@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Sonance Music Player
+Comment=A Mono/GStreamer Based Music Player
+Exec=@prefix@/bin/sonance
+Terminal=false
+Type=Application
+Icon=@prefix@/share/pixmaps/sonance-icon.png
+Categories=GNOME;Application;AudioVideo;
+StartupNotify=true
+Encoding=UTF-8
+

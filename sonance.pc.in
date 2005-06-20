@@ -1,0 +1,9 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+Name: Sonance
+Description: Mono/GStreamer based media playback and organization platform
+Version: @VERSION@
+Libs:
+

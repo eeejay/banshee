@@ -1,0 +1,190 @@
+# Anjuta Version 1.2.2 
+Compatibility Level: 1 
+
+<PROJECT_DESCRIPTION_START>
+<PROJECT_DESCRIPTION_END>
+<CONFIG_PROGS_START>
+<CONFIG_PROGS_END>
+<CONFIG_LIBS_START>
+<CONFIG_LIBS_END>
+<CONFIG_HEADERS_START>
+<CONFIG_HEADERS_END>
+<CONFIG_CHARACTERISTICS_START>
+<CONFIG_CHARACTERISTICS_END>
+<CONFIG_LIB_FUNCS_START>
+<CONFIG_LIB_FUNCS_END>
+<CONFIG_ADDITIONAL_START>
+<CONFIG_ADDITIONAL_END>
+<CONFIG_FILES_START>
+<CONFIG_FILES_END>
+<MAKEFILE_AM_START>
+<MAKEFILE_AM_END>
+
+props.file.type=project
+
+anjuta.version=1.2.2
+anjuta.compatibility.level=1
+
+project.name=Sonance
+project.type=GENERIC
+project.target.type=EXECUTABLE
+project.version=0.4.0
+project.author=Aaron Bockover
+project.source.target=Mono/Linux
+project.has.gettext=0
+project.gui.command=
+project.programming.language=C
+project.excluded.modules=intl
+
+project.config.extra.modules.before=
+project.config.extra.modules.after=
+project.config.blocked=1
+project.config.disable.overwriting=1 1 1 1 1 1 1 1 1 
+
+project.menu.entry=Sonance Version 0.3.0
+project.menu.group=Application
+project.menu.comment=Sonance Version 0.3.0
+project.menu.icon=
+project.menu.need.terminal=0
+
+project.configure.options=
+anjuta.program.arguments=
+preferences.build.option.jobs=0
+preferences.build.option.silent=0
+preferences.build.option.autosave=0
+preferences.anjuta.make.options=-k
+preferences.make=make
+preferences.build.option.keep.going=1
+preferences.build.option.warn.undef=0
+preferences.autoformat.custom.style= -i8 -sc -bli0 -bl0 -cbi0 -ss
+preferences.indent.opening=0
+preferences.autoformat.disable=0
+preferences.indent.automatic=1
+preferences.use.tabs=1
+preferences.indent.size=4
+preferences.tabsize=4
+preferences.indent.closing=0
+
+module.include.name=.
+module.include.type=
+module.include.files=\
+	src/libsonance/egg/eggtrayicon.h\
+	src/libsonance/mm-keys.h
+
+module.source.name=.
+module.source.type=
+module.source.files=\
+	src/libsonance/egg/eggtrayicon.c\
+	src/libsonance/mm-keys.c\
+	src/AboutBox.cs\
+	src/CommonTags.cs\
+	src/Core.cs\
+	src/Database.cs\
+	src/DebugLog.cs\
+	src/Dialogs.cs\
+	src/GConfKeys.cs\
+	src/GstMetadata.cs\
+	src/GstPlayer.cs\
+	src/Library.cs\
+	src/Main.cs\
+	src/MmKeys.cs\
+	src/NotificationAreaIcon.cs\
+	src/PlayerInterface.cs\
+	src/PlaylistView.cs\
+	src/Preferences.cs\
+	src/SignalUtils.cs\
+	src/SourceView.cs\
+	src/SqlGenerator.cs\
+	src/StockIcons.cs\
+	src/TrackInfo.cs\
+	src/TrackProperties.cs\
+	src/Utilities.cs\
+	src/VolumeButton.cs\
+	src/DecoderRegistry.cs\
+	src/LibraryTransactionManager.cs\
+	src/LibraryTransactions.cs\
+	src/LibraryTransactionStatus.cs\
+	src/DateButton.cs\
+	src/SearchEntry.cs\
+	src/SimpleNotebook.cs\
+	src/PlaylistModel.cs\
+	src/InstanceFinder.cs\
+	src/DragDrop.cs
+
+module.pixmap.name=.
+module.pixmap.type=
+module.pixmap.files=\
+	data/images/player-shuffle.png\
+	data/images/media-stop.png\
+	data/images/source-library-icon.png\
+	data/images/media-pause.png\
+	data/images/burn-icon.png\
+	data/images/playlist-icon-large.png\
+	data/images/media-artist.png\
+	data/images/album-cover-searching.png\
+	data/images/volume-max.png\
+	data/images/media-album.png\
+	data/images/icon-album.png\
+	data/images/media-audiofile.png\
+	data/images/volume-min.png\
+	data/images/volume-decrease.png\
+	data/images/sonance-splash.png\
+	data/images/player-repeat.png\
+	data/images/sonance-icon.png\
+	data/images/icon-artist.png\
+	data/images/volume-increase.png\
+	data/images/tray-icon.png\
+	data/images/album-cover-container.png\
+	data/images/source/mono-logo.png\
+	data/images/tray-icon-raw.png\
+	data/images/library-icon.png\
+	data/images/volume-zero.png\
+	data/images/source-playlist-icon.png\
+	data/images/media-prev.png\
+	data/images/volume-medium.png\
+	data/images/media-repeat.png\
+	data/images/media-next.png\
+	data/images/media-play.png\
+	data/images/media-stream.png\
+	data/images/media-shuffle.png\
+	data/images/icon-title.png\
+	data/images/media-burn.png
+
+module.data.name=.
+module.data.type=
+module.data.files=\
+	data/Tables.sql
+
+module.help.name=.
+module.help.type=
+module.help.files=
+
+module.doc.name=.
+module.doc.type=
+module.doc.files=\
+	NEWS\
+	README\
+	AUTHORS\
+	INSTALL\
+	ChangeLog
+
+module.po.files=
+
+compiler.options.supports=
+compiler.options.include.paths=\
+	.\
+	..
+compiler.options.library.paths=
+compiler.options.libraries=
+compiler.options.libraries.selected=
+compiler.options.defines=\
+	HAVE_CONFIG_H
+compiler.options.defines.selected=
+compiler.options.warning.buttons=0 0 1 1 0 1 0 0 0 0 0 0 0 1 0 0 
+compiler.options.optimize.buttons=0 0 1 0 
+compiler.options.other.buttons=1 0 
+compiler.options.other.c.flags=
+compiler.options.other.l.flags=
+compiler.options.other.l.libs=
+
+project.src.paths=

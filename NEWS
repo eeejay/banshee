@@ -1,0 +1,14 @@
+18 February 2005:
+  * Second public release of Sonance (v0.2) 
+
+17 February 2005: 
+  * First public release of Sonance (v0.1)
+
+January 2005: 
+  * GstPlayer engine is written in C#, Sonance is born (again)
+
+November 2004: 
+  * Sonance is started for the first time, under the original name,
+    Remix. It was written in C, and after two months of development,
+    was scrapped in favor of a complete rewrite in C# under Mono.
+    The C version never had a public release.

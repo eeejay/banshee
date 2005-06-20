@@ -1,0 +1,280 @@
+2005-06-20 Aaron Bockover <aaron@aaronbock.net>
+
+	* Project: First import to GNOME CVS as a Novell-owned project. Heavy
+	development ahead, starting to manage ChangeLog again.
+
+
+2005-05-04 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: Playlist renaming/delete/append
+
+  * Library.cs: Playlist renaming/delete/append
+
+  * SourceView.cs: Fixed cell editor for sources
+
+2005-05-03 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlaylistView.cs: Reorder via DnD
+
+2005-05-02 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: New playlist creation support
+
+  * PlaylistView.cs: Multiple row selections supported.
+
+2005-04-28 Aaron Bockover <aaron@aaronbock.net>
+
+  * SimpleNotebook.cs: Very simple Notebook widget (without tabs) for the
+    status header widgets in the top of the main UI.
+
+  * SearchEntry.cs: Custom search entry widget with drop down menu for
+    simple searching
+
+2005-04-24 Aaron Bockover <aaron@aaronbock.net>
+
+  * SqlBuilder.cs: SQL Builder UI for searching/smart playlists.
+
+2005-04-15 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlaylistView.cs: Column states saved, dialog to toggle column visibility
+  
+  * TrackInfo.cs: Support for album information now
+  
+  * Library.cs: Cache of all Library Tracks
+  
+  * PlayerInterface.cs: New Interface!
+
+2005-04-11 Aaron Bockover <aaron@aaronbock.net>
+
+  * TrackInfo.cs: Fixed playlist loading bug
+  
+  * Database.cs: SQLite connection managing for threads
+
+2005-04-07 Aaron Bockover <aaron@aaronbock.net>
+
+  * LibraryTransactions.cs: Playlist saving
+
+2005-04-03 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: Added connecting code to the LibraryTransactionStatus
+
+  * LibraryTransactionStatus.cs: Wrote UI for showing statistics in the 
+    LibraryTransactionManager. 
+
+  * ImageAnimation.cs: Wrote nice Animated Image widget
+
+  * LibraryTransactions.cs: Replaced FileLoader with LibraryTransactions
+
+  * FileLoader.cs: Removed FileLoader
+
+  * LibraryTransactionManager.cs: Wrote LibraryTransactionManager to 
+    manage all Library IO in a safe way
+
+2005-04-01 Aaron Bockover <aaron@aaronbock.net>
+
+  * Preferences.cs: Wrote beginning of UI for Mimetype/Decoder handling
+
+2005-03-31 Aaron Bockover <aaron@aaronbock.net>
+
+  * Core.cs: Added support for global DecoderRegistry instance.
+
+  * GstMetadata.cs: Updated to use core global DecoderRegistry for supported
+    mimetype checking instead of old Core DB.
+
+  * DecoderRegistry.cs: Wrote DecoderRegistry class. This handles the parsing
+    of the GStreamer plugins registry to build a local decoders registry
+    for mimetype checking. The decoder registry is saved to XML for quick 
+    loading on next run. Also will allow a UI for users to add/remove
+    mimetypes.
+
+  * Database.cs, Core.cs: Removed Core database. All SQL queries are specific 
+    to the Library database.
+
+  * Finally, a break from work to really do some hacking on Sonance again :-/
+
+2005-03-10 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: Progress bar for track loading/importing
+
+  * Preferences.cs: You can save/edit preferences
+
+  * Preferences.cs: New preferences dialog.
+
+2005-03-09 Aaron Bockover <aaron@aaronbock.net>
+
+  * FileLoader.cs: Support for SQL queries, sends IDataReader to TrackInfo.
+    Reduces library load times (4000 songs) to 5 seconds! Major optimization!
+
+  * TrackInfo.cs: New constructor that handles a raw IDataReader to reduce
+    the number of SQL queries. 
+
+  * PlayerInterface.cs: Using new FileChooserDialog instead of old FileSelector
+
+  * PlaylistView.cs: Now all playlist additions are done based on a queue
+    and an interface timeout. This reduces load time by over 250% (vs. a 
+    1:1 loader/UI sync). Uses FileLoader/FileLoaderManager.
+
+  * FileLoader.cs: Wrote a managed file/SQL loader. Manages a queue of
+    load requests, allows the cancellation of all requests. FileLoader
+    objects recurse directories and load TrackInfo objects, or load
+    them from the database.
+
+2005-03-01 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlaylistRowRenderer.cs: Removed extern constructors... not allowed in 
+    latest mcs.
+
+  * SourceView.cs: Removed extern constructors... not allowed in latest mcs.
+
+  * Library.cs: Removed extern constructors... not allowed in  latest mcs.
+
+  * All: Changed namespaces to avoid conflicts with mcs 1.1.4. Project
+    now depends on gtk-sharp-2.0 (1.9.2), and the latest gst-sharp (0.2.4)
+    from SVN.
+
+2005-02-28 Aaron Bockover <aaron@aaronbock.net>
+
+  * Library.cs: Set of Source classes to define how to read data from
+    a given source.
+
+  * SourceDialog.cs: A window that embeds a SourceView widget, used by
+    the main interface to show a list of sources.
+
+  * SourceView.cs: A new TreeView widget for showing data sources (Library
+    and a list of Playlists)
+
+  * PlayerInterface.cs: Supports MmKeys.
+
+  * MmKeys.cs: Wraps mm-keys support in libsonance, adds MM-Keys support
+    to Sonance. Adapted from Muine.
+    
+  * SignalUtils.cs: Wraps signal utilities in gobject-2.0. Needed for
+    MM-Keys. Adapted from Muine.
+
+  * NoticationAreaIcon.cs: Calls native egg-tray from libsonance
+
+  * Build System: Builds libsonance (C shared library) which includes
+    egg-tray support and mm-keys support. Dropped egg-sharp.dll.
+
+  * libsonance/mm-keys.c: Added to project
+
+  * libsonance/eggtrayicon.c: Added to project
+
+  * Dialogs.cs: Save playlist dialog
+
+  * PlayerInterface.cs: Can save playlist
+
+  * PlaylistView.cs: Now saves playlist to DB
+
+  * Library.cs: Playlist class saves to Library DB
+  
+  * Database.cs: More DB utilities
+
+2005-02-26 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlaylistView.cs: Fixed bug when removing item from playlist
+
+  * TrackInfo.cs: Writes metadata to Library database
+
+  * Database.cs: Supports new SQL generator objects as queries
+
+  * SqlGenerator.cs: New SQL query generator to easily generate complex and
+    safe SQL queries
+
+  * PlayerInterface.cs: Lots of code cleanp, and support for interfacing
+    with NotificationAreaIcon.
+
+  * NotificationAreaIcon.cs: Added tray icon support in GNOME through libegg.
+    Uses the egg-sharp.dll assembly, a wraper for libegg.so.
+  
+  * Source/Makefile.am: Added libegg.so rule to use gcc to build eggtrayicon.c
+    for the egg-sharp.dll assembly.
+
+2005-02-24 Aaron Bockover <aaron@aaronbock.net>
+
+  * Database.cs: Supports multiple databases (we now have a core and a library
+    database that are independent of eachother).
+
+  * Data/Makefile.am: Included Tables.sql
+
+  * Tables.sql: Defined all SQL Table construction in a SQL file, included
+    as resource.
+
+  * TrackProperties.cs: Updated to reflect new supported metadata. Also only
+    shows fields that we have data for (instead of showing "Unknown Field").
+
+  * TrackInfo.cs: Updated to reflect updated GstMetadata.
+
+  * GstMetadata.cs: Updated GStreamer metadata backend. Using a Hashtable to
+    store tag data. 
+    
+  * CommonTags.cs: Simple class containing GStreamer tag names as constant
+    members.
+
+  * AboutBox.cs: Updated about box with new graphic, a tabbed information
+    layout, project information, and assembly information. New graphic does
+    not reference version, and version information is written based on the
+    main assembly, so no updates need to be made to this code anymore.
+
+2005-02-21 Aaron Bockover <aaron@aaronbock.net>
+
+  * Database.cs: Added dynamic mime type support checking based on
+    a GstDecoders and MimeSynonyms table in the SQL database.
+    If GstDecoders is empty or non-existant, it is constructed
+    based on the GStreamer registry.xml file. No hard-coded supported
+    mime types exist now.
+
+  * Database.cs: Added SQLite support. SQLite is now a dependency.
+
+2005-02-18 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: Fixed volume loading bug.
+
+2005-02-18 Aaron Bockover <aaron@aaronbock.net>
+
+  * Sonance-0.2.1: Minor release for updates below
+
+  * PlaylistView.cs: Fixed minor bug in playlist. PlayIter now ScrollToCell
+    to always keep the active item in view unless user manually scrolls out
+    of view
+  
+  * PlayerInterface.cs: Statusbar now shows total number of items and duration
+    of entire playlist
+
+  * PlaylistView.cs: Added Update event. Fired whenever the playlist changes
+
+  * PlaylistView.cs: Added TotalDuration support to hold the length (time)
+    of entire playlist
+
+2005-02-18 Aaron Bockover <aaron@aaronbock.net>
+
+  * Sonance-0.2 - That was fast!?
+
+2005-02-17 Aaron Bockover <aaron@aaronbock.net>
+
+  * PlayerInterface.cs: Added a GConf client (/apps/Sonance). Now all interface
+    states are saved and loaded (Window size/position, volume, shuffle/repeat,
+    and search bar).
+
+  * PlayerInterface.cs: Added a search box, with back/forward features, and
+    it can be toggled via J or F3 (Similar to Firefox, live searching)
+
+  * PlaylistView.cs: Added searching support
+
+  * PlayerInterface.cs: Added support for "Add" files through Gtk.FileSelection
+    dialog. I hate that dialog. I can't wait for gtk-sharp2 to become stable
+    to use the new Gtk.FileChooser dialog. Mugh.
+
+  * PlaylistView.cs: Added directory reading and recursion for additions
+  
+  * PlaylistView.cs: Added support for shuffle and repeat modes
+  
+  * PlayerInterface.cs: Many UI enchancements. Interface is now
+    resizeable and there are shuffle/repeat toggle buttons
+  
+  * TrackInfo.cs: Implemented a window for viewing selected track properties
+    (Shows metadata for track)
+
+2005-02-17 Aaron Bockover <aaron@aaronbock.net>
+
+  * Sonance-0.1 - First Public Release

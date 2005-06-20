@@ -1,0 +1,79 @@
+Sonance requires gst-sharp to be installed, along with the latest Mono
+runtime, compiler, and libraries. Currently, gst-sharp is only available
+via SVN.
+
+Sonance MUST have:
+  mono-1.1.4 or better
+  gtk+-2.6 (or greater)
+  gnome-vfs-2.0 / gnome-desktop-2.0
+  gtk-sharp-2.0 (version 1.9.2+) ***
+  gst-sharp (version 0.2.4+) ***
+  sqlite 2.x
+  
+gtk-sharp-2.0 is a development release, but is relatively stable, and is
+required by the latest gst-sharp. You can have both gtk-sharp and gtk-sharp-2.0
+installed concurrently. 
+
+It is recommended that you use mono-1.1.6 or greater. At least 1.1.4 is required.
+
+Sonance uses the SQLite database library for underlying database transactions.
+You must have this library installed (2.x series).
+
+    http://sqlite.org/sqlite-2.8.16.tar.gz
+
+
+BUILD INSTRUCTIONS
+
+Get mono-1.1.4 from the Mono project download page.
+Get gtk-sharp-2.0 from the Gtk# project (gtk-sharp.sourceforge.net)
+
+Mono 1.1.4:
+
+	tar zxvf mono-1.1.4.tar.gz
+	cd mono-1.1.4
+	./configure --prefix=/usr
+	make
+	su -c "make install"
+
+Gtk# 2.0 (1.9.2)
+
+	tar zxvf gtk-sharp-1.9.2.tar.gz
+	cd gtk-sharp-1.9.2
+	./configure --prefix=/usr
+	make
+	su -c "make install"
+
+gst-sharp (0.2.4 or greater)
+
+	As of Sonance-0.3.0, a pre-compiled gst-sharp.dll assembly
+	is bundled with Sonance. It is preferred that you build
+	gst-sharp yourself, but if this is causing problems, you
+	can try building Sonance with the bundled gst-sharp.dll.
+
+	** BUILD gst-sharp FROM SVN (skip if using bundled) **
+
+	svn co svn://svn.myrealbox.com/source/trunk/gst-sharp
+	cd gst-sharp
+	./autogen.sh --prefix=/usr
+	make
+	su -c "make install"
+
+SONANCE:
+
+	./configure --prefix=/usr
+
+		** OR if you want the bundled gst-sharp **
+
+	./configure --prefix=/usr --enable-bundled-gst-sharp
+	
+	make
+	su -c "make install"
+	
+
+Also, you must have a working install of GStreamer (C libraries), and
+it should be configured. Make sure you have run gst-register to register
+your GStreamer plugins.
+
+NOTE! 
+Sonance is in very early development! I am not responsible if you run 
+Sonance, and your computer catches fire. You have been warned.
