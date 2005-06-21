@@ -61,7 +61,9 @@ sonance_sources = \
 	PlaylistColumns.cs \
 	Metadata.cs \
 	IPlaybackModel.cs \
-	PlaylistRowRenderer.cs
+	PlaylistRowRenderer.cs \
+	DBusIPC.cs \
+	PlayerEngine.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -107,7 +109,8 @@ sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resou
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
-	$(GSTSHARP_LIBS)
+	$(GSTSHARP_LIBS) \
+	$(DBUSSHARP_LIBS)
 
 SYSTEM_REFERENCES = \
 	System.dll \
