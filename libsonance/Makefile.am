@@ -20,4 +20,4 @@ libsonance_la_SOURCES =       \
 	metadata.c metadata.h     \
 	ogg-helper.c ogg-helper.h 
 
-libsonance_la_LIBADD = $(SONANCE_LIBS) $(OGG_LIBS) $(VORBIS_LIBS) $(VORBISFILE_LIBS) $(ID3TAG_LIBS) $(FLAC_LIBS) $(FAAD_LIBS) egg/libegg.la 
+libsonance_la_LIBADD = $(SONANCE_LIBS) $(OGG_LIBS) $(VORBIS_LIBS) $(VORBISFILE_LIBS) $(ID3TAG_LIBS) $(FLAC_LIBS) $(FAAD_LIBS) egg/libegg.la $(id3_vfs_lib)
