@@ -36,6 +36,8 @@ namespace Sonance
 		public static void Find()
 		{
 			foreach(Process process in Process.GetProcesses()) {
+				
+				
 				Console.WriteLine("Process {0}: {1} on {2} started at {3}",
 					process.Id, process.ProcessName, process.MachineName,
 					process.StartTime);

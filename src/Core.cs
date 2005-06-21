@@ -99,16 +99,6 @@ namespace Sonance
 			if(!Directory.Exists(Paths.ApplicationData))
 				Directory.CreateDirectory(Paths.ApplicationData);
 			
-			if(!Engine.Initialize(Args)) {
-				Gtk.Application.Quit();
-				ErrorDialog.Run(
-					"Sonance could not initialize GStreamer. Please ensure " + 
-					"that GStreamer is properly installed and configured. " +
-					"Try running gst-register."
-				);
-				return;
-			}
-			
 			Random = new Random();
 			gconfClient = new GConf.Client();
 			library = new Library();

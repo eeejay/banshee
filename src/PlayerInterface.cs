@@ -82,10 +82,8 @@ namespace Sonance
 			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
-			ConnectToLibraryTransactionManager();
 			
-			Core.Library.Reloaded += OnLibraryReloaded;
-			Core.Library.ReloadLibrary();
+			GLib.Timeout.Add(500, InitialLoadTimeout);
 			
 			Gdk.Threads.Enter();
 			HigMessageDialog wd = new HigMessageDialog(WindowPlayer,
@@ -99,9 +97,18 @@ namespace Sonance
 			wd.Destroy();
 			Gdk.Threads.Leave();
 			
+			
 			Gdk.Threads.Enter();
 			Gtk.Application.Run();
 			Gdk.Threads.Leave();
+      	}
+      	
+      	private bool InitialLoadTimeout()
+      	{
+      		ConnectToLibraryTransactionManager();
+			Core.Library.Reloaded += OnLibraryReloaded;
+			Core.Library.ReloadLibrary();
+			return false;
       	}
       	
       	// ---- Setup/Initialization Routines ----
@@ -396,7 +403,7 @@ namespace Sonance
 		{
 			activeTrackInfo = ti;
 			Core.Instance.Player.Close();
-			Core.Instance.Player.Open(ti.Uri);
+			Core.Instance.Player.Open(ti);
 
 			ScaleTime.Adjustment.Lower = 0;
 			ScaleTime.Adjustment.Upper = ti.Duration;

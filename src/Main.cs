@@ -38,10 +38,10 @@ namespace Sonance
 	public class SonanceEntry
 	{
 		public static void Main(string[] args)
-		{			
+		{
+			Console.WriteLine(System.Threading.Thread.CurrentThread);	
+			
 			InstanceFinder.Find();
-		
-			DebugLog.Add("Sonance Main() Entry");
 			Core.Args = args;
 			Core.Instance.Program = 
 				new Program("Sonance", "0.3", Modules.UI, args);

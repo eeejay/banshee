@@ -33,45 +33,7 @@ using GLib;
 	
 namespace Sonance
 {	
-	public class Engine
-	{
-		static public bool Initialize(string [] args)
-		{
-			Element dummy;
-			
-			Gst.Application.Init("Sonance", ref args);
-			
-			try {
-				dummy = Gst.ElementFactory.Make("fakesink", "fakesink");
-				Gst.SchedulerFactory.Make(null, dummy);
-			} catch(Exception e) {
-				new Error(
-					"Could not initialize GStreamer scheduler. " +
-					"Did you run gst-register?", e);
-				DebugLog.Add("Failed to initialize GStreamer scheduler");
-				return false;
-			}
-			
-			DebugLog.Add("GStreamer is working");
-			return true;
-		}
-	}
-	
-	public class TickEventArgs : EventArgs
-	{
-    	public long Position;
-	}
-	
-	public class VolumeChangedEventArgs : EventArgs
-	{
-		public double Volume;
-	}
-	
-	public delegate void TickEventHandler(object o, TickEventArgs args);
-	public delegate void VolumeChangedEventHandler(object o, 
-		VolumeChangedEventArgs args);
-	
-	public class GstPlayer
+	public class GstPlayer : PlayerEngine
 	{
 		private Bin pipeline = null;
 		
@@ -93,9 +55,19 @@ namespace Sonance
 		private bool finalizing = false;
 		private bool atEos = false;
 		
-		public event TickEventHandler Tick;
-		public event EventHandler Eos;
-		public event VolumeChangedEventHandler VolumeChanged;
+		public override event TickEventHandler Tick;
+		public override event EventHandler Eos;
+		public override event VolumeChangedEventHandler VolumeChanged;
+
+		public GstPlayer()
+		{
+			/*Element dummy;
+			string [] args = {""};
+			
+			Gst.Application.Init("Sonance", ref args);
+			dummy = Gst.ElementFactory.Make("fakesink", "fakesink");
+			Gst.SchedulerFactory.Make(null, dummy);*/
+		}
 		
 		private bool Construct()
 		{
@@ -221,7 +193,7 @@ namespace Sonance
 			return true;
 		}
 		
-		public bool Open(string uri)
+		public override bool Open(TrackInfo ti)
 		{
 			if(finalizing) 
 				return false;
@@ -230,7 +202,7 @@ namespace Sonance
 			finalizing = false;
 			atEos = false;
 
-			if(uri == null)
+			if(ti == null)
 				return false;
 				
 			if(pipeline != null)
@@ -248,7 +220,7 @@ namespace Sonance
 			return true;
 		}
 		
-		public void Close()
+		public override void Close()
 		{
 			finalizing = true;
 			Finalize(true);
@@ -283,7 +255,7 @@ namespace Sonance
 				atEos = true;
 		}
 		
-		public void Play()
+		public override void Play()
 		{
 			if(pipeline == null)
 				return;
@@ -296,7 +268,7 @@ namespace Sonance
 			thread.Start();
 		}
         
-        public void Pause()
+        public override void Pause()
         {
         	if(pipeline == null)
         		return;
@@ -305,35 +277,39 @@ namespace Sonance
        			requestedState = ElementState.Paused;	
        	}
        	
-       	public bool Playing 
+       	public override bool Playing 
        	{ 
        		get { 
        			return requestedState == ElementState.Playing; 
        		} 
        	}
        	
-       	public bool HasFile 
+       	public override bool HasFile 
        	{ 
        		get { 
        			return uri != null; 
        		} 
        	}
        	
-       	public bool Loaded
+       	public override bool Loaded
        	{
        		get {
        			return uri != null && pipeline != null;
        		}
        	}
        	
-       	public long Position 
+       	public override long Position 
        	{ 
        		get { 
        			return time; 
        		} 
+       		
+       		set {
+       			
+       		}
        	}
        	
-	    public double Volume 
+	    public override double Volume 
 	    {
 	        get { 
 	        	return volumeValue; 
@@ -356,7 +332,7 @@ namespace Sonance
 	        }
 	    }
 	    
-	    public bool AtEos
+	    public override bool AtEos
 	    {
 	    	get {
 	    		return atEos;
