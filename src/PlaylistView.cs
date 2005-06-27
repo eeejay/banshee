@@ -118,7 +118,7 @@ namespace Sonance
 			this.EnableSearch = true;
 			this.RulesHint = true;
 			this.HeadersClickable = true;
-			this.HeadersVisible = true;
+			this.HeadersVisible = false;
 			this.Selection.Mode = SelectionMode.Multiple;
 
 			this.model = model;
@@ -174,7 +174,7 @@ namespace Sonance
 		public void ColumnChooser()
 		{
 			columnChooser = new PlaylistColumnChooserDialog(columns);
-			columnChooser.ShowAll();
+		//	columnChooser.ShowAll();
 		}
 		
 		public void Shutdown()
