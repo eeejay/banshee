@@ -86,7 +86,7 @@ namespace Sonance
 			// set up columns
 			columns = new ArrayList();
 			
-			/*columns.Add(new PlaylistColumn(this, "Track", 
+			columns.Add(new PlaylistColumn(this, "Track", 
 				new TreeCellDataFunc(TrackCellTrack), 0));
 			columns.Add(new PlaylistColumn(this, "Artist", 
 				new TreeCellDataFunc(TrackCellArtist), 1));
@@ -102,23 +102,23 @@ namespace Sonance
 				new TreeCellDataFunc(TrackCellPlayCount), 6));
 
 			foreach(PlaylistColumn plcol in columns) 
-				this.InsertColumn(plcol.Column, plcol.Order);*/
+				this.InsertColumn(plcol.Column, plcol.Order);
 
 
-		TreeViewColumn col = new TreeViewColumn();
-		PlaylistRowRenderer renderer = new PlaylistRowRenderer();
-		col.Title = "Artist / Title";
-		col.PackStart(renderer, true);
-		col.SetCellDataFunc(renderer, 
-			new TreeCellDataFunc(TrackCellDataFunc));
-		AppendColumn(col);
+			/*TreeViewColumn col = new TreeViewColumn();
+			PlaylistRowRenderer renderer = new PlaylistRowRenderer();
+			col.Title = "Artist / Title";
+			col.PackStart(renderer, true);
+			col.SetCellDataFunc(renderer, 
+				new TreeCellDataFunc(TrackCellDataFunc));
+			AppendColumn(col);*/
 		
 
 			// set up tree view
 			this.EnableSearch = true;
 			this.RulesHint = true;
 			this.HeadersClickable = true;
-			this.HeadersVisible = false;
+			this.HeadersVisible = true;
 			this.Selection.Mode = SelectionMode.Multiple;
 
 			this.model = model;
@@ -167,14 +167,14 @@ namespace Sonance
 		
 		private void SaveColumns()
 		{
-		//	foreach(PlaylistColumn plcol in columns)
-		//		plcol.Save(Columns);
+			foreach(PlaylistColumn plcol in columns)
+				plcol.Save(Columns);
 		}
 		
 		public void ColumnChooser()
 		{
-		//	columnChooser = new PlaylistColumnChooserDialog(columns);
-		//	columnChooser.ShowAll();
+			columnChooser = new PlaylistColumnChooserDialog(columns);
+			columnChooser.ShowAll();
 		}
 		
 		public void Shutdown()

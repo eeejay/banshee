@@ -298,8 +298,8 @@ namespace Sonance
 			if(md == null) 
 				throw new SonanceException("Metadata Read Error: " + uri);
 	
-			if(md.MimeType == null || !Core.Instance.DecoderRegistry.SupportedMimeType(md.MimeType))
-				throw new SonanceException("invalid mimetype: " + md.MimeType);
+			//if(md.MimeType == null || !Core.Instance.DecoderRegistry.SupportedMimeType(md.MimeType))
+			//	throw new SonanceException("invalid mimetype: " + md.MimeType);
 			
 			mimetype = md.MimeType;
 
@@ -312,8 +312,8 @@ namespace Sonance
 			if(md.Title != null && md.Title.Length > 0)
 				title = md.Title;
 			
-			/*if(md.Genre != null && md.Genre.Length > 0)
-				genre = md.Genre;*/
+			//if(md.Genre != null && md.Genre.Length > 0)
+			//	genre = md.Genre;
 			
 			if(md.Performers.Length > 0 && md.Performers[0].Length > 0)
 				performer = md.Performers[0];
@@ -330,7 +330,6 @@ namespace Sonance
 			trackPeak = md.Gain;
 			
 			duration = md.Duration;
-			
 			
 			SaveToDatabase(true);
 			

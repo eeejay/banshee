@@ -211,7 +211,7 @@ namespace Sonance
 			if(!Construct())
 				return false;
 				
-			this.uri = uri;
+			uri = ti.Uri;
 			src.SetProperty("location", uri);
 			
 			DebugLog.Add("GstPlayer: Opening '{0}'",

@@ -254,7 +254,6 @@ namespace Sonance
 			try {
 				ti = new TrackInfo(uri/*, allowLibrary*/);
 			} catch(Exception e) { 
-				//Console.WriteLine("Skipping: " + uri);
 				return;
 			}
 			

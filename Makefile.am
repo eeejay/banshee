@@ -1,4 +1,5 @@
 SUBDIRS = \
+	entagged \
 	data \
 	libsonance \
 	src \

@@ -85,7 +85,7 @@ namespace Sonance
 			
 			GLib.Timeout.Add(500, InitialLoadTimeout);
 			
-			Gdk.Threads.Enter();
+			/*Gdk.Threads.Enter();
 			HigMessageDialog wd = new HigMessageDialog(WindowPlayer,
 				DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Ok,
 				"Unstable and Incomplete",
@@ -95,7 +95,7 @@ namespace Sonance
 				"with this release. Consider for testing and development only.");
 			wd.Run();
 			wd.Destroy();
-			Gdk.Threads.Leave();
+			Gdk.Threads.Leave();*/
 			
 			
 			Gdk.Threads.Enter();

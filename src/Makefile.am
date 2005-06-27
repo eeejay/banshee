@@ -9,10 +9,9 @@ EXTRA_SCRIPTS = gst-sharp.dll
 EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
 	sonance.in \
 	AssemblyInfo.cs.in \
-	AmazonSearchService.wsdl \
-	Sonance.prjx
+	AmazonSearchService.wsdl
 
-CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp
+CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb
 DISTCLEANFILES = sonance $(sonance_generated_sources)
 
 sonance_sources_in = AssemblyInfo.cs.in
@@ -131,6 +130,7 @@ sonance.exe: $(sonance_build_sources)
 	$(MCS) $(PKG_REFERENCES) $(sonance_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
+	-r:../entagged/entagged.dll \
 	$(sonance_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl

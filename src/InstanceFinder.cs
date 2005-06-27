@@ -33,15 +33,15 @@ namespace Sonance
 {
 	public class InstanceFinder
 	{
-		public static void Find()
+		public static bool Find()
 		{
-			foreach(Process process in Process.GetProcesses()) {
-				
-				
-				Console.WriteLine("Process {0}: {1} on {2} started at {3}",
-					process.Id, process.ProcessName, process.MachineName,
-					process.StartTime);
-			}
+			DBusIPC.Instance.RegisterObject(true, "/org/gnome/Sonance/running");
+		
+			foreach(Process process in Process.GetProcesses())
+				if(process.ProcessName.Equals("sonance"))
+					return true;
+					
+			return false;
 		}
 	}
 }

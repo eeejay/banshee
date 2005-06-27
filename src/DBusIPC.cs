@@ -34,7 +34,9 @@ namespace Sonance
 	public class DBusIPC
 	{
 		private static DBusIPC instance = null;
-	
+		
+		private Service service;
+			
 		public static DBusIPC Instance
 		{
 			get {
@@ -42,6 +44,21 @@ namespace Sonance
 					instance = new DBusIPC();
 				return instance;
 			}
+		}
+		
+		public DBusIPC()
+		{
+            service = new Service(Bus.GetSessionBus(), "org.gnome.Sonance");
+		}
+		
+		public void RegisterObject(object o, string path)
+		{
+			service.RegisterObject(o, path);
+		}
+		
+		public void UnregisterObject(object o)
+		{
+			service.UnregisterObject(o);
 		}
 	}
 }

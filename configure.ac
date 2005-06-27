@@ -191,6 +191,7 @@ AC_SUBST(FAAD_LIBS)
 AC_OUTPUT([
 Makefile
 sonance.pc
+entagged/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 src/sonance

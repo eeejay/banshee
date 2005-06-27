@@ -39,9 +39,6 @@ namespace Sonance
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine(System.Threading.Thread.CurrentThread);	
-			
-			InstanceFinder.Find();
 			Core.Args = args;
 			Core.Instance.Program = 
 				new Program("Sonance", "0.3", Modules.UI, args);

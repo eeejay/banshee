@@ -59,10 +59,12 @@ am__installdirs = "$(DESTDIR)$(sonancelibdir)"
 sonancelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(sonancelib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
+@HAVE_ID3TAG_TRUE@am__DEPENDENCIES_2 = id3-vfs/libid3-vfs.la
 libsonance_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) egg/libegg.la
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) egg/libegg.la \
+	$(am__DEPENDENCIES_2)
 am_libsonance_la_OBJECTS = mm-keys.lo metadata.lo ogg-helper.lo
 libsonance_la_OBJECTS = $(am_libsonance_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
@@ -107,6 +109,9 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DBUSSHARP = @DBUSSHARP@
+DBUSSHARP_CFLAGS = @DBUSSHARP_CFLAGS@
+DBUSSHARP_LIBS = @DBUSSHARP_LIBS@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 ECHO = @ECHO@
@@ -186,6 +191,7 @@ ac_ct_CXX = @ac_ct_CXX@
 ac_ct_F77 = @ac_ct_F77@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -245,7 +251,7 @@ libsonance_la_SOURCES = \
 	metadata.c metadata.h     \
 	ogg-helper.c ogg-helper.h 
 
-libsonance_la_LIBADD = $(SONANCE_LIBS) $(OGG_LIBS) $(VORBIS_LIBS) $(VORBISFILE_LIBS) $(ID3TAG_LIBS) $(FLAC_LIBS) $(FAAD_LIBS) egg/libegg.la 
+libsonance_la_LIBADD = $(SONANCE_LIBS) $(OGG_LIBS) $(VORBIS_LIBS) $(VORBISFILE_LIBS) $(ID3TAG_LIBS) $(FLAC_LIBS) $(FAAD_LIBS) egg/libegg.la $(id3_vfs_lib)
 all: all-recursive
 
 .SUFFIXES:

@@ -76,6 +76,9 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DBUSSHARP = @DBUSSHARP@
+DBUSSHARP_CFLAGS = @DBUSSHARP_CFLAGS@
+DBUSSHARP_LIBS = @DBUSSHARP_LIBS@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 ECHO = @ECHO@
@@ -155,6 +158,7 @@ ac_ct_CXX = @ac_ct_CXX@
 ac_ct_F77 = @ac_ct_F77@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
@@ -205,10 +209,9 @@ EXTRA_SCRIPTS = gst-sharp.dll
 EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
 	sonance.in \
 	AssemblyInfo.cs.in \
-	AmazonSearchService.wsdl \
-	Sonance.prjx
+	AmazonSearchService.wsdl
 
-CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp
+CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb
 DISTCLEANFILES = sonance $(sonance_generated_sources)
 sonance_sources_in = AssemblyInfo.cs.in
 sonance_generated_sources = $(sonance_sources_in:.in=) \
@@ -256,7 +259,9 @@ sonance_sources = \
 	PlaylistColumns.cs \
 	Metadata.cs \
 	IPlaybackModel.cs \
-	PlaylistRowRenderer.cs
+	PlaylistRowRenderer.cs \
+	DBusIPC.cs \
+	PlayerEngine.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -301,7 +306,8 @@ sonance_resources = \
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
-	$(GSTSHARP_LIBS)
+	$(GSTSHARP_LIBS) \
+	$(DBUSSHARP_LIBS)
 
 SYSTEM_REFERENCES = \
 	System.dll \
@@ -533,6 +539,7 @@ sonance.exe: $(sonance_build_sources)
 	$(MCS) $(PKG_REFERENCES) $(sonance_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
+	-r:../entagged/entagged.dll \
 	$(sonance_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl

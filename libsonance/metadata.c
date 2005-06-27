@@ -687,6 +687,7 @@ assign_metadata_ogg (const char *filename,
 
 	rc = ov_open_callbacks (handle, &vf, NULL, 0,
 				file_info_callbacks);
+				
 	if (rc < 0) {
 		ogg_helper_close (handle);
 		*error_message_return = g_strdup ("Failed to open file as Ogg Vorbis");
@@ -870,24 +871,29 @@ metadata_load (const char *filename,
 				 GNOME_VFS_FILE_INFO_GET_MIME_TYPE | GNOME_VFS_FILE_INFO_FOLLOW_LINKS);
 
 	if (!strcmp (info->mime_type, "application/x-ogg") ||
-	    !strcmp (info->mime_type, "application/ogg"))
+	    !strcmp (info->mime_type, "application/ogg")) {
 		m = assign_metadata_ogg (escaped, error_message_return);
+	}
 #if HAVE_ID3TAG
 	else if (!strcmp (info->mime_type, "audio/x-mp3") ||
-	         !strcmp (info->mime_type, "audio/mpeg"))
+	         !strcmp (info->mime_type, "audio/mpeg")) {
 		m = assign_metadata_mp3 (escaped, info, error_message_return);
+	}
 #endif /* HAVE_ID3TAG */
 	else if (!strcmp (info->mime_type, "application/x-flac") ||
-		 !strcmp (info->mime_type, "audio/x-flac"))
+		 !strcmp (info->mime_type, "audio/x-flac")) {
 		m = assign_metadata_flac (escaped, error_message_return);
+	}
 #if HAVE_FAAD
 	else if (!strcmp (info->mime_type, "application/x-m4a") ||
-		 !strcmp (info->mime_type, "audio/x-m4a"))
+		 !strcmp (info->mime_type, "audio/x-m4a")) {
 		m = assign_metadata_mp4 (filename, error_message_return);
+	}
 #endif /* HAVE_FAAD */
-	else
+	else {
 		*error_message_return = g_strdup ("Unknown format");
-
+	}
+	
 	if (m != NULL) {
 		ensure_track_number (m, filename);
 

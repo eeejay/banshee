@@ -1,3 +1,15 @@
+2005-06-21 Aaron Bockover <aaron@aaronbock.net>
+
+	* PlayerEngine.cs: New abstract class for building modular playback
+	engines. Updated GstPlayer to extend PlayerEngine.
+
+	* PlayerInterface.cs: Various bug fixes, cleanup
+
+	* DBusIPC.cs: Added D-Bus dependency for IPC
+
+	* Project: Updated build system, depends on dbus-sharp, fixed
+	Makefile.am to include id3-vfs
+
 2005-06-20 Aaron Bockover <aaron@aaronbock.net>
 
 	* Project: First import to GNOME CVS as a Novell-owned project. Heavy
