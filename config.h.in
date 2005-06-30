@@ -3,12 +3,6 @@
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
-/* faad2 support */
-#undef HAVE_FAAD
-
-/* id3tag support */
-#undef HAVE_ID3TAG
-
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 

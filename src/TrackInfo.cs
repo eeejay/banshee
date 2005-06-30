@@ -32,6 +32,7 @@ using System.IO;
 using System.Data;
 using System.Collections;
 using System.Threading;
+using Entagged;
 
 using Sql;
 
@@ -44,7 +45,8 @@ namespace Sonance
 	    private string artist;
 	    private string album;
 	    private string title;
-	    private DateTime date;
+	    private DateTime dateAdded;
+	    private int year;
 	    private string genre;
 	    private string performer;
 		
@@ -166,7 +168,8 @@ namespace Sonance
 					"Label", label,
 					"Title", title, 
 					"Genre", genre, 
-					"Date", date, 
+					"Year", year,
+					"DateAdded", dateAdded, 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -188,7 +191,8 @@ namespace Sonance
 					"Label", label,
 					"Title", title, 
 					"Genre", genre, 
-					"Date", date, 
+					"Year", year,
+					"DateAdded", dateAdded, 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -249,7 +253,8 @@ namespace Sonance
 			performer = (string)reader[(int)colmap["Performer"]];
 			title = (string)reader[(int)colmap["Title"]];
 			genre = (string)reader[(int)colmap["Genre"]];
-			date = DateTime.Parse((string)reader[(int)colmap["Date"]]);
+			dateAdded = DateTime.Parse((string)reader[(int)colmap["DateAdded"]]);
+			year = Convert.ToInt32(reader[(int)colmap["Year"]]);
 			
 			trackNumber = Convert.ToUInt32(reader[(int)colmap["TrackNumber"]]);
 			trackCount = Convert.ToUInt32(reader[(int)colmap["TrackCount"]]);
@@ -293,102 +298,21 @@ namespace Sonance
 			ParseUri(uri);
 			trackId = 0;
 	
-			Metadata md = new Metadata(uri);
-			
-			if(md == null) 
-				throw new SonanceException("Metadata Read Error: " + uri);
-	
-			//if(md.MimeType == null || !Core.Instance.DecoderRegistry.SupportedMimeType(md.MimeType))
-			//	throw new SonanceException("invalid mimetype: " + md.MimeType);
-			
-			mimetype = md.MimeType;
+			AudioFileWrapper af = new AudioFileWrapper(uri);
 
-			if(md.Artists.Length > 0 && md.Artists[0].Length > 0)
-				artist = md.Artists[0];
-			
-			if(md.Album != null && md.Album.Length > 0)
-				album = md.Album;
-			
-			if(md.Title != null && md.Title.Length > 0)
-				title = md.Title;
-			
-			//if(md.Genre != null && md.Genre.Length > 0)
-			//	genre = md.Genre;
-			
-			if(md.Performers.Length > 0 && md.Performers[0].Length > 0)
-				performer = md.Performers[0];
-			
-			//date
-			
-			if(md.TrackNumber > 0)
-				trackNumber = md.TrackNumber;
-			
-			if(md.TotalTracks > 0)
-				trackCount = md.TotalTracks;
-				
-			trackGain = md.Peak;
-			trackPeak = md.Gain;
-			
-			duration = md.Duration;
+			mimetype = null;
+
+			artist = af.Artist == null ? artist : af.Artist;
+			album = af.Album == null ? album : af.Album;
+			title = af.Title == null ? title : af.Title;
+			genre = af.Genre == null ? genre : af.Genre;
+			trackNumber = (uint)af.TrackNumber;
+			trackCount = 0;
+			duration = af.Duration;
+			year = af.Year;
 			
 			SaveToDatabase(true);
-			
 		}
-		
-		/*private void LoadFromFile(string uri)
-		{
-			this.uri = uri;
-			ParseUri(uri);
-			trackId = 0;
-			
-			//Console.Write(uri);
-			
-			ThreadedGstMetadataLoader mdl = new ThreadedGstMetadataLoader(uri);
-			md = mdl.Metadata;
-
-			//Console.WriteLine(" [" + md.MimeType + "]");
-
-			if(md == null) 
-				throw new SonanceException("GstMetadata Read Error: " + uri);
-			
-			if(!md.IsAcceptedType)
-				throw new SonanceException("invalid mimetype: " + md.MimeType);
-			
-			this.uri = md.Uri;
-			mimetype = md.MimeType;
-			
-			if(md.Artist != null && md.Artist.Length > 0)
-				artist = md.Artist;
-			
-			if(md.Album != null && md.Album.Length > 0)
-				album = md.Album;
-			
-			if(md.Title != null && md.Title.Length > 0)
-				title = md.Title;
-			
-			if(md.Genre != null && md.Genre.Length > 0)
-				genre = md.Genre;
-			
-			if(md.Performer != null && md.Performer.Length > 0)
-				performer = md.Performer;
-				
-			date = md.Date;
-			
-			if(md.TrackNumber > 0)
-				trackNumber = md.TrackNumber;
-			
-			if(md.TrackCount > 0)
-				trackCount = md.TrackCount;
-				
-			trackGain = md.TrackGain;
-			trackPeak = md.TrackPeak;
-			albumGain = md.AlbumGain;
-			albumPeak = md.AlbumPeak;
-			
-			duration = md.Duration;
-			
-			SaveToDatabase(true);
-		}*/
 		
 		public void Save()
 		{
@@ -404,7 +328,7 @@ namespace Sonance
 	    public string Title     { get { return title;       } }
 	    public string Genre     { get { return genre;       } }
 	    public string Performer { get { return performer;   } }
-	    public DateTime Date    { get { return date;        } }	    
+	    public int Year         { get { return year;        } }	    
 	    
 	    public long Duration    { get { return duration;    } }
 	   	public uint TrackNumber { get { return trackNumber; } }
@@ -413,6 +337,7 @@ namespace Sonance
 	    public uint Rating         { get { return rating;        } }
 	    public uint NumberOfPlays  { get { return numberOfPlays; } }
 	    public DateTime LastPlayed { get { return lastPlayed;    } }
+	    public DateTime DateAdded  { get { return dateAdded;     } }
 	    
 	    public double TrackGain { get { return trackGain;   } }
 	    public double TrackPeak { get { return trackPeak;   } }

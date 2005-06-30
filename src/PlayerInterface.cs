@@ -66,6 +66,7 @@ namespace Sonance
 		private SimpleNotebook headerNotebook;
 		
 		private long plLoaderMax, plLoaderCount;
+		private bool startupLoadReady = false;
 
         public PlayerUI() 
         {
@@ -311,8 +312,6 @@ namespace Sonance
 				libraryTransactionStatus = new LibraryTransactionStatus();
 				libraryTransactionStatus.Stopped += 
 					OnLibraryTransactionStatusStopped;
-					
-				Console.WriteLine("LTM NEW");
 			}
 			
 			if(libraryTransactionStatus.AllowShow) {
@@ -323,7 +322,13 @@ namespace Sonance
 		
 		private void OnLTMExecutionStackEmpty(object o, EventArgs args)
 		{
-			DebugLog.Add("LTMExecutionStackEmpty");
+			if(startupLoadReady) {
+				startupLoadReady = false;
+				TreeIter iter;
+				sourceView.Model.GetIterFirst(out iter);
+				sourceView.ActivateRow(sourceView.Model.GetPath(iter), 
+					sourceView.Columns[0]);
+			}
 		}
 		
 		private void OnLibraryTransactionStatusStopped(object o, 
@@ -347,12 +352,9 @@ namespace Sonance
 		{
 			if(Core.Library.Tracks.Count <= 0)
 				GLib.Timeout.Add(500, PromptForImportTimeout);
-			/*else {
-				TreeIter iter;
-				sourceView.Model.GetIterFirst(out iter);
-				sourceView.ActivateRow(sourceView.Model.GetPath(iter), 
-					sourceView.Columns[0]);
-			}*/
+			else {
+				startupLoadReady = true;
+			}
 		}
 		
 		private bool PromptForImportTimeout()

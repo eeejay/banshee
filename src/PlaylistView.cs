@@ -118,7 +118,7 @@ namespace Sonance
 			this.EnableSearch = true;
 			this.RulesHint = true;
 			this.HeadersClickable = true;
-			this.HeadersVisible = false;
+			this.HeadersVisible = true;
 			this.Selection.Mode = SelectionMode.Multiple;
 
 			this.model = model;
@@ -225,6 +225,7 @@ namespace Sonance
 		{
 			TrackInfo Track = model.IterTrackInfo(iter);
 			SetRendererAttributes((CellRendererText)cell, 
+				Track.Duration < 0 ? "N/A" : 
 				String.Format("{0}:{1}", Track.Duration / 60, 
 				(Track.Duration % 60).ToString("00")), iter);
 		}

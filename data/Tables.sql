@@ -22,8 +22,8 @@ CREATE TABLE Tracks (
 	Label TEXT,
 	Title TEXT,
 	Genre TEXT,
+	Year INTEGER,
 	
-	Date DATE,
 	TrackNumber INTEGER,
 	TrackCount INTEGER,
 	Duration INTEGER,
@@ -35,7 +35,8 @@ CREATE TABLE Tracks (
 	
 	Rating INTEGER,
 	NumberOfPlays INTEGER,
-	LastPlayed DATE
+	LastPlayed DATE,
+	DateAdded DATE
 );
 
 --IF TABLE NOT EXISTS Playlists;

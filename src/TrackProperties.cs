@@ -58,7 +58,7 @@ namespace Sonance
 			SetField("Album", ti.Album);
 			SetField("Title", ti.Title);
 			SetField("Genre", ti.Genre);
-			SetField("Date", ti.Date.ToString());
+			//SetField("DateAdded", ti.DateAdded.ToString());
 			SetField("Duration", String.Format("{0}:{1}",
 				ti.Duration / 60, (ti.Duration % 60).ToString("00")));
 			SetField("TrackNumber", ti.TrackNumber == 0 ? null : 

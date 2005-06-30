@@ -1,3 +1,9 @@
+2005-06-29 Aaron Bockover <aaron@aaronbock.net>
+
+	* Project: dropped Muine Metadata support, using Entagged
+	* Project: lots of other stuff since last entry, I need to get
+	better about writing the ChangeLog again :)
+
 2005-06-21 Aaron Bockover <aaron@aaronbock.net>
 
 	* PlayerEngine.cs: New abstract class for building modular playback

@@ -2,11 +2,10 @@ sonancewrapdir = $(bindir)
 sonancewrap_SCRIPTS = sonance
 
 sonancedir = $(pkglibdir)
-sonance_SCRIPTS = sonance.exe sonance.exe.config $(GSTSHARP_BUNDLED_ASM)
-
-EXTRA_SCRIPTS = gst-sharp.dll
+sonance_SCRIPTS = sonance.exe sonance.exe.config gst-sharp.dll
 
 EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
+	gst-sharp.dll \
 	sonance.in \
 	AssemblyInfo.cs.in \
 	AmazonSearchService.wsdl
@@ -58,7 +57,6 @@ sonance_sources = \
 	PlaylistModel.cs \
 	InstanceFinder.cs \
 	PlaylistColumns.cs \
-	Metadata.cs \
 	IPlaybackModel.cs \
 	PlaylistRowRenderer.cs \
 	DBusIPC.cs \
@@ -108,8 +106,9 @@ sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resou
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
-	$(GSTSHARP_LIBS) \
-	$(DBUSSHARP_LIBS)
+	$(DBUSSHARP_LIBS) \
+	-r:$(top_builddir)/entagged/entagged-sharp.dll \
+	-r:$(srcdir)/gst-sharp.dll
 
 SYSTEM_REFERENCES = \
 	System.dll \
@@ -130,7 +129,6 @@ sonance.exe: $(sonance_build_sources)
 	$(MCS) $(PKG_REFERENCES) $(sonance_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
-	-r:../entagged/entagged.dll \
 	$(sonance_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl

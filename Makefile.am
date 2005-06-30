@@ -1,17 +1,15 @@
 SUBDIRS = \
-	entagged \
 	data \
 	libsonance \
-	src \
-	m4
+	entagged \
+	src 
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = sonance.pc
 
 EXTRA_DIST = \
-	Sonance.mdp \
-	Sonance.mds \
-	Sonance.prj \
+	sonance.mdp \
+	sonance.mds \
 	sonance.pc.in
 
 CLEANFILES=sonance.pc

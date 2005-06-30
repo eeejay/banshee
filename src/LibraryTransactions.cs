@@ -81,12 +81,12 @@ namespace Sonance
 		
 		public void SafeRun()
 		{
-			try {
+			/*try {
 				Run();
 			} catch(Exception) {
 				DebugLog.Add("LibraryTransaction threw an unhandled " + 
 					"exception, ending transaction safely");
-			}
+			}*/Run();
 			
 			Finish(this);
 		}
@@ -249,16 +249,14 @@ namespace Sonance
 				return;
 				
 			DateTime startStamp = DateTime.Now;
-			TrackInfo ti = null;
-
+			
 			try {
-				ti = new TrackInfo(uri/*, allowLibrary*/);
-			} catch(Exception e) { 
+				TrackInfo ti = new TrackInfo(uri/*, allowLibrary*/);
+				RaiseTrackInfo(ti);
+				UpdateAverageDuration(startStamp);
+			} catch(Exception e) {
 				return;
 			}
-			
-			RaiseTrackInfo(ti);
-			UpdateAverageDuration(startStamp);
 		}
 		
 		private void RaiseTrackInfo(TrackInfo ti)
