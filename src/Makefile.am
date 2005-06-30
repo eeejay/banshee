@@ -1,3 +1,9 @@
+# CS0169 is for methods declared that are not used... since all methods that
+# that cause this warning are assigned at runtime to an event handler set
+# in glade, the warning is disabled... it's extremely annoying!
+
+MCS_FLAGS = -debug -nowarn:0169
+
 sonancewrapdir = $(bindir)
 sonancewrap_SCRIPTS = sonance
 
@@ -126,7 +132,7 @@ sonance_build_sources += $(sonance_generated_sources)
 all: AmazonSearchService.cs sonance.exe
 
 sonance.exe: $(sonance_build_sources)
-	$(MCS) $(PKG_REFERENCES) $(sonance_resources_build) \
+	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(sonance_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
 	$(sonance_build_sources)
