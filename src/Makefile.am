@@ -28,7 +28,6 @@ sonance_sources = \
 	DebugLog.cs \
 	Main.cs \
 	StockIcons.cs \
-	GstMetadata.cs \
 	PlayerInterface.cs \
 	TrackInfo.cs \
 	GstPlayer.cs \
@@ -45,7 +44,6 @@ sonance_sources = \
 	SignalUtils.cs \
 	MmKeys.cs \
 	SourceView.cs \
-	CommonTags.cs \
 	Preferences.cs \
 	GConfKeys.cs \
 	LibraryTransactions.cs \
