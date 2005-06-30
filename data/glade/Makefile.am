@@ -11,3 +11,5 @@ CLEANFILES = \
 	preferences.gladep* \
 	*.bak
 
+DISTCLEANFILES = Makefile.in
+

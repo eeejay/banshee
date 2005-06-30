@@ -11,7 +11,7 @@ EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
 	AmazonSearchService.wsdl
 
 CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb
-DISTCLEANFILES = sonance $(sonance_generated_sources)
+DISTCLEANFILES = Makefile.in sonance $(sonance_generated_sources)
 
 sonance_sources_in = AssemblyInfo.cs.in
 sonance_generated_sources = $(sonance_sources_in:.in=) \

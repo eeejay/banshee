@@ -9,6 +9,8 @@ sonanceicon_DATA = \\
 	sonance-icon.png \\
 	sonance-icon.svg
 
+DISTCLEANFILES = Makefile.in
+
 EXTRA_DIST = \\" > Makefile.am
 
 for i in `ls *.png *.svg`; do

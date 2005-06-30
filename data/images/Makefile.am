@@ -3,6 +3,8 @@ sonanceicon_DATA = \
 	sonance-icon.png \
 	sonance-icon.svg
 
+DISTCLEANFILES = Makefile.in
+
 EXTRA_DIST = \
 	album-cover-container.png \
 	album-cover-searching.png \

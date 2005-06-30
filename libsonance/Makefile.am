@@ -9,3 +9,5 @@ libsonance_la_SOURCES = \
 
 libsonance_la_LIBADD = $(SONANCE_LIBS)
 
+DISTCLEANFILES = Makefile.in
+
