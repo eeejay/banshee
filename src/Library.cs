@@ -40,12 +40,14 @@ namespace Sonance
 		public Database Db;
 		public LibraryTransactionManager TransactionManager;
 		public Hashtable Tracks;
+		public Hashtable Playlists;
 		
 		public event EventHandler Reloaded;
 		
 		public Library()
 		{
 			Tracks = new Hashtable();
+			Playlists = new Hashtable();
 			ReloadDatabase();
 			TransactionManager = new LibraryTransactionManager();
 		}
@@ -58,8 +60,6 @@ namespace Sonance
 				Directory.CreateDirectory(libraryLocation);
 			
 			Db = new Database("Library", libraryLocation + "/Library.sdb");
-			
-			Console.WriteLine(libraryLocation + "/Library.sdb");
 		}
 		
 		public void ReloadLibrary()
@@ -67,8 +67,20 @@ namespace Sonance
 			SqlLoadTransaction transaction = new SqlLoadTransaction(
 				new Select("Tracks"));
 			
+			Tracks.Clear();
 			transaction.Finished += OnReloadLibraryFinished;
 			TransactionManager.Register(transaction);
+			
+			/*string [] names = Playlist.ListAll();
+			if(names == null)
+				return;
+				
+			Playlists.Clear();
+			foreach(string name in names) {
+				Playlist playlist = new Playlist(name);
+				playlist.Load();
+				Playlists[name] = playlist;
+			}*/
 		}
 		
 		private void OnReloadLibraryFinished(object o, EventArgs args)
@@ -231,7 +243,7 @@ namespace Sonance
 			} catch(Exception) {}
 		}
 		
-		public static ArrayList ListAll()
+		public static string [] ListAll()
 		{
 			Statement query = new Select("Playlists", new List("Name")) 
 				+ new OrderBy("Name", OrderDirection.Asc);
@@ -239,9 +251,10 @@ namespace Sonance
 			
 			try {
 				IDataReader reader = Core.Library.Db.Query(query);
-				while(reader.Read())
+				while(reader.Read()){
 					list.Add(reader[0]);
-				return list;
+				Console.WriteLine(reader[0]);}
+				return (string [])list.ToArray(typeof(string));
 			} catch(Exception) {
 				return null;
 			}
@@ -253,9 +266,39 @@ namespace Sonance
 			items = new ArrayList();
 		}
 		
+		public void Load()
+		{
+			/*int id = Playlist.GetId(name);
+			if(id <= 0)
+				return;
+				
+			Statement query = new Statement(
+				"SELECT t.* " + 
+				"FROM PlaylistEntries p, Tracks t " + 
+				"WHERE t.TrackID = p.TrackID AND p.PlaylistID = " + id);
+				
+			SqlLoadTransaction loader = 
+				new SqlLoadTransaction(query.ToString());*/
+				
+			PlaylistLoadTransaction loader = new PlaylistLoadTransaction(name);
+			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
+			Core.Library.TransactionManager.Register(loader);
+		}
+		
+		private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
+		{
+			items.Add(args.TrackInfo);
+		}
+		
 		public void Append(TrackInfo ti)
 		{
 			items.Add(ti);
+		}
+		
+		public void Append(ArrayList tis)
+		{
+			foreach(TrackInfo ti in tis)
+				items.Add(ti);
 		}
 		
 		public void Rename(string newName)
@@ -264,6 +307,7 @@ namespace Sonance
 				new Where("PlaylistID", Op.EqualTo, Playlist.GetId(name));
 			try {
 				Core.Library.Db.Execute(query);
+				name = newName;
 			} catch(Exception) {}
 		}
 		
@@ -280,6 +324,13 @@ namespace Sonance
 			EventHandler handler = Saved;
 			if(handler != null)
 				handler(this, new EventArgs());
+		}
+		
+		public string Name
+		{
+			get {
+				return name;
+			}
 		}
 	}
 }

@@ -31,6 +31,7 @@ using System.Threading;
 using System.Data;
 using System.Collections;
 using Gtk;
+using Gdk;
 using Glade;
 
 using Sql;
@@ -64,9 +65,34 @@ namespace Sonance
 		private LibraryTransactionStatus libraryTransactionStatus;
 		private TrackInfoHeader trackInfoHeader;
 		private SimpleNotebook headerNotebook;
+		private SearchEntry searchEntry;
 		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;
+
+		private static TargetEntry [] playlistViewSourceEntries = 
+			new TargetEntry [] {
+				Dnd.TargetSource,
+				Dnd.TargetPlaylist,
+				Dnd.TargetUriList
+			};
+			
+		private static TargetEntry [] playlistViewDestEntries = 
+			new TargetEntry [] {
+				Dnd.TargetPlaylist,
+				Dnd.TargetSource,
+				Dnd.TargetUriList
+			};
+
+		private static TargetEntry [] sourceViewSourceEntries = 
+			new TargetEntry [] {
+				Dnd.TargetPlaylist
+			};
+			
+		private static TargetEntry [] sourceViewDestEntries = 
+			new TargetEntry [] {
+				Dnd.TargetSource
+			};
 
         public PlayerUI() 
         {
@@ -85,20 +111,7 @@ namespace Sonance
 			Core.Instance.PlayerInterface = this;
 			
 			GLib.Timeout.Add(500, InitialLoadTimeout);
-			
-			/*Gdk.Threads.Enter();
-			HigMessageDialog wd = new HigMessageDialog(WindowPlayer,
-				DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Ok,
-				"Unstable and Incomplete",
-				"Sonance is currently under heavy development. As such, many " +
-				"features are incomplete, broken, or unimplemented. Do not " +
-				"expect a working audio management and playback platform " + 
-				"with this release. Consider for testing and development only.");
-			wd.Run();
-			wd.Destroy();
-			Gdk.Threads.Leave();*/
-			
-			
+	
 			Gdk.Threads.Enter();
 			Gtk.Application.Run();
 			Gdk.Threads.Leave();
@@ -181,6 +194,17 @@ namespace Sonance
 			sourceView.Show();
 			sourceView.SourceChanged += OnSourceChanged;
 			sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
+			sourceView.DragMotion += OnSourceViewDragMotion;
+			sourceView.DragDataReceived += OnSourceViewDragDataReceived;
+
+			Gtk.Drag.SourceSet(sourceView, 
+				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
+				sourceViewSourceEntries, 
+				DragAction.Copy | DragAction.Move);
+		
+			Gtk.Drag.DestSet(sourceView, 
+				DestDefaults.All, sourceViewDestEntries, 
+				DragAction.Copy | DragAction.Move);
 
 			// Playlist View
 			playlistModel = new PlaylistModel();
@@ -189,6 +213,19 @@ namespace Sonance
 			playlistView.Show();
 			playlistModel.Updated += OnPlaylistUpdated;
 			playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
+			playlistView.DragDataReceived += OnPlaylistViewDragDataReceived;
+			playlistView.DragDataGet += OnPlaylistViewDragDataGet;
+			playlistView.DragMotion += OnPlaylistViewDragMotion;
+			playlistView.DragDrop += OnPlaylistViewDragDrop;	
+				
+			Gtk.Drag.SourceSet(playlistView, 
+				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
+				playlistViewSourceEntries, 
+				DragAction.Copy | DragAction.Move);
+		
+			Gtk.Drag.DestSet(playlistView, 
+				DestDefaults.All, playlistViewDestEntries, 
+				DragAction.Copy | DragAction.Move);
 			
 			// Misc
 			SetInfoLabel("Idle");
@@ -207,7 +244,9 @@ namespace Sonance
 			fields.Add("Artist Name");
 			fields.Add("Album Title");
 			
-			SearchEntry searchEntry = new SearchEntry(fields);
+			searchEntry = new SearchEntry(fields);
+			searchEntry.EnterPress += OnSimpleSearch;
+			searchEntry.Changed += OnSimpleSearch;
 			searchEntry.Show();
 			((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, 
 				false, false, 0);
@@ -378,7 +417,7 @@ namespace Sonance
 					IconSize.LargeToolbar);
 				Core.Instance.Player.Pause();
 				if(trayIcon != null) {
-					((Image)trayIcon.PlayItem.Image).
+					((Gtk.Image)trayIcon.PlayItem.Image).
 						SetFromStock("media-play", IconSize.Menu);
 				}
 			} else {
@@ -386,7 +425,7 @@ namespace Sonance
 					IconSize.LargeToolbar);
 				Core.Instance.Player.Play();
 				if(trayIcon != null) {
-					((Image)trayIcon.PlayItem.Image).
+					((Gtk.Image)trayIcon.PlayItem.Image).
 						SetFromStock("media-pause", IconSize.Menu);
 				}
 			}
@@ -416,11 +455,7 @@ namespace Sonance
 		}
 
 		// ---- Window Event Handlers ----
-		/*private TrackInfo IterTrackInfo(TreeIter iter)
-		{
-			return GetValue(iter, 0) as TrackInfo;
-		}*/
-
+		
 		private void OnWindowPlayerDeleteEvent(object o, DeleteEventArgs args) 
 		{
 			playlistView.Shutdown();
@@ -498,10 +533,10 @@ namespace Sonance
 
 		private void OnButtonPlayPauseClicked(object o, EventArgs args)
 		{
-			/*if(Core.Instance.Player.Loaded)
+			if(Core.Instance.Player.Loaded)
 				TogglePlaying();
 			else
-				playlistView.PlaySelected();*/
+				playlistView.PlaySelected();
 		}
 		
 		private void OnButtonPreviousClicked(object o, EventArgs args)
@@ -632,11 +667,6 @@ namespace Sonance
 			
 			chooser.Destroy();
 		}
-		
-		private void OnMenuPlaylistClearActivate(object o, EventArgs args)
-		{
-			//playlistView.Clear();
-		}
 				
 		private void OnMenuTrackPropertiesActivate(object o, EventArgs args)
 		{
@@ -657,17 +687,17 @@ namespace Sonance
 		
 		private void OnMenuNewSmartPlaylistActivate(object o, EventArgs args)
 		{
-		
+			new SqlBuilderUI();
 		}
 		
 		private void OnMenuPlaylistRemoveActivate(object o, EventArgs args)
 		{
-			new SqlBuilderUI();
+			;
 		}
 		
 		private void OnMenuPlaylistPropertiesActivate(object o, EventArgs args)
 		{
-		
+			
 		}
 		
 		/*private void OnButtonRemoveClicked(object o, EventArgs args)
@@ -725,16 +755,10 @@ namespace Sonance
 			
 			if(source.Type == SourceType.Library) {
 				playlistModel.LoadFromLibrary();
+				playlistModel.Source = source;
 			} else {
-				int id = Playlist.GetId(source.Name);
-				query = new Statement(
-					"SELECT t.* " + 
-					"FROM PlaylistEntries p, Tracks t " + 
-					"WHERE t.TrackID = p.TrackID AND p.PlaylistID = " + id);
-
-				//playlistView.Clear();
-				Console.WriteLine(query);
-				playlistModel.AddSql(query);
+				playlistModel.LoadFromPlaylist(source.Name);
+				playlistModel.Source = source;
 			}
 		}
 		
@@ -746,7 +770,7 @@ namespace Sonance
 				t.Active);
 				
 			if(trayIcon != null)
-				((Image)trayIcon.ShuffleItem.Image).SetFromStock(
+				((Gtk.Image)trayIcon.ShuffleItem.Image).SetFromStock(
 					t.Active ? "gtk-yes" : "gtk-no", IconSize.Menu);
 		}
 		
@@ -758,7 +782,7 @@ namespace Sonance
 				t.Active);
 				
 			if(trayIcon != null)
-				((Image)trayIcon.RepeatItem.Image).SetFromStock(
+				((Gtk.Image)trayIcon.RepeatItem.Image).SetFromStock(
 					t.Active ? "gtk-yes" : "gtk-no", IconSize.Menu);
 		}
 		
@@ -786,68 +810,9 @@ namespace Sonance
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
 		}
-		
-		// ---- Search Event Handlers ----
-
-		/*private void OnEntrySearchChanged(object o, EventArgs args)
-		{
-			string searchString = ((Gtk.Entry)o).Text.Trim();
-			int matches = 0;
-			bool cleared = true;
-			
-			if(searchString.Length > 0) {
-				matches = playlistView.SearchQuery(searchString);
-				cleared = false;
-			}
-			
-			((Gtk.Label)gxml["LabelSearchResults"]).Markup = 
-				"<span size=\"small\""
-				+ (!cleared && matches == 0 ? " color=\"red\"" : "") +
-				">(" + matches + " Hit" + (matches == 1 ? "" : "s") 
-				+ ")</span>";
-				
-			gxml["ButtonSearchBack"].Sensitive = false;
-			gxml["ButtonSearchForward"].Sensitive = matches > 1;
-		}
-		
-		private void OnButtonSearchBackClicked(object o, EventArgs args)
-		{
-			playlistView.SearchBack();
-			SensitizeSearchButtons();
-		}
-		
-		private void OnButtonSearchForwardClicked(object o, EventArgs args)
-		{
-			playlistView.SearchForward();
-			SensitizeSearchButtons();
-		}
-		
-		private void OnEntrySearchActivate(object o, EventArgs args)
-		{
-			if(playlistView.SearchMatches > 0)
-				playlistView.PlaySelected();
-		}*/
 	
 		// PlaylistMenu Handlers
 	
-		[GLib.ConnectBefore]
-		private void OnPlaylistViewButtonPressEvent(object o, 
-			ButtonPressEventArgs args)
-		{			
-			if(args.Event.Button != 3)
-				return;
-				
-			if(gxmlPlaylistMenu == null) {
-				gxmlPlaylistMenu = new Glade.XML(null, "player.glade", 
-					"PlaylistMenu", null);
-				gxmlPlaylistMenu.Autoconnect(this);
-			}
-			
-			Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
-			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
-			menu.ShowAll();
-		}
-		
 		private void OnItemColumnsActivate(object o, EventArgs args)
 		{
 			playlistView.ColumnChooser();
@@ -855,12 +820,13 @@ namespace Sonance
 		
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
-			//playlistView.RemoveSelected();
+			foreach(TreePath path in playlistView.Selection.GetSelectedRows())
+				playlistModel.RemoveTrack(path);
 		}
 		
 		private void OnItemPropertiesActivate(object o, EventArgs args)
 		{
-			//new TrackProperties(playlistView.SelectedTrackInfo);
+			new TrackProperties(playlistView.SelectedTrackInfo);
 		}
 		
 		// SourceMenu Handlers
@@ -936,6 +902,314 @@ namespace Sonance
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
 		{
 
+		}
+		
+		private void OnSimpleSearch(object o, EventArgs args)
+		{
+			playlistModel.Clear();
+			
+			string query = searchEntry.Query;
+			string field = searchEntry.Field;
+			
+			if(query == null || query == String.Empty) {
+				playlistModel.LoadFromLibrary();
+				return;
+			}
+			
+			query = query.ToLower();
+			
+			foreach(TrackInfo ti in Core.Library.Tracks.Values) {
+				string match;
+				
+				try {
+					switch(field) {
+						case "Artist Name":
+							match = ti.Artist;
+							break;
+						case "Song Name":
+							match = ti.Title;
+							break;
+						case "Album Title":
+							match = ti.Album;
+							break;
+						case "All":
+						default:
+							string [] matches = {
+								ti.Artist,
+								ti.Album,
+								ti.Title
+							};
+							
+							foreach(string m in matches) {
+								string ml = m.ToLower();
+								if(ml.StartsWith(query) 
+									|| ml.StartsWith("the " + query)) {
+									playlistModel.AddTrack(ti);
+									break;
+								}
+							}
+							
+							continue;
+					}
+					
+					match = match.ToLower();
+					if(match.StartsWith(query) 
+						|| match.StartsWith("the " + query))
+						playlistModel.AddTrack(ti);
+				} catch(Exception) {
+					continue;
+				}
+			}
+		}
+		
+		// PlaylistView DnD
+		
+		[GLib.ConnectBefore]
+		private void OnPlaylistViewButtonPressEvent(object o, 
+			ButtonPressEventArgs args)
+		{
+			if(args.Event.Button == 3) {
+				if(gxmlPlaylistMenu == null) {
+					gxmlPlaylistMenu = new Glade.XML(null, "player.glade", 
+						"PlaylistMenu", null);
+					gxmlPlaylistMenu.Autoconnect(this);
+				}
+			
+				Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
+				menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
+				menu.ShowAll();
+			}
+			
+			TreePath path;
+			playlistView.GetPathAtPos((int)args.Event.X, 
+				(int)args.Event.Y, out path);
+		
+			if(path == null)
+				return;
+		
+			switch(args.Event.Type) {
+				case EventType.TwoButtonPress:
+					if(args.Event.Button != 1
+			    		|| (args.Event.State &  (ModifierType.ControlMask 
+			    		| ModifierType.ShiftMask)) != 0)
+			    		return;
+			    	playlistView.Selection.UnselectAll();
+			    	playlistView.Selection.SelectPath(path);
+			    	playlistView.PlayPath(path);
+			    	return;
+			    case EventType.ButtonPress:
+			    	if(playlistView.Selection.PathIsSelected(path)) 
+			    		args.RetVal = true;
+			    	return;
+				default:
+					args.RetVal = false;
+					return;
+			}
+		}
+
+		private void OnPlaylistViewDragMotion(object o, DragMotionArgs args)
+		{
+			TreePath path;
+
+			if(!playlistView.GetPathAtPos(args.X, args.Y, out path))
+				return;
+				
+			playlistView.SetDragDestRow(path, Gtk.TreeViewDropPosition.Before);
+		}
+		
+		private void OnPlaylistViewDragDataReceived(object o, 
+			DragDataReceivedArgs args)
+		{
+			TreePath destPath, srcPath;
+			TreeIter destIter, srcIter;
+			TreeViewDropPosition pos;
+			bool haveDropPosition;
+			
+			string rawSelectionData = 
+				Dnd.SelectionDataToString(args.SelectionData);			
+			
+			haveDropPosition = playlistView.GetDestRowAtPos(args.X, 
+				args.Y, out destPath, out pos);
+			
+			if(haveDropPosition && 
+				!playlistModel.GetIter(out destIter, destPath)) {
+				Gtk.Drag.Finish(args.Context, true, false, args.Time);
+				return;
+			}
+
+			switch(args.Info) {
+				case (uint)Dnd.TargetType.UriList:
+					// AddFile needs to accept a Path for inserting
+					// If in Library view, we just append to Library
+					// If in Playlist view, we append Library *AND* PlayList
+					// If in SmartPlaylist View WE DO NOT ACCEPT DND
+				
+					if(rawSelectionData != null 
+						&& rawSelectionData.Trim().Length > 0)
+						playlistModel.AddFile(rawSelectionData);
+						
+					break;
+				case (uint)Dnd.TargetType.PlaylistViewModel:
+					if(!haveDropPosition)
+						break;
+					
+					string [] paths = Dnd.SplitSelectionData(rawSelectionData);
+					if(paths.Length <= 0) 
+						break;
+						
+					ArrayList iters = new ArrayList();
+					foreach(string path in paths) {
+						if(path == null || path.Length == 0)
+							continue;
+						
+						TreeIter iter;
+						if(!playlistModel.GetIter(out iter, new TreePath(path)))
+							continue;
+							
+						iters.Add(iter);
+					}
+						
+					foreach(TreeIter iter in iters) {
+						if(playlistModel.IterIsValid(destIter))
+							playlistModel.MoveAfter(iter, destIter);
+						
+						destIter = iter.Copy();						
+					}	
+									
+					break;
+			}
+
+			Gtk.Drag.Finish(args.Context, true, false, args.Time);
+		}
+		
+		private void OnPlaylistViewDragDataGet(object o, DragDataGetArgs args)
+		{
+			byte [] selData;
+			
+			switch(args.Info) {
+				case (uint)Dnd.TargetType.PlaylistViewModel:				
+					selData = Dnd.TreeViewSelectionPathsToBytes(playlistView);
+					if(selData == null)
+						return;
+					
+					args.SelectionData.Set(
+						Gdk.Atom.Intern(Dnd.TargetPlaylist.Target, 
+						false), 8, selData);
+						
+					break;
+				case (uint)Dnd.TargetType.SourceViewModel:
+					selData = Dnd.PlaylistSelectionTrackIdsToBytes(playlistView);
+					if(selData == null)
+						return;
+					
+					args.SelectionData.Set(
+						Gdk.Atom.Intern(Dnd.TargetSource.Target,
+						false), 8, selData);
+						
+					break;
+				case (uint)Dnd.TargetType.UriList:
+					selData = Dnd.PlaylistViewSelectionUrisToBytes(playlistView);
+					if(selData == null)
+						return;
+			
+					args.SelectionData.Set(args.Context.Targets[0],
+						8, selData, selData.Length);
+						
+					break;
+			}
+		}
+		
+		private void OnPlaylistViewDragDrop(object o, DragDropArgs args)
+		{
+			Gtk.Drag.Finish(args.Context, true, false, args.Time);
+			
+			// major weird hack
+			TreePath [] selrows = playlistView.Selection.GetSelectedRows();
+			playlistView.Selection.UnselectAll();
+			playlistView.Selection.SelectPath(new TreePath("0"));
+			playlistView.Selection.UnselectAll();
+			foreach(TreePath path in selrows)
+				playlistView.Selection.SelectPath(path);
+		}
+		
+		// Source View DnD
+
+		private void OnSourceViewDragMotion(object o, DragMotionArgs args)
+		{
+			TreePath path;
+			Source source;
+			
+			if(!sourceView.GetPathAtPos(args.X, args.Y, out path))
+				return;
+				
+			source = sourceView.GetSource(path);
+			if(source == null)
+				return;
+				
+			switch(source.Type) {
+				case SourceType.Library:
+					return;
+			}
+				
+			sourceView.SetDragDestRow(path, 
+				Gtk.TreeViewDropPosition.IntoOrAfter);
+		}
+		
+		private void OnSourceViewDragDataReceived(object o, 
+			DragDataReceivedArgs args)
+		{
+			TreePath destPath, srcPath;
+			TreeIter destIter, srcIter;
+			TreeViewDropPosition pos;
+			bool haveDropPosition;
+			
+			string rawData = Dnd.SelectionDataToString(args.SelectionData);		
+			string [] rawDataArray = Dnd.SplitSelectionData(rawData);
+			if(rawData.Length <= 0) 
+				return;		
+			
+			haveDropPosition = sourceView.GetDestRowAtPos(args.X, args.Y, 
+				out destPath, out pos);
+
+			switch(args.Info) {
+				case (uint)Dnd.TargetType.SourceViewModel: // makes no sense!
+					ArrayList tracks = new ArrayList();
+					foreach(string trackId in rawDataArray) {
+						try {
+							int tid = Convert.ToInt32(trackId);
+							tracks.Add(Core.Library.Tracks[tid]);
+						} catch(Exception) {
+							continue;
+						}
+					}
+					
+					Source source = sourceView.GetSource(destPath);
+					
+					if(source == null) {
+						Playlist pl = new Playlist(Playlist.UniqueName);
+						pl.Append(tracks);
+						pl.Save();
+						pl.Saved += OnPlaylistSavedRefreshSourceView;
+					} else if(haveDropPosition
+						&& source.Type == SourceType.Playlist) {
+						Playlist pl = new Playlist(source.Name);
+						pl.Load();
+						pl.Append(tracks);
+						pl.Save();
+					}
+					
+					break;
+				case (uint)Dnd.TargetType.UriList:
+					// M3U URI Drops Here?
+					break;
+			}
+			
+			Gtk.Drag.Finish(args.Context, true, false, args.Time);
+		}
+		
+		private void OnPlaylistSavedRefreshSourceView(object o, EventArgs args)
+		{
+			sourceView.RefreshList();
 		}
 	}
 }

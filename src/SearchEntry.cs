@@ -41,7 +41,9 @@ namespace Sonance
 		private HBox box;
 		private Entry entry;
 		private EventBox evBox;
+		private EventBox evCancelBox;
 		private Image img;
+		private Image cancelImage;
 		private Tooltips tooltips;
 	
 		private Gdk.Pixbuf icon;
@@ -51,7 +53,8 @@ namespace Sonance
 		private CheckMenuItem activeItem;
 		private bool menuActive;
 		
-		public event EventHandler RunQuery;
+		public event EventHandler EnterPress;
+		public event EventHandler Changed;
 	
 		static GLib.GType gtype;
 		public static new GLib.GType GType
@@ -77,22 +80,22 @@ namespace Sonance
 		
 		private void BuildWidget()
 		{
+			EventBox evContainer = new EventBox();
+			Add(evContainer);
+			
 			box = new HBox();
-			box.Show();
-			Add(box);
+			evContainer.Add(box);;
 			
 			entry = new Entry();
 			entry.HasFrame = false;
 			entry.WidthChars = 15;
 			entry.Activated += OnEntryActivated;
-			entry.Show();
 			
 			icon = Gdk.Pixbuf.LoadFromResource("search-entry-icon.png");
 			hoverIcon = Gdk.Pixbuf.LoadFromResource(
 				"search-entry-icon-hover.png");
 			
 			img = new Image(icon);
-			img.Show();
 			//img.CanFocus = true;
 			img.Xpad = 5;
 			img.Ypad = 1;
@@ -105,13 +108,33 @@ namespace Sonance
 			evBox.KeyPressEvent += OnKeyPressEvent;
 			evBox.FocusInEvent += OnFocusInEvent;
 			evBox.FocusOutEvent += OnFocusOutEvent;
-			evBox.Show();
 			evBox.Add(img);
 			evBox.ModifyBg(StateType.Normal, 
 				entry.Style.Base(StateType.Normal));
+			evContainer.ModifyBg(StateType.Normal, 
+				entry.Style.Base(StateType.Normal));
+			
+			cancelImage = new Image("gtk-close", IconSize.Menu);
+			cancelImage.Xpad = 2;
+			evCancelBox = new EventBox();
+			evCancelBox.CanFocus = true;
+			evCancelBox.Add(cancelImage);
+			evCancelBox.ModifyBg(StateType.Normal, 
+				entry.Style.Base(StateType.Normal));
+			evCancelBox.EnterNotifyEvent += OnCancelEnterNotifyEvent;
+			evCancelBox.ButtonPressEvent += OnCancelButtonPressEvent;
+			evCancelBox.KeyPressEvent += OnCancelKeyPressEvent;
 			
 			box.PackStart(evBox, false, false, 0);
 			box.PackStart(entry, true, true, 0);
+			box.PackStart(evCancelBox, false, false, 0);
+			
+			evContainer.ShowAll();
+			evCancelBox.HideAll();
+			
+			SetSizeRequest(175, -1);
+			
+			entry.Changed += OnEntryChanged;
 		}
 		
 		private void BuildMenu()
@@ -181,10 +204,28 @@ namespace Sonance
 		
 		private void OnKeyPressEvent(object o, KeyPressEventArgs args)
 		{
-			if(args.Event.Key != Gdk.Key.Return)
+			if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space)
 				return;
 				
 			ShowMenu(args.Event.Time);
+		}
+
+		private void OnCancelEnterNotifyEvent(object o, EnterNotifyEventArgs args)
+		{
+			cancelImage.GdkWindow.Cursor = handCursor;
+		}
+		
+		private void OnCancelButtonPressEvent(object o, ButtonPressEventArgs args)
+		{
+			CancelSearch(true);
+		}
+		
+		private void OnCancelKeyPressEvent(object o, KeyPressEventArgs args)
+		{
+			if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space);
+				return;
+				
+			CancelSearch(true);
 		}
 
 		private void MenuPosition(Menu menu, out int x, out int y, 
@@ -223,6 +264,10 @@ namespace Sonance
 			tooltips.SetTip(evBox, "Searching: " + Field, null);
 			
 			entry.HasFocus = true;
+			
+			EventHandler handler = Changed;
+			if(handler != null)
+				handler(this, new EventArgs()); 
 		}
 		
 		private void OnMenuDeactivated(object o, EventArgs args)
@@ -233,9 +278,29 @@ namespace Sonance
 		
 		private void OnEntryActivated(object o, EventArgs args)
 		{
-			EventHandler handler = RunQuery;
+			EventHandler handler = EnterPress;
 			if(handler != null)
 				handler(this, new EventArgs());
+		}
+		
+		private void OnEntryChanged(object o, EventArgs args)
+		{
+			if(entry.Text.Length == 0)
+				CancelSearch(true);
+			else
+				evCancelBox.ShowAll();
+			
+			EventHandler handler = Changed;
+			if(handler != null)
+				handler(this, new EventArgs()); 
+		}
+		
+		public void CancelSearch(bool focus)
+		{
+			evCancelBox.HideAll();
+			entry.Text = String.Empty;
+			if(focus)
+				entry.HasFocus = true;
 		}
 		
 		public string Query

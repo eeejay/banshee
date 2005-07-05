@@ -151,14 +151,6 @@ namespace Sonance
 			HeadersVisible = false;
 			
 			RowActivated += OnRowActivated;
-			DragDataReceived += OnDragDataReceived;
-			
-			//Gtk.Drag.DestSet(this, DestDefaults.All,
-			//	Dnd.sourceViewDestEntries, Gdk.DragAction.Copy | Gdk.DragAction.Copy);
-			
-			EnableModelDragDest(
-				Dnd.sourceViewDestEntries, Gdk.DragAction.Copy | 
-				Gdk.DragAction.Link | Gdk.DragAction.Ask);
 			
 			RefreshList();
 		}
@@ -171,37 +163,6 @@ namespace Sonance
 			renderer.source = (Source)store.GetValue(iter, 0);
 			renderer.Selected = renderer.source.Equals(selectedSource);
 			renderer.Editable = renderer.source.Type != SourceType.Library;
-		}
-		
-		private void OnDragDataReceived(object o, DragDataReceivedArgs args)
-		{
-			TreePath destPath, srcPath;
-			TreeIter destIter, srcIter;
-			TreeViewDropPosition pos;
-			bool haveDropPosition;
-			
-			//Console.WriteLine(Dnd.SelectionDataToString(args.SelectionData));		
-			
-			haveDropPosition = 
-				GetDestRowAtPos(args.X, args.Y, out destPath, out pos);
-			
-			if(haveDropPosition && !store.GetIter(out destIter, destPath)) {
-				Gtk.Drag.Finish(args.Context, true, false, args.Time);
-				return;
-			}
-
-			/*switch(args.Info) {
-				case (uint)Dnd.TargetType.ModelRow:
-					Console.WriteLine(rawSelectionData);
-					break;
-				/*case (uint)Dnd.TargetType.UriList:
-					// M3U URI Drops Here?
-					break;
-			}*/
-			
-			Console.WriteLine("Args: " + args.Info);
-
-			Gtk.Drag.Finish(args.Context, true, false, args.Time);
 		}
 		
 		public void UpdateRow(TreePath path, string text)
@@ -222,12 +183,12 @@ namespace Sonance
 			
 			store.Clear();
 			store.AppendValues(new LibrarySource());
-			ArrayList list = Playlist.ListAll();
+			string [] names = Playlist.ListAll();
 			
-			if(list == null)
+			if(names == null)
 				return;
 				
-			foreach(string name in list) {
+			foreach(string name in names) {
 				PlaylistSource plsrc = new PlaylistSource(name);
 				plsrc.Updated += OnSourceUpdated;
 				store.AppendValues(plsrc);
@@ -255,6 +216,17 @@ namespace Sonance
 		private void OnSourceUpdated(object o, EventArgs args)
 		{
 			QueueDraw();
+		}
+		
+		public Source GetSource(TreePath path)
+		{
+			TreeModel model;
+			TreeIter iter;
+		
+			if(store.GetIter(out iter, path))
+				return store.GetValue(iter, 0) as Source;
+			
+			return null;
 		}
 		
 		public Source SelectedSource

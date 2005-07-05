@@ -44,32 +44,13 @@ namespace Sonance
 	
 	public delegate void LoaderAdditionHandler(object o, 
 		LoaderAdditionArgs args);
-
+		
 	public class PlaylistView : TreeView
 	{
 		private ArrayList columns;
 		PlaylistModel model;
 		
 		PlaylistColumnChooserDialog columnChooser;
-	
-		private static TargetEntry [] dragEntries = 
-			new TargetEntry [] {
-				Dnd.TargetUriList
-			};
-
-		private static TargetEntry [] playlistSourceEntries = 
-			new TargetEntry [] {
-				Dnd.TargetTreeModelRow,
-				Dnd.TargetUriList
-			};
-			
-		private static TargetEntry [] playlistDestEntries = 
-			new TargetEntry [] {
-				Dnd.TargetTreeModelRow,
-				Dnd.TargetSourceView,
-				Dnd.TargetPlayList,
-				Dnd.TargetUriList
-			};
 
 		static GLib.GType gtype;
 		public static new GLib.GType GType
@@ -102,68 +83,21 @@ namespace Sonance
 				new TreeCellDataFunc(TrackCellPlayCount), 6));
 
 			foreach(PlaylistColumn plcol in columns) 
-				this.InsertColumn(plcol.Column, plcol.Order);
+				InsertColumn(plcol.Column, plcol.Order);
 
-
-			/*TreeViewColumn col = new TreeViewColumn();
-			PlaylistRowRenderer renderer = new PlaylistRowRenderer();
-			col.Title = "Artist / Title";
-			col.PackStart(renderer, true);
-			col.SetCellDataFunc(renderer, 
-				new TreeCellDataFunc(TrackCellDataFunc));
-			AppendColumn(col);*/
-		
-
+			Model = this.model = model;
+			
 			// set up tree view
-			this.EnableSearch = true;
-			this.RulesHint = true;
-			this.HeadersClickable = true;
-			this.HeadersVisible = true;
-			this.Selection.Mode = SelectionMode.Multiple;
-
-			this.model = model;
-			this.Model = model;
-				
-			DragDataReceived += OnDragDataReceived;
-			DragDataGet += OnDragDataGet;
-			DragDrop += OnDragDrop;
-			
-			RowActivated += OnRowActivated;
-			//ButtonPressEvent += OnButtonPressEvent;
-
-			/*EnableModelDragSource(Gdk.ModifierType.Button1Mask, 
-				playlistSourceEntries, Gdk.DragAction.Copy | 
-				Gdk.DragAction.Link | Gdk.DragAction.Ask);
-			
-			EnableModelDragDest(playlistDestEntries, Gdk.DragAction.Copy);*/
-			
-			Gtk.Drag.SourceSet(this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
-				    playlistSourceEntries, DragAction.Copy | DragAction.Move);
-				
-			Gtk.Drag.SourceSet(this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
-				    Dnd.sourceViewDestEntries, DragAction.Copy | DragAction.Move);
-				    
-			Gtk.Drag.DestSet(this, DestDefaults.All, playlistDestEntries, 
-				  DragAction.Copy | DragAction.Move ); 
+			RulesHint = true;
+			HeadersClickable = true;
+			HeadersVisible = true;
+			Selection.Mode = SelectionMode.Multiple;		
 		}	
-		
+			
 		public TrackInfo IterTrackInfo(TreeIter iter)
 		{
 			return Model.GetValue(iter, 0) as TrackInfo;
 		}
-		
-		protected void TrackCellDataFunc(TreeViewColumn tree_column,
-		CellRenderer cell, TreeModel tree_model, TreeIter iter)
-	{
-		PlaylistRowRenderer renderer = (PlaylistRowRenderer)cell;
-		
-		renderer.Track = IterTrackInfo(iter);
-		renderer.Playing = false;
-		
-		/*TreePath activePath = Model.GetPath(iter);
-		if(playingPath != null && activePath != null)
-			renderer.Playing = Model.GetPath(iter).Compare(playingPath) == 0;*/
-	}
 		
 		private void SaveColumns()
 		{
@@ -174,7 +108,7 @@ namespace Sonance
 		public void ColumnChooser()
 		{
 			columnChooser = new PlaylistColumnChooserDialog(columns);
-		//	columnChooser.ShowAll();
+			columnChooser.ShowAll();
 		}
 		
 		public void Shutdown()
@@ -246,137 +180,13 @@ namespace Sonance
 				iter);
 		}
 		
-		[GLib.ConnectBefore]
-		private void OnButtonPressEvent(object o, ButtonPressEventArgs args)
+		public void PlayPath(TreePath path)
 		{
-			TreePath path;
-			GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path);
-			
-			if(path == null || Selection.PathIsSelected(path)) {
-				args.RetVal = true;
-				return;
-			}
-			
-			args.RetVal = false;
-		}
-		
-		private void OnDragDataReceived(object o, DragDataReceivedArgs args)
-		{
-			/*TreePath destPath, srcPath;
-			TreeIter destIter, srcIter;
-			TreeViewDropPosition pos;
-			bool haveDropPosition;
-			
-			string rawSelectionData = 
-				Dnd.SelectionDataToString(args.SelectionData);			
-			
-			haveDropPosition = 
-				GetDestRowAtPos(args.X, args.Y, out destPath, out pos);
-			
-			if(haveDropPosition && !model.GetIter(out destIter, destPath)) {
-				Gtk.Drag.Finish(args.Context, true, false, args.Time);
-				return;
-			}
-
-			switch(args.Info) {
-				case (uint)Dnd.TargetType.UriList:
-					// AddFile needs to accept a Path for inserting
-					// If in Library view, we just append to Library
-					// If in Playlist view, we append Library *AND* PlayList
-					// If in SmartPlaylist View WE DO NOT ACCEPT DND
-				
-					if(rawSelectionData != null 
-						&& rawSelectionData.Trim().Length > 0)
-						model.AddFile(rawSelectionData);
-						
-					break;
-				case (uint)Dnd.TargetType.ModelRow:
-					if(!haveDropPosition)
-						break;
-					
-					string [] paths = Dnd.SplitSelectionData(rawSelectionData);
-					if(paths.Length <= 0)
-						break;
-					
-					srcPath = new TreePath(paths[0]);
-					if(!model.GetIter(out srcIter, srcPath))
-						break;
-					
-					switch(pos) {
-						case TreeViewDropPosition.Before:
-						case TreeViewDropPosition.IntoOrBefore:
-							model.MoveBefore(srcIter, destIter);
-							break;
-						case TreeViewDropPosition.After:
-						case TreeViewDropPosition.IntoOrAfter:
-							model.MoveAfter(srcIter, destIter);
-							break;
-					}
-					
-					break;
-			}
-
-			Gtk.Drag.Finish(args.Context, true, false, args.Time);*/
-			Console.WriteLine("OnDragDataReceived");
-		}
-		
-		private void OnDragDataGet(object o, DragDataGetArgs args)
-		{
-			
-			Console.WriteLine("OnDragDataGet");
-			switch(args.Info) {
-				case (uint)Dnd.TargetType.ModelRow:
-					if(Selection.CountSelectedRows() <= 0)
-						return;
-						
-					string selData = null;
-
-					foreach(TreePath p in Selection.GetSelectedRows())
-						selData += p.ToString() + "\r\n";
-				
-					Console.WriteLine(selData);
-					Console.WriteLine("OnDragDataGet AAA");
-					args.SelectionData.Set(
-						Gdk.Atom.Intern(Dnd.TargetTreeModelRow.Target, false), 
-						8, System.Text.Encoding.ASCII.GetBytes(selData)
-					);
-				
-					break;
-				case (uint)Dnd.TargetType.SourceView:
-					Console.WriteLine("HrmmAMAMA");
-				
-					if(Selection.CountSelectedRows() <= 0)
-						return;
-						
-					string selData2 = null;
-
-					foreach(TreePath p in Selection.GetSelectedRows())
-						selData2 += p.ToString() + "\r\n";
-				
-					Console.WriteLine(selData2);
-					Console.WriteLine("OnDragDataGet SDFSDF");
-					args.SelectionData.Set(
-						Gdk.Atom.Intern(Dnd.TargetTreeModelRow.Target, false), 
-						8, System.Text.Encoding.ASCII.GetBytes(selData2)
-					);
-				
-					break;
-			}
-		}
-		
-		private void OnDragDrop(object o, DragDropArgs args)
-		{
-			Console.WriteLine("OnDragDrop");
-		}
-		
-		private void OnRowActivated(object o, RowActivatedArgs args)
-		{
-			model.PlayPath(args.Path);
-			Console.WriteLine("playing: " + args.Path);
+			model.PlayPath(path);
 			QueueDraw();
 			ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.0f);
 		}
-
+		
 		//QueueDraw();
 		//ScrollToCell(playingPath, null, true, 0.5f, 0.0f);
 
@@ -572,35 +382,21 @@ namespace Sonance
 					ResetPlayingPath(ti);
 			}
 		}
+		*/
 		
-		public void Clear()
-		{
-			Core.Library.TransactionManager.Cancel(typeof(FileLoadTransaction));
-			trackInfoQueue.Clear();
-		
-			totalDuration = 0;
-			searchResults.Clear();
-			currentSearchResult = 0;
-			playingPath = null;
-			store.Clear();
-				
-			if(Updated != null && 
-				Core.Instance.MainThread.Equals(Thread.CurrentThread))
-				Updated(this, new EventArgs());
-		}
 		
 		public void PlaySelected()
 		{
 			TreeIter selIter;
 			
 			try {
-				if(!store.GetIter(out selIter, Selection.GetSelectedRows()[0]))
+				if(!model.GetIter(out selIter, Selection.GetSelectedRows()[0]))
 					return;
 			} catch(Exception) {
 				return;
 			}
 			
-			PlayIter(selIter);
+			model.PlayIter(selIter);
 		}
 		
 		public void AddSelectedToPlayList(string name)
@@ -609,7 +405,7 @@ namespace Sonance
 		
 			foreach(TreePath p in Selection.GetSelectedRows()) {
 				TreeIter iter;
-				if(!store.GetIter(out iter, p))
+				if(!model.GetIter(out iter, p))
 					continue;
 					
 				TrackInfo ti = IterTrackInfo(iter);
@@ -627,11 +423,11 @@ namespace Sonance
 				if(paths.Length <= 0)
 					return null;
 				
-				if(!store.GetIter(out selIter, paths[0]))
+				if(!model.GetIter(out selIter, paths[0]))
 					return null;
 					
-				return IterTrackInfo(selIter);
+				return model.IterTrackInfo(selIter);
 			}
-		}*/
+		}
 	}
 }

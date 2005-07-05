@@ -81,12 +81,12 @@ namespace Sonance
 		
 		public void SafeRun()
 		{
-			/*try {
+			try {
 				Run();
 			} catch(Exception) {
 				DebugLog.Add("LibraryTransaction threw an unhandled " + 
 					"exception, ending transaction safely");
-			}*/Run();
+			}
 			
 			Finish(this);
 		}
@@ -212,38 +212,44 @@ namespace Sonance
 			if(rawData == null)
 				return;
 			
-			foreach(string file in rawData.Split('\n')) {
-				if(file == null)
+			foreach(string uri in rawData.Split('\n')) {
+				if(uri == null)
 					continue;
 					
-				string uri = StringUtil.UriToFileName(file.Trim()).Trim();
-				if(uri.Length == 0)
+				string file = StringUtil.UriToFileName(uri.Trim()).Trim();
+				
+				if(file.Length == 0)
 					continue;
 				
-				DirectoryInfo di;
-				
-				try {
-					di = new DirectoryInfo(uri);
-				} catch(Exception) {
-					continue;
-				}
-							
 				if(preload) {
 					statusMessage = "Preloading Files";
-					totalCount = FileCount(di);
+					
+					if(File.Exists(file)) {
+						totalCount++;
+					} else if(Directory.Exists(file)) {
+						DirectoryInfo di;
+				
+						try {
+							di = new DirectoryInfo(file);
+						} catch(Exception) {
+							continue;
+						}
+			
+						totalCount = FileCount(di);
+					} 
 				}
-
-				AddFile(uri);
+			
+				AddFile(file);
 				
 				if(cancelRequested)
 					return;
 			}
 		}
 		
-		private void AddFile(string uri)
+		private void AddFile(string file)
 		{
-			if(RecurseDirectory(uri))
-				return;
+			if(Directory.Exists(file) && RecurseDirectory(file))
+					return;
 				
 			if(cancelRequested)
 				return;
@@ -251,7 +257,7 @@ namespace Sonance
 			DateTime startStamp = DateTime.Now;
 			
 			try {
-				TrackInfo ti = new TrackInfo(uri/*, allowLibrary*/);
+				TrackInfo ti = new TrackInfo(file);
 				RaiseTrackInfo(ti);
 				UpdateAverageDuration(startStamp);
 			} catch(Exception e) {
@@ -488,5 +494,84 @@ namespace Sonance
 
 			return count;
 		}
+	}
+	
+	public class PlaylistLoadTransaction : LibraryTransaction
+	{
+		private string name;
+		private int id;
+		
+		public event HaveTrackInfoHandler HaveTrackInfo;
+		
+		public override string Name {
+			get {
+				return "Playlist Track Loader";
+			}
+		}
+		
+		public PlaylistLoadTransaction(string name)
+		{
+			this.name = name;
+		}
+		
+		public PlaylistLoadTransaction(Playlist pl)
+		{
+			this.name = pl.Name;
+		}
+		
+		public override void Run()
+		{
+			totalCount = 0;
+			currentCount = 0;
+			statusMessage = "Processing";
+			
+			id = Playlist.GetId(name);
+			if(id <= 0)
+				return;
+			
+			totalCount = SqlCount();
+			Statement query = new Select("PlaylistEntries", new List("TrackID")) 
+				+ new Where("PlaylistId", Op.EqualTo, id);
+			IDataReader reader = Core.Library.Db.Query(query);
+			while(reader.Read() && !cancelRequested) {
+				DateTime startStamp = DateTime.Now;
+				int tid = Convert.ToInt32(reader[0]);
+				TrackInfo ti = Core.Library.Tracks[tid] as TrackInfo;
+				RaiseTrackInfo(ti);
+				UpdateAverageDuration(startStamp);
+			}
+		}
+		
+		private void RaiseTrackInfo(TrackInfo ti)
+		{
+			statusMessage = "Loading " + ti.Artist + " - " + ti.Title;
+			currentCount++;
+			
+			HaveTrackInfoHandler handler = HaveTrackInfo;
+			if(handler != null) {
+				HaveTrackInfoArgs args = new HaveTrackInfoArgs();
+				args.TrackInfo = ti;
+				handler(this, args);
+			}
+		}
+		
+		private long SqlCount()
+		{
+			Statement countQuery = new Select("PlaylistEntries", 
+				new List("COUNT(*)")) 
+				+ new Where("PlaylistID", Op.EqualTo, id);
+				
+			Console.WriteLine(countQuery);
+		
+			long count;
+			
+			try {
+				count = Convert.ToInt64(Core.Library.Db.QuerySingle(countQuery));
+			} catch(Exception) {
+				count = 0;
+			}
+
+			return count;
+		}	
 	}
 }

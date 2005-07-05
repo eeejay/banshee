@@ -4,13 +4,13 @@
       <Output directory="./src" assembly="sonance" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
-      <CodeGeneration compiler="Csc" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="2" optimize="False" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./src" assembly="sonance" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
-      <CodeGeneration compiler="Csc" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="2" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <References>
@@ -37,7 +37,6 @@
     <File name="./" subtype="Directory" buildaction="Nothing" />
     <File name="./src" subtype="Directory" buildaction="Compile" />
     <File name="./src/AboutBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/CommonTags.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Core.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Database.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DateButton.cs" subtype="Code" buildaction="Compile" />
@@ -46,7 +45,6 @@
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DragDrop.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/GConfKeys.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/GstMetadata.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/GstPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/ImageAnimation.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/InstanceFinder.cs" subtype="Code" buildaction="Compile" />

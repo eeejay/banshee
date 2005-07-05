@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using Gtk;
-
+using Sql;
 
 namespace Sonance
 {
@@ -45,6 +45,8 @@ namespace Sonance
 		
 		private bool repeat = false;
 		private bool shuffle = false;
+		
+		public Source Source;
 		
 		public event EventHandler Updated;
 		
@@ -135,7 +137,7 @@ namespace Sonance
 		{
 			FileLoadTransaction loader = new FileLoadTransaction(path);
 			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-			Core.Library.TransactionManager.Register(loader);			
+			Core.Library.TransactionManager.Register(loader);	
 		}
 		
 		public void AddSql(object query)
@@ -146,11 +148,20 @@ namespace Sonance
 			Core.Library.TransactionManager.Register(loader);
 		}
 		
+		public void LoadFromPlaylist(string name)
+		{
+			ClearModel();
+			PlaylistLoadTransaction loader = new PlaylistLoadTransaction(name);
+			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
+			Core.Library.TransactionManager.Register(loader);
+		}
+		
 		public void LoadFromLibrary()
 		{
+			ClearModel();
 			LibraryLoadTransaction loader = new LibraryLoadTransaction();
 			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-			Core.Library.TransactionManager.Register(loader);			
+			Core.Library.TransactionManager.Register(loader);
 		}
 		
 		// --- Helper Methods ---
@@ -285,6 +296,50 @@ namespace Sonance
 			}
 	
 			return -1;
+		}
+		
+		public void ClearModel()
+		{
+			Core.Library.TransactionManager.Cancel(typeof(FileLoadTransaction));
+			trackInfoQueue.Clear();
+		
+			totalDuration = 0;
+			playingIter = TreeIter.Zero;
+			Clear();
+				
+			if(Updated != null && 
+				Core.Instance.MainThread.Equals(Thread.CurrentThread))
+				Updated(this, new EventArgs());
+		}
+		
+		public void RemoveTrack(TreePath path)
+		{
+			TrackInfo ti = PathTrackInfo(path);
+			TreeIter iter;
+			
+			if(!GetIter(out iter, path))
+				return;
+				
+			if(Source.Type == SourceType.Playlist 
+				|| Source.Type == SourceType.Library) {
+				Statement query = new Delete("PlaylistEntries")
+					+ new Where("TrackID", Op.EqualTo, ti.TrackId);
+				try {
+					Core.Library.Db.Execute(query);
+				} catch(Exception) {}
+				
+				
+				if(Source.Type == SourceType.Library) {
+					Statement query2 = new Delete("Tracks")
+						+ new Where("TrackID", Op.EqualTo, ti.TrackId);
+					try {
+						Core.Library.Db.Execute(query2);
+					} catch(Exception) {}
+				}
+			}
+			
+			
+			Remove(ref iter);
 		}
 		
 		// --- Event Raise Handlers ---

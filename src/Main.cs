@@ -27,11 +27,7 @@
  */
 
 using System;
-using Gtk;
 using Gnome;
-using System.IO;
-
-using Gst;
 
 namespace Sonance
 {	
@@ -39,9 +35,15 @@ namespace Sonance
 	{
 		public static void Main(string[] args)
 		{
+			System.Reflection.AssemblyName asm = 
+				System.Reflection.Assembly.GetEntryAssembly().GetName();		
+			string appname = StringUtil.UcFirst(asm.Name);
+			string version = String.Format("{0}.{1}.{2}", asm.Version.Major, 
+				asm.Version.Minor, asm.Version.Build);
+			
 			Core.Args = args;
-			Core.Instance.Program = 
-				new Program("Sonance", "0.3", Modules.UI, args);
+			Core.Instance.Program = new Program(appname, 
+				version, Modules.UI, args);
 			new Sonance.PlayerUI();
 		}
 	}
