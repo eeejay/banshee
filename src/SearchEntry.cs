@@ -222,7 +222,7 @@ namespace Sonance
 		
 		private void OnCancelKeyPressEvent(object o, KeyPressEventArgs args)
 		{
-			if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space);
+			if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space)
 				return;
 				
 			CancelSearch(true);
