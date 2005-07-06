@@ -25,7 +25,7 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Collections;
 using System.Text.RegularExpressions; 
@@ -210,6 +210,11 @@ namespace Sql
 				
 			statement = statement.Trim();
 		}
+		
+		public Where()
+		{
+			statement = "WHERE ";
+		}
 	}
 	
 	public class Compare : Statement
@@ -277,7 +282,6 @@ namespace Sql
 	
 	public class OrderBy : Statement
 	{
-	
 		public OrderBy(params object [] args)
 		{
 			statement = "ORDER BY";
@@ -314,6 +318,22 @@ namespace Sql
 					statement += ",";
 				}
 			}	
+		}
+	}
+	
+	public class Or : Statement
+	{
+		public Or()
+		{
+			statement = Op.Or;
+		}
+	}
+	
+	public class And : Statement
+	{
+		public And()
+		{
+			statement = Op.And;
 		}
 	}
 }
