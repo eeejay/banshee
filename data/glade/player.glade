@@ -669,6 +669,7 @@
 		      <property name="can_focus">True</property>
 		      <property name="relief">GTK_RELIEF_NONE</property>
 		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="OnButtonNewPlaylistClicked" last_modification_time="Wed, 06 Jul 2005 13:25:44 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="image123">
@@ -774,6 +775,7 @@
 		      <property name="can_focus">True</property>
 		      <property name="relief">GTK_RELIEF_NONE</property>
 		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="OnButtonTrackPropertiesClicked" last_modification_time="Wed, 06 Jul 2005 13:26:01 GMT"/>
 
 		      <child>
 			<widget class="GtkImage" id="image79">
@@ -883,7 +885,7 @@
       <signal name="activate" handler="OnItemAddSelectedSongsActivate" last_modification_time="Wed, 04 May 2005 16:24:12 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image171">
+	<widget class="GtkImage" id="image181">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-add</property>
 	  <property name="icon_size">1</property>
@@ -904,7 +906,7 @@
       <signal name="activate" handler="OnItemSourceDuplicateActivate" last_modification_time="Wed, 04 May 2005 18:08:06 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image172">
+	<widget class="GtkImage" id="image182">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-copy</property>
 	  <property name="icon_size">1</property>
@@ -918,6 +920,15 @@
   </child>
 
   <child>
+    <widget class="GtkMenuItem" id="ItemSourceRename">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">Rename</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="OnItemSourceRenameActivate" last_modification_time="Wed, 06 Jul 2005 13:10:35 GMT"/>
+    </widget>
+  </child>
+
+  <child>
     <widget class="GtkImageMenuItem" id="ItemSourceDelete">
       <property name="visible">True</property>
       <property name="label" translatable="yes">Delete</property>
@@ -925,7 +936,7 @@
       <signal name="activate" handler="OnItemSourceDeleteActivate" last_modification_time="Wed, 04 May 2005 18:08:06 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image173">
+	<widget class="GtkImage" id="image183">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-delete</property>
 	  <property name="icon_size">1</property>
@@ -946,7 +957,7 @@
       <signal name="activate" handler="OnItemSourcePropertiesActivate" last_modification_time="Wed, 04 May 2005 18:08:06 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image174">
+	<widget class="GtkImage" id="image184">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-properties</property>
 	  <property name="icon_size">1</property>

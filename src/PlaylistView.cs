@@ -187,6 +187,12 @@ namespace Sonance
 			ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.0f);
 		}
 		
+		public void UpdateView()
+		{
+			QueueDraw();
+			ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.5f);
+		}
+		
 		//QueueDraw();
 		//ScrollToCell(playingPath, null, true, 0.5f, 0.0f);
 

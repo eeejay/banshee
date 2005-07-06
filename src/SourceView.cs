@@ -162,7 +162,7 @@ namespace Sonance
 			renderer.view = this;
 			renderer.source = (Source)store.GetValue(iter, 0);
 			renderer.Selected = renderer.source.Equals(selectedSource);
-			renderer.Editable = renderer.source.Type != SourceType.Library;
+			//renderer.Editable = renderer.source.Type != SourceType.Library;
 		}
 		
 		public void UpdateRow(TreePath path, string text)
@@ -263,7 +263,8 @@ namespace Sonance
 		
 		public SourceRowRenderer()
 		{
-			Editable = true;
+			//Editable = true;
+			Editable = false;
 		}
 		
 		protected SourceRowRenderer(System.IntPtr ptr) : base(ptr)

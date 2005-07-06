@@ -542,13 +542,13 @@ namespace Sonance
 		private void OnButtonPreviousClicked(object o, EventArgs args)
 		{
 			playlistModel.Regress();
-			playlistView.QueueDraw();
+			playlistView.UpdateView();
 		}
 		
 		private void OnButtonNextClicked(object o, EventArgs args)
 		{
 			playlistModel.Advance();
-			playlistView.QueueDraw();
+			playlistView.UpdateView();
 		}
 		
 		private void OnVolumeScaleChanged(int volume)
@@ -617,7 +617,7 @@ namespace Sonance
 				Gdk.Threads.Leave();
 			
 			playlistModel.Continue();
-			playlistView.QueueDraw();
+			playlistView.UpdateView();
 		}
 		
 		// ---- Playlist Event Handlers ----
@@ -670,7 +670,7 @@ namespace Sonance
 				
 		private void OnMenuTrackPropertiesActivate(object o, EventArgs args)
 		{
-			//new TrackProperties(playlistView.SelectedTrackInfo);
+			new TrackProperties(playlistView.SelectedTrackInfo);
 		}
 		
 		private void OnMenuNewPlaylistActivate(object o, EventArgs args)
@@ -829,6 +829,16 @@ namespace Sonance
 			new TrackProperties(playlistView.SelectedTrackInfo);
 		}
 		
+		private void OnButtonNewPlaylistClicked(object o, EventArgs args)
+		{
+			OnMenuNewPlaylistActivate(o, args);
+		}
+		
+		private void OnButtonTrackPropertiesClicked(object o, EventArgs args)
+		{
+			OnItemPropertiesActivate(o, args);
+		}
+		
 		// SourceMenu Handlers
 		
 		private uint popupTime;
@@ -865,8 +875,9 @@ namespace Sonance
 			Menu menu = gxmlSourceMenu["SourceMenu"] as Menu;
 			(gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem).Sensitive =
 				type  == SourceType.Playlist 
-				/*&& playlistView.Selection.CountSelectedRows() > 0*/;
-			
+				&& playlistView.Selection.CountSelectedRows() > 0;
+			(gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem).Sensitive = false;
+			(gxmlSourceMenu["ItemSourceProperties"] as MenuItem).Sensitive = false;
 			menu.Popup(null, null, null, IntPtr.Zero, 0, popupTime);
 			menu.ShowAll();
 			
@@ -880,7 +891,7 @@ namespace Sonance
 			if(source == null || source.Type != SourceType.Playlist)
 				return;
 				
-			//playlistView.AddSelectedToPlayList(source.Name);
+			playlistView.AddSelectedToPlayList(source.Name);
 		}
 		
 		private void OnItemSourceDuplicateActivate(object o, EventArgs args)
@@ -902,6 +913,15 @@ namespace Sonance
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
 		{
 
+		}
+		
+		private void OnItemSourceRenameActivate(object o, EventArgs args)
+		{
+			InputDialog input = new InputDialog("Rename Playlist",
+				"Enter new playlist name", "playlist-icon-large.png", sourceView.HighlightedSource.Name);
+			string newName = input.Execute();
+			sourceView.HighlightedSource.Name = newName;
+			sourceView.QueueDraw();
 		}
 		
 		private void OnSimpleSearch(object o, EventArgs args)

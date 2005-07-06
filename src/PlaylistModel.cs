@@ -39,6 +39,13 @@ namespace Sonance
 		private static int uid;
 		private long totalDuration = 0;
 		
+		private ArrayList playHistory;
+		private int historyPosition = 0;
+		
+		private ArrayList randomQueue;
+		private int randomIndex;
+		private TreeIter lastNonRandomIter;
+		
 		private ArrayList trackInfoQueue;
 		private bool trackInfoQueueLocked = false;
 		private TreeIter playingIter;
@@ -60,6 +67,8 @@ namespace Sonance
 		public PlaylistModel() : base(typeof(TrackInfo))
 		{
 			trackInfoQueue = new ArrayList();
+			randomQueue = new ArrayList();
+			playHistory = new ArrayList();
 			GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
 		}
 	
@@ -127,8 +136,11 @@ namespace Sonance
 			totalDuration += ti.Duration;
 
 			Core.ThreadEnter();
-			AppendValues(ti);
+			TreeIter iter = AppendValues(ti);
 			Core.ThreadLeave();
+			
+			// random insertion into the random queue
+			randomQueue.Insert(Core.Instance.Random.Next(randomQueue.Count), iter);
 			
 			RaiseUpdated(this, new EventArgs());
 		}
@@ -201,6 +213,11 @@ namespace Sonance
 				
 			Core.Instance.PlayerInterface.PlayFile(ti);
 			playingIter = iter;
+			
+			if(historyPosition >= playHistory.Count) {
+				playHistory.Add(iter);
+				historyPosition = playHistory.Count;
+			}
 		}
 		
 		// --- IPlaybackModel 
@@ -231,11 +248,15 @@ namespace Sonance
 			TreeIter nextIter;
 			bool success = true;
 			int count, index;
-
-			/*if(shuffle) {
-				PlayRandomIter();
-				return;
-			}*/
+			
+			if(shuffle) {
+				if(ChangeDirectionRandom(forward))
+					return;
+				else if(!lastNonRandomIter.Equals(TreeIter.Zero)) {
+					PlayIter(lastNonRandomIter);
+					return;
+				}
+			}
 			
 			if(path == null)
 				return;
@@ -275,7 +296,39 @@ namespace Sonance
 				return;
 			
 			PlayIter(nextIter);
-		}		
+		}	
+		
+		private bool ChangeDirectionRandom(bool forward)
+		{
+			int count = randomQueue.Count;
+			int nextIndex = 0;
+			
+			if(count <= 0 || randomIndex >= count)
+				return false;
+				
+			if(forward && randomIndex < count - 1) 
+				nextIndex = randomIndex + 1;
+			else if(forward && repeat) {
+				nextIndex = 0;
+			} else if(forward) {
+				return false;
+			}
+			
+			if(!forward && randomIndex > 0)
+				nextIndex = randomIndex - 1;
+			else if(!forward)
+				return false;
+			
+			try {
+				TreeIter iter = (TreeIter)randomQueue[nextIndex];
+				randomIndex = nextIndex;
+				PlayIter(iter);
+			} catch(Exception) {
+				return false;
+			}
+			
+			return true;
+		}
 		
 		public int Count()
 		{
@@ -338,7 +391,12 @@ namespace Sonance
 				}
 			}
 			
-			
+			RemoveTrack(ref iter, ti);
+		}
+		
+		private void RemoveTrack(ref TreeIter iter, TrackInfo ti)
+		{
+			randomQueue.Remove(iter);
 			Remove(ref iter);
 		}
 		
@@ -380,6 +438,7 @@ namespace Sonance
 		public bool Shuffle {
 			set {
 				shuffle = value;
+				lastNonRandomIter = playingIter;
 			}
 			
 			get {

@@ -1,3 +1,9 @@
+2005-07-06 Aaron Bockover <aaron@aaronbock.net>
+
+	* Project: 0.7.2 Release, and I updated the ChangeLog...
+	* PlaylistModel.cs: Added random/shuffle with history
+	* PlayerInterface.cs: Rename playlist dialog, tool buttons work
+	
 2005-06-29 Aaron Bockover <aaron@aaronbock.net>
 
 	* Project: dropped Muine Metadata support, using Entagged

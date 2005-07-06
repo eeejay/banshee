@@ -83,9 +83,9 @@ namespace Sonance
 		{
 			try {
 				Run();
-			} catch(Exception) {
+			} catch(Exception e) {
 				DebugLog.Add("LibraryTransaction threw an unhandled " + 
-					"exception, ending transaction safely");
+					"exception, ending transaction safely: " + e.Message);
 			}
 			
 			Finish(this);

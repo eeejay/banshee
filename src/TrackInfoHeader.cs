@@ -121,7 +121,7 @@ namespace Sonance
 			artistLabel.Markup = 
 				"<span weight=\"bold\">Sonance Player</span>";
 			titleLabel.Markup = 
-				"<span size=\"small\">Version 0.4</span>";
+				"<span size=\"small\">Version 0.7</span>";
 		}
 		
 		public string Artist 
