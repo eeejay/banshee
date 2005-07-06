@@ -616,7 +616,7 @@ namespace Sonance
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
 			
-			playlistModel.Continue();
+			//playlistModel.Continue();
 			playlistView.UpdateView();
 		}
 		
@@ -820,8 +820,21 @@ namespace Sonance
 		
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
-			foreach(TreePath path in playlistView.Selection.GetSelectedRows())
-				playlistModel.RemoveTrack(path);
+			TreeIter [] iters = new TreeIter[playlistView.Selection.CountSelectedRows()];
+			int i = 0;
+			
+			foreach(TreePath path in playlistView.Selection.GetSelectedRows())			
+				playlistModel.GetIter(out iters[i++], path);
+				
+			TrackRemoveTransaction transaction = new TrackRemoveTransaction();
+			
+			for(i = 0; i < iters.Length; i++) {
+				TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
+				playlistModel.RemoveTrack(ref iters[i]);
+				transaction.RemoveQueue.Add(ti);
+			}
+			
+			Core.Library.TransactionManager.Register(transaction);
 		}
 		
 		private void OnItemPropertiesActivate(object o, EventArgs args)

@@ -365,7 +365,7 @@ namespace Sonance
 				Updated(this, new EventArgs());
 		}
 		
-		public void RemoveTrack(TreePath path)
+		/*public void RemoveTrack(TreePath path)
 		{
 			TrackInfo ti = PathTrackInfo(path);
 			TreeIter iter;
@@ -395,6 +395,13 @@ namespace Sonance
 		}
 		
 		private void RemoveTrack(ref TreeIter iter, TrackInfo ti)
+		{
+			randomQueue.Remove(iter);
+			Remove(ref iter);
+		}
+		*/
+		
+		public void RemoveTrack(ref TreeIter iter)
 		{
 			randomQueue.Remove(iter);
 			Remove(ref iter);

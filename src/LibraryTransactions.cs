@@ -424,6 +424,49 @@ namespace Sonance
 		}
 	}
 	
+	public class TrackRemoveTransaction : LibraryTransaction
+	{
+		public override string Name
+		{
+			get {
+				return "Track Remove";
+			}
+		}
+	
+		public ArrayList RemoveQueue;
+		
+		public TrackRemoveTransaction()
+		{
+			RemoveQueue = new ArrayList();
+			showStatus = true;
+		}
+		
+		public override void Run()
+		{
+			statusMessage = "Removing Tracks";
+			totalCount = RemoveQueue.Count;
+			currentCount = 0;
+			
+			Statement query = new Delete("Tracks") + new Where();
+			
+			for(int i = 0; i < totalCount; i++) {
+				TrackInfo ti = RemoveQueue[i] as TrackInfo;
+				query += new Compare("TrackID", Op.EqualTo, ti.TrackId);
+				if(i < totalCount - 1)
+					query += new Or();
+				
+				statusMessage = "Removing " + ti.Artist + " - " + ti.Title;
+				currentCount++;
+				Core.Library.Tracks.Remove(ti.TrackId);
+			}
+			
+			statusMessage = "Purging Library of Removed Tracks...";
+			currentCount = 0;
+			totalCount = 0;
+			Core.Library.Db.Execute(query);
+		}
+	}
+	
 	public class SqlLoadTransaction : LibraryTransaction
 	{
 		private string sql;
