@@ -1,4 +1,12 @@
 2005-07-06 Aaron Bockover <aaron@aaronbock.net>
+	
+	* SqlGenerator.cs: More SQL classes (generic OR and AND, updated WHERE)
+	* PlaylistModel.cs, PlayerInterface.cs: Fixed logic for removing 
+	selected tracks (bug 309608, mtgordon)
+	* LibraryTransactions.cs: New TrackRemoveTransaction to remove a set 
+	of tracks from the library
+
+2005-07-06 Aaron Bockover <aaron@aaronbock.net>
 
 	* Project: 0.7.2 Release, and I updated the ChangeLog...
 	* PlaylistModel.cs: Added random/shuffle with history

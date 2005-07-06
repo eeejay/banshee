@@ -27,9 +27,9 @@
  */
  
 using System;
-using DBus;
+//usin//g DBus;
 
-namespace Sonance
+/*namespace Sonance
 {
 	public class DBusIPC
 	{
@@ -62,3 +62,4 @@ namespace Sonance
 		}
 	}
 }
+*/

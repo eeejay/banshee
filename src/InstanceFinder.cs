@@ -35,7 +35,7 @@ namespace Sonance
 	{
 		public static bool Find()
 		{
-			DBusIPC.Instance.RegisterObject(true, "/org/gnome/Sonance/running");
+			///DBusIPC.Instance.RegisterObject(true, "/org/gnome/Sonance/running");
 		
 			foreach(Process process in Process.GetProcesses())
 				if(process.ProcessName.Equals("sonance"))
