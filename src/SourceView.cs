@@ -65,6 +65,9 @@ namespace Sonance
 		
 		public event EventHandler SourceChanged;
 
+		private int currentTimeout = -1;
+		private TreeIter timeoutIter;
+
 		static GLib.GType gtype;
 		public static new GLib.GType GType
 		{
@@ -150,7 +153,7 @@ namespace Sonance
 			Model = store;
 			HeadersVisible = false;
 			
-			RowActivated += OnRowActivated;
+			CursorChanged += OnCursorChanged;
 			
 			RefreshList();
 		}
@@ -197,20 +200,41 @@ namespace Sonance
 			Core.ThreadLeave();
 		} 
 		
-		private void OnRowActivated(object o, RowActivatedArgs args)
+		private void OnCursorChanged(object o, EventArgs args)
+		{				
+			if(currentTimeout < 0)		
+				currentTimeout = (int)GLib.Timeout.Add(200, OnCursorChangedTimeout);
+		}
+		
+		private bool OnCursorChangedTimeout()
 		{
 			TreeIter iter;
+			TreeModel model;
 			
-			if(!store.GetIter(out iter, args.Path))
-				return;
-				
-			selectedSource = (Source)store.GetValue(iter, 0);
+			currentTimeout = -1;
+			
+			if(!Selection.GetSelected(out model, out iter))
+				return false;
+			
+			Source newSource = store.GetValue(iter, 0) as Source;
+			if(selectedSource == newSource)
+				return false;
+			
+			selectedSource = newSource;
 			
 			QueueDraw();
 			
 			EventHandler handler = SourceChanged;
 			if(handler != null)
 				handler(this, new EventArgs());
+			
+			return false;
+		}
+		
+		public void SelectLibrary()
+		{
+			Selection.SelectPath(new TreePath("0"));
+			OnCursorChanged(this, new EventArgs());
 		}
 		
 		private void OnSourceUpdated(object o, EventArgs args)
