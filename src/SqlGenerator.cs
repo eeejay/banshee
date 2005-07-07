@@ -106,6 +106,13 @@ namespace Sql
 		 	s = Regex.Replace(s, @"[']+''", @"''");
 		 	return s;
 		}
+		
+		public static Statement Empty
+		{
+			get {
+				return new Statement("");
+			}
+		}
 	}
 		
 	public class Insert : Statement
@@ -334,6 +341,14 @@ namespace Sql
 		public And()
 		{
 			statement = Op.And;
+		}
+	}
+	
+	public class ParenGroup : Statement
+	{
+		public ParenGroup(Statement sub)
+		{
+			statement = " ( " + sub + " ) ";
 		}
 	}
 }
