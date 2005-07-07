@@ -424,21 +424,24 @@ namespace Sonance
 		}
 	}
 	
-	public class TrackRemoveTransaction : LibraryTransaction
+	abstract public class TrackRemoveTransaction : LibraryTransaction
 	{
-		public override string Name
-		{
-			get {
-				return "Track Remove";
-			}
-		}
-	
 		public ArrayList RemoveQueue;
 		
 		public TrackRemoveTransaction()
 		{
 			RemoveQueue = new ArrayList();
 			showStatus = true;
+		}
+	}
+	
+	public class LibraryTrackRemoveTransaction : TrackRemoveTransaction
+	{
+		public override string Name
+		{
+			get {
+				return "Library Track Remove";
+			}
 		}
 		
 		public override void Run()
@@ -461,6 +464,51 @@ namespace Sonance
 			}
 			
 			statusMessage = "Purging Library of Removed Tracks...";
+			currentCount = 0;
+			totalCount = 0;
+			Core.Library.Db.Execute(query);
+		}
+	}
+	
+	public class PlaylistTrackRemoveTransaction : TrackRemoveTransaction
+	{
+		private int id;
+	
+		public override string Name
+		{
+			get {
+				return "Playlist Track Remove";
+			}
+		}
+		
+		public PlaylistTrackRemoveTransaction(int id)
+		{
+			this.id = id;
+		}
+		
+		public override void Run()
+		{
+			statusMessage = "Removing Tracks";
+			totalCount = RemoveQueue.Count;
+			currentCount = 0;
+			
+			Statement query = new Delete("PlaylistEntries") + 
+				new Where("PlaylistID", Op.EqualTo, id) + new And();
+			Statement subquery = Statement.Empty;
+			
+			for(int i = 0; i < totalCount; i++) {
+				TrackInfo ti = RemoveQueue[i] as TrackInfo;
+				subquery += new Compare("TrackID", Op.EqualTo, ti.TrackId);
+				if(i < totalCount - 1)
+					subquery += new Or();
+				
+				statusMessage = "Removing " + ti.Artist + " - " + ti.Title;
+				currentCount++;
+			}
+			
+			query += new ParenGroup(subquery);
+
+			statusMessage = "Purging Playlist of Removed Tracks...";
 			currentCount = 0;
 			totalCount = 0;
 			Core.Library.Db.Execute(query);
