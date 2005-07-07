@@ -403,8 +403,11 @@ namespace Sonance
 		
 		public void RemoveTrack(ref TreeIter iter)
 		{
+			TrackInfo ti = IterTrackInfo(iter);
+			totalDuration -= ti.Duration;
 			randomQueue.Remove(iter);
 			Remove(ref iter);
+			RaiseUpdated(this, new EventArgs());
 		}
 		
 		// --- Event Raise Handlers ---

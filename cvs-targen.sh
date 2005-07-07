@@ -1,8 +1,12 @@
 #!/bin/sh
 
-DATE=`date +"%Y%m%d-%k%m"`
+DATE=`date +"%Y%m%d-%H%M"`
 DIR="sonance-cvs-$DATE"
 FILE="$DIR.tar.gz"
+
+if [ -e Makefile ]; then
+	make maintainer-clean
+fi
 
 mkdir $DIR
 

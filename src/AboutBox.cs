@@ -70,12 +70,13 @@ namespace Sonance
 				"<span weight=\"bold\">Version</span>\n" + 
 				"   {0} v{1}.{2}.{3}\n\n" + 
 				"<span weight=\"bold\">License</span>\n" + 
-				"   Released under the GNU General Public License\n\n" + 
+				"   Released under the MIT License\n\n" + 
 				"<span weight=\"bold\">Author</span>\n" + 
 				"   Written by Aaron Bockover\n" + 
 				"   <span color=\"blue\">http://sonance.aaronbock.net</span>\n" + 
 				"   <span color=\"blue\">aaron@aaronbock.net</span>\n\n"  +
-				"<span weight=\"bold\">Copyright</span>\n" + 
+				"<span weight=\"bold\">Copyright</span>\n" +
+				"   Copyright (C) 2005 Novell\n" + 
 				"   Copyright (C) 2005 Aaron Bockover\n",
 				StringUtil.UcFirst(selAsm.Name), selAsm.Version.Major, 
 				selAsm.Version.Minor, selAsm.Version.Build
@@ -83,8 +84,7 @@ namespace Sonance
 			
 			LabelQuickInfo.Markup = String.Format(
 				"<span size=\"small\"><b>{0} v{1}.{2}.{3}</b> " + 
-				"<span color=\"blue\">(http://sonance.aaronbock.net/)</span>" + 
-				"\nMuch thanks to the Mono and GStreamer projects!</span>",
+				"<span color=\"blue\">(http://sonance.aaronbock.net/)</span></span>",
 				StringUtil.UcFirst(selAsm.Name), selAsm.Version.Major, 
 				selAsm.Version.Minor, selAsm.Version.Build
 			);
@@ -131,20 +131,7 @@ namespace Sonance
 		{
 			LabelCredits.Markup = 
 			"<b>Lead Developer</b>\n\n" +
-			"\tAaron Bockover &lt;aaron@aaronbock.net&gt;\n\n" +
-			"<b>Thanks to the following people</b> for bug\n" +
-			"reports, feature requests, help on formulating\n" +
-			"implementation ideas and getting Sonance to\n" + 
-			"work on different distributions:\n\n" + 
-			"\tJeff Tickle\n" +
-			"\tChristoph Trassl\n" +
-			"\tG. Vamsee Krishna\n" + 
-			"\tMike Sears\n" +
-			"\tMarko Sosic\n" +
-			"\tAdam Bellinson (Thread)\n" +
-			"\tMaciek (etoare)\n" + 
-			"\tDerek Buranen\n" +
-			"\tEvan Bockover\n";
+			"\tAaron Bockover &lt;aaron@aaronbock.net&gt;\n\n";
 		}
 	}
 }
