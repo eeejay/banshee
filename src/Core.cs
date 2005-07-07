@@ -48,6 +48,9 @@ namespace Sonance
 		public Random Random;
 		public DecoderRegistry DecoderRegistry;
 		
+		public string UserRealName;
+		public string UserFirstName;
+		
 		private Library library;
 		private GConf.Client gconfClient;
 		
@@ -108,7 +111,7 @@ namespace Sonance
 			StockIcons.Initialize();
 			MainThread = System.Threading.Thread.CurrentThread;
 			
-			DebugLog.Add("Sonance.Backend.Core Initialized");
+			FindUserRealName();
 		}
 		
 		public void Shutdown()
@@ -136,6 +139,28 @@ namespace Sonance
 		{
 			if(!InMainThread)
 				Gdk.Threads.Leave();
+		}
+		
+		private void FindUserRealName()
+		{
+			try {
+				FileStream file = File.OpenRead("/etc/passwd");
+				StreamReader reader = new StreamReader(file);
+				string line;
+				while((line = reader.ReadLine()) != null) {
+					if(!line.StartsWith(Environment.UserName + ":"))
+						continue;
+						
+					string [] parts = line.Split(':');
+					UserRealName = parts[4].Trim();
+					
+					parts = UserRealName.Split(' ');
+					UserFirstName = parts[0].Trim();
+					UserFirstName += UserFirstName.EndsWith("s") ? "´" : "´s"; 
+				}
+				reader.Close();
+				file.Close();
+			} catch(Exception) { }
 		}
 	}
 }
