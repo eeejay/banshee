@@ -102,7 +102,6 @@ namespace Sonance
 			ResizeMoveWindow();
 			BuildWindow();   
 			InstallTrayIcon();
-			InstallMmKeys();
 			
 			Core.Instance.Player.Tick += new TickEventHandler(OnPlayerTick);
 			Core.Instance.Player.Eos += new EventHandler(OnPlayerEos);		
@@ -276,19 +275,7 @@ namespace Sonance
 				DebugLog.Add("egg-tray could not be installed [no libsonance]");
 			}
 		}
-		
-		private void InstallMmKeys()
-		{
-			/*try {
-				MmKeys mmkeys = new MmKeys();
-				mmkeys.TogglePlay += new EventHandler(OnButtonPlayPauseClicked);
-				mmkeys.Next += new EventHandler(OnButtonNextClicked);
-				mmkeys.Previous += new EventHandler(OnButtonPreviousClicked);
-			} catch(Exception) {
-				DebugLog.Add("mm-keys could not be installed [no libsonance]");
-			}*/
-		}
-		
+	
 		private void LoadSettings()
 		{	
 			try {
@@ -327,11 +314,21 @@ namespace Sonance
 				DialogFlags.DestroyWithParent, MessageType.Question,
 				"Import Music",
 				"Your music library is empty. You may import new music into " +
-				"your library now, or choose to do so later.",
-				"Import Music");
+				"your library now, or choose to do so later.\n\nAutomatic import " +
+				"or importing a large folder may take a long time, so please " +
+				"be patient.",
+				"Import Folder");
+				
+			md.AddButton("Automatic Import", Gtk.ResponseType.Apply, true);
 			
-			if(md.Run() == (int)ResponseType.Ok)
-				ImportWithFileSelector();
+			switch(md.Run()) {
+				case (int)ResponseType.Ok:
+					ImportWithFileSelector();
+					break;
+				case (int)ResponseType.Apply:
+					ImportHomeDirectory();
+					break;
+			}
 			
 			md.Destroy();
 			Gdk.Threads.Leave();
@@ -363,10 +360,7 @@ namespace Sonance
 		{
 			if(startupLoadReady) {
 				startupLoadReady = false;
-				TreeIter iter;
-				sourceView.Model.GetIterFirst(out iter);
-				sourceView.ActivateRow(sourceView.Model.GetPath(iter), 
-					sourceView.Columns[0]);
+				sourceView.SelectLibrary();
 			}
 		}
 		
@@ -640,6 +634,11 @@ namespace Sonance
 			
 			chooser.Destroy();
 		}
+		
+		private void ImportHomeDirectory()
+		{
+			playlistModel.AddFile(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+		}
 
 		private void OnMenuImportFolderActivate(object o, EventArgs args)
 		{
@@ -756,9 +755,19 @@ namespace Sonance
 			if(source.Type == SourceType.Library) {
 				playlistModel.LoadFromLibrary();
 				playlistModel.Source = source;
+				
+				Core.ThreadEnter();
+				(gxml["ViewNameLabel"] as Label).Markup = 
+					"<b>" + Core.Instance.UserFirstName + " Music Library</b>";
+				Core.ThreadLeave();
 			} else {
 				playlistModel.LoadFromPlaylist(source.Name);
 				playlistModel.Source = source;
+				
+				Core.ThreadEnter();
+				(gxml["ViewNameLabel"] as Label).Markup = 
+					"<b>" + source.Name + "</b>";
+				Core.ThreadLeave();
 			}
 		}
 		
@@ -788,12 +797,29 @@ namespace Sonance
 		
 		private void OnPlaylistUpdated(object o, EventArgs args)
 		{
-			long h = playlistModel.TotalDuration / 3600;
+			long tsec = playlistModel.TotalDuration;
+			
+			long d = tsec / 86400;
+			long s = tsec - (86400 * d);
+			if(s < 0) {
+				d = 0;
+				s += 86400;
+			}
+			
+			long h = s / 3600;
+			s -= 3600 * h;
+			long m = s / 60;
+			s -= m * 60;
+		
+			/*long h = playlistModel.TotalDuration / 3600;
 			long m = (playlistModel.TotalDuration / 60) - (h * 60);
-			long s = playlistModel.TotalDuration % 60;
+			long s = playlistModel.TotalDuration % 60;*/
 			string timeDisp;
 	
-			if(h > 0)
+			if(d > 0)
+				timeDisp = String.Format("{0} day{1}, {2}:{3}:{4}",
+					d, d == 1 ? "" : "s", h, m.ToString("00"), s.ToString("00"));
+			else if(h > 0)
 				timeDisp = String.Format("{0}:{1}:{2}",
 					h, m.ToString("00"), s.ToString("00"));
 			else	
@@ -921,6 +947,7 @@ namespace Sonance
 				
 			Playlist.Delete(source.Name);
 			sourceView.RefreshList();
+			sourceView.SelectLibrary();
 		}
 		
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
