@@ -1,3 +1,22 @@
+2005-07-07 Aaron Bockover <aaron@aaronbock.net>
+
+	* SqlGenerator.cs: Added Statement.Empty and ParenGroup classes
+	* LibraryTransactions.cs: Made TrackRemoveTransaction an abstract class
+	and added LibraryTrackRemoveTransaction and PlaylistTrackRemoveTransaction
+	that extends TrackRemoveTransaction
+	* PlayerInterface.cs: Proper removal of music from Playlists
+	* PlayerInterface.cs: Prompt a confirm dialog to user to ask if they are
+	sure they want to remove music from their *library*
+	* Core.cs: Find user's real name
+	* PlayerInterface.cs: Name of Playlist or User's Library showed at
+	top of tree view depending on source
+	* SourceView.cs: Single click/arrow up/down now selects source instead
+	of double click/row activate
+	* PlayerInterface.cs: Total Play Duration format updated to include
+	days of music playback as well as hours, minutes, seconds
+	* PlayerInterface.cs: Track Count / Total Play Duration updated on
+	item remove
+
 2005-07-06 Aaron Bockover <aaron@aaronbock.net>
 	
 	* SqlGenerator.cs: More SQL classes (generic OR and AND, updated WHERE)
