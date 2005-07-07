@@ -846,14 +846,38 @@ namespace Sonance
 		
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
-			TreeIter [] iters = new TreeIter[playlistView.Selection.CountSelectedRows()];
+			int selCount = playlistView.Selection.CountSelectedRows();
+		
+			if(playlistModel.Source.Type == SourceType.Library) {
+				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+					DialogFlags.DestroyWithParent, MessageType.Warning,
+					ButtonsType.YesNo,
+					"Remove Selected Songs from Library",
+					String.Format(
+					"Are you sure you want to remove the selected <b>({0})</b> " +
+					"song{1} from your library?", selCount, selCount == 1 ? "" : "s"));
+				
+				if(md.Run() != (int)ResponseType.Yes) {
+					md.Destroy();
+					return;
+				}
+		
+				md.Destroy();
+			}
+		
+			TreeIter [] iters = new TreeIter[selCount];
 			int i = 0;
 			
 			foreach(TreePath path in playlistView.Selection.GetSelectedRows())			
 				playlistModel.GetIter(out iters[i++], path);
 				
-			TrackRemoveTransaction transaction = new TrackRemoveTransaction();
+			TrackRemoveTransaction transaction;
 			
+			if(playlistModel.Source.Type == SourceType.Library)
+				transaction = new LibraryTrackRemoveTransaction();
+			else
+				transaction = new PlaylistTrackRemoveTransaction(Playlist.GetId(playlistModel.Source.Name));
+				
 			for(i = 0; i < iters.Length; i++) {
 				TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
 				playlistModel.RemoveTrack(ref iters[i]);
@@ -960,7 +984,8 @@ namespace Sonance
 			InputDialog input = new InputDialog("Rename Playlist",
 				"Enter new playlist name", "playlist-icon-large.png", sourceView.HighlightedSource.Name);
 			string newName = input.Execute();
-			sourceView.HighlightedSource.Name = newName;
+			if(newName != null)
+				sourceView.HighlightedSource.Name = newName;
 			sourceView.QueueDraw();
 		}
 		
