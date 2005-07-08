@@ -1,3 +1,11 @@
+2005-08-08 Aaron Bockover <aaron@aaronbock.net>
+
+	* project: removed mm-keys support
+	* LibraryTransactionManager.cs: small bug fix
+	* PlayerInterface.cs: Edit menu enhanced with new items, tooltips on 
+	toolbar buttons at the bottom
+	* PlaylistView.cs: the beginning of column sorting
+
 2005-07-07 Aaron Bockover <aaron@aaronbock.net>
 
 	* SqlGenerator.cs: Added Statement.Empty and ParenGroup classes
