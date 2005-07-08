@@ -42,7 +42,6 @@ sonance_sources = \
 	SqlGenerator.cs \
 	Library.cs \
 	SignalUtils.cs \
-	MmKeys.cs \
 	SourceView.cs \
 	Preferences.cs \
 	GConfKeys.cs \
@@ -140,4 +139,4 @@ AmazonSearchService.cs: AmazonSearchService.wsdl
 		-o:AmazonSearchService.cs
 
 run:
-	mono --config /usr/lib/sonance/sonance.exe.config sonance.exe
+	mono --debug --config /usr/lib/sonance/sonance.exe.config sonance.exe
