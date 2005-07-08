@@ -82,17 +82,28 @@ namespace Sonance
 			columns.Add(new PlaylistColumn(this, "Play Count", 
 				new TreeCellDataFunc(TrackCellPlayCount), 6));
 
-			foreach(PlaylistColumn plcol in columns) 
+			foreach(PlaylistColumn plcol in columns) {
 				InsertColumn(plcol.Column, plcol.Order);
+				plcol.Column.Clicked += OnColumnClicked;
+			}
 
 			Model = this.model = model;
-			
+			model.DefaultSortFunc =
+				new TreeIterCompareFunc(DefaultTreeIterCompareFunc);
+				
 			// set up tree view
 			RulesHint = true;
 			HeadersClickable = true;
 			HeadersVisible = true;
 			Selection.Mode = SelectionMode.Multiple;		
 		}	
+			
+		public int DefaultTreeIterCompareFunc(TreeModel model, TreeIter a, TreeIter b)
+		{
+			
+			
+			return 0;	
+		}
 			
 		public TrackInfo IterTrackInfo(TreeIter iter)
 		{
@@ -178,6 +189,20 @@ namespace Sonance
 			SetRendererAttributes((CellRendererText)cell, 
 				String.Format("{0}", model.IterTrackInfo(iter).Rating), 
 				iter);
+		}
+		
+		private void OnColumnClicked(object o, EventArgs args)
+		{
+			TreeViewColumn column = o as TreeViewColumn;
+			
+			foreach(PlaylistColumn plcol in columns) {
+				if(plcol.Column != column)
+					plcol.Column.SortIndicator = false;
+			}
+			
+			column.SortIndicator = true;
+			column.SortOrder = column.SortOrder == SortType.Ascending ? SortType.Descending : SortType.Ascending;
+			model.SetSortColumnId(column.SortColumnId, column.SortOrder);
 		}
 		
 		public void PlayPath(TreePath path)
