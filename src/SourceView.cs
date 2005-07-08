@@ -62,6 +62,7 @@ namespace Sonance
 	{
 		private ListStore store;
 		private Source selectedSource;
+		private bool forceReselect = false;
 		
 		public event EventHandler SourceChanged;
 
@@ -202,7 +203,7 @@ namespace Sonance
 		
 		private void OnCursorChanged(object o, EventArgs args)
 		{				
-			if(currentTimeout < 0)		
+			if(currentTimeout < 0)
 				currentTimeout = (int)GLib.Timeout.Add(200, OnCursorChangedTimeout);
 		}
 		
@@ -217,9 +218,10 @@ namespace Sonance
 				return false;
 			
 			Source newSource = store.GetValue(iter, 0) as Source;
-			if(selectedSource == newSource)
+			if(selectedSource == newSource && !forceReselect)
 				return false;
-			
+				
+			forceReselect = false;
 			selectedSource = newSource;
 			
 			QueueDraw();
@@ -235,6 +237,13 @@ namespace Sonance
 		{
 			Selection.SelectPath(new TreePath("0"));
 			OnCursorChanged(this, new EventArgs());
+		}
+		
+		public void SelectLibraryForce()
+		{
+			forceReselect = true;
+			Selection.SelectPath(new TreePath("0"));
+			OnCursorChangedTimeout();
 		}
 		
 		private void OnSourceUpdated(object o, EventArgs args)
@@ -341,7 +350,7 @@ namespace Sonance
 			
 			int layoutWidth, layoutHeight;
 			layout.GetPixelSize(out layoutWidth, out layoutHeight);
-
+			
 			window.DrawPixbuf(widget.Style.TextGC(state), icon, 0, 0, 
 				cell_area.X + 0, 
 				cell_area.Y + ((cell_area.Height - icon.Height) / 2),

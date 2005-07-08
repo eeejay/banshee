@@ -25,7 +25,7 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Collections;
 using System.Threading;
@@ -652,8 +652,6 @@ namespace Sonance
 				new List("COUNT(*)")) 
 				+ new Where("PlaylistID", Op.EqualTo, id);
 				
-			Console.WriteLine(countQuery);
-		
 			long count;
 			
 			try {

@@ -156,7 +156,7 @@ namespace Sonance
 					
 					parts = UserRealName.Split(' ');
 					UserFirstName = parts[0].Trim();
-					UserFirstName += UserFirstName.EndsWith("s") ? "´" : "´s"; 
+					UserFirstName += UserFirstName.EndsWith("s") ? "'" : "'s"; 
 				}
 				reader.Close();
 				file.Close();

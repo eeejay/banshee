@@ -177,7 +177,10 @@ namespace Sonance
 		
 		private void ExecutionStackRemove(LibraryTransaction transaction)
 		{
-			executionStack.Remove(transaction);
+			try { 	
+				executionStack.Remove(transaction);
+				
+			} catch(Exception) {}
 			
 			if(executionStack.Count == 0) {
 				EventHandler handler = ExecutionStackEmpty;
@@ -189,14 +192,14 @@ namespace Sonance
 		private void OnTransactionFinished(object o, EventArgs args)
 		{
 			Type transactionType = o.GetType();
-			
 			ArrayList transactionQueue = 
 				(ArrayList)transactionTable[transactionType];
 			
 			if(transactionQueue != null && transactionQueue.Count > 0 
 				&& !cancelAll && cancelType != transactionType)
 				transactionQueue.Remove(o);
-
+				
+			System.Threading.Thread.Sleep(200);
 			ExecutionStackRemove((LibraryTransaction)o);
 			
 			ExecuteNext(o.GetType());

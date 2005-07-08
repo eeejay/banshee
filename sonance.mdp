@@ -52,7 +52,6 @@
     <File name="./src/LibraryTransactions.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/LibraryTransactionStatus.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/MmKeys.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/NotificationAreaIcon.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/PlayerInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/PlaylistModel.cs" subtype="Code" buildaction="Compile" />
