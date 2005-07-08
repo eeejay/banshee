@@ -1076,8 +1076,8 @@ namespace Sonance
 							
 							foreach(string m in matches) {
 								string ml = m.ToLower();
-								if(ml.StartsWith(query) 
-									|| ml.StartsWith("the " + query)) {
+								if(ml.IndexOf(query) >= 0
+									|| ml.IndexOf("the " + query) >= 0) {
 									playlistModel.AddTrack(ti);
 									break;
 								}
@@ -1087,8 +1087,8 @@ namespace Sonance
 					}
 					
 					match = match.ToLower();
-					if(match.StartsWith(query) 
-						|| match.StartsWith("the " + query))
+					if(match.IndexOf(query) >= 0
+						|| match.IndexOf("the " + query) >= 0)
 						playlistModel.AddTrack(ti);
 				} catch(Exception) {
 					continue;
