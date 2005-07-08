@@ -66,6 +66,7 @@ namespace Sonance
 		private TrackInfoHeader trackInfoHeader;
 		private SimpleNotebook headerNotebook;
 		private SearchEntry searchEntry;
+		private Tooltips toolTips;
 		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;
@@ -217,6 +218,8 @@ namespace Sonance
 			playlistView.DragMotion += OnPlaylistViewDragMotion;
 			playlistView.DragDrop += OnPlaylistViewDragDrop;	
 				
+			sourceView.SelectLibrary();
+				
 			Gtk.Drag.SourceSet(playlistView, 
 				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
 				playlistViewSourceEntries, 
@@ -249,6 +252,12 @@ namespace Sonance
 			searchEntry.Show();
 			((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, 
 				false, false, 0);
+				
+			toolTips = new Tooltips();
+			toolTips.SetTip(gxml["ButtonNewPlaylist"], "Create New Playlist", "Create New Playlist");
+			toolTips.SetTip(gxml["ToggleButtonShuffle"], "Toggle Shuffle Playback Mode", "Toggle Shuffle Playback Mode");
+			toolTips.SetTip(gxml["ToggleButtonRepeat"], "Toggle Repeat Playback Mode", "Toggle Repeat Playback Mode");
+			toolTips.SetTip(gxml["ButtonTrackProperties"], "View Selected Song Information", "View Selected Song Information");
       	}
       	
       	private void InstallTrayIcon()
@@ -360,7 +369,7 @@ namespace Sonance
 		{
 			if(startupLoadReady) {
 				startupLoadReady = false;
-				sourceView.SelectLibrary();
+				sourceView.SelectLibraryForce();
 			}
 		}
 		
@@ -797,25 +806,24 @@ namespace Sonance
 		
 		private void OnPlaylistUpdated(object o, EventArgs args)
 		{
+			long count = playlistModel.Count();
 			long tsec = playlistModel.TotalDuration;
+			long d, h, m, s;
 			
-			long d = tsec / 86400;
-			long s = tsec - (86400 * d);
+			d = tsec / 86400;
+			s = tsec - (86400 * d);
 			if(s < 0) {
 				d = 0;
 				s += 86400;
 			}
 			
-			long h = s / 3600;
+			h = s / 3600;
 			s -= 3600 * h;
-			long m = s / 60;
+			m = s / 60;
 			s -= m * 60;
 		
-			/*long h = playlistModel.TotalDuration / 3600;
-			long m = (playlistModel.TotalDuration / 60) - (h * 60);
-			long s = playlistModel.TotalDuration % 60;*/
 			string timeDisp;
-	
+			
 			if(d > 0)
 				timeDisp = String.Format("{0} day{1}, {2}:{3}:{4}",
 					d, d == 1 ? "" : "s", h, m.ToString("00"), s.ToString("00"));
@@ -829,9 +837,21 @@ namespace Sonance
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Enter();
 			
-			LabelStatusBar.Text = String.Format(
-				"{0} Items, {1} Total Play Time",
-				playlistModel.Count(), timeDisp);
+			if(count == 0 && playlistModel.Source == null) {
+				LabelStatusBar.Text = "Sonance Music Player";
+			} else if(count == 0) {
+				switch(playlistModel.Source.Type) {
+					case SourceType.Library:
+						LabelStatusBar.Text = "Your Library is Empty - Consider Importing Music";
+						break;
+					case SourceType.Playlist:
+						LabelStatusBar.Text = "This Playlist is Empty - Consider Adding Music";
+						break;
+				}
+			} else
+				LabelStatusBar.Text = String.Format(
+					"{0} Items, {1} Total Play Time",
+					count, timeDisp);
 				
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
@@ -981,12 +1001,41 @@ namespace Sonance
 		
 		private void OnItemSourceRenameActivate(object o, EventArgs args)
 		{
+			if(sourceView.HighlightedSource == null || 
+				sourceView.HighlightedSource.Type == SourceType.Library)
+				return;
+				
 			InputDialog input = new InputDialog("Rename Playlist",
 				"Enter new playlist name", "playlist-icon-large.png", sourceView.HighlightedSource.Name);
 			string newName = input.Execute();
 			if(newName != null)
 				sourceView.HighlightedSource.Name = newName;
 			sourceView.QueueDraw();
+		}
+		
+		private void OnItemRenamePlaylistActivate(object o, EventArgs args)
+		{
+			OnItemSourceRenameActivate(o, args);
+		}
+		
+		private void OnItemRemoveSongsActivate(object o, EventArgs args)
+		{
+			OnItemRemoveActivate(o, args);
+		}
+		
+		private void OnItemDeletePlaylistActivate(object o, EventArgs args)
+		{
+			OnItemSourceDeleteActivate(o, args);
+		}
+		
+		private void OnItemSelectAllActivate(object o, EventArgs args)
+		{
+			playlistView.Selection.SelectAll();
+		}
+		
+		private void OnItemSelectNoneActivate(object o, EventArgs args)
+		{
+			playlistView.Selection.UnselectAll();
 		}
 		
 		private void OnSimpleSearch(object o, EventArgs args)
