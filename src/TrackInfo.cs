@@ -67,6 +67,8 @@ namespace Sonance
 	   	private double trackPeak;
 	   	private double albumGain;
 	   	private double albumPeak;
+	   	
+	   	public Gtk.TreeIter PreviousTrack;
 	
 		public static int GetId(string name)
 		{
@@ -96,6 +98,7 @@ namespace Sonance
 			Core.Library.Tracks[trackId] = this;
 			
 			uid = Core.Instance.NextUid;
+			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
 		public TrackInfo(IDataReader reader)
@@ -103,6 +106,7 @@ namespace Sonance
 			LoadFromDatabaseReader(reader);
 			Core.Library.Tracks[trackId] = this;
 			uid = Core.Instance.NextUid;
+			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
 		private void ParseUri(string uri)
