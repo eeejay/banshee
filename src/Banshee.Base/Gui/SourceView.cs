@@ -246,6 +246,11 @@ namespace Sonance
 			OnCursorChangedTimeout();
 		}
 		
+		public void HighlightPath(TreePath path)
+		{
+			Console.WriteLine("Highlighting: " + path);
+		}
+		
 		private void OnSourceUpdated(object o, EventArgs args)
 		{
 			QueueDraw();
@@ -328,28 +333,87 @@ namespace Sonance
 			height = text_h + 5;
 		}
 		
+		private static Gdk.Color ColorBlend(Gdk.Color a, Gdk.Color b)
+		{
+			// at some point, might be nice to allow any blend?
+			double blend = 0.5;
+		
+			if(blend < 0.0 || blend > 1.0)
+				throw new ApplicationException("blend < 0.0 || blend > 1.0");
+		
+			double blendRatio = 1.0 - blend;
+		
+			int aR = a.Red >> 8;
+			int aG = a.Green >> 8;
+			int aB = a.Blue >> 8;
+			
+			int bR = b.Red >> 8;
+			int bG = b.Green >> 8;
+			int bB = b.Blue >> 8;
+			
+			double mR = aR + bR;
+			double mG = aG + bG;
+			double mB = aB + bB;
+			
+			double blR = mR * blendRatio;
+			double blG = mG * blendRatio;
+			double blB = mB * blendRatio;
+			
+			Gdk.Color color = new Gdk.Color((byte)blR, (byte)blG, (byte)blB);
+			Gdk.Colormap.System.AllocColor(ref color, true, true);
+			return color;
+		}
+		
 		protected override void Render(Gdk.Drawable drawable, 
 			Widget widget, Gdk.Rectangle background_area, 
 			Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, 
 			CellRendererState flags)
 		{
+			int titleLayoutWidth, titleLayoutHeight;
+			int countLayoutWidth, countLayoutHeight;
+			int maxTitleLayoutWidth;
+			bool hideCounts =false;
 			Gdk.Window window = drawable as Gdk.Window;
+			
 			StateType state = RendererStateToWidgetState(flags);
 			Pixbuf icon = Pixbuf.LoadFromResource(
 				source.Type == SourceType.Library ?
 					"source-library-icon.png" :
 					"source-playlist-icon.png");
 
-			Pango.Layout layout = new Pango.Layout(widget.PangoContext);
+			Pango.Layout titleLayout = new Pango.Layout(widget.PangoContext);
+			Pango.Layout countLayout = new Pango.Layout(widget.PangoContext);
 			
 			FontDescription fd = widget.PangoContext.FontDescription.Copy();
 			fd.Weight = Selected ? Pango.Weight.Bold : Pango.Weight.Normal;
 			
-			layout.FontDescription = fd;
-			layout.SetMarkup(source.Name);
+			titleLayout.FontDescription = fd;
+			countLayout.FontDescription = fd;
 			
-			int layoutWidth, layoutHeight;
-			layout.GetPixelSize(out layoutWidth, out layoutHeight);
+			string titleText = source.Name;
+			titleLayout.SetMarkup(titleText);
+			countLayout.SetMarkup("<span size=\"small\">(" + source.Count + ")</span>");
+			
+			titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
+			countLayout.GetPixelSize(out countLayoutWidth, out countLayoutHeight);
+			
+			maxTitleLayoutWidth = cell_area.Width - icon.Width - countLayoutWidth - 10;
+			
+			while(true) {
+				titleLayout.GetPixelSize(out titleLayoutWidth, 
+					out titleLayoutHeight);
+				if(titleLayoutWidth <= maxTitleLayoutWidth)
+					break;
+				
+				try {
+					titleText = titleText.Substring(0, titleText.Length - 1);
+					titleLayout.SetMarkup(titleText.Trim() + "...");
+				} catch(Exception) {
+					titleLayout.SetMarkup(source.Name);
+					hideCounts = true;
+					break;
+				}
+			} 
 			
 			window.DrawPixbuf(widget.Style.TextGC(state), icon, 0, 0, 
 				cell_area.X + 0, 
@@ -359,8 +423,25 @@ namespace Sonance
 		
 			window.DrawLayout(widget.Style.TextGC(state), 
 				cell_area.X + icon.Width + 6, 
-				cell_area.Y + ((cell_area.Height - layoutHeight) / 2) + 1, 
-				layout);
+				cell_area.Y + ((cell_area.Height - titleLayoutHeight) / 2) + 1, 
+				titleLayout);
+			
+			if(hideCounts)
+				return;
+				
+			Gdk.GC modGC = widget.Style.TextGC(state);
+			if(!state.Equals(StateType.Selected)) {
+				modGC = new Gdk.GC(window);
+				modGC.Copy(widget.Style.TextGC(state));
+				Gdk.Color fgcolor = widget.Style.Foreground(state);
+				Gdk.Color bgcolor = widget.Style.Background(state);
+				modGC.RgbFgColor = ColorBlend(fgcolor, bgcolor);
+			} 
+			
+			window.DrawLayout(modGC,
+				(cell_area.X + cell_area.Width) - countLayoutWidth - 2,
+				cell_area.Y + ((cell_area.Height - countLayoutHeight) / 2) + 1,
+				countLayout);
 		}
 		
 		public override CellEditable StartEditing(Gdk.Event evnt , Widget widget, 
