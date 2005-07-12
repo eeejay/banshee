@@ -130,5 +130,5 @@ namespace Sonance
 			StreamReader reader = new StreamReader(stream);
 			return reader.ReadToEnd();	
 		}
-	}
+	}	
 }
