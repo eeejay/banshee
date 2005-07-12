@@ -127,7 +127,7 @@ namespace Sonance
 			totalDuration += ti.Duration;
 
 			Core.ThreadEnter();
-			TreeIter iter = AppendValues(ti);
+			AppendValues(ti);
 			Core.ThreadLeave();
 			
 			RaiseUpdated(this, new EventArgs());

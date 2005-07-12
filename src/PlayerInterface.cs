@@ -716,8 +716,6 @@ namespace Sonance
 			Source source = sourceView.SelectedSource;
 			if(source == null)
 				return;
-				
-			Statement query;
 			
 			if(source.Type == SourceType.Library) {
 				playlistModel.LoadFromLibrary();
@@ -1160,8 +1158,8 @@ namespace Sonance
 		private void OnPlaylistViewDragDataReceived(object o, 
 			DragDataReceivedArgs args)
 		{
-			TreePath destPath, srcPath;
-			TreeIter destIter, srcIter;
+			TreePath destPath;
+			TreeIter destIter;
 			TreeViewDropPosition pos;
 			bool haveDropPosition;
 			
@@ -1298,8 +1296,7 @@ namespace Sonance
 		private void OnSourceViewDragDataReceived(object o, 
 			DragDataReceivedArgs args)
 		{
-			TreePath destPath, srcPath;
-			TreeIter destIter, srcIter;
+			TreePath destPath;
 			TreeViewDropPosition pos;
 			bool haveDropPosition;
 			

@@ -258,7 +258,6 @@ namespace Sonance
 		
 		public Source GetSource(TreePath path)
 		{
-			TreeModel model;
 			TreeIter iter;
 		
 			if(store.GetIter(out iter, path))

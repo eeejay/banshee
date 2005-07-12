@@ -44,9 +44,9 @@ namespace Sonance
 
 	abstract public class PlayerEngine
 	{
-		public abstract event TickEventHandler Tick;
-		public abstract event System.EventHandler Eos;
-		public abstract event VolumeChangedEventHandler VolumeChanged;
+		//public event TickEventHandler Tick;
+		//public event System.EventHandler Eos;
+		//public event VolumeChangedEventHandler VolumeChanged;
 	
 		abstract public bool Open(TrackInfo ti);
 		abstract public void Close();
