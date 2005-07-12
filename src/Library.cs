@@ -121,7 +121,7 @@ namespace Sonance
 	{
 		protected string name;
 		protected SourceType type;
-		
+
 		public event EventHandler Updated;
 		
 		public Source(string name, SourceType type)
@@ -151,6 +151,11 @@ namespace Sonance
 			}
 		}
 		
+		public abstract int Count
+		{
+			get;
+		}
+		
 		public abstract void UpdateName(string oldName, string newName);
 	}
 	
@@ -165,10 +170,19 @@ namespace Sonance
 		{
 			
 		}
+		
+		public override int Count
+		{
+			get {
+				return Core.Library.Tracks.Count;	
+			}
+		}
 	}
 	
 	public class PlaylistSource : Source
 	{
+		int count = -1;
+	
 		public PlaylistSource(string name) : base(name, SourceType.Playlist)
 		{
 		
@@ -183,6 +197,18 @@ namespace Sonance
 			pl.Rename(newName);
 			name = newName;
 		}
+		
+		public override int Count
+		{
+			get {
+				if(count < 0) {
+					Playlist pl = new Playlist(name);
+					count = pl.Count;
+				}
+				
+				return count;
+			}
+		}			
 	}
 
 	public class Playlist 
@@ -211,17 +237,79 @@ namespace Sonance
 			return GetId(name) > 0;
 		}
 		
+		private static string PostfixDuplicate(string prefix)
+		{
+			string name = prefix;
+			for(int i = 1; true; i++) {
+				if(!Playlist.Exists(name))
+					return name;
+					
+				name = prefix + " " + i;
+			}
+		}
+		
 		public static string UniqueName
 		{
 			get {
-				string prefix = "New Playlist ";
+				return PostfixDuplicate("New Playlist");
+			}
+		}
+		
+		public static string GoodUniqueName(ArrayList tracks)
+		{
+			ArrayList names = new ArrayList();
+			Hashtable groups = new Hashtable();
+			
+			foreach(TrackInfo ti in tracks) {
+				bool haveArtist = ti.Artist != null && !ti.Artist.Equals(String.Empty);
+				bool haveAlbum = ti.Album != null && !ti.Album.Equals(String.Empty);
+			
+				if(haveArtist && haveAlbum)
+					names.Add(ti.Artist + " - " + ti.Album);
+				else if(haveArtist)
+					names.Add(ti.Artist);
+				else if(haveAlbum)
+					names.Add(ti.Album);
+			}
 				
-				for(int i = 1; true; i++) {
-					string name = prefix + i;
-					if(!Playlist.Exists(name))
-						return name;
+			names.Sort();
+			groups[names[0]] = 1;
+			
+			for(int i = 1; i < names.Count; i++) {
+				bool match = false;
+				foreach(string key in groups.Keys) {
+					if(names[i].Equals(key)) {
+						groups[key] = ((int)groups[key]) + 1;
+						match = true;
+						break;
+					}
+				}
+			
+				if(match)
+					continue;
+			
+				groups[names[i]] = 1;
+			}
+			
+			string bestMatch = String.Empty;
+			int maxValue = 0;
+			
+			foreach(int count in groups.Values) {
+				if(count > maxValue) {
+					maxValue = count;
+					foreach(string key in groups.Keys) {
+						if((int)groups[key] == maxValue) {
+							bestMatch = key;
+							break;
+						}
+					}
 				}
 			}
+			
+			if(bestMatch.Equals(String.Empty))
+				return UniqueName;
+				
+			return PostfixDuplicate(bestMatch);
 		}
 		
 		public static void Delete(string name)
@@ -251,9 +339,9 @@ namespace Sonance
 			
 			try {
 				IDataReader reader = Core.Library.Db.Query(query);
-				while(reader.Read()){
+				while(reader.Read())
 					list.Add(reader[0]);
-				Console.WriteLine(reader[0]);}
+				
 				return (string [])list.ToArray(typeof(string));
 			} catch(Exception) {
 				return null;
@@ -324,6 +412,18 @@ namespace Sonance
 			EventHandler handler = Saved;
 			if(handler != null)
 				handler(this, new EventArgs());
+		}
+		
+		public int Count
+		{
+			get {
+				Statement query = new Select("PlaylistEntries", 
+					new List("COUNT(*)")) +
+					new Where("PlaylistID", Op.EqualTo, Playlist.GetId(name));
+				
+				object result = Core.Library.Db.QuerySingle(query);
+				return Convert.ToInt32(result);
+			}
 		}
 		
 		public string Name
