@@ -67,6 +67,7 @@ namespace Sonance
 		private SimpleNotebook headerNotebook;
 		private SearchEntry searchEntry;
 		private Tooltips toolTips;
+		private Hashtable playlistMenuMap;
 		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;
@@ -258,6 +259,8 @@ namespace Sonance
 			toolTips.SetTip(gxml["ToggleButtonShuffle"], "Toggle Shuffle Playback Mode", "Toggle Shuffle Playback Mode");
 			toolTips.SetTip(gxml["ToggleButtonRepeat"], "Toggle Repeat Playback Mode", "Toggle Repeat Playback Mode");
 			toolTips.SetTip(gxml["ButtonTrackProperties"], "View Selected Song Information", "View Selected Song Information");
+			
+			playlistMenuMap = new Hashtable();
       	}
       	
       	private void InstallTrayIcon()
@@ -708,51 +711,6 @@ namespace Sonance
 			
 		}
 		
-		/*private void OnButtonRemoveClicked(object o, EventArgs args)
-		{
-			playlistView.RemoveSelected();
-		}*/
-		
-		/*private void OnButtonMoveUpClicked(object o, EventArgs args)
-		{
-			playlistView.MoveUp();
-		}
-		
-		private void OnButtonMoveDownClicked(object o, EventArgs args)
-		{
-			playlistView.MoveDown();
-		}*/
-		
-		/*private void OnButtonSaveClicked(object o, EventArgs args)
-		{
-			string name = InputDialog.Run(
-				"Save Playlist", "Playlist Name:", "playlist-icon-large.png", 
-				playlistView.PlaylistName);
-				
-			if(name == null)
-				return;
-				
-			name = name.Trim();
-			if(name.Length == 0) {
-				SimpleMessageDialogs.Error("You must specify a playlist name");
-				return;
-			}
-			
-			if(Sonance.Playlist.Exists(name) && 
-				!name.Equals(playlistView.PlaylistName)) {
-				if(SimpleMessageDialogs.YesNo("The playlist '" 
-					+ name + "' already exists. Overwrite?") 
-					!= ResponseType.Yes) {
-					return;
-				}
-			}
-				
-			playlistView.PlaylistName = name;
-			playlistView.Save(name);
-			
-			sourceView.RefreshList();
-		}*/
-		
 		private void OnSourceChanged(object o, EventArgs args)
 		{
 			Source source = sourceView.SelectedSource;
@@ -933,21 +891,18 @@ namespace Sonance
 			if(args.Event.Button != 3)
 				return;
 				
-			// Uguugh - the actual selection doesn't take place until *after*
-			// we finish here - garh
-			popupTime = args.Event.Time;
-			GLib.Timeout.Add(1, SourceViewPopupTimeout);
-		}
-		
-		private bool SourceViewPopupTimeout()
-		{
-			if(sourceView.HighlightedSource == null)
-				return false;
-				
-			SourceType type = sourceView.HighlightedSource.Type;
-
-			if(type == SourceType.Library)
-				return false;
+			TreePath path;
+			if(!sourceView.GetPathAtPos((int)args.Event.X, 
+				(int)args.Event.Y, out path)) {
+				args.RetVal = true; 
+				return;
+			}
+			
+			sourceView.HighlightPath(path);
+			Source source = sourceView.GetSource(path);
+			
+			if(source.Type == SourceType.Library)
+				return;
 
 			if(gxmlSourceMenu == null) {
 				gxmlSourceMenu = new Glade.XML(null, "player.glade", 
@@ -957,15 +912,15 @@ namespace Sonance
 			
 			Menu menu = gxmlSourceMenu["SourceMenu"] as Menu;
 			(gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem).Sensitive =
-				type  == SourceType.Playlist 
+				source.Type  == SourceType.Playlist 
 				&& playlistView.Selection.CountSelectedRows() > 0;
 			(gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem).Sensitive = false;
 			(gxmlSourceMenu["ItemSourceProperties"] as MenuItem).Sensitive = false;
-			menu.Popup(null, null, null, IntPtr.Zero, 0, popupTime);
+			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
 			menu.ShowAll();
-			
-			return false;
+			args.RetVal = true;
 		}
+		
 		
 		private void OnItemAddSelectedSongsActivate(object o, EventArgs args)
 		{
@@ -1109,7 +1064,33 @@ namespace Sonance
 					gxmlPlaylistMenu.Autoconnect(this);
 				}
 			
+				Menu plMenu = new Menu();
+				playlistMenuMap.Clear();
+				
+				ImageMenuItem newPlItem = new ImageMenuItem("New Playlist");
+				newPlItem.Image = new Gtk.Image("gtk-new", IconSize.Menu);
+				newPlItem.Activated += OnNewPlaylistFromSelectionActivated;
+				plMenu.Append(newPlItem);
+				
+				string [] names = Playlist.ListAll();
+				
+				if(names.Length > 0) {
+					plMenu.Append(new SeparatorMenuItem());
+					
+					foreach(string plName in names) {
+						ImageMenuItem item = new ImageMenuItem(plName);
+						item.Image = new Gtk.Image(
+							Pixbuf.LoadFromResource("source-playlist-icon.png"));
+						
+						playlistMenuMap[item] = plName;
+						item.Activated += OnItemAddToPlaylistActivated;
+						
+						plMenu.Append(item);
+					}
+				}
+			
 				Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
+				(gxmlPlaylistMenu["ItemAddToPlaylist"] as MenuItem).Submenu = plMenu;
 				menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
 				menu.ShowAll();
 			}
@@ -1139,6 +1120,31 @@ namespace Sonance
 					args.RetVal = false;
 					return;
 			}
+		}
+
+		private void OnItemAddToPlaylistActivated(object o, EventArgs args)
+		{
+			string name = playlistMenuMap[o] as string;
+			
+			if(name == null)
+				return;
+				
+			playlistView.AddSelectedToPlayList(name);
+		}
+
+		private void OnNewPlaylistFromSelectionActivated(object o, EventArgs args)
+		{
+			ArrayList tracks = new ArrayList();
+			
+			foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+				TrackInfo ti = playlistModel.PathTrackInfo(path);
+				tracks.Add(ti);
+			}
+			
+			Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
+			pl.Append(tracks);
+			pl.Save();
+			pl.Saved += OnPlaylistSavedRefreshSourceView;
 		}
 
 		private void OnPlaylistViewDragMotion(object o, DragMotionArgs args)
@@ -1320,7 +1326,7 @@ namespace Sonance
 					Source source = sourceView.GetSource(destPath);
 					
 					if(source == null) {
-						Playlist pl = new Playlist(Playlist.UniqueName);
+						Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
 						pl.Append(tracks);
 						pl.Save();
 						pl.Saved += OnPlaylistSavedRefreshSourceView;
