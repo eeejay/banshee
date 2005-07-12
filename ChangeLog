@@ -1,4 +1,14 @@
-2005-08-08 Aaron Bockover <aaron@aaronbock.net>
+2005-07-09 Aaron Bockover <aaron@aaronbock.net>
+
+	* Library.cs: New Playlist.Count property
+	* SourceView.cs: Updated source cell renderer to show child count
+	* PlaylistModel.cs: Updated ChangeDirection algorithm, added O(1) 
+	regression history for random playback
+	* project: Version 0.7.3
+	* PlayerInterface.cs: Added dynamic playlist context menu item and submenu
+	to add selection to existing or new playlist
+
+2005-07-08 Aaron Bockover <aaron@aaronbock.net>
 
 	* project: removed mm-keys support
 	* LibraryTransactionManager.cs: small bug fix
