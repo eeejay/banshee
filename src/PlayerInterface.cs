@@ -637,8 +637,8 @@ namespace Sonance
 				"gnome-vfs"
 			);
 			
-			chooser.AddButton(Stock.Open, ResponseType.Ok);
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+			chooser.AddButton(Stock.Open, ResponseType.Ok);
 			chooser.DefaultResponse = ResponseType.Ok;
 			
 			if(chooser.Run() == (int)ResponseType.Ok) 
@@ -666,8 +666,9 @@ namespace Sonance
 				"gnome-vfs"
 			);
 			
-			chooser.AddButton(Stock.Open, ResponseType.Ok);
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+			chooser.AddButton(Stock.Open, ResponseType.Ok);
+			
 			chooser.SelectMultiple = true;
 			chooser.DefaultResponse = ResponseType.Ok;
 			
