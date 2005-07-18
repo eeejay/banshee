@@ -2,12 +2,11 @@
 
 # Automatically build a Makefile.am for all PNG images in directory
 
-rm Makefile.am
+rm -f Makefile.am
 
 echo "sonanceicondir = \$(datadir)/pixmaps/
 sonanceicon_DATA = \\
-	sonance-icon.png \\
-	sonance-icon.svg
+	sonance-icon.png
 
 DISTCLEANFILES = Makefile.in
 
