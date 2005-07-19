@@ -31,8 +31,8 @@ EXTRA_DIST = \
 	sonance-splash.png \
 	source-cd-audio.png \
 	source-ipod-regular.png \
-	source-library-icon.png \
-	source-playlist-icon.png \
+	source-library.png \
+	source-playlist.png \
 	tray-icon.png \
 	tray-icon-raw.png \
 	volume-decrease.png \

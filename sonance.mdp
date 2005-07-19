@@ -99,8 +99,8 @@
     <File name="./data/images/sonance-icon-24.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/sonance-icon.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/sonance-splash.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./data/images/source-library-icon.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./data/images/source-playlist-icon.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/tray-icon-raw.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/volume-decrease.png" subtype="Code" buildaction="EmbedAsResource" />

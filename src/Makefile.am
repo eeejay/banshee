@@ -93,8 +93,8 @@ sonance_resources = \
 	../data/images/media-repeat.png \
 	../data/images/media-shuffle.png \
 	../data/images/playlist-icon-large.png \
-	../data/images/source-library-icon.png \
-	../data/images/source-playlist-icon.png \
+	../data/images/source-library.png \
+	../data/images/source-playlist.png \
 	../data/images/library-icon.png \
 	../data/images/library-icon-32.png \
 	../data/images/busy-spinner.png \
