@@ -20,6 +20,10 @@ if test "x$PKG_CONFIG" = "xno"; then
 	AC_MSG_ERROR([You need to install pkg-config])
 fi
 
+AC_PATH_PROG(INSTALL, install, /usr/bin/install)
+AC_SUBST(INSTALL)
+AC_SUBST(PKG_CONFIG)
+
 MONO_REQUIRED_VERSION=1.0.0
 PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
 
@@ -61,11 +65,20 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gapi-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
+PKG_CHECK_MODULES(IPODSHARP,
+	ipod-sharp >= 0.4.9)
+AC_SUBST(IPODSHARP_LIBS)
+
 PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
 AC_SUBST(DBUSSHARP)
 
-SQLITE_REQUIRED=2.8.15
-PKG_CHECK_MODULES(SQLITE, sqlite >= $SQLITE_REQUIRED)
+#SQLITE_REQUIRED=2.8.15
+#PKG_CHECK_MODULES(SQLITE, sqlite >= $SQLITE_REQUIRED)
+
+AC_PATH_PROG(SQLITE, sqlite, no)
+if test "x$SQLITE" = "xno"; then
+	AC_MSG_ERROR([You need sqlite 2.8.x])
+fi
 
 ## probably should make gstreamer-plugins optional
 ## but generating conditionally the source is not really possible

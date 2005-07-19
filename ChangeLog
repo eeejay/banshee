@@ -1,3 +1,9 @@
+2005-07-18 Aaron Bockover <aaron@aaronbock.net>
+
+	* configure.ac: Now requires ipod-sharp
+	* src/Makefile.am: Cleaned out some of the unused resources, uses ipod-sharp
+	* src/IpodCore.cs: IpodCore for managing all iPod services
+
 2005-07-12 Aaron Bockover <aaron@aaronbock.net>
 
 	* configure.ac: Got rid of AC_PROG_CC
