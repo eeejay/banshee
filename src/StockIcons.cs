@@ -46,7 +46,7 @@ namespace Sonance
 			
 			/* Volume Button Icons */
 			"volume-max",
-			"volume-medium",
+			"volume-med",
 			"volume-min",
 			"volume-zero",
 			"volume-decrease",

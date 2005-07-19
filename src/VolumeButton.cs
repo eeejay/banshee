@@ -54,7 +54,7 @@ namespace Sonance
 				else if (volume <= 100 / 3)
 					id += "min";
 				else if (volume <= 200 / 3)
-					id += "medium";
+					id += "med";
 				else
 					id += "max";
 
