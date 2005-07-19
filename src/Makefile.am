@@ -101,7 +101,9 @@ sonance_resources = \
 	../data/images/busy-spinner-36.png \
 	../data/images/sonance-icon-24.png \
 	../data/images/search-entry-icon.png \
-	../data/images/search-entry-icon-hover.png
+	../data/images/search-entry-icon-hover.png \
+	../data/images/source-ipod-regular.png \
+	../data/images/source-cd-audio.png
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 

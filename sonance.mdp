@@ -119,5 +119,7 @@
     <File name="./src/IpodCore.cs" subtype="Code" buildaction="Compile" />
     <File name="./data/images/volume-med.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/album-cover-container.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/source-ipod-regular.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
 </Project>

@@ -28,6 +28,8 @@ EXTRA_DIST = \
 	sonance-icon-24.png \
 	sonance-icon.png \
 	sonance-splash.png \
+	source-cd-audio.png \
+	source-ipod-regular.png \
 	source-library-icon.png \
 	source-playlist-icon.png \
 	tray-icon.png \

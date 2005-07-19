@@ -13,6 +13,7 @@ EXTRA_DIST = \
 	sonance.pc.in
 
 CLEANFILES=sonance.pc
-DISTCLEANFILES=config.guess config.sub configure install-sh missing depcomp Makefile.in *.bak *~ sonance.pidb Sonance.pws mkinstalldirs ltmain.sh aclocal.m4
+DISTCLEANFILES=config.guess config.sub configure install-sh missing depcomp Makefile.in *.bak *~ sonance.pidb Sonance.pws mkinstalldirs ltmain.sh aclocal.m4 config.h.in INSTALL
+
 
 
