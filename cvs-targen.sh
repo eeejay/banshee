@@ -19,6 +19,10 @@ for i in `find ./`; do
 		continue;
 	fi
 
+	if test "x`echo $i | grep 'snapshots'`" != "x"; then
+		continue;
+	fi
+
 	if [ -d $i ]; then
 		if test "x$i" != "x./"; then
 			mkdir $DIR/$i
@@ -33,6 +37,8 @@ if ./autogen.sh && make && make maintainer-clean; then
 	cd ..
 	tar cfz $FILE $DIR
 	rm -rf $DIR
+	mkdir -p snapshots
+	mv $FILE snapshots
 	echo
 	echo "*********************************************************"
 	echo "CVS Snapshot '$FILE' ready!"
