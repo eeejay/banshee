@@ -64,7 +64,8 @@ sonance_sources = \
 	PlaylistRowRenderer.cs \
 	DBusIPC.cs \
 	PlayerEngine.cs \
-	IpodCore.cs
+	IpodCore.cs \
+	AlbumCoverFetch.cs 
 
 sonance_resources = \
 	../data/Tables.sql \
