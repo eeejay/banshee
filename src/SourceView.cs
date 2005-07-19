@@ -392,14 +392,14 @@ namespace Sonance
 			
 			switch(source.Type) {
 				case SourceType.Playlist:
-					iconFile = "source-playlist-icon.png";
+					iconFile = "source-playlist.png";
 					break;
 				case SourceType.Ipod:
 					iconFile = "source-ipod-regular.png";
 					break;
 				case SourceType.Library:
 				default:
-					iconFile = "source-library-icon.png";
+					iconFile = "source-library.png";
 					break;
 			}
 			
