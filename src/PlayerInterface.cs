@@ -69,6 +69,8 @@ namespace Sonance
 		private Tooltips toolTips;
 		private Hashtable playlistMenuMap;
 		
+		private IpodCore ipodCore;
+		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;
 
@@ -110,6 +112,8 @@ namespace Sonance
 			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
+			
+			ipodCore = IpodCore.Instance;
 			
 			GLib.Timeout.Add(500, InitialLoadTimeout);
 	
