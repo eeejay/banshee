@@ -114,7 +114,8 @@ namespace Sonance
 
 	public enum SourceType : uint {
 		Library = 1,
-		Playlist = 2
+		Playlist = 2,
+		Ipod = 3
 	}
 
 	public abstract class Source
@@ -209,6 +210,26 @@ namespace Sonance
 				return count;
 			}
 		}			
+	}
+
+	public class IpodSource : Source
+	{
+		public IpodSource(string name) : base(name, SourceType.Ipod)
+		{
+		
+		}
+		
+		public override void UpdateName(string oldName, string newName)
+		{
+			
+		}
+		
+		public override int Count
+		{
+			get {
+				return 0;
+			}
+		}
 	}
 
 	public class Playlist 
