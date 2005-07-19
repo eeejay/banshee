@@ -63,7 +63,8 @@ sonance_sources = \
 	IPlaybackModel.cs \
 	PlaylistRowRenderer.cs \
 	DBusIPC.cs \
-	PlayerEngine.cs
+	PlayerEngine.cs \
+	IpodCore.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -77,7 +78,7 @@ sonance_resources = \
 	../data/images/volume-decrease.png \
 	../data/images/volume-increase.png \
 	../data/images/volume-max.png \
-	../data/images/volume-medium.png \
+	../data/images/volume-med.png \
 	../data/images/volume-min.png \
 	../data/images/volume-zero.png \
 	../data/glade/about.glade \
@@ -88,7 +89,6 @@ sonance_resources = \
 	../data/images/icon-artist.png \
 	../data/images/icon-title.png \
 	../data/images/sonance-icon.png \
-	../data/images/sonance-icon.svg \
 	../data/images/media-repeat.png \
 	../data/images/media-shuffle.png \
 	../data/images/playlist-icon-large.png \
@@ -96,12 +96,9 @@ sonance_resources = \
 	../data/images/source-playlist-icon.png \
 	../data/images/library-icon.png \
 	../data/images/library-icon-32.png \
-	../data/images/mimesystem-icon-32.png \
-	../data/images/icon-ltm-status.png \
 	../data/images/busy-spinner.png \
 	../data/images/busy-spinner-36.png \
 	../data/images/sonance-icon-24.png \
-	../data/images/status-resize.png \
 	../data/images/search-entry-icon.png \
 	../data/images/search-entry-icon-hover.png
 	
@@ -110,6 +107,7 @@ sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resou
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
+	$(IPODSHARP_LIBS) \
 	-r:$(top_builddir)/entagged/entagged-sharp.dll \
 	-r:$(srcdir)/gst-sharp.dll
 
@@ -135,8 +133,12 @@ sonance.exe: $(sonance_build_sources)
 	$(sonance_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl
-	MONO_XMLSERIALIZER_THS=no wsdl $(srcdir)/AmazonSearchService.wsdl \
-		-o:AmazonSearchService.cs
+	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
+
+install-data-hook:
+	for asm in `$(PKG_CONFIG) --variable=Libraries ipod-sharp`; do \
+		$(INSTALL) -c -m 0755 $$asm $(pkglibdir); \
+	done;
 
 run:
 	mono --debug --config /usr/lib/sonance/sonance.exe.config sonance.exe
