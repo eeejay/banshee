@@ -15,6 +15,7 @@ EXTRA_DIST = \
 	library-icon-32.png \
 	library-icon.png \
 	media-burn.png \
+	media-eject.png \
 	media-next.png \
 	media-pause.png \
 	media-play.png \

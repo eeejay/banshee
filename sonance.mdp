@@ -121,5 +121,6 @@
     <File name="./data/images/album-cover-container.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/source-ipod-regular.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/media-eject.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
 </Project>
