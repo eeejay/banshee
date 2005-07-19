@@ -938,7 +938,7 @@
       <signal name="activate" handler="OnItemRemoveActivate" last_modification_time="Mon, 02 May 2005 23:39:50 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image138">
+	<widget class="GtkImage" id="image241">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-remove</property>
 	  <property name="icon_size">1</property>
@@ -959,7 +959,7 @@
       <signal name="activate" handler="OnItemPropertiesActivate" last_modification_time="Mon, 02 May 2005 23:39:50 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image139">
+	<widget class="GtkImage" id="image242">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-properties</property>
 	  <property name="icon_size">1</property>
@@ -969,6 +969,14 @@
 	  <property name="ypad">0</property>
 	</widget>
       </child>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="ItemAddToPlaylist">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">Add To Playlist</property>
+      <property name="use_underline">True</property>
     </widget>
   </child>
 </widget>
