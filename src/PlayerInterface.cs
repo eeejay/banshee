@@ -857,7 +857,8 @@ namespace Sonance
 			if(playlistModel.Source.Type == SourceType.Library)
 				transaction = new LibraryTrackRemoveTransaction();
 			else
-				transaction = new PlaylistTrackRemoveTransaction(Playlist.GetId(playlistModel.Source.Name));
+				transaction = new PlaylistTrackRemoveTransaction(
+					Playlist.GetId(playlistModel.Source.Name));
 				
 			for(i = 0; i < iters.Length; i++) {
 				TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
@@ -914,16 +915,30 @@ namespace Sonance
 			}
 			
 			Menu menu = gxmlSourceMenu["SourceMenu"] as Menu;
-			(gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem).Sensitive =
-				source.Type  == SourceType.Playlist 
+			MenuItem addSelectedSongs = gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem;
+			MenuItem sourceDuplicate = gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem;
+			MenuItem sourceDelete = gxmlSourceMenu["ItemSourceDelete"] as MenuItem;
+			MenuItem sourceProperties = gxmlSourceMenu["ItemSourceProperties"] as MenuItem;
+			ImageMenuItem ejectItem = gxmlSourceMenu["ItemEject"] as ImageMenuItem;
+			
+			addSelectedSongs.Sensitive = source.Type == SourceType.Playlist
 				&& playlistView.Selection.CountSelectedRows() > 0;
-			(gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem).Sensitive = false;
-			(gxmlSourceMenu["ItemSourceProperties"] as MenuItem).Sensitive = false;
+			sourceDuplicate.Sensitive = false;
+			sourceProperties.Sensitive = false;
+		
+			if(source.CanEject) {
+				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
+			}
+			
 			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
-			menu.ShowAll();
+			menu.Show();
+			
+			sourceDuplicate.Visible = !source.CanEject;
+			ejectItem.Visible = source.CanEject;
+			sourceDelete.Visible = !source.CanEject;
+			
 			args.RetVal = true;
 		}
-		
 		
 		private void OnItemAddSelectedSongsActivate(object o, EventArgs args)
 		{
@@ -937,7 +952,7 @@ namespace Sonance
 		
 		private void OnItemSourceDuplicateActivate(object o, EventArgs args)
 		{
-			Console.WriteLine("OnItemSourceDuplicateActivate");
+	
 		}
 		
 		private void OnItemSourceDeleteActivate(object o, EventArgs args)
@@ -952,6 +967,14 @@ namespace Sonance
 			sourceView.SelectLibrary();
 		}
 		
+		private void OnItemEjectActivate(object o, EventArgs args)
+		{
+			Source source = sourceView.HighlightedSource;
+			
+			if(source.CanEject)
+				source.Eject();
+		}
+		
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
 		{
 
@@ -964,7 +987,8 @@ namespace Sonance
 				return;
 				
 			InputDialog input = new InputDialog("Rename Playlist",
-				"Enter new playlist name", "playlist-icon-large.png", sourceView.HighlightedSource.Name);
+				"Enter new playlist name", "playlist-icon-large.png", 
+				sourceView.HighlightedSource.Name);
 			string newName = input.Execute();
 			if(newName != null)
 				sourceView.HighlightedSource.Name = newName;

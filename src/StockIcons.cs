@@ -43,6 +43,7 @@ namespace Sonance
 			"media-pause",
 			"media-shuffle",
 			"media-repeat",
+			"media-eject",
 			
 			/* Volume Button Icons */
 			"volume-max",

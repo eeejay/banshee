@@ -155,6 +155,7 @@ namespace Sonance
 			HeadersVisible = false;
 			
 			CursorChanged += OnCursorChanged;
+			IpodCore.Instance.Updated += OnIpodCoreUpdated;
 			
 			RefreshList();
 		}
@@ -187,6 +188,12 @@ namespace Sonance
 			
 			store.Clear();
 			store.AppendValues(new LibrarySource());
+			
+			// iPod Sources
+			foreach(IPod.Device device in IpodCore.Instance.Devices)
+				store.AppendValues(new IpodSource(device));
+			
+			// Playlist Sources
 			string [] names = Playlist.ListAll();
 			
 			if(names == null)
@@ -248,12 +255,18 @@ namespace Sonance
 		
 		public void HighlightPath(TreePath path)
 		{
-			Console.WriteLine("Highlighting: " + path);
+		
 		}
 		
 		private void OnSourceUpdated(object o, EventArgs args)
 		{
 			QueueDraw();
+		}
+		
+		private void OnIpodCoreUpdated(object o, EventArgs args)
+		{
+			Console.WriteLine("Ipod Stuff Updated");
+			RefreshList();
 		}
 		
 		public Source GetSource(TreePath path)
@@ -375,11 +388,23 @@ namespace Sonance
 			Gdk.Window window = drawable as Gdk.Window;
 			
 			StateType state = RendererStateToWidgetState(flags);
-			Pixbuf icon = Pixbuf.LoadFromResource(
-				source.Type == SourceType.Library ?
-					"source-library-icon.png" :
-					"source-playlist-icon.png");
-
+			string iconFile = null;
+			
+			switch(source.Type) {
+				case SourceType.Playlist:
+					iconFile = "source-playlist-icon.png";
+					break;
+				case SourceType.Ipod:
+					iconFile = "source-ipod-regular.png";
+					break;
+				case SourceType.Library:
+				default:
+					iconFile = "source-library-icon.png";
+					break;
+			}
+			
+			Pixbuf icon = Pixbuf.LoadFromResource(iconFile);
+			
 			Pango.Layout titleLayout = new Pango.Layout(widget.PangoContext);
 			Pango.Layout countLayout = new Pango.Layout(widget.PangoContext);
 			

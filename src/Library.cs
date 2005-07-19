@@ -122,6 +122,7 @@ namespace Sonance
 	{
 		protected string name;
 		protected SourceType type;
+		protected bool canEject;
 
 		public event EventHandler Updated;
 		
@@ -157,7 +158,19 @@ namespace Sonance
 			get;
 		}
 		
+		public bool CanEject
+		{
+			get {
+				return canEject;
+			}
+		}
+		
 		public abstract void UpdateName(string oldName, string newName);
+		
+		public virtual bool Eject()
+		{
+			return false;
+		}
 	}
 	
 	public class LibrarySource : Source
@@ -214,21 +227,42 @@ namespace Sonance
 
 	public class IpodSource : Source
 	{
-		public IpodSource(string name) : base(name, SourceType.Ipod)
-		{
+		private IPod.Device device;
 		
+		public IpodSource(IPod.Device device) : base(device.Name, 
+			SourceType.Ipod)
+		{
+			this.device = device;
+			canEject = true;
 		}
 		
 		public override void UpdateName(string oldName, string newName)
 		{
-			
+			if(!oldName.Equals(newName)) {
+				device.Name = newName;
+				name = newName;
+				device.Save();
+			}
 		}
 		
 		public override int Count
 		{
 			get {
-				return 0;
+				return device.SongDatabase.Songs.Length;
 			}
+		}
+		
+		public IPod.Device Device
+		{
+			get {
+				return device;
+			}
+		}
+		
+		public override bool Eject()
+		{
+			device.Eject();
+			return true;
 		}
 	}
 

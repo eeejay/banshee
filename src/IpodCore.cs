@@ -37,6 +37,8 @@ namespace Sonance
 		private static IpodCore instance;
 		private DeviceEventListener listener;
 		private Hashtable devices;
+		
+		public event EventHandler Updated;
 	
 		public static IpodCore Instance
 		{
@@ -61,21 +63,40 @@ namespace Sonance
 		
 		private void OnDeviceAdded(object o, DeviceAddedArgs args)
 		{
-			if(devices[args.Udi] != null)
+			if(devices[args.Udi] == null) {
 				devices[args.Udi] = new Device(args.Udi);
+				HandleUpdated();
+			}
 		}
 		
 		
 		private void OnDeviceRemoved(object o, DeviceRemovedArgs args)
 		{
-			if(devices[args.Udi] != null)
+			if(devices[args.Udi] != null) {
 				devices.Remove(args.Udi);
+				HandleUpdated();
+			}
 		}
 		
 		public void ListAll()
 		{
 			foreach(Device device in Device.ListDevices())
 				device.Debug();
+		}
+		
+		private void HandleUpdated()
+		{
+			EventHandler handler = Updated;
+			if(handler != null)
+				handler(this, new EventArgs());
+		}
+		
+		public Device [] Devices
+		{
+			get {
+				ArrayList list = new ArrayList(devices.Values);
+				return list.ToArray(typeof(Device)) as Device [];
+			}
 		}
 	}
 }
