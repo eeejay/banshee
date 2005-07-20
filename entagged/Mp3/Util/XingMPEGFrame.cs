@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/07/20 02:34:06  abock
- * Updates to entagged
+ * Revision 1.3  2005/07/20 03:37:04  abock
+ * Build system updates, hal-sharp
  *
  * Revision 1.5  2005/02/21 00:13:00  kikidonk
  * Should fix the bitrate calculation for mp3

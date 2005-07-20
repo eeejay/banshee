@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/07/20 02:34:06  abock
- * Updates to entagged
+ * Revision 1.3  2005/07/20 03:37:04  abock
+ * Build system updates, hal-sharp
  *
  * Revision 1.4  2005/02/22 22:21:17  kikidonk
  * Should fixes most times length/bitrate errors

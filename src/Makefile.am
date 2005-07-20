@@ -113,6 +113,7 @@ PKG_REFERENCES = \
 	$(DBUSSHARP_LIBS) \
 	$(IPODSHARP_LIBS) \
 	-r:$(top_builddir)/entagged/entagged-sharp.dll \
+	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(srcdir)/gst-sharp.dll
 
 SYSTEM_REFERENCES = \
@@ -139,10 +140,18 @@ sonance.exe: $(sonance_build_sources)
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
 
+INSTALLED_ASSEMBLIES="`$(PKG_CONFIG) --variable=Libraries ipod-sharp`"
+
 install-data-hook:
-	for asm in `$(PKG_CONFIG) --variable=Libraries ipod-sharp`; do \
-		$(INSTALL) -c -m 0755 $$asm $(pkglibdir); \
+	for ASM in $(INSTALLED_ASSEMBLIES); do \
+		$(INSTALL) -c -m 0755 $$ASM $(pkglibdir); \
 	done;
+
+uninstall-hook:
+	for ASM in $(INSTALLED_ASSEMBLIES); do \
+		rm -f $(pkglibdir)/`basename $$ASM`; \
+	done;
+
 
 run:
 	mono --debug --config /usr/lib/sonance/sonance.exe.config sonance.exe

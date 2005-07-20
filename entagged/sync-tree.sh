@@ -9,11 +9,14 @@
 # svn checkout. After setting, sync sources by executing this script fom the
 # sonance/entagged directory
 
-TREE_SOURCE="/home/aaron/cvs/entagged-sharp"
+MONO_BRANCH="entagged-sharp"
+svn co svn+ssh://abock@mono-cvs.ximian.com/source/trunk/$MONO_BRANCH
+
+TREE_SOURCE="./$MONO_BRANCH"
 
 #@DO NOT EDIT@#
 
-TREE_BRANCHES="Ape Ape/Util Mpc Mpc/Util M4a M4a/Util Mp3 Mp3/Util Mp3/Util/Id3frames  Flac Flac/Util Ogg Ogg/Util Exceptions Util"
+TREE_BRANCHES="Ape Ape/Util Mpc Mpc/Util M4a M4a/Util Mp3 Mp3/Util Mp3/Util/Id3frames Flac Flac/Util Ogg Ogg/Util Exceptions Util"
 
 rm -f entagged.sources
 # create local branches and update source
@@ -23,11 +26,13 @@ for branch in $TREE_BRANCHES; do
 done;
 cp $TREE_SOURCE/src/*.cs .
 
+rm -rf $MONO_BRANCH
+
 #FILES="ASSEMBLY_SOURCES = `find ./ | grep -e '.cs$'`"
 FILES="ASSEMBLY_SOURCES = "
 for file in `find ./ | grep -e '.cs$'`; do
 	TRFILE=`echo "$file" | sed 's/^.\///'`
 	FILES="$FILES \$(srcdir)/$TRFILE"
 done;
-echo $FILES > entagged.sources
+echo $FILES > entagged-sharp.sources
 

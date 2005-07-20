@@ -127,6 +127,7 @@ AC_OUTPUT([
 Makefile
 sonance.pc
 entagged/Makefile
+hal-sharp/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 src/sonance

@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/07/20 02:34:04  abock
- * Updates to entagged
+ * Revision 1.5  2005/07/20 03:37:01  abock
+ * Build system updates, hal-sharp
  *
  * Revision 1.5  2005/02/25 15:31:16  kikidonk
  * Big structure change

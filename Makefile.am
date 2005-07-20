@@ -2,6 +2,7 @@ SUBDIRS = \
 	data \
 	libsonance \
 	entagged \
+	hal-sharp \
 	src 
 
 pkgconfigdir = $(libdir)/pkgconfig
