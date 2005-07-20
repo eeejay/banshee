@@ -9,7 +9,7 @@
 # svn checkout. After setting, sync sources by executing this script fom the
 # sonance/entagged directory
 
-TREE_SOURCE="/home/aaron/Sonance/entagged-sharp"
+TREE_SOURCE="/home/aaron/cvs/entagged-sharp"
 
 #@DO NOT EDIT@#
 
