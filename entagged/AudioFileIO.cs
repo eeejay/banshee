@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.3  2005/06/30 16:56:20  abock
- * New entagged
+ * Revision 1.4  2005/07/20 02:34:04  abock
+ * Updates to entagged
  *
  * Revision 1.7  2005/02/25 15:37:40  kikidonk
  * Big structure change

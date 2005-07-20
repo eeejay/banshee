@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.3  2005/06/30 16:56:20  abock
- * New entagged
+ * Revision 1.4  2005/07/20 02:34:04  abock
+ * Updates to entagged
  *
  * Revision 1.4  2005/02/18 13:38:12  kikidonk
  * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR

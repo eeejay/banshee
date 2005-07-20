@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.1  2005/06/30 16:56:25  abock
- * New entagged
+ * Revision 1.2  2005/07/20 02:34:08  abock
+ * Updates to entagged
  *
  * Revision 1.4  2005/02/08 12:54:42  kikidonk
  * Added cvs log and header

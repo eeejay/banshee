@@ -26,7 +26,8 @@ cp $TREE_SOURCE/src/*.cs .
 #FILES="ASSEMBLY_SOURCES = `find ./ | grep -e '.cs$'`"
 FILES="ASSEMBLY_SOURCES = "
 for file in `find ./ | grep -e '.cs$'`; do
-	FILES="$FILES \$(srcdir)/$file"
+	TRFILE=`echo "$file" | sed 's/^.\///'`
+	FILES="$FILES \$(srcdir)/$TRFILE"
 done;
 echo $FILES > entagged.sources
 

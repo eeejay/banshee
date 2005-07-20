@@ -6,9 +6,11 @@ public class EntaggedTest
 {
 	public static void Main(string [] args)
 	{
-		foreach(string file in Directory.GetFiles("/home/aaron/Music/F02")) {
-			AudioFileWrapper af = new AudioFileWrapper(file);
-			Console.WriteLine(af.Artist + " - " + af.Title);
+		foreach(string file in Directory.GetFiles("/home/aaron/Desktop")) {
+			try {
+				AudioFileWrapper af = new AudioFileWrapper(file);
+				Console.WriteLine(af.Year);
+			} catch(Exception) {}
 		}
 	}
 }
