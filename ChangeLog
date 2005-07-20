@@ -1,3 +1,8 @@
+2005-07-20 Aaron Bockover <aaron@aaronbock.net>
+
+	* src/Makefile.am: Updated install-data-hook and uninstall-data rules to
+	play nice with make distcheck
+
 2005-07-19 Aaron Bockover <aaron@aaronbock.net>
 
 	* hal-sharp/: Added hal-sharp source tree

@@ -140,16 +140,17 @@ sonance.exe: $(sonance_build_sources)
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
 
-INSTALLED_ASSEMBLIES="`$(PKG_CONFIG) --variable=Libraries ipod-sharp`"
+UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp"
+INSTALLED_ASSEMBLIES="`$(PKG_CONFIG) --variable=Libraries $(UNSTABLE_INSTALL_ASSEMBLIES)`"
 
 install-data-hook:
 	for ASM in $(INSTALLED_ASSEMBLIES); do \
-		$(INSTALL) -c -m 0755 $$ASM $(pkglibdir); \
+		$(INSTALL) -c -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
 	done;
 
 uninstall-hook:
 	for ASM in $(INSTALLED_ASSEMBLIES); do \
-		rm -f $(pkglibdir)/`basename $$ASM`; \
+		rm -f $(DESTDIR)$(pkglibdir)/`basename $$ASM`; \
 	done;
 
 
