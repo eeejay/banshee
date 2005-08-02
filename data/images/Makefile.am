@@ -25,6 +25,7 @@ EXTRA_DIST = \
 	media-repeat.png \
 	media-shuffle.png \
 	media-stop.png \
+	now-playing-arrow.png \
 	playlist-icon-large.png \
 	search-entry-icon-hover.png \
 	search-entry-icon.png \
