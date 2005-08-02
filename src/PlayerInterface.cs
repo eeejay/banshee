@@ -70,6 +70,13 @@ namespace Sonance
 		private Tooltips toolTips;
 		private Hashtable playlistMenuMap;
 		
+		public Gtk.Window Window
+		{
+			get {
+				return WindowPlayer;
+			}
+		}
+		
 		private IpodCore ipodCore;
 		
 		private long plLoaderMax, plLoaderCount;
@@ -415,6 +422,16 @@ namespace Sonance
 		
 		// ---- Misc. Utility Routines ----
       
+      	private void Quit()
+      	{
+      		playlistView.Shutdown();
+			Core.Instance.Player.Shutdown();
+			Core.GconfClient.Set(GConfKeys.SourceViewWidth, 
+				SourceSplitter.Position);
+			Core.Instance.Shutdown();
+			Application.Quit();
+      	}
+      
      	private void SetInfoLabel(string text)
       	{
       		LabelInfo.Markup = "<span size=\"small\">" + text + "</span>";
@@ -468,12 +485,7 @@ namespace Sonance
 		
 		private void OnWindowPlayerDeleteEvent(object o, DeleteEventArgs args) 
 		{
-			playlistView.Shutdown();
-			Core.Instance.Player.Shutdown();
-			Core.GconfClient.Set(GConfKeys.SourceViewWidth, 
-				SourceSplitter.Position);
-			Core.Instance.Shutdown();
-			Application.Quit();
+			Quit();
 			args.RetVal = true;
 		}
 		
@@ -572,8 +584,7 @@ namespace Sonance
 		
 		private void OnMenuQuitActivate(object o, EventArgs args)
 		{
-			Core.Instance.Shutdown();
-			Application.Quit();
+			Quit();
 		}
 		
 		private void OnMenuAboutActivate(object o, EventArgs args)
@@ -1108,7 +1119,7 @@ namespace Sonance
 					foreach(string plName in names) {
 						ImageMenuItem item = new ImageMenuItem(plName);
 						item.Image = new Gtk.Image(
-							Pixbuf.LoadFromResource("source-playlist-icon.png"));
+							Pixbuf.LoadFromResource("source-playlist.png"));
 						
 						playlistMenuMap[item] = plName;
 						item.Activated += OnItemAddToPlaylistActivated;

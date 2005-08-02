@@ -51,6 +51,7 @@ namespace Sonance
 		PlaylistModel model;
 		
 		PlaylistColumnChooserDialog columnChooser;
+		Pixbuf nowPlayingPixbuf;
 
 		static GLib.GType gtype;
 		public static new GLib.GType GType
@@ -87,6 +88,25 @@ namespace Sonance
 				plcol.Column.Clicked += OnColumnClicked;
 			}
 
+			TreeViewColumn playIndColumn = new TreeViewColumn();
+			Gtk.Image playIndImg = new Gtk.Image(
+				Gdk.Pixbuf.LoadFromResource("blue-speaker.png"));
+			playIndImg.Show();
+			playIndColumn.Expand = false;
+			playIndColumn.Resizable = false;
+			playIndColumn.Clickable = false;
+			playIndColumn.Reorderable = false;
+			playIndColumn.Widget = playIndImg;
+			
+			nowPlayingPixbuf = 
+				Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
+			
+			CellRendererPixbuf indRenderer = new CellRendererPixbuf();
+			playIndColumn.PackStart(indRenderer, true);
+			playIndColumn.SetCellDataFunc(indRenderer, 
+				new TreeCellDataFunc(TrackCellInd));
+			InsertColumn(playIndColumn, 0);
+
 			Model = this.model = model;
 			model.DefaultSortFunc =
 				new TreeIterCompareFunc(DefaultTreeIterCompareFunc);
@@ -100,8 +120,6 @@ namespace Sonance
 			
 		public int DefaultTreeIterCompareFunc(TreeModel model, TreeIter a, TreeIter b)
 		{
-			
-			
 			return 0;	
 		}
 			
@@ -135,6 +153,16 @@ namespace Sonance
 				&& model.GetPath(iter).Compare(model.PlayingPath) == 0 
 				? (int)Pango.Weight.Bold 
 				: (int)Pango.Weight.Normal;
+		}
+		
+		protected void TrackCellInd(TreeViewColumn tree_column,
+			CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		{
+			CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
+			renderer.Pixbuf = model.PlayingPath != null 
+				&& model.GetPath(iter).Compare(model.PlayingPath) == 0 
+				? nowPlayingPixbuf
+				: null; 
 		}
 		
 		protected void TrackCellTrack(TreeViewColumn tree_column,

@@ -1,5 +1,11 @@
 2005-08-01 Aaron Bockover <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Fixed Menu->Quit bug not saving settings
+	* data/images: Two new icons
+	* src/PlaylistView.cs: Added column for showing arrow of current 
+	playing song
+	* src/PlaylistColumns.cs: Fixed column saving bug
+
 	* sonance: Lots and lots of updates, I'm sure I missed lots of things
 	in the ChangeLog
 

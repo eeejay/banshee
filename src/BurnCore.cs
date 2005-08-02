@@ -181,6 +181,7 @@ namespace Sonance
 			DeleteEvent += OnDeleteEvent;
 			
 			ShowAll();
+			WindowPosition = WindowPosition.Center;
 			
 			Fraction = -1.0;
 		}
@@ -252,7 +253,7 @@ namespace Sonance
  				if(value < 0) {
 					if(timeoutId == 0) {
 						killPulse = false;
-						timeoutId = GLib.Timeout.Add(50, Pulseate);
+						timeoutId = GLib.Timeout.Add(100, Pulseate);
 					} 
 				} else {
 					if(timeoutId != 0) {
