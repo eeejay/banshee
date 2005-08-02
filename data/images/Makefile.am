@@ -6,6 +6,7 @@ DISTCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
 	album-cover-container.png \
+	blue-speaker.png \
 	burn-icon-32.png \
 	burn-icon.png \
 	busy-spinner-36.png \

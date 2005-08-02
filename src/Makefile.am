@@ -111,7 +111,8 @@ sonance_resources = \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
 	../data/images/burn-icon-32.png \
-	../data/images/burn-icon.png
+	../data/images/burn-icon.png \
+	../data/images/blue-speaker.png
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
