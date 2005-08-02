@@ -118,10 +118,15 @@ namespace Sonance
 
 			PackStart(imageAlbum, false, false, 5);
 						
+			System.Reflection.AssemblyName asm = 
+				System.Reflection.Assembly.GetEntryAssembly().GetName();
+			string version = String.Format("{0}.{1}", asm.Version.Major, 
+				asm.Version.Minor);
+						
 			artistLabel.Markup = 
 				"<span weight=\"bold\">Sonance Player</span>";
-			titleLabel.Markup = 
-				"<span size=\"small\">Version 0.7</span>";
+			titleLabel.Markup = String.Format(
+				"<span size=\"small\">Version {0}</span>", version);
 		}
 		
 		public string Artist 

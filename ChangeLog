@@ -1,5 +1,8 @@
 2005-08-01 Aaron Bockover <aaron@aaronbock.net>
 
+	* mediaengines/gst/Makefile.am: Fixed rule that removed bundled
+	gst-sharp.dll on distclean
+	* src/TrackInfoHeader.cs: Why I had a hard-coded version number is beyond me
 	* src/PlayerInterface.cs: Fixed Menu->Quit bug not saving settings
 	* data/images: Two new icons
 	* src/PlaylistView.cs: Added column for showing arrow of current 

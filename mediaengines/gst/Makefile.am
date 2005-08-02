@@ -22,7 +22,7 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll -r:gst-sharp.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 DISTCLEANFILES = Makefile.in
-CLEANFILES = gst-encode *.dll *.mdp *.exe
+CLEANFILES = gst-encode gst-player.dll *.mdp *.exe
 
 EXTRA_DIST = gst-encode-test.c gst-sharp.dll $(ASSEMBLY_SOURCES)
 
