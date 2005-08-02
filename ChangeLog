@@ -1,3 +1,35 @@
+2005-08-01 Aaron Bockover <aaron@aaronbock.net>
+
+	* sonance: Lots and lots of updates, I'm sure I missed lots of things
+	in the ChangeLog
+
+	* mediaengines/helix: Unworking Helix Core (very close to working,
+	one major bug to figure out)
+
+	* plugincore: New library currently containing IPlayerEngine and 
+	ITrackInfo for developing player engine plugins
+	* src/BurnCore.cs: Core CD Burning Engine
+	* src/FileEncodeTransaction: LTM Transaction for the FileEncoder
+	* src/BurnTransaction: LTM Transaction for the CD Burner (not in use ATM)
+	* src/PlayerEngineLoader.cs: Searches for assemblies that have classes
+	implementing IPlayerEngine - loads engines at runtime (no more linking)
+	* src/Core.cs: Use PlayerEngineLoader
+
+2005-07-28 Aaron Bockover <aaron@aaronbock.net>
+
+	* sonance: Version 0.8.0
+	* src/FileEncoder.cs: Abstract engine class for encoding files
+	* src/GstFileEncoder.cs: GStreamer implementation of FileEncoder class
+	using mediaengines/gst/gst-encode
+	* src/NautilusBurnUtil.cs: Utilities for libnautilus-burn-sharp
+
+2005-07-27 Aaron Bockover <aaron@aaronbock.net>
+
+	* burn-sharp/: Added libnautilus-burn-sharp source tree
+	* mediaengines/gst/: Added gst media engine root
+	* mediaengines/gst/gst-encode.c: GStreamer file encoder engine
+	* src/Preferences.cs: CD Burning Preferences
+
 2005-07-20 Aaron Bockover <aaron@aaronbock.net>
 
 	* src/Makefile.am: Updated install-data-hook and uninstall-data rules to

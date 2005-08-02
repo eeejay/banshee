@@ -4,7 +4,7 @@ AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
-AM_INIT_AUTOMAKE(sonance, 0.7.3)
+AM_INIT_AUTOMAKE(sonance, 0.8.0)
 AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
@@ -30,9 +30,9 @@ PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
 MONODIR=`$PKG_CONFIG --variable=exec_prefix mono`
 MONOBIN="$MONODIR/bin"
 MONO="$MONOBIN/mono"
-MINT="$MONOBIN/mint"
+#MINT="$MONOBIN/mint"
 MCS="$MONOBIN/mcs"
-GACUTIL="$MONOBIN/gacutil"
+#GACUTIL="$MONOBIN/gacutil"
 
 if test ! -x "$MONO" -a ! -x "$MINT"; then
 	AC_MSG_ERROR([No Mono runtime found])
@@ -47,13 +47,13 @@ if test ! -x "$MCS"; then
 	AC_MSG_ERROR([No $CS compiler found])
 fi
 
-if test ! -x "$GACUTIL"; then
-	AC_MSG_ERROR([No Mono gacutil found])
-fi
+#if test ! -x "$GACUTIL"; then
+#	AC_MSG_ERROR([No Mono gacutil found])
+#fi
 
 AC_SUBST(MCS)
 AC_SUBST(MONO)
-AC_SUBST(GACUTIL)
+#AC_SUBST(GACUTIL)
 
 GTKSHARP_REQUIRED=1.9
 PKG_CHECK_MODULES(GTKSHARP,
@@ -86,7 +86,7 @@ GSTREAMER_REQUIRED_VERSION=0.8.8
 GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.7
 AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
-PKG_CHECK_MODULES(GST_DEPENDENCIES,
+PKG_CHECK_MODULES(GST,
 gstreamer >= $GSTREAMER_REQUIRED_VERSION
 gstreamer-gconf >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
 gstreamer-interfaces >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
@@ -96,7 +96,7 @@ enable_gst=yes, enable_gst=no
 )
 
 if test "x$enable_gst" = "xno" ; then
-  PKG_CHECK_MODULES(GST_DEPENDENCIES,
+  PKG_CHECK_MODULES(GST,
   gstreamer-0.8 >= $GSTREAMER_REQUIRED_VERSION
   gstreamer-gconf-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
   gstreamer-interfaces-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
@@ -110,6 +110,9 @@ if test "x$enable_gst" = "xno" ; then
   fi
 fi
 
+AC_SUBST(GST_CFLAGS)
+AC_SUBST(GST_LIBS)
+
 dnl C Stuff
 
 GTK_REQUIRED=2.4
@@ -122,14 +125,24 @@ PKG_CHECK_MODULES(SONANCE,
 AC_SUBST(SONANCE_CFLAGS)
 AC_SUBST(SONANCE_LIBS)
 
+PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn)
+AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
+AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
 AC_OUTPUT([
 Makefile
 sonance.pc
 entagged/Makefile
 hal-sharp/Makefile
+mediaengines/Makefile
+mediaengines/gst/Makefile
+mediaengines/helix/Makefile
+mediaengines/helix/include/Makefile
+burn-sharp/Makefile
+plugincore/Makefile
 src/Makefile
 src/AssemblyInfo.cs
+src/ConfigureDefines.cs
 src/sonance
 src/sonance.exe.config
 libsonance/Makefile
@@ -146,6 +159,5 @@ sonance-$VERSION
 	C Compiler:       ${CC}
 	Mono C# Compiler: ${MCS}
 	Mono Runtime:     ${MONO}
-	GACUTIL:          ${GACUTIL}
 
 "

@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.3  2005/07/20 03:37:02  abock
- * Build system updates, hal-sharp
+ * Revision 1.4  2005/08/02 05:24:54  abock
+ * Sonance 0.8 Updates, Too Numerous, see ChangeLog
  *
  * Revision 1.4  2005/02/08 12:54:42  kikidonk
  * Added cvs log and header

@@ -31,7 +31,6 @@ using System.Data;
 using System.Xml;
 using System.Collections;
 using Mono.Data.SqliteClient;
-using Gst;
 
 using Sql;
 

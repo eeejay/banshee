@@ -41,6 +41,7 @@ namespace Sonance
 	public abstract class LibraryTransaction
 	{
 		public event EventHandler Finished;
+		public event EventHandler Canceled;
 		public Thread ExecutingThread;
 		
 		// statistics fields for any UI progress display
@@ -53,6 +54,7 @@ namespace Sonance
 		protected bool cancelRequested;
 		
 		protected bool showStatus;
+		protected bool showCount;
 		
 		public abstract string Name {
 			get;
@@ -65,6 +67,7 @@ namespace Sonance
 			Finished = null;
 			ExecutingThread = null;
 			showStatus = true;
+			showCount = true;
 		}
 		
 		public bool ThreadedRun()
@@ -81,19 +84,24 @@ namespace Sonance
 		
 		public void SafeRun()
 		{
-			try {
+		//	try {
 				Run();
-			} catch(Exception e) {
-				DebugLog.Add("LibraryTransaction threw an unhandled " + 
-					"exception, ending transaction safely: " + e.Message);
-			}
+		//	} catch(Exception e) {
+			//	DebugLog.Add("LibraryTransaction threw an unhandled " + 
+			//		"exception, ending transaction safely: " + e.Message);
+			//}
 			
 			Finish(this);
 		}
 		
 		public void Cancel()
 		{
+			EventHandler handler = Canceled;
+			if(handler != null)
+				handler(this, new EventArgs());
+				
 			cancelRequested = true;
+			CancelAction();
 			
 			if(ExecutingThread == null)
 				return;
@@ -122,6 +130,11 @@ namespace Sonance
 				else
 					averageDuration = (averageDuration + timeDiff) / 2;
 			}
+		}
+		
+		protected virtual void CancelAction()
+		{
+		
 		}
 		
 		public void Finish(object o)
@@ -159,6 +172,17 @@ namespace Sonance
 			get {
 				return showStatus;
 			}
+		}
+		
+		public bool ShowCount {
+			get {
+				return showCount;
+			}
+		}
+		
+		public void Register()
+		{
+			Core.Library.TransactionManager.Register(this);
 		}
 	}
 	

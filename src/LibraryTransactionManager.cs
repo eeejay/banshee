@@ -133,7 +133,7 @@ namespace Sonance
 			
 			for(int i = 0, n = transactionQueue.Count; i < n; i++) {
 				LibraryTransaction transaction = 
-					(LibraryTransaction)transactionQueue[i];	
+					(LibraryTransaction)transactionQueue[i];
 				transaction.Cancel();
 				transaction = null;
 			}

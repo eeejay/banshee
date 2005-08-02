@@ -176,10 +176,17 @@ namespace Sonance
 				/*int etaSeconds = (int)((double)(transaction.TotalCount - 
 					transaction.CurrentCount) * 
 					((double)(transaction.AverageDuration) / 10000000.0));*/
-					
-				LabelProgress.Markup = "<small>" + 
-					transaction.CurrentCount + " / " +
-					transaction.TotalCount + "</small>";
+				
+				if(transaction.ShowCount) {
+					LabelProgress.Markup = "<small>" + 
+						transaction.CurrentCount + " / " +
+						transaction.TotalCount + "</small>";
+					if(!LabelProgress.Visible)
+						LabelProgress.Visible = true;
+				} else {
+					LabelProgress.Visible = false;
+				}
+				
 				double fraction = (double)transaction.CurrentCount /
 					(double)transaction.TotalCount;
 					

@@ -48,7 +48,7 @@
 		      <accelerator key="O" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image231">
+			<widget class="GtkImage" id="image316">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -69,7 +69,7 @@
 		      <signal name="activate" handler="OnMenuImportFilesActivate" last_modification_time="Tue, 03 May 2005 00:04:01 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image232">
+			<widget class="GtkImage" id="image317">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -100,7 +100,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image233">
+				<widget class="GtkImage" id="image318">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -123,7 +123,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image234">
+				<widget class="GtkImage" id="image319">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-execute</property>
 				  <property name="icon_size">1</property>
@@ -150,7 +150,7 @@
 			      <signal name="activate" handler="OnMenuPlaylistPropertiesActivate" last_modification_time="Thu, 14 Apr 2005 00:36:24 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image235">
+				<widget class="GtkImage" id="image320">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -171,7 +171,7 @@
 			      <signal name="activate" handler="OnMenuPlaylistRemoveActivate" last_modification_time="Thu, 14 Apr 2005 00:36:48 GMT"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image236">
+				<widget class="GtkImage" id="image321">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -237,7 +237,7 @@
 		      <accelerator key="F2" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image237">
+			<widget class="GtkImage" id="image322">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-edit</property>
 			  <property name="icon_size">1</property>
@@ -259,7 +259,7 @@
 		      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image238">
+			<widget class="GtkImage" id="image323">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-remove</property>
 			  <property name="icon_size">1</property>
@@ -281,7 +281,7 @@
 		      <accelerator key="Delete" modifiers="GDK_SHIFT_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image239">
+			<widget class="GtkImage" id="image324">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-delete</property>
 			  <property name="icon_size">1</property>
@@ -327,10 +327,24 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="preferences1">
+		    <widget class="GtkImageMenuItem" id="preferences3">
 		      <property name="visible">True</property>
-		      <property name="stock_item">GNOMEUIINFO_MENU_PREFERENCES_ITEM</property>
-		      <signal name="activate" handler="OnMenuPreferencesActivate" last_modification_time="Thu, 10 Mar 2005 21:44:43 GMT"/>
+		      <property name="label" translatable="yes">Prefere_nces</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="OnMenuPreferencesActivate" last_modification_time="Thu, 28 Jul 2005 05:54:56 GMT"/>
+		      <accelerator key="comma" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image325">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-preferences</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
@@ -377,7 +391,7 @@
 	      <property name="border_width">2</property>
 	      <property name="visible">True</property>
 	      <property name="n_rows">2</property>
-	      <property name="n_columns">6</property>
+	      <property name="n_columns">7</property>
 	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">2</property>
 	      <property name="column_spacing">5</property>
@@ -462,32 +476,6 @@
 		  <property name="top_attach">0</property>
 		  <property name="bottom_attach">2</property>
 		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkAlignment" id="VolumeButtonContainer">
-		  <property name="visible">True</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xscale">1</property>
-		  <property name="yscale">1</property>
-		  <property name="top_padding">0</property>
-		  <property name="bottom_padding">0</property>
-		  <property name="left_padding">0</property>
-		  <property name="right_padding">0</property>
-
-		  <child>
-		    <placeholder/>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="left_attach">5</property>
-		  <property name="right_attach">6</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options"></property>
 		  <property name="y_options"></property>
 		</packing>
 	      </child>
@@ -582,6 +570,60 @@
 		  <property name="top_attach">0</property>
 		  <property name="bottom_attach">2</property>
 		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkAlignment" id="VolumeButtonContainer">
+		  <property name="visible">True</property>
+		  <property name="xalign">0.5</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xscale">1</property>
+		  <property name="yscale">1</property>
+		  <property name="top_padding">0</property>
+		  <property name="bottom_padding">0</property>
+		  <property name="left_padding">0</property>
+		  <property name="right_padding">0</property>
+
+		  <child>
+		    <placeholder/>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="left_attach">6</property>
+		  <property name="right_attach">7</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options"></property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkButton" id="ButtonBurn">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="relief">GTK_RELIEF_NORMAL</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="OnButtonBurnClicked" last_modification_time="Fri, 29 Jul 2005 00:34:27 GMT"/>
+
+		  <child>
+		    <widget class="GtkImage" id="ImageBurn">
+		      <property name="visible">True</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="left_attach">5</property>
+		  <property name="right_attach">6</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
 		</packing>
 	      </child>
 	    </widget>

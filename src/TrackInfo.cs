@@ -38,7 +38,7 @@ using Sql;
 
 namespace Sonance
 {
-	public class TrackInfo
+	public class TrackInfo : ITrackInfo
 	{
 		private string uri;
 	    private string mimetype;

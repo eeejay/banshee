@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.3  2005/07/20 03:37:04  abock
- * Build system updates, hal-sharp
+ * Revision 1.4  2005/08/02 05:24:56  abock
+ * Sonance 0.8 Updates, Too Numerous, see ChangeLog
  *
  * Revision 1.5  2005/02/18 12:31:51  kikidonk
  * Adds a way to know if there was an id3 tag or not

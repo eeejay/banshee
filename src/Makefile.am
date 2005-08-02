@@ -8,18 +8,18 @@ sonancewrapdir = $(bindir)
 sonancewrap_SCRIPTS = sonance
 
 sonancedir = $(pkglibdir)
-sonance_SCRIPTS = sonance.exe sonance.exe.config gst-sharp.dll
+sonance_SCRIPTS = sonance.exe sonance.exe.config
 
 EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
-	gst-sharp.dll \
 	sonance.in \
 	AssemblyInfo.cs.in \
+	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl
 
-CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb
+CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb *.dll
 DISTCLEANFILES = Makefile.in sonance entagged-sharp.dll $(sonance_generated_sources)
 
-sonance_sources_in = AssemblyInfo.cs.in
+sonance_sources_in = AssemblyInfo.cs.in ConfigureDefines.cs.in
 sonance_generated_sources = $(sonance_sources_in:.in=) \
 	AmazonSearchService.cs
 
@@ -30,7 +30,6 @@ sonance_sources = \
 	StockIcons.cs \
 	PlayerInterface.cs \
 	TrackInfo.cs \
-	GstPlayer.cs \
 	Utilities.cs \
 	Core.cs \
 	PlaylistView.cs \
@@ -48,7 +47,6 @@ sonance_sources = \
 	LibraryTransactions.cs \
 	LibraryTransactionManager.cs \
 	LibraryTransactionStatus.cs \
-	DecoderRegistry.cs \
 	ImageAnimation.cs \
 	QueryBuilder.cs \
 	QueryBuilderModel.cs \
@@ -63,9 +61,15 @@ sonance_sources = \
 	IPlaybackModel.cs \
 	PlaylistRowRenderer.cs \
 	DBusIPC.cs \
-	PlayerEngine.cs \
 	IpodCore.cs \
-	AlbumCoverFetch.cs 
+	AlbumCoverFetch.cs \
+	FileEncoder.cs \
+	GstFileEncoder.cs \
+	NautilusBurnUtil.cs \
+	FileEncodeTransaction.cs \
+	BurnCore.cs \
+	BurnTransaction.cs \
+	PlayerEngineLoader.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -76,6 +80,7 @@ sonance_resources = \
 	../data/images/media-pause.png \
 	../data/images/media-play.png \
 	../data/images/media-prev.png \
+	../data/images/media-burn.png \
 	../data/images/volume-decrease.png \
 	../data/images/volume-increase.png \
 	../data/images/volume-max.png \
@@ -105,7 +110,8 @@ sonance_resources = \
 	../data/images/source-ipod-regular.png \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
-	../data/images/burn-icon-32.png
+	../data/images/burn-icon-32.png \
+	../data/images/burn-icon.png
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
@@ -115,7 +121,8 @@ PKG_REFERENCES = \
 	$(IPODSHARP_LIBS) \
 	-r:$(top_builddir)/entagged/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
-	-r:$(srcdir)/gst-sharp.dll
+	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
+	-r:$(top_builddir)/plugincore/plugin-core.dll
 
 SYSTEM_REFERENCES = \
 	System.dll \
@@ -123,7 +130,7 @@ SYSTEM_REFERENCES = \
 	System.Web.Services.dll \
 	System.Data.dll \
 	Mono.Data.SqliteClient.dll \
-	Mono.Posix
+	Mono.Posix 
 
 SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 
@@ -156,4 +163,6 @@ uninstall-hook:
 
 
 run:
-	mono --debug --config /usr/lib/sonance/sonance.exe.config sonance.exe
+	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../mediaengines/helix/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
+	LD_LIBRARY_PATH=/usr/lib/sonance:/usr/lib/sonance/mediaengines/gst:/usr/lib/sonance/mediaengines/helix:$$LD_LIBRARY_PATH mono --debug --config sonance.exe.config sonance.exe
+	

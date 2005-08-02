@@ -56,7 +56,10 @@ namespace Sonance
 			/* Now Playing Images */
 			"icon-artist",
 			"icon-album",
-			"icon-title"
+			"icon-title",
+			
+			/* Other */
+			"media-burn"
 		};	
 
 		public static void Initialize()

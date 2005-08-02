@@ -1,6 +1,9 @@
 SUBDIRS = \
 	data \
 	libsonance \
+	plugincore \
+	mediaengines \
+	burn-sharp \
 	entagged \
 	hal-sharp \
 	src 

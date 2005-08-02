@@ -45,5 +45,8 @@ namespace Sonance
 		public const string CopyOnImport = BasePath + "CopyOnImport";
 		public const string AdditionAction = BasePath + "AdditionAction";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
+	
+		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
+		public const string CDBurnerId = BasePath + "CDBurnerId";
 	}
 }

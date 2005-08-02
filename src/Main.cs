@@ -46,6 +46,11 @@ namespace Sonance
 				version, Modules.UI, args);
 			new Sonance.PlayerUI();
 		}
+		
+		public static void OnFileEncodeProgress(object o, FileEncoderProgressArgs args)
+		{
+			Console.WriteLine("Progress Made: {0}", args.Progress);
+		}
 	}
 }
 

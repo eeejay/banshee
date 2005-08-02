@@ -29,8 +29,10 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Reflection;
 using Gnome;
 using GConf;
+using Hal;
 
 namespace Sonance
 {
@@ -42,17 +44,17 @@ namespace Sonance
 		public static string [] Args = null;
 		public System.Threading.Thread MainThread;
 		
-		public GstPlayer Player; 
+		public IPlayerEngine Player; 
 		public Program Program;
 		public PlayerUI PlayerInterface;
 		public Random Random;
-		public DecoderRegistry DecoderRegistry;
 		
 		public string UserRealName;
 		public string UserFirstName;
 		
 		private Library library;
 		private GConf.Client gconfClient;
+		private Context halContext;
 		
 		public static Core Instance
 		{
@@ -85,13 +87,20 @@ namespace Sonance
 			}
 		}
 		
+		public static Context HalContext
+		{
+			get {
+				return Instance.halContext;
+			}
+		}
+		
 		public int NextUid
 		{
 			get {
 				return uid++;
 			}
 		}
-		
+
 		private Core()
 		{
 			uid = 0;
@@ -105,8 +114,15 @@ namespace Sonance
 			Random = new Random();
 			gconfClient = new GConf.Client();
 			library = new Library();
-			DecoderRegistry = new DecoderRegistry();
-			Player = new GstPlayer();
+			
+			Player = PlayerEngineLoader.LoadPreferred();
+
+			if(Player == null) {
+				Console.WriteLine("Could not load A PlayerEngine Core!");
+				System.Environment.Exit(1);
+			}
+			
+			DebugLog.Add("Loaded PlayerEngine core: " + Player.EngineName);
 			
 			StockIcons.Initialize();
 			MainThread = System.Threading.Thread.CurrentThread;
@@ -118,7 +134,6 @@ namespace Sonance
 		{
 			library.TransactionManager.CancelAll();
 			library.Db.Close();
-			Player.Close();
 		}
 		
 		public static bool InMainThread

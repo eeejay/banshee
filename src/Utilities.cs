@@ -119,6 +119,21 @@ namespace Sonance
 				return Paths.ApplicationData + "Library";
 			}
 		}
+		
+		public static string TempDir 
+		{
+			get {
+				string dir = Paths.ApplicationData 
+					+ Path.DirectorySeparatorChar 
+					+ "temp";
+		
+				if(File.Exists(dir))
+					File.Delete(dir);
+
+				Directory.CreateDirectory(dir);
+				return dir;
+			}
+		}
 	}
 	
 	public class Resource

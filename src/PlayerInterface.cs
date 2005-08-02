@@ -48,6 +48,7 @@ namespace Sonance
 		[Widget] private Gtk.Image ImagePrevious;
 		[Widget] private Gtk.Image ImageNext;
 		[Widget] private Gtk.Image ImagePlayPause;
+		[Widget] private Gtk.Image ImageBurn;
 		[Widget] private Gtk.HScale ScaleTime;
 		[Widget] private Gtk.Label LabelInfo;
 		[Widget] private Gtk.Label LabelStatusBar;
@@ -107,13 +108,11 @@ namespace Sonance
 			BuildWindow();   
 			InstallTrayIcon();
 			
-			Core.Instance.Player.Tick += new TickEventHandler(OnPlayerTick);
-			Core.Instance.Player.Eos += new EventHandler(OnPlayerEos);		
+			Core.Instance.Player.Iterate += OnPlayerTick;
+			Core.Instance.Player.EndOfStream += OnPlayerEos;		
 			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
-			
-			ipodCore = IpodCore.Instance;
 			
 			GLib.Timeout.Add(500, InitialLoadTimeout);
 	
@@ -121,7 +120,7 @@ namespace Sonance
 			Gtk.Application.Run();
 			Gdk.Threads.Leave();
       	}
-      	
+      			
       	private bool InitialLoadTimeout()
       	{
       		ConnectToLibraryTransactionManager();
@@ -166,6 +165,7 @@ namespace Sonance
 			ImagePrevious.SetFromStock("media-prev", IconSize.LargeToolbar);
 			ImageNext.SetFromStock("media-next", IconSize.LargeToolbar);
 			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+			ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
 				
 			((Gtk.Image)gxml["ImageShuffle"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
@@ -453,7 +453,7 @@ namespace Sonance
 		public void PlayFile(TrackInfo ti)
 		{
 			activeTrackInfo = ti;
-			Core.Instance.Player.Close();
+			Core.Instance.Player.Shutdown();
 			Core.Instance.Player.Open(ti);
 
 			ScaleTime.Adjustment.Lower = 0;
@@ -469,6 +469,7 @@ namespace Sonance
 		private void OnWindowPlayerDeleteEvent(object o, DeleteEventArgs args) 
 		{
 			playlistView.Shutdown();
+			Core.Instance.Player.Shutdown();
 			Core.GconfClient.Set(GConfKeys.SourceViewWidth, 
 				SourceSplitter.Position);
 			Core.Instance.Shutdown();
@@ -592,7 +593,7 @@ namespace Sonance
 
 		// ---- Player Event Handlers ----
 		
-		private void OnPlayerTick(object o, TickEventArgs args)
+		private void OnPlayerTick(object o, PlayerEngineIterateArgs args)
 		{
 			if(activeTrackInfo == null)
 				return;
@@ -1376,6 +1377,19 @@ namespace Sonance
 		private void OnPlaylistSavedRefreshSourceView(object o, EventArgs args)
 		{
 			sourceView.RefreshList();
+		}
+		
+		private void OnButtonBurnClicked(object o, EventArgs args)
+		{
+			if(playlistView.Selection.CountSelectedRows() <= 0)
+				return;
+		
+			BurnCore burnCore = new BurnCore(BurnCore.DiskType.Audio);
+		
+			foreach(TreePath path in playlistView.Selection.GetSelectedRows())
+				burnCore.AddTrack(playlistModel.PathTrackInfo(path));
+				
+			burnCore.Burn();
 		}
 	}
 }
