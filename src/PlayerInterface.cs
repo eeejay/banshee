@@ -270,6 +270,12 @@ namespace Sonance
 			toolTips.SetTip(gxml["ToggleButtonShuffle"], "Toggle Shuffle Playback Mode", "Toggle Shuffle Playback Mode");
 			toolTips.SetTip(gxml["ToggleButtonRepeat"], "Toggle Repeat Playback Mode", "Toggle Repeat Playback Mode");
 			toolTips.SetTip(gxml["ButtonTrackProperties"], "View Selected Song Information", "View Selected Song Information");
+			toolTips.SetTip(gxml["ButtonBurn"], "Burn Selection to CD", "Burn Selection to CD");
+			toolTips.SetTip(gxml["ButtonPrevious"], "Play Previous Song", "Play Previous Song");
+			toolTips.SetTip(gxml["ButtonPlayPause"], "Play/Pause Current Song", "Play/Pause Current Song");
+			toolTips.SetTip(gxml["ButtonNext"], "Plah Next Song", "Play Next Song");
+			toolTips.SetTip(gxml["ScaleTime"], "Current Position in Song", "Current Position in Song");
+			toolTips.SetTip(volumeButton, "Adjust Volume", "Adjust Volume");
 			
 			playlistMenuMap = new Hashtable();
       	}
@@ -479,6 +485,9 @@ namespace Sonance
 			UpdateMetaDisplay(ti);
 			
 			TogglePlaying();
+			
+			ti.IncrementPlayCount();
+			playlistView.QueueDraw();
 		}
 
 		// ---- Window Event Handlers ----
@@ -1097,41 +1106,9 @@ namespace Sonance
 			ButtonPressEventArgs args)
 		{
 			if(args.Event.Button == 3) {
-				if(gxmlPlaylistMenu == null) {
-					gxmlPlaylistMenu = new Glade.XML(null, "player.glade", 
-						"PlaylistMenu", null);
-					gxmlPlaylistMenu.Autoconnect(this);
-				}
-			
-				Menu plMenu = new Menu();
-				playlistMenuMap.Clear();
-				
-				ImageMenuItem newPlItem = new ImageMenuItem("New Playlist");
-				newPlItem.Image = new Gtk.Image("gtk-new", IconSize.Menu);
-				newPlItem.Activated += OnNewPlaylistFromSelectionActivated;
-				plMenu.Append(newPlItem);
-				
-				string [] names = Playlist.ListAll();
-				
-				if(names.Length > 0) {
-					plMenu.Append(new SeparatorMenuItem());
-					
-					foreach(string plName in names) {
-						ImageMenuItem item = new ImageMenuItem(plName);
-						item.Image = new Gtk.Image(
-							Pixbuf.LoadFromResource("source-playlist.png"));
-						
-						playlistMenuMap[item] = plName;
-						item.Activated += OnItemAddToPlaylistActivated;
-						
-						plMenu.Append(item);
-					}
-				}
-			
-				Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
-				(gxmlPlaylistMenu["ItemAddToPlaylist"] as MenuItem).Submenu = plMenu;
-				menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
-				menu.ShowAll();
+				//GLib.Timeout.Add(10, 
+				//	new GLib.TimeoutHandler(PlaylistMenuPopupTimeout));
+				PlaylistMenuPopupTimeout(args.Event.Time);
 			}
 			
 			TreePath path;
@@ -1161,6 +1138,84 @@ namespace Sonance
 			}
 		}
 
+		private bool PlaylistMenuPopupTimeout(uint time)
+		{
+			if(gxmlPlaylistMenu == null) {
+				gxmlPlaylistMenu = new Glade.XML(null, "player.glade", 
+					"PlaylistMenu", null);
+				gxmlPlaylistMenu.Autoconnect(this);
+			}
+		
+			bool sensitive = playlistView.Selection.CountSelectedRows() > 0;
+			Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
+			
+			if(sensitive) {
+				Menu plMenu = new Menu();
+				playlistMenuMap.Clear();
+				
+				ImageMenuItem newPlItem = new ImageMenuItem("New Playlist");
+				newPlItem.Image = new Gtk.Image("gtk-new", IconSize.Menu);
+				newPlItem.Activated += OnNewPlaylistFromSelectionActivated;
+				plMenu.Append(newPlItem);
+				
+				string [] names = Playlist.ListAll();
+				
+				if(names.Length > 0) {
+					plMenu.Append(new SeparatorMenuItem());
+					
+					foreach(string plName in names) {
+						ImageMenuItem item = new ImageMenuItem(plName);
+						item.Image = new Gtk.Image(
+							Pixbuf.LoadFromResource("source-playlist.png"));
+						
+						playlistMenuMap[item] = plName;
+						item.Activated += OnItemAddToPlaylistActivated;
+						
+						plMenu.Append(item);
+					}
+				}
+				
+				Menu ratingMenu = new Menu();
+				
+				MenuItem clearItem = new MenuItem("Clear");
+				clearItem.Name = "0";
+				clearItem.Activated += OnItemRatingActivated;
+				
+				ratingMenu.Append(clearItem);
+				ratingMenu.Append(new SeparatorMenuItem());
+				
+				for(int i = 0; i < 5; i++) {
+					MenuItem item = new MenuItem();
+					HBox box = new HBox();
+					box.Spacing = 3;
+					for(int j = 0; j < i + 1; j++)
+						box.PackStart(new Gtk.Image(RatingRenderer.Star), 
+							false, false, 0);
+					item.Add(box);
+					item.Name = String.Format("{0}", i + 1);
+					item.Activated += OnItemRatingActivated;
+					ratingMenu.Append(item);
+				}
+			
+				(gxmlPlaylistMenu["ItemAddToPlaylist"] 
+					as MenuItem).Submenu = plMenu;
+				(gxmlPlaylistMenu["ItemRating"] 
+					as MenuItem).Submenu = ratingMenu;
+			}
+		
+			menu.ShowAll();
+			
+			gxmlPlaylistMenu["ItemAddToPlaylist"].Visible = sensitive;
+			gxmlPlaylistMenu["ItemRating"].Visible = sensitive;
+			gxmlPlaylistMenu["ItemSep"].Visible = sensitive;
+			gxmlPlaylistMenu["ItemRemove"].Visible = sensitive;
+			gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
+			
+			menu.Popup(null, null, null, IntPtr.Zero, 0, time);
+			
+			return false;
+		}
+
 		private void OnItemAddToPlaylistActivated(object o, EventArgs args)
 		{
 			string name = playlistMenuMap[o] as string;
@@ -1169,6 +1224,14 @@ namespace Sonance
 				return;
 				
 			playlistView.AddSelectedToPlayList(name);
+		}
+		
+		private void OnItemRatingActivated(object o, EventArgs args)
+		{
+			uint rating = Convert.ToUInt32((o as Widget).Name);
+			foreach(TreePath path in playlistView.Selection.GetSelectedRows())
+				playlistModel.PathTrackInfo(path).Rating = rating;
+			playlistView.QueueDraw();
 		}
 
 		private void OnNewPlaylistFromSelectionActivated(object o, EventArgs args)

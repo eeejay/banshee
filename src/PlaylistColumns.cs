@@ -37,7 +37,8 @@ namespace Sonance
 		private TreeCellDataFunc datafunc;
 	
 		public PlaylistColumn(PlaylistView view, string name, 
-			TreeCellDataFunc datafunc, int Order)
+			TreeCellDataFunc datafunc, CellRenderer renderer, 
+			int Order, int SortId)
 		{
 			this.Name = name;
 			this.datafunc = datafunc;
@@ -45,15 +46,22 @@ namespace Sonance
 			this.view = view;
 			
 			Column = new TreeViewColumn();
-			CellRendererText renderer = new CellRendererText();
 			Column.Title = name;
 			Column.Resizable = true;
 			Column.Reorderable = true;
 			Column.Sizing = TreeViewColumnSizing.Fixed;
-			Column.Clickable = true;
 			Column.PackStart(renderer, false);
 			Column.SetCellDataFunc(renderer, datafunc);
-
+				
+			if(SortId >= 0) {
+				Column.Clickable = true;
+				Column.SortColumnId = SortId;
+			} else {
+				Column.Clickable = false;
+				Column.SortColumnId = -1;
+				Column.SortIndicator = false;
+			}
+			
 			string keyName = Name.Replace(' ', '-');
 
 			try {

@@ -47,6 +47,17 @@ namespace Sonance
 		
 	public class PlaylistView : TreeView
 	{
+		private enum ColumnId : int {
+			Track,
+			Artist,
+			Title,
+			Album,
+			Time,
+			Rating,
+			PlayCount,
+			LastPlayed
+		};
+			
 		private ArrayList columns;
 		PlaylistModel model;
 		
@@ -69,20 +80,32 @@ namespace Sonance
 			columns = new ArrayList();
 			
 			columns.Add(new PlaylistColumn(this, "Track", 
-				new TreeCellDataFunc(TrackCellTrack), 0));
+				new TreeCellDataFunc(TrackCellTrack), new CellRendererText(),
+				0, (int)ColumnId.Track));
 			columns.Add(new PlaylistColumn(this, "Artist", 
-				new TreeCellDataFunc(TrackCellArtist), 1));
+				new TreeCellDataFunc(TrackCellArtist), new CellRendererText(),
+				1, (int)ColumnId.Artist));
 			columns.Add(new PlaylistColumn(this, "Title", 
-				new TreeCellDataFunc(TrackCellTitle), 2));
+				new TreeCellDataFunc(TrackCellTitle), new CellRendererText(),
+				2, (int)ColumnId.Title));
 			columns.Add(new PlaylistColumn(this, "Album", 
-				new TreeCellDataFunc(TrackCellAlbum), 3));
+				new TreeCellDataFunc(TrackCellAlbum), new CellRendererText(),
+				3, (int)ColumnId.Album));
 			columns.Add(new PlaylistColumn(this, "Time", 
-				new TreeCellDataFunc(TrackCellTime), 4));
+				new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
+				4, (int)ColumnId.Time));
 			columns.Add(new PlaylistColumn(this, "Rating", 
-				new TreeCellDataFunc(TrackCellRating), 5));
-			columns.Add(new PlaylistColumn(this, "Play Count", 
-				new TreeCellDataFunc(TrackCellPlayCount), 6));
-
+				new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
+				5, (int)ColumnId.Rating));
+			columns.Add(new PlaylistColumn(this, "Plays", 
+				new TreeCellDataFunc(TrackCellPlayCount), 
+				new CellRendererText(),
+				6, (int)ColumnId.PlayCount));
+			columns.Add(new PlaylistColumn(this, "Last Played", 
+				new TreeCellDataFunc(TrackCellLastPlayed), 
+				new CellRendererText(),
+				7, (int)ColumnId.LastPlayed));
+			
 			foreach(PlaylistColumn plcol in columns) {
 				InsertColumn(plcol.Column, plcol.Order);
 				plcol.Column.Clicked += OnColumnClicked;
@@ -115,12 +138,102 @@ namespace Sonance
 			RulesHint = true;
 			HeadersClickable = true;
 			HeadersVisible = true;
-			Selection.Mode = SelectionMode.Multiple;		
+			Selection.Mode = SelectionMode.Multiple;
+			
+			model.SetSortFunc((int)ColumnId.Track, 
+					new TreeIterCompareFunc(TrackTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.Artist, 
+				new TreeIterCompareFunc(ArtistTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.Title, 
+				new TreeIterCompareFunc(TitleTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.Album, 
+				new TreeIterCompareFunc(AlbumTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.Time, 
+				new TreeIterCompareFunc(TimeTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.Rating, 
+				new TreeIterCompareFunc(RatingTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.PlayCount, 
+				new TreeIterCompareFunc(PlayCountTreeIterCompareFunc));
+			model.SetSortFunc((int)ColumnId.LastPlayed, 
+				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));
 		}	
 			
-		public int DefaultTreeIterCompareFunc(TreeModel model, TreeIter a, TreeIter b)
+		private int StringFieldCompare(string a, string b)
 		{
-			return 0;	
+			if(a != null)
+				a = a.ToLower();
+				
+			if(b != null)
+				b = b.ToLower();
+				
+			return String.Compare(a, b);
+		}
+		
+		private int LongFieldCompare(long a, long b)
+		{
+			return a < b ? -1 : (a == b ? 0 : 1);
+		}
+			
+		public int TrackTreeIterCompareFunc(TreeModel _model, TreeIter a,
+			TreeIter b)
+		{
+			return LongFieldCompare((long)model.IterTrackInfo(a).TrackNumber,
+				(long)model.IterTrackInfo(b).TrackNumber);
+		}
+			
+		public int ArtistTreeIterCompareFunc(TreeModel _model, TreeIter a, 
+			TreeIter b)
+		{
+			return StringFieldCompare(model.IterTrackInfo(a).Artist, 
+				model.IterTrackInfo(b).Artist);
+		}
+		
+		public int TitleTreeIterCompareFunc(TreeModel _model, TreeIter a, 
+			TreeIter b)
+		{
+			return StringFieldCompare(model.IterTrackInfo(a).Title, 
+				model.IterTrackInfo(b).Title);
+		}
+		
+		public int AlbumTreeIterCompareFunc(TreeModel _model, TreeIter a, 
+			TreeIter b)
+		{
+			return StringFieldCompare(model.IterTrackInfo(a).Album, 
+				model.IterTrackInfo(b).Album);
+		}
+		
+		public int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a,
+			TreeIter b)
+		{
+			return LongFieldCompare(model.IterTrackInfo(a).Duration,
+				model.IterTrackInfo(b).Duration);
+		}
+		
+		public int RatingTreeIterCompareFunc(TreeModel _model, TreeIter a,
+			TreeIter b)
+		{
+			return LongFieldCompare((long)model.IterTrackInfo(a).Rating,
+				(long)model.IterTrackInfo(b).Rating);
+		}
+		
+		public int PlayCountTreeIterCompareFunc(TreeModel _model, TreeIter a,
+			TreeIter b)
+		{
+			return LongFieldCompare((long)model.IterTrackInfo(a).NumberOfPlays,
+				(long)model.IterTrackInfo(b).NumberOfPlays);
+		}
+		
+		public int LastPlayedTreeIterCompareFunc(TreeModel _model, TreeIter a,
+			TreeIter b)
+		{
+			return DateTime.Compare(model.IterTrackInfo(a).LastPlayed,
+				model.IterTrackInfo(b).LastPlayed);
+		}
+		
+		public int DefaultTreeIterCompareFunc(TreeModel _model, TreeIter a, 
+			TreeIter b)
+		{
+			return 0;
 		}
 			
 		public TrackInfo IterTrackInfo(TreeIter iter)
@@ -206,17 +319,30 @@ namespace Sonance
 		protected void TrackCellPlayCount(TreeViewColumn tree_column,
 			CellRenderer cell, TreeModel tree_model, TreeIter iter)
 		{
+			uint plays = model.IterTrackInfo(iter).NumberOfPlays;
 			SetRendererAttributes((CellRendererText)cell, 
-				String.Format("{0}", model.IterTrackInfo(iter).NumberOfPlays), 
+				plays > 0 ? Convert.ToString(plays) : "", 
 				iter);
 		}
 		
 		protected void TrackCellRating(TreeViewColumn tree_column,
 			CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		{			
+			((RatingRenderer)cell).Track = model.IterTrackInfo(iter);
+		}
+		
+		protected void TrackCellLastPlayed(TreeViewColumn tree_column,
+			CellRenderer cell, TreeModel tree_model, TreeIter iter)
 		{
+			DateTime lastPlayed = model.IterTrackInfo(iter).LastPlayed;
+			
+			string disp = String.Empty;
+			
+			if(lastPlayed > DateTime.MinValue)
+				disp = lastPlayed.ToString();
+			
 			SetRendererAttributes((CellRendererText)cell, 
-				String.Format("{0}", model.IterTrackInfo(iter).Rating), 
-				iter);
+				String.Format("{0}", disp), iter);
 		}
 		
 		private void OnColumnClicked(object o, EventArgs args)
@@ -229,7 +355,8 @@ namespace Sonance
 			}
 			
 			column.SortIndicator = true;
-			column.SortOrder = column.SortOrder == SortType.Ascending ? SortType.Descending : SortType.Ascending;
+			column.SortOrder = column.SortOrder == SortType.Ascending 
+				? SortType.Descending : SortType.Ascending;
 			model.SetSortColumnId(column.SortColumnId, column.SortOrder);
 		}
 		
