@@ -133,5 +133,8 @@
     <File name="./src/ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
     <File name="./data/images/blue-speaker.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/now-playing-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/circle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./src/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

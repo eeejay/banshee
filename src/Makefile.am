@@ -69,7 +69,8 @@ sonance_sources = \
 	FileEncodeTransaction.cs \
 	BurnCore.cs \
 	BurnTransaction.cs \
-	PlayerEngineLoader.cs
+	PlayerEngineLoader.cs \
+	RatingRenderer.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -113,7 +114,9 @@ sonance_resources = \
 	../data/images/burn-icon-32.png \
 	../data/images/burn-icon.png \
 	../data/images/blue-speaker.png \
-	../data/images/now-playing-arrow.png
+	../data/images/now-playing-arrow.png \
+	../data/images/circle.png \
+	../data/images/star.png
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 

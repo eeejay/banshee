@@ -14,12 +14,12 @@ libgstmediaengine_la_SOURCES = \
 
 libgstmediaengine_la_LIBADD = $(GST_LIBS)
 
-ASSEMBLY_SOURCES = GstPlayer.cs
+ASSEMBLY_SOURCES = $(srcdir)/GstPlayer.cs
 
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll -r:gst-sharp.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(MCS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll -r:$(srcdir)/gst-sharp.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 DISTCLEANFILES = Makefile.in
 CLEANFILES = gst-encode gst-player.dll *.mdp *.exe

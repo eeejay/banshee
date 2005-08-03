@@ -6,8 +6,8 @@ plugincoredir = $(pkglibdir)
 plugincore_SCRIPTS = $(ASSEMBLY)
 
 ASSEMBLY_SOURCES = \
-	IPlayerEngine.cs \
-	ITrackInfo.cs
+	$(srcdir)/IPlayerEngine.cs \
+	$(srcdir)/ITrackInfo.cs
 	
 all: $(ASSEMBLY)
 

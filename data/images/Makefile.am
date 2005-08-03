@@ -11,6 +11,7 @@ EXTRA_DIST = \
 	burn-icon.png \
 	busy-spinner-36.png \
 	busy-spinner.png \
+	circle.png \
 	icon-album.png \
 	icon-artist.png \
 	icon-title.png \
@@ -36,6 +37,7 @@ EXTRA_DIST = \
 	source-ipod-regular.png \
 	source-library.png \
 	source-playlist.png \
+	star.png \
 	tray-icon.png \
 	tray-icon-raw.png \
 	volume-decrease.png \

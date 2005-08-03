@@ -8,21 +8,21 @@ INCLUDES = -I$(srcdir)/include -include HXCompat.h
 
 helixenginelibdir = $(pkglibdir)/mediaengines/helix
 helixenginelib_LTLIBRARIES = libhxplayer.la
-helixenginelib_DATA = libhxclient.a
+helixenginelib_DATA = libhxclient.a 
 helixenginelib_SCRIPTS = $(ASSEMBLY)
 
 libhxplayer_la_SOURCES = \
 	HXPlayer.c
 	
-libhxplayer_la_LIBADD = -L. -lstdc++ -lpthread -ldl -lhxclient
+libhxplayer_la_LIBADD = -L$(srcdir) -lstdc++ -lpthread -ldl -lhxclient
 
 ASSEMBLY_SOURCES = \
-	HxPlayer.cs    \
-	HxUnmanaged.cs \
-	HxEvents.cs    \
-	HxDefines.cs   \
-	HxCallbackDelegates.cs \
-	HelixPlayer.cs
+	$(srcdir)/HxPlayer.cs    \
+	$(srcdir)/HxUnmanaged.cs \
+	$(srcdir)/HxEvents.cs    \
+	$(srcdir)/HxDefines.cs   \
+	$(srcdir)/HxCallbackDelegates.cs \
+	$(srcdir)/HelixPlayer.cs
 
 all: $(ASSEMBLY)
 
@@ -33,9 +33,10 @@ EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs HXPlayer.h HXCompat.h libhxclie
 DISTCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe
 
+
 install-data-hook:
-	$(INSTALL) -c -c -m 0755 libhxclient.so $(pkglibdir)/mediaengines/helix
+	$(INSTALL) -c -c -m 0755 $(srcdir)/libhxclient.so $(DESTDIR)$(pkglibdir)/mediaengines/helix
 
 uninstall-data:
-	rm -f $(pkglibdir)/mediaengines/helix/libhxclient.so
+	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so
 
