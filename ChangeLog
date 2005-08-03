@@ -1,3 +1,11 @@
+2005-08-03 Aaron Bockover <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Rating Menu, Increment Play Count/Date
+	* src/PlaylistView.cs: Column Sorting, new Last Played Column
+	* src/PlaylistColumns.cs: CellRenderer argument
+	* src/TrackInfo.cs: Save count, date, rating
+	* src/RatingRenderer.cs: CellRenderer for stars as rating
+
 2005-08-01 Aaron Bockover <aaron@aaronbock.net>
 
 	* mediaengines/gst/Makefile.am: Fixed rule that removed bundled
