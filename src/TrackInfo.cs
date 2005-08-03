@@ -207,8 +207,8 @@ namespace Sonance
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
 					"LastPlayed", lastPlayed) +
-					new Where(new Compare("TrackID", Op.EqualTo, trackId)) +
-					new Limit(1);
+					new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
+				//	new Limit(1);
 			}
 			
 			Core.Library.Db.Execute(tracksQuery);
@@ -323,6 +323,28 @@ namespace Sonance
 			SaveToDatabase(true);
 		}
 		
+		public void IncrementPlayCount()
+		{
+			numberOfPlays++;
+			lastPlayed = DateTime.Now;
+			
+			Statement query = new Update("Tracks",
+				"NumberOfPlays", numberOfPlays, 
+				"LastPlayed", lastPlayed) +
+				new Where(new Compare("TrackID", Op.EqualTo, trackId));
+				//new Limit(1);
+
+			Core.Library.Db.Execute(query);
+		}
+		
+		private void SaveRating()
+		{
+			Statement query = new Update("Tracks",
+				"Rating", rating) +
+				new Where(new Compare("TrackID", Op.EqualTo, trackId));
+			Core.Library.Db.Execute(query);
+		}
+		
 		public int TrackId      { get { return trackId;     } }
 		
 		public string Uri       { get { return uri;         } } 
@@ -338,7 +360,9 @@ namespace Sonance
 	   	public uint TrackNumber { get { return trackNumber; } }
 	    public uint TrackCount  { get { return trackCount;  } }
 	    
-	    public uint Rating         { get { return rating;        } }
+	    public uint Rating         { get { return rating;        } 
+	    	                         set { rating = value; 
+	    	                               SaveRating();         } }
 	    public uint NumberOfPlays  { get { return numberOfPlays; } }
 	    public DateTime LastPlayed { get { return lastPlayed;    } }
 	    public DateTime DateAdded  { get { return dateAdded;     } }
