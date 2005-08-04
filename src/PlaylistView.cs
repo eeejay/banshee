@@ -347,7 +347,7 @@ namespace Sonance
 		
 		private void OnColumnClicked(object o, EventArgs args)
 		{
-			TreeViewColumn column = o as TreeViewColumn;
+			/*TreeViewColumn column = o as TreeViewColumn;
 			
 			foreach(PlaylistColumn plcol in columns) {
 				if(plcol.Column != column)
@@ -357,7 +357,7 @@ namespace Sonance
 			column.SortIndicator = true;
 			column.SortOrder = column.SortOrder == SortType.Ascending 
 				? SortType.Descending : SortType.Ascending;
-			model.SetSortColumnId(column.SortColumnId, column.SortOrder);
+			//model.SetSortColumnId(column.SortColumnId, column.SortOrder);*/
 		}
 		
 		public void PlayPath(TreePath path)

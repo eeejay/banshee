@@ -1,5 +1,6 @@
 2005-08-03 Aaron Bockover <aaron@aaronbock.net>
 
+	* sonance: Version 0.8.1
 	* src/PlayerInterface.cs: Rating Menu, Increment Play Count/Date
 	* src/PlaylistView.cs: Column Sorting, new Last Played Column
 	* src/PlaylistColumns.cs: CellRenderer argument
