@@ -69,7 +69,6 @@ namespace Helix
 			
 			set {
 				HxUnmanaged.ClientPlayerSetVolume(handle, value);
-				Console.WriteLine("Set volume to : " + volume);
 			}
 		}
 		

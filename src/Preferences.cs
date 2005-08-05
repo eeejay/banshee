@@ -120,7 +120,7 @@ namespace Banshee
 		private void OnButtonLibraryChangeClicked(object o, EventArgs args)
 		{
 			FileChooserDialog chooser = new FileChooserDialog(
-				"Select Sonance Library Location",
+				"Select Banshee Library Location",
 				null,
 				FileChooserAction.SelectFolder,
 				"gnome-vfs"

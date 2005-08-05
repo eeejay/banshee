@@ -69,7 +69,7 @@ namespace Banshee
 
 		public void Init()
 		{
-			Raw = egg_tray_icon_new("Sonance");
+			Raw = egg_tray_icon_new("Banshee");
 
 			DestroyEvent += new DestroyEventHandler (OnDestroyEvent);
 
@@ -136,7 +136,7 @@ namespace Banshee
 			
 			traymenu.Append(new SeparatorMenuItem());
 			
-			ExitItem = new ImageMenuItem("Quit Sonance");
+			ExitItem = new ImageMenuItem("Quit Banshee");
 			ExitItem.Image = new Image();
 			((Image)ExitItem.Image).SetFromStock("gtk-quit", IconSize.Menu);
 			traymenu.Append(ExitItem);

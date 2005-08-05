@@ -133,7 +133,6 @@ namespace Banshee
 					as IPlayerEngine;
 				try {
 					engines[i].TestInitialize();
-					Console.WriteLine("Testing");
 				} catch(Exception) {
 					engines[i].Disabled = true;
 					Console.WriteLine("Player Engine `{0}' failed init tests... disabling",

@@ -1,6 +1,9 @@
 2005-08-04 Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.8.2
+	* configure.ac: --enable-helix option, HME disabled by default
+	* mediaengines/helix/Makefile.am: if ENABLE_HELIX.. build only if requested
+	* banshee: More Sonance->Banshee string changes
 	* banshee: Namespace renamed from Sonance to Banshee
 	* banshee: Files/Graphics updated to read Banshee in public/user places
 	* sonance: Renamed to Banshee

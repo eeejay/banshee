@@ -119,7 +119,7 @@ namespace Banshee
 			Player.Initialize();
 
 			if(Player == null) {
-				Console.WriteLine("Could not load A PlayerEngine Core!");
+				Console.Error.WriteLine("Could not load A PlayerEngine Core!");
 				System.Environment.Exit(1);
 			}
 			

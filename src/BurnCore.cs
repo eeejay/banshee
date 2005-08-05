@@ -127,7 +127,7 @@ namespace Banshee
 		private bool killPulse;
 		private bool canCancel;
 		
-		public BurnWindow() : base("Sonance CD Burner")
+		public BurnWindow() : base("Banshee CD Burner")
 		{
 			VBox vboxWindow;
 			VBox vboxInner;

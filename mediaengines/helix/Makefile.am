@@ -1,3 +1,16 @@
+ASSEMBLY_SOURCES = \
+	$(srcdir)/HxPlayer.cs    \
+	$(srcdir)/HxUnmanaged.cs \
+	$(srcdir)/HxEvents.cs    \
+	$(srcdir)/HxDefines.cs   \
+	$(srcdir)/HxCallbackDelegates.cs \
+	$(srcdir)/HelixPlayer.cs
+
+EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs HXPlayer.h HXCompat.h libhxclient.a libhxclient.so
+DISTCLEANFILES = Makefile.in
+CLEANFILES = *.dll *.mdb *.exe
+
+if ENABLE_HELIX
 SUBDIRS = include
 
 MCS_FLAGS = -debug -nowarn:0169
@@ -16,27 +29,15 @@ libhxplayer_la_SOURCES = \
 	
 libhxplayer_la_LIBADD = -L$(srcdir) -lstdc++ -lpthread -ldl -lhxclient
 
-ASSEMBLY_SOURCES = \
-	$(srcdir)/HxPlayer.cs    \
-	$(srcdir)/HxUnmanaged.cs \
-	$(srcdir)/HxEvents.cs    \
-	$(srcdir)/HxDefines.cs   \
-	$(srcdir)/HxCallbackDelegates.cs \
-	$(srcdir)/HelixPlayer.cs
-
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
-
-EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs HXPlayer.h HXCompat.h libhxclient.a libhxclient.so
-DISTCLEANFILES = Makefile.in
-CLEANFILES = *.dll *.mdb *.exe
-
 
 install-data-hook:
 	$(INSTALL) -c -c -m 0755 $(srcdir)/libhxclient.so $(DESTDIR)$(pkglibdir)/mediaengines/helix
 
 uninstall-data:
 	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so
+endif
 

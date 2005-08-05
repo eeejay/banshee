@@ -133,7 +133,7 @@ namespace Banshee
 		{
 			Element dummy;
 			string [] args = {""};
-			Gst.Application.Init("Sonance", ref args);
+			Gst.Application.Init("Banshee", ref args);
 			dummy = Gst.ElementFactory.Make("fakesink", "fakesink");
 			Gst.SchedulerFactory.Make(null, dummy);
 		}

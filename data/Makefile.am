@@ -3,8 +3,8 @@ SUBDIRS = \
 	images
 
 desktopdir = $(datadir)/applications
-desktop_DATA = sonance.desktop
+desktop_DATA = banshee.desktop
 
-EXTRA_DIST = Tables.sql sonance.desktop.in
+EXTRA_DIST = Tables.sql banshee.desktop.in
 DISTCLEANFILES = Makefile.in
 

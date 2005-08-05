@@ -14,6 +14,13 @@ AM_PROG_LIBTOOL
 
 AM_CONDITIONAL(INSTALL_GST_SHARP, 1)
 
+AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="no")
+#if test "x$enable_helix" = "xyes"; then
+#	AC_DEFINE(ENABLE_HELIX, 1, [Enable Helix/Realplayer media engine])
+#fi
+
+AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
+
 dnl pkg-config
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test "x$PKG_CONFIG" = "xno"; then
@@ -160,4 +167,7 @@ banshee-$VERSION
 	Mono C# Compiler: ${MCS}
 	Mono Runtime:     ${MONO}
 
+	Engines:
+	   gst-sharp:     yes
+	   helix:         ${enable_helix}
 "
