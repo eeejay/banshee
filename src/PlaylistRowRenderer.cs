@@ -33,9 +33,8 @@ using Gdk;
 using Pango;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
-
 	public class PlaylistRowRenderer : CellRenderer
 	{
 		public bool Playing = false;

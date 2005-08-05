@@ -31,7 +31,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions; 
 
-namespace Sonance
+namespace Banshee
 {
 	public class Error
 	{

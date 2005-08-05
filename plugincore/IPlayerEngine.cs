@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Sonance
+namespace Banshee
 {
 	public delegate void PlayerEngineErrorHandler(object o, 
 		PlayerEngineErrorArgs args);
@@ -56,38 +56,34 @@ namespace Sonance
 	
 	public interface IPlayerEngine
 	{
-		bool Open(ITrackInfo track);
-		void Play();
-		void Pause();
-		void Shutdown();
+		bool   Open(ITrackInfo track);
 		
-		string EngineName {
-			get;
-		}
+		void   Initialize();
+		void   TestInitialize();
+		void   Play();
+		void   Pause();
+		void   Shutdown();
 		
-		bool Loaded {
-			get;
-		}
+		bool   Disabled       { get; set; }
 		
-		bool Playing {
-			get;
-		}
+		string ConfigName     { get; }
+		string EngineName     { get; }
+		string EngineLongName { get; }
+		string EngineDetails  { get; }
+		string AuthorName     { get; }
+		string AuthorEmail    { get; }
+		int    MajorVersion   { get; }
+		int    MinorVersion   { get; }
 		
-		double Volume {
-			get;
-			set;
-		}
+		bool   Loaded         { get; }
+		bool   Playing        { get; }
 		
-		long Position {
-			get;
-			set;
-		}
+		double Volume         { get; set; }
+		long   Position       { get; set; }
 	
-		// --- //
-		
-		event PlayerEngineErrorHandler Error;
-		event PlayerEngineVolumeChangedHandler VolumeChanged;
-		event PlayerEngineIterateHandler Iterate;
-		event EventHandler EndOfStream;
+		event  PlayerEngineErrorHandler Error;
+		event  PlayerEngineVolumeChangedHandler VolumeChanged;
+		event  PlayerEngineIterateHandler Iterate;
+		event  EventHandler EndOfStream;
 	}
 }

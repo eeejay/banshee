@@ -31,7 +31,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using Gtk;
 
-namespace Sonance 
+namespace Banshee 
 {
 	public sealed class Dnd
 	{

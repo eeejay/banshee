@@ -35,7 +35,7 @@ using Gtk;
 using Gdk;
 using Pango;
 
-namespace Sonance
+namespace Banshee
 {
 	public class LoaderAdditionArgs : EventArgs
 	{
@@ -63,6 +63,8 @@ namespace Sonance
 		
 		PlaylistColumnChooserDialog columnChooser;
 		Pixbuf nowPlayingPixbuf;
+		public int CursorX;
+		public int CursorY;
 
 		static GLib.GType gtype;
 		public static new GLib.GType GType
@@ -140,7 +142,9 @@ namespace Sonance
 			HeadersVisible = true;
 			Selection.Mode = SelectionMode.Multiple;
 			
-			model.SetSortFunc((int)ColumnId.Track, 
+			MotionNotifyEvent += OnMotionNotifyEvent;
+			
+			/*model.SetSortFunc((int)ColumnId.Track, 
 					new TreeIterCompareFunc(TrackTreeIterCompareFunc));
 			model.SetSortFunc((int)ColumnId.Artist, 
 				new TreeIterCompareFunc(ArtistTreeIterCompareFunc));
@@ -155,7 +159,7 @@ namespace Sonance
 			model.SetSortFunc((int)ColumnId.PlayCount, 
 				new TreeIterCompareFunc(PlayCountTreeIterCompareFunc));
 			model.SetSortFunc((int)ColumnId.LastPlayed, 
-				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));
+				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));*/
 		}	
 			
 		private int StringFieldCompare(string a, string b)
@@ -345,9 +349,16 @@ namespace Sonance
 				String.Format("{0}", disp), iter);
 		}
 		
+		[GLib.ConnectBeforeAttribute]
+		private void OnMotionNotifyEvent(object o, MotionNotifyEventArgs args)
+		{
+			CursorX = (int)args.Event.X;
+			CursorY = (int)args.Event.Y;
+		}
+		
 		private void OnColumnClicked(object o, EventArgs args)
 		{
-			/*TreeViewColumn column = o as TreeViewColumn;
+			TreeViewColumn column = o as TreeViewColumn;
 			
 			foreach(PlaylistColumn plcol in columns) {
 				if(plcol.Column != column)
@@ -357,7 +368,9 @@ namespace Sonance
 			column.SortIndicator = true;
 			column.SortOrder = column.SortOrder == SortType.Ascending 
 				? SortType.Descending : SortType.Ascending;
-			//model.SetSortColumnId(column.SortColumnId, column.SortOrder);*/
+			//model.SetSortColumnId(column.SortColumnId, column.SortOrder);
+			
+			
 		}
 		
 		public void PlayPath(TreePath path)

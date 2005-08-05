@@ -26,7 +26,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
-namespace Sonance
+namespace Banshee
 {
 	public interface ITrackInfo
 	{

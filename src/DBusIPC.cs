@@ -29,7 +29,7 @@
 using System;
 //usin//g DBus;
 
-/*namespace Sonance
+/*namespace Banshee
 {
 	public class DBusIPC
 	{

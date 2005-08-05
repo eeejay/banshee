@@ -31,12 +31,14 @@ using System.Reflection;
 using System.Collections;
 using System.IO;
 
-namespace Sonance
+namespace Banshee
 {
 	public class PlayerEngineLoader
 	{
 		private const string RootEngineDir = ConfigureDefines.InstallDir +
-			"mediaengines/";	
+			"mediaengines/";
+			
+		private static IPlayerEngine [] engines;
 			
 		private static string [] FindEngineDirs()
 		{
@@ -96,7 +98,7 @@ namespace Sonance
 			return null;
 		}
 		
-		public static Type [] FindTypes()
+		private static Type [] FindTypes()
 		{
 			Assembly [] assemblies = FindEngineAssemblies();
 			
@@ -117,14 +119,59 @@ namespace Sonance
 			return engines.ToArray(typeof(Type)) as Type [];
 		}
 		
-		public static IPlayerEngine LoadPreferred()
+		public static IPlayerEngine [] LoadEngines()
 		{
 			Type [] types = FindTypes();
 			
-			if(types == null)
-				return null;
+			if(engines != null)
+				return engines;
+			
+			engines = new IPlayerEngine[types.Length];
+			
+			for(int i = 0; i < types.Length; i++) {
+				engines[i] = Activator.CreateInstance(types[i]) 
+					as IPlayerEngine;
+				try {
+					engines[i].TestInitialize();
+					Console.WriteLine("Testing");
+				} catch(Exception) {
+					engines[i].Disabled = true;
+					Console.WriteLine("Player Engine `{0}' failed init tests... disabling",
+						engines[i].EngineLongName);
+				}
+			}
+			
+			return engines;
+		}
+		
+		public static IPlayerEngine SelectedEngine
+		{
+			get {
+				LoadEngines();
 				
-			return Activator.CreateInstance(types[0]) as IPlayerEngine;
+				if(engines.Length == 0)
+					return null;
+			
+				GConf.Client gconf = new GConf.Client();
+				
+				try {
+					string selected = gconf.Get(GConfKeys.PlayerEngine) 
+						as string;
+					foreach(IPlayerEngine engine in engines)
+						if(engine.ConfigName.Equals(selected))
+							return engine;
+				} catch(Exception) {}
+				
+				gconf.Set(GConfKeys.PlayerEngine, engines[0].ConfigName);
+				return engines[0];
+			}
+		}
+		
+		public static IPlayerEngine [] Engines
+		{
+			get {
+				return engines;
+			}
 		}
 	}
 }

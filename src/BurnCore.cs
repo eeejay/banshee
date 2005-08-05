@@ -33,7 +33,7 @@ using System.IO;
 using Gtk;
 using Nautilus;
 
-namespace Sonance
+namespace Banshee
 {
 	public class BurnCore
 	{

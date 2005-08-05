@@ -1,13 +1,13 @@
-<Project name="sonance" fileversion="2.0" enableviewstate="False" language="C#" ctype="DotNetProject">
+<Project name="banshee" fileversion="2.0" enableviewstate="False" language="C#" ctype="DotNetProject">
   <Configurations>
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./src" assembly="sonance" />
+      <Output directory="./src" assembly="banshee" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
       <CodeGeneration compiler="Csc" warninglevel="2" optimize="False" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./src" assembly="sonance" />
+      <Output directory="./src" assembly="banshee" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
       <CodeGeneration compiler="Csc" warninglevel="2" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -136,5 +136,6 @@
     <File name="./data/images/circle.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./src/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./data/images/advanced-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
 </Project>

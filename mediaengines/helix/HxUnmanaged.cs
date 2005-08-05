@@ -140,7 +140,7 @@ namespace Helix
 		public static extern void ClientPlayerSetVolume(uint handle, 
 			uint volume);
 
-		/*[DllImport("hxclient")]
+		[DllImport("hxclient")]
 		public static extern bool ClientPlayerOpenURL(uint handle,
 			string url, IntPtr ptr);
 
@@ -158,9 +158,9 @@ namespace Helix
 		
 		[DllImport("hxclient")]
 		public static extern void ClientPlayerSetPosition(uint handle, 
-			int position);*/
+			int position);
 			
-		[DllImport("hxplayer")]
+		/*[DllImport("hxplayer")]
 		public static extern bool HXPlayerOpenUrl(HandleRef player,
 			string url);
 			
@@ -185,6 +185,6 @@ namespace Helix
 		
 		[DllImport("hxplayer")]
 		public static extern void HXPlayerSetPosition(HandleRef player,
-			int position);
+			int position);*/
 	}
 }

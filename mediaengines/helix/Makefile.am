@@ -27,7 +27,7 @@ ASSEMBLY_SOURCES = \
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs HXPlayer.h HXCompat.h libhxclient.a libhxclient.so
 DISTCLEANFILES = Makefile.in

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sonance
+namespace Banshee
 {
 	public sealed class ConfigureDefines
 	{

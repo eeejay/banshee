@@ -34,7 +34,7 @@ using Mono.Data.SqliteClient;
 
 using Sql;
 
-namespace Sonance
+namespace Banshee
 {
 	public class Database 
 	{

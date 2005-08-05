@@ -35,7 +35,7 @@ using Glade;
 
 using Nautilus;
 
-namespace Sonance
+namespace Banshee
 {
 	public class PreferencesWindow
 	{
@@ -53,6 +53,8 @@ namespace Sonance
 		private string selectedBurnerId;
 		private string burnKeyParent;
 		private BurnDrive selectedDrive;
+
+		private IPlayerEngine SelectedEngine;
 
 		private Glade.XML glade;
 		
@@ -75,6 +77,9 @@ namespace Sonance
 				
 			((Image)glade["ImageBurningTab"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("burn-icon-32.png");
+				
+			((Image)glade["ImageAdvancedTab"]).Pixbuf = 
+				Gdk.Pixbuf.LoadFromResource("advanced-icon-32.png");
 					
 			WindowPreferences.Icon = 
 				Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
@@ -89,6 +94,7 @@ namespace Sonance
 			LibraryLocationEntry.HasFocus = true;
 			LoadPreferences();
 			LoadBurnerDrives();
+			LoadPlayerEngines();
 		}
 		
 		private bool GetBoolPref(string key, bool def)
@@ -174,6 +180,7 @@ namespace Sonance
 				CopyOnImport.Active);
 				
 			SaveBurnSettings();
+			SaveEngineSettings();
 		}
 		
 		private void ThreadLoadBurnerDrives()
@@ -414,6 +421,56 @@ namespace Sonance
 				Core.GconfClient.Set(burnKeyParent + "Speed",
 					GetSpeedFromCombo());
 			}
+		}
+		
+		private void LoadPlayerEngines()
+		{
+			ListStore store = new ListStore(typeof(string), typeof(string), 
+				typeof(IPlayerEngine));
+			
+			ComboBox enginesCombo = new ComboBox();
+			enginesCombo.Changed += OnEngineChanged;
+			CellRendererText rendererName = new CellRendererText();
+			enginesCombo.Model = store;
+			enginesCombo.PackStart(rendererName, true);
+			enginesCombo.SetAttributes(rendererName, "text", 0);
+			
+			(glade["EngineComboContainer"] as Box).PackStart(
+				enginesCombo, true, true, 0);
+			glade["EngineComboContainer"].ShowAll();
+			
+			TreeIter activeIter = TreeIter.Zero;
+			
+			foreach(IPlayerEngine engine in PlayerEngineLoader.Engines) {
+				TreeIter iter = store.AppendValues(engine.EngineName, 
+					engine.ConfigName, engine);
+				if(PlayerEngineLoader.SelectedEngine.Equals(engine))
+					activeIter = iter;
+			}
+			
+			if(!activeIter.Equals(TreeIter.Zero))
+				enginesCombo.SetActiveIter(activeIter);	
+		}
+		
+		private void OnEngineChanged(object o, EventArgs args)
+		{
+			ComboBox box = o as ComboBox;
+			ListStore store = box.Model as ListStore;
+			TextView view = glade["EngineDescription"] as TextView;
+			TreeIter iter;
+			
+			if(!box.GetActiveIter(out iter))
+				return;
+				
+			IPlayerEngine engine = store.GetValue(iter, 2) as IPlayerEngine;
+			view.Buffer.Text = engine.EngineDetails;
+			SelectedEngine = engine;
+		}
+		
+		private void SaveEngineSettings()
+		{
+			Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
+			Core.Instance.ReloadEngine(SelectedEngine);
 		}
 	}
 }

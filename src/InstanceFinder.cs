@@ -29,7 +29,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Sonance
+namespace Banshee
 {
 	public class InstanceFinder
 	{
@@ -38,7 +38,7 @@ namespace Sonance
 			///DBusIPC.Instance.RegisterObject(true, "/org/gnome/Sonance/running");
 		
 			foreach(Process process in Process.GetProcesses())
-				if(process.ProcessName.Equals("sonance"))
+				if(process.ProcessName.Equals("banshee"))
 					return true;
 					
 			return false;

@@ -32,7 +32,7 @@ using System.Text.RegularExpressions;
 using Gst;
 using GLib;
 	
-namespace Sonance
+namespace Banshee
 {	
 	public class GstPlayer : IPlayerEngine
 	{
@@ -60,21 +60,87 @@ namespace Sonance
 		public event PlayerEngineVolumeChangedHandler VolumeChanged;
 		public event PlayerEngineIterateHandler Iterate;
 		public event EventHandler EndOfStream;
+		
+		private bool disabled;
+		public bool Disabled {
+			get { return disabled;  }
+			set { disabled = value; }
+		}
+
+		public string ConfigName
+		{
+			get {
+				return "gst-sharp";
+			}
+		}
 
 		public string EngineName
+		{
+			get {
+				return "GStreamer (gst-sharp)";
+			}
+		}
+		
+		public string EngineLongName
 		{
 			get {
 				return "GStreamer CLI Engine (gst-sharp)";
 			}
 		}
+		
+		public string EngineDetails
+		{
+			get {
+				return "gst-sharp provides a managed API binding for the " +
+				"GStreamer multimedia framework. Any GStreamer plugin " + 
+				"that is available will work through this engine.";
+			}
+		}
+		
+		public int MajorVersion
+		{
+			get {
+				return 0;
+			}
+		}
+		
+		public int MinorVersion
+		{
+			get {
+				return 3;
+			}
+		}
+		
+		public string AuthorName
+		{
+			get {
+				return "Aaron Bockover";
+			}
+		}
+		
+		public string AuthorEmail
+		{
+			get {
+				return "aaron@aaronbock.net";
+			}
+		}
 
 		public GstPlayer()
+		{
+		}
+		
+		public void Initialize()
 		{
 			Element dummy;
 			string [] args = {""};
 			Gst.Application.Init("Sonance", ref args);
 			dummy = Gst.ElementFactory.Make("fakesink", "fakesink");
 			Gst.SchedulerFactory.Make(null, dummy);
+		}
+		
+		public void TestInitialize()
+		{
+			Initialize();
 		}
 		
 		private bool Construct()

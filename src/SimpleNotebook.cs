@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class SimpleNotebook : Alignment
 	{

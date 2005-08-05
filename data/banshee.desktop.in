@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Sonance Music Player
+Name=Banshee Music Player
 Comment=A Mono/GStreamer Based Music Player
-Exec=@prefix@/bin/sonance
+Exec=@prefix@/bin/banshee
 Terminal=false
 Type=Application
 Icon=@prefix@/share/pixmaps/sonance-icon.png

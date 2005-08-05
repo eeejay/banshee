@@ -32,7 +32,7 @@ using Gtk;
 using Gdk;
 using Pango;
 
-namespace Sonance
+namespace Banshee
 {
 	public class CellEdit : Entry, CellEditable
 	{

@@ -36,7 +36,7 @@ using Entagged;
 
 using Sql;
 
-namespace Sonance
+namespace Banshee
 {
 	public class TrackInfo : ITrackInfo
 	{

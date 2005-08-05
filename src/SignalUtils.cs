@@ -30,7 +30,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Sonance
+namespace Banshee
 {
 	public sealed class SignalUtils 
 	{

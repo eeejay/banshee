@@ -32,7 +32,7 @@ using System.Collections;
 using Nautilus;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class BurnTransaction : LibraryTransaction
 	{

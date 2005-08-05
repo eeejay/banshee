@@ -30,7 +30,7 @@ using System;
 using System.IO;
 using System.Diagnostics;
 
-namespace Sonance
+namespace Banshee
 {
 	public class DebugLog
 	{

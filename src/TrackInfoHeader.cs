@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class TrackInfoHeader : HBox
 	{
@@ -124,7 +124,7 @@ namespace Sonance
 				asm.Version.Minor);
 						
 			artistLabel.Markup = 
-				"<span weight=\"bold\">Sonance Player</span>";
+				"<span weight=\"bold\">Banshee Player</span>";
 			titleLabel.Markup = String.Format(
 				"<span size=\"small\">Version {0}</span>", version);
 		}

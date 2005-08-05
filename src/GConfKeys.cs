@@ -26,11 +26,11 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
-namespace Sonance 
+namespace Banshee 
 {
 	public sealed class GConfKeys
 	{
-		public const string BasePath = "/apps/Sonance/";
+		public const string BasePath = "/apps/Banshee/";
 		
 		public const string LibraryLocation = BasePath + "LibraryLocation";
 		public const string WindowX = BasePath + "WindowX";
@@ -44,6 +44,7 @@ namespace Sonance
 		public const string PlaylistRepeat = BasePath + "PlaylistRepeat";
 		public const string CopyOnImport = BasePath + "CopyOnImport";
 		public const string AdditionAction = BasePath + "AdditionAction";
+		public const string PlayerEngine = BasePath + "PlayerEngine";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
 	
 		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";

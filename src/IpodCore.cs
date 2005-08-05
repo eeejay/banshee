@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using IPod;
 
-namespace Sonance
+namespace Banshee
 {
 	public class IpodCore
 	{

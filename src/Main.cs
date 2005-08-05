@@ -29,9 +29,9 @@
 using System;
 using Gnome;
 
-namespace Sonance
+namespace Banshee
 {	
-	public class SonanceEntry
+	public class BansheeEntry
 	{
 		public static void Main(string[] args)
 		{
@@ -44,12 +44,7 @@ namespace Sonance
 			Core.Args = args;
 			Core.Instance.Program = new Program(appname, 
 				version, Modules.UI, args);
-			new Sonance.PlayerUI();
-		}
-		
-		public static void OnFileEncodeProgress(object o, FileEncoderProgressArgs args)
-		{
-			Console.WriteLine("Progress Made: {0}", args.Progress);
+			new Banshee.PlayerUI();
 		}
 	}
 }

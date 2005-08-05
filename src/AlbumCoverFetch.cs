@@ -29,7 +29,7 @@
 using System;
 using Amazon;
 
-namespace Sonance
+namespace Banshee
 {
 	public class AlbumCoverFetch
 	{

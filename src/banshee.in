@@ -1,4 +1,4 @@
 #!/bin/sh
 export DYLD_LIBRARY_PATH=@prefix@/lib/@PACKAGE@:$DYLD_LIBRARY_PATH
 export LD_LIBRARY_PATH=@prefix@/lib/@PACKAGE@:@prefix@/lib/@PACKAGE@/mediaengines/helix:@prefix@/lib/@PACKAGE@/mediaengines/gst:$LD_LIBRARY_PATH
-exec @MONO@ --config @prefix@/lib/@PACKAGE@/sonance.exe.config @prefix@/lib/@PACKAGE@/sonance.exe "$@"
+exec @MONO@ --config @prefix@/lib/@PACKAGE@/banshee.exe.config @prefix@/lib/@PACKAGE@/banshee.exe "$@"

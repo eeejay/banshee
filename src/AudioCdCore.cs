@@ -30,7 +30,7 @@ using System;
 using System.Collections;
 using Hal;
 
-namespace Sonance
+namespace Banshee
 {
 	public class AudioCdCore
 	{

@@ -31,7 +31,7 @@ using System.IO;
 using Gtk;
 using Gdk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class StockIcons 
 	{

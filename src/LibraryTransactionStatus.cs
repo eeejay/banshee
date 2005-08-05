@@ -31,7 +31,7 @@ using System.Collections;
 using Gtk;
 using Glade;
 
-namespace Sonance
+namespace Banshee
 {
 	public class LibraryTransactionStatus : Table
 	{

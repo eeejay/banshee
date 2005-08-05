@@ -33,7 +33,7 @@ using System.IO;
 using Sql;
 using GConf;
 
-namespace Sonance
+namespace Banshee
 {
 	public class Library
 	{

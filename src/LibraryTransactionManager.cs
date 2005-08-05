@@ -29,7 +29,7 @@
 using System;
 using System.Collections;
  
-namespace Sonance 
+namespace Banshee 
 {
 	public class LibraryTransactionManager
 	{

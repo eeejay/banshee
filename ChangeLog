@@ -1,3 +1,16 @@
+2005-08-04 Aaron Bockover <aaron@aaronbock.net>
+
+	* banshee: Version 0.8.2
+	* banshee: Namespace renamed from Sonance to Banshee
+	* banshee: Files/Graphics updated to read Banshee in public/user places
+	* sonance: Renamed to Banshee
+	* src/Preferences.cs: Player Engine Chooser, Advanced Tab
+	* src/PlayerEngineLoader.cs: Uses gconf to select preferred engine
+	* plugincore/IPlayerEngine.cs: New fields for name, description, author,
+	etc. for engine implementations. Initializer code moved to Initialize()
+	function. Added TestInitialize() to interface.
+	* src/mediaengines/HelixPlayer.cs: More minor fixes, still not working
+
 2005-08-03 Aaron Bockover <aaron@aaronbock.net>
 
 	* sonance: Version 0.8.1

@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 using Gtk;
 using Mono.Posix;
 
-namespace Sonance
+namespace Banshee
 {
 	public class NotificationAreaIcon : Plug
 	{

@@ -9,15 +9,15 @@ SUBDIRS = \
 	src 
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = sonance.pc
+pkgconfig_DATA = banshee.pc
 
 EXTRA_DIST = \
-	sonance.mdp \
-	sonance.mds \
-	sonance.pc.in
+	banshee.mdp \
+	banshee.mds \
+	banshee.pc.in
 
-CLEANFILES=sonance.pc
-DISTCLEANFILES=config.guess config.sub configure install-sh missing depcomp Makefile.in *.bak *~ sonance.pidb Sonance.pws mkinstalldirs ltmain.sh aclocal.m4 config.h.in INSTALL
+CLEANFILES=banshee.pc
+DISTCLEANFILES=config.guess config.sub configure install-sh missing depcomp Makefile.in *.bak *~ *.pidb mkinstalldirs ltmain.sh aclocal.m4 config.h.in INSTALL
 
 
 

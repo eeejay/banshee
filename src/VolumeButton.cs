@@ -31,7 +31,7 @@ using GLib;
 using Gtk;
 using System;
 
-namespace Sonance
+namespace Banshee
 {
 	class VolumeButton : ToggleButton
 	{

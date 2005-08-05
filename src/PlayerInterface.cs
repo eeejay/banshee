@@ -36,7 +36,7 @@ using Glade;
 
 using Sql;
 
-namespace Sonance
+namespace Banshee
 {
 	public class PlayerUI
 	{
@@ -642,7 +642,7 @@ namespace Sonance
 			activeTrackInfo = null;
 			
 			if(trayIcon != null)
-				trayIcon.Tooltip = "Sonance - Idle";
+				trayIcon.Tooltip = "Banshee - Idle";
 			
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
@@ -820,7 +820,7 @@ namespace Sonance
 				Gdk.Threads.Enter();
 			
 			if(count == 0 && playlistModel.Source == null) {
-				LabelStatusBar.Text = "Sonance Music Player";
+				LabelStatusBar.Text = "Banshee Music Player";
 			} else if(count == 0) {
 				switch(playlistModel.Source.Type) {
 					case SourceType.Library:

@@ -34,7 +34,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using Sql; 
 
-namespace Sonance 
+namespace Banshee 
 {
 	// --- Base LibraryTransaction Class 
 	

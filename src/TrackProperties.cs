@@ -30,7 +30,7 @@ using System;
 using Gtk;
 using Glade;
 
-namespace Sonance
+namespace Banshee
 {
 	public class TrackProperties
 	{

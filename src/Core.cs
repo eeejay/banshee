@@ -34,7 +34,7 @@ using Gnome;
 using GConf;
 using Hal;
 
-namespace Sonance
+namespace Banshee
 {
 	public class Core
 	{
@@ -115,7 +115,8 @@ namespace Sonance
 			gconfClient = new GConf.Client();
 			library = new Library();
 			
-			Player = PlayerEngineLoader.LoadPreferred();
+			Player = PlayerEngineLoader.SelectedEngine;
+			Player.Initialize();
 
 			if(Player == null) {
 				Console.WriteLine("Could not load A PlayerEngine Core!");
@@ -128,6 +129,17 @@ namespace Sonance
 			MainThread = System.Threading.Thread.CurrentThread;
 			
 			FindUserRealName();
+		}
+		
+		public void ReloadEngine(IPlayerEngine engine)
+		{
+			if(Player != null) {
+				Player.Shutdown();
+				Player = null;
+			}
+			
+			Player = engine;
+			Player.Initialize();
 		}
 		
 		public void Shutdown()
@@ -170,7 +182,7 @@ namespace Sonance
 					UserRealName = parts[4].Trim();
 					
 					parts = UserRealName.Split(' ');
-					UserFirstName = parts[0].Trim();
+					UserFirstName = parts[0].Replace(',', ' ').Trim();
 					UserFirstName += UserFirstName.EndsWith("s") ? "'" : "'s"; 
 				}
 				reader.Close();

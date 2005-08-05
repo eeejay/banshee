@@ -2,8 +2,8 @@ prefix=@prefix@
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 
-Name: Sonance
+Name: Banshee
 Description: Mono/GStreamer based media playback and organization platform
 Version: @VERSION@
-Libs:
+Libs: -r:${prefix}/lib/banshee/plugin-core.dll
 

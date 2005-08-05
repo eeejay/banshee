@@ -32,7 +32,7 @@ using Gtk;
 using Sql;
 using System.Collections;
 
-namespace Sonance
+namespace Banshee
 {
 	// --- Query Filter Operations --- 
 	

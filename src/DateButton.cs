@@ -30,7 +30,7 @@ using System;
 using GLib;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class DateButton : ToggleButton
 	{

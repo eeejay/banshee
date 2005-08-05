@@ -29,7 +29,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Sonance
+namespace Banshee
 {	
 	internal delegate void GstFileEncoderProgressCallback(IntPtr encoder, 
 		double progress);

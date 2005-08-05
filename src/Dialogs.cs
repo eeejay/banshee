@@ -29,7 +29,7 @@
 using System;
 using Gtk;
 
-namespace Sonance
+namespace Banshee
 {
 	public class SimpleMessageDialogs
 	{

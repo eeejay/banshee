@@ -31,7 +31,7 @@ using System.IO;
 using System.Collections;
 using Nautilus;
 
-namespace Sonance
+namespace Banshee
 {
 	public delegate void FileEncodeCompleteHandler(object o, 
 		FileEncodeCompleteArgs args);

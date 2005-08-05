@@ -4,7 +4,7 @@ AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
-AM_INIT_AUTOMAKE(sonance, 0.8.1)
+AM_INIT_AUTOMAKE(banshee, 0.8.2)
 AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
@@ -131,7 +131,7 @@ AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
 AC_OUTPUT([
 Makefile
-sonance.pc
+banshee.pc
 entagged/Makefile
 hal-sharp/Makefile
 mediaengines/Makefile
@@ -143,17 +143,17 @@ plugincore/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 src/ConfigureDefines.cs
-src/sonance
-src/sonance.exe.config
+src/banshee
+src/banshee.exe.config
 libsonance/Makefile
 data/Makefile
-data/sonance.desktop
+data/banshee.desktop
 data/glade/Makefile
 data/images/Makefile
 ])
 
 echo "
-sonance-$VERSION
+banshee-$VERSION
 
 	Install Prefix:   ${prefix}
 	C Compiler:       ${CC}

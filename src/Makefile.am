@@ -5,19 +5,20 @@
 MCS_FLAGS = -debug -nowarn:0169
 
 sonancewrapdir = $(bindir)
-sonancewrap_SCRIPTS = sonance
+sonancewrap_SCRIPTS = banshee
 
 sonancedir = $(pkglibdir)
-sonance_SCRIPTS = sonance.exe sonance.exe.config
+sonance_SCRIPTS = banshee.exe banshee.exe.config
 
 EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
-	sonance.in \
+	banshee.in \
 	AssemblyInfo.cs.in \
 	ConfigureDefines.cs.in \
-	AmazonSearchService.wsdl
+	AmazonSearchService.wsdl \
+	banshee.exe.config.in
 
-CLEANFILES = sonance.exe sonance Makefile.Sonance Sonance.mdp *.mdb *.dll
-DISTCLEANFILES = Makefile.in sonance entagged-sharp.dll $(sonance_generated_sources)
+CLEANFILES = banshee banshee.exe Makefile.Sonance Sonance.mdp *.mdb *.dll
+DISTCLEANFILES = Makefile.in entagged-sharp.dll $(sonance_generated_sources)
 
 sonance_sources_in = AssemblyInfo.cs.in ConfigureDefines.cs.in
 sonance_generated_sources = $(sonance_sources_in:.in=) \
@@ -116,7 +117,8 @@ sonance_resources = \
 	../data/images/blue-speaker.png \
 	../data/images/now-playing-arrow.png \
 	../data/images/circle.png \
-	../data/images/star.png
+	../data/images/star.png \
+	../data/images/advanced-icon-32.png
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
@@ -142,9 +144,9 @@ SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 sonance_build_sources = $(addprefix $(srcdir)/, $(sonance_sources))
 sonance_build_sources += $(sonance_generated_sources)
 
-all: AmazonSearchService.cs sonance.exe
+all: AmazonSearchService.cs banshee.exe
 
-sonance.exe: $(sonance_build_sources)
+banshee.exe: $(sonance_build_sources)
 	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(sonance_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
@@ -169,5 +171,5 @@ uninstall-hook:
 
 run:
 	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../mediaengines/helix/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
-	LD_LIBRARY_PATH=/usr/lib/sonance:/usr/lib/sonance/mediaengines/gst:/usr/lib/sonance/mediaengines/helix:$$LD_LIBRARY_PATH mono --debug --config sonance.exe.config sonance.exe
+	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH mono --debug --config banshee.exe.config banshee.exe
 	

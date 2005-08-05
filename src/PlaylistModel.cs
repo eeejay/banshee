@@ -32,7 +32,7 @@ using System.Threading;
 using Gtk;
 using Sql;
 
-namespace Sonance
+namespace Banshee
 {
 	public class PlaylistModel : ListStore, IPlaybackModel
 	{

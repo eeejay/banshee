@@ -29,7 +29,7 @@
 using System;
 using System.IO;
 
-namespace Sonance
+namespace Banshee
 {
 	public delegate void FileEncoderProgressHandler(object o, 
 		FileEncoderProgressArgs args);

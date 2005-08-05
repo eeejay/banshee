@@ -69,6 +69,7 @@ namespace Helix
 			
 			set {
 				HxUnmanaged.ClientPlayerSetVolume(handle, value);
+				Console.WriteLine("Set volume to : " + volume);
 			}
 		}
 		
@@ -117,11 +118,11 @@ namespace Helix
 		public int Position
 		{
 			get {
-				return HxUnmanaged.HXPlayerGetPosition(handleRaw);
+				return HxUnmanaged.ClientPlayerGetPosition(handle);
 			}
 			
 			set {
-				HxUnmanaged.HXPlayerSetPosition(handleRaw, value);
+				HxUnmanaged.ClientPlayerSetPosition(handle, value);
 			}
 		}
 		
@@ -203,9 +204,8 @@ namespace Helix
 
 		public bool OpenUri(string uri)
 		{
-			Console.WriteLine("URI: " + uri);
-		
-			shouldIterate = HxUnmanaged.HXPlayerOpenUrl(handleRaw, uri);
+			shouldIterate = HxUnmanaged.ClientPlayerOpenURL(handle, uri,
+				IntPtr.Zero);
 				
 			if(shouldIterate)
 				this.uri = uri;
@@ -215,17 +215,19 @@ namespace Helix
 
 		public void Play()
 		{
-			HxUnmanaged.HXPlayerPlay(handleRaw);
+			HxUnmanaged.ClientPlayerPlay(handle);
+			while(true)
+			HxUnmanaged.HXPlayerIterate(handleRaw);
 		}
 
 		public void Pause()
 		{
-			HxUnmanaged.HXPlayerPause(handleRaw);
+			HxUnmanaged.ClientPlayerPause(handle);
 		}
 		
 		public void Stop()
 		{
-			HxUnmanaged.HXPlayerStop(handleRaw);
+			HxUnmanaged.ClientPlayerStop(handle);
 		}
 
 		public bool Iterate()
@@ -270,6 +272,8 @@ namespace Helix
 				args.Player = this;
 				args.NewState = newContentState;
 				args.OldState = oldContentState;
+				
+				Console.WriteLine("{0} -> {1}", oldContentState, newContentState);
 				
 				handler(this, args);
 			}

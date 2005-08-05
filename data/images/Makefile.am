@@ -5,6 +5,7 @@ sonanceicon_DATA = \
 DISTCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
+	advanced-icon-32.png \
 	album-cover-container.png \
 	blue-speaker.png \
 	burn-icon-32.png \

@@ -6,7 +6,7 @@
 <widget class="GtkWindow" id="WindowAbout">
   <property name="border_width">7</property>
   <property name="visible">True</property>
-  <property name="title" translatable="yes">About Sonance</property>
+  <property name="title" translatable="yes">About Banshee</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
   <property name="modal">False</property>
@@ -78,7 +78,7 @@
 	    <widget class="GtkLabel" id="AboutLabel">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">About Sonance</property>
+	      <property name="label" translatable="yes">About Banshee</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
