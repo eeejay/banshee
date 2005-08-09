@@ -1,0 +1,16 @@
+<Combine name="gst-mediaengine" fileversion="2.0">
+  <Configurations>
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="gst-mediaengine" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="gst-mediaengine" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="gst-mediaengine" single="True">
+    <Execute type="None" entry="gst-mediaengine" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./gst-mediaengine.mdp" />
+  </Entries>
+</Combine>
