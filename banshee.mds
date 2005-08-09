@@ -2,14 +2,12 @@
   <Configurations>
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="banshee" />
-      <Entry build="True" name="entagged" />
       <Entry build="True" name="plugincore" />
       <Entry build="True" name="helix-mediaengine" />
       <Entry build="True" name="gst-mediaengine" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="banshee" />
-      <Entry build="True" name="entagged" />
       <Entry build="True" name="plugincore" />
       <Entry build="True" name="helix-mediaengine" />
       <Entry build="True" name="gst-mediaengine" />
@@ -17,7 +15,6 @@
   </Configurations>
   <StartMode startupentry="banshee" single="True">
     <Execute type="None" entry="banshee" />
-    <Execute type="None" entry="entagged" />
     <Execute type="None" entry="plugincore" />
     <Execute type="None" entry="helix-mediaengine" />
     <Execute type="None" entry="gst-mediaengine" />
