@@ -144,7 +144,7 @@ namespace Banshee
 			
 			MotionNotifyEvent += OnMotionNotifyEvent;
 			
-			/*model.SetSortFunc((int)ColumnId.Track, 
+			model.SetSortFunc((int)ColumnId.Track, 
 					new TreeIterCompareFunc(TrackTreeIterCompareFunc));
 			model.SetSortFunc((int)ColumnId.Artist, 
 				new TreeIterCompareFunc(ArtistTreeIterCompareFunc));
@@ -159,7 +159,7 @@ namespace Banshee
 			model.SetSortFunc((int)ColumnId.PlayCount, 
 				new TreeIterCompareFunc(PlayCountTreeIterCompareFunc));
 			model.SetSortFunc((int)ColumnId.LastPlayed, 
-				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));*/
+				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));
 		}	
 			
 		private int StringFieldCompare(string a, string b)
@@ -368,9 +368,7 @@ namespace Banshee
 			column.SortIndicator = true;
 			column.SortOrder = column.SortOrder == SortType.Ascending 
 				? SortType.Descending : SortType.Ascending;
-			//model.SetSortColumnId(column.SortColumnId, column.SortOrder);
-			
-			
+			model.SetSortColumnId(column.SortColumnId, column.SortOrder);
 		}
 		
 		public void PlayPath(TreePath path)

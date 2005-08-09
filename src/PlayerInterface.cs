@@ -81,6 +81,9 @@ namespace Banshee
 		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;
+		private bool tickFromEngine = false;
+		private uint setPositionTimeoutId;
+		private bool updateEnginePosition = true;
 
 		private static TargetEntry [] playlistViewSourceEntries = 
 			new TargetEntry [] {
@@ -613,24 +616,60 @@ namespace Banshee
 
 		// ---- Player Event Handlers ----
 		
-		private void OnPlayerTick(object o, PlayerEngineIterateArgs args)
+		private void SetPositionLabel(long position)
 		{
-			if(activeTrackInfo == null)
-				return;
-				
-			ScaleTime.Value = args.Position;
 			SetInfoLabel(String.Format("{0}:{1:00} of {2}:{3:00}",
-				args.Position / 60,
-				args.Position % 60,
+				position / 60,
+				position % 60,
 				activeTrackInfo.Duration / 60,
 				activeTrackInfo.Duration % 60)
 			);	
 		}
 		
+		private void OnPlayerTick(object o, PlayerEngineIterateArgs args)
+		{
+			if(activeTrackInfo == null)
+				return;
+				
+			if(updateEnginePosition) {
+				if(setPositionTimeoutId > 0)
+                	GLib.Source.Remove(setPositionTimeoutId);
+				setPositionTimeoutId = GLib.Timeout.Add(100,
+                	new GLib.TimeoutHandler(SetPositionTimeoutCallback));
+			
+				SetPositionLabel(args.Position);
+			}
+		}
+		
+		private bool SetPositionTimeoutCallback()
+		{
+			setPositionTimeoutId = 0;
+			ScaleTime.Value = Core.Instance.Player.Position;
+			return false;
+		}
+		
+		private void OnScaleTimeMoveSlider(object o, EventArgs args)
+		{
+			SetPositionLabel((long)ScaleTime.Value);
+		}
+		
+		[GLib.ConnectBeforeAttribute]
+		private void OnScaleTimeButtonPressEvent(object o, 
+			ButtonPressEventArgs args)
+		{
+			updateEnginePosition = false;
+		}
+		
+		[GLib.ConnectBeforeAttribute]
+		private void OnScaleTimeButtonReleaseEvent(object o, 
+			ButtonReleaseEventArgs args)
+		{
+			Core.Instance.Player.Position = (int)ScaleTime.Value;
+			updateEnginePosition = true;
+		}
+		
 		private void OnPlayerEos(object o, EventArgs args)
 		{
-			DebugLog.Add("OnPlayerEos entry");
-			
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Enter();
 			
@@ -647,7 +686,7 @@ namespace Banshee
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
 			
-			//playlistModel.Continue();
+			playlistModel.Continue();
 			playlistView.UpdateView();
 		}
 		

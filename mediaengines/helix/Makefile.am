@@ -8,7 +8,7 @@ ASSEMBLY_SOURCES = \
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs HXPlayer.h HXCompat.h libhxclient.a libhxclient.so
 DISTCLEANFILES = Makefile.in
-CLEANFILES = *.dll *.mdb *.exe
+CLEANFILES = *.dll *.mdb *.exe *.pidb
 
 if ENABLE_HELIX
 SUBDIRS = include
@@ -35,7 +35,7 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 install-data-hook:
-	$(INSTALL) -c -c -m 0755 $(srcdir)/libhxclient.so $(DESTDIR)$(pkglibdir)/mediaengines/helix
+	$(INSTALL) -m 0755 $(srcdir)/libhxclient.so $(DESTDIR)$(pkglibdir)/mediaengines/helix
 
 uninstall-data:
 	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so

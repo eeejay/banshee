@@ -160,7 +160,7 @@ INSTALLED_ASSEMBLIES="`$(PKG_CONFIG) --variable=Libraries $(UNSTABLE_INSTALL_ASS
 
 install-data-hook:
 	for ASM in $(INSTALLED_ASSEMBLIES); do \
-		$(INSTALL) -c -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
+		$(INSTALL) -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
 	done;
 
 uninstall-hook:
@@ -170,6 +170,6 @@ uninstall-hook:
 
 
 run:
-	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../mediaengines/helix/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
+	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
 	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH mono --debug --config banshee.exe.config banshee.exe
 	

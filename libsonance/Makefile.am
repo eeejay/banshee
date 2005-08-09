@@ -1,4 +1,4 @@
-INCLUDES = $(SONANCE_CFLAGS)
+INCLUDES = $(BANSHEE_CFLAGS)
 
 sonancelibdir = $(pkglibdir)
 sonancelib_LTLIBRARIES = libsonance.la
@@ -6,7 +6,7 @@ sonancelib_LTLIBRARIES = libsonance.la
 libsonance_la_SOURCES = \
 	eggtrayicon.c eggtrayicon.h
 
-libsonance_la_LIBADD = $(SONANCE_LIBS)
+libsonance_la_LIBADD = $(BANSHEE_LIBS)
 
 DISTCLEANFILES = Makefile.in
 

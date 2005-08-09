@@ -15,5 +15,5 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 EXTRA_DIST = $(ASSEMBLY_SOURCES) entagged-sharp.sources 
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe *.pidb
 

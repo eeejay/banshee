@@ -2,7 +2,7 @@
   <Configurations>
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./src" assembly="banshee" />
-      <Build debugmode="False" target="Exe" />
+      <Build executeAfterBuild="../../../../usr/lib/monodevelop/bin/cp ../mediaengines/gst/.libs/*.{la,so}* ." debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
       <CodeGeneration compiler="Csc" warninglevel="2" optimize="False" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>

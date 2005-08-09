@@ -56,16 +56,26 @@ namespace Banshee
 	
 	public interface IPlayerEngine
 	{
-		bool   Open(ITrackInfo track);
-		
+		event  PlayerEngineErrorHandler Error;
+		event  PlayerEngineVolumeChangedHandler VolumeChanged;
+		event  PlayerEngineIterateHandler Iterate;
+		event  EventHandler EndOfStream;
+	
 		void   Initialize();
 		void   TestInitialize();
+		
+		bool   Open(ITrackInfo track);
+		
 		void   Play();
 		void   Pause();
 		void   Shutdown();
+
+		bool   Loaded         { get; }
+		bool   Playing        { get; }
 		
-		bool   Disabled       { get; set; }
-		
+		double Volume         { get; set; }
+		long   Position       { get; set; }
+
 		string ConfigName     { get; }
 		string EngineName     { get; }
 		string EngineLongName { get; }
@@ -74,16 +84,5 @@ namespace Banshee
 		string AuthorEmail    { get; }
 		int    MajorVersion   { get; }
 		int    MinorVersion   { get; }
-		
-		bool   Loaded         { get; }
-		bool   Playing        { get; }
-		
-		double Volume         { get; set; }
-		long   Position       { get; set; }
-	
-		event  PlayerEngineErrorHandler Error;
-		event  PlayerEngineVolumeChangedHandler VolumeChanged;
-		event  PlayerEngineIterateHandler Iterate;
-		event  EventHandler EndOfStream;
 	}
 }

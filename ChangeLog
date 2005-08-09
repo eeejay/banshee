@@ -1,3 +1,26 @@
+2005-08-08 Aaron Bockover <aaron@aaronbock.net>
+
+	* libsonance/Makefile.am: SONANCE_* -> BANSHEE_*
+	* configure.ac: Cleaned up lots of stuff
+	* src/PlayerInterface.cs: Minor bug fixes
+	* mediaengines/gst/GstPlayerEngine.cs: Fixed some error handling bugs,
+	other minor bugs
+	* mediaengines/gst/gst-player-engine.c: Fixed some error handling bugs
+	* banshee.{mds,mdp}: Added entagged, plugincore, mediaengines/gst, and
+	mediaengines/helix Mono Develop projects
+	* Makefile.am: Removed banshee.{mds,mdp} from EXTRA_DIST. Not distributing
+	Mono Develop projects with tarball releases
+
+2005-08-07 Aaron Bockover <aaron@aaronbock.net>
+
+	* banshee: Version 0.8.3
+	* banshee: gst-sharp player engine removed
+	* src/PlayerInterface.cs: Implemented seeking in the UI
+	* mediaengines/gst/GstPlayerEngine.cs: Bindings implementing IPlayerEngine
+	for new GStreamer C player engine core
+	* mediaengines/gst/gst-player-engine.c: New GStreamer C player engine core
+	* mediaengines/gst/gst-player-engine.h: New GStreamer C player engine core
+
 2005-08-04 Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.8.2

@@ -491,6 +491,9 @@
 		  <property name="update_policy">GTK_UPDATE_DISCONTINUOUS</property>
 		  <property name="inverted">False</property>
 		  <property name="adjustment">0 0 0 0 0 0</property>
+		  <signal name="button_press_event" handler="OnScaleTimeButtonPressEvent" last_modification_time="Mon, 08 Aug 2005 06:36:26 GMT"/>
+		  <signal name="button_release_event" handler="OnScaleTimeButtonReleaseEvent" last_modification_time="Mon, 08 Aug 2005 06:40:16 GMT"/>
+		  <signal name="move_slider" handler="OnScaleTimeMoveSlider" last_modification_time="Mon, 08 Aug 2005 06:56:54 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">3</property>

@@ -100,7 +100,7 @@ namespace Banshee
 				
 			spinner = new ImageAnimation(
 				Gdk.Pixbuf.LoadFromResource("busy-spinner-36.png"), 
-				75, 36, 36, 24);
+				75, 36, 36, 35);
 			spinner.Show();
 			Attach(spinner, 2, 3, 0, 2,
 				AttachOptions.Shrink, 

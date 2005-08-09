@@ -134,7 +134,7 @@ namespace Banshee
 				try {
 					engines[i].TestInitialize();
 				} catch(Exception) {
-					engines[i].Disabled = true;
+					//engines[i].Disabled = true;
 					Console.WriteLine("Player Engine `{0}' failed init tests... disabling",
 						engines[i].EngineLongName);
 				}

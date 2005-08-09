@@ -51,14 +51,14 @@ namespace Banshee
 	
 		public IpodCore()
 		{
-			//listener = new DeviceEventListener();
-			//listener.DeviceAdded += OnDeviceAdded;
-			//listener.DeviceRemoved += OnDeviceRemoved;
+			listener = new DeviceEventListener();
+			listener.DeviceAdded += OnDeviceAdded;
+			listener.DeviceRemoved += OnDeviceRemoved;
 			
 			devices = new Hashtable();
 			
-			//foreach(Device device in Device.ListDevices())
-			//	devices[device.VolumeId] = device;
+			foreach(Device device in Device.ListDevices())
+				devices[device.VolumeId] = device;
 		}
 		
 		private void OnDeviceAdded(object o, DeviceAddedArgs args)

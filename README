@@ -1,6 +1,6 @@
-For Novell development, Sonance is under a three milestone development cycle.
-At the end of this cycle, Sonance will be released as 1.0. As such, as of the
-June 30 GNOME CVS commit, Sonance is labeled as version 0.7.x to match the
+For Novell development, Banshee is under a three milestone development cycle.
+At the end of this cycle, Banshee will be released as 1.0. As such, as of the
+June 30 GNOME CVS commit, Banshee is labeled as version 0.7.x to match the
 Milestone 1 release.
 
 Milestone 1:    0.7.x
@@ -10,12 +10,15 @@ Public Release: 1.0.x
 
 -----------------------------------------------------------------------------
 
-Sonance MUST have
+Banshee MUST have
 
 	* The latest GNOME development packages (gtk+-2.6, gnome-vfs-2.0, etc)
 	* A full Mono Development stack (mono 1.1.x, gtk-sharp-2.0, etc.)
 	* sqlite 2.x
 	* A working GStreamer (gst-sharp.dll is provided for now)
+	* libipoddevice (GNOME CVS), ipod-sharp (Mono SVN): this will require
+	  HAL 0.5.2, which introduces a number of other low level dependencies
+	  such as D-Bus, hotplug, and udev... basically bleeding edge GNOME 2.12.
 
 Sqlite: http://sqlite.org/sqlite-2.8.16.tar.gz
 
