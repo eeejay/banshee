@@ -21,7 +21,6 @@
   </StartMode>
   <Entries>
     <Entry filename="./banshee.mdp" />
-    <Entry filename="./entagged/entagged.mdp" />
     <Entry filename="./plugincore/plugincore.mdp" />
     <Entry filename="./mediaengines/helix/helix-mediaengine.mdp" />
     <Entry filename="./mediaengines/gst/gst-mediaengine.mdp" />
