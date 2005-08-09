@@ -1,0 +1,24 @@
+<Project name="plugincore" fileversion="2.0" language="C#" ctype="DotNetProject">
+  <Configurations>
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="plugin-core" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="plugin-core" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <References />
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
+  <Contents>
+    <File name="./IPlayerEngine.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ITrackInfo.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+</Project>

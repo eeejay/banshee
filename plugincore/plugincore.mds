@@ -1,0 +1,16 @@
+<Combine name="plugincore" fileversion="2.0">
+  <Configurations>
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="plugincore" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="plugincore" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="plugincore" single="True">
+    <Execute type="None" entry="plugincore" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./plugincore.mdp" />
+  </Entries>
+</Combine>
