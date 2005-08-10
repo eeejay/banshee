@@ -15,7 +15,8 @@ public class HxPlayerTest
 		player.Volume = 80;
 		player.Play();
 
-		while(player.Iterate());
+		while(true)
+			player.Iterate();
 	}
 	
 	public static void OnPlayerLengthChanged(object o, LengthChangedArgs args)

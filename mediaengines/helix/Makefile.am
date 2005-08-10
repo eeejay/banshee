@@ -32,5 +32,9 @@ install-data-hook:
 
 uninstall-data:
 	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so
+
+test:
+	$(MCS) -out:hxplayer.exe HxPlayer.cs HxCallbacks.cs HxUnmanaged.cs HxDefines.cs HxEvents.cs HxPlayerTest.cs
+
 endif
 
