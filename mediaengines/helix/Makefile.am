@@ -3,7 +3,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/HxUnmanaged.cs \
 	$(srcdir)/HxEvents.cs    \
 	$(srcdir)/HxDefines.cs   \
-	$(srcdir)/HxCallbackDelegates.cs \
+	$(srcdir)/HxCallbacks.cs \
 	$(srcdir)/HelixPlayer.cs
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs libhxclient.a libhxclient.so
