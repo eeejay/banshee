@@ -1,4 +1,5 @@
 [Desktop Entry]
+GenericName=Music Player
 Name=Banshee Music Player
 Comment=A Mono/GStreamer Based Music Player
 Exec=@prefix@/bin/banshee
