@@ -33,158 +33,41 @@ namespace Helix
 {
 	public class HxUnmanaged
 	{
-		// HxPlayer Core Functions
-	
-		[DllImport("hxplayer")]
-		public static extern IntPtr HXPlayerCreate();
+		[DllImport("hxclient")]
+		public static extern bool ClientPlayerCreate(out int token, 
+			IntPtr pWindow, IntPtr userInfo, IntPtr callbackStruct);
 
-		[DllImport("hxplayer")]
-		public static extern bool HXPlayerInit(HandleRef player);
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerClose(int token);
 
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerShutdown(HandleRef player);
+		[DllImport("hxclient")]
+		public static extern bool ClientPlayerOpenURL(int token,
+			string url, string mimeType);
 
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerFree(HandleRef player);
-
-		[DllImport("hxplayer")]
-		public static extern int HXPlayerIterate(HandleRef player);
-
-		[DllImport("hxplayer")]
-		public static extern uint HXPlayerGetHandle(HandleRef player);
-
-		// HxPlayer Callback Registration Functions
+		[DllImport("hxclient")]
+		public static extern void ClientEngineProcessXEvent(IntPtr window);
+		
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerPlay(int token);
+		
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerPause(int token);
+		
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerStop(int token);
+		
+		[DllImport("hxclient")]
+		public static extern UInt32 ClientPlayerGetPosition(int token);
+		
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerSetPosition(int token, 
+			UInt32 position);
 			
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnErrorOccurredCallback(
-			HandleRef player, OnErrorOccurredCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnVisualStateChangedCallback(
-			HandleRef player, OnVisualStateChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnContactingCallback(
-			HandleRef player, OnContactingCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void 
-			HXPlayerRegisterOnContentStateChangedCallback(
-				HandleRef player, OnContentStateChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnStatusChangedCallback(
-			HandleRef player, OnStatusChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnMuteChangedCallback(
-			HandleRef player, OnMuteChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnContentConcludedCallback(
-			HandleRef player, OnContentConcludedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnTitleChangedCallback(
-			HandleRef player, OnTitleChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnLengthChangedCallback(
-			HandleRef player, OnLengthChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnVolumeChangedCallback(
-			HandleRef player, OnVolumeChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnGroupsChangedCallback(
-			HandleRef player, OnGroupsChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnIdealSizeChangedCallback(
-			HandleRef player, OnIdealSizeChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnBufferingCallback(
-			HandleRef player, OnBufferingCallback cb);
-			
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerRegisterOnGroupStartedCallback(
-			HandleRef player, OnGroupStartedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern void 
-			HXPlayerRegisterOnClipBandwidthChangedCallback(
-				HandleRef player, OnClipBandwidthChangedCallback cb);
-
-		[DllImport("hxplayer")]
-		public static extern bool HXPlayerRegisterGoToURLCallback(
-			HandleRef player, GoToURLCallback cb);
-			
-		[DllImport("hxplayer")]
-		public static extern bool 
-			HXPlayerRegisterRequestAuthenticationCallback(
-				HandleRef player, RequestAuthenticationCallback cb);	
-		
-		[DllImport("hxplayer")]
-		public static extern bool HXPlayerRegisterHasComponentCallback(
-			HandleRef player, HasComponentCallback cb);
-		
-		[DllImport("hxplayer")]
-		public static extern bool HXPlayerRegisterRequestUpgradeCallback(
-			HandleRef player, RequestUpgradeCallback cb);
-	
-		// hxclientkit Core Functions
-
 		[DllImport("hxclient")]
-		public static extern void ClientPlayerSetVolume(uint handle, 
-			uint volume);
-
-		[DllImport("hxclient")]
-		public static extern bool ClientPlayerOpenURL(uint handle,
-			string url, IntPtr ptr);
-
-		[DllImport("hxclient")]
-		public static extern void ClientPlayerPlay(uint handle);
+		public static extern UInt32 ClientPlayerGetLength(int token);
 		
 		[DllImport("hxclient")]
-		public static extern void ClientPlayerPause(uint handle);
-		
-		[DllImport("hxclient")]
-		public static extern void ClientPlayerStop(uint handle);
-		
-		[DllImport("hxclient")]
-		public static extern int ClientPlayerGetPosition(uint handle);
-		
-		[DllImport("hxclient")]
-		public static extern void ClientPlayerSetPosition(uint handle, 
-			int position);
-			
-		/*[DllImport("hxplayer")]
-		public static extern bool HXPlayerOpenUrl(HandleRef player,
-			string url);
-			
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerSetVolume(HandleRef player,
-			uint volume);
-		
-		[DllImport("hxplayer")]
-		public static extern uint HXPlayerGetVolume(HandleRef player);
-		
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerPlay(HandleRef player);
-		
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerPause(HandleRef player);
-		
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerStop(HandleRef player);
-		
-		[DllImport("hxplayer")]
-		public static extern int HXPlayerGetPosition(HandleRef player);
-		
-		[DllImport("hxplayer")]
-		public static extern void HXPlayerSetPosition(HandleRef player,
-			int position);*/
+		public static extern void ClientPlayerSetVolume(int token,
+			UInt16 volume);	
 	}
 }

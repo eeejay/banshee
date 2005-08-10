@@ -1,5 +1,5 @@
 /***************************************************************************
- *  HxCallbackDelegates.cs
+ *  HxCallbacks.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -31,60 +31,88 @@ using System.Runtime.InteropServices;
 
 namespace Helix
 {
-	public delegate void OnErrorOccurredCallback(IntPtr player,
-		uint hxCode, uint userCode, IntPtr pErrorString, IntPtr pUserString,
-		IntPtr pMoreInfoURL);
+	[StructLayout(LayoutKind.Sequential)]
+	public struct ClientEngineCallbacks
+	{
+		public OnVisualStateChangedCallback OnVisualStateChanged;
+		public OnIdealSizeChangedCallback OnIdealSizeChanged;
+		public OnLengthChangedCallback OnLengthChanged;
+		public OnTitleChangedCallback OnTitleChanged;
+		public OnGroupsChangedCallback OnGroupsChanged;
+		public OnGroupStartedCallback OnGroupStarted;
+		public OnContactingCallback OnContacting;
+		public OnBufferingCallback OnBuffering;
+		public OnContentStateChangedCallback OnContentStateChanged;
+		public OnContentConcludedCallback OnContentConcluded;
+		public OnStatusChangedCallback OnStatusChanged;
+		public OnVolumeChangedCallback OnVolumeChanged;
+		public OnMuteChangedCallback OnMuteChanged;
+		public OnClipBandwidthChangedCallback OnClipBandwidthChanged;
+		public OnErrorOccurredCallback OnErrorOccurred;
+		public GoToURLCallback GoToURL;
+		public RequestAuthenticationCallback RequestAuthentication;
+		public RequestUpgradeCallback RequestUpgrade;
+		public HasComponentCallback HasComponent;
+		public PrivateCallback PrivateCallback1;
+		public PrivateCallback PrivateCallback2;
+	}
 
-	public delegate void OnVisualStateChangedCallback(IntPtr player,
+	public delegate void OnVisualStateChangedCallback(IntPtr userInfo,
 		bool hasVisualContent);
 
-	public delegate void OnContactingCallback(IntPtr player,
-		IntPtr pHostName);
+	public delegate void OnIdealSizeChangedCallback(IntPtr userInfo,
+		Int32 idealWidth, Int32 idealHeight);
 
-	public delegate void OnContentStateChangedCallback(IntPtr player,
-		HxContentState oldContentState, HxContentState newContentState);
+	public delegate void OnLengthChangedCallback(IntPtr userInfo,
+		UInt32 length);
 
-	public delegate void OnStatusChangedCallback(IntPtr player,
-		IntPtr pStatus);
-
-	public delegate void OnMuteChangedCallback(IntPtr player,
-		bool hasMuted);
-
-	public delegate void OnContentConcludedCallback(IntPtr player);
-
-	public delegate void OnTitleChangedCallback(IntPtr player,
+	public delegate void OnTitleChangedCallback(IntPtr userInfo, 
 		IntPtr pTitle);
 
-	public delegate void OnLengthChangedCallback(IntPtr player,
-		 uint length);
+	public delegate void OnGroupsChangedCallback(IntPtr userInfo);
 
-	public delegate void OnVolumeChangedCallback(IntPtr player,
-		 uint volume);
+	public delegate void OnGroupStartedCallback(IntPtr userInfo,
+		UInt16 groupIndex);
 
-	public delegate void OnGroupsChangedCallback(IntPtr player);
+	public delegate void OnContactingCallback(IntPtr userInfo, 
+		IntPtr pHostName);
+	
+	public delegate void OnBufferingCallback(IntPtr userInfo, 
+		HxBufferReason bufferingReason, UInt16 bufferPercent);
 
-	public delegate void OnIdealSizeChangedCallback(IntPtr player,
-		 int idealWidth, int idealHeight);
+	public delegate void OnContentStateChangedCallback(IntPtr userInfo,
+		HxContentState oldContentState, HxContentState newContentState);
 
-	public delegate void OnBufferingCallback(IntPtr player,
-		 HxBufferReason bufferingReason, uint bufferingPercent);
+	public delegate void OnContentConcludedCallback(IntPtr userInfo);
 
-	public delegate void OnGroupStartedCallback(IntPtr player,
-		 uint groupIndex);
+	public delegate void OnStatusChangedCallback(IntPtr userInfo,
+		IntPtr pStatus);
 
-	public delegate void OnClipBandwidthChangedCallback(IntPtr player,
-		 int clipBandwidth);
+	public delegate void OnVolumeChangedCallback(IntPtr userInfo,
+		UInt16 volume);
 
-	public delegate bool GoToURLCallback(IntPtr player, IntPtr url,
-		 IntPtr target, bool isPlayerUrl, bool isAutoActivated);
+	public delegate void OnMuteChangedCallback(IntPtr userInfo, 
+		bool hasMuted);
 
-	public delegate bool HasComponentCallback(IntPtr player,
-		 IntPtr componentName);
+	public delegate void OnClipBandwidthChangedCallback(IntPtr userInfo,
+		Int32 clipBandwidth);
 
-	public delegate bool RequestUpgradeCallback(IntPtr player,
-		 IntPtr pUrl, uint numOfComponents, IntPtr componentNamesArr,
-		 bool isBlocking);
+	public delegate void OnErrorOccurredCallback(IntPtr userInfo,
+		UInt32 hxCode, UInt32 userCode, IntPtr pErrorString, 
+		IntPtr pUserString, IntPtr pMoreInfoURL);
 
-	public delegate bool RequestAuthenticationCallback(IntPtr player,
-		 IntPtr pServer, IntPtr pRealm, bool isProxyServer);
+	public delegate bool GoToURLCallback(IntPtr userInfo, IntPtr pURL, 
+		IntPtr pTarget, bool isPlayerURL, bool isAutoActivated);
+
+	public delegate bool RequestAuthenticationCallback(IntPtr userInfo,
+		IntPtr pServer, IntPtr pRealm, bool isProxyServer);
+
+	public delegate bool RequestUpgradeCallback(IntPtr userInfo,
+		IntPtr pURL, UInt32 numOfComponents, IntPtr componentNames,
+		bool isBlocking);
+
+	public delegate bool HasComponentCallback(IntPtr userInfo, 
+		IntPtr componentName);
+
+	public delegate void PrivateCallback(IntPtr userInfo);
 }

@@ -96,20 +96,15 @@ namespace Banshee
 			player.ErrorOccurred += OnErrorOccurred;
 			player.ContentStateChanged += OnContentStateChanged;
 			
-			//playbackThread = new Thread(new ThreadStart(ThreadedIterate));
-			//playbackThread.Start();
-			
-			GLib.Timeout.Add(100, new GLib.TimeoutHandler(ThreadedIterate));
+			playbackThread = new Thread(new ThreadStart(ThreadedIterate));
+			playbackThread.Start();
 		}
 		
 		public void TestInitialize()
 		{
 			HxPlayer testplayer = new HxPlayer();
-			uint testvol = testplayer.Volume;
+			ushort testvol = testplayer.Volume;
 			testplayer.Volume = testvol;
-		//	testplayer.OpenUri("file:///dev/null");
-		//	testplayer.Play();
-		///	testplayer.Stop();
 		}
 		
 		public bool Open(ITrackInfo ti)
@@ -153,7 +148,7 @@ namespace Banshee
 			}
 			
 			set {
-				player.Position = (int)value;
+				player.Position = (uint)value;
 			}
 		}
 		
@@ -178,10 +173,10 @@ namespace Banshee
 				else if(newVolume < 0)
 					player.Volume = 0;
 				else
-					player.Volume = newVolume;
+					player.Volume = (ushort)newVolume;
 				
 				PlayerEngineVolumeChangedArgs args = 
-						new PlayerEngineVolumeChangedArgs();
+					new PlayerEngineVolumeChangedArgs();
 				args.Volume = Volume;
 				EmitVolumeChanged(args);
 			}
@@ -189,7 +184,7 @@ namespace Banshee
 		
 		// --- //
 		
-		private bool ThreadedIterate()
+		private void ThreadedIterate()
 		{
 			if(Playing) {
 			Console.WriteLine("Pumping HxClientHengine");
@@ -201,8 +196,6 @@ namespace Banshee
 			} else {
 				Console.WriteLine("Idling");
 			}
-			//return true;
-			return !shutdown;
 		}
 		
 		private void OnContentConcluded(object o, HxPlayerArgs args)
