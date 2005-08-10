@@ -132,7 +132,6 @@ hal-sharp/Makefile
 mediaengines/Makefile
 mediaengines/gst/Makefile
 mediaengines/helix/Makefile
-mediaengines/helix/include/Makefile
 burn-sharp/Makefile
 plugincore/Makefile
 src/Makefile
