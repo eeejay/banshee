@@ -108,17 +108,13 @@ namespace Helix
 		
 		public bool OpenUri(string uri)
 		{
-			try {
-				shouldIterate = HxUnmanaged.ClientPlayerOpenURL(token, uri,
-					null);
-					
-				if(shouldIterate)
-					this.uri = uri;
-					
-				return shouldIterate;
-			} catch(NullReferenceException) {
-				return false;
-			}
+			shouldIterate = HxUnmanaged.ClientPlayerOpenURL(token, uri,
+				null);
+				
+			if(shouldIterate)
+				this.uri = uri;
+				
+			return shouldIterate;
 		}
 
 		public void Play()
@@ -146,7 +142,7 @@ namespace Helix
 		
 		private void OnErrorOccurred(IntPtr player, uint hxCode, uint userCode, 
 			IntPtr pErrorString, IntPtr pUserString, IntPtr pMoreInfoURL)
-		{
+		{	
 			ErrorOccurredHandler handler = ErrorOccurred;
 			if(handler != null) {			
 				string errorString = Marshal.PtrToStringAnsi(pErrorString);
@@ -167,7 +163,7 @@ namespace Helix
 			HxContentState oldContentState, HxContentState newContentState)
 		{
 			state = newContentState;
-			
+
 			ContentStateChangedHandler handler = ContentStateChanged;
 			if(handler != null) {
 				ContentStateChangedArgs args = new ContentStateChangedArgs();

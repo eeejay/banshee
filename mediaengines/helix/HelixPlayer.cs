@@ -110,16 +110,14 @@ namespace Banshee
 		public bool Open(ITrackInfo ti)
 		{
 			loaded = player.OpenUri("file://" + ti.Uri);
-			Console.WriteLine("Loaded URI: " + loaded);
 			return loaded;
 		}
 		
 		public void Play()
 		{
 			if(player.State == HxContentState.Stopped 
-				|| player.State == HxContentState.Paused) {
-				Console.WriteLine("Playing");
-				player.Play();}
+				|| player.State == HxContentState.Paused)
+				player.Play();
 		}
 		
 		public void Pause()
@@ -186,16 +184,17 @@ namespace Banshee
 		
 		private void ThreadedIterate()
 		{
-			if(Playing) {
-			Console.WriteLine("Pumping HxClientHengine");
-				player.Iterate();
-				Console.WriteLine("Pumped HxClientHengine");
-				PlayerEngineIterateArgs args = new PlayerEngineIterateArgs();
-				args.Position = Position;
-				EmitIterate(args);
-			} else {
-				Console.WriteLine("Idling");
-			}
+			//if(Playing) {
+			//	Console.WriteLine("Pumping HxClientHengine");
+				while(true)
+					player.Iterate();
+			//	Console.WriteLine("Pumped HxClientHengine");
+			//	PlayerEngineIterateArgs args = new PlayerEngineIterateArgs();
+			//	args.Position = Position;
+			//	EmitIterate(args);
+			//} else {
+			//	Console.WriteLine("Idling");
+			//}
 		}
 		
 		private void OnContentConcluded(object o, HxPlayerArgs args)
