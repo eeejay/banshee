@@ -16,6 +16,8 @@ dnl configure options
 AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="no")
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
+AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
+
 dnl pkg-config, install programs
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test "x$PKG_CONFIG" = "xno"; then
@@ -123,6 +125,30 @@ PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.10)
 AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
 AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
+dnl HELIX_LIBS stuff
+
+if test "x$enable_helix" = "xyes"; then
+	POSSIBLE_HELIX_LIBS="/usr/lib/RealPlayer10 /usr/lib/RealPlayer /usr/lib/realplayer /usr/local/realplayer /usr/local/RealPlayer10 /usr/local/RealPlayer /opt/realplayer /usr/lib/realplay-10.0.5 /usr/lib/realplay-10.0.4 /usr/lib/realplay-10.0.3 /usr/lib/realplay-10.0.2 /usr/lib/realplay-10.0.1 /usr/lib/realplay-10.0.0 /usr/lib/realplay-10.0 /usr/lib/helix /usr/local/Helix /usr/local/HelixPlayer"
+	COMMON_HELIX_SIGNATURE="common/clntcore.so"
+
+	if test ! -e $helix_libs/$COMMON_HELIX_SIGNATURE; then
+		helix_libs="no";
+		for possible in $POSSIBLE_HELIX_LIBS; do
+			if test -e $possible/$COMMON_HELIX_SIGNATURE ; then
+				helix_libs="$possible";
+				break;
+			fi
+		done
+	fi
+
+	if test "x$helix_libs" = "xno"; then
+		AC_MSG_ERROR([You have enabled the Helix Player Engine, but configure could not find a RealPlayer or Helix Player installation. Please configure with --with-helix-libs=/path/to/install])
+	else
+		HELIX_LIBRARY_PATH="$helix_libs";
+		AC_SUBST(HELIX_LIBRARY_PATH)
+	fi
+fi
+
 dnl generated files
 AC_OUTPUT([
 Makefile
@@ -158,3 +184,9 @@ banshee-$VERSION
 	   GStreamer:     yes
 	   Helix:         ${enable_helix}
 "
+
+if test "x${enable_helix}" = "xyes"; then
+	echo "	Helix/RealPlayer: ${helix_libs}
+"
+fi
+
