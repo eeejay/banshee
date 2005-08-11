@@ -36,7 +36,7 @@ namespace Banshee
 		int length);
 	internal delegate void GpeEndOfStreamCallback(IntPtr engine);
 
-	public class GstPlayer : IPlayerEngine, IDisposable
+	public class GstPlayer : IPlayerEngine
 	{
 		[DllImport("libgstmediaengine")]
 		private static extern IntPtr gpe_new();
@@ -103,24 +103,9 @@ namespace Banshee
 		private bool loaded;
 		private bool playing;
 		
+		private bool finalized = false;
+		
 		private bool timeoutCancelRequest = false;
-		
-		public GstPlayer()
-		{
-		
-		}
-		
-		~GstPlayer()
-		{
-			Dispose();
-		}
-		
-		public void Dispose()
-		{
-			timeoutCancelRequest = true;
-			Shutdown();
-			gpe_free(handle);
-		}
 		
 		public void Initialize()
 		{
@@ -135,19 +120,28 @@ namespace Banshee
 		
 		public void TestInitialize()
 		{
-			//Initialize();
-			//Dispose();
+
+		}
+			
+		public void Dispose()
+		{
+			if(!finalized) {
+				finalized = true;
+				timeoutCancelRequest = true;
+				Close();
+				gpe_free(handle);
+			}
 		}
 			
 		public bool Open(ITrackInfo ti)
 		{
 			if(loaded || playing)
-				Shutdown();
+				Close();
 			loaded = gpe_open(handle, "file://" + ti.Uri);
 			return loaded;
 		}
 		
-		public void Shutdown()
+		public void Close()
 		{
 			gpe_stop(handle);
 			loaded = false;
@@ -187,10 +181,10 @@ namespace Banshee
        		}
        	}
        	
-       	public long Position 
+       	public uint Position 
        	{ 
        		get { 
-       			return (long)gpe_get_position(handle);
+       			return (uint)gpe_get_position(handle);
        		} 
        		
        		set {
@@ -198,22 +192,22 @@ namespace Banshee
        		}
        	}
        	
-       	public long Length
+       	public uint Length
        	{
        		get {
-       			return (long)gpe_get_length(handle);
+       			return (uint)gpe_get_length(handle);
        		}
        	}
        	
-	    public double Volume 
+	    public ushort Volume 
 	    {
 	        get { 
-	        	return (double)gpe_get_volume(handle);
+	        	return (ushort)gpe_get_volume(handle);
 	        }
 	        
 	        set { 
 				gpe_set_volume(handle, (int)value);
-
+				
 				if(VolumeChanged != null) {
 					PlayerEngineVolumeChangedArgs args = 
 						new PlayerEngineVolumeChangedArgs();
@@ -232,7 +226,7 @@ namespace Banshee
 				return true;
 				
 			if(gpe_have_error(handle)) {
-				Shutdown();
+				Close();
 				IntPtr errorPtr = gpe_get_error(handle);
 				PlayerEngineErrorArgs errargs = new PlayerEngineErrorArgs();
 				errargs.Error = Marshal.PtrToStringAnsi(errorPtr);
