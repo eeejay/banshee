@@ -356,7 +356,7 @@ namespace Banshee
 	    public string Performer { get { return performer;   } }
 	    public int Year         { get { return year;        } }	    
 	    
-	    public long Duration    { get { return duration;    } }
+	    public long Duration    { get { return duration;    } set { duration = value; } }
 	   	public uint TrackNumber { get { return trackNumber; } }
 	    public uint TrackCount  { get { return trackCount;  } }
 	    

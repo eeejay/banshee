@@ -469,8 +469,18 @@ namespace Banshee
 		
 		private void SaveEngineSettings()
 		{
-			Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
-			Core.Instance.ReloadEngine(SelectedEngine);
+			if(SelectedEngine.ConfigName != Core.Instance.Player.ConfigName) {
+				Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
+				HigMessageDialog.RunHigMessageDialog(WindowPreferences,
+					DialogFlags.Modal,
+					MessageType.Info,
+					ButtonsType.Ok,
+					"Banshee Restart Required",
+					"You have changed the Banshee Playback Engine. This change will not " + 
+					"take affect until the next time Banshee is run. Please restart " + 
+					"Banshee to use the new <b><i>" + SelectedEngine.EngineName + "</i></b> Engine"
+				);
+			}
 		}
 	}
 }

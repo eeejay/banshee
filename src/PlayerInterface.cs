@@ -317,7 +317,7 @@ namespace Banshee
 				volumeButton.Volume = 80;
 			}
 			
-			Core.Instance.Player.Volume = (double)volumeButton.Volume;
+			Core.Instance.Player.Volume = (ushort)volumeButton.Volume;
 			
 			try {
 				((ToggleButton)gxml["ToggleButtonShuffle"]).Active = 
@@ -434,7 +434,7 @@ namespace Banshee
       	private void Quit()
       	{
       		playlistView.Shutdown();
-			Core.Instance.Player.Shutdown();
+			Core.Instance.Player.Dispose();
 			Core.GconfClient.Set(GConfKeys.SourceViewWidth, 
 				SourceSplitter.Position);
 			Core.Instance.Shutdown();
@@ -479,7 +479,7 @@ namespace Banshee
 		public void PlayFile(TrackInfo ti)
 		{
 			activeTrackInfo = ti;
-			Core.Instance.Player.Shutdown();
+			Core.Instance.Player.Close();
 			Core.Instance.Player.Open(ti);
 
 			ScaleTime.Adjustment.Lower = 0;
@@ -588,7 +588,7 @@ namespace Banshee
 		
 		private void OnVolumeScaleChanged(int volume)
 		{
-			Core.Instance.Player.Volume = (double)volume;
+			Core.Instance.Player.Volume = (ushort)volume;
 			Core.GconfClient.Set(GConfKeys.Volume, volume);
 		}
 		
@@ -631,6 +631,16 @@ namespace Banshee
 			if(activeTrackInfo == null)
 				return;
 				
+			if(Core.Instance.Player.Length > 0 
+				&& activeTrackInfo.Duration <= 0) {
+				activeTrackInfo.Duration = Core.Instance.Player.Length;
+				activeTrackInfo.Save();
+				Core.ThreadEnter();
+				playlistView.QueueDraw();
+				Core.ThreadLeave();
+				ScaleTime.Adjustment.Upper = activeTrackInfo.Duration;
+			}
+				
 			if(updateEnginePosition) {
 				if(setPositionTimeoutId > 0)
                 	GLib.Source.Remove(setPositionTimeoutId);
@@ -664,7 +674,7 @@ namespace Banshee
 		private void OnScaleTimeButtonReleaseEvent(object o, 
 			ButtonReleaseEventArgs args)
 		{
-			Core.Instance.Player.Position = (int)ScaleTime.Value;
+			Core.Instance.Player.Position = (uint)ScaleTime.Value;
 			updateEnginePosition = true;
 		}
 		

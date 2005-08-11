@@ -33,12 +33,18 @@ using System.IO;
 
 namespace Banshee
 {
+	public class PlayerEngineSlot
+	{
+		public IPlayerEngine Engine;
+		public bool Disabled;
+	}
+
 	public class PlayerEngineLoader
 	{
 		private const string RootEngineDir = ConfigureDefines.InstallDir +
 			"mediaengines/";
 			
-		private static IPlayerEngine [] engines;
+		private static PlayerEngineSlot [] engineSlots;
 			
 		private static string [] FindEngineDirs()
 		{
@@ -119,28 +125,30 @@ namespace Banshee
 			return engines.ToArray(typeof(Type)) as Type [];
 		}
 		
-		public static IPlayerEngine [] LoadEngines()
+		public static PlayerEngineSlot [] LoadEngines()
 		{
 			Type [] types = FindTypes();
 			
-			if(engines != null)
-				return engines;
+			if(engineSlots != null)
+				return engineSlots;
 			
-			engines = new IPlayerEngine[types.Length];
+			engineSlots = new PlayerEngineSlot[types.Length];
 			
 			for(int i = 0; i < types.Length; i++) {
-				engines[i] = Activator.CreateInstance(types[i]) 
+				engineSlots[i] = new PlayerEngineSlot();
+				engineSlots[i].Engine = Activator.CreateInstance(types[i]) 
 					as IPlayerEngine;
 				try {
-					engines[i].TestInitialize();
-				} catch(Exception) {
-					//engines[i].Disabled = true;
-					Console.WriteLine("Player Engine `{0}' failed init tests... disabling",
-						engines[i].EngineLongName);
+					engineSlots[i].Engine.TestInitialize();
+				} catch(Exception e) {
+					engineSlots[i].Disabled = true;
+					Console.WriteLine(
+						"Player Engine `{0}' failed init tests... disabling ({1})",
+						engineSlots[i].Engine.EngineLongName, e.Message);
 				}
 			}
 			
-			return engines;
+			return engineSlots;
 		}
 		
 		public static IPlayerEngine SelectedEngine
@@ -148,7 +156,7 @@ namespace Banshee
 			get {
 				LoadEngines();
 				
-				if(engines.Length == 0)
+				if(engineSlots.Length == 0)
 					return null;
 			
 				GConf.Client gconf = new GConf.Client();
@@ -156,20 +164,28 @@ namespace Banshee
 				try {
 					string selected = gconf.Get(GConfKeys.PlayerEngine) 
 						as string;
-					foreach(IPlayerEngine engine in engines)
-						if(engine.ConfigName.Equals(selected))
-							return engine;
+					for(int i = 0; i < engineSlots.Length; i++) {
+						if(engineSlots[i].Engine.ConfigName.Equals(selected) 
+							&& !engineSlots[i].Disabled)
+							return engineSlots[i].Engine;
+					}
 				} catch(Exception) {}
 				
-				gconf.Set(GConfKeys.PlayerEngine, engines[0].ConfigName);
-				return engines[0];
+				gconf.Set(GConfKeys.PlayerEngine, 
+					engineSlots[0].Engine.ConfigName);
+				return engineSlots[0].Disabled ? null : engineSlots[0].Engine;
 			}
 		}
 		
 		public static IPlayerEngine [] Engines
 		{
 			get {
-				return engines;
+				ArrayList engines = new ArrayList();
+				foreach(PlayerEngineSlot slot in engineSlots)
+					if(!slot.Disabled)
+						engines.Add(slot.Engine);
+				return engines.ToArray(typeof(IPlayerEngine)) 
+					as IPlayerEngine [];
 			}
 		}
 	}

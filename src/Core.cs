@@ -134,7 +134,7 @@ namespace Banshee
 		public void ReloadEngine(IPlayerEngine engine)
 		{
 			if(Player != null) {
-				Player.Shutdown();
+				Player.Dispose();
 				Player = null;
 			}
 			
