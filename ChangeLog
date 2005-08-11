@@ -1,3 +1,18 @@
+2005-08-11 Aaron Bockover <aaron@aaronbock.net>
+
+	* banshee: Version 0.8.4
+	* mediaengines/helix: Helix (hxclientkit) bindings working,
+	HelixPlayer implementation of IPlayerEngine
+	* plugincore/IPlayerEngine.cs: Interface updates
+	* mediaengines/gst/GstPlayerEngine.cs: Updated to implement IPlayerEngine
+	interface updates
+	* src/Preferences.cs: Notify that restart needed after changing Player
+	Engines
+	* src/PlayerInterface.cs: Update song length if it was previously 0 
+	with stream length from player engine if available
+	* configure.ac: Detect HELIX_LIBS automatically or set based on configure
+	--with-helix-libs option
+
 2005-08-08 Aaron Bockover <aaron@aaronbock.net>
 
 	* libsonance/Makefile.am: SONANCE_* -> BANSHEE_*
