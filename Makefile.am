@@ -17,6 +17,3 @@ EXTRA_DIST = \
 CLEANFILES=banshee.pc
 DISTCLEANFILES=config.guess config.sub configure install-sh missing depcomp Makefile.in *.bak *~ *.pidb mkinstalldirs ltmain.sh aclocal.m4 config.h.in INSTALL
 
-uninstall-hook:
-	rmdir $(pkglibdir)
-
