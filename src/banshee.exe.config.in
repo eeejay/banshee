@@ -6,7 +6,6 @@
 	<dllmap dll="libnautilus-burn-1.0" target="libnautilus-burn.so.1" />
 	<dllmap dll="libnautilusburnglue" target="@prefix@/lib/@PACKAGE@/libnautilusburnglue.so" />
 	<dllmap dll="libgstmediaengine" target="@prefix@/lib/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
-	<dllmap dll="hxplayer" target="@prefix@/lib/@PACKAGE@/mediaengines/helix/libhxplayer.so" />
-	<dllmap dll="hxclient" target="@prefix@/lib/@PACKAGE@/mediaengines/helix/libhxclient.so" />
+	<dllmap dll="hxclient" target="@prefix@/lib/@PACKAGE@/mediaengines/helix/libhxclient.so.1.0" />
 </configuration>
 
