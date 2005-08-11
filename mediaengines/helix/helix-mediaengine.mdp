@@ -22,10 +22,10 @@
   </DeploymentInformation>
   <Contents>
     <File name="./HelixPlayer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./HxCallbackDelegates.cs" subtype="Code" buildaction="Compile" />
     <File name="./HxDefines.cs" subtype="Code" buildaction="Compile" />
     <File name="./HxEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="./HxPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="./HxUnmanaged.cs" subtype="Code" buildaction="Compile" />
+    <File name="./HxCallbacks.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

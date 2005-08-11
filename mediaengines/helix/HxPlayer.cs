@@ -33,7 +33,7 @@ namespace Helix
 {
 	public class HxPlayer : IDisposable
 	{		
-		private const ushort HELIX_PUMP_EVENT_DELAY = 75;
+		public const ushort PumpEventDelay = 75;
 	
 		public event ErrorOccurredHandler ErrorOccurred;
 		public event LengthChangedHandler LengthChanged;
@@ -135,7 +135,6 @@ namespace Helix
 		public void Iterate()
 		{
 			HxUnmanaged.ClientEngineProcessXEvent(IntPtr.Zero);
-			System.Threading.Thread.Sleep(HELIX_PUMP_EVENT_DELAY);
 		}
 		
 		// Default Callbacks
@@ -170,8 +169,6 @@ namespace Helix
 				args.Player = this;
 				args.NewState = newContentState;
 				args.OldState = oldContentState;
-				
-				Console.WriteLine("{0} -> {1}", oldContentState, newContentState);
 				
 				handler(this, args);
 			}

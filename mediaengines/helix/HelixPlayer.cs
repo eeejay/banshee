@@ -1,7 +1,34 @@
-// created on 7/31/2005 at 3:35 PM
+/***************************************************************************
+ *  HelixPlayer.cs
+ *
+ *  Copyright (C) 2005 Novell
+ *  Written by Aaron Bockover (aaron@aaronbock.net)
+ ****************************************************************************/
 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+ 
 using System;
 using System.Threading;
+
 using Helix;
 
 namespace Banshee
@@ -16,6 +43,9 @@ namespace Banshee
 		public event PlayerEngineVolumeChangedHandler VolumeChanged;
 		public event PlayerEngineIterateHandler Iterate;
 		public event EventHandler EndOfStream;
+		
+		private DateTime lastIterateEmit;
+		private Thread iterateThread;
 		
 		private bool disabled;
 		private bool shutdown;
@@ -84,11 +114,6 @@ namespace Banshee
 			}
 		}
 		
-		public HelixPlayer()
-		{
-		
-		}
-		
 		public void Initialize()
 		{
 			player = new HxPlayer();
@@ -96,8 +121,8 @@ namespace Banshee
 			player.ErrorOccurred += OnErrorOccurred;
 			player.ContentStateChanged += OnContentStateChanged;
 			
-			playbackThread = new Thread(new ThreadStart(ThreadedIterate));
-			playbackThread.Start();
+			iterateThread = new Thread(new ThreadStart(DoIterate));
+			iterateThread.Start();
 		}
 		
 		public void TestInitialize()
@@ -107,46 +132,59 @@ namespace Banshee
 			testplayer.Volume = testvol;
 		}
 		
+		public void Dispose()
+		{
+			shutdown = true;
+		}
+		
 		public bool Open(ITrackInfo ti)
 		{
 			loaded = player.OpenUri("file://" + ti.Uri);
 			return loaded;
 		}
 		
+		public void Close()
+		{
+			player.Stop();
+		}
+		
 		public void Play()
 		{
 			if(player.State == HxContentState.Stopped 
-				|| player.State == HxContentState.Paused)
+				|| player.State == HxContentState.Paused) {
 				player.Play();
+			}
 		}
 		
 		public void Pause()
 		{
-			if(player.State == HxContentState.Playing)
+			if(player.State == HxContentState.Playing) {
 				player.Pause();
-		}
-		
-		public void Shutdown()
-		{
-			//shutdown = true;
+			}
 		}
 		
 		public bool Playing 
 		{
 			get {
-				Console.WriteLine("State: " + player.State);
 				return player.State == HxContentState.Playing;
 			}
 		}
 		
-		public long Position
+		public uint Position
 		{
 			get {
-				return (long)player.Position;
+				return player.Position / 1000;
 			}
 			
 			set {
-				player.Position = (uint)value;
+				player.Position = value * 1000;
+			}
+		}
+		
+		public uint Length
+		{
+			get {
+				return player.Length / 1000;
 			}
 		}
 		
@@ -157,21 +195,14 @@ namespace Banshee
 			}
 		}
 		
-		public double Volume
+		public ushort Volume
 		{
 			get {
-				return (double)player.Volume / 100.0;
+				return player.Volume;
 			}
 			
 			set {
-				uint newVolume = (uint)value * 100;
-				
-				if(newVolume > 100)
-					player.Volume = 100;
-				else if(newVolume < 0)
-					player.Volume = 0;
-				else
-					player.Volume = (ushort)newVolume;
+				player.Volume = value;
 				
 				PlayerEngineVolumeChangedArgs args = 
 					new PlayerEngineVolumeChangedArgs();
@@ -182,19 +213,23 @@ namespace Banshee
 		
 		// --- //
 		
-		private void ThreadedIterate()
+		private void DoIterate()
 		{
-			//if(Playing) {
-			//	Console.WriteLine("Pumping HxClientHengine");
-				while(true)
-					player.Iterate();
-			//	Console.WriteLine("Pumped HxClientHengine");
-			//	PlayerEngineIterateArgs args = new PlayerEngineIterateArgs();
-			//	args.Position = Position;
-			//	EmitIterate(args);
-			//} else {
-			//	Console.WriteLine("Idling");
-			//}
+			while(!shutdown) {
+				player.Iterate();
+			
+				// emit iterate signal only once every half second
+				if(DateTime.Now - lastIterateEmit >= 
+					new TimeSpan(0, 0, 0, 0, 500)) {
+					PlayerEngineIterateArgs args = 
+						new PlayerEngineIterateArgs();
+					args.Position = Position;
+					EmitIterate(args);
+					lastIterateEmit = DateTime.Now;
+				}
+	
+				Thread.Sleep(HxPlayer.PumpEventDelay);
+			}
 		}
 		
 		private void OnContentConcluded(object o, HxPlayerArgs args)
@@ -202,9 +237,11 @@ namespace Banshee
 			EmitEndOfStream();
 		}
 		
-		private void OnContentStateChanged(object o, ContentStateChangedArgs args)
+		private void OnContentStateChanged(object o, 
+			ContentStateChangedArgs args)
 		{
-			Console.WriteLine("Setting New State: " + args.NewState);
+			Console.WriteLine("Helix Content State Changed: {0} -> {1}",
+				args.NewState, args.OldState);
 		}
 		
 		private void OnErrorOccurred(object o, ErrorOccurredArgs args)

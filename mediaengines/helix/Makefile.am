@@ -23,7 +23,7 @@ helixengine_SCRIPTS = $(ASSEMBLY)
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/plugincore/plugin-core.dll -r:Mono.Posix $(ASSEMBLY_SOURCES)
 
 install-data-hook:
 	$(INSTALL) -m 0755 $(srcdir)/libhxclient.so.1.0 $(DESTDIR)$(pkglibdir)/mediaengines/helix
