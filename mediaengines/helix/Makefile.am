@@ -6,7 +6,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/HxCallbacks.cs \
 	$(srcdir)/HelixPlayer.cs
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs libhxclient.a libhxclient.so.1.0
+EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs libhxclient.so.1.0
 DISTCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
 
@@ -17,7 +17,6 @@ ASSEMBLY_NAME = helix-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 helixenginedir = $(pkglibdir)/mediaengines/helix
-helixengine_DATA = libhxclient.a 
 helixengine_SCRIPTS = $(ASSEMBLY)
 
 all: $(ASSEMBLY)
@@ -29,7 +28,7 @@ install-data-hook:
 	$(INSTALL) -m 0755 $(srcdir)/libhxclient.so.1.0 $(DESTDIR)$(pkglibdir)/mediaengines/helix
 
 uninstall-data:
-	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so
+	rm -f $(DESTDIR)$(pkglibdir)/mediaengines/helix/libhxclient.so.1.0
 
 test:
 	$(MCS) -out:hxplayer.exe HxPlayer.cs HxCallbacks.cs HxUnmanaged.cs HxDefines.cs HxEvents.cs HxPlayerTest.cs
