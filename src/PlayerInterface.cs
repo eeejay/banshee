@@ -647,14 +647,18 @@ namespace Banshee
 				setPositionTimeoutId = GLib.Timeout.Add(100,
                 	new GLib.TimeoutHandler(SetPositionTimeoutCallback));
 			
+				Core.ThreadEnter();
 				SetPositionLabel(args.Position);
+				Core.ThreadLeave();
 			}
 		}
 		
 		private bool SetPositionTimeoutCallback()
 		{
 			setPositionTimeoutId = 0;
+			Core.ThreadEnter();
 			ScaleTime.Value = Core.Instance.Player.Position;
+			Core.ThreadLeave();
 			return false;
 		}
 		
@@ -680,8 +684,7 @@ namespace Banshee
 		
 		private void OnPlayerEos(object o, EventArgs args)
 		{
-			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
-				Gdk.Threads.Enter();
+			Core.ThreadEnter();
 			
 			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
 			ScaleTime.Adjustment.Lower = 0;
@@ -693,11 +696,10 @@ namespace Banshee
 			if(trayIcon != null)
 				trayIcon.Tooltip = "Banshee - Idle";
 			
-			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
-				Gdk.Threads.Leave();
-			
 			playlistModel.Continue();
 			playlistView.UpdateView();
+			
+			Core.ThreadLeave();
 		}
 		
 		// ---- Playlist Event Handlers ----
@@ -1041,8 +1043,16 @@ namespace Banshee
 		{
 			Source source = sourceView.HighlightedSource;
 			
-			if(source.CanEject)
-				source.Eject();
+			if(source.CanEject) {
+				try {
+					source.Eject();
+				} catch(Exception e) {
+					HigMessageDialog.RunHigMessageDialog(null, 
+						DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
+						"Could Not Eject",
+						e.Message);
+				}
+			}
 		}
 		
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
