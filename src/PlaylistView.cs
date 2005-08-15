@@ -266,8 +266,7 @@ namespace Banshee
 			string text, TreeIter iter)
 		{
 			renderer.Text = text;
-			renderer.Weight = model.PlayingPath != null 
-				&& model.GetPath(iter).Compare(model.PlayingPath) == 0 
+			renderer.Weight = iter.Equals(model.PlayingIter) 
 				? (int)Pango.Weight.Bold 
 				: (int)Pango.Weight.Normal;
 		}
@@ -276,8 +275,7 @@ namespace Banshee
 			CellRenderer cell, TreeModel tree_model, TreeIter iter)
 		{
 			CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
-			renderer.Pixbuf = model.PlayingPath != null 
-				&& model.GetPath(iter).Compare(model.PlayingPath) == 0 
+			renderer.Pixbuf = iter.Equals(model.PlayingIter)
 				? nowPlayingPixbuf
 				: null; 
 		}

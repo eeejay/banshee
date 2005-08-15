@@ -393,12 +393,24 @@ namespace Banshee
 							
 				haveMedia = true;
 				
-				string selectedBurnerId = (string)Core.GconfClient.Get(
+				string selectedBurnerId;
+				
+				try { 
+					selectedBurnerId = (string)Core.GconfClient.Get(
 						GConfKeys.CDBurnerId);
+				} catch(Exception) { 
+					selectedBurnerId = null;
+				}
+				
+				drive = BurnUtil.GetDriveByIdOrDefault(selectedBurnerId);
+					
+				if(drive.Equals(BurnDrive.Zero))
+					throw new ApplicationException("No CD Burners Available");
+					
+				selectedBurnerId = BurnUtil.GetDriveUniqueId(drive);
+				
 				string burnKeyParent = GConfKeys.CDBurnerRoot 
 					+ selectedBurnerId + "/";
-					
-				drive = BurnUtil.GetDriveByIdOrDefault(selectedBurnerId);
 				
 				foreach(string file in burnQueue)
 					tracks.Add(new BurnRecorderTrack(file, 

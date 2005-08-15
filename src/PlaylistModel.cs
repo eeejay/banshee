@@ -230,9 +230,22 @@ namespace Banshee
 			// TODO: Implement random playback without repeating a track 
 			// until all Tracks have been played first (see Legacy Sonance)
 			
-			TreePath currentPath = GetPath(playingIter);
+			TreePath currentPath;
 			TreeIter currentIter, nextIter = TreeIter.Zero;
-			TrackInfo currentTrack, nextTrack;
+			TrackInfo currentTrack = null, nextTrack;
+			
+			try {
+				currentPath = GetPath(playingIter);
+			} catch(NullReferenceException) {
+				currentPath = null;
+			}
+			
+			if(currentPath == null) {
+				if(GetIterFirst(out nextIter))
+					PlayIter(nextIter);
+				return;
+			}
+		
 			int count = Count();
 			int index = FindIndex(currentPath);
 			bool lastTrack = index == count - 1;
@@ -375,11 +388,21 @@ namespace Banshee
 		public TreePath PlayingPath
 		{
 			get {
-				return playingIter.Equals(TreeIter.Zero) 
-					? null : GetPath(playingIter);
+				try {
+					return playingIter.Equals(TreeIter.Zero) 
+						? null : GetPath(playingIter);
+				} catch(NullReferenceException) {
+					return null;
+				}
 			}
 		}
 		
+		public TreeIter PlayingIter
+		{
+			get {
+				return playingIter;
+			}
+		}
 		
 		public bool Repeat {
 			set {
