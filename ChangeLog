@@ -1,3 +1,10 @@
+2005-08-14 Aaron Bockover <aaron@aaronbock.net>
+
+	* banshee: Version 0.8.5
+	* src/PlaylistModel.cs: NullReferenceException bug fixes
+	* src/BurnCore.cs: GConf bug fix
+	* banshee: Various other bug fixes
+	
 2005-08-11 Aaron Bockover <aaron@aaronbock.net>
 
 	* src/BurnCore.cs: Fixed 313256 (exception thrown if burner was never
