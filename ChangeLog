@@ -1,5 +1,8 @@
 2005-08-11 Aaron Bockover <aaron@aaronbock.net>
 
+	* src/BurnCore.cs: Fixed 313256 (exception thrown if burner was never
+	configured in preferences... default is now selected)
+
 	* banshee: Version 0.8.4
 	* mediaengines/helix: Helix (hxclientkit) bindings working,
 	HelixPlayer implementation of IPlayerEngine
