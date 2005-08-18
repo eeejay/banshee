@@ -137,8 +137,13 @@ namespace Banshee
 			shutdown = true;
 		}
 		
-		public bool Open(ITrackInfo ti)
+		public bool Open(TrackInfo ti)
 		{
+			if(!ti.CanPlay) {
+				EmitEndOfStream();
+				return false;
+			}
+			
 			loaded = player.OpenUri("file://" + ti.Uri);
 			return loaded;
 		}
@@ -249,6 +254,8 @@ namespace Banshee
 			PlayerEngineErrorArgs eargs = new PlayerEngineErrorArgs();
 			eargs.Error = args.Error;
 			EmitError(eargs);
+			
+			Console.WriteLine(args.Error + ": " + args.UserError);
 		}
 		
 		protected void EmitError(PlayerEngineErrorArgs args)

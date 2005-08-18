@@ -133,10 +133,16 @@ namespace Banshee
 			}
 		}
 			
-		public bool Open(ITrackInfo ti)
+		public bool Open(TrackInfo ti)
 		{
 			if(loaded || playing)
 				Close();
+			
+			if(!ti.CanPlay) {
+				EmitEndOfStream();
+				return false;
+			}
+			
 			loaded = gpe_open(handle, "file://" + ti.Uri);
 			return loaded;
 		}
