@@ -65,7 +65,7 @@ namespace Banshee
 		void   TestInitialize();       // test Initialize and Finalize
 		void   Dispose();              // engine finalization/shutdown
 		
-		bool   Open(ITrackInfo track); // load a file into the engine
+		bool   Open(TrackInfo track); // load a file into the engine
 		void   Close();                // close an open file
 		
 		void   Play();                 // play a file

@@ -7,12 +7,12 @@ plugincore_SCRIPTS = $(ASSEMBLY)
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/IPlayerEngine.cs \
-	$(srcdir)/ITrackInfo.cs
+	$(srcdir)/TrackInfo.cs
 	
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -target:library  -out:$@ $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) 
 
