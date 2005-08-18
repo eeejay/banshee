@@ -93,7 +93,6 @@ sonance_resources = \
 	../data/images/volume-zero.png \
 	../data/glade/about.glade \
 	../data/glade/trackinfo.glade \
-	../data/images/sonance-splash.png \
 	../data/images/album-cover-container.png \
 	../data/images/icon-album.png \
 	../data/images/icon-artist.png \
