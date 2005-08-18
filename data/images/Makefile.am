@@ -5,6 +5,10 @@ sonanceicon_DATA = \
 DISTCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
+	about-footer.png \
+	about-grad-bottom.png \
+	about-grad-top.png \
+	about-header.png \
 	advanced-icon-32.png \
 	album-cover-container.png \
 	blue-speaker.png \
@@ -33,7 +37,6 @@ EXTRA_DIST = \
 	search-entry-icon.png \
 	sonance-icon-24.png \
 	sonance-icon.png \
-	sonance-splash.png \
 	source-cd-audio.png \
 	source-ipod-regular.png \
 	source-library.png \
