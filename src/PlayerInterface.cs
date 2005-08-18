@@ -69,7 +69,8 @@ namespace Banshee
 		private SearchEntry searchEntry;
 		private Tooltips toolTips;
 		private Hashtable playlistMenuMap;
-		
+		private ProgressBar ipodDiskUsageBar;
+	
 		public Gtk.Window Window
 		{
 			get {
@@ -84,6 +85,8 @@ namespace Banshee
 		private bool tickFromEngine = false;
 		private uint setPositionTimeoutId;
 		private bool updateEnginePosition = true;
+
+		private int ipodDiskUsageTextViewState;
 
 		private static TargetEntry [] playlistViewSourceEntries = 
 			new TargetEntry [] {
@@ -244,6 +247,23 @@ namespace Banshee
 				DestDefaults.All, playlistViewDestEntries, 
 				DragAction.Copy | DragAction.Move);
 			
+			// Ipod Container
+			HBox box = new HBox();
+			box.Spacing = 5;
+			(gxml["IpodContainer"] as Container).Add(box);
+			ipodDiskUsageBar = new ProgressBar();
+			box.PackStart(ipodDiskUsageBar, false, false, 0);
+			
+			Button ipodPropertiesButton = new Button(
+				new Gtk.Image("gtk-properties", IconSize.Menu));
+			box.PackStart(ipodPropertiesButton, false, false, 0);
+			
+			Button ipodEjectButton = new Button(new Gtk.Image("media-eject",
+				IconSize.Menu));
+			box.PackStart(ipodEjectButton, false, false, 0);
+			
+			box.ShowAll();
+			
 			// Misc
 			SetInfoLabel("Idle");
 
@@ -281,6 +301,9 @@ namespace Banshee
 			toolTips.SetTip(volumeButton, "Adjust Volume", "Adjust Volume");
 			
 			playlistMenuMap = new Hashtable();
+			
+			Core.Instance.DBusServer.RegisterObject(
+				new BansheeCore(Window), "/org/gnome/Banshee/Core");
       	}
       	
       	private void InstallTrayIcon()
@@ -780,7 +803,7 @@ namespace Banshee
 		
 		private void OnMenuPlaylistRemoveActivate(object o, EventArgs args)
 		{
-			;
+			
 		}
 		
 		private void OnMenuPlaylistPropertiesActivate(object o, EventArgs args)
@@ -793,7 +816,7 @@ namespace Banshee
 			Source source = sourceView.SelectedSource;
 			if(source == null)
 				return;
-			
+				
 			if(source.Type == SourceType.Library) {
 				playlistModel.LoadFromLibrary();
 				playlistModel.Source = source;
@@ -801,6 +824,28 @@ namespace Banshee
 				Core.ThreadEnter();
 				(gxml["ViewNameLabel"] as Label).Markup = 
 					"<b>" + Core.Instance.UserFirstName + " Music Library</b>";
+				Core.ThreadLeave();
+			} else if(source.Type == SourceType.Ipod) {
+				playlistModel.Clear();
+				playlistModel.Source = source;
+				
+				IpodSource ipodSource = source as IpodSource;
+				IPod.Device device = ipodSource.Device;
+				foreach(IPod.Song song in device.SongDatabase.Songs) {
+					playlistModel.AddTrack(new IpodTrackInfo(song));
+				}
+				
+				ipodDiskUsageBar.Fraction = (double)device.VolumeUsed / 
+					(double)device.VolumeSize;
+				ulong usedgb = device.VolumeUsed / (1000 * 1000 * 1000);
+				ulong availgb = device.VolumeAvailable / (1000 * 1000 * 1000);
+				ulong totalgb = device.VolumeSize / (1000 * 1000 * 1000);
+				
+				ipodDiskUsageBar.Text = String.Format("{0}  {1}  {2}", usedgb, availgb, totalgb); 
+				
+				Core.ThreadEnter();
+				(gxml["ViewNameLabel"] as Label).Markup = 
+					"<b>" + source.Name + "</b>";
 				Core.ThreadLeave();
 			} else {
 				playlistModel.LoadFromPlaylist(source.Name);
@@ -811,6 +856,16 @@ namespace Banshee
 					"<b>" + source.Name + "</b>";
 				Core.ThreadLeave();
 			}
+			
+			gxml["IpodContainer"].Visible = source.Type == SourceType.Ipod;
+		}
+		
+		[GLib.ConnectBeforeAttribute]
+		private void OnIpodDiskUsageButtonPressEvent(object o, 
+			ButtonPressEventArgs args)
+		{
+			ipodDiskUsageTextViewState = (ipodDiskUsageTextViewState + 1) % 2;
+			Console.WriteLine("VIEW: " + ipodDiskUsageTextViewState);
 		}
 		
 		private void OnToggleButtonShuffleToggled(object o, EventArgs args)
