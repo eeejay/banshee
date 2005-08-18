@@ -155,7 +155,10 @@ namespace Banshee
 			HeadersVisible = false;
 			
 			CursorChanged += OnCursorChanged;
-			IpodCore.Instance.Updated += OnIpodCoreUpdated;
+			
+			try {
+				IpodCore.Instance.Updated += OnIpodCoreUpdated;
+			} catch(NullReferenceException) {}
 			
 			RefreshList();
 		}
@@ -190,8 +193,10 @@ namespace Banshee
 			store.AppendValues(new LibrarySource());
 			
 			// iPod Sources
-			foreach(IPod.Device device in IpodCore.Instance.Devices)
-				store.AppendValues(new IpodSource(device));
+			try {
+				foreach(IPod.Device device in IpodCore.Instance.Devices)
+					store.AppendValues(new IpodSource(device));
+			} catch(NullReferenceException) {}
 			
 			// Playlist Sources
 			string [] names = Playlist.ListAll();
