@@ -68,7 +68,7 @@
     <File name="./src/SourceView.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/SqlGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/StockIcons.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/TrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/LibraryTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/TrackInfoHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/TrackProperties.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Utilities.cs" subtype="Code" buildaction="Compile" />
@@ -137,5 +137,7 @@
     <File name="./data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./src/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
     <File name="./data/images/advanced-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./src/IpodTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/AltProgressBar.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>
