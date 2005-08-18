@@ -1,3 +1,15 @@
+2005-08-18 Aaron Bockover <aaron@aaronbock.net>
+	
+	* plugincore/TrackInfo.cs: Abstract TrackInfo class
+	* src/LibraryTrackInfo.cs: Library TrackInfo, extends TrackInfo
+	* src/IpodTrackInfo.cs: Ipod TrackInfo, extends TrackInfo
+	* src/PlayerInterface.cs: Ipod stuff, play from iPod, iPod properties
+	* src/AboutBox.cs: About box patch from Evan... scrolls credits? Woo?
+	* src/DBusIPC.cs: Dbus object, registration, session stuff
+	* src/Main.cs: Instance detection through dbus
+	* banshee: Probably more stuff I missed, because I suck at updating
+	my own ChangeLogs
+
 2005-08-14 Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.8.5
