@@ -435,13 +435,14 @@ namespace Banshee
 		
 		public void Append(TrackInfo ti)
 		{
-			items.Add(ti);
+			if(ti.CanSaveToDatabase)
+				items.Add(ti);
 		}
 		
 		public void Append(ArrayList tis)
 		{
 			foreach(TrackInfo ti in tis)
-				items.Add(ti);
+				Append(ti);
 		}
 		
 		public void Rename(string newName)

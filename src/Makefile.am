@@ -30,7 +30,6 @@ sonance_sources = \
 	Main.cs \
 	StockIcons.cs \
 	PlayerInterface.cs \
-	TrackInfo.cs \
 	Utilities.cs \
 	Core.cs \
 	PlaylistView.cs \
@@ -48,6 +47,7 @@ sonance_sources = \
 	LibraryTransactions.cs \
 	LibraryTransactionManager.cs \
 	LibraryTransactionStatus.cs \
+	LibraryTrackInfo.cs \
 	ImageAnimation.cs \
 	QueryBuilder.cs \
 	QueryBuilderModel.cs \
@@ -71,7 +71,9 @@ sonance_sources = \
 	BurnCore.cs \
 	BurnTransaction.cs \
 	PlayerEngineLoader.cs \
-	RatingRenderer.cs
+	RatingRenderer.cs \
+	IpodTrackInfo.cs \
+	AltProgressBar.cs
 
 sonance_resources = \
 	../data/Tables.sql \
@@ -118,7 +120,11 @@ sonance_resources = \
 	../data/images/now-playing-arrow.png \
 	../data/images/circle.png \
 	../data/images/star.png \
-	../data/images/advanced-icon-32.png
+	../data/images/advanced-icon-32.png \
+	../data/images/about-header.png \
+	../data/images/about-footer.png \
+	../data/images/about-grad-top.png \
+	../data/images/about-grad-bottom.png 
 	
 sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
@@ -171,5 +177,5 @@ uninstall-hook:
 
 run:
 	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
-	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH HELIX_LIBS=/usr/lib/RealPlayer10 mono --config banshee.exe.config banshee.exe
+	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH HELIX_LIBS=/usr/lib/RealPlayer10 mono --debug --config banshee.exe.config banshee.exe
 	

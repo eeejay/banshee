@@ -199,8 +199,13 @@ namespace Banshee
 			if(ti == null)
 				return;
 				
-			Core.Instance.PlayerInterface.PlayFile(ti);
-			playingIter = iter;
+			if(ti.CanPlay) {
+				Core.Instance.PlayerInterface.PlayFile(ti);
+				playingIter = iter;
+			} else {
+				playingIter = iter;
+				Continue();
+			}
 		}
 		
 		// --- IPlaybackModel 

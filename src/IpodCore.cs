@@ -43,9 +43,10 @@ namespace Banshee
 		public static IpodCore Instance
 		{
 			get {
-				if(instance == null) 
-					instance = new IpodCore();
-				return instance;
+				//if(instance == null) 
+				//	instance = new IpodCore();
+				//return instance;
+				return null;
 			}
 		}
 	

@@ -48,6 +48,7 @@ namespace Banshee
 		public Program Program;
 		public PlayerUI PlayerInterface;
 		public Random Random;
+		public DBusServer dbusServer;
 		
 		public string UserRealName;
 		public string UserFirstName;
@@ -100,6 +101,13 @@ namespace Banshee
 				return uid++;
 			}
 		}
+		
+		public DBusServer DBusServer
+		{
+			get { 
+				return dbusServer;
+			}
+		}
 
 		private Core()
 		{
@@ -107,6 +115,8 @@ namespace Banshee
 		
 			Gdk.Threads.Init();
 			Gtk.Application.Init();
+			
+			dbusServer = new DBusServer();
 
 			if(!Directory.Exists(Paths.ApplicationData))
 				Directory.CreateDirectory(Paths.ApplicationData);

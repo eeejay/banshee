@@ -281,7 +281,7 @@ namespace Banshee
 			DateTime startStamp = DateTime.Now;
 			
 			try {
-				TrackInfo ti = new TrackInfo(file);
+				TrackInfo ti = new LibraryTrackInfo(file);
 				RaiseTrackInfo(ti);
 				UpdateAverageDuration(startStamp);
 			} catch(Exception e) {
@@ -588,7 +588,7 @@ namespace Banshee
 			IDataReader reader = Core.Library.Db.Query(sql);
 			while(reader.Read() && !cancelRequested) {
 				DateTime startStamp = DateTime.Now;
-				RaiseTrackInfo(new TrackInfo(reader));
+				RaiseTrackInfo(new LibraryTrackInfo(reader));
 				UpdateAverageDuration(startStamp);
 			}
 		}
