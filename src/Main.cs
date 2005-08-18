@@ -35,6 +35,18 @@ namespace Banshee
 	{
 		public static void Main(string[] args)
 		{
+			BansheeCore dbusCore = null;
+			
+			try {
+				dbusCore = BansheeCore.FindInstance();
+			} catch { }
+			
+			if(dbusCore != null) {
+				Console.WriteLine("Already Running!");
+				dbusCore.PresentWindow();
+				return;
+			}
+			
 			System.Reflection.AssemblyName asm = 
 				System.Reflection.Assembly.GetEntryAssembly().GetName();		
 			string appname = StringUtil.UcFirst(asm.Name);

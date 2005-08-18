@@ -27,28 +27,28 @@
  */
  
 using System;
-//usin//g DBus;
+using DBus;
 
-/*namespace Banshee
+namespace Banshee
 {
-	public class DBusIPC
+	public class DBusServer
 	{
-		private static DBusIPC instance = null;
+		private static DBusServer instance = null;
 		
 		private Service service;
 			
-		public static DBusIPC Instance
+		public static DBusServer Instance
 		{
 			get {
 				if(instance == null)
-					instance = new DBusIPC();
+					instance = new DBusServer();
 				return instance;
 			}
 		}
 		
-		public DBusIPC()
+		public DBusServer()
 		{
-            service = new Service(Bus.GetSessionBus(), "org.gnome.Sonance");
+            service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
 		}
 		
 		public void RegisterObject(object o, string path)
@@ -61,5 +61,33 @@ using System;
 			service.UnregisterObject(o);
 		}
 	}
+	
+	[Interface("org.gnome.Banshee.Core")]
+	public class BansheeCore
+	{
+		private Gtk.Window mainWindow;
+		
+		public static BansheeCore FindInstance()
+		{
+			Connection connection = Bus.GetSessionBus();
+			Service service = Service.Get(connection, "org.gnome.Banshee");		
+			return (BansheeCore)service.GetObject(typeof(BansheeCore), 
+				"/org/gnome/Banshee/Core");
+		}
+		
+		public BansheeCore(Gtk.Window mainWindow)
+		{
+			this.mainWindow = mainWindow;
+		}
+		
+		//[Method]
+		public void PresentWindow()
+		{
+			if(mainWindow != null)
+				mainWindow.Present();
+			else
+				Console.WriteLine("Don't have main window");
+		}
+	}
 }
-*/
+
