@@ -141,7 +141,7 @@ namespace Banshee
 			SetSizeRequest(image.Width, image.Height);
 			
 			Realized += OnRealized;
-			Unrealized += OnUnrealized;
+			Destroyed += OnDestroyed;
 			ExposeEvent += OnExposed;
 			
 			TimerHandle = GLib.Timeout.Add(50, new TimeoutHandler(ScrollDown));
@@ -232,7 +232,7 @@ namespace Banshee
 			shadowLayout.GetPixelSize(out textWidth, out textHeight);
 		}
 		
-		protected void OnUnrealized(object o, EventArgs args)
+		protected void OnDestroyed(object o, EventArgs args)
 		{
 			unrealize = true;
 		}
