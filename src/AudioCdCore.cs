@@ -50,7 +50,49 @@ namespace Banshee
 	
 		public AudioCdCore()
 		{
+			Context ctx = new Context();
+			ctx.DeviceAdded += OnHalDeviceAdded;
+			ctx.DeviceRemoved += OnHalDeviceRemoved;
+			ctx.DeviceCondition += OnHalDeviceCondition;
+			ctx.DeviceLostCapability += OnHalDeviceLostCapability;
+			ctx.DeviceNewCapability += OnHalDeviceNewCapability;
+			ctx.DevicePropertyModified += OnHalDevicePropertyModified;
+		}
+	
+		public void OnHalDeviceAdded(object o, DeviceAddedArgs args)
+		{
+			Console.WriteLine("Device Added: " + args.Device);
+			args.Device.WatchProperties = true;
+		}
 		
+		public void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
+		{
+			Console.WriteLine("Device Removed: " + args.Device);
+		}
+		
+		public void OnHalDeviceCondition(object o, DeviceConditionArgs args)
+		{
+			Console.WriteLine("Device Condition: " + args.Device);
+		}
+		
+		public void OnHalDeviceLostCapability(object o, 
+			DeviceLostCapabilityArgs args)
+		{
+			Console.WriteLine("Device Lost Capability: " + args.Device);	
+		}
+		
+		public void OnHalDeviceNewCapability(object o,
+			DeviceNewCapabilityArgs args)
+		{
+			Console.WriteLine("Device New Capability: " + args.Device);
+		}
+		
+		public void OnHalDevicePropertyModified(object o,
+			DevicePropertyModifiedArgs args)
+		{
+			Console.WriteLine("Device Property Modified: " + args.Device +
+				", Key: " + args.Key + ", Is Removed: " + args.IsRemoved +
+				", Is Added: " + args.IsAdded);
 		}
 		
 		private void OnDeviceAdded(object o, EventArgs args)

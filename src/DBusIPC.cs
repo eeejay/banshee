@@ -80,13 +80,11 @@ namespace Banshee
 			this.mainWindow = mainWindow;
 		}
 		
-		//[Method]
-		public void PresentWindow()
+		[Method]
+		public virtual void PresentWindow()
 		{
 			if(mainWindow != null)
 				mainWindow.Present();
-			else
-				Console.WriteLine("Don't have main window");
 		}
 	}
 }

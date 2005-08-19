@@ -108,7 +108,7 @@ namespace Banshee
 				return Environment.GetFolderPath(
 					Environment.SpecialFolder.ApplicationData) 
 					+ Path.DirectorySeparatorChar 
-					+ "sonance" 
+					+ "banshee" 
 					+ Path.DirectorySeparatorChar;
 			}
 		}

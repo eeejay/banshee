@@ -78,7 +78,8 @@ namespace Banshee
 			}
 		}
 		
-		private IpodCore ipodCore;
+		private IpodCore ipodCore = IpodCore.Instance;
+		private AudioCdCore audioCdCore = AudioCdCore.Instance;
 		
 		private long plLoaderMax, plLoaderCount;
 		private bool startupLoadReady = false;

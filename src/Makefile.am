@@ -73,7 +73,8 @@ sonance_sources = \
 	PlayerEngineLoader.cs \
 	RatingRenderer.cs \
 	IpodTrackInfo.cs \
-	AltProgressBar.cs
+	AltProgressBar.cs \
+	AudioCdCore.cs
 
 sonance_resources = \
 	../data/Tables.sql \

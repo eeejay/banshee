@@ -42,7 +42,6 @@ namespace Banshee
 			} catch { }
 			
 			if(dbusCore != null) {
-				Console.WriteLine("Already Running!");
 				dbusCore.PresentWindow();
 				return;
 			}

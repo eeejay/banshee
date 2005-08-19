@@ -43,10 +43,12 @@ namespace Banshee
 		public static IpodCore Instance
 		{
 			get {
-				//if(instance == null) 
-				//	instance = new IpodCore();
-				//return instance;
-				return null;
+				if(instance == null) {
+					IPod.Initializer.UseDefaultContext = true;
+					instance = new IpodCore();
+				}
+				
+				return instance;
 			}
 		}
 	
