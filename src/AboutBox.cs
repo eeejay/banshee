@@ -128,6 +128,7 @@ namespace Banshee
 		private AssemblyName selAsm;
 
 		private uint TimerHandle;
+		private bool unrealize;
 	
 		public ScrollBox()
 		{
@@ -140,6 +141,7 @@ namespace Banshee
 			SetSizeRequest(image.Width, image.Height);
 			
 			Realized += OnRealized;
+			Unrealized += OnUnrealized;
 			ExposeEvent += OnExposed;
 			
 			TimerHandle = GLib.Timeout.Add(50, new TimeoutHandler(ScrollDown));
@@ -185,12 +187,13 @@ namespace Banshee
 		{
 			scroll++;
 			QueueDrawArea(offsetX, 0, textWidth, image.Height);
-			return true;
+			return !unrealize;
 		}
 		
 		protected void OnExposed(object o, ExposeEventArgs args)
 		{
-			if(image == null || gradTop == null || gradBottom == null)
+			if(GdkWindow == null || unrealize || image == null || 
+				gradTop == null || gradBottom == null)
 				return;
 			
 			GdkWindow.DrawPixbuf(Style.BackgroundGC(StateType.Normal), 
@@ -216,7 +219,7 @@ namespace Banshee
 				scroll = -scroll;
 		}
 
-		protected void OnRealized (object o, EventArgs args)
+		protected void OnRealized(object o, EventArgs args)
 		{
 			layout = new Pango.Layout(PangoContext);
 			layout.SetMarkup("<span color=\"white\">" 
@@ -227,6 +230,11 @@ namespace Banshee
 			shadowLayout.SetMarkup("<span color=\"black\">" 
 				+ ScrollText + "</span>");
 			shadowLayout.GetPixelSize(out textWidth, out textHeight);
+		}
+		
+		protected void OnUnrealized(object o, EventArgs args)
+		{
+			unrealize = true;
 		}
 	}
 }
