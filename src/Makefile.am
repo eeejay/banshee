@@ -57,7 +57,6 @@ sonance_sources = \
 	TrackInfoHeader.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
-	InstanceFinder.cs \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
 	PlaylistRowRenderer.cs \
