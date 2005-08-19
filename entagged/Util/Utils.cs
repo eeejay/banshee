@@ -25,14 +25,16 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:59  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:16  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.3  2005/02/08 12:54:41  kikidonk
  * Added cvs log and header
  *
  */
 
+using System;
+using System.Collections;
 using System.Text;
 
 namespace Entagged.Audioformats.Util {
@@ -68,5 +70,73 @@ namespace Entagged.Audioformats.Util {
 			
 			return number;
 		}
+
+		public static string[] FieldListToStringArray(IList taglist)
+		{
+			string[] ret = new string[taglist.Count];
+			int i = 0;
+			foreach (TagTextField field in taglist)
+				ret[i++] = field.Content;
+			return ret;
+		}
+
+		public static int[] FieldListToIntArray(IList taglist)
+		{
+			int[] ret = new int[taglist.Count];
+			int i = 0;
+			foreach (TagTextField field in taglist)
+				ret[i++] = Convert.ToInt32(field.Content);
+			return ret;
+		}
+
+		public static Tag CombineTags(params Tag[] tags)
+		{
+			Tag ret = new GenericTag();
+
+			foreach (Tag tag in tags) {
+				if (tag == null)
+					continue;
+
+				foreach (TagTextField artist in tag.Artist)
+					ret.AddArtist (artist.Content);
+
+				foreach (TagTextField album in tag.Album)
+					ret.AddAlbum (album.Content);
+
+				foreach (TagTextField title in tag.Title)
+					ret.AddTitle (title.Content);
+
+				foreach (TagTextField track in tag.Track)
+					ret.AddTrack (track.Content);
+
+				foreach (TagTextField trackcount in tag.TrackCount)
+					ret.AddTrackCount (trackcount.Content);
+
+				foreach (TagTextField year in tag.Year)
+					ret.AddYear (year.Content);
+
+				foreach (TagTextField comment in tag.Comment)
+					ret.AddComment (comment.Content);
+
+				foreach (TagTextField genre in tag.Genre)
+					ret.AddGenre (genre.Content);
+			}
+
+			return ret;
+		}
+
+		// Splits (e.g.) "1/6" into track 1 of 6.
+		public static void SplitTrackNumber(string content, out string num, out string count)
+		{
+			string[] split = content.Split(new char[] {'/'}, 2);
+			if (split.Length == 1) {
+				num = content;
+				count = null;
+			} else {
+				num = split[0];
+				count = split[1];
+			}
+		}
+		
 	}
 }

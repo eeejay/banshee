@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:54  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:10  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.4  2005/02/08 12:54:41  kikidonk
  * Added cvs log and header
@@ -34,6 +34,7 @@
  */
 
 using System.IO;
+using System.Text;
 using Entagged.Audioformats.Exceptions;
 using Entagged.Audioformats.Util;
 
@@ -105,13 +106,28 @@ namespace Entagged.Audioformats.Ape.Util {
 				apeStream.Read( b , 0,  b .Length);
 				apeStream.Seek(1, SeekOrigin.Current);
 				string field = new string(System.Text.Encoding.GetEncoding("ISO-8859-1").GetChars(b));
-				
+
 				//Read Item content
 				b = new byte[contentLength];
 				apeStream.Read( b , 0,  b .Length);
-				if(!binary)
-				    tag.Add(new ApeTagTextField(field, new string(System.Text.Encoding.UTF8.GetChars(b))));
-				else
+				if(!binary) {
+					string content = new string(Encoding.UTF8.GetChars(b));
+					switch (field) {
+					case "Track":
+						string num, count;
+						Utils.SplitTrackNumber(content, out num, out count);
+						if (num != null)
+							tag.Add(new ApeTagTextField(field, num));
+						if (count != null)
+							tag.Add(new ApeTagTextField("EntaggedTrackCount", count));
+						break;
+
+					default:
+					    tag.Add(new ApeTagTextField(field, content));
+						break;
+					}
+					
+				} else
 				    tag.Add(new ApeTagBinaryField(field, b));
 			}
 			

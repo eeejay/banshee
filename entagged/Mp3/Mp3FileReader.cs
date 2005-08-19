@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:56  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:13  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.5  2005/02/18 12:31:51  kikidonk
  * Adds a way to know if there was an id3 tag or not
@@ -43,6 +43,9 @@ using Entagged.Audioformats.Exceptions;
 using Entagged.Audioformats.Mp3.Util;
 
 namespace Entagged.Audioformats.Mp3 {
+	[SupportedExtension ("mp3")]
+	[SupportedMimeType ("audio/x-mp3")]
+	[SupportedMimeType ("entagged/mp3")]
 	public class Mp3FileReader : AudioFileReader {
 		
 		private Mp3InfoReader ir = new Mp3InfoReader();
@@ -72,17 +75,10 @@ namespace Entagged.Audioformats.Mp3 {
 				error += "("+e.Message+")";
 			}
 
-			if(v1 == null && v2 == null)
-				return new GenericTag();
-			
-			if(v2 == null) {
-				return v1;
-			}
-			else if(v1 != null) {
-				v2.Merge( v1 );
+			if (v2 != null && v1 != null)
 				v2.HasId3v1 = true;
-			}
-			return v2;
+
+			return Utils.CombineTags(v2, v1);
 		}
 	}
 }

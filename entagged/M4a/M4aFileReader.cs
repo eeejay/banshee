@@ -33,19 +33,22 @@ using Entagged.Audioformats.M4a.Util;
  
 namespace Entagged.Audioformats.M4a
 {
+	[SupportedExtension ("m4a")]
+	[SupportedExtension ("m4p")]
+	[SupportedMimeType ("audio/x-m4a")]
+	[SupportedMimeType ("entagged/m4a")]
 	public class M4aFileReader : AudioFileReader
 	{
-		private M4aInfoReader ir = new M4aInfoReader();
 		private M4aTagReader tr = new M4aTagReader();
 		
 		protected override EncodingInfo GetEncodingInfo(Stream raf)  
 		{
-			return ir.Read(raf);
+			return tr.ReadEncodingInfo(raf);
 		}
 		
 		protected override Tag GetTag(Stream raf)  
 		{
-			return tr.Read(raf);
+			return tr.ReadTags(raf);
 		}
 	}
 }

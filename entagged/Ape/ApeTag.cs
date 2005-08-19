@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:54  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:10  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.3  2005/02/08 12:54:42  kikidonk
  * Added cvs log and header
@@ -52,6 +52,9 @@ namespace Entagged.Audioformats.Ape {
 	    protected override string TrackId {
 		    get { return "Track"; }
 		}
+		protected override string TrackCountId {
+			get { return "EntaggedTrackCount"; }
+		}
 	    protected override string YearId {
 		    get { return "Year"; }
 		}
@@ -63,25 +66,28 @@ namespace Entagged.Audioformats.Ape {
 		}
 	    
 	    protected override TagField CreateArtistField(string content) {
-	        return new ApeTagTextField("Artist", content);
+	        return new ApeTagTextField(ArtistId, content);
 	    }
 	    protected override TagField CreateAlbumField(string content) {
-	        return new ApeTagTextField("Album", content);
+	        return new ApeTagTextField(AlbumId, content);
 	    }
 	    protected override TagField CreateTitleField(string content) {
-	        return new ApeTagTextField("Title", content);
+	        return new ApeTagTextField(TitleId, content);
 	    }
 	    protected override TagField CreateTrackField(string content) {
-	        return new ApeTagTextField("Track", content);
+	        return new ApeTagTextField(TrackId, content);
+	    }
+	    protected override TagField CreateTrackCountField(string content) {
+	        return new ApeTagTextField(TrackCountId, content);
 	    }
 	    protected override TagField CreateYearField(string content) {
-	        return new ApeTagTextField("Year", content);
+	        return new ApeTagTextField(YearId, content);
 	    }
 	    protected override TagField CreateCommentField(string content) {
-	        return new ApeTagTextField("Comment", content);
+	        return new ApeTagTextField(CommentId, content);
 	    }
 	    protected override TagField CreateGenreField(string content) {
-	        return new ApeTagTextField("Genre", content);
+	        return new ApeTagTextField(GenreId, content);
 	    }
 	    
 	    protected override bool IsAllowedEncoding(string enc) {

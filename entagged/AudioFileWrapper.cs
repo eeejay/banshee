@@ -25,6 +25,7 @@
  */
  
 using System;
+using System.IO;
 using Entagged.Audioformats;
 using Entagged.Audioformats.Util;
  
@@ -34,11 +35,25 @@ namespace Entagged
 	{
 		private AudioFile afb;
 		private string filename;
+		private string mimetype;
 		
 		public AudioFileWrapper(string filename)
 		{
 			this.filename = filename;
 			afb = AudioFileIO.Read(filename);
+		}
+
+		public AudioFileWrapper(string filename, string mimetype)
+		{
+			this.filename = filename;
+			this.mimetype = mimetype;
+			afb = AudioFileIO.Read(filename, mimetype);
+		}
+
+		public AudioFileWrapper(Stream stream, string mimetype)
+		{
+			this.mimetype = mimetype;
+			afb = AudioFileIO.Read(stream, mimetype);
 		}
 		
 		public int Bitrate 
@@ -89,20 +104,76 @@ namespace Entagged
 				return afb.EncodingInfo.Vbr; 
 			}
 		}
-		
+
+		public string[] Genres
+		{
+			get {
+				return Utils.FieldListToStringArray(Tag.Genre);
+			}
+		}
+
+		public string[] Titles
+		{
+			get {
+				return Utils.FieldListToStringArray(Tag.Title);
+			}
+		}
+
+		public int[] TrackNumbers
+		{
+			get {
+				return Utils.FieldListToIntArray(Tag.Track);
+			}
+		}
+
+		public int[] TrackCounts
+		{
+			get {
+				return Utils.FieldListToIntArray(Tag.TrackCount);
+			}
+		}
+
+		public int[] Years
+		{
+			get {
+				return Utils.FieldListToIntArray(Tag.Year);
+			}
+		}
+
+		public string[] Albums
+		{
+			get {
+				return Utils.FieldListToStringArray(Tag.Album);
+			}
+		}
+
+		public string[] Artists
+		{
+			get {
+				return Utils.FieldListToStringArray(Tag.Artist);
+			}
+		}
+
+		public string[] Comments
+		{
+			get {
+				return Utils.FieldListToStringArray(Tag.Comment);
+			}
+		}
+
 		public string Genre 
 		{
 	    	get {
-	    		return afb.Tag.FirstGenre.Equals(String.Empty) 
-	    			? null : afb.Tag.FirstGenre;
+				return Tag.Genre.Count > 0 ?
+					((TagTextField)Tag.Genre[0]).Content : null;
 	    	}
 	    }
 	    
 	    public string Title
 	    {
 	    	get {
-	    		return afb.Tag.FirstTitle.Equals(String.Empty) 
-	    			? null : afb.Tag.FirstTitle;
+				return Tag.Title.Count > 0 ?
+					((TagTextField)Tag.Title[0]).Content : null;
 	    	}
 	    }
 	    
@@ -110,52 +181,63 @@ namespace Entagged
 	    {
 	    	get {
 	    		try {
-	    			return Convert.ToInt32(afb.Tag.FirstTrack);
+	    			return Convert.ToInt32(((TagTextField)Tag.Track[0]).Content);
 	    		} catch(Exception) {
 	    			return 0;
 	    		}
 	    	}
 	    }
-	    
+
+		public int TrackCount
+	    {
+	    	get {
+	    		try {
+	    			return Convert.ToInt32(((TagTextField)Tag.TrackCount[0]).Content);
+	    		} catch(Exception) {
+	    			return 0;
+	    		}
+	    	}
+	    }
+
 	    public int Year
 	    {
 	    	get {
 	    		try {
-	    			return Convert.ToInt32(afb.Tag.FirstYear);
+	    			return Convert.ToInt32(((TagTextField)Tag.Year[0]).Content);
 	    		} catch(Exception) {
 	    			return 0;
 	    		}
 	    	}
 	    }
-	    
+
 	    public string Album
 	    {
 	    	get {
-	    		return afb.Tag.FirstAlbum.Equals(String.Empty) 
-	    			? null : afb.Tag.FirstAlbum;
+				return Tag.Album.Count > 0 ?
+					((TagTextField)Tag.Album[0]).Content : null;
 	    	}
 	    }
 	    
 	    public string Artist
 	    {
 	    	get {
-	    		return afb.Tag.FirstArtist.Equals(String.Empty) 
-	    			? null : afb.Tag.FirstArtist;
+				return Tag.Artist.Count > 0 ?
+					((TagTextField)Tag.Artist[0]).Content : null;
 	    	}
 	    } 
 	    
 	    public string Comment
 	    {
 	    	get {
-	    		return afb.Tag.FirstComment.Equals(String.Empty) 
-	    			? null : afb.Tag.FirstComment;
+				return Tag.Comment.Count > 0 ?
+					((TagTextField)Tag.Comment[0]).Content : null;
 	    	}
 	    }
 	    
 		public Tag Tag 
 		{
 			get { 
-				return afb.Tag == null ? new GenericTag() : afb.Tag; 
+				return afb.Tag; 
 			}
 		}
 		
@@ -163,6 +245,13 @@ namespace Entagged
 		{
 			get {
 				return filename;
+			}
+		}
+
+		public string MimeType
+		{
+			get {
+				return mimetype;
 			}
 		}
 		

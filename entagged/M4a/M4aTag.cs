@@ -63,6 +63,11 @@ namespace Entagged.Audioformats.M4a
 			return new M4aTagField(TrackId, content);
 		}
 
+		protected override TagField CreateTrackCountField(string content) 
+		{
+			return new M4aTagField(TrackCountId, content);
+		}
+
 		protected override TagField CreateYearField(string content) 
 		{
 			return new M4aTagField(YearId, content);
@@ -70,51 +75,42 @@ namespace Entagged.Audioformats.M4a
 
 		protected override string AlbumId 
 		{
-			get { 
-				return "ALBUM"; 	
-			}
+			get { return "ALBUM"; }
 		}
 
 		protected override string ArtistId 
 		{
-			get { 
-				return "ARTIST"; 
-			}
+			get { return "ARTIST"; }
 		}
 
 		protected override string CommentId 
 		{
-			get { 
-				return "COMMENTS"; 
-			}
+			get { return "COMMENTS"; }
 		}
 
 		protected override string GenreId 
 		{
-			get {
-				return "GENRE"; 
-			}
+			get { return "GENRE"; }
 		}
 
 		protected override string TitleId 
 		{
-			get { 
-				return "TITLE"; 
-			}
+			get { return "TITLE"; }
 		}
 
 		protected override string TrackId 
 		{
-			get { 
-				return "TRACKNUMBER"; 
-			}
+			get { return "TRACKNUMBER"; }
+		}
+
+		protected override string TrackCountId 
+		{
+			get { return "EntaggedTrackCount"; }
 		}
 
 		protected override string YearId 
 		{
-			get { 
-				return "YEAR"; 
-			}
+			get { return "YEAR"; }
 		}
 
 		protected override bool IsAllowedEncoding(string enc) 
@@ -124,7 +120,7 @@ namespace Entagged.Audioformats.M4a
 
 		public override string ToString() 
 		{
-			return "OGG " + base.ToString();
+			return "M4A " + base.ToString();
 		}
 	}
 }

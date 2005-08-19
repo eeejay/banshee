@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:59  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:15  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.5  2005/02/18 13:38:11  kikidonk
  * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR

@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:58  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:15  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.3  2005/02/08 12:54:42  kikidonk
  * Added cvs log and header
@@ -44,31 +44,35 @@ namespace Entagged.Audioformats.Ogg {
 		public const string DEFAULT_VENDOR = "Entagged - The Musical Box";
 
 	    protected override TagField CreateAlbumField(string content) {
-	        return new OggTagField("ALBUM", content);
+	        return new OggTagField(AlbumId, content);
 	    }
 
 	    protected override TagField CreateArtistField(string content) {
-	        return new OggTagField("ARTIST", content);
+	        return new OggTagField(ArtistId, content);
 	    }
 
 	    protected override TagField CreateCommentField(string content) {
-	        return new OggTagField("DESCRIPTION", content);
+	        return new OggTagField(CommentId, content);
 	    }
 
 	    protected override TagField CreateGenreField(string content) {
-	        return new OggTagField("GENRE", content);
+	        return new OggTagField(GenreId, content);
 	    }
 
 	    protected override TagField CreateTitleField(string content) {
-	        return new OggTagField("TITLE", content);
+	        return new OggTagField(TitleId, content);
 	    }
 
 	    protected override TagField CreateTrackField(string content) {
-	        return new OggTagField("TRACKNUMBER", content);
+	        return new OggTagField(TrackId, content);
+	    }
+
+	    protected override TagField CreateTrackCountField(string content) {
+	        return new OggTagField(TrackCountId, content);
 	    }
 
 	    protected override TagField CreateYearField(string content) {
-	        return new OggTagField("DATE", content);
+	        return new OggTagField(YearId, content);
 	    }
 
 	    protected override string AlbumId {
@@ -94,6 +98,10 @@ namespace Entagged.Audioformats.Ogg {
 	    protected override string TrackId {
 	        get { return "TRACKNUMBER"; }
 	    }
+
+		protected override string TrackCountId {
+			get { return "TRACKTOTAL"; }
+		}
 
 	    protected override string YearId {
 	        get { return "DATE"; }

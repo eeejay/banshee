@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/08/02 05:24:53  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.7  2005/08/19 02:17:09  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.4  2005/02/25 15:31:16  kikidonk
  * Big structure change
@@ -92,6 +92,7 @@ namespace Entagged.Audioformats {
 	    void AddGenre(string s);
 	    void AddTitle(string s);
 	    void AddTrack(string s);
+	    void AddTrackCount(string s);
 	    void AddYear(string s);
 
 	    IList Get(string id);
@@ -104,6 +105,9 @@ namespace Entagged.Audioformats {
 	    	get;
 	    }
 	    IList Track {
+	    	get;
+	    }
+	    IList TrackCount {
 	    	get;
 	    }
 	    IList Year {
@@ -119,28 +123,6 @@ namespace Entagged.Audioformats {
 	    	get;
 	    }
 	    
-	    string FirstGenre {
-	    	get;
-	    }
-	    string FirstTitle {
-	    	get;
-	    }
-	    string FirstTrack {
-	    	get;
-	    }
-	    string FirstYear {
-	    	get;
-	    }
-	    string FirstAlbum {
-	    	get;
-	    }
-	    string FirstArtist {
-	    	get;
-	    }
-	    string FirstComment {
-	    	get;
-	    }
-	    
 	    bool HasCommonFields {
 	    	get;
 	    }
@@ -149,8 +131,6 @@ namespace Entagged.Audioformats {
 	    	get;
 	    }
 
-	    void Merge(Tag tag);
-	    
 	    void Set(TagField field);
         
 	    void SetAlbum(string s);
@@ -195,6 +175,10 @@ namespace Entagged.Audioformats {
 		{
 			get { return Get(TrackId); }
 		}
+		public IList TrackCount
+		{
+			get { return Get(TrackCountId); }
+		}
 		public IList Year 
 		{
 			get { return Get(YearId); }
@@ -203,63 +187,8 @@ namespace Entagged.Audioformats {
 		{
 			get { return Get(CommentId); }
 		}
-	    
-		public string FirstTitle 
-		{
-			get {
-				IList l = Get(TitleId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
-		public string FirstAlbum 
-		{
-			get {
-				IList l =  Get(AlbumId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
 
-		public string FirstArtist 
-		{
-			get {
-				IList l =  Get(ArtistId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
-		
-		public string FirstGenre 
-		{
-			get {
-				IList l =  Get(GenreId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
-		
-		public string FirstTrack 
-		{
-			get {
-				IList l =  Get(TrackId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
-		
-		public string FirstYear 
-		{
-			get {
-				IList l =  Get(YearId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
-		
-		public string FirstComment 
-		{
-			get {
-				IList l =  Get(CommentId);
-				return (l.Count != 0) ? (l[0] as TagTextField).Content : "";
-			}
-		}
 
-	    
 		public void SetTitle(string s) 
 		{
 			Set (CreateTitleField (s));
@@ -279,6 +208,10 @@ namespace Entagged.Audioformats {
 		public void SetTrack(string s) 
 		{
 			Set (CreateTrackField (s));
+		}
+		public void SetTrackCount(string s) 
+		{
+			Set (CreateTrackCountField (s));
 		}
 		public void SetYear(string s) 
 		{
@@ -309,6 +242,10 @@ namespace Entagged.Audioformats {
 		public void AddTrack(string s) 
 		{
 			Add (CreateTrackField (s));
+		}
+		public void AddTrackCount(string s) 
+		{
+			Add (CreateTrackCountField (s));
 		}
 		public void AddYear(string s) 
 		{
@@ -461,29 +398,7 @@ namespace Entagged.Audioformats {
 			}
 			return sb.ToString().Substring(0,sb.Length-1);
 		}
-	    
-		public void Merge(Tag tag) 
-		{
-			//FIXME: Improve me, for the moment,
-			//it overwrites this tag with other values
-			//FIXME: TODO: an abstract method that merges particular things for each 
-			//format
-			if( Title.Count == 0)
-				SetTitle(tag.FirstTitle);
-			if( Artist.Count == 0 )
-				SetArtist(tag.FirstArtist);
-			if( Album.Count == 0 )
-				SetAlbum(tag.FirstAlbum);
-			if( Year.Count == 0 )
-				SetYear(tag.FirstYear);
-			if( Comment.Count == 0 )
-				SetComment(tag.FirstComment);
-			if( Track.Count == 0 )
-				SetTrack(tag.FirstTrack);
-			if( Genre.Count == 0 )
-				SetGenre(tag.FirstGenre);
-		}
-	    
+
         public bool SetEncoding(string enc) {
             if(!IsAllowedEncoding(enc)) {
                 return false;
@@ -510,6 +425,9 @@ namespace Entagged.Audioformats {
 		protected abstract string TrackId {
 			get;
 		}
+		protected abstract string TrackCountId {
+			get;
+		}
 		protected abstract string YearId {
 			get;
 		}
@@ -524,6 +442,7 @@ namespace Entagged.Audioformats {
 		protected abstract TagField CreateAlbumField(string content);
 		protected abstract TagField CreateTitleField(string content);
 		protected abstract TagField CreateTrackField(string content);
+		protected abstract TagField CreateTrackCountField(string content);
 		protected abstract TagField CreateYearField(string content);
 		protected abstract TagField CreateCommentField(string content);
 		protected abstract TagField CreateGenreField(string content);
@@ -548,7 +467,8 @@ namespace Entagged.Audioformats {
 			"TRACK",
 			"YEAR",
 			"GENRE",
-			"COMMENT"
+			"COMMENT",
+			"TRACKCOUNT",
 		};
 
 		public static int ARTIST = 0;
@@ -558,6 +478,7 @@ namespace Entagged.Audioformats {
 		public static int YEAR = 4;
 		public static int GENRE = 5;
 		public static int COMMENT = 6;
+		public static int TRACKCOUNT = 7;
 			
 		protected override string ArtistId {
 			get { return keys[ARTIST]; }
@@ -570,6 +491,9 @@ namespace Entagged.Audioformats {
 		}
 		protected override string TrackId {
 			get { return keys[TRACK]; }
+		}
+		protected override string TrackCountId {
+			get { return keys[TRACKCOUNT]; }
 		}
 		protected override string YearId {
 			get { return keys[YEAR]; }
@@ -592,6 +516,9 @@ namespace Entagged.Audioformats {
 		}
 		protected override TagField CreateTrackField(string content) {
 			return new GenericTagTextField(keys[TRACK], content);
+		}
+		protected override TagField CreateTrackCountField(string content) {
+			return new GenericTagTextField(keys[TRACKCOUNT], content);
 		}
 		protected override TagField CreateYearField(string content) {
 			return new GenericTagTextField(keys[YEAR], content);

@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/08/02 05:24:53  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.7  2005/08/19 02:17:09  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.7  2005/02/25 15:37:40  kikidonk
  * Big structure change
@@ -42,44 +42,64 @@
  *
  */
 
-using Entagged.Audioformats.Ape;
 using Entagged.Audioformats.Exceptions;
-using Entagged.Audioformats.Flac;
 using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Mp3;
-using Entagged.Audioformats.Mpc;
-using Entagged.Audioformats.Ogg;
-using Entagged.Audioformats.M4a;
+using System.Reflection;
 using System.Collections;
 using System.IO;
 using System;
 
 namespace Entagged.Audioformats {
 	public class AudioFileIO {		
-		//These tables contains all the readers/writers associated with extension as a key
-		private static Hashtable readers = new Hashtable();
+		//These tables contains all the readers writers associated with extensions/mimetypes
+		private static Hashtable extensions = new Hashtable();
+		private static Hashtable mimetypes = new Hashtable();
 		
-		//Initialize the different readers/writers
+		//Initialize the different readers/writers using reflection
 		static AudioFileIO() {
-			//Tag Readers
-			readers["mp3"] = new Mp3FileReader();
-			readers["ogg"] = new OggFileReader();
-			readers["flac"] = new FlacFileReader();
-			readers["mpc"] = new MpcFileReader();
-			readers["mp+"]= readers["mpc"];
-			readers["ape"] = new MonkeyFileReader();
-			readers["m4a"] = new M4aFileReader();
-			readers["m4p"] = readers["m4a"];
+			Assembly assembly = Assembly.GetExecutingAssembly();
+
+			foreach (Type type in assembly.GetTypes()) {
+				if (! type.IsSubclassOf(typeof(AudioFileReader)))
+					continue;
+
+				AudioFileReader reader = (AudioFileReader) Activator.CreateInstance(type);
+				Attribute [] attrs = Attribute.GetCustomAttributes(type, typeof(SupportedExtension));
+				foreach (SupportedExtension attr in attrs)
+					extensions.Add (attr.Extension, reader);
+
+				attrs = Attribute.GetCustomAttributes (type, typeof(SupportedMimeType));
+				foreach (SupportedMimeType attr in attrs)
+					mimetypes.Add (attr.MimeType, reader);
+			}
 		}
 		
 		public static AudioFile Read(string f) {
 			string ext = Utils.GetExtension(f);
 			
-			object afr = readers[ext];
+			object afr = extensions[ext];
 			if( afr == null)
 				throw new CannotReadException("No Reader associated to this extension: "+ext);
 			
 			return (afr as AudioFileReader).Read(f);
 		}
+
+		public static AudioFile Read(string f, string mimetype) {
+			object afr = mimetypes[mimetype];
+			if( afr == null)
+				throw new CannotReadException("No Reader associated to this MimeType: "+mimetype);
+
+			return (afr as AudioFileReader).Read(f);
+		}
+
+		public static AudioFile Read(Stream stream, string mimetype)
+		{
+			object afr = mimetypes[mimetype];
+			if ( afr == null)
+				throw new CannotReadException("No Reader associated to this MimeType: "+mimetype);
+
+			return (afr as AudioFileReader).Read(stream);
+		}
+
 	}
 }

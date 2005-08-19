@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:59  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:16  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.5  2005/02/13 17:30:15  kikidonk
  * Little fix, peek should not forward the ponter

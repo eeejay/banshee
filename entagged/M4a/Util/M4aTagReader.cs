@@ -28,6 +28,7 @@
 using System; 
 using System.IO;
 using System.Text;
+using System.Net;
 
 using Entagged.Audioformats.Util;
 using Entagged.Audioformats.Exceptions;
@@ -38,13 +39,26 @@ namespace Entagged.Audioformats.M4a.Util
 	{
 		private BinaryReader br;
 		private M4aTag tag;
+		private EncodingInfo ei;
 		
-		public Tag Read(Stream raf)
+		public Tag ReadTags(Stream raf)
+		{
+			Read(raf);
+			return tag;
+		}
+
+		public EncodingInfo ReadEncodingInfo(Stream raf)
+		{
+			Read(raf);
+			return ei;
+		}
+
+		public void Read (Stream raf)
 		{
 			tag = new M4aTag();
+			ei = new EncodingInfo();
 			br = new BinaryReader(raf);
 			Parse();
-			return tag;
 		}
 		
 		private void Parse()
@@ -65,6 +79,18 @@ namespace Entagged.Audioformats.M4a.Util
 			long len = br.BaseStream.Length;
 
 			ParseContainer(ref pos, ref len, level, br);
+		}
+
+		private void ParseMvhd (ref long pos, ref long len, long size,
+			BinaryReader br)
+		{
+			byte[] bytes = br.ReadBytes ((int) size);
+
+			int scale = IPAddress.NetworkToHostOrder (BitConverter.ToInt32 (bytes, 12));
+			int duration = IPAddress.NetworkToHostOrder (BitConverter.ToInt32 (bytes, 16));
+			ei.Length = (duration / scale);
+			
+			pos += size;
 		}
 
 		private void ParseData(ref long pos, ref long len, int level, 
@@ -212,6 +238,9 @@ namespace Entagged.Audioformats.M4a.Util
 					case "TRAK":
 					case "UDTA":
 						ParseContainer(ref pos, ref len, level, br);
+						break;
+					case "MVHD":
+						ParseMvhd (ref pos, ref len, size, br);
 						break;
 					case "MDAT":
 					case "FREE":

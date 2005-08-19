@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/08/02 05:24:57  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.5  2005/08/19 02:17:13  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.4  2005/02/13 17:22:17  kikidonk
  * Support for APIC
@@ -87,8 +87,22 @@ namespace Entagged.Audioformats.Mp3.Util {
 				
 				if( "" != field) {
 					Id3Frame f = CreateId3Frame(field, b, version);
-					if(f != null)
-					    tag.Add(f);
+					switch (field) {
+					case "TRCK":
+						if (!(f is TextId3Frame))
+							break;
+						string num, count;
+						Utils.SplitTrackNumber(((TextId3Frame)f).Content, out num, out count);
+						if (num != null)
+							tag.Add(new TextId3Frame(field, num));
+						if (count != null)
+							tag.Add(new TextId3Frame("EntaggedTrackCount", count));
+						break;
+
+					default:
+						tag.Add(f);
+						break;
+					}
 				}
 			}
 			

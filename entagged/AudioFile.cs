@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/08/02 05:24:53  abock
- * Sonance 0.8 Updates, Too Numerous, see ChangeLog
+ * Revision 1.7  2005/08/19 02:17:09  abock
+ * Updated to entagged-sharp 0.1.4
  *
  * Revision 1.5  2005/02/25 15:31:16  kikidonk
  * Big structure change
@@ -45,18 +45,15 @@ namespace Entagged.Audioformats {
 
 	public class AudioFile {
 		
-		private string s;
 		private EncodingInfo info;
 		private Tag tag;
 		
-		public AudioFile(string s, EncodingInfo info, Tag tag) {
-			this.s = s;
+		public AudioFile(EncodingInfo info, Tag tag) {
 			this.info = info;
 			this.tag = tag;
 		}
 		
-		public AudioFile(string s, EncodingInfo info) {
-			this.s = s;
+		public AudioFile(EncodingInfo info) {
 			this.info = info;
 			this.tag = new GenericTag();
 		}
@@ -101,7 +98,11 @@ namespace Entagged.Audioformats {
 		}
 		
 		public override string ToString() {
-			return "AudioFile "+s+"  --------\n"/*+info.ToString()*/+"\n"+ ( (tag == null) ? "" : tag.ToString())+"\n-------------------";
+			return "AudioFile --------\n" + 
+				info.ToString() + "\n"+ 
+				((tag == null) ? "" : 
+				tag.ToString()) +
+				"\n-------------------";
 		}
 	}
 }
