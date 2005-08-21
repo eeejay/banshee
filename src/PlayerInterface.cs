@@ -160,6 +160,10 @@ namespace Banshee
 				height = (int)Core.GconfClient.Get(
 					GConfKeys.WindowHeight);
 			} catch(GConf.NoSuchKeyException e) {
+				width = 800;
+				height = 600;
+				x = 10;
+				y = 10;
 			}
       	
       		if(width != 0 && height != 0) {
@@ -429,15 +433,17 @@ namespace Banshee
 		{
 			if(startupLoadReady) {
 				startupLoadReady = false;
-				
-				sourceView.Sensitive = true;
-				
-				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoadingVP);
-				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
-				sourceView.Show();
-				
+				LoadSourceView();
 				sourceView.SelectLibraryForce();
 			}
+		}
+		
+		private void LoadSourceView()
+		{		
+			sourceView.Sensitive = true;
+			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoadingVP);
+			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
+			sourceView.Show();
 		}
 		
 		private void OnLibraryTransactionStatusStopped(object o, 
@@ -459,15 +465,16 @@ namespace Banshee
 		
 		private void OnLibraryReloaded(object o, EventArgs args)
 		{
-			if(Core.Library.Tracks.Count <= 0)
+			if(Core.Library.Tracks.Count <= 0) {
 				GLib.Timeout.Add(500, PromptForImportTimeout);
-			else {
+			} else {
 				startupLoadReady = true;
 			}
 		}
 		
 		private bool PromptForImportTimeout()
 		{
+			LoadSourceView();
 			PromptForImport();
 			
 			return false;
