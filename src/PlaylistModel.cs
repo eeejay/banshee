@@ -164,6 +164,16 @@ namespace Banshee
 			Core.Library.TransactionManager.Register(loader);
 		}
 		
+		public void LoadFromIpodSource(IpodSource ipodSource)
+		{
+			ClearModel();
+			
+			IPod.Device device = ipodSource.Device;
+			foreach(IPod.Song song in device.SongDatabase.Songs) {
+				AddTrack(new IpodTrackInfo(song));
+			}
+		}
+		
 		// --- Helper Methods ---
 		
 		public TrackInfo IterTrackInfo(TreeIter iter)

@@ -1,5 +1,8 @@
 2005-08-20 Aaron Bockover <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Search works on the iPod, ejection fixes
+	* src/PlayerInterface.cs: Don't show the source view until the database
+	has been loaded into cache
 	* src/TrackInfoHeader.cs: Don't show Banshee Version
 	* src/PlayerInterface.cs: Nice iPod properties box, properties context
 	menu, generic StopPlaying method

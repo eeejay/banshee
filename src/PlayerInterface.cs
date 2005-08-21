@@ -70,6 +70,7 @@ namespace Banshee
 		private Tooltips toolTips;
 		private Hashtable playlistMenuMap;
 		private ProgressBar ipodDiskUsageBar;
+		private Label sourceViewLoading;
 	
 		public Gtk.Window Window
 		{
@@ -209,7 +210,12 @@ namespace Banshee
 
 			// Source View
 			sourceView = new SourceView();
-			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
+			sourceViewLoading = new Label();
+			sourceViewLoading.Yalign = 0.15f;
+			sourceViewLoading.Xalign = 0.5f;
+			sourceViewLoading.Markup = "<big><i>Loading...</i></big>";
+			sourceViewLoading.Show();
+			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceViewLoading);
 			sourceView.Show();
 			sourceView.SourceChanged += OnSourceChanged;
 			sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
@@ -420,7 +426,11 @@ namespace Banshee
 		{
 			if(startupLoadReady) {
 				startupLoadReady = false;
+				
 				sourceView.Sensitive = true;
+				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoading);
+				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
+				
 				sourceView.SelectLibraryForce();
 			}
 		}
@@ -647,6 +657,9 @@ namespace Banshee
 		
 		private void SetPositionLabel(long position)
 		{
+			if(activeTrackInfo == null)
+				return;
+			
 			SetInfoLabel(String.Format("{0}:{1:00} of {2}:{3:00}",
 				position / 60,
 				position % 60,
@@ -815,6 +828,8 @@ namespace Banshee
 			if(source == null)
 				return;
 				
+			searchEntry.CancelSearch(false);
+				
 			if(source.Type == SourceType.Library) {
 				playlistModel.LoadFromLibrary();
 				playlistModel.Source = source;
@@ -829,9 +844,7 @@ namespace Banshee
 				
 				IpodSource ipodSource = source as IpodSource;
 				IPod.Device device = ipodSource.Device;
-				foreach(IPod.Song song in device.SongDatabase.Songs) {
-					playlistModel.AddTrack(new IpodTrackInfo(song));
-				}
+				playlistModel.LoadFromIpodSource(ipodSource);
 				
 				ipodDiskUsageBar.Fraction = (double)device.VolumeUsed / 
 					(double)device.VolumeSize;
@@ -1163,19 +1176,38 @@ namespace Banshee
 		
 		private void OnSimpleSearch(object o, EventArgs args)
 		{
+			Source source = sourceView.SelectedSource;
 			playlistModel.Clear();
 			
 			string query = searchEntry.Query;
 			string field = searchEntry.Field;
 			
 			if(query == null || query == String.Empty) {
-				playlistModel.LoadFromLibrary();
+				if(source.Type == SourceType.Ipod)
+					playlistModel.LoadFromIpodSource(source as IpodSource);
+				else
+					playlistModel.LoadFromLibrary();
 				return;
 			}
 			
 			query = query.ToLower();
 			
-			foreach(TrackInfo ti in Core.Library.Tracks.Values) {
+			ICollection collection = null;
+			
+			if(source.Type == SourceType.Ipod) {
+				IPod.Device device = (source as IpodSource).Device;
+				collection = device.SongDatabase.Songs;
+				
+				// TODO: this sucks! Song->IpodTrackInfo needs to be cached!
+				ArrayList tmpCol = new ArrayList();
+				foreach(IPod.Song ti in collection)
+					tmpCol.Add(new IpodTrackInfo(ti));
+				collection = tmpCol;
+			} else {
+				collection = Core.Library.Tracks.Values;
+			}
+			
+			foreach(TrackInfo ti in collection) {
 				string match;
 				
 				try {
