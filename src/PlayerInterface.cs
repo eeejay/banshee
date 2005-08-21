@@ -70,7 +70,7 @@ namespace Banshee
 		private Tooltips toolTips;
 		private Hashtable playlistMenuMap;
 		private ProgressBar ipodDiskUsageBar;
-		private Label sourceViewLoading;
+		private Viewport sourceViewLoadingVP;
 	
 		public Gtk.Window Window
 		{
@@ -209,14 +209,17 @@ namespace Banshee
 				new VolumeButton.VolumeChangedHandler(OnVolumeScaleChanged);
 
 			// Source View
-			sourceView = new SourceView();
-			sourceViewLoading = new Label();
+			Label sourceViewLoading = new Label();
 			sourceViewLoading.Yalign = 0.15f;
 			sourceViewLoading.Xalign = 0.5f;
 			sourceViewLoading.Markup = "<big><i>Loading...</i></big>";
-			sourceViewLoading.Show();
-			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceViewLoading);
-			sourceView.Show();
+			sourceViewLoadingVP = new Viewport();
+			sourceViewLoadingVP.ShadowType = ShadowType.None;
+			sourceViewLoadingVP.Add(sourceViewLoading);
+			sourceViewLoadingVP.ShowAll();
+			((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceViewLoadingVP);
+			
+			sourceView = new SourceView();
 			sourceView.SourceChanged += OnSourceChanged;
 			sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
 			sourceView.DragMotion += OnSourceViewDragMotion;
@@ -428,8 +431,10 @@ namespace Banshee
 				startupLoadReady = false;
 				
 				sourceView.Sensitive = true;
-				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoading);
+				
+				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoadingVP);
 				((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
+				sourceView.Show();
 				
 				sourceView.SelectLibraryForce();
 			}
