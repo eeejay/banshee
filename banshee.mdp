@@ -49,7 +49,6 @@
     <File name="./src/DragDrop.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/GConfKeys.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/ImageAnimation.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/InstanceFinder.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Library.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/LibraryTransactionManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/LibraryTransactions.cs" subtype="Code" buildaction="Compile" />
@@ -139,5 +138,6 @@
     <File name="./data/images/advanced-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./src/IpodTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/AltProgressBar.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/IpodPropertiesWindow.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

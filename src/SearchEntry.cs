@@ -90,6 +90,7 @@ namespace Banshee
 			entry.HasFrame = false;
 			entry.WidthChars = 15;
 			entry.Activated += OnEntryActivated;
+			entry.KeyPressEvent += OnEntryKeyPressEvent;
 			
 			icon = Gdk.Pixbuf.LoadFromResource("search-entry-icon.png");
 			hoverIcon = Gdk.Pixbuf.LoadFromResource(
@@ -208,6 +209,12 @@ namespace Banshee
 				return;
 				
 			ShowMenu(args.Event.Time);
+		}
+
+		private void OnEntryKeyPressEvent(object o, KeyPressEventArgs args) 
+		{
+			if(args.Event.Key != Gdk.Key.Delete)
+				return;
 		}
 
 		private void OnCancelEnterNotifyEvent(object o, EnterNotifyEventArgs args)

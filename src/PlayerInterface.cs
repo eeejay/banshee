@@ -215,6 +215,7 @@ namespace Banshee
 			sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
 			sourceView.DragMotion += OnSourceViewDragMotion;
 			sourceView.DragDataReceived += OnSourceViewDragDataReceived;
+			sourceView.Sensitive = false;
 
 			Gtk.Drag.SourceSet(sourceView, 
 				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
@@ -257,10 +258,12 @@ namespace Banshee
 			
 			Button ipodPropertiesButton = new Button(
 				new Gtk.Image("gtk-properties", IconSize.Menu));
+			ipodPropertiesButton.Clicked += OnIpodPropertiesClicked;
 			box.PackStart(ipodPropertiesButton, false, false, 0);
 			
 			Button ipodEjectButton = new Button(new Gtk.Image("media-eject",
 				IconSize.Menu));
+			ipodEjectButton.Clicked += OnIpodEjectClicked;
 			box.PackStart(ipodEjectButton, false, false, 0);
 			
 			box.ShowAll();
@@ -297,9 +300,10 @@ namespace Banshee
 			toolTips.SetTip(gxml["ButtonBurn"], "Burn Selection to CD", "Burn Selection to CD");
 			toolTips.SetTip(gxml["ButtonPrevious"], "Play Previous Song", "Play Previous Song");
 			toolTips.SetTip(gxml["ButtonPlayPause"], "Play/Pause Current Song", "Play/Pause Current Song");
-			toolTips.SetTip(gxml["ButtonNext"], "Plah Next Song", "Play Next Song");
+			toolTips.SetTip(gxml["ButtonNext"], "Play Next Song", "Play Next Song");
 			toolTips.SetTip(gxml["ScaleTime"], "Current Position in Song", "Current Position in Song");
 			toolTips.SetTip(volumeButton, "Adjust Volume", "Adjust Volume");
+			toolTips.SetTip(ipodDiskUsageBar, "iPod Disk Usage", "iPod Disk Usage");
 			
 			playlistMenuMap = new Hashtable();
 			
@@ -416,6 +420,7 @@ namespace Banshee
 		{
 			if(startupLoadReady) {
 				startupLoadReady = false;
+				sourceView.Sensitive = true;
 				sourceView.SelectLibraryForce();
 			}
 		}
@@ -710,15 +715,7 @@ namespace Banshee
 		{
 			Core.ThreadEnter();
 			
-			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
-			ScaleTime.Adjustment.Lower = 0;
-			ScaleTime.Adjustment.Upper = 0;
-			ScaleTime.Value = 0;
-			SetInfoLabel("Idle");
-			activeTrackInfo = null;
-			
-			if(trayIcon != null)
-				trayIcon.Tooltip = "Banshee - Idle";
+			StopPlaying();
 			
 			playlistModel.Continue();
 			playlistView.UpdateView();
@@ -838,11 +835,21 @@ namespace Banshee
 				
 				ipodDiskUsageBar.Fraction = (double)device.VolumeUsed / 
 					(double)device.VolumeSize;
-				ulong usedgb = device.VolumeUsed / (1000 * 1000 * 1000);
-				ulong availgb = device.VolumeAvailable / (1000 * 1000 * 1000);
-				ulong totalgb = device.VolumeSize / (1000 * 1000 * 1000);
+				ulong usedmb = device.VolumeUsed / (1024 * 1024);
+				ulong availmb = device.VolumeAvailable / (1024 * 1024);
+				ulong totalmb = device.VolumeSize / (1024 * 1024);
 				
-				ipodDiskUsageBar.Text = String.Format("{0}  {1}  {2}", usedgb, availgb, totalgb); 
+				string usedstr = usedmb >= 1024 ? (usedmb / 1024) + " GB" :
+					usedmb + " MB";
+				string availstr = availmb >= 1024 ? (availmb / 1024) + " GB" :
+					availmb + " MB";
+				string totalstr = totalmb >= 1024 ? (totalmb / 1024) + " GB" :
+					totalmb + " MB";
+				
+				ipodDiskUsageBar.Text = usedstr + " of " + totalstr;
+				string tooltip = ipodDiskUsageBar.Text + " (" + availstr + 
+					" Remaining)";
+				toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
 				
 				Core.ThreadEnter();
 				(gxml["ViewNameLabel"] as Label).Markup = 
@@ -861,12 +868,17 @@ namespace Banshee
 			gxml["IpodContainer"].Visible = source.Type == SourceType.Ipod;
 		}
 		
-		[GLib.ConnectBeforeAttribute]
-		private void OnIpodDiskUsageButtonPressEvent(object o, 
-			ButtonPressEventArgs args)
+		private void OnIpodPropertiesClicked(object o, EventArgs args)
 		{
-			ipodDiskUsageTextViewState = (ipodDiskUsageTextViewState + 1) % 2;
-			Console.WriteLine("VIEW: " + ipodDiskUsageTextViewState);
+			if(sourceView.SelectedSource.Type != SourceType.Ipod)
+				return;
+			
+			ShowSourceProperties(sourceView.SelectedSource);
+		}
+		
+		private void OnIpodEjectClicked(object o, EventArgs args)
+		{
+			EjectSource(sourceView.SelectedSource);
 		}
 		
 		private void OnToggleButtonShuffleToggled(object o, EventArgs args)
@@ -1052,7 +1064,11 @@ namespace Banshee
 			addSelectedSongs.Sensitive = source.Type == SourceType.Playlist
 				&& playlistView.Selection.CountSelectedRows() > 0;
 			sourceDuplicate.Sensitive = false;
-			sourceProperties.Sensitive = false;
+			
+			if(source.Type == SourceType.Ipod)
+				sourceProperties.Sensitive = true;
+			else
+				sourceProperties.Sensitive = false;
 		
 			if(source.CanEject) {
 				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
@@ -1097,23 +1113,12 @@ namespace Banshee
 		
 		private void OnItemEjectActivate(object o, EventArgs args)
 		{
-			Source source = sourceView.HighlightedSource;
-			
-			if(source.CanEject) {
-				try {
-					source.Eject();
-				} catch(Exception e) {
-					HigMessageDialog.RunHigMessageDialog(null, 
-						DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
-						"Could Not Eject",
-						e.Message);
-				}
-			}
+			EjectSource(sourceView.HighlightedSource);
 		}
 		
 		private void OnItemSourcePropertiesActivate(object o, EventArgs args)
 		{
-
+			ShowSourceProperties(sourceView.HighlightedSource);
 		}
 		
 		private void OnItemSourceRenameActivate(object o, EventArgs args)
@@ -1579,6 +1584,62 @@ namespace Banshee
 				burnCore.AddTrack(playlistModel.PathTrackInfo(path));
 				
 			burnCore.Burn();
+		}
+		
+		private void EjectSource(Source source)
+		{
+			if(source.CanEject) {
+				try {
+					if(source.GetType() == typeof(IpodSource)) {
+						if(activeTrackInfo.GetType() == typeof(IpodTrackInfo)) {
+							StopPlaying();
+						}
+					}
+						
+					source.Eject();
+					
+					if(source == sourceView.SelectedSource)
+						sourceView.SelectLibrary();
+				} catch(Exception e) {
+					HigMessageDialog.RunHigMessageDialog(null, 
+						DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
+						"Could Not Eject",
+						e.Message);
+				}
+			}
+		}
+		
+		private void ShowSourceProperties(Source source)
+		{
+			switch(source.Type) {
+				case SourceType.Ipod:
+					IpodSource ipodSource = source as IpodSource;
+					IPod.Device device = ipodSource.Device;
+					IpodPropertiesDialog propWin = 
+						new IpodPropertiesDialog(device);
+					propWin.Run();
+					propWin.Destroy();
+					device.Save();
+					source.Name = device.Name;
+					sourceView.QueueDraw();
+					break;
+			}
+		}
+		
+		private void StopPlaying()
+		{
+			Core.Instance.Player.Close();
+			
+			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+			ScaleTime.Adjustment.Lower = 0;
+			ScaleTime.Adjustment.Upper = 0;
+			ScaleTime.Value = 0;
+			SetInfoLabel("Idle");
+			trackInfoHeader.SetIdle();
+			activeTrackInfo = null;
+			
+			if(trayIcon != null)
+				trayIcon.Tooltip = "Banshee - Idle";
 		}
 	}
 }

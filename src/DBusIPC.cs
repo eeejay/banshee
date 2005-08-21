@@ -1,5 +1,5 @@
 /***************************************************************************
- *  InstanceFinder.cs
+ *  DBusIPC.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)

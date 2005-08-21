@@ -270,7 +270,6 @@ namespace Banshee
 		
 		private void OnIpodCoreUpdated(object o, EventArgs args)
 		{
-			Console.WriteLine("Ipod Stuff Updated");
 			RefreshList();
 		}
 		

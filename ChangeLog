@@ -1,3 +1,11 @@
+2005-08-20 Aaron Bockover <aaron@aaronbock.net>
+
+	* src/TrackInfoHeader.cs: Don't show Banshee Version
+	* src/PlayerInterface.cs: Nice iPod properties box, properties context
+	menu, generic StopPlaying method
+	* src/IpodPropertiesWindow.cs: Full iPod properties dialog/editor
+	* configure.ac: Added more potential HELIX_LIBS paths to detector
+
 2005-08-18 Aaron Bockover <aaron@aaronbock.net>
 	
 	* plugincore/TrackInfo.cs: Abstract TrackInfo class
