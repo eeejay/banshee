@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("@VERSION@.*")]
-[assembly: AssemblyTitle ("Sonance")]
-[assembly: AssemblyDescription ("Sonance Music Player")]
-[assembly: AssemblyCopyright ("Copyright (C) Aaron Bockover")]
-[assembly: AssemblyCompany ("Aaronbock.Net")]
+[assembly: AssemblyVersion("@ASM_VERSION@")]
+[assembly: AssemblyTitle ("Banshee")]
+[assembly: AssemblyDescription ("Banshee Music Player")]
+[assembly: AssemblyCopyright ("Copyright (C) Novell, Aaron Bockover")]
+[assembly: AssemblyCompany ("Novell, Inc")]
 
