@@ -1663,7 +1663,8 @@ namespace Banshee
 						new IpodPropertiesDialog(device);
 					propWin.Run();
 					propWin.Destroy();
-					device.Save();
+					if(propWin.Edited && device.CanWrite)
+						device.Save();
 					source.Name = device.Name;
 					sourceView.QueueDraw();
 					break;

@@ -91,6 +91,8 @@ namespace Banshee
 		private Entry userEntry;
 		private Entry hostEntry;
 		
+		private bool edited;
+		
 		public IpodPropertiesDialog(Device device) : base(
 			device.Name + " Properties",
 			null,
@@ -107,14 +109,20 @@ namespace Banshee
 			table.ColumnSpacing = 10;
 			table.RowSpacing = 5;
 			
-			nameEntry = table.AddEntry("iPod Name", device.Name);
-			userEntry = table.AddEntry("Your Name", device.UserName);
-			hostEntry = table.AddEntry("Computer Name", device.HostName);
+			if(device.CanWrite) {
+				nameEntry = table.AddEntry("iPod Name", device.Name);
+				userEntry = table.AddEntry("Your Name", device.UserName);
+				hostEntry = table.AddEntry("Computer Name", device.HostName);
+				
+				nameEntry.Changed += OnEntryChanged;
+				userEntry.Changed += OnEntryChanged;
+				hostEntry.Changed += OnEntryChanged;
+			} else {
+				table.AddLabel("iPod Name", device.Name);
+				table.AddLabel("Your Name", device.UserName);
+				table.AddLabel("Computer Name", device.HostName);
+			}
 			
-			nameEntry.Changed += OnEntryChanged;
-			userEntry.Changed += OnEntryChanged;
-			hostEntry.Changed += OnEntryChanged;
-		
 			table.AddSeparator();
 	
 			table.AddLabel("Model", device.ModelNumber + " (" + 
@@ -175,6 +183,14 @@ namespace Banshee
 			device.Name = nameEntry.Text;
 			device.UserName = userEntry.Text;
 			device.HostName = hostEntry.Text;
+			edited = true;
+		}
+		
+		public bool Edited
+		{
+			get {
+				return edited;
+			}
 		}
 	}
 }
