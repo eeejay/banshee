@@ -47,10 +47,11 @@ public class ImageAnimation : Gtk.Image
 	private int frameWidth, frameHeight, maxFrames, currentFrame;
 	private uint refreshRate;
 	private Pixbuf [] frames;
-	private bool deactivate = true;
+	private bool active = true;
 	
-	public ImageAnimation() : base()
+	protected ImageAnimation() : base()
 	{
+		
 	}
 	
 	public ImageAnimation(Pixbuf sourcePixbuf, uint refreshRate, 
@@ -64,6 +65,7 @@ public class ImageAnimation : Gtk.Image
 	{
 		Load(sourcePixbuf, frameWidth, frameHeight, maxFrames);
 		this.refreshRate = refreshRate;
+		GLib.Timeout.Add(refreshRate, new GLib.TimeoutHandler(OnTimeout));
 	}
 	
 	public void Load(Pixbuf sourcePixbuf, int frameWidth, int frameHeight, 
@@ -79,20 +81,19 @@ public class ImageAnimation : Gtk.Image
 	public Pixbuf InactivePixbuf {
 		set {
 			inactivePixbuf = value;
-			if(deactivate)
-				this.Pixbuf = value;
+			if(!active)
+				Pixbuf = value;
 		}
 	}
 	
 	public void SetActive()
 	{
-		deactivate = false;
-		GLib.Timeout.Add(refreshRate, new GLib.TimeoutHandler(OnTimeout));
+		active = true;
 	}
 	
 	public void SetInactive()
 	{
-		deactivate = true;
+		active = false;
 	}
 	
 	private void SpliceImage()
@@ -140,16 +141,17 @@ public class ImageAnimation : Gtk.Image
 	
 	private bool OnTimeout()
 	{
-		if(deactivate) {
-			if(inactivePixbuf != null)
-				this.Pixbuf = inactivePixbuf;
-			return false;
+		if(!active) {
+			if(inactivePixbuf != null && Pixbuf != inactivePixbuf)
+				Pixbuf = inactivePixbuf;
+				
+			return true;
 		}
 	
 		if(frames == null || frames.Length == 0)
 			return true;
 			
-		this.Pixbuf = frames[currentFrame++ % frames.Length];
+		Pixbuf = frames[currentFrame++ % frames.Length];
 			
 		return true;
 	}
