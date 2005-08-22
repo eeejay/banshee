@@ -1,3 +1,13 @@
+2005-08-21 Aaron Bockover <aaron@aaronbock.net>
+
+	* banshee: 0.8.7.1
+	* configure.ac: Export ASM_VERSION instead of VERSION, an assembly-friendly
+	version number string; require ipod-sharp 0.5.11 or better
+	* src/IpodPropertiesWindow.cs: Display labels instead of entries if
+	iPod is mounted read-only
+	* src/PlayerInterface.cs: Only call Device.Save() if iPod is mounted RW
+	* src/ImageAnimation.cs: Fix animation sync bug
+
 2005-08-20 Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.8.7
