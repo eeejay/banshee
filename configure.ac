@@ -4,7 +4,23 @@ AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
-AM_INIT_AUTOMAKE(banshee, 0.8.7)
+
+VERSION_MAJOR=0
+VERSION_MINOR=8
+VERSION_MICRO=7
+VERSION_REVIS=no
+
+VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
+ASM_VERSION="$VERSION.*"
+
+if test ! "x$VERSION_REVIS" = "xno" ; then	
+	VERSION="$VERSION.$VERSION_REVIS"
+	ASM_VERSION=$VERSION
+fi
+
+AM_INIT_AUTOMAKE(banshee, $VERSION)
+AC_SUBST(ASM_VERSION)
+
 AM_MAINTAINER_MODE
 
 AC_PROG_INSTALL
@@ -63,7 +79,7 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
-PKG_CHECK_MODULES(IPODSHARP, ipod-sharp >= 0.4.11)
+PKG_CHECK_MODULES(IPODSHARP, ipod-sharp >= 0.5.1)
 AC_SUBST(IPODSHARP_LIBS)
 
 PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
@@ -102,7 +118,7 @@ if test "x$enable_gst" = "xno" ; then
 		enable_gst=yes, enable_gst=no)
 
 	if test "x$enable_gst" = "xno" ; then
-		AC_MSG_ERROR([Install gstreamer and gstreamer-plugins])
+		AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
 	fi
 fi
 
