@@ -6,9 +6,9 @@ AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
-VERSION_MINOR=8
-VERSION_MICRO=7
-VERSION_REVIS=1
+VERSION_MINOR=9
+VERSION_MICRO=0
+VERSION_REVIS=0
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 ASM_VERSION="$VERSION.*"
@@ -169,11 +169,12 @@ dnl generated files
 AC_OUTPUT([
 Makefile
 banshee.pc
-entagged/Makefile
+entagged-sharp/Makefile
 hal-sharp/Makefile
 mediaengines/Makefile
 mediaengines/gst/Makefile
 mediaengines/helix/Makefile
+mediaengines/helix/mp3enclib/Makefile
 burn-sharp/Makefile
 plugincore/Makefile
 src/Makefile
