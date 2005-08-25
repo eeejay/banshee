@@ -99,7 +99,7 @@ EXTRA_DIST = \
 	AssemblyInfo.cs.in
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = AssemblyInfo.cs *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
 
 test:
 	$(MCS) -out:entagged-test.exe -r:entagged-sharp.dll EntaggedTest.cs
