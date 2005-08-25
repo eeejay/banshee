@@ -174,7 +174,6 @@ hal-sharp/Makefile
 mediaengines/Makefile
 mediaengines/gst/Makefile
 mediaengines/helix/Makefile
-mediaengines/helix/mp3enclib/Makefile
 burn-sharp/Makefile
 plugincore/Makefile
 src/Makefile

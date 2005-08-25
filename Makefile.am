@@ -4,7 +4,7 @@ SUBDIRS = \
 	plugincore \
 	mediaengines \
 	burn-sharp \
-	entagged \
+	entagged-sharp \
 	hal-sharp \
 	src 
 

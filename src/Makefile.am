@@ -132,7 +132,7 @@ PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
 	$(IPODSHARP_LIBS) \
-	-r:$(top_builddir)/entagged/entagged-sharp.dll \
+	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/plugincore/plugin-core.dll
