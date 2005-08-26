@@ -125,18 +125,21 @@ namespace Banshee
 			
 			table.AddSeparator();
 	
-			table.AddLabel("Model", device.ModelNumber + " (" + 
-				device.Model + ")");
+			table.AddLabel("Model", device.ModelNumber != null ? 
+				device.ModelNumber + " (" + device.Model.ToString() + ")" : 
+				device.Model.ToString());
 			table.AddLabel("Capacity", device.AdvertisedCapacity);
 			table.AddWidget("Volume Usage", UsedProgressBar);
-			table.AddLabel("Mount Point", device.MountPoint);
 	
 			box.PackStart(table, true, true, 0);
 			
 			PropertyTable extTable = new PropertyTable();
 			extTable.ColumnSpacing = 10;
 			extTable.RowSpacing = 5;
-			extTable.AddLabel("Volume ID", device.VolumeId);
+			extTable.AddLabel("Mount Point", device.MountPoint);
+			extTable.AddLabel("Device Node", device.DevicePath);
+			extTable.AddLabel("Write Support", device.CanWrite ? "Yes" : "No");
+			extTable.AddLabel("Volume UUID", device.VolumeUuid);
 			extTable.AddLabel("Serial Number", device.SerialNumber);
 			extTable.AddLabel("Firmware Version", device.FirmwareVersion);
 			extTable.AddLabel("Database Version", device.SongDatabase.Version);
