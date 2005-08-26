@@ -262,7 +262,7 @@ gboolean
 gpe_open(GstPlayerEngine *engine, const gchar *file)
 {
 	if(engine == NULL)
-		return; 
+		return FALSE; 
 	
 	gpe_stop(engine);
 
