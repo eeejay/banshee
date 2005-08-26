@@ -1,5 +1,6 @@
 2005-08-25 Aaron Bockover <aaron@aaronbock.net>
 
+	* mediaengines/xing-encoder/Makefile.am: Fixed so make distcheck works
 	* mediaengines/xing-encoder: Xing MP3 Encoder from RealNetworks
 	* mediaengines/gst/Makefile.am, libsonance/Makefile.am, 
 	burn-sharp/Makefile.am: -module -no-version

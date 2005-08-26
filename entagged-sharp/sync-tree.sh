@@ -41,8 +41,9 @@ for cs in `find ./$MONO_BRANCH/ | grep -e '\.cs$'`; do
 	fi
 done;
 
-cp $MONO_BRANCH/src/Makefile.am .
-touch AssemblyInfo.cs
+if [ ! -e Makefile.am ]; then
+	cp $MONO_BRANCH/src/Makefile.am .
+fi
 
 rm -rf $MONO_BRANCH $TRIM_FILES
 

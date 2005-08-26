@@ -60,7 +60,6 @@ TRACKER_CSFILES = \
 	$(srcdir)/Tracker/Util/TrackerTagReader.cs
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/AssemblyInfo.cs \
 	$(srcdir)/Exceptions/CannotReadException.cs \
 	$(srcdir)/Util/AudioFileReader.cs \
 	$(srcdir)/Util/ByteBuffer.cs \
@@ -95,8 +94,7 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 #	$(GACUTIL) /u $(ASSEMBLY_NAME) /package $(PACKAGE) /gacdir $(libdir) /root $(DESTDIR)$(libdir)
 
 EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) \
-	AssemblyInfo.cs.in
+	$(ASSEMBLY_SOURCES) 
 
 CLEANFILES = $(ASSEMBLY)
 DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe

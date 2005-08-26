@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DATE=`date +"%Y%m%d-%H%M"`
-DIR="sonance-cvs-$DATE"
+DIR="banshee-cvs-$DATE"
 FILE="$DIR.tar.gz"
 
 if [ -e Makefile ]; then
