@@ -10,6 +10,7 @@ include burn-sharp.sources
 INCLUDES = $(LIBNAUTILUS_BURN_CFLAGS)
 burngluelibdir = $(pkglibdir)
 burngluelib_LTLIBRARIES = libnautilusburnglue.la
+libnautilusburnglue_la_LDFLAGS = -avoid-version -module
 libnautilusburnglue_la_SOURCES = glue.c
 libnautilusburnglue_la_LIBADD = $(LIBNAUTILUS_BURN_LIBS)
 

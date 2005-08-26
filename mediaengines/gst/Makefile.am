@@ -8,6 +8,7 @@ gstenginelibdir = $(pkglibdir)/mediaengines/gst
 gstenginelib_LTLIBRARIES = libgstmediaengine.la
 gstenginelib_SCRIPTS = $(ASSEMBLY)
 
+libgstmediaengine_la_LDFLAGS = -avoid-version -module
 libgstmediaengine_la_SOURCES = \
 	gst-encode.c \
 	gst-encode.h \
