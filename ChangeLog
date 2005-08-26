@@ -1,3 +1,20 @@
+2005-08-25 Aaron Bockover <aaron@aaronbock.net>
+
+	* mediaengines/xing-encoder: Xing MP3 Encoder from RealNetworks
+	* mediaengines/gst/Makefile.am, libsonance/Makefile.am, 
+	burn-sharp/Makefile.am: -module -no-version
+	* mediaengines/gst/gst-player-engine.c: Fixed random return
+	* configure.ac: Check /usr/lib, /usr/local for SQLITE
+	* src/SearchEntry.cs: Do not call changed event twice 
+	* src/IpodPropertiesWindow.cs: More properties
+	* src/PlayerInterface.cs, src/PlaylistModel.cs, src/PlaylistView.cs: 
+	DnD patch by Dan Winship, fixes most DnD issues 
+	* mediaengines/helix/HelixPlayer.cs: ClientPlayerMute to unmute 
+	PCM on startup
+	* entagged: Dropped from tree
+	* entagged-sharp: Added to tree, updated sync script, updated entagged
+	* configure.ac, src/Makefile.am: Updated for entagged-sharp
+	
 2005-08-21 Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: 0.8.7.1
