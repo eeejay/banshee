@@ -176,6 +176,6 @@ uninstall-hook:
 
 
 run:
-	cp ../entagged/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
+	cp ../entagged-sharp/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
 	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH HELIX_LIBS=/usr/lib/RealPlayer10 mono --debug --config banshee.exe.config banshee.exe
 	
