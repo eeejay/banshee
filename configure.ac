@@ -89,7 +89,7 @@ dnl sqlite devel dep
 PKG_CHECK_MODULES(SQLITE, sqlite >= 2.8)
 
 dnl sqlite runtime dep
-AC_PATH_PROG(SQLITE, sqlite, no)
+AC_PATH_PROG(SQLITE, sqlite, no, $PATH:/usr/local:/usr/lib)
 if test "x$SQLITE" = "xno"; then
 	AC_MSG_ERROR([You need sqlite 2.8.x])
 fi
@@ -172,6 +172,7 @@ banshee.pc
 entagged-sharp/Makefile
 hal-sharp/Makefile
 mediaengines/Makefile
+mediaengines/xing-encoder/Makefile
 mediaengines/gst/Makefile
 mediaengines/helix/Makefile
 burn-sharp/Makefile
