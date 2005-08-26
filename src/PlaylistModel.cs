@@ -63,27 +63,6 @@ namespace Banshee
 			GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
 		}
 	
-	    // -- Egg.TreeMultiDragSource Implementations
-		
-		public bool DragDataDelete(GLib.List path_list)
-		{
-			Console.WriteLine("DragDataDelete");
-			return true;
-		}
-		
-        public bool RowDraggable(GLib.List path_list)
-		{
-			Console.WriteLine("RowDraggable");
-			return true;
-		}
-        
-		public bool DragDataGet(GLib.List path_list, 
-			Gtk.SelectionData selection_data)
-		{
-			Console.WriteLine("DragDataGet");
-			return true;
-		}
-
 		// --- Load Queue and Additions ---
 	
 		private bool OnIdle()
@@ -161,7 +140,7 @@ namespace Banshee
 			ClearModel();
 			LibraryLoadTransaction loader = new LibraryLoadTransaction();
 			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-			Core.Library.TransactionManager.Register(loader);
+			loader.Register();
 		}
 		
 		public void LoadFromIpodSource(IpodSource ipodSource)

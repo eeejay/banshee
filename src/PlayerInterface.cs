@@ -87,6 +87,7 @@ namespace Banshee
 		private bool tickFromEngine = false;
 		private uint setPositionTimeoutId;
 		private bool updateEnginePosition = true;
+		private int clickX, clickY;
 
 		private int ipodDiskUsageTextViewState;
 
@@ -246,6 +247,7 @@ namespace Banshee
 			playlistView.Show();
 			playlistModel.Updated += OnPlaylistUpdated;
 			playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
+			playlistView.MotionNotifyEvent += OnPlaylistViewMotionNotifyEvent;
 			playlistView.DragDataReceived += OnPlaylistViewDragDataReceived;
 			playlistView.DragDataGet += OnPlaylistViewDragDataGet;
 			playlistView.DragMotion += OnPlaylistViewDragMotion;
@@ -976,8 +978,8 @@ namespace Banshee
 				}
 			} else
 				LabelStatusBar.Text = String.Format(
-					"{0} Items, {1} Total Play Time",
-					count, timeDisp);
+					"{0} Items, {1} Total Play Time [{2}]",
+					count, timeDisp, playlistModel.TotalDuration);
 				
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
@@ -1199,6 +1201,7 @@ namespace Banshee
 					playlistModel.LoadFromIpodSource(source as IpodSource);
 				else
 					playlistModel.LoadFromLibrary();
+				
 				return;
 			}
 			
@@ -1281,6 +1284,8 @@ namespace Banshee
 		
 			if(path == null)
 				return;
+			clickX = (int)args.Event.X;
+			clickY = (int)args.Event.Y;
 		
 			switch(args.Event.Type) {
 				case EventType.TwoButtonPress:
@@ -1300,6 +1305,21 @@ namespace Banshee
 					args.RetVal = false;
 					return;
 			}
+		}
+
+		[GLib.ConnectBefore]
+		private void OnPlaylistViewMotionNotifyEvent(object o, 
+			MotionNotifyEventArgs args)
+		{
+			if((args.Event.State & ModifierType.Button1Mask) == 0)
+				return;
+			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
+						    (int)args.Event.X, (int)args.Event.Y))
+				return;
+		
+			Gtk.Drag.Begin(playlistView, new TargetList (playlistViewSourceEntries),
+				       Gdk.DragAction.Move, 1, args.Event);
+			args.RetVal = true;
 		}
 
 		private bool PlaylistMenuPopupTimeout(uint time)
@@ -1416,11 +1436,11 @@ namespace Banshee
 		private void OnPlaylistViewDragMotion(object o, DragMotionArgs args)
 		{
 			TreePath path;
+			TreeViewDropPosition pos;
 
-			if(!playlistView.GetPathAtPos(args.X, args.Y, out path))
+			if(!playlistView.GetDestRowAtPos(args.X, args.Y, out path, out pos))
 				return;
-				
-			playlistView.SetDragDestRow(path, Gtk.TreeViewDropPosition.Before);
+			playlistView.SetDragDestRow(path, (TreeViewDropPosition)((int)pos & 0x1));
 		}
 		
 		private void OnPlaylistViewDragDataReceived(object o, 
@@ -1476,11 +1496,16 @@ namespace Banshee
 					}
 						
 					foreach(TreeIter iter in iters) {
-						if(playlistModel.IterIsValid(destIter))
+						if(!playlistModel.IterIsValid(destIter))
+							break;
+
+						if (pos == TreeViewDropPosition.After ||
+						    pos == TreeViewDropPosition.IntoOrAfter) {
 							playlistModel.MoveAfter(iter, destIter);
-						
-						destIter = iter.Copy();						
-					}	
+							destIter = iter.Copy();
+						} else
+							playlistModel.MoveBefore(iter, destIter);
+					}
 									
 					break;
 			}

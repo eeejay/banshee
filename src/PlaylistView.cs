@@ -63,8 +63,6 @@ namespace Banshee
 		
 		PlaylistColumnChooserDialog columnChooser;
 		Pixbuf nowPlayingPixbuf;
-		public int CursorX;
-		public int CursorY;
 
 		static GLib.GType gtype;
 		public static new GLib.GType GType
@@ -141,8 +139,6 @@ namespace Banshee
 			HeadersClickable = true;
 			HeadersVisible = true;
 			Selection.Mode = SelectionMode.Multiple;
-			
-			MotionNotifyEvent += OnMotionNotifyEvent;
 			
 			model.SetSortFunc((int)ColumnId.Track, 
 					new TreeIterCompareFunc(TrackTreeIterCompareFunc));
@@ -345,13 +341,6 @@ namespace Banshee
 			
 			SetRendererAttributes((CellRendererText)cell, 
 				String.Format("{0}", disp), iter);
-		}
-		
-		[GLib.ConnectBeforeAttribute]
-		private void OnMotionNotifyEvent(object o, MotionNotifyEventArgs args)
-		{
-			CursorX = (int)args.Event.X;
-			CursorY = (int)args.Event.Y;
 		}
 		
 		private void OnColumnClicked(object o, EventArgs args)
