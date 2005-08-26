@@ -53,6 +53,8 @@ namespace Banshee
 		private CheckMenuItem activeItem;
 		private bool menuActive;
 		
+		private bool emptyEmitted;
+		
 		public event EventHandler EnterPress;
 		public event EventHandler Changed;
 	
@@ -292,22 +294,24 @@ namespace Banshee
 		
 		private void OnEntryChanged(object o, EventArgs args)
 		{
-			if(entry.Text.Length == 0)
-				CancelSearch(true);
-			else
+			if(entry.Text.Length == 0) {
+				entry.HasFocus = true;
+				evCancelBox.HideAll();
+			} else {
+				emptyEmitted = false;
 				evCancelBox.ShowAll();
+			}
 			
 			EventHandler handler = Changed;
-			if(handler != null)
-				handler(this, new EventArgs()); 
+			if(handler != null && !emptyEmitted)
+				handler(this, new EventArgs());
+				
+			emptyEmitted = entry.Text.Length == 0;
 		}
 		
 		public void CancelSearch(bool focus)
 		{
-			evCancelBox.HideAll();
 			entry.Text = String.Empty;
-			if(focus)
-				entry.HasFocus = true;
 		}
 		
 		public string Query
