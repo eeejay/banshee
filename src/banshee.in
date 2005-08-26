@@ -1,5 +1,5 @@
 #!/bin/sh
-export DYLD_LIBRARY_PATH=@prefix@/lib/@PACKAGE@:$DYLD_LIBRARY_PATH
-export LD_LIBRARY_PATH=@prefix@/lib/@PACKAGE@:@prefix@/lib/@PACKAGE@/mediaengines/helix:@prefix@/lib/@PACKAGE@/mediaengines/gst:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=@expanded_libdir@/@PACKAGE@:$DYLD_LIBRARY_PATH
+export LD_LIBRARY_PATH=@expanded_libdir@/@PACKAGE@:@expanded_libdir@/@PACKAGE@/mediaengines/helix:@expanded_libdir@/@PACKAGE@/mediaengines/gst:@expanded_libdir@/@PACKAGE@/xing-encoder:$LD_LIBRARY_PATH
 export HELIX_LIBS="@HELIX_LIBRARY_PATH@"
-exec @MONO@ --config @prefix@/lib/@PACKAGE@/banshee.exe.config @prefix@/lib/@PACKAGE@/banshee.exe "$@"
+exec @MONO@ --config @expanded_libdir@/@PACKAGE@/banshee.exe.config @expanded_libdir@/@PACKAGE@/banshee.exe "$@"

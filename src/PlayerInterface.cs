@@ -33,6 +33,7 @@ using System.Collections;
 using Gtk;
 using Gdk;
 using Glade;
+using Mono.Posix;
 
 using Sql;
 
@@ -117,6 +118,8 @@ namespace Banshee
 
         public PlayerUI() 
         {
+			Catalog.Init("banshee", ConfigureDefines.LOCALE_DIR);
+		
 			gxml = new Glade.XML(null, "player.glade", "WindowPlayer", null);
 			gxml.Autoconnect(this);
 
@@ -217,7 +220,7 @@ namespace Banshee
 			Label sourceViewLoading = new Label();
 			sourceViewLoading.Yalign = 0.15f;
 			sourceViewLoading.Xalign = 0.5f;
-			sourceViewLoading.Markup = "<big><i>Loading...</i></big>";
+			sourceViewLoading.Markup = Catalog.GetString("<big><i>Loading...</i></big>");
 			sourceViewLoadingVP = new Viewport();
 			sourceViewLoadingVP.ShadowType = ShadowType.None;
 			sourceViewLoadingVP.Add(sourceViewLoading);
@@ -308,22 +311,27 @@ namespace Banshee
 				false, false, 0);
 				
 			toolTips = new Tooltips();
-			toolTips.SetTip(gxml["ButtonNewPlaylist"], "Create New Playlist", "Create New Playlist");
-			toolTips.SetTip(gxml["ToggleButtonShuffle"], "Toggle Shuffle Playback Mode", "Toggle Shuffle Playback Mode");
-			toolTips.SetTip(gxml["ToggleButtonRepeat"], "Toggle Repeat Playback Mode", "Toggle Repeat Playback Mode");
-			toolTips.SetTip(gxml["ButtonTrackProperties"], "View Selected Song Information", "View Selected Song Information");
-			toolTips.SetTip(gxml["ButtonBurn"], "Burn Selection to CD", "Burn Selection to CD");
-			toolTips.SetTip(gxml["ButtonPrevious"], "Play Previous Song", "Play Previous Song");
-			toolTips.SetTip(gxml["ButtonPlayPause"], "Play/Pause Current Song", "Play/Pause Current Song");
-			toolTips.SetTip(gxml["ButtonNext"], "Play Next Song", "Play Next Song");
-			toolTips.SetTip(gxml["ScaleTime"], "Current Position in Song", "Current Position in Song");
-			toolTips.SetTip(volumeButton, "Adjust Volume", "Adjust Volume");
-			toolTips.SetTip(ipodDiskUsageBar, "iPod Disk Usage", "iPod Disk Usage");
+			SetTip(gxml["ButtonNewPlaylist"], Catalog.GetString("Create New Playlist"));
+			SetTip(gxml["ToggleButtonShuffle"], Catalog.GetString("Toggle Shuffle Playback Mode"));
+			SetTip(gxml["ToggleButtonRepeat"], Catalog.GetString("Toggle Repeat Playback Mode"));
+			SetTip(gxml["ButtonTrackProperties"], Catalog.GetString("View Selected Song Information"));
+			SetTip(gxml["ButtonBurn"], Catalog.GetString("Burn Selection to CD"));
+			SetTip(gxml["ButtonPrevious"], Catalog.GetString("Play Previous Song"));
+			SetTip(gxml["ButtonPlayPause"], Catalog.GetString("Play/Pause Current Song"));
+			SetTip(gxml["ButtonNext"], Catalog.GetString("Play Next Song"));
+			SetTip(gxml["ScaleTime"], Catalog.GetString("Current Position in Song"));
+			SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
+			SetTip(ipodDiskUsageBar, Catalog.GetString("iPod Disk Usage"));
 			
 			playlistMenuMap = new Hashtable();
 			
 			Core.Instance.DBusServer.RegisterObject(
 				new BansheeCore(Window), "/org/gnome/Banshee/Core");
+      	}
+      	
+      	private void SetTip(Widget widget, string tip)
+      	{
+      		toolTips.SetTip(widget, tip, tip);
       	}
       	
       	private void InstallTrayIcon()
@@ -347,7 +355,7 @@ namespace Banshee
 					new EventHandler(OnMenuQuitActivate);
 			} catch(Exception) {
 				trayIcon = null;
-				DebugLog.Add("egg-tray could not be installed [no libsonance]");
+				DebugLog.Add(Catalog.GetString("egg-tray could not be installed [no libsonance]"));
 			}
 		}
 	
@@ -387,14 +395,15 @@ namespace Banshee
 			
 			HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
 				DialogFlags.DestroyWithParent, MessageType.Question,
-				"Import Music",
-				"Your music library is empty. You may import new music into " +
+				Catalog.GetString("Import Music"),
+				Catalog.GetString("Your music library is empty. You may import new music into " +
 				"your library now, or choose to do so later.\n\nAutomatic import " +
 				"or importing a large folder may take a long time, so please " +
-				"be patient.",
-				"Import Folder");
+				"be patient."),
+				Catalog.GetString("Import Folder"));
 				
-			md.AddButton("Automatic Import", Gtk.ResponseType.Apply, true);
+			md.AddButton(Catalog.GetString("Automatic Import"), 
+				Gtk.ResponseType.Apply, true);
 			
 			switch(md.Run()) {
 				case (int)ResponseType.Ok:
@@ -755,7 +764,7 @@ namespace Banshee
 		private void ImportWithFileSelector()
 		{
 			FileChooserDialog chooser = new FileChooserDialog(
-				"Import Folder to Library",
+				Catalog.GetString("Import Folder to Library"),
 				null,
 				FileChooserAction.SelectFolder,
 				"gnome-vfs"
@@ -784,7 +793,7 @@ namespace Banshee
 		private void OnMenuImportFilesActivate(object o, EventArgs args)
 		{
 			FileChooserDialog chooser = new FileChooserDialog(
-				"Import Files to Library",
+				Catalog.GetString("Import Files to Library"),
 				null,
 				FileChooserAction.Open,
 				"gnome-vfs"
@@ -850,7 +859,9 @@ namespace Banshee
 				
 				Core.ThreadEnter();
 				(gxml["ViewNameLabel"] as Label).Markup = 
-					"<b>" + Core.Instance.UserFirstName + " Music Library</b>";
+					String.Format(Catalog.GetString("<b>{0} Music Library</b>"),
+						Core.Instance.UserFirstName);
+				
 				Core.ThreadLeave();
 			} else if(source.Type == SourceType.Ipod) {
 				playlistModel.Clear();
@@ -875,7 +886,7 @@ namespace Banshee
 				
 				ipodDiskUsageBar.Text = usedstr + " of " + totalstr;
 				string tooltip = ipodDiskUsageBar.Text + " (" + availstr + 
-					" Remaining)";
+					" " + Catalog.GetString("Remaining") + ")";
 				toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
 				
 				Core.ThreadEnter();
@@ -966,19 +977,19 @@ namespace Banshee
 				Gdk.Threads.Enter();
 			
 			if(count == 0 && playlistModel.Source == null) {
-				LabelStatusBar.Text = "Banshee Music Player";
+				LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
 			} else if(count == 0) {
 				switch(playlistModel.Source.Type) {
 					case SourceType.Library:
-						LabelStatusBar.Text = "Your Library is Empty - Consider Importing Music";
+						LabelStatusBar.Text = Catalog.GetString("Your Library is Empty - Consider Importing Music");
 						break;
 					case SourceType.Playlist:
-						LabelStatusBar.Text = "This Playlist is Empty - Consider Adding Music";
+						LabelStatusBar.Text = Catalog.GetString("This Playlist is Empty - Consider Adding Music");
 						break;
 				}
 			} else
 				LabelStatusBar.Text = String.Format(
-					"{0} Items, {1} Total Play Time [{2}]",
+					Catalog.GetString("{0} Items, {1} Total Play Time") + " [{2}]",
 					count, timeDisp, playlistModel.TotalDuration);
 				
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
@@ -1000,10 +1011,10 @@ namespace Banshee
 				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
 					DialogFlags.DestroyWithParent, MessageType.Warning,
 					ButtonsType.YesNo,
-					"Remove Selected Songs from Library",
-					String.Format(
-					"Are you sure you want to remove the selected <b>({0})</b> " +
-					"song{1} from your library?", selCount, selCount == 1 ? "" : "s"));
+					Catalog.GetString("Remove Selected Songs from Library"),
+					String.Format(Catalog.GetString(
+					"Are you sure you want to remove the selected <b>({0})</b> song(s) from your library?"), selCount)
+				);
 				
 				if(md.Run() != (int)ResponseType.Yes) {
 					md.Destroy();
@@ -1154,8 +1165,10 @@ namespace Banshee
 				sourceView.HighlightedSource.Type == SourceType.Library)
 				return;
 				
-			InputDialog input = new InputDialog("Rename Playlist",
-				"Enter new playlist name", "playlist-icon-large.png", 
+			InputDialog input = new InputDialog(
+				Catalog.GetString("Rename Playlist"),
+				Catalog.GetString("Enter new playlist name"), 
+				"playlist-icon-large.png", 
 				sourceView.HighlightedSource.Name);
 			string newName = input.Execute();
 			if(newName != null)
@@ -1337,7 +1350,7 @@ namespace Banshee
 				Menu plMenu = new Menu();
 				playlistMenuMap.Clear();
 				
-				ImageMenuItem newPlItem = new ImageMenuItem("New Playlist");
+				ImageMenuItem newPlItem = new ImageMenuItem(Catalog.GetString("New Playlist"));
 				newPlItem.Image = new Gtk.Image("gtk-new", IconSize.Menu);
 				newPlItem.Activated += OnNewPlaylistFromSelectionActivated;
 				plMenu.Append(newPlItem);
@@ -1361,7 +1374,7 @@ namespace Banshee
 				
 				Menu ratingMenu = new Menu();
 				
-				MenuItem clearItem = new MenuItem("Clear");
+				MenuItem clearItem = new MenuItem(Catalog.GetString("Clear"));
 				clearItem.Name = "0";
 				clearItem.Activated += OnItemRatingActivated;
 				
@@ -1672,7 +1685,7 @@ namespace Banshee
 				} catch(Exception e) {
 					HigMessageDialog.RunHigMessageDialog(null, 
 						DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
-						"Could Not Eject",
+						Catalog.GetString("Could Not Eject"),
 						e.Message);
 				}
 			}
@@ -1709,7 +1722,7 @@ namespace Banshee
 			activeTrackInfo = null;
 			
 			if(trayIcon != null)
-				trayIcon.Tooltip = "Banshee - Idle";
+				trayIcon.Tooltip = Catalog.GetString("Banshee - Idle");
 		}
 	}
 }

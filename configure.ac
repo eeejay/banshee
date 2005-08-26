@@ -23,13 +23,18 @@ AC_SUBST(ASM_VERSION)
 
 AM_MAINTAINER_MODE
 
+AC_PROG_INTLTOOL([0.21])
+
 AC_PROG_INSTALL
 AC_ISC_POSIX
 AC_HEADER_STDC
 AM_PROG_LIBTOOL
 
+GNOME_COMPILE_WARNINGS
+AM_PATH_GLIB_2_0
+
 dnl configure options
-AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="no")
+AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
 AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
@@ -57,7 +62,25 @@ MONOBIN="$MONODIR/bin"
 MONO="$MONOBIN/mono"
 MCS="$MONOBIN/mcs"
 
-if test ! -x "$MONO" -a ; then
+AC_MSG_CHECKING([for mono.pc])
+if test -z `$PKG_CONFIG --variable=prefix mono`; then
+	AC_MSG_ERROR([missing the mono.pc file, usually found in the mono-devel package])
+else
+	AC_MSG_RESULT([found])
+fi
+
+required_assemblies="Mono.Data.SqliteClient Mono.Posix System.Runtime.Remoting System.Web System.Web.Services"
+
+for asm in $required_assemblies; do
+	AC_MSG_CHECKING([for $asm.dll])
+	if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/1.0/$asm.dll; then
+		AC_MSG_ERROR([missing required Mono DLL: $asm.dll])
+	else
+		AC_MSG_RESULT([found])
+	fi
+done
+
+if test ! -x "$MONO"; then
 	AC_MSG_ERROR([No Mono runtime found])
 fi
 
@@ -86,12 +109,11 @@ PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
 AC_SUBST(DBUSSHARP)
 
 dnl sqlite devel dep
-PKG_CHECK_MODULES(SQLITE, sqlite >= 2.8)
+PKG_CHECK_MODULES(SQLITE, sqlite, have_sqlite2="yes", have_sqlite2="no")
+PKG_CHECK_MODULES(SQLITE, sqlite3, have_sqlite3="yes", have_sqlite3="no")
 
-dnl sqlite runtime dep
-AC_PATH_PROG(SQLITE, sqlite, no, $PATH:/usr/local:/usr/lib)
-if test "x$SQLITE" = "xno"; then
-	AC_MSG_ERROR([You need sqlite 2.8.x])
+if test "x$have_sqlite2" = "xno" -a "x$have_sqlite3" = "xno"; then
+	AC_MSG_ERROR([You need to install either sqlite2 or sqlite3])
 fi
 
 dnl gstreamer devel deps
@@ -165,6 +187,21 @@ if test "x$enable_helix" = "xyes"; then
 	fi
 fi
 
+dnl Find the real @libdir@
+
+expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
+		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
+		   eval echo $libdir )`
+AC_SUBST(expanded_libdir)
+
+dnl Intl
+
+ALL_LINGUAS=""
+GETTEXT_PACKAGE=banshee
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
+AM_GLIB_GNU_GETTEXT
+
 dnl generated files
 AC_OUTPUT([
 Makefile
@@ -184,9 +221,10 @@ src/banshee
 src/banshee.exe.config
 libsonance/Makefile
 data/Makefile
-data/banshee.desktop
+data/banshee.desktop.in
 data/glade/Makefile
 data/images/Makefile
+po/Makefile.in
 ])
 
 echo "

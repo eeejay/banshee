@@ -1,5 +1,9 @@
 2005-08-25 Aaron Bockover <aaron@aaronbock.net>
 
+	* data/banshee.desktop.in.in: Moved from banshee.desktop.in
+	* data/Makefile.am: Translate banshee.desktop.in
+	* configure.ac: Better configure checks, fix sqlite problem, hopefully
+	* configure.ac, Makefile.am, po/: Set up infrastructure for translations
 	* mediaengines/xing-encoder/Makefile.am: Fixed so make distcheck works
 	* mediaengines/xing-encoder: Xing MP3 Encoder from RealNetworks
 	* mediaengines/gst/Makefile.am, libsonance/Makefile.am, 

@@ -1,30 +1,29 @@
-# CS0169 is for methods declared that are not used... since all methods that
-# that cause this warning are assigned at runtime to an event handler set
-# in glade, the warning is disabled... it's extremely annoying!
-
 MCS_FLAGS = -debug -nowarn:0169
 
-sonancewrapdir = $(bindir)
-sonancewrap_SCRIPTS = banshee
+WRAPPER = banshee
+TARGET = $(WRAPPER).exe
 
-sonancedir = $(pkglibdir)
-sonance_SCRIPTS = banshee.exe banshee.exe.config
+bansheewrapdir = $(bindir)
+bansheewrap_SCRIPTS = $(WRAPPER)
 
-EXTRA_DIST = $(sonance_sources) $(sonance_sources_in) \
+bansheedir = $(pkglibdir)
+banshee_SCRIPTS = $(TARGET) $(TARGET).config
+
+EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	banshee.in \
 	AssemblyInfo.cs.in \
 	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in
 
-CLEANFILES = banshee banshee.exe Makefile.Sonance Sonance.mdp *.mdb *.dll
-DISTCLEANFILES = Makefile.in entagged-sharp.dll $(sonance_generated_sources)
+CLEANFILES = banshee banshee.exe *.mdb *.dll
+DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
 
-sonance_sources_in = AssemblyInfo.cs.in ConfigureDefines.cs.in
-sonance_generated_sources = $(sonance_sources_in:.in=) \
+banshee_sources_in = AssemblyInfo.cs.in ConfigureDefines.cs.in
+banshee_generated_sources = $(banshee_sources_in:.in=) \
 	AmazonSearchService.cs
 
-sonance_sources = \
+banshee_sources = \
 	AboutBox.cs \
 	DebugLog.cs \
 	Main.cs \
@@ -76,7 +75,7 @@ sonance_sources = \
 	AudioCdCore.cs \
 	IpodPropertiesWindow.cs
 
-sonance_resources = \
+banshee_resources = \
 	../data/Tables.sql \
 	../data/glade/player.glade \
 	../data/glade/preferences.glade \
@@ -126,7 +125,7 @@ sonance_resources = \
 	../data/images/about-grad-top.png \
 	../data/images/about-grad-bottom.png 
 	
-sonance_resources_build = $(foreach res,$(sonance_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
+banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
@@ -147,16 +146,16 @@ SYSTEM_REFERENCES = \
 
 SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 
-sonance_build_sources = $(addprefix $(srcdir)/, $(sonance_sources))
-sonance_build_sources += $(sonance_generated_sources)
+banshee_build_sources = $(addprefix $(srcdir)/, $(banshee_sources))
+banshee_build_sources += $(banshee_generated_sources)
 
-all: AmazonSearchService.cs banshee.exe
+all: AmazonSearchService.cs $(TARGET)
 
-banshee.exe: $(sonance_build_sources)
-	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(sonance_resources_build) \
+$(TARGET): $(banshee_build_sources)
+	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
-	$(sonance_build_sources)
+	$(banshee_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
@@ -174,8 +173,7 @@ uninstall-hook:
 		rm -f $(DESTDIR)$(pkglibdir)/`basename $$ASM`; \
 	done;
 
-
 run:
-	cp ../entagged-sharp/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll ../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
+	cp ../entagged-sharp/*.dll ../hal-sharp/*.dll ../burn-sharp/*.dll \../plugincore/plugin-core.dll /usr/lib/ipod-sharp/ipod-sharp.dll .
 	LD_LIBRARY_PATH=/usr/lib/banshee:/usr/lib/banshee/mediaengines/gst:/usr/lib/banshee/mediaengines/helix:$$LD_LIBRARY_PATH HELIX_LIBS=/usr/lib/RealPlayer10 mono --debug --config banshee.exe.config banshee.exe
 	
