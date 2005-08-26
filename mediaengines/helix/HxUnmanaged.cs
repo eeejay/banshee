@@ -69,5 +69,9 @@ namespace Helix
 		[DllImport("hxclient")]
 		public static extern void ClientPlayerSetVolume(int token,
 			UInt16 volume);	
+			
+		[DllImport("hxclient")]
+		public static extern void ClientPlayerMute(int token,
+			bool shouldMute);
 	}
 }

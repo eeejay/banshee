@@ -117,6 +117,7 @@ namespace Banshee
 		public void Initialize()
 		{
 			player = new HxPlayer();
+			player.Muted = false;
 			player.ContentConcluded += OnContentConcluded;
 			player.ErrorOccurred += OnErrorOccurred;
 			player.ContentStateChanged += OnContentStateChanged;

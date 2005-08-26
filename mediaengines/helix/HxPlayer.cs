@@ -381,6 +381,10 @@ namespace Helix
 			get {
 				return muted;
 			}
+			
+			set {
+				HxUnmanaged.ClientPlayerMute(token, value);
+			}
 		}
 		
 		public uint Position
