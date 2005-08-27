@@ -16,7 +16,9 @@ EXTRA_DIST =            \
 	banshee.pc.in       \
 	intltool-extract.in \
 	intltool-merge.in   \
-	intltool-update.in  
+	intltool-update.in  \
+	MAINTAINERS         \
+	HACKING
 
 CLEANFILES =            \
 	banshee.pc          \
@@ -41,5 +43,6 @@ DISTCLEANFILES =  \
 	mkinstalldirs \
 	ltmain.sh     \
 	aclocal.m4    \
-	config.h.in 
+	config.h.in   \
+	INSTALL
 
