@@ -3,4 +3,11 @@
 [encoding: UTF-8]
 data/banshee.desktop.in.in
 src/PlayerInterface.cs
+data/banshee.desktop.in
+data/banshee.schemas.in
+data/glade/about.glade
+data/glade/player.glade
+data/glade/preferences.glade
+data/glade/trackinfo.glade
+libsonance/eggtrayicon.c
 
