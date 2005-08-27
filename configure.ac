@@ -109,12 +109,7 @@ PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
 AC_SUBST(DBUSSHARP)
 
 dnl sqlite devel dep
-PKG_CHECK_MODULES(SQLITE, sqlite, have_sqlite2="yes", have_sqlite2="no")
-PKG_CHECK_MODULES(SQLITE, sqlite3, have_sqlite3="yes", have_sqlite3="no")
-
-if test "x$have_sqlite2" = "xno" -a "x$have_sqlite3" = "xno"; then
-	AC_MSG_ERROR([You need to install either sqlite2 or sqlite3])
-fi
+PKG_CHECK_MODULES(SQLITE, sqlite3)
 
 dnl gstreamer devel deps
 GSTREAMER_REQUIRED_VERSION=0.8.8
@@ -163,6 +158,11 @@ PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.10)
 AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
 AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
+dnl GConf
+
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+AM_GCONF_SOURCE_2
+
 dnl HELIX_LIBS stuff
 
 if test "x$enable_helix" = "xyes"; then
@@ -187,7 +187,7 @@ if test "x$enable_helix" = "xyes"; then
 	fi
 fi
 
-dnl Find the real @libdir@
+idnl Find the real @libdir@
 
 expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
@@ -222,6 +222,7 @@ src/banshee.exe.config
 libsonance/Makefile
 data/Makefile
 data/banshee.desktop.in
+data/org.gnome.Banshee.service
 data/glade/Makefile
 data/images/Makefile
 po/Makefile.in
