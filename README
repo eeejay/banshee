@@ -1,3 +1,14 @@
+About
+-----
+
+Banshee is an audio management and playback application for the GNOME Desktop,
+allowing users to import audio from CDs, search their library, create playlists
+of selections of their library, sync music to/from iPods, and burn selections
+to a CD.
+
+Development
+-----------
+
 For Novell development, Banshee is under a three milestone development cycle.
 At the end of this cycle, Banshee will be released as 1.0. As such, as of the
 June 30 GNOME CVS commit, Banshee is labeled as version 0.7.x to match the
