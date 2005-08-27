@@ -1,4 +1,5 @@
 SUBDIRS =          \
+	po             \
 	data           \
 	libsonance     \
 	plugincore     \
