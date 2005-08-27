@@ -1,3 +1,13 @@
+2005-08-26 Aaron Bockover <aaron@aaronbock.net>
+
+	* src/LibraryTrackInfo.cs: Fix canSaveToDatabase = true, fixes append to
+	Playlist bug
+	* src/PlayerInterface.cs: Window resize/show patch
+	* data/org.gnome.Banshee.service.in: D-Bus Service File
+	* data/banshee.schemas.in: GConf Schemas
+	* configure.ac: Check for sqlite3
+	* src/Database.cs: Use sqlite3
+
 2005-08-25 Aaron Bockover <aaron@aaronbock.net>
 
 	* data/banshee.desktop.in.in: Moved from banshee.desktop.in
