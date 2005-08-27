@@ -588,11 +588,9 @@ namespace Banshee
 			Playlist pl = new Playlist(name);
 		
 			foreach(TreePath p in Selection.GetSelectedRows()) {
-				TreeIter iter;
-				if(!model.GetIter(out iter, p))
+				TrackInfo ti = model.PathTrackInfo(p);
+				if(ti == null)
 					continue;
-					
-				TrackInfo ti = IterTrackInfo(iter);
 				pl.Append(ti);
 			}
 			

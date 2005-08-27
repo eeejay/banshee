@@ -404,7 +404,7 @@ namespace Banshee
 				
 				drive = BurnUtil.GetDriveByIdOrDefault(selectedBurnerId);
 					
-				if(drive.Equals(BurnDrive.Zero))
+				if(drive == null)
 					throw new ApplicationException("No CD Burners Available");
 					
 				selectedBurnerId = BurnUtil.GetDriveUniqueId(drive);
@@ -439,11 +439,13 @@ namespace Banshee
 					recorder.WriteTracks(drive,
 					tracks.ToArray(typeof(BurnRecorderTrack)) 
 						as BurnRecorderTrack [],
-					drive.MaxSpeedWrite, flags);
+					drive.MaxWriteSpeed, flags);
 				
 				if(result == BurnRecorderResult.Error) {
-					string header = recorder.ErrorMessage;
-					string message = recorder.ErrorMessageDetails;
+					//string header = recorder.ErrorMessage;
+					//string message = recorder.ErrorMessageDetails;
+					string header = null;
+					string message = null;
 					if(header == null || header.Equals(String.Empty))
 						header = "Error Burning CD";
 					if(message == null || message.Equals(String.Empty))

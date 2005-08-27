@@ -74,20 +74,20 @@ namespace Nautilus
 				if(GetDriveUniqueId(drive).Equals(id))
 					return drive;
 					
-			return BurnDrive.Zero;	
+			return null;	
 		}
 		
 		public static BurnDrive GetDriveByIdOrDefault(string id)
 		{
 			BurnDrive drive = GetDriveById(id, false);
 			
-			if(!drive.Equals(BurnDrive.Zero))
+			if(drive != null)
 				return drive;
 				
 			BurnDrive [] drives = GetDrives(false);
 			
 			if(drives == null)
-				return BurnDrive.Zero;
+				return null;
 				
 			return drives[0];
 		}

@@ -72,7 +72,8 @@ namespace Banshee
 				return (IDbConnection)threadConnections[
 					System.Threading.Thread.CurrentThread];
 			
-			IDbConnection conn = new SqliteConnection("URI=file:" + dbpath);
+			IDbConnection conn = new SqliteConnection("Version=3,URI=file:" 
+				+ dbpath);
 			conn.Open();
 			threadConnections[System.Threading.Thread.CurrentThread] = conn;
 			return conn;

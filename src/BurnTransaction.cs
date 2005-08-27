@@ -31,7 +31,7 @@ using System.IO;
 using System.Collections;
 using Nautilus;
 using Gtk;
-
+/*
 namespace Banshee
 {
 	public class BurnTransaction : LibraryTransaction
@@ -266,3 +266,4 @@ namespace Banshee
 		}
 	}
 }
+*/

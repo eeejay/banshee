@@ -40,6 +40,9 @@ namespace Banshee
 {
 	public class LibraryTrackInfo : TrackInfo
 	{
+		System.Globalization.CultureInfo ci = 
+			new System.Globalization.CultureInfo("en-US");
+	
 		public static int GetId(string lookup)
 		{
 			Statement query = new Select("Tracks", new List("TrackID")) +
@@ -54,8 +57,13 @@ namespace Banshee
 				return 0;
 			}
 		}
+		
+		protected LibraryTrackInfo()
+		{
+			canSaveToDatabase = true;
+		}
 	
-		public LibraryTrackInfo(string uri)
+		public LibraryTrackInfo(string uri) : this()
 		{
 			if(uri.StartsWith("sql://")) {
 				uri = uri.Substring(6);
@@ -71,7 +79,7 @@ namespace Banshee
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
-		public LibraryTrackInfo(IDataReader reader)
+		public LibraryTrackInfo(IDataReader reader) : this()
 		{
 			LoadFromDatabaseReader(reader);
 			Core.Library.Tracks[trackId] = this;
@@ -143,7 +151,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAdded", dateAdded, 
+					"DateAdded", dateAdded.ToString(ci.DateTimeFormat), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -153,7 +161,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayed", lastPlayed);
+					"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat));
 			} else {
 				tracksQuery = new Update("Tracks",
 					"Uri", uri, 
@@ -166,7 +174,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAdded", dateAdded, 
+					"DateAdded", dateAdded.ToString(ci.DateTimeFormat), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -176,7 +184,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayed", lastPlayed) +
+					"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat)) +
 					new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
 				//	new Limit(1);
 			}
@@ -227,7 +235,8 @@ namespace Banshee
 			performer = (string)reader[(int)colmap["Performer"]];
 			title = (string)reader[(int)colmap["Title"]];
 			genre = (string)reader[(int)colmap["Genre"]];
-			dateAdded = DateTime.Parse((string)reader[(int)colmap["DateAdded"]]);
+			dateAdded = DateTime.Parse((string)reader[(int)colmap["DateAdded"]], 
+				ci.DateTimeFormat);
 			year = Convert.ToInt32(reader[(int)colmap["Year"]]);
 			
 			trackNumber = Convert.ToUInt32(reader[(int)colmap["TrackNumber"]]);
@@ -237,7 +246,8 @@ namespace Banshee
 			numberOfPlays = 
 				Convert.ToUInt32(reader[(int)colmap["NumberOfPlays"]]);
 			lastPlayed = 
-				DateTime.Parse((string)reader[(int)colmap["LastPlayed"]]);
+				DateTime.Parse((string)reader[(int)colmap["LastPlayed"]], 
+				ci.DateTimeFormat);
 				
 			/*if(reader == null)
 				return;

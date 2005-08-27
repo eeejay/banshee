@@ -126,6 +126,7 @@ namespace Banshee
 			ResizeMoveWindow();
 			BuildWindow();   
 			InstallTrayIcon();
+			WindowPlayer.Show();
 			
 			Core.Instance.Player.Iterate += OnPlayerTick;
 			Core.Instance.Player.EndOfStream += OnPlayerEos;		
@@ -1006,6 +1007,9 @@ namespace Banshee
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
 			int selCount = playlistView.Selection.CountSelectedRows();
+		
+			if(selCount <= 0)
+				return;
 		
 			if(playlistModel.Source.Type == SourceType.Library) {
 				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 

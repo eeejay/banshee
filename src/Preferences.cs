@@ -95,6 +95,10 @@ namespace Banshee
 			LoadPreferences();
 			LoadBurnerDrives();
 			LoadPlayerEngines();
+			
+			TextView view = glade["EngineDescription"] as TextView;
+			view.SetSizeRequest (view.Allocation.Width, -1);
+			WindowPreferences.Show();
 		}
 		
 		private bool GetBoolPref(string key, bool def)
@@ -292,7 +296,7 @@ namespace Banshee
 		{
 			ListStore drivesModel = burnerDrivesCombo.Model as ListStore;
 			string driveId = drivesModel.GetValue(iter, 2) as string;
-			BurnDrive drive = BurnDrive.Zero;	
+			BurnDrive drive = null;	
 		
 			if(burnDevices == null || burnDevices.Length == 0)
 				return;
@@ -304,8 +308,8 @@ namespace Banshee
 				}
 			}
 					
-			if(drive.Equals(BurnDrive.Zero)) {
-				selectedDrive = BurnDrive.Zero;
+			if(drive == null) {
+				selectedDrive = null;
 				burnKeyParent = null;
 				selectedBurnerId = null;
 				return;
@@ -321,7 +325,7 @@ namespace Banshee
 			
 			writeSpeedCombo.AppendText("Fastest Possible");
 			
-			for(int speed = drive.MaxSpeedWrite; speed >= 2; speed -= 2) 
+			for(int speed = drive.MaxWriteSpeed; speed >= 2; speed -= 2) 
 				writeSpeedCombo.AppendText(Convert.ToString(speed) + "x");
 				
 			writeSpeedCombo.Active = 0;
@@ -366,10 +370,10 @@ namespace Banshee
 		
 		private int GetSpeedFromCombo()
 		{
-			if(selectedDrive.Equals(BurnDrive.Zero))
+			if(selectedDrive == null)
 				return 0;
 				
-			int max = selectedDrive.MaxSpeedWrite;
+			int max = selectedDrive.MaxWriteSpeed;
 			int index = writeSpeedCombo.Active;
 			
 			if(index-- == 0)
@@ -380,10 +384,10 @@ namespace Banshee
 		
 		private void SetComboFromSpeed(int speed)
 		{
-			if(selectedDrive.Equals(BurnDrive.Zero))
+			if(selectedDrive == null)
 				return;
 		
-			int max = selectedDrive.MaxSpeedWrite;
+			int max = selectedDrive.MaxWriteSpeed;
 			
 			if(speed % 2 != 0)
 				speed--;
