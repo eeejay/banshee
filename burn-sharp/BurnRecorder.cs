@@ -227,9 +227,9 @@ namespace Nautilus {
 		}
 
 		[GLib.CDeclCallback]
-		delegate bool WarnDataLossSignalDelegate (IntPtr arg0, IntPtr gch);
+		delegate int WarnDataLossSignalDelegate (IntPtr arg0, IntPtr gch);
 
-		static bool WarnDataLossSignalCallback (IntPtr arg0, IntPtr gch)
+		static int WarnDataLossSignalCallback (IntPtr arg0, IntPtr gch)
 		{
 			GLib.Signal sig = ((GCHandle) gch).Target as GLib.Signal;
 			if (sig == null)
@@ -240,16 +240,16 @@ namespace Nautilus {
 			handler (GLib.Object.GetObject (arg0), args);
 
 			if (args.RetVal == null)
-				return false;
-			return ((bool)args.RetVal);
+				throw new Exception("args.RetVal unset in callback");
+			return ((int)args.RetVal);
 		}
 
 		[GLib.CDeclCallback]
-		delegate bool WarnDataLossVMDelegate (IntPtr recorder);
+		delegate int WarnDataLossVMDelegate (IntPtr recorder);
 
 		static WarnDataLossVMDelegate WarnDataLossVMCallback;
 
-		static bool warndataloss_cb (IntPtr recorder)
+		static int warndataloss_cb (IntPtr recorder)
 		{
 			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
 			return obj.OnWarnDataLoss ();
@@ -263,9 +263,9 @@ namespace Nautilus {
 		}
 
 		[GLib.DefaultSignalHandler(Type=typeof(Nautilus.BurnRecorder), ConnectionMethod="OverrideWarnDataLoss")]
-		protected virtual bool OnWarnDataLoss ()
+		protected virtual int OnWarnDataLoss ()
 		{
-			GLib.Value ret = new GLib.Value (GLib.GType.Boolean);
+			GLib.Value ret = new GLib.Value (GLib.GType.Int);
 			GLib.ValueArray inst_and_params = new GLib.ValueArray (1);
 			GLib.Value[] vals = new GLib.Value [1];
 			vals [0] = new GLib.Value (this);
@@ -273,7 +273,7 @@ namespace Nautilus {
 			g_signal_chain_from_overridden (inst_and_params.ArrayPtr, ref ret);
 			foreach (GLib.Value v in vals)
 				v.Dispose ();
-			return (bool) ret;
+			return (int) ret;
 		}
 
 		[GLib.Signal("warn-data-loss")]
@@ -351,23 +351,14 @@ namespace Nautilus {
 		}
 
 		[DllImport("libnautilus-burn")]
-		static extern int nautilus_burn_recorder_blank_disc(IntPtr raw, ref Nautilus.BurnDrive drive, int type, bool debug);
+		static extern unsafe int nautilus_burn_recorder_blank_disc(IntPtr raw, IntPtr drive, int type, int flags, out IntPtr error);
 
-		public int BlankDisc(Nautilus.BurnDrive drive, Nautilus.BurnRecorderBlankType type, bool debug) {
-			int raw_ret = nautilus_burn_recorder_blank_disc(Handle, ref drive, (int) type, debug);
+		public unsafe int BlankDisc(Nautilus.BurnDrive drive, Nautilus.BurnRecorderBlankType type, Nautilus.BurnRecorderBlankFlags flags) {
+			IntPtr error = IntPtr.Zero;
+			int raw_ret = nautilus_burn_recorder_blank_disc(Handle, drive == null ? IntPtr.Zero : drive.Handle, (int) type, (int) flags, out error);
 			int ret = raw_ret;
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
 			return ret;
-		}
-
-		[DllImport("libnautilus-burn")]
-		static extern IntPtr nautilus_burn_recorder_get_error_message(IntPtr raw);
-
-		public string ErrorMessage { 
-			get {
-				IntPtr raw_ret = nautilus_burn_recorder_get_error_message(Handle);
-				string ret = GLib.Marshaller.Utf8PtrToString (raw_ret);
-				return ret;
-			}
 		}
 
 		[DllImport("libnautilus-burn")]
@@ -382,10 +373,10 @@ namespace Nautilus {
 		}
 
 		[DllImport("libnautilus-burn")]
-		static extern int nautilus_burn_recorder_write_tracks(IntPtr raw, ref Nautilus.BurnDrive drive, IntPtr tracks, int speed, int flags);
+		static extern int nautilus_burn_recorder_error_quark();
 
-		public int WriteTracks(Nautilus.BurnDrive drive, GLib.List tracks, int speed, Nautilus.BurnRecorderWriteFlags flags) {
-			int raw_ret = nautilus_burn_recorder_write_tracks(Handle, ref drive, tracks.Handle, speed, (int) flags);
+		public static int ErrorQuark() {
+			int raw_ret = nautilus_burn_recorder_error_quark();
 			int ret = raw_ret;
 			return ret;
 		}
@@ -400,14 +391,14 @@ namespace Nautilus {
 		}
 
 		[DllImport("libnautilus-burn")]
-		static extern IntPtr nautilus_burn_recorder_get_error_message_details(IntPtr raw);
+		static extern unsafe int nautilus_burn_recorder_write_tracks(IntPtr raw, IntPtr drive, IntPtr tracks, int speed, int flags, out IntPtr error);
 
-		public string ErrorMessageDetails { 
-			get {
-				IntPtr raw_ret = nautilus_burn_recorder_get_error_message_details(Handle);
-				string ret = GLib.Marshaller.Utf8PtrToString (raw_ret);
-				return ret;
-			}
+		public unsafe int WriteTracks(Nautilus.BurnDrive drive, GLib.List tracks, int speed, Nautilus.BurnRecorderWriteFlags flags) {
+			IntPtr error = IntPtr.Zero;
+			int raw_ret = nautilus_burn_recorder_write_tracks(Handle, drive == null ? IntPtr.Zero : drive.Handle, tracks.Handle, speed, (int) flags, out error);
+			int ret = raw_ret;
+			if (error != IntPtr.Zero) throw new GLib.GException (error);
+			return ret;
 		}
 
 #endregion

@@ -21,6 +21,7 @@ namespace Nautilus {
 		DvdRam,
 		DvdPlusR,
 		DvdPlusRw,
+		DvdPlusRDl,
 	}
 #endregion
 }

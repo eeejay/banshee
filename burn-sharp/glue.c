@@ -19,3 +19,39 @@ nautilus_burn_glue_create_track (const char *filename,
 
 	return track;
 }
+
+char *
+nautilus_burn_glue_drive_get_id (NautilusBurnDrive *drive)
+{
+	return g_strdup (drive->cdrecord_id);
+}
+
+NautilusBurnDriveType
+nautilus_burn_glue_drive_get_type (NautilusBurnDrive *drive)
+{
+	return drive->type;
+}
+
+char *
+nautilus_burn_glue_drive_get_display_name (NautilusBurnDrive *drive)
+{
+	return g_strdup (drive->display_name);
+}
+
+int
+nautilus_burn_glue_drive_get_max_read_speed (NautilusBurnDrive *drive)
+{
+	return drive->max_speed_read;
+}
+
+int
+nautilus_burn_glue_drive_get_max_write_speed (NautilusBurnDrive *drive)
+{
+	return drive->max_speed_write;
+}
+
+char *
+nautilus_burn_glue_drive_get_device (NautilusBurnDrive *drive)
+{
+	return g_strdup (drive->device);
+}

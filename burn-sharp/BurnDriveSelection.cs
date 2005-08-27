@@ -78,7 +78,7 @@ namespace Nautilus {
 		public Nautilus.BurnDrive Drive { 
 			get {
 				IntPtr raw_ret = nautilus_burn_drive_selection_get_drive(Handle);
-				Nautilus.BurnDrive ret = Nautilus.BurnDrive.New (raw_ret);
+				Nautilus.BurnDrive ret = raw_ret == IntPtr.Zero ? null : new Nautilus.BurnDrive(raw_ret);
 				return ret;
 			}
 		}
