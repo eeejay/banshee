@@ -4,9 +4,9 @@
 
 rm -f Makefile.am
 
-echo "sonanceicondir = \$(datadir)/pixmaps/
-sonanceicon_DATA = \\
-	sonance-icon.png
+echo "bansheeicondir = \$(datadir)/pixmaps/
+bansheeicon_DATA = \\
+	banshee-icon.png
 
 DISTCLEANFILES = Makefile.in
 

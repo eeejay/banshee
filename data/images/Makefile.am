@@ -1,6 +1,6 @@
-sonanceicondir = $(datadir)/pixmaps/
-sonanceicon_DATA = \
-	sonance-icon.png
+bansheeicondir = $(datadir)/pixmaps/
+bansheeicon_DATA = \
+	banshee-icon.png
 
 DISTCLEANFILES = Makefile.in
 
