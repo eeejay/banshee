@@ -11,6 +11,8 @@ EXTRA_DIST = \
 	about-header.png \
 	advanced-icon-32.png \
 	album-cover-container.png \
+	banshee-icon-24.png \
+	banshee-icon.png \
 	blue-speaker.png \
 	burn-icon-32.png \
 	burn-icon.png \
@@ -35,8 +37,6 @@ EXTRA_DIST = \
 	playlist-icon-large.png \
 	search-entry-icon-hover.png \
 	search-entry-icon.png \
-	sonance-icon-24.png \
-	sonance-icon.png \
 	source-cd-audio.png \
 	source-ipod-regular.png \
 	source-library.png \
