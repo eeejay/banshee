@@ -63,7 +63,19 @@ namespace Banshee
 			trackId = song.Id;
 			duration = song.Length / 1000;
 			numberOfPlays = (uint)song.PlayCount;
-			rating = (uint)song.Rating;
+
+			switch(song.Rating) {
+				case SongRating.One:   rating = 1; break;
+				case SongRating.Two:   rating = 2; break;
+				case SongRating.Three: rating = 3; break;
+				case SongRating.Four:  rating = 4; break;
+				case SongRating.Five:  rating = 5; break;
+				case SongRating.Zero: 
+				default: 
+					rating = 0; 
+					break;
+			}
+			
 			lastPlayed = song.LastPlayed;
 			dateAdded = song.DateAdded;
 			trackCount = (uint)song.TotalTracks;
