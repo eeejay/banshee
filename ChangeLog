@@ -1,5 +1,7 @@
 2005-08-28 Aaron Bockover <aaron@aaronbock.net>
 	
+	* libbanshee/cd-detect.c: HAL Audio CD Detection Library
+	* libbanshee: Core Banshee C code
 	* src/banshee.exe.config.in: Updated mappings, split up, don't override
 	mono mappings
 	* burn-sharp/burn-sharp.dll.config.in, burn-sharp/Makefile.am: DLL config
