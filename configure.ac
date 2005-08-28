@@ -220,12 +220,14 @@ mediaengines/gst/gst-player.dll.config
 mediaengines/helix/Makefile
 mediaengines/helix/helix-sharp.dll.config
 burn-sharp/Makefile
+burn-sharp/burn-sharp.dll.config
 plugincore/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 src/ConfigureDefines.cs
 src/banshee
 src/banshee.exe.config
+src/ipod-sharp.dll.config
 data/Makefile
 data/banshee.desktop.in
 data/org.gnome.Banshee.service

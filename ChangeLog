@@ -1,3 +1,10 @@
+2005-08-28 Aaron Bockover <aaron@aaronbock.net>
+	
+	* burn-sharp/burn-sharp.dll.config.in, burn-sharp/Makefile.am: DLL config
+	file for burn-sharp assembly
+	* src/ipod-sharp.dll.config.in, src/Makefile.am: DLL config file for
+	ipod-sharp assembly
+
 2005-08-26 Aaron Bockover <aaron@aaronbock.net>
 
 	* src/NotificationAreaIcon.cs: Tray icon code no longer depends on 

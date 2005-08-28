@@ -7,14 +7,15 @@ bansheewrapdir = $(bindir)
 bansheewrap_SCRIPTS = $(WRAPPER)
 
 bansheedir = $(pkglibdir)
-banshee_SCRIPTS = $(TARGET) $(TARGET).config
+banshee_SCRIPTS = $(TARGET) $(TARGET).config ipod-sharp.dll.config
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	banshee.in \
 	AssemblyInfo.cs.in \
 	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl \
-	banshee.exe.config.in
+	banshee.exe.config.in \
+	ipod-sharp.dll.config.in
 
 CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
