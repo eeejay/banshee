@@ -144,14 +144,24 @@ AC_SUBST(GST_LIBS)
 
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.6
-PKG_CHECK_MODULES(BANSHEE,
+PKG_CHECK_MODULES(GTK,
 	gconf-2.0 \
 	gdk-pixbuf-2.0 \
 	gnome-vfs-2.0 \
 	gnome-desktop-2.0 \
 	gtk+-2.0 >= $GTK_REQUIRED)
-AC_SUBST(BANSHEE_CFLAGS)
-AC_SUBST(BANSHEE_LIBS)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+
+dnl HAL devel deps
+PKG_CHECK_MODULES(HAL,
+	gobject-2.0 \
+	glib-2.0 \
+	dbus-1 \
+	dbus-glib-1 \
+	hal > 0.5.2)
+AC_SUBST(HAL_CFLAGS)
+AC_SUBST(HAL_LIBS)
 
 dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.10)
@@ -219,6 +229,7 @@ mediaengines/gst/Makefile
 mediaengines/gst/gst-player.dll.config
 mediaengines/helix/Makefile
 mediaengines/helix/helix-sharp.dll.config
+libbanshee/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 plugincore/Makefile
