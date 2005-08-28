@@ -1,17 +1,4 @@
 <configuration>
-	<!-- System Mappings -->
-	<dllmap dll="sqlite" target="libsqlite.so.0" />
 	<dllmap dll="libglib-2.0.so" target="libglib-2.0.so.0" />
 	<dllmap dll="libgobject-2.0-0.dll" target="libgobject-2.0.so.0" />
-	<dllmap dll="libnautilus-burn" target="libnautilus-burn.so.2" />
-	<dllmap dll="ipoddevice" target="libipoddevice.so.0.0.0" />
-	<dllmap dll="libdbus-1" target="libdbus-1.so.1" />
-	<dllmap dll="libhal" target="libhal.so.1" />
-	<!--<dllmap dll="libintl" target="/lib/libc.so.6" />-->
-
-	<!-- Internal Mappings -->
-	<dllmap dll="libnautilusburnglue" target="@expanded_libdir@/@PACKAGE@/libnautilusburnglue.so" />
-	<dllmap dll="libgstmediaengine" target="@expanded_libdir@/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
-	<dllmap dll="hxclient" target="@expanded_libdir@/@PACKAGE@/mediaengines/helix/libhxclient.so.1.0" />
-	<dllmap dll="mp3enc" target="@expanded_libdir@/@PACKAGE@/mediaengines/xing-encoder/libmp3enc.so" />
 </configuration>

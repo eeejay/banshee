@@ -1,5 +1,7 @@
 2005-08-28 Aaron Bockover <aaron@aaronbock.net>
 	
+	* src/banshee.exe.config.in: Updated mappings, split up, don't override
+	mono mappings
 	* burn-sharp/burn-sharp.dll.config.in, burn-sharp/Makefile.am: DLL config
 	file for burn-sharp assembly
 	* src/ipod-sharp.dll.config.in, src/Makefile.am: DLL config file for
