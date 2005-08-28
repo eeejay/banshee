@@ -6,7 +6,12 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/HxCallbacks.cs \
 	$(srcdir)/HelixPlayer.cs
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) HxPlayerTest.cs libhxclient.so.1.0
+EXTRA_DIST = \
+	$(ASSEMBLY_SOURCES) \
+	HxPlayerTest.cs \
+	libhxclient.so.1.0 \
+	$(ASSEMBLY).config.in
+
 DISTCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
 
@@ -18,8 +23,6 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 helixenginedir = $(pkglibdir)/mediaengines/helix
 helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).config
-
-EXTRA_DIST = $(ASSEMBLY).config.in
 
 all: $(ASSEMBLY)
 
