@@ -7,7 +7,7 @@
 	<dllmap dll="ipoddevice" target="libipoddevice.so.0.0.0" />
 	<dllmap dll="libdbus-1" target="libdbus-1.so.1" />
 	<dllmap dll="libhal" target="libhal.so.1" />
-	<dllmap dll="libintl" target="/lib/libc.so.6" />
+	<!--<dllmap dll="libintl" target="/lib/libc.so.6" />-->
 
 	<!-- Internal Mappings -->
 	<dllmap dll="libnautilusburnglue" target="@expanded_libdir@/@PACKAGE@/libnautilusburnglue.so" />

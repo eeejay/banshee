@@ -179,8 +179,13 @@ if test "x$enable_helix" = "xyes"; then
 		done
 	fi
 
-	if test "x$helix_libs" = "xno"; then
-		AC_MSG_ERROR([You have enabled the Helix Player Engine, but configure could not find a RealPlayer or Helix Player installation. Please configure with --with-helix-libs=/path/to/install])
+	if test "x$helix_libs" = "xyes"; then
+		AC_MSG_ERROR([		
+You have enabled the Helix Player Engine, but configure could not 
+find a RealPlayer or Helix Player installation. 
+		
+Please configure with --with-helix-libs=/path/to/install or to 
+disable the Helix engine, configure with --disable-helix])
 	else
 		HELIX_LIBRARY_PATH="$helix_libs";
 		AC_SUBST(HELIX_LIBRARY_PATH)
@@ -211,7 +216,9 @@ hal-sharp/Makefile
 mediaengines/Makefile
 mediaengines/xing-encoder/Makefile
 mediaengines/gst/Makefile
+mediaengines/gst/gst-player.dll.config
 mediaengines/helix/Makefile
+mediaengines/helix/helix-sharp.dll.config
 burn-sharp/Makefile
 plugincore/Makefile
 src/Makefile

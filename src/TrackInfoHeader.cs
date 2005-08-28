@@ -125,7 +125,7 @@ namespace Banshee
 		{
 			set {
 				artistLabel.Markup = "<b>" + 
-					StringUtil.EntityEscape(value) + "</b>";
+					GLib.Markup.EscapeText(StringUtil.EntityEscape(value)) + "</b>";
 			}
 		}
 		

@@ -356,7 +356,8 @@ namespace Banshee
 					new EventHandler(OnMenuQuitActivate);
 			} catch(Exception) {
 				trayIcon = null;
-				DebugLog.Add(Catalog.GetString("egg-tray could not be installed [no libsonance]"));
+				DebugLog.Add(Catalog.GetString(
+					"Notification Area Icon could not be installed"));
 			}
 		}
 	

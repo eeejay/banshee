@@ -1,0 +1,4 @@
+<configuration>
+	<dllmap dll="hxclient" target="@expanded_libdir@/@PACKAGE@/mediaengines/helix/libhxclient.so.1.0" />
+</configuration>
+

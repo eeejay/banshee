@@ -6,7 +6,7 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 gstenginelibdir = $(pkglibdir)/mediaengines/gst
 gstenginelib_LTLIBRARIES = libgstmediaengine.la
-gstenginelib_SCRIPTS = $(ASSEMBLY)
+gstenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).config 
 
 libgstmediaengine_la_LDFLAGS = -avoid-version -module
 libgstmediaengine_la_SOURCES = \
@@ -27,7 +27,7 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 DISTCLEANFILES = Makefile.in
 CLEANFILES = gst-encode gst-play  *.exe *.dll *.mdb *.pidb
 
-EXTRA_DIST = gst-encode-test.c gst-player-engine-test.c $(ASSEMBLY_SOURCES)
+EXTRA_DIST = $(ASSEMBLY).config.in gst-encode-test.c gst-player-engine-test.c $(ASSEMBLY_SOURCES)
 
 test:
 	$(CC) $(GST_LIBS) $(GST_CFLAGS) -o gst-encode gst-encode.c \

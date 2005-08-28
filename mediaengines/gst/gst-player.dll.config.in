@@ -1,0 +1,4 @@
+<configuration>
+	<dllmap dll="libgstmediaengine" target="@expanded_libdir@/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
+</configuration>
+
