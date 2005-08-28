@@ -340,7 +340,7 @@ namespace Banshee
       		try {
 				trayIcon = new NotificationAreaIcon();
 				trayIcon.ClickEvent += new EventHandler(OnTrayClick);
-				trayIcon.ScrollEvent += new ScrollEventHandler(OnTrayScroll);
+				//trayIcon.ScrollEvent += new ScrollEventHandler(OnTrayScroll);
 				
 				trayIcon.PlayItem.Activated += 
 					new EventHandler(OnButtonPlayPauseClicked);

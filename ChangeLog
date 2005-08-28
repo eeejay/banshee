@@ -1,5 +1,8 @@
 2005-08-26 Aaron Bockover <aaron@aaronbock.net>
 
+	* src/NotificationAreaIcon.cs: Tray icon code no longer depends on 
+	eggtrayicon in egg in libsonance
+	* libsonance/: Removed
 	* src/LibraryTrackInfo.cs: Fix canSaveToDatabase = true, fixes append to
 	Playlist bug
 	* src/PlayerInterface.cs: Window resize/show patch

@@ -10,7 +10,6 @@
 	<dllmap dll="libintl" target="/lib/libc.so.6" />
 
 	<!-- Internal Mappings -->
-	<dllmap dll="libsonance" target="@expanded_libdir@/lib/@PACKAGE@/libsonance.so" />
 	<dllmap dll="libnautilusburnglue" target="@expanded_libdir@/@PACKAGE@/libnautilusburnglue.so" />
 	<dllmap dll="libgstmediaengine" target="@expanded_libdir@/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
 	<dllmap dll="hxclient" target="@expanded_libdir@/@PACKAGE@/mediaengines/helix/libhxclient.so.1.0" />

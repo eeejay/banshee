@@ -1,7 +1,6 @@
 SUBDIRS =          \
 	po             \
 	data           \
-	libsonance     \
 	plugincore     \
 	mediaengines   \
 	burn-sharp     \
