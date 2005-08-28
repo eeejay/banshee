@@ -24,7 +24,7 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/WidthWidth</key>
+      <key>/schemas/apps/Banshee/WindowWidth</key>
       <applyto>/apps/Banshee/WindowWidth</applyto>
       <owner>banshee</owner>
       <type>int</type>

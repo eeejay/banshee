@@ -219,7 +219,6 @@ src/AssemblyInfo.cs
 src/ConfigureDefines.cs
 src/banshee
 src/banshee.exe.config
-libsonance/Makefile
 data/Makefile
 data/banshee.desktop.in
 data/org.gnome.Banshee.service
