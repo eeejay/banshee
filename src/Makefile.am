@@ -98,7 +98,7 @@ banshee_resources = \
 	../data/images/icon-album.png \
 	../data/images/icon-artist.png \
 	../data/images/icon-title.png \
-	../data/images/sonance-icon.png \
+	../data/images/banshee-icon.png \
 	../data/images/media-repeat.png \
 	../data/images/media-shuffle.png \
 	../data/images/playlist-icon-large.png \
@@ -108,7 +108,7 @@ banshee_resources = \
 	../data/images/library-icon-32.png \
 	../data/images/busy-spinner.png \
 	../data/images/busy-spinner-36.png \
-	../data/images/sonance-icon-24.png \
+	../data/images/banshee-icon-24.png \
 	../data/images/search-entry-icon.png \
 	../data/images/search-entry-icon-hover.png \
 	../data/images/source-ipod-regular.png \

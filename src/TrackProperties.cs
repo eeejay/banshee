@@ -46,7 +46,7 @@ namespace Banshee
 				"trackinfo.glade", "WindowTrackInfo", null);
 			glade.Autoconnect(this);
 			WindowTrackInfo.Icon = 
-				Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+				Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			
 			((Gtk.Image)glade["ImageAlbumCover"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("album-cover-container.png");

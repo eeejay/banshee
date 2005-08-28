@@ -139,7 +139,7 @@ namespace Banshee
 			BorderWidth = 12;
 			SetSizeRequest(400, -1);
 			Resizable = false;
-			Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			
 			vboxWindow = new VBox();
 			vboxWindow.Spacing = 12;
@@ -224,7 +224,7 @@ namespace Banshee
 				"Are you sure you want to cancel the CD Burn?");
 				
 			dialog.Title = "Cancel CD Burn?";
-			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.No;
 			response = (ResponseType)dialog.Run();
 			dialog.Destroy();
@@ -366,7 +366,7 @@ namespace Banshee
 						"are needed on the media.", -remaining / 60));
 
 				dialog.Title = "Not Enough Space";
-				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				dialog.DefaultResponse = ResponseType.Ok;
 				dialog.Run();
 				dialog.Destroy();
@@ -480,7 +480,7 @@ namespace Banshee
 				"Would you like to continue?");
 				
 			dialog.Title = "Data Loss Warning";
-			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			response = (ResponseType)dialog.Run();
 			
@@ -545,7 +545,7 @@ namespace Banshee
 					"Please insert a blank CD disk for the burn process.");
 				
 				dialog.Title = "Insert Blank CD";
-				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				dialog.DefaultResponse = ResponseType.Ok;
 				response = (ResponseType)dialog.Run();
 				dialog.Destroy();
@@ -579,7 +579,7 @@ namespace Banshee
 				message);
 
 			dialog.Title = "Error Burning Disk";
-			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();
 			dialog.Destroy();
@@ -604,7 +604,7 @@ namespace Banshee
 				"The selected audio was successfully written to the CD.");
 
 			dialog.Title = "CD Burning Complete";
-			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();
 			dialog.Destroy();

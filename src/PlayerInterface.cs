@@ -184,7 +184,7 @@ namespace Banshee
       	private void BuildWindow()
       	{
 			// Icons and Pixbufs
-      		WindowPlayer.Icon = Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+      		WindowPlayer.Icon = Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			
 			ImagePrevious.SetFromStock("media-prev", IconSize.LargeToolbar);
 			ImageNext.SetFromStock("media-next", IconSize.LargeToolbar);

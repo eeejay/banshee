@@ -50,7 +50,7 @@ namespace Banshee
 			Glade.XML glade = new Glade.XML(null, 
 				"about.glade", "WindowAbout", null);
 			glade.Autoconnect(this);
-			WindowAbout.Icon = Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+			WindowAbout.Icon = Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			(glade["CreditsContainer"] as Container).Add(new ScrollBox());
 			glade["CreditsContainer"].ShowAll();
 			(glade["AboutHeader"] as Gtk.Image).Pixbuf = 

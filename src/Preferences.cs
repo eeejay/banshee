@@ -82,7 +82,7 @@ namespace Banshee
 				Gdk.Pixbuf.LoadFromResource("advanced-icon-32.png");
 					
 			WindowPreferences.Icon = 
-				Gdk.Pixbuf.LoadFromResource("sonance-icon.png");
+				Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				
 			driveContainer = glade["DriveComboContainer"] as HBox;
 			speedContainer = glade["SpeedComboContainer"] as HBox;
