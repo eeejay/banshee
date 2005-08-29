@@ -279,7 +279,7 @@ namespace Banshee
 		public override int Count
 		{
 			get {
-				return 0;
+				return disk.TrackCount;
 			}
 		}
 		

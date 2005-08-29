@@ -32,10 +32,12 @@
 #include <glib.h>
 
 #include "cd-detect.h"
+#include "cd-info.h"
 
 void on_cd_added(const gchar *udi)
 {
 	g_printf("NEW AUDIO CD: %s\n", udi);
+
 }
 
 void on_device_removed(const gchar *udi)
@@ -47,7 +49,10 @@ gint main()
 {
 	GMainLoop *loop;
 	CdDetect *cd_detect;
-	
+	CdDiskInfo *disk;
+	DiskInfo **disks;
+	int i;
+		
 	loop = g_main_loop_new(g_main_context_default(), FALSE);
 		
 	cd_detect = cd_detect_new();
@@ -59,8 +64,18 @@ gint main()
 	cd_detect_set_device_added_callback(cd_detect, on_cd_added);
 	cd_detect_set_device_removed_callback(cd_detect, on_device_removed);
 
-	g_printf("Listening for Audio-CD-specific HAL events...\n");
-	g_main_loop_run(loop);
+	disks = cd_detect_get_disk_array(cd_detect);
+
+	for(i = 0; disks[i] != NULL; i++) {
+		disk = cd_disk_info_new(disks[i]->device_node);
+		g_printf("Tracks: %lld\n", disk->n_tracks);
+		cd_disk_info_free(disk);
+	}
+		
+	cd_detect_disk_array_free(disks);
+
+//	g_printf("Listening for Audio-CD-specific HAL events...\n");
+//	g_main_loop_run(loop);
 
 	cd_detect_free(cd_detect);	
 

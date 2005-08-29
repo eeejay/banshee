@@ -35,48 +35,132 @@ namespace Banshee
 {
 	internal delegate void CdDetectUdiCallback(IntPtr udiPtr);
 
-	[StructLayout(LayoutKind.Explicit)]
+	[StructLayout(LayoutKind.Sequential)]
 	internal struct DiskInfoRaw
 	{
-		[FieldOffset(0)] public IntPtr Udi;
-		[FieldOffset(4)] public IntPtr DeviceNode;
-		[FieldOffset(8)] public IntPtr DriveName;
+		public IntPtr Udi;
+		public IntPtr DeviceNode;
+		public IntPtr DriveName;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct CdDiskInfoRaw
+	{
+		public IntPtr device_node;
+		
+		public long n_tracks;
+		public long total_sectors;
+		public long total_time;
+		
+		public IntPtr tracks;
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct CdTrackInfoRaw
+	{
+		int number;
+		
+		int duration;
+		int minutes;
+		int seconds;
+		
+		long start_sector;
+		long end_sector;
+		long sectors;
+		long start_time;
+		long end_time;
 	}
 	
 	public class AudioDisk
 	{
-		public string Udi;
-		public string DeviceNode;
-		public string DriveName;
+		private string udi;
+		private string deviceNode;
+		private string driveName;
 		
-	    [DllImport("libc")]
-	    static extern int ioctl(int device, EjectOperation request); 
-	    
-	    private enum EjectOperation {
-	        Open = 0x5309,
-	        Close = 0x5319
-	    }
+		private int trackCount;
+
+		[DllImport("libbanshee")]
+		private static extern IntPtr cd_disk_info_new(string device_node);
+		
+		[DllImport("libbanshee")]
+		private static extern void cd_disk_info_free(IntPtr diskPtr);
+
+		public AudioDisk(string udi, string deviceNode, string driveName)
+		{
+			this.udi = udi;
+			this.deviceNode = deviceNode;
+			this.driveName = driveName;
+			
+			LoadDiskInfo();
+		}
+		
+		private void LoadDiskInfo()
+		{
+			IntPtr diskPtr = cd_disk_info_new(deviceNode);
+			CdDiskInfoRaw diskRaw = (CdDiskInfoRaw)Marshal.PtrToStructure(
+				diskPtr, typeof(CdDiskInfoRaw));
+				
+			trackCount = (int)diskRaw.n_tracks;
+			
+			cd_disk_info_free(diskPtr);
+		}
+
+		[DllImport("libc")]
+		private static extern int ioctl(int device, EjectOperation request); 
+
+		private enum EjectOperation {
+			Open = 0x5309,
+			Close = 0x5319
+		}
 
 		public bool Eject()
 		{
 			return Eject(true);
 		}
 
-	    public bool Eject(bool open)
-	    {
-	        try {
-	            using(UnixStream stream = UnixFile.Open(DeviceNode, 
-	                OpenFlags.O_RDONLY | OpenFlags.O_NONBLOCK)) {
-	                    return ioctl(stream.Handle, open
-	                        ? EjectOperation.Open
-	                        : EjectOperation.Close) == 0;
-	            }
-	        } catch {
-	            return false;
-	        }
-	    }
+		public bool Eject(bool open)
+		{
+			try {
+				using(UnixStream stream = UnixFile.Open(deviceNode, 
+					OpenFlags.O_RDONLY | OpenFlags.O_NONBLOCK)) {
+					return ioctl(stream.Handle, open
+						? EjectOperation.Open
+						: EjectOperation.Close) == 0;
+				}
+			} catch {
+				return false;
+			}
+		}
+		
+		public string Udi
+		{
+			get {
+				return udi;
+			}
+		}
+		
+		public string DeviceNode
+		{
+			get {
+				return deviceNode;
+			}
+		}
+		
+		public string DriveName
+		{
+			get {
+				return driveName;
+			}
+		}
+		
+		public int TrackCount
+		{
+			get {
+				return trackCount;
+			}
+		}
 	}
-
+	
 	public class AudioCdCore : IDisposable
 	{
 		private static AudioCdCore instance;
@@ -142,10 +226,11 @@ namespace Banshee
 				DiskInfoRaw diskRaw = (DiskInfoRaw)Marshal.PtrToStructure(
 					rawPtr, typeof(DiskInfoRaw));
 				
-				AudioDisk disk = new AudioDisk();
-				disk.Udi = Marshal.PtrToStringAnsi(diskRaw.Udi);
-				disk.DeviceNode = Marshal.PtrToStringAnsi(diskRaw.DeviceNode);
-				disk.DriveName = Marshal.PtrToStringAnsi(diskRaw.DriveName);
+				AudioDisk disk = new AudioDisk(
+					Marshal.PtrToStringAnsi(diskRaw.Udi),
+					Marshal.PtrToStringAnsi(diskRaw.DeviceNode),
+					Marshal.PtrToStringAnsi(diskRaw.DriveName)
+				);
 				
 				disks[disk.Udi] = disk;
 			}

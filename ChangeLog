@@ -1,5 +1,9 @@
 2005-08-28 Aaron Bockover <aaron@aaronbock.net>
 	
+	* banshee: Version 0.9.0
+	* src/AudioCdCore.cs: Implementing cd-info bindings
+	* libbanshee/cd-info.c: Disk/Track info objects, GStreamer to detect 
+	sectors, offsets, and track numbers/layouts
 	* src/Library.cs: New AudioCdSource
 	* src/SourceView.cs: Listen to AudioCdCore for events to update the
 	SourceView
