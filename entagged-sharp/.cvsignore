@@ -1,0 +1,5 @@
+.cvsignore
+Makefile
+Makefile.in
+entagged-sharp.dll
+entagged-sharp.dll.mdb

@@ -1,0 +1,7 @@
+.cvsignore
+Makefile
+Makefile.in
+banshee.desktop
+banshee.desktop.in
+banshee.schemas
+org.gnome.Banshee.service

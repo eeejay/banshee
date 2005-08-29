@@ -1,0 +1,5 @@
+.cvsignore
+Makefile
+Makefile.in
+plugin-core.dll
+plugin-core.dll.mdb
