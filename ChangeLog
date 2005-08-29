@@ -1,3 +1,12 @@
+2005-08-29  Dan Winship  <danw@novell.com>
+
+	* src/PlayerInterface.cs (OnPlaylistViewMotionNotifyEvent): Oops,
+	don't start a song drag if the user is dragging a column. Also,
+	the drag action should have been Move|Copy, not just Move.
+	(OnPlaylistViewButtonReleaseEvent): if the user clicks on a single
+	row of a multi-row selection (without dragging), select just that
+	row.
+
 2005-08-28 Aaron Bockover <aaron@aaronbock.net>
 	
 	* banshee: Version 0.9.0

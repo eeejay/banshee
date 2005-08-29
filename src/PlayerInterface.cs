@@ -252,6 +252,7 @@ namespace Banshee
 			playlistModel.Updated += OnPlaylistUpdated;
 			playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
 			playlistView.MotionNotifyEvent += OnPlaylistViewMotionNotifyEvent;
+			playlistView.ButtonReleaseEvent += OnPlaylistViewButtonReleaseEvent;
 			playlistView.DragDataReceived += OnPlaylistViewDragDataReceived;
 			playlistView.DragDataGet += OnPlaylistViewDragDataGet;
 			playlistView.DragMotion += OnPlaylistViewDragMotion;
@@ -1331,13 +1332,31 @@ namespace Banshee
 		{
 			if((args.Event.State & ModifierType.Button1Mask) == 0)
 				return;
+			if(args.Event.Window != playlistView.BinWindow)
+				return;
 			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
 						    (int)args.Event.X, (int)args.Event.Y))
 				return;
 		
 			Gtk.Drag.Begin(playlistView, new TargetList (playlistViewSourceEntries),
-				       Gdk.DragAction.Move, 1, args.Event);
+				       Gdk.DragAction.Move | Gdk.DragAction.Copy, 1, args.Event);
 			args.RetVal = true;
+		}
+
+		private void OnPlaylistViewButtonReleaseEvent(object o, 
+			ButtonReleaseEventArgs args)
+		{
+			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
+						    (int)args.Event.X, (int)args.Event.Y) &&
+			   ((args.Event.State & (ModifierType.ControlMask 
+						 | ModifierType.ShiftMask)) == 0) &&
+			   playlistView.Selection.CountSelectedRows() > 1) {
+				TreePath path;
+				playlistView.GetPathAtPos((int)args.Event.X, 
+							  (int)args.Event.Y, out path);
+				playlistView.Selection.UnselectAll();
+				playlistView.Selection.SelectPath(path);
+			}
 		}
 
 		private bool PlaylistMenuPopupTimeout(uint time)
