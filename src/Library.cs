@@ -115,7 +115,8 @@ namespace Banshee
 	public enum SourceType : uint {
 		Library = 1,
 		Playlist = 2,
-		Ipod = 3
+		Ipod = 3,
+		AudioCd
 	}
 
 	public abstract class Source
@@ -165,7 +166,10 @@ namespace Banshee
 			}
 		}
 		
-		public abstract void UpdateName(string oldName, string newName);
+		public virtual void UpdateName(string oldName, string newName)
+		{
+		
+		}
 		
 		public virtual bool Eject()
 		{
@@ -178,11 +182,6 @@ namespace Banshee
 		public LibrarySource() : base("Library", SourceType.Library)
 		{
 		
-		}
-		
-		public override void UpdateName(string oldName, string newName)
-		{
-			
 		}
 		
 		public override int Count
@@ -262,6 +261,38 @@ namespace Banshee
 		public override bool Eject()
 		{
 			device.Eject();
+			return true;
+		}
+	}
+	
+	public class AudioCdSource : Source
+	{
+		private AudioDisk disk;
+		
+		public AudioCdSource(AudioDisk disk) : base(disk.DriveName, 
+			SourceType.AudioCd)
+		{
+			this.disk = disk;
+			canEject = true;
+		}
+		
+		public override int Count
+		{
+			get {
+				return 0;
+			}
+		}
+		
+		public AudioDisk Disk
+		{
+			get {
+				return disk;
+			}
+		}
+		
+		public override bool Eject()
+		{
+			disk.Eject();
 			return true;
 		}
 	}

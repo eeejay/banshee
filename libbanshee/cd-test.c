@@ -46,22 +46,23 @@ void on_device_removed(const gchar *udi)
 gint main()
 {
 	GMainLoop *loop;
+	CdDetect *cd_detect;
 	
 	loop = g_main_loop_new(g_main_context_default(), FALSE);
 		
-	if(!cd_detect_initialize()) {
+	cd_detect = cd_detect_new();
+	if(!cd_detect) {
 		g_printf("Error: Could not initialize HAL\n");
 		exit(1);
 	}
 	
-	cd_detect_list_disks();
-	cd_detect_set_device_added_callback(on_cd_added);
-	cd_detect_set_device_removed_callback(on_device_removed);
+	cd_detect_set_device_added_callback(cd_detect, on_cd_added);
+	cd_detect_set_device_removed_callback(cd_detect, on_device_removed);
 
 	g_printf("Listening for Audio-CD-specific HAL events...\n");
 	g_main_loop_run(loop);
 
-	cd_detect_finalize();	
+	cd_detect_free(cd_detect);	
 
 	exit(0);
 }

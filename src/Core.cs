@@ -50,12 +50,14 @@ namespace Banshee
 		public Random Random;
 		public DBusServer dbusServer;
 		
+		public AudioCdCore AudioCdCore;
+		public IpodCore IpodCore;
+		
 		public string UserRealName;
 		public string UserFirstName;
 		
 		private Library library;
 		private GConf.Client gconfClient;
-		private Context halContext;
 		
 		public static Core Instance
 		{
@@ -85,13 +87,6 @@ namespace Banshee
 		{
 			get {
 				return Instance.library;
-			}
-		}
-		
-		public static Context HalContext
-		{
-			get {
-				return Instance.halContext;
 			}
 		}
 		
@@ -135,6 +130,9 @@ namespace Banshee
 			
 			DebugLog.Add("Loaded PlayerEngine core: " + Player.EngineName);
 			
+			AudioCdCore = new AudioCdCore();
+			IpodCore = new IpodCore();
+			
 			StockIcons.Initialize();
 			MainThread = System.Threading.Thread.CurrentThread;
 			
@@ -156,6 +154,8 @@ namespace Banshee
 		{
 			library.TransactionManager.CancelAll();
 			library.Db.Close();
+			AudioCdCore.Dispose();
+			IpodCore.Dispose();
 		}
 		
 		public static bool InMainThread

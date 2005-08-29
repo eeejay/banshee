@@ -1,5 +1,10 @@
 2005-08-28 Aaron Bockover <aaron@aaronbock.net>
 	
+	* src/Library.cs: New AudioCdSource
+	* src/SourceView.cs: Listen to AudioCdCore for events to update the
+	SourceView
+	* src/AudioCdCore.cs: Bindings to cd-detect.c, AudioCdCore class provides
+	a centralized layer for Audio CDs
 	* libbanshee/cd-detect.c: HAL Audio CD Detection Library
 	* libbanshee: Core Banshee C code
 	* src/banshee.exe.config.in: Updated mappings, split up, don't override

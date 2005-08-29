@@ -28,84 +28,131 @@
  
 using System;
 using System.Collections;
-using Hal;
+using System.Runtime.InteropServices;
+using Mono.Unix;
 
 namespace Banshee
 {
-	public class AudioCdCore
+	internal delegate void CdDetectUdiCallback(IntPtr udiPtr);
+
+	[StructLayout(LayoutKind.Explicit)]
+	internal struct DiskInfoRaw
+	{
+		[FieldOffset(0)] public IntPtr Udi;
+		[FieldOffset(4)] public IntPtr DeviceNode;
+		[FieldOffset(8)] public IntPtr DriveName;
+	}
+	
+	public class AudioDisk
+	{
+		public string Udi;
+		public string DeviceNode;
+		public string DriveName;
+		
+	    [DllImport("libc")]
+	    static extern int ioctl(int device, EjectOperation request); 
+	    
+	    private enum EjectOperation {
+	        Open = 0x5309,
+	        Close = 0x5319
+	    }
+
+		public bool Eject()
+		{
+			return Eject(true);
+		}
+
+	    public bool Eject(bool open)
+	    {
+	        try {
+	            using(UnixStream stream = UnixFile.Open(DeviceNode, 
+	                OpenFlags.O_RDONLY | OpenFlags.O_NONBLOCK)) {
+	                    return ioctl(stream.Handle, open
+	                        ? EjectOperation.Open
+	                        : EjectOperation.Close) == 0;
+	            }
+	        } catch {
+	            return false;
+	        }
+	    }
+	}
+
+	public class AudioCdCore : IDisposable
 	{
 		private static AudioCdCore instance;
 		private Hashtable disks;
+		private HandleRef handle;
+		
+		private CdDetectUdiCallback AddedCallback;
+		private CdDetectUdiCallback RemovedCallback;
 		
 		public event EventHandler Updated;
-	
-		public static AudioCdCore Instance
-		{
-			get {
-				if(instance == null) 
-					instance = new AudioCdCore();
-				return instance;
-			}
-		}
-	
+		
 		public AudioCdCore()
 		{
-			Context ctx = new Context();
-			ctx.DeviceAdded += OnHalDeviceAdded;
-			ctx.DeviceRemoved += OnHalDeviceRemoved;
-			ctx.DeviceCondition += OnHalDeviceCondition;
-			ctx.DeviceLostCapability += OnHalDeviceLostCapability;
-			ctx.DeviceNewCapability += OnHalDeviceNewCapability;
-			ctx.DevicePropertyModified += OnHalDevicePropertyModified;
+			IntPtr ptr = cd_detect_new();
+			if(ptr == IntPtr.Zero)
+				throw new ApplicationException(
+					"Could not initialize HAL for CD Detection");
+			
+			handle = new HandleRef(this, ptr);
+				
+			AddedCallback = new CdDetectUdiCallback(OnDiskAdded);
+			RemovedCallback = new CdDetectUdiCallback(OnDeviceRemoved);
+				
+			cd_detect_set_device_added_callback(handle, AddedCallback);
+			cd_detect_set_device_removed_callback(handle, RemovedCallback);	
+						
+			DebugLog.Add("Audio CD Core Initialized");
+			
+			BuildList();
+		}
+		
+		public void Dispose()
+		{
+			cd_detect_free(handle);
 		}
 	
-		public void OnHalDeviceAdded(object o, DeviceAddedArgs args)
+		private void OnDiskAdded(IntPtr udiPtr)
 		{
-			Console.WriteLine("Device Added: " + args.Device);
-			args.Device.WatchProperties = true;
+			BuildList();
 		}
 		
-		public void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
+		private void OnDeviceRemoved(IntPtr udiPtr)
 		{
-			Console.WriteLine("Device Removed: " + args.Device);
+			BuildList();
 		}
-		
-		public void OnHalDeviceCondition(object o, DeviceConditionArgs args)
+	
+		private void BuildList()
 		{
-			Console.WriteLine("Device Condition: " + args.Device);
-		}
-		
-		public void OnHalDeviceLostCapability(object o, 
-			DeviceLostCapabilityArgs args)
-		{
-			Console.WriteLine("Device Lost Capability: " + args.Device);	
-		}
-		
-		public void OnHalDeviceNewCapability(object o,
-			DeviceNewCapabilityArgs args)
-		{
-			Console.WriteLine("Device New Capability: " + args.Device);
-		}
-		
-		public void OnHalDevicePropertyModified(object o,
-			DevicePropertyModifiedArgs args)
-		{
-			Console.WriteLine("Device Property Modified: " + args.Device +
-				", Key: " + args.Key + ", Is Removed: " + args.IsRemoved +
-				", Is Added: " + args.IsAdded);
-		}
-		
-		private void OnDeviceAdded(object o, EventArgs args)
-		{
-		}
-		
-		private void OnDeviceRemoved(object o, EventArgs args)
-		{
-		}
-		
-		public void ListAll()
-		{
-
+			IntPtr arrayPtr = cd_detect_get_disk_array(handle);
+			int arraySize = 0;
+			
+			disks = new Hashtable();
+			
+			if(arrayPtr == IntPtr.Zero)
+				return;
+			
+			while(Marshal.ReadIntPtr(arrayPtr, arraySize * IntPtr.Size)
+				!= IntPtr.Zero)
+				arraySize++;
+			
+			for(int i = 0; i < arraySize; i++) {
+				IntPtr rawPtr = Marshal.ReadIntPtr(arrayPtr, i * IntPtr.Size);
+				DiskInfoRaw diskRaw = (DiskInfoRaw)Marshal.PtrToStructure(
+					rawPtr, typeof(DiskInfoRaw));
+				
+				AudioDisk disk = new AudioDisk();
+				disk.Udi = Marshal.PtrToStringAnsi(diskRaw.Udi);
+				disk.DeviceNode = Marshal.PtrToStringAnsi(diskRaw.DeviceNode);
+				disk.DriveName = Marshal.PtrToStringAnsi(diskRaw.DriveName);
+				
+				disks[disk.Udi] = disk;
+			}
+			
+			cd_detect_disk_array_free(arrayPtr);
+			
+			HandleUpdated();
 		}
 		
 		private void HandleUpdated()
@@ -115,12 +162,32 @@ namespace Banshee
 				handler(this, new EventArgs());
 		}
 		
-		public string [] Disks
+		public AudioDisk [] Disks
 		{
 			get {
 				ArrayList list = new ArrayList(disks.Values);
-				return list.ToArray(typeof(string)) as string [];
+				return list.ToArray(typeof(AudioDisk)) as AudioDisk [];
 			}
 		}
+		
+		[DllImport("libbanshee")]
+		private static extern IntPtr cd_detect_new();
+		
+		[DllImport("libbanshee")]
+		private static extern void cd_detect_free(HandleRef handle);
+		
+		[DllImport("libbanshee")]
+		private static extern IntPtr cd_detect_get_disk_array(HandleRef handle);
+		
+		[DllImport("libbanshee")]
+		private static extern void cd_detect_disk_array_free(IntPtr list);
+		
+		[DllImport("libbanshee")]
+		private static extern bool cd_detect_set_device_added_callback(
+			HandleRef handle, CdDetectUdiCallback cb);
+		
+		[DllImport("libbanshee")]
+		private static extern bool cd_detect_set_device_removed_callback(
+			HandleRef handle, CdDetectUdiCallback cb);
 	}
 }

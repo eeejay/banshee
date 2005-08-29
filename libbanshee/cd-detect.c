@@ -38,10 +38,6 @@
 
 #include "cd-detect.h"
 
-static LibHalContext *hal_ctx = NULL;
-static CdDetectUdiCallback on_device_added = NULL;
-static CdDetectUdiCallback on_device_removed = NULL;
-
 dbus_bool_t 
 hal_mainloop_integrate(LibHalContext *ctx, GMainContext *mainctx, 
 	DBusError *error)
@@ -60,21 +56,27 @@ hal_mainloop_integrate(LibHalContext *ctx, GMainContext *mainctx,
 static void
 hal_device_added(LibHalContext *ctx, const char *udi)
 {
-	if(!libhal_device_get_property_bool(ctx, udi, "volume.disc.has_audio", 
-		NULL)) {
+	CdDetect *cd_detect = (CdDetect *)libhal_ctx_get_user_data(ctx);
+	
+	if(cd_detect == NULL || !libhal_device_get_property_bool(ctx, 
+		udi, "volume.disc.has_audio", NULL)) {
 		return;
 	}
 	
-	if(on_device_added != NULL)
-		on_device_added(udi);
+	if(cd_detect->on_device_added != NULL)
+		cd_detect->on_device_added(udi);
 }
 
 static void
-hal_device_removed(LibHalContext *ctx __attribute__((__unused__)), 
-	const char *udi)
+hal_device_removed(LibHalContext *ctx, const char *udi)
 {
-	if(on_device_removed != NULL)
-		on_device_removed(udi);
+	CdDetect *cd_detect = (CdDetect *)libhal_ctx_get_user_data(ctx);
+	
+	if(cd_detect == NULL)
+		return;
+		
+	if(cd_detect->on_device_removed != NULL)
+		cd_detect->on_device_removed(udi);
 }
 
 LibHalContext *
@@ -119,7 +121,7 @@ cd_detect_hal_initialize()
 }
 
 DiskInfo *
-cd_detect_get_disk_info(gchar *udi)
+cd_detect_get_disk_info(LibHalContext *hal_ctx, gchar *udi)
 {
 	DiskInfo *disk;
 	gchar **volumes;
@@ -166,28 +168,6 @@ cd_detect_get_disk_info(gchar *udi)
 	return disk;
 }
 
-/* PUBLIC FUNCTIONS */
-
-gboolean
-cd_detect_initialize()
-{
-	if(hal_ctx == NULL) 
-		hal_ctx = cd_detect_hal_initialize();
-		
-	return hal_ctx != NULL;
-}
-
-void
-cd_detect_finalize()
-{
-	if(hal_ctx == NULL)
-		return;
-		
-	libhal_ctx_shutdown(hal_ctx, NULL);
-	libhal_ctx_free(hal_ctx);
-	hal_ctx = NULL;
-}
-
 void
 cd_detect_disk_info_free(DiskInfo *disk)
 {
@@ -202,49 +182,119 @@ cd_detect_disk_info_free(DiskInfo *disk)
 	disk = NULL;
 }
 
-GList *
-cd_detect_list_disks()
+/* PUBLIC FUNCTIONS */
+
+CdDetect *
+cd_detect_new()
 {
-	gchar **devices;
-	gint device_count, i;
-	DiskInfo *disk = NULL;
-	GList *disks = NULL;
+	CdDetect *cd_detect = NULL;
+	LibHalContext *hal_ctx = cd_detect_hal_initialize();
 	
 	if(hal_ctx == NULL)
 		return NULL;
+
+	cd_detect = g_new0(CdDetect, 1);
+	cd_detect->hal_ctx = hal_ctx;
+	cd_detect->on_device_added = NULL;
+	cd_detect->on_device_removed = NULL;
 	
-	devices = libhal_manager_find_device_string_match(hal_ctx, 
+	libhal_ctx_set_user_data(cd_detect->hal_ctx, cd_detect);
+	
+	return cd_detect;
+}
+
+void
+cd_detect_free(CdDetect *cd_detect)
+{
+	if(cd_detect == NULL)
+		return;
+		
+	libhal_ctx_shutdown(cd_detect->hal_ctx, NULL);
+	libhal_ctx_free(cd_detect->hal_ctx);
+	cd_detect->hal_ctx = NULL;
+	
+	g_free(cd_detect);
+	cd_detect = NULL;
+}
+
+DiskInfo **
+cd_detect_get_disk_array(CdDetect *cd_detect)
+{
+	gchar **devices;
+	gint device_count, i, n;
+	DiskInfo *disk = NULL;
+	GList *disks = NULL;
+	DiskInfo **disk_array = NULL;
+	
+	if(cd_detect == NULL)
+		return NULL;
+	
+	devices = libhal_manager_find_device_string_match(cd_detect->hal_ctx, 
 		"storage.drive_type", "cdrom", &device_count, NULL);
 	
 	for(i = 0; i < device_count; i++) {
-		disk = cd_detect_get_disk_info(devices[i]);
+		disk = cd_detect_get_disk_info(cd_detect->hal_ctx, devices[i]);
 		if(disk == NULL)
 			continue;
 
-		disks = g_list_append(disks, disk);
+		disks = g_list_append(disks, disk);	
 	}
 		
 	libhal_free_string_array(devices);
+	
+	n = g_list_length(disks);
+	disk_array = (DiskInfo **)g_new0(DiskInfo, n + 1);
+	for(i = 0; i < n; i++)
+		disk_array[i] = g_list_nth_data(disks, i);
+	disk_array[n] = NULL;
 		
-	return disks;
+	g_list_free(disks);
+		
+	return disk_array;
+}
+
+void
+cd_detect_disk_array_free(DiskInfo **disk_array)
+{
+	gint i;
+	
+	if(disk_array == NULL)
+		return;
+	
+	for(i = 0; disk_array[i] != NULL; i++)
+		cd_detect_disk_info_free(disk_array[i]); 
+		
+	g_free(disk_array);
+	disk_array = NULL;
 }
 
 gboolean
-cd_detect_set_device_added_callback(CdDetectUdiCallback cb)
+cd_detect_set_device_added_callback(CdDetect *cd_detect, 
+	CdDetectUdiCallback cb)
 {
-	if(on_device_added != NULL)
+	if(cd_detect == NULL)
 		return FALSE;
 		
-	on_device_added = cb;
+	cd_detect->on_device_added = cb;
 	return TRUE;
 }
 
 gboolean
-cd_detect_set_device_removed_callback(CdDetectUdiCallback cb)
+cd_detect_set_device_removed_callback(CdDetect *cd_detect,
+	CdDetectUdiCallback cb)
 {
-	if(on_device_removed != NULL)
+	if(cd_detect == NULL)
 		return FALSE;
 		
-	on_device_removed = cb;
+	cd_detect->on_device_removed = cb;
 	return TRUE;
 }
+
+void
+cd_detect_print_disk_info(DiskInfo *disk)
+{
+	g_printf("UDI:         %s\n", disk->udi);
+	g_printf("Device Node: %s\n", disk->device_node);
+	g_printf("Drive Name:  %s\n", disk->drive_name);
+}
+

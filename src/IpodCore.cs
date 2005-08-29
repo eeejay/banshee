@@ -32,7 +32,7 @@ using IPod;
 
 namespace Banshee
 {
-	public class IpodCore
+	public class IpodCore : IDisposable
 	{
 		private static IpodCore instance;
 		private DeviceEventListener listener;
@@ -40,20 +40,9 @@ namespace Banshee
 		
 		public event EventHandler Updated;
 	
-		public static IpodCore Instance
-		{
-			get {
-				if(instance == null) {
-					IPod.Initializer.UseDefaultContext = true;
-					instance = new IpodCore();
-				}
-				
-				return instance;
-			}
-		}
-	
 		public IpodCore()
 		{
+			IPod.Initializer.UseDefaultContext = true;
 			listener = new DeviceEventListener();
 			listener.DeviceAdded += OnDeviceAdded;
 			listener.DeviceRemoved += OnDeviceRemoved;
@@ -64,6 +53,11 @@ namespace Banshee
 				devices[device.VolumeId] = device;
 		}
 		
+		public void Dispose()
+		{
+			
+		}
+		
 		private void OnDeviceAdded(object o, DeviceAddedArgs args)
 		{
 			if(devices[args.Udi] == null) {
@@ -71,7 +65,6 @@ namespace Banshee
 				HandleUpdated();
 			}
 		}
-		
 		
 		private void OnDeviceRemoved(object o, DeviceRemovedArgs args)
 		{

@@ -39,15 +39,25 @@
 typedef void (* CdDetectUdiCallback) (const gchar *udi);
 
 typedef struct {
+	LibHalContext *hal_ctx;
+	CdDetectUdiCallback on_device_added;
+	CdDetectUdiCallback on_device_removed;
+} CdDetect;
+
+typedef struct {
 	gchar *udi;
 	gchar *device_node;
 	gchar *drive_name;
 } DiskInfo;
 
-gboolean cd_detect_initialize();
-void cd_detect_finalize();
-GList *cd_detect_list_disks();
-gboolean cd_detect_set_device_added_callback(CdDetectUdiCallback cb);
-gboolean cd_detect_set_device_removed_callback(CdDetectUdiCallback cb);
+CdDetect *cd_detect_new();
+void cd_detect_free(CdDetect *cd_detect);
+DiskInfo **cd_detect_get_disk_array(CdDetect *cd_detect);
+void cd_detect_disk_array_free(DiskInfo **disk_array);
+gboolean cd_detect_set_device_added_callback(CdDetect *cd_detect, 
+	CdDetectUdiCallback cb);
+gboolean cd_detect_set_device_removed_callback(CdDetect *cd_detect, 
+	CdDetectUdiCallback cb);
+void cd_detect_print_disk_info(DiskInfo *disk);
 
 #endif /* CD_DETECT_H */

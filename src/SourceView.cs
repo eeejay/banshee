@@ -157,7 +157,8 @@ namespace Banshee
 			CursorChanged += OnCursorChanged;
 			
 			try {
-				IpodCore.Instance.Updated += OnIpodCoreUpdated;
+				Core.Instance.IpodCore.Updated += OnIpodCoreUpdated;
+				Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
 			} catch(NullReferenceException) {}
 			
 			RefreshList();
@@ -194,8 +195,13 @@ namespace Banshee
 			
 			// iPod Sources
 			try {
-				foreach(IPod.Device device in IpodCore.Instance.Devices)
+				foreach(IPod.Device device in Core.Instance.IpodCore.Devices)
 					store.AppendValues(new IpodSource(device));
+			} catch(NullReferenceException) {}
+			
+			try {
+				foreach(AudioDisk disk in Core.Instance.AudioCdCore.Disks)
+					store.AppendValues(new AudioCdSource(disk));
 			} catch(NullReferenceException) {}
 			
 			// Playlist Sources
@@ -269,6 +275,11 @@ namespace Banshee
 		}
 		
 		private void OnIpodCoreUpdated(object o, EventArgs args)
+		{
+			RefreshList();
+		}
+		
+		private void OnAudioCdCoreUpdated(object o, EventArgs args)
 		{
 			RefreshList();
 		}
@@ -400,6 +411,9 @@ namespace Banshee
 					break;
 				case SourceType.Ipod:
 					iconFile = "source-ipod-regular.png";
+					break;
+				case SourceType.AudioCd:
+					iconFile = "source-cd-audio.png";
 					break;
 				case SourceType.Library:
 				default:
