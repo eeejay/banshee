@@ -31,6 +31,7 @@ using System.Threading;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.IO;
+using Mono.Unix;
 using Gtk;
 using Gdk;
 using Pango;
@@ -79,29 +80,29 @@ namespace Banshee
 			// set up columns
 			columns = new ArrayList();
 			
-			columns.Add(new PlaylistColumn(this, "Track", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Track"), "Track", 
 				new TreeCellDataFunc(TrackCellTrack), new CellRendererText(),
 				0, (int)ColumnId.Track));
-			columns.Add(new PlaylistColumn(this, "Artist", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Artist"), "Artist", 
 				new TreeCellDataFunc(TrackCellArtist), new CellRendererText(),
 				1, (int)ColumnId.Artist));
-			columns.Add(new PlaylistColumn(this, "Title", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Title"), "Title", 
 				new TreeCellDataFunc(TrackCellTitle), new CellRendererText(),
 				2, (int)ColumnId.Title));
-			columns.Add(new PlaylistColumn(this, "Album", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Album"), "Album", 
 				new TreeCellDataFunc(TrackCellAlbum), new CellRendererText(),
 				3, (int)ColumnId.Album));
-			columns.Add(new PlaylistColumn(this, "Time", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Time"), "Time", 
 				new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
 				4, (int)ColumnId.Time));
-			columns.Add(new PlaylistColumn(this, "Rating", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Rating"), "Rating", 
 				new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
 				5, (int)ColumnId.Rating));
-			columns.Add(new PlaylistColumn(this, "Plays", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Plays"), "Plays", 
 				new TreeCellDataFunc(TrackCellPlayCount), 
 				new CellRendererText(),
 				6, (int)ColumnId.PlayCount));
-			columns.Add(new PlaylistColumn(this, "Last Played", 
+			columns.Add(new PlaylistColumn(this, Catalog.GetString("Last Played"), "Last-Played", 
 				new TreeCellDataFunc(TrackCellLastPlayed), 
 				new CellRendererText(),
 				7, (int)ColumnId.LastPlayed));
@@ -309,7 +310,7 @@ namespace Banshee
 		{
 			TrackInfo Track = model.IterTrackInfo(iter);
 			SetRendererAttributes((CellRendererText)cell, 
-				Track.Duration < 0 ? "N/A" : 
+				Track.Duration < 0 ? Catalog.GetString("N/A") : 
 				String.Format("{0}:{1}", Track.Duration / 60, 
 				(Track.Duration % 60).ToString("00")), iter);
 		}

@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.IO;
+using Mono.Unix;
 using Gtk;
 using Nautilus;
 
@@ -127,7 +128,7 @@ namespace Banshee
 		private bool killPulse;
 		private bool canCancel;
 		
-		public BurnWindow() : base("Banshee CD Burner")
+		public BurnWindow() : base(Catalog.GetString("Banshee CD Burner"))
 		{
 			VBox vboxWindow;
 			VBox vboxInner;
@@ -157,7 +158,7 @@ namespace Banshee
 			hbox.PackStart(image, false, false, 0);
 			
 			statusLabel = new Label();
-			statusLabel.Markup = "<big><b>Burning CD...</b></big>";
+			statusLabel.Markup = "<big><b>" + Catalog.GetString("Burning CD...") + "</b></big>";
 			statusLabel.Xalign = 0.0f;
 			statusLabel.Yalign = 0.0f;
 			vboxInner.PackStart(statusLabel, true, true, 0);
@@ -220,10 +221,10 @@ namespace Banshee
 				DialogFlags.Modal, 
 				MessageType.Question,
 				ButtonsType.YesNo,
-				"Cancel CD Burn?",
-				"Are you sure you want to cancel the CD Burn?");
+				Catalog.GetString("Cancel CD Burn?"),
+				Catalog.GetString("Are you sure you want to cancel the CD Burn?"));
 				
-			dialog.Title = "Cancel CD Burn?";
+			dialog.Title = Catalog.GetString("Cancel CD Burn?");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.No;
 			response = (ResponseType)dialog.Run();
@@ -305,7 +306,7 @@ namespace Banshee
 			this.burnQueue = burnQueue;
 			
 			window = new BurnWindow();
-			window.Header = "Initializing Burner...";
+			window.Header = Catalog.GetString("Initializing Burner...");
 			window.Canceled += OnCanceled;
 			
 			burnThread = new Thread(new ThreadStart(BurnThread));
@@ -356,16 +357,21 @@ namespace Banshee
 
 			if(remaining < 0) {
 				Core.ThreadEnter();
+				int minutes = (int)(-remaining / 60);
+				string msg =
+					Catalog.GetString("The inserted media is not large enough to hold your selected music.") + " " +
+					Catalog.GetPluralString(
+						"{0} more minute is needed on the media.",
+						"{0} more minutes are needed on the media.",
+						minutes);
 				HigMessageDialog dialog = new HigMessageDialog(null,
 					DialogFlags.Modal, 
 					MessageType.Error,
 					ButtonsType.Ok,
-					"Not Enough Space",
-					String.Format("The inserted media is not large enough " +
-						"to hold your selected music. {0} more minutes " + 
-						"are needed on the media.", -remaining / 60));
+					Catalog.GetString("Not Enough Space"),
+					String.Format(msg, minutes));
 
-				dialog.Title = "Not Enough Space";
+				dialog.Title = Catalog.GetString("Not Enough Space");
 				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				dialog.DefaultResponse = ResponseType.Ok;
 				dialog.Run();
@@ -405,7 +411,7 @@ namespace Banshee
 				drive = BurnUtil.GetDriveByIdOrDefault(selectedBurnerId);
 					
 				if(drive == null)
-					throw new ApplicationException("No CD Burners Available");
+					throw new ApplicationException(Catalog.GetString("No CD Burners Available"));
 					
 				selectedBurnerId = BurnUtil.GetDriveUniqueId(drive);
 				
@@ -447,10 +453,12 @@ namespace Banshee
 					string header = null;
 					string message = null;
 					if(header == null || header.Equals(String.Empty))
-						header = "Error Burning CD";
-					if(message == null || message.Equals(String.Empty))
-						message = "An unknown error occurred when " + 
-							"attempting to write the CD";
+						header = Catalog.GetString("Error Burning CD");
+					if(message == null || message.Equals(String.Empty)) {
+						message = Catalog.GetString(
+							"An unknown error occurred when " +
+							"attempting to write the CD");
+					}
 					ShowError(header, message);
 				} else if(result != BurnRecorderResult.Cancel) {
 					ShowSuccess();
@@ -459,7 +467,7 @@ namespace Banshee
 				if(e.GetType() == typeof(ThreadAbortException))
 					return;
 					
-				ShowError("Error Burning CD", e.Message);	
+				ShowError(Catalog.GetString("Error Burning CD"), e.Message);	
 			} finally {
 				foreach(string file in Directory.GetFiles(Paths.TempDir))
 					File.Delete(file); 
@@ -474,12 +482,13 @@ namespace Banshee
 				DialogFlags.Modal, 
 				MessageType.Info,
 				ButtonsType.OkCancel,
-				"Data Loss Warning",
-				"Attempting to burn this collection may result in data " + 
-				"loss. The selected collection may not fit on the media.\n\n" +
-				"Would you like to continue?");
+				Catalog.GetString("Data Loss Warning"),
+				Catalog.GetString(
+					"Attempting to burn this collection may result in data " + 
+					"loss. The selected collection may not fit on the media.\n\n" +
+					"Would you like to continue?"));
 				
-			dialog.Title = "Data Loss Warning";
+			dialog.Title = Catalog.GetString("Data Loss Warning");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			response = (ResponseType)dialog.Run();
@@ -504,15 +513,15 @@ namespace Banshee
 			Core.ThreadEnter();
 			switch(currentAction) {
 				case BurnRecorderActions.PreparingWrite:
-					window.Header = "Preparing to write...";
+					window.Header = Catalog.GetString("Preparing to write...");
 					window.CanCancel = true;
 					break;
 				case BurnRecorderActions.Writing:
-					window.Header = "Writing disk...";
+					window.Header = Catalog.GetString("Writing disk...");
 					window.CanCancel = true;
 					break;
 				case BurnRecorderActions.Fixating:
-					window.Header = "Fixating disk...";
+					window.Header = Catalog.GetString("Fixating disk...");
 					window.CanCancel = false;
 					break;
 			}
@@ -528,7 +537,7 @@ namespace Banshee
 				return;
 			
 			Core.ThreadEnter();
-			window.Header = "Waiting for media...";
+			window.Header = Catalog.GetString("Waiting for media...");
 			Core.ThreadLeave();
 			
 			haveMedia = false;
@@ -541,10 +550,10 @@ namespace Banshee
 					DialogFlags.Modal, 
 					MessageType.Info,
 					ButtonsType.OkCancel,
-					"Insert Blank CD",
-					"Please insert a blank CD disk for the burn process.");
+					Catalog.GetString("Insert Blank CD"),
+					Catalog.GetString("Please insert a blank CD disk for the burn process."));
 				
-				dialog.Title = "Insert Blank CD";
+				dialog.Title = Catalog.GetString("Insert Blank CD");
 				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				dialog.DefaultResponse = ResponseType.Ok;
 				response = (ResponseType)dialog.Run();
@@ -578,7 +587,7 @@ namespace Banshee
 				header,
 				message);
 
-			dialog.Title = "Error Burning Disk";
+			dialog.Title = Catalog.GetString("Error Burning Disk");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();
@@ -600,10 +609,10 @@ namespace Banshee
 				DialogFlags.Modal, 
 				MessageType.Info,
 				ButtonsType.Ok,
-				"CD Burning Complete",
-				"The selected audio was successfully written to the CD.");
+				Catalog.GetString("CD Burning Complete"),
+				Catalog.GetString("The selected audio was successfully written to the CD."));
 
-			dialog.Title = "CD Burning Complete";
+			dialog.Title = Catalog.GetString("CD Burning Complete");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();

@@ -1,12 +1,35 @@
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
 [encoding: UTF-8]
-data/banshee.desktop.in.in
-src/PlayerInterface.cs
 data/banshee.desktop.in
+data/banshee.desktop.in.in
 data/banshee.schemas.in
 data/glade/about.glade
 data/glade/player.glade
 data/glade/preferences.glade
 data/glade/trackinfo.glade
-
+mediaengines/gst/GstPlayerEngine.cs
+mediaengines/gst/gst-encode.c
+mediaengines/gst/gst-player-engine.c
+mediaengines/helix/HelixPlayer.cs
+mediaengines/helix/HxPlayer.cs
+plugincore/TrackInfo.cs
+src/AudioCdCore.cs
+src/BurnCore.cs
+src/BurnTransaction.cs
+src/FileEncodeTransaction.cs
+src/GstFileEncoder.cs
+src/IpodPropertiesWindow.cs
+src/Library.cs
+src/LibraryTransactionStatus.cs
+src/LibraryTransactions.cs
+src/NotificationAreaIcon.cs
+src/PlayerInterface.cs
+src/PlaylistColumns.cs
+src/PlaylistRowRenderer.cs
+src/PlaylistView.cs
+src/Preferences.cs
+src/SearchEntry.cs
+src/SourceView.cs
+src/TrackInfoHeader.cs
+src/TrackProperties.cs

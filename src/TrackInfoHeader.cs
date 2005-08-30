@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 
 namespace Banshee
@@ -139,9 +140,9 @@ namespace Banshee
 		public void SetIdle()
 		{
 			artistLabel.Markup = 
-				"<span weight=\"bold\">Banshee Player</span>";
+				"<span weight=\"bold\">" + Catalog.GetString("Banshee Player") + "</span>";
 			titleLabel.Markup = 
-				"<span size=\"small\">Idle</span>";
+				"<span size=\"small\">" + Catalog.GetString("Idle") + "</span>";
 		}
 	}
 }

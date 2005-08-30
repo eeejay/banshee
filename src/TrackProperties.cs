@@ -189,11 +189,11 @@ namespace Banshee
 	
 			(glade["LastPlayedLabel"] as Label).Markup = 
 				PrepareStatistic(track.Track.LastPlayed == DateTime.MinValue ?
-					"Never Played" :
+					Catalog.GetString("Never Played") :
 					track.Track.LastPlayed.ToString());
 			(glade["ImportedLabel"] as Label).Markup = 
 				PrepareStatistic(track.Track.DateAdded == DateTime.MinValue ?
-					"Unkown" :
+					Catalog.GetString("Unknown") :
 					track.Track.DateAdded.ToString());
 					
 			TitleLabel.Markup = "<big><b>" +	

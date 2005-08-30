@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 using Glade;
 
@@ -170,7 +171,7 @@ namespace Banshee
 				+ "</b></small>";
 			
 			if(transaction.TotalCount == 0) {
-				LabelProgress.Markup = "<small>Working</small>";
+				LabelProgress.Markup = "<small>" + Catalog.GetString("Working") + "</small>";
 				Progress.Pulse();
 			} else {
 				/*int etaSeconds = (int)((double)(transaction.TotalCount - 
@@ -206,19 +207,20 @@ namespace Banshee
 		private void OnButtonCancelClicked(object o, EventArgs args)
 		{
 			int tableCount = Core.Library.TransactionManager.TableCount;
-				
+
+			string multiple = Catalog.GetString(
+				"There are multiple operations executing. " +
+				"You may either cancel the current operation or all " + 
+				"operations.\n\n");
+			string areyousure = Catalog.GetPluralString(
+				"Are you sure you want to cancel this operation?",
+				"Are you sure you want to cancel these operations?",
+				tableCount);
+
 			MessageDialog md = new MessageDialog(null, 
 				DialogFlags.DestroyWithParent, MessageType.Question, 
                 ButtonsType.None, 
-				tableCount > 1 ? 
-					"There are multiple operations executing. " +
-					"You may either cancel the current operation or all " + 
-					"operations.\n\n" +
-					"Are you sure you want to cancel these operation(s)?" :
-					
-					"Are you sure you want to cancel this operation?"
-				);
-				
+				tableCount > 1 ? multiple + areyousure : areyousure);
 				
 			if(tableCount > 1) {
 				md.AddButton("Yes, Cancel Current", 1);

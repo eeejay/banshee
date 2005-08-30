@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 using Gdk;
 using Pango;
@@ -92,7 +93,7 @@ namespace Banshee
 			CellRendererPixbuf pixbufRender = new CellRendererPixbuf();
 			CellRendererText textRender = new CellRendererText();
 			
-			col.Title = "Source";
+			col.Title = Catalog.GetString("Source");
 			col.PackStart(pixbufRender, true);
 			col.PackStart(textRender, true);
 			
@@ -144,7 +145,7 @@ namespace Banshee
 		{
 			TreeViewColumn col = new TreeViewColumn();
 			SourceRowRenderer renderer = new SourceRowRenderer();
-			col.Title = "Source";
+			col.Title = Catalog.GetString("Source");
 			col.PackStart(renderer, true);
 			col.SetCellDataFunc(renderer, 
 				new TreeCellDataFunc(SourceCellDataFunc));

@@ -33,9 +33,8 @@ using System.IO;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-
+using Mono.Unix;
 using Sql; 
-using Mono.Posix;
 
 namespace Banshee 
 {
@@ -211,7 +210,7 @@ namespace Banshee
 		
 		public override string Name {
 			get {
-				return "Library Track Loader";
+				return Catalog.GetString("Library Track Loader");
 			}
 		}
 		
@@ -233,7 +232,7 @@ namespace Banshee
 		{
 			totalCount = 0;
 			currentCount = 0;
-			statusMessage = "Processing";
+			statusMessage = Catalog.GetString("Processing");
 			
 			AddMultipleFilesRaw(path);
 		}
@@ -253,7 +252,7 @@ namespace Banshee
 					continue;
 				
 				if(preload) {
-					statusMessage = "Preloading Files";
+					statusMessage = Catalog.GetString("Preloading Files");
 					
 					if(File.Exists(file)) {
 						totalCount++;
@@ -298,7 +297,9 @@ namespace Banshee
 		
 		private void RaiseTrackInfo(TrackInfo ti)
 		{
-			statusMessage = "Loading " + ti.Artist + " - " + ti.Title;
+			statusMessage = String.Format(
+				Catalog.GetString("Loading {0} - {1} ..."),
+				ti.Artist, ti.Title);
 			currentCount++;
 			
 			HaveTrackInfoHandler handler = HaveTrackInfo;
@@ -365,7 +366,7 @@ namespace Banshee
 		public override string Name 
 		{
 			get {
-				return "Playlist Save";
+				return Catalog.GetString("Playlist Save");
 			}
 		}
 		
@@ -379,7 +380,7 @@ namespace Banshee
 			Statement query;
 			int playlistId = Playlist.GetId(pl.name);
 			
-			statusMessage = "Flushing old entries";
+			statusMessage = Catalog.GetString("Flushing old entries");
 			totalCount = pl.items.Count;
 			currentCount = 0;
 
@@ -393,7 +394,7 @@ namespace Banshee
 				new Where(new Compare("PlaylistID", Op.EqualTo, playlistId));
 			Core.Library.Db.Execute(query);
 
-			statusMessage = "Saving new entries";
+			statusMessage = Catalog.GetString("Saving new entries");
 			
 			foreach(TrackInfo ti in pl.items) {
 				if(cancelRequested)
@@ -422,7 +423,7 @@ namespace Banshee
 		public override string Name 
 		{
 			get {
-				return "Library Load";
+				return Catalog.GetString("Library Load");
 			}
 		}
 		
@@ -433,7 +434,7 @@ namespace Banshee
 		
 		public override void Run()
 		{
-			statusMessage = "Preloading Library";
+			statusMessage = Catalog.GetString("Preloading Library");
 			totalCount = Core.Library.Tracks.Count;
 			currentCount = 0;
 			
@@ -443,7 +444,9 @@ namespace Banshee
 		
 		private void RaiseTrackInfo(TrackInfo ti)
 		{
-			statusMessage = "Loading " + ti.Artist + " - " + ti.Title;
+			statusMessage = String.Format(
+				Catalog.GetString("Loading {0} - {1} ..."),
+				ti.Artist, ti.Title);
 			currentCount++;
 			
 			HaveTrackInfoHandler handler = HaveTrackInfo;
@@ -471,13 +474,13 @@ namespace Banshee
 		public override string Name
 		{
 			get {
-				return "Library Track Remove";
+				return Catalog.GetString("Library Track Remove");
 			}
 		}
 		
 		public override void Run()
 		{
-			statusMessage = "Removing Tracks";
+			statusMessage = Catalog.GetString("Removing Tracks");
 			totalCount = RemoveQueue.Count;
 			currentCount = 0;
 			
@@ -489,12 +492,14 @@ namespace Banshee
 				if(i < totalCount - 1)
 					query += new Or();
 				
-				statusMessage = "Removing " + ti.Artist + " - " + ti.Title;
+				statusMessage = String.Format(
+					Catalog.GetString("Removing {0} - {1}"),
+					ti.Artist, ti.Title);
 				currentCount++;
 				Core.Library.Tracks.Remove(ti.TrackId);
 			}
 			
-			statusMessage = "Purging Library of Removed Tracks...";
+			statusMessage = Catalog.GetString("Purging Library of Removed Tracks...");
 			currentCount = 0;
 			totalCount = 0;
 			Core.Library.Db.Execute(query);
@@ -508,7 +513,7 @@ namespace Banshee
 		public override string Name
 		{
 			get {
-				return "Playlist Track Remove";
+				return Catalog.GetString("Playlist Track Remove");
 			}
 		}
 		
@@ -519,7 +524,7 @@ namespace Banshee
 		
 		public override void Run()
 		{
-			statusMessage = "Removing Tracks";
+			statusMessage = Catalog.GetString("Removing Tracks");
 			totalCount = RemoveQueue.Count;
 			currentCount = 0;
 			
@@ -533,13 +538,15 @@ namespace Banshee
 				if(i < totalCount - 1)
 					subquery += new Or();
 				
-				statusMessage = "Removing " + ti.Artist + " - " + ti.Title;
+				statusMessage = String.Format(
+					Catalog.GetString("Removing {0} - {1}"),
+					ti.Artist, ti.Title);
 				currentCount++;
 			}
 			
 			query += new ParenGroup(subquery);
 
-			statusMessage = "Purging Playlist of Removed Tracks...";
+			statusMessage = Catalog.GetString("Purging Playlist of Removed Tracks...");
 			currentCount = 0;
 			totalCount = 0;
 			Core.Library.Db.Execute(query);
@@ -554,7 +561,7 @@ namespace Banshee
 		
 		public override string Name {
 			get {
-				return "Library Track Loader";
+				return Catalog.GetString("Library Track Loader");
 			}
 		}
 		
@@ -572,13 +579,15 @@ namespace Banshee
 		{
 			totalCount = 0;
 			currentCount = 0;
-			statusMessage = "Processing";
+			statusMessage = Catalog.GetString("Processing");
 			AddSql();
 		}
 		
 		private void RaiseTrackInfo(TrackInfo ti)
 		{
-			statusMessage = "Loading " + ti.Artist + " - " + ti.Title;
+			statusMessage = String.Format(
+				Catalog.GetString("Loading {0} - {1} ..."),
+				ti.Artist, ti.Title);
 			currentCount++;
 			
 			HaveTrackInfoHandler handler = HaveTrackInfo;
@@ -654,7 +663,7 @@ namespace Banshee
 		
 		public override string Name {
 			get {
-				return "Playlist Track Loader";
+				return Catalog.GetString("Playlist Track Loader");
 			}
 		}
 		
@@ -672,7 +681,7 @@ namespace Banshee
 		{
 			totalCount = 0;
 			currentCount = 0;
-			statusMessage = "Processing";
+			statusMessage = Catalog.GetString("Processing");
 			
 			id = Playlist.GetId(name);
 			if(id <= 0)
@@ -693,7 +702,9 @@ namespace Banshee
 		
 		private void RaiseTrackInfo(TrackInfo ti)
 		{
-			statusMessage = "Loading " + ti.Artist + " - " + ti.Title;
+			statusMessage = String.Format(
+				Catalog.GetString("Loading {0} - {1} ..."),
+				ti.Artist, ti.Title);
 			currentCount++;
 			
 			HaveTrackInfoHandler handler = HaveTrackInfo;

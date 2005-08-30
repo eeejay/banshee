@@ -28,6 +28,7 @@
  
 using System;
 using System.Threading;
+using Mono.Unix;
 
 using Helix;
 
@@ -72,17 +73,18 @@ namespace Banshee
 		public string EngineLongName
 		{
 			get {
-				return "Helix Framework Engine (hxclientkit)";
+				return Catalog.GetString("Helix Framework Engine (hxclientkit)");
 			}
 		}
 		
 		public string EngineDetails
 		{
 			get {
-				return "The Helix Engine provides multimedia control through " +
-				"the Helix Multimedia Framework, sponsored by RealNetworks. " +
-				"The engine can play any file that RealPlayer can. Install " + 
-				"RealPlayer for best results.";
+				return Catalog.GetString(
+					"The Helix Engine provides multimedia control through " +
+					"the Helix Multimedia Framework, sponsored by RealNetworks. " +
+					"The engine can play any file that RealPlayer can. Install " +
+					"RealPlayer for best results.");
 			}
 		}
 		

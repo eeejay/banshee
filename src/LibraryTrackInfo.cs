@@ -40,6 +40,7 @@ namespace Banshee
 {
 	public class LibraryTrackInfo : TrackInfo
 	{
+		// This is correct; it's used for internal non-user-visible stuff
 		System.Globalization.CultureInfo ci = 
 			new System.Globalization.CultureInfo("en-US");
 	

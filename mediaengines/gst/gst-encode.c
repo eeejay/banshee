@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <glib.h>
+#include <glib/gi18n.h>
 
 #include "gst-encode.h"
 
@@ -90,32 +91,32 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 
 	source_elem = gst_element_factory_make("gnomevfssrc", "source");
 	if(source_elem == NULL) {
-		encoder->error = g_strdup("Could not create gnomevfssrc element");
+		encoder->error = g_strdup(_("Could not create 'gnomevfssrc' element"));
 		return NULL;
 	}
 
 	decoder_elem = gst_element_factory_make("spider", "spider");
 	if(decoder_elem == NULL) {
-		encoder->error = g_strdup("Could not create spider element");
+		encoder->error = g_strdup(_("Could not create 'spider' element"));
 		return NULL;
 	}
 
 	converter_elem = gst_element_factory_make("audioconvert", "converter");
 	if(converter_elem == NULL) {
-		encoder->error = g_strdup("Could not create converter element");
+		encoder->error = g_strdup(_("Could not create 'converter' element"));
 		return NULL;
 	}
 	
 	encoder_elem = gst_element_factory_make(encoder_plugin, "encoder");
 	if(encoder_elem == NULL) {
-		encoder->error = g_strdup_printf("Could not create encoder element: %s", 
+		encoder->error = g_strdup_printf(_("Could not create 'encoder' element: %s"), 
 			encoder_plugin);
 		return NULL;
 	}
 
 	sink_elem = gst_element_factory_make("filesink", "sink");
 	if(sink_elem == NULL) {
-		encoder->error = g_strdup("Could not create filesink element");
+		encoder->error = g_strdup(_("Could not create 'filesink' element"));
 		return NULL;
 	}
 	
@@ -210,12 +211,12 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	if(encoder->error == NULL) {
 		if(g_stat(output_file, &statbuf) == 0) {
 			if(statbuf.st_size < 100) {
-				encoder->error = g_strdup("No decoder could be found "
-					"for source format.");
+				encoder->error = g_strdup(_("No decoder could be found "
+							    "for source format."));
 				g_remove(output_file);
 			}
 		} else {
-			encoder->error = g_strdup("Could not stat encoded file");
+			encoder->error = g_strdup(_("Could not stat encoded file"));
 		}
 	}
 	

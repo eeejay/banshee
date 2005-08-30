@@ -28,6 +28,7 @@
  
 using System;
 using System.Runtime.InteropServices;
+using Mono.Unix;
 
 namespace Helix
 {
@@ -89,10 +90,10 @@ namespace Helix
 			try {
 				if(!HxUnmanaged.ClientPlayerCreate(out token, IntPtr.Zero, 
 					IntPtr.Zero, callbacksRaw))
-					throw new ApplicationException("Couldn't create player");
+					throw new ApplicationException(Catalog.GetString("Couldn't create player"));
 			} catch(NullReferenceException e) {
 				throw new ApplicationException(
-					"Couldn't create player: No HELIX_LIBS?");
+					Catalog.GetString("Couldn't create player: No HELIX_LIBS?"));
 			}
 		}
 

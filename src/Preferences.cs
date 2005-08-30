@@ -30,6 +30,7 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Threading;
+using Mono.Unix;
 using Gtk;
 using Glade;
 
@@ -129,7 +130,7 @@ namespace Banshee
 		private void OnButtonLibraryChangeClicked(object o, EventArgs args)
 		{
 			FileChooserDialog chooser = new FileChooserDialog(
-				"Select Banshee Library Location",
+				Catalog.GetString("Select Banshee Library Location"),
 				null,
 				FileChooserAction.SelectFolder,
 				"gnome-vfs"
@@ -199,7 +200,7 @@ namespace Banshee
 			if(burnDevices == null || burnDevices.Length == 0) {
 				Core.ThreadEnter();
 				ShowBurnerWidgets(false);
-				driveLoadingLabel.Markup = "<i>No CD Burners Detected</i>";
+				driveLoadingLabel.Markup = "<i>" + Catalog.GetString("No CD Burners Detected") + "</i>";
 				Core.ThreadLeave();
 				return;
 			} 
@@ -258,14 +259,14 @@ namespace Banshee
 			while(writeSpeedCombo.Model.IterNChildren() > 0)
 				writeSpeedCombo.RemoveText(0);
 	
-			writeSpeedCombo.AppendText("Unavailable");
+			writeSpeedCombo.AppendText(Catalog.GetString("Unavailable"));
 			writeSpeedCombo.Active = 0;
 			writeSpeedCombo.Sensitive = false;
 
 			driveLoadingLabel = new Label();
 			driveLoadingLabel.Ypad = 7;
 			driveLoadingLabel.Markup = 
-				"<i>Loading Drive List...</i>";
+				"<i>" + Catalog.GetString("Loading Drive List...") + "</i>";
 			driveLoadingLabel.Xalign = 0.0f;
 			driveContainer.PackStart(driveLoadingLabel, false, false, 0);
 			driveContainer.ShowAll();
@@ -328,11 +329,12 @@ namespace Banshee
 			while(writeSpeedCombo.Model.IterNChildren() > 0)
 				writeSpeedCombo.RemoveText(0);
 			
-			writeSpeedCombo.AppendText("Fastest Possible");
+			writeSpeedCombo.AppendText(Catalog.GetString("Fastest Possible"));
 			
-			for(int speed = drive.MaxWriteSpeed; speed >= 2; speed -= 2) 
-				writeSpeedCombo.AppendText(Convert.ToString(speed) + "x");
-				
+			for(int speed = drive.MaxWriteSpeed; speed >= 2; speed -= 2) {
+				// Translators: this represents a CD write speed, eg "32x"
+				writeSpeedCombo.AppendText(String.Format(Catalog.GetString("{0}x"), speed));
+			}
 			writeSpeedCombo.Active = 0;
 			
 			Core.GconfClient.Set(GConfKeys.CDBurnerId, selectedBurnerId);
@@ -480,14 +482,18 @@ namespace Banshee
 		{
 			if(SelectedEngine.ConfigName != Core.Instance.Player.ConfigName) {
 				Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
+				string msg = 
+					String.Format(
+						Catalog.GetString("You have changed the Banshee Playback Engine. This change will not " + 
+								  "take affect until the next time Banshee is run. Please restart " + 
+								  "Banshee to use the new <b><i>{0}</i></b> Engine"),
+						SelectedEngine.EngineName);
 				HigMessageDialog.RunHigMessageDialog(WindowPreferences,
 					DialogFlags.Modal,
 					MessageType.Info,
 					ButtonsType.Ok,
-					"Banshee Restart Required",
-					"You have changed the Banshee Playback Engine. This change will not " + 
-					"take affect until the next time Banshee is run. Please restart " + 
-					"Banshee to use the new <b><i>" + SelectedEngine.EngineName + "</i></b> Engine"
+					Catalog.GetString("Banshee Restart Required"),
+					msg
 				);
 			}
 		}

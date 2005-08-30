@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 
 namespace Banshee
@@ -35,12 +36,14 @@ namespace Banshee
 	
 		private PlaylistView view;
 		private TreeCellDataFunc datafunc;
+		private string keyName;
 	
-		public PlaylistColumn(PlaylistView view, string name, 
+		public PlaylistColumn(PlaylistView view, string name, string keyName,
 			TreeCellDataFunc datafunc, CellRenderer renderer, 
 			int Order, int SortId)
 		{
 			this.Name = name;
+			this.keyName = keyName;
 			this.datafunc = datafunc;
 			this.Order = Order;
 			this.view = view;
@@ -62,14 +65,12 @@ namespace Banshee
 				Column.SortIndicator = false;
 			}
 			
-			string keyName = Name.Replace(' ', '-');
-
 			try {
 				int width = (int)Core.GconfClient.Get(
 					GConfKeys.ColumnPath + keyName + "/Width");
 					
 				if(width <= 1)
-					throw new Exception("Invalid column width");
+					throw new Exception(Catalog.GetString("Invalid column width"));
 					
 				Column.FixedWidth = width;
 					
@@ -90,8 +91,6 @@ namespace Banshee
 				if(columns[order_t].Equals(Column))
 					break;
 					
-			string keyName = Name.Replace(' ', '-');
-		
 			Core.GconfClient.Set(GConfKeys.ColumnPath + 
 				keyName + "/Width", Column.Width);
 			Core.GconfClient.Set(GConfKeys.ColumnPath + 
@@ -116,7 +115,7 @@ namespace Banshee
 		}
 
 		public PlaylistColumnChooserDialog(ArrayList columns) 
-			: base("Choose Columns")
+			: base(Catalog.GetString("Choose Columns"))
 		{
 			BorderWidth = 10;
 			SetPosition(WindowPosition.Center);
@@ -130,7 +129,7 @@ namespace Banshee
 			Add(vbox);
 			
 			Label label = new Label();
-			label.Markup = "<b>Visible Playlist Columns</b>";
+			label.Markup = "<b>" + Catalog.GetString("Visible Playlist Columns") + "</b>";
 			label.Show();
 			vbox.Add(label);
 			

@@ -7,7 +7,8 @@ SUBDIRS =          \
 	burn-sharp     \
 	entagged-sharp \
 	hal-sharp      \
-	src 
+	src            \
+	po
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = banshee.pc
@@ -28,7 +29,7 @@ CLEANFILES =            \
 	intltool-extract.in \
 	intltool-merge.in   \
 	intltool-update.in 
-	
+
 DISTCLEANFILES =  \
 	config.guess  \
 	config.sub    \

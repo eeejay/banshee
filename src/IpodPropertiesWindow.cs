@@ -27,6 +27,7 @@
  */
 
 using System;
+using Mono.Unix;
 using Gtk;
 using IPod;
 
@@ -86,6 +87,7 @@ namespace Banshee
 
 	public class IpodPropertiesDialog : Dialog
 	{
+		private IpodSource source;
 		private Device device;
 		private Entry nameEntry;
 		private Entry userEntry;
@@ -93,14 +95,16 @@ namespace Banshee
 		
 		private bool edited;
 		
-		public IpodPropertiesDialog(Device device) : base(
-			device.Name + " Properties",
+		public IpodPropertiesDialog(IpodSource source) : base(
+			// Translators: {0} is the name assigned to an iPod by its owner
+			String.Format(Catalog.GetString("{0} Properties"), source.Device.Name),
 			null,
 			DialogFlags.Modal | DialogFlags.NoSeparator,
 			Stock.Close,
 			ResponseType.Close)
 		{
-			this.device = device;
+			this.source = source;
+			this.device = source.Device;
 			
 			VBox box = new VBox();
 			box.Spacing = 10;
@@ -110,41 +114,42 @@ namespace Banshee
 			table.RowSpacing = 5;
 			
 			if(device.CanWrite) {
-				nameEntry = table.AddEntry("iPod Name", device.Name);
-				userEntry = table.AddEntry("Your Name", device.UserName);
-				hostEntry = table.AddEntry("Computer Name", device.HostName);
+				nameEntry = table.AddEntry(Catalog.GetString("iPod Name"), device.Name);
+				userEntry = table.AddEntry(Catalog.GetString("Your Name"), device.UserName);
+				hostEntry = table.AddEntry(Catalog.GetString("Computer Name"), device.HostName);
 				
 				nameEntry.Changed += OnEntryChanged;
 				userEntry.Changed += OnEntryChanged;
 				hostEntry.Changed += OnEntryChanged;
 			} else {
-				table.AddLabel("iPod Name", device.Name);
-				table.AddLabel("Your Name", device.UserName);
-				table.AddLabel("Computer Name", device.HostName);
+				table.AddLabel(Catalog.GetString("iPod Name"), device.Name);
+				table.AddLabel(Catalog.GetString("Your Name"), device.UserName);
+				table.AddLabel(Catalog.GetString("Computer Name"), device.HostName);
 			}
 			
 			table.AddSeparator();
 	
-			table.AddLabel("Model", device.ModelNumber != null ? 
+			table.AddLabel(Catalog.GetString("Model"), device.ModelNumber != null ? 
 				device.ModelNumber + " (" + device.Model.ToString() + ")" : 
 				device.Model.ToString());
-			table.AddLabel("Capacity", device.AdvertisedCapacity);
-			table.AddWidget("Volume Usage", UsedProgressBar);
+			table.AddLabel(Catalog.GetString("Capacity"), device.AdvertisedCapacity);
+			table.AddWidget(Catalog.GetString("Volume Usage"), UsedProgressBar);
 	
 			box.PackStart(table, true, true, 0);
 			
 			PropertyTable extTable = new PropertyTable();
 			extTable.ColumnSpacing = 10;
 			extTable.RowSpacing = 5;
-			extTable.AddLabel("Mount Point", device.MountPoint);
-			extTable.AddLabel("Device Node", device.DevicePath);
-			extTable.AddLabel("Write Support", device.CanWrite ? "Yes" : "No");
-			extTable.AddLabel("Volume UUID", device.VolumeUuid);
-			extTable.AddLabel("Serial Number", device.SerialNumber);
-			extTable.AddLabel("Firmware Version", device.FirmwareVersion);
-			extTable.AddLabel("Database Version", device.SongDatabase.Version);
+			extTable.AddLabel(Catalog.GetString("Mount Point"), device.MountPoint);
+			extTable.AddLabel(Catalog.GetString("Device Node"), device.DevicePath);
+			extTable.AddLabel(Catalog.GetString("Write Support"),
+					  device.CanWrite ? Catalog.GetString("Yes") : Catalog.GetString("No"));
+			extTable.AddLabel(Catalog.GetString("Volume UUID"), device.VolumeUuid);
+			extTable.AddLabel(Catalog.GetString("Serial Number"), device.SerialNumber);
+			extTable.AddLabel(Catalog.GetString("Firmware Version"), device.FirmwareVersion);
+			extTable.AddLabel(Catalog.GetString("Database Version"), device.SongDatabase.Version);
 			
-			Expander expander = new Expander("Advanced Details");
+			Expander expander = new Expander(Catalog.GetString("Advanced Details"));
 			expander.Add(extTable);
 			box.PackStart(expander, false, false, 0);
 			
@@ -158,25 +163,10 @@ namespace Banshee
 		private ProgressBar UsedProgressBar
 		{
 			get {
-				ulong usedmb = device.VolumeUsed / (1024 * 1024);
-				ulong availmb = device.VolumeAvailable / (1024 * 1024);
-				ulong totalmb = device.VolumeSize / (1024 * 1024);
-
-				string usedstr = usedmb >= 1024 ? (usedmb / 1024) + " GB" :
-					usedmb + " MB";
-				string availstr = availmb >= 1024 ? (availmb / 1024) + " GB" :
-					availmb + " MB";
-				string totalstr = totalmb >= 1024 ? (totalmb / 1024) + " GB" :
-					totalmb + " MB";
-					
 				ProgressBar usedBar = new ProgressBar();
-				double fraction = (double)device.VolumeUsed / 
-					(double)device.VolumeSize;
-					
-				usedBar.Fraction = fraction;
-				usedBar.Text = String.Format("{0} of {1} ({2} Available)",
-					usedstr, totalstr, availstr);
-					
+				usedBar.Fraction = source.DiskUsageFraction;
+				usedBar.Text = source.DiskUsageString + " (" +
+					source.DiskAvailableString + ")";
 				return usedBar;
 			}
 		}

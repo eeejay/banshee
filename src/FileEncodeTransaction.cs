@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using Mono.Unix;
 using Nautilus;
 
 namespace Banshee
@@ -55,7 +56,7 @@ namespace Banshee
 		
 		public override string Name {
 			get {
-				return "File Encoder";
+				return Catalog.GetString("File Encoder");
 			}
 		}
 		
@@ -63,7 +64,7 @@ namespace Banshee
 		{
 			this.format = format;
 			showCount = false;
-			statusMessage = "Initializing Encoder...";
+			statusMessage = Catalog.GetString("Initializing Encoder...");
 		}
 		
 		public void AddTrack(TrackInfo track)
@@ -77,8 +78,9 @@ namespace Banshee
 			encoder.Progress += OnEncoderProgress;
 			
 			foreach(TrackInfo ti in tracks) {
-				statusMessage = "Encoding " + ti.Artist + " - " + 
-					ti.Title + "...";
+				statusMessage = String.Format(
+					Catalog.GetString("Encoding {0} - {1} ..."),
+					ti.Artist, ti.Title);
 				
 				if(cancelRequested)
 					break;

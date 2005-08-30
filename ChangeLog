@@ -1,3 +1,35 @@
+2005-08-29  Dan Winship  <danw@novell.com>
+
+	* Makefile.am (SUBDIRS): add po/
+
+	* mediaengines/gst/GstPlayerEngine.cs: 
+	* mediaengines/gst/gst-encode.c: 
+	* mediaengines/gst/gst-player-engine.c: 
+	* mediaengines/helix/HelixPlayer.cs: 
+	* mediaengines/helix/HxPlayer.cs: 
+	* plugincore/TrackInfo.cs: 
+	* src/*.cs: Use _() / Catalog.GetString()
+	
+	* plugincore/Makefile.am ($(ASSEMBLY)): 
+	* mediaengines/gst/Makefile.am ($(ASSEMBLY)): add -r:Mono.Posix
+
+	* src/Core.cs (UserFirstName): don't add "'s" here, since that has
+	to be part of the localization of "{0}'s Music Library". (Ignoring
+	for now the larger issue that the first word of the user's full
+	name might not be their given name.)
+
+	* src/Library.cs (IpodSource.DiskUsageString): property that
+	returns an internationalized "500 MB of 2 GB (1500 MB Remaining)"
+	string.
+
+	* src/PlayerInterface.cs (OnSimpleSearch): deal with the fact that
+	the field names are now localized rather than being constant
+	strings.
+
+	* src/PlaylistColumns.cs: Add another arg to the constructor
+	giving the database key name, since that won't be related to the
+	column name if LANG != en
+
 2005-08-29  Aaron Bockover  <aaron@aaronbock.net>
 	
 	* mediaengines/helix/HelixPlayer.cs: Fixed PCM set to 0 bug (314816)

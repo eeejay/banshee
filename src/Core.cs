@@ -193,7 +193,6 @@ namespace Banshee
 					
 					parts = UserRealName.Split(' ');
 					UserFirstName = parts[0].Replace(',', ' ').Trim();
-					UserFirstName += UserFirstName.EndsWith("s") ? "'" : "'s"; 
 				}
 				reader.Close();
 				file.Close();

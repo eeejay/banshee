@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using Mono.Unix;
 using Nautilus;
 using Gtk;
 /*
@@ -45,7 +46,7 @@ namespace Banshee
 
 		public override string Name {
 			get {
-				return "Song Burner";
+				return Catalog.GetString("Song Burner");
 			}
 		}	
 		
@@ -56,7 +57,7 @@ namespace Banshee
 			
 			
 			showCount = false;
-			statusMessage = "Initializing Burner...";
+			statusMessage = Catalog.GetString("Initializing Burner...");
 		}
 
 		private bool GetBoolPref(string key, bool def)
@@ -127,19 +128,21 @@ namespace Banshee
 					string header = recorder.ErrorMessage;
 					string message = recorder.ErrorMessageDetails;
 					if(header == null || header.Equals(String.Empty))
-						header = "Error Burning CD";
-					if(message == null || message.Equals(String.Empty))
-						message = "An unknown error occurred when " + 
-							"attempting to write the CD";
+						header = Catalog.GetString("Error Burning CD");
+					if(message == null || message.Equals(String.Empty)) {
+						message = Catalog.GetString(
+							"An unknown error occurred when " + 
+							"attempting to write the CD");
+					}
 					ShowError(header, message);
 				} else if(result == BurnRecorderResult.Cancel) {
-					ShowError("CD Burning Canceled", 
-						"The CD Burning was canceled.");
+					ShowError(Catalog.GetString("CD Burning Canceled"), 
+						  Catalog.GetString("The CD Burning was canceled."));
 				} else {
 					ShowSuccess();
 				}
 			} catch(Exception e) {
-				ShowError("Error Burning CD", e.Message);	
+				ShowError(Catalog.GetString("Error Burning CD"), e.Message);	
 			} finally {
 				foreach(string file in Directory.GetFiles(Paths.TempDir))
 					File.Delete(file); 
@@ -166,13 +169,13 @@ namespace Banshee
 
 			switch(currentAction) {
 				case BurnRecorderActions.PreparingWrite:
-					statusMessage = "Preparing to write...";
+					statusMessage = Catalog.GetString("Preparing to write...");
 					break;
 				case BurnRecorderActions.Writing:
-					statusMessage = "Writing disk...";
+					statusMessage = Catalog.GetString("Writing disk...");
 					break;
 				case BurnRecorderActions.Fixating:
-					statusMessage = "Fixating disk...";
+					statusMessage = Catalog.GetString("Fixating disk...");
 					break;
 			}
 		}
@@ -181,7 +184,7 @@ namespace Banshee
 		{
 			ResponseType response;
 			
-			statusMessage = "Waiting for media...";
+			statusMessage = Catalog.GetString("Waiting for media...");
 			
 			haveMedia = false;
 			
@@ -192,10 +195,10 @@ namespace Banshee
 					DialogFlags.Modal, 
 					MessageType.Info,
 					ButtonsType.OkCancel,
-					"Insert Blank CD",
-					"Please insert a blank CD disk for the burn process.");
+					Catalog.GetString("Insert Blank CD"),
+					Catalog.GetString("Please insert a blank CD disk for the burn process."));
 				
-				dialog.Title = "Insert Blank CD";
+				dialog.Title = Catalog.GetString("Insert Blank CD");
 				dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 				dialog.DefaultResponse = ResponseType.Ok;
 				response = (ResponseType)dialog.Run();
@@ -218,7 +221,7 @@ namespace Banshee
 			if(cancelRequested)
 				return;
 				
-			statusMessage = "Finished Burning: Error";
+			statusMessage = Catalog.GetString("Finished Burning: Error");
 			totalCount = 1;
 			currentCount = 1;
 		
@@ -230,7 +233,7 @@ namespace Banshee
 				header,
 				message);
 
-			dialog.Title = "Error Burning Disk";
+			dialog.Title = Catalog.GetString("Error Burning Disk");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();
@@ -244,7 +247,7 @@ namespace Banshee
 			if(cancelRequested)
 				return;
 			
-			statusMessage = "Finished Burning: CD Written Successfully!";
+			statusMessage = Catalog.GetString("Finished Burning: CD Written Successfully!");
 			totalCount = 1;
 			currentCount = 1;
 		
@@ -253,10 +256,10 @@ namespace Banshee
 				DialogFlags.Modal, 
 				MessageType.Info,
 				ButtonsType.Ok,
-				"CD Burning Complete",
-				"The selected audio was successfully written to the CD.");
+				Catalog.GetString("CD Burning Complete"),
+				Catalog.GetString("The selected audio was successfully written to the CD."));
 
-			dialog.Title = "CD Burning Complete";
+			dialog.Title = Catalog.GetString("CD Burning Complete");
 			dialog.Icon =  Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
 			dialog.DefaultResponse = ResponseType.Ok;
 			dialog.Run();

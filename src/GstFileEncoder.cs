@@ -28,6 +28,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Mono.Unix;
 
 namespace Banshee
 {	
@@ -62,7 +63,7 @@ namespace Banshee
 		{
 			IntPtr ptr = gst_file_encoder_new();
 			if(ptr == IntPtr.Zero)
-				throw new NullReferenceException("Could not create encoder");
+				throw new NullReferenceException(Catalog.GetString("Could not create encoder"));
 			
 			ProgressCallback = new GstFileEncoderProgressCallback(
 				OnEncoderProgress);
@@ -88,7 +89,7 @@ namespace Banshee
 				IntPtr errPtr = gst_file_encoder_get_error(encoderHandle);
 				string error = Marshal.PtrToStringAnsi(errPtr);
 				throw new ApplicationException(String.Format(
-					"Could not encode file: {0}", error));
+					Catalog.GetString("Could not encode file: {0}"), error));
 			}
 		
 			return outputFile;

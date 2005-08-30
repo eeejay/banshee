@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Data;
 using System.IO;
+using Mono.Unix;
 using Sql;
 using GConf;
 
@@ -179,7 +180,7 @@ namespace Banshee
 	
 	public class LibrarySource : Source
 	{
-		public LibrarySource() : base("Library", SourceType.Library)
+		public LibrarySource() : base(Catalog.GetString("Library"), SourceType.Library)
 		{
 		
 		}
@@ -263,6 +264,45 @@ namespace Banshee
 			device.Eject();
 			return true;
 		}
+
+		public double DiskUsageFraction
+		{
+			get {
+				return (double)device.VolumeUsed /
+					(double)device.VolumeSize;
+			}
+		}
+
+		private static string BytesToString(ulong bytes)
+		{
+			ulong mb = bytes / (1024 * 1024);
+
+			if (mb > 1024)
+				return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
+			else
+				return String.Format(Catalog.GetString("{0} MB"), mb);
+		}
+
+		public string DiskUsageString
+		{
+			get {
+				// Translators: iPod disk usage. Each {N} is something like "100 MB"
+				return String.Format(
+					Catalog.GetString("{0} of {1}"),
+					BytesToString(device.VolumeUsed),
+					BytesToString(device.VolumeSize));
+			}
+		}
+
+		public string DiskAvailableString
+		{
+			get {
+				// Translators: iPod disk usage. {0} is something like "100 MB"
+				return String.Format(
+					Catalog.GetString("({0} Remaining)"),
+					BytesToString(device.VolumeAvailable));
+			}
+		}
 	}
 	
 	public class AudioCdSource : Source
@@ -337,7 +377,7 @@ namespace Banshee
 		public static string UniqueName
 		{
 			get {
-				return PostfixDuplicate("New Playlist");
+				return PostfixDuplicate(Catalog.GetString("New Playlist"));
 			}
 		}
 		

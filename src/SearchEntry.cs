@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 
 namespace Banshee
@@ -165,7 +166,7 @@ namespace Banshee
 				}
 			}	
 			
-			tooltips.SetTip(evBox, "Searching: " + Field, null);
+			tooltips.SetTip(evBox, String.Format(Catalog.GetString("Searching: {0}"), Field), null);
 		}
 		
 		private void ShowMenu(uint time)
@@ -270,7 +271,7 @@ namespace Banshee
 			
 			activeItem.Active = true;
 			
-			tooltips.SetTip(evBox, "Searching: " + Field, null);
+			tooltips.SetTip(evBox, String.Format(Catalog.GetString("Searching: {0}"), Field), null);
 			
 			entry.HasFocus = true;
 			

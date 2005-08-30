@@ -32,6 +32,7 @@
 #include <math.h>
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gst/gst.h>
 #include <gst/gconf/gconf.h>
 
@@ -67,13 +68,13 @@ gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 
 	engine->player_element = gst_element_factory_make("playbin", "play");
 	if(engine->player_element == NULL) {
-		*error = g_strdup("Failed to create a GStreamer player opbject");
+		*error = g_strdup(_("Failed to create a GStreamer player opbject"));
 		return;
 	}
 
 	sink = gst_gconf_get_default_audio_sink();
 	if(!sink) {
-		*error = g_strdup("Could get audio output sink");
+		*error = g_strdup(_("Could not get audio output sink"));
 		return;
 	}
 

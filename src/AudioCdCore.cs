@@ -177,7 +177,7 @@ namespace Banshee
 			IntPtr ptr = cd_detect_new();
 			if(ptr == IntPtr.Zero)
 				throw new ApplicationException(
-					"Could not initialize HAL for CD Detection");
+					Catalog.GetString("Could not initialize HAL for CD Detection"));
 			
 			handle = new HandleRef(this, ptr);
 				

@@ -27,6 +27,7 @@
  */
 
 using System;
+using Mono.Unix;
 using Gtk;
  
 namespace Banshee
@@ -120,17 +121,17 @@ namespace Banshee
 	    
 	    public string DisplayArtist { 
 	    	get { return artist == null || artist == String.Empty
-	    		? "Unknown Artist" : artist; } 
+	    		? Catalog.GetString("Unknown Artist") : artist; } 
 	    }
 	    
 	    public string DisplayAlbum { 
 	    	get { return album == null || album == String.Empty 
-	    		? "Unknown Album" : album; } 
+	    		? Catalog.GetString("Unknown Album") : album; } 
 	    }
 	    
 	    public string DisplayTitle { 
 	    	get { return title == null || title == String.Empty
-	    		? "Unknown Title" : title; } 
+	    		? Catalog.GetString("Unknown Title") : title; } 
 	    }    	
 	    
 	    public bool CanSaveToDatabase {

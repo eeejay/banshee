@@ -30,10 +30,10 @@ using System;
 using System.Threading;
 using System.Data;
 using System.Collections;
+using Mono.Unix;
 using Gtk;
 using Gdk;
 using Glade;
-using Mono.Posix;
 
 using Sql;
 
@@ -224,7 +224,7 @@ namespace Banshee
 			Label sourceViewLoading = new Label();
 			sourceViewLoading.Yalign = 0.15f;
 			sourceViewLoading.Xalign = 0.5f;
-			sourceViewLoading.Markup = Catalog.GetString("<big><i>Loading...</i></big>");
+			sourceViewLoading.Markup = "<big><i>" + Catalog.GetString("Loading...") + "</i></big>";
 			sourceViewLoadingVP = new Viewport();
 			sourceViewLoadingVP.ShadowType = ShadowType.None;
 			sourceViewLoadingVP.Add(sourceViewLoading);
@@ -297,7 +297,7 @@ namespace Banshee
 			box.ShowAll();
 			
 			// Misc
-			SetInfoLabel("Idle");
+			SetInfoLabel(Catalog.GetString("Idle"));
 
 			// Window Events
 			WindowPlayer.KeyPressEvent += 
@@ -307,11 +307,11 @@ namespace Banshee
 			
 			// Search Entry
 			ArrayList fields = new ArrayList();
-			fields.Add("All");
+			fields.Add(Catalog.GetString("All"));
 			fields.Add("-");
-			fields.Add("Song Name");
-			fields.Add("Artist Name");
-			fields.Add("Album Title");
+			fields.Add(Catalog.GetString("Song Name"));
+			fields.Add(Catalog.GetString("Artist Name"));
+			fields.Add(Catalog.GetString("Album Title"));
 			
 			searchEntry = new SearchEntry(fields);
 			searchEntry.EnterPress += OnSimpleSearch;
@@ -707,11 +707,11 @@ namespace Banshee
 			if(activeTrackInfo == null)
 				return;
 			
-			SetInfoLabel(String.Format("{0}:{1:00} of {2}:{3:00}",
-				position / 60,
-				position % 60,
-				activeTrackInfo.Duration / 60,
-				activeTrackInfo.Duration % 60)
+			SetInfoLabel(
+				// Translators: position in song. eg, "0:37 of 3:48"
+				String.Format(Catalog.GetString("{0} of {1}"),
+					      String.Format("{0}:{1:00}", position / 60, position % 60),
+					      String.Format("{0}:{1:00}", activeTrackInfo.Duration / 60, activeTrackInfo.Duration % 60))
 			);	
 		}
 		
@@ -883,7 +883,7 @@ namespace Banshee
 				
 				Core.ThreadEnter();
 				(gxml["ViewNameLabel"] as Label).Markup = 
-					String.Format(Catalog.GetString("<b>{0} Music Library</b>"),
+					String.Format(Catalog.GetString("<b>{0}'s Music Library</b>"),
 						Core.Instance.UserFirstName);
 				
 				Core.ThreadLeave();
@@ -892,25 +892,12 @@ namespace Banshee
 				playlistModel.Source = source;
 				
 				IpodSource ipodSource = source as IpodSource;
-				IPod.Device device = ipodSource.Device;
 				playlistModel.LoadFromIpodSource(ipodSource);
 				
-				ipodDiskUsageBar.Fraction = (double)device.VolumeUsed / 
-					(double)device.VolumeSize;
-				ulong usedmb = device.VolumeUsed / (1024 * 1024);
-				ulong availmb = device.VolumeAvailable / (1024 * 1024);
-				ulong totalmb = device.VolumeSize / (1024 * 1024);
-				
-				string usedstr = usedmb >= 1024 ? (usedmb / 1024) + " GB" :
-					usedmb + " MB";
-				string availstr = availmb >= 1024 ? (availmb / 1024) + " GB" :
-					availmb + " MB";
-				string totalstr = totalmb >= 1024 ? (totalmb / 1024) + " GB" :
-					totalmb + " MB";
-				
-				ipodDiskUsageBar.Text = usedstr + " of " + totalstr;
-				string tooltip = ipodDiskUsageBar.Text + " (" + availstr + 
-					" " + Catalog.GetString("Remaining") + ")";
+				ipodDiskUsageBar.Fraction = ipodSource.DiskUsageFraction;
+				ipodDiskUsageBar.Text = ipodSource.DiskUsageString;
+				string tooltip = ipodSource.DiskUsageString + " (" +
+					ipodSource.DiskAvailableString + ")";
 				toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
 				
 				Core.ThreadEnter();
@@ -997,16 +984,15 @@ namespace Banshee
 			m = s / 60;
 			s -= m * 60;
 		
-			string timeDisp;
+			string timeDisp = String.Empty;
 			
 			if(d > 0)
-				timeDisp = String.Format("{0} day{1}, {2}:{3}:{4}",
-					d, d == 1 ? "" : "s", h, m.ToString("00"), s.ToString("00"));
-			else if(h > 0)
-				timeDisp = String.Format("{0}:{1}:{2}",
+				timeDisp = String.Format(Catalog.GetPluralString ("{0} day", "{0} days", (int)d), d);
+			if(d > 0 || h > 0)
+				timeDisp += String.Format("{0}:{1}:{2}",
 					h, m.ToString("00"), s.ToString("00"));
 			else	
-				timeDisp = String.Format("{0}:{1}",
+				timeDisp += String.Format("{0}:{1}",
 					m, s.ToString("00"));
 		
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
@@ -1023,10 +1009,18 @@ namespace Banshee
 						LabelStatusBar.Text = Catalog.GetString("This Playlist is Empty - Consider Adding Music");
 						break;
 				}
-			} else
-				LabelStatusBar.Text = String.Format(
-					Catalog.GetString("{0} Items, {1} Total Play Time") + " [{2}]",
-					count, timeDisp, playlistModel.TotalDuration);
+			} else {
+				string text = String.Format(
+					Catalog.GetPluralString("{0} Item", "{0} Items", (int)count),
+					count);
+				text += ", ";
+				text += String.Format(
+					Catalog.GetString("{0} Total Play Time"),
+					timeDisp);
+				text += " ";
+				text += String.Format("[{0}]", playlistModel.TotalDuration);
+				LabelStatusBar.Text = text;
+			}
 				
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
@@ -1047,14 +1041,17 @@ namespace Banshee
 				return;
 		
 			if(playlistModel.Source.Type == SourceType.Library) {
+				string msg = String.Format(
+					Catalog.GetPluralString(
+						"Are you sure you want to remove the selected song from your library?",
+						"Are you sure you want to remove the selected <b>({0})</b> songs from your library?",
+						selCount),
+					selCount);
 				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
 					DialogFlags.DestroyWithParent, MessageType.Warning,
 					ButtonsType.YesNo,
 					Catalog.GetString("Remove Selected Songs from Library"),
-					String.Format(Catalog.GetString(
-					"Are you sure you want to remove the selected <b>({0})</b> song(s) from your library?"), selCount)
-				);
-				
+					msg);
 				if(md.Run() != (int)ResponseType.Yes) {
 					md.Destroy();
 					return;
@@ -1285,34 +1282,29 @@ namespace Banshee
 				string match;
 				
 				try {
-					switch(field) {
-						case "Artist Name":
-							match = ti.Artist;
-							break;
-						case "Song Name":
-							match = ti.Title;
-							break;
-						case "Album Title":
-							match = ti.Album;
-							break;
-						case "All":
-						default:
-							string [] matches = {
-								ti.Artist,
-								ti.Album,
-								ti.Title
-							};
-							
-							foreach(string m in matches) {
-								string ml = m.ToLower();
-								if(ml.IndexOf(query) >= 0
-									|| ml.IndexOf("the " + query) >= 0) {
-									playlistModel.AddTrack(ti);
-									break;
-								}
+					if(field == Catalog.GetString("Artist Name"))
+						match = ti.Artist;
+					else if(field == Catalog.GetString("Song Name"))
+						match = ti.Title;
+					else if(field == Catalog.GetString("Album Title"))
+						match = ti.Album;
+					else {
+						string [] matches = {
+							ti.Artist,
+							ti.Album,
+							ti.Title
+						};
+
+						foreach(string m in matches) {
+							string ml = m.ToLower();
+							if(ml.IndexOf(query) >= 0
+							   || ml.IndexOf("the " + query) >= 0) {
+								playlistModel.AddTrack(ti);
+								break;
 							}
-							
-							continue;
+						}
+
+						continue;
 					}
 					
 					match = match.ToLower();
@@ -1762,7 +1754,7 @@ namespace Banshee
 					IpodSource ipodSource = source as IpodSource;
 					IPod.Device device = ipodSource.Device;
 					IpodPropertiesDialog propWin = 
-						new IpodPropertiesDialog(device);
+						new IpodPropertiesDialog(ipodSource);
 					propWin.Run();
 					propWin.Destroy();
 					if(propWin.Edited && device.CanWrite)
@@ -1781,7 +1773,7 @@ namespace Banshee
 			ScaleTime.Adjustment.Lower = 0;
 			ScaleTime.Adjustment.Upper = 0;
 			ScaleTime.Value = 0;
-			SetInfoLabel("Idle");
+			SetInfoLabel(Catalog.GetString("Idle"));
 			trackInfoHeader.SetIdle();
 			activeTrackInfo = null;
 			

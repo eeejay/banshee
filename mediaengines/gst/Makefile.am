@@ -22,7 +22,7 @@ ASSEMBLY_SOURCES = $(srcdir)/GstPlayerEngine.cs
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) -target:library -out:$@ $(GTKSHARP_LIBS) -r:$(top_builddir)/plugincore/plugin-core.dll $(ASSEMBLY_SOURCES)
+	$(MCS) -target:library -out:$@ $(GTKSHARP_LIBS) -r:$(top_builddir)/plugincore/plugin-core.dll -r:Mono.Posix $(ASSEMBLY_SOURCES)
 
 DISTCLEANFILES = Makefile.in
 CLEANFILES = gst-encode gst-play  *.exe *.dll *.mdb *.pidb

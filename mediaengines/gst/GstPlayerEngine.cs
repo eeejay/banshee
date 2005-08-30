@@ -28,6 +28,7 @@
  
 using System;
 using System.Runtime.InteropServices;
+using Mono.Unix;
 
 namespace Banshee
 {	
@@ -301,21 +302,22 @@ namespace Banshee
 				handler(this, new EventArgs());
 		}
 
-		public string ConfigName     { get { return "gstreamer";           } }
-		public string EngineName     { get { return "GStreamer";           } }
-		public string EngineLongName { get { return "GStreamer Engine";    } }
-		public int MajorVersion      { get { return 0;                     } }
-		public int MinorVersion      { get { return 1;                     } }
+		public string ConfigName     { get { return "gstreamer"; } }
+		public string EngineName     { get { return "GStreamer"; } }
+		public string EngineLongName { get { return Catalog.GetString("GStreamer Engine"); } }
+		public int MajorVersion      { get { return 0; } }
+		public int MinorVersion      { get { return 1; } }
 		
-		public string AuthorName     { get { return "Aaron Bockover";      } }
+		public string AuthorName     { get { return "Aaron Bockover"; } }
 		public string AuthorEmail    { get { return "aaron@aaronbock.net"; } }
 	
 		public string EngineDetails
 		{
 			get {
-				return "GStreamer is a multimedia framework for playing and " +
-				"manipulating media. Any GStreamer plugin " + 
-				"that is available will work through this engine.";
+				return Catalog.GetString(
+					"GStreamer is a multimedia framework for playing and " +
+					"xmanipulating media. Any GStreamer plugin " +
+					"that is available will work through this engine.");
 			}
 		}	
 	}

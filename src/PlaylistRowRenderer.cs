@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using Mono.Unix;
 using Gdk;
 using Pango;
 using Gtk;
@@ -180,9 +181,10 @@ namespace Banshee
 		private void DrawPlayCount(Gdk.Window canvas, Gtk.Widget widget, 
 			Gdk.Rectangle area, StateType state)
 		{	
+			string plays = Catalog.GetPluralString("{0} Play", "{0} Plays", (int)Track.NumberOfPlays);
 			string text = 
-				String.Format("<span size=\"small\">{0} Play{1}</span>", 
-				Track.NumberOfPlays, Track.NumberOfPlays != 1 ? "s" : "");
+				String.Format("<span size=\"small\">" + plays + "</span>", 
+					      Track.NumberOfPlays);
 			int width, height;
 			
 			Pango.Layout layout = GetPlainTextLayout(widget, 
