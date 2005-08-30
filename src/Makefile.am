@@ -74,7 +74,7 @@ banshee_sources = \
 	IpodTrackInfo.cs \
 	AltProgressBar.cs \
 	AudioCdCore.cs \
-	IpodPropertiesWindow.cs
+	IpodPropertiesWindow.cs 
 
 banshee_resources = \
 	../data/Tables.sql \

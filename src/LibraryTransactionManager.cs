@@ -102,8 +102,7 @@ namespace Banshee
 				(ArrayList)transactionTable[transactionType];
 			transactionQueue.Add(transaction);
 			
-			DebugLog.Add("Registered LibraryTransaction [" + 
-				transactionType + "]");
+			DebugLog.Add("Registered " + transactionType);
 			
 			if(transactionQueue.Count == 1) 
 				ExecuteNext(transactionType);
@@ -153,8 +152,7 @@ namespace Banshee
 				return;
 		
 			if(transactionQueue.Count > 0) {
-				DebugLog.Add("Executing next LibraryTransaction [" + 
-					transactionType + "]");
+				DebugLog.Add("Executing " + transactionType);
 				
 				LibraryTransaction transaction = 
 					(LibraryTransaction)transactionQueue[0];

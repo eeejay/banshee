@@ -38,21 +38,21 @@ namespace Banshee
 	
 		public static void Add(string message, params object[] args)
 		{
-			/*
-			StackFrame sf = new StackFrame(1, true);
-			string methodName = sf.GetMethod().ToString();
-			string fileName = sf.GetFileName().ToString();
-			int lineNumber = sf.GetFileLineNumber();
-			
-			Console.WriteLine("{0}{1} {2}",
-				String.Format("{0}: {1}", callNumber++, 
-					Path.GetFileName(fileName)).PadRight(18), 
-				String.Format("[{0}]", lineNumber++).PadRight(6),
-				String.Format(message, args));
-			*/
-			
-			Console.WriteLine("{0}: {1}", callNumber++, 
-				String.Format(message, args));
+			try {
+				StackFrame sf = new StackFrame(1, true);
+				//string methodName = sf.GetMethod().ToString();
+				string fileName = sf.GetFileName().ToString();
+				int lineNumber = sf.GetFileLineNumber();
+				
+				Console.WriteLine("{0}{1} {2}",
+					String.Format("{0}: {1}", callNumber++, 
+						Path.GetFileName(fileName)).PadRight(18), 
+					String.Format("[{0}]", lineNumber++).PadRight(6),
+					String.Format(message, args));
+			} catch(Exception) {
+				Console.WriteLine("{0}: {1}", callNumber++, 
+					String.Format(message, args));
+			}
 		}
 	}
 }

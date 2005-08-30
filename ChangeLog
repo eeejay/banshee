@@ -1,3 +1,10 @@
+2005-08-29  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* src/PlayerInterface.cs, src/Preferences.cs: Disable CD Burning UI
+	unless BANSHEE_BURN_ENABLE is set (Attn Packagers: DO NOT SET THIS...
+	development only)
+	* src/TrackProperties.cs: Multi-track metadata editor
+
 2005-08-29  Dan Winship  <danw@novell.com>
 
 	* src/PlayerInterface.cs (OnPlaylistViewMotionNotifyEvent): Oops,

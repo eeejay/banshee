@@ -47,6 +47,7 @@ namespace Banshee
 		[Widget] private RadioButton RadioAsk;
 		[Widget] private TreeView TreeMimeSynonyms;
 		[Widget] private TreeView TreeDecoders;
+		[Widget] private Notebook Notebook;
 		
 		private string oldLibraryLocation;
 		
@@ -83,21 +84,25 @@ namespace Banshee
 					
 			WindowPreferences.Icon = 
 				Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
-				
+					
+			LibraryLocationEntry.HasFocus = true;
+			LoadPreferences();
+			LoadPlayerEngines();
+			
 			driveContainer = glade["DriveComboContainer"] as HBox;
 			speedContainer = glade["SpeedComboContainer"] as HBox;
 				
-			writeSpeedCombo = ComboBox.NewText();
-			speedContainer.PackStart(writeSpeedCombo, false, false, 0);
-			speedContainer.ShowAll();
-				
-			LibraryLocationEntry.HasFocus = true;
-			LoadPreferences();
-			LoadBurnerDrives();
-			LoadPlayerEngines();
+			if(Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null) {
+				writeSpeedCombo = ComboBox.NewText();
+				speedContainer.PackStart(writeSpeedCombo, false, false, 0);
+				speedContainer.ShowAll();
+				LoadBurnerDrives();	
+			} else {
+				Notebook.RemovePage(1);
+			}
 			
 			TextView view = glade["EngineDescription"] as TextView;
-			view.SetSizeRequest (view.Allocation.Width, -1);
+			view.SetSizeRequest(view.Allocation.Width, -1);
 			WindowPreferences.Show();
 		}
 		

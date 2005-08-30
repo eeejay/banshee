@@ -32,7 +32,10 @@ using System.Threading;
 using System.IO;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+
 using Sql; 
+using Mono.Posix;
 
 namespace Banshee 
 {
@@ -84,12 +87,16 @@ namespace Banshee
 		
 		public void SafeRun()
 		{
-		//	try {
+			try {
 				Run();
-		//	} catch(Exception e) {
-			//	DebugLog.Add("LibraryTransaction threw an unhandled " + 
-			//		"exception, ending transaction safely: " + e.Message);
-			//}
+			} catch(Exception e) {
+				DebugLog.Add(String.Format(Catalog.GetString(
+					"{0} threw an unhandled exception: ending " + 
+					"transaction safely: {1} ({2})"),
+					GetType().ToString(),
+					e.GetType().ToString(), 
+					e.Message));
+			}
 			
 			Finish(this);
 		}
@@ -608,6 +615,33 @@ namespace Banshee
 			}
 
 			return count;
+		}
+	}
+	
+	public class TrackInfoSaveTransaction : LibraryTransaction
+	{
+		private ArrayList list;
+		
+		public override string Name {
+			get {
+				return "Track Save Transaction";
+			}
+		}
+		
+		public TrackInfoSaveTransaction(ArrayList list)
+		{
+			this.list = list;	
+			showStatus = false;
+		}
+		
+		public override void Run()
+		{
+			foreach(TrackInfo track in list) {
+				if(cancelRequested)
+					break;
+					
+				track.Save();
+			}
 		}
 	}
 	

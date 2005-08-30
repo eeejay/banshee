@@ -86,24 +86,32 @@ namespace Banshee
 	
 		public string Uri          { get { return uri;           } } 
 	   	public string MimeType     { get { return mimetype;      } }
-	    public string Artist       { get { return artist;        } }
-	    public string Album        { get { return album;         } }
-	    public string Title        { get { return title;         } }
+	    public string Artist       { get { return artist;        } 
+	                                 set { artist = value;       } }
+	    public string Album        { get { return album;         }
+	                                 set { album = value;        } }
+	    public string Title        { get { return title;         } 
+	                                 set { title = value;        } }
 	    public string Genre        { get { return genre;         } }
+
 	    public string Performer    { get { return performer;     } }
 	    public int Year            { get { return year;          } }	    
 	    
 	    public long Duration       { get { return duration;        } 
 	                                 set { duration = value;     } }
-	   	public uint TrackNumber    { get { return trackNumber;   } }
-	    public uint TrackCount     { get { return trackCount;    } }
+	   	
+	   	public uint TrackNumber    { get { return trackNumber;   } 
+	   	                             set { trackNumber = value;  } }
+	    public uint TrackCount     { get { return trackCount;    } 
+	                                 set { trackCount = value;   } }
 	    
 	    public uint NumberOfPlays  { get { return numberOfPlays; } }
 	    public DateTime LastPlayed { get { return lastPlayed;    } }
 	    public DateTime DateAdded  { get { return dateAdded;     } }
+		
 		public uint Rating         { get { return rating;        } 
-	    	                         set { rating = value; 
-	    	                               SaveRating();         } }
+		                             set { rating = value; 
+		                                   SaveRating();         } }
 	    	                               
 	    public double TrackGain    { get { return trackGain;     } }
 	    public double TrackPeak    { get { return trackPeak;     } }

@@ -611,5 +611,19 @@ namespace Banshee
 				return model.IterTrackInfo(selIter);
 			}
 		}
+		
+		public TrackInfo [] SelectedTrackInfoMultiple {
+			get {
+				if(Selection.CountSelectedRows() == 0)
+					return null;
+				
+				ArrayList list = new ArrayList();
+				
+				foreach(TreePath path in Selection.GetSelectedRows())
+					list.Add(model.PathTrackInfo(path));
+				
+				return list.ToArray(typeof(TrackInfo)) as TrackInfo [];
+			}
+		}
 	}
 }

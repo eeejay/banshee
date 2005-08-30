@@ -189,7 +189,10 @@ namespace Banshee
 			ImagePrevious.SetFromStock("media-prev", IconSize.LargeToolbar);
 			ImageNext.SetFromStock("media-next", IconSize.LargeToolbar);
 			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+			
 			ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
+			
+			gxml["ButtonBurn"].Visible = Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null;
 				
 			((Gtk.Image)gxml["ImageShuffle"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
@@ -818,7 +821,7 @@ namespace Banshee
 				
 		private void OnMenuTrackPropertiesActivate(object o, EventArgs args)
 		{
-			new TrackProperties(playlistView.SelectedTrackInfo);
+			OnItemPropertiesActivate(o, args);
 		}
 		
 		private void OnMenuNewPlaylistActivate(object o, EventArgs args)
@@ -1035,7 +1038,7 @@ namespace Banshee
 			
 			foreach(TreePath path in playlistView.Selection.GetSelectedRows())			
 				playlistModel.GetIter(out iters[i++], path);
-				
+		
 			TrackRemoveTransaction transaction;
 			
 			if(playlistModel.Source.Type == SourceType.Library)
@@ -1055,7 +1058,14 @@ namespace Banshee
 		
 		private void OnItemPropertiesActivate(object o, EventArgs args)
 		{
-			new TrackProperties(playlistView.SelectedTrackInfo);
+			TrackProperties propEdit = new TrackProperties(
+				playlistView.SelectedTrackInfoMultiple);
+			propEdit.Saved += OnTrackPropertyEditorSaved;
+		}
+		
+		private void OnTrackPropertyEditorSaved(object o, EventArgs args)
+		{
+			playlistView.QueueDraw();
 		}
 		
 		private void OnButtonNewPlaylistClicked(object o, EventArgs args)

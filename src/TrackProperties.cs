@@ -29,60 +29,261 @@
 using System;
 using Gtk;
 using Glade;
+using System.Collections;
+using Mono.Posix;
 
 namespace Banshee
 {
+	internal class EditorTrack
+	{
+		private TrackInfo track;
+		
+		public string Artist;
+		public string Album;
+		public string Title;
+	
+		public uint TrackNumber;
+		public uint TrackCount;
+	
+		public EditorTrack(TrackInfo track)
+		{
+			this.track = track;
+			Revert();
+		}
+		
+		public void Revert()
+		{
+			Artist = track.Artist;
+			Album = track.Album;
+			Title = track.Title;
+			TrackNumber = track.TrackNumber;
+			TrackCount = track.TrackCount;
+		}
+		
+		public void Save()
+		{
+			track.Artist = Artist;
+			track.Album = Album;
+			track.Title = Title;
+			track.TrackNumber = TrackNumber;
+			track.TrackCount = TrackCount;
+		}
+		
+		public TrackInfo Track
+		{
+			get {
+				return track;
+			}
+		}
+	}
+
 	public class TrackProperties
 	{
-		[Glade.WidgetAttribute] private Gtk.Window WindowTrackInfo;
+		[Widget] private Window WindowTrackInfo;
+		[Widget] private Button CancelButton;
+		[Widget] private Button SaveButton;
+		[Widget] private Button Previous;
+		[Widget] private Button Next;
+		[Widget] private Button TrackNumberSync;
+		[Widget] private Button TrackCountSync;
+		[Widget] private Button ArtistSync;
+		[Widget] private Button AlbumSync;
+		[Widget] private Button TitleSync;
+		[Widget] private Label TitleLabel;
+		[Widget] private SpinButton TrackCount;
+		[Widget] private SpinButton TrackNumber;
+		[Widget] private Entry Artist;
+		[Widget] private Entry Album;
+		[Widget] private Entry Title;
+		[Widget] private Container EditorContainer;
+		
+		Tooltips tips = new Tooltips();
+		
 		private Glade.XML glade;
+		
+		private ArrayList TrackSet = new ArrayList();
+		private int currentIndex = 0;
 
-		public TrackProperties(TrackInfo ti)
+		public event EventHandler Saved;
+
+		public TrackProperties(TrackInfo [] selection)
 		{
-			if(ti == null)
+			if(selection == null)
 				return;
+		
+			foreach(TrackInfo track in selection)
+				TrackSet.Add(new EditorTrack(track));
 		
 			glade = new Glade.XML(null, 
 				"trackinfo.glade", "WindowTrackInfo", null);
 			glade.Autoconnect(this);
 			WindowTrackInfo.Icon = 
 				Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
-			
-			((Gtk.Image)glade["ImageAlbumCover"]).Pixbuf = 
-				Gdk.Pixbuf.LoadFromResource("album-cover-container.png");
+	
+			(glade["BackImage"] as Image).SetFromStock("gtk-go-back", 
+				IconSize.Button);
+			(glade["ForwardImage"] as Image).SetFromStock("gtk-go-forward", 
+				IconSize.Button);
 				
-			glade["ButtonClose"].HasFocus = true;
+			CancelButton.Clicked += OnCancelButtonClicked;
+			SaveButton.Clicked += OnSaveButtonClicked;
+			Previous.Clicked += OnPreviousClicked;
+			Next.Clicked += OnNextClicked;
 			
-			SetField("Artist", ti.Artist);
-			SetField("Performer", ti.Performer);
-			SetField("Album", ti.Album);
-			SetField("Title", ti.Title);
-			SetField("Genre", ti.Genre);
-			//SetField("DateAdded", ti.DateAdded.ToString());
-			SetField("Duration", String.Format("{0}:{1}",
-				ti.Duration / 60, (ti.Duration % 60).ToString("00")));
-			SetField("TrackNumber", ti.TrackNumber == 0 ? null : 
-				ti.TrackNumber.ToString());
-			SetField("TrackCount", ti.TrackCount == 0 ? null :
-				ti.TrackCount.ToString());
+			TrackNumberSync.Clicked += OnTrackNumberSyncClicked;
+			TrackCountSync.Clicked += OnTrackCountSyncClicked;
+			ArtistSync.Clicked += OnArtistSyncClicked;
+			AlbumSync.Clicked += OnAlbumSyncClicked;
+			TitleSync.Clicked += OnTitleSyncClicked;
 				
-			((Gtk.Label)glade["LabelMimeType"]).Text = ti.MimeType;
-			((Gtk.Entry)glade["EntryUri"]).Text = StringUtil.UriEscape(ti.Uri);
+			glade["MultiTrackHeader"].Visible = TrackSet.Count > 1;
+			TrackNumberSync.Visible = TrackSet.Count > 1;
+			TrackCountSync.Visible = TrackSet.Count > 1;
+			ArtistSync.Visible = TrackSet.Count > 1;
+			AlbumSync.Visible = TrackSet.Count > 1;
+			TitleSync.Visible = TrackSet.Count > 1;
+			
+			tips.SetTip(TrackNumberSync, 
+				Catalog.GetString("Set all Track Numbers to this value"), 
+				"track numbers");
+			tips.SetTip(TrackCountSync, 
+				Catalog.GetString("Set all Track Counts to this value"),
+				"track counts");
+			tips.SetTip(ArtistSync,
+				Catalog.GetString("Set all Artists to this value"), "artists");
+			tips.SetTip(AlbumSync, 
+				Catalog.GetString("Set all Albums to this value"), "albums");
+			tips.SetTip(TitleSync, 
+				Catalog.GetString("Set all Titles to this value"), "titles");
+				
+			LoadTrack(0);
+				
+			WindowTrackInfo.Show();
 		}
 		
-		private void SetField(string field, string val)
+		private string PrepareStatistic(string stat)
 		{
-			bool visible = val != null;
-			
-			if(val != null)
-				((Gtk.Label)glade["Label" + field]).Text = val;
-				
-			glade["Label" + field].Visible = visible;
-			glade["Title" + field].Visible = visible;
+			return "<small><i>" + stat + "</i></small>";
 		}
 		
-		private void OnButtonCloseClicked(object o, EventArgs args)
+		private void LoadTrack(int index)
 		{
+			if(index < 0 || index >= TrackSet.Count)
+				return;
+				
+			EditorTrack track = TrackSet[index] as EditorTrack;
+		
+			TrackNumber.Value = track.TrackNumber;
+			TrackCount.Value = track.TrackCount;
+		
+			(glade["Artist"] as Entry).Text = track.Artist;
+			(glade["Album"] as Entry).Text = track.Album;
+			(glade["Title"] as Entry).Text = track.Title;
+			
+			(glade["DurationLabel"] as Label).Markup = 
+				PrepareStatistic(String.Format("{0}:{1}", 
+				track.Track.Duration / 60, 
+				(track.Track.Duration % 60).ToString("00")));
+			(glade["PlayCountLabel"] as Label).Markup = 
+				PrepareStatistic(track.Track.NumberOfPlays.ToString());
+	
+			(glade["LastPlayedLabel"] as Label).Markup = 
+				PrepareStatistic(track.Track.LastPlayed == DateTime.MinValue ?
+					"Never Played" :
+					track.Track.LastPlayed.ToString());
+			(glade["ImportedLabel"] as Label).Markup = 
+				PrepareStatistic(track.Track.DateAdded == DateTime.MinValue ?
+					"Unkown" :
+					track.Track.DateAdded.ToString());
+					
+			TitleLabel.Markup = "<big><b>" +	
+				String.Format(Catalog.GetString(
+					"Editing Track Properties ({0} of {1})"), 
+					index + 1, TrackSet.Count) + "</b></big>";
+					
+			Previous.Sensitive = index > 0;
+			Next.Sensitive = index < TrackSet.Count - 1;
+		}
+		
+		private void OnPreviousClicked(object o, EventArgs args)
+		{
+			UpdateCurrent();
+			LoadTrack(--currentIndex);
+		}
+		
+		private void OnNextClicked(object o, EventArgs args)
+		{
+			UpdateCurrent();
+			LoadTrack(++currentIndex);
+		}
+		
+		private void OnTrackNumberSyncClicked(object o, EventArgs args)
+		{
+			foreach(EditorTrack track in TrackSet)
+				track.TrackNumber = (uint)TrackNumber.Value;
+		}
+		
+		private void OnTrackCountSyncClicked(object o, EventArgs args)
+		{
+			foreach(EditorTrack track in TrackSet)
+				track.TrackCount = (uint)TrackCount.Value;
+		}
+
+		private void OnArtistSyncClicked(object o, EventArgs args)
+		{
+			foreach(EditorTrack track in TrackSet)
+				track.Artist = Artist.Text;
+		}
+
+		private void OnAlbumSyncClicked(object o, EventArgs args)
+		{
+			foreach(EditorTrack track in TrackSet)
+				track.Album = Album.Text;
+		}
+		
+		private void OnTitleSyncClicked(object o, EventArgs args)
+		{
+			foreach(EditorTrack track in TrackSet)
+				track.Title = Title.Text;
+		}
+		
+		private void UpdateCurrent()
+		{
+			if(currentIndex < 0 || currentIndex >= TrackSet.Count)
+				return;
+				
+			EditorTrack track = TrackSet[currentIndex] as EditorTrack;
+			
+			track.TrackNumber = (uint)TrackNumber.Value;
+			track.TrackCount = (uint)TrackCount.Value;
+			track.Artist = Artist.Text;
+			track.Album = Album.Text;
+			track.Title = Title.Text;
+		}
+
+		private void OnCancelButtonClicked(object o, EventArgs args)
+		{
+			WindowTrackInfo.Destroy();
+		}
+		
+		private void OnSaveButtonClicked(object o, EventArgs args)
+		{
+			UpdateCurrent();
+			
+			ArrayList list = new ArrayList();
+			foreach(EditorTrack track in TrackSet) {
+				track.Save();
+				list.Add(track.Track);
+			}
+			
+			TrackInfoSaveTransaction saveTransaction 
+				= new TrackInfoSaveTransaction(list);
+			saveTransaction.Register();
+				
+			EventHandler handler = Saved;
+			if(handler != null)
+				handler(this, new EventArgs());
+				
 			WindowTrackInfo.Destroy();
 		}
 	}
