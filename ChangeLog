@@ -1,4 +1,4 @@
-2005-08-29  Dan Winship  <danw@novell.com>
+2005-08-30  Dan Winship  <danw@novell.com>
 
 	* Makefile.am (SUBDIRS): add po/
 
@@ -29,6 +29,9 @@
 	* src/PlaylistColumns.cs: Add another arg to the constructor
 	giving the database key name, since that won't be related to the
 	column name if LANG != en
+
+	* src/LibraryTrackInfo.cs (IncrementPlayCount): use the invariant
+	datetime format for LastPlayed, not the localized one.
 
 2005-08-29  Aaron Bockover  <aaron@aaronbock.net>
 	

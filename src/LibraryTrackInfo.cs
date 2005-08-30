@@ -311,7 +311,7 @@ namespace Banshee
 			
 			Statement query = new Update("Tracks",
 				"NumberOfPlays", numberOfPlays, 
-				"LastPlayed", lastPlayed) +
+				"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat)) +
 				new Where(new Compare("TrackID", Op.EqualTo, trackId));
 				//new Limit(1);
 
