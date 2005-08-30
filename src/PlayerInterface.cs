@@ -1349,7 +1349,9 @@ namespace Banshee
 			    	playlistView.PlayPath(path);
 			    	return;
 			    case EventType.ButtonPress:
-			    	if(playlistView.Selection.PathIsSelected(path)) 
+			    	if(playlistView.Selection.PathIsSelected(path) &&
+				   (args.Event.State & (ModifierType.ControlMask |
+							ModifierType.ShiftMask)) == 0)
 			    		args.RetVal = true;
 			    	return;
 				default:
@@ -1362,6 +1364,7 @@ namespace Banshee
 		private void OnPlaylistViewMotionNotifyEvent(object o, 
 			MotionNotifyEventArgs args)
 		{
+			args.RetVal = true;
 			if((args.Event.State & ModifierType.Button1Mask) == 0)
 				return;
 			if(args.Event.Window != playlistView.BinWindow)
@@ -1369,10 +1372,13 @@ namespace Banshee
 			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
 						    (int)args.Event.X, (int)args.Event.Y))
 				return;
-		
+			TreePath path;
+			if (!playlistView.GetPathAtPos((int)args.Event.X, 
+						       (int)args.Event.Y, out path))
+				return;
+
 			Gtk.Drag.Begin(playlistView, new TargetList (playlistViewSourceEntries),
 				       Gdk.DragAction.Move | Gdk.DragAction.Copy, 1, args.Event);
-			args.RetVal = true;
 		}
 
 		private void OnPlaylistViewButtonReleaseEvent(object o, 

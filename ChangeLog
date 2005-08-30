@@ -1,5 +1,13 @@
 2005-08-30  Dan Winship  <danw@novell.com>
 
+	* src/PlayerInterface.cs (OnPlaylistViewButtonPressEvent): never
+	eat control/shift clicks, so GtkTreeView will handle control-click
+	to unselect rows.
+	(OnPlaylistViewMotionNotifyEvent): Ignore drags below the last row
+	of the tree
+
+2005-08-30  Dan Winship  <danw@novell.com>
+
 	* Makefile.am (SUBDIRS): add po/
 
 	* mediaengines/gst/GstPlayerEngine.cs: 
