@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Mono.Posix;
 using IPod;
 
 namespace Banshee
@@ -49,8 +50,9 @@ namespace Banshee
 			
 			devices = new Hashtable();
 			
-			foreach(Device device in Device.ListDevices())
+			foreach(Device device in Device.ListDevices()) {
 				devices[device.VolumeId] = device;
+			}
 		}
 		
 		public void Dispose()
@@ -93,6 +95,139 @@ namespace Banshee
 				ArrayList list = new ArrayList(devices.Values);
 				return list.ToArray(typeof(Device)) as Device [];
 			}
+		}
+	}
+	
+	public class IpodSyncTransaction : LibraryTransaction
+	{
+		public override string Name {
+			get {
+				return "iPod Sync Transaction";
+			}
+		}
+	
+		private Device device;
+		private bool iPodUpdating = false;
+		
+		public IpodSyncTransaction(Device device)
+		{
+			this.device = device;
+			showCount = false;
+		}
+		
+		private bool TrackCompare(LibraryTrackInfo libTrack, Song song)
+		{
+			return song.Title.ToLower() == libTrack.Title.ToLower() && 
+				song.Album.ToLower() == libTrack.Album.ToLower() &&
+				song.Artist.ToLower() == libTrack.Artist.ToLower() &&
+				song.Length / 1000 == libTrack.Duration;
+		}
+		
+		private bool ExistsOnIpod(LibraryTrackInfo libTrack)
+		{
+			foreach(Song song in device.SongDatabase.Songs) {
+				if(TrackCompare(libTrack, song))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		private bool ExistsInLibrary(Song song)
+		{
+			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
+				if(TrackCompare(libTrack, song))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		public override void Run()
+		{
+			statusMessage = String.Format(Catalog.GetString(
+				"Preparing to sync '{0}'"), device.Name);
+				
+			currentCount = 0;
+			totalCount = 0;
+			
+			bool doUpdate = false;
+			
+			foreach(Song song in device.SongDatabase.Songs) {
+				if(ExistsInLibrary(song))
+					continue;
+					
+				device.SongDatabase.RemoveSong(song);
+				doUpdate = true;
+			}
+			
+			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
+				if(ExistsOnIpod(libTrack))
+					continue;
+					
+				Song song = device.SongDatabase.CreateSong();
+				song.Album = libTrack.Album;
+				song.Artist = libTrack.Artist;
+				song.Title = libTrack.Title;
+				song.Genre = libTrack.Genre;
+				song.Length = (int)(libTrack.Duration * 1000);
+				song.TrackNumber = (int)libTrack.TrackNumber;
+				song.TotalTracks = (int)libTrack.TrackCount;
+				song.Filename = libTrack.Uri;
+				song.Year = (int)libTrack.Year;
+				
+				if(song.Artist == null)
+					song.Artist = String.Empty;
+
+				if(song.Album == null)
+					song.Album = String.Empty;
+
+				if(song.Title == null)
+					song.Title = String.Empty;
+
+				if(song.Genre == null)
+					song.Genre = String.Empty;
+					
+				doUpdate = true;
+			}
+			
+			if(!doUpdate)
+				return;
+			
+			device.SongDatabase.SaveStarted += OnSaveStarted;
+			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
+			device.SongDatabase.SaveEnded += OnSaveEnded;
+			
+			device.SongDatabase.Save();
+			
+			iPodUpdating = true;
+			Console.WriteLine("SAVE BLOCKING");
+			while(iPodUpdating);
+			
+			Console.WriteLine("SAVE DONE");
+		} 
+		
+		private void OnSaveStarted(object o, EventArgs args)
+		{
+			iPodUpdating = true;
+			Console.WriteLine("SAVE STARTED");
+		}
+		
+		private void OnSaveEnded(object o, EventArgs args)
+		{
+			iPodUpdating = false;
+		}
+		
+		private void OnSaveProgressChanged(SongDatabase db, Song song, 
+			double currentPercent, int completed, int total)
+		{
+			currentCount = completed;
+			totalCount = total;
+			statusMessage = String.Format(Catalog.GetString(
+				"Copying {0} - {1}"), song.Artist, song.Title); 
+				
+			if(total >= completed - 1)
+				iPodUpdating = false;
 		}
 	}
 }

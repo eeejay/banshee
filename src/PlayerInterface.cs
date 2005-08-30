@@ -279,6 +279,11 @@ namespace Banshee
 			ipodDiskUsageBar = new ProgressBar();
 			box.PackStart(ipodDiskUsageBar, false, false, 0);
 			
+			Button ipodSyncButton = new Button(
+				new Gtk.Image("gtk-copy", IconSize.Menu));
+			ipodSyncButton.Clicked += OnIpodSyncClicked;
+			box.PackStart(ipodSyncButton, false, false, 0);
+			
 			Button ipodPropertiesButton = new Button(
 				new Gtk.Image("gtk-properties", IconSize.Menu));
 			ipodPropertiesButton.Clicked += OnIpodPropertiesClicked;
@@ -327,11 +332,14 @@ namespace Banshee
 			SetTip(gxml["ScaleTime"], Catalog.GetString("Current Position in Song"));
 			SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
 			SetTip(ipodDiskUsageBar, Catalog.GetString("iPod Disk Usage"));
+			SetTip(ipodEjectButton, Catalog.GetString("Eject iPod"));
+			SetTip(ipodSyncButton, Catalog.GetString("Synchronize Music Library to iPod"));
+			SetTip(ipodPropertiesButton, Catalog.GetString("View iPod Properties"));
 			
 			playlistMenuMap = new Hashtable();
 			
 			Core.Instance.DBusServer.RegisterObject(
-				new BansheeCore(Window), "/org/gnome/Banshee/Core");
+				new BansheeCore(Window, this), "/org/gnome/Banshee/Core");
       	}
       	
       	private void SetTip(Widget widget, string tip)
@@ -514,8 +522,8 @@ namespace Banshee
       		LabelInfo.Markup = "<span size=\"small\">" + text + "</span>";
       	}
       	
-      	private void TogglePlaying()
-		{		
+      	public void TogglePlaying()
+		{
 			if(Core.Instance.Player.Playing) {
 				ImagePlayPause.SetFromStock("media-play", 
 					IconSize.LargeToolbar);
@@ -642,16 +650,26 @@ namespace Banshee
 				playlistView.PlaySelected();
 		}
 		
-		private void OnButtonPreviousClicked(object o, EventArgs args)
+		public void Previous()
 		{
 			playlistModel.Regress();
 			playlistView.UpdateView();
 		}
 		
-		private void OnButtonNextClicked(object o, EventArgs args)
+		public void Next()
 		{
 			playlistModel.Advance();
 			playlistView.UpdateView();
+		}
+		
+		private void OnButtonPreviousClicked(object o, EventArgs args)
+		{
+			Previous();
+		}
+		
+		private void OnButtonNextClicked(object o, EventArgs args)
+		{
+			Next();
 		}
 		
 		private void OnVolumeScaleChanged(int volume)
@@ -918,6 +936,18 @@ namespace Banshee
 				return;
 			
 			ShowSourceProperties(sourceView.SelectedSource);
+		}
+		
+		private void OnIpodSyncClicked(object o, EventArgs args)
+		{
+			if(sourceView.SelectedSource.Type != SourceType.Ipod)
+				return;
+		
+			IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
+			IPod.Device device = ipodSource.Device;
+					
+			IpodSyncTransaction sync = new IpodSyncTransaction(device);
+			sync.Register();
 		}
 		
 		private void OnIpodEjectClicked(object o, EventArgs args)

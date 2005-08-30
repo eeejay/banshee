@@ -42,9 +42,29 @@ namespace Banshee
 			} catch { }
 			
 			if(dbusCore != null) {
-				dbusCore.PresentWindow();
+				bool present = true;
+				
+				if(args.Length > 0) {
+					switch(args[0]) {
+						case "--play-pause":
+							dbusCore.TogglePlaying();
+							present = false;
+							break;
+						case "--next":
+							dbusCore.Next();
+							present = false;
+							break;
+						case "--previous":
+							dbusCore.Previous();
+							present = false;
+							break;
+					}
+				}
+			
+				if(present)
+					dbusCore.PresentWindow();
 				return;
-			}
+			}	
 			
 			System.Reflection.AssemblyName asm = 
 				System.Reflection.Assembly.GetEntryAssembly().GetName();		

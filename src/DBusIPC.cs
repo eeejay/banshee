@@ -66,6 +66,7 @@ namespace Banshee
 	public class BansheeCore
 	{
 		private Gtk.Window mainWindow;
+		private PlayerUI PlayerUI;
 		
 		public static BansheeCore FindInstance()
 		{
@@ -75,9 +76,10 @@ namespace Banshee
 				"/org/gnome/Banshee/Core");
 		}
 		
-		public BansheeCore(Gtk.Window mainWindow)
+		public BansheeCore(Gtk.Window mainWindow, PlayerUI ui)
 		{
 			this.mainWindow = mainWindow;
+			this.PlayerUI = ui;
 		}
 		
 		[Method]
@@ -85,6 +87,27 @@ namespace Banshee
 		{
 			if(mainWindow != null)
 				mainWindow.Present();
+		}
+		
+		[Method]
+		public virtual void TogglePlaying()
+		{
+			if(PlayerUI != null)
+				PlayerUI.TogglePlaying();
+		}
+		
+		[Method]
+		public virtual void Next()
+		{
+			if(PlayerUI != null)
+				PlayerUI.Next();
+		}
+		
+		[Method]
+		public virtual void Previous()
+		{
+			if(PlayerUI != null)
+				PlayerUI.Previous();
 		}
 	}
 }

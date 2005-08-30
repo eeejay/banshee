@@ -38,7 +38,7 @@ namespace Banshee
 	
 		public static void Add(string message, params object[] args)
 		{
-			try {
+			/*try {
 				StackFrame sf = new StackFrame(1, true);
 				//string methodName = sf.GetMethod().ToString();
 				string fileName = sf.GetFileName().ToString();
@@ -49,10 +49,10 @@ namespace Banshee
 						Path.GetFileName(fileName)).PadRight(18), 
 					String.Format("[{0}]", lineNumber++).PadRight(6),
 					String.Format(message, args));
-			} catch(Exception) {
+			} catch(Exception) {*/
 				Console.WriteLine("{0}: {1}", callNumber++, 
 					String.Format(message, args));
-			}
+			//}
 		}
 	}
 }

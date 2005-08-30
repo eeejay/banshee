@@ -129,8 +129,6 @@ namespace Banshee
 		public void TestInitialize()
 		{
 			HxPlayer testplayer = new HxPlayer();
-			ushort testvol = testplayer.Volume;
-			testplayer.Volume = testvol;
 		}
 		
 		public void Dispose()

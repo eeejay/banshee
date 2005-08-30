@@ -118,7 +118,7 @@ cd_disk_info_load(CdDiskInfo *disk)
 	sector_format = gst_format_get_by_nick("sector");
 	source_pad = gst_element_get_pad(source, "src");
 	
-	gst_element_set_state(source, GST_STATE_PAUSED);
+	gst_element_set_state(source, GST_STATE_PLAYING);
 
 	gst_pad_query(source_pad, GST_QUERY_TOTAL, &track_format, 
 		&(disk->n_tracks));
@@ -128,6 +128,9 @@ cd_disk_info_load(CdDiskInfo *disk)
 	
 	gst_pad_convert(source_pad, sector_format, disk->total_sectors, 
 		&time_format, &(disk->total_time));
+		
+	g_printf("TOTAL_SECTORS: %lld\n", disk->total_sectors);
+	g_printf("TOTAL_TIME:    %lld\n", disk->total_time / GST_SECOND);
 		
 	if(disk->n_tracks <= 0) {
 		gst_element_set_state(source, GST_STATE_NULL);
@@ -150,6 +153,10 @@ cd_disk_info_load(CdDiskInfo *disk)
 		if(i > 0) {
 			disk->tracks[i - 1] = cd_track_info_new(i - 1, start_sector,
 				end_sector);
+				
+			g_printf("START,END SECTOR: %lld, %lld\n", 
+				disk->tracks[i - 1]->start_sector,
+				disk->tracks[i - 1]->end_sector);
 		}
 		
 		start_sector = end_sector;
