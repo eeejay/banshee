@@ -1,5 +1,15 @@
 2005-08-29  Aaron Bockover  <aaron@aaronbock.net>
 	
+	* libbanshee/cd-info.c: More internals complete/working, cdparanoia
+	fix in patched gstreamer
+	* src/DBusIPC.cs: Virtual D-Bus methods for TogglePlaying(), Next(), 
+	and Previous() 
+	* src/Main.cs: Command line option parser, supports --play-pause, 
+	--next, and --previous, translated to method calls on running instance
+	over D-Bus
+	* src/PlayerInterface.cs: Generic Next()/Previous() methods for D-Bus,
+	UI Button for Syncing iPod
+	* src/IpodCore.cs: IpodSyncTransaction for auto-syncing iPod
 	* src/PlayerInterface.cs, src/Preferences.cs: Disable CD Burning UI
 	unless BANSHEE_BURN_ENABLE is set (Attn Packagers: DO NOT SET THIS...
 	development only)
