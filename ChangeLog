@@ -1,3 +1,9 @@
+2005-08-30  Aaron Bockover  <aaron@aaronbock.net>
+
+	* libbanshee/xing/gst-xing-encoder.[ch]: GStreamer plugin for Xing
+	* libbanshee/xing: Moved Xing Encoder from mediaengines/xing-encoder
+	* libbanshee/gst-init.[ch]: GStreamer initialization
+	
 2005-08-30  Hans Petter Jansson  <hpj@novell.com>
 
 	* mediaengines/xing-encoder/xing-mp3-encoder.c
