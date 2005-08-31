@@ -113,6 +113,8 @@ banshee_resources = \
 	../data/images/search-entry-icon.png \
 	../data/images/search-entry-icon-hover.png \
 	../data/images/source-ipod-regular.png \
+	../data/images/source-ipod-color.png \
+	../data/images/source-ipod-shuffle.png \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
 	../data/images/burn-icon-32.png \

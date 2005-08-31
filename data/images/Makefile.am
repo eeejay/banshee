@@ -38,7 +38,9 @@ EXTRA_DIST = \
 	search-entry-icon-hover.png \
 	search-entry-icon.png \
 	source-cd-audio.png \
+	source-ipod-color.png \
 	source-ipod-regular.png \
+	source-ipod-shuffle.png \
 	source-library.png \
 	source-playlist.png \
 	star.png \
