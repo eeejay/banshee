@@ -1,7 +1,6 @@
 SUBDIRS = \
 	gst \
-	helix \
-	xing-encoder
+	helix 
 
 DISTCLEANFILES = Makefile.in
 
