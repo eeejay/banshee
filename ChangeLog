@@ -1,6 +1,12 @@
 2005-08-30  Hans Petter Jansson  <hpj@novell.com>
 
 	* mediaengines/xing-encoder/xing-mp3-encoder.c
+	(xing_mp3_encoder_set_property): Guard against too low bitrate being
+	set.
+
+2005-08-30  Hans Petter Jansson  <hpj@novell.com>
+
+	* mediaengines/xing-encoder/xing-mp3-encoder.c
 	(xing_mp3_encoder_get_property)
 	(xing_mp3_encoder_set_property): Fix bad symbol references.
 
