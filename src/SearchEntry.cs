@@ -56,6 +56,7 @@ namespace Banshee
 		private bool menuActive;
 		
 		private bool emptyEmitted;
+		private uint timeoutId;
 		
 		public event EventHandler EnterPress;
 		public event EventHandler Changed;
@@ -283,6 +284,16 @@ namespace Banshee
 			if(handler != null)
 				handler(this, new EventArgs());
 		}
+
+		private bool OnTimeout () {
+			EventHandler handler = Changed;
+			
+			if (handler != null && !emptyEmitted)
+				handler (this, new EventArgs ());
+
+			emptyEmitted = entry.Text.Length == 0;
+			return false;
+		}
 		
 		private void OnEntryChanged(object o, EventArgs args)
 		{
@@ -293,12 +304,12 @@ namespace Banshee
 				emptyEmitted = false;
 				evCancelBox.ShowAll();
 			}
+
+			if (timeoutId > 0) {
+				GLib.Source.Remove (timeoutId);
+			}
 			
-			EventHandler handler = Changed;
-			if(handler != null && !emptyEmitted)
-				handler(this, new EventArgs());
-				
-			emptyEmitted = entry.Text.Length == 0;
+			timeoutId = GLib.Timeout.Add (300, OnTimeout);
 		}
 		
 		public void CancelSearch(bool focus)

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SOURCE_ROOT="/home/aaron/cvs/libnautilus-burn-sharp"
+SOURCE_ROOT="/home/snorp/baz/snorp/libnautilus-burn-sharp"
 
 cp $SOURCE_ROOT/src/*.c .
 cp $SOURCE_ROOT/src/generated/*.cs .

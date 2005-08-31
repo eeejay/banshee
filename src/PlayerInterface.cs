@@ -199,7 +199,7 @@ namespace Banshee
 			ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
 			
 			ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
-			
+
 			gxml["ButtonBurn"].Visible = Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null;
 				
 			((Gtk.Image)gxml["ImageShuffle"]).Pixbuf = 
@@ -1764,7 +1764,7 @@ namespace Banshee
 			if(source.CanEject) {
 				try {
 					if(source.GetType() == typeof(IpodSource)) {
-						if(activeTrackInfo.GetType() == typeof(IpodTrackInfo)) {
+						if(activeTrackInfo != null && activeTrackInfo.GetType() == typeof(IpodTrackInfo)) {
 							StopPlaying();
 						}
 					}
