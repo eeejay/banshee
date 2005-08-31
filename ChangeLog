@@ -1,5 +1,6 @@
 2005-08-30  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee: 0.9.2
 	* libbanshee/xing/gst-xing-encoder.[ch]: GStreamer plugin for Xing
 	* libbanshee/xing: Moved Xing Encoder from mediaengines/xing-encoder
 	* libbanshee/gst-init.[ch]: GStreamer initialization
