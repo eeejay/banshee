@@ -1,3 +1,4 @@
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  IpodCore.cs
  *
@@ -107,25 +108,33 @@ namespace Banshee
 		}
 	
 		private Device device;
-		private bool iPodUpdating = false;
 		
 		public IpodSyncTransaction(Device device)
 		{
 			this.device = device;
 			showCount = false;
 		}
+
+		private string ToLower (string str)
+		{
+			if (str == null)
+				return null;
+			else
+				return str.ToLower ();
+		}
 		
 		private bool TrackCompare(LibraryTrackInfo libTrack, Song song)
 		{
-			return song.Title.ToLower() == libTrack.Title.ToLower() && 
-				song.Album.ToLower() == libTrack.Album.ToLower() &&
-				song.Artist.ToLower() == libTrack.Artist.ToLower() &&
-				song.Length / 1000 == libTrack.Duration;
+			return ToLower(song.Title) == ToLower(libTrack.Title) && 
+				ToLower(song.Album) == ToLower(libTrack.Album) &&
+				ToLower(song.Artist) == ToLower(libTrack.Artist) &&
+				song.Year == libTrack.Year &&
+				song.TrackNumber == libTrack.TrackNumber;
 		}
 		
-		private bool ExistsOnIpod(LibraryTrackInfo libTrack)
+		private bool ExistsOnIpod(Song[] songs, LibraryTrackInfo libTrack)
 		{
-			foreach(Song song in device.SongDatabase.Songs) {
+			foreach(Song song in songs) {
 				if(TrackCompare(libTrack, song))
 					return true;
 			}
@@ -142,7 +151,7 @@ namespace Banshee
 			
 			return false;
 		}
-		
+
 		public override void Run()
 		{
 			statusMessage = String.Format(Catalog.GetString(
@@ -156,13 +165,15 @@ namespace Banshee
 			foreach(Song song in device.SongDatabase.Songs) {
 				if(ExistsInLibrary(song))
 					continue;
-					
+
 				device.SongDatabase.RemoveSong(song);
 				doUpdate = true;
 			}
+
+			Song[] ipodSongs = device.SongDatabase.Songs;
 			
 			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
-				if(ExistsOnIpod(libTrack))
+				if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
 					continue;
 					
 				Song song = device.SongDatabase.CreateSong();
@@ -187,36 +198,19 @@ namespace Banshee
 
 				if(song.Genre == null)
 					song.Genre = String.Empty;
-					
+
 				doUpdate = true;
 			}
 			
 			if(!doUpdate)
 				return;
 			
-			device.SongDatabase.SaveStarted += OnSaveStarted;
 			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
-			device.SongDatabase.SaveEnded += OnSaveEnded;
-			
+
 			device.SongDatabase.Save();
-			
-			iPodUpdating = true;
-			Console.WriteLine("SAVE BLOCKING");
-			while(iPodUpdating);
-			
-			Console.WriteLine("SAVE DONE");
+
+			device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;
 		} 
-		
-		private void OnSaveStarted(object o, EventArgs args)
-		{
-			iPodUpdating = true;
-			Console.WriteLine("SAVE STARTED");
-		}
-		
-		private void OnSaveEnded(object o, EventArgs args)
-		{
-			iPodUpdating = false;
-		}
 		
 		private void OnSaveProgressChanged(SongDatabase db, Song song, 
 			double currentPercent, int completed, int total)
@@ -225,9 +219,6 @@ namespace Banshee
 			totalCount = total;
 			statusMessage = String.Format(Catalog.GetString(
 				"Copying {0} - {1}"), song.Artist, song.Title); 
-				
-			if(total >= completed - 1)
-				iPodUpdating = false;
 		}
 	}
 }

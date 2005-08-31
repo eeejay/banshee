@@ -1,3 +1,10 @@
+2005-08-31  James Willcox  <snorp@snorp.net>
+
+	* add an emacs modeline to all the .cs sources
+	* src/IpodCore.cs: fix iPod syncing.
+	* src/PlayerInterface.cs (OnSimpleSearch): fix a null reference that
+	was causing some crashes.
+
 2005-08-30  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee: 0.9.2

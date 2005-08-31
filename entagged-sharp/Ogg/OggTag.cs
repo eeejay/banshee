@@ -1,3 +1,4 @@
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
@@ -25,6 +26,14 @@
 
 /*
  * $Log$
+ * Revision 1.2  2005/08/31 07:59:04  jwillcox
+ * 2005-08-31  James Willcox  <snorp@snorp.net>
+ *
+ *         * add an emacs modeline to all the .cs sources
+ *         * src/IpodCore.cs: fix iPod syncing.
+ *         * src/PlayerInterface.cs (OnSimpleSearch): fix a null reference that
+ *         was causing some crashes.
+ *
  * Revision 1.1  2005/08/25 21:12:07  abock
  * Forgot Ogg too
  *
