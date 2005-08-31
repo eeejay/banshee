@@ -37,16 +37,6 @@ namespace Banshee
 {
 	public class LibraryTransactionStatus : Table
 	{
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(LibraryTransactionStatus));
-				return gtype;
-			}
-		}
-		
 		private ImageAnimation spinner;
 		private Label LabelStatus;
 		private Label LabelProgress;

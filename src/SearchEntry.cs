@@ -60,16 +60,6 @@ namespace Banshee
 		public event EventHandler EnterPress;
 		public event EventHandler Changed;
 	
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(SearchEntry));
-				return gtype;
-			}
-		}
-	
 		public SearchEntry(ArrayList searchFields) : base()
 		{
 			handCursor = new Gdk.Cursor(Gdk.CursorType.Hand1);

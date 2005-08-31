@@ -21,6 +21,9 @@
 	prevent dragging the content columns before the "now playing"
 	column.
 
+	* src/*.cs: Remove GLib.GType stuff which isn't needed. (Probably
+	copied from another old out-of-date gtk# app)
+
 2005-08-31  James Willcox  <snorp@snorp.net>
 
 	* banshee: 0.9.2

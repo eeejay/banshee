@@ -42,16 +42,6 @@ namespace Banshee
 	
 		private const uint CURRENT_TIME = 0;
 	
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(DateButton));
-				return gtype;
-			}
-		}
-		
 		public DateButton(string text) : base(text)
 		{
 			Toggled += OnToggled;

@@ -71,16 +71,6 @@ namespace Banshee
 		private int currentTimeout = -1;
 		private TreeIter timeoutIter;
 
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(SourceView));
-				return gtype;
-			}
-		}
-		
 		/*
 		    I like this method better, packing two cell renderers into 
 			a column and using pure data functions to set the pixbufs/text

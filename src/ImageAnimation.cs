@@ -33,16 +33,6 @@ using Gdk;
 
 public class ImageAnimation : Gtk.Image
 {
-	static GLib.GType gtype;
-	public static new GLib.GType GType
-	{
-		get {
-			if(gtype == GLib.GType.Invalid)
-				gtype = RegisterGType(typeof(ImageAnimation));
-			return gtype;
-		}
-	}
-	
 	private Pixbuf sourcePixbuf;
 	private Pixbuf inactivePixbuf;
 	private int frameWidth, frameHeight, maxFrames, currentFrame;

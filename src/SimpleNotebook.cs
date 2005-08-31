@@ -42,16 +42,6 @@ namespace Banshee
 		public event EventHandler PageRemoved;
 		public event EventHandler PageCountChanged;
 		
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(SimpleNotebook));
-				return gtype;
-			}
-		}
-		
 		public SimpleNotebook() : base(0.0f, 0.0f, 0.0f, 0.0f)
 		{
 			pages = new ArrayList();

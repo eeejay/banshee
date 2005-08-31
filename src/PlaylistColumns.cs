@@ -105,16 +105,6 @@ namespace Banshee
 	{	
 		private Hashtable boxes;
 	
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(PlaylistColumnChooserDialog));
-				return gtype;
-			}
-		}
-
 		public PlaylistColumnChooserDialog(ArrayList columns) 
 			: base(Catalog.GetString("Choose Columns"))
 		{

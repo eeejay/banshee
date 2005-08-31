@@ -66,16 +66,6 @@ namespace Banshee
 		PlaylistColumnChooserDialog columnChooser;
 		Pixbuf nowPlayingPixbuf;
 
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(PlaylistView));
-				return gtype;
-			}
-		}
-
 		public PlaylistView(PlaylistModel model)
 		{		
 			// set up columns

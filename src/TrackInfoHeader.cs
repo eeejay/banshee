@@ -40,16 +40,6 @@ namespace Banshee
 		private Label titleLabel;
 		private Image imageAlbum;
 	
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(TrackInfoHeader));
-				return gtype;
-			}
-		}
-		
 		public TrackInfoHeader() : base()
 		{
 			ConstructWidget();

@@ -166,16 +166,6 @@ namespace Banshee
 		
 		private bool canDelete;
 		
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(QueryBuilderMatchRow));
-				return gtype;
-			}
-		}
-		
 		public QueryBuilderMatchRow(QueryBuilderModel model) : base()
 		{
 			this.model = model;
@@ -313,16 +303,6 @@ namespace Banshee
 	{
 		private QueryBuilderModel model;
 		
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(QueryBuilderMatches));
-				return gtype;
-			}
-		}
-	
 		public QueryBuilderMatches(QueryBuilderModel model) : base()
 		{
 			this.model = model;
@@ -384,16 +364,6 @@ namespace Banshee
 		private ComboBox limitComboBox;
 		private ComboBox orderComboBox;
 	
-		static GLib.GType gtype;
-		public static new GLib.GType GType
-		{
-			get {
-				if(gtype == GLib.GType.Invalid)
-					gtype = RegisterGType(typeof(QueryBuilder));
-				return gtype;
-			}
-		}
-		
 		public QueryBuilder(QueryBuilderModel model) : base()
 		{
 			this.model = model;
