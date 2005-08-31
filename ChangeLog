@@ -1,3 +1,26 @@
+2005-08-31  Dan Winship  <danw@novell.com>
+
+	* plugincore/IPlayerEngine.cs: fix a comment
+
+	* mediaengines/helix/HxPlayer.cs (HxPlayer): Use Marshal.SizeOf
+	rather than a hardcoded size.
+	(Dispose): Call GC.SuppressFinalize so
+	HxUnmanaged.ClientPlayerClose() doesn't get called twice if the
+	HxPlayer is explicitly disposed.
+
+	* src/AboutBox.cs: Make sure the timer always gets cleaned up
+	properly when the window closes.
+
+	* src/Core.cs (FindUserRealName): Use g_get_real_name() from glib
+
+	* src/PlayerInterface.cs (OnPlaylistViewMotionNotifyEvent): fix
+	again so column resizing/rearranging works again
+
+	* src/PlaylistView.cs: don't intercept OnColumnClicked. Let the
+	TreeView handle sorting itself. Also, Set a ColumnDragFunction to
+	prevent dragging the content columns before the "now playing"
+	column.
+
 2005-08-31  James Willcox  <snorp@snorp.net>
 
 	* banshee: 0.9.2

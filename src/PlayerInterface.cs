@@ -1393,11 +1393,11 @@ namespace Banshee
 		private void OnPlaylistViewMotionNotifyEvent(object o, 
 			MotionNotifyEventArgs args)
 		{
-			args.RetVal = true;
 			if((args.Event.State & ModifierType.Button1Mask) == 0)
 				return;
 			if(args.Event.Window != playlistView.BinWindow)
 				return;
+			args.RetVal = true;
 			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
 						    (int)args.Event.X, (int)args.Event.Y))
 				return;

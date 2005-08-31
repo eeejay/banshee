@@ -110,7 +110,6 @@ namespace Banshee
 			
 			foreach(PlaylistColumn plcol in columns) {
 				InsertColumn(plcol.Column, plcol.Order);
-				plcol.Column.Clicked += OnColumnClicked;
 			}
 
 			TreeViewColumn playIndColumn = new TreeViewColumn();
@@ -131,6 +130,8 @@ namespace Banshee
 			playIndColumn.SetCellDataFunc(indRenderer, 
 				new TreeCellDataFunc(TrackCellInd));
 			InsertColumn(playIndColumn, 0);
+
+			ColumnDragFunction = new TreeViewColumnDropFunc(CheckColumnDrop);
 
 			Model = this.model = model;
 			model.DefaultSortFunc =
@@ -159,7 +160,14 @@ namespace Banshee
 			model.SetSortFunc((int)ColumnId.LastPlayed, 
 				new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));
 		}	
-			
+
+		private bool CheckColumnDrop(TreeView tree, TreeViewColumn col,
+									 TreeViewColumn prev, TreeViewColumn next)
+		{
+			// Don't allow moving other columns before the first column
+			return prev != null;
+		}
+
 		private int StringFieldCompare(string a, string b)
 		{
 			if(a != null)
@@ -343,21 +351,6 @@ namespace Banshee
 			
 			SetRendererAttributes((CellRendererText)cell, 
 				String.Format("{0}", disp), iter);
-		}
-		
-		private void OnColumnClicked(object o, EventArgs args)
-		{
-			TreeViewColumn column = o as TreeViewColumn;
-			
-			foreach(PlaylistColumn plcol in columns) {
-				if(plcol.Column != column)
-					plcol.Column.SortIndicator = false;
-			}
-			
-			column.SortIndicator = true;
-			column.SortOrder = column.SortOrder == SortType.Ascending 
-				? SortType.Descending : SortType.Ascending;
-			model.SetSortColumnId(column.SortColumnId, column.SortOrder);
 		}
 		
 		public void PlayPath(TreePath path)

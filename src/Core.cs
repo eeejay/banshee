@@ -31,6 +31,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Gnome;
 using GConf;
 using Hal;
@@ -179,24 +180,15 @@ namespace Banshee
 				Gdk.Threads.Leave();
 		}
 		
+		[DllImport("libglib-2.0.so")]
+		static extern IntPtr g_get_real_name();
+
 		private void FindUserRealName()
 		{
 			try {
-				FileStream file = File.OpenRead("/etc/passwd");
-				StreamReader reader = new StreamReader(file);
-				string line;
-				while((line = reader.ReadLine()) != null) {
-					if(!line.StartsWith(Environment.UserName + ":"))
-						continue;
-						
-					string [] parts = line.Split(':');
-					UserRealName = parts[4].Trim();
-					
-					parts = UserRealName.Split(' ');
-					UserFirstName = parts[0].Replace(',', ' ').Trim();
-				}
-				reader.Close();
-				file.Close();
+				UserRealName = GLib.Marshaller.Utf8PtrToString(g_get_real_name());
+				string[] parts = UserRealName.Split(' ');
+				UserFirstName = parts[0].Replace(',', ' ').Trim();
 			} catch(Exception) { }
 		}
 	}

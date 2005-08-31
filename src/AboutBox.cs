@@ -129,7 +129,6 @@ namespace Banshee
 		private AssemblyName selAsm;
 
 		private uint TimerHandle;
-		private bool unrealize;
 	
 		public ScrollBox()
 		{
@@ -188,12 +187,12 @@ namespace Banshee
 		{
 			scroll++;
 			QueueDrawArea(offsetX, 0, textWidth, image.Height);
-			return !unrealize;
+			return true;
 		}
 		
 		protected void OnExposed(object o, ExposeEventArgs args)
 		{
-			if(GdkWindow == null || unrealize || image == null || 
+			if(GdkWindow == null || image == null || 
 				gradTop == null || gradBottom == null)
 				return;
 			
@@ -235,7 +234,7 @@ namespace Banshee
 		
 		protected void OnDestroyed(object o, EventArgs args)
 		{
-			unrealize = true;
+			GLib.Source.Remove (TimerHandle);
 		}
 	}
 }

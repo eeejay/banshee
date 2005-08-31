@@ -85,7 +85,7 @@ namespace Helix
 			callbacks.PrivateCallback1 = PrivateCallback;
 			callbacks.PrivateCallback2 = PrivateCallback;
 			
-			IntPtr callbacksRaw = Marshal.AllocHGlobal(1024);
+			IntPtr callbacksRaw = Marshal.AllocHGlobal(Marshal.SizeOf(callbacks));
 			Marshal.StructureToPtr(callbacks, callbacksRaw, false);
 				
 			try {
@@ -106,6 +106,7 @@ namespace Helix
 		public void Dispose()
 		{
 			HxUnmanaged.ClientPlayerClose(token);
+			GC.SuppressFinalize(this);
 		}
 		
 		public bool OpenUri(string uri)

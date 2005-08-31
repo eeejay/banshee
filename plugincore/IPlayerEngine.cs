@@ -45,7 +45,7 @@
 	to read required fields which must contain information about the engine.
 	
 	The Initialize() method is used to perform all engine initialization,
-	and the Finalize() method is used to perform any necessary engine
+	and the Dispose() method is used to perform any necessary engine
 	cleanup. DO NOT USE the constructor/destructor for this purpose!
 */
 
