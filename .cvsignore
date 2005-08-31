@@ -24,3 +24,6 @@ ltmain.sh
 missing
 mkinstalldirs
 stamp-h1
+snapshots
+make-release.sh
+
