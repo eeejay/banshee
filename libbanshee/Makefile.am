@@ -4,7 +4,8 @@ INCLUDES = \
 	-ggdb3 \
 	-D_FORTIFY_SOURCE=2 \
 	$(HAL_CFLAGS) \
-	$(GST_CFLAGS)
+	$(GST_CFLAGS) \
+	-I$(top_builddir)/libbanshee/xing
 
 bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
@@ -14,9 +15,11 @@ libbanshee_la_SOURCES = \
 	cd-detect.c \
 	cd-detect.h \
 	cd-info.c   \
-	cd-info.h
+	cd-info.h   \
+	gst-init.c  \
+	gst-init.h
 
-libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS)
+libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS) 
 
 CLEANFILES = cdtest
 DISTCLEANFILES = Makefile.in
