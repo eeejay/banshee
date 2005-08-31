@@ -77,6 +77,8 @@ namespace Banshee
 		ushort Volume         { get; set; } // volume 0-100
 		uint   Position       { get; set; } // position 0-N (seconds)
 		uint   Length         { get; } // Length of stream, 0 if unavailable
+		
+		TrackInfo Track       { get; } // TrackInfo for playing/loaded track
 
 		string ConfigName     { get; } // GConf configuration name (gst/helix)
 		string EngineName     { get; } // Short Display Name (GStreamer/Helix)

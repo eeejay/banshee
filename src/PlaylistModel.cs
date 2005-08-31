@@ -63,6 +63,26 @@ namespace Banshee
 			GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
 		}
 	
+		private void SyncPlayingIter()
+		{
+			if(Core.Instance.Player.Track == null) {
+				playingIter = TreeIter.Zero;
+			} else {
+				for(int i = 0, n = Count(); i < n; i++) {
+					TreeIter iter;
+					if(!IterNthChild(out iter, i))
+						continue;
+						
+					TrackInfo ti = IterTrackInfo(iter);
+					
+					if(Core.Instance.Player.Track.Uid == ti.Uid) {
+						playingIter = iter;
+						break;
+					}
+				}
+			}
+		}
+	
 		// --- Load Queue and Additions ---
 	
 		private bool OnIdle()
@@ -83,6 +103,7 @@ namespace Banshee
 
 			trackInfoQueue.Clear();
 			trackInfoQueueLocked = false;
+			SyncPlayingIter();
 			
 			return;
 		}
@@ -151,8 +172,23 @@ namespace Banshee
 			foreach(IPod.Song song in device.SongDatabase.Songs) {
 				AddTrack(new IpodTrackInfo(song));
 			}
+			
+			SyncPlayingIter();
 		}
 		
+		public void LoadFromAudioCdSource(AudioCdSource cdSource)
+		{	
+			ClearModel();
+			
+			AudioCdDisk disk = cdSource.Disk;
+			
+			foreach(AudioCdTrackInfo track in disk.Tracks) {
+				AddTrack(track);
+			}
+			
+			SyncPlayingIter();
+		}
+
 		// --- Helper Methods ---
 		
 		public TrackInfo IterTrackInfo(TreeIter iter)

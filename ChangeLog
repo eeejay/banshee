@@ -1,3 +1,11 @@
+2005-08-30  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs, src/SourceView.cs: Good support for CD Audio
+	Source
+	* src/AudioCdCore.cs: Complete Audio CD Backend, with CDDB support
+	* src/CddbClient.cs: CDDB Client
+	* libbanshee/cd-info.c: DiskID Support
+	
 2005-08-30  Dan Winship  <danw@novell.com>
 
 	* src/PlayerInterface.cs (OnPlaylistViewButtonPressEvent): never
@@ -43,6 +51,7 @@
 
 2005-08-29  Aaron Bockover  <aaron@aaronbock.net>
 	
+	* banshee: Version 0.9.1
 	* mediaengines/helix/HelixPlayer.cs: Fixed PCM set to 0 bug (314816)
 	* libbanshee/cd-info.c: More internals complete/working, cdparanoia
 	fix in patched gstreamer

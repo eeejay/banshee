@@ -104,6 +104,8 @@ namespace Banshee
 		private bool loaded;
 		private bool playing;
 		
+		private TrackInfo track;
+		
 		private bool finalized = false;
 		
 		private bool timeoutCancelRequest = false;
@@ -144,7 +146,20 @@ namespace Banshee
 				return false;
 			}
 			
-			loaded = gpe_open(handle, "file://" + ti.Uri);
+			string uri = ti.Uri;
+			
+			if(!uri.StartsWith("file://") && !uri.StartsWith("cdda://"))
+				 uri = "file://" + uri;
+			
+			Console.WriteLine(uri);
+			
+			loaded = gpe_open(handle, uri);
+			
+			if(loaded)
+				track = ti;
+			else
+				track = null;
+			
 			return loaded;
 		}
 		
@@ -163,9 +178,9 @@ namespace Banshee
         
         public void Pause()
         {
-        	gpe_pause(handle);
-        	playing = false;
-    	}
+        		gpe_pause(handle);
+        		playing = false;
+   	 	}
     	   	
        	public bool Playing 
        	{ 
@@ -223,6 +238,13 @@ namespace Banshee
 				}
 	        }
 	    }
+	    
+	    	public TrackInfo Track
+		{
+			get {
+				return track;
+			}
+		}
 
 		private bool OnTimeout()
 		{

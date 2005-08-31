@@ -61,6 +61,7 @@ cd_disk_info_new(const gchar *device_node)
 	disk = g_new0(CdDiskInfo, 1);
 	
 	disk->device_node = g_strdup(device_node);
+	disk->disk_id = NULL;
 	
 	disk->n_tracks = 0;
 	disk->total_sectors = 0;
@@ -94,6 +95,7 @@ cd_disk_info_free(CdDiskInfo *disk)
 	}
 	
 	g_free(disk->device_node);
+	g_free(disk->disk_id);
 	g_free(disk);
 	
 	disk = NULL;
@@ -112,6 +114,10 @@ cd_disk_info_load(CdDiskInfo *disk)
 	gst_init(NULL, NULL);
 	
 	source = gst_element_factory_make("cdparanoia", "cdparanoia");
+	
+	if(source == NULL)
+		return;
+	
 	g_object_set(G_OBJECT(source), "device", disk->device_node, NULL);
 
 	track_format = gst_format_get_by_nick("track");
@@ -128,10 +134,7 @@ cd_disk_info_load(CdDiskInfo *disk)
 	
 	gst_pad_convert(source_pad, sector_format, disk->total_sectors, 
 		&time_format, &(disk->total_time));
-		
-	g_printf("TOTAL_SECTORS: %lld\n", disk->total_sectors);
-	g_printf("TOTAL_TIME:    %lld\n", disk->total_time / GST_SECOND);
-		
+
 	if(disk->n_tracks <= 0) {
 		gst_element_set_state(source, GST_STATE_NULL);
 		gst_object_unref(GST_OBJECT(source));
@@ -153,14 +156,12 @@ cd_disk_info_load(CdDiskInfo *disk)
 		if(i > 0) {
 			disk->tracks[i - 1] = cd_track_info_new(i - 1, start_sector,
 				end_sector);
-				
-			g_printf("START,END SECTOR: %lld, %lld\n", 
-				disk->tracks[i - 1]->start_sector,
-				disk->tracks[i - 1]->end_sector);
 		}
 		
 		start_sector = end_sector;
 	}
+	
+	g_object_get(source, "discid", &(disk->disk_id), NULL);
 	
 	gst_element_set_state(source, GST_STATE_NULL);
 	gst_object_unref(GST_OBJECT(source));

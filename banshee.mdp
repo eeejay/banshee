@@ -139,5 +139,6 @@
     <File name="./src/IpodTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/AltProgressBar.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/IpodPropertiesWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/CddbClient.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

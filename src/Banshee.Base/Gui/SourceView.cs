@@ -201,7 +201,7 @@ namespace Banshee
 			} catch(NullReferenceException) {}
 			
 			try {
-				foreach(AudioDisk disk in Core.Instance.AudioCdCore.Disks)
+				foreach(AudioCdDisk disk in Core.Instance.AudioCdCore.Disks)
 					store.AppendValues(new AudioCdSource(disk));
 			} catch(NullReferenceException) {}
 			

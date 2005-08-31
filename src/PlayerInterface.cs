@@ -126,6 +126,13 @@ namespace Banshee
 			ResizeMoveWindow();
 			BuildWindow();   
 			InstallTrayIcon();
+			
+			Core.Instance.DBusServer.RegisterObject(
+				new BansheeCore(Window, this), "/org/gnome/Banshee/Core");
+			
+			Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+			AudioCdRefresh();
+				
 			WindowPlayer.Show();
 			
 			Core.Instance.Player.Iterate += OnPlayerTick;
@@ -337,9 +344,6 @@ namespace Banshee
 			SetTip(ipodPropertiesButton, Catalog.GetString("View iPod Properties"));
 			
 			playlistMenuMap = new Hashtable();
-			
-			Core.Instance.DBusServer.RegisterObject(
-				new BansheeCore(Window, this), "/org/gnome/Banshee/Core");
       	}
       	
       	private void SetTip(Widget widget, string tip)
@@ -569,6 +573,21 @@ namespace Banshee
 			playlistView.QueueDraw();
 		}
 
+		private void AudioCdRefresh()
+		{
+			Core.ThreadEnter();
+			
+			sourceView.QueueDraw();
+			playlistView.QueueDraw();
+			
+			Core.ThreadLeave();
+		}
+
+		private void OnAudioCdCoreUpdated(object o, EventArgs args)
+		{
+			AudioCdRefresh();
+		}
+		
 		// ---- Window Event Handlers ----
 		
 		private void OnWindowPlayerDeleteEvent(object o, DeleteEventArgs args) 
@@ -904,6 +923,12 @@ namespace Banshee
 				(gxml["ViewNameLabel"] as Label).Markup = 
 					"<b>" + source.Name + "</b>";
 				Core.ThreadLeave();
+			} else if(source.Type == SourceType.AudioCd) {
+				playlistModel.Clear();
+				playlistModel.Source = source;
+				
+				AudioCdSource cdSource = source as AudioCdSource;
+				playlistModel.LoadFromAudioCdSource(cdSource);
 			} else {
 				playlistModel.LoadFromPlaylist(source.Name);
 				playlistModel.Source = source;
@@ -1689,7 +1714,7 @@ namespace Banshee
 					}
 					
 					Source source = sourceView.GetSource(destPath);
-					
+										
 					if(source == null) {
 						Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
 						pl.Append(tracks);

@@ -29,6 +29,7 @@
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Mono.Unix;
 
 namespace Banshee
@@ -47,6 +48,7 @@ namespace Banshee
 	internal struct CdDiskInfoRaw
 	{
 		public IntPtr device_node;
+		public IntPtr disk_id;
 		
 		public long n_tracks;
 		public long total_sectors;
@@ -58,26 +60,90 @@ namespace Banshee
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct CdTrackInfoRaw
 	{
-		int number;
+		public int number;
 		
-		int duration;
-		int minutes;
-		int seconds;
+		public int duration;
+		public int minutes;
+		public int seconds;
 		
-		long start_sector;
-		long end_sector;
-		long sectors;
-		long start_time;
-		long end_time;
+		public long start_sector;
+		public long end_sector;
+		public long sectors;
+		public long start_time;
+		public long end_time;
 	}
 	
-	public class AudioDisk
+	public class AudioCdTrackInfo : TrackInfo
+	{
+		private int track_index;
+	
+		private int minutes;
+		private int seconds;
+		
+		private long start_sector;
+		private long end_sector;
+		private long sectors;
+		private long start_time;
+		private long end_time;
+		
+		private string disk_id;
+		
+		private string device;
+		
+		public AudioCdTrackInfo(string device)
+		{
+			//uid = Core.Instance.NextUid;
+			PreviousTrack = Gtk.TreeIter.Zero;
+			canSaveToDatabase = false;
+			this.device = device;
+		}
+		
+		public override void Save()
+		{
+			
+		}
+		
+		public override void IncrementPlayCount()
+		{
+			numberOfPlays++;
+			Save();
+		}
+		
+		protected override void SaveRating()
+		{
+			Save();
+		}
+		
+		public int TrackIndex   { get { return track_index;  } set { track_index =  value; 
+		                                                             uri = "cdda://" + (track_index + 1); } }
+		public int Minutes      { get { return minutes;      } set { minutes =      value; } }
+		public int Seconds      { get { return seconds;      } set { seconds =      value; } }
+		public long StartSector { get { return start_sector; } set { start_sector = value; } }
+		public long EndSector   { get { return end_sector;   } set { end_sector =   value; } }
+		public long Sectors     { get { return sectors;      } set { sectors =      value; } }
+		public long StartTime   { get { return start_time;   } set { start_time =   value; } }
+		public long EndTime     { get { return end_time;     } set { end_time =     value; } }
+		public string DiskId    { get { return disk_id;      } set { disk_id =      value; } }
+	}
+	
+	public class AudioCdDisk
 	{
 		private string udi;
 		private string deviceNode;
 		private string driveName;
-		
+		private string diskId;
+		private string title;	
+	
 		private int trackCount;
+		private long totalSectors;
+		private long totalTime;
+		
+		private bool valid;
+		private bool cddbFetched = false;
+		
+		private AudioCdTrackInfo [] tracks;
+		
+		public event EventHandler Updated;
 
 		[DllImport("libbanshee")]
 		private static extern IntPtr cd_disk_info_new(string device_node);
@@ -85,24 +151,124 @@ namespace Banshee
 		[DllImport("libbanshee")]
 		private static extern void cd_disk_info_free(IntPtr diskPtr);
 
-		public AudioDisk(string udi, string deviceNode, string driveName)
+		public AudioCdDisk(string udi, string deviceNode, string driveName)
 		{
 			this.udi = udi;
 			this.deviceNode = deviceNode;
 			this.driveName = driveName;
 			
-			LoadDiskInfo();
+			valid = LoadDiskInfo();
 		}
 		
-		private void LoadDiskInfo()
+		private bool LoadDiskInfo()
 		{
 			IntPtr diskPtr = cd_disk_info_new(deviceNode);
+
+			if(diskPtr == IntPtr.Zero)
+				return false;
+			
 			CdDiskInfoRaw diskRaw = (CdDiskInfoRaw)Marshal.PtrToStructure(
 				diskPtr, typeof(CdDiskInfoRaw));
 				
 			trackCount = (int)diskRaw.n_tracks;
+			totalSectors = diskRaw.total_sectors;
+			totalTime = diskRaw.total_time;
+			
+			if(trackCount <= 0) {
+				cd_disk_info_free(diskPtr);
+				return false;
+			}
+			
+			diskId = Marshal.PtrToStringAnsi(diskRaw.disk_id);
+			
+			IntPtr trackArrPtr = diskRaw.tracks;
+			int trackArraySize = 0;
+			
+			while(Marshal.ReadIntPtr(trackArrPtr, trackArraySize * IntPtr.Size)
+				!= IntPtr.Zero)
+				trackArraySize++;
+			
+			if(trackArraySize != trackCount) {
+				cd_disk_info_free(diskPtr);
+				return false;
+			}
+		
+			tracks = new AudioCdTrackInfo[trackCount];
+			
+			for(int i = 0; i < trackArraySize; i++) {
+				IntPtr rawPtr = Marshal.ReadIntPtr(trackArrPtr, 
+					i * IntPtr.Size);
+				CdTrackInfoRaw trackRaw = 
+					(CdTrackInfoRaw)Marshal.PtrToStructure(rawPtr, 
+						typeof(CdTrackInfoRaw));
+						
+				tracks[i] = new AudioCdTrackInfo(deviceNode);
+				
+				tracks[i].TrackIndex = trackRaw.number;
+				tracks[i].Minutes = trackRaw.minutes;
+				tracks[i].Seconds = trackRaw.seconds;
+				tracks[i].Duration = trackRaw.duration;
+				tracks[i].StartSector = trackRaw.start_sector;
+				tracks[i].EndSector = trackRaw.end_sector;
+				tracks[i].StartTime = trackRaw.start_time;
+				tracks[i].EndTime = trackRaw.end_sector;
+				tracks[i].Sectors = trackRaw.sectors;
+				tracks[i].TrackNumber = (uint)trackRaw.number + 1;
+				tracks[i].TrackCount = (uint)trackCount;
+				tracks[i].DiskId = diskId;
+				
+				tracks[i].Artist = Catalog.GetString("Unknown Artist");
+				tracks[i].Album = Catalog.GetString("Unknown Album");
+				tracks[i].Title = 
+					String.Format(Catalog.GetString("Track {0}"), i + 1);
+			}
+			
+			title = Catalog.GetString("Audio CD");
 			
 			cd_disk_info_free(diskPtr);
+			
+			CddbFetch();
+			
+			return true;
+		}
+		
+		public void CddbFetch()
+		{
+			if(cddbFetched)
+				return;
+		
+			cddbFetched = true;
+			
+			Thread thread = new Thread(new ThreadStart(CddbFetchThread));
+			thread.Start();
+		}
+		
+		private void CddbFetchThread()
+		{
+			CddbClient cddb = new CddbClient("Banshee", "1.0");
+			CddbDisc [] discs = cddb.QueryAll(diskId);
+			
+			if(discs == null || discs.Length == 0)
+				return;
+				
+			CddbDisc disc = discs[0];
+				
+			int min = disc.Titles.Length < tracks.Length ? 
+				disc.Titles.Length : tracks.Length;
+				
+			for(int i = 0; i < min; i++) {
+				tracks[i].Artist = disc.Titles[i].Artist;
+				tracks[i].Title = disc.Titles[i].Title;
+				tracks[i].Album = disc.Title;
+				//tracks[i].Genre = disc.Genre;
+				//tracks[i].Year = disc.Year;
+			}
+			
+			title = disc.Title;
+			
+			EventHandler handler = Updated;
+			if(handler != null)
+				handler(this, new EventArgs());
 		}
 
 		[DllImport("libc")]
@@ -132,33 +298,14 @@ namespace Banshee
 			}
 		}
 		
-		public string Udi
-		{
-			get {
-				return udi;
-			}
-		}
-		
-		public string DeviceNode
-		{
-			get {
-				return deviceNode;
-			}
-		}
-		
-		public string DriveName
-		{
-			get {
-				return driveName;
-			}
-		}
-		
-		public int TrackCount
-		{
-			get {
-				return trackCount;
-			}
-		}
+		public string Udi        { get { return udi;        } }	
+		public string DeviceNode { get { return deviceNode; } }
+		public string DriveName  { get { return driveName;  } }
+		public string DiskId     { get { return diskId;     } }
+		public string Title      { get { return title;      } }
+		public int TrackCount    { get { return trackCount; } }
+		public bool Valid        { get { return valid;      } }
+		public AudioCdTrackInfo [] Tracks { get { return tracks; } }
 	}
 	
 	public class AudioCdCore : IDisposable
@@ -213,7 +360,7 @@ namespace Banshee
 			int arraySize = 0;
 			
 			disks = new Hashtable();
-			
+
 			if(arrayPtr == IntPtr.Zero)
 				return;
 			
@@ -226,17 +373,25 @@ namespace Banshee
 				DiskInfoRaw diskRaw = (DiskInfoRaw)Marshal.PtrToStructure(
 					rawPtr, typeof(DiskInfoRaw));
 				
-				AudioDisk disk = new AudioDisk(
+				AudioCdDisk disk = new AudioCdDisk(
 					Marshal.PtrToStringAnsi(diskRaw.Udi),
 					Marshal.PtrToStringAnsi(diskRaw.DeviceNode),
 					Marshal.PtrToStringAnsi(diskRaw.DriveName)
 				);
 				
-				disks[disk.Udi] = disk;
+				disk.Updated += OnAudioCdDiskUpdated;
+				
+				if(disk.Valid)
+					disks[disk.Udi] = disk;
 			}
 			
 			cd_detect_disk_array_free(arrayPtr);
 			
+			HandleUpdated();
+		}
+		
+		private void OnAudioCdDiskUpdated(object o, EventArgs args)
+		{
 			HandleUpdated();
 		}
 		
@@ -247,11 +402,11 @@ namespace Banshee
 				handler(this, new EventArgs());
 		}
 		
-		public AudioDisk [] Disks
+		public AudioCdDisk [] Disks
 		{
 			get {
 				ArrayList list = new ArrayList(disks.Values);
-				return list.ToArray(typeof(AudioDisk)) as AudioDisk [];
+				return list.ToArray(typeof(AudioCdDisk)) as AudioCdDisk [];
 			}
 		}
 		

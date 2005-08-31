@@ -48,6 +48,7 @@ typedef struct {
 
 typedef struct {
 	gchar *device_node;
+	gchar *disk_id;
 
 	gint64 n_tracks;
 	gint64 total_sectors;

@@ -48,6 +48,8 @@ namespace Banshee
 		private DateTime lastIterateEmit;
 		private Thread iterateThread;
 		
+		private TrackInfo track;
+		
 		private bool disabled;
 		private bool shutdown;
 		
@@ -146,6 +148,12 @@ namespace Banshee
 			}
 			
 			loaded = player.OpenUri("file://" + ti.Uri);
+			
+			if(loaded)
+				track = ti;
+			else
+				track = null;
+				
 			return loaded;
 		}
 		
@@ -214,6 +222,13 @@ namespace Banshee
 					new PlayerEngineVolumeChangedArgs();
 				args.Volume = Volume;
 				EmitVolumeChanged(args);
+			}
+		}
+		
+		public TrackInfo Track
+		{
+			get {
+				return track;
 			}
 		}
 		

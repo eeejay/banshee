@@ -307,12 +307,13 @@ namespace Banshee
 	
 	public class AudioCdSource : Source
 	{
-		private AudioDisk disk;
+		private AudioCdDisk disk;
 		
-		public AudioCdSource(AudioDisk disk) : base(disk.DriveName, 
+		public AudioCdSource(AudioCdDisk disk) : base(disk.Title, 
 			SourceType.AudioCd)
 		{
 			this.disk = disk;
+			disk.Updated += OnUpdated;
 			canEject = true;
 		}
 		
@@ -323,7 +324,7 @@ namespace Banshee
 			}
 		}
 		
-		public AudioDisk Disk
+		public AudioCdDisk Disk
 		{
 			get {
 				return disk;
@@ -334,6 +335,13 @@ namespace Banshee
 		{
 			disk.Eject();
 			return true;
+		}
+		
+		private void OnUpdated(object o, EventArgs args)
+		{
+			Core.ThreadEnter();
+			Name = disk.Title;
+			Core.ThreadLeave();
 		}
 	}
 
@@ -396,6 +404,8 @@ namespace Banshee
 					names.Add(ti.Artist);
 				else if(haveAlbum)
 					names.Add(ti.Album);
+				else
+					names.Add("New Playlist");
 			}
 				
 			names.Sort();
