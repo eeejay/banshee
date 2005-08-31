@@ -1,3 +1,10 @@
+2005-08-30  Hans Petter Jansson  <hpj@novell.com>
+
+	* mediaengines/xing-encoder/Makefile.am: Add xing-mp3-encoder.[ch],
+	add $(GST_CFLAGS).
+	* mediaengines/xing-encoder/xing-mp3-encoder.[ch]: Implement Xing MP3
+	Encoder GST plugin.
+
 2005-08-30  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs, src/SourceView.cs: Good support for CD Audio
