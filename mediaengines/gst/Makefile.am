@@ -1,4 +1,4 @@
-INCLUDES = $(GST_CFLAGS)
+INCLUDES = $(GST_CFLAGS) 
 
 MCS_FLAGS = -debug -nowarn:0169
 ASSEMBLY_NAME = gst-player
@@ -13,9 +13,9 @@ libgstmediaengine_la_SOURCES = \
 	gst-encode.c \
 	gst-encode.h \
 	gst-player-engine.c \
-	gst-player-engine.h
+	gst-player-engine.h 
 
-libgstmediaengine_la_LIBADD = $(GST_LIBS)
+libgstmediaengine_la_LIBADD = $(GST_LIBS) 
 
 ASSEMBLY_SOURCES = $(srcdir)/GstPlayerEngine.cs
 

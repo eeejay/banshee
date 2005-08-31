@@ -224,12 +224,12 @@ banshee.pc
 entagged-sharp/Makefile
 hal-sharp/Makefile
 mediaengines/Makefile
-mediaengines/xing-encoder/Makefile
 mediaengines/gst/Makefile
 mediaengines/gst/gst-player.dll.config
 mediaengines/helix/Makefile
 mediaengines/helix/helix-sharp.dll.config
 libbanshee/Makefile
+libbanshee/xing/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 plugincore/Makefile
