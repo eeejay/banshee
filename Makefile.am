@@ -1,5 +1,4 @@
 SUBDIRS =          \
-	po             \
 	data           \
 	plugincore     \
 	mediaengines   \
