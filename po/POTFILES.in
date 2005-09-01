@@ -8,6 +8,9 @@ data/glade/about.glade
 data/glade/player.glade
 data/glade/preferences.glade
 data/glade/trackinfo.glade
+libbanshee/cd-info.c
+libbanshee/cd-rip.c
+libbanshee/cd-detect.c
 mediaengines/gst/GstPlayerEngine.cs
 mediaengines/gst/gst-encode.c
 mediaengines/gst/gst-player-engine.c
@@ -29,6 +32,7 @@ src/PlaylistColumns.cs
 src/PlaylistRowRenderer.cs
 src/PlaylistView.cs
 src/Preferences.cs
+src/RipTransaction.cs
 src/SearchEntry.cs
 src/SourceView.cs
 src/TrackInfoHeader.cs
