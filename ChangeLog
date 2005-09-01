@@ -1,3 +1,19 @@
+2005-09-01  Aaron Bockover <aaron@aaronbock.net>
+
+	* data/glade/player.glade: Ripping button
+	* src/PlayerInterface.cs: New button to initiate Ripping, added UI code
+	to create and register a RipTransaction
+	* src/Library.cs: Library.sdb is now .banshee.db in new DefaultLibraryPath
+	* src/Utilities.cs: DefaultLibraryPath now ~/My Music
+	* src/FileNamePattern.cs: Base template for a file name pattern class to
+	build file names based on an input pattern and create a directory structure
+	* src/RipTransaction.cs: Bindings to CD Ripping core, and implementing
+	LTM Transaction for Ripping/Encoding. Use xingenc bitrate=192, will
+	make UI for future to pass any gst encoder pipeline
+	* libbanshee/cd-rip.[ch]: CD Ripping Core
+	* src/Library.cs: New default library DB path: ~/My Music/.banshee.db
+	* src/Utilities.cs: New default library location: ~/My Music
+
 2005-08-31  James Willcox  <snorp@snorp.net>
 
 	* src/SearchEntry.cs: delay a bit before emitting the 'changed'

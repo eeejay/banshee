@@ -101,7 +101,7 @@ namespace Helix
 	public delegate void OnErrorOccurredCallback(IntPtr userInfo,
 		UInt32 hxCode, UInt32 userCode, IntPtr pErrorString, 
 		IntPtr pUserString, IntPtr pMoreInfoURL);
-
+		
 	public delegate bool GoToURLCallback(IntPtr userInfo, IntPtr pURL, 
 		IntPtr pTarget, bool isPlayerURL, bool isAutoActivated);
 

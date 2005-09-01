@@ -33,6 +33,7 @@
 
 #include "cd-detect.h"
 #include "cd-info.h"
+#include "cd-rip.h"
 
 void on_cd_added(const gchar *udi)
 {
@@ -45,9 +46,41 @@ void on_device_removed(const gchar *udi)
 	g_printf("REMOVED DEVICE: %s\n", udi);
 }
 
+static void rip_progress(CdRip *ripper, int seconds, CdTrackInfo *track)
+{
+    g_printf("Track %d: %d/%d (%g)%%\n", track->number, seconds, 
+        track->duration, ((gdouble)seconds / (gdouble)track->duration) * 100.0);
+}
+
 gint main()
 {
-	GMainLoop *loop;
+	CdDiskInfo *disk;
+	CdRip *ripper;
+	int i;
+	gchar *uri;
+	
+	disk = cd_disk_info_new("/dev/hdc");
+	ripper = cd_rip_new(disk->device_node, 0, "lame bitrate=192");
+	cd_rip_set_progress_callback(ripper, rip_progress);
+	
+	g_printf("CD Has %d tracks\n", disk->n_tracks);
+	
+	for(i = 0; i < disk->n_tracks; i++) {
+	   uri = g_strdup_printf("file:///home/aaron/Desktop/testrip/%d.mp3",
+	       i + 1);
+	   cd_rip_rip_track(ripper, uri, i + 1, "Scarlet Undercover", "She Walks Away With Fingers",
+	       "Stop Drop Rock 'N' Roll", "Rock", i + 1, 6, disk->tracks[i]);
+	   
+	   g_printf("DONE WITH TRACK\n");
+	   
+	   g_free(uri);
+	}
+	
+	cd_rip_free(ripper);
+	
+	exit(0);
+	
+	/*GMainLoop *loop;
 	CdDetect *cd_detect;
 	CdDiskInfo *disk;
 	DiskInfo **disks;
@@ -77,7 +110,7 @@ gint main()
 //	g_printf("Listening for Audio-CD-specific HAL events...\n");
 //	g_main_loop_run(loop);
 
-	cd_detect_free(cd_detect);	
+	cd_detect_free(cd_detect);*/
 
 	exit(0);
 }

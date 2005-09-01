@@ -117,7 +117,11 @@ namespace Banshee
 		public static string DefaultLibraryPath
 		{
 			get {
-				return Paths.ApplicationData + "Library";
+				return Environment.GetFolderPath(
+				    Environment.SpecialFolder.Personal) + 
+				    + Path.DirectorySeparatorChar  
+				    + "My Music"
+				    + Path.DirectorySeparatorChar;
 			}
 		}
 		

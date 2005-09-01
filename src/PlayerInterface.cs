@@ -137,7 +137,10 @@ namespace Banshee
 			WindowPlayer.Show();
 			
 			Core.Instance.Player.Iterate += OnPlayerTick;
-			Core.Instance.Player.EndOfStream += OnPlayerEos;		
+			Core.Instance.Player.EndOfStream += OnPlayerEos;	
+			
+			Core.Instance.AudioCdPlayer.Iterate += OnPlayerTick;
+			Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;	
 			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
@@ -380,14 +383,17 @@ namespace Banshee
 	
 		private void LoadSettings()
 		{	
-			try {
-				volumeButton.Volume = (int)Core.GconfClient.Get
-					(GConfKeys.Volume);
-			} catch(GConf.NoSuchKeyException) {
-				volumeButton.Volume = 80;
-			}
-			
-			Core.Instance.Player.Volume = (ushort)volumeButton.Volume;
+            try {
+                volumeButton.Volume = (int)Core.GconfClient.Get
+                   	(GConfKeys.Volume);
+            } catch(GConf.NoSuchKeyException) {
+                volumeButton.Volume = 80;
+            }
+
+            Core.Instance.Player.Volume = (ushort)volumeButton.Volume;
+            if(Core.Instance.AudioCdPlayer != Core.Instance.Player)
+                Core.Instance.AudioCdPlayer.Volume = 
+                    (ushort)volumeButton.Volume;
 			
 			try {
 				((ToggleButton)gxml["ToggleButtonShuffle"]).Active = 
@@ -557,22 +563,28 @@ namespace Banshee
 				trayIcon.Tooltip = ti.DisplayArtist + " - " + ti.DisplayTitle;
 		}
 		
-		public void PlayFile(TrackInfo ti)
-		{
-			activeTrackInfo = ti;
-			Core.Instance.Player.Close();
-			Core.Instance.Player.Open(ti);
+        public void PlayFile(TrackInfo ti)
+        {
+            Core.Instance.Player.Close();
+            
+            if(ti.Uri.StartsWith("cdda://"))
+                Core.Instance.LoadCdPlayer();
+            else
+                Core.Instance.UnloadCdPlayer();
 
-			ScaleTime.Adjustment.Lower = 0;
-			ScaleTime.Adjustment.Upper = ti.Duration;
-			
-			UpdateMetaDisplay(ti);
-			
-			TogglePlaying();
-			
-			ti.IncrementPlayCount();
-			playlistView.QueueDraw();
-		}
+            activeTrackInfo = ti;
+            Core.Instance.Player.Open(ti);
+
+            ScaleTime.Adjustment.Lower = 0;
+            ScaleTime.Adjustment.Upper = ti.Duration;
+
+            UpdateMetaDisplay(ti);
+
+            TogglePlaying();
+
+            ti.IncrementPlayCount();
+            playlistView.QueueDraw();
+        }
 
 		private void AudioCdRefresh()
 		{
@@ -624,6 +636,7 @@ namespace Banshee
 				case Gdk.Key.J:
 				case Gdk.Key.j:
 				case Gdk.Key.F3:
+				    searchEntry.HasFocus = true;
 					break;
 			}
 		}
@@ -1758,6 +1771,19 @@ namespace Banshee
 				
 			burnCore.Burn();
 		}
+		
+        private void OnButtonRipClicked(object o, EventArgs args)
+        {
+            RipTransaction trans = new RipTransaction();
+
+            foreach(object [] node in playlistModel) {
+                if(node[0].GetType() == typeof(AudioCdTrackInfo))
+                    trans.QueueTrack(node[0] as AudioCdTrackInfo);
+            }
+            
+            if(trans.QueueSize > 0)
+                trans.Register();
+        }
 		
 		private void EjectSource(Source source)
 		{

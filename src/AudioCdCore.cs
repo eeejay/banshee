@@ -125,6 +125,7 @@ namespace Banshee
 		public long StartTime   { get { return start_time;   } set { start_time =   value; } }
 		public long EndTime     { get { return end_time;     } set { end_time =     value; } }
 		public string DiskId    { get { return disk_id;      } set { disk_id =      value; } }
+		public string Device    { get { return device;       } }
 	}
 	
 	public class AudioCdDisk

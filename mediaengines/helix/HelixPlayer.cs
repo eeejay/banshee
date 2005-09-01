@@ -154,7 +154,7 @@ namespace Banshee
 				track = ti;
 			else
 				track = null;
-				
+
 			return loaded;
 		}
 		
@@ -242,7 +242,7 @@ namespace Banshee
 			
 				// emit iterate signal only once every half second
 				if(DateTime.Now - lastIterateEmit >= 
-					new TimeSpan(0, 0, 0, 0, 500)) {
+					new TimeSpan(0, 0, 0, 0, 500) && Playing) {
 					PlayerEngineIterateArgs args = 
 						new PlayerEngineIterateArgs();
 					args.Position = Position;
@@ -272,7 +272,7 @@ namespace Banshee
 			eargs.Error = args.Error;
 			EmitError(eargs);
 			
-			Console.WriteLine(args.Error + ": " + args.UserError);
+			Console.WriteLine("HxError: " + args.Error + ": " + args.UserError);
 		}
 		
 		protected void EmitError(PlayerEngineErrorArgs args)

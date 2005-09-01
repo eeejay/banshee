@@ -140,5 +140,7 @@
     <File name="./src/AltProgressBar.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/IpodPropertiesWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/CddbClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/RipTransaction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/FileNamePattern.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

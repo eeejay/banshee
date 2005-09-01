@@ -61,7 +61,7 @@ namespace Banshee
 			if(!Directory.Exists(libraryLocation))
 				Directory.CreateDirectory(libraryLocation);
 			
-			Db = new Database("Library", libraryLocation + "/Library.sdb");
+			Db = new Database("Library", libraryLocation + ".banshee.db");
 		}
 		
 		public void ReloadLibrary()

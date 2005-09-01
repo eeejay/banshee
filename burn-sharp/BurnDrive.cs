@@ -49,7 +49,7 @@ namespace Nautilus {
 		public static Nautilus.BurnDrive FileImage { 
 			get {
 				IntPtr raw_ret = nautilus_burn_drive_get_file_image();
-				Nautilus.BurnDrive ret = raw_ret == IntPtr.Zero ? null : (Nautilus.BurnDrive) GLib.Opaque.GetOpaque (raw_ret, typeof (Nautilus.BurnDrive), false);
+				Nautilus.BurnDrive ret = raw_ret == IntPtr.Zero ? null : new Nautilus.BurnDrive(raw_ret);
 				return ret;
 			}
 		}
@@ -90,6 +90,13 @@ namespace Nautilus {
 			bool raw_ret = nautilus_burn_drive_unmount(Handle);
 			bool ret = raw_ret;
 			return ret;
+		}
+
+		[DllImport("libnautilus-burn")]
+		static extern void nautilus_burn_drive_free(IntPtr raw);
+
+		public void Free() {
+			nautilus_burn_drive_free(Handle);
 		}
 
 		[DllImport("libnautilus-burn")]
@@ -135,7 +142,7 @@ namespace Nautilus {
 
 		public Nautilus.BurnDrive Copy() {
 			IntPtr raw_ret = nautilus_burn_drive_copy(Handle);
-			Nautilus.BurnDrive ret = raw_ret == IntPtr.Zero ? null : (Nautilus.BurnDrive) GLib.Opaque.GetOpaque (raw_ret, typeof (Nautilus.BurnDrive), false);
+			Nautilus.BurnDrive ret = raw_ret == IntPtr.Zero ? null : new Nautilus.BurnDrive(raw_ret);
 			return ret;
 		}
 
@@ -157,14 +164,6 @@ namespace Nautilus {
 			IntPtr device_path_as_native = GLib.Marshaller.StringToPtrGStrdup (device_path);
 			Raw = nautilus_burn_drive_new_from_path(device_path_as_native);
 			GLib.Marshaller.Free (device_path_as_native);
-		}
-
-		[DllImport("libnautilus-burn")]
-		static extern void nautilus_burn_drive_free(IntPtr raw);
-
-		protected override void Free (IntPtr raw)
-		{
-			nautilus_burn_drive_free (raw);
 		}
 
 #endregion

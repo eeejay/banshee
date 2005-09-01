@@ -56,8 +56,8 @@ namespace Nautilus {
 
 		static void progresschanged_cb (IntPtr recorder, double fraction, int secs)
 		{
-			BurnRecorder recorder_managed = GLib.Object.GetObject (recorder, false) as BurnRecorder;
-			recorder_managed.OnProgressChanged (fraction, secs);
+			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
+			obj.OnProgressChanged (fraction, secs);
 		}
 
 		private static void OverrideProgressChanged (GLib.GType gtype)
@@ -121,8 +121,8 @@ namespace Nautilus {
 
 		static void actionchanged_cb (IntPtr recorder, int action, int media)
 		{
-			BurnRecorder recorder_managed = GLib.Object.GetObject (recorder, false) as BurnRecorder;
-			recorder_managed.OnActionChanged ((Nautilus.BurnRecorderActions) action, (Nautilus.BurnRecorderMedia) media);
+			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
+			obj.OnActionChanged ((Nautilus.BurnRecorderActions) action, (Nautilus.BurnRecorderMedia) media);
 		}
 
 		private static void OverrideActionChanged (GLib.GType gtype)
@@ -187,8 +187,8 @@ namespace Nautilus {
 
 		static void insertmediarequest_cb (IntPtr recorder, bool is_reload, bool can_rewrite, bool busy)
 		{
-			BurnRecorder recorder_managed = GLib.Object.GetObject (recorder, false) as BurnRecorder;
-			recorder_managed.OnInsertMediaRequest (is_reload, can_rewrite, busy);
+			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
+			obj.OnInsertMediaRequest (is_reload, can_rewrite, busy);
 		}
 
 		private static void OverrideInsertMediaRequest (GLib.GType gtype)
@@ -254,8 +254,8 @@ namespace Nautilus {
 
 		static int warndataloss_cb (IntPtr recorder)
 		{
-			BurnRecorder recorder_managed = GLib.Object.GetObject (recorder, false) as BurnRecorder;
-			return recorder_managed.OnWarnDataLoss ();
+			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
+			return obj.OnWarnDataLoss ();
 		}
 
 		private static void OverrideWarnDataLoss (GLib.GType gtype)
@@ -315,8 +315,8 @@ namespace Nautilus {
 
 		static void animationchanged_cb (IntPtr recorder, bool spinning)
 		{
-			BurnRecorder recorder_managed = GLib.Object.GetObject (recorder, false) as BurnRecorder;
-			recorder_managed.OnAnimationChanged (spinning);
+			BurnRecorder obj = GLib.Object.GetObject (recorder, false) as BurnRecorder;
+			obj.OnAnimationChanged (spinning);
 		}
 
 		private static void OverrideAnimationChanged (GLib.GType gtype)

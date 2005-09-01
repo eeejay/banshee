@@ -152,8 +152,6 @@ namespace Banshee
 			if(!uri.StartsWith("file://") && !uri.StartsWith("cdda://"))
 				 uri = "file://" + uri;
 			
-			Console.WriteLine(uri);
-			
 			loaded = gpe_open(handle, uri);
 			
 			if(loaded)
