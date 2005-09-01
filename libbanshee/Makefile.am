@@ -18,10 +18,12 @@ libbanshee_la_SOURCES = \
 	cd-detect.h \
 	cd-info.c   \
 	cd-info.h   \
+	cd-rip.c    \
+	cd-rip.h    \
 	gst-init.c  \
 	gst-init.h
 
-libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS) 
+libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS) $(top_builddir)/libbanshee/xing/libgstxingenc.la
 
 CLEANFILES = cdtest
 DISTCLEANFILES = Makefile.in
@@ -29,5 +31,5 @@ DISTCLEANFILES = Makefile.in
 EXTRA_DIST = cd-test.c
 
 test:
-	$(CC) -o cdtest $(INCLUDES) $(libbanshee_la_LIBADD) cd-test.c $(libbanshee_la_SOURCES)
+	$(CC) -o cdtest $(INCLUDES) $(GST_LIBS) $(HAL_LIBS) cd-test.c cd-detect.c cd-info.c cd-rip.c
 
