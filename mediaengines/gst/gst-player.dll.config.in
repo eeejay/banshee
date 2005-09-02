@@ -1,4 +1,4 @@
 <configuration>
-	<dllmap dll="libgstmediaengine" target="@expanded_libdir@/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
+	<dllmap dll="libbanshee" target="@expanded_libdir@/@PACKAGE@/libbanshee.so" />
 </configuration>
 

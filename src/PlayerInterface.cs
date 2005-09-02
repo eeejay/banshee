@@ -579,7 +579,7 @@ namespace Banshee
             ScaleTime.Adjustment.Upper = ti.Duration;
 
             UpdateMetaDisplay(ti);
-
+            
             TogglePlaying();
 
             ti.IncrementPlayCount();

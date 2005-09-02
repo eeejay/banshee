@@ -38,22 +38,22 @@ namespace Banshee
 
 	public class GstFileEncoder : FileEncoder, IDisposable
 	{
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern IntPtr gst_file_encoder_new();
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gst_file_encoder_free(HandleRef encoder);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern bool gst_file_encoder_encode_file(
 			HandleRef encoder, string input_file, string output_file, 
 			EncodeFormat format, GstFileEncoderProgressCallback progress_cb);
 	
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern IntPtr gst_file_encoder_get_error(
 			HandleRef encoder);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gst_file_encoder_encode_cancel(
 			HandleRef encoder);
 		

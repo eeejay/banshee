@@ -29,6 +29,8 @@
  
 using System;
 using System.Text.RegularExpressions;
+using System.Collections;
+using System.IO;
 
 namespace Banshee
 {
@@ -36,13 +38,67 @@ namespace Banshee
     {
         public static string CreateFromTrackInfo(TrackInfo track)
         {
-            return String.Format("{0:00}. {1} - {2}",
-                track.TrackNumber, track.Artist, track.Title);
+            string pattern;
+
+            try {
+                pattern = Core.GconfClient.Get(GConfKeys.FileNamePattern) 
+                    as string;
+            } catch(Exception) {
+                pattern = null;
+            }
+            
+            return CreateFromTrackInfo(pattern, track);
         }
-        
+
+        public static string CreateFromTrackInfo(string pattern, 
+            TrackInfo track)
+        {
+            Hashtable convtable = new Hashtable();
+            string repl_pattern;
+
+            if(pattern == null || pattern.Trim() == String.Empty)
+                repl_pattern = "%artist%/%album%/%track_number%. %title%";
+            else
+                repl_pattern = pattern;
+
+            convtable["%artist%"] = Escape(track.DisplayArtist);
+            convtable["%album%"] = Escape(track.DisplayAlbum);
+            convtable["%title%"] = Escape(track.DisplayTitle);
+
+            convtable["%track_count%"] = String.Format("{0:00}", 
+                track.TrackCount);
+            convtable["%track_number%"] = String.Format("{0:00}", 
+                track.TrackNumber);
+            convtable["%track_count_nz%"] = 
+                String.Format("{0}", track.TrackCount);
+            convtable["%track_number_nz%"] = 
+                String.Format("{0}", track.TrackNumber);
+
+            foreach(string key in convtable.Keys)
+                repl_pattern = repl_pattern.Replace(key, convtable[key] 
+                    as string);
+
+            return repl_pattern;
+        }
+
+        public static string BuildFull(TrackInfo track, string ext)
+        {
+            string songpath = CreateFromTrackInfo(track) + "." + ext;
+            string dir = Path.GetFullPath(Core.Library.Location + 
+                Path.DirectorySeparatorChar + 
+                Path.GetDirectoryName(songpath));
+            string filename = dir + Path.DirectorySeparatorChar + 
+                Path.GetFileName(songpath);
+             
+            if(!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+             
+            return filename;
+        }
+
         public static string Escape(string input)
         {
-            return Regex.Replace(input, @"[\\\/\$\%\?]+", "_");
+            return Regex.Replace(input, @"[\\/\$\%\?\*]+", "_");
         }
     }
 }

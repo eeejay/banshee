@@ -1,5 +1,15 @@
 2005-09-01  Aaron Bockover <aaron@aaronbock.net>
 
+	* libbanshee/Makefile.am: Build Xing conditionally (--enable-xing)
+	* configure.ac: Disable Xing by default, --enable-xing to enable
+	* src/FileNamePattern.cs: Full pattern support for naming, creates
+	directory structure if not exist
+	* src/RipTransaction.cs: Bug fixes
+	* libbanshee/cd-rip.c: Fix some bugs
+	* mediaengines/gst/GstPlayerEngine.cs: DllImport on libbanshee
+	* src/GstFileEncoder.cs: DllImport on libbanshee
+	* mediaengines/gst/*.[ch]: moved to libbanshee
+	
 	* data/glade/player.glade: Ripping button
 	* src/PlayerInterface.cs: New button to initiate Ripping, added UI code
 	to create and register a RipTransaction

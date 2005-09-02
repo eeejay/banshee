@@ -13,8 +13,8 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/SourceWidth</key>
-      <applyto>/apps/Banshee/SourceWidth</applyto>
+      <key>/schemas/apps/Banshee/SourceViewWidth</key>
+      <applyto>/apps/Banshee/SourceViewWidth</applyto>
       <owner>banshee</owner>
       <type>int</type>
       <default>150</default>
@@ -67,6 +67,28 @@
         <long>Pixel position of Main Player Window on the Y Axis</long>
       </locale>
     </schema>
+	<schema>
+	  <key>/schemas/apps/Banshee/Volume</key>
+	  <applyto>/apps/Banshee/Volume</applyto>
+	  <owner>banshee</owner>
+	  <type>int</type>
+	  <default>80</default>
+	  <locale name="C">
+	  	<short>Volume Output Level</short>
+		<long>Volume of playback relative to mixer output (except on Helix, which sets volume directly on PCM</long>
+      </locale>
+	</schema>
+	<schema>
+	  <key>/schemas/apps/Banshee/FileNamePattern</key>
+	  <applyto>/apps/Banshee/FileNamePattern</applyto>
+	  <owner>banshee</owner>
+	  <type>string</type>
+	  <default>%artist%/%album%/%track_number%. %title%</default>
+	  <locale name="C">
+	    <short>File Name Pattern</short>
+		<long>Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
+      </locale>
+	</schema>
   </schemalist>
 </gconfschemafile>
 

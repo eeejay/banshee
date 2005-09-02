@@ -46,6 +46,7 @@ namespace Banshee
 		public const string CopyOnImport = BasePath + "CopyOnImport";
 		public const string AdditionAction = BasePath + "AdditionAction";
 		public const string PlayerEngine = BasePath + "PlayerEngine";
+		public const string FileNamePattern = BasePath + "FileNamePattern";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
 	
 		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";

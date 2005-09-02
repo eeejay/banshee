@@ -2,5 +2,4 @@
 	<dllmap dll="libglib-2.0.so" target="libglib-2.0.so.0" />
 	<dllmap dll="libgobject-2.0-0.dll" target="libgobject-2.0.so.0" />
 	<dllmap dll="libbanshee" target="@expanded_libdir@/@PACKAGE@/libbanshee.so" />
-	<dllmap dll="libgstmediaengine" target="@expanded_libdir@/@PACKAGE@/mediaengines/gst/libgstmediaengine.so" />
 </configuration>

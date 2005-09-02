@@ -42,6 +42,7 @@
 
 static gboolean gstreamer_initialized = FALSE;
 
+#ifdef ENABLE_XING
 static gboolean
 register_elements(GstPlugin *plugin)
 {
@@ -64,6 +65,7 @@ static GstPluginDesc xingenc_plugin_desc = {
 	"http://banshee-project.org",
 	GST_PADDING_INIT
 };
+#endif
 
 void gstreamer_initialize()
 {
@@ -71,7 +73,11 @@ void gstreamer_initialize()
 		return;
 
 	gst_init(NULL, NULL);
+	
+#ifdef ENABLE_XING
+	g_message("Registering GStreamer plugin for the Xing Encoder");
 	_gst_plugin_register_static(&xingenc_plugin_desc);
+#endif
 
 	gstreamer_initialized = TRUE;
 }

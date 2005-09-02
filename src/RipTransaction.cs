@@ -190,10 +190,15 @@ namespace Banshee
                     "Ripping {0} of {1} : {2} - {3}"), current++, QueueSize,
                     track.Artist, track.Title);
                     
-                string filename = Core.Library.Location + 
-                   FileNamePattern.CreateFromTrackInfo(track) + ".mp3";
+                string filename = "file://" + 
+                    FileNamePattern.BuildFull(track, "mp3");
                     
                 ripper.RipTrack(track, track.TrackIndex + 1, filename);
+                    
+              /*  if(!ripper.RipTrack(track, track.TrackIndex + 1, filename)) {
+                    Console.WriteLine("** Error: " + ripper.Error);
+                    break;
+                }*/
                 
                 FileLoadTransaction flt = new FileLoadTransaction(filename);
                 flt.Register();

@@ -29,8 +29,6 @@
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
-#else
-#  define VERSION "0.9.3"
 #endif
 
 #include <gst/gst.h>
@@ -193,12 +191,16 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
     GList *elements = NULL;
     GList *element = NULL;
     gboolean can_tag = FALSE;
+    gboolean has_started = FALSE;
     
     if(ripper == NULL || uri == NULL)
         return FALSE;
         
-    if(ripper->error != NULL)
+    if(ripper->error != NULL) {
         g_free(ripper->error);
+        ripper->error = NULL;
+    }
+    
     ripper->cancel = FALSE;
         
     if(!cd_rip_build_pipeline(ripper))
@@ -238,7 +240,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
     }        
 
     if(!can_tag) {
-        g_warning(_("Encoding element does not suppor tagging!"));
+        g_warning(_("Encoding element does not support tagging!"));
     }
         
     gst_element_set_state(ripper->pipeline, GST_STATE_PAUSED);
@@ -285,13 +287,12 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
                     ripper->seconds, user_info);
             }
         }
-       
-        /* major ugly hack */
-        /*if(last_seconds - 5 > 0 && last_seconds != 0 && seconds == 0) {
-           break;
-        }*/
-        
-        //last_seconds = seconds;
+      
+        /* nasty hack because gstreamer keeps iterating after completion */
+        if(seconds > 0)
+            has_started = TRUE;
+        else if(has_started && seconds == 0)
+            break;
     }            
         	
     gst_element_set_state(GST_ELEMENT(ripper->pipeline), GST_STATE_NULL);

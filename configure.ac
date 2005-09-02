@@ -39,6 +39,16 @@ AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
 AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
 
+AC_ARG_ENABLE(xing, AC_HELP_STRING([--enable-xing], [Enable Real's Xing MP3 Encoder]), , enable_xing="no")
+AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
+
+AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
+AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
+
+if test "x$enable_xing" = "xyes"; then
+	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
+fi
+
 dnl pkg-config, install programs
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 if test "x$PKG_CONFIG" = "xno"; then
@@ -250,18 +260,20 @@ po/Makefile.in
 echo "
 banshee-$VERSION
 
-	Install Prefix:   ${prefix}
-	C Compiler:       ${CC}
-	Mono C# Compiler: ${MCS}
-	Mono Runtime:     ${MONO}
+    Install Prefix:   ${prefix}
+    C Compiler:       ${CC}
+    Mono C# Compiler: ${MCS}
+    Mono Runtime:     ${MONO}
 
-	Engines:
-	   GStreamer:     yes
-	   Helix:         ${enable_helix}
+    Engines:
+      GStreamer:      yes
+      Helix:          ${enable_helix}
+
+    Xing MP3 Encoder: ${enable_xing}
 "
 
 if test "x${enable_helix}" = "xyes"; then
-	echo "	Helix/RealPlayer: ${helix_libs}
-"
+	echo "    Helix/RealPlayer: ${helix_libs}
+	"
 fi
 

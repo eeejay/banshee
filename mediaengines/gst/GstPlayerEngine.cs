@@ -40,10 +40,10 @@ namespace Banshee
 
 	public class GstPlayer : IPlayerEngine
 	{
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern IntPtr gpe_new();
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_free(HandleRef handle);
 		
 		/*[DllImport("libgstmediaengine")]
@@ -58,42 +58,42 @@ namespace Banshee
 		private static extern void gpe_set_iterate_handler(
 			HandleRef handle, GpeIterateCallback cb);*/
 
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern bool gpe_open(HandleRef handle, string file);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_play(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_pause(HandleRef handle);
 	
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_stop(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_set_volume(HandleRef handle,
 			int volume);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern int gpe_get_volume(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern void gpe_set_position(HandleRef handle,
 			int position);
 			
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern int gpe_get_position(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern int gpe_get_length(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern bool gpe_is_eos(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern IntPtr gpe_get_error(HandleRef handle);
 		
-		[DllImport("libgstmediaengine")]
+		[DllImport("libbanshee")]
 		private static extern bool gpe_have_error(HandleRef handle);
 		
 		public event PlayerEngineErrorHandler Error;
