@@ -47,6 +47,9 @@ namespace Banshee
 		public const string AdditionAction = BasePath + "AdditionAction";
 		public const string PlayerEngine = BasePath + "PlayerEngine";
 		public const string FileNamePattern = BasePath + "FileNamePattern";
+		public const string EncoderProfiles = BasePath + "EncoderProfiles";
+		public const string RippingProfile = BasePath + "RippingProfile";
+		public const string RippingBitrate = BasePath + "RippingBitrate";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
 	
 		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";

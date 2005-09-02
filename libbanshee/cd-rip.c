@@ -46,7 +46,6 @@
 #include "cd-rip.h"
 #include "gst-init.h"
 
-static gboolean gst_initialized = FALSE;
 
 static GstElement *
 cd_rip_build_encoder(CdRip *ripper)
@@ -187,7 +186,6 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
     static GstFormat format = GST_FORMAT_TIME;
     gint64 nanoseconds;
     gint seconds;
-    gint last_seconds = 0;
     GList *elements = NULL;
     GList *element = NULL;
     gboolean can_tag = FALSE;
@@ -300,7 +298,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
 
     ripper->cancel = FALSE;
 
-    return ripper->error != NULL;
+    return ripper->error == NULL;
 }
 
 void

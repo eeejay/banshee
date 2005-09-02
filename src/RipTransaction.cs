@@ -146,6 +146,15 @@ namespace Banshee
         private AudioCdRipper ripper;
         private string device;
         private int currentIndex = 0;
+        private int overallProgress = 0;
+        private string status;
+        
+        // speed calculations
+        private int currentSeconds = 0;
+        private int lastPollSeconds = 0;
+        private uint pollDelay = 1000;
+
+        public event HaveTrackInfoHandler HaveTrackInfo;
 
         public override string Name {
             get {
@@ -178,48 +187,89 @@ namespace Banshee
             int current = 1;
             statusMessage = Catalog.GetString("Initializing CD Drive");
         
-            ripper = new AudioCdRipper(device, 0, 
-                "xingenc bitrate=192");
+            PipelineProfile profile = 
+                PipelineProfile.GetConfiguredProfile("Ripping");
+            
+            string encodePipeline;
+            
+            try {
+                encodePipeline = profile.Pipeline;
+            } catch(PipelineProfileException e) {
+                DebugLog.Add("Cannot Rip CD: " + e.Message);
+                return;
+            }
+        
+            DebugLog.Add("Ripping CD and Encoding with Pipeline: " 
+                + encodePipeline);
+        
+            ripper = new AudioCdRipper(device, 0, encodePipeline);
             ripper.Progress += OnRipperProgress;
+            
+            uint timeoutId = GLib.Timeout.Add(pollDelay, OnTimeout);
             
             foreach(AudioCdTrackInfo track in tracks) {
                 if(cancelRequested)
                     break;
          
-                statusMessage = String.Format(Catalog.GetString(
+                status = String.Format(Catalog.GetString(
                     "Ripping {0} of {1} : {2} - {3}"), current++, QueueSize,
                     track.Artist, track.Title);
+                statusMessage = status;
                     
                 string filename = "file://" + 
-                    FileNamePattern.BuildFull(track, "mp3");
+                    FileNamePattern.BuildFull(track, profile.Extension);
                     
-                ripper.RipTrack(track, track.TrackIndex + 1, filename);
-                    
-              /*  if(!ripper.RipTrack(track, track.TrackIndex + 1, filename)) {
+                if(!ripper.RipTrack(track, track.TrackIndex + 1, filename)) {
                     Console.WriteLine("** Error: " + ripper.Error);
                     break;
-                }*/
+                }
                 
-                FileLoadTransaction flt = new FileLoadTransaction(filename);
-                flt.Register();
+                overallProgress += (int)track.Duration;
+                
+                if(!cancelRequested) {
+                    TrackInfo lti = new LibraryTrackInfo(filename, track);
+                    
+                    HaveTrackInfoHandler handler = HaveTrackInfo;
+                    if(handler != null) {
+                        HaveTrackInfoArgs args = new HaveTrackInfoArgs();
+                        args.TrackInfo = lti;
+                        handler(this, args);
+                    }
+                }
                 
                 currentIndex++;
             }
                    
+            if(timeoutId > 0)
+                GLib.Source.Remove(timeoutId);
+                   
             ripper.Dispose();
+        }
+        
+        private bool OnTimeout()
+        {
+            int diff = currentSeconds - lastPollSeconds;  
+            lastPollSeconds = currentSeconds;
+            
+            if(diff <= 0) {
+                statusMessage = status;
+                return true;
+            }
+            
+            statusMessage = status + String.Format(" ({0}x)", diff);
+            return true;
         }
         
         private void OnRipperProgress(object o, AudioCdRipperProgressArgs args)
         {
-            int count = 0;
-            
-            for(int i = 0; i < currentIndex; i++)
-                count += (int)(tracks[i] as AudioCdTrackInfo).Duration;
-            
-            currentCount = args.SecondsEncoded + count;
-           
             if(cancelRequested && ripper != null)
                 ripper.Cancel();
+                
+            if(args.SecondsEncoded == 0)
+                return;
+                
+            currentCount = args.SecondsEncoded + overallProgress;
+            currentSeconds = args.SecondsEncoded;
         }
         
         public int QueueSize

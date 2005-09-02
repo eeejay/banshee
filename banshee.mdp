@@ -142,5 +142,7 @@
     <File name="./src/CddbClient.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/RipTransaction.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/FileNamePattern.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/GstMisc.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/PipelineProfile.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

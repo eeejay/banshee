@@ -28,7 +28,9 @@ libbanshee_la_SOURCES = \
 	gst-encode.c \
 	gst-encode.h \
 	gst-player-engine.c \
-	gst-player-engine.h
+	gst-player-engine.h \
+	gst-misc.c \
+	gst-misc.h
 
 if ENABLE_XING
 libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS) $(top_builddir)/libbanshee/xing/libgstxingenc.la

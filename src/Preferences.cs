@@ -68,6 +68,8 @@ namespace Banshee
 		private HBox speedContainer;
 		
 		private BurnDrive [] burnDevices;
+		
+		private PipelineProfileSelector rippingProfile;
 
 		public PreferencesWindow()
 		{
@@ -77,6 +79,9 @@ namespace Banshee
 			
 			((Image)glade["ImageLibraryTab"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("library-icon-32.png");
+
+			((Image)glade["ImageEncodingTab"]).Pixbuf = 
+				Gdk.Pixbuf.LoadFromResource("encoding-icon-32.png");
 				
 			((Image)glade["ImageBurningTab"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("burn-icon-32.png");
@@ -100,18 +105,47 @@ namespace Banshee
 				speedContainer.ShowAll();
 				LoadBurnerDrives();	
 			} else {
-				Notebook.RemovePage(1);
+				Notebook.RemovePage(2);
 			}
 			
 			TextView view = glade["EngineDescription"] as TextView;
 			view.SetSizeRequest(view.Allocation.Width, -1);
 			WindowPreferences.Show();
+			
+            rippingProfile = new PipelineProfileSelector();
+            (glade["RippingProfileContainer"] as HBox).PackStart(
+                rippingProfile, true, true, 0);
+                
+            rippingProfile.ProfileKey = GetStringPref(
+                GConfKeys.RippingProfile, "default");
+            rippingProfile.Bitrate = GetIntPref(
+                GConfKeys.RippingBitrate, -1);
+                
+            rippingProfile.Show();
 		}
 		
 		private bool GetBoolPref(string key, bool def)
 		{
 			try {
 				return (bool)Core.GconfClient.Get(key);
+			} catch(Exception) {
+				return def;
+			}
+		}
+		
+		private int GetIntPref(string key, int def)
+		{
+			try {
+				return (int)Core.GconfClient.Get(key);
+			} catch(Exception) {
+				return def;
+			}
+		}
+		
+		private string GetStringPref(string key, string def)
+		{
+			try {
+				return (string)Core.GconfClient.Get(key);
 			} catch(Exception) {
 				return def;
 			}
@@ -190,6 +224,12 @@ namespace Banshee
 			Core.GconfClient.Set(GConfKeys.CopyOnImport,
 				CopyOnImport.Active);
 				
+		      Core.GconfClient.Set(GConfKeys.RippingProfile,
+				rippingProfile.ProfileKey);
+				
+		      Core.GconfClient.Set(GConfKeys.RippingBitrate,
+				rippingProfile.Bitrate);
+				
 			SaveBurnSettings();
 			SaveEngineSettings();
 		}
@@ -201,7 +241,8 @@ namespace Banshee
 			if(burnDevices == null || burnDevices.Length == 0) {
 				Core.ThreadEnter();
 				ShowBurnerWidgets(false);
-				driveLoadingLabel.Markup = "<i>" + Catalog.GetString("No CD Burners Detected") + "</i>";
+				driveLoadingLabel.Markup = "<i>" + 
+				    Catalog.GetString("No CD Burners Detected") + "</i>";
 				Core.ThreadLeave();
 				return;
 			} 

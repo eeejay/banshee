@@ -65,6 +65,39 @@ namespace Banshee
 			canSaveToDatabase = true;
 		}
 	
+	    public LibraryTrackInfo(string uri, string artist, string album, 
+	       string title, string genre, uint trackNumber, uint trackCount,
+	       int year, long duration)
+	    {
+	    		this.uri = uri;
+			trackId = 0;
+	
+			mimetype = null;
+			
+			this.artist = artist;
+			this.album = album;
+			this.title = title;
+			this.genre = genre;
+			this.trackNumber = trackNumber;
+			this.trackCount = trackCount;
+			this.year = year;
+			this.duration = duration;
+			
+			SaveToDatabase(true);
+			
+			Core.Library.Tracks[trackId] = this;
+			
+			uid = Core.Instance.NextUid;
+			PreviousTrack = Gtk.TreeIter.Zero;
+	    }
+	    
+        public LibraryTrackInfo(string uri, AudioCdTrackInfo track) : this(
+            uri, track.Artist, track.Album, track.Title, track.Genre,
+            track.TrackNumber, track.TrackCount, track.Year, track.Duration)
+        {
+        
+        }
+	
 		public LibraryTrackInfo(string uri) : this()
 		{
 			if(uri.StartsWith("sql://")) {

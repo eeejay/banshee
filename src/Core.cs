@@ -130,10 +130,12 @@ namespace Banshee
             Gdk.Threads.Init();
             Gtk.Application.Init();
 
+            Gstreamer.Initialize();
+
             dbusServer = new DBusServer();
 
             if(!Directory.Exists(Paths.ApplicationData))
-            Directory.CreateDirectory(Paths.ApplicationData);
+                Directory.CreateDirectory(Paths.ApplicationData);
 
             Random = new Random();
             gconfClient = new GConf.Client();

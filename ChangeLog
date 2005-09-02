@@ -4,6 +4,19 @@
 	a large memory leak.
 
 2005-09-01  Aaron Bockover <aaron@aaronbock.net>
+	
+	* libbanshee/gst-misc.c: Use gst_bin_parsev for pipeline validating
+	* src/PlayerInterface.cs: Only show rip button if in CD view, tooltip for
+	rip button
+	* src/LibraryTrackInfo.cs: Two new constructors for generating a library
+	track object off of pure metadata and an existing URI
+	* src/RipTransaction.cs: Better progress handling, no longer load ripped
+	track into library using a FileLoadTransaction (causes metadata loss if
+	encoder does not support tagging), instead load directly into cache
+	* src/Preferences.cs: Preference page for setting ripping encoder profile
+	* src/PipelineProfile.cs: GStreamer pipeline profile manager
+	* src/GstMisc.cs: Bindings for libbanshee/gst-misc.c
+	* libbanshee/gst-misc.[ch]: Misc. gstreamer functions
 
 	* libbanshee/Makefile.am: Build Xing conditionally (--enable-xing)
 	* configure.ac: Disable Xing by default, --enable-xing to enable
