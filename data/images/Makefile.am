@@ -19,6 +19,7 @@ EXTRA_DIST = \
 	busy-spinner-36.png \
 	busy-spinner.png \
 	circle.png \
+	encoding-icon-32.png \
 	icon-album.png \
 	icon-artist.png \
 	icon-title.png \

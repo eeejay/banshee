@@ -77,7 +77,9 @@ banshee_sources = \
 	IpodPropertiesWindow.cs \
 	CddbClient.cs \
 	RipTransaction.cs \
-	FileNamePattern.cs
+	FileNamePattern.cs \
+	GstMisc.cs \
+	PipelineProfile.cs
 
 banshee_resources = \
 	../data/Tables.sql \
@@ -129,7 +131,8 @@ banshee_resources = \
 	../data/images/about-header.png \
 	../data/images/about-footer.png \
 	../data/images/about-grad-top.png \
-	../data/images/about-grad-bottom.png 
+	../data/images/about-grad-bottom.png \
+	../data/images/encoding-icon-32.png
 	
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
