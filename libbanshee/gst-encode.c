@@ -34,18 +34,14 @@
 #include <glib/gi18n.h>
 
 #include "gst-encode.h"
-
-static gboolean gst_initialized = FALSE;
+#include "gst-init.h"
 
 GstFileEncoder *
 gst_file_encoder_new()
 {
 	GstFileEncoder *encoder;
 	
-	if(!gst_initialized) {
-		gst_init(NULL, NULL);
-		gst_initialized = TRUE;
-	}
+	gstreamer_initialize();
 	
 	encoder = g_new0(GstFileEncoder, 1);
 	encoder->cancel = FALSE;

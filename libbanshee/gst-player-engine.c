@@ -37,6 +37,7 @@
 #include <gst/gconf/gconf.h>
 
 #include "gst-player-engine.h"
+#include "gst-init.h"
 
 static void end_of_stream_cb(GstElement *sink, GstPlayerEngine *engine);
 static void gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error);
@@ -56,7 +57,7 @@ gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 {
 	GstElement *sink;
 
-	gst_init(NULL, NULL);
+	gstreamer_initialize();
 
 	engine->timer = g_timer_new();
 	g_timer_stop(engine->timer);
