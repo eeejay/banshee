@@ -26,4 +26,5 @@ mkinstalldirs
 stamp-h1
 snapshots
 make-release.sh
+*.pidb
 

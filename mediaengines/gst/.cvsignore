@@ -2,3 +2,5 @@ Makefile
 Makefile.in
 gst-player.dll
 gst-player.dll.config
+*.pidb
+
