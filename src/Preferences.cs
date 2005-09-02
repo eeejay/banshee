@@ -167,8 +167,7 @@ namespace Banshee
 			FileChooserDialog chooser = new FileChooserDialog(
 				Catalog.GetString("Select Banshee Library Location"),
 				null,
-				FileChooserAction.SelectFolder,
-				"gnome-vfs"
+				FileChooserAction.SelectFolder
 			);
 			
 			chooser.AddButton(Stock.Open, ResponseType.Ok);

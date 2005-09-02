@@ -155,6 +155,10 @@ namespace Banshee
 			dialog.AddActionWidget(cancelButton, ResponseType.Cancel);
 			dialog.AddActionWidget(saveButton, ResponseType.Ok);
 
+			saveButton.CanDefault = true;
+			saveButton.HasDefault = true;
+			entry.ActivatesDefault = true;
+
 			ResponseType result = (ResponseType)dialog.Run();
 			string input = entry.Text;
 			

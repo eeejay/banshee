@@ -258,7 +258,7 @@ namespace Banshee
 		
 		public void HighlightPath(TreePath path)
 		{
-		
+			Selection.SelectPath(path);
 		}
 		
 		private void OnSourceUpdated(object o, EventArgs args)

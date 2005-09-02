@@ -824,8 +824,7 @@ namespace Banshee
 			FileChooserDialog chooser = new FileChooserDialog(
 				Catalog.GetString("Import Folder to Library"),
 				null,
-				FileChooserAction.SelectFolder,
-				"gnome-vfs"
+				FileChooserAction.SelectFolder
 			);
 			
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
@@ -853,8 +852,7 @@ namespace Banshee
 			FileChooserDialog chooser = new FileChooserDialog(
 				Catalog.GetString("Import Files to Library"),
 				null,
-				FileChooserAction.Open,
-				"gnome-vfs"
+				FileChooserAction.Open
 			);
 			
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);

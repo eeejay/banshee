@@ -1,3 +1,15 @@
+2005-09-02  Dan Winship  <danw@novell.com>
+
+	* src/Dialogs.cs (InputDialog.Execute): make Return == OK.
+
+	* src/PlayerInterface.cs (ImportWithFileSelector,
+	OnMenuImportFilesActivate): 
+	* src/Preferences.cs (OnButtonLibraryChangeClicked): Remove
+	incorrect (but harmless) "gnome-vfs" arg.
+
+	* src/SourceView.cs (HighlightPath): select the row. (Fixes so
+	that right-clicking on an unselected row DTRT now.)
+
 2005-09-01  Hans Petter Jansson  <hpj@novell.com>
 
 	* libbanshee/xing/gst-xing-encoder.c (xing_mp3_encoder_chain): Fixed
