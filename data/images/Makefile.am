@@ -23,6 +23,7 @@ EXTRA_DIST = \
 	icon-album.png \
 	icon-artist.png \
 	icon-title.png \
+	ipod-48.png \
 	library-icon-32.png \
 	library-icon.png \
 	media-burn.png \
