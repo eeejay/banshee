@@ -38,13 +38,27 @@ namespace Banshee
 	internal delegate void CdDetectUdiCallback(IntPtr udiPtr);
 
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct DiskInfoRaw
+	public struct DiskInfoRaw
 	{
 		public IntPtr Udi;
 		public IntPtr DeviceNode;
 		public IntPtr DriveName;
 	}
-	
+
+    public class DiskInfo
+    {
+        public string Udi;
+        public string DeviceNode;
+        public string DriveName;
+        
+        public DiskInfo(DiskInfoRaw raw)
+        {
+            Udi = Marshal.PtrToStringAnsi(raw.Udi);
+            DeviceNode = Marshal.PtrToStringAnsi(raw.DeviceNode);
+            DriveName = Marshal.PtrToStringAnsi(raw.DriveName);
+        }
+    }
+    	
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct CdDiskInfoRaw
 	{
@@ -93,7 +107,7 @@ namespace Banshee
 		
 		public AudioCdTrackInfo(string device)
 		{
-			//uid = Core.Instance.NextUid;
+		    uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
 			this.device = device;
@@ -153,11 +167,11 @@ namespace Banshee
 		[DllImport("libbanshee")]
 		private static extern void cd_disk_info_free(IntPtr diskPtr);
 
-		public AudioCdDisk(string udi, string deviceNode, string driveName)
+		public AudioCdDisk(DiskInfo disk)
 		{
-			this.udi = udi;
-			this.deviceNode = deviceNode;
-			this.driveName = driveName;
+			this.udi = disk.Udi;
+			this.deviceNode = disk.DeviceNode;
+			this.driveName = disk.DriveName;
 			
 			valid = LoadDiskInfo();
 		}
@@ -313,13 +327,14 @@ namespace Banshee
 	public class AudioCdCore : IDisposable
 	{
 		private static AudioCdCore instance;
-		private Hashtable disks;
+		private Hashtable disks = new Hashtable();
 		private HandleRef handle;
 		
 		private CdDetectUdiCallback AddedCallback;
 		private CdDetectUdiCallback RemovedCallback;
 		
 		public event EventHandler Updated;
+		public event EventHandler DiskRemoved;
 		
 		public AudioCdCore()
 		{
@@ -338,7 +353,7 @@ namespace Banshee
 						
 			DebugLog.Add("Audio CD Core Initialized");
 			
-			BuildList();
+			BuildInitialList();
 		}
 		
 		public void Dispose()
@@ -348,23 +363,56 @@ namespace Banshee
 	
 		private void OnDiskAdded(IntPtr udiPtr)
 		{
-			BuildList();
-		}
+            string udi = Marshal.PtrToStringAnsi(udiPtr);
+
+            if(udi == null || disks[udi] != null)
+                return;
+
+            DiskInfo [] halDisks = GetHalDisks();
+
+            if(halDisks == null || halDisks.Length == 0)
+                return;
+
+            foreach(DiskInfo halDisk in halDisks) {
+                if(halDisk.Udi != udi)
+                    continue;
+                
+                AudioCdDisk disk = new AudioCdDisk(halDisk);
+                disk.Updated += OnAudioCdDiskUpdated;
+
+                if(disk.Valid)
+                    disks[disk.Udi] = disk;
+                
+                HandleUpdated();
+                break;
+            }
+
+        }
 		
 		private void OnDeviceRemoved(IntPtr udiPtr)
 		{
-			BuildList();
+			string udi = Marshal.PtrToStringAnsi(udiPtr);
+			
+			if(udi == null || disks[udi] == null)
+			     return;
+			     
+			disks.Remove(udi);
+			HandleUpdated();
+			
+			EventHandler handler = DiskRemoved;
+			if(handler != null)
+				handler(this, new EventArgs());
 		}
-	
-		private void BuildList()
-		{
-			IntPtr arrayPtr = cd_detect_get_disk_array(handle);
+	       
+	    private DiskInfo [] GetHalDisks()
+	    {
+	        IntPtr arrayPtr = cd_detect_get_disk_array(handle);
 			int arraySize = 0;
 			
-			disks = new Hashtable();
+			ArrayList disks = new ArrayList();
 
 			if(arrayPtr == IntPtr.Zero)
-				return;
+				return null;
 			
 			while(Marshal.ReadIntPtr(arrayPtr, arraySize * IntPtr.Size)
 				!= IntPtr.Zero)
@@ -375,21 +423,30 @@ namespace Banshee
 				DiskInfoRaw diskRaw = (DiskInfoRaw)Marshal.PtrToStructure(
 					rawPtr, typeof(DiskInfoRaw));
 				
-				AudioCdDisk disk = new AudioCdDisk(
-					Marshal.PtrToStringAnsi(diskRaw.Udi),
-					Marshal.PtrToStringAnsi(diskRaw.DeviceNode),
-					Marshal.PtrToStringAnsi(diskRaw.DriveName)
-				);
-				
-				disk.Updated += OnAudioCdDiskUpdated;
-				
-				if(disk.Valid)
-					disks[disk.Udi] = disk;
+				disks.Add(new DiskInfo(diskRaw));
 			}
 			
 			cd_detect_disk_array_free(arrayPtr);
 			
-			HandleUpdated();
+			return disks.ToArray(typeof(DiskInfo)) as DiskInfo [];
+	    }
+	    
+		private void BuildInitialList()
+		{
+            DiskInfo [] halDisks = GetHalDisks();
+
+            if(halDisks == null || halDisks.Length == 0)
+                return;
+
+            foreach(DiskInfo halDisk in halDisks) {
+                AudioCdDisk disk = new AudioCdDisk(halDisk);
+                disk.Updated += OnAudioCdDiskUpdated;
+
+                if(disk.Valid)
+                    disks[disk.Udi] = disk;
+            }
+
+            HandleUpdated();
 		}
 		
 		private void OnAudioCdDiskUpdated(object o, EventArgs args)
