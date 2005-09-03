@@ -150,7 +150,9 @@ namespace Banshee
 			
 			try {
 				Core.Instance.IpodCore.Updated += OnIpodCoreUpdated;
-				Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+				Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
+				Core.Instance.AudioCdCore.DiskRemoved 
+				    += OnAudioCdCoreDiskRemoved;
 			} catch(NullReferenceException) {}
 			
 			RefreshList();
@@ -272,10 +274,56 @@ namespace Banshee
 			RefreshList();
 		}
 		
-		private void OnAudioCdCoreUpdated(object o, EventArgs args)
-		{
-			RefreshList();
-		}
+        private int FindSourceLastIndex(SourceType type)
+        {
+            int lastIndex = 0;
+            int index = 0;
+            
+            foreach(object [] obj in store) {
+                if(obj[0].GetType() != typeof(Source)) {
+                    index++;
+                    continue;
+                }
+                
+                if((obj[0] as Source).Type == type)
+                    lastIndex = index;
+            
+                index++;
+            }
+            
+            return lastIndex;
+        }
+		
+        private void OnAudioCdCoreDiskAdded(object o, 
+            AudioCdCoreDiskAddedArgs args)
+        {
+            int index = FindSourceLastIndex(SourceType.Library);
+
+            TreeIter iter = store.Insert(index + 1);
+            store.SetValue(iter, 0, new AudioCdSource(args.Disk));
+        }
+
+        private void OnAudioCdCoreDiskRemoved(object o, 
+            AudioCdCoreDiskRemovedArgs args)
+        {
+            TreeIter iter = TreeIter.Zero;
+            
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                if(!store.IterNthChild(out iter, i))
+                    continue;
+                
+                object obj = store.GetValue(iter, 0);
+                
+                if(obj.GetType() != typeof(AudioCdSource))
+                    continue;
+                    
+                AudioCdSource source = obj as AudioCdSource;
+                if(source.Disk.Udi == args.Udi) {
+                    store.Remove(ref iter);
+                    return;
+                }
+            }
+        }
 		
 		public Source GetSource(TreePath path)
 		{

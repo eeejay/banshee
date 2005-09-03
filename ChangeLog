@@ -1,5 +1,7 @@
 2005-09-02  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/SourceView.cs: Use Add/Remove events for AudioCdCore to remove
+	and insert AudioCdSources instead of rebuilding the source view tree
 	* src/SourceView.cs: Fixed right click/highlight bug (dup of danw, cvs
 	collision), Draw Markup in Source cell renderer wrapped in 
 	GLib.Markup.Escape

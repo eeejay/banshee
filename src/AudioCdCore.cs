@@ -324,6 +324,22 @@ namespace Banshee
 		public AudioCdTrackInfo [] Tracks { get { return tracks; } }
 	}
 	
+	public delegate void AudioCdCoreDiskRemovedHandler(object o,
+	   AudioCdCoreDiskRemovedArgs args);
+	
+	public class AudioCdCoreDiskRemovedArgs : EventArgs
+	{
+	   public string Udi;
+	}
+	
+	public delegate void AudioCdCoreDiskAddedHandler(object o,
+	   AudioCdCoreDiskAddedArgs args);
+	
+	public class AudioCdCoreDiskAddedArgs : EventArgs
+	{
+	   public AudioCdDisk Disk;
+	}
+	
 	public class AudioCdCore : IDisposable
 	{
 		private static AudioCdCore instance;
@@ -334,7 +350,8 @@ namespace Banshee
 		private CdDetectUdiCallback RemovedCallback;
 		
 		public event EventHandler Updated;
-		public event EventHandler DiskRemoved;
+		public event AudioCdCoreDiskRemovedHandler DiskRemoved;
+		public event AudioCdCoreDiskAddedHandler DiskAdded;
 		
 		public AudioCdCore()
 		{
@@ -384,6 +401,14 @@ namespace Banshee
                     disks[disk.Udi] = disk;
                 
                 HandleUpdated();
+                
+                AudioCdCoreDiskAddedHandler handler = DiskAdded;
+                if(handler != null) {
+                    AudioCdCoreDiskAddedArgs args = new AudioCdCoreDiskAddedArgs();
+                    args.Disk = disk;
+                    handler(this, args);
+                }
+                
                 break;
             }
 
@@ -399,9 +424,12 @@ namespace Banshee
 			disks.Remove(udi);
 			HandleUpdated();
 			
-			EventHandler handler = DiskRemoved;
-			if(handler != null)
-				handler(this, new EventArgs());
+           AudioCdCoreDiskRemovedHandler handler = DiskRemoved;
+           if(handler != null) {
+               AudioCdCoreDiskRemovedArgs args = new AudioCdCoreDiskRemovedArgs();
+               args.Udi = udi;
+               handler(this, args);
+           }
 		}
 	       
 	    private DiskInfo [] GetHalDisks()
