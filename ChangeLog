@@ -1,5 +1,7 @@
 2005-09-02  Aaron Bockover <aaron@aaronbock.net>
 
+	* data/glade/player.glade: Removed Menu->Playlists, moved Properties to
+	View, added Columns item to View menu
 	* src/Library.cs: TracksFnKeyed table for file name lookups for tracks 
 	instead of ID based lookup
 	* src/LibraryTrackInfo.cs: Guard against already imported tracks
