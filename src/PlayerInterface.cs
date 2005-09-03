@@ -531,7 +531,8 @@ namespace Banshee
       
      	private void SetInfoLabel(string text)
       	{
-      		LabelInfo.Markup = "<span size=\"small\">" + text + "</span>";
+      		LabelInfo.Markup = "<span size=\"small\">" 
+      		    + GLib.Markup.EscapeText(text) + "</span>";
       	}
       	
       	public void TogglePlaying()
@@ -745,7 +746,8 @@ namespace Banshee
 				// Translators: position in song. eg, "0:37 of 3:48"
 				String.Format(Catalog.GetString("{0} of {1}"),
 					      String.Format("{0}:{1:00}", position / 60, position % 60),
-					      String.Format("{0}:{1:00}", activeTrackInfo.Duration / 60, activeTrackInfo.Duration % 60))
+					      String.Format("{0}:{1:00}", activeTrackInfo.Duration / 60, 
+					      activeTrackInfo.Duration % 60))
 			);	
 		}
 		
@@ -827,12 +829,24 @@ namespace Banshee
 				FileChooserAction.SelectFolder
 			);
 			
+			
+			try {
+			     chooser.SetCurrentFolderUri(Core.GconfClient.Get(
+			         GConfKeys.LastFileSelectorUri) as string);
+			} catch(Exception) {
+			     chooser.SetCurrentFolder(Environment.GetFolderPath(
+				    Environment.SpecialFolder.Personal));
+		    }
+		    
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
 			chooser.AddButton(Stock.Open, ResponseType.Ok);
 			chooser.DefaultResponse = ResponseType.Ok;
 			
 			if(chooser.Run() == (int)ResponseType.Ok) 
 				playlistModel.AddFile(chooser.CurrentFolderUri);
+				
+			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
+			     chooser.CurrentFolderUri);
 			
 			chooser.Destroy();
 		}
@@ -855,6 +869,14 @@ namespace Banshee
 				FileChooserAction.Open
 			);
 			
+			try {
+			     chooser.SetCurrentFolderUri(Core.GconfClient.Get(
+			         GConfKeys.LastFileSelectorUri) as string);
+			} catch(Exception) {
+			     chooser.SetCurrentFolder(Environment.GetFolderPath(
+				    Environment.SpecialFolder.Personal));
+		    }
+			
 			chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
 			chooser.AddButton(Stock.Open, ResponseType.Ok);
 			
@@ -865,6 +887,9 @@ namespace Banshee
 				foreach(string path in chooser.Uris)
 					playlistModel.AddFile(path);
 			}
+			
+			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
+			     chooser.CurrentFolderUri);
 			
 			chooser.Destroy();
 		}
@@ -916,7 +941,7 @@ namespace Banshee
 				Core.ThreadEnter();
 				(gxml["ViewNameLabel"] as Label).Markup = 
 					String.Format(Catalog.GetString("<b>{0}'s Music Library</b>"),
-						Core.Instance.UserFirstName);
+						GLib.Markup.EscapeText(Core.Instance.UserFirstName));
 				
 				Core.ThreadLeave();
 			} else if(source.Type == SourceType.Ipod) {
@@ -931,11 +956,6 @@ namespace Banshee
 				string tooltip = ipodSource.DiskUsageString + " (" +
 					ipodSource.DiskAvailableString + ")";
 				toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
-				
-				Core.ThreadEnter();
-				(gxml["ViewNameLabel"] as Label).Markup = 
-					"<b>" + source.Name + "</b>";
-				Core.ThreadLeave();
 			} else if(source.Type == SourceType.AudioCd) {
 				playlistModel.Clear();
 				playlistModel.Source = source;
@@ -945,15 +965,18 @@ namespace Banshee
 			} else {
 				playlistModel.LoadFromPlaylist(source.Name);
 				playlistModel.Source = source;
-				
-				Core.ThreadEnter();
-				(gxml["ViewNameLabel"] as Label).Markup = 
-					"<b>" + source.Name + "</b>";
-				Core.ThreadLeave();
 			}
+			
+            Core.ThreadEnter();
+            (gxml["ViewNameLabel"] as Label).Markup = 
+                "<b>" + GLib.Markup.EscapeText(source.Name) + "</b>";
+            Core.ThreadLeave();
 			
 			gxml["ButtonRip"].Visible = source.Type == SourceType.AudioCd;
 			gxml["IpodContainer"].Visible = source.Type == SourceType.Ipod;
+			gxml["SearchLabel"].Sensitive = source.Type == SourceType.Ipod 
+			     || source.Type == SourceType.Library;
+			searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
 		}
 		
 		private void OnIpodPropertiesClicked(object o, EventArgs args)
@@ -1057,7 +1080,7 @@ namespace Banshee
 					Catalog.GetString("{0} Total Play Time"),
 					timeDisp);
 				text += " ";
-				text += String.Format("[{0}]", playlistModel.TotalDuration);
+				//text += String.Format("[{0}]", playlistModel.TotalDuration);
 				LabelStatusBar.Text = text;
 			}
 				
@@ -1177,19 +1200,17 @@ namespace Banshee
 			Menu menu = gxmlSourceMenu["SourceMenu"] as Menu;
 			MenuItem addSelectedSongs = gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem;
 			MenuItem sourceDuplicate = gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem;
+			MenuItem sourceRename = gxmlSourceMenu["ItemSourceRename"] as MenuItem;			
 			MenuItem sourceDelete = gxmlSourceMenu["ItemSourceDelete"] as MenuItem;
 			MenuItem sourceProperties = gxmlSourceMenu["ItemSourceProperties"] as MenuItem;
 			ImageMenuItem ejectItem = gxmlSourceMenu["ItemEject"] as ImageMenuItem;
 			
-			addSelectedSongs.Sensitive = source.Type == SourceType.Playlist
-				&& playlistView.Selection.CountSelectedRows() > 0;
-			sourceDuplicate.Sensitive = false;
-			
-			if(source.Type == SourceType.Ipod)
-				sourceProperties.Sensitive = true;
-			else
-				sourceProperties.Sensitive = false;
-		
+			//addSelectedSongs.Sensitive = source.Type == SourceType.Playlist
+			//	&& playlistView.Selection.CountSelectedRows() > 0;
+            addSelectedSongs.Visible = false;
+            
+		    sourceProperties.Visible = source.Type == SourceType.Ipod;
+		  
 			if(source.CanEject) {
 				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
 			}
@@ -1197,9 +1218,13 @@ namespace Banshee
 			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
 			menu.Show();
 			
-			sourceDuplicate.Visible = !source.CanEject;
+			addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
+			 source.Type == SourceType.Ipod;
+			
+			sourceDuplicate.Visible = false;
 			ejectItem.Visible = source.CanEject;
 			sourceDelete.Visible = !source.CanEject;
+			sourceRename.Visible = source.CanRename;
 			
 			args.RetVal = true;
 		}
@@ -1243,18 +1268,28 @@ namespace Banshee
 		
 		private void OnItemSourceRenameActivate(object o, EventArgs args)
 		{
-			if(sourceView.HighlightedSource == null || 
-				sourceView.HighlightedSource.Type == SourceType.Library)
-				return;
-				
-			InputDialog input = new InputDialog(
+			Source source = sourceView.HighlightedSource;
+			
+			if(source == null || !source.CanRename)
+			     return;
+			
+			InputDialog input;
+			
+			if(source.Type == SourceType.Playlist)
+			 input = new InputDialog(
 				Catalog.GetString("Rename Playlist"),
 				Catalog.GetString("Enter new playlist name"), 
-				"playlist-icon-large.png", 
-				sourceView.HighlightedSource.Name);
+				"playlist-icon-large.png", source.Name);
+		    else
+		      input = new InputDialog(
+		          Catalog.GetString("Rename iPod"),
+		          Catalog.GetString("Enter new name for your iPod"),
+		          "ipod-48.png", source.Name);
+				
 			string newName = input.Execute();
 			if(newName != null)
-				sourceView.HighlightedSource.Name = newName;
+				source.Rename(newName);
+
 			sourceView.QueueDraw();
 		}
 		
@@ -1377,6 +1412,7 @@ namespace Banshee
 		
 			if(path == null)
 				return;
+			
 			clickX = (int)args.Event.X;
 			clickY = (int)args.Event.Y;
 		
@@ -1410,6 +1446,7 @@ namespace Banshee
 				return;
 			if(args.Event.Window != playlistView.BinWindow)
 				return;
+			        
 			args.RetVal = true;
 			if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
 						    (int)args.Event.X, (int)args.Event.Y))
@@ -1419,6 +1456,9 @@ namespace Banshee
 						       (int)args.Event.Y, out path))
 				return;
 
+           if(sourceView.SelectedSource.Type == SourceType.AudioCd)
+		      return;
+		      
 			Gtk.Drag.Begin(playlistView, new TargetList (playlistViewSourceEntries),
 				       Gdk.DragAction.Move | Gdk.DragAction.Copy, 1, args.Event);
 		}
@@ -1696,6 +1736,7 @@ namespace Banshee
 				
 			switch(source.Type) {
 				case SourceType.Library:
+				case SourceType.AudioCd:
 					return;
 			}
 				
@@ -1820,7 +1861,7 @@ namespace Banshee
 					propWin.Destroy();
 					if(propWin.Edited && device.CanWrite)
 						device.Save();
-					source.Name = device.Name;
+					source.Rename(device.Name);
 					sourceView.QueueDraw();
 					break;
 			}

@@ -87,7 +87,7 @@ namespace Banshee
 			
 			Core.Library.Tracks[trackId] = this;
 			
-			uid = Core.Instance.NextUid;
+			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 	    }
 	    
@@ -110,7 +110,7 @@ namespace Banshee
 			
 			Core.Library.Tracks[trackId] = this;
 			
-			uid = Core.Instance.NextUid;
+			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
@@ -118,7 +118,7 @@ namespace Banshee
 		{
 			LoadFromDatabaseReader(reader);
 			Core.Library.Tracks[trackId] = this;
-			uid = Core.Instance.NextUid;
+			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		

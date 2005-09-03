@@ -8,10 +8,6 @@ INCLUDES = \
 	$(HAL_CFLAGS) \
 	$(GST_CFLAGS)
 
-if ENABLE_XING
-	INCLUDES += -I$(top_builddir)/libbanshee/xing
-endif
-
 bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
 
@@ -32,11 +28,7 @@ libbanshee_la_SOURCES = \
 	gst-misc.c \
 	gst-misc.h
 
-if ENABLE_XING
-libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS) $(top_builddir)/libbanshee/xing/libgstxingenc.la
-else
 libbanshee_la_LIBADD = $(HAL_LIBS) $(GST_LIBS)
-endif
 
 CLEANFILES = cdtest
 DISTCLEANFILES = Makefile.in

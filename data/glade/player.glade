@@ -782,7 +782,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkLabel" id="label12">
+			    <widget class="GtkLabel" id="SearchLabel">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Search:</property>
 			      <property name="use_underline">False</property>

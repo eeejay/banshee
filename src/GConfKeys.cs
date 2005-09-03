@@ -50,6 +50,7 @@ namespace Banshee
 		public const string EncoderProfiles = BasePath + "EncoderProfiles";
 		public const string RippingProfile = BasePath + "RippingProfile";
 		public const string RippingBitrate = BasePath + "RippingBitrate";
+		public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
 	
 		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";

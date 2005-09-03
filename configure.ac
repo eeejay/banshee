@@ -7,8 +7,8 @@ AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
 VERSION_MINOR=9
-VERSION_MICRO=3
-VERSION_REVIS=no
+VERSION_MICRO=4
+VERSION_REVIS=1
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 ASM_VERSION="$VERSION.*"
@@ -127,6 +127,8 @@ GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.7
 AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
 
+gst_pkg_name="gstreamer"
+
 PKG_CHECK_MODULES(GST,
 	gstreamer >= $GSTREAMER_REQUIRED_VERSION
 	gstreamer-gconf >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
@@ -144,6 +146,8 @@ if test "x$enable_gst" = "xno" ; then
 		gstreamer-plugins-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
 		enable_gst=yes, enable_gst=no)
 
+	gst_pkg_name="gstreamer-0.8"
+
 	if test "x$enable_gst" = "xno" ; then
 		AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
 	fi
@@ -151,6 +155,13 @@ fi
 
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
+
+GST_PLUGINS_DIR="`$PKG_CONFIG --variable=libdir $gst_pkg_name`/$gst_pkg_name"
+if test ! -d "$GST_PLUGINS_DIR"; then
+    AC_MSG_ERROR([GStreamer plugins directory could not be found])
+fi
+
+AC_SUBST(GST_PLUGINS_DIR)
 
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.6
@@ -260,20 +271,21 @@ po/Makefile.in
 echo "
 banshee-$VERSION
 
-    Install Prefix:   ${prefix}
-    C Compiler:       ${CC}
-    Mono C# Compiler: ${MCS}
-    Mono Runtime:     ${MONO}
+    Install Prefix:    ${prefix}
+    C Compiler:        ${CC}
+    Mono C# Compiler:  ${MCS}
+    Mono Runtime:      ${MONO}
 
     Engines:
-      GStreamer:      yes
-      Helix:          ${enable_helix}
+      GStreamer:       yes
+      Helix:           ${enable_helix}
 
-    Xing MP3 Encoder: ${enable_xing}
+    Xing MP3 Encoder:  ${enable_xing}
+    GStreamer Plugins: ${GST_PLUGINS_DIR}
 "
 
 if test "x${enable_helix}" = "xyes"; then
-	echo "    Helix/RealPlayer: ${helix_libs}
+	echo "    Helix/RealPlayer:  ${helix_libs}
 	"
 fi
 

@@ -1,3 +1,27 @@
+2005-09-02  Aaron Bockover <aaron@aaronbock.net>
+
+	* src/SourceView.cs: Fixed right click/highlight bug (dup of danw, cvs
+	collision), Draw Markup in Source cell renderer wrapped in 
+	GLib.Markup.Escape
+	* src/GConfKeys.cs: LastFileSelectorUri: key to store last position in
+	the file selectors
+	* src/PlayerInterface.cs: Retain last directory in gconf for the file/folder
+	selectors. Open the selector at that path.
+	* src/LibraryTrackInfo.cs, src/IpodTrackInfo.cs, src/AudioCdCore.cs:
+	Set the track UID using UidGenerator.Next
+	* src/Core.cs: NextUid removed in favor of UidGenerator.Next
+	* src/Dialogs.cs: MessageDialogs class for really simple prompting
+	* src/AudioCdCore.cs: Better HAL event and device handling... no longer
+	regenerate disk objects on a HAL event.
+	* src/PlayerInterface.cs: Do not allow drag operations for Audio CDs,
+	Disable search for CDs and Playlists, Cleaned up Menus, Rename on iPod
+	now pops up an iPod-specific rename dialog, fixed markup errors, Fixed
+	playlist appending, only allow rename on sources that allow it
+	* src/Library.cs: CanRename property for Source objects. set accessor
+	on Source.Name removed, moved to Rename method that returns false on
+	failure. PlaylistSource shows an error dialog if it can't rename (existing
+	playlist).
+
 2005-09-02  Dan Winship  <danw@novell.com>
 
 	* src/Dialogs.cs (InputDialog.Execute): make Return == OK.

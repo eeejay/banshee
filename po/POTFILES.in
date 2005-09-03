@@ -11,9 +11,10 @@ data/glade/trackinfo.glade
 libbanshee/cd-info.c
 libbanshee/cd-rip.c
 libbanshee/cd-detect.c
+libbanshee/gst-encode.c
+libbanshee/gst-misc.c
+libbanshee/gst-player-engine.c
 mediaengines/gst/GstPlayerEngine.cs
-mediaengines/gst/gst-encode.c
-mediaengines/gst/gst-player-engine.c
 mediaengines/helix/HelixPlayer.cs
 mediaengines/helix/HxPlayer.cs
 plugincore/TrackInfo.cs
@@ -22,11 +23,13 @@ src/BurnCore.cs
 src/BurnTransaction.cs
 src/FileEncodeTransaction.cs
 src/GstFileEncoder.cs
+src/GstMisc.cs
 src/IpodPropertiesWindow.cs
 src/Library.cs
 src/LibraryTransactionStatus.cs
 src/LibraryTransactions.cs
 src/NotificationAreaIcon.cs
+src/PipelineProfile.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
 src/PlaylistRowRenderer.cs

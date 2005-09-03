@@ -148,7 +148,11 @@ namespace Banshee
 				return false;
 			}
 			
-			loaded = player.OpenUri("file://" + ti.Uri);
+			string file = ti.Uri;
+			if(!file.StartsWith("file://"))
+			     file = "file://" + file;
+			
+			loaded = player.OpenUri(file);
 			
 			if(loaded)
 				track = ti;

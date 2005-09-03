@@ -571,6 +571,7 @@ namespace Banshee
 		public void AddSelectedToPlayList(string name)
 		{
 			Playlist pl = new Playlist(name);
+			pl.Load();
 		
 			foreach(TreePath p in Selection.GetSelectedRows()) {
 				TrackInfo ti = model.PathTrackInfo(p);

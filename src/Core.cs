@@ -42,8 +42,7 @@ namespace Banshee
 	public class Core
 	{
 		private static Core appInstance = null;
-		private static int uid;
-		
+
 		public static string [] Args = null;
 		public System.Threading.Thread MainThread;
 		
@@ -96,13 +95,6 @@ namespace Banshee
 			}
 		}
 		
-		public int NextUid
-		{
-			get {
-				return uid++;
-			}
-		}
-		
 		public DBusServer DBusServer
 		{
 			get { 
@@ -125,8 +117,6 @@ namespace Banshee
 
 		private Core()
 		{
-            uid = 0;
-
             Gdk.Threads.Init();
             Gtk.Application.Init();
 
@@ -246,4 +236,16 @@ namespace Banshee
 			} catch(Exception) { }
 		}
 	}
+	
+    public class UidGenerator
+    {
+        private static int uid = 0;
+        
+        public static int Next
+        {
+            get {
+                return ++uid;
+            }
+        }
+    }
 }

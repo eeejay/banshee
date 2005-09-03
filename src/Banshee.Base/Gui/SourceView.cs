@@ -163,7 +163,7 @@ namespace Banshee
 			renderer.view = this;
 			renderer.source = (Source)store.GetValue(iter, 0);
 			renderer.Selected = renderer.source.Equals(selectedSource);
-			renderer.Editable = renderer.source.Type != SourceType.Library;
+			renderer.Editable = renderer.source.CanRename;
 		}
 		
 		public void UpdateRow(TreePath path, string text)
@@ -174,7 +174,7 @@ namespace Banshee
 				return;
 			
 			Source source = store.GetValue(iter, 0) as Source;
-			source.Name = text;
+			source.Rename(text);
 			QueueDraw();
 		}
 		
@@ -214,7 +214,8 @@ namespace Banshee
 		private void OnCursorChanged(object o, EventArgs args)
 		{				
 			if(currentTimeout < 0)
-				currentTimeout = (int)GLib.Timeout.Add(200, OnCursorChangedTimeout);
+				currentTimeout = (int)GLib.Timeout.Add(200, 
+				    OnCursorChangedTimeout);
 		}
 		
 		private bool OnCursorChangedTimeout()
@@ -436,7 +437,7 @@ namespace Banshee
 			titleLayout.FontDescription = fd;
 			countLayout.FontDescription = fd;
 			
-			string titleText = source.Name;
+			string titleText = GLib.Markup.EscapeText(source.Name);
 			titleLayout.SetMarkup(titleText);
 			countLayout.SetMarkup("<span size=\"small\">(" + source.Count + ")</span>");
 			

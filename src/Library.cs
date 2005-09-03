@@ -126,6 +126,7 @@ namespace Banshee
 		protected string name;
 		protected SourceType type;
 		protected bool canEject;
+		protected bool canRename;
 
 		public event EventHandler Updated;
 		
@@ -140,13 +141,18 @@ namespace Banshee
 			get {
 				return name;
 			}
-			
-			set {
-				UpdateName(name, value);
-				EventHandler handler = Updated;
-				if(handler != null)
-					handler(this, new EventArgs());
-			}
+		}
+		
+		public bool Rename(string newName)
+		{
+		    if(!UpdateName(name, newName))
+				    return false;
+				    
+        		EventHandler handler = Updated;
+        		if(handler != null)
+        			handler(this, new EventArgs());
+        			
+        	   return true;
 		}
 		
 		public SourceType Type
@@ -168,9 +174,16 @@ namespace Banshee
 			}
 		}
 		
-		public virtual void UpdateName(string oldName, string newName)
+		public bool CanRename
 		{
+		    get {
+		        return canRename;
+		    }
+		}
 		
+		public virtual bool UpdateName(string oldName, string newName)
+		{
+		  return false;
 		}
 		
 		public virtual bool Eject()
@@ -181,9 +194,10 @@ namespace Banshee
 	
 	public class LibrarySource : Source
 	{
-		public LibrarySource() : base(Catalog.GetString("Library"), SourceType.Library)
+		public LibrarySource() : base(Catalog.GetString("Library"), 
+		  SourceType.Library)
 		{
-		
+		      canRename = false;
 		}
 		
 		public override int Count
@@ -200,17 +214,25 @@ namespace Banshee
 	
 		public PlaylistSource(string name) : base(name, SourceType.Playlist)
 		{
-		
+		    canRename = true;
 		}
 		
-		public override void UpdateName(string oldName, string newName)
+		public override bool UpdateName(string oldName, string newName)
 		{
 			if(oldName.Equals(newName))
-				return;
+				return false;
 			
 			Playlist pl = new Playlist(oldName);
-			pl.Rename(newName);
-			name = newName;
+			if(pl.Rename(newName)) {
+			     name = newName;
+			     return true;
+			}
+			
+			Core.ThreadEnter();
+			MessageDialogs.CannotRenamePlaylist();
+			Core.ThreadLeave();
+			
+			return false;
 		}
 		
 		public override int Count
@@ -235,15 +257,18 @@ namespace Banshee
 		{
 			this.device = device;
 			canEject = true;
+			canRename = true;
 		}
 		
-		public override void UpdateName(string oldName, string newName)
+		public override bool UpdateName(string oldName, string newName)
 		{
 			if(!oldName.Equals(newName)) {
 				device.Name = newName;
 				name = newName;
 				device.Save();
 			}
+			
+			return true;
 		}
 		
 		public override int Count
@@ -316,6 +341,7 @@ namespace Banshee
 			this.disk = disk;
 			disk.Updated += OnUpdated;
 			canEject = true;
+			canRename = false;
 		}
 		
 		public override int Count
@@ -341,7 +367,7 @@ namespace Banshee
 		private void OnUpdated(object o, EventArgs args)
 		{
 			Core.ThreadEnter();
-			Name = disk.Title;
+			Rename(disk.Title);
 			Core.ThreadLeave();
 		}
 	}
@@ -527,14 +553,20 @@ namespace Banshee
 				Append(ti);
 		}
 		
-		public void Rename(string newName)
+		public bool Rename(string newName)
 		{
+			if(GetId(newName) != 0)
+			   return false;
+			
 			Statement query = new Update("Playlists", "Name", newName) + 
 				new Where("PlaylistID", Op.EqualTo, Playlist.GetId(name));
 			try {
 				Core.Library.Db.Execute(query);
 				name = newName;
-			} catch(Exception) {}
+				return true;
+			} catch(Exception) {
+			     return false;
+			}
 		}
 		
 		public void Save()

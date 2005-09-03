@@ -48,7 +48,7 @@ namespace Banshee
 		{
 			this.song = song;
 			Load();
-			uid = Core.Instance.NextUid;
+			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
 		}

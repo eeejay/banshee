@@ -38,34 +38,7 @@
 
 #include <gst/gst.h>
 
-#include <xing/gst-xing-encoder.h>
-
 static gboolean gstreamer_initialized = FALSE;
-
-#ifdef ENABLE_XING
-static gboolean
-register_elements(GstPlugin *plugin)
-{
-	return gst_element_register(plugin, 
-		XING_MP3_ENCODER_NAME,
-		GST_RANK_NONE, 
-		XING_TYPE_MP3_ENCODER);
-}
-
-static GstPluginDesc xingenc_plugin_desc = {
-	GST_VERSION_MAJOR,
-	GST_VERSION_MINOR,
-	XING_MP3_ENCODER_NAME,
-	"Xing MP3 Encoder",
-	register_elements,
-	NULL,
-	VERSION,
-	"LGPL",
-	"Banshee",
-	"http://banshee-project.org",
-	GST_PADDING_INIT
-};
-#endif
 
 void gstreamer_initialize()
 {
@@ -73,11 +46,6 @@ void gstreamer_initialize()
 		return;
 
 	gst_init(NULL, NULL);
-	
-#ifdef ENABLE_XING
-	g_message("Registering GStreamer plugin for the Xing Encoder");
-	_gst_plugin_register_static(&xingenc_plugin_desc);
-#endif
 
 	gstreamer_initialized = TRUE;
 }
