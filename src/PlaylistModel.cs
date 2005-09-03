@@ -454,5 +454,14 @@ namespace Banshee
 				return shuffle;
 			}
 		}
+		
+		public TrackInfo FirstTrack {
+		  get {
+		      TreeIter iter = TreeIter.Zero;
+		      if(GetIterFirst(out iter) && !iter.Equals(TreeIter.Zero))
+		          return IterTrackInfo(iter);
+		      return null;
+		  }
+	   }
 	}
 }

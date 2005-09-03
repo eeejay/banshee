@@ -102,15 +102,17 @@ namespace Banshee
 		private long end_time;
 		
 		private string disk_id;
+		private string udi;
 		
 		private string device;
 		
-		public AudioCdTrackInfo(string device)
+		public AudioCdTrackInfo(string device, string udi)
 		{
 		    uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
 			this.device = device;
+			this.udi = udi;
 		}
 		
 		public override void Save()
@@ -140,6 +142,7 @@ namespace Banshee
 		public long EndTime     { get { return end_time;     } set { end_time =     value; } }
 		public string DiskId    { get { return disk_id;      } set { disk_id =      value; } }
 		public string Device    { get { return device;       } }
+		public string Udi    { get { return udi;       } }
 	}
 	
 	public class AudioCdDisk
@@ -218,7 +221,7 @@ namespace Banshee
 					(CdTrackInfoRaw)Marshal.PtrToStructure(rawPtr, 
 						typeof(CdTrackInfoRaw));
 						
-				tracks[i] = new AudioCdTrackInfo(deviceNode);
+				tracks[i] = new AudioCdTrackInfo(deviceNode, udi);
 				
 				tracks[i].TrackIndex = trackRaw.number;
 				tracks[i].Minutes = trackRaw.minutes;

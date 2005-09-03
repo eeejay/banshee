@@ -367,7 +367,7 @@ namespace Banshee
 		private void OnUpdated(object o, EventArgs args)
 		{
 			Core.ThreadEnter();
-			Rename(disk.Title);
+			name = disk.Title;
 			Core.ThreadLeave();
 		}
 	}

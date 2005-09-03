@@ -130,10 +130,7 @@ namespace Banshee
 			
 			Core.Instance.DBusServer.RegisterObject(
 				new BansheeCore(Window, this), "/org/gnome/Banshee/Core");
-			
-			Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
-			AudioCdRefresh();
-				
+						
 			WindowPlayer.Show();
 			
 			Core.Instance.Player.Iterate += OnPlayerTick;
@@ -141,6 +138,9 @@ namespace Banshee
 			
 			Core.Instance.AudioCdPlayer.Iterate += OnPlayerTick;
 			Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;	
+			
+			Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
+			Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
 			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
@@ -587,21 +587,6 @@ namespace Banshee
             ti.IncrementPlayCount();
             playlistView.QueueDraw();
         }
-
-		private void AudioCdRefresh()
-		{
-			Core.ThreadEnter();
-			
-			sourceView.QueueDraw();
-			playlistView.QueueDraw();
-			
-			Core.ThreadLeave();
-		}
-
-		private void OnAudioCdCoreUpdated(object o, EventArgs args)
-		{
-			AudioCdRefresh();
-		}
 		
 		// ---- Window Event Handlers ----
 		
@@ -978,6 +963,46 @@ namespace Banshee
 			     || source.Type == SourceType.Library;
 			searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
 		}
+		
+        private void OnAudioCdCoreDiskRemoved(object o, 
+            AudioCdCoreDiskRemovedArgs args)
+        {
+            Source source = sourceView.SelectedSource;
+            if(source == null)
+                return;
+
+            if(source.Type == SourceType.AudioCd) {
+                AudioCdSource cdSource = source as AudioCdSource;
+                if(cdSource.Disk.Udi == args.Udi) {
+                    sourceView.SelectLibrary();
+                }
+            }
+        }
+
+        private void OnAudioCdCoreUpdated(object o, EventArgs args)
+        {
+            Source source = sourceView.SelectedSource;
+            if(source == null)
+                return;
+            
+            Core.ThreadEnter();
+            playlistView.QueueDraw();
+            
+            if(source.Type == SourceType.AudioCd 
+                && playlistModel.FirstTrack != null 
+                && playlistModel.FirstTrack.GetType() == 
+                typeof(AudioCdTrackInfo)) {
+                AudioCdSource cdSource = source as AudioCdSource;
+                AudioCdTrackInfo track = playlistModel.FirstTrack 
+                    as AudioCdTrackInfo;
+                
+                if(cdSource.Disk.Udi == track.Udi) 
+                    (gxml["ViewNameLabel"] as Label).Markup = 
+                    "<b>" + GLib.Markup.EscapeText(cdSource.Disk.Title) + "</b>";
+            }
+                    
+            Core.ThreadLeave();
+        }
 		
 		private void OnIpodPropertiesClicked(object o, EventArgs args)
 		{
