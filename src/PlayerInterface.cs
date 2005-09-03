@@ -1120,6 +1120,11 @@ namespace Banshee
 			playlistView.ColumnChooser();
 		}
 		
+		private void OnMenuColumnsActivate(object o, EventArgs args)
+		{
+		    OnItemColumnsActivate(o, args);
+		}
+		
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
 			int selCount = playlistView.Selection.CountSelectedRows();

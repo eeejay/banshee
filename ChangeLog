@@ -1,5 +1,6 @@
 2005-09-02  Aaron Bockover <aaron@aaronbock.net>
 
+	* banshee: Version 0.9.5
 	* data/glade/player.glade: Removed Menu->Playlists, moved Properties to
 	View, added Columns item to View menu
 	* src/Library.cs: TracksFnKeyed table for file name lookups for tracks 

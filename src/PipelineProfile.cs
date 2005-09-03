@@ -339,7 +339,7 @@ namespace Banshee
             48
         };
        
-        public PipelineProfileSelector()
+        public PipelineProfileSelector(string extFilter)
         {
             profileCombo = ComboBox.NewText();
             bitrateCombo = ComboBox.NewText();
@@ -350,9 +350,28 @@ namespace Banshee
             foreach(int bitrate in bitrates)
                 bitrateCombo.AppendText(String.Format("{0} Kbps", bitrate));
             
+            if(extFilter != null) {
+                string [] filters = extFilter.Split(',');
+                ArrayList filteredProfiles = new ArrayList();
+                
+                foreach(string filter in filters) {
+                    foreach(PipelineProfile profile in profiles) {
+                        if(profile.Extension.ToLower() == 
+                            filter.Trim().ToLower())
+                            filteredProfiles.Add(profile);
+                    }
+                }
+                
+                if(filteredProfiles.Count == 0)
+                    profiles = null;
+                else
+                    profiles = filteredProfiles.ToArray(typeof(PipelineProfile)) 
+                        as PipelineProfile [];
+            }
+            
             foreach(PipelineProfile profile in profiles)
                 profileCombo.AppendText(profile.Name);
-                
+                          
             profileCombo.Changed += OnProfileChanged;
             bitrateCombo.Changed += OnBitrateChanged;
                 
@@ -365,6 +384,11 @@ namespace Banshee
                 
             ActiveProfileIndex = 0;
             Bitrate = -1;
+        }
+        
+        public PipelineProfileSelector() : this(null)
+        {
+                        
         }
         
         private void OnProfileChanged(object o, EventArgs args)
