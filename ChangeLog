@@ -1,5 +1,8 @@
 2005-09-02  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/Library.cs: TracksFnKeyed table for file name lookups for tracks 
+	instead of ID based lookup
+	* src/LibraryTrackInfo.cs: Guard against already imported tracks
 	* src/PlayerInterface.cs: Connect to AudioCdCore.Updated to refresh
 	the view title if update is for CD in current view
 	* src/SourceView.cs: Use Add/Remove events for AudioCdCore to remove

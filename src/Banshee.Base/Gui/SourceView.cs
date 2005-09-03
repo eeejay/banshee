@@ -154,6 +154,7 @@ namespace Banshee
 				Core.Instance.AudioCdCore.DiskRemoved 
 				    += OnAudioCdCoreDiskRemoved;
 				Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+				Core.Library.Updated += OnLibraryUpdated;
 			} catch(NullReferenceException) {}
 			
 			RefreshList();
@@ -267,7 +268,9 @@ namespace Banshee
 		
 		private void OnSourceUpdated(object o, EventArgs args)
 		{
+			Core.ThreadEnter();
 			QueueDraw();
+			Core.ThreadLeave();
 		}
 		
 		private void OnIpodCoreUpdated(object o, EventArgs args)
@@ -332,6 +335,13 @@ namespace Banshee
             QueueDraw();
             Core.ThreadLeave();
         }
+		
+		private void OnLibraryUpdated(object o, EventArgs args)
+		{
+		    Core.ThreadEnter();
+			QueueDraw();
+			Core.ThreadLeave();
+		}
 		
 		public Source GetSource(TreePath path)
 		{

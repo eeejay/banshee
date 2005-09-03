@@ -65,6 +65,22 @@ namespace Banshee
 			canSaveToDatabase = true;
 		}
 	
+        private void CheckIfExists(string uri)
+        {
+              bool exists = false;
+              try {
+                exists = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] != null;
+              } catch(Exception) {
+                exists = false;
+              }
+              
+              if(exists) {
+                  // TODO: we should actually probably take this as a hint to
+                  // reparse metadata
+                  throw new ApplicationException("Song is already in library");
+              } 
+        }
+	
 	    public LibraryTrackInfo(string uri, string artist, string album, 
 	       string title, string genre, uint trackNumber, uint trackCount,
 	       int year, long duration)
@@ -83,9 +99,10 @@ namespace Banshee
 			this.year = year;
 			this.duration = duration;
 			
-			SaveToDatabase(true);
+			CheckIfExists(uri);
 			
-			Core.Library.Tracks[trackId] = this;
+			SaveToDatabase(true);
+			Core.Library.SetTrack(trackId, this);
 			
 			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
@@ -104,11 +121,13 @@ namespace Banshee
 				uri = uri.Substring(6);
 				LoadFromDatabase(uri);
 			} else {
-				if(!LoadFromDatabase(uri))
+                CheckIfExists(uri);
+                
+            		if(!LoadFromDatabase(uri))
 					LoadFromFile(uri);
 			}
 			
-			Core.Library.Tracks[trackId] = this;
+			Core.Library.SetTrack(trackId, this);
 			
 			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
@@ -117,7 +136,7 @@ namespace Banshee
 		public LibraryTrackInfo(IDataReader reader) : this()
 		{
 			LoadFromDatabaseReader(reader);
-			Core.Library.Tracks[trackId] = this;
+			Core.Library.SetTrack(trackId, this);;
 			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}

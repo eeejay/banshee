@@ -42,13 +42,16 @@ namespace Banshee
 		public Database Db;
 		public LibraryTransactionManager TransactionManager;
 		public Hashtable Tracks;
+		public Hashtable TracksFnKeyed;
 		public Hashtable Playlists;
 		
 		public event EventHandler Reloaded;
+		public event EventHandler Updated;
 		
 		public Library()
 		{
 			Tracks = new Hashtable();
+			TracksFnKeyed = new Hashtable();
 			Playlists = new Hashtable();
 			ReloadDatabase();
 			TransactionManager = new LibraryTransactionManager();
@@ -111,6 +114,28 @@ namespace Banshee
 				
 				return libraryLocation;		 	
 			 }	
+		}
+		
+		public void SetTrack(int id, TrackInfo track)
+		{
+		    Tracks[id] = track;
+		    TracksFnKeyed[MakeFilenameKey(track.Uri)] = track;
+		    
+		    EventHandler handler = Updated;
+		    if(handler != null)
+		      handler(this, new EventArgs());
+		}
+		
+		public static string MakeFilenameKey(string uri)
+		{
+		      string path = uri;
+		      
+		      if(path.StartsWith("file://"))
+		          path = path.Substring(7);
+		
+    		      return Path.GetDirectoryName(path) + 
+                     Path.DirectorySeparatorChar + 
+                     Path.GetFileNameWithoutExtension(path);
 		}
 	}
 

@@ -220,7 +220,6 @@ namespace Banshee
                     FileNamePattern.BuildFull(track, profile.Extension);
                     
                 if(!ripper.RipTrack(track, track.TrackIndex + 1, filename)) {
-                    Console.WriteLine("** Error: " + ripper.Error);
                     break;
                 }
                 
