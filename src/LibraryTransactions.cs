@@ -87,7 +87,9 @@ namespace Banshee
 		
 		public void SafeRun()
 		{
-			try {
+			Run();
+			
+			/*try {
 				Run();
 			} catch(Exception e) {
 				DebugLog.Add(String.Format(Catalog.GetString(
@@ -96,7 +98,7 @@ namespace Banshee
 					GetType().ToString(),
 					e.GetType().ToString(), 
 					e.Message));
-			}
+			}*/
 			
 			Finish(this);
 		}
@@ -284,6 +286,9 @@ namespace Banshee
 				
 			if(cancelRequested)
 				return;
+				
+		    if(Path.GetFileName(file).StartsWith(".banshee-ipod-"))
+		       return;
 				
 			DateTime startStamp = DateTime.Now;
 			

@@ -27,14 +27,29 @@
  */
  
 #include <gst/gst.h>
+#include <gst/gconf/gconf.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 
 #include "gst-encode.h"
 #include "gst-init.h"
+
+static GstElement *
+gst_file_encoder_build_encoder(const gchar *encoder_pipeline)
+{
+    GstElement *encoder = NULL;
+    gchar *pipeline;
+    
+    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
+    encoder = gst_gconf_render_bin_from_description(pipeline);
+    g_free(pipeline);
+    
+    return encoder;
+}    
 
 GstFileEncoder *
 gst_file_encoder_new()
@@ -71,12 +86,11 @@ gst_error_callback(GstElement *elem, GstElement *arg1,
 static GstElement *
 gst_file_encoder_create_pipeline(GstFileEncoder *encoder, 
 	const char *input_file, const char *output_file, 
-	const gchar *encoder_plugin, GstElement **out_sink)
+	const gchar *encoder_pipeline, GstElement **out_sink)
 {
 	GstElement *pipeline;
 	GstElement *source_elem;
 	GstElement *decoder_elem;
-	GstElement *converter_elem;
 	GstElement *encoder_elem;
 	GstElement *sink_elem;
 
@@ -97,17 +111,11 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 		return NULL;
 	}
 
-	converter_elem = gst_element_factory_make("audioconvert", "converter");
-	if(converter_elem == NULL) {
-		encoder->error = g_strdup(_("Could not create 'converter' element"));
-		return NULL;
-	}
-	
-	encoder_elem = gst_element_factory_make(encoder_plugin, "encoder");
+	encoder_elem = gst_file_encoder_build_encoder(encoder_pipeline);
 	if(encoder_elem == NULL) {
-		encoder->error = g_strdup_printf(_("Could not create 'encoder' element: %s"), 
-			encoder_plugin);
-		return NULL;
+	     encoder->error = g_strdup_printf(
+	       _("Could not create encoding pipeline: %s"), encoder_pipeline);
+	     return NULL;
 	}
 
 	sink_elem = gst_element_factory_make("filesink", "sink");
@@ -119,13 +127,11 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 	gst_bin_add_many(GST_BIN(pipeline), 
 		source_elem, 
 		decoder_elem, 
-		converter_elem, 
 		encoder_elem, 
 		sink_elem, NULL);
 	
 	gst_element_link_many(source_elem,
 		decoder_elem,
-		converter_elem,
 		encoder_elem, 
 		sink_elem, NULL);
 	
@@ -142,7 +148,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 
 gboolean 
 gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file, 
-	const gchar *output_file, enum GstEncodeFormat encode_format, 
+	const gchar *output_file, const gchar *encoder_pipeline, 
 	GstFileEncoderProgressCallback progress_cb)
 {
 	GstElement *pipeline;
@@ -150,7 +156,6 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	GstFormat format = GST_FORMAT_BYTES;
 	gint64 position, total;
 	gdouble last_fraction = 0.0, fraction = 0.0;
-	const gchar *encode_plugin;
 	struct stat statbuf;
 
 	if(encoder == NULL)
@@ -163,21 +168,8 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	
 	encoder->cancel = FALSE;
 	
-	switch(encode_format) {
-		case GST_ENCODE_MP3:
-			encode_plugin = "lame";
-			break;
-		case GST_ENCODE_AAC:
-			encode_plugin = "faac";
-			break;
-		case GST_ENCODE_WAV:
-		default:
-			encode_plugin = "wavenc";
-			break;
-	}
-	
 	pipeline = gst_file_encoder_create_pipeline(encoder, input_file,
-		output_file, encode_plugin, &sink);
+		output_file, encoder_pipeline, &sink);
 	
 	if(pipeline == NULL)
 		return FALSE;
@@ -190,10 +182,9 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 		
 		gst_element_query(sink, GST_QUERY_POSITION, &format, &position);
 		gst_element_query(sink, GST_QUERY_TOTAL, &format, &total);
-		
+	
 		if(total > position && total != 0 && progress_cb != NULL) {
 			fraction = (double)position / (double)total;
-			
 			if(fraction - 0.01 > last_fraction) {
 				last_fraction = fraction;
 				progress_cb(encoder, fraction);
@@ -205,7 +196,7 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	g_object_unref(G_OBJECT(pipeline));
 
 	if(encoder->error == NULL) {
-		if(g_stat(output_file, &statbuf) == 0) {
+		if(stat(output_file, &statbuf) == 0) {
 			if(statbuf.st_size < 100) {
 				encoder->error = g_strdup(_("No decoder could be found "
 							    "for source format."));

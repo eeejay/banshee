@@ -136,7 +136,7 @@ namespace Banshee
 		public LibraryTrackInfo(IDataReader reader) : this()
 		{
 			LoadFromDatabaseReader(reader);
-			Core.Library.SetTrack(trackId, this);;
+			Core.Library.SetTrack(trackId, this);
 			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}

@@ -64,6 +64,8 @@ namespace Banshee
 		private Library library;
 		private GConf.Client gconfClient;
 		
+		private LogCore log;
+		
 		public static Core Instance
 		{
 			get {
@@ -114,6 +116,13 @@ namespace Banshee
                     activePlayer.EngineName + "'");
             }
         }
+        
+        public static LogCore Log
+        {
+            get {
+                return Instance.log;
+            }
+        }
 
 		private Core()
 		{
@@ -123,6 +132,7 @@ namespace Banshee
             Gstreamer.Initialize();
 
             dbusServer = new DBusServer();
+            log = new LogCore();
 
             if(!Directory.Exists(Paths.ApplicationData))
                 Directory.CreateDirectory(Paths.ApplicationData);

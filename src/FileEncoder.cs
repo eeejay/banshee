@@ -40,39 +40,13 @@ namespace Banshee
 		public double Progress;
 	}
 		
-	public abstract class FileEncoder
+	public abstract class FileEncoder : IDisposable
 	{		
 		public event FileEncoderProgressHandler Progress;
 	
-		public enum EncodeFormat : uint {
-			Wav = 0,
-			Mp3,
-			Aac
-		};
-	
-		public abstract string Encode(string inputFile, EncodeFormat format);
+		public abstract string Encode(string inputFile, string outputFile, 
+		  PipelineProfile profile);
 		public abstract void Cancel();
-		
-		protected string GetBurnTempFile(string inputFile, EncodeFormat format)
-		{
-			string ext;
-
-			switch(format) {
-				case EncodeFormat.Mp3:
-					ext = "mp3";
-					break;
-				case EncodeFormat.Aac:
-					ext = "mp4";
-					break;
-				case EncodeFormat.Wav:
-				default:
-					ext = "wav";
-					break;
-			} 
-
-			return Paths.TempDir + "/"  + 
-				Path.GetFileNameWithoutExtension(inputFile) + "." + ext;
-		}
 		
 		protected void UpdateProgress(double progress)
 		{
@@ -82,6 +56,11 @@ namespace Banshee
 				args.Progress = progress;
 				handler(this, args);
 			}
+		}
+		
+		public virtual void Dispose()
+		{
+		
 		}
 	}
 }

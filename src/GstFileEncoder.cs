@@ -36,7 +36,7 @@ namespace Banshee
 	internal delegate void GstFileEncoderProgressCallback(IntPtr encoder, 
 		double progress);
 
-	public class GstFileEncoder : FileEncoder, IDisposable
+	public class GstFileEncoder : FileEncoder
 	{
 		[DllImport("libbanshee")]
 		private static extern IntPtr gst_file_encoder_new();
@@ -47,7 +47,7 @@ namespace Banshee
 		[DllImport("libbanshee")]
 		private static extern bool gst_file_encoder_encode_file(
 			HandleRef encoder, string input_file, string output_file, 
-			EncodeFormat format, GstFileEncoderProgressCallback progress_cb);
+			string encode_pipeline, GstFileEncoderProgressCallback progress_cb);
 	
 		[DllImport("libbanshee")]
 		private static extern IntPtr gst_file_encoder_get_error(
@@ -71,22 +71,16 @@ namespace Banshee
 			encoderHandle = new HandleRef(this, ptr);
 		}
 		
-		~GstFileEncoder()
-		{
-			Dispose();
-		}
-		
-		public void Dispose()
+		public override void Dispose()
 		{
 			gst_file_encoder_free(encoderHandle);
 		}
 		
-		public override string Encode(string inputFile, EncodeFormat format)
-		{
-			string outputFile = GetBurnTempFile(inputFile, format);
-			
+		public override string Encode(string inputFile, string outputFile,
+		   PipelineProfile profile)
+		{			
 			if(!gst_file_encoder_encode_file(encoderHandle, inputFile, 
-				outputFile, format, ProgressCallback)) {
+				outputFile, profile.Pipeline, ProgressCallback)) {
 				IntPtr errPtr = gst_file_encoder_get_error(encoderHandle);
 				string error = Marshal.PtrToStringAnsi(errPtr);
 				throw new ApplicationException(String.Format(

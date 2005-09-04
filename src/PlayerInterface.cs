@@ -145,6 +145,8 @@ namespace Banshee
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
 			
+			Core.Log.Updated += OnLogCoreUpdated;
+			
 			GLib.Timeout.Add(500, InitialLoadTimeout);
 	
 			Gdk.Threads.Enter();
@@ -1112,7 +1114,24 @@ namespace Banshee
 			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
 				Gdk.Threads.Leave();
 		}
-	
+		
+		private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
+		{
+		    if(args.Entry.Type != LogEntryType.UserError)
+		      return;
+		      
+		    Core.ThreadEnter();
+		    
+		    HigMessageDialog.RunHigMessageDialog(WindowPlayer, 
+		      DialogFlags.Modal,
+		      MessageType.Error,
+		      ButtonsType.Ok,
+		      args.Entry.ShortMessage,
+		      args.Entry.Details);
+		      
+		    Core.ThreadLeave();
+		}
+		
 		// PlaylistMenu Handlers
 	
 		private void OnItemColumnsActivate(object o, EventArgs args)

@@ -46,9 +46,9 @@ namespace Banshee
 
 	public class FileEncodeTransaction : LibraryTransaction
 	{
-		private ArrayList tracks = new ArrayList();
-		private FileEncoder.EncodeFormat format;
+		private Hashtable tracks = new Hashtable();
 		private FileEncoder encoder;
+		private PipelineProfile profile;
 		private int encodedFilesFinished;
 		
 		public event FileEncodeCompleteHandler FileEncodeComplete; 
@@ -61,16 +61,16 @@ namespace Banshee
 			}
 		}
 		
-		public FileEncodeTransaction(FileEncoder.EncodeFormat format)
+		public FileEncodeTransaction(PipelineProfile profile)
 		{
-			this.format = format;
+			this.profile = profile;
 			showCount = false;
 			statusMessage = Catalog.GetString("Initializing Encoder...");
 		}
 		
-		public void AddTrack(TrackInfo track)
+		public void AddTrack(TrackInfo track, string outputFile)
 		{
-			tracks.Add(track);
+			tracks[track] = outputFile;
 		}
 		
 		public override void Run()
@@ -78,7 +78,9 @@ namespace Banshee
 			encoder = new GstFileEncoder();
 			encoder.Progress += OnEncoderProgress;
 			
-			foreach(TrackInfo ti in tracks) {
+			foreach(TrackInfo ti in tracks.Keys) {
+			    string outputFile = tracks[ti] as string;
+			    
 				statusMessage = String.Format(
 					Catalog.GetString("Encoding {0} - {1} ..."),
 					ti.Artist, ti.Title);
@@ -87,7 +89,8 @@ namespace Banshee
 					break;
 					
 				try {
-					string encPath = encoder.Encode(ti.Uri, format);
+					string encPath = encoder.Encode(ti.Uri, outputFile, 
+					   profile);
 				
 					FileEncodeCompleteHandler handler = FileEncodeComplete;
 					if(handler != null) {

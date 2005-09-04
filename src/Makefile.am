@@ -79,7 +79,8 @@ banshee_sources = \
 	RipTransaction.cs \
 	FileNamePattern.cs \
 	GstMisc.cs \
-	PipelineProfile.cs
+	PipelineProfile.cs \
+	LogCore.cs
 
 banshee_resources = \
 	../data/Tables.sql \
@@ -184,4 +185,4 @@ uninstall-hook:
 	done;
 
 run:
-	banshee
+	BANSHEE_BURN_ENABLE=yes banshee

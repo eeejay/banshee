@@ -50,6 +50,8 @@ namespace Banshee
 		public const string EncoderProfiles = BasePath + "EncoderProfiles";
 		public const string RippingProfile = BasePath + "RippingProfile";
 		public const string RippingBitrate = BasePath + "RippingBitrate";
+		public const string IpodProfile = BasePath + "IpodProfile";
+		public const string IpodBitrate = BasePath + "IpodBitrate";
 		public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
 	

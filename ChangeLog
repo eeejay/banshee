@@ -1,3 +1,19 @@
+2005-09-03  Aaron Bockover <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Use the LogCore to report errors to the user
+	* src/LogCore.cs: New logging system to easily propagate and log warnings
+	and errors.
+	* src/IpodCore.cs: File transcoding to allow non-iPod formats to be 
+	copied to an iPod. Transcoded song duplicates are cached so they need
+	only be transcoded once. This allows the computer library to be in various
+	formats (Ogg, Flac, Mp3) and the iPod in MP3 or AAC format.
+	* libbanshee/gst-encode.c: Pass a full pipeline for encoding instead of a 
+	file extension used to conditionally select a hard coded encoder pipeline
+	* src/FileEncoder.cs, src/GstFileEncoder.cs, src/FileEncodeTransaction.cs,
+	BurnCore.cs: Use PipelineProfile instead of hard coded encoding options
+	* src/Preferences.cs: Encoding preference option for iPod transcoding
+	* data/glade/preferences.cs: Encoding area for iPod
+
 2005-09-02  Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.9.5

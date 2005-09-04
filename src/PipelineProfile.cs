@@ -287,7 +287,8 @@ namespace Banshee
             }
         }
         
-        public static PipelineProfile GetConfiguredProfile(string gckey)
+        public static PipelineProfile GetConfiguredProfile(string gckey, 
+            string extFilter)
         {
             string key = "default";
             int bitrate = 160;
@@ -316,9 +317,29 @@ namespace Banshee
                 }
             }
 
+            if(extFilter != null) {
+                string [] filters = extFilter.Split(',');
+                
+                foreach(string filter in filters) {
+                    foreach(PipelineProfile cProfile in Profiles) {
+                        if(cProfile.Extension.ToLower() == 
+                            filter.Trim().ToLower()) {
+                            profile = new PipelineProfile(cProfile);
+                            profile.Bitrate = bitrate;
+                            return profile;
+                        }
+                    }
+                }
+            }
+
             profile = new PipelineProfile(Profiles[0]);
             profile.Bitrate = bitrate;
             return profile;   
+        }
+        
+        public static PipelineProfile GetConfiguredProfile(string gckey)
+        {
+            return GetConfiguredProfile(gckey, null);
         }
     }
     

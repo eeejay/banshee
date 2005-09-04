@@ -34,12 +34,6 @@ typedef struct {
 	gchar *error;
 } GstFileEncoder;
 
-enum GstEncodeFormat {
-	GST_ENCODE_WAV = 0,
-	GST_ENCODE_MP3,
-	GST_ENCODE_AAC
-};
-
 typedef void (* GstFileEncoderProgressCallback) (GstFileEncoder *encoder, 
 	gdouble progress);
 
@@ -48,7 +42,7 @@ void gst_file_encoder_free(GstFileEncoder *encoder);
 
 gboolean gst_file_encoder_encode_file(GstFileEncoder *encoder, 
 	const gchar *input_file, const gchar *output_file, 
-	enum GstEncodeFormat encode_format, 
+	const gchar *encoder_pipeline, 
 	GstFileEncoderProgressCallback progress_cb);
 
 const gchar *gst_file_encoder_get_error(GstFileEncoder *encoder);

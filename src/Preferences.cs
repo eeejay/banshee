@@ -70,6 +70,7 @@ namespace Banshee
 		private BurnDrive [] burnDevices;
 		
 		private PipelineProfileSelector rippingProfile;
+		private PipelineProfileSelector ipodProfile;
 
 		public PreferencesWindow()
 		{
@@ -122,6 +123,17 @@ namespace Banshee
                 GConfKeys.RippingBitrate, -1);
                 
             rippingProfile.Show();
+            
+            ipodProfile = new PipelineProfileSelector("mp3,aac,mp4,m4a,m4p");
+            (glade["IpodProfileContainer"] as HBox).PackStart(
+                ipodProfile, true, true, 0);
+                
+            ipodProfile.ProfileKey = GetStringPref(
+                GConfKeys.IpodProfile, "default");
+            ipodProfile.Bitrate = GetIntPref(
+                GConfKeys.IpodBitrate, -1);
+                
+            ipodProfile.Show();
 		}
 		
 		private bool GetBoolPref(string key, bool def)
@@ -228,6 +240,12 @@ namespace Banshee
 				
 		      Core.GconfClient.Set(GConfKeys.RippingBitrate,
 				rippingProfile.Bitrate);
+			
+			     Core.GconfClient.Set(GConfKeys.IpodProfile,
+				ipodProfile.ProfileKey);
+				
+		      Core.GconfClient.Set(GConfKeys.IpodBitrate,
+				ipodProfile.Bitrate);
 				
 			SaveBurnSettings();
 			SaveEngineSettings();

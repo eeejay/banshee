@@ -62,17 +62,20 @@ namespace Banshee
 		
 		public void Burn()
 		{
-			FileEncoder.EncodeFormat trackFormat;
+			PipelineProfile profile = null;
 			
 			canceled = false;
 			
 			switch(diskType) {
 				case DiskType.Audio:
-					trackFormat = FileEncoder.EncodeFormat.Wav;
+					foreach(PipelineProfile cp in PipelineProfile.Profiles) {
+					   if(cp.Extension == "wav") {
+					       profile = new PipelineProfile(cp);
+					       break;
+					   }
+					}
 					break;
 				case DiskType.Mp3:
-					trackFormat = FileEncoder.EncodeFormat.Mp3;
-					break;
 				case DiskType.Data:
 				default:
 					foreach(TrackInfo ti in encodeQueue)
@@ -80,14 +83,26 @@ namespace Banshee
 					DoBurn();
 					return;
 			}
+			
+			if(profile == null) {
+			     Core.Log.Push(LogEntryType.UserError,
+			         Catalog.GetString("Could Not Burn CD"),
+			         Catalog.GetString("No suitable wave encoder could be found to convert selected songs to CD audio format."));
+			     return;
+			}
 		
-			FileEncodeTransaction fet = new FileEncodeTransaction(trackFormat);
+			FileEncodeTransaction fet = new FileEncodeTransaction(profile);
 			fet.FileEncodeComplete += OnFileEncodeComplete;
 			fet.Finished += OnFileEncodeTransactionFinished;
 			fet.Canceled += OnFileEncodeTransactionCanceled;
 			
-			foreach(TrackInfo ti in encodeQueue)
-				fet.AddTrack(ti);
+			foreach(TrackInfo ti in encodeQueue) {
+			    string outputFile = Paths.TempDir + "/"  + 
+				    Path.GetFileNameWithoutExtension(ti.Uri) + "." + 
+				    profile.Extension;
+				
+				fet.AddTrack(ti, outputFile);
+		    }
 				
 			fet.Register();
 		}

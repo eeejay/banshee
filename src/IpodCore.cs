@@ -29,6 +29,7 @@
  
 using System;
 using System.Collections;
+using System.IO;
 using Mono.Posix;
 using IPod;
 
@@ -39,6 +40,9 @@ namespace Banshee
 		private static IpodCore instance;
 		private DeviceEventListener listener;
 		private Hashtable devices;
+		
+		private static string [] validSongExtensions = 
+		  {"mp3", "aac", "mp4", "m4a", "m4p"};
 		
 		public event EventHandler Updated;
 	
@@ -97,6 +101,56 @@ namespace Banshee
 				return list.ToArray(typeof(Device)) as Device [];
 			}
 		}
+		
+        public static bool ValidSongFormat(string filename)
+        {
+            string ext = Path.GetExtension(filename).ToLower().Trim();
+
+            foreach(string vext in validSongExtensions) {
+                if(ext == "." + vext) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        public static string GetIpodSong(string filename)
+        {
+            if(ValidSongFormat(filename)) 
+                return filename;
+                
+            string path = Library.MakeFilenameKey(filename);
+            string dir = Path.GetDirectoryName(path);
+            string file = Path.GetFileNameWithoutExtension(filename);
+            
+            foreach(string vext in validSongExtensions) {
+                string newfile = dir + Path.DirectorySeparatorChar +  
+                    ".banshee-ipod-" + file + "." + vext;
+                
+                if(File.Exists(newfile))
+                    return newfile;
+            }
+            
+            foreach(string vext in validSongExtensions) {
+                string newfile = path + "." + vext;
+                
+                if(File.Exists(newfile))
+                    return newfile;
+            }   
+                 
+            return null;
+        }
+        
+        public static string ConvertSongName(string filename, string newext)
+        {
+            string path = Library.MakeFilenameKey(filename);
+            string dir = Path.GetDirectoryName(path);
+            string file = Path.GetFileNameWithoutExtension(filename);
+            
+            return dir + Path.DirectorySeparatorChar + 
+                ".banshee-ipod-" + file + "." + newext;
+        }
 	}
 	
 	public class IpodSyncTransaction : LibraryTransaction
@@ -106,7 +160,9 @@ namespace Banshee
 				return "iPod Sync Transaction";
 			}
 		}
-	
+		
+		private PipelineProfile profile;
+		private FileEncoder encoder;
 		private Device device;
 		
 		public IpodSyncTransaction(Device device)
@@ -151,6 +207,11 @@ namespace Banshee
 			
 			return false;
 		}
+		
+		protected override void CancelAction()
+		{
+		    encoder.Cancel();
+		}
 
 		public override void Run()
 		{
@@ -161,6 +222,11 @@ namespace Banshee
 			totalCount = 0;
 			
 			bool doUpdate = false;
+			
+			profile = PipelineProfile.GetConfiguredProfile(
+                "Ipod", "mp3,aac,mp4,m4a,m4p");
+            encoder = new GstFileEncoder();
+            encoder.Progress += OnEncodeProgress;
 			
 			foreach(Song song in device.SongDatabase.Songs) {
 				if(ExistsInLibrary(song))
@@ -173,6 +239,9 @@ namespace Banshee
 			Song[] ipodSongs = device.SongDatabase.Songs;
 			
 			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
+			     if(cancelRequested)
+			         break;
+			         
 				if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
 					continue;
 					
@@ -184,8 +253,18 @@ namespace Banshee
 				song.Length = (int)(libTrack.Duration * 1000);
 				song.TrackNumber = (int)libTrack.TrackNumber;
 				song.TotalTracks = (int)libTrack.TrackCount;
-				song.Filename = libTrack.Uri;
 				song.Year = (int)libTrack.Year;
+				//song.LastPlayed = libTrack.LastPlayed;
+				song.LastPlayed = DateTime.MinValue;
+				
+				switch(libTrack.Rating) {
+				    case 1: song.Rating = SongRating.Zero; break;
+				    case 2: song.Rating = SongRating.Two; break;
+				    case 3: song.Rating = SongRating.Three; break;
+				    case 4: song.Rating = SongRating.Four; break;
+				    case 5: song.Rating = SongRating.Five; break;
+				    default: song.Rating = SongRating.Zero; break;
+				}
 				
 				if(song.Artist == null)
 					song.Artist = String.Empty;
@@ -198,16 +277,57 @@ namespace Banshee
 
 				if(song.Genre == null)
 					song.Genre = String.Empty;
+					
+			    string filename = IpodCore.GetIpodSong(libTrack.Uri);
+			    if(filename == null) {
+			         if(profile == null) {
+			             continue;
+			         }
+			       
+			         filename = IpodCore.ConvertSongName(libTrack.Uri,
+			             profile.Extension);
+			         
+				    statusMessage = String.Format(
+					Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
+					song.Artist, song.Title);
+					
+			        try {
+			        		encoder.Encode(libTrack.Uri, filename, profile);
+			        	} catch(Exception) {
+			        		Core.Log.Push(LogEntryType.Warning,
+			        			Catalog.GetString("Could not encode file for iPod"),
+			        			String.Format("{0} -> {1} failed",
+			        				libTrack.Uri, filename));
+			        		filename = null;
+			        }
+			    }
+			    
+			    if(filename == null)
+			         continue;
+
+				song.Filename = filename;
 
 				doUpdate = true;
 			}
 			
-			if(!doUpdate)
+			encoder.Dispose();
+			
+			if(!doUpdate || cancelRequested) {
+			    device.SongDatabase.Reload();
 				return;
+		    }
 			
 			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
 
-			device.SongDatabase.Save();
+			Console.WriteLine("CAn asave: " + device.CanWrite);
+
+			try {
+				device.SongDatabase.Save();
+			} catch(Exception e) {
+				Core.Log.Push(LogEntryType.UserError, 
+					Catalog.GetString("Could not sync iPod"),
+					e.Message);
+			}
 
 			device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;
 		} 
@@ -219,6 +339,12 @@ namespace Banshee
 			totalCount = total;
 			statusMessage = String.Format(Catalog.GetString(
 				"Copying {0} - {1}"), song.Artist, song.Title); 
+		}
+		
+		private void OnEncodeProgress(object o, FileEncoderProgressArgs args)
+		{
+		    totalCount = 100;
+		    currentCount = (int)(100.0 * args.Progress);
 		}
 	}
 }
