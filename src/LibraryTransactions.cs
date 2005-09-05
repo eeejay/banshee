@@ -306,6 +306,7 @@ namespace Banshee
 							Path.GetExtension(file).Substring(1));
 						File.Copy(file, destfile, true);
 						ti.Uri = destfile;
+						ti.Save();
 					} catch(Exception) { }
 				}
 			

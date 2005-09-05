@@ -1,3 +1,9 @@
+2005-09-05  Aaron Bockover <aaron@aaronbock.net>
+
+	* src/LibraryTransactions.cs: call Save() on track info after setting 
+	new filename when performing copy on import
+	* src/Library.cs: Applied patch to fix death on renaming new iPod (315307)
+
 2005-09-04  Aaron Bockover <aaron@aaronbock.net>
 
 	* banshee: Version 0.9.6
