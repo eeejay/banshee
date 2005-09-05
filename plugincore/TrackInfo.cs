@@ -94,10 +94,12 @@ namespace Banshee
 	                                 set { album = value;        } }
 	    public string Title        { get { return title;         } 
 	                                 set { title = value;        } }
-	    public string Genre        { get { return genre;         } }
+	    public string Genre        { get { return genre;         } 
+	                                 set { genre = value;        } }
 
 	    public string Performer    { get { return performer;     } }
-	    public int Year            { get { return year;          } }	    
+	    public int Year            { get { return year;          } 
+	                                 set { year = value;         } }  
 	    
 	    public long Duration       { get { return duration;        } 
 	                                 set { duration = value;     } }
