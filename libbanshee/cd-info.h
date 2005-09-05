@@ -53,8 +53,10 @@ typedef struct {
 	gint64 n_tracks;
 	gint64 total_sectors;
 	gint64 total_time;
+	gint64 total_seconds;
 	
 	CdTrackInfo **tracks;
+	gchar *offsets;
 } CdDiskInfo;
 
 CdDiskInfo *cd_disk_info_new(const gchar *device_node);

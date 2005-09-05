@@ -67,6 +67,7 @@ cd_disk_info_new(const gchar *device_node)
 	disk->total_sectors = 0;
 	disk->total_time = 0;
 	disk->tracks = NULL;
+	disk->offsets = NULL;
 	
 	cd_disk_info_load(disk);
 	
@@ -109,6 +110,8 @@ cd_disk_info_load(CdDiskInfo *disk)
 	GstFormat track_format, sector_format;
 	GstFormat time_format = GST_FORMAT_TIME;
 	gint64 start_sector = 0, end_sector;
+	GString *offsets = NULL;
+	gchar *offset = NULL;
 	gint i;
 	
 	gst_init(NULL, NULL);
@@ -135,12 +138,15 @@ cd_disk_info_load(CdDiskInfo *disk)
 	gst_pad_convert(source_pad, sector_format, disk->total_sectors, 
 		&time_format, &(disk->total_time));
 
+	disk->total_seconds = disk->total_time / GST_SECOND;
+
 	if(disk->n_tracks <= 0) {
 		gst_element_set_state(source, GST_STATE_NULL);
 		gst_object_unref(GST_OBJECT(source));
 	}
 	
 	disk->tracks = (CdTrackInfo **)g_new0(CdTrackInfo, disk->n_tracks + 1);
+	offsets = g_string_new(NULL);
 	
 	for(i = 0; i <= disk->n_tracks; i++) {
 		end_sector = 0;
@@ -156,10 +162,16 @@ cd_disk_info_load(CdDiskInfo *disk)
 		if(i > 0) {
 			disk->tracks[i - 1] = cd_track_info_new(i - 1, start_sector,
 				end_sector);
+			offset = g_strdup_printf("%" G_GINT64_FORMAT " ", start_sector);
+			g_string_append(offsets, offset);
+			g_free(offset);
 		}
 		
 		start_sector = end_sector;
 	}
+	
+	disk->offsets = g_strdup(offsets->str);
+	g_string_free(offsets, TRUE);
 	
 	g_object_get(source, "discid", &(disk->disk_id), NULL);
 	
