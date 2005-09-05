@@ -304,7 +304,7 @@ namespace Banshee
 		
 		public override bool UpdateName(string oldName, string newName)
 		{
-			if(!oldName.Equals(newName) || oldName == null) {
+			if(oldName == null || !oldName.Equals(newName)) {
 				device.Name = newName;
 				name = newName;
 				device.Save();
