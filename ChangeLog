@@ -1,5 +1,8 @@
 2005-09-04  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/banshee.exe.config.in: Added libbonobo-2 mapping
+	* libbanshee/gst-encode-test.c: Adapted to use pipeline for gst-encode
+	* plugincore/TrackInfo.cs: Added set accessor on Year and Genre
 	* src/CddbClient.cs: Old CDDB HTTP client removed
 	* src/AudioCdCore.cs: Adapted to use CddbSlaveClient
 	* src/CddbSlaveClient.cs: Bindings for CDDB Slave2 CORBA Client
@@ -9,6 +12,8 @@
 	CDDB Slave2 CORBA client
 	* libbanshee/GNOME_Media_CDDBSlave2.idl: IDL Definition for GNOME Media
 	CDDB Slave2 CORBA client
+	* libbanshee/cd-info.[ch]: Added offsets property string with all
+	track offsets for CDDB queries
 
 2005-09-03  Aaron Bockover <aaron@aaronbock.net>
 
