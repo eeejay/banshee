@@ -145,5 +145,6 @@
     <File name="./src/GstMisc.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/PipelineProfile.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/LogCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/CddbSlaveClient.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>
