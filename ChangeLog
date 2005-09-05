@@ -1,5 +1,8 @@
 2005-09-04  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/AudioCdCore.cs: Parse proper artist and song title from the track 
+	name CDDB field if artist is "Various" and the track name field contains
+	a " / " token (per the CDDB Database Specification)
 	* src/banshee.exe.config.in: Added libbonobo-2 mapping
 	* libbanshee/gst-encode-test.c: Adapted to use pipeline for gst-encode
 	* plugincore/TrackInfo.cs: Added set accessor on Year and Genre

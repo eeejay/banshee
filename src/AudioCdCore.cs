@@ -257,25 +257,53 @@ namespace Banshee
 		
 		public void LoadFromCddbDiscInfo(CddbSlaveClientDiscInfo disc)
 		{
-			if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
-					title = disc.DiscTitle;
+			string discTitle = null, artist = null;
 			
+			if(disc.DiscTitle != null && disc.DiscTitle != String.Empty 
+				&& disc.DiscTitle != "Unknown") {
+				discTitle = disc.DiscTitle;
+				title = discTitle;
+			}
+					
 			for(int i = 0; i < trackCount; i++) {
-				if(disc.Artist != null && disc.Artist != String.Empty)
-					tracks[i].Artist = disc.Artist;
+				string trackTitle = disc.Tracks[i].Name;
+
+				if(disc.Artist != null && disc.Artist != String.Empty 
+					&& disc.Artist != "Unknown")
+					artist = disc.Artist; 
+
+				if(trackTitle == null || trackTitle == String.Empty 
+					|| trackTitle == "Unknown")
+					trackTitle = null;
 				
-				if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
-					tracks[i].Album = disc.DiscTitle;
+				if(artist != null && artist.ToLower() == "various" 
+					&& trackTitle != null) {
+
+					string [] parts = 
+						System.Text.RegularExpressions.Regex.Split(trackTitle,
+							 @" / ");
+					
+					if(parts != null && parts.Length >= 2) {
+						artist = parts[0].Trim();
+						trackTitle = parts[1].Trim();
+					}
+				}
+			
+				if(artist != null)
+					tracks[i].Artist = artist;
 				
-				if(disc.Genre != null && disc.Genre != String.Empty)
+				if(discTitle != null)
+					tracks[i].Album = discTitle;
+				
+				if(disc.Genre != null && disc.Genre != String.Empty 
+					&& disc.Genre != "Unknown")
 					tracks[i].Genre = disc.Genre;
 				
-				if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
-					tracks[i].Album = disc.DiscTitle;
+				if(discTitle != null)
+					tracks[i].Album = discTitle;
 					
-				if(disc.Tracks[i].Name != null 
-					&& disc.Tracks[i].Name != String.Empty)	
-					tracks[i].Title = disc.Tracks[i].Name;
+				if(title != null)	
+					tracks[i].Title = trackTitle;
 				
 				if(tracks[i].Duration <= 0 && disc.Tracks[i].Length > 0)
 					tracks[i].Duration = disc.Tracks[i].Length;
@@ -455,8 +483,8 @@ namespace Banshee
 			CddbSlaveClientDiscInfo cddbDisc = args.DiscInfo;
 
 			foreach(AudioCdDisk disk in Disks) {
-			Console.WriteLine(disk.DiskId + " : " + cddbDisc.DiscId);
-				if(disk.DiskId.ToLower() == cddbDisc.DiscId.ToLower()) {
+				if(disk.DiskId.ToLower() == cddbDisc.DiscId.ToLower() && 
+					disk.TrackCount == cddbDisc.TrackCount) {
 					disk.LoadFromCddbDiscInfo(cddbDisc);
 				}
 			}
