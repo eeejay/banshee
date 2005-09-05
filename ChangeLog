@@ -1,5 +1,7 @@
 2005-09-04  Aaron Bockover <aaron@aaronbock.net>
 
+	* banshee: Version 0.9.6
+
 	* src/LibraryTransactions.cs: Added copy-on-import to FileLoadTransaction;
 	obeys GConf setting for the feature
 	* src/Library.cs: IpodSource handles its own syncing and updating of
