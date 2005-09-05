@@ -187,6 +187,8 @@ namespace Banshee
 public class HigMessageDialog : Gtk.Dialog
 {	
 	Gtk.AccelGroup accel_group;
+	
+	private Gtk.Image image;
 
 	public HigMessageDialog (Gtk.Window parent,
 				 Gtk.DialogFlags flags,
@@ -212,7 +214,7 @@ public class HigMessageDialog : Gtk.Dialog
 		hbox.Show ();
 		VBox.PackStart (hbox, false, false, 0);
 
-		Gtk.Image image = null;
+		image = null;
 
 		switch (type) {
 		case Gtk.MessageType.Error:
@@ -350,6 +352,17 @@ public class HigMessageDialog : Gtk.Dialog
  		} finally {
  			hmd.Destroy();
  		}	
+ 	}
+ 	
+ 	public Gdk.Pixbuf Image
+ 	{
+ 		set {
+ 			image.Pixbuf = value;
+ 		}
+ 		
+ 		get {
+ 			return image.Pixbuf;
+ 		}
  	}
  }
  

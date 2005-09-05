@@ -164,34 +164,32 @@ namespace Banshee
 		private PipelineProfile profile;
 		private FileEncoder encoder;
 		private Device device;
+		private ArrayList updateTracks = null;
+		
+		public event EventHandler SyncStarted;
+		public event EventHandler SyncCompleted;
 		
 		public IpodSyncTransaction(Device device)
 		{
 			this.device = device;
 			showCount = false;
 		}
-
-		private string ToLower (string str)
+		
+		public IpodSyncTransaction(Device device, ArrayList tracks) : this(device)
 		{
-			if (str == null)
-				return null;
-			else
-				return str.ToLower ();
+			updateTracks = tracks;
 		}
 		
-		private bool TrackCompare(LibraryTrackInfo libTrack, Song song)
+		private bool ExistsOnIpod(Song[] songs, TrackInfo libTrack)
 		{
-			return ToLower(song.Title) == ToLower(libTrack.Title) && 
-				ToLower(song.Album) == ToLower(libTrack.Album) &&
-				ToLower(song.Artist) == ToLower(libTrack.Artist) &&
-				song.Year == libTrack.Year &&
-				song.TrackNumber == libTrack.TrackNumber;
-		}
+			if(libTrack.GetType() == typeof(IpodTrackInfo)) {
+				if((libTrack as IpodTrackInfo).NeedSync) {
+					return false;
+				}
+			}
 		
-		private bool ExistsOnIpod(Song[] songs, LibraryTrackInfo libTrack)
-		{
 			foreach(Song song in songs) {
-				if(TrackCompare(libTrack, song))
+				if(IpodMisc.TrackCompare(libTrack, song))
 					return true;
 			}
 			
@@ -201,7 +199,7 @@ namespace Banshee
 		private bool ExistsInLibrary(Song song)
 		{
 			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
-				if(TrackCompare(libTrack, song))
+				if(IpodMisc.TrackCompare(libTrack, song))
 					return true;
 			}
 			
@@ -213,7 +211,34 @@ namespace Banshee
 		    encoder.Cancel();
 		}
 
+		private void EmitSyncStarted()
+		{
+			EventHandler handler = SyncStarted;
+			if(handler != null)
+				handler(this, new EventArgs());
+		}
+
+		private void EmitSyncCompleted()
+		{
+			EventHandler handler = SyncCompleted;
+			if(handler != null)
+				handler(this, new EventArgs());
+		}
+		
 		public override void Run()
+		{
+			EmitSyncStarted();
+			try {
+				WrapRun();
+			} catch(Exception e) {
+				Core.Log.Push(LogEntryType.UserError, 
+					Catalog.GetString("Error Syncing iPod"),
+					e.Message);
+			}
+			EmitSyncCompleted();
+		}
+		
+		public void WrapRun()
 		{
 			statusMessage = String.Format(Catalog.GetString(
 				"Preparing to sync '{0}'"), device.Name);
@@ -228,56 +253,45 @@ namespace Banshee
             encoder = new GstFileEncoder();
             encoder.Progress += OnEncodeProgress;
 			
-			foreach(Song song in device.SongDatabase.Songs) {
-				if(ExistsInLibrary(song))
-					continue;
+			if(updateTracks == null) {
+				foreach(Song song in device.SongDatabase.Songs) {
+					if(ExistsInLibrary(song))
+						continue;
 
-				device.SongDatabase.RemoveSong(song);
-				doUpdate = true;
+					device.SongDatabase.RemoveSong(song);
+					doUpdate = true;
+				}
 			}
-
+			
 			Song[] ipodSongs = device.SongDatabase.Songs;
 			
-			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
+			ICollection collection;
+			if(updateTracks == null)
+				collection = Core.Library.Tracks.Values;
+			else
+				collection = updateTracks;
+			
+			foreach(TrackInfo libTrack in collection) {
 			     if(cancelRequested)
 			         break;
 			         
-				if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
+			    if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
+			    		continue;
+			         
+			    Song song = null;
+			         
+			    if(libTrack.GetType() == typeof(LibraryTrackInfo)) {
+				    song = IpodMisc.TrackInfoToSong(device, 
+				    	libTrack as LibraryTrackInfo);
+				} else if(libTrack.GetType() == typeof(IpodTrackInfo)) {
+					song = (libTrack as IpodTrackInfo).Song;
+				} else {
 					continue;
-					
-				Song song = device.SongDatabase.CreateSong();
-				song.Album = libTrack.Album;
-				song.Artist = libTrack.Artist;
-				song.Title = libTrack.Title;
-				song.Genre = libTrack.Genre;
-				song.Length = (int)(libTrack.Duration * 1000);
-				song.TrackNumber = (int)libTrack.TrackNumber;
-				song.TotalTracks = (int)libTrack.TrackCount;
-				song.Year = (int)libTrack.Year;
-				//song.LastPlayed = libTrack.LastPlayed;
-				song.LastPlayed = DateTime.MinValue;
-				
-				switch(libTrack.Rating) {
-				    case 1: song.Rating = SongRating.Zero; break;
-				    case 2: song.Rating = SongRating.Two; break;
-				    case 3: song.Rating = SongRating.Three; break;
-				    case 4: song.Rating = SongRating.Four; break;
-				    case 5: song.Rating = SongRating.Five; break;
-				    default: song.Rating = SongRating.Zero; break;
 				}
 				
-				if(song.Artist == null)
-					song.Artist = String.Empty;
-
-				if(song.Album == null)
-					song.Album = String.Empty;
-
-				if(song.Title == null)
-					song.Title = String.Empty;
-
-				if(song.Genre == null)
-					song.Genre = String.Empty;
-					
+				if(song == null)
+					continue;
+				
 			    string filename = IpodCore.GetIpodSong(libTrack.Uri);
 			    if(filename == null) {
 			         if(profile == null) {
@@ -305,7 +319,14 @@ namespace Banshee
 			    if(filename == null)
 			         continue;
 
-				song.Filename = filename;
+				try {
+					song.Filename = StringUtil.UriToFileName(filename);
+				} catch(Exception e) {
+					Core.Log.Push(LogEntryType.Warning,
+		        			Catalog.GetString("Could not transfer file to iPod"),
+		        			e.Message);
+					continue;
+				}
 
 				doUpdate = true;
 			}
@@ -318,8 +339,6 @@ namespace Banshee
 		    }
 			
 			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
-
-			Console.WriteLine("CAn asave: " + device.CanWrite);
 
 			try {
 				device.SongDatabase.Save();
@@ -346,5 +365,74 @@ namespace Banshee
 		    totalCount = 100;
 		    currentCount = (int)(100.0 * args.Progress);
 		}
+	}
+	
+	public class IpodMisc
+	{
+		public static Song TrackInfoToSong(Device device, 
+			LibraryTrackInfo libTrack)
+		{
+			Song song = device.SongDatabase.CreateSong();
+			
+			if(libTrack.Album != null)
+				song.Album = libTrack.Album;
+			
+			if(libTrack.Artist != null)
+				song.Artist = libTrack.Artist;
+			
+			if(libTrack.Title != null)
+				song.Title = libTrack.Title;
+			
+			if(libTrack.Genre != null)
+				song.Genre = libTrack.Genre;
+			
+			song.Length = (int)(libTrack.Duration * 1000);
+			song.TrackNumber = (int)libTrack.TrackNumber;
+			song.TotalTracks = (int)libTrack.TrackCount;
+			song.Year = (int)libTrack.Year;
+			//song.LastPlayed = libTrack.LastPlayed;
+			song.LastPlayed = DateTime.MinValue;
+			
+			switch(libTrack.Rating) {
+			    case 1: song.Rating = SongRating.Zero; break;
+			    case 2: song.Rating = SongRating.Two; break;
+			    case 3: song.Rating = SongRating.Three; break;
+			    case 4: song.Rating = SongRating.Four; break;
+			    case 5: song.Rating = SongRating.Five; break;
+			    default: song.Rating = SongRating.Zero; break;
+			}
+			
+			if(song.Artist == null)
+				song.Artist = String.Empty;
+
+			if(song.Album == null)
+				song.Album = String.Empty;
+
+			if(song.Title == null)
+				song.Title = String.Empty;
+
+			if(song.Genre == null)
+				song.Genre = String.Empty;
+				
+			return song;
+		}
+		
+		private static string ToLower (string str)
+		{
+			if (str == null)
+				return null;
+			else
+				return str.ToLower ();
+		}
+		
+		public static bool TrackCompare(TrackInfo libTrack, Song song)
+		{
+			return ToLower(song.Title) == ToLower(libTrack.Title) && 
+				ToLower(song.Album) == ToLower(libTrack.Album) &&
+				ToLower(song.Artist) == ToLower(libTrack.Artist) &&
+				song.Year == libTrack.Year &&
+				song.TrackNumber == libTrack.TrackNumber;
+		}
+		
 	}
 }

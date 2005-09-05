@@ -43,6 +43,8 @@ namespace Banshee
 	public class IpodTrackInfo : TrackInfo
 	{
 		private Song song;
+		private bool needSync;
+		private LibraryTrackInfo libTrack = null;
 	
 		public IpodTrackInfo(Song song)
 		{
@@ -51,6 +53,19 @@ namespace Banshee
 			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
+			needSync = false;
+		}
+		
+		public IpodTrackInfo(Device device, LibraryTrackInfo lti)
+		{
+			song = IpodMisc.TrackInfoToSong(device, lti);
+			Load();
+			uid = UidGenerator.Next;
+			PreviousTrack = Gtk.TreeIter.Zero;
+			canSaveToDatabase = false;
+			needSync = true;
+			libTrack = lti;
+			uri = libTrack.Uri;
 		}
 		
 		private void Load()
@@ -99,6 +114,27 @@ namespace Banshee
 		protected override void SaveRating()
 		{
 			Save();
+		}
+		
+		public bool NeedSync
+		{
+			get {
+				return libTrack != null;
+			}
+		}
+		
+		public LibraryTrackInfo LibraryTrack
+		{
+			get {
+				return libTrack;
+			}
+		}
+		
+		public IPod.Song Song
+		{
+			get {
+				return song;
+			}
 		}
 	}
 }

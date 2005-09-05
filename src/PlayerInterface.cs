@@ -119,7 +119,8 @@ namespace Banshee
 
         public PlayerUI() 
         {
-			Catalog.Init("banshee", ConfigureDefines.LOCALE_DIR);
+			Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, 
+				ConfigureDefines.LOCALE_DIR);
 		
 			gxml = new Glade.XML(null, "player.glade", "WindowPlayer", null);
 			gxml.Autoconnect(this);
@@ -211,6 +212,8 @@ namespace Banshee
 				Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
 			((Gtk.Image)gxml["ImageRepeat"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("media-repeat.png");
+			((Gtk.Image)gxml["ImageIpodSync"]).Pixbuf = 
+				Gdk.Pixbuf.LoadFromResource("source-ipod-regular.png");
 			
 			// Header
 			headerNotebook = new SimpleNotebook();
@@ -830,7 +833,7 @@ namespace Banshee
 			chooser.DefaultResponse = ResponseType.Ok;
 			
 			if(chooser.Run() == (int)ResponseType.Ok) 
-				playlistModel.AddFile(chooser.CurrentFolderUri);
+				ImportMusic(chooser.CurrentFolderUri);
 				
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
 			     chooser.CurrentFolderUri);
@@ -838,9 +841,27 @@ namespace Banshee
 			chooser.Destroy();
 		}
 		
+		private void ImportMusic(string path)
+		{
+			if(sourceView.SelectedSource.Type == SourceType.Library &&
+				searchEntry.Query == String.Empty) {
+				playlistModel.AddFile(path);
+			} else {
+				FileLoadTransaction loader = new FileLoadTransaction(path);
+				loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
+				loader.Register();
+			}
+		}
+		
+		private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
+		{
+			sourceView.QueueDraw();
+			playlistView.QueueDraw();
+		}
+		
 		private void ImportHomeDirectory()
 		{
-			playlistModel.AddFile(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+			ImportMusic(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 		}
 
 		private void OnMenuImportFolderActivate(object o, EventArgs args)
@@ -872,7 +893,7 @@ namespace Banshee
 			
 			if(chooser.Run() == (int)ResponseType.Ok) {
 				foreach(string path in chooser.Uris)
-					playlistModel.AddFile(path);
+					ImportMusic(path);
 			}
 			
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
@@ -960,10 +981,28 @@ namespace Banshee
             Core.ThreadLeave();
 			
 			gxml["ButtonRip"].Visible = source.Type == SourceType.AudioCd;
+			gxml["ButtonBurn"].Visible = source.Type != SourceType.AudioCd && 
+				Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null;
+			gxml["IpodSyncButton"].Visible = source.Type == SourceType.Ipod;
+			(gxml["HeaderActionButtonBox"] as HBox).Spacing = (
+			gxml["ButtonBurn"].Visible && gxml["IpodSyncButton"].Visible) ?
+				10 : 0;
+			
 			gxml["IpodContainer"].Visible = source.Type == SourceType.Ipod;
 			gxml["SearchLabel"].Sensitive = source.Type == SourceType.Ipod 
 			     || source.Type == SourceType.Library;
 			searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
+			playlistView.SyncColumn.Visible = source.Type == SourceType.Ipod;
+			
+			playlistModel.ImportCanUpdate = source.Type == SourceType.Library
+				&& searchEntry.Query == String.Empty;
+				
+			if(source.Type != SourceType.Ipod)
+				playlistView.Sensitive = true;
+			else if((source as IpodSource).IsSyncing)
+				playlistView.Sensitive = false;
+			else
+				playlistView.Sensitive = true;
 		}
 		
         private void OnAudioCdCoreDiskRemoved(object o, 
@@ -1014,21 +1053,104 @@ namespace Banshee
 			ShowSourceProperties(sourceView.SelectedSource);
 		}
 		
+		private void OnIpodSyncButtonClicked(object o, EventArgs args)
+		{
+			OnIpodSyncClicked(o, args);
+		}
+		
 		private void OnIpodSyncClicked(object o, EventArgs args)
 		{
 			if(sourceView.SelectedSource.Type != SourceType.Ipod)
 				return;
 		
 			IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
-			IPod.Device device = ipodSource.Device;
-					
-			IpodSyncTransaction sync = new IpodSyncTransaction(device);
-			sync.Register();
+			IpodSyncTransaction sync = null;
+		
+			if(ipodSource.NeedSync) {
+				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+					DialogFlags.DestroyWithParent, MessageType.Question,
+					Catalog.GetString("Synchronize iPod"),
+					Catalog.GetString("You have made changes to your iPod. Please choose " +
+					"a method for updating the contents of your iPod.\n\n" + 
+					"<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
+					"<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
+					"<b>Warning:</b> actions will alter or erase existing iPod contents!"),
+					Catalog.GetString("Synchronize Library"));
+					md.AddButton(Catalog.GetString("Save Manual Changes"), 
+						Gtk.ResponseType.Apply, true);
+				md.Image = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
+				md.Icon = md.Image;
+				switch(md.Run()) {
+					case (int)ResponseType.Ok:
+						sync = ipodSource.Sync(true);
+						sync.SyncStarted += OnIpodSyncStarted;
+						sync.SyncCompleted += OnIpodSyncCompleted;
+						sync.Register();
+						break;
+					case (int)ResponseType.Apply:
+						sync = ipodSource.Sync(false);
+						sync.SyncStarted += OnIpodSyncStarted;
+						sync.SyncCompleted += OnIpodSyncCompleted;
+						sync.Register();
+						break;
+				}
+				
+				md.Destroy();
+			} else {
+				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+					DialogFlags.DestroyWithParent, MessageType.Question,
+					Catalog.GetString("Synchronize iPod"),
+					Catalog.GetString("Are you sure you want to synchronize your iPod " +
+					"with your Banshee library? This will <b>erase</b> the contents of " +
+					"your iPod and then copy the contents of your Banshee library."),
+					Catalog.GetString("Synchronize Library"));
+				md.Image = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
+				md.Icon = md.Image;
+				switch(md.Run()) {
+					case (int)ResponseType.Ok:
+						sync = ipodSource.Sync(true);
+						sync.SyncStarted += OnIpodSyncStarted;
+						sync.SyncCompleted += OnIpodSyncCompleted;
+						sync.Register();
+						break;
+				}
+				
+				md.Destroy();
+			}
 		}
 		
 		private void OnIpodEjectClicked(object o, EventArgs args)
 		{
 			EjectSource(sourceView.SelectedSource);
+		}
+		
+		private void OnIpodSyncStarted(object o, EventArgs args)
+		{
+			Core.ThreadEnter();
+			if(playlistModel.Source.Type == SourceType.Ipod 
+				&& (playlistModel.Source as IpodSource).IsSyncing)
+				playlistView.Sensitive = false;
+			Core.ThreadLeave();
+		}
+		
+		private void OnIpodSyncCompleted(object o, EventArgs args)
+		{
+			Core.ThreadEnter();
+			GLib.Timeout.Add(10, IpodSyncCompletedTimeout);
+			Core.ThreadLeave();
+		}
+		
+		private bool IpodSyncCompletedTimeout()
+		{
+			if(playlistModel.Source.Type == SourceType.Ipod 
+				&& !(playlistModel.Source as IpodSource).IsSyncing) {
+				playlistView.Sensitive = true;
+				playlistModel.LoadFromIpodSource(
+					(playlistModel.Source as IpodSource));
+			}
+			sourceView.QueueDraw();
+			playlistView.QueueDraw();
+			return false;
 		}
 		
 		private void OnToggleButtonShuffleToggled(object o, EventArgs args)
@@ -1076,7 +1198,8 @@ namespace Banshee
 			string timeDisp = String.Empty;
 			
 			if(d > 0)
-				timeDisp = String.Format(Catalog.GetPluralString ("{0} day", "{0} days", (int)d), d);
+				timeDisp = String.Format(Catalog.GetPluralString("{0} day",
+					"{0} days", (int)d), d) + " ";
 			if(d > 0 || h > 0)
 				timeDisp += String.Format("{0}:{1}:{2}",
 					h, m.ToString("00"), s.ToString("00"));
@@ -1084,35 +1207,34 @@ namespace Banshee
 				timeDisp += String.Format("{0}:{1}",
 					m, s.ToString("00"));
 		
-			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
-				Gdk.Threads.Enter();
+			Core.ThreadEnter();
 			
 			if(count == 0 && playlistModel.Source == null) {
 				LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
 			} else if(count == 0) {
 				switch(playlistModel.Source.Type) {
 					case SourceType.Library:
-						LabelStatusBar.Text = Catalog.GetString("Your Library is Empty - Consider Importing Music");
+						LabelStatusBar.Text = Catalog.GetString(
+							"Your Library is Empty - Consider Importing Music");
 						break;
 					case SourceType.Playlist:
-						LabelStatusBar.Text = Catalog.GetString("This Playlist is Empty - Consider Adding Music");
+						LabelStatusBar.Text = Catalog.GetString(
+							"This Playlist is Empty - Consider Adding Music");
 						break;
 				}
 			} else {
 				string text = String.Format(
-					Catalog.GetPluralString("{0} Item", "{0} Items", (int)count),
-					count);
+					Catalog.GetPluralString("{0} Item", "{0} Items", 
+						(int)count), count);
 				text += ", ";
 				text += String.Format(
 					Catalog.GetString("{0} Total Play Time"),
 					timeDisp);
 				text += " ";
-				//text += String.Format("[{0}]", playlistModel.TotalDuration);
 				LabelStatusBar.Text = text;
 			}
 				
-			if(!Core.Instance.MainThread.Equals(Thread.CurrentThread))
-				Gdk.Threads.Leave();
+			Core.ThreadLeave();
 		}
 		
 		private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
@@ -1179,7 +1301,17 @@ namespace Banshee
 		
 			TrackRemoveTransaction transaction;
 			
-			if(playlistModel.Source.Type == SourceType.Library)
+			if(playlistModel.Source.Type == SourceType.Ipod) {
+				for(i = 0; i < iters.Length; i++) {
+					TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
+					playlistModel.RemoveTrack(ref iters[i]);
+					
+					IpodTrackInfo iti = ti as IpodTrackInfo;
+					(playlistModel.Source as IpodSource).Remove(iti);
+				}
+				sourceView.QueueDraw();
+				return;
+			} else if(playlistModel.Source.Type == SourceType.Library)
 				transaction = new LibraryTrackRemoveTransaction();
 			else
 				transaction = new PlaylistTrackRemoveTransaction(
@@ -1191,7 +1323,14 @@ namespace Banshee
 				transaction.RemoveQueue.Add(ti);
 			}
 			
-			Core.Library.TransactionManager.Register(transaction);
+			transaction.Finished += OnLibraryTrackRemoveFinished;
+			transaction.Register();
+		}
+		
+		private void OnLibraryTrackRemoveFinished(object o, EventArgs args)
+		{
+			playlistView.QueueDraw();
+			sourceView.QueueDraw();
 		}
 		
 		private void OnItemPropertiesActivate(object o, EventArgs args)
@@ -1375,6 +1514,10 @@ namespace Banshee
 			string query = searchEntry.Query;
 			string field = searchEntry.Field;
 			
+			
+			playlistModel.ImportCanUpdate = 
+				query == null || query == String.Empty;
+			
 			if(query == null || query == String.Empty) {
 				if(source.Type == SourceType.Ipod)
 					playlistModel.LoadFromIpodSource(source as IpodSource);
@@ -1389,14 +1532,7 @@ namespace Banshee
 			ICollection collection = null;
 			
 			if(source.Type == SourceType.Ipod) {
-				IPod.Device device = (source as IpodSource).Device;
-				collection = device.SongDatabase.Songs;
-				
-				// TODO: this sucks! Song->IpodTrackInfo needs to be cached!
-				ArrayList tmpCol = new ArrayList();
-				foreach(IPod.Song ti in collection)
-					tmpCol.Add(new IpodTrackInfo(ti));
-				collection = tmpCol;
+				collection = (source as IpodSource).Tracks;
 			} else {
 				collection = Core.Library.Tracks.Values;
 			}
@@ -1678,7 +1814,7 @@ namespace Banshee
 				
 					if(rawSelectionData != null 
 						&& rawSelectionData.Trim().Length > 0)
-						playlistModel.AddFile(rawSelectionData);
+						ImportMusic(rawSelectionData);
 						
 					break;
 				case (uint)Dnd.TargetType.PlaylistViewModel:
@@ -1783,11 +1919,19 @@ namespace Banshee
 			if(source == null)
 				return;
 				
+			// TODO: Allow iPod view to drop into Library
+				
 			switch(source.Type) {
 				case SourceType.Library:
 				case SourceType.AudioCd:
 					return;
 			}
+			
+			// No Ipod->Ipod
+			if((source.Type == SourceType.Playlist 
+				|| source.Type == SourceType.Ipod) 
+				&& sourceView.SelectedSource.Type == SourceType.Ipod)
+				return;
 				
 			sourceView.SetDragDestRow(path, 
 				Gtk.TreeViewDropPosition.IntoOrAfter);
@@ -1799,6 +1943,9 @@ namespace Banshee
 			TreePath destPath;
 			TreeViewDropPosition pos;
 			bool haveDropPosition;
+			
+			if(sourceView.SelectedSource.Type == SourceType.Ipod)
+				return;
 			
 			string rawData = Dnd.SelectionDataToString(args.SelectionData);		
 			string [] rawDataArray = Dnd.SplitSelectionData(rawData);
@@ -1822,17 +1969,24 @@ namespace Banshee
 					
 					Source source = sourceView.GetSource(destPath);
 										
-					if(source == null) {
+					if(source == null && sourceView.SelectedSource.Type == SourceType.Library) {
 						Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
 						pl.Append(tracks);
 						pl.Save();
 						pl.Saved += OnPlaylistSavedRefreshSourceView;
 					} else if(haveDropPosition
-						&& source.Type == SourceType.Playlist) {
+						&& source.Type == SourceType.Playlist &&
+						sourceView.SelectedSource.Type == SourceType.Library) {
 						Playlist pl = new Playlist(source.Name);
 						pl.Load();
 						pl.Append(tracks);
 						pl.Save();
+					} else if(haveDropPosition 
+						&& source.Type == SourceType.Ipod) {
+						IpodSource ipodSource = source as IpodSource;
+						
+						foreach(LibraryTrackInfo lti in tracks)
+							ipodSource.QueueForSync(lti);	
 					}
 					
 					break;
@@ -1880,7 +2034,8 @@ namespace Banshee
 			if(source.CanEject) {
 				try {
 					if(source.GetType() == typeof(IpodSource)) {
-						if(activeTrackInfo != null && activeTrackInfo.GetType() == typeof(IpodTrackInfo)) {
+						if(activeTrackInfo != null && activeTrackInfo.GetType() 
+							== typeof(IpodTrackInfo)) {
 							StopPlaying();
 						}
 					}

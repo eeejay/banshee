@@ -166,8 +166,8 @@ namespace Banshee
 			get {
 				ProgressBar usedBar = new ProgressBar();
 				usedBar.Fraction = source.DiskUsageFraction;
-				usedBar.Text = source.DiskUsageString + " (" +
-					source.DiskAvailableString + ")";
+				usedBar.Text = source.DiskUsageString + " " +
+					source.DiskAvailableString;
 				return usedBar;
 			}
 		}

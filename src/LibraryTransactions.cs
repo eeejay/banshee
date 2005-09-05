@@ -294,6 +294,21 @@ namespace Banshee
 			
 			try {
 				TrackInfo ti = new LibraryTrackInfo(file);
+				
+				bool copy = false;
+				try {
+					copy = (bool)Core.GconfClient.Get(GConfKeys.CopyOnImport);
+				} catch(Exception) {}
+				
+				if(copy) {
+					try {
+						string destfile = FileNamePattern.BuildFull(ti, 
+							Path.GetExtension(file).Substring(1));
+						File.Copy(file, destfile, true);
+						ti.Uri = destfile;
+					} catch(Exception) { }
+				}
+			
 				RaiseTrackInfo(ti);
 				UpdateAverageDuration(startStamp);
 			} catch(Exception e) {
@@ -444,8 +459,10 @@ namespace Banshee
 			totalCount = Core.Library.Tracks.Count;
 			currentCount = 0;
 			
-			foreach(TrackInfo track in Core.Library.Tracks.Values)
-				RaiseTrackInfo(track);
+			lock(Core.Library.Tracks.SyncRoot) {
+				foreach(TrackInfo track in Core.Library.Tracks.Values)
+					RaiseTrackInfo(track);
+			}
 		}
 		
 		private void RaiseTrackInfo(TrackInfo ti)

@@ -7,7 +7,7 @@ AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
 VERSION_MINOR=9
-VERSION_MICRO=5
+VERSION_MICRO=6
 VERSION_REVIS=no
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
@@ -234,7 +234,7 @@ disable the Helix engine, configure with --disable-helix])
 	fi
 fi
 
-idnl Find the real @libdir@
+dnl Find the real @libdir@
 
 expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac

@@ -6,6 +6,9 @@ namespace Banshee
 	{
 		public const string LOCALE_DIR = "@prefix@/share/locale/";
 		public const string InstallDir = "@expanded_libdir@/@PACKAGE@/";
+		public const string PACKAGE = "@PACKAGE@";
+		public const string VERSION = "@VERSION@";
+		public const string GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
 	}
 }
 

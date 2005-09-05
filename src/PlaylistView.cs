@@ -65,6 +65,10 @@ namespace Banshee
 		
 		PlaylistColumnChooserDialog columnChooser;
 		Pixbuf nowPlayingPixbuf;
+		Pixbuf syncNeededPixbuf;
+		Pixbuf songDrmedPixbuf;
+
+		public TreeViewColumn SyncColumn;
 
 		public PlaylistView(PlaylistModel model)
 		{		
@@ -114,12 +118,29 @@ namespace Banshee
 			
 			nowPlayingPixbuf = 
 				Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
+			syncNeededPixbuf = Gdk.Pixbuf.LoadFromResource("sync-needed.png");
+			songDrmedPixbuf = Gdk.Pixbuf.LoadFromResource("song-drm.png");
 			
 			CellRendererPixbuf indRenderer = new CellRendererPixbuf();
 			playIndColumn.PackStart(indRenderer, true);
 			playIndColumn.SetCellDataFunc(indRenderer, 
 				new TreeCellDataFunc(TrackCellInd));
 			InsertColumn(playIndColumn, 0);
+
+			SyncColumn = new TreeViewColumn();
+			Gtk.Image syncNeededImg = new Gtk.Image(syncNeededPixbuf);
+			syncNeededImg.Show();
+			SyncColumn.Expand = false;
+			SyncColumn.Resizable = false;
+			SyncColumn.Clickable = false;
+			SyncColumn.Reorderable = false;
+			SyncColumn.Widget = syncNeededImg;
+			
+			CellRendererPixbuf syncRenderer = new CellRendererPixbuf();
+			SyncColumn.PackStart(syncRenderer, true);
+			SyncColumn.SetCellDataFunc(syncRenderer, 
+				new TreeCellDataFunc(SyncCellInd));
+			InsertColumn(SyncColumn, 1);
 
 			ColumnDragFunction = new TreeViewColumnDropFunc(CheckColumnDrop);
 
@@ -265,6 +286,15 @@ namespace Banshee
 			renderer.Weight = iter.Equals(model.PlayingIter) 
 				? (int)Pango.Weight.Bold 
 				: (int)Pango.Weight.Normal;
+			
+			renderer.Foreground = null;
+			
+			TrackInfo ti = model.IterTrackInfo(iter);
+			if(ti.GetType() != typeof(IpodTrackInfo)) 
+				return;
+				
+			if((ti as IpodTrackInfo).NeedSync)
+				renderer.Foreground = "blue";
 		}
 		
 		protected void TrackCellInd(TreeViewColumn tree_column,
@@ -273,7 +303,29 @@ namespace Banshee
 			CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
 			renderer.Pixbuf = iter.Equals(model.PlayingIter)
 				? nowPlayingPixbuf
-				: null; 
+				: null;
+		}
+		
+		protected void SyncCellInd(TreeViewColumn tree_column,
+			CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		{
+			CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
+			if(model.Source.GetType() != typeof(IpodSource)) {
+				renderer.Pixbuf = null;
+				return; 
+			}
+			
+			TrackInfo ti = model.IterTrackInfo(iter);
+			
+			if(ti.GetType() != typeof(IpodTrackInfo)) {
+				renderer.Pixbuf = null;
+				return;
+			}
+			
+			IpodTrackInfo iti = ti as IpodTrackInfo;
+			renderer.Pixbuf = iti.NeedSync
+				? syncNeededPixbuf
+				: (iti.CanPlay ? null : songDrmedPixbuf); 
 		}
 		
 		protected void TrackCellTrack(TreeViewColumn tree_column,

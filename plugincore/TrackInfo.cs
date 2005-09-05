@@ -86,7 +86,8 @@ namespace Banshee
 	   	public int TrackId         { get { return trackId;       } }
 	    public int Uid             { get { return uid;           } }
 	
-		public string Uri          { get { return uri;           } } 
+		public string Uri          { get { return uri;           } 
+		                             set { uri = value;          } } 
 	   	public string MimeType     { get { return mimetype;      } }
 	    public string Artist       { get { return artist;        } 
 	                                 set { artist = value;       } }

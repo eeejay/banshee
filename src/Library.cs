@@ -118,8 +118,13 @@ namespace Banshee
 		
 		public void SetTrack(int id, TrackInfo track)
 		{
-		    Tracks[id] = track;
-		    TracksFnKeyed[MakeFilenameKey(track.Uri)] = track;
+		    lock(Tracks.SyncRoot) {
+		    		Tracks[id] = track;
+		    	}
+		    	
+		    lock(TracksFnKeyed.SyncRoot) {
+		    		TracksFnKeyed[MakeFilenameKey(track.Uri)] = track;
+		    	}
 		    
 		    EventHandler handler = Updated;
 		    if(handler != null)
@@ -276,6 +281,9 @@ namespace Banshee
 	public class IpodSource : Source
 	{
 		private IPod.Device device;
+		private ArrayList tracks = new ArrayList();
+		private bool needSync = false;
+		public bool IsSyncing;
 		
 		public IpodSource(IPod.Device device) : base(device.Name, 
 			SourceType.Ipod)
@@ -283,6 +291,15 @@ namespace Banshee
 			this.device = device;
 			canEject = true;
 			canRename = true;
+			
+			Refresh();
+		}
+		
+		private void Refresh()
+		{
+			tracks.Clear();
+			foreach(IPod.Song song in device.SongDatabase.Songs)
+				tracks.Add(new IpodTrackInfo(song));
 		}
 		
 		public override bool UpdateName(string oldName, string newName)
@@ -322,6 +339,92 @@ namespace Banshee
 				return (double)device.VolumeUsed /
 					(double)device.VolumeSize;
 			}
+		}
+		
+		public bool NeedSync
+		{
+			get {
+				if(needSync)
+					return needSync;
+				
+				foreach(IpodTrackInfo iti in tracks) {
+					if(iti.NeedSync)
+						return true;
+				}
+				
+				return false;
+			}
+		}
+		
+		public ArrayList Tracks
+		{
+			get {
+				return tracks;
+			}
+		}
+		
+		private bool ExistsOnIpod(LibraryTrackInfo libTrack)
+		{
+			foreach(IPod.Song song in device.SongDatabase.Songs) {
+				if(IpodMisc.TrackCompare(libTrack, song))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		public void QueueForSync(LibraryTrackInfo ti)
+		{
+			if(ti == null)
+				return;
+				
+			foreach(IpodTrackInfo iti in tracks) {
+				if(iti.LibraryTrack != null && ti.Equals(iti.LibraryTrack))
+					return;
+			}
+			
+			if(ExistsOnIpod(ti))
+				return;
+			
+			tracks.Add(new IpodTrackInfo(device, ti));
+		}
+		
+		public void Remove(IpodTrackInfo iti)
+		{
+			if(!iti.NeedSync)
+				needSync = true;
+			device.SongDatabase.RemoveSong(iti.Song);
+			tracks.Remove(iti);
+		}
+		
+		public IpodSyncTransaction Sync(bool full)
+		{
+			IpodSyncTransaction sync;
+			
+			if(full)
+				sync = new IpodSyncTransaction(device);
+			else
+				sync = new IpodSyncTransaction(device, tracks);
+				
+			sync.SyncStarted += OnIpodSyncStarted;
+			sync.SyncCompleted += OnIpodSyncCompleted;
+			
+			return sync;
+		}
+		
+		private void OnIpodSyncStarted(object o, EventArgs args)
+		{
+			Core.ThreadEnter();
+			IsSyncing = true;
+			Core.ThreadLeave();
+		}
+		
+		private void OnIpodSyncCompleted(object o, EventArgs args)
+		{
+			Core.ThreadEnter();
+			IsSyncing = false;
+			Refresh();
+			Core.ThreadLeave();
 		}
 
 		private static string BytesToString(ulong bytes)

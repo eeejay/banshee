@@ -47,6 +47,9 @@ namespace Banshee
 		private bool repeat = false;
 		private bool shuffle = false;
 		
+		private bool canUpdate;
+		private FileLoadTransaction importTransaction;
+		
 		public Source Source;
 		
 		public event EventHandler Updated;
@@ -62,6 +65,7 @@ namespace Banshee
 		{
 			trackInfoQueue = new ArrayList();
 			GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
+			canUpdate = true;
 		}
 	
 		private void SyncPlayingIter()
@@ -117,6 +121,9 @@ namespace Banshee
 
 		private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
 		{
+			if(o == importTransaction && !canUpdate)
+				return;
+				
 			QueueAddTrack(args.TrackInfo);
 		}
 
@@ -136,9 +143,9 @@ namespace Banshee
 		
 		public void AddFile(string path)
 		{
-			FileLoadTransaction loader = new FileLoadTransaction(path);
-			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-			Core.Library.TransactionManager.Register(loader);	
+			importTransaction = new FileLoadTransaction(path);
+			importTransaction.HaveTrackInfo += OnLoaderHaveTrackInfo;
+			importTransaction.Register();	
 		}
 		
 		public void AddSql(object query)
@@ -160,18 +167,20 @@ namespace Banshee
 		public void LoadFromLibrary()
 		{
 			ClearModel();
-			LibraryLoadTransaction loader = new LibraryLoadTransaction();
+			/*LibraryLoadTransaction loader = new LibraryLoadTransaction();
 			loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-			loader.Register();
+			loader.Register();*/
+			
+			foreach(TrackInfo ti in Core.Library.Tracks.Values)
+				AddTrack(ti);
 		}
 		
 		public void LoadFromIpodSource(IpodSource ipodSource)
 		{
 			ClearModel();
 			
-			IPod.Device device = ipodSource.Device;
-			foreach(IPod.Song song in device.SongDatabase.Songs) {
-				AddTrack(new IpodTrackInfo(song));
+			foreach(IpodTrackInfo track in ipodSource.Tracks) {
+				AddTrack(track);
 			}
 			
 			SyncPlayingIter();
@@ -452,6 +461,16 @@ namespace Banshee
 			
 			get {
 				return shuffle;
+			}
+		}
+		
+		public bool ImportCanUpdate {
+			set {
+				canUpdate = value;
+			} 
+			
+			get {
+				return canUpdate;
 			}
 		}
 		

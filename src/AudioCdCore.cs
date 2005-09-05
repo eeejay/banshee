@@ -471,7 +471,8 @@ namespace Banshee
 	    private void QueryCddb(AudioCdDisk disk)
         {
         		cddbClient.Query(disk.DiskId, disk.TrackCount, disk.Offsets,
-        			disk.TotalSeconds, "Banshee", "0.9.6");
+        			disk.TotalSeconds, ConfigureDefines.PACKAGE, 
+        			ConfigureDefines.VERSION);
 		}
 		
 		private void OnCddbSlaveClientEventNotify(object o, 

@@ -134,7 +134,9 @@ banshee_resources = \
 	../data/images/about-grad-top.png \
 	../data/images/about-grad-bottom.png \
 	../data/images/encoding-icon-32.png \
-	../data/images/ipod-48.png
+	../data/images/ipod-48.png \
+	../data/images/sync-needed.png \
+	../data/images/song-drm.png
 	
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 

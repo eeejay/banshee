@@ -1,5 +1,16 @@
 2005-09-04  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/LibraryTransactions.cs: Added copy-on-import to FileLoadTransaction;
+	obeys GConf setting for the feature
+	* src/Library.cs: IpodSource handles its own syncing and updating of
+	tracks on iPod
+	* src/IpodCore.cs: Fixed to allow manual update and automatic syncing
+	* src/PlaylistView.cs: Show warning icon next to DRMed songs, show
+	sync icon next to pending iPod songs
+	* src/SourceView.cs: Show iPod sources that have been modified (queued
+	for sync) in blue
+	* src/PlayerInterface.cs: Restrict DnD on iPod view, disable view if
+	if active view is a syncing iPod
 	* src/AudioCdCore.cs: Parse proper artist and song title from the track 
 	name CDDB field if artist is "Various" and the track name field contains
 	a " / " token (per the CDDB Database Specification)

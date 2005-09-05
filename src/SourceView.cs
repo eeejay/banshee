@@ -526,15 +526,28 @@ namespace Banshee
 					hideCounts = true;
 					break;
 				}
+			}
+			
+			Gdk.GC mainGC = widget.Style.TextGC(state);
+				
+			if(source.Type == SourceType.Ipod 
+				&& (source as IpodSource).NeedSync 
+				&& !state.Equals(StateType.Selected)) {
+				mainGC = new Gdk.GC(window);
+				mainGC.Copy(widget.Style.TextGC(state));
+				
+				Gdk.Color color = Gdk.Color.Zero;
+				if(Gdk.Color.Parse("blue", ref color))
+					mainGC.RgbFgColor = color;
 			} 
 			
-			window.DrawPixbuf(widget.Style.TextGC(state), icon, 0, 0, 
+			window.DrawPixbuf(mainGC, icon, 0, 0, 
 				cell_area.X + 0, 
 				cell_area.Y + ((cell_area.Height - icon.Height) / 2),
 				icon.Width, icon.Height,
 				RgbDither.None, 0, 0);
 		
-			window.DrawLayout(widget.Style.TextGC(state), 
+			window.DrawLayout(mainGC, 
 				cell_area.X + icon.Width + 6, 
 				cell_area.Y + ((cell_area.Height - titleLayoutHeight) / 2) + 1, 
 				titleLayout);

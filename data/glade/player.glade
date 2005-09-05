@@ -321,7 +321,7 @@
 	      <property name="border_width">2</property>
 	      <property name="visible">True</property>
 	      <property name="n_rows">2</property>
-	      <property name="n_columns">8</property>
+	      <property name="n_columns">7</property>
 	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">2</property>
 	      <property name="column_spacing">5</property>
@@ -507,6 +507,96 @@
 	      </child>
 
 	      <child>
+		<widget class="GtkHBox" id="HeaderActionButtonBox">
+		  <property name="visible">True</property>
+		  <property name="homogeneous">False</property>
+		  <property name="spacing">0</property>
+
+		  <child>
+		    <widget class="GtkButton" id="ButtonRip">
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="OnButtonRipClicked" last_modification_time="Thu, 01 Sep 2005 09:27:44 GMT"/>
+
+		      <child>
+			<widget class="GtkImage" id="ImageRip">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-cdrom</property>
+			  <property name="icon_size">3</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="ButtonBurn">
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="OnButtonBurnClicked" last_modification_time="Fri, 29 Jul 2005 00:34:27 GMT"/>
+
+		      <child>
+			<widget class="GtkImage" id="ImageBurn">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkButton" id="IpodSyncButton">
+		      <property name="can_focus">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <signal name="clicked" handler="OnIpodSyncButtonClicked" last_modification_time="Mon, 05 Sep 2005 09:52:43 GMT"/>
+
+		      <child>
+			<widget class="GtkImage" id="ImageIpodSync">
+			  <property name="visible">True</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="left_attach">5</property>
+		  <property name="right_attach">6</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
 		<widget class="GtkAlignment" id="VolumeButtonContainer">
 		  <property name="visible">True</property>
 		  <property name="xalign">0.5</property>
@@ -523,66 +613,8 @@
 		  </child>
 		</widget>
 		<packing>
-		  <property name="left_attach">7</property>
-		  <property name="right_attach">8</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options"></property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="ButtonBurn">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="OnButtonBurnClicked" last_modification_time="Fri, 29 Jul 2005 00:34:27 GMT"/>
-
-		  <child>
-		    <widget class="GtkImage" id="ImageBurn">
-		      <property name="visible">True</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
 		  <property name="left_attach">6</property>
 		  <property name="right_attach">7</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="ButtonRip">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="OnButtonRipClicked" last_modification_time="Thu, 01 Sep 2005 09:27:44 GMT"/>
-
-		  <child>
-		    <widget class="GtkImage" id="ImageRip">
-		      <property name="visible">True</property>
-		      <property name="stock">gtk-cdrom</property>
-		      <property name="icon_size">3</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="left_attach">5</property>
-		  <property name="right_attach">6</property>
 		  <property name="top_attach">0</property>
 		  <property name="bottom_attach">2</property>
 		  <property name="x_options">fill</property>
