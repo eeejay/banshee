@@ -1,3 +1,15 @@
+2005-09-04  Aaron Bockover <aaron@aaronbock.net>
+
+	* src/CddbClient.cs: Old CDDB HTTP client removed
+	* src/AudioCdCore.cs: Adapted to use CddbSlaveClient
+	* src/CddbSlaveClient.cs: Bindings for CDDB Slave2 CORBA Client
+	* configure.ac: Build rules cor cddb slave code
+	* libbanshee/Makefile.am: Build cddb slave code
+	* libbanshee/cddb-slave-client.[ch]: GObject wrapper around GNOME Media
+	CDDB Slave2 CORBA client
+	* libbanshee/GNOME_Media_CDDBSlave2.idl: IDL Definition for GNOME Media
+	CDDB Slave2 CORBA client
+
 2005-09-03  Aaron Bockover <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs: Use the LogCore to report errors to the user

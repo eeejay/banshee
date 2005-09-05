@@ -163,9 +163,15 @@ fi
 
 AC_SUBST(GST_PLUGINS_DIR)
 
+AM_PATH_ORBIT2
+
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.6
 PKG_CHECK_MODULES(GTK,
+	glib-2.0 \
+	libgnome-2.0 \
+	libgnomeui-2.0 \
+	libbonobo-2.0 \
 	gconf-2.0 \
 	gdk-pixbuf-2.0 \
 	gnome-vfs-2.0 \
@@ -173,6 +179,11 @@ PKG_CHECK_MODULES(GTK,
 	gtk+-2.0 >= $GTK_REQUIRED)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
+
+IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
+IDL_INCLUDES="`$PKG_CONFIG --variable=idldir $IDL_MODULES | sed -e 's/^/ /' -e 's/ \+$//' -e 's/ / -I /g' -e 's/^ \+//'`"
+AC_SUBST(IDL_INCLUDES)
+
 
 dnl HAL devel deps
 PKG_CHECK_MODULES(HAL,

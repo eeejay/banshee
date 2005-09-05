@@ -75,12 +75,12 @@ banshee_sources = \
 	AltProgressBar.cs \
 	AudioCdCore.cs \
 	IpodPropertiesWindow.cs \
-	CddbClient.cs \
 	RipTransaction.cs \
 	FileNamePattern.cs \
 	GstMisc.cs \
 	PipelineProfile.cs \
-	LogCore.cs
+	LogCore.cs \
+	CddbSlaveClient.cs
 
 banshee_resources = \
 	../data/Tables.sql \

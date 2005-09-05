@@ -68,8 +68,10 @@ namespace Banshee
 		public long n_tracks;
 		public long total_sectors;
 		public long total_time;
+		public long total_seconds;
 		
 		public IntPtr tracks;
+		public IntPtr offsets;
 	}
 	
 	[StructLayout(LayoutKind.Sequential)]
@@ -142,7 +144,7 @@ namespace Banshee
 		public long EndTime     { get { return end_time;     } set { end_time =     value; } }
 		public string DiskId    { get { return disk_id;      } set { disk_id =      value; } }
 		public string Device    { get { return device;       } }
-		public string Udi    { get { return udi;       } }
+		public string Udi       { get { return udi;          } }
 	}
 	
 	public class AudioCdDisk
@@ -156,11 +158,12 @@ namespace Banshee
 		private int trackCount;
 		private long totalSectors;
 		private long totalTime;
+		private long totalSeconds;
 		
 		private bool valid;
-		private bool cddbFetched = false;
 		
 		private AudioCdTrackInfo [] tracks;
+		private string offsets;
 		
 		public event EventHandler Updated;
 
@@ -192,13 +195,16 @@ namespace Banshee
 			trackCount = (int)diskRaw.n_tracks;
 			totalSectors = diskRaw.total_sectors;
 			totalTime = diskRaw.total_time;
+			totalSeconds = diskRaw.total_seconds;
+			
+			offsets = GLib.Marshaller.Utf8PtrToString(diskRaw.offsets);
 			
 			if(trackCount <= 0) {
 				cd_disk_info_free(diskPtr);
 				return false;
 			}
 			
-			diskId = Marshal.PtrToStringAnsi(diskRaw.disk_id);
+			diskId = GLib.Marshaller.Utf8PtrToString(diskRaw.disk_id);
 			
 			IntPtr trackArrPtr = diskRaw.tracks;
 			int trackArraySize = 0;
@@ -246,44 +252,34 @@ namespace Banshee
 			
 			cd_disk_info_free(diskPtr);
 			
-			CddbFetch();
-			
 			return true;
 		}
 		
-		public void CddbFetch()
+		public void LoadFromCddbDiscInfo(CddbSlaveClientDiscInfo disc)
 		{
-			if(cddbFetched)
-				return;
-		
-			cddbFetched = true;
+			if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
+					title = disc.DiscTitle;
 			
-			Thread thread = new Thread(new ThreadStart(CddbFetchThread));
-			thread.Start();
-		}
-		
-		private void CddbFetchThread()
-		{
-			CddbClient cddb = new CddbClient("Banshee", "1.0");
-			CddbDisc [] discs = cddb.QueryAll(diskId);
-			
-			if(discs == null || discs.Length == 0)
-				return;
+			for(int i = 0; i < trackCount; i++) {
+				if(disc.Artist != null && disc.Artist != String.Empty)
+					tracks[i].Artist = disc.Artist;
 				
-			CddbDisc disc = discs[0];
+				if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
+					tracks[i].Album = disc.DiscTitle;
 				
-			int min = disc.Titles.Length < tracks.Length ? 
-				disc.Titles.Length : tracks.Length;
+				if(disc.Genre != null && disc.Genre != String.Empty)
+					tracks[i].Genre = disc.Genre;
 				
-			for(int i = 0; i < min; i++) {
-				tracks[i].Artist = disc.Titles[i].Artist;
-				tracks[i].Title = disc.Titles[i].Title;
-				tracks[i].Album = disc.Title;
-				//tracks[i].Genre = disc.Genre;
-				//tracks[i].Year = disc.Year;
+				if(disc.DiscTitle != null && disc.DiscTitle != String.Empty)
+					tracks[i].Album = disc.DiscTitle;
+					
+				if(disc.Tracks[i].Name != null 
+					&& disc.Tracks[i].Name != String.Empty)	
+					tracks[i].Title = disc.Tracks[i].Name;
+				
+				if(tracks[i].Duration <= 0 && disc.Tracks[i].Length > 0)
+					tracks[i].Duration = disc.Tracks[i].Length;
 			}
-			
-			title = disc.Title;
 			
 			EventHandler handler = Updated;
 			if(handler != null)
@@ -324,6 +320,8 @@ namespace Banshee
 		public string Title      { get { return title;      } }
 		public int TrackCount    { get { return trackCount; } }
 		public bool Valid        { get { return valid;      } }
+		public int    TotalSeconds { get { return (int)totalSeconds; } }
+		public string Offsets { get { return offsets; } }
 		public AudioCdTrackInfo [] Tracks { get { return tracks; } }
 	}
 	
@@ -349,6 +347,8 @@ namespace Banshee
 		private Hashtable disks = new Hashtable();
 		private HandleRef handle;
 		
+		private CddbSlaveClient cddbClient;
+		
 		private CdDetectUdiCallback AddedCallback;
 		private CdDetectUdiCallback RemovedCallback;
 		
@@ -370,7 +370,10 @@ namespace Banshee
 				
 			cd_detect_set_device_added_callback(handle, AddedCallback);
 			cd_detect_set_device_removed_callback(handle, RemovedCallback);	
-						
+			
+			cddbClient = new CddbSlaveClient();
+			cddbClient.EventNotify += OnCddbSlaveClientEventNotify;
+
 			DebugLog.Add("Audio CD Core Initialized");
 			
 			BuildInitialList();
@@ -378,6 +381,7 @@ namespace Banshee
 		
 		public void Dispose()
 		{
+			cddbClient.Dispose();
 			cd_detect_free(handle);
 		}
 	
@@ -403,6 +407,7 @@ namespace Banshee
                 if(disk.Valid)
                     disks[disk.Udi] = disk;
                 
+                QueryCddb(disk);
                 HandleUpdated();
                 
                 AudioCdCoreDiskAddedHandler handler = DiskAdded;
@@ -414,7 +419,6 @@ namespace Banshee
                 
                 break;
             }
-
         }
 		
 		private void OnDeviceRemoved(IntPtr udiPtr)
@@ -431,10 +435,33 @@ namespace Banshee
            if(handler != null) {
                AudioCdCoreDiskRemovedArgs args = new AudioCdCoreDiskRemovedArgs();
                args.Udi = udi;
+				
                handler(this, args);
            }
 		}
 	       
+	    private void QueryCddb(AudioCdDisk disk)
+        {
+        		cddbClient.Query(disk.DiskId, disk.TrackCount, disk.Offsets,
+        			disk.TotalSeconds, "Banshee", "0.9.6");
+		}
+		
+		private void OnCddbSlaveClientEventNotify(object o, 
+			CddbSlaveClientEventNotifyArgs args)
+		{
+			if(args.DiscInfo == null)
+				return;
+				
+			CddbSlaveClientDiscInfo cddbDisc = args.DiscInfo;
+
+			foreach(AudioCdDisk disk in Disks) {
+			Console.WriteLine(disk.DiskId + " : " + cddbDisc.DiscId);
+				if(disk.DiskId.ToLower() == cddbDisc.DiscId.ToLower()) {
+					disk.LoadFromCddbDiscInfo(cddbDisc);
+				}
+			}
+        }
+        
 	    private DiskInfo [] GetHalDisks()
 	    {
 	        IntPtr arrayPtr = cd_detect_get_disk_array(handle);
@@ -472,9 +499,11 @@ namespace Banshee
             foreach(DiskInfo halDisk in halDisks) {
                 AudioCdDisk disk = new AudioCdDisk(halDisk);
                 disk.Updated += OnAudioCdDiskUpdated;
-
-                if(disk.Valid)
+				
+                if(disk.Valid) 
                     disks[disk.Udi] = disk;
+                
+                QueryCddb(disk);
             }
 
             HandleUpdated();
