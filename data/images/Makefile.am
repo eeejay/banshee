@@ -39,6 +39,7 @@ EXTRA_DIST = \
 	playlist-icon-large.png \
 	search-entry-icon-hover.png \
 	search-entry-icon.png \
+	song-drm.png \
 	source-cd-audio.png \
 	source-ipod-color.png \
 	source-ipod-regular.png \
@@ -46,6 +47,7 @@ EXTRA_DIST = \
 	source-library.png \
 	source-playlist.png \
 	star.png \
+	sync-needed.png \
 	tray-icon.png \
 	tray-icon-raw.png \
 	volume-decrease.png \
