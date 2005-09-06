@@ -133,8 +133,9 @@ namespace Banshee
 			Save();
 		}
 		
-		public int TrackIndex   { get { return track_index;  } set { track_index =  value; 
-		                                                             uri = "cdda://" + (track_index + 1); } }
+		public int TrackIndex   { get { return track_index;  } 
+		                          set { track_index =  value; 
+		                                uri = "cdda://" + (track_index + 1) + "#" + device; } }
 		public int Minutes      { get { return minutes;      } set { minutes =      value; } }
 		public int Seconds      { get { return seconds;      } set { seconds =      value; } }
 		public long StartSector { get { return start_sector; } set { start_sector = value; } }

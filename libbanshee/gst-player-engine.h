@@ -41,6 +41,7 @@ typedef struct {
 	GstElement *player_element;
 
 	gchar *file;
+	gchar *cd_device;
 	gchar *error;
 	
 	gboolean have_error;

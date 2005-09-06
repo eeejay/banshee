@@ -1,5 +1,9 @@
 2005-09-05  Aaron Bockover <aaron@aaronbock.net>
 
+	* src/AudioCdCore.cs: Set the URI for CD tracks to cdda://<track>#<device>
+	* libbanshee/gst-player-engine.c: Added notify::source support for
+	getting the source from the playbin element to set the CD device for 
+	cdda:// URIs. Handles cdda:// URIs in the form of cdda://<track>#<device>
 	* src/LibraryTransactions.cs: call Save() on track info after setting 
 	new filename when performing copy on import
 	* src/Library.cs: Applied patch to fix death on renaming new iPod (315307)

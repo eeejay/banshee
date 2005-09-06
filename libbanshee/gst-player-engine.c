@@ -53,6 +53,27 @@ static void state_change_cb(GstElement *play, GstElementState old_state,
 // Private Members
 
 static void
+on_notify_source_cb(GstElement *playbin, gpointer unknown, 
+	GstPlayerEngine *engine)
+{
+	GstElement *src = NULL;
+	
+	g_object_get(playbin, "source", &src, NULL);
+	if(src == NULL)
+		return;
+	
+	if(engine->cd_device == NULL)
+		return;
+		
+	g_signal_connect(src, "error", 
+		G_CALLBACK(error_cb), engine);
+	
+	g_object_set(src, "device", engine->cd_device, NULL);
+	
+	g_object_unref(src);
+}
+
+static void
 gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 {
 	GstElement *sink;
@@ -89,6 +110,9 @@ gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 
 	g_signal_connect(engine->player_element, "state-change", 
 		G_CALLBACK(state_change_cb), engine);
+		
+	g_signal_connect(engine->player_element, "notify::source", 
+		G_CALLBACK(on_notify_source_cb), engine);
 }
 
 static gboolean
@@ -208,6 +232,7 @@ gpe_new()
 	gpe_pipeline_setup(engine, NULL);
 	
 	engine->file = NULL;
+	engine->cd_device = NULL;
 	engine->error = NULL;
 	
 	engine->eos_cb = NULL;
@@ -239,6 +264,9 @@ gpe_free(GstPlayerEngine *engine)
 
 	g_object_unref(engine->player_element);
 	
+	if(engine->cd_device != NULL)
+		g_free(engine->cd_device);
+	
 	g_free(engine->file);
 	g_free(engine->error);
 	g_free(engine);
@@ -263,8 +291,16 @@ void gpe_set_error_handler(GstPlayerEngine *engine, GpeErrorCallback cb)
 gboolean
 gpe_open(GstPlayerEngine *engine, const gchar *file)
 {
+	GstElement *src = NULL;
+	gchar *p = NULL;
+	
 	if(engine == NULL)
 		return FALSE; 
+	
+	if(engine->cd_device != NULL) {
+		g_free(engine->cd_device);
+		engine->cd_device = NULL;
+	}
 	
 	gpe_stop(engine);
 
@@ -276,6 +312,14 @@ gpe_open(GstPlayerEngine *engine, const gchar *file)
 	engine->position = 0;
 
 	engine->file = g_strdup(file);
+	
+	if(g_strncasecmp(engine->file, "cdda://", 7) == 0) {
+		p = strchr(engine->file, '#');
+		if(p != NULL) {
+			engine->cd_device = g_strdup(p + 1);
+		}
+	}
+	
 	g_object_set(G_OBJECT(engine->player_element), "uri", engine->file, NULL);
 
 	return TRUE;

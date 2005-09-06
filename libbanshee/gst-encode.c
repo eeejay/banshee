@@ -105,7 +105,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 		return NULL;
 	}
 
-	decoder_elem = gst_element_factory_make("spider", "spider");
+	decoder_elem = gst_element_factory_make("decodebin", "decodebin");
 	if(decoder_elem == NULL) {
 		encoder->error = g_strdup(_("Could not create 'spider' element"));
 		return NULL;
