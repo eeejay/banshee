@@ -7,7 +7,7 @@ bansheewrapdir = $(bindir)
 bansheewrap_SCRIPTS = $(WRAPPER)
 
 bansheedir = $(pkglibdir)
-banshee_SCRIPTS = $(TARGET) $(TARGET).config ipod-sharp.dll.config
+banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config ipod-sharp.dll.config
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	banshee.in \
@@ -137,7 +137,7 @@ banshee_resources = \
 	../data/images/ipod-48.png \
 	../data/images/sync-needed.png \
 	../data/images/song-drm.png
-	
+
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
 PKG_REFERENCES = \

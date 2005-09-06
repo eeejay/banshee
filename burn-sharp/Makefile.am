@@ -3,7 +3,7 @@ ASSEMBLY_NAME = burn-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 burndir = $(pkglibdir)
-burn_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).config
+burn_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 include burn-sharp.sources
 

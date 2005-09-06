@@ -124,7 +124,11 @@ namespace Banshee
 		
 		public void TestInitialize()
 		{
-
+			IntPtr ptr = gpe_new();
+			if (ptr == IntPtr.Zero)
+				throw new ApplicationException(Catalog.GetString("Could not initialize GStreamer library"));
+			handle = new HandleRef(this, ptr);
+			Dispose();
 		}
 			
 		public void Dispose()

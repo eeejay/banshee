@@ -22,7 +22,7 @@ ASSEMBLY_NAME = helix-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 helixenginedir = $(pkglibdir)/mediaengines/helix
-helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).config
+helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 all: $(ASSEMBLY)
 

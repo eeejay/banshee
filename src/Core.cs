@@ -159,11 +159,14 @@ namespace Banshee
             Player.Initialize();
             DebugLog.Add("Loaded PlayerEngine core: " + Player.EngineName);
 
-            if(AudioCdPlayer != null) {
-             AudioCdPlayer.Initialize();
-             DebugLog.Add("Loaded AudioCdPlayerEngine core: " + 
-                 AudioCdPlayer.EngineName);
+            if(AudioCdPlayer == null) {
+                	Console.Error.WriteLine("Could not load AudioCdPlayer!");
+                	System.Environment.Exit(1);
             }
+
+			AudioCdPlayer.Initialize();
+			DebugLog.Add("Loaded AudioCdPlayerEngine core: " + 
+                 AudioCdPlayer.EngineName);
 			
             AudioCdCore = new AudioCdCore();
             IpodCore = new IpodCore();

@@ -3,7 +3,7 @@ ASSEMBLY_NAME = entagged-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 entaggedsharpdir=$(pkglibdir)
-entaggedsharp_SCRIPTS=$(ASSEMBLY)
+entaggedsharp_SCRIPTS=$(ASSEMBLY) $(ASSEMBLY).mdb
 
 APE_CSFILES = \
 	$(srcdir)/Ape/MonkeyFileReader.cs \

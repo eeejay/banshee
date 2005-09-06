@@ -3,7 +3,7 @@ ASSEMBLY_NAME = hal-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 haldir = $(pkglibdir)
-hal_SCRIPTS = $(ASSEMBLY)
+hal_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 include hal-sharp.sources
 

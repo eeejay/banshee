@@ -3,7 +3,7 @@ ASSEMBLY_NAME = plugin-core
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 plugincoredir = $(pkglibdir)
-plugincore_SCRIPTS = $(ASSEMBLY)
+plugincore_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/IPlayerEngine.cs \

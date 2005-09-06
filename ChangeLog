@@ -1,3 +1,25 @@
+2005-09-06  Dan Winship  <danw@novell.com>
+
+	* burn-sharp/Makefile.am: 
+	* entagged-sharp/Makefile.am: 
+	* hal-sharp/Makefile.am: 
+	* mediaengines/gst/Makefile.am: 
+	* mediaengines/helix/Makefile.am: 
+	* plugincore/Makefile.am: 
+	* src/Makefile.am: Install .mdb files along with assemblies.
+
+	* libbanshee/.cvsignore: add CORBA CDDB gunk
+
+	* libbanshee/gst-player-engine.c (gpe_pipeline_setup): Drop
+	"error" param since it's not used. Return success/failure.
+	(gpe_new): if gpe_pipeline_setup() fails, return NULL rather than
+	crashing.
+	(gpe_free): fix leak
+	* mediaengines/gst/GstPlayerEngine.cs (TestInitialize): fill this
+	in.
+	* src/Core.cs: Exit without crashing if the AudioCdPlayer can't be
+	loaded
+
 2005-09-05  Aaron Bockover <aaron@aaronbock.net>
 
 	* src/AudioCdCore.cs: Set the URI for CD tracks to cdda://<track>#<device>

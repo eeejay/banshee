@@ -40,7 +40,7 @@
 #include "gst-init.h"
 
 static void end_of_stream_cb(GstElement *sink, GstPlayerEngine *engine);
-static void gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error);
+static gboolean gpe_pipeline_setup(GstPlayerEngine *engine);
 static gboolean iterate_timeout(GstPlayerEngine *engine);
 static gboolean end_of_stream_idle_cb(GstPlayerEngine *engine);
 static gboolean error_idle_cb(GstPlayerEngine *engine);
@@ -71,8 +71,8 @@ on_notify_source_cb(GstElement *playbin, gpointer unknown,
 	g_object_unref(src);
 }
 
-static void
-gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
+static gboolean
+gpe_pipeline_setup(GstPlayerEngine *engine)
 {
 	GstElement *sink;
 
@@ -87,16 +87,12 @@ gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 		(GSourceFunc)iterate_timeout, engine);
 
 	engine->player_element = gst_element_factory_make("playbin", "play");
-	if(engine->player_element == NULL) {
-		*error = g_strdup(_("Failed to create a GStreamer player opbject"));
-		return;
-	}
+	if(engine->player_element == NULL)
+		return FALSE;
 
 	sink = gst_gconf_get_default_audio_sink();
-	if(!sink) {
-		*error = g_strdup(_("Could not get audio output sink"));
-		return;
-	}
+	if(!sink)
+		return FALSE;
 
 	g_object_set(G_OBJECT(engine->player_element), "audio-sink", sink, NULL);
 	
@@ -111,6 +107,8 @@ gpe_pipeline_setup(GstPlayerEngine *engine, gchar **error)
 		
 	g_signal_connect(engine->player_element, "notify::source", 
 		G_CALLBACK(on_notify_source_cb), engine);
+	
+	return TRUE;
 }
 
 static gboolean
@@ -227,7 +225,8 @@ gpe_new()
 	GstPlayerEngine *engine;
 	
 	engine = g_new0(GstPlayerEngine, 1);
-	gpe_pipeline_setup(engine, NULL);
+	if (!gpe_pipeline_setup(engine))
+		return NULL;
 	
 	engine->file = NULL;
 	engine->cd_device = NULL;
@@ -247,7 +246,7 @@ gpe_new()
 void
 gpe_free(GstPlayerEngine *engine)
 {
-	if(engine != NULL)
+	if(engine == NULL)
 		return;
 
 	gpe_stop(engine);
@@ -289,7 +288,6 @@ void gpe_set_error_handler(GstPlayerEngine *engine, GpeErrorCallback cb)
 gboolean
 gpe_open(GstPlayerEngine *engine, const gchar *file)
 {
-	GstElement *src = NULL;
 	gchar *p = NULL;
 	
 	if(engine == NULL)

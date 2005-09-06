@@ -1,3 +1,7 @@
-.cvsignore
+GNOME_Media_CDDBSlave2-common.c
+GNOME_Media_CDDBSlave2-skels.c
+GNOME_Media_CDDBSlave2-stubs.c
+GNOME_Media_CDDBSlave2.h
 Makefile
 Makefile.in
+gnome_media_cddbslave2_idl_stamp
