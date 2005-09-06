@@ -20,6 +20,16 @@
 	* src/Core.cs: Exit without crashing if the AudioCdPlayer can't be
 	loaded
 
+	* src/EllipsizeLabel.cs: Gtk.Label subclass that checks if an
+	"ellipsize" property exists on the underlying C object and sets it
+	if so (so we get ellipsization on gtk 2.6+ platforms without
+	depending on gtk# 2.6).
+	* src/TrackInfoHeader.cs: 
+	* src/LibraryTransactionStatus.cs: Use it
+
+	* src/PlayerInterface.cs (OnPlaylistViewButtonPressEvent): ignore
+	double-clicks in the header area
+
 2005-09-05  Aaron Bockover <aaron@aaronbock.net>
 
 	* src/AudioCdCore.cs: Set the URI for CD tracks to cdda://<track>#<device>

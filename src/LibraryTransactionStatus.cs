@@ -67,7 +67,7 @@ namespace Banshee
 				AttachOptions.Fill, 
 				(AttachOptions)0, 0, 0);
 				
-			LabelStatus = new Label();
+			LabelStatus = new EllipsizeLabel();
 			LabelStatus.Xalign = 0.0f;
 			LabelStatus.Show();
 			Attach(LabelStatus, 0, 1, 0, 1, 

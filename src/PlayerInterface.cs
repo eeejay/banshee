@@ -1585,6 +1585,9 @@ namespace Banshee
 		private void OnPlaylistViewButtonPressEvent(object o, 
 			ButtonPressEventArgs args)
 		{
+			if (args.Event.Window != playlistView.BinWindow)
+				return;
+
 			if(args.Event.Button == 3) {
 				//GLib.Timeout.Add(10, 
 				//	new GLib.TimeoutHandler(PlaylistMenuPopupTimeout));

@@ -74,13 +74,13 @@ namespace Banshee
 			imageTitleIcon.Xalign = 0.0f;
 			imageTitleIcon.Yalign = 0.5f;
 			
-			artistLabel = new Label();
+			artistLabel = new EllipsizeLabel();
 			artistLabel.Show();
 			artistLabel.Xalign = 0.0f;
 			artistLabel.Yalign = 0.5f;
 			artistLabel.Selectable = true;
 			
-			titleLabel = new Label();
+			titleLabel = new EllipsizeLabel();
 			titleLabel.Show();			
 			titleLabel.Xalign = 0.0f;
 			titleLabel.Yalign = 0.5f;
