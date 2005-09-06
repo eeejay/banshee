@@ -61,12 +61,11 @@ on_notify_source_cb(GstElement *playbin, gpointer unknown,
 	g_object_get(playbin, "source", &src, NULL);
 	if(src == NULL)
 		return;
+		
+	g_signal_connect(src, "error", G_CALLBACK(error_cb), engine);
 	
 	if(engine->cd_device == NULL)
 		return;
-		
-	g_signal_connect(src, "error", 
-		G_CALLBACK(error_cb), engine);
 	
 	g_object_set(src, "device", engine->cd_device, NULL);
 	
