@@ -1,5 +1,5 @@
 --This file contains most of the Database construction/initialization
---for sonance. Because SQL92 does not support "IF [NOT] EXIST", I have
+--for banshee. Because SQL92 does not support "IF [NOT] EXIST", I have
 --added a proprietary rule '--IF TABLE NOT EXISTS {Name}' that when 
 --encountered will cause the parser to query the database for the table 
 --and only execute the next statement if the table does not exist. 
@@ -58,7 +58,7 @@ CREATE TABLE SmartPlaylists (
 	Name TEXT NOT NULL,
 	SelectedBy TEXT NOT NULL,
 	LimitToType TEXT NOT NULL,
-	LimitToValue TEXT NOT NULL,
+	LimitToValue TEXT NOT NULL
 );
 
 --IF TABLE NOT EXISTS SmartPlaylistMatches;
@@ -67,6 +67,5 @@ CREATE TABLE SmartPlaylistMatches (
 	PlaylistID INTEGER NOT NULL,
 	Field TEXT NOT NULL,
 	Condition TEXT NOT NULL,
-	Value TEXT NOT NULL,
-	Join TEXT NOT NULL
+	Value TEXT NOT NULL
 );
