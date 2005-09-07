@@ -213,7 +213,7 @@ namespace Banshee
 				CopyOnImport.Active = (bool)Core.GconfClient.Get(
 					GConfKeys.CopyOnImport);
 			} catch(Exception) {
-				CopyOnImport.Active = true;
+				CopyOnImport.Active = false;
 			}	
 			
 			try {
