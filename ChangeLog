@@ -1,5 +1,7 @@
 2005-09-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/player.glade: Moved the iPod box to under the playlist view,
+	will add more iPod crack there later
 	* data/glade/trackinfo.glade: Add an event box behind the title label for
 	setting its tooltip
 	* src/TrackProperties.cs: Show the "editing track" title for single edits
