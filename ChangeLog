@@ -1,5 +1,7 @@
 2005-09-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Only update last played/play count when 
+	at least half the song has been played (bug 315168)
 	* data/banshee.schemas.in: schema for CopyOnImport, default to false
 	* src/Preferences.cs: Default to false for CopyOnImport
 	* data/Tables.sql: Removed incomplete and unused Smart Playlist tables

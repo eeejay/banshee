@@ -73,6 +73,8 @@ namespace Banshee
 		private Hashtable playlistMenuMap;
 		private ProgressBar ipodDiskUsageBar;
 		private Viewport sourceViewLoadingVP;
+		
+		private bool incrementedCurrentSongPlayCount;
 	
 		public Gtk.Window Window
 		{
@@ -582,6 +584,7 @@ namespace Banshee
             activeTrackInfo = ti;
             Core.Instance.Player.Open(ti);
 
+            incrementedCurrentSongPlayCount = false;
             ScaleTime.Adjustment.Lower = 0;
             ScaleTime.Adjustment.Upper = ti.Duration;
 
@@ -589,7 +592,6 @@ namespace Banshee
             
             TogglePlaying();
 
-            ti.IncrementPlayCount();
             playlistView.QueueDraw();
         }
 		
@@ -756,11 +758,21 @@ namespace Banshee
 				ScaleTime.Adjustment.Upper = activeTrackInfo.Duration;
 			}
 				
+			if(Core.Instance.Player.Length > 0 && 
+			    Core.Instance.Player.Position > Core.Instance.Player.Length / 2
+			    && !incrementedCurrentSongPlayCount) {
+			    activeTrackInfo.IncrementPlayCount();
+			    incrementedCurrentSongPlayCount = true;
+			    Core.ThreadEnter();
+			    playlistView.QueueDraw();
+			    Core.ThreadLeave();
+			}
+				
 			if(updateEnginePosition) {
 				if(setPositionTimeoutId > 0)
-                	GLib.Source.Remove(setPositionTimeoutId);
+                    	GLib.Source.Remove(setPositionTimeoutId);
 				setPositionTimeoutId = GLib.Timeout.Add(100,
-                	new GLib.TimeoutHandler(SetPositionTimeoutCallback));
+                    	new GLib.TimeoutHandler(SetPositionTimeoutCallback));
 			
 				Core.ThreadEnter();
 				SetPositionLabel(args.Position);
