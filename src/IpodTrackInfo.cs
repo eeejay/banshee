@@ -60,7 +60,6 @@ namespace Banshee
 		{
 			song = IpodMisc.TrackInfoToSong(device, lti);
 			Load();
-			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
 			needSync = true;

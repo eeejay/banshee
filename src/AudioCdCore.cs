@@ -110,7 +110,6 @@ namespace Banshee
 		
 		public AudioCdTrackInfo(string device, string udi)
 		{
-		    uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 			canSaveToDatabase = false;
 			this.device = device;

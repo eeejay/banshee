@@ -104,7 +104,6 @@ namespace Banshee
 			SaveToDatabase(true);
 			Core.Library.SetTrack(trackId, this);
 			
-			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 	    }
 	    
@@ -129,7 +128,6 @@ namespace Banshee
 			
 			Core.Library.SetTrack(trackId, this);
 			
-			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
@@ -137,7 +135,6 @@ namespace Banshee
 		{
 			LoadFromDatabaseReader(reader);
 			Core.Library.SetTrack(trackId, this);
-			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
@@ -354,7 +351,17 @@ namespace Banshee
 		
 		public override void Save()
 		{
-			SaveToDatabase(true);
+			try {
+			     Core.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
+			   SaveToDatabase(true);
+			} catch(Exception) {
+			    Core.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
+			}
+		}
+		
+		private void OnDbWriteCycleFinished(object o, EventArgs args)
+		{
+		    Save();
 		}
 		
 		public override void IncrementPlayCount()
@@ -362,21 +369,24 @@ namespace Banshee
 			numberOfPlays++;
 			lastPlayed = DateTime.Now;
 			
-			Statement query = new Update("Tracks",
+			/*Statement query = new Update("Tracks",
 				"NumberOfPlays", numberOfPlays, 
 				"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat)) +
 				new Where(new Compare("TrackID", Op.EqualTo, trackId));
 				//new Limit(1);
 
-			Core.Library.Db.Execute(query);
+			Core.Library.Db.Execute(query);*/
+			
+			Save();
 		}
 		
 		protected override void SaveRating()
 		{
-			Statement query = new Update("Tracks",
+			/*Statement query = new Update("Tracks",
 				"Rating", rating) +
 				new Where(new Compare("TrackID", Op.EqualTo, trackId));
-			Core.Library.Db.Execute(query);
+			Core.Library.Db.Execute(query);*/
+			Save();
 		}
 	}
 }

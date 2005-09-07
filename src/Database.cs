@@ -44,6 +44,16 @@ namespace Banshee
 		private string dbname;
 		private string dbpath;
 
+        private bool writeInProgress;
+        
+        public event EventHandler WriteCycleFinished;
+
+        public bool WriteInProgress {
+            get {
+                return writeInProgress;
+           }
+        }
+
 		private IDbConnection dbcon
 		{
 			get {	
@@ -58,6 +68,8 @@ namespace Banshee
 			
 			threadConnections = new Hashtable();
 			tableColumns = new Hashtable();
+			
+			writeInProgress = false;
 			
 			Connect();
 			InitializeTables();
@@ -98,7 +110,13 @@ namespace Banshee
 		{
 			IDbCommand dbcmd = dbcon.CreateCommand();
 			dbcmd.CommandText = query.ToString();
-			return dbcmd.ExecuteNonQuery();
+			int ret = dbcmd.ExecuteNonQuery();
+			
+			EventHandler handler = WriteCycleFinished;
+			if(handler != null)
+			     handler(this, new EventArgs());
+			
+			return ret;
 		}
 		
 		public object QuerySingle(object query)
@@ -157,7 +175,7 @@ namespace Banshee
 					if(parts.Length != 2)
 						continue;
 						
-					db_use = parts[1].Trim();;
+					db_use = parts[1].Trim();
 					continue;
 				} 
 				
@@ -175,11 +193,7 @@ namespace Banshee
 					continue;
 				}
 
-				try {
-					Execute(stmt);
-				} catch(ApplicationException) {
-					// Something went wrong with SQL query
-				}
+				Execute(stmt);
 			}
 		}
 		
