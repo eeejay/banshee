@@ -1,3 +1,18 @@
+2005-09-06  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/banshee.schemas.in: schema for CopyOnImport, default to false
+	* src/Preferences.cs: Default to false for CopyOnImport
+	* data/Tables.sql: Removed incomplete and unused Smart Playlist tables
+	* src/Database.cs: WriteCycleFinished event for notifying objects that
+	the current query is finished and it is save to make pending queries
+	* src/LibraryTrackInfo.cs: Catch exception on Save() query for potential
+	database locking and put in a request with the Database core for 
+	notification when it is safe to re-try the query
+	* src/IpodTrackInfo.cs:
+	* src/AudioCdCore.cs (AudioCdTrackInfo):
+	* src/LibraryTrackInfo.cs: remove manual UID setting
+	* plugincore/TrackInfo.cs: base class sets UID
+
 2005-09-06  Dan Winship  <danw@novell.com>
 
 	* burn-sharp/Makefile.am: 
