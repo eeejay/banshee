@@ -1,5 +1,9 @@
 2005-09-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/trackinfo.glade: Add an event box behind the title label for
+	setting its tooltip
+	* src/TrackProperties.cs: Show the "editing track" title for single edits
+	and set its tooltip to the URI of the current track
 	* src/PlayerInterface.cs: Only update last played/play count when 
 	at least half the song has been played (bug 315168)
 	* data/banshee.schemas.in: schema for CopyOnImport, default to false

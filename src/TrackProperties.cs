@@ -42,6 +42,7 @@ namespace Banshee
 		public string Artist;
 		public string Album;
 		public string Title;
+		public string Uri;
 	
 		public uint TrackNumber;
 		public uint TrackCount;
@@ -59,6 +60,7 @@ namespace Banshee
 			Title = track.Title;
 			TrackNumber = track.TrackNumber;
 			TrackCount = track.TrackCount;
+			Uri = track.Uri;
 		}
 		
 		public void Save()
@@ -68,6 +70,7 @@ namespace Banshee
 			track.Title = Title;
 			track.TrackNumber = TrackNumber;
 			track.TrackCount = TrackCount;
+			track.Uri = Uri;
 		}
 		
 		public TrackInfo Track
@@ -137,7 +140,10 @@ namespace Banshee
 			AlbumSync.Clicked += OnAlbumSyncClicked;
 			TitleSync.Clicked += OnTitleSyncClicked;
 				
-			glade["MultiTrackHeader"].Visible = TrackSet.Count > 1;
+			Next.Visible = TrackSet.Count > 1;
+			Previous.Visible = TrackSet.Count > 1;
+				
+			//glade["MultiTrackHeader"].Visible = TrackSet.Count > 1;
 			TrackNumberSync.Visible = TrackSet.Count > 1;
 			TrackCountSync.Visible = TrackSet.Count > 1;
 			ArtistSync.Visible = TrackSet.Count > 1;
@@ -197,11 +203,21 @@ namespace Banshee
 					Catalog.GetString("Unknown") :
 					track.Track.DateAdded.ToString());
 					
-			TitleLabel.Markup = "<big><b>" +	
-				String.Format(Catalog.GetString(
-					"Editing Track Properties ({0} of {1})"), 
-					index + 1, TrackSet.Count) + "</b></big>";
-					
+		    if(TrackSet.Count > 1) {
+        			TitleLabel.Markup = "<big><b>" +	
+        				String.Format(Catalog.GetString(
+        					"Editing Track Properties ({0} of {1})"), 
+        					index + 1, TrackSet.Count) + "</b></big>";
+		    } else {
+		          TitleLabel.Markup = "<big><b>" + 
+		              Catalog.GetString("Editing Track Properties") 
+		              + "</b></big>";    
+		    }			
+		    
+		    tips.SetTip(glade["TitleEventBox"],
+				String.Format(Catalog.GetString("File: {0}"), 
+				    track.Uri), "uri");
+		
 			Previous.Sensitive = index > 0;
 			Next.Sensitive = index < TrackSet.Count - 1;
 		}
