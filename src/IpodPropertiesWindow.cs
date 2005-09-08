@@ -73,12 +73,9 @@ namespace Banshee
 		}
 		
 		public Entry AddEntry(string key, object value)
-		{
-			if(value == null)
-				return null;
-				
+		{		
 			Entry valEntry = new Entry();
-			valEntry.Text = value.ToString();
+			valEntry.Text = value == null ? String.Empty : value.ToString();
 			
 			AddWidget(key, valEntry);
 			
