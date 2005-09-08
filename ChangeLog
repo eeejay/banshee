@@ -21,6 +21,10 @@
 	* src/PlaylistView.cs (OnDragBegin, OnDragMotion): override the
 	default GtkTreeView dnd behavior.
 
+	* src/PlayerInterface.cs (OnItemRemoveActivate,
+	OnItemSelectAllActivate): Don't steal "Del" and "Ctrl+A" keys from
+	the search entry.
+
 2005-09-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.in: Version 0.9.7

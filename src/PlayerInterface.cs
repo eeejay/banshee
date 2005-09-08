@@ -1359,6 +1359,13 @@ namespace Banshee
 		
 		private void OnItemRemoveActivate(object o, EventArgs args)
 		{
+			// Don't steal "Del" key from the search entry
+			if (WindowPlayer.Focus is Entry &&
+				Gtk.Global.CurrentEvent is Gdk.EventKey) {
+				Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
+				return;
+			}
+
 			int selCount = playlistView.Selection.CountSelectedRows();
 		
 			if(selCount <= 0)
@@ -1607,6 +1614,13 @@ namespace Banshee
 		
 		private void OnItemSelectAllActivate(object o, EventArgs args)
 		{
+			// Don't steal "Ctrl+A" from the search entry
+			if (WindowPlayer.Focus is Entry &&
+				Gtk.Global.CurrentEvent is Gdk.EventKey) {
+				Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
+				return;
+			}
+
 			playlistView.Selection.SelectAll();
 		}
 		
