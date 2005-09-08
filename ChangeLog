@@ -1,3 +1,19 @@
+2005-09-08  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/IpodPropertiesWindow.cs: Fixed NullRef bug
+	* src/Library.cs: Remove tracks from both track caches/maps
+	* src/LibraryTransactions.cs: Remove tracks using new Library remove method
+	in TrackRemoveTransaction
+	* src/TrackInfoHeader.cs: Hide logo/album cover container 
+	* libbanshee/gst-encode.c: Fixed double free, and a pipeline element
+	* src/GstFileEncoder.cs: Fixed minor bug
+	* src/Library.cs: Keep track of songs queued for manual removal
+	* src/IpodCore.cs: Fixed manual song remove bug
+	* src/SourceView.cs: AddPlaylist() for adding playlist sources
+	* src/PlayerInterface.cs: Update disk usage bar when device emits Changed
+	signal. Add/Remove playlist specifically from the source view instead of
+	rebuilding the source list. Updated Ipod UI parts.
+
 2005-09-07  Hans Petter Jansson  <hpj@novell.com>
 
 	* libbanshee/xing/emdct.c
