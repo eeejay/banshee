@@ -37,18 +37,23 @@ namespace Banshee
 	public sealed class Dnd
 	{
 		public enum TargetType {
-			SourceViewModel,
-			PlaylistViewModel,
+			Source,
+			PlaylistRows,
+			LibraryTrackIds,
 			UriList
 		};
 		
 		public static readonly TargetEntry TargetSource = 
-			new TargetEntry("DND_SOURCE_VIEW_MODEL", TargetFlags.App, 
-				(uint)TargetType.SourceViewModel);
+			new TargetEntry("application/x-banshee-source", TargetFlags.App, 
+				(uint)TargetType.Source);
 
-		public static readonly TargetEntry TargetPlaylist = 
-			new TargetEntry("DND_PLAYLIST_VIEW_MODEL", TargetFlags.App, 
-				(uint)TargetType.PlaylistViewModel);
+		public static readonly TargetEntry TargetPlaylistRows = 
+			new TargetEntry("application/x-banshee-playlist-rows", TargetFlags.App, 
+				(uint)TargetType.PlaylistRows);
+
+		public static readonly TargetEntry TargetLibraryTrackIds = 
+			new TargetEntry("application/x-banshee-library-track-ids", TargetFlags.App, 
+				(uint)TargetType.LibraryTrackIds);
 
 		public static readonly TargetEntry TargetUriList = 
 			new TargetEntry("text/uri-list", 0, (uint)TargetType.UriList);

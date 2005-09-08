@@ -1,3 +1,26 @@
+2005-09-08  Dan Winship  <danw@novell.com>
+
+	* src/DragDrop.cs: reorganize the dnd target types into "Source",
+	"PlaylistRows", "LibraryTrackIds", and "UriList". Use
+	MIME-type-style target atoms.
+
+	* src/PlayerInterface.cs: update for DragDrop changes. Use
+	TreeView.EnableModelDragSource and EnableModelDragDest rather than
+	Gtk.Drag.SourceSet and DestSet on the treeviews, so that
+	GtkTreeView will do things like scrolling automatically. Remove
+	code that got moved into PlaylistView.cs and SourceView.cs.
+
+	* src/SourceView.cs (OnDragMotion, OnDragLeave,
+	OnDragDataReceived): Move these here from PlayerInterface and fix
+	up the drag feedback so you can't drop tracks onto sources that
+	won't really accept them. Dynamically add a "New Playlist" line
+	when dragging, so that it's always possible to create a new
+	playlist via dnd, even when there isn't any blank space at the
+	bottom of the source list.
+
+	* src/PlaylistView.cs (OnDragBegin, OnDragMotion): override the
+	default GtkTreeView dnd behavior.
+
 2005-09-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.in: Version 0.9.7

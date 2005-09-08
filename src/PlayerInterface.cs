@@ -98,26 +98,25 @@ namespace Banshee
 
 		private static TargetEntry [] playlistViewSourceEntries = 
 			new TargetEntry [] {
-				Dnd.TargetSource,
-				Dnd.TargetPlaylist,
+				Dnd.TargetPlaylistRows,
+				Dnd.TargetLibraryTrackIds,
 				Dnd.TargetUriList
 			};
 			
 		private static TargetEntry [] playlistViewDestEntries = 
 			new TargetEntry [] {
-				Dnd.TargetPlaylist,
-				Dnd.TargetSource,
+				Dnd.TargetPlaylistRows,
 				Dnd.TargetUriList
 			};
 
 		private static TargetEntry [] sourceViewSourceEntries = 
 			new TargetEntry [] {
-				Dnd.TargetPlaylist
+				Dnd.TargetSource
 			};
 			
 		private static TargetEntry [] sourceViewDestEntries = 
 			new TargetEntry [] {
-				Dnd.TargetSource
+				Dnd.TargetLibraryTrackIds,
 			};
 
         public PlayerUI() 
@@ -261,17 +260,15 @@ namespace Banshee
 			sourceView = new SourceView();
 			sourceView.SourceChanged += OnSourceChanged;
 			sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
-			sourceView.DragMotion += OnSourceViewDragMotion;
-			sourceView.DragDataReceived += OnSourceViewDragDataReceived;
 			sourceView.Sensitive = false;
 
-			Gtk.Drag.SourceSet(sourceView, 
+			/*sourceView.EnableModelDragSource(
 				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
 				sourceViewSourceEntries, 
-				DragAction.Copy | DragAction.Move);
+				DragAction.Copy | DragAction.Move);*/
 		
-			Gtk.Drag.DestSet(sourceView, 
-				DestDefaults.All, sourceViewDestEntries, 
+			sourceView.EnableModelDragDest(
+				sourceViewDestEntries, 
 				DragAction.Copy | DragAction.Move);
 
 			// Playlist View
@@ -285,18 +282,17 @@ namespace Banshee
 			playlistView.ButtonReleaseEvent += OnPlaylistViewButtonReleaseEvent;
 			playlistView.DragDataReceived += OnPlaylistViewDragDataReceived;
 			playlistView.DragDataGet += OnPlaylistViewDragDataGet;
-			playlistView.DragMotion += OnPlaylistViewDragMotion;
 			playlistView.DragDrop += OnPlaylistViewDragDrop;	
 				
 			sourceView.SelectLibrary();
 				
-			Gtk.Drag.SourceSet(playlistView, 
+			playlistView.EnableModelDragSource(
 				Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
 				playlistViewSourceEntries, 
 				DragAction.Copy | DragAction.Move);
 		
-			Gtk.Drag.DestSet(playlistView, 
-				DestDefaults.All, playlistViewDestEntries, 
+			playlistView.EnableModelDragDest( 
+				playlistViewDestEntries, 
 				DragAction.Copy | DragAction.Move);
 			
 			// Ipod Container
@@ -1891,16 +1887,6 @@ namespace Banshee
 			pl.Saved += OnPlaylistSaved;
 		}
 
-		private void OnPlaylistViewDragMotion(object o, DragMotionArgs args)
-		{
-			TreePath path;
-			TreeViewDropPosition pos;
-
-			if(!playlistView.GetDestRowAtPos(args.X, args.Y, out path, out pos))
-				return;
-			playlistView.SetDragDestRow(path, (TreeViewDropPosition)((int)pos & 0x1));
-		}
-		
 		private void OnPlaylistViewDragDataReceived(object o, 
 			DragDataReceivedArgs args)
 		{
@@ -1933,7 +1919,7 @@ namespace Banshee
 						ImportMusic(rawSelectionData);
 						
 					break;
-				case (uint)Dnd.TargetType.PlaylistViewModel:
+				case (uint)Dnd.TargetType.PlaylistRows:
 					if(!haveDropPosition)
 						break;
 					
@@ -1976,23 +1962,23 @@ namespace Banshee
 			byte [] selData;
 			
 			switch(args.Info) {
-				case (uint)Dnd.TargetType.PlaylistViewModel:				
+				case (uint)Dnd.TargetType.PlaylistRows:				
 					selData = Dnd.TreeViewSelectionPathsToBytes(playlistView);
 					if(selData == null)
 						return;
 					
 					args.SelectionData.Set(
-						Gdk.Atom.Intern(Dnd.TargetPlaylist.Target, 
+						Gdk.Atom.Intern(Dnd.TargetPlaylistRows.Target, 
 						false), 8, selData);
 						
 					break;
-				case (uint)Dnd.TargetType.SourceViewModel:
+				case (uint)Dnd.TargetType.LibraryTrackIds:
 					selData = Dnd.PlaylistSelectionTrackIdsToBytes(playlistView);
 					if(selData == null)
 						return;
 					
 					args.SelectionData.Set(
-						Gdk.Atom.Intern(Dnd.TargetSource.Target,
+						Gdk.Atom.Intern(Dnd.TargetLibraryTrackIds.Target,
 						false), 8, selData);
 						
 					break;
@@ -2021,99 +2007,6 @@ namespace Banshee
 				playlistView.Selection.SelectPath(path);
 		}
 		
-		// Source View DnD
-
-		private void OnSourceViewDragMotion(object o, DragMotionArgs args)
-		{
-			TreePath path;
-			Source source;
-			
-			if(!sourceView.GetPathAtPos(args.X, args.Y, out path))
-				return;
-				
-			source = sourceView.GetSource(path);
-			if(source == null)
-				return;
-				
-			// TODO: Allow iPod view to drop into Library
-				
-			switch(source.Type) {
-				case SourceType.Library:
-				case SourceType.AudioCd:
-					return;
-			}
-			
-			// No Ipod->Ipod
-			if((source.Type == SourceType.Playlist 
-				|| source.Type == SourceType.Ipod) 
-				&& sourceView.SelectedSource.Type == SourceType.Ipod)
-				return;
-				
-			sourceView.SetDragDestRow(path, 
-				Gtk.TreeViewDropPosition.IntoOrAfter);
-		}
-		
-		private void OnSourceViewDragDataReceived(object o, 
-			DragDataReceivedArgs args)
-		{
-			TreePath destPath;
-			TreeViewDropPosition pos;
-			bool haveDropPosition;
-			
-			if(sourceView.SelectedSource.Type == SourceType.Ipod)
-				return;
-			
-			string rawData = Dnd.SelectionDataToString(args.SelectionData);		
-			string [] rawDataArray = Dnd.SplitSelectionData(rawData);
-			if(rawData.Length <= 0) 
-				return;		
-			
-			haveDropPosition = sourceView.GetDestRowAtPos(args.X, args.Y, 
-				out destPath, out pos);
-
-			switch(args.Info) {
-				case (uint)Dnd.TargetType.SourceViewModel: // makes no sense!
-					ArrayList tracks = new ArrayList();
-					foreach(string trackId in rawDataArray) {
-						try {
-							int tid = Convert.ToInt32(trackId);
-							tracks.Add(Core.Library.Tracks[tid]);
-						} catch(Exception) {
-							continue;
-						}
-					}
-					
-					Source source = sourceView.GetSource(destPath);
-										
-					if(source == null && sourceView.SelectedSource.Type == SourceType.Library) {
-						Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
-						pl.Append(tracks);
-						pl.Save();
-						pl.Saved += OnPlaylistSaved;
-					} else if(haveDropPosition
-						&& source.Type == SourceType.Playlist &&
-						sourceView.SelectedSource.Type == SourceType.Library) {
-						Playlist pl = new Playlist(source.Name);
-						pl.Load();
-						pl.Append(tracks);
-						pl.Save();
-					} else if(haveDropPosition 
-						&& source.Type == SourceType.Ipod) {
-						IpodSource ipodSource = source as IpodSource;
-						
-						foreach(LibraryTrackInfo lti in tracks)
-							ipodSource.QueueForSync(lti);	
-					}
-					
-					break;
-				case (uint)Dnd.TargetType.UriList:
-					// M3U URI Drops Here?
-					break;
-			}
-			
-			Gtk.Drag.Finish(args.Context, true, false, args.Time);
-		}
-
 		private void OnButtonBurnClicked(object o, EventArgs args)
 		{
 			if(playlistView.Selection.CountSelectedRows() <= 0)

@@ -663,5 +663,29 @@ namespace Banshee
 				return list.ToArray(typeof(TrackInfo)) as TrackInfo [];
 			}
 		}
+
+		protected override void OnDragBegin(Gdk.DragContext ctx)
+		{
+			// This is just here to block GtkTreeView's
+			// implementation, which would use an image of the row
+			// being dragged as the drag icon, which we don't want
+			// since we might actually be dragging multiple rows.
+		}
+
+		protected override bool OnDragMotion(Gdk.DragContext context, int x, int y, uint time)
+		{
+			if (!base.OnDragMotion(context, x, y, time))
+				return false;
+
+			// Force the drag highlight to be either before or after a
+			// row, not on top of one.
+
+			TreePath path;
+			TreeViewDropPosition pos;
+			if(GetDestRowAtPos(x, y, out path, out pos))
+				SetDragDestRow(path, (TreeViewDropPosition)((int)pos & 0x1));
+
+			return true;
+		}
 	}
 }

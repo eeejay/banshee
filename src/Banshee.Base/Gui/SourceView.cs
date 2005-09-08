@@ -65,11 +65,14 @@ namespace Banshee
 		private ListStore store;
 		private Source selectedSource;
 		private bool forceReselect = false;
+
+		private Source newPlaylistSource = new PlaylistSource(Catalog.GetString("New Playlist"));
+		private TreeIter newPlaylistIter = TreeIter.Zero;
+		private bool newPlaylistVisible = false;
 		
 		public event EventHandler SourceChanged;
 
 		private int currentTimeout = -1;
-		private TreeIter timeoutIter;
 
 		/*
 		    I like this method better, packing two cell renderers into 
@@ -170,6 +173,7 @@ namespace Banshee
 			if(renderer.source == null)
 			    return;
 			renderer.Selected = renderer.source.Equals(selectedSource);
+			renderer.Italicized = renderer.source.Equals(newPlaylistSource);
 			renderer.Editable = renderer.source.CanRename;
 		}
 		
@@ -254,6 +258,98 @@ namespace Banshee
 				handler(this, new EventArgs());
 			
 			return false;
+		}
+		
+		protected override bool OnDragMotion(Gdk.DragContext context, int x, int y, uint time)
+		{
+			base.OnDragMotion(context, x, y, time);
+			SetDragDestRow(null, TreeViewDropPosition.IntoOrAfter);
+			Gdk.Drag.Status(context, 0, time);
+
+			// TODO: Support other drag sources
+			if(SelectedSource.Type != SourceType.Library)
+				return true;
+			
+			if(!newPlaylistVisible) {
+				newPlaylistIter = store.AppendValues(newPlaylistSource);
+				newPlaylistVisible = true;
+			}
+
+			TreePath path;
+			TreeViewDropPosition pos;
+			if(!GetDestRowAtPos(x, y, out path, out pos))
+				path = store.GetPath(newPlaylistIter);
+
+			Source source = GetSource(path);
+			if(source == null)
+				return true;
+			// TODO: Support other drag destinations
+			if(source.Type != SourceType.Playlist && source.Type != SourceType.Ipod)
+				return true;
+			
+			SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
+			Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
+			return true;
+		}
+		
+		protected override void OnDragLeave(Gdk.DragContext context, uint time)
+		{
+			if (newPlaylistVisible) {
+				store.Remove(ref newPlaylistIter);
+				newPlaylistVisible = false;
+			}
+		}
+
+		protected override void OnDragDataReceived(Gdk.DragContext context, int x, int y,
+			Gtk.SelectionData selectionData, uint info, uint time)
+		{
+			TreePath destPath;
+			TreeViewDropPosition pos;
+			
+			string rawData = Dnd.SelectionDataToString(selectionData);		
+			string [] rawDataArray = Dnd.SplitSelectionData(rawData);
+			if(rawData.Length <= 0) {
+				Gtk.Drag.Finish(context, false, false, time);
+				return;		
+			}
+			
+			ArrayList tracks = new ArrayList();
+			foreach(string trackId in rawDataArray) {
+				try {
+					int tid = Convert.ToInt32(trackId);
+					tracks.Add(Core.Library.Tracks[tid]);
+				} catch(Exception) {
+					continue;
+				}
+			}
+			
+			if(GetDestRowAtPos(x, y, out destPath, out pos)) {
+				Source source = GetSource(destPath);
+				
+				if(source.Type == SourceType.Playlist) {
+					Playlist pl = new Playlist(source.Name);
+					pl.Load();
+					pl.Append(tracks);
+					pl.Save();
+				} else if(source.Type == SourceType.Ipod) {
+					IpodSource ipodSource = source as IpodSource;
+					
+					foreach(LibraryTrackInfo lti in tracks)
+						ipodSource.QueueForSync(lti);	
+				}
+			} else {
+				Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
+				pl.Append(tracks);
+				pl.Save();
+				pl.Saved += OnPlaylistSaved;
+			}
+			
+			Gtk.Drag.Finish(context, true, false, time);
+		}
+		
+		private void OnPlaylistSaved(object o, PlaylistSavedArgs args)
+		{
+			AddPlaylist(args.Name);
 		}
 		
 		public void SelectLibrary()
@@ -415,6 +511,7 @@ namespace Banshee
 	public class SourceRowRenderer : CellRendererText
 	{
 		public bool Selected = false;
+		public bool Italicized = false;
 		public Source source;
 		public SourceView view;
 		
@@ -497,7 +594,6 @@ namespace Banshee
 			int countLayoutWidth, countLayoutHeight;
 			int maxTitleLayoutWidth;
 			bool hideCounts = false;
-			Gdk.Window window = drawable as Gdk.Window;
 			
 			StateType state = RendererStateToWidgetState(flags);
 			string iconFile = null;
@@ -540,7 +636,11 @@ namespace Banshee
 			
 			FontDescription fd = widget.PangoContext.FontDescription.Copy();
 			fd.Weight = Selected ? Pango.Weight.Bold : Pango.Weight.Normal;
-			
+			if (Italicized) {
+				fd.Style = Pango.Style.Italic;
+				hideCounts = true;
+			}
+
 			titleLayout.FontDescription = fd;
 			countLayout.FontDescription = fd;
 			
@@ -574,7 +674,7 @@ namespace Banshee
 			if(source.Type == SourceType.Ipod 
 				&& (source as IpodSource).NeedSync 
 				&& !state.Equals(StateType.Selected)) {
-				mainGC = new Gdk.GC(window);
+				mainGC = new Gdk.GC(drawable);
 				mainGC.Copy(widget.Style.TextGC(state));
 				
 				Gdk.Color color = Gdk.Color.Zero;
@@ -582,13 +682,13 @@ namespace Banshee
 					mainGC.RgbFgColor = color;
 			} 
 			
-			window.DrawPixbuf(mainGC, icon, 0, 0, 
+			drawable.DrawPixbuf(mainGC, icon, 0, 0, 
 				cell_area.X + 0, 
 				cell_area.Y + ((cell_area.Height - icon.Height) / 2),
 				icon.Width, icon.Height,
 				RgbDither.None, 0, 0);
 		
-			window.DrawLayout(mainGC, 
+			drawable.DrawLayout(mainGC, 
 				cell_area.X + icon.Width + 6, 
 				cell_area.Y + ((cell_area.Height - titleLayoutHeight) / 2) + 1, 
 				titleLayout);
@@ -598,14 +698,14 @@ namespace Banshee
 				
 			Gdk.GC modGC = widget.Style.TextGC(state);
 			if(!state.Equals(StateType.Selected)) {
-				modGC = new Gdk.GC(window);
+				modGC = new Gdk.GC(drawable);
 				modGC.Copy(widget.Style.TextGC(state));
 				Gdk.Color fgcolor = widget.Style.Foreground(state);
 				Gdk.Color bgcolor = widget.Style.Background(state);
 				modGC.RgbFgColor = ColorBlend(fgcolor, bgcolor);
 			} 
 			
-			window.DrawLayout(modGC,
+			drawable.DrawLayout(modGC,
 				(cell_area.X + cell_area.Width) - countLayoutWidth - 2,
 				cell_area.Y + ((cell_area.Height - countLayoutHeight) / 2) + 1,
 				countLayout);
