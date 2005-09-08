@@ -1,6 +1,9 @@
 SUBDIRS = \
-	gst \
-	helix 
+	gst 
+
+if ENABLE_HELIX
+SUBDIRS += helix
+endif
 
 DISTCLEANFILES = Makefile.in
 
