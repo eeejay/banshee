@@ -60,7 +60,7 @@ gst_file_encoder_new()
 	
 	encoder = g_new0(GstFileEncoder, 1);
 	encoder->cancel = FALSE;
-	encoder->error = FALSE;
+	encoder->error = NULL;
 	
 	return encoder;
 }
@@ -72,15 +72,20 @@ gst_file_encoder_free(GstFileEncoder *encoder)
 		return;
 	
 	encoder->cancel = TRUE;
-	g_free(encoder->error);
+	
+	if(encoder->error != NULL)
+	   g_free(encoder->error);
+	encoder->error = NULL;
+	
 	g_free(encoder);
+	encoder = NULL;
 }
 
 static void 
 gst_error_callback(GstElement *elem, GstElement *arg1, 
 	GError *error, gchar *str, GstFileEncoder *encoder)
 {
-	encoder->error = str;
+	encoder->error = g_strdup(str);
 }
 
 static GstElement *
@@ -105,7 +110,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 		return NULL;
 	}
 
-	decoder_elem = gst_element_factory_make("decodebin", "decodebin");
+	decoder_elem = gst_element_factory_make("spider", "spider");
 	if(decoder_elem == NULL) {
 		encoder->error = g_strdup(_("Could not create 'spider' element"));
 		return NULL;
