@@ -103,12 +103,12 @@ namespace Banshee
 				(AttachOptions)0, 0, 0);
 			
 			// Album Picture
-			imageAlbum = new Image();
+			/*imageAlbum = new Image();
 			imageAlbum.Show();
 			imageAlbum.Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("album-cover-container.png");
 
-			PackStart(imageAlbum, false, false, 5);
+			PackStart(imageAlbum, false, false, 5);*/
 						
 			SetIdle();
 		}
