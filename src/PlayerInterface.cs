@@ -73,6 +73,7 @@ namespace Banshee
 		private Hashtable playlistMenuMap;
 		private ProgressBar ipodDiskUsageBar;
 		private Viewport sourceViewLoadingVP;
+		private Button ipodSyncButton;
 		
 		private bool incrementedCurrentSongPlayCount;
 	
@@ -145,6 +146,8 @@ namespace Banshee
 			Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
 			Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
 			
+			Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
+			
 			LoadSettings();
 			Core.Instance.PlayerInterface = this;
 			
@@ -162,6 +165,12 @@ namespace Banshee
       		ConnectToLibraryTransactionManager();
 			Core.Library.Reloaded += OnLibraryReloaded;
 			Core.Library.ReloadLibrary();
+			
+			foreach(IPod.Device device in Core.Instance.IpodCore.Devices) {
+			     device.Changed += OnIpodDeviceChanged;
+			     CheckIpodForNew(device);
+			}
+			
 			return false;
       	}
       	
@@ -296,23 +305,32 @@ namespace Banshee
 			(gxml["IpodContainer"] as Container).Add(box);
 			ipodDiskUsageBar = new ProgressBar();
 			box.PackStart(ipodDiskUsageBar, false, false, 0);
+			ipodDiskUsageBar.ShowAll();
 			
-			Button ipodSyncButton = new Button(
-				new Gtk.Image("gtk-copy", IconSize.Menu));
+			HBox syncBox = new HBox();
+			syncBox.Spacing = 3;
+			ipodSyncButton = new Button(syncBox);
+			Label syncLabel = new Label(Catalog.GetString("Update iPod"));
 			ipodSyncButton.Clicked += OnIpodSyncClicked;
+			syncBox.PackStart(new Gtk.Image("gtk-copy", IconSize.Menu), 
+			 false, false, 0);
+			syncBox.PackStart(syncLabel, true, true, 0);
 			box.PackStart(ipodSyncButton, false, false, 0);
+			ipodSyncButton.ShowAll();
 			
 			Button ipodPropertiesButton = new Button(
 				new Gtk.Image("gtk-properties", IconSize.Menu));
 			ipodPropertiesButton.Clicked += OnIpodPropertiesClicked;
 			box.PackStart(ipodPropertiesButton, false, false, 0);
+			ipodPropertiesButton.ShowAll();
 			
 			Button ipodEjectButton = new Button(new Gtk.Image("media-eject",
 				IconSize.Menu));
 			ipodEjectButton.Clicked += OnIpodEjectClicked;
 			box.PackStart(ipodEjectButton, false, false, 0);
+			ipodEjectButton.ShowAll();
 			
-			box.ShowAll();
+			box.Show();
 			
 			// Misc
 			SetInfoLabel(Catalog.GetString("Idle"));
@@ -926,10 +944,17 @@ namespace Banshee
 			pl.Save();
 		}
 		
-		private void OnPlaylistSaved(object o, EventArgs args)
+		private void OnPlaylistSaved(object o, PlaylistSavedArgs args)
 		{	
-			sourceView.RefreshList();
+			sourceView.AddPlaylist(args.Name);
 		}
+		
+		private void OnPlaylistObjectUpdated(object o, EventArgs args)
+		{
+		    Core.ThreadEnter();
+		    sourceView.QueueDraw();
+		    Core.ThreadLeave();
+	    }
 		
 		private void OnMenuNewSmartPlaylistActivate(object o, EventArgs args)
 		{
@@ -971,11 +996,7 @@ namespace Banshee
 				IpodSource ipodSource = source as IpodSource;
 				playlistModel.LoadFromIpodSource(ipodSource);
 				
-				ipodDiskUsageBar.Fraction = ipodSource.DiskUsageFraction;
-				ipodDiskUsageBar.Text = ipodSource.DiskUsageString;
-				string tooltip = ipodSource.DiskUsageString + " (" +
-					ipodSource.DiskAvailableString + ")";
-				toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
+				UpdateIpodDiskUsageBar(ipodSource);
 			} else if(source.Type == SourceType.AudioCd) {
 				playlistModel.Clear();
 				playlistModel.Source = source;
@@ -1000,7 +1021,14 @@ namespace Banshee
 			gxml["ButtonBurn"].Visible && gxml["IpodSyncButton"].Visible) ?
 				10 : 0;
 			
-			gxml["IpodContainer"].Visible = source.Type == SourceType.Ipod;
+			if(source.Type == SourceType.Ipod) {
+			     gxml["IpodContainer"].Visible = true;
+			     IpodSource ipodSource = source as IpodSource;
+			     ipodSyncButton.Visible = ipodSource.Device.CanWrite;
+			} else {
+			     gxml["IpodContainer"].Visible = false;
+			}     
+			     
 			gxml["SearchLabel"].Sensitive = source.Type == SourceType.Ipod 
 			     || source.Type == SourceType.Library;
 			searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
@@ -1015,6 +1043,56 @@ namespace Banshee
 				playlistView.Sensitive = false;
 			else
 				playlistView.Sensitive = true;
+		}
+		
+		private void UpdateIpodDiskUsageBar(IpodSource ipodSource)
+		{
+	        Core.ThreadEnter();
+	        ipodDiskUsageBar.Fraction = ipodSource.DiskUsageFraction;
+			ipodDiskUsageBar.Text = ipodSource.DiskUsageString;
+			string tooltip = ipodSource.DiskUsageString + " (" +
+				ipodSource.DiskAvailableString + ")";
+			toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
+			Core.ThreadLeave();		
+		}
+		
+		private void CheckIpodForNew(IPod.Device device)
+		{
+		  if(device.IsNew) {
+		      Core.ThreadEnter();
+		      new IpodNewDialog(device);
+		      sourceView.QueueDraw();
+		      Core.ThreadLeave();
+		   }
+		}
+		
+		private void OnIpodDeviceChanged(object o, EventArgs args)
+		{
+		    IPod.Device device = o as IPod.Device;
+		    
+		    foreach(object [] obj in (sourceView.Model as ListStore)) {
+		      if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
+		          Core.ThreadEnter();
+		          (obj[0] as IpodSource).SetSourceName(device.Name);
+		          sourceView.QueueDraw();
+		          Core.ThreadLeave();
+		      }
+		    }
+		    
+		    if(playlistModel.Source is IpodSource && 
+		      (playlistModel.Source as IpodSource).Device == device) {
+                UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
+                (gxml["ViewNameLabel"] as Label).Markup = 
+                "<b>" + GLib.Markup.EscapeText(device.Name)
+                 + "</b>";
+                 sourceView.QueueDraw();
+		    }
+		}
+		
+		private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
+		{
+		    args.Device.Changed += OnIpodDeviceChanged;
+		    CheckIpodForNew(args.Device);
 		}
 		
         private void OnAudioCdCoreDiskRemoved(object o, 
@@ -1077,6 +1155,9 @@ namespace Banshee
 		
 			IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
 			IpodSyncTransaction sync = null;
+			
+			if(!ipodSource.Device.CanWrite)
+			     return;
 		
 			if(ipodSource.NeedSync) {
 				HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
@@ -1154,6 +1235,7 @@ namespace Banshee
 		
 		private bool IpodSyncCompletedTimeout()
 		{
+			Core.ThreadEnter();
 			if(playlistModel.Source.Type == SourceType.Ipod 
 				&& !(playlistModel.Source as IpodSource).IsSyncing) {
 				playlistView.Sensitive = true;
@@ -1162,6 +1244,7 @@ namespace Banshee
 			}
 			sourceView.QueueDraw();
 			playlistView.QueueDraw();
+			Core.ThreadLeave();
 			return false;
 		}
 		
@@ -1452,7 +1535,25 @@ namespace Banshee
 				return;
 				
 			Playlist.Delete(source.Name);
-			sourceView.RefreshList();
+			
+			TreeIter iter = TreeIter.Zero;
+            ListStore store = sourceView.Model as ListStore;
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                if(!store.IterNthChild(out iter, i))
+                    continue;
+                
+                object obj = store.GetValue(iter, 0);
+                
+                if(!(obj is PlaylistSource))
+                    continue;
+                    
+                PlaylistSource currSource = obj as PlaylistSource;
+                if(currSource.Name == source.Name) {
+                    store.Remove(ref iter);
+                    break;
+                }
+            }
+			
 			sourceView.SelectLibrary();
 		}
 		
@@ -1787,7 +1888,7 @@ namespace Banshee
 			Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
 			pl.Append(tracks);
 			pl.Save();
-			pl.Saved += OnPlaylistSavedRefreshSourceView;
+			pl.Saved += OnPlaylistSaved;
 		}
 
 		private void OnPlaylistViewDragMotion(object o, DragMotionArgs args)
@@ -1988,7 +2089,7 @@ namespace Banshee
 						Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
 						pl.Append(tracks);
 						pl.Save();
-						pl.Saved += OnPlaylistSavedRefreshSourceView;
+						pl.Saved += OnPlaylistSaved;
 					} else if(haveDropPosition
 						&& source.Type == SourceType.Playlist &&
 						sourceView.SelectedSource.Type == SourceType.Library) {
@@ -2012,12 +2113,7 @@ namespace Banshee
 			
 			Gtk.Drag.Finish(args.Context, true, false, args.Time);
 		}
-		
-		private void OnPlaylistSavedRefreshSourceView(object o, EventArgs args)
-		{
-			sourceView.RefreshList();
-		}
-		
+
 		private void OnButtonBurnClicked(object o, EventArgs args)
 		{
 			if(playlistView.Selection.CountSelectedRows() <= 0)
