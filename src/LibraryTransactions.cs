@@ -511,7 +511,7 @@ namespace Banshee
 			Statement query = new Delete("Tracks") + new Where();
 			
 			for(int i = 0; i < totalCount; i++) {
-				TrackInfo ti = RemoveQueue[i] as TrackInfo;
+				LibraryTrackInfo ti = RemoveQueue[i] as LibraryTrackInfo;
 				query += new Compare("TrackID", Op.EqualTo, ti.TrackId);
 				if(i < totalCount - 1)
 					query += new Or();
@@ -520,7 +520,7 @@ namespace Banshee
 					Catalog.GetString("Removing {0} - {1}"),
 					ti.Artist, ti.Title);
 				currentCount++;
-				Core.Library.Tracks.Remove(ti.TrackId);
+				Core.Library.Remove(ti);
 			}
 			
 			statusMessage = Catalog.GetString("Purging Library of Removed Tracks...");
