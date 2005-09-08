@@ -116,7 +116,7 @@ namespace Banshee
 			 }	
 		}
 		
-		public void SetTrack(int id, TrackInfo track)
+		public void SetTrack(int id, LibraryTrackInfo track)
 		{
 		    lock(Tracks.SyncRoot) {
 		    		Tracks[id] = track;
@@ -129,6 +129,17 @@ namespace Banshee
 		    EventHandler handler = Updated;
 		    if(handler != null)
 		      handler(this, new EventArgs());
+		}
+		
+		public void Remove(LibraryTrackInfo track)
+		{
+		    lock(Tracks.SyncRoot) {
+		      Tracks.Remove(track.TrackId);
+		    }
+		    
+		    lock(TracksFnKeyed.SyncRoot) {
+		      TracksFnKeyed.Remove(MakeFilenameKey(track.Uri));
+		    }
 		}
 		
 		public static string MakeFilenameKey(string uri)
@@ -282,6 +293,7 @@ namespace Banshee
 	{
 		private IPod.Device device;
 		private ArrayList tracks = new ArrayList();
+		private ArrayList removeTracks = new ArrayList();
 		private bool needSync = false;
 		public bool IsSyncing;
 		
@@ -298,8 +310,15 @@ namespace Banshee
 		private void Refresh()
 		{
 			tracks.Clear();
+			removeTracks.Clear();
+			needSync = false;
 			foreach(IPod.Song song in device.SongDatabase.Songs)
 				tracks.Add(new IpodTrackInfo(song));
+		}
+		
+		public void SetSourceName(string name)
+		{
+		  this.name = name;
 		}
 		
 		public override bool UpdateName(string oldName, string newName)
@@ -316,7 +335,8 @@ namespace Banshee
 		public override int Count
 		{
 			get {
-				return device.SongDatabase.Songs.Length;
+				//return device.SongDatabase.Songs.Length;
+				return tracks.Count;
 			}
 		}
 		
@@ -344,8 +364,8 @@ namespace Banshee
 		public bool NeedSync
 		{
 			get {
-				if(needSync)
-					return needSync;
+				if(needSync || removeTracks.Count > 0)
+					return true;
 				
 				foreach(IpodTrackInfo iti in tracks) {
 					if(iti.NeedSync)
@@ -395,6 +415,7 @@ namespace Banshee
 				needSync = true;
 			device.SongDatabase.RemoveSong(iti.Song);
 			tracks.Remove(iti);
+			removeTracks.Add(iti);
 		}
 		
 		public IpodSyncTransaction Sync(bool full)
@@ -404,7 +425,7 @@ namespace Banshee
 			if(full)
 				sync = new IpodSyncTransaction(device);
 			else
-				sync = new IpodSyncTransaction(device, tracks);
+				sync = new IpodSyncTransaction(device, tracks, removeTracks);
 				
 			sync.SyncStarted += OnIpodSyncStarted;
 			sync.SyncCompleted += OnIpodSyncCompleted;
@@ -500,12 +521,19 @@ namespace Banshee
 		}
 	}
 
+    public delegate void PlaylistSavedHandler(object o, PlaylistSavedArgs args);
+    
+    public class PlaylistSavedArgs : EventArgs
+    {
+        public string Name;
+    }
+
 	public class Playlist 
 	{
 		public string name;
 		public ArrayList items;
 		
-		public event EventHandler Saved;
+		public event PlaylistSavedHandler Saved;
 		
 		public static int GetId(string name)
 		{
@@ -707,9 +735,12 @@ namespace Banshee
 		private void OnPlaylistSaveTransactionFinished(object o, 
 			EventArgs args)
 		{
-			EventHandler handler = Saved;
-			if(handler != null)
-				handler(this, new EventArgs());
+			PlaylistSavedHandler handler = Saved;
+			if(handler != null) {
+			    PlaylistSavedArgs sargs = new PlaylistSavedArgs();
+			    sargs.Name = name;
+				handler(this, sargs);
+		    }
 		}
 		
 		public int Count
