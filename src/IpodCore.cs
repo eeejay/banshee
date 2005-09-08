@@ -35,6 +35,14 @@ using IPod;
 
 namespace Banshee
 {
+    public delegate void IpodDeviceAddedHandler(object o, IpodDeviceArgs args);
+    public delegate void IpodDeviceRemovedHandler(object o, IpodDeviceArgs args); 
+
+    public class IpodDeviceArgs
+    {
+        public Device Device;
+    }
+
 	public class IpodCore : IDisposable
 	{
 		private static IpodCore instance;
@@ -44,7 +52,8 @@ namespace Banshee
 		private static string [] validSongExtensions = 
 		  {"mp3", "aac", "mp4", "m4a", "m4p"};
 		
-		public event EventHandler Updated;
+		public event IpodDeviceAddedHandler DeviceAdded;
+		public event IpodDeviceRemovedHandler DeviceRemoved;
 	
 		public IpodCore()
 		{
@@ -69,15 +78,26 @@ namespace Banshee
 		{
 			if(devices[args.Udi] == null) {
 				devices[args.Udi] = new Device(args.Udi);
-				HandleUpdated();
+				IpodDeviceAddedHandler handler = DeviceAdded;
+				if(handler != null) {
+				    IpodDeviceArgs dargs = new IpodDeviceArgs();
+				    dargs.Device = devices[args.Udi] as Device;
+				    handler(this, dargs);
+			    }
 			}
 		}
 		
 		private void OnDeviceRemoved(object o, DeviceRemovedArgs args)
 		{
 			if(devices[args.Udi] != null) {
+			    Device device = devices[args.Udi] as Device; 
 				devices.Remove(args.Udi);
-				HandleUpdated();
+				IpodDeviceRemovedHandler handler = DeviceRemoved;
+				if(handler != null) {
+				    IpodDeviceArgs dargs = new IpodDeviceArgs();
+				    dargs.Device = device;
+				    handler(this, dargs);
+			    }
 			}
 		}
 		
@@ -85,13 +105,6 @@ namespace Banshee
 		{
 			//foreach(Device device in Device.ListDevices())
 			//	device.Debug();
-		}
-		
-		private void HandleUpdated()
-		{
-			EventHandler handler = Updated;
-			if(handler != null)
-				handler(this, new EventArgs());
 		}
 		
 		public Device [] Devices
@@ -165,6 +178,7 @@ namespace Banshee
 		private FileEncoder encoder;
 		private Device device;
 		private ArrayList updateTracks = null;
+		private ArrayList removeTracks = null;
 		
 		public event EventHandler SyncStarted;
 		public event EventHandler SyncCompleted;
@@ -175,9 +189,11 @@ namespace Banshee
 			showCount = false;
 		}
 		
-		public IpodSyncTransaction(Device device, ArrayList tracks) : this(device)
+		public IpodSyncTransaction(Device device, ArrayList tracks, 
+		  ArrayList removeTracks) : this(device)
 		{
 			updateTracks = tracks;
+			this.removeTracks = removeTracks;
 		}
 		
 		private bool ExistsOnIpod(Song[] songs, TrackInfo libTrack)
@@ -261,6 +277,11 @@ namespace Banshee
 					device.SongDatabase.RemoveSong(song);
 					doUpdate = true;
 				}
+			} else if(removeTracks != null) {
+			    foreach(IpodTrackInfo libTrack in removeTracks) {
+			         device.SongDatabase.RemoveSong(libTrack.Song);
+			         doUpdate = true;
+			    }
 			}
 			
 			Song[] ipodSongs = device.SongDatabase.Songs;
@@ -305,9 +326,10 @@ namespace Banshee
 					Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
 					song.Artist, song.Title);
 					
+					
 			        try {
 			        		encoder.Encode(libTrack.Uri, filename, profile);
-			        	} catch(Exception) {
+			        	} catch(Exception e) {
 			        		Core.Log.Push(LogEntryType.Warning,
 			        			Catalog.GetString("Could not encode file for iPod"),
 			        			String.Format("{0} -> {1} failed",
