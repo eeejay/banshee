@@ -2,7 +2,8 @@ EXTRA_DIST = \
 	player.glade \
 	about.glade \
 	trackinfo.glade \
-	preferences.glade
+	preferences.glade \
+	newipod.glade
 
 CLEANFILES = \
 	player.gladep* \
