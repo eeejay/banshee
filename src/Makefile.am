@@ -81,12 +81,14 @@ banshee_sources = \
 	PipelineProfile.cs \
 	LogCore.cs \
 	CddbSlaveClient.cs \
-	EllipsizeLabel.cs
+	EllipsizeLabel.cs \
+	IpodNewDialog.cs
 
 banshee_resources = \
 	../data/Tables.sql \
 	../data/glade/player.glade \
 	../data/glade/preferences.glade \
+	../data/glade/newipod.glade \
 	../data/images/tray-icon.png \
 	../data/images/media-next.png \
 	../data/images/media-pause.png \
