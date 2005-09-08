@@ -149,7 +149,8 @@ namespace Banshee
 			CursorChanged += OnCursorChanged;
 			
 			try {
-				Core.Instance.IpodCore.Updated += OnIpodCoreUpdated;
+				Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
+				Core.Instance.IpodCore.DeviceRemoved += OnIpodCoreDeviceRemoved;
 				Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
 				Core.Instance.AudioCdCore.DiskRemoved 
 				    += OnAudioCdCoreDiskRemoved;
@@ -166,6 +167,8 @@ namespace Banshee
 			SourceRowRenderer renderer = (SourceRowRenderer)cell;
 			renderer.view = this;
 			renderer.source = (Source)store.GetValue(iter, 0);
+			if(renderer.source == null)
+			    return;
 			renderer.Selected = renderer.source.Equals(selectedSource);
 			renderer.Editable = renderer.source.CanRename;
 		}
@@ -182,7 +185,7 @@ namespace Banshee
 			QueueDraw();
 		}
 		
-		public void RefreshList()
+		private void RefreshList()
 		{
 			Core.ThreadEnter();
 			
@@ -207,13 +210,18 @@ namespace Banshee
 				return;
 				
 			foreach(string name in names) {
-				PlaylistSource plsrc = new PlaylistSource(name);
-				plsrc.Updated += OnSourceUpdated;
-				store.AppendValues(plsrc);
+				AddPlaylist(name);
 			}
 			
 			Core.ThreadLeave();
 		} 
+		
+		public void AddPlaylist(string name)
+		{
+            PlaylistSource plsrc = new PlaylistSource(name);
+            plsrc.Updated += OnSourceUpdated;
+            store.AppendValues(plsrc);
+        }
 		
 		private void OnCursorChanged(object o, EventArgs args)
 		{				
@@ -273,9 +281,39 @@ namespace Banshee
 			Core.ThreadLeave();
 		}
 		
-		private void OnIpodCoreUpdated(object o, EventArgs args)
+		private void OnIpodCoreDeviceChanged(object o, EventArgs args)
 		{
-			RefreshList();
+		  //playlistModel.Source.Rename(device.Name);
+                
+		}
+		
+		private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
+		{
+			int index = FindSourceLastIndex(SourceType.AudioCd);
+
+            TreeIter iter = store.Insert(index + 1);
+            store.SetValue(iter, 0, new IpodSource(args.Device));
+		}
+		
+		private void OnIpodCoreDeviceRemoved(object o, IpodDeviceArgs args)
+		{
+		    TreeIter iter = TreeIter.Zero;
+            
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                if(!store.IterNthChild(out iter, i))
+                    continue;
+                
+                object obj = store.GetValue(iter, 0);
+                
+                if(!(obj is IpodSource))
+                    continue;
+                    
+                IpodSource source = obj as IpodSource;
+                if(source.Device == args.Device) {
+                    store.Remove(ref iter);
+                    return;
+                }
+            }
 		}
 		
         private int FindSourceLastIndex(SourceType type)
@@ -458,11 +496,14 @@ namespace Banshee
 			int titleLayoutWidth, titleLayoutHeight;
 			int countLayoutWidth, countLayoutHeight;
 			int maxTitleLayoutWidth;
-			bool hideCounts =false;
+			bool hideCounts = false;
 			Gdk.Window window = drawable as Gdk.Window;
 			
 			StateType state = RendererStateToWidgetState(flags);
 			string iconFile = null;
+			
+			if(source == null)
+			    return;
 			
 			switch(source.Type) {
 				case SourceType.Playlist:
