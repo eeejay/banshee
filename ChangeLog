@@ -1,5 +1,8 @@
 2005-09-08  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.in: Version 0.9.7
+	* configure.in: Require ipod-sharp 0.5.4
+	* src/IpodCore.cs: Disabled status, some kind of LTM bug... looking into it
 	* src/IpodPropertiesWindow.cs: Fixed NullRef bug
 	* src/Library.cs: Remove tracks from both track caches/maps
 	* src/LibraryTransactions.cs: Remove tracks using new Library remove method
