@@ -1,3 +1,17 @@
+2005-09-07  Hans Petter Jansson  <hpj@novell.com>
+
+	* libbanshee/xing/emdct.c
+	* libbanshee/xing/hwin.c
+	* libbanshee/xing/l3init.c
+	* libbanshee/xing/mp3enc.cpp
+	* libbanshee/xing/mp3low.h
+	* libbanshee/xing/sbt.c
+	* libbanshee/xing/setup.c
+	* libbanshee/xing/xhwin.c: Make static or add xingenc_ namespace to
+	the most obnoxious exported functions. This fixes a clash with a
+	symbol in GStreamer's oggdec plugin, and makes future clashes less
+	likely. The Xing code still needs a more thorough cleanup.
+
 2005-09-06  Aaron Bockover  <aaron@aaronbock.net>
 
 	* data/glade/player.glade: Moved the iPod box to under the playlist view,
