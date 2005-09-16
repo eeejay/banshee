@@ -37,6 +37,7 @@ namespace Banshee
 {
     public delegate void IpodDeviceAddedHandler(object o, IpodDeviceArgs args);
     public delegate void IpodDeviceRemovedHandler(object o, IpodDeviceArgs args); 
+    public delegate void IpodDeviceHandler(object o, IpodDeviceArgs args);
 
     public class IpodDeviceArgs
     {
@@ -259,8 +260,8 @@ namespace Banshee
 			//statusMessage = String.Format(Catalog.GetString(
 			//	"Preparing to sync '{0}'"), device.Name);
 				
-			currentCount = 0;
-			totalCount = 0;
+			//currentCount = 0;
+			//totalCount = 0;
 			
 			bool doUpdate = false;
 			
@@ -461,5 +462,27 @@ namespace Banshee
 				song.TrackNumber == libTrack.TrackNumber;
 		}
 		
+		public static string GetDiskUsageString(Device device)
+		{
+			// Translators: iPod disk usage. Each {N} is something like "100 MB"
+			return String.Format(
+				Catalog.GetString("{0} of {1}"),
+				Utilities.BytesToString(device.VolumeUsed),
+				Utilities.BytesToString(device.VolumeSize));
+		}
+
+		public static string GetDiskAvailableString(Device device)
+		{
+			// Translators: iPod disk usage. {0} is something like "100 MB"
+			return String.Format(
+				Catalog.GetString("({0} Remaining)"),
+				Utilities.BytesToString(device.VolumeAvailable));
+		}
+	   
+	    public static double GetDiskUsageFraction(Device device)
+	    {
+	       return (double)device.VolumeUsed /
+					(double)device.VolumeSize;
+	    }
 	}
 }
