@@ -139,8 +139,10 @@ namespace Banshee
 			Core.Instance.Player.Iterate += OnPlayerTick;
 			Core.Instance.Player.EndOfStream += OnPlayerEos;	
 			
-			Core.Instance.AudioCdPlayer.Iterate += OnPlayerTick;
-			Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;	
+			if(Core.Instance.Player != Core.Instance.AudioCdPlayer) {
+				Core.Instance.AudioCdPlayer.Iterate += OnPlayerTick;
+				Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;	
+			}
 			
 			Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
 			Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
@@ -1163,7 +1165,7 @@ namespace Banshee
 					"a method for updating the contents of your iPod.\n\n" + 
 					"<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
 					"<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
-					"<b>Warning:</b> actions will alter or erase existing iPod contents!"),
+					"<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"),
 					Catalog.GetString("Synchronize Library"));
 					md.AddButton(Catalog.GetString("Save Manual Changes"), 
 						Gtk.ResponseType.Apply, true);
