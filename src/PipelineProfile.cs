@@ -281,6 +281,9 @@ namespace Banshee
                     }
                 }
                 
+                if(list.Count == 0)
+                    return null;
+                
                 loadedProfiles = list.ToArray(typeof(PipelineProfile)) 
                     as PipelineProfile [];
                 return loadedProfiles;
@@ -365,13 +368,13 @@ namespace Banshee
             profileCombo = ComboBox.NewText();
             bitrateCombo = ComboBox.NewText();
             atLabel = new Label(Catalog.GetString("at"));
-            
+
             profiles = PipelineProfile.Profiles;
-            
+
             foreach(int bitrate in bitrates)
                 bitrateCombo.AppendText(String.Format("{0} Kbps", bitrate));
             
-            if(extFilter != null) {
+            if(extFilter != null && profiles != null) {
                 string [] filters = extFilter.Split(',');
                 ArrayList filteredProfiles = new ArrayList();
                 
@@ -389,20 +392,30 @@ namespace Banshee
                     profiles = filteredProfiles.ToArray(typeof(PipelineProfile)) 
                         as PipelineProfile [];
             }
+
+            if(profiles != null) {
+                foreach(PipelineProfile profile in profiles)
+                    profileCombo.AppendText(profile.Name);
+            }
             
-            foreach(PipelineProfile profile in profiles)
-                profileCombo.AppendText(profile.Name);
-                          
             profileCombo.Changed += OnProfileChanged;
             bitrateCombo.Changed += OnBitrateChanged;
-                
-            Spacing = 10;
-            PackStart(profileCombo, false, false, 0);
-            PackStart(atLabel, false, false, 0);
-            PackStart(bitrateCombo, false, false, 0);
+             
+            if(profiles != null) {   
+                Spacing = 10;
+                PackStart(profileCombo, false, false, 0);
+                PackStart(atLabel, false, false, 0);
+                PackStart(bitrateCombo, false, false, 0);
+            } else {
+                Label label = new Label();
+                label.Markup = "<i><small>" + 
+                    Catalog.GetString("No iPod-compatible encoders available") +
+                    "</small></i>";
+                PackStart(label, false, false, 0);
+                label.Show();
+            }
             
-            profileCombo.Show();
-                
+            profileCombo.Show(); 
             ActiveProfileIndex = 0;
             Bitrate = -1;
         }
@@ -432,11 +445,17 @@ namespace Banshee
         private int ActiveProfileIndex 
         {
             set {
+                if(profiles == null)
+                    return;
+                    
                 profileCombo.Active = value;
                 SetBitrateVisibility();
             }
             
             get {
+                if(profiles == null)
+                    return -1;
+                    
                 return profileCombo.Active;
             }
         }
@@ -444,10 +463,16 @@ namespace Banshee
         private int ActiveBitrateIndex
         {
             set {
+                if(profiles == null)
+                    return;
+                    
                 bitrateCombo.Active = value;
             }
             
             get {
+                if(profiles == null)
+                    return -1;
+                    
                 return bitrateCombo.Active;
             }
         } 
@@ -455,10 +480,16 @@ namespace Banshee
         public string ProfileKey
         {
             get {
+                if(profiles == null)
+                    return null;
+                    
                 return profiles[ActiveProfileIndex].Key;
             }
             
             set {
+                if(profiles == null)
+                    return;
+            
                 for(int i = 0; i < profiles.Length; i++) {
                     if(profiles[i].Key == value) {
                         ActiveProfileIndex = i;
@@ -473,10 +504,16 @@ namespace Banshee
         public int Bitrate
         {
             get {
+                if(profiles == null)
+                    return 0;
+                    
                 return bitrates[ActiveBitrateIndex];
             }
             
             set {
+                if(profiles == null)
+                    return;
+                    
                 for(int i = 0; i < bitrates.Length; i++) {
                     if(bitrates[i] == value) {
                         ActiveBitrateIndex = i;
