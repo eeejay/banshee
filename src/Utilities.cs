@@ -31,6 +31,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions; 
+using Mono.Unix;
 
 namespace Banshee
 {
@@ -151,4 +152,17 @@ namespace Banshee
 			return reader.ReadToEnd();	
 		}
 	}	
+	
+	public class Utilities
+	{
+		public static string BytesToString(ulong bytes)
+		{
+			ulong mb = bytes / (1024 * 1024);
+
+			if (mb > 1024)
+				return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
+			else
+				return String.Format(Catalog.GetString("{0} MB"), mb);
+		}
+    }
 }
