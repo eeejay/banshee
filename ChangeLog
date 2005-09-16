@@ -1,3 +1,19 @@
+2005-09-09  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.9.7.1
+	* hal-sharp/hal-sharp.dll.config.in: DLL mappings for hal-sharp
+	* hal-sharp/Makefile.am: Install hal-sharp.dll.config
+	* src/PipelineProfile.cs: guard against empty/null profile array and protect
+	empty combo box from ever getting its Active index set (segfaults, bug in
+	gtk-sharp)
+	* src/Library.cs: Fixed path creation bug to library DB
+	* src/PlayerInterface.cs: Fixed gstreamer double-skip bug
+	* mediaengines/gst/GstPlayerEngine.cs: fixed iterate cancel bug
+	* data/banshee.schemas.in: Added default column widths per Nat's request
+	* src/RipTransactions.cs: Fixed song-already-in-library exception when
+	ripping (BNC 115945)
+	* src/NotificationAreaIcon.cs: Fix bug on 64 bit
+
 2005-09-08  Dan Winship  <danw@novell.com>
 
 	* src/DragDrop.cs: reorganize the dnd target types into "Source",
