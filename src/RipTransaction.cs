@@ -226,13 +226,20 @@ namespace Banshee
                 overallProgress += (int)track.Duration;
                 
                 if(!cancelRequested) {
-                    TrackInfo lti = new LibraryTrackInfo(filename, track);
+                    TrackInfo lti;
+                    try {
+                        lti = new LibraryTrackInfo(filename, track);
+                    } catch(ApplicationException) {
+                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(filename)] as TrackInfo;
+                    }
                     
-                    HaveTrackInfoHandler handler = HaveTrackInfo;
-                    if(handler != null) {
-                        HaveTrackInfoArgs args = new HaveTrackInfoArgs();
-                        args.TrackInfo = lti;
-                        handler(this, args);
+                    if(lti != null) {                       
+                        HaveTrackInfoHandler handler = HaveTrackInfo;
+                        if(handler != null) {
+                            HaveTrackInfoArgs args = new HaveTrackInfoArgs();
+                            args.TrackInfo = lti;
+                            handler(this, args);
+                        }
                     }
                 }
                 
