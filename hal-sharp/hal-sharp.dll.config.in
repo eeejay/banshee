@@ -1,0 +1,6 @@
+<configuration>
+  <dllmap dll="libdbus-1" target="libdbus-1.so.1" />
+  <dllmap dll="libdbus-glib-1" target="libdbus-glib-1.so.1" />
+  <dllmap dll="libglib-2.0.so" target="libglib-2.0.so.0" />
+  <dllmap dll="libhal" target="libhal.so.1" />
+</configuration>
