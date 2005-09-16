@@ -148,5 +148,6 @@
     <File name="./src/CddbSlaveClient.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/EllipsizeLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/IpodNewDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/IpodBar.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>
