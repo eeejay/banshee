@@ -82,7 +82,7 @@ banshee_sources = \
 	LogCore.cs \
 	CddbSlaveClient.cs \
 	EllipsizeLabel.cs \
-	IpodNewDialog.cs
+	IpodNewDialog.cs 
 
 banshee_resources = \
 	../data/Tables.sql \
