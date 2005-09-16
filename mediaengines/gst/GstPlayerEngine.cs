@@ -107,9 +107,8 @@ namespace Banshee
 		
 		private TrackInfo track;
 		
-		private bool finalized = false;
-		
-		private bool timeoutCancelRequest = false;
+		private bool finalized;
+		private bool timeoutCancelRequest;
 		
 		public void Initialize()
 		{
@@ -118,6 +117,9 @@ namespace Banshee
 			//gpe_set_end_of_stream_handler(handle, OnEndOfStream);
 			//gpe_set_error_handler(handle, OnError);
 			//gpe_set_iterate_handler(handle, OnIterate);
+			
+			timeoutCancelRequest = false;
+			finalized = false;
 			
 			GLib.Timeout.Add(250, OnTimeout);
 		}
