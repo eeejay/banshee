@@ -2,17 +2,17 @@
 <gconfschemafile>
   <schemalist>
     <schema>
-	  <key>/schemas/apps/Banshee/CopyOnImport</key>
-	  <applyto>/apps/Banshee/CopyOnImport</applyto>
-	  <owner>banshee</owner>
-	  <type>bool</type>
-	  <default>false</default>
-	  <locale name="C">
-	  	<short>Copy music on import</short>
-	    <long>Copy and rename music to banshee music library directory when importing</long>
+      <key>/schemas/apps/Banshee/CopyOnImport</key>
+      <applyto>/apps/Banshee/CopyOnImport</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+          <short>Copy music on import</short>
+        <long>Copy and rename music to banshee music library directory when importing</long>
       </locale>
     </schema>
-	<schema>
+    <schema>
       <key>/schemas/apps/Banshee/PlayerEngine</key>
       <applyto>/apps/Banshee/PlayerEngine</applyto>
       <owner>banshee</owner>
@@ -24,25 +24,14 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/SourceViewWidth</key>
-      <applyto>/apps/Banshee/SourceViewWidth</applyto>
-      <owner>banshee</owner>
-      <type>int</type>
-      <default>150</default>
-      <locale name="C">
-        <short>Source View Width</short>
-        <long>Width of Source View Comlumn.</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/Banshee/WindowWidth</key>
       <applyto>/apps/Banshee/WindowWidth</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>800</default>
+      <default>1024</default>
       <locale name="C">
         <short>Window Width</short>
-        <long>Width of Main Player Window.</long>
+        <long>Width of the main interface window.</long>
       </locale>
     </schema>
     <schema>
@@ -50,10 +39,21 @@
       <applyto>/apps/Banshee/WindowHeight</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>600</default>
+      <default>700</default>
       <locale name="C">
         <short>Window Height</short>
-        <long>Height of Main Player Window.</long>
+        <long>Height of the main interface window.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/SourceViewWidth</key>
+      <applyto>/apps/Banshee/SourceViewWidth</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>175</default>
+      <locale name="C">
+        <short>Source View Width</short>
+        <long>Width of Source View Comlumn.</long>
       </locale>
     </schema>
     <schema>
@@ -78,28 +78,127 @@
         <long>Pixel position of Main Player Window on the Y Axis</long>
       </locale>
     </schema>
-	<schema>
-	  <key>/schemas/apps/Banshee/Volume</key>
-	  <applyto>/apps/Banshee/Volume</applyto>
-	  <owner>banshee</owner>
-	  <type>int</type>
-	  <default>80</default>
-	  <locale name="C">
-	  	<short>Volume Output Level</short>
-		<long>Volume of playback relative to mixer output (except on Helix, which sets volume directly on PCM</long>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Album/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Album/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>700</default>
+      <locale name="C">
+        <short>Width of Album Column.</short>
+        <long>Width of Album Column.</long>
       </locale>
-	</schema>
-	<schema>
-	  <key>/schemas/apps/Banshee/FileNamePattern</key>
-	  <applyto>/apps/Banshee/FileNamePattern</applyto>
-	  <owner>banshee</owner>
-	  <type>string</type>
-	  <default>%artist%/%album%/%track_number%. %title%</default>
-	  <locale name="C">
-	    <short>File Name Pattern</short>
-		<long>Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Album/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Album/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>145</default>
+      <locale name="C">
+        <short>Width of Album Column.</short>
+        <long>Width of Album Column.</long>
       </locale>
-	</schema>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Artist/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Artist/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>165</default>
+      <locale name="C">
+        <short>Width of Artist Column.</short>
+        <long>Width of Artist Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Last-Played/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Last-Played/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>80</default>
+      <locale name="C">
+        <short>Width of Last Played Column.</short>
+        <long>Width of Last Played Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Plays/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Plays/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>45</default>
+      <locale name="C">
+        <short>Width of Plays Column.</short>
+        <long>Width of Plays Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Rating/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Rating/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>85</default>
+      <locale name="C">
+        <short>Width of Rating Column.</short>
+        <long>Width of Rating Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Time/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Time/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>45</default>
+      <locale name="C">
+        <short>Width of Time Column.</short>
+        <long>Width of Time Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Title/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Title/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>180</default>
+      <locale name="C">
+        <short>Width of Title Column.</short>
+        <long>Width of Title Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Track/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Track/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>45</default>
+      <locale name="C">
+        <short>Width of Track Column.</short>
+        <long>Width of Track Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Volume</key>
+      <applyto>/apps/Banshee/Volume</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>80</default>
+      <locale name="C">
+          <short>Volume Output Level</short>
+        <long>Volume of playback relative to mixer output (except on Helix, which sets volume directly on PCM</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/FileNamePattern</key>
+      <applyto>/apps/Banshee/FileNamePattern</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default>%artist%/%album%/%track_number%. %title%</default>
+      <locale name="C">
+        <short>File Name Pattern</short>
+        <long>Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>
 
