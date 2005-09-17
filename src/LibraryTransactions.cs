@@ -591,12 +591,13 @@ namespace Banshee
 		
 		public SqlLoadTransaction(string sql)
 		{
+		    showStatus = false;
 			this.sql = sql;
 		}
 		
-		public SqlLoadTransaction(Statement sql)
+		public SqlLoadTransaction(Statement sql) : this(sql.ToString())
 		{
-			this.sql = sql.ToString();
+		
 		}
 		
 		public override void Run()
@@ -624,12 +625,14 @@ namespace Banshee
 		
 		private void AddSql()
 		{
-			totalCount = SqlCount();
+			//totalCount = SqlCount();
 			IDataReader reader = Core.Library.Db.Query(sql);
 			while(reader.Read() && !cancelRequested) {
-				DateTime startStamp = DateTime.Now;
-				RaiseTrackInfo(new LibraryTrackInfo(reader));
-				UpdateAverageDuration(startStamp);
+				new LibraryTrackInfo(reader);
+				
+				//DateTime startStamp = DateTime.Now;
+				//RaiseTrackInfo(new LibraryTrackInfo(reader));
+				//UpdateAverageDuration(startStamp);
 			}
 		}
 		

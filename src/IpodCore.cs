@@ -257,11 +257,11 @@ namespace Banshee
 		
 		public void WrapRun()
 		{
-			//statusMessage = String.Format(Catalog.GetString(
-			//	"Preparing to sync '{0}'"), device.Name);
+			statusMessage = String.Format(Catalog.GetString(
+				"Preparing to sync '{0}'"), device.Name);
 				
-			//currentCount = 0;
-			//totalCount = 0;
+			currentCount = 0;
+			totalCount = 0;
 			
 			bool doUpdate = false;
 			
@@ -323,9 +323,9 @@ namespace Banshee
 			         filename = IpodCore.ConvertSongName(libTrack.Uri,
 			             profile.Extension);
 			         
-				  //  statusMessage = String.Format(
-				//	Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
-				//	song.Artist, song.Title);
+				    statusMessage = String.Format(
+				        Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
+				        song.Artist, song.Title);
 					
 					
 			        try {
@@ -361,12 +361,12 @@ namespace Banshee
 				return;
 		    }
 			
-			//device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
+			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
 
 			try {
-			    //statusMessage = Catalog.GetString("Synchronizing iPod...");
-			    //currentCount = 0;
-			    //totalCount = 0;
+			    statusMessage = Catalog.GetString("Synchronizing iPod...");
+			    currentCount = 0;
+			    totalCount = 0;
 				device.SongDatabase.Save();
 			} catch(Exception e) {
 				Core.Log.Push(LogEntryType.UserError, 
@@ -375,10 +375,10 @@ namespace Banshee
 			}
 			
 
-			//device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;
+			device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;
 		} 
 		
-		/*private void OnSaveProgressChanged(SongDatabase db, Song song, 
+		private void OnSaveProgressChanged(SongDatabase db, Song song, 
 			double currentPercent, int completed, int total)
 		{
 			
@@ -386,7 +386,7 @@ namespace Banshee
 			totalCount = total;
 			statusMessage = String.Format(Catalog.GetString(
 				"Copying {0} - {1}"), song.Artist, song.Title);
-		}*/
+		}
 		
 		private void OnEncodeProgress(object o, FileEncoderProgressArgs args)
 		{

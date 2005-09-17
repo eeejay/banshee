@@ -41,10 +41,6 @@ namespace Banshee
 {
 	public class LibraryTrackInfo : TrackInfo
 	{
-		// This is correct; it's used for internal non-user-visible stuff
-		System.Globalization.CultureInfo ci = 
-			new System.Globalization.CultureInfo("en-US");
-	
 		public static int GetId(string lookup)
 		{
 			Statement query = new Select("Tracks", new List("TrackID")) +
@@ -98,6 +94,8 @@ namespace Banshee
 			this.trackCount = trackCount;
 			this.year = year;
 			this.duration = duration;
+			
+			this.dateAdded = DateTime.Now;
 			
 			CheckIfExists(uri);
 			
@@ -202,7 +200,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAdded", dateAdded.ToString(ci.DateTimeFormat), 
+					"DateAddedStamp", Mono.Unix.UnixConvert.FromDateTime(dateAdded), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -212,7 +210,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat));
+					"LastPlayedStamp", Mono.Unix.UnixConvert.FromDateTime(lastPlayed));
 			} else {
 				tracksQuery = new Update("Tracks",
 					"Uri", uri, 
@@ -225,7 +223,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAdded", dateAdded.ToString(ci.DateTimeFormat), 
+					"DateAddedStamp", Mono.Unix.UnixConvert.FromDateTime(dateAdded), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -235,7 +233,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayed", lastPlayed.ToString(ci.DateTimeFormat)) +
+					"LastPlayedStamp", Mono.Unix.UnixConvert.FromDateTime(lastPlayed)) +
 					new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
 				//	new Limit(1);
 			}
@@ -272,59 +270,38 @@ namespace Banshee
 			return true;
 		}
 		
-		private void LoadFromDatabaseReader(IDataReader reader)
-		{
-			Hashtable colmap = Core.Library.Db.ColumnMap("Tracks");
-			
-			trackId = Convert.ToInt32(reader[(int)colmap["TrackID"]]);
-				
-			uri = (string)reader[(int)colmap["Uri"]];
-			mimetype = (string)reader[(int)colmap["MimeType"]];
-			
-			album = (string)reader[(int)colmap["AlbumTitle"]];
-			artist = (string)reader[(int)colmap["Artist"]];
-			performer = (string)reader[(int)colmap["Performer"]];
-			title = (string)reader[(int)colmap["Title"]];
-			genre = (string)reader[(int)colmap["Genre"]];
-			dateAdded = DateTime.Parse((string)reader[(int)colmap["DateAdded"]], 
-				ci.DateTimeFormat);
-			year = Convert.ToInt32(reader[(int)colmap["Year"]]);
-			
-			trackNumber = Convert.ToUInt32(reader[(int)colmap["TrackNumber"]]);
-			trackCount = Convert.ToUInt32(reader[(int)colmap["TrackCount"]]);
-			duration = Convert.ToInt64(reader[(int)colmap["Duration"]]);
-			rating = Convert.ToUInt32(reader[(int)colmap["Rating"]]);
-			numberOfPlays = 
-				Convert.ToUInt32(reader[(int)colmap["NumberOfPlays"]]);
-			lastPlayed = 
-				DateTime.Parse((string)reader[(int)colmap["LastPlayed"]], 
-				ci.DateTimeFormat);
-				
-			/*if(reader == null)
-				return;
-				
-			foreach(string key in reader.GetSchemaTable().Columns) 
-				Console.WriteLine(key);*/
-				
-			/*trackId = Convert.ToInt32(reader["TrackID"]);
-				
-			uri = (string)reader["Uri"];
-			mimetype = (string)reader["MimeType"];
-			
-			artist = (string)reader["Artist"];
-			performer = (string)reader["Performer"];
-			title = (string)reader["Title"];
-			genre = (string)reader["Genre"];
-			date = DateTime.Parse((string)reader["Date"]);
-			
-			trackNumber = Convert.ToUInt32(reader["TrackNumber"]);
-			trackCount = Convert.ToUInt32(reader["TrackCount"]);
-			duration = Convert.ToInt64(reader["Duration"]);
-			rating = Convert.ToUInt32(reader["Rating"]);
-			numberOfPlays = 
-				Convert.ToUInt32(reader["NumberOfPlays"]);
-			lastPlayed = 
-				DateTime.Parse((string)reader["LastPlayed"]);*/
+        private void LoadFromDatabaseReader(IDataReader reader)
+        {
+            trackId = Convert.ToInt32(reader["TrackID"]);
+
+            uri = reader["Uri"] as string;
+            mimetype = reader["MimeType"] as string;
+
+            album = reader["AlbumTitle"] as string;
+            artist = reader["Artist"] as string;
+            performer = reader["Performer"] as string;
+            title = reader["Title"] as string;
+            genre = reader["Genre"] as string;
+
+            year = Convert.ToInt32(reader["Year"]);
+
+            trackNumber = Convert.ToUInt32(reader["TrackNumber"]);
+            trackCount = Convert.ToUInt32(reader["TrackCount"]);
+            duration = Convert.ToInt64(reader["Duration"]);
+            rating = Convert.ToUInt32(reader["Rating"]);
+            numberOfPlays = Convert.ToUInt32(reader["NumberOfPlays"]);
+
+            try {
+                lastPlayed = Mono.Unix.UnixConvert.ToDateTime((long)reader["LastPlayedStamp"]);
+            } catch(Exception) {
+                lastPlayed = DateTime.MinValue;
+            }
+
+            try {
+                dateAdded = Mono.Unix.UnixConvert.ToDateTime((long)reader["DateAddedStamp"]);
+            } catch(Exception) {
+                dateAdded = DateTime.MinValue;
+            }
 		}
 		
 		private void LoadFromFile(string uri)
@@ -345,6 +322,8 @@ namespace Banshee
 			trackCount = 0;
 			duration = af.Duration;
 			year = af.Year;
+			
+			this.dateAdded = DateTime.Now;
 			
 			SaveToDatabase(true);
 		}

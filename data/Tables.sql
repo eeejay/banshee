@@ -35,8 +35,8 @@ CREATE TABLE Tracks (
 	
 	Rating INTEGER,
 	NumberOfPlays INTEGER,
-	LastPlayed DATE,
-	DateAdded DATE
+	LastPlayedStamp INTEGER,
+	DateAddedStamp INTEGER
 );
 
 --IF TABLE NOT EXISTS Playlists;

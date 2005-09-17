@@ -133,6 +133,13 @@ namespace Banshee
 			string data = Resource.GetFileContents("Tables.sql");
 			ArrayList instructions = ParseRawSql(data);
 			ExecuteSqlStatements(instructions);
+			
+			try {
+			   QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
+			} catch(ApplicationException) {
+			   Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
+			   Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
+			}
 		}
 		
 		private ArrayList ParseRawSql(string rawData)

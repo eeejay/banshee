@@ -1,3 +1,11 @@
+2005-09-16  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Database.cs: 
+	* src/LibraryTrackInfo.cs: 
+	* src/LibraryTransactions.cs:
+	* data/Tables.sql: Date/Time optimizations, loads *much* faster from SQL.
+	Had to create two new table columns: LastPlayedStamp, DateAddedStamp
+
 2005-09-09  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Version 0.9.7.1
