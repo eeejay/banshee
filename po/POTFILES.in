@@ -5,6 +5,7 @@ data/banshee.desktop.in
 data/banshee.desktop.in.in
 data/banshee.schemas.in
 data/glade/about.glade
+data/glade/newipod.glade
 data/glade/player.glade
 data/glade/preferences.glade
 data/glade/trackinfo.glade
@@ -21,9 +22,11 @@ plugincore/TrackInfo.cs
 src/AudioCdCore.cs
 src/BurnCore.cs
 src/BurnTransaction.cs
+src/Dialogs.cs
 src/FileEncodeTransaction.cs
 src/GstFileEncoder.cs
 src/GstMisc.cs
+src/IpodCore.cs
 src/IpodPropertiesWindow.cs
 src/Library.cs
 src/LibraryTransactionStatus.cs
@@ -40,3 +43,5 @@ src/SearchEntry.cs
 src/SourceView.cs
 src/TrackInfoHeader.cs
 src/TrackProperties.cs
+src/Utilities.cs
+

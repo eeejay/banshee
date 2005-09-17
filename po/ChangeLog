@@ -1,0 +1,5 @@
+2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: added data/glade/newipod.glade, src/Dialogs.cs, 
+	src/IpodCore.cs, src/Utilities.cs
+	
