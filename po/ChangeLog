@@ -1,3 +1,7 @@
+2005-09-17  Vincent van Adrighem  <adrighem@gnome.org>
+
+	* nl.po: Translation added by Stijn Verslycken.
+
 2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: added data/glade/newipod.glade, src/Dialogs.cs, 
