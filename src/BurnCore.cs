@@ -98,10 +98,10 @@ namespace Banshee
 			
 			foreach(TrackInfo ti in encodeQueue) {
 			    string outputFile = Paths.TempDir + "/"  + 
-				    Path.GetFileNameWithoutExtension(ti.Uri) + "." + 
+				    Path.GetFileNameWithoutExtension(ti.Uri.AbsolutePath) + "." + 
 				    profile.Extension;
 				
-				fet.AddTrack(ti, outputFile);
+				fet.AddTrack(ti, new Uri(outputFile));
 		    }
 				
 			fet.Register();
@@ -109,7 +109,7 @@ namespace Banshee
 		
 		private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
 		{
-			burnQueue.Add(args.EncodedFilePath);
+			burnQueue.Add(args.EncodedFileUri);
 		}
 		
 		private void OnFileEncodeTransactionFinished(object o, EventArgs args)
@@ -434,8 +434,8 @@ namespace Banshee
 				string burnKeyParent = GConfKeys.CDBurnerRoot 
 					+ selectedBurnerId + "/";
 				
-				foreach(string file in burnQueue)
-					tracks.Add(new BurnRecorderTrack(file, 
+				foreach(Uri uri in burnQueue)
+					tracks.Add(new BurnRecorderTrack(uri.AbsolutePath, 
 						diskType == BurnCore.DiskType.Audio ?
 							BurnRecorderTrackType.Audio :
 							BurnRecorderTrackType.Data));

@@ -228,9 +228,9 @@ namespace Banshee
                 if(!cancelRequested) {
                     TrackInfo lti;
                     try {
-                        lti = new LibraryTrackInfo(filename, track);
+                        lti = new LibraryTrackInfo(new Uri(filename), track);
                     } catch(ApplicationException) {
-                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(filename)] as TrackInfo;
+                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(new Uri(filename))] as TrackInfo;
                     }
                     
                     if(lti != null) {                       

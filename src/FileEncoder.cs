@@ -44,7 +44,7 @@ namespace Banshee
 	{		
 		public event FileEncoderProgressHandler Progress;
 	
-		public abstract string Encode(string inputFile, string outputFile, 
+		public abstract Uri Encode(Uri inputUri, Uri outputUri, 
 		  PipelineProfile profile);
 		public abstract void Cancel();
 		

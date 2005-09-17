@@ -42,7 +42,7 @@ namespace Banshee
 		public string Artist;
 		public string Album;
 		public string Title;
-		public string Uri;
+		public Uri Uri;
 	
 		public uint TrackNumber;
 		public uint TrackCount;
@@ -216,7 +216,7 @@ namespace Banshee
 		    
 		    tips.SetTip(glade["TitleEventBox"],
 				String.Format(Catalog.GetString("File: {0}"), 
-				    track.Uri), "uri");
+				    track.Uri.AbsoluteUri), "uri");
 		
 			Previous.Sensitive = index > 0;
 			Next.Sensitive = index < TrackSet.Count - 1;

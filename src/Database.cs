@@ -138,6 +138,11 @@ namespace Banshee
 			   QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
 			} catch(ApplicationException) {
 			   Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
+			}
+			
+			try {
+			   QuerySingle("SELECT DateAddedStamp FROM Tracks LIMIT 1");
+			} catch(ApplicationException) {
 			   Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
 			}
 		}

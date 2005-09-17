@@ -61,7 +61,7 @@ namespace Banshee
 			canSaveToDatabase = true;
 		}
 	
-        private void CheckIfExists(string uri)
+        private void CheckIfExists(Uri uri)
         {
               bool exists = false;
               try {
@@ -77,7 +77,7 @@ namespace Banshee
               } 
         }
 	
-	    public LibraryTrackInfo(string uri, string artist, string album, 
+	    public LibraryTrackInfo(Uri uri, string artist, string album, 
 	       string title, string genre, uint trackNumber, uint trackCount,
 	       int year, long duration)
 	    {
@@ -105,18 +105,18 @@ namespace Banshee
 			PreviousTrack = Gtk.TreeIter.Zero;
 	    }
 	    
-        public LibraryTrackInfo(string uri, AudioCdTrackInfo track) : this(
+        public LibraryTrackInfo(Uri uri, AudioCdTrackInfo track) : this(
             uri, track.Artist, track.Album, track.Title, track.Genre,
             track.TrackNumber, track.TrackCount, track.Year, track.Duration)
         {
         
         }
 	
-		public LibraryTrackInfo(string uri) : this()
+		public LibraryTrackInfo(Uri uri) : this()
 		{
-			if(uri.StartsWith("sql://")) {
-				uri = uri.Substring(6);
-				LoadFromDatabase(uri);
+			if(uri.Scheme == "sql") {
+			    throw new ApplicationException("SQL URI DEPRECATED");
+				//LoadFromDatabase(uri.AbsolutePath);
 			} else {
                 CheckIfExists(uri);
                 
@@ -136,7 +136,7 @@ namespace Banshee
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
-		private void ParseUri(string uri)
+		private void ParseUri(string path)
 		{
 			artist = "";
 			album = "";
@@ -144,7 +144,7 @@ namespace Banshee
 			trackNumber = 0;
 			Match match;
 
-			string fileName = StringUtil.UriEscape(uri);
+			string fileName = StringUtil.UriEscape(path);
 			fileName = Path.GetFileNameWithoutExtension(fileName);
 		
 			match = Regex.Match(fileName, @"(\d+)\.(.*)$");
@@ -245,7 +245,8 @@ namespace Banshee
 				SaveToDatabase(false);
 			} else if(trackId <= 0) {*/
 			
-			trackId = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
+			if(trackId <= 0)
+			   trackId = GetId(uri.AbsoluteUri); /* OPTIMIZE! Seems like an unnecessary query */
 		}
 		
 		private bool LoadFromDatabase(object id)
@@ -274,7 +275,12 @@ namespace Banshee
         {
             trackId = Convert.ToInt32(reader["TrackID"]);
 
-            uri = reader["Uri"] as string;
+            try {
+                uri = new Uri(reader["Uri"] as string);
+            } catch(UriFormatException) {
+                uri = new Uri("file://" + (reader["Uri"] as string));
+            }
+            
             mimetype = reader["MimeType"] as string;
 
             album = reader["AlbumTitle"] as string;
@@ -304,13 +310,13 @@ namespace Banshee
             }
 		}
 		
-		private void LoadFromFile(string uri)
+		private void LoadFromFile(Uri uri)
 		{
 			this.uri = uri;
-			ParseUri(uri);
+			ParseUri(uri.AbsolutePath);
 			trackId = 0;
 	
-			AudioFileWrapper af = new AudioFileWrapper(uri);
+			AudioFileWrapper af = new AudioFileWrapper(uri.AbsolutePath);
 
 			mimetype = null;
 

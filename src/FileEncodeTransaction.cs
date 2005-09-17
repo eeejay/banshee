@@ -41,7 +41,7 @@ namespace Banshee
 	public class FileEncodeCompleteArgs : EventArgs
 	{
 		public TrackInfo Track;
-		public string EncodedFilePath;
+		public Uri EncodedFileUri;
 	}
 
 	public class FileEncodeTransaction : LibraryTransaction
@@ -68,9 +68,9 @@ namespace Banshee
 			statusMessage = Catalog.GetString("Initializing Encoder...");
 		}
 		
-		public void AddTrack(TrackInfo track, string outputFile)
+		public void AddTrack(TrackInfo track, Uri outputUri)
 		{
-			tracks[track] = outputFile;
+			tracks[track] = outputUri;
 		}
 		
 		public override void Run()
@@ -79,7 +79,7 @@ namespace Banshee
 			encoder.Progress += OnEncoderProgress;
 			
 			foreach(TrackInfo ti in tracks.Keys) {
-			    string outputFile = tracks[ti] as string;
+			    Uri outputUri = tracks[ti] as Uri;
 			    
 				statusMessage = String.Format(
 					Catalog.GetString("Encoding {0} - {1} ..."),
@@ -89,7 +89,7 @@ namespace Banshee
 					break;
 					
 				try {
-					string encPath = encoder.Encode(ti.Uri, outputFile, 
+					Uri encUri = encoder.Encode(ti.Uri, outputUri, 
 					   profile);
 				
 					FileEncodeCompleteHandler handler = FileEncodeComplete;
@@ -97,7 +97,7 @@ namespace Banshee
 						FileEncodeCompleteArgs args = 
 							new FileEncodeCompleteArgs();
 						args.Track = ti;
-						args.EncodedFilePath = encPath;
+						args.EncodedFileUri = encUri;
 						handler(this, args);
 					}
 				} catch(Exception e) {

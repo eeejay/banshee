@@ -35,7 +35,7 @@ namespace Banshee
 {
     public abstract class TrackInfo
     {
-        protected string uri;
+        protected Uri uri;
         protected string mimetype;
         protected string artist;
         protected string album;
@@ -98,7 +98,7 @@ namespace Banshee
         public int TrackId         { get { return trackId;                  } }
         public int Uid             { get { return uid;                      } }
 
-        public string Uri          { get { return uri;                      } 
+        public Uri Uri             { get { return uri;                      } 
                                      set { uri = value; WriteUpdate();      } } 
         public string MimeType     { get { return mimetype;                 } }
         public string Artist       { get { return artist;                   } 

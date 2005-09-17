@@ -76,18 +76,18 @@ namespace Banshee
 			gst_file_encoder_free(encoderHandle);
 		}
 		
-		public override string Encode(string inputFile, string outputFile,
+		public override Uri Encode(Uri inputUri, Uri outputUri,
 		   PipelineProfile profile)
 		{			
-			if(!gst_file_encoder_encode_file(encoderHandle, inputFile, 
-				outputFile, profile.Pipeline, ProgressCallback)) {
+			if(!gst_file_encoder_encode_file(encoderHandle, inputUri.AbsoluteUri, 
+				outputUri.AbsoluteUri, profile.Pipeline, ProgressCallback)) {
 				IntPtr errPtr = gst_file_encoder_get_error(encoderHandle);
 				string error = Marshal.PtrToStringAnsi(errPtr);
 				throw new ApplicationException(String.Format(
 					Catalog.GetString("Could not encode file: {0}"), error));
 			}
 		
-			return outputFile;
+			return outputUri;
 		}
 		
 		public override void Cancel()

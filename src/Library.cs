@@ -142,12 +142,9 @@ namespace Banshee
 		    }
 		}
 		
-		public static string MakeFilenameKey(string uri)
+		public static string MakeFilenameKey(Uri uri)
 		{
-		      string path = uri;
-		      
-		      if(path.StartsWith("file://"))
-		          path = path.Substring(7);
+		      string path = uri.AbsolutePath;
 		
     		      return Path.GetDirectoryName(path) + 
                      Path.DirectorySeparatorChar + 

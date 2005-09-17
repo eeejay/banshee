@@ -592,7 +592,7 @@ namespace Banshee
         {
             Core.Instance.Player.Close();
             
-            if(ti.Uri.StartsWith("cdda://"))
+            if(ti.Uri.Scheme == "cdda")
                 Core.Instance.LoadCdPlayer();
             else
                 Core.Instance.UnloadCdPlayer();

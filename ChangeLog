@@ -1,3 +1,20 @@
+2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/LibraryTrackInfo:
+	* src/Library.cs:
+	* src/LibraryTransactions.cs:
+	* src/BurnCore.cs:
+	* src/AudioCdCore.cs:
+	* src/IpodCore.cs:
+	* src/TrackProperties.cs:
+	* src/GstFileEncoder.cs:
+	* src/FileEncoder.cs:
+	* src/RipTransaction.cs:
+	* mediaengines/gst/GstPlayerEngine.cs:
+	* mediaengines/helix/HelixPlayer.cs: All now use System.Uri instead of
+	strings for filename/URI usage as scheme stuff was getting out of hand
+	without it. All file components should play nicer now
+
 2005-09-16  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Database.cs: 

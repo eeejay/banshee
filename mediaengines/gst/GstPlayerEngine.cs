@@ -153,12 +153,7 @@ namespace Banshee
 				return false;
 			}
 			
-			string uri = ti.Uri;
-			
-			if(!uri.StartsWith("file://") && !uri.StartsWith("cdda://"))
-				 uri = "file://" + uri;
-			
-			loaded = gpe_open(handle, uri);
+			loaded = gpe_open(handle, ti.Uri.AbsoluteUri);
 			
 			if(loaded)
 				track = ti;

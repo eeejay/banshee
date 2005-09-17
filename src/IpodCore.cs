@@ -129,12 +129,14 @@ namespace Banshee
             return false;
         }
         
-        public static string GetIpodSong(string filename)
+        public static string GetIpodSong(Uri uri)
         {
+            string filename = uri.AbsolutePath;
+        
             if(ValidSongFormat(filename)) 
                 return filename;
                 
-            string path = Library.MakeFilenameKey(filename);
+            string path = Library.MakeFilenameKey(uri);
             string dir = Path.GetDirectoryName(path);
             string file = Path.GetFileNameWithoutExtension(filename);
             
@@ -156,9 +158,11 @@ namespace Banshee
             return null;
         }
         
-        public static string ConvertSongName(string filename, string newext)
+        public static string ConvertSongName(Uri uri, string newext)
         {
-            string path = Library.MakeFilenameKey(filename);
+            string filename = uri.AbsolutePath;
+            
+            string path = Library.MakeFilenameKey(uri);
             string dir = Path.GetDirectoryName(path);
             string file = Path.GetFileNameWithoutExtension(filename);
             
@@ -329,7 +333,7 @@ namespace Banshee
 					
 					
 			        try {
-			        		encoder.Encode(libTrack.Uri, filename, profile);
+			        		encoder.Encode(libTrack.Uri, new Uri(filename), profile);
 			        	} catch(Exception e) {
 			        		Core.Log.Push(LogEntryType.Warning,
 			        			Catalog.GetString("Could not encode file for iPod"),

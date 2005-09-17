@@ -293,7 +293,7 @@ namespace Banshee
 			DateTime startStamp = DateTime.Now;
 			
 			try {
-				TrackInfo ti = new LibraryTrackInfo(file);
+				TrackInfo ti = new LibraryTrackInfo(new Uri(file));
 				
 				bool copy = false;
 				try {
@@ -305,7 +305,7 @@ namespace Banshee
 						string destfile = FileNamePattern.BuildFull(ti, 
 							Path.GetExtension(file).Substring(1));
 						File.Copy(file, destfile, true);
-						ti.Uri = destfile;
+						ti.Uri = new Uri(destfile);
 						ti.Save();
 					} catch(Exception) { }
 				}
