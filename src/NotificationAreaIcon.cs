@@ -90,7 +90,7 @@ namespace Banshee
 					menu_y = (int)args.Event.YRoot - (int)args.Event.Y;
 					traymenu.Popup(null, null, 
 						new MenuPositionFunc(PositionMenu), 
-						IntPtr.Zero, args.Event.Button, args.Event.Time);
+						args.Event.Button, args.Event.Time);
 					break;
 			}
 

@@ -98,7 +98,7 @@ namespace Banshee
 			
 			foreach(TrackInfo ti in encodeQueue) {
 			    string outputFile = Paths.TempDir + "/"  + 
-				    Path.GetFileNameWithoutExtension(ti.Uri.AbsolutePath) + "." + 
+				    Path.GetFileNameWithoutExtension(ti.Uri.LocalPath) + "." + 
 				    profile.Extension;
 				
 				fet.AddTrack(ti, new Uri(outputFile));
@@ -435,7 +435,7 @@ namespace Banshee
 					+ selectedBurnerId + "/";
 				
 				foreach(Uri uri in burnQueue)
-					tracks.Add(new BurnRecorderTrack(uri.AbsolutePath, 
+					tracks.Add(new BurnRecorderTrack(uri.LocalPath, 
 						diskType == BurnCore.DiskType.Audio ?
 							BurnRecorderTrackType.Audio :
 							BurnRecorderTrackType.Data));

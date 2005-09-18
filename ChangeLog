@@ -1,5 +1,13 @@
 2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LibraryTransactions.cs: Explicitly prepend a file:// to the filename
+	passed to new Uri() as ':' in the local file name can cause improper
+	parsing
+
+	* src/PlayerInterface.cs:
+	* src/SearchEntry.cs:
+	* src/NotificationAreaIcon.cs: Fixed gtk-sharp deprecation warnings
+
 	* src/LibraryTrackInfo:
 	* src/Library.cs:
 	* src/LibraryTransactions.cs:

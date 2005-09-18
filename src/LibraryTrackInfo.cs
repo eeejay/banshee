@@ -116,7 +116,7 @@ namespace Banshee
 		{
 			if(uri.Scheme == "sql") {
 			    throw new ApplicationException("SQL URI DEPRECATED");
-				//LoadFromDatabase(uri.AbsolutePath);
+				//LoadFromDatabase(uri.LocalPath);
 			} else {
                 CheckIfExists(uri);
                 
@@ -313,10 +313,10 @@ namespace Banshee
 		private void LoadFromFile(Uri uri)
 		{
 			this.uri = uri;
-			ParseUri(uri.AbsolutePath);
+			ParseUri(uri.LocalPath);
 			trackId = 0;
 	
-			AudioFileWrapper af = new AudioFileWrapper(uri.AbsolutePath);
+			AudioFileWrapper af = new AudioFileWrapper(uri.LocalPath);
 
 			mimetype = null;
 

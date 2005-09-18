@@ -293,7 +293,7 @@ namespace Banshee
 			DateTime startStamp = DateTime.Now;
 			
 			try {
-				TrackInfo ti = new LibraryTrackInfo(new Uri(file));
+				TrackInfo ti = new LibraryTrackInfo(new Uri("file://" + file));
 				
 				bool copy = false;
 				try {
@@ -512,7 +512,7 @@ namespace Banshee
 			
 			for(int i = 0; i < totalCount; i++) {
 				LibraryTrackInfo ti = RemoveQueue[i] as LibraryTrackInfo;
-				query += new Compare("TrackID", Op.EqualTo, ti.TrackId);
+				query += new Compare("TrackInD", Op.EqualTo, ti.TrackId);
 				if(i < totalCount - 1)
 					query += new Or();
 				
@@ -628,8 +628,13 @@ namespace Banshee
 			//totalCount = SqlCount();
 			IDataReader reader = Core.Library.Db.Query(sql);
 			while(reader.Read() && !cancelRequested) {
-				new LibraryTrackInfo(reader);
-				
+				try {
+				    new LibraryTrackInfo(reader);
+				} catch(Exception e) {
+				    Core.Log.Push(LogEntryType.Warning,
+				        Catalog.GetString("Could not load track from library"),
+				        (reader["Uri"] as string) + ": " + e.Message);
+				}
 				//DateTime startStamp = DateTime.Now;
 				//RaiseTrackInfo(new LibraryTrackInfo(reader));
 				//UpdateAverageDuration(startStamp);

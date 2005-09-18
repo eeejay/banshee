@@ -1332,6 +1332,9 @@ namespace Banshee
 		
 		private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
 		{
+		    if(args.Entry.Type == LogEntryType.Warning)
+		       Console.WriteLine("Warning: " + args.Entry.ShortMessage + ": " + args.Entry.Details);
+		
 		    if(args.Entry.Type != LogEntryType.UserError)
 		      return;
 		      
@@ -1503,7 +1506,7 @@ namespace Banshee
 				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
 			}
 			
-			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
+			menu.Popup(null, null, null, 0, args.Event.Time);
 			menu.Show();
 			
 			addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
@@ -1865,7 +1868,7 @@ namespace Banshee
 			gxmlPlaylistMenu["ItemRemove"].Visible = sensitive;
 			gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
 			
-			menu.Popup(null, null, null, IntPtr.Zero, 0, time);
+			menu.Popup(null, null, null, 0, time);
 			
 			return false;
 		}
@@ -1962,7 +1965,8 @@ namespace Banshee
 						if (pos == TreeViewDropPosition.After ||
 						    pos == TreeViewDropPosition.IntoOrAfter) {
 							playlistModel.MoveAfter(iter, destIter);
-							destIter = iter.Copy();
+							//destIter = iter.Copy();
+							destIter = (TreeIter)iter;
 						} else
 							playlistModel.MoveBefore(iter, destIter);
 					}

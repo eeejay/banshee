@@ -164,7 +164,7 @@ namespace Banshee
 		private void ShowMenu(uint time)
 		{
 			popupMenu.Popup(null, null, new MenuPositionFunc(MenuPosition), 
-				IntPtr.Zero, 0, time);
+				 0, time);
 			popupMenu.ShowAll();
 			img.Pixbuf = hoverIcon;
 			menuActive = true;

@@ -131,7 +131,7 @@ namespace Banshee
         
         public static string GetIpodSong(Uri uri)
         {
-            string filename = uri.AbsolutePath;
+            string filename = uri.LocalPath;
         
             if(ValidSongFormat(filename)) 
                 return filename;
@@ -160,7 +160,7 @@ namespace Banshee
         
         public static string ConvertSongName(Uri uri, string newext)
         {
-            string filename = uri.AbsolutePath;
+            string filename = uri.LocalPath;
             
             string path = Library.MakeFilenameKey(uri);
             string dir = Path.GetDirectoryName(path);
