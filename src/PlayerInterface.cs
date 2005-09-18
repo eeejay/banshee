@@ -1332,8 +1332,7 @@ namespace Banshee
 		
 		private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
 		{
-		    if(args.Entry.Type == LogEntryType.Warning)
-		       Console.WriteLine("Warning: " + args.Entry.ShortMessage + ": " + args.Entry.Details);
+		    Console.WriteLine(args.Entry.ShortMessage + ": " + args.Entry.Details);
 		
 		    if(args.Entry.Type != LogEntryType.UserError)
 		      return;

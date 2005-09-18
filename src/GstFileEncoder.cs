@@ -78,7 +78,7 @@ namespace Banshee
 		
 		public override Uri Encode(Uri inputUri, Uri outputUri,
 		   PipelineProfile profile)
-		{			
+		{	
 			if(!gst_file_encoder_encode_file(encoderHandle, inputUri.AbsoluteUri, 
 				outputUri.AbsoluteUri, profile.Pipeline, ProgressCallback)) {
 				IntPtr errPtr = gst_file_encoder_get_error(encoderHandle);

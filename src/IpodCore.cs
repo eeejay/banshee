@@ -330,15 +330,14 @@ namespace Banshee
 				    statusMessage = String.Format(
 				        Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
 				        song.Artist, song.Title);
-					
-					
+
 			        try {
 			        		encoder.Encode(libTrack.Uri, new Uri(filename), profile);
 			        	} catch(Exception e) {
 			        		Core.Log.Push(LogEntryType.Warning,
 			        			Catalog.GetString("Could not encode file for iPod"),
-			        			String.Format("{0} -> {1} failed",
-			        				libTrack.Uri, filename));
+			        			String.Format("{0} -> {1} failed ({0})",
+			        				libTrack.Uri, filename, e.Message));
 			        		filename = null;
 			        }
 			    }
@@ -367,16 +366,16 @@ namespace Banshee
 			
 			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
 
-			try {
+			//try {
 			    statusMessage = Catalog.GetString("Synchronizing iPod...");
 			    currentCount = 0;
 			    totalCount = 0;
 				device.SongDatabase.Save();
-			} catch(Exception e) {
-				Core.Log.Push(LogEntryType.UserError, 
-					Catalog.GetString("Could not sync iPod"),
-					e.Message);
-			}
+			//} catch(Exception e) {
+			//	Core.Log.Push(LogEntryType.UserError, 
+			//		Catalog.GetString("Could not sync iPod"),
+			//		e.Message);
+			//}
 			
 
 			device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;

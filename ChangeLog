@@ -1,5 +1,11 @@
 2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Preferences.cs: Fixed crash on save if no iPod transcoders were
+	available
+
+	* libbanshee/gst-encode.c: Use gnomevfssink, replaced stat() call with
+	gnome_vfs_get_file_info() call
+
 	* src/LibraryTransactions.cs: Explicitly prepend a file:// to the filename
 	passed to new Uri() as ':' in the local file name can cause improper
 	parsing

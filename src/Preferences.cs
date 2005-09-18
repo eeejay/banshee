@@ -235,18 +235,27 @@ namespace Banshee
 			Core.GconfClient.Set(GConfKeys.CopyOnImport,
 				CopyOnImport.Active);
 				
+		      
+		    if(rippingProfile != null) {
+		      try { 
 		      Core.GconfClient.Set(GConfKeys.RippingProfile,
 				rippingProfile.ProfileKey);
 				
 		      Core.GconfClient.Set(GConfKeys.RippingBitrate,
 				rippingProfile.Bitrate);
+			  } catch(Exception) {}
+			}
 			
-			     Core.GconfClient.Set(GConfKeys.IpodProfile,
+			if(ipodProfile != null) {
+			   try {
+			    Core.GconfClient.Set(GConfKeys.IpodProfile,
 				ipodProfile.ProfileKey);
 				
 		      Core.GconfClient.Set(GConfKeys.IpodBitrate,
 				ipodProfile.Bitrate);
-				
+				} catch(Exception) {}
+		    }
+		    
 			SaveBurnSettings();
 			SaveEngineSettings();
 		}
