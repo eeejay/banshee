@@ -35,6 +35,8 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
+#include <libgnomevfs/gnome-vfs.h>
+
 #include "gst-encode.h"
 #include "gst-init.h"
 
@@ -123,7 +125,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 	     return NULL;
 	}
 
-	sink_elem = gst_element_factory_make("filesink", "sink");
+	sink_elem = gst_element_factory_make("gnomevfssink", "sink");
 	if(sink_elem == NULL) {
 		encoder->error = g_strdup(_("Could not create 'filesink' element"));
 		return NULL;
@@ -161,7 +163,7 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	GstFormat format = GST_FORMAT_BYTES;
 	gint64 position, total;
 	gdouble last_fraction = 0.0, fraction = 0.0;
-	struct stat statbuf;
+	GnomeVFSFileInfo fileinfo;
 
 	if(encoder == NULL)
 		return FALSE;
@@ -201,8 +203,9 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
 	g_object_unref(G_OBJECT(pipeline));
 
 	if(encoder->error == NULL) {
-		if(stat(output_file, &statbuf) == 0) {
-			if(statbuf.st_size < 100) {
+		if(gnome_vfs_get_file_info(output_file, &fileinfo, 
+			GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
+			if(fileinfo.size < 100) {
 				encoder->error = g_strdup(_("No decoder could be found "
 							    "for source format."));
 				g_remove(output_file);
