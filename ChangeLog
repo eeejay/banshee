@@ -1,3 +1,7 @@
+2005-09-18  Adam Weinberger  <adamw@gnome.org>
+
+	* configure.ac: Added en_CA to ALL_LINGUAS.
+
 2005-09-18  Funda Wang  <fundawang@linux.net.cn>
 
 	* configure.ac: Added Simplified Chinese translation.
