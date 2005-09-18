@@ -1,3 +1,7 @@
+2005-09-18  Funda Wang  <fundawang@linux.net.cn>
+
+	* configure.ac: Added Simplified Chinese translation.
+
 2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Preferences.cs: Fixed crash on save if no iPod transcoders were

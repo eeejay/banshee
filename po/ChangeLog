@@ -1,3 +1,8 @@
+2005-09-18  Funda Wang  <fundawang@linux.net.cn>
+
+	* zh_CN.po: Added Simplified Chinese translation.
+	* POTFILES.in: Removed obsolete files.
+
 2005-09-17  Vincent van Adrighem  <adrighem@gnome.org>
 
 	* nl.po: Translation added by Stijn Verslycken.
