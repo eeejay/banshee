@@ -87,9 +87,9 @@ namespace Banshee
 		
 		public void SafeRun()
 		{
-			Run();
+			//Run();
 			
-			/*try {
+			try {
 				Run();
 			} catch(Exception e) {
 				DebugLog.Add(String.Format(Catalog.GetString(
@@ -98,7 +98,7 @@ namespace Banshee
 					GetType().ToString(),
 					e.GetType().ToString(), 
 					e.Message));
-			}*/
+			}
 			
 			Finish(this);
 		}
@@ -523,7 +523,7 @@ namespace Banshee
 				Core.Library.Remove(ti);
 			}
 			
-			statusMessage = Catalog.GetString("Purging Library of Removed Tracks...");
+			statusMessage = Catalog.GetString("Purging Removed Tracks from Library...");
 			currentCount = 0;
 			totalCount = 0;
 			Core.Library.Db.Execute(query);
@@ -570,7 +570,7 @@ namespace Banshee
 			
 			query += new ParenGroup(subquery);
 
-			statusMessage = Catalog.GetString("Purging Playlist of Removed Tracks...");
+			statusMessage = Catalog.GetString("Purging Removed Tracks from Playlist...");
 			currentCount = 0;
 			totalCount = 0;
 			Core.Library.Db.Execute(query);
