@@ -112,7 +112,10 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
-PKG_CHECK_MODULES(IPODSHARP, ipod-sharp >= 0.5.4)
+IPODSHARP_REQUIRED=0.5.5
+PKG_CHECK_MODULES(IPODSHARP, 
+	ipod-sharp >= $IPODSHARP_REQUIRED \
+	ipod-sharp-ui >= $IPODSHARP_REQUIRED)	
 AC_SUBST(IPODSHARP_LIBS)
 
 PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
@@ -240,6 +243,10 @@ expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
 		   eval echo $libdir )`
 AC_SUBST(expanded_libdir)
+
+UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp ipod-sharp-ui"
+INSTALLED_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries $UNSTABLE_INSTALL_ASSEMBLIES`"
+AC_SUBST(INSTALLED_ASSEMBLIES)
 
 dnl Intl
 
