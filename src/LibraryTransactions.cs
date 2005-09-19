@@ -189,7 +189,7 @@ namespace Banshee
 			}
 		}
 		
-		public void Register()
+		public virtual void Register()
 		{
 			Core.Library.TransactionManager.Register(this);
 		}
