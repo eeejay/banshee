@@ -79,15 +79,24 @@ namespace Banshee
         private Hashtable logs = new Hashtable();
         private ArrayList notifyQueue = new ArrayList();
         
+        private Gtk.ThreadNotify notify;
+        
         private bool queueLocked = false;
         
         public event LogCoreUpdatedHandler Updated;
         
         public LogCore()
         {
-        
+            notify = new Gtk.ThreadNotify(new Gtk.ReadyEvent(OnReadyNotify));
         }
-                      
+        
+        private void OnReadyNotify()
+        {
+            foreach(LogEntry entry in notifyQueue)
+                QueueNotify(entry);
+            notifyQueue.Clear();
+        }
+        
         private void QueueNotify(LogEntry entry)
         {
              LogCoreUpdatedHandler handler = Updated;
@@ -109,7 +118,8 @@ namespace Banshee
                 
             (logs[entry.Type] as ArrayList).Insert(0, entry);
             
-            QueueNotify(entry);
+            notifyQueue.Add(entry);
+            notify.WakeupMain();
         }
     }
 }
