@@ -415,14 +415,14 @@ namespace Banshee
 			removeTracks.Add(iti);
 		}
 		
-		public IpodSyncTransaction Sync(bool full)
+		public IpodSync Sync(bool full)
 		{
-			IpodSyncTransaction sync;
+			IpodSync sync;
 			
 			if(full)
-				sync = new IpodSyncTransaction(device);
+				sync = new IpodSync(device);
 			else
-				sync = new IpodSyncTransaction(device, tracks, removeTracks);
+				sync = new IpodSync(device, tracks, removeTracks);
 				
 			sync.SyncStarted += OnIpodSyncStarted;
 			sync.SyncCompleted += OnIpodSyncCompleted;
@@ -432,18 +432,14 @@ namespace Banshee
 		
 		private void OnIpodSyncStarted(object o, EventArgs args)
 		{
-			Core.ThreadEnter();
 			IsSyncing = true;
-			Core.ThreadLeave();
 		}
 		
 		private void OnIpodSyncCompleted(object o, EventArgs args)
 		{
-			Core.ThreadEnter();
 			IsSyncing = false;
 			Refresh();
-			Core.ThreadLeave();
-		}
+	    }
 
 		private static string BytesToString(ulong bytes)
 		{
