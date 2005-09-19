@@ -29,9 +29,11 @@
  
 using System;
 using System.Collections;
+using System.Threading;
 using System.IO;
 using Mono.Posix;
 using IPod;
+using Gtk;
 
 namespace Banshee
 {
@@ -171,233 +173,198 @@ namespace Banshee
         }
 	}
 	
-	public class IpodSyncTransaction : LibraryTransaction
-	{
-		public override string Name {
-			get {
-				return "iPod Sync Transaction";
-			}
-		}
-		
-		private PipelineProfile profile;
-		private FileEncoder encoder;
-		private Device device;
-		private ArrayList updateTracks = null;
-		private ArrayList removeTracks = null;
-		
-		public event EventHandler SyncStarted;
-		public event EventHandler SyncCompleted;
-		
-		public IpodSyncTransaction(Device device)
-		{
-			this.device = device;
-			showCount = false;
-		}
-		
-		public IpodSyncTransaction(Device device, ArrayList tracks, 
-		  ArrayList removeTracks) : this(device)
-		{
-			updateTracks = tracks;
-			this.removeTracks = removeTracks;
-		}
-		
-		private bool ExistsOnIpod(Song[] songs, TrackInfo libTrack)
-		{
-			if(libTrack.GetType() == typeof(IpodTrackInfo)) {
-				if((libTrack as IpodTrackInfo).NeedSync) {
-					return false;
-				}
-			}
-		
-			foreach(Song song in songs) {
-				if(IpodMisc.TrackCompare(libTrack, song))
-					return true;
-			}
-			
-			return false;
-		}
-		
-		private bool ExistsInLibrary(Song song)
-		{
-			foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
-				if(IpodMisc.TrackCompare(libTrack, song))
-					return true;
-			}
-			
-			return false;
-		}
-		
-		protected override void CancelAction()
-		{
-		    encoder.Cancel();
-		}
-
-		private void EmitSyncStarted()
-		{
-			EventHandler handler = SyncStarted;
-			if(handler != null)
-				handler(this, new EventArgs());
-		}
-
-		private void EmitSyncCompleted()
-		{
-			EventHandler handler = SyncCompleted;
-			if(handler != null)
-				handler(this, new EventArgs());
-		}
-		
-		public override void Run()
-		{
-			EmitSyncStarted();
-			try {
-				WrapRun();
-			} catch(Exception e) {
-				Core.Log.Push(LogEntryType.UserError, 
-					Catalog.GetString("Error Syncing iPod"),
-					e.Message);
-			}
-			EmitSyncCompleted();
-		}
-		
-		public void WrapRun()
-		{
-			statusMessage = String.Format(Catalog.GetString(
-				"Preparing to sync '{0}'"), device.Name);
-				
-			currentCount = 0;
-			totalCount = 0;
-			
-			bool doUpdate = false;
-			
-			profile = PipelineProfile.GetConfiguredProfile(
+    public class IpodSync
+    {
+        private PipelineProfile encodeProfile;
+        private Device device;
+        private ArrayList updateTracks;
+        private ArrayList removeTracks;
+        
+        private ProgressDialog progress;
+        
+        private Hashtable copyFiles;
+        
+        public event EventHandler SyncStarted;
+        public event EventHandler SyncCompleted;
+        
+        public IpodSync(Device device)
+        {
+            this.device = device;
+            
+            encodeProfile = PipelineProfile.GetConfiguredProfile(
                 "Ipod", "mp3,aac,mp4,m4a,m4p");
-            encoder = new GstFileEncoder();
-            encoder.Progress += OnEncodeProgress;
-			
-			if(updateTracks == null) {
-				foreach(Song song in device.SongDatabase.Songs) {
-					if(ExistsInLibrary(song))
-						continue;
+                
+            progress = new ProgressDialog(null);
+            progress.SongDatabase = device.SongDatabase;
+        }
+        
+        public IpodSync(Device device, ArrayList updateTracks, ArrayList removeTracks)
+            : this(device)
+        {
+            this.updateTracks = updateTracks;
+            this.removeTracks = removeTracks;
+        }
+        
+        public void StartSync()
+        {
+            EncodeFiles();
+        }
+        
+        private void EmitSyncStarted()
+        {
+            EventHandler handler = SyncStarted;
+            if(handler != null)
+                handler(this, new EventArgs());
+        }
 
-					device.SongDatabase.RemoveSong(song);
-					doUpdate = true;
-				}
-			} else if(removeTracks != null) {
-			    foreach(IpodTrackInfo libTrack in removeTracks) {
-			         device.SongDatabase.RemoveSong(libTrack.Song);
-			         doUpdate = true;
-			    }
-			}
-			
-			Song[] ipodSongs = device.SongDatabase.Songs;
-			
-			ICollection collection;
-			if(updateTracks == null)
-				collection = Core.Library.Tracks.Values;
-			else
-				collection = updateTracks;
-			
-			foreach(TrackInfo libTrack in collection) {
-			     if(cancelRequested)
-			         break;
-			         
-			    if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
-			    		continue;
-			         
-			    Song song = null;
-			         
-			    if(libTrack.GetType() == typeof(LibraryTrackInfo)) {
-				    song = IpodMisc.TrackInfoToSong(device, 
-				    	libTrack as LibraryTrackInfo);
-				} else if(libTrack.GetType() == typeof(IpodTrackInfo)) {
-					song = (libTrack as IpodTrackInfo).Song;
-				} else {
-					continue;
-				}
-				
-				if(song == null)
-					continue;
-				
-			    string filename = IpodCore.GetIpodSong(libTrack.Uri);
-			    if(filename == null) {
-			         if(profile == null) {
-			             continue;
-			         }
-			       
-			         filename = IpodCore.ConvertSongName(libTrack.Uri,
-			             profile.Extension);
-			         
-				    statusMessage = String.Format(
-				        Catalog.GetString("Encoding for iPod Usage: {0} - {1}"),
-				        song.Artist, song.Title);
+        private void EmitSyncCompleted()
+        {
+            EventHandler handler = SyncCompleted;
+            if(handler != null)
+                handler(this, new EventArgs());
+        }
+        
+        private bool ExistsOnIpod(Song[] songs, TrackInfo libTrack)
+        {
+            if(libTrack.GetType() == typeof(IpodTrackInfo)) {
+                if((libTrack as IpodTrackInfo).NeedSync) {
+                    return false;
+                }
+            }
 
-			        try {
-			        		encoder.Encode(libTrack.Uri, new Uri(filename), profile);
-			        	} catch(Exception e) {
-			        		Core.Log.Push(LogEntryType.Warning,
-			        			Catalog.GetString("Could not encode file for iPod"),
-			        			String.Format("{0} -> {1} failed ({0})",
-			        				libTrack.Uri, filename, e.Message));
-			        		filename = null;
-			        }
-			    }
-			    
-			    if(filename == null)
-			         continue;
+            foreach(Song song in songs) {
+                if(IpodMisc.TrackCompare(libTrack, song))
+                    return true;
+            }
 
-				try {
-					song.Filename = StringUtil.UriToFileName(filename);
-				} catch(Exception e) {
-					Core.Log.Push(LogEntryType.Warning,
-		        			Catalog.GetString("Could not transfer file to iPod"),
-		        			e.Message);
-					continue;
-				}
+            return false;
+        }
 
-				doUpdate = true;
-			}
-			
-			encoder.Dispose();
-			
-			if(!doUpdate || cancelRequested) {
-			    device.SongDatabase.Reload();
-				return;
-		    }
-			
-			device.SongDatabase.SaveProgressChanged += OnSaveProgressChanged;
+        private bool ExistsInLibrary(Song song)
+        {
+            foreach(LibraryTrackInfo libTrack in Core.Library.Tracks.Values) {
+                if(IpodMisc.TrackCompare(libTrack, song))
+                    return true;
+            }
 
-			//try {
-			    statusMessage = Catalog.GetString("Synchronizing iPod...");
-			    currentCount = 0;
-			    totalCount = 0;
-				device.SongDatabase.Save();
-			//} catch(Exception e) {
-			//	Core.Log.Push(LogEntryType.UserError, 
-			//		Catalog.GetString("Could not sync iPod"),
-			//		e.Message);
-			//}
-			
+            return false;
+        }
+        
+        private void EncodeFiles()
+        {
+            copyFiles = new Hashtable();
+            FileEncodeTransaction fet = null;
+            
+            Song [] ipodSongs = device.SongDatabase.Songs;
+            
+            ICollection collection = updateTracks;
+            if(collection == null)
+                collection = Core.Library.Tracks.Values;
+                
+            foreach(TrackInfo libTrack in collection) {                    
+                if(ExistsOnIpod(ipodSongs, libTrack) || libTrack.Uri == null)
+                    continue;
 
-			device.SongDatabase.SaveProgressChanged -= OnSaveProgressChanged;
-		} 
-		
-		private void OnSaveProgressChanged(SongDatabase db, Song song, 
-			double currentPercent, int completed, int total)
-		{
-			
-			currentCount = completed;
-			totalCount = total;
-			statusMessage = String.Format(Catalog.GetString(
-				"Copying {0} - {1}"), song.Artist, song.Title);
-		}
-		
-		private void OnEncodeProgress(object o, FileEncoderProgressArgs args)
-		{
-		    totalCount = 100;
-		    currentCount = (int)(100.0 * args.Progress);
-		}
-	}
-	
+                Song song = null;
+
+                if(libTrack is LibraryTrackInfo) {
+                    song = IpodMisc.TrackInfoToSong(device, libTrack as LibraryTrackInfo);
+                } else if(libTrack is IpodTrackInfo) {
+                    song = (libTrack as IpodTrackInfo).Song;
+                } else {
+                    continue;
+                }
+
+                if(song == null)
+                    continue;
+
+                string filename = IpodCore.GetIpodSong(libTrack.Uri);
+                
+                if(filename == null) {
+                    if(encodeProfile == null) {
+                        continue;
+                    }
+
+                    filename = IpodCore.ConvertSongName(libTrack.Uri, encodeProfile.Extension);
+                    Uri uri = new Uri(filename);
+                    
+                    copyFiles.Add(song, uri);
+                    
+                    if(fet == null) {
+                        fet = new FileEncodeTransaction(encodeProfile);
+                        fet.FileEncodeComplete += OnFileEncodeComplete;
+                        fet.Finished += OnFileEncodeBatchFinished;
+                    }
+                        
+                    fet.AddTrack(libTrack.Uri, uri);
+                } else {
+                    if(System.IO.File.Exists(filename)) {
+                        song.Filename = filename;
+                        copyFiles.Add(song, String.Empty);
+                    }
+                }
+            }
+            
+            if(fet != null) {
+                fet.Register();
+            } else {
+                SyncIpod();
+            }
+        }
+        
+        private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
+        {
+            foreach(Song song in copyFiles.Keys) {
+                if(copyFiles[song] == args.EncodedFileUri) {
+                    song.Filename = args.EncodedFileUri.LocalPath;
+                }
+            }
+        }
+        
+        private void OnFileEncodeBatchFinished(object o, EventArgs args)
+        {
+            SyncIpod();
+        }
+        
+        private void SyncIpod()
+        {
+            bool doUpdate = false;
+            
+            if(updateTracks == null) {
+                foreach(Song song in device.SongDatabase.Songs) {
+                    if(ExistsInLibrary(song))
+                        continue;
+
+                    device.SongDatabase.RemoveSong(song);
+                    doUpdate = true;
+                }
+            } else if(removeTracks != null) {
+                foreach(IpodTrackInfo libTrack in removeTracks) {
+                    device.SongDatabase.RemoveSong(libTrack.Song);
+                    doUpdate = true;
+                }
+            }
+            
+            foreach(Song song in copyFiles.Keys) {
+                if(song.Filename != null && song.Filename != String.Empty) {
+                    doUpdate = true;
+                    break;
+                }
+            }
+            
+            if(!doUpdate)
+                return;
+                
+            Thread thread = new Thread(new ThreadStart(ThreadedSave));
+            thread.Start();
+        }
+        
+        private void ThreadedSave()
+        {
+            device.SongDatabase.Save();
+        }    
+    }
+    
 	public class IpodMisc
 	{
 		public static Song TrackInfoToSong(Device device, 
