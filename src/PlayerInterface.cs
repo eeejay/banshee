@@ -1152,7 +1152,7 @@ namespace Banshee
 				return;
 		
 			IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
-			IpodSyncTransaction sync = null;
+			IpodSync sync = null;
 			
 			if(!ipodSource.Device.CanWrite)
 			     return;
@@ -1176,13 +1176,13 @@ namespace Banshee
 						sync = ipodSource.Sync(true);
 						sync.SyncStarted += OnIpodSyncStarted;
 						sync.SyncCompleted += OnIpodSyncCompleted;
-						sync.Register();
+						sync.StartSync();
 						break;
 					case (int)ResponseType.Apply:
 						sync = ipodSource.Sync(false);
 						sync.SyncStarted += OnIpodSyncStarted;
 						sync.SyncCompleted += OnIpodSyncCompleted;
-						sync.Register();
+						sync.StartSync();
 						break;
 				}
 				
@@ -1202,7 +1202,7 @@ namespace Banshee
 						sync = ipodSource.Sync(true);
 						sync.SyncStarted += OnIpodSyncStarted;
 						sync.SyncCompleted += OnIpodSyncCompleted;
-						sync.Register();
+						sync.StartSync();
 						break;
 				}
 				
@@ -1217,35 +1217,25 @@ namespace Banshee
 		
 		private void OnIpodSyncStarted(object o, EventArgs args)
 		{
-			Core.ThreadEnter();
 			if(playlistModel.Source.Type == SourceType.Ipod 
-				&& (playlistModel.Source as IpodSource).IsSyncing)
-				playlistView.Sensitive = false;
-			Core.ThreadLeave();
+				&& (playlistModel.Source as IpodSource).IsSyncing) {
+			    playlistView.Sensitive = false;
+		    }
 		}
 		
 		private void OnIpodSyncCompleted(object o, EventArgs args)
 		{
-			Core.ThreadEnter();
-			GLib.Timeout.Add(10, IpodSyncCompletedTimeout);
-			Core.ThreadLeave();
-		}
-		
-		private bool IpodSyncCompletedTimeout()
-		{
-			Core.ThreadEnter();
 			if(playlistModel.Source.Type == SourceType.Ipod 
 				&& !(playlistModel.Source as IpodSource).IsSyncing) {
 				playlistView.Sensitive = true;
 				playlistModel.LoadFromIpodSource(
 					(playlistModel.Source as IpodSource));
 			}
+			
 			sourceView.QueueDraw();
 			playlistView.QueueDraw();
-			Core.ThreadLeave();
-			return false;
 		}
-		
+	
 		private void OnToggleButtonShuffleToggled(object o, EventArgs args)
 		{
 			ToggleButton t = (ToggleButton)o;
@@ -1337,16 +1327,12 @@ namespace Banshee
 		    if(args.Entry.Type != LogEntryType.UserError)
 		      return;
 		      
-		    Core.ThreadEnter();
-		    
 		    HigMessageDialog.RunHigMessageDialog(WindowPlayer, 
 		      DialogFlags.Modal,
 		      MessageType.Error,
 		      ButtonsType.Ok,
 		      args.Entry.ShortMessage,
 		      args.Entry.Details);
-		      
-		    Core.ThreadLeave();
 		}
 		
 		// PlaylistMenu Handlers
