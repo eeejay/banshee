@@ -69,7 +69,7 @@ namespace Banshee
 		
 		private void Load()
 		{
-			uri = new Uri(song.Filename);
+			uri = new Uri("file://" + song.Filename);
 			album = song.Album == String.Empty ? null : song.Album;
 			artist = song.Artist == String.Empty ? null : song.Artist;
 			title = song.Title == String.Empty ? null : song.Title;
