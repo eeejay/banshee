@@ -176,9 +176,6 @@ $(TARGET): $(banshee_build_sources)
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
 
-UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp"
-INSTALLED_ASSEMBLIES="`$(PKG_CONFIG) --variable=Libraries $(UNSTABLE_INSTALL_ASSEMBLIES)`"
-
 install-data-hook:
 	for ASM in $(INSTALLED_ASSEMBLIES); do \
 		$(INSTALL) -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
