@@ -1,3 +1,23 @@
+2005-09-19  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* src/LogCore.cs: Use a ThreadNotify for events
+	* src/IpodTrackInfo.cs: Prepend explicit file:// to thrwart
+	parsing problems, as Ipod.Song.Filename is always a local path
+	* src/FileEncodeTransaction.cs: Accept TrackInfo or Uri inputs
+	* src/PlayerInterface.cs:
+	* src/Library.cs: Update to use new iPod sync method
+	* src/IpodCore.cs: Rewrote iPod Syncing, now using ipod-sharp-ui
+	* src/Makefile.am: Add ipod-sharp-ui
+	* configure.ac: Added ipod-sharp-ui, moved unstable assembly 
+	copy script from src/Makefile.am 
+
+2005-09-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/glade/player.glade: Added _M to Music top level menu item and
+	fixed the misspelling "selelected" (awesome word) to "selected".
+	* src/LibraryTransactions.cs: Made two strings make more sense, easier
+	to translate
+
 2005-09-18  Adam Weinberger  <adamw@gnome.org>
 
 	* configure.ac: Added en_CA to ALL_LINGUAS.
