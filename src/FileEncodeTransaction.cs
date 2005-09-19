@@ -41,6 +41,7 @@ namespace Banshee
 	public class FileEncodeCompleteArgs : EventArgs
 	{
 		public TrackInfo Track;
+		public Uri InputUri;
 		public Uri EncodedFileUri;
 	}
 
@@ -73,36 +74,53 @@ namespace Banshee
 			tracks[track] = outputUri;
 		}
 		
+		public void AddTrack(Uri inputUri, Uri outputUri)
+		{
+		    tracks[inputUri] = outputUri;
+		}
+		
 		public override void Run()
 		{
 			encoder = new GstFileEncoder();
 			encoder.Progress += OnEncoderProgress;
 			
-			foreach(TrackInfo ti in tracks.Keys) {
-			    Uri outputUri = tracks[ti] as Uri;
+			foreach(object obj in tracks.Keys) {
+			    Uri outputUri = tracks[obj] as Uri;
+			    Uri inputUri = null;
 			    
-				statusMessage = String.Format(
-					Catalog.GetString("Encoding {0} - {1} ..."),
-					ti.Artist, ti.Title);
+			    if(obj is TrackInfo) {
+        				statusMessage = String.Format(
+        					Catalog.GetString("Encoding {0} - {1} ..."),
+        					(obj as TrackInfo).Artist, (obj as TrackInfo).Title);
+        			    inputUri = (obj as TrackInfo).Uri;
+        		    } else if(obj is Uri) {
+        		        statusMessage = Catalog.GetString("Encoding files...");
+        		        inputUri = obj as Uri;
+        		    }
 				
 				if(cancelRequested)
 					break;
 					
 				try {
-					Uri encUri = encoder.Encode(ti.Uri, outputUri, 
-					   profile);
-				
+					Uri encUri = encoder.Encode(inputUri, outputUri, profile);
+					   
 					FileEncodeCompleteHandler handler = FileEncodeComplete;
 					if(handler != null) {
 						FileEncodeCompleteArgs args = 
 							new FileEncodeCompleteArgs();
-						args.Track = ti;
+						if(obj is TrackInfo) {
+						  args.Track = obj as TrackInfo;
+						  args.InputUri = (obj as TrackInfo).Uri;
+						} else if(obj is Uri) {
+						  args.InputUri = (obj as Uri);
+						}
+						
 						args.EncodedFileUri = encUri;
 						handler(this, args);
 					}
 				} catch(Exception e) {
 					Console.WriteLine("Could not encode '{0}': {1}",
-						ti.Uri, e.Message);
+						inputUri.AbsoluteUri, e.Message);
 				}
 					
 					
