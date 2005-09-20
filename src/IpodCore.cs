@@ -194,8 +194,8 @@ namespace Banshee
             encodeProfile = PipelineProfile.GetConfiguredProfile(
                 "Ipod", "mp3,aac,mp4,m4a,m4p");
                 
-            progress = new ProgressDialog(null);
-            progress.SongDatabase = device.SongDatabase;
+           // progress = new ProgressDialog(null);
+           // progress.SongDatabase = device.SongDatabase;
         }
         
         public IpodSync(Device device, ArrayList updateTracks, ArrayList removeTracks)
@@ -361,7 +361,9 @@ namespace Banshee
         
         private void ThreadedSave()
         {
-            device.SongDatabase.Save();
+            lock(device.SongDatabase) {
+                device.SongDatabase.Save();
+            }
         }    
     }
     
