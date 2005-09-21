@@ -1,0 +1,1356 @@
+# banshee ja.po.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# This file is distributed under the same license as the 'banshee' package.
+# Takeshi AIHANA <aihana@gnome.gr.jp>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: banshee HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-09-21 21:59+0900\n"
+"PO-Revision-Date: 2005-09-21 21:58+0900\n"
+"Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../data/banshee.desktop.in.in.h:1 ../data/glade/player.glade.h:6
+#: ../src/PlayerInterface.cs:1296
+msgid "Banshee Music Player"
+msgstr "Banshee 楽曲プレイヤー"
+
+#: ../data/banshee.desktop.in.in.h:2
+msgid "Music Player"
+msgstr "楽曲プレイヤー"
+
+#: ../data/banshee.schemas.in.h:1
+msgid "Copy and rename music to banshee music library directory when importing"
+msgstr ""
+"楽曲をインポートする際に banshee 楽曲ライブラリのフォルダへコピーして名前を変"
+"更します。"
+
+#: ../data/banshee.schemas.in.h:2
+msgid "Copy music on import"
+msgstr "インポート時に楽曲をコピーする"
+
+#: ../data/banshee.schemas.in.h:3
+msgid "File Name Pattern"
+msgstr "ファイル名のパターン"
+
+#: ../data/banshee.schemas.in.h:5
+#, no-c-format
+msgid ""
+"Format for creating filenames/directories for ripped tracks, imported music, "
+"etc. Format is relative to the Banshee music directory... do not form an "
+"absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero)."
+msgstr ""
+"切り出したトラック、あるいはインポートした楽曲に付与するファイル名やフォルダ"
+"名の書式です。この書式は Banshee 独自の楽曲フォルダに関連付けされます。ここで"
+"絶対パスを指定しないで下さい。使用可能な文字: %artist%、%album%、%title%、%"
+"track_number%、%track_count%、%track_number_nz% (0 にはしないこと)、%"
+"track_count_nz% (0 にはしないこと)"
+
+#: ../data/banshee.schemas.in.h:6
+msgid "Height of the main interface window."
+msgstr "メイン・ウィンドウの高さです。"
+
+#: ../data/banshee.schemas.in.h:7
+msgid "Name of media playback engine."
+msgstr "楽曲再生エンジンの名前です。"
+
+#: ../data/banshee.schemas.in.h:8
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "メイン・ウィンドウを配置する位置 X (ピクセル単位) です。"
+
+#: ../data/banshee.schemas.in.h:9
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "メイン・ウィンドウを配置する位置 Y (ピクセル単位) です。"
+
+#: ../data/banshee.schemas.in.h:10
+msgid "Player Engine Name"
+msgstr "再生エンジンの名前"
+
+#: ../data/banshee.schemas.in.h:11
+msgid "Source View Width"
+msgstr "ソース・ビューの幅"
+
+#: ../data/banshee.schemas.in.h:12
+msgid "Volume Output Level"
+msgstr "音量レベル"
+
+#: ../data/banshee.schemas.in.h:13
+msgid ""
+"Volume of playback relative to mixer output (except on Helix, which sets "
+"volume directly on PCM"
+msgstr ""
+"ミキサ出力に対応した再生時の音量です (Helix を使用した場合は PCM に音量レベル"
+"を直接セットしてくれます)。"
+
+#: ../data/banshee.schemas.in.h:14
+msgid "Width of Album Column."
+msgstr "項目 \"アルバム名\" の幅"
+
+#: ../data/banshee.schemas.in.h:15
+msgid "Width of Artist Column."
+msgstr "項目 \"演奏者\" の幅"
+
+#: ../data/banshee.schemas.in.h:16
+msgid "Width of Last Played Column."
+msgstr "項目 \"最終演奏日時\" の幅"
+
+#: ../data/banshee.schemas.in.h:17
+msgid "Width of Plays Column."
+msgstr "項目 \"演奏\" の幅"
+
+#: ../data/banshee.schemas.in.h:18
+msgid "Width of Rating Column."
+msgstr "項目 \"評価\" の幅"
+
+#: ../data/banshee.schemas.in.h:19
+msgid "Width of Source View Comlumn."
+msgstr "項目 \"ソース・ビュー\" の幅"
+
+#: ../data/banshee.schemas.in.h:20
+msgid "Width of Time Column."
+msgstr "項目 \"演奏時間\" の幅"
+
+#: ../data/banshee.schemas.in.h:21
+msgid "Width of Title Column."
+msgstr "項目 \"タイトル\" の幅"
+
+#: ../data/banshee.schemas.in.h:22
+msgid "Width of Track Column."
+msgstr "項目 \"トラック番号\" の幅"
+
+#: ../data/banshee.schemas.in.h:23
+msgid "Width of the main interface window."
+msgstr "メイン・ウィンドウの幅です。"
+
+#: ../data/banshee.schemas.in.h:24
+msgid "Window Height"
+msgstr "ウィンドウの高さ"
+
+#: ../data/banshee.schemas.in.h:25
+msgid "Window Position X"
+msgstr "ウィンドウの X-座標"
+
+#: ../data/banshee.schemas.in.h:26
+msgid "Window Position Y"
+msgstr "ウィンドウの Y-座標"
+
+#: ../data/banshee.schemas.in.h:27
+msgid "Window Width"
+msgstr "ウィンドウの幅"
+
+#: ../data/glade/about.glade.h:1
+msgid "About"
+msgstr "情報"
+
+#: ../data/glade/about.glade.h:2
+msgid "About Banshee"
+msgstr "Banshee について"
+
+#: ../data/glade/about.glade.h:3
+msgid "Quick Info"
+msgstr "クィック・ヘルプ"
+
+#: ../data/glade/about.glade.h:4
+msgid "Version Information"
+msgstr "バージョン情報"
+
+#: ../data/glade/newipod.glade.h:1
+msgid "<big><b>New iPod Detected <small><sup>TM</sup></small></b></big>"
+msgstr "<big><b>新たに検出した iPod <small><sup>TM</sup></small></b></big>"
+
+#: ../data/glade/newipod.glade.h:2
+msgid "<small>Serial Number</small>"
+msgstr "<small>シリアル番号</small>"
+
+#: ../data/glade/newipod.glade.h:3
+msgid ""
+"Banshee has detected that you are plugging in an iPod for the first time. "
+"Please take a moment to give your iPod a name."
+msgstr ""
+"Banshee で初めて接続した iPod を検出しました。iPod に名前を付けて下さい。"
+
+#: ../data/glade/newipod.glade.h:4
+msgid "New iPod Detected"
+msgstr "新しい iPod を検出しました"
+
+#: ../data/glade/newipod.glade.h:5
+msgid "Your Name:"
+msgstr "あなたの名前:"
+
+#: ../data/glade/newipod.glade.h:6
+msgid "iPod Name:"
+msgstr "iPod の名前:"
+
+#: ../data/glade/player.glade.h:1
+msgid "<b>Playlist</b>"
+msgstr "<b>演奏一覧</b>"
+
+#: ../data/glade/player.glade.h:2
+msgid "<span size=\"small\">Idle</span>"
+msgstr "<span size=\"small\">待機中</span>"
+
+#: ../data/glade/player.glade.h:3
+msgid "Add Selected Songs"
+msgstr "選択した曲の追加"
+
+#: ../data/glade/player.glade.h:4
+msgid "Add To Playlist"
+msgstr "演奏一覧へ追加"
+
+#: ../data/glade/player.glade.h:5 ../libbanshee/cd-rip.c:227
+#: ../src/NotificationAreaIcon.cs:61
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../data/glade/player.glade.h:7
+msgid "Columns..."
+msgstr "表示項目..."
+
+#: ../data/glade/player.glade.h:8
+msgid "Delete"
+msgstr "削除"
+
+#: ../data/glade/player.glade.h:9
+msgid "Delete Playlist"
+msgstr "演奏一覧の削除"
+
+#: ../data/glade/player.glade.h:10
+msgid "Duplicate"
+msgstr "複製"
+
+#: ../data/glade/player.glade.h:11
+msgid "Eject"
+msgstr "取り出し"
+
+#: ../data/glade/player.glade.h:12
+msgid "Import Files..."
+msgstr "ファイルのインポート..."
+
+#: ../data/glade/player.glade.h:13
+msgid "Import Folder..."
+msgstr "フォルダのインポート..."
+
+#: ../data/glade/player.glade.h:14 ../src/Library.cs:564
+#: ../src/PlayerInterface.cs:1798 ../src/SourceView.cs:69
+msgid "New Playlist"
+msgstr "新しい演奏一覧"
+
+#: ../data/glade/player.glade.h:15
+msgid "Prefere_nces"
+msgstr "設定(_N)"
+
+#: ../data/glade/player.glade.h:16
+msgid "Properties"
+msgstr "プロパティ"
+
+#: ../data/glade/player.glade.h:17 ../src/PlaylistView.cs:93
+msgid "Rating"
+msgstr "評価"
+
+#: ../data/glade/player.glade.h:18
+msgid "Remove"
+msgstr "削除"
+
+#: ../data/glade/player.glade.h:19
+msgid "Remove Song(s)"
+msgstr "曲の削除"
+
+#: ../data/glade/player.glade.h:20
+msgid "Rename"
+msgstr "名前の変更"
+
+#: ../data/glade/player.glade.h:21 ../src/PlayerInterface.cs:1574
+msgid "Rename Playlist"
+msgstr "演奏一覧の名前の変更"
+
+#: ../data/glade/player.glade.h:22
+msgid "Search:"
+msgstr "検索:"
+
+#: ../data/glade/player.glade.h:23
+msgid "Select All"
+msgstr "全て選択"
+
+#: ../data/glade/player.glade.h:24
+msgid "Select None"
+msgstr "選択解除"
+
+#: ../data/glade/player.glade.h:25
+msgid "_Music"
+msgstr "楽曲(_M)"
+
+#: ../data/glade/preferences.glade.h:1
+msgid "<b>Advanced Options</b>"
+msgstr "<b>拡張オプション</b>"
+
+#: ../data/glade/preferences.glade.h:2
+msgid "<b>Banshee Music Folder Location</b>"
+msgstr "<b>Banshee 楽曲フォルダの場所</b>"
+
+#: ../data/glade/preferences.glade.h:3
+msgid "<b>CD Burning</b>"
+msgstr "<b>CD の作成</b>"
+
+#: ../data/glade/preferences.glade.h:4
+msgid "<b>CD Ripping</b>"
+msgstr "<b>CD の切り出し</b>"
+
+#: ../data/glade/preferences.glade.h:5
+msgid "<b>Playback Engines</b>"
+msgstr "<b>再生エンジン</b>"
+
+#: ../data/glade/preferences.glade.h:6
+msgid "<b>iPod Transcoding</b>"
+msgstr "<b>iPod トランスコード</b>"
+
+#: ../data/glade/preferences.glade.h:7
+msgid "<small>Advanced</small>"
+msgstr "<small>拡張</small>"
+
+#: ../data/glade/preferences.glade.h:8
+msgid "<small>Burning</small>"
+msgstr "<small>CD 作成中</small>"
+
+#: ../data/glade/preferences.glade.h:9
+msgid "<small>Encoding</small>"
+msgstr "<small>エンコーディング</small>"
+
+#: ../data/glade/preferences.glade.h:10
+msgid "<small>Library</small>"
+msgstr "<small>ライブラリ</small>"
+
+#: ../data/glade/preferences.glade.h:11 ../src/AudioCdCore.cs:251
+msgid "Audio CD"
+msgstr "音楽 CD"
+
+#: ../data/glade/preferences.glade.h:12
+msgid "Burnproof"
+msgstr "バーンプルーフ"
+
+#: ../data/glade/preferences.glade.h:13
+msgid "Change"
+msgstr "変更"
+
+#: ../data/glade/preferences.glade.h:14
+msgid "Copy files to Banshee Music Folder when importing to Library"
+msgstr "インポートしたファイルを Banshee 楽曲フォルダへコピーする"
+
+#: ../data/glade/preferences.glade.h:15
+msgid "Data CD"
+msgstr "データ CD"
+
+#: ../data/glade/preferences.glade.h:16
+msgid "Description:"
+msgstr "説明:"
+
+#: ../data/glade/preferences.glade.h:17
+msgid "Disk At Once"
+msgstr "ディスク・アット・ワンス"
+
+#: ../data/glade/preferences.glade.h:18
+msgid "Disk Drive:"
+msgstr "ドライブ:"
+
+#: ../data/glade/preferences.glade.h:19
+msgid "Disk Format:"
+msgstr "ディスクの種類:"
+
+#: ../data/glade/preferences.glade.h:20
+msgid "Eject When Finished"
+msgstr "完了したら取り出す"
+
+#: ../data/glade/preferences.glade.h:21
+msgid "Encoding Profile:"
+msgstr "エンコーディングのプロファイル:"
+
+#: ../data/glade/preferences.glade.h:22
+msgid "Engine:"
+msgstr "エンジン:"
+
+#: ../data/glade/preferences.glade.h:23
+msgid "MP3 CD"
+msgstr "MP3 CD"
+
+#: ../data/glade/preferences.glade.h:24
+msgid "Overburn"
+msgstr "オーバーラン"
+
+#: ../data/glade/preferences.glade.h:25
+msgid "Preferences"
+msgstr "設定"
+
+#: ../data/glade/preferences.glade.h:26
+msgid "Reset"
+msgstr "戻す"
+
+#: ../data/glade/preferences.glade.h:27
+msgid "Simulate Write"
+msgstr "ダミーな書き込み"
+
+#: ../data/glade/preferences.glade.h:28
+msgid "Write Speed:"
+msgstr "書き込み速度:"
+
+#: ../data/glade/trackinfo.glade.h:1
+msgid "<big><b>Editing Track Properties</b></big>"
+msgstr "<big><b>トラック情報の編集</b></big>"
+
+#: ../data/glade/trackinfo.glade.h:2
+msgid "<small><i><Unknown></i></small>"
+msgstr "<small><i><不明></i></small>"
+
+#: ../data/glade/trackinfo.glade.h:3 ../src/PlaylistView.cs:87
+msgid "Album"
+msgstr "アルバム"
+
+#: ../data/glade/trackinfo.glade.h:4 ../src/PlaylistView.cs:81
+msgid "Artist"
+msgstr "演奏者"
+
+#: ../data/glade/trackinfo.glade.h:5
+msgid "Imported On:"
+msgstr "インポート日時:"
+
+#: ../data/glade/trackinfo.glade.h:6
+msgid "Last Played On:"
+msgstr "最終演奏日時:"
+
+#: ../data/glade/trackinfo.glade.h:7
+msgid "Number of Plays:"
+msgstr "演奏数:"
+
+#: ../data/glade/trackinfo.glade.h:8 ../src/PlaylistView.cs:84
+msgid "Title"
+msgstr "タイトル"
+
+#: ../data/glade/trackinfo.glade.h:9
+msgid "Track Count"
+msgstr "トラックのカウント"
+
+#: ../data/glade/trackinfo.glade.h:10
+msgid "Track Duration:"
+msgstr "トラックの演奏時間:"
+
+#: ../data/glade/trackinfo.glade.h:11
+msgid "Track Number"
+msgstr "トラック番号"
+
+#: ../data/glade/trackinfo.glade.h:12
+msgid "Track Properties"
+msgstr "トラックのプロパティ"
+
+#: ../libbanshee/cd-rip.c:85
+msgid "Could not create pipeline"
+msgstr "パイプラインを生成できませんでした"
+
+#: ../libbanshee/cd-rip.c:94
+msgid "Could not initialize cdparanoia"
+msgstr "cdparanoia を初期化できませんでした"
+
+#: ../libbanshee/cd-rip.c:107
+msgid "Could not create encoder pipeline"
+msgstr "エンコーダ用のパイプラインを生成できませんでした"
+
+#: ../libbanshee/cd-rip.c:113
+msgid "Could not create GNOME VFS File Sink"
+msgstr "GNOME VFS ファイル Sink を生成できませんでした"
+
+#: ../libbanshee/cd-rip.c:128
+msgid "Could not link pipeline elements"
+msgstr "パイプライン要素へのリンクを生成できませんでした"
+
+#: ../libbanshee/cd-rip.c:241
+msgid "Encoding element does not support tagging!"
+msgstr "エンコードする要素がタグ付けをサポートしていません！"
+
+#: ../libbanshee/cd-rip.c:251
+msgid "Could not send seek event to cdparanoia"
+msgstr "cdparanoia にシークのイベントを送信できませんでした"
+
+#: ../libbanshee/cd-rip.c:257
+msgid "Could not get track start position"
+msgstr "トラックの開始位置を取得できませんでした"
+
+#: ../libbanshee/cd-rip.c:271
+msgid "Could not get track position"
+msgstr "トラックの位置を取得できませんでした"
+
+#: ../libbanshee/gst-encode.c:111
+msgid "Could not create 'gnomevfssrc' element"
+msgstr "要素 'gnomevfssrc' を生成できませんでした"
+
+#: ../libbanshee/gst-encode.c:117
+msgid "Could not create 'spider' element"
+msgstr "要素 'spider' を生成できませんでした"
+
+#: ../libbanshee/gst-encode.c:124
+#, c-format
+msgid "Could not create encoding pipeline: %s"
+msgstr "エンコード用のパイプラインを生成できませんでした: %s"
+
+#: ../libbanshee/gst-encode.c:130
+msgid "Could not create 'filesink' element"
+msgstr "要素 'filesink'を生成できませんでした"
+
+#: ../libbanshee/gst-encode.c:209
+msgid "No decoder could be found for source format."
+msgstr "ソースのフォーマットからデコーダを検出できませんでした"
+
+#: ../libbanshee/gst-encode.c:214
+msgid "Could not stat encoded file"
+msgstr "エンコードしたファイルの情報を取得できませんでした"
+
+#: ../mediaengines/gst/GstPlayerEngine.cs:131
+msgid "Could not initialize GStreamer library"
+msgstr "GStreamer ライブラリを初期化できませんでした"
+
+#: ../mediaengines/gst/GstPlayerEngine.cs:329
+msgid "GStreamer Engine"
+msgstr "GStreamer エンジン"
+
+#: ../mediaengines/gst/GstPlayerEngine.cs:340
+msgid ""
+"GStreamer is a multimedia framework for playing and xmanipulating media. Any "
+"GStreamer plugin that is available will work through this engine."
+msgstr ""
+"GStreamer はメディアを再生したり操作するためのマルチメディア・フレームワーク"
+"です。このエンジンを介して GStreamer プラグインを利用します。"
+
+#: ../mediaengines/helix/HelixPlayer.cs:79
+msgid "Helix Framework Engine (hxclientkit)"
+msgstr "Helix フレームワーク・エンジン (hxclientkit)"
+
+#: ../mediaengines/helix/HelixPlayer.cs:87
+msgid ""
+"The Helix Engine provides multimedia control through the Helix Multimedia "
+"Framework, sponsored by RealNetworks. The engine can play any file that "
+"RealPlayer can. Install RealPlayer for best results."
+msgstr ""
+"Helix エンジンは Helix マルチメディア・フレームワークを介してマルチメディアを"
+"制御する機能を提供します。このエンジンは RealPlayer で扱えるファイルを再生で"
+"きます。ベストな状況で再生する場合は RealPlayer をインストールして下さい。"
+
+#: ../plugincore/TrackInfo.cs:143 ../src/AudioCdCore.cs:245
+msgid "Unknown Artist"
+msgstr "不明"
+
+#: ../plugincore/TrackInfo.cs:148 ../src/AudioCdCore.cs:246
+msgid "Unknown Album"
+msgstr "不明"
+
+#: ../plugincore/TrackInfo.cs:153
+msgid "Unknown Title"
+msgstr "不明"
+
+#: ../src/AudioCdCore.cs:248
+#, csharp-format
+msgid "Track {0}"
+msgstr "トラック番号 {0}"
+
+#: ../src/AudioCdCore.cs:392
+msgid "Could not initialize HAL for CD Detection"
+msgstr "CD の検出に必要な HAL を初期化できませんでした"
+
+#: ../src/BurnCore.cs:89
+msgid "Could Not Burn CD"
+msgstr "CD を作成できませんでした"
+
+#: ../src/BurnCore.cs:90
+msgid ""
+"No suitable wave encoder could be found to convert selected songs to CD "
+"audio format."
+msgstr ""
+"選択した曲を CD 楽曲フォーマットへ変換するのに必要な WAVE エンコーダが見つか"
+"りませんでした"
+
+#: ../src/BurnCore.cs:147
+msgid "Banshee CD Burner"
+msgstr "Banshee CD 作成"
+
+#: ../src/BurnCore.cs:177
+msgid "Burning CD..."
+msgstr "CD の作成中..."
+
+#: ../src/BurnCore.cs:240 ../src/BurnCore.cs:243
+msgid "Cancel CD Burn?"
+msgstr "CD の作成をキャンセルしますか？"
+
+#: ../src/BurnCore.cs:241
+msgid "Are you sure you want to cancel the CD Burn?"
+msgstr "本当に CD 作成を途中でキャンセルしますか？"
+
+#: ../src/BurnCore.cs:325
+msgid "Initializing Burner..."
+msgstr "CD 作成エンジンの初期化中..."
+
+#: ../src/BurnCore.cs:378
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr ""
+"挿入したメディアのサイズでは、選択した曲の全てを格納することはできません"
+
+#: ../src/BurnCore.cs:380
+#, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "そのメディアの場合は {0}分以上かかります"
+msgstr[1] "そのメディアの場合は {0}分以上かかります"
+
+#: ../src/BurnCore.cs:387 ../src/BurnCore.cs:390
+msgid "Not Enough Space"
+msgstr "容量が不足しています"
+
+#: ../src/BurnCore.cs:430
+msgid "No CD Burners Available"
+msgstr "CD 作成機能は利用できません"
+
+#: ../src/BurnCore.cs:472 ../src/BurnCore.cs:486
+msgid "Error Burning CD"
+msgstr "CD の作成でエラー"
+
+#: ../src/BurnCore.cs:475
+msgid "An unknown error occurred when attempting to write the CD"
+msgstr "CD へ書き込みを行っている際に原因不明のエラーが発生しました"
+
+#: ../src/BurnCore.cs:501 ../src/BurnCore.cs:507
+msgid "Data Loss Warning"
+msgstr "データ消失の警告"
+
+#: ../src/BurnCore.cs:503
+msgid ""
+"Attempting to burn this collection may result in data loss. The selected "
+"collection may not fit on the media.\n"
+"\n"
+"Would you like to continue?"
+msgstr ""
+"このコレクションの CD を作成するとデータを消失する結果になります。そのメディ"
+"アに対して選択したコレクションは適当ではないかもしれません。\n"
+"\n"
+"それでも続行しますか？"
+
+#: ../src/BurnCore.cs:532
+msgid "Preparing to write..."
+msgstr "書き込みの準備中..."
+
+#: ../src/BurnCore.cs:536
+msgid "Writing disk..."
+msgstr "書き込み中..."
+
+#: ../src/BurnCore.cs:540
+msgid "Fixating disk..."
+msgstr "ディスクの Fixate 中..."
+
+#: ../src/BurnCore.cs:556
+msgid "Waiting for media..."
+msgstr "メディアの挿入待ち..."
+
+#: ../src/BurnCore.cs:569 ../src/BurnCore.cs:572
+msgid "Insert Blank CD"
+msgstr "空のディスクを挿入して下さい"
+
+#: ../src/BurnCore.cs:570
+msgid "Please insert a blank CD disk for the burn process."
+msgstr "CD 書き込みを行うために空のディスクを挿入して下さい。"
+
+#: ../src/BurnCore.cs:606
+msgid "Error Burning Disk"
+msgstr "ディスクの書き込みでエラー"
+
+#: ../src/BurnCore.cs:628 ../src/BurnCore.cs:631
+msgid "CD Burning Complete"
+msgstr "CD の作成が完了しました"
+
+#: ../src/BurnCore.cs:629
+msgid "The selected audio was successfully written to the CD."
+msgstr "選択した楽曲の書き込みが完了しました。"
+
+#: ../src/Dialogs.cs:80
+msgid "Cannot Rename Playlist"
+msgstr "演奏一覧の名前を変更できません"
+
+#: ../src/Dialogs.cs:81
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr "この名前の付いた演奏一覧が既に存在します。別の名前を付けて下さい。"
+
+#: ../src/FileEncodeTransaction.cs:61
+msgid "File Encoder"
+msgstr "ファイルのエンコーダ"
+
+#: ../src/FileEncodeTransaction.cs:69
+msgid "Initializing Encoder..."
+msgstr "エンコーダの初期化中..."
+
+#: ../src/FileEncodeTransaction.cs:93
+#, csharp-format
+msgid "Encoding {0} - {1} ..."
+msgstr "{0} - {1} のエンコーディング中..."
+
+#: ../src/FileEncodeTransaction.cs:97
+msgid "Encoding files..."
+msgstr "ファイルのエンコーディング中..."
+
+#: ../src/GstFileEncoder.cs:67
+msgid "Could not create encoder"
+msgstr "エンコーダを生成できませんでした"
+
+#: ../src/GstFileEncoder.cs:87
+#, csharp-format
+msgid "Could not encode file: {0}"
+msgstr "ファイルをエンコードできませんでした: {0}"
+
+#. Translators: position in song. eg, "0:37 of 3:48"
+#: ../src/IpodCore.cs:441 ../src/Library.cs:459 ../src/PlayerInterface.cs:755
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} / {1}"
+
+#: ../src/IpodCore.cs:450 ../src/Library.cs:470
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "(残り {0})"
+
+#. Translators: {0} is the name assigned to an iPod by its owner
+#: ../src/IpodPropertiesWindow.cs:98
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} 個のプロパティ"
+
+#: ../src/IpodPropertiesWindow.cs:115 ../src/IpodPropertiesWindow.cs:123
+msgid "iPod Name"
+msgstr "iPod の名前"
+
+#: ../src/IpodPropertiesWindow.cs:116 ../src/IpodPropertiesWindow.cs:124
+msgid "Your Name"
+msgstr "あなたの名前"
+
+#: ../src/IpodPropertiesWindow.cs:117 ../src/IpodPropertiesWindow.cs:125
+msgid "Computer Name"
+msgstr "コンピュータの名前"
+
+#: ../src/IpodPropertiesWindow.cs:130
+msgid "Model"
+msgstr "型式"
+
+#: ../src/IpodPropertiesWindow.cs:133
+msgid "Capacity"
+msgstr "容量"
+
+#: ../src/IpodPropertiesWindow.cs:134
+msgid "Volume Usage"
+msgstr "音量レベル"
+
+#: ../src/IpodPropertiesWindow.cs:141
+msgid "Mount Point"
+msgstr "マウント・ポイント"
+
+#: ../src/IpodPropertiesWindow.cs:142
+msgid "Device Node"
+msgstr "デバイス・ノード"
+
+#: ../src/IpodPropertiesWindow.cs:143
+msgid "Write Support"
+msgstr "書き込み可否"
+
+#: ../src/IpodPropertiesWindow.cs:144
+msgid "Yes"
+msgstr "はい"
+
+#: ../src/IpodPropertiesWindow.cs:144
+msgid "No"
+msgstr "いいえ"
+
+#: ../src/IpodPropertiesWindow.cs:145
+msgid "Volume UUID"
+msgstr "音量 UUID"
+
+#: ../src/IpodPropertiesWindow.cs:146
+msgid "Serial Number"
+msgstr "シリアル番号"
+
+#: ../src/IpodPropertiesWindow.cs:147
+msgid "Firmware Version"
+msgstr "ファームウェアのバージョン"
+
+#: ../src/IpodPropertiesWindow.cs:148
+msgid "Database Version"
+msgstr "データベースのバージョン"
+
+#: ../src/IpodPropertiesWindow.cs:150
+msgid "Advanced Details"
+msgstr "詳細情報"
+
+#: ../src/Library.cs:235
+msgid "Library"
+msgstr "ライブラリ"
+
+#: ../src/Library.cs:449 ../src/Utilities.cs:163
+#, csharp-format
+msgid "{0} GB"
+msgstr "{0} GB"
+
+#: ../src/Library.cs:451 ../src/Utilities.cs:165
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0} MB"
+
+#: ../src/LibraryTransactionStatus.cs:165
+msgid "Working"
+msgstr "処理中"
+
+#: ../src/LibraryTransactionStatus.cs:203
+msgid ""
+"There are multiple operations executing. You may either cancel the current "
+"operation or all operations.\n"
+"\n"
+msgstr ""
+"いくつかの操作が輻輳しています。現在の操作または全ての操作をキャンセルした方"
+"が良いかもしれません。\n"
+"\n"
+
+#: ../src/LibraryTransactionStatus.cs:207
+msgid "Are you sure you want to cancel this operation?"
+msgid_plural "Are you sure you want to cancel these operations?"
+msgstr[0] "この操作を本当にキャンセルしてもよろしいですか？"
+msgstr[1] "この操作を本当にキャンセルしてもよろしいですか？"
+
+#: ../src/LibraryTransactions.cs:96
+#, csharp-format
+msgid "{0} threw an unhandled exception: ending transaction safely: {1} ({2})"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:216 ../src/LibraryTransactions.cs:588
+msgid "Library Track Loader"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:238 ../src/LibraryTransactions.cs:607
+#: ../src/LibraryTransactions.cs:716
+msgid "Processing"
+msgstr "処理中"
+
+#: ../src/LibraryTransactions.cs:258
+msgid "Preloading Files"
+msgstr "ファイルのプレロード中"
+
+#: ../src/LibraryTransactions.cs:323 ../src/LibraryTransactions.cs:472
+#: ../src/LibraryTransactions.cs:614 ../src/LibraryTransactions.cs:738
+#, csharp-format
+msgid "Loading {0} - {1} ..."
+msgstr "{0} - {1} の読み込み中..."
+
+#: ../src/LibraryTransactions.cs:391
+msgid "Playlist Save"
+msgstr "演奏一覧の保存"
+
+#: ../src/LibraryTransactions.cs:405
+msgid "Flushing old entries"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:419
+msgid "Saving new entries"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:448
+msgid "Library Load"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:459
+msgid "Preloading Library"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:501
+msgid "Library Track Remove"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:507 ../src/LibraryTransactions.cs:551
+msgid "Removing Tracks"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:520 ../src/LibraryTransactions.cs:566
+#, csharp-format
+msgid "Removing {0} - {1}"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:526
+msgid "Purging Removed Tracks from Library..."
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:540
+msgid "Playlist Track Remove"
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:573
+msgid "Purging Removed Tracks from Playlist..."
+msgstr ""
+
+#: ../src/LibraryTransactions.cs:635
+msgid "Could not load track from library"
+msgstr "ライブラリからトラックを読み込めませんでした"
+
+#: ../src/LibraryTransactions.cs:698
+msgid "Playlist Track Loader"
+msgstr ""
+
+#: ../src/NotificationAreaIcon.cs:104
+msgid "Play / Pause"
+msgstr "演奏 / 一時停止"
+
+#: ../src/NotificationAreaIcon.cs:109
+msgid "Next"
+msgstr "次へ"
+
+#: ../src/NotificationAreaIcon.cs:114
+msgid "Previous"
+msgstr "前へ"
+
+#: ../src/NotificationAreaIcon.cs:122
+msgid "Shuffle"
+msgstr "シャッフル"
+
+#: ../src/NotificationAreaIcon.cs:127
+msgid "Repeat"
+msgstr "リピート"
+
+#: ../src/NotificationAreaIcon.cs:134
+msgid "Quit Banshee"
+msgstr "Banshee の終了"
+
+#: ../src/PipelineProfile.cs:105
+msgid "Pipeline profile is empty."
+msgstr "パイプライン用のプロファイルが空です"
+
+#: ../src/PipelineProfile.cs:111
+msgid "Pipeline profile does not have the correct number of components (7)"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:121
+msgid "Pipeline profile does not have a lookup key"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:125
+msgid "Pipeline profile does not have a display name"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:130
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a file extension"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:136
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a GStreamer element"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:167
+#, csharp-format
+msgid ""
+"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
+"not be run"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:195
+msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
+msgstr ""
+
+#: ../src/PipelineProfile.cs:215
+msgid ""
+"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
+"PipelineProfile(profile))"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:370
+msgid "at"
+msgstr ""
+
+#: ../src/PipelineProfile.cs:412
+msgid "No iPod-compatible encoders available"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:255
+msgid "Loading..."
+msgstr ""
+
+#: ../src/PlayerInterface.cs:311
+msgid "Update iPod"
+msgstr ""
+
+#. Misc
+#: ../src/PlayerInterface.cs:334 ../src/PlayerInterface.cs:2091
+#: ../src/TrackInfoHeader.cs:136
+msgid "Idle"
+msgstr "待機中"
+
+#: ../src/PlayerInterface.cs:344
+msgid "All"
+msgstr "全て"
+
+#: ../src/PlayerInterface.cs:346 ../src/PlayerInterface.cs:1659
+msgid "Song Name"
+msgstr "タイトル"
+
+#: ../src/PlayerInterface.cs:347 ../src/PlayerInterface.cs:1657
+msgid "Artist Name"
+msgstr "演奏者"
+
+#: ../src/PlayerInterface.cs:348 ../src/PlayerInterface.cs:1661
+msgid "Album Title"
+msgstr "アルバム"
+
+#: ../src/PlayerInterface.cs:358
+msgid "Create New Playlist"
+msgstr "新しい演奏一覧を生成します"
+
+#: ../src/PlayerInterface.cs:359
+msgid "Toggle Shuffle Playback Mode"
+msgstr "シャッフル演奏モードの ON/OFF を切り替えます"
+
+#: ../src/PlayerInterface.cs:360
+msgid "Toggle Repeat Playback Mode"
+msgstr "リピート演奏モードの ON/OFF を切り替えます"
+
+#: ../src/PlayerInterface.cs:361
+msgid "View Selected Song Information"
+msgstr "選択した曲の情報を表示します"
+
+#: ../src/PlayerInterface.cs:362
+msgid "Burn Selection to CD"
+msgstr "CD を作成します"
+
+#: ../src/PlayerInterface.cs:363
+msgid "Rip CD into Library"
+msgstr "CD からライブラリへ切り出します"
+
+#: ../src/PlayerInterface.cs:364
+msgid "Play Previous Song"
+msgstr "前の曲を演奏します"
+
+#: ../src/PlayerInterface.cs:365
+msgid "Play/Pause Current Song"
+msgstr "選択した曲の演奏/一時停止を行います"
+
+#: ../src/PlayerInterface.cs:366
+msgid "Play Next Song"
+msgstr "次の曲を演奏します"
+
+#: ../src/PlayerInterface.cs:367
+msgid "Current Position in Song"
+msgstr "現在演奏している位置です"
+
+#: ../src/PlayerInterface.cs:368
+msgid "Adjust Volume"
+msgstr "音量を調整します"
+
+#: ../src/PlayerInterface.cs:369
+msgid "iPod Disk Usage"
+msgstr "iPod ディスクの容量を表示します"
+
+#: ../src/PlayerInterface.cs:370
+msgid "Eject iPod"
+msgstr "iPod を取り出します"
+
+#: ../src/PlayerInterface.cs:371
+msgid "Synchronize Music Library to iPod"
+msgstr "楽曲ライブラリと iPod を同期します"
+
+#: ../src/PlayerInterface.cs:372
+msgid "View iPod Properties"
+msgstr "iPod のプロパティを表示します"
+
+#: ../src/PlayerInterface.cs:404
+msgid "Notification Area Icon could not be installed"
+msgstr "通知スペースのアイコンをインストールできませんでした"
+
+#: ../src/PlayerInterface.cs:447
+msgid "Import Music"
+msgstr "楽曲のインポート"
+
+#: ../src/PlayerInterface.cs:448
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later.\n"
+"\n"
+"Automatic import or importing a large folder may take a long time, so please "
+"be patient."
+msgstr ""
+"楽曲ライブラリが空です。\n"
+"楽曲をライブラリへ新規にインポートするかしないかを選択できます。\n"
+"\n"
+"ファイル数が多いフォルダに対して [フォルダのインポート] または [自動インポー"
+"ト] を実行すると、それ相応の処理時間がかかります。ご了承下さい。"
+
+#: ../src/PlayerInterface.cs:452
+msgid "Import Folder"
+msgstr "フォルダのインポート"
+
+#: ../src/PlayerInterface.cs:454
+msgid "Automatic Import"
+msgstr "自動インポート"
+
+#: ../src/PlayerInterface.cs:845
+msgid "Import Folder to Library"
+msgstr "インポートするフォルダの選択"
+
+#: ../src/PlayerInterface.cs:903
+msgid "Import Files to Library"
+msgstr "インポートするファイルの選択"
+
+#: ../src/PlayerInterface.cs:986
+#, csharp-format
+msgid "<b>{0}'s Music Library</b>"
+msgstr "<b>{0}の楽曲ライブラリ</b>"
+
+#: ../src/PlayerInterface.cs:1163 ../src/PlayerInterface.cs:1193
+msgid "Synchronize iPod"
+msgstr "iPod との同期"
+
+#: ../src/PlayerInterface.cs:1164
+msgid ""
+"You have made changes to your iPod. Please choose a method for updating the "
+"contents of your iPod.\n"
+"\n"
+"<i>Synchronize Library</i>: synchronize Banshee library to iPod\n"
+"<i>Save Manual Changes</i>: save only the manual changes you made\n"
+"\n"
+"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+"cause incompatability with iTunes!"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1169 ../src/PlayerInterface.cs:1197
+msgid "Synchronize Library"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1170
+msgid "Save Manual Changes"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1194
+msgid ""
+"Are you sure you want to synchronize your iPod with your Banshee library? "
+"This will <b>erase</b> the contents of your iPod and then copy the contents "
+"of your Banshee library."
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1284
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/PlayerInterface.cs:1301
+msgid "Your Library is Empty - Consider Importing Music"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1305
+msgid "This Playlist is Empty - Consider Adding Music"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1310
+#, csharp-format
+msgid "{0} Item"
+msgid_plural "{0} Items"
+msgstr[0] "{0}個のアイテム"
+msgstr[1] "{0}個のアイテム"
+
+#: ../src/PlayerInterface.cs:1314
+#, csharp-format
+msgid "{0} Total Play Time"
+msgstr "演奏時間 {0}"
+
+#: ../src/PlayerInterface.cs:1367
+#, csharp-format
+msgid "Are you sure you want to remove the selected song from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected <b>({0})</b> songs from your "
+"library?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/PlayerInterface.cs:1374
+msgid "Remove Selected Songs from Library"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1575
+msgid "Enter new playlist name"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1579
+msgid "Rename iPod"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1580
+msgid "Enter new name for your iPod"
+msgstr ""
+
+#: ../src/PlayerInterface.cs:1822
+msgid "Clear"
+msgstr "クリア"
+
+#: ../src/PlayerInterface.cs:2059
+msgid "Could Not Eject"
+msgstr "取り出せませんでした"
+
+#: ../src/PlayerInterface.cs:2096
+msgid "Banshee - Idle"
+msgstr "Banshee - 待機中"
+
+#: ../src/PlaylistColumns.cs:80
+msgid "Invalid column width"
+msgstr ""
+
+#: ../src/PlaylistColumns.cs:115
+msgid "Choose Columns"
+msgstr "表示する項目の選択"
+
+#: ../src/PlaylistColumns.cs:129
+msgid "Visible Playlist Columns"
+msgstr "演奏一覧で表示する項目"
+
+#: ../src/PlaylistRowRenderer.cs:185
+#, csharp-format
+msgid "{0} Play"
+msgid_plural "{0} Plays"
+msgstr[0] "演奏中 {0}個"
+msgstr[1] "演奏中 {0}個"
+
+#: ../src/PlaylistView.cs:78
+msgid "Track"
+msgstr "トラック番号"
+
+#: ../src/PlaylistView.cs:90
+msgid "Time"
+msgstr "演奏時間"
+
+#: ../src/PlaylistView.cs:96
+msgid "Plays"
+msgstr "演奏"
+
+#: ../src/PlaylistView.cs:100
+msgid "Last Played"
+msgstr "最終演奏日時"
+
+#: ../src/PlaylistView.cs:364
+msgid "N/A"
+msgstr "N/A"
+
+#: ../src/Preferences.cs:180
+msgid "Select Banshee Library Location"
+msgstr ""
+
+#: ../src/Preferences.cs:271
+msgid "No CD Burners Detected"
+msgstr ""
+
+#: ../src/Preferences.cs:330
+msgid "Unavailable"
+msgstr ""
+
+#: ../src/Preferences.cs:337
+msgid "Loading Drive List..."
+msgstr ""
+
+#: ../src/Preferences.cs:400
+msgid "Fastest Possible"
+msgstr ""
+
+#. Translators: this represents a CD write speed, eg "32x"
+#: ../src/Preferences.cs:404
+#, csharp-format
+msgid "{0}x"
+msgstr ""
+
+#: ../src/Preferences.cs:555
+#, csharp-format
+msgid ""
+"You have changed the Banshee Playback Engine. This change will not take "
+"affect until the next time Banshee is run. Please restart Banshee to use the "
+"new <b><i>{0}</i></b> Engine"
+msgstr ""
+"Banshee の再生エンジンを変更しました。この変更は次回 Banshee を起動するまで有"
+"効になりません。新しいエンジン <b><i>{0}</i></b> を利用する場合は Banshee を"
+"再起動して下さい。"
+
+#: ../src/Preferences.cs:563
+msgid "Banshee Restart Required"
+msgstr "Banshee を再起動して下さい"
+
+#: ../src/RipTransaction.cs:65
+msgid "Could not create CD Ripper"
+msgstr "CD リッパーを生成できませんでした"
+
+#: ../src/RipTransaction.cs:176
+#, csharp-format
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
+msgstr ""
+
+#: ../src/RipTransaction.cs:188
+msgid "Initializing CD Drive"
+msgstr ""
+
+#: ../src/RipTransaction.cs:215
+#, csharp-format
+msgid "Ripping {0} of {1} : {2} - {3}"
+msgstr ""
+
+#: ../src/SearchEntry.cs:161 ../src/SearchEntry.cs:266
+#, csharp-format
+msgid "Searching: {0}"
+msgstr "検索中: {0}"
+
+#: ../src/SourceView.cs:142
+msgid "Source"
+msgstr ""
+
+#: ../src/TrackInfoHeader.cs:134
+msgid "Banshee Player"
+msgstr "Banshee プレイヤー"
+
+#: ../src/TrackProperties.cs:154
+msgid "Set all Track Numbers to this value"
+msgstr ""
+
+#: ../src/TrackProperties.cs:157
+msgid "Set all Track Counts to this value"
+msgstr ""
+
+#: ../src/TrackProperties.cs:160
+msgid "Set all Artists to this value"
+msgstr ""
+
+#: ../src/TrackProperties.cs:162
+msgid "Set all Albums to this value"
+msgstr ""
+
+#: ../src/TrackProperties.cs:164
+msgid "Set all Titles to this value"
+msgstr ""
+
+#: ../src/TrackProperties.cs:199
+msgid "Never Played"
+msgstr "演奏情報なし"
+
+#: ../src/TrackProperties.cs:203
+msgid "Unknown"
+msgstr "不明"
+
+#: ../src/TrackProperties.cs:209
+#, csharp-format
+msgid "Editing Track Properties ({0} of {1})"
+msgstr "トラック情報の編集 ({0} / {1})"
+
+#: ../src/TrackProperties.cs:213
+msgid "Editing Track Properties"
+msgstr "トラック情報の編集"
+
+#: ../src/TrackProperties.cs:218
+#, csharp-format
+msgid "File: {0}"
+msgstr "ファイル: {0}"
