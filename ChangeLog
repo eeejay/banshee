@@ -1,3 +1,7 @@
+2005-09-21  Takeshi AIHANA <aihana@gnome.gr.jp>
+
+	* configure.ac: Added 'ja' (Japanese) to ALL_LINGUAS.
+
 2005-09-20  Aaron Bockover  <aaron@aaronbock.net>
 	
 	* src/Main.cs: wrap everything in try/catch and pass the exception to
