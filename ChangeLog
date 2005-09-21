@@ -1,3 +1,13 @@
+2005-09-20  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* src/Main.cs: wrap everything in try/catch and pass the exception to
+	the new ExceptionDialog... any unhandled exception will now be shown
+	in a GUI instead of on the console (which may not be visible)
+
+	* src/ExceptionDialog.cs: Added a nice exception dialog to show 
+	unhandled exceptions (hopefully this never gets seen!), and harvest
+	system info to help bug reports
+
 2005-09-19  Žygimantas Beručka  <zygis@gnome.org>
 
 	* configure.ac: Added "lt" to ALL_LINGUAS.

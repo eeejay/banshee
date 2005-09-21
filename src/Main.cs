@@ -32,52 +32,65 @@ using Gnome;
 
 namespace Banshee
 {	
-	public class BansheeEntry
-	{
-		public static void Main(string[] args)
+    public class BansheeEntry
+    {
+        public static void Main(string[] args)
+        {
+            try {
+                Startup(args);
+            } catch(Exception e) {
+                Console.Error.WriteLine(e);
+                Gtk.Application.Init();
+                ExceptionDialog dlg = new ExceptionDialog(e);
+                dlg.Run();
+                dlg.Destroy();
+                System.Environment.Exit(1);
+            }
+        }
+		
+		private static void Startup(string [] args)
 		{
-			BansheeCore dbusCore = null;
-			
-			try {
-				dbusCore = BansheeCore.FindInstance();
-			} catch { }
-			
-			if(dbusCore != null) {
-				bool present = true;
-				
-				if(args.Length > 0) {
-					switch(args[0]) {
-						case "--play-pause":
-							dbusCore.TogglePlaying();
-							present = false;
-							break;
-						case "--next":
-							dbusCore.Next();
-							present = false;
-							break;
-						case "--previous":
-							dbusCore.Previous();
-							present = false;
-							break;
-					}
-				}
-			
-				if(present)
-					dbusCore.PresentWindow();
-				return;
-			}	
-			
-			System.Reflection.AssemblyName asm = 
-				System.Reflection.Assembly.GetEntryAssembly().GetName();		
-			string appname = StringUtil.UcFirst(asm.Name);
-			string version = String.Format("{0}.{1}.{2}", asm.Version.Major, 
-				asm.Version.Minor, asm.Version.Build);
-			
-			Core.Args = args;
-			Core.Instance.Program = new Program(appname, 
-				version, Modules.UI, args);
-			new Banshee.PlayerUI();
-		}
-	}
+            BansheeCore dbusCore = null;
+
+            try {
+                dbusCore = BansheeCore.FindInstance();
+            } catch { }
+
+            if(dbusCore != null) {
+                bool present = true;
+
+            if(args.Length > 0) {
+                switch(args[0]) {
+                    case "--play-pause":
+                        dbusCore.TogglePlaying();
+                        present = false;
+                    break;
+                    case "--next":
+                        dbusCore.Next();
+                        present = false;
+                    break;
+                    case "--previous":
+                        dbusCore.Previous();
+                        present = false;
+                    break;
+                }
+            }
+
+            if(present)
+                dbusCore.PresentWindow();
+                return;
+            }	
+
+            System.Reflection.AssemblyName asm = 
+            System.Reflection.Assembly.GetEntryAssembly().GetName();		
+            string appname = StringUtil.UcFirst(asm.Name);
+            string version = String.Format("{0}.{1}.{2}", asm.Version.Major, 
+                asm.Version.Minor, asm.Version.Build);
+                
+            Core.Args = args;
+            Core.Instance.Program = new Program(appname, version, Modules.UI, args);
+            new Banshee.PlayerUI();
+        }
+    }
 }
 
