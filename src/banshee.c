@@ -37,7 +37,12 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <errno.h>
+#include <signal.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+
+static pid_t mono_pid;
 
 static char *
 strconcat(const char *first, ...)
@@ -97,12 +102,19 @@ setup_environment(int local_exe)
 	}
 }
 
+static void
+signal_handler(int signum)
+{
+	kill(mono_pid, signum);
+}
+
 int 
 main(int argc, char **argv)
 {
 	char *mono_exe = 0;
 	char **shift_argv;
 	struct stat statbuf;
+	int p_status;
 	int local_exe = 0;
 	int i;
 
@@ -134,7 +146,13 @@ main(int argc, char **argv)
 
 	shift_argv[argc + local_exe + 1] = 0;
 
-	execvp(MONO, shift_argv);
+	signal(SIGTERM, signal_handler);
+	signal(SIGINT, signal_handler);
+
+	if((mono_pid = fork()) == 0) 
+		execvp(MONO, shift_argv);
+	
+	waitpid(mono_pid, &p_status, WUNTRACED);
 	
 	free(mono_exe);
 	free(shift_argv);
