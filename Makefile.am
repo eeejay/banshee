@@ -44,5 +44,6 @@ DISTCLEANFILES =  \
 	ltmain.sh     \
 	aclocal.m4    \
 	config.h.in   \
-	INSTALL
+	INSTALL       \
+	compile
 
