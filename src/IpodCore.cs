@@ -60,7 +60,6 @@ namespace Banshee
 	
 		public IpodCore()
 		{
-			IPod.Initializer.UseDefaultContext = true;
 			listener = new DeviceEventListener();
 			listener.DeviceAdded += OnDeviceAdded;
 			listener.DeviceRemoved += OnDeviceRemoved;

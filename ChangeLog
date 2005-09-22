@@ -1,3 +1,16 @@
+2005-09-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Require latest ipod-sharp (0.5.6)
+
+	* src/IpodCore.cs: ipod-sharp uses default context by default, removed
+	Ipod.Initializer.UseDefaultContext
+
+	* Makefile.am: added compile to DISTCLEANFILES
+
+	* src/banshee.c: use fork() to run the mono process as a child process of
+	the wrapper, as just exec doesn't work with killall. Handle SIGINT/SIGKILL
+	in the parent process and propagate to the child, and clean up the parent
+
 2005-09-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Makefile.am: Removed banshee.in/$(WRAPPER) instances and added
