@@ -1,16 +1,15 @@
+bin_PROGRAMS = banshee
+banshee_CFLAGS = -Wall -D_FORTIFY_SOURCE=2 -ggdb3
+banshee_SOURCES = banshee.c
+
 MCS_FLAGS = -debug -nowarn:0169
 
-WRAPPER = banshee
-TARGET = $(WRAPPER).exe
-
-bansheewrapdir = $(bindir)
-bansheewrap_SCRIPTS = $(WRAPPER)
+TARGET = banshee.exe
 
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config ipod-sharp.dll.config
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
-	banshee.in \
 	AssemblyInfo.cs.in \
 	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl \

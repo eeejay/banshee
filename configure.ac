@@ -7,8 +7,8 @@ AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
 VERSION_MINOR=9
-VERSION_MICRO=7
-VERSION_REVIS=1
+VERSION_MICRO=9
+VERSION_REVIS=no
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 ASM_VERSION="$VERSION.*"
@@ -244,13 +244,23 @@ expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   eval echo $libdir )`
 AC_SUBST(expanded_libdir)
 
+dnl Defines for C Exec Wrapper (${prefix}/bin/banshee)
+
+AC_DEFINE_UNQUOTED([PREFIX], ["${prefix}"], [install prefix])
+AC_DEFINE_UNQUOTED([LIBDIR], ["${expanded_libdir}"], [libdir])
+AC_DEFINE_UNQUOTED([MONO], ["${MONO}"], [Mono Runtime])
+AC_DEFINE_UNQUOTED([MONO_PATH], ["${MONO_PATH}"], [MONO_PATH Env])
+AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Library Path])
+
+dnl Unstable assembly installation
+
 UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp ipod-sharp-ui"
 INSTALLED_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries $UNSTABLE_INSTALL_ASSEMBLIES`"
 AC_SUBST(INSTALLED_ASSEMBLIES)
 
 dnl Intl
 
-ALL_LINGUAS="en_CA ja lt nl zh_CN"
+ALL_LINGUAS="en_CA lt nl zh_CN"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
@@ -275,7 +285,6 @@ plugincore/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 src/ConfigureDefines.cs
-src/banshee
 src/banshee.exe.config
 src/ipod-sharp.dll.config
 data/Makefile

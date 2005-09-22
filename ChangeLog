@@ -1,9 +1,22 @@
+2005-09-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Makefile.am: Removed banshee.in/$(WRAPPER) instances and added
+	bin_PROGRAMS/banshee_SOURCE for banshee.c binary 'wrapper'
+	* src/banshee.c: replaced bash wrapper script with a C program that uses
+	execvp to replace the process image with mono. Makes banshee show up as
+	"banshee" in ps instead of "mono" and makes `killall banshee' work. Also
+	only pass --debug to mono if running from build directory, should speed
+	up installed instances
+	* configure.ac: Added AC_DEFINE_UNQUOTED calls to create defines for 
+	banshee.c that were AC_SUBST in old banshee.in
+	* src/banshee.in: removed bash wrapper script
+
 2005-09-21  Takeshi AIHANA <aihana@gnome.gr.jp>
 
 	* configure.ac: Added 'ja' (Japanese) to ALL_LINGUAS.
 
 2005-09-20  Aaron Bockover  <aaron@aaronbock.net>
-	
+
 	* src/Main.cs: wrap everything in try/catch and pass the exception to
 	the new ExceptionDialog... any unhandled exception will now be shown
 	in a GUI instead of on the console (which may not be visible)
