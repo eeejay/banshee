@@ -22,6 +22,7 @@ src/AudioCdCore.cs
 src/BurnCore.cs
 src/BurnTransaction.cs
 src/Dialogs.cs
+src/ExceptionDialog.cs
 src/FileEncodeTransaction.cs
 src/GstFileEncoder.cs
 src/GstMisc.cs
