@@ -1,3 +1,7 @@
+2005-09-26  Alexander Shopov  <ash@contact.bg>
+
+	* configure.ac: Added "bg" (Bulgarian) to ALL_LINGUAS
+
 2005-09-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Require latest ipod-sharp (0.5.6)
