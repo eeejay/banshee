@@ -1,3 +1,8 @@
+2005-10-03  Christopher James Lahey  <clahey@ximian.com>
+
+	* data/glade/trackinfo.glade, src/TrackProperties.cs: Added
+	automatic track setting button.
+
 2005-10-03  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Preferences.cs, src/PlayerInterface.cs: Enabled burning!

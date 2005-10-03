@@ -88,6 +88,7 @@ namespace Banshee
 		[Widget] private Button SaveButton;
 		[Widget] private Button Previous;
 		[Widget] private Button Next;
+		[Widget] private Button TrackNumberIterator;
 		[Widget] private Button TrackNumberSync;
 		[Widget] private Button TrackCountSync;
 		[Widget] private Button ArtistSync;
@@ -134,6 +135,7 @@ namespace Banshee
 			Previous.Clicked += OnPreviousClicked;
 			Next.Clicked += OnNextClicked;
 			
+			TrackNumberIterator.Clicked += OnTrackNumberIteratorClicked;
 			TrackNumberSync.Clicked += OnTrackNumberSyncClicked;
 			TrackCountSync.Clicked += OnTrackCountSyncClicked;
 			ArtistSync.Clicked += OnArtistSyncClicked;
@@ -144,6 +146,7 @@ namespace Banshee
 			Previous.Visible = TrackSet.Count > 1;
 				
 			//glade["MultiTrackHeader"].Visible = TrackSet.Count > 1;
+			TrackNumberIterator.Visible = TrackSet.Count > 1;
 			TrackNumberSync.Visible = TrackSet.Count > 1;
 			TrackCountSync.Visible = TrackSet.Count > 1;
 			ArtistSync.Visible = TrackSet.Count > 1;
@@ -153,6 +156,9 @@ namespace Banshee
 			tips.SetTip(TrackNumberSync, 
 				Catalog.GetString("Set all Track Numbers to this value"), 
 				"track numbers");
+			tips.SetTip(TrackNumberIterator, 
+				Catalog.GetString("Automatically Set All Track Numbers"), 
+				"track iterator");
 			tips.SetTip(TrackCountSync, 
 				Catalog.GetString("Set all Track Counts to this value"),
 				"track counts");
@@ -238,6 +244,19 @@ namespace Banshee
 		{
 			foreach(EditorTrack track in TrackSet)
 				track.TrackNumber = (uint)TrackNumber.Value;
+		}
+		
+		private void OnTrackNumberIteratorClicked(object o, EventArgs args)
+		{
+			int i = 1;
+			foreach(EditorTrack track in TrackSet) {
+				track.TrackNumber = (uint)i++;
+				track.TrackCount = (uint) TrackSet.Count;
+			}
+
+			EditorTrack current_track = TrackSet[currentIndex] as EditorTrack;
+			TrackNumber.Value = (int) current_track.TrackNumber;
+			TrackCount.Value = (int) current_track.TrackCount;
 		}
 		
 		private void OnTrackCountSyncClicked(object o, EventArgs args)
