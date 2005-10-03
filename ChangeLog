@@ -1,3 +1,13 @@
+2005-10-03  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/AudioCdCore.cs: Bind changes to cd-info.[ch], ignore lead out and
+	data tracks
+	* libbanshee/cd-info.[ch]: If the Linux CDROM ioctl support is available,
+	use it to detect CD track info/CDDB disc ID instead of GStreamer. Fall back
+	on GStreamer (buggy, slower).
+	* configure.ac: Cleaned up a little bit, added headers to check, especially
+	linux/cdrom.h
+
 2005-09-26  Alexander Shopov  <ash@contact.bg>
 
 	* configure.ac: Added "bg" (Bulgarian) to ALL_LINGUAS

@@ -65,7 +65,7 @@ namespace Banshee
 		public IntPtr device_node;
 		public IntPtr disk_id;
 		
-		public long n_tracks;
+		public int n_tracks;
 		public long total_sectors;
 		public long total_time;
 		public long total_seconds;
@@ -85,9 +85,15 @@ namespace Banshee
 		
 		public long start_sector;
 		public long end_sector;
+		public int msf_minutes;
+		public int msf_seconds;
+		
 		public long sectors;
 		public long start_time;
 		public long end_time;
+		
+		public bool is_data;
+		public bool is_lead_out;
 	}
 	
 	public class AudioCdTrackInfo : TrackInfo
@@ -206,51 +212,63 @@ namespace Banshee
 			
 			diskId = GLib.Marshaller.Utf8PtrToString(diskRaw.disk_id);
 			
+			DebugLog.Add(
+			     "New Audio Disk\n" + 
+			     "     Disc ID:       " + diskId + "\n" + 
+			     "     Track Count:   " + trackCount + "\n" +
+			     "     Total Sectors: " + totalSectors + "\n" +
+			     "     Total Seconds: " + totalSeconds + "\n" +
+			     "     Track Offsets: " + offsets
+			);
+			
 			IntPtr trackArrPtr = diskRaw.tracks;
 			int trackArraySize = 0;
-			
+		
 			while(Marshal.ReadIntPtr(trackArrPtr, trackArraySize * IntPtr.Size)
 				!= IntPtr.Zero)
 				trackArraySize++;
-			
-			if(trackArraySize != trackCount) {
-				cd_disk_info_free(diskPtr);
-				return false;
-			}
 		
-			tracks = new AudioCdTrackInfo[trackCount];
-			
-			for(int i = 0; i < trackArraySize; i++) {
+		    ArrayList track_list = new ArrayList();
+		  
+			for(int i = 0; i < trackCount; i++) {
 				IntPtr rawPtr = Marshal.ReadIntPtr(trackArrPtr, 
 					i * IntPtr.Size);
 				CdTrackInfoRaw trackRaw = 
 					(CdTrackInfoRaw)Marshal.PtrToStructure(rawPtr, 
 						typeof(CdTrackInfoRaw));
 						
-				tracks[i] = new AudioCdTrackInfo(deviceNode, udi);
+				if(trackRaw.is_lead_out || trackRaw.is_data)
+				    continue;
+						
+				AudioCdTrackInfo track = new AudioCdTrackInfo(deviceNode, udi);
 				
-				tracks[i].TrackIndex = trackRaw.number;
-				tracks[i].Minutes = trackRaw.minutes;
-				tracks[i].Seconds = trackRaw.seconds;
-				tracks[i].Duration = trackRaw.duration;
-				tracks[i].StartSector = trackRaw.start_sector;
-				tracks[i].EndSector = trackRaw.end_sector;
-				tracks[i].StartTime = trackRaw.start_time;
-				tracks[i].EndTime = trackRaw.end_sector;
-				tracks[i].Sectors = trackRaw.sectors;
-				tracks[i].TrackNumber = (uint)trackRaw.number + 1;
-				tracks[i].TrackCount = (uint)trackCount;
-				tracks[i].DiskId = diskId;
+				track.TrackIndex = trackRaw.number;
+				track.Minutes = trackRaw.minutes;
+				track.Seconds = trackRaw.seconds;
+				track.Duration = trackRaw.duration;
+				track.StartSector = trackRaw.start_sector;
+				track.EndSector = trackRaw.end_sector;
+				track.StartTime = trackRaw.start_time;
+				track.EndTime = trackRaw.end_sector;
+				track.Sectors = trackRaw.sectors;
+				track.TrackNumber = (uint)trackRaw.number + 1;
+				track.TrackCount = (uint)trackCount;
+				track.DiskId = diskId;
 				
-				tracks[i].Artist = Catalog.GetString("Unknown Artist");
-				tracks[i].Album = Catalog.GetString("Unknown Album");
-				tracks[i].Title = 
+				track.Artist = Catalog.GetString("Unknown Artist");
+				track.Album = Catalog.GetString("Unknown Album");
+				track.Title = 
 					String.Format(Catalog.GetString("Track {0}"), i + 1);
+					
+		        track_list.Add(track);
 			}
 			
 			title = Catalog.GetString("Audio CD");
 			
 			cd_disk_info_free(diskPtr);
+			
+			tracks = track_list.ToArray(typeof(AudioCdTrackInfo)) as AudioCdTrackInfo [];
+			trackCount = tracks.Length;
 			
 			return true;
 		}

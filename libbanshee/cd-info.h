@@ -41,16 +41,22 @@ typedef struct {
 	
 	gint64 start_sector;
 	gint64 end_sector;
+	gint msf_minutes;
+	gint msf_seconds;
+	
 	gint64 sectors;
 	gint64 start_time;
 	gint64 end_time;
+	
+	gboolean is_data;
+	gboolean is_lead_out;
 } CdTrackInfo;
 
 typedef struct {
 	gchar *device_node;
 	gchar *disk_id;
 
-	gint64 n_tracks;
+	gint n_tracks;
 	gint64 total_sectors;
 	gint64 total_time;
 	gint64 total_seconds;

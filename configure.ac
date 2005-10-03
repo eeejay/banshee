@@ -27,8 +27,11 @@ AC_PROG_INTLTOOL([0.21])
 
 AC_PROG_INSTALL
 AC_ISC_POSIX
-AC_HEADER_STDC
 AM_PROG_LIBTOOL
+
+dnl check headers
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h string.h sys/types.h sys/ioctl.h string.h fcntl.h linux/cdrom.h)
 
 GNOME_COMPILE_WARNINGS
 AM_PATH_GLIB_2_0
@@ -103,7 +106,7 @@ AC_SUBST(MCS)
 AC_SUBST(MONO)
 
 dnl gtk-sharp, other CLR deps
-GTKSHARP_REQUIRED=1.9
+GTKSHARP_REQUIRED=2.3.91
 PKG_CHECK_MODULES(GTKSHARP,
 	gtk-sharp-2.0 >= $GTKSHARP_REQUIRED \
 	gnome-sharp-2.0 >= $GTKSHARP_REQUIRED \
@@ -187,7 +190,6 @@ IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
 IDL_INCLUDES="`$PKG_CONFIG --variable=idldir $IDL_MODULES | sed -e 's/^/ /' -e 's/ \+$//' -e 's/ / -I /g' -e 's/^ \+//'`"
 AC_SUBST(IDL_INCLUDES)
 
-
 dnl HAL devel deps
 PKG_CHECK_MODULES(HAL,
 	gobject-2.0 \
@@ -199,7 +201,7 @@ AC_SUBST(HAL_CFLAGS)
 AC_SUBST(HAL_LIBS)
 
 dnl libnautilus-burn devel deps
-PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.10)
+PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.11)
 AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
 AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
@@ -260,7 +262,7 @@ AC_SUBST(INSTALLED_ASSEMBLIES)
 
 dnl Intl
 
-ALL_LINGUAS="bg en_CA lt nl zh_CN"
+ALL_LINGUAS="bg en_CA es lt nl zh_CN"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
