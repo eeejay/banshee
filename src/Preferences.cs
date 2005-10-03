@@ -100,15 +100,11 @@ namespace Banshee
 			driveContainer = glade["DriveComboContainer"] as HBox;
 			speedContainer = glade["SpeedComboContainer"] as HBox;
 				
-			if(Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null) {
-				writeSpeedCombo = ComboBox.NewText();
-				speedContainer.PackStart(writeSpeedCombo, false, false, 0);
-				speedContainer.ShowAll();
-				LoadBurnerDrives();	
-			} else {
-				Notebook.RemovePage(2);
-			}
-			
+			writeSpeedCombo = ComboBox.NewText();
+			speedContainer.PackStart(writeSpeedCombo, false, false, 0);
+			speedContainer.ShowAll();
+			LoadBurnerDrives();	
+		
 			TextView view = glade["EngineDescription"] as TextView;
 			view.SetSizeRequest(view.Allocation.Width, -1);
 			WindowPreferences.Show();

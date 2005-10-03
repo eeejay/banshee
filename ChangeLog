@@ -1,5 +1,6 @@
 2005-10-03  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Preferences.cs, src/PlayerInterface.cs: Enabled burning!
 	* src/AudioCdCore.cs: Bind changes to cd-info.[ch], ignore lead out and
 	data tracks
 	* libbanshee/cd-info.[ch]: If the Linux CDROM ioctl support is available,

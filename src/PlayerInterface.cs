@@ -218,7 +218,7 @@ namespace Banshee
 			
 			ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
 
-			gxml["ButtonBurn"].Visible = Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null;
+			gxml["ButtonBurn"].Visible = true;
 				
 			((Gtk.Image)gxml["ImageShuffle"]).Pixbuf = 
 				Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
@@ -1012,8 +1012,7 @@ namespace Banshee
             Core.ThreadLeave();
 			
 			gxml["ButtonRip"].Visible = source.Type == SourceType.AudioCd;
-			gxml["ButtonBurn"].Visible = source.Type != SourceType.AudioCd && 
-				Environment.GetEnvironmentVariable("BANSHEE_BURN_ENABLE") != null;
+			gxml["ButtonBurn"].Visible = source.Type != SourceType.AudioCd;
 			gxml["IpodSyncButton"].Visible = source.Type == SourceType.Ipod;
 			(gxml["HeaderActionButtonBox"] as HBox).Spacing = (
 			gxml["ButtonBurn"].Visible && gxml["IpodSyncButton"].Visible) ?
@@ -1219,6 +1218,7 @@ namespace Banshee
 		{
 			if(playlistModel.Source.Type == SourceType.Ipod 
 				&& (playlistModel.Source as IpodSource).IsSyncing) {
+				playlistModel.ClearModel();
 			    playlistView.Sensitive = false;
 		    }
 		}
