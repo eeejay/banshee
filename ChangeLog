@@ -1,3 +1,8 @@
+2005-10-04  Larry Ewing  <lewing@novell.com>
+
+	* src/PlayerInterface.cs: Import from the selected uri not the
+	folder uri.
+
 2005-10-04  Christopher James Lahey  <clahey@ximian.com>
 
 	* src/SourceView.cs: Fixed bug that was ellipsing escaped data

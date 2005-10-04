@@ -861,10 +861,10 @@ namespace Banshee
 			chooser.DefaultResponse = ResponseType.Ok;
 			
 			if(chooser.Run() == (int)ResponseType.Ok) 
-				ImportMusic(chooser.CurrentFolderUri);
+				ImportMusic(chooser.Uri);
 				
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-			     chooser.CurrentFolderUri);
+			     chooser.Uri);
 			
 			chooser.Destroy();
 		}
@@ -906,10 +906,10 @@ namespace Banshee
 			);
 			
 			try {
-			     chooser.SetCurrentFolderUri(Core.GconfClient.Get(
-			         GConfKeys.LastFileSelectorUri) as string);
+				chooser.SetCurrentFolderUri(Core.GconfClient.Get(
+				    GConfKeys.LastFileSelectorUri) as string);
 			} catch(Exception) {
-			     chooser.SetCurrentFolder(Environment.GetFolderPath(
+				chooser.SetCurrentFolder(Environment.GetFolderPath(
 				    Environment.SpecialFolder.Personal));
 		    }
 			
@@ -925,7 +925,7 @@ namespace Banshee
 			}
 			
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-			     chooser.CurrentFolderUri);
+			    chooser.Uri);
 			
 			chooser.Destroy();
 		}
