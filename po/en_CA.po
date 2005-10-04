@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-23 09:21-0400\n"
+"POT-Creation-Date: 2005-10-04 00:03-0400\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -328,7 +328,7 @@ msgstr "<small>Encoding</small>"
 msgid "<small>Library</small>"
 msgstr "<small>Library</small>"
 
-#: data/glade/preferences.glade.h:11 src/AudioCdCore.cs:251
+#: data/glade/preferences.glade.h:11 src/AudioCdCore.cs:266
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -539,11 +539,11 @@ msgstr ""
 "Framework, sponsored by RealNetworks. The engine can play any file that "
 "RealPlayer can. Install RealPlayer for best results."
 
-#: plugincore/TrackInfo.cs:143 src/AudioCdCore.cs:245
+#: plugincore/TrackInfo.cs:143 src/AudioCdCore.cs:258
 msgid "Unknown Artist"
 msgstr "Unknown Artist"
 
-#: plugincore/TrackInfo.cs:148 src/AudioCdCore.cs:246
+#: plugincore/TrackInfo.cs:148 src/AudioCdCore.cs:259
 msgid "Unknown Album"
 msgstr "Unknown Album"
 
@@ -551,12 +551,12 @@ msgstr "Unknown Album"
 msgid "Unknown Title"
 msgstr "Unknown Title"
 
-#: src/AudioCdCore.cs:248
+#: src/AudioCdCore.cs:261
 #, csharp-format
 msgid "Track {0}"
 msgstr "Track {0}"
 
-#: src/AudioCdCore.cs:392
+#: src/AudioCdCore.cs:410
 msgid "Could not initialize HAL for CD Detection"
 msgstr "Could not initialize HAL for CD Detection"
 
@@ -1125,11 +1125,11 @@ msgstr "Import Files to Library"
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>{0}'s Music Library</b>"
 
-#: src/PlayerInterface.cs:1163 src/PlayerInterface.cs:1193
+#: src/PlayerInterface.cs:1162 src/PlayerInterface.cs:1192
 msgid "Synchronize iPod"
 msgstr "Synchronize iPod"
 
-#: src/PlayerInterface.cs:1164
+#: src/PlayerInterface.cs:1163
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1149,15 +1149,15 @@ msgstr ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 
-#: src/PlayerInterface.cs:1169 src/PlayerInterface.cs:1197
+#: src/PlayerInterface.cs:1168 src/PlayerInterface.cs:1196
 msgid "Synchronize Library"
 msgstr "Synchronize Library"
 
-#: src/PlayerInterface.cs:1170
+#: src/PlayerInterface.cs:1169
 msgid "Save Manual Changes"
 msgstr "Save Manual Changes"
 
-#: src/PlayerInterface.cs:1194
+#: src/PlayerInterface.cs:1193
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
@@ -1273,33 +1273,33 @@ msgstr "Last Played"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/Preferences.cs:180
+#: src/Preferences.cs:176
 msgid "Select Banshee Library Location"
 msgstr "Select Banshee Library Location"
 
-#: src/Preferences.cs:271
+#: src/Preferences.cs:267
 msgid "No CD Burners Detected"
 msgstr "No CD Burners Detected"
 
-#: src/Preferences.cs:330
+#: src/Preferences.cs:326
 msgid "Unavailable"
 msgstr "Unavailable"
 
-#: src/Preferences.cs:337
+#: src/Preferences.cs:333
 msgid "Loading Drive List..."
 msgstr "Loading Drive List..."
 
-#: src/Preferences.cs:400
+#: src/Preferences.cs:396
 msgid "Fastest Possible"
 msgstr "Fastest Possible"
 
 #. Translators: this represents a CD write speed, eg "32x"
-#: src/Preferences.cs:404
+#: src/Preferences.cs:400
 #, csharp-format
 msgid "{0}x"
 msgstr "{0}x"
 
-#: src/Preferences.cs:555
+#: src/Preferences.cs:551
 #, csharp-format
 msgid ""
 "You have changed the Banshee Playback Engine. This change will not take "
@@ -1310,7 +1310,7 @@ msgstr ""
 "affect until the next time Banshee is run. Please restart Banshee to use the "
 "new <b><i>{0}</i></b> Engine"
 
-#: src/Preferences.cs:563
+#: src/Preferences.cs:559
 msgid "Banshee Restart Required"
 msgstr "Banshee Restart Required"
 
@@ -1349,44 +1349,48 @@ msgstr "Source"
 msgid "Banshee Player"
 msgstr "Banshee Player"
 
-#: src/TrackProperties.cs:154
+#: src/TrackProperties.cs:157
 msgid "Set all Track Numbers to this value"
 msgstr "Set all Track Numbers to this value"
 
-#: src/TrackProperties.cs:157
+#: src/TrackProperties.cs:160
+msgid "Automatically Set All Track Numbers"
+msgstr "Automatically Set All Track Numbers"
+
+#: src/TrackProperties.cs:163
 msgid "Set all Track Counts to this value"
 msgstr "Set all Track Counts to this value"
 
-#: src/TrackProperties.cs:160
+#: src/TrackProperties.cs:166
 msgid "Set all Artists to this value"
 msgstr "Set all Artists to this value"
 
-#: src/TrackProperties.cs:162
+#: src/TrackProperties.cs:168
 msgid "Set all Albums to this value"
 msgstr "Set all Albums to this value"
 
-#: src/TrackProperties.cs:164
+#: src/TrackProperties.cs:170
 msgid "Set all Titles to this value"
 msgstr "Set all Titles to this value"
 
-#: src/TrackProperties.cs:199
+#: src/TrackProperties.cs:205
 msgid "Never Played"
 msgstr "Never Played"
 
-#: src/TrackProperties.cs:203
+#: src/TrackProperties.cs:209
 msgid "Unknown"
 msgstr "Unknown"
 
-#: src/TrackProperties.cs:209
+#: src/TrackProperties.cs:215
 #, csharp-format
 msgid "Editing Track Properties ({0} of {1})"
 msgstr "Editing Track Properties ({0} of {1})"
 
-#: src/TrackProperties.cs:213
+#: src/TrackProperties.cs:219
 msgid "Editing Track Properties"
 msgstr "Editing Track Properties"
 
-#: src/TrackProperties.cs:218
+#: src/TrackProperties.cs:224
 #, csharp-format
 msgid "File: {0}"
 msgstr "File: {0}"
