@@ -1,3 +1,8 @@
+2005-10-04  Christopher James Lahey  <clahey@ximian.com>
+
+	* src/SourceView.cs: Fixed bug that was ellipsing escaped data
+	instead of escaping ellipsed data.
+
 2005-10-03  Christopher James Lahey  <clahey@ximian.com>
 
 	* data/glade/trackinfo.glade, src/TrackProperties.cs: Added

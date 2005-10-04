@@ -644,8 +644,8 @@ namespace Banshee
 			titleLayout.FontDescription = fd;
 			countLayout.FontDescription = fd;
 			
-			string titleText = GLib.Markup.EscapeText(source.Name);
-			titleLayout.SetMarkup(titleText);
+			string titleText = source.Name;
+			titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText));
 			countLayout.SetMarkup("<span size=\"small\">(" + source.Count + ")</span>");
 			
 			titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
@@ -661,7 +661,7 @@ namespace Banshee
 				
 				try {
 					titleText = titleText.Substring(0, titleText.Length - 1);
-					titleLayout.SetMarkup(titleText.Trim() + "...");
+					titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText).Trim() + "...");
 				} catch(Exception) {
 					titleLayout.SetMarkup(source.Name);
 					hideCounts = true;
