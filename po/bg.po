@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-26 19:12+0300\n"
-"PO-Revision-Date: 2005-09-26 19:12+0300\n"
+"POT-Creation-Date: 2005-10-06 14:12+0300\n"
+"PO-Revision-Date: 2005-10-06 14:12+0300\n"
 "Last-Translator: Rostislav \"zbrox\" Raykov <zbrox@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,11 @@ msgid ""
 "track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
 "prefixed zero)."
 msgstr ""
+"Формат за създаване на файлови имена/папки за извлечените песни, внесената "
+"музика и т.н. Форматът е относителен към папката за музика на Banshee. Не "
+"пишете абсолютен път!Възможни елементи: %artist%,·%album%,·%title%,·%"
+"track_number%,·%track_count%,·%track_number_nz%·(без начална нули в "
+"началото),·%track_count_nz%·(без нули в началото)."
 
 #: ../data/banshee.schemas.in.h:6
 msgid "Height of the main interface window."
@@ -170,10 +175,12 @@ msgid ""
 "Banshee has detected that you are plugging in an iPod for the first time. "
 "Please take a moment to give your iPod a name."
 msgstr ""
+"Banshee засече, че за пръв път включвате към компютъра iPod. Отделете момент "
+"да го наименувате."
 
 #: ../data/glade/newipod.glade.h:4
 msgid "New iPod Detected"
-msgstr ""
+msgstr "Засечен е нов iPod"
 
 #: ../data/glade/newipod.glade.h:5
 msgid "Your Name:"
@@ -189,7 +196,7 @@ msgstr "<b>Списък</b>"
 
 #: ../data/glade/player.glade.h:2
 msgid "<span size=\"small\">Idle</span>"
-msgstr ""
+msgstr "<span size=\"small\">В покой</span>"
 
 #: ../data/glade/player.glade.h:3
 msgid "Add Selected Songs"
@@ -287,7 +294,7 @@ msgstr "<b>Допълнителни настройки</b>"
 
 #: ../data/glade/preferences.glade.h:2
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr ""
+msgstr "<b>Местонахождение на папката за музика на Banshee</b>"
 
 #: ../data/glade/preferences.glade.h:3
 msgid "<b>CD Burning</b>"
@@ -321,7 +328,7 @@ msgstr ""
 msgid "<small>Library</small>"
 msgstr "<small>Библиотека</small>"
 
-#: ../data/glade/preferences.glade.h:11 ../src/AudioCdCore.cs:251
+#: ../data/glade/preferences.glade.h:11 ../src/AudioCdCore.cs:266
 msgid "Audio CD"
 msgstr "Аудио диск"
 
@@ -529,11 +536,11 @@ msgid ""
 "RealPlayer can. Install RealPlayer for best results."
 msgstr ""
 
-#: ../plugincore/TrackInfo.cs:143 ../src/AudioCdCore.cs:245
+#: ../plugincore/TrackInfo.cs:143 ../src/AudioCdCore.cs:258
 msgid "Unknown Artist"
 msgstr "Непознат изпълнител"
 
-#: ../plugincore/TrackInfo.cs:148 ../src/AudioCdCore.cs:246
+#: ../plugincore/TrackInfo.cs:148 ../src/AudioCdCore.cs:259
 msgid "Unknown Album"
 msgstr "Непознат албум"
 
@@ -541,12 +548,12 @@ msgstr "Непознат албум"
 msgid "Unknown Title"
 msgstr "Непознато заглавие"
 
-#: ../src/AudioCdCore.cs:248
+#: ../src/AudioCdCore.cs:261
 #, csharp-format
 msgid "Track {0}"
 msgstr "Песен {0}"
 
-#: ../src/AudioCdCore.cs:392
+#: ../src/AudioCdCore.cs:410
 msgid "Could not initialize HAL for CD Detection"
 msgstr "Не може да се инициализира HAL за засичане на дискове"
 
@@ -667,13 +674,16 @@ msgstr ""
 
 #: ../src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
-msgstr ""
+msgstr "Появи се фатална грешка"
 
 #: ../src/ExceptionDialog.cs:52
 msgid ""
 "This may be due to a programming error. Please help us make Banshee better "
 "by reporting this error. Thank you in advance!"
 msgstr ""
+"Това може да се дължи на грешка в програмирането. Помогнете ни да направим "
+"Banshee по-добра програма и докладвайте тази грешка. Благодарим "
+"предварително!"
 
 #: ../src/ExceptionDialog.cs:99
 msgid "An unhandled exception was thrown: "
@@ -810,6 +820,9 @@ msgid ""
 "operation or all operations.\n"
 "\n"
 msgstr ""
+"Изпълняват се множество операции. Може да спрете текущата или всички "
+"операции.\n"
+"\n"
 
 #: ../src/LibraryTransactionStatus.cs:207
 msgid "Are you sure you want to cancel this operation?"
@@ -888,7 +901,7 @@ msgstr ""
 
 #: ../src/LibraryTransactions.cs:635
 msgid "Could not load track from library"
-msgstr ""
+msgstr "Не може да се зареди песента от библиотеката"
 
 #: ../src/LibraryTransactions.cs:698
 msgid "Playlist Track Loader"
@@ -981,7 +994,7 @@ msgstr "Обновяване на iPod"
 #: ../src/PlayerInterface.cs:334 ../src/PlayerInterface.cs:2091
 #: ../src/TrackInfoHeader.cs:136
 msgid "Idle"
-msgstr ""
+msgstr "В покой"
 
 #: ../src/PlayerInterface.cs:344
 msgid "All"
@@ -1075,6 +1088,11 @@ msgid ""
 "Automatic import or importing a large folder may take a long time, so please "
 "be patient."
 msgstr ""
+"Музикалната Ви библиотека е празна. Може да внесете нова музика сега или да "
+"изберете да го направите друг път.\n"
+"\n"
+"Автоматичното внасяне или внасянето на голяма папка може да отнеме много "
+"време, затова бъдете търпеливи."
 
 #: ../src/PlayerInterface.cs:452
 msgid "Import Folder"
@@ -1097,11 +1115,11 @@ msgstr "Внасяне на файлове в библиотеката"
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>Музикалната библиотека на {0}</b>"
 
-#: ../src/PlayerInterface.cs:1163 ../src/PlayerInterface.cs:1193
+#: ../src/PlayerInterface.cs:1162 ../src/PlayerInterface.cs:1192
 msgid "Synchronize iPod"
 msgstr "Синхронизиране на iPod"
 
-#: ../src/PlayerInterface.cs:1164
+#: ../src/PlayerInterface.cs:1163
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1112,16 +1130,26 @@ msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr ""
+"Направихте промени на Вашия iPod. Изберете метод за обновяване на "
+"съдържанието му.\n"
+"\n"
+"<i>Синхронизиране на библиотека</i>: синхронизиране на библиотеката на "
+"Banshee с iPod\n"
+"<i>Запазване на ръчните промени</i>: запазване само на ръчните промени, "
+"който сте направили\n"
+"\n"
+"<b>Внимание:</b> Действията ще променят или изтрият съществуващото "
+"съдържание на iPod-а и може да причинят несъвместимост с iTunes!"
 
-#: ../src/PlayerInterface.cs:1169 ../src/PlayerInterface.cs:1197
+#: ../src/PlayerInterface.cs:1168 ../src/PlayerInterface.cs:1196
 msgid "Synchronize Library"
 msgstr "Синхронизиране на библиотеката"
 
-#: ../src/PlayerInterface.cs:1170
+#: ../src/PlayerInterface.cs:1169
 msgid "Save Manual Changes"
 msgstr "Запазване на ръчните промени"
 
-#: ../src/PlayerInterface.cs:1194
+#: ../src/PlayerInterface.cs:1193
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
@@ -1147,8 +1175,8 @@ msgstr "Списъкът е празен - трябва да добавите м
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} обект"
+msgstr[1] "{0} обекта"
 
 #: ../src/PlayerInterface.cs:1314
 #, csharp-format
@@ -1162,7 +1190,10 @@ msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library?"
 msgstr[0] ""
+"Сигурни ли сте, че искате да премахнете избраната песен от библиотеката си?"
 msgstr[1] ""
+"Сигурни ли сте, че искате да премахнете избраните <b>({0})</b> песни от "
+"библиотеката си?"
 
 #: ../src/PlayerInterface.cs:1374
 msgid "Remove Selected Songs from Library"
@@ -1190,7 +1221,7 @@ msgstr "Не може да се извади"
 
 #: ../src/PlayerInterface.cs:2096
 msgid "Banshee - Idle"
-msgstr ""
+msgstr "Banshee - В покой"
 
 #: ../src/PlaylistColumns.cs:80
 msgid "Invalid column width"
@@ -1231,35 +1262,35 @@ msgstr "Последно слушана"
 msgid "N/A"
 msgstr "няма"
 
-#: ../src/Preferences.cs:180
+#: ../src/Preferences.cs:176
 msgid "Select Banshee Library Location"
 msgstr ""
 "Изберете местонахождението на\n"
 "библиотеката на Banshee"
 
-#: ../src/Preferences.cs:271
+#: ../src/Preferences.cs:267
 msgid "No CD Burners Detected"
 msgstr "Няма засечена записвачка"
 
-#: ../src/Preferences.cs:330
+#: ../src/Preferences.cs:326
 msgid "Unavailable"
 msgstr "Неналичен"
 
-#: ../src/Preferences.cs:337
+#: ../src/Preferences.cs:333
 msgid "Loading Drive List..."
 msgstr "Зареждане на списъка с устройства..."
 
-#: ../src/Preferences.cs:400
+#: ../src/Preferences.cs:396
 msgid "Fastest Possible"
 msgstr "Възможно най-бързо"
 
 #. Translators: this represents a CD write speed, eg "32x"
-#: ../src/Preferences.cs:404
+#: ../src/Preferences.cs:400
 #, csharp-format
 msgid "{0}x"
 msgstr "{0}x"
 
-#: ../src/Preferences.cs:555
+#: ../src/Preferences.cs:551
 #, csharp-format
 msgid ""
 "You have changed the Banshee Playback Engine. This change will not take "
@@ -1267,7 +1298,7 @@ msgid ""
 "new <b><i>{0}</i></b> Engine"
 msgstr ""
 
-#: ../src/Preferences.cs:563
+#: ../src/Preferences.cs:559
 msgid "Banshee Restart Required"
 msgstr "Нужно е да рестартирате Banshee"
 
@@ -1304,44 +1335,57 @@ msgstr "Източник"
 msgid "Banshee Player"
 msgstr "Слушане на музика (Banshee)"
 
-#: ../src/TrackProperties.cs:154
+#: ../src/TrackProperties.cs:157
 msgid "Set all Track Numbers to this value"
 msgstr "Всички номера на песни към тази стойност"
 
-#: ../src/TrackProperties.cs:157
+#: ../src/TrackProperties.cs:160
+msgid "Automatically Set All Track Numbers"
+msgstr "Автоматично настройване на всички номера на песни"
+
+#: ../src/TrackProperties.cs:163
 msgid "Set all Track Counts to this value"
 msgstr ""
 
-#: ../src/TrackProperties.cs:160
+#: ../src/TrackProperties.cs:166
 msgid "Set all Artists to this value"
 msgstr "Всички изпълнители към тази стойност"
 
-#: ../src/TrackProperties.cs:162
+#: ../src/TrackProperties.cs:168
 msgid "Set all Albums to this value"
 msgstr "Всички албуми към тази стойност"
 
-#: ../src/TrackProperties.cs:164
+#: ../src/TrackProperties.cs:170
 msgid "Set all Titles to this value"
 msgstr "Всички заглавия към тази стойност"
 
-#: ../src/TrackProperties.cs:199
+#: ../src/TrackProperties.cs:205
 msgid "Never Played"
 msgstr "Не е слушана"
 
-#: ../src/TrackProperties.cs:203
+#: ../src/TrackProperties.cs:209
 msgid "Unknown"
 msgstr "Непознат"
 
-#: ../src/TrackProperties.cs:209
+#: ../src/TrackProperties.cs:215
 #, csharp-format
 msgid "Editing Track Properties ({0} of {1})"
 msgstr "Редактиране информация за песента ({0} от {1})"
 
-#: ../src/TrackProperties.cs:213
+#: ../src/TrackProperties.cs:219
 msgid "Editing Track Properties"
 msgstr "Редактиране информация за песента"
 
-#: ../src/TrackProperties.cs:218
+#: ../src/TrackProperties.cs:224
 #, csharp-format
 msgid "File: {0}"
 msgstr "Файл: {0}"
+
+#~ msgid ""
+#~ "Are you sure you want to remove the selected song from your library?Are "
+#~ "you sure you want to remove the selected <b>({0})</b> songs from your "
+#~ "library?"
+#~ msgstr ""
+#~ "Сигурни ли сте, че искате да премахнете избраната песен от библиотеката "
+#~ "си?Сигурни ли сте, че искате да премахнете избраните <b>({0})</b> песни "
+#~ "от библиотеката си?"
