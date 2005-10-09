@@ -219,8 +219,13 @@ namespace Banshee
 		public int AlbumTreeIterCompareFunc(TreeModel _model, TreeIter a, 
 			TreeIter b)
 		{
-			return StringFieldCompare(model.IterTrackInfo(a).Album, 
+			int v = StringFieldCompare(model.IterTrackInfo(a).Album, 
 				model.IterTrackInfo(b).Album);
+
+			if (v != 0)
+				return v;
+
+			return TrackTreeIterCompareFunc (_model, a, b);
 		}
 		
 		public int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a,
