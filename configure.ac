@@ -28,6 +28,8 @@ AC_PROG_INTLTOOL([0.21])
 AC_PROG_INSTALL
 AC_ISC_POSIX
 AM_PROG_LIBTOOL
+AC_PROG_CC
+AC_PROG_CXX
 
 dnl check headers
 AC_HEADER_STDC
@@ -41,6 +43,9 @@ AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer e
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
 AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
+
+AC_ARG_ENABLE(vlc, AC_HELP_STRING([--enable-vlc], [Enable VLC Media Engine]), , enable_vlc="no")
+AM_CONDITIONAL(ENABLE_VLC, test "x$enable_vlc" = "xyes")
 
 AC_ARG_ENABLE(xing, AC_HELP_STRING([--enable-xing], [Enable Real's Xing MP3 Encoder]), , enable_xing="no")
 AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
@@ -106,7 +111,7 @@ AC_SUBST(MCS)
 AC_SUBST(MONO)
 
 dnl gtk-sharp, other CLR deps
-GTKSHARP_REQUIRED=2.3.91
+GTKSHARP_REQUIRED=1.9.5
 PKG_CHECK_MODULES(GTKSHARP,
 	gtk-sharp-2.0 >= $GTKSHARP_REQUIRED \
 	gnome-sharp-2.0 >= $GTKSHARP_REQUIRED \
@@ -279,6 +284,8 @@ mediaengines/gst/Makefile
 mediaengines/gst/gst-player.dll.config
 mediaengines/helix/Makefile
 mediaengines/helix/helix-sharp.dll.config
+mediaengines/vlc/Makefile
+mediaengines/vlc/vlc-player.dll.config
 libbanshee/Makefile
 libbanshee/xing/Makefile
 burn-sharp/Makefile
@@ -308,6 +315,7 @@ banshee-$VERSION
     Engines:
       GStreamer:       yes
       Helix:           ${enable_helix}
+      VLC:             ${enable_vlc}
 
     Xing MP3 Encoder:  ${enable_xing}
     GStreamer Plugins: ${GST_PLUGINS_DIR}
@@ -315,6 +323,23 @@ banshee-$VERSION
 
 if test "x${enable_helix}" = "xyes"; then
 	echo "    Helix/RealPlayer:  ${helix_libs}
-	"
-fi
+	";
+fi;
+
+if test "x${enable_vlc}" = "xyes"; then
+	if test ! -e ./mediaengines/vlc/libvlc.so; then
+		echo ""
+		echo "    *****************************************************"
+		echo "    NOTICE: You have enabled the VLC engine, but have not"
+		echo "    provided a libvlc.so in ./mediaengines/vlc/"
+		echo ""
+		echo "    You must build your own libvlc.so library and copy it"
+		echo "    to ./mediaengines/vlc/libvlc.so before running"
+		echo "    'make install' or copy libvlc.so after the install to"
+		echo "    ${expanded_libdir}/banshee/mediaengines/vlc/libvlc.so"
+		echo ""
+		echo "    libvlc.so cannot be distributed with Banshee."
+		echo ""
+	fi;
+fi;
 

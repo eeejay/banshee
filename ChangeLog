@@ -1,3 +1,14 @@
+2005-10-12  Aaron Bockover  <aaron@aaronbock.net>
+
+	* mediaengines/vlc/libvlc.so: Dummy text file user must replace with
+	real libvlc.so they must compile (legal issues)
+	* mediaengines/vlc/VLC.cs: Partial libvlc C# bindings
+	* mediaengines/vlc/VlcPlayerEngine.cs: libvlc IPlayerEngine implementation
+	* mediaengines/vlc/vlc-player.dll.config.in: vlc-player.dll assembly
+	DLL mappings
+	* mediaengines/vlc/Makefile.am: Build rules for the VLC media engine
+	* configure.ac: Add option for --enable-vlc to build VLC engine
+
 2005-10-12  Chris Lahey  <clahey@localhost.localdomain>
 
 	* data/banshee.schemas.in: Add GConf key for move on save.
