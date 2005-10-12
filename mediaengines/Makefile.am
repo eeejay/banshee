@@ -1,8 +1,11 @@
-SUBDIRS = \
-	gst 
+SUBDIRS = gst
 
 if ENABLE_HELIX
 SUBDIRS += helix
+endif
+
+if ENABLE_VLC
+SUBDIRS += vlc
 endif
 
 DISTCLEANFILES = Makefile.in
