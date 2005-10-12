@@ -41,11 +41,10 @@ namespace Banshee
 {
 	public class LibraryTrackInfo : TrackInfo
 	{
-		public static int GetId(string lookup)
+		public static int GetId(Uri lookup)
 		{
 			Statement query = new Select("Tracks", new List("TrackID")) +
-				new Where(new Compare("Uri", Op.EqualTo, lookup), 
-					Op.Or, new Compare("TrackID", Op.EqualTo, lookup));
+				new Where(new Compare("Uri", Op.EqualTo, lookup));
 
 			try {
 				object result = Core.Library.Db.QuerySingle(query);
@@ -69,14 +68,91 @@ namespace Banshee
               } catch(Exception) {
                 exists = false;
               }
-              
+//              Console.WriteLine ("{0} {1}", uri.LocalPath, exists ? "exists" : "does not exist");
               if(exists) {
                   // TODO: we should actually probably take this as a hint to
                   // reparse metadata
                   throw new ApplicationException("Song is already in library");
               } 
         }
+
+		private void CheckIfExists(string filename)
+		{
+			CheckIfExists (new Uri ("file://" + filename));
+		}
+
+		private string MoveToPlace(string old_filename, bool initial_import)
+		{
+			bool in_library = old_filename.StartsWith (Core.Library.Location);
+//			Console.WriteLine ("\"{0}\" in \"{1}\": {2}", old_filename, Core.Library.Location, in_library);
+
+			if (initial_import && !in_library) {
+				bool copy = false;
+				try {
+					copy = (bool)Core.GconfClient.Get(GConfKeys.CopyOnImport);
+				} catch {}
+
+				if (copy) {
+					string new_filename = FileNamePattern.BuildFull(this,
+						Path.GetExtension (old_filename).Substring(1));
+					CheckIfExists(new_filename);
+
+					try {
+
+//						Console.WriteLine ("!in_library: {0}", new_filename);
+
+//						Console.WriteLine ("if (File.Exists (\"{0}\"): {1}", new_filename, File.Exists (new_filename));
+						if (File.Exists (new_filename))
+							return null;
+//						Console.WriteLine ("File.Copy(\"{0}\", \"{1}\", false);", old_filename, new_filename);
+						File.Copy(old_filename, new_filename, false);
+						return new_filename;
+					} catch {
+						return null;
+					}
+				}
+			}
+
+			if (in_library) {
+				bool move = false;
+
+				try {
+					move = (bool)Core.GconfClient.Get(GConfKeys.MoveOnInfoSave);
+				} catch {}
 	
+				if (move) {
+					string new_filename = FileNamePattern.BuildFull(this,
+						Path.GetExtension (old_filename).Substring(1));
+//					Console.WriteLine ("in_library: {0}", new_filename);
+					CheckIfExists(new_filename);
+
+					try {
+						if (File.Exists (new_filename))
+							return null;
+
+						if (old_filename != new_filename) {
+							// Move and set uri.
+							File.Move (old_filename, new_filename);
+	
+							// Delete old directories if empty.
+							try {
+								string old_dir = Path.GetDirectoryName (old_filename);
+								while (old_dir != null && old_dir != String.Empty) {
+									Directory.Delete (old_dir);
+									old_dir = Path.GetDirectoryName (old_dir);
+								}
+							} catch {}
+
+							return new_filename;
+						}
+					} catch {
+						return null;
+					}
+				}
+			}
+			return null;
+		}
+
 	    public LibraryTrackInfo(Uri uri, string artist, string album, 
 	       string title, string genre, uint trackNumber, uint trackCount,
 	       int year, long duration)
@@ -112,20 +188,27 @@ namespace Banshee
         
         }
 	
-		public LibraryTrackInfo(Uri uri) : this()
+		public LibraryTrackInfo(string filename) : this()
 		{
-			if(uri.Scheme == "sql") {
-			    throw new ApplicationException("SQL URI DEPRECATED");
-				//LoadFromDatabase(uri.LocalPath);
-			} else {
-                CheckIfExists(uri);
-                
-            		if(!LoadFromDatabase(uri))
-					LoadFromFile(uri);
+//			Console.WriteLine ("LibraryTrackInfo(\"{0}\");", filename);
+			Uri old_uri = new Uri ("file://" + filename);
+
+			CheckIfExists(old_uri);
+			if(!LoadFromDatabase(old_uri)) {
+//				Console.WriteLine ("LoadFromFile(\"{0}\");", filename);
+				LoadFromFile(filename);
+
+				string new_filename = MoveToPlace(filename, true);
+
+				uri = new Uri ("file://" + (new_filename != null ? new_filename : filename));
+
+				CheckIfExists(uri);
+
+				SaveToDatabase(true);
 			}
-			
+
 			Core.Library.SetTrack(trackId, this);
-			
+
 			PreviousTrack = Gtk.TreeIter.Zero;
 		}
 		
@@ -138,9 +221,9 @@ namespace Banshee
 		
 		private void ParseUri(string path)
 		{
-			artist = "";
-			album = "";
-			title = "";
+			artist = String.Empty;
+			album = String.Empty;
+			title = String.Empty;
 			trackNumber = 0;
 			Match match;
 
@@ -150,9 +233,10 @@ namespace Banshee
 			match = Regex.Match(fileName, @"(\d+)\.(.*)$");
 			if(match.Success) {
 				trackNumber = Convert.ToUInt32(match.Groups[1].ToString());
+//				Console.WriteLine ("trackNumber = {0}", trackNumber);
 				fileName = match.Groups[2].ToString().Trim();
 			}
-			
+
 			/* Artist - Album - Title */
 			match = Regex.Match(fileName, @"\s*(.*)-\s*(.*)-\s*(.*)$");
 			if(match.Success) {
@@ -170,6 +254,20 @@ namespace Banshee
 					title = fileName;
 				}
 			}
+
+			while (path != null && path != String.Empty) {
+				path = Path.GetDirectoryName(path);
+				fileName = Path.GetFileName (path);
+				if (album == String.Empty) {
+					album = fileName;
+					continue;
+				}
+				if (artist == String.Empty) {
+					artist = fileName;
+					continue;
+				}
+				break;
+			}
 			
 			artist = artist.Trim();
 			album = album.Trim();
@@ -186,7 +284,9 @@ namespace Banshee
 		private void SaveToDatabase(bool retryIfFail)
 		{
 			Statement tracksQuery;
-		
+
+//			Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
+
 			if(trackId <= 0) {
 				tracksQuery = new Insert("Tracks", true,
 					"TrackID", null, 
@@ -237,16 +337,18 @@ namespace Banshee
 					new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
 				//	new Limit(1);
 			}
-			
+
 			Core.Library.Db.Execute(tracksQuery);
-			
+
 			/*if(Core.Library.Db.Execute(query) <= 0 && retryIfFail) {
 				trackId = 0;
 				SaveToDatabase(false);
 			} else if(trackId <= 0) {*/
 			
 			if(trackId <= 0)
-			   trackId = GetId(uri.AbsoluteUri); /* OPTIMIZE! Seems like an unnecessary query */
+			   trackId = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
+
+//			Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
 		}
 		
 		private bool LoadFromDatabase(object id)
@@ -310,13 +412,12 @@ namespace Banshee
             }
 		}
 		
-		private void LoadFromFile(Uri uri)
+		private void LoadFromFile(string filename)
 		{
-			this.uri = uri;
-			ParseUri(uri.LocalPath);
+			ParseUri(filename);
 			trackId = 0;
 	
-			AudioFileWrapper af = new AudioFileWrapper(uri.LocalPath);
+			AudioFileWrapper af = new AudioFileWrapper(filename);
 
 			mimetype = null;
 
@@ -324,23 +425,28 @@ namespace Banshee
 			album = af.Album == null ? album : af.Album;
 			title = af.Title == null ? title : af.Title;
 			genre = af.Genre == null ? genre : af.Genre;
-			trackNumber = (uint)af.TrackNumber;
+			trackNumber = af.TrackNumber == 0 ? trackNumber : (uint)af.TrackNumber;
 			trackCount = 0;
 			duration = af.Duration;
 			year = af.Year;
 			
 			this.dateAdded = DateTime.Now;
-			
-			SaveToDatabase(true);
 		}
-		
+
 		public override void Save()
 		{
 			try {
-			     Core.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
-			   SaveToDatabase(true);
-			} catch(Exception) {
-			    Core.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
+				string new_filename = MoveToPlace (uri.LocalPath, false);
+				if (new_filename != null) {
+					this.uri = new Uri ("file://" + new_filename);
+				}
+			} catch {}
+
+			try {
+				Core.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
+				SaveToDatabase(true);
+			} catch {
+				Core.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
 			}
 		}
 		

@@ -37,6 +37,8 @@
 	      <property name="can_focus">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
+	      <accelerator key="Left" modifiers="GDK_MOD1_MASK" signal="clicked"/>
+	      <accelerator key="KP_Left" modifiers="GDK_MOD1_MASK" signal="clicked"/>
 
 	      <child>
 		<widget class="GtkImage" id="BackImage">
@@ -96,6 +98,8 @@
 	      <property name="can_focus">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
+	      <accelerator key="Right" modifiers="GDK_MOD1_MASK" signal="clicked"/>
+	      <accelerator key="KP_Right" modifiers="GDK_MOD1_MASK" signal="clicked"/>
 
 	      <child>
 		<widget class="GtkImage" id="ForwardImage">
@@ -208,8 +212,8 @@
 			  <child>
 			    <widget class="GtkLabel" id="label42">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Track Number</property>
-			      <property name="use_underline">False</property>
+			      <property name="label" translatable="yes">Track _Number</property>
+			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
 			      <property name="wrap">False</property>
@@ -218,6 +222,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">TrackNumber</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -304,8 +309,8 @@
 			  <child>
 			    <widget class="GtkLabel" id="label43">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Track Count</property>
-			      <property name="use_underline">False</property>
+			      <property name="label" translatable="yes">Track _Count</property>
+			      <property name="use_underline">True</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
 			      <property name="wrap">False</property>
@@ -314,6 +319,7 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="mnemonic_widget">TrackCount</property>
 			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			      <property name="width_chars">-1</property>
 			      <property name="single_line_mode">False</property>
@@ -473,8 +479,8 @@
 		      <child>
 			<widget class="GtkLabel" id="label45">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Album</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">Albu_m</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -483,6 +489,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">Album</property>
 			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
@@ -540,8 +547,8 @@
 		      <child>
 			<widget class="GtkLabel" id="label46">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Title</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">_Title</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -550,6 +557,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">Title</property>
 			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>
@@ -607,8 +615,8 @@
 		      <child>
 			<widget class="GtkLabel" id="label44">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Artist</property>
-			  <property name="use_underline">False</property>
+			  <property name="label" translatable="yes">_Artist</property>
+			  <property name="use_underline">True</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
 			  <property name="wrap">False</property>
@@ -617,6 +625,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="mnemonic_widget">Artist</property>
 			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 			  <property name="width_chars">-1</property>
 			  <property name="single_line_mode">False</property>

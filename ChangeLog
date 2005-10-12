@@ -1,3 +1,21 @@
+2005-10-12  Chris Lahey  <clahey@localhost.localdomain>
+
+	* data/banshee.schemas.in: Add GConf key for move on save.
+
+	* data/glade/trackinfo.glade: Add accelerators.
+
+	* src/GConfKeys.cs: Add GConf key for move on save.
+
+	* src/LibraryTrackInfo.cs: Add move on save behavior.  Fix GetId
+	function to use uri.ToString instead of uri.AbsoluteUri to match
+	other uses of uri.  Use information parsed from filename to set
+	track number.  Use directory structure to guess metadata.  Move
+	copy on import behavior to here.
+
+	* src/LibraryTransactions.cs: Typo in field name.  Let
+	LibraryTrackInfo handle importing files instead of importing them
+	here.
+
 2005-10-08  Ben Maurer  <bmaurer@ximian.com>
 
 	* src/PlaylistView.cs (AlbumTreeIterCompareFunc): Sort by track#

@@ -293,26 +293,11 @@ namespace Banshee
 			DateTime startStamp = DateTime.Now;
 			
 			try {
-				TrackInfo ti = new LibraryTrackInfo(new Uri("file://" + file));
-				
-				bool copy = false;
-				try {
-					copy = (bool)Core.GconfClient.Get(GConfKeys.CopyOnImport);
-				} catch(Exception) {}
-				
-				if(copy) {
-					try {
-						string destfile = FileNamePattern.BuildFull(ti, 
-							Path.GetExtension(file).Substring(1));
-						File.Copy(file, destfile, true);
-						ti.Uri = new Uri(destfile);
-						ti.Save();
-					} catch(Exception) { }
-				}
-			
+				TrackInfo ti = new LibraryTrackInfo(file);
+
 				RaiseTrackInfo(ti);
 				UpdateAverageDuration(startStamp);
-			} catch(Exception e) {
+			} catch {
 				return;
 			}
 		}
@@ -352,7 +337,7 @@ namespace Banshee
 				if(!sdi.Name.StartsWith(".")) 
 					RecurseDirectory(path + "/" + sdi.Name);
 			}
-					
+
 			foreach(FileInfo fi in di.GetFiles()) {
 				if(cancelRequested)
 					return false;
@@ -512,7 +497,7 @@ namespace Banshee
 			
 			for(int i = 0; i < totalCount; i++) {
 				LibraryTrackInfo ti = RemoveQueue[i] as LibraryTrackInfo;
-				query += new Compare("TrackInD", Op.EqualTo, ti.TrackId);
+				query += new Compare("TrackID", Op.EqualTo, ti.TrackId);
 				if(i < totalCount - 1)
 					query += new Or();
 				

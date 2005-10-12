@@ -13,6 +13,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/Banshee/MoveOnInfoSave</key>
+      <applyto>/apps/Banshee/MoveOnInfoSave</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+          <short>Move music on info save</short>
+        <long>Move music within banshee music library directory when saving track info</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/PlayerEngine</key>
       <applyto>/apps/Banshee/PlayerEngine</applyto>
       <owner>banshee</owner>
