@@ -44,6 +44,7 @@ namespace Banshee
 		private static Core appInstance = null;
 
 		public static string [] Args = null;
+		public static ArgumentQueue ArgumentQueue = null;
 		public System.Threading.Thread MainThread;
 		
 		public IPlayerEngine activePlayer;
@@ -260,5 +261,101 @@ namespace Banshee
                 return ++uid;
             }
         }
-    }
+    
+	}
+
+	public class ArgumentLayout
+	{
+		public string Name, ValueKind, Description;
+		
+		public ArgumentLayout(string name, string description) : this(name, 
+			null, description)
+		{
+	
+		}
+		
+		public ArgumentLayout(string name, string valueKind, string description)
+		{
+			Name = name;
+			ValueKind = valueKind;
+			Description = description;
+		}
+	}
+
+	public class ArgumentQueue : IEnumerable
+	{
+		private ArgumentLayout [] availableArgs; 
+		private Hashtable args = new Hashtable();
+
+		public ArgumentQueue(ArgumentLayout [] availableArgs, string [] args)
+		{
+			this.availableArgs = availableArgs;
+		
+			for(int i = 0; i < args.Length; i++) {
+				string arg = null, val = String.Empty;
+				
+				if(args[i].StartsWith("--")) {
+					arg = args[i].Substring(2);
+				}
+
+				if(i < args.Length - 1) {
+					if(!args[i + 1].StartsWith("--")) {
+						val = args[i + 1];
+						i++;
+					}
+				}
+
+				if(arg != null) {
+					Enqueue(arg, val);
+				}
+			}
+		}
+
+		public void Enqueue(string arg)
+		{
+			Enqueue(arg, String.Empty);
+		}
+
+		public void Enqueue(string arg, string val)
+		{
+			args.Add(arg, val);
+		}
+
+		public void Dequeue(string arg)
+		{
+			args.Remove(arg);
+		}
+
+		public bool Contains(string arg)
+		{
+			return args[arg] != null;
+		}
+
+		public string this [string arg]
+		{
+			get {
+				return args[arg] as string;
+			}
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return args.GetEnumerator();
+		}
+
+		public string [] Arguments 
+		{
+			get {
+				ArrayList list = new ArrayList(args.Keys);
+				return list.ToArray(typeof(string)) as string [];
+			}
+		}
+
+		public ArgumentLayout [] AvailableArguments
+		{
+			get {
+				return availableArgs;
+			}
+		}
+	}
 }
