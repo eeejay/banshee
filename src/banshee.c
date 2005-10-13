@@ -113,6 +113,7 @@ main(int argc, char **argv)
 {
 	char *mono_exe = 0;
 	char **shift_argv;
+	char *mono_process_name;
 	struct stat statbuf;
 	int p_status;
 	int local_exe = 0;
@@ -131,8 +132,10 @@ main(int argc, char **argv)
 	
 	setup_environment(local_exe);
 	
+	mono_process_name = strconcat(argv[0], "-mono", 0);
+	
 	shift_argv = (char **)malloc((argc + local_exe + 2) * sizeof(char *));
-	shift_argv[0] = argv[0];
+	shift_argv[0] = mono_process_name;
 	
 	if(local_exe == 0) {
 		shift_argv[1] = mono_exe; 
@@ -146,15 +149,16 @@ main(int argc, char **argv)
 
 	shift_argv[argc + local_exe + 1] = 0;
 
-	signal(SIGTERM, signal_handler);
-	signal(SIGINT, signal_handler);
+	//signal(SIGTERM, signal_handler);
+	//signal(SIGINT, signal_handler);
 
-	if((mono_pid = fork()) == 0) 
+	//if((mono_pid = fork()) == 0) 
 		execvp(MONO, shift_argv);
 	
-	waitpid(mono_pid, &p_status, WUNTRACED);
+	//waitpid(mono_pid, &p_status, WUNTRACED);
 	
 	free(mono_exe);
+	free(mono_process_name);
 	free(shift_argv);
 	
 	exit(errno);
