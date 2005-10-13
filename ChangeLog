@@ -1,3 +1,7 @@
+2005-10-13  Aaron Bockover  <aaron@aaronbock.net>
+
+	* mediaengines/vlc/libvlc.so: Removed, not needed
+	
 2005-10-13  Jordi Mas <jordi@ximian.com>
 
 	* configure.ac: Added catalan language
@@ -5,7 +9,7 @@
 2005-10-12  Aaron Bockover  <aaron@aaronbock.net>
 
 	* mediaengines/vlc/libvlc.so: Dummy text file user must replace with
-	real libvlc.so they must compile (legal issues)
+	real libvlc.so (source tree too large for inclusion)
 	* mediaengines/vlc/VLC.cs: Partial libvlc C# bindings
 	* mediaengines/vlc/VlcPlayerEngine.cs: libvlc IPlayerEngine implementation
 	* mediaengines/vlc/vlc-player.dll.config.in: vlc-player.dll assembly
