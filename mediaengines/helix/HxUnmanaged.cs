@@ -74,5 +74,22 @@ namespace Helix
 		[DllImport("hxclient")]
 		public static extern void ClientPlayerMute(int token,
 			bool shouldMute);
+
+		// COM Plugin Stuff
+
+        [DllImport("hxclient")]
+        public static extern bool ClientPlayerGetPluginHandler(int token, 
+            out IntPtr pluginHandlerPtr);
+
+	    [DllImport("hxclient")]
+	    public static extern uint ClientPlayerGetPluginCount(IntPtr pluginHandlerPtr);
+	    
+	    [DllImport("hxclient")]
+	    public static extern bool ClientPlayerGetPlugin(IntPtr pluginHandlerPtr, uint index, 
+	       out IntPtr pluginPtr);
+	       
+	    [DllImport("hxclient")]
+	    public static extern bool ClientPlayerGetPluginFileFormatInfo(IntPtr pluginPtr, 
+	       out IntPtr fileMimeTypes, out IntPtr fileExtensions, out IntPtr fileOpenNames);
 	}
 }

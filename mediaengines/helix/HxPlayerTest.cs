@@ -11,13 +11,47 @@ public class HxPlayerTest
 		
 		player.LengthChanged += OnPlayerLengthChanged;
 		player.VolumeChanged += OnPlayerVolumeChanged;
-		
-		player.OpenUri(uri);
+
+		Console.WriteLine("Plugins Loaded: " + player.Plugins.Length);
+
+        int index = 0;
+        foreach(HxPlugin plugin in player.Plugins) {
+            HxFileFormatInfo formatInfo = plugin.FileFormatInfo;
+            index++;
+            
+            if(formatInfo == null)
+                continue;
+            
+            Console.WriteLine(index + ": ");
+            
+            
+            if(formatInfo.MimeTypes != null) {
+                foreach(string mime in formatInfo.MimeTypes) {
+                    Console.WriteLine("    " + mime);
+                }
+            }
+            
+            Console.WriteLine("    ------");
+            if(formatInfo.Extensions != null) {
+                foreach(string ext in formatInfo.Extensions) {
+                    Console.WriteLine("    " + ext);
+                }
+            }
+            
+            Console.WriteLine("    ------");
+            if(formatInfo.OpenNames != null) {
+                foreach(string name in formatInfo.OpenNames) {
+                    Console.WriteLine("    " + name);
+                }
+            }
+        }
+
+		/*player.OpenUri(uri);
 		player.Volume = 80;
 		player.Play();
 
 		while(true)
-			player.Iterate();
+			player.Iterate();*/
 	}
 	
 	public static void OnPlayerLengthChanged(object o, LengthChangedArgs args)

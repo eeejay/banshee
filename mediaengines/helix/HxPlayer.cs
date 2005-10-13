@@ -32,6 +32,120 @@ using System.Runtime.InteropServices;
 
 namespace Helix
 {
+    public class HxPlugin
+    {
+        public static HxPlugin GetPluginFromIndex(IntPtr pluginHandler, uint index)
+        {
+            IntPtr ptr = IntPtr.Zero;
+            
+            if(!HxUnmanaged.ClientPlayerGetPlugin(pluginHandler, index, out ptr)) {
+                throw new ApplicationException("Could not get plugin through COM");  
+            }
+            
+            return new HxPlugin(ptr);
+        }
+        
+        private IntPtr raw;
+        public IntPtr Raw
+        {
+            get {
+                return raw;
+            }
+        }
+        
+        protected HxPlugin(IntPtr raw)
+        {
+            this.raw = raw;
+        }
+        
+        private bool fileFormatInfoLoadAttempted = false;
+        private HxFileFormatInfo fileFormatInfo;
+        public HxFileFormatInfo FileFormatInfo
+        {
+            get {
+                if(fileFormatInfo == null && !fileFormatInfoLoadAttempted) {
+                    fileFormatInfoLoadAttempted = true;
+                    
+                    try {
+                        fileFormatInfo = new HxFileFormatInfo(this);
+                    } catch(Exception) { }
+                }
+                
+                return fileFormatInfo;
+            }
+        }
+    }
+    
+    public class HxFileFormatInfo
+    {
+        private string [] mimeTypes;
+        private string [] extensions;
+        private string [] openNames;
+        
+        public HxFileFormatInfo(HxPlugin plugin)
+        {
+            IntPtr fileMimeTypesPtr;
+            IntPtr fileExtensionsPtr;
+            IntPtr fileOpenNamesPtr;
+    
+            if(!HxUnmanaged.ClientPlayerGetPluginFileFormatInfo(plugin.Raw, out fileMimeTypesPtr, 
+                out fileExtensionsPtr, out fileOpenNamesPtr)) {
+                throw new ApplicationException("Could not get FileFormatInfo from Plugin");
+            }
+            
+            mimeTypes = MarshalAnsiStringArray(fileMimeTypesPtr);
+            extensions = MarshalAnsiStringArray(fileExtensionsPtr);
+            openNames = MarshalAnsiStringArray(fileOpenNamesPtr);
+        }
+        
+        private static string [] MarshalAnsiStringArray(IntPtr arrayPtr)
+        {
+            int arraySize = 0;
+            
+            while(Marshal.ReadIntPtr(arrayPtr, arraySize * IntPtr.Size) != IntPtr.Zero) {
+                arraySize++;
+            }
+            
+            if(arraySize <= 0) {
+                return null;
+            }
+                
+            string [] strings = new string[arraySize];
+            
+            for(int i = 0; i < arraySize; i++) {
+                IntPtr strPtr = Marshal.ReadIntPtr(arrayPtr, i * IntPtr.Size);
+                if(strPtr == IntPtr.Zero) {
+                    throw new ApplicationException("Unexpected null pointer before end of array");
+                }
+                
+                strings[i] = Marshal.PtrToStringAnsi(strPtr);
+            }
+            
+            return strings;
+        }
+        
+        public string [] MimeTypes
+        {
+            get {
+                return mimeTypes;
+            }
+        }
+        
+        public string [] Extensions
+        {
+            get {
+                return extensions;
+            }
+        }
+        
+        public string [] OpenNames
+        {
+            get {
+                return openNames;
+            }
+        }
+    }        
+	
 	public class HxPlayer : IDisposable
 	{		
 		public const ushort PumpEventDelay = 75;
@@ -139,6 +253,40 @@ namespace Helix
 			HxUnmanaged.ClientEngineProcessXEvent(IntPtr.Zero);
 		}
 		
+		private IntPtr pluginHandler = IntPtr.Zero;
+        public IntPtr PluginHandler
+        {
+            get {
+                if(pluginHandler == IntPtr.Zero) {
+                    IntPtr ptr = IntPtr.Zero;
+                    
+                    if(!HxUnmanaged.ClientPlayerGetPluginHandler(token, out ptr)) {
+                        throw new ApplicationException("Could not get plugin handler through COM");
+                    }
+                    
+                    pluginHandler = ptr;
+                }
+            
+                return pluginHandler;
+            }
+        }
+        
+        private HxPlugin [] plugins;
+        public HxPlugin [] Plugins
+        {
+            get {
+                if(plugins == null) {
+                    plugins = new HxPlugin[HxUnmanaged.ClientPlayerGetPluginCount(PluginHandler)];
+                    
+                    for(int i = 0; i < plugins.Length; i++) {
+                        plugins[i] = HxPlugin.GetPluginFromIndex(PluginHandler, (uint)i);
+                    }       
+                }
+               
+                return plugins;
+            }
+        }
+        
 		// Default Callbacks
 		
 		private void OnErrorOccurred(IntPtr player, uint hxCode, uint userCode, 
