@@ -52,20 +52,7 @@ typedef struct {
 	gboolean is_lead_out;
 } CdTrackInfo;
 
-typedef struct {
-	gchar *device_node;
-	gchar *disk_id;
-
-	gint n_tracks;
-	gint64 total_sectors;
-	gint64 total_time;
-	gint64 total_seconds;
-	
-	CdTrackInfo **tracks;
-	gchar *offsets;
-} CdDiskInfo;
-
-CdDiskInfo *cd_disk_info_new(const gchar *device_node);
-void cd_disk_info_free(CdDiskInfo *disk);
+char *
+cd_info_get_extended_disc_id(char *device);
 
 #endif /* CD_INFO_H */

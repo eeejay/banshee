@@ -44,6 +44,7 @@
 #  include <linux/cdrom.h>
 #endif
 
+#include <glib.h>
 #include <gst/gst.h>
 
 #include "cd-info.h"
@@ -53,65 +54,42 @@
 #define TIME_TO_SECTOR(t) ((t) / GST_SECOND * SECTORS_PER_SEC)
 #define SECTOR_TO_TIME(s) (((s) / SECTORS_PER_SEC) * GST_SECOND)
 
-void cd_disk_info_load(CdDiskInfo *disk);
-
-CdTrackInfo *cd_track_info_new(int number, gint64 start_sector, 
-gint64 end_sector);
-static void cd_track_info_free(CdTrackInfo *track);
-
-/* CD Disk Info */
-
-CdDiskInfo *
-cd_disk_info_new(const gchar *device_node)
-{
-    CdDiskInfo *disk;
-
-    disk = g_new0(CdDiskInfo, 1);
-
-    disk->device_node = g_strdup(device_node);
-    disk->disk_id = NULL;
-
-    disk->n_tracks = 0;
-    disk->total_sectors = 0;
-    disk->total_time = 0;
-    disk->tracks = NULL;
-    disk->offsets = NULL;
-
-    cd_disk_info_load(disk);
-
-    if(disk->n_tracks == 0) {
-        cd_disk_info_free(disk);
-        disk = NULL;
-    }
-
-    return disk;
-}
-
-void 
-cd_disk_info_free(CdDiskInfo *disk)
-{
-    gint i;
-
-    if(disk == NULL) {
-        return;
-    }
-    
-    if(disk->tracks != NULL) {
-        for(i = 0; i < disk->n_tracks; i++) {
-            cd_track_info_free(disk->tracks[i]);	
-        }
-
-        g_free(disk->tracks);
-    }
-
-    g_free(disk->device_node);
-    g_free(disk->disk_id);
-    g_free(disk);
-
-    disk = NULL;
-}
-
 #ifdef HAVE_LINUX_CDROM_H
+CdTrackInfo *
+cd_track_info_new(int number, gint64 start_sector, gint64 end_sector)
+{
+    CdTrackInfo *track;
+
+    track = g_new0(CdTrackInfo, 1);
+
+    track->number = number;
+
+    track->start_sector = start_sector;
+    track->end_sector = end_sector;
+    track->msf_minutes = 0;
+    track->msf_seconds = 0;
+    track->sectors = track->end_sector - track->start_sector;
+
+    track->start_time = SECTOR_TO_TIME(start_sector);
+    track->end_time = SECTOR_TO_TIME(end_sector);
+
+    track->duration = (track->end_time - track->start_time) / GST_SECOND;
+
+    track->minutes = track->duration / 60;
+    track->seconds = track->duration % 60;
+
+    track->is_data = FALSE;
+    track->is_lead_out = FALSE;
+
+    return track;
+}
+
+static void
+cd_track_info_free(CdTrackInfo *track)
+{
+    g_free(track);
+    track = NULL;
+}
 
 inline static int 
 msf_to_frames(struct cdrom_msf0 msf)
@@ -133,22 +111,22 @@ cddb_sum(gint n)
 }
 
 static gchar *
-calculate_disc_id(CdDiskInfo *disk)
+calculate_disc_id(int n_tracks, CdTrackInfo **tracks)
 {
     gint i, t = 0, n = 0;
     
-    for(i = 0; i < disk->n_tracks; i++) {
-        n += cddb_sum((disk->tracks[i]->msf_minutes * 60) +
-            disk->tracks[i]->msf_seconds);
+    for(i = 0; i < n_tracks; i++) {
+        n += cddb_sum((tracks[i]->msf_minutes * 60) +
+            tracks[i]->msf_seconds);
     }
     
-    t = ((disk->tracks[disk->n_tracks]->msf_minutes * 60) + 
-        disk->tracks[disk->n_tracks]->msf_seconds) - 
-        ((disk->tracks[0]->msf_minutes * 60) + 
-        disk->tracks[0]->msf_seconds);
+    t = ((tracks[n_tracks]->msf_minutes * 60) + 
+        tracks[n_tracks]->msf_seconds) - 
+        ((tracks[0]->msf_minutes * 60) + 
+        tracks[0]->msf_seconds);
 
     return g_strdup_printf("%08x",
-        (n % 0xFF) << 24 | t << 8 | disk->n_tracks);
+        (n % 0xFF) << 24 | t << 8 | n_tracks);
 }
 
 static CdTrackInfo * 
@@ -186,169 +164,81 @@ cdrom_read_toc_entry_msf(int fd, int track_count, int track_num)
     return track;
 }
 
-void
-cd_disk_info_load(CdDiskInfo *disk)
+char *
+cd_info_get_extended_disc_id(char *device)
 {
-    int devfd, i;
+    int devfd, i, n_tracks;
     struct cdrom_tochdr tochdr;
+    CdTrackInfo **tracks;
+    gchar *offsets_c;
 
     GString *offsets = NULL;
     gchar *offset;
  
-    devfd = open(disk->device_node, O_RDONLY | O_NONBLOCK);
+    devfd = open(device, O_RDONLY | O_NONBLOCK);
     if(devfd == -1) {
-        return;
+        return NULL;
     }   
  
     if(ioctl(devfd, CDROMREADTOCHDR, &tochdr) == -1) {
         close(devfd);
-        return;
+        return NULL;
     }
     
-    disk->n_tracks = tochdr.cdth_trk1;
+    n_tracks = tochdr.cdth_trk1;
     
-    disk->tracks = (CdTrackInfo **)g_new0(CdTrackInfo, 
-        disk->n_tracks + 1);
+    tracks = (CdTrackInfo **)g_new0(CdTrackInfo, n_tracks + 1);
     offsets = g_string_new(NULL);
     
     for(i = tochdr.cdth_trk0; i <= tochdr.cdth_trk1; i++) {
-        disk->tracks[i - 1] = cdrom_read_toc_entry_msf(devfd, 
-            disk->n_tracks, i);
+        tracks[i - 1] = cdrom_read_toc_entry_msf(devfd, n_tracks, i);
         
         offset = g_strdup_printf("%" G_GINT64_FORMAT " ", 
-            disk->tracks[i - 1]->start_sector);
+            tracks[i - 1]->start_sector);
         g_string_append(offsets, offset);
         g_free(offset);
     }
     
-    disk->tracks[disk->n_tracks] = cdrom_read_toc_entry_msf(devfd, 
-        disk->n_tracks, CDROM_LEADOUT);
-    
-    disk->total_sectors
-     = disk->tracks[disk->n_tracks]->start_sector;
-    disk->total_seconds = disk->tracks[disk->n_tracks]->start_sector / 75;
-        
-    disk->offsets = g_strdup(offsets->str);
-    g_string_free(offsets, TRUE);
-    
-    disk->disk_id = calculate_disc_id(disk);
+    tracks[n_tracks] = cdrom_read_toc_entry_msf(devfd, 
+        n_tracks, CDROM_LEADOUT);
     
     close(devfd);
+    
+    offsets_c = g_strdup_printf("%s %s", calculate_disc_id(n_tracks, tracks), 
+        offsets->str);
+    
+    g_string_free(offsets, TRUE);
+    
+    for(i = 0; i < n_tracks; i++) {
+        cd_track_info_free(tracks[i]);
+    }
+    
+    g_free(tracks);
+    tracks = NULL;
+    g_printf("SEC: %lld\n", GST_SECOND);
+    return offsets_c;
 }
 #else
-void
-cd_disk_info_load(CdDiskInfo *disk)
+cd_info_get_extended_disc_id(char *device)
 {
     GstElement *source;
     GstPad *source_pad;
-    GstFormat track_format, sector_format;
-    GstFormat time_format = GST_FORMAT_TIME;
-    gint64 start_sector = 0, end_sector;
-    GString *offsets = NULL;
-    gchar *offset = NULL;
-    gint i;
+    char *disc_id;
 
     gst_init(NULL, NULL);
 
-    source = gst_element_factory_make("cdparanoia", "cdparanoia");
+    source = gst_element_factory_make("cddasrc", "cddasrc");
 
     if(source == NULL) {
-        return;
+        return NULL;
     }
     
-    g_object_set(G_OBJECT(source), "device", disk->device_node, NULL);
-
-    track_format = gst_format_get_by_nick("track");
-    sector_format = gst_format_get_by_nick("sector");
-    source_pad = gst_element_get_pad(source, "src");
-
+    g_object_set(G_OBJECT(source), "device", device, NULL);
     gst_element_set_state(source, GST_STATE_PLAYING);
-
-    gst_pad_query(source_pad, GST_QUERY_TOTAL, &track_format, 
-        &(disk->n_tracks));
-    gst_pad_query(source_pad, GST_QUERY_TOTAL, &sector_format, 
-        &(disk->total_sectors));
-    disk->total_sectors += TOC_OFFSET;
-    
-    gst_pad_convert(source_pad, sector_format, disk->total_sectors, 
-        &time_format, &(disk->total_time));
-
-    disk->total_seconds = disk->total_time / GST_SECOND;
-    
-    if(disk->n_tracks <= 0) {
-        gst_element_set_state(source, GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(source));
-    }
-
-    disk->tracks = (CdTrackInfo **)g_new0(CdTrackInfo, disk->n_tracks + 1);
-    offsets = g_string_new(NULL);
-
-    for(i = 0; i <= disk->n_tracks; i++) {
-        end_sector = 0;
-
-        if(i < disk->n_tracks) {
-            gst_pad_convert(source_pad, track_format, i, 
-                &sector_format, &end_sector);
-            end_sector += TOC_OFFSET;
-        } else {
-            end_sector = disk->total_sectors;
-        }
-
-        if(i > 0) {
-            disk->tracks[i - 1] = cd_track_info_new(i - 1, start_sector,
-                end_sector);
-            offset = g_strdup_printf("%" G_GINT64_FORMAT " ", start_sector);
-            g_string_append(offsets, offset);
-            g_free(offset);
-        }
-
-        start_sector = end_sector;
-    }
-
-    disk->offsets = g_strdup(offsets->str);
-    g_string_free(offsets, TRUE);
-
-    g_object_get(source, "discid", &(disk->disk_id), NULL);
-
+    g_object_get(source, "extended-discid", &disc_id, NULL);
     gst_element_set_state(source, GST_STATE_NULL);
     gst_object_unref(GST_OBJECT(source));
+    
+    return disc_id;
 }
 #endif
-
-/* Track Info */
-
-CdTrackInfo *
-cd_track_info_new(int number, gint64 start_sector, gint64 end_sector)
-{
-    CdTrackInfo *track;
-
-    track = g_new0(CdTrackInfo, 1);
-
-    track->number = number;
-
-    track->start_sector = start_sector;
-    track->end_sector = end_sector;
-    track->msf_minutes = 0;
-    track->msf_seconds = 0;
-    track->sectors = track->end_sector - track->start_sector;
-
-    track->start_time = SECTOR_TO_TIME(start_sector);
-    track->end_time = SECTOR_TO_TIME(end_sector);
-
-    track->duration = (track->end_time - track->start_time) / GST_SECOND;
-
-    track->minutes = track->duration / 60;
-    track->seconds = track->duration % 60;
-
-    track->is_data = FALSE;
-    track->is_lead_out = FALSE;
-
-    return track;
-}
-
-static void
-cd_track_info_free(CdTrackInfo *track)
-{
-    g_free(track);
-    track = NULL;
-}
