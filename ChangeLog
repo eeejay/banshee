@@ -1,5 +1,24 @@
 2005-10-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* mediaengines/helix/libhxclient.so.1.0: Updated with COM wrappings
+	* mediaengines/helix/HxUnmanaged.cs, mediaengines/helix/HxPlayer.cs,
+	mediaengines/helix/HxPlayerTest.cs: Bindings and tests for Helix COM
+	* README: Updated it
+	* libbanshee/cd-info.[ch]: Make CD stuff simpler, probably broken ATM
+	* src/AudioCdCore.cs: Making CD stuff simpler, probably broken ATM
+	* src/DBusIPC.cs: SelectAudioCd() method for D-Bus
+	* src/Database.cs: Turn synchronous = OFF for the SQLite DB
+	* src/IpodCore.cs: Tweak some broken iPod sync stuff
+	* src/IpodTrackInfo.cs: Fix URI bug
+	* src/LibraryTransactionStatus.cs: Fix some HIG problems
+	* src/PlayerInterface.cs: Use argument queue to check for g-v-m commands
+	* src/Main.cs: Use argument queue for command line options, options for
+	g-v-m
+	* src/Core.cs: Argument queue
+	* src/PlaylistModel.cs: Fix small null ref
+
+	* mediaengines/vlc/VlcPlayerEngine.cs: Fixed pausing, removed debug writes
+
 	* mediaengines/vlc/VLC.cs: Minor fixes in bindings
 	* mediaengines/vlc/VlcPlayerEngine.cs: Minor fixes
 	* mediaengines/vlc/libvlc.so: Removed, not needed
