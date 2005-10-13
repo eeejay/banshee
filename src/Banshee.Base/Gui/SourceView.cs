@@ -364,6 +364,22 @@ namespace Banshee
 			Selection.SelectPath(new TreePath("0"));
 			OnCursorChangedTimeout();
 		}
+
+		public void SelectSource(Source source)
+		{
+			for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+				TreeIter iter = TreeIter.Zero;
+				if(!store.IterNthChild(out iter, i)) {
+					continue;
+				}
+				
+				if((store.GetValue(iter, 0) as Source) == source) {
+					Selection.SelectPath(store.GetPath(iter));
+					OnCursorChanged(this, new EventArgs());
+					return;
+				}
+			}
+		}
 		
 		public void HighlightPath(TreePath path)
 		{

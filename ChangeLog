@@ -1,5 +1,8 @@
 2005-10-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/SourceView.cs: SelectSource() method to select any source
+	* src/PlayerInterface.cs: Remove obsolete gtk-sharp-2.0 stuff
+
 	* mediaengines/helix/libhxclient.so.1.0: Updated with COM wrappings
 	* mediaengines/helix/HxUnmanaged.cs, mediaengines/helix/HxPlayer.cs,
 	mediaengines/helix/HxPlayerTest.cs: Bindings and tests for Helix COM

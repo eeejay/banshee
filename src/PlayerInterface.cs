@@ -1500,7 +1500,7 @@ namespace Banshee
 				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
 			}
 			
-			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
+			menu.Popup(null, null, null, 0, args.Event.Time);
 			menu.Show();
 			
 			addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
@@ -1862,7 +1862,7 @@ namespace Banshee
 			gxmlPlaylistMenu["ItemRemove"].Visible = sensitive;
 			gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
 			
-			menu.Popup(null, null, null, IntPtr.Zero, 0, time);
+			menu.Popup(null, null, null, 0, time);
 			
 			return false;
 		}
