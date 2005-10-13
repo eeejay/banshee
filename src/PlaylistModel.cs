@@ -203,7 +203,12 @@ namespace Banshee
 		
 		public TrackInfo IterTrackInfo(TreeIter iter)
 		{
-			return GetValue(iter, 0) as TrackInfo;
+		    object o = GetValue(iter, 0);
+		    if(o != null) {
+		      return o as TrackInfo;
+		    }
+		    
+		    return null;
 		}
 		
 		public TrackInfo PathTrackInfo(TreePath path)
