@@ -135,6 +135,12 @@ namespace Banshee
 			ExecuteSqlStatements(instructions);
 			
 			try {
+			   Execute("PRAGMA synchronous = OFF");
+			} catch(ApplicationException) {
+			   DebugLog.Add("Could not set sqlite3 PRAGMA synchronous = OFF");
+			}
+			
+			try {
 			   QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
 			} catch(ApplicationException) {
 			   Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
