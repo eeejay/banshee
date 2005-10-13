@@ -1,7 +1,6 @@
-2005-10-12  Adam Weinberger  <adamw@gnome.org>
+2005-10-13  Jordi Mas <jordi@ximian.com>
 
-	* POTFILES.in: Added missing file.
-	* en_CA.po: Updated Canadian English translation.
+	* ca.po: Added Catalan translation
 
 2005-10-06  Alexander Shopov  <ash@contact.bg>
 
