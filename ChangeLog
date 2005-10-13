@@ -1,5 +1,7 @@
 2005-10-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* mediaengines/vlc/VLC.cs: Minor fixes in bindings
+	* mediaengines/vlc/VlcPlayerEngine.cs: Minor fixes
 	* mediaengines/vlc/libvlc.so: Removed, not needed
 	
 2005-10-13  Jordi Mas <jordi@ximian.com>

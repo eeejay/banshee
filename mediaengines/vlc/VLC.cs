@@ -138,12 +138,12 @@ public class VLC : IDisposable
         VLC_Destroy(iVLC);
     }
     
-    public Error Open(string target)
+    public bool Open(string target)
     {
         VLC_PlaylistClear(iVLC);
-        return VLC_AddTarget(iVLC, target, null, 0, (int)Mode.Replace, 0);
+        return VLC_AddTarget(iVLC, target, null, 0, (int)Mode.Replace, 0) > 0;
     }
-
+    
     public Error Play()
     {
         return VLC_Play(iVLC);

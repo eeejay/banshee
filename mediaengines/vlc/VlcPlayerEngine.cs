@@ -48,6 +48,7 @@ namespace Banshee
         
         private uint timerId = 0;
         private bool loaded = false;
+        private bool playing = false;
         private bool disabled;
         private bool shutdown;
         
@@ -134,13 +135,13 @@ namespace Banshee
         public bool Open(TrackInfo ti)
         {
             if(!ti.CanPlay) {
+                loaded = false;
                 EmitEndOfStream();
                 return false;
             }
             
-            loaded = player.Open(ti.Uri.AbsoluteUri) == VLC.Error.Success;
-            track = loaded ? ti : null;
-            
+            player.Open(ti.Uri.AbsoluteUri);
+
             timerId = GLib.Timeout.Add(500, delegate() {
                 if(!player.IsPlaying) {
                     EmitEndOfStream();
@@ -153,15 +154,18 @@ namespace Banshee
                 return true;
             });
             
-            return loaded;
+            loaded = true;
+            return true;
         }
         
         public void Close()
         {
-            if(timerId > 0)
+            if(timerId > 0) {
                 GLib.Source.Remove(timerId);
-                
+            }
+            
             player.Stop();
+            loaded = false;
         }
         
         public void Play()
@@ -184,7 +188,7 @@ namespace Banshee
         public bool Playing
         {
             get {
-                return player.IsPlaying;  
+                return player.IsPlaying;
             }
         }
          
