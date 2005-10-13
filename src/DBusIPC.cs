@@ -110,6 +110,13 @@ namespace Banshee
 			if(PlayerUI != null)
 				PlayerUI.Previous();
 		}
+
+		[Method]
+		public virtual void SelectAudioCd(string device)
+		{
+			if(PlayerUI != null)
+				PlayerUI.SelectAudioCd(device);
+		}
 	}
 }
 
