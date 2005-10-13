@@ -33,8 +33,8 @@ using Gnome;
 namespace Banshee
 {	
     public class BansheeEntry
-    {
-        public static void Main(string[] args)
+    {	
+		public static void Main(string[] args)
         {
             try {
                 Startup(args);
@@ -52,6 +52,46 @@ namespace Banshee
 		{
             BansheeCore dbusCore = null;
 
+			Core.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
+				new ArgumentLayout("next",       "Play next song"),
+				new ArgumentLayout("previous",   "Play previous song"),
+				new ArgumentLayout("toggle-playing", "Toggle playing of current song"),
+				new ArgumentLayout("play",       "Play current song"),
+				new ArgumentLayout("pause",      "Pause current song"),
+				new ArgumentLayout("help",       "List available command line arguments"),
+				new ArgumentLayout("audio-cd", "device", "Start Banshee and select source mapped to <device>")
+			}, args);
+
+			if(Core.ArgumentQueue.Contains("help")) {
+				int maxNameLen = 0;
+				int maxVarLen = 0;
+
+				foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+					if(layout.Name.Length > maxNameLen) {
+						maxNameLen = layout.Name.Length;
+					}
+
+					if(layout.ValueKind != null && layout.ValueKind.Length > maxVarLen) {
+						maxVarLen = layout.ValueKind.Length;
+					}
+				}
+
+				maxVarLen = maxVarLen > 0 ? maxVarLen + 3 : 0;
+				maxNameLen++;
+
+				Console.WriteLine("Usage: banshee [ options ... ]\n       where options include:");
+
+				Console.WriteLine("");
+				
+				foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+					Console.WriteLine("  --{0,-" + maxNameLen + "} {1,-" + maxVarLen + "} {2}", layout.Name, layout.ValueKind == null ? String.Empty : "<" + layout.ValueKind + ">", layout.Description);
+				}
+
+				Console.WriteLine("");
+
+				return;
+			}
+
             try {
                 dbusCore = BansheeCore.FindInstance();
             } catch { }
@@ -60,20 +100,36 @@ namespace Banshee
                 bool present = true;
 
             if(args.Length > 0) {
-                switch(args[0]) {
-                    case "--play-pause":
-                        dbusCore.TogglePlaying();
-                        present = false;
-                    break;
-                    case "--next":
-                        dbusCore.Next();
-                        present = false;
-                    break;
-                    case "--previous":
-                        dbusCore.Previous();
-                        present = false;
-                    break;
-                }
+				foreach(string arg in Core.ArgumentQueue.Arguments) {
+	                switch(arg) {
+    	                case "toggle-playing":
+        	                dbusCore.TogglePlaying();
+							Core.ArgumentQueue.Dequeue(arg);
+                	        present = false;
+                    		break;
+                    	case "next":
+                        	dbusCore.Next();
+							Core.ArgumentQueue.Dequeue(arg);
+                        	present = false;
+                    		break;
+                    	case "previous":
+                        	dbusCore.Previous();
+							Core.ArgumentQueue.Dequeue(arg);
+	                        present = false;
+    		                break;
+						case "play-cd":
+							dbusCore.SelectAudioCd(Core.ArgumentQueue[arg]);
+							//Core.ArgumentQueue.Dequeue(arg);
+							present = false;
+							break;
+						case "ipod":
+							Console.WriteLine("IPOD: " + Core.ArgumentQueue[arg]);
+							break;
+						case "burn-cd":
+							Console.WriteLine("BURN: " + Core.ArgumentQueue[arg]);
+							break;
+            	    }
+				}
             }
 
             if(present)
