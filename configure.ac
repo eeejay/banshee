@@ -120,7 +120,7 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
-IPODSHARP_REQUIRED=0.5.6
+IPODSHARP_REQUIRED=0.5.4
 PKG_CHECK_MODULES(IPODSHARP, 
 	ipod-sharp >= $IPODSHARP_REQUIRED \
 	ipod-sharp-ui >= $IPODSHARP_REQUIRED)	
@@ -338,7 +338,7 @@ if test "x${enable_vlc}" = "xyes"; then
 		echo "    'make install' or copy libvlc.so after the install to"
 		echo "    ${expanded_libdir}/banshee/mediaengines/vlc/libvlc.so"
 		echo ""
-		echo "    libvlc.so cannot be distributed with Banshee."
+		echo "    libvlc.so is not included in Banshee."
 		echo ""
 	fi;
 fi;
