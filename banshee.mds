@@ -1,16 +1,16 @@
 <Combine name="banshee" fileversion="2.0">
-  <Configurations>
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry build="True" name="banshee" />
-      <Entry build="True" name="plugincore" />
-      <Entry build="True" name="helix-mediaengine" />
-      <Entry build="True" name="gst-mediaengine" />
+      <Entry configuration="Debug" build="True" name="banshee" />
+      <Entry configuration="Debug" build="True" name="plugincore" />
+      <Entry configuration="Debug" build="True" name="helix-mediaengine" />
+      <Entry configuration="Debug" build="True" name="gst-mediaengine" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="banshee" />
-      <Entry build="True" name="plugincore" />
-      <Entry build="True" name="helix-mediaengine" />
-      <Entry build="True" name="gst-mediaengine" />
+      <Entry configuration="Release" build="True" name="banshee" />
+      <Entry configuration="Release" build="True" name="plugincore" />
+      <Entry configuration="Release" build="True" name="helix-mediaengine" />
+      <Entry configuration="Release" build="True" name="gst-mediaengine" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="banshee" single="True">

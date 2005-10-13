@@ -1,5 +1,5 @@
 <Project name="plugincore" fileversion="2.0" language="C#" ctype="DotNetProject">
-  <Configurations>
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="plugin-core" />
       <Build debugmode="True" target="Library" />
@@ -13,9 +13,6 @@
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <References>
-    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-  </References>
   <DeploymentInformation strategy="File">
     <excludeFiles />
   </DeploymentInformation>
@@ -23,4 +20,7 @@
     <File name="./IPlayerEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </References>
 </Project>
