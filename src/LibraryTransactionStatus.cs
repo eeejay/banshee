@@ -208,11 +208,14 @@ namespace Banshee
 				"Are you sure you want to cancel these operations?",
 				tableCount);
 
-			MessageDialog md = new MessageDialog(null, 
-				DialogFlags.DestroyWithParent, MessageType.Question, 
-                ButtonsType.None, 
-				tableCount > 1 ? multiple + areyousure : areyousure);
+		    HigMessageDialog md = new HigMessageDialog(null, DialogFlags.DestroyWithParent,
+		      MessageType.Question, ButtonsType.None,
+		      Catalog.GetPluralString("Really Cancel Operation?",
+		          "Really Cancel Operations?", tableCount),
+		          tableCount > 1 ? multiple + areyousure : areyousure);
 				
+			md.AddButton("No", 3); 
+     		
 			if(tableCount > 1) {
 				md.AddButton("Yes, Cancel Current", 1);
 				md.AddButton("Yes, Cancel All", 2);
@@ -220,8 +223,6 @@ namespace Banshee
 				md.AddButton("Yes", 1);
 			}
 			
-			md.AddButton("No", 3); 
-     
 			int result = md.Run();
 			md.Destroy();
 			
