@@ -17,6 +17,7 @@ libbanshee/gst-player-engine.c
 mediaengines/gst/GstPlayerEngine.cs
 mediaengines/helix/HelixPlayer.cs
 mediaengines/helix/HxPlayer.cs
+mediaengines/vlc/VlcPlayerEngine.cs
 plugincore/TrackInfo.cs
 src/AudioCdCore.cs
 src/BurnCore.cs

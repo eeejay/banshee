@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-04 00:03-0400\n"
+"POT-Creation-Date: 2005-10-12 21:02-0400\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -59,30 +59,40 @@ msgid "Height of the main interface window."
 msgstr "Height of the main interface window."
 
 #: data/banshee.schemas.in.h:7
+msgid "Move music on info save"
+msgstr "Move music on info save"
+
+#: data/banshee.schemas.in.h:8
+msgid ""
+"Move music within banshee music library directory when saving track info"
+msgstr ""
+"Move music within banshee music library directory when saving track info"
+
+#: data/banshee.schemas.in.h:9
 msgid "Name of media playback engine."
 msgstr "Name of media playback engine."
 
-#: data/banshee.schemas.in.h:8
+#: data/banshee.schemas.in.h:10
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Pixel position of Main Player Window on the X Axis"
 
-#: data/banshee.schemas.in.h:9
+#: data/banshee.schemas.in.h:11
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Pixel position of Main Player Window on the Y Axis"
 
-#: data/banshee.schemas.in.h:10
+#: data/banshee.schemas.in.h:12
 msgid "Player Engine Name"
 msgstr "Player Engine Name"
 
-#: data/banshee.schemas.in.h:11
+#: data/banshee.schemas.in.h:13
 msgid "Source View Width"
 msgstr "Source View Width"
 
-#: data/banshee.schemas.in.h:12
+#: data/banshee.schemas.in.h:14
 msgid "Volume Output Level"
 msgstr "Volume Output Level"
 
-#: data/banshee.schemas.in.h:13
+#: data/banshee.schemas.in.h:15
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
@@ -90,59 +100,59 @@ msgstr ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
 
-#: data/banshee.schemas.in.h:14
+#: data/banshee.schemas.in.h:16
 msgid "Width of Album Column."
 msgstr "Width of Album Column."
 
-#: data/banshee.schemas.in.h:15
+#: data/banshee.schemas.in.h:17
 msgid "Width of Artist Column."
 msgstr "Width of Artist Column."
 
-#: data/banshee.schemas.in.h:16
+#: data/banshee.schemas.in.h:18
 msgid "Width of Last Played Column."
 msgstr "Width of Last Played Column."
 
-#: data/banshee.schemas.in.h:17
+#: data/banshee.schemas.in.h:19
 msgid "Width of Plays Column."
 msgstr "Width of Plays Column."
 
-#: data/banshee.schemas.in.h:18
+#: data/banshee.schemas.in.h:20
 msgid "Width of Rating Column."
 msgstr "Width of Rating Column."
 
-#: data/banshee.schemas.in.h:19
+#: data/banshee.schemas.in.h:21
 msgid "Width of Source View Comlumn."
 msgstr "Width of Source View Comlumn."
 
-#: data/banshee.schemas.in.h:20
+#: data/banshee.schemas.in.h:22
 msgid "Width of Time Column."
 msgstr "Width of Time Column."
 
-#: data/banshee.schemas.in.h:21
+#: data/banshee.schemas.in.h:23
 msgid "Width of Title Column."
 msgstr "Width of Title Column."
 
-#: data/banshee.schemas.in.h:22
+#: data/banshee.schemas.in.h:24
 msgid "Width of Track Column."
 msgstr "Width of Track Column."
 
-#: data/banshee.schemas.in.h:23
+#: data/banshee.schemas.in.h:25
 msgid "Width of the main interface window."
 msgstr "Width of the main interface window."
 
-#: data/banshee.schemas.in.h:24
+#: data/banshee.schemas.in.h:26
 msgid "Window Height"
 msgstr "Window Height"
 
-#: data/banshee.schemas.in.h:25
+#: data/banshee.schemas.in.h:27
 msgid "Window Position X"
 msgstr "Window Position X"
 
-#: data/banshee.schemas.in.h:26
+#: data/banshee.schemas.in.h:28
 msgid "Window Position Y"
 msgstr "Window Position Y"
 
-#: data/banshee.schemas.in.h:27
+#: data/banshee.schemas.in.h:29
 msgid "Window Width"
 msgstr "Window Width"
 
@@ -408,45 +418,45 @@ msgstr "<big><b>Editing Track Properties</b></big>"
 msgid "<small><i><Unknown></i></small>"
 msgstr "<small><i><Unknown></i></small>"
 
-#: data/glade/trackinfo.glade.h:3 src/PlaylistView.cs:87
-msgid "Album"
-msgstr "Album"
+#: data/glade/trackinfo.glade.h:3
+msgid "Albu_m"
+msgstr "Albu_m"
 
-#: data/glade/trackinfo.glade.h:4 src/PlaylistView.cs:81
-msgid "Artist"
-msgstr "Artist"
-
-#: data/glade/trackinfo.glade.h:5
+#: data/glade/trackinfo.glade.h:4
 msgid "Imported On:"
 msgstr "Imported On:"
 
-#: data/glade/trackinfo.glade.h:6
+#: data/glade/trackinfo.glade.h:5
 msgid "Last Played On:"
 msgstr "Last Played On:"
 
-#: data/glade/trackinfo.glade.h:7
+#: data/glade/trackinfo.glade.h:6
 msgid "Number of Plays:"
 msgstr "Number of Plays:"
 
-#: data/glade/trackinfo.glade.h:8 src/PlaylistView.cs:84
-msgid "Title"
-msgstr "Title"
-
-#: data/glade/trackinfo.glade.h:9
-msgid "Track Count"
-msgstr "Track Count"
-
-#: data/glade/trackinfo.glade.h:10
+#: data/glade/trackinfo.glade.h:7
 msgid "Track Duration:"
 msgstr "Track Duration:"
 
-#: data/glade/trackinfo.glade.h:11
-msgid "Track Number"
-msgstr "Track Number"
-
-#: data/glade/trackinfo.glade.h:12
+#: data/glade/trackinfo.glade.h:8
 msgid "Track Properties"
 msgstr "Track Properties"
+
+#: data/glade/trackinfo.glade.h:9
+msgid "Track _Count"
+msgstr "Track _Count"
+
+#: data/glade/trackinfo.glade.h:10
+msgid "Track _Number"
+msgstr "Track _Number"
+
+#: data/glade/trackinfo.glade.h:11
+msgid "_Artist"
+msgstr "_Artist"
+
+#: data/glade/trackinfo.glade.h:12
+msgid "_Title"
+msgstr "_Title"
 
 #: libbanshee/cd-rip.c:85
 msgid "Could not create pipeline"
@@ -538,6 +548,18 @@ msgstr ""
 "The Helix Engine provides multimedia control through the Helix Multimedia "
 "Framework, sponsored by RealNetworks. The engine can play any file that "
 "RealPlayer can. Install RealPlayer for best results."
+
+#: mediaengines/vlc/VlcPlayerEngine.cs:76
+msgid "VLC"
+msgstr "VLC"
+
+#: mediaengines/vlc/VlcPlayerEngine.cs:84
+msgid ""
+"VLC is a highly portable multimedia player for various audio and video "
+"formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
+msgstr ""
+"VLC is a highly portable multimedia player for various audio and video "
+"formats (MP3, AAC, OGG, FLAC, WMA, etc.). See http://videolan.org/vlc/"
 
 #: plugincore/TrackInfo.cs:143 src/AudioCdCore.cs:258
 msgid "Unknown Artist"
@@ -841,12 +863,12 @@ msgstr[1] "Are you sure you want to cancel these operations?"
 msgid "{0} threw an unhandled exception: ending transaction safely: {1} ({2})"
 msgstr "{0} threw an unhandled exception: ending transaction safely: {1} ({2})"
 
-#: src/LibraryTransactions.cs:216 src/LibraryTransactions.cs:588
+#: src/LibraryTransactions.cs:216 src/LibraryTransactions.cs:573
 msgid "Library Track Loader"
 msgstr "Library Track Loader"
 
-#: src/LibraryTransactions.cs:238 src/LibraryTransactions.cs:607
-#: src/LibraryTransactions.cs:716
+#: src/LibraryTransactions.cs:238 src/LibraryTransactions.cs:592
+#: src/LibraryTransactions.cs:701
 msgid "Processing"
 msgstr "Processing"
 
@@ -854,62 +876,62 @@ msgstr "Processing"
 msgid "Preloading Files"
 msgstr "Preloading Files"
 
-#: src/LibraryTransactions.cs:323 src/LibraryTransactions.cs:472
-#: src/LibraryTransactions.cs:614 src/LibraryTransactions.cs:738
+#: src/LibraryTransactions.cs:308 src/LibraryTransactions.cs:457
+#: src/LibraryTransactions.cs:599 src/LibraryTransactions.cs:723
 #, csharp-format
 msgid "Loading {0} - {1} ..."
 msgstr "Loading {0} - {1} ..."
 
-#: src/LibraryTransactions.cs:391
+#: src/LibraryTransactions.cs:376
 msgid "Playlist Save"
 msgstr "Playlist Save"
 
-#: src/LibraryTransactions.cs:405
+#: src/LibraryTransactions.cs:390
 msgid "Flushing old entries"
 msgstr "Flushing old entries"
 
-#: src/LibraryTransactions.cs:419
+#: src/LibraryTransactions.cs:404
 msgid "Saving new entries"
 msgstr "Saving new entries"
 
-#: src/LibraryTransactions.cs:448
+#: src/LibraryTransactions.cs:433
 msgid "Library Load"
 msgstr "Library Load"
 
-#: src/LibraryTransactions.cs:459
+#: src/LibraryTransactions.cs:444
 msgid "Preloading Library"
 msgstr "Preloading Library"
 
-#: src/LibraryTransactions.cs:501
+#: src/LibraryTransactions.cs:486
 msgid "Library Track Remove"
 msgstr "Library Track Remove"
 
-#: src/LibraryTransactions.cs:507 src/LibraryTransactions.cs:551
+#: src/LibraryTransactions.cs:492 src/LibraryTransactions.cs:536
 msgid "Removing Tracks"
 msgstr "Removing Tracks"
 
-#: src/LibraryTransactions.cs:520 src/LibraryTransactions.cs:566
+#: src/LibraryTransactions.cs:505 src/LibraryTransactions.cs:551
 #, csharp-format
 msgid "Removing {0} - {1}"
 msgstr "Removing {0} - {1}"
 
-#: src/LibraryTransactions.cs:526
+#: src/LibraryTransactions.cs:511
 msgid "Purging Removed Tracks from Library..."
 msgstr "Purging Removed Tracks from Library..."
 
-#: src/LibraryTransactions.cs:540
+#: src/LibraryTransactions.cs:525
 msgid "Playlist Track Remove"
 msgstr "Playlist Track Remove"
 
-#: src/LibraryTransactions.cs:573
+#: src/LibraryTransactions.cs:558
 msgid "Purging Removed Tracks from Playlist..."
 msgstr "Purging Removed Tracks from Playlist..."
 
-#: src/LibraryTransactions.cs:635
+#: src/LibraryTransactions.cs:620
 msgid "Could not load track from library"
 msgstr "Could not load track from library"
 
-#: src/LibraryTransactions.cs:698
+#: src/LibraryTransactions.cs:683
 msgid "Playlist Track Loader"
 msgstr "Playlist Track Loader"
 
@@ -1257,6 +1279,18 @@ msgstr[1] "{0} Plays"
 msgid "Track"
 msgstr "Track"
 
+#: src/PlaylistView.cs:81
+msgid "Artist"
+msgstr "Artist"
+
+#: src/PlaylistView.cs:84
+msgid "Title"
+msgstr "Title"
+
+#: src/PlaylistView.cs:87
+msgid "Album"
+msgstr "Album"
+
 #: src/PlaylistView.cs:90
 msgid "Time"
 msgstr "Time"
@@ -1269,7 +1303,7 @@ msgstr "Plays"
 msgid "Last Played"
 msgstr "Last Played"
 
-#: src/PlaylistView.cs:364
+#: src/PlaylistView.cs:369
 msgid "N/A"
 msgstr "N/A"
 
