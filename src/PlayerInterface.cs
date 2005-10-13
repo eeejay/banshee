@@ -495,6 +495,15 @@ namespace Banshee
 				startupLoadReady = false;
 				LoadSourceView();
 				sourceView.SelectLibraryForce();
+
+				if(Core.ArgumentQueue.Contains("audio-cd")) {
+					sourceView.SelectSource(null);
+					playlistView.Selection.SelectPath(new TreePath("0"));
+					playlistView.PlaySelected();
+					//Next();
+				} else {
+					sourceView.SelectLibraryForce();
+				}
 			}
 		}
 		
@@ -861,10 +870,10 @@ namespace Banshee
 			chooser.DefaultResponse = ResponseType.Ok;
 			
 			if(chooser.Run() == (int)ResponseType.Ok) 
-				ImportMusic(chooser.Uri);
+				ImportMusic(chooser.CurrentFolderUri);
 				
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-			     chooser.Uri);
+			     chooser.CurrentFolderUri);
 			
 			chooser.Destroy();
 		}
@@ -906,10 +915,10 @@ namespace Banshee
 			);
 			
 			try {
-				chooser.SetCurrentFolderUri(Core.GconfClient.Get(
-				    GConfKeys.LastFileSelectorUri) as string);
+			     chooser.SetCurrentFolderUri(Core.GconfClient.Get(
+			         GConfKeys.LastFileSelectorUri) as string);
 			} catch(Exception) {
-				chooser.SetCurrentFolder(Environment.GetFolderPath(
+			     chooser.SetCurrentFolder(Environment.GetFolderPath(
 				    Environment.SpecialFolder.Personal));
 		    }
 			
@@ -925,7 +934,7 @@ namespace Banshee
 			}
 			
 			Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-			    chooser.Uri);
+			     chooser.CurrentFolderUri);
 			
 			chooser.Destroy();
 		}
@@ -1124,7 +1133,7 @@ namespace Banshee
                 AudioCdTrackInfo track = playlistModel.FirstTrack 
                     as AudioCdTrackInfo;
                 
-                if(cdSource.Disk.Udi == track.Udi) 
+                if(cdSource.Disk.DeviceNode == track.Device) 
                     (gxml["ViewNameLabel"] as Label).Markup = 
                     "<b>" + GLib.Markup.EscapeText(cdSource.Disk.Title) + "</b>";
             }
@@ -1491,7 +1500,7 @@ namespace Banshee
 				ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
 			}
 			
-			menu.Popup(null, null, null, 0, args.Event.Time);
+			menu.Popup(null, null, null, IntPtr.Zero, 0, args.Event.Time);
 			menu.Show();
 			
 			addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
@@ -1853,7 +1862,7 @@ namespace Banshee
 			gxmlPlaylistMenu["ItemRemove"].Visible = sensitive;
 			gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
 			
-			menu.Popup(null, null, null, 0, time);
+			menu.Popup(null, null, null, IntPtr.Zero, 0, time);
 			
 			return false;
 		}
@@ -2094,6 +2103,11 @@ namespace Banshee
 			
 			if(trayIcon != null)
 				trayIcon.Tooltip = Catalog.GetString("Banshee - Idle");
+		}
+
+		public void SelectAudioCd(string device)
+		{
+			Console.WriteLine("Selecting CD");
 		}
 	}
 }

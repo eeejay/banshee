@@ -48,7 +48,7 @@ namespace Banshee
         
         private uint timerId = 0;
         private bool loaded = false;
-        private bool playing = false;
+        private bool paused = false;
         private bool disabled;
         private bool shutdown;
         
@@ -143,7 +143,7 @@ namespace Banshee
             player.Open(ti.Uri.AbsoluteUri);
 
             timerId = GLib.Timeout.Add(500, delegate() {
-                if(!player.IsPlaying) {
+                if(!player.IsPlaying && !paused) {
                     EmitEndOfStream();
                     return false;
                 }
@@ -171,11 +171,13 @@ namespace Banshee
         public void Play()
         {
             player.Play();
+            paused = false;
         }
         
         public void Pause()
         {
             player.Pause();
+            paused = true;
         }
 
         public bool Loaded 
@@ -195,7 +197,6 @@ namespace Banshee
         public ushort Volume
         {
             get {
-                Console.WriteLine("VOLUME: " + player.Volume);
                 return (ushort)player.Volume;
             }
           
