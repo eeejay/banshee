@@ -360,9 +360,12 @@ namespace Banshee
         
         private void ThreadedSave()
         {
-            lock(device.SongDatabase) {
+           try {
                 device.SongDatabase.Save();
-            }
+            
+           } catch(Exception e) {
+            Console.WriteLine(e);
+           }
         }    
     }
     
