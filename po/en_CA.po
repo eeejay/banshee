@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-12 21:02-0400\n"
+"POT-Creation-Date: 2005-10-14 12:19-0400\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/banshee.desktop.in.in.h:1 data/glade/player.glade.h:6
-#: src/PlayerInterface.cs:1296
+#: src/PlayerInterface.cs:1305
 msgid "Banshee Music Player"
 msgstr "Banshee Music Player"
 
@@ -249,7 +249,7 @@ msgstr "Import Files..."
 msgid "Import Folder..."
 msgstr "Import Folder..."
 
-#: data/glade/player.glade.h:14 src/Library.cs:564 src/PlayerInterface.cs:1798
+#: data/glade/player.glade.h:14 src/Library.cs:564 src/PlayerInterface.cs:1807
 #: src/SourceView.cs:69
 msgid "New Playlist"
 msgstr "New Playlist"
@@ -278,7 +278,7 @@ msgstr "Remove Song(s)"
 msgid "Rename"
 msgstr "Rename"
 
-#: data/glade/player.glade.h:21 src/PlayerInterface.cs:1574
+#: data/glade/player.glade.h:21 src/PlayerInterface.cs:1583
 msgid "Rename Playlist"
 msgstr "Rename Playlist"
 
@@ -338,7 +338,7 @@ msgstr "<small>Encoding</small>"
 msgid "<small>Library</small>"
 msgstr "<small>Library</small>"
 
-#: data/glade/preferences.glade.h:11 src/AudioCdCore.cs:266
+#: data/glade/preferences.glade.h:11 src/AudioCdCore.cs:216
 msgid "Audio CD"
 msgstr "Audio CD"
 
@@ -549,11 +549,11 @@ msgstr ""
 "Framework, sponsored by RealNetworks. The engine can play any file that "
 "RealPlayer can. Install RealPlayer for best results."
 
-#: mediaengines/vlc/VlcPlayerEngine.cs:76
+#: mediaengines/vlc/VlcPlayerEngine.cs:77
 msgid "VLC"
 msgstr "VLC"
 
-#: mediaengines/vlc/VlcPlayerEngine.cs:84
+#: mediaengines/vlc/VlcPlayerEngine.cs:85
 msgid ""
 "VLC is a highly portable multimedia player for various audio and video "
 "formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
@@ -561,11 +561,11 @@ msgstr ""
 "VLC is a highly portable multimedia player for various audio and video "
 "formats (MP3, AAC, OGG, FLAC, WMA, etc.). See http://videolan.org/vlc/"
 
-#: plugincore/TrackInfo.cs:143 src/AudioCdCore.cs:258
+#: plugincore/TrackInfo.cs:143 src/AudioCdCore.cs:202
 msgid "Unknown Artist"
 msgstr "Unknown Artist"
 
-#: plugincore/TrackInfo.cs:148 src/AudioCdCore.cs:259
+#: plugincore/TrackInfo.cs:148 src/AudioCdCore.cs:203
 msgid "Unknown Album"
 msgstr "Unknown Album"
 
@@ -573,12 +573,12 @@ msgstr "Unknown Album"
 msgid "Unknown Title"
 msgstr "Unknown Title"
 
-#: src/AudioCdCore.cs:261
+#: src/AudioCdCore.cs:205
 #, csharp-format
 msgid "Track {0}"
 msgstr "Track {0}"
 
-#: src/AudioCdCore.cs:410
+#: src/AudioCdCore.cs:362
 msgid "Could not initialize HAL for CD Detection"
 msgstr "Could not initialize HAL for CD Detection"
 
@@ -744,12 +744,12 @@ msgid "Could not encode file: {0}"
 msgstr "Could not encode file: {0}"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: src/IpodCore.cs:440 src/Library.cs:459 src/PlayerInterface.cs:755
+#: src/IpodCore.cs:443 src/Library.cs:459 src/PlayerInterface.cs:764
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} of {1}"
 
-#: src/IpodCore.cs:449 src/Library.cs:470
+#: src/IpodCore.cs:452 src/Library.cs:470
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} Remaining)"
@@ -857,6 +857,12 @@ msgid "Are you sure you want to cancel this operation?"
 msgid_plural "Are you sure you want to cancel these operations?"
 msgstr[0] "Are you sure you want to cancel this operation?"
 msgstr[1] "Are you sure you want to cancel these operations?"
+
+#: src/LibraryTransactionStatus.cs:213
+msgid "Really Cancel Operation?"
+msgid_plural "Really Cancel Operations?"
+msgstr[0] "Really Cancel Operation?"
+msgstr[1] "Really Cancel Operations?"
 
 #: src/LibraryTransactions.cs:96
 #, csharp-format
@@ -1023,7 +1029,7 @@ msgid "Update iPod"
 msgstr "Update iPod"
 
 #. Misc
-#: src/PlayerInterface.cs:334 src/PlayerInterface.cs:2091
+#: src/PlayerInterface.cs:334 src/PlayerInterface.cs:2100
 #: src/TrackInfoHeader.cs:136
 msgid "Idle"
 msgstr "Idle"
@@ -1032,15 +1038,15 @@ msgstr "Idle"
 msgid "All"
 msgstr "All"
 
-#: src/PlayerInterface.cs:346 src/PlayerInterface.cs:1659
+#: src/PlayerInterface.cs:346 src/PlayerInterface.cs:1668
 msgid "Song Name"
 msgstr "Song Name"
 
-#: src/PlayerInterface.cs:347 src/PlayerInterface.cs:1657
+#: src/PlayerInterface.cs:347 src/PlayerInterface.cs:1666
 msgid "Artist Name"
 msgstr "Artist Name"
 
-#: src/PlayerInterface.cs:348 src/PlayerInterface.cs:1661
+#: src/PlayerInterface.cs:348 src/PlayerInterface.cs:1670
 msgid "Album Title"
 msgstr "Album Title"
 
@@ -1134,24 +1140,24 @@ msgstr "Import Folder"
 msgid "Automatic Import"
 msgstr "Automatic Import"
 
-#: src/PlayerInterface.cs:845
+#: src/PlayerInterface.cs:854
 msgid "Import Folder to Library"
 msgstr "Import Folder to Library"
 
-#: src/PlayerInterface.cs:903
+#: src/PlayerInterface.cs:912
 msgid "Import Files to Library"
 msgstr "Import Files to Library"
 
-#: src/PlayerInterface.cs:986
+#: src/PlayerInterface.cs:995
 #, csharp-format
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>{0}'s Music Library</b>"
 
-#: src/PlayerInterface.cs:1162 src/PlayerInterface.cs:1192
+#: src/PlayerInterface.cs:1171 src/PlayerInterface.cs:1201
 msgid "Synchronize iPod"
 msgstr "Synchronize iPod"
 
-#: src/PlayerInterface.cs:1163
+#: src/PlayerInterface.cs:1172
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1171,15 +1177,15 @@ msgstr ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 
-#: src/PlayerInterface.cs:1168 src/PlayerInterface.cs:1196
+#: src/PlayerInterface.cs:1177 src/PlayerInterface.cs:1205
 msgid "Synchronize Library"
 msgstr "Synchronize Library"
 
-#: src/PlayerInterface.cs:1169
+#: src/PlayerInterface.cs:1178
 msgid "Save Manual Changes"
 msgstr "Save Manual Changes"
 
-#: src/PlayerInterface.cs:1193
+#: src/PlayerInterface.cs:1202
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
@@ -1189,34 +1195,34 @@ msgstr ""
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
 "of your Banshee library."
 
-#: src/PlayerInterface.cs:1284
+#: src/PlayerInterface.cs:1293
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} day"
 msgstr[1] "{0} days"
 
-#: src/PlayerInterface.cs:1301
+#: src/PlayerInterface.cs:1310
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Your Library is Empty - Consider Importing Music"
 
-#: src/PlayerInterface.cs:1305
+#: src/PlayerInterface.cs:1314
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "This Playlist is Empty - Consider Adding Music"
 
-#: src/PlayerInterface.cs:1310
+#: src/PlayerInterface.cs:1319
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} Item"
 msgstr[1] "{0} Items"
 
-#: src/PlayerInterface.cs:1314
+#: src/PlayerInterface.cs:1323
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} Total Play Time"
 
-#: src/PlayerInterface.cs:1367
+#: src/PlayerInterface.cs:1376
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1228,31 +1234,31 @@ msgstr[1] ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library?"
 
-#: src/PlayerInterface.cs:1374
+#: src/PlayerInterface.cs:1383
 msgid "Remove Selected Songs from Library"
 msgstr "Remove Selected Songs from Library"
 
-#: src/PlayerInterface.cs:1575
+#: src/PlayerInterface.cs:1584
 msgid "Enter new playlist name"
 msgstr "Enter new playlist name"
 
-#: src/PlayerInterface.cs:1579
+#: src/PlayerInterface.cs:1588
 msgid "Rename iPod"
 msgstr "Rename iPod"
 
-#: src/PlayerInterface.cs:1580
+#: src/PlayerInterface.cs:1589
 msgid "Enter new name for your iPod"
 msgstr "Enter new name for your iPod"
 
-#: src/PlayerInterface.cs:1822
+#: src/PlayerInterface.cs:1831
 msgid "Clear"
 msgstr "Clear"
 
-#: src/PlayerInterface.cs:2059
+#: src/PlayerInterface.cs:2068
 msgid "Could Not Eject"
 msgstr "Could Not Eject"
 
-#: src/PlayerInterface.cs:2096
+#: src/PlayerInterface.cs:2105
 msgid "Banshee - Idle"
 msgstr "Banshee - Idle"
 
