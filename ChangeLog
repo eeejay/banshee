@@ -1,5 +1,9 @@
 2005-10-20  Rodney Dawes  <dobey@novell.com>
 
+	* data/images/about-header.png: Replace with new logo image
+
+2005-10-20  Rodney Dawes  <dobey@novell.com>
+
 	* data/images/album-cover-container.png:
 	* data/images/banshee-icon*.png:
 	Removed these old app icons, replaced by music-player-banshee
