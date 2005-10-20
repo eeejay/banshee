@@ -1,5 +1,11 @@
 2005-10-20  Rodney Dawes  <dobey@novell.com>
 
+	* data/images/album-cover-container.png:
+	* data/images/banshee-icon*.png:
+	Removed these old app icons, replaced by music-player-banshee
+	
+2005-10-20  Rodney Dawes  <dobey@novell.com>
+
 	* data/images/music-player-banshee*: Add new banshee icons to CVS
 
 2005-10-13  Aaron Bockover  <aaron@aaronbock.net>
