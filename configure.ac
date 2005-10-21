@@ -71,7 +71,7 @@ fi
 AC_SUBST(INSTALL)
 AC_SUBST(PKG_CONFIG)
 
-MONO_REQUIRED_VERSION=1.1.9
+MONO_REQUIRED_VERSION=1.1.8
 PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
 
 dnl Mono programs
@@ -279,6 +279,7 @@ Makefile
 banshee.pc
 entagged-sharp/Makefile
 hal-sharp/Makefile
+hal-sharp/hal-sharp.dll.config
 mediaengines/Makefile
 mediaengines/gst/Makefile
 mediaengines/gst/gst-player.dll.config
