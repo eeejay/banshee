@@ -1,7 +1,3 @@
-bansheeicondir = $(datadir)/pixmaps/
-bansheeicon_DATA = \
-	music-player-banshee.png
-
 hicolordir = $(datadir)/icons/hicolor
 
 install-data-local:
@@ -25,7 +21,6 @@ DISTCLEANFILES = Makefile.in
 EXTRA_DIST = \
 	advanced-icon-32.png \
 	banshee-logo.png \
-	banshee-logo.svg \
 	blue-speaker.png \
 	burn-icon-32.png \
 	burn-icon.png \
