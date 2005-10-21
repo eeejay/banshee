@@ -82,7 +82,9 @@ banshee_sources = \
 	CddbSlaveClient.cs \
 	EllipsizeLabel.cs \
 	IpodNewDialog.cs \
-	ExceptionDialog.cs
+	ExceptionDialog.cs \
+	ThemeIcons.cs \
+	VersionInformationDialog.cs
 
 banshee_resources = \
 	../data/Tables.sql \
@@ -103,21 +105,18 @@ banshee_resources = \
 	../data/images/volume-zero.png \
 	../data/glade/about.glade \
 	../data/glade/trackinfo.glade \
-	../data/images/album-cover-container.png \
 	../data/images/icon-album.png \
 	../data/images/icon-artist.png \
 	../data/images/icon-title.png \
-	../data/images/banshee-icon.png \
+	../data/images/music-player-banshee.png \
 	../data/images/media-repeat.png \
 	../data/images/media-shuffle.png \
 	../data/images/playlist-icon-large.png \
 	../data/images/source-library.png \
 	../data/images/source-playlist.png \
-	../data/images/library-icon.png \
 	../data/images/library-icon-32.png \
 	../data/images/busy-spinner.png \
 	../data/images/busy-spinner-36.png \
-	../data/images/banshee-icon-24.png \
 	../data/images/search-entry-icon.png \
 	../data/images/search-entry-icon-hover.png \
 	../data/images/source-ipod-regular.png \
@@ -132,14 +131,11 @@ banshee_resources = \
 	../data/images/circle.png \
 	../data/images/star.png \
 	../data/images/advanced-icon-32.png \
-	../data/images/about-header.png \
-	../data/images/about-footer.png \
-	../data/images/about-grad-top.png \
-	../data/images/about-grad-bottom.png \
 	../data/images/encoding-icon-32.png \
 	../data/images/ipod-48.png \
 	../data/images/sync-needed.png \
-	../data/images/song-drm.png
+	../data/images/song-drm.png \
+	../data/images/banshee-logo.png
 
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
