@@ -297,7 +297,6 @@ src/ConfigureDefines.cs
 src/banshee.exe.config
 src/ipod-sharp.dll.config
 data/Makefile
-data/banshee.desktop.in
 data/org.gnome.Banshee.service
 data/glade/Makefile
 data/images/Makefile
