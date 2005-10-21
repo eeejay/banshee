@@ -1,3 +1,8 @@
+2005-10-21  Rodney Dawes  <dobey@novell.com>
+
+	* data/images/Makefile.am: Install the 16px and 22px versions into the
+	16x16 and 22x22 hicolor directories, not the 24px icon
+
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Require gtk-sharp 2.3.91 and ipod-sharp 0.5.8

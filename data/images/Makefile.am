@@ -8,18 +8,18 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/scalable/apps
 	$(INSTALL_DATA) $(srcdir)/music-player-banshee.svg $(DESTDIR)$(hicolordir)/scalable/apps/music-player-banshee.svg
 	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/16x16/apps
-	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/16x16/apps/music-player-banshee.png
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-16.png $(DESTDIR)$(hicolordir)/16x16/apps/music-player-banshee.png
 	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/22x22/apps
-	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-22.png $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
 	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/24x24/apps
 	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
- 
+
 uninstall-hook: 
 	rm -f $(DESTDIR)$(hicolordir)/scalable/apps/music-player-banshee.svg
 	rm -f $(DESTDIR)$(hicolordir)/16x16/apps/music-player-banshee.png
 	rm -f $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
 	rm -f $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
- 
+
 DISTCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
