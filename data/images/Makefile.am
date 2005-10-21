@@ -1,18 +1,25 @@
 bansheeicondir = $(datadir)/pixmaps/
 bansheeicon_DATA = \
-	banshee-icon.png
+	music-player-banshee.png
 
+hicolordir = $(datadir)/icons/hicolor
+
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/scalable/apps
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee.svg $(DESTDIR)$(hicolordir)/scalable/apps/music-player-banshee.svg
+	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/16x16/apps
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/16x16/apps/music-player-banshee.png
+	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/22x22/apps
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
+	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/24x24/apps
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
+ 
 DISTCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
-	about-footer.png \
-	about-grad-bottom.png \
-	about-grad-top.png \
-	about-header.png \
 	advanced-icon-32.png \
-	album-cover-container.png \
-	banshee-icon-24.png \
-	banshee-icon.png \
+	banshee-logo.png \
+	banshee-logo.svg \
 	blue-speaker.png \
 	burn-icon-32.png \
 	burn-icon.png \
@@ -25,7 +32,6 @@ EXTRA_DIST = \
 	icon-title.png \
 	ipod-48.png \
 	library-icon-32.png \
-	library-icon.png \
 	media-burn.png \
 	media-eject.png \
 	media-next.png \
@@ -35,6 +41,12 @@ EXTRA_DIST = \
 	media-repeat.png \
 	media-shuffle.png \
 	media-stop.png \
+	music-player-banshee-16.png \
+	music-player-banshee-22.png \
+	music-player-banshee-24.png \
+	music-player-banshee.png \
+	music-player-banshee.svg \
+	banshee-logo.svg \
 	now-playing-arrow.png \
 	playlist-icon-large.png \
 	search-entry-icon-hover.png \
@@ -49,12 +61,10 @@ EXTRA_DIST = \
 	star.png \
 	sync-needed.png \
 	tray-icon.png \
-	tray-icon-raw.png \
 	volume-decrease.png \
 	volume-increase.png \
 	volume-max.png \
 	volume-med.png \
 	volume-min.png \
-	volume-zero.png \
-	Makefile.am.build
+	volume-zero.png
 
