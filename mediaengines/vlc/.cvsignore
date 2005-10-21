@@ -1,8 +1,8 @@
 Makefile
 Makefile.in
-helix-sharp.dll
-helix-sharp.dll.config
-helix-sharp.dll.mdb
+vlc-player.dll
+vlc-player.dll.config
+vlc-player.dll.mdb
 *.pidb
 install.sh
 
