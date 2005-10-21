@@ -29,7 +29,7 @@ uninstall-hook:
 package:
 	mkdir -p banshee-engine-vlc/vlc; \
 	cp install.sh banshee-engine-vlc; \
-	cp vlc-player.dll vlc-player.dll.config vlc-player.dll.mdb libvlc.so banshee-engine-vlc/vlc; \ 
+	cp vlc-player.dll vlc-player.dll.config vlc-player.dll.mdb libvlc.so banshee-engine-vlc/vlc; \
 	tar cfz banshee-engine-vlc.tar.gz banshee-engine-vlc; \
 	rm -rf banshee-engine-vlc
 	
