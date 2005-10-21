@@ -31,7 +31,7 @@ using System;
 using System.Runtime.InteropServices;
 using Gtk;
 using Gdk;
-using Mono.Posix;
+using Mono.Unix;
 
 namespace Banshee
 {

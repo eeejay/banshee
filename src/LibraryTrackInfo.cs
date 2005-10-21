@@ -300,7 +300,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAddedStamp", Mono.Unix.UnixConvert.FromDateTime(dateAdded), 
+					"DateAddedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(dateAdded), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -310,7 +310,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayedStamp", Mono.Unix.UnixConvert.FromDateTime(lastPlayed));
+					"LastPlayedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(lastPlayed));
 			} else {
 				tracksQuery = new Update("Tracks",
 					"Uri", uri, 
@@ -323,7 +323,7 @@ namespace Banshee
 					"Title", title, 
 					"Genre", genre, 
 					"Year", year,
-					"DateAddedStamp", Mono.Unix.UnixConvert.FromDateTime(dateAdded), 
+					"DateAddedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(dateAdded), 
 					"TrackNumber", trackNumber, 
 					"TrackCount", trackCount, 
 					"Duration", duration, 
@@ -333,7 +333,7 @@ namespace Banshee
 					"AlbumPeak", albumPeak, 
 					"Rating", rating, 
 					"NumberOfPlays", numberOfPlays, 
-					"LastPlayedStamp", Mono.Unix.UnixConvert.FromDateTime(lastPlayed)) +
+					"LastPlayedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(lastPlayed)) +
 					new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
 				//	new Limit(1);
 			}
@@ -400,13 +400,13 @@ namespace Banshee
             numberOfPlays = Convert.ToUInt32(reader["NumberOfPlays"]);
 
             try {
-                lastPlayed = Mono.Unix.UnixConvert.ToDateTime((long)reader["LastPlayedStamp"]);
+                lastPlayed = Mono.Unix.Native.NativeConvert.ToDateTime((long)reader["LastPlayedStamp"]);
             } catch(Exception) {
                 lastPlayed = DateTime.MinValue;
             }
 
             try {
-                dateAdded = Mono.Unix.UnixConvert.ToDateTime((long)reader["DateAddedStamp"]);
+                dateAdded = Mono.Unix.Native.NativeConvert.ToDateTime((long)reader["DateAddedStamp"]);
             } catch(Exception) {
                 dateAdded = DateTime.MinValue;
             }

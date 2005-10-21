@@ -31,7 +31,7 @@ using System;
 using Gtk;
 using Glade;
 using System.Collections;
-using Mono.Posix;
+using Mono.Unix;
 
 namespace Banshee
 {
@@ -122,8 +122,7 @@ namespace Banshee
 			glade = new Glade.XML(null, 
 				"trackinfo.glade", "WindowTrackInfo", null);
 			glade.Autoconnect(this);
-			WindowTrackInfo.Icon = 
-				Gdk.Pixbuf.LoadFromResource("banshee-icon.png");
+			WindowTrackInfo.Icon = ThemeIcons.WindowManager;
 	
 			(glade["BackImage"] as Image).SetFromStock("gtk-go-back", 
 				IconSize.Button);

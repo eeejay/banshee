@@ -31,7 +31,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.IO;
-using Mono.Posix;
+using Mono.Unix;
 using IPod;
 using Gtk;
 
