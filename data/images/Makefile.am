@@ -46,7 +46,6 @@ EXTRA_DIST = \
 	music-player-banshee-24.png \
 	music-player-banshee.png \
 	music-player-banshee.svg \
-	banshee-logo.svg \
 	now-playing-arrow.png \
 	playlist-icon-large.png \
 	search-entry-icon-hover.png \
