@@ -34,76 +34,76 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Gnome;
 using GConf;
-using Mono.Posix;
+using Mono.Unix;
 
 
 namespace Banshee
 {
-	public class Core
-	{
-		private static Core appInstance = null;
+    public class Core
+    {
+        private static Core appInstance = null;
 
-		public static string [] Args = null;
-		public static ArgumentQueue ArgumentQueue = null;
-		public System.Threading.Thread MainThread;
-		
-		public IPlayerEngine activePlayer;
-		public IPlayerEngine PreferredPlayer;
-		public IPlayerEngine AudioCdPlayer;
-		
-		public Program Program;
-		public PlayerUI PlayerInterface;
-		public Random Random;
-		public DBusServer dbusServer;
-		
-		public AudioCdCore AudioCdCore;
-		public IpodCore IpodCore;
-		
-		public string UserRealName;
-		public string UserFirstName;
-		
-		private Library library;
-		private GConf.Client gconfClient;
-		
-		private LogCore log;
-		
-		public static Core Instance
-		{
-			get {
-				if(appInstance == null)
-					appInstance = new Core();
-					
-				return appInstance;
-			}
-		}
-		
-		public static bool IsInstantiated 
-		{
-			get {
-				return appInstance != null;
-			}
-		}
-		
-		public static GConf.Client GconfClient
-		{
-			get {
-				return Instance.gconfClient;
-			}
-		}
-		
-		public static Library Library
-		{
-			get {
-				return Instance.library;
-			}
-		}
-		
-		public DBusServer DBusServer
-		{
-			get { 
-				return dbusServer;
-			}
-		}
+        public static string [] Args = null;
+        public static ArgumentQueue ArgumentQueue = null;
+        public System.Threading.Thread MainThread;
+        
+        public IPlayerEngine activePlayer;
+        public IPlayerEngine PreferredPlayer;
+        public IPlayerEngine AudioCdPlayer;
+        
+        public Program Program;
+        public PlayerUI PlayerInterface;
+        public Random Random;
+        public DBusServer dbusServer;
+        
+        public AudioCdCore AudioCdCore;
+        public IpodCore IpodCore;
+        
+        public string UserRealName;
+        public string UserFirstName;
+        
+        private Library library;
+        private GConf.Client gconfClient;
+        
+        private LogCore log;
+        
+        public static Core Instance
+        {
+            get {
+                if(appInstance == null)
+                    appInstance = new Core();
+                    
+                return appInstance;
+            }
+        }
+        
+        public static bool IsInstantiated 
+        {
+            get {
+                return appInstance != null;
+            }
+        }
+        
+        public static GConf.Client GconfClient
+        {
+            get {
+                return Instance.gconfClient;
+            }
+        }
+        
+        public static Library Library
+        {
+            get {
+                return Instance.library;
+            }
+        }
+        
+        public DBusServer DBusServer
+        {
+            get { 
+                return dbusServer;
+            }
+        }
 
         public IPlayerEngine Player
         {
@@ -125,8 +125,8 @@ namespace Banshee
             }
         }
 
-		private Core()
-		{
+        private Core()
+        {
             Gdk.Threads.Init();
             Gtk.Application.Init();
 
@@ -153,22 +153,22 @@ namespace Banshee
             }
 
             if(Player == null) {
-                	Console.Error.WriteLine("Could not load A PlayerEngine Core!");
-                	System.Environment.Exit(1);
+                    Console.Error.WriteLine("Could not load A PlayerEngine Core!");
+                    System.Environment.Exit(1);
             }
 
             Player.Initialize();
             DebugLog.Add("Loaded PlayerEngine core: " + Player.EngineName);
 
             if(AudioCdPlayer == null) {
-                	Console.Error.WriteLine("Could not load AudioCdPlayer!");
-                	System.Environment.Exit(1);
+                    Console.Error.WriteLine("Could not load AudioCdPlayer!");
+                    System.Environment.Exit(1);
             }
 
-			AudioCdPlayer.Initialize();
-			DebugLog.Add("Loaded AudioCdPlayerEngine core: " + 
+            AudioCdPlayer.Initialize();
+            DebugLog.Add("Loaded AudioCdPlayerEngine core: " + 
                  AudioCdPlayer.EngineName);
-			
+            
             AudioCdCore = new AudioCdCore();
             IpodCore = new IpodCore();
 
@@ -176,19 +176,19 @@ namespace Banshee
             MainThread = System.Threading.Thread.CurrentThread;
 
             FindUserRealName();
-		}
-		
-		public void ReloadEngine(IPlayerEngine engine)
-		{
-			if(Player != null) {
-				Player.Dispose();
-				Player = null;
-			}
-			
-			Player = engine;
-			Player.Initialize();
-		}
-		
+        }
+        
+        public void ReloadEngine(IPlayerEngine engine)
+        {
+            if(Player != null) {
+                Player.Dispose();
+                Player = null;
+            }
+            
+            Player = engine;
+            Player.Initialize();
+        }
+        
         public void LoadCdPlayer()
         {
             if(Player == AudioCdPlayer)
@@ -209,48 +209,36 @@ namespace Banshee
             
             Player = PreferredPlayer;
         }
-		
-		public void Shutdown()
-		{
-			library.TransactionManager.CancelAll();
-			library.Db.Close();
-			AudioCdCore.Dispose();
-			IpodCore.Dispose();
-		}
-		
-		public static bool InMainThread
-		{
-			get {
-				return Core.Instance.MainThread.Equals(
-					System.Threading.Thread.CurrentThread);
-			}
-		}
-		
-		public static void ThreadEnter()
-		{
-			if(!InMainThread)
-				Gdk.Threads.Enter();
-		}
-		
-		public static void ThreadLeave()
-		{
-			if(!InMainThread)
-				Gdk.Threads.Leave();
-		}
-		
-		[DllImport("libglib-2.0.so")]
-		static extern IntPtr g_get_real_name();
+        
+        public void Shutdown()
+        {
+            library.TransactionManager.CancelAll();
+            library.Db.Close();
+            AudioCdCore.Dispose();
+            IpodCore.Dispose();
+        }
+        
+        public static bool InMainThread
+        {
+            get {
+                return Core.Instance.MainThread.Equals(
+                    System.Threading.Thread.CurrentThread);
+            }
+        }
+        
+        [DllImport("libglib-2.0.so")]
+        static extern IntPtr g_get_real_name();
 
-		private void FindUserRealName()
-		{
-			try {
-				UserRealName = GLib.Marshaller.Utf8PtrToString(g_get_real_name());
-				string[] parts = UserRealName.Split(' ');
-				UserFirstName = parts[0].Replace(',', ' ').Trim();
-			} catch(Exception) { }
-		}
-	}
-	
+        private void FindUserRealName()
+        {
+            try {
+                UserRealName = GLib.Marshaller.Utf8PtrToString(g_get_real_name());
+                string[] parts = UserRealName.Split(' ');
+                UserFirstName = parts[0].Replace(',', ' ').Trim();
+            } catch(Exception) { }
+        }
+    }
+    
     public class UidGenerator
     {
         private static int uid = 0;
@@ -262,100 +250,100 @@ namespace Banshee
             }
         }
     
-	}
+    }
 
-	public class ArgumentLayout
-	{
-		public string Name, ValueKind, Description;
-		
-		public ArgumentLayout(string name, string description) : this(name, 
-			null, description)
-		{
-	
-		}
-		
-		public ArgumentLayout(string name, string valueKind, string description)
-		{
-			Name = name;
-			ValueKind = valueKind;
-			Description = description;
-		}
-	}
+    public class ArgumentLayout
+    {
+        public string Name, ValueKind, Description;
+        
+        public ArgumentLayout(string name, string description) : this(name, 
+            null, description)
+        {
+    
+        }
+        
+        public ArgumentLayout(string name, string valueKind, string description)
+        {
+            Name = name;
+            ValueKind = valueKind;
+            Description = description;
+        }
+    }
 
-	public class ArgumentQueue : IEnumerable
-	{
-		private ArgumentLayout [] availableArgs; 
-		private Hashtable args = new Hashtable();
+    public class ArgumentQueue : IEnumerable
+    {
+        private ArgumentLayout [] availableArgs; 
+        private Hashtable args = new Hashtable();
 
-		public ArgumentQueue(ArgumentLayout [] availableArgs, string [] args)
-		{
-			this.availableArgs = availableArgs;
-		
-			for(int i = 0; i < args.Length; i++) {
-				string arg = null, val = String.Empty;
-				
-				if(args[i].StartsWith("--")) {
-					arg = args[i].Substring(2);
-				}
+        public ArgumentQueue(ArgumentLayout [] availableArgs, string [] args)
+        {
+            this.availableArgs = availableArgs;
+        
+            for(int i = 0; i < args.Length; i++) {
+                string arg = null, val = String.Empty;
+                
+                if(args[i].StartsWith("--")) {
+                    arg = args[i].Substring(2);
+                }
 
-				if(i < args.Length - 1) {
-					if(!args[i + 1].StartsWith("--")) {
-						val = args[i + 1];
-						i++;
-					}
-				}
+                if(i < args.Length - 1) {
+                    if(!args[i + 1].StartsWith("--")) {
+                        val = args[i + 1];
+                        i++;
+                    }
+                }
 
-				if(arg != null) {
-					Enqueue(arg, val);
-				}
-			}
-		}
+                if(arg != null) {
+                    Enqueue(arg, val);
+                }
+            }
+        }
 
-		public void Enqueue(string arg)
-		{
-			Enqueue(arg, String.Empty);
-		}
+        public void Enqueue(string arg)
+        {
+            Enqueue(arg, String.Empty);
+        }
 
-		public void Enqueue(string arg, string val)
-		{
-			args.Add(arg, val);
-		}
+        public void Enqueue(string arg, string val)
+        {
+            args.Add(arg, val);
+        }
 
-		public void Dequeue(string arg)
-		{
-			args.Remove(arg);
-		}
+        public void Dequeue(string arg)
+        {
+            args.Remove(arg);
+        }
 
-		public bool Contains(string arg)
-		{
-			return args[arg] != null;
-		}
+        public bool Contains(string arg)
+        {
+            return args[arg] != null;
+        }
 
-		public string this [string arg]
-		{
-			get {
-				return args[arg] as string;
-			}
-		}
+        public string this [string arg]
+        {
+            get {
+                return args[arg] as string;
+            }
+        }
 
-		public IEnumerator GetEnumerator()
-		{
-			return args.GetEnumerator();
-		}
+        public IEnumerator GetEnumerator()
+        {
+            return args.GetEnumerator();
+        }
 
-		public string [] Arguments 
-		{
-			get {
-				ArrayList list = new ArrayList(args.Keys);
-				return list.ToArray(typeof(string)) as string [];
-			}
-		}
+        public string [] Arguments 
+        {
+            get {
+                ArrayList list = new ArrayList(args.Keys);
+                return list.ToArray(typeof(string)) as string [];
+            }
+        }
 
-		public ArgumentLayout [] AvailableArguments
-		{
-			get {
-				return availableArgs;
-			}
-		}
-	}
+        public ArgumentLayout [] AvailableArguments
+        {
+            get {
+                return availableArgs;
+            }
+        }
+    }
 }

@@ -34,43 +34,47 @@ using Gdk;
 
 namespace Banshee
 {
-	public class StockIcons 
-	{
-		private static string [] iconList = {
-			/* Playback Control Icons */
-			"media-next",
-			"media-prev",
-			"media-play",
-			"media-pause",
-			"media-shuffle",
-			"media-repeat",
-			"media-eject",
-			
-			/* Volume Button Icons */
-			"volume-max",
-			"volume-med",
-			"volume-min",
-			"volume-zero",
-			"volume-decrease",
-			"volume-increase",
-			
-			/* Now Playing Images */
-			"icon-artist",
-			"icon-album",
-			"icon-title",
-			
-			/* Other */
-			"media-burn"
-		};	
+    public class StockIcons 
+    {
+        private static string [] icon_list = {
+            /* Playback Control Icons */
+            "media-next",
+            "media-prev",
+            "media-play",
+            "media-pause",
+            "media-shuffle",
+            "media-repeat",
+            "media-eject",
+            
+            /* Volume Button Icons */
+            "volume-max",
+            "volume-med",
+            "volume-min",
+            "volume-zero",
+            "volume-decrease",
+            "volume-increase",
+            
+            /* Now Playing Images */
+            "icon-artist",
+            "icon-album",
+            "icon-title",
+            
+            /* Other */
+            "media-burn"
+        };    
 
-		public static void Initialize()
-		{
-			IconFactory factory = new IconFactory();
-			factory.AddDefault();
+        public static void Initialize()
+        {
+            IconFactory factory = new IconFactory();
+            factory.AddDefault();
 
-			foreach(string name in iconList) 
-				factory.Add(name, new IconSet(
-					Pixbuf.LoadFromResource(name + ".png")));
-		}
-	}
+            foreach(string name in icon_list) {
+                try {
+                    factory.Add(name, new IconSet(Pixbuf.LoadFromResource(name + ".png")));
+                } catch(Exception) {
+                    
+                }
+            }
+        }
+    }
 }
