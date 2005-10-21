@@ -1,5 +1,8 @@
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* mediaengines/vlc/Makefile.am: fixed whitespace after trailing \
+	* data/banshee.desktop.in.in: Make the desktop file show up in 
+	Ximian/Novell/RedHat menus
 	* configure.ac: Output hal-sharp/hal-sharp.dll.config
 	* src/StockIcons.cs: use StockItem to initalize stock icons with i18n 
 	descriptions, add items to Gtk.StockManager
