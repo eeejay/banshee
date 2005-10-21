@@ -1,3 +1,59 @@
+2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* Makefile.am: Updated DISTCLEANFILES/CLEANFILES
+	* configure.ac: Removed data/banshee.desktop.in
+
+	* mediaengines/vlc/Makefile.am: Added package rule for creating separate
+	binary VLC mediaengine tarball
+
+	* data/images/Makefile.am: Updated icon installation rules
+	* data/images/Makefile.am.build: Removed, managing manually
+
+	* data/glade/about.glade: removed, using gnome about dialog
+	* data/glade/player.glade: Add help menu item for version information
+
+	* data/banshee.desktop.in.in: Updated desktop file to exec banshee and
+	use new icon 
+	* data/org.gnome.Banshee.service.in: Exec banshee
+	* data/Makefile.am: Updated desktop file and schema install rules
+
+	* src/PlaylistColumns.cs: Fix bug regarding default column sizing (the one 
+	Nat has been complaining about)
+	* src/AboutBox.cs: Use Gnome About Dialog
+	* src/VersionInformationDialog.cs: Version Information Dialog, move from old
+	About Box, invoke from Help menu
+	
+	* src/BurnCore.cs: 
+	* src/Preferences.cs:
+	* src/SourceView.cs:
+	* src/PlayerInterface.cs: Lots of cleaning, Use new window icon, 
+	get rid of Gdk Thead junk
+
+	* src/PlaylistModel.cs: Use Application.Invoke smartly, fixed performance 
+	bug regarding loading a large list of tracks
+
+
+	* src/Core.cs:
+	* src/Library.cs: Clean up, get rid of Gdk Thread junk
+
+	* src/ThemeIcons.cs: Provide a WindowManager icon pixbuf; will expand to 
+	new Icon Theme code (vs. stock icon code)
+	* src/DBusIPC.cs: Add more DBus methods (show/hide/play/pause/query*)
+	* src/Main.cs: Command line options for new DBus methods for remote-mode
+
+	* src/PlaylistView.cs:
+	* src/Core.cs:
+	* src/BurnTransaction.cs:
+	* src/StockIcons.cs: general syntax/formatting cleanup
+
+	* src/PipelineProfile.cs:
+	* src/LibraryTrackInfo.cs: 
+	* src/IpodCore.cs:
+	* src/AudioCdCore.cs:
+	* src/TrackProperties.cs: Use Mono.Unix, instead of deprecated Mono.Posix
+
+	* src/Makefile.am: Added new sources, modified graphic resources
+	
 2005-10-20  Rodney Dawes  <dobey@novell.com>
 
 	* data/images/about-header.png: Replace with new logo image
