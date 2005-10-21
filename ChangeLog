@@ -1,5 +1,7 @@
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Require gtk-sharp 2.3.91 and ipod-sharp 0.5.8
+
 	* Makefile.am: Updated DISTCLEANFILES/CLEANFILES
 	* configure.ac: Removed data/banshee.desktop.in
 
