@@ -103,7 +103,6 @@ banshee_resources = \
 	../data/images/volume-med.png \
 	../data/images/volume-min.png \
 	../data/images/volume-zero.png \
-	../data/glade/about.glade \
 	../data/glade/trackinfo.glade \
 	../data/images/icon-album.png \
 	../data/images/icon-artist.png \
