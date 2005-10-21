@@ -20,16 +20,14 @@ EXTRA_DIST =            \
 	MAINTAINERS         \
 	HACKING
 
-CLEANFILES =            \
-	banshee.pc          \
+DISTCLEANFILES =        \
 	intltool-extract    \
 	intltool-merge      \
 	intltool-update     \
 	intltool-extract.in \
 	intltool-merge.in   \
-	intltool-update.in 
-
-DISTCLEANFILES =  \
+	intltool-update.in  \
+	banshee.pc    \
 	config.guess  \
 	config.sub    \
 	configure     \
