@@ -1,3 +1,8 @@
+2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/StockIcons.cs: use StockItem to initalize stock icons with i18n 
+	descriptions, add items to Gtk.StockManager
+
 2005-10-21  Rodney Dawes  <dobey@novell.com>
 
 	* data/images/Makefile.am: Install the 16px and 22px versions into the

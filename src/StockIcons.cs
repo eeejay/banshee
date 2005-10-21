@@ -28,52 +28,63 @@
  */
 
 using System;
-using System.IO;
 using Gtk;
 using Gdk;
+using Mono.Unix;
 
 namespace Banshee
 {
     public class StockIcons 
     {
-        private static string [] icon_list = {
+        static StockItem FromDef(string id, string label, uint keyval, 
+            ModifierType modifier, string domain)
+        {
+            StockItem item;
+            item.StockId = id;
+            item.Label = label;
+            item.Keyval = keyval;
+            item.Modifier = modifier;
+            item.TranslationDomain = domain;
+            return item;
+        }
+        
+        private static StockItem [] stock_items = {
             /* Playback Control Icons */
-            "media-next",
-            "media-prev",
-            "media-play",
-            "media-pause",
-            "media-shuffle",
-            "media-repeat",
-            "media-eject",
+            FromDef("media-next", Catalog.GetString("Next"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-prev", Catalog.GetString("Previous"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-play", Catalog.GetString("Play"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-pause", Catalog.GetString("Pause"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-shuffle", Catalog.GetString("Shuffle"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-repeat", Catalog.GetString("Repeat"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-eject", Catalog.GetString("Eject"), 0, ModifierType.ShiftMask, null),
             
             /* Volume Button Icons */
-            "volume-max",
-            "volume-med",
-            "volume-min",
-            "volume-zero",
-            "volume-decrease",
-            "volume-increase",
+            FromDef("volume-max", Catalog.GetString("Volume Maximum"), 0, ModifierType.ShiftMask, null),
+            FromDef("volume-med", Catalog.GetString("Volume Medium"), 0, ModifierType.ShiftMask, null),
+            FromDef("volume-min", Catalog.GetString("Volume Miniumum"), 0, ModifierType.ShiftMask, null),
+            FromDef("volume-zero", Catalog.GetString("Volume Mute"), 0, ModifierType.ShiftMask, null),
+            FromDef("volume-decrease", Catalog.GetString("Volume Decrease"), 0, ModifierType.ShiftMask, null),
+            FromDef("volume-increase", Catalog.GetString("Volume Increase"), 0, ModifierType.ShiftMask, null),
             
             /* Now Playing Images */
-            "icon-artist",
-            "icon-album",
-            "icon-title",
+            FromDef("icon-artist", Catalog.GetString("Artist"), 0, ModifierType.ShiftMask, null),
+            FromDef("icon-album", Catalog.GetString("Album"), 0, ModifierType.ShiftMask, null),
+            FromDef("icon-title", Catalog.GetString("Title"), 0, ModifierType.ShiftMask, null),
             
             /* Other */
-            "media-burn"
+            FromDef("media-burn", Catalog.GetString("Burn CD"), 0, ModifierType.ShiftMask, null)
         };    
 
         public static void Initialize()
         {
-            IconFactory factory = new IconFactory();
-            factory.AddDefault();
+            IconFactory icon_factory = new IconFactory();
+            icon_factory.AddDefault();
 
-            foreach(string name in icon_list) {
-                try {
-                    factory.Add(name, new IconSet(Pixbuf.LoadFromResource(name + ".png")));
-                } catch(Exception) {
-                    
-                }
+            foreach(StockItem item in stock_items) {
+                Pixbuf pixbuf = Pixbuf.LoadFromResource(item.StockId + ".png");
+                IconSet icon_set = new IconSet(pixbuf);
+                icon_factory.Add(item.StockId, icon_set);
+                StockManager.Add(item);
             }
         }
     }
