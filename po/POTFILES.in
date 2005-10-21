@@ -3,7 +3,6 @@
 [encoding: UTF-8]
 data/banshee.desktop.in.in
 data/banshee.schemas.in
-data/glade/about.glade
 data/glade/newipod.glade
 data/glade/player.glade
 data/glade/preferences.glade
