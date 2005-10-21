@@ -1,5 +1,6 @@
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* POTFILES.in: Added src/StockIcons.cs
 	* POTFILES.in: removed about.glade
 
 2005-10-14  Adam Weinberger  <adamw@gnome.org>

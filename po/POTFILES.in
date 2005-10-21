@@ -41,6 +41,7 @@ src/Preferences.cs
 src/RipTransaction.cs
 src/SearchEntry.cs
 src/SourceView.cs
+src/StockIcons.cs
 src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/Utilities.cs
