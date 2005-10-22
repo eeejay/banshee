@@ -33,7 +33,6 @@ AC_PROG_CXX
 
 dnl check headers
 AC_HEADER_STDC
-AC_CHECK_HEADERS(unistd.h string.h sys/types.h sys/ioctl.h string.h fcntl.h linux/cdrom.h)
 
 GNOME_COMPILE_WARNINGS
 AM_PATH_GLIB_2_0
@@ -177,8 +176,6 @@ fi
 
 AC_SUBST(GST_PLUGINS_DIR)
 
-AM_PATH_ORBIT2
-
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.6
 PKG_CHECK_MODULES(GTK,
@@ -193,10 +190,6 @@ PKG_CHECK_MODULES(GTK,
 	gtk+-2.0 >= $GTK_REQUIRED)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
-
-IDL_MODULES="bonobo-activation-2.0 libbonobo-2.0 libbonoboui-2.0"
-IDL_INCLUDES="`$PKG_CONFIG --variable=idldir $IDL_MODULES | sed -e 's/^/ /' -e 's/ \+$//' -e 's/ / -I /g' -e 's/^ \+//'`"
-AC_SUBST(IDL_INCLUDES)
 
 dnl HAL devel deps
 PKG_CHECK_MODULES(HAL,
