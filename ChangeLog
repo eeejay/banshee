@@ -1,3 +1,8 @@
+2005-10-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/AudioCdCore.cs: Removed CDDB implementation, implemented MusicBrainz
+	CD TOC reading and Metadata Lookup, refactored and cleaned up a lot in here
+
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Generate src/MusicBrainz/MusicBrainz.dll.config, and 
