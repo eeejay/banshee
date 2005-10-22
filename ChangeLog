@@ -1,5 +1,21 @@
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Generate src/MusicBrainz/MusicBrainz.dll.config, and 
+	src/MusicBrainz/Makefile
+	* src/Makefile.am: Add MusicBrainz to SUBDIRS, link against MusicBrainz.dll
+	* src/MusicBrainz/Makefile.am: Build/install MusicBrainz.dll
+	* src/MusicBrainz/MusicBrainz.dll.config.in: DLL Mappings to libmusicbrainz
+	* src/MusicBrainz/Client.cs: MusicBrainz C# bindings to the MusicBrainz 
+	client
+	* src/MusicBrainz/ClientVersion.cs: Class representing MusicBrainz client
+	version information
+	* src/MusicBrainz/Rdf.cs: RDF Strings for the MusicBrainz client
+	* src/MusicBrainz/SimpleDisc.cs: Basic class to handle reading CD 
+	and querying MB
+	* src/MusicBrainz/SimpleTrack.cs: A class representing a track on a CD
+	* src/MusicBrainz/SimpleDiscTest.cs: A simple console test program 
+	to read a CD
+
 	* mediaengines/vlc/Makefile.am: fixed whitespace after trailing \
 	* data/banshee.desktop.in.in: Make the desktop file show up in 
 	Ximian/Novell/RedHat menus
