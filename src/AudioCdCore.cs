@@ -64,12 +64,14 @@ namespace Banshee
     {
         private int track_index;
         private string device;
+        private bool do_rip;
         
         public AudioCdTrackInfo(string device)
         {
             PreviousTrack = Gtk.TreeIter.Zero;
             canSaveToDatabase = false;
             this.device = device;
+            do_rip = true;
         }
         
         public override void Save()
@@ -100,6 +102,16 @@ namespace Banshee
             get { 
                 return device; 
             } 
+        }
+        
+        public bool CanRip {
+            get {
+                return do_rip;
+            }
+            
+            set {
+                do_rip = value;
+            }
         }
     }
     
