@@ -67,8 +67,10 @@ namespace Banshee
         Pixbuf nowPlayingPixbuf;
         Pixbuf syncNeededPixbuf;
         Pixbuf songDrmedPixbuf;
+        Pixbuf ripColumnPixbuf;
 
         public TreeViewColumn SyncColumn;
+        public TreeViewColumn RipColumn;
 
         public PlaylistView(PlaylistModel model)
         {        
@@ -116,10 +118,10 @@ namespace Banshee
             playIndColumn.Reorderable = false;
             playIndColumn.Widget = playIndImg;
             
-            nowPlayingPixbuf = 
-                Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
+            nowPlayingPixbuf = Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
             syncNeededPixbuf = Gdk.Pixbuf.LoadFromResource("sync-needed.png");
             songDrmedPixbuf = Gdk.Pixbuf.LoadFromResource("song-drm.png");
+            ripColumnPixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-16.png");
             
             CellRendererPixbuf indRenderer = new CellRendererPixbuf();
             playIndColumn.PackStart(indRenderer, true);
@@ -134,6 +136,7 @@ namespace Banshee
             SyncColumn.Resizable = false;
             SyncColumn.Clickable = false;
             SyncColumn.Reorderable = false;
+            SyncColumn.Visible = false;
             SyncColumn.Widget = syncNeededImg;
             
             CellRendererPixbuf syncRenderer = new CellRendererPixbuf();
@@ -141,12 +144,28 @@ namespace Banshee
             SyncColumn.SetCellDataFunc(syncRenderer, 
                 new TreeCellDataFunc(SyncCellInd));
             InsertColumn(SyncColumn, 1);
+            
+            RipColumn = new TreeViewColumn();
+            Gtk.Image ripImage = new Gtk.Image(ripColumnPixbuf);
+            ripImage.Show();
+            RipColumn.Expand = false;
+            RipColumn.Resizable = false;
+            RipColumn.Clickable = false;
+            RipColumn.Reorderable = false;
+            RipColumn.Visible = false;
+            RipColumn.Widget = ripImage;
+            
+            CellRendererToggle ripRenderer = new CellRendererToggle();
+            ripRenderer.Activatable = true;
+            ripRenderer.Toggled += OnRipToggled;
+            RipColumn.PackStart(ripRenderer, true);
+            RipColumn.SetCellDataFunc(ripRenderer, new TreeCellDataFunc(RipCellInd));
+            InsertColumn(RipColumn, 1);
 
             ColumnDragFunction = new TreeViewColumnDropFunc(CheckColumnDrop);
 
             Model = this.model = model;
-            model.DefaultSortFunc =
-                new TreeIterCompareFunc(DefaultTreeIterCompareFunc);
+            model.DefaultSortFunc = new TreeIterCompareFunc(DefaultTreeIterCompareFunc);
                 
             // set up tree view
             RulesHint = true;
@@ -171,6 +190,18 @@ namespace Banshee
             model.SetSortFunc((int)ColumnId.LastPlayed, 
                 new TreeIterCompareFunc(LastPlayedTreeIterCompareFunc));
         }    
+
+        private void OnRipToggled(object o, ToggledArgs args)
+        {
+            try {
+                AudioCdTrackInfo ti = (AudioCdTrackInfo)model.PathTrackInfo(new TreePath(args.Path));
+                CellRendererToggle renderer = (CellRendererToggle)o;
+                ti.CanRip = !ti.CanRip;
+                renderer.Active = ti.CanRip;
+            } catch(Exception) {
+            
+            }   
+        }
 
         private bool CheckColumnDrop(TreeView tree, TreeViewColumn col,
                                      TreeViewColumn prev, TreeViewColumn next)
@@ -309,6 +340,19 @@ namespace Banshee
             renderer.Pixbuf = iter.Equals(model.PlayingIter)
                 ? nowPlayingPixbuf
                 : null;
+        }
+        
+        protected void RipCellInd(TreeViewColumn tree_column, CellRenderer cell, 
+            TreeModel tree_model, TreeIter iter)
+        {
+            CellRendererToggle toggle = (CellRendererToggle)cell;
+            
+            try {
+                AudioCdTrackInfo ti = (AudioCdTrackInfo)model.IterTrackInfo(iter);
+                toggle.Active = ti.CanRip;
+            } catch(Exception) {
+                toggle.Active = false;
+            }
         }
         
         protected void SyncCellInd(TreeViewColumn tree_column,
