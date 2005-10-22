@@ -531,8 +531,6 @@
 		      <child>
 			<widget class="GtkImage" id="ImageRip">
 			  <property name="visible">True</property>
-			  <property name="stock">gtk-cdrom</property>
-			  <property name="icon_size">3</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
