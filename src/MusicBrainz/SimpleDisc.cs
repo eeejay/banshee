@@ -159,6 +159,12 @@ namespace MusicBrainz
             client.Select(Rdf.MBS_Back);
         }
         
+        public SimpleTrack this[int index] {
+            get {
+                return tracks[index];
+            }
+        }
+        
         public IEnumerator GetEnumerator()
         {
             foreach(SimpleTrack track in Tracks) {
