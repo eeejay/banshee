@@ -132,6 +132,9 @@ AC_SUBST(DBUSSHARP)
 dnl sqlite devel dep
 PKG_CHECK_MODULES(SQLITE, sqlite3)
 
+dnl musicbrainz
+PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
+
 dnl gstreamer devel deps
 GSTREAMER_REQUIRED_VERSION=0.8.8
 GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.7
@@ -297,6 +300,8 @@ src/AssemblyInfo.cs
 src/ConfigureDefines.cs
 src/banshee.exe.config
 src/ipod-sharp.dll.config
+src/MusicBrainz/Makefile
+src/MusicBrainz/MusicBrainz.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile

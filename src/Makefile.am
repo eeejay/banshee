@@ -1,3 +1,5 @@
+SUBDIRS = MusicBrainz
+
 bin_PROGRAMS = banshee
 banshee_CFLAGS = -Wall -D_FORTIFY_SOURCE=2 -ggdb3
 banshee_SOURCES = banshee.c
@@ -145,7 +147,8 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
-	-r:$(top_builddir)/plugincore/plugin-core.dll
+	-r:$(top_builddir)/plugincore/plugin-core.dll \
+	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll
 
 SYSTEM_REFERENCES = \
 	System.dll \
