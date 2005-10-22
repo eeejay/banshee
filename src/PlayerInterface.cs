@@ -51,6 +51,7 @@ namespace Banshee
         [Widget] private Gtk.Image ImageNext;
         [Widget] private Gtk.Image ImagePlayPause;
         [Widget] private Gtk.Image ImageBurn;
+        [Widget] private Gtk.Image ImageRip;
         [Widget] private Gtk.HScale ScaleTime;
         [Widget] private Gtk.Label LabelInfo;
         [Widget] private Gtk.Label LabelStatusBar;
@@ -211,6 +212,7 @@ namespace Banshee
             ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
             
             ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
+            ImageRip.SetFromStock("media-rip", IconSize.LargeToolbar);
 
             gxml["ButtonBurn"].Visible = true;
                 
@@ -1020,6 +1022,7 @@ namespace Banshee
                  || source.Type == SourceType.Library;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.SyncColumn.Visible = source.Type == SourceType.Ipod;
+            playlistView.RipColumn.Visible = source.Type == SourceType.AudioCd;
             
             playlistModel.ImportCanUpdate = source.Type == SourceType.Library
                 && searchEntry.Query == String.Empty;
@@ -2002,13 +2005,15 @@ namespace Banshee
         
         private void OnButtonBurnClicked(object o, EventArgs args)
         {
-            if(playlistView.Selection.CountSelectedRows() <= 0)
+            if(playlistView.Selection.CountSelectedRows() <= 0) {
                 return;
+            }
         
             BurnCore burnCore = new BurnCore(BurnCore.DiskType.Audio);
         
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows())
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 burnCore.AddTrack(playlistModel.PathTrackInfo(path));
+            }
                 
             burnCore.Burn();
         }
@@ -2018,12 +2023,22 @@ namespace Banshee
             RipTransaction trans = new RipTransaction();
 
             foreach(object [] node in playlistModel) {
-                if(node[0].GetType() == typeof(AudioCdTrackInfo))
+                if(node[0] is AudioCdTrackInfo && ((AudioCdTrackInfo)node[0]).CanRip) {
                     trans.QueueTrack(node[0] as AudioCdTrackInfo);
+                }
             }
             
-            if(trans.QueueSize > 0)
+            if(trans.QueueSize > 0) {
                 trans.Register();
+            } else {
+                HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
+                    MessageType.Info, ButtonsType.Ok, 
+                    Catalog.GetString("Invalid Selection"),
+                    Catalog.GetString("You must select at least one track to import.")
+                );
+                dialog.Run();
+                dialog.Destroy();
+            }
         }
         
         private void EjectSource(Source source)
@@ -2031,8 +2046,7 @@ namespace Banshee
             if(source.CanEject) {
                 try {
                     if(source.GetType() == typeof(IpodSource)) {
-                        if(activeTrackInfo != null && activeTrackInfo.GetType() 
-                            == typeof(IpodTrackInfo)) {
+                        if(activeTrackInfo != null && activeTrackInfo is IpodTrackInfo) {
                             StopPlaying();
                         }
                     }
