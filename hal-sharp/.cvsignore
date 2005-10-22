@@ -3,3 +3,4 @@ Makefile
 Makefile.in
 hal-sharp.dll
 hal-sharp.dll.mdb
+hal-sharp.dll.config
