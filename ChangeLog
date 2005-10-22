@@ -1,5 +1,14 @@
 2005-10-22  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Show/Hide the rip column for the respective view,
+	only queue items for ripping that have been checked, nice pretty rip icon
+	* src/PlaylistView.cs: Added a toggle column used for selecting tracks 
+	for ripping
+	* src/AudioCdCore.cs: Added CanRip property that is toggled on/off to 
+	designate whether to rip a track or not
+	* src/StockIcons.cs: Added a hashtable map to icon names, added the nice
+	rip icon (media-rip maps to cd-action-rip-24)
+
 	* configure.ac: Remove all IDL/CORBA junk previously needed for CDDB Slave2
 	* libbanshee/GNOME_Media_CDDBSlave2.idl:
 	* libbanshee/cd-info.[ch]:
