@@ -31,6 +31,7 @@ using System;
 using Gtk;
 using Gdk;
 using Mono.Unix;
+using System.Collections;
 
 namespace Banshee
 {
@@ -72,16 +73,24 @@ namespace Banshee
             FromDef("icon-title", Catalog.GetString("Title"), 0, ModifierType.ShiftMask, null),
             
             /* Other */
-            FromDef("media-burn", Catalog.GetString("Burn CD"), 0, ModifierType.ShiftMask, null)
+            FromDef("media-burn", Catalog.GetString("Burn CD"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-rip", Catalog.GetString("Rip CD"), 0, ModifierType.ShiftMask, null)
         };    
 
         public static void Initialize()
         {
             IconFactory icon_factory = new IconFactory();
             icon_factory.AddDefault();
+            
+            Hashtable map = new Hashtable();
+            foreach(StockItem item in stock_items) {
+                map[item.StockId] = item.StockId;
+            }
+            
+            map["media-rip"] = "cd-action-rip-24";
 
             foreach(StockItem item in stock_items) {
-                Pixbuf pixbuf = Pixbuf.LoadFromResource(item.StockId + ".png");
+                Pixbuf pixbuf = Pixbuf.LoadFromResource((map[item.StockId] as string) + ".png");
                 IconSet icon_set = new IconSet(pixbuf);
                 icon_factory.Add(item.StockId, icon_set);
                 StockManager.Add(item);
