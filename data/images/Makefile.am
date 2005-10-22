@@ -66,5 +66,7 @@ EXTRA_DIST = \
 	volume-max.png \
 	volume-med.png \
 	volume-min.png \
-	volume-zero.png
+	volume-zero.png \
+	cd-action-rip-16.png \
+	cd-action-rip-24.png
 
