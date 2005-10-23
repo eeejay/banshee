@@ -7,7 +7,8 @@ plugincore_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/IPlayerEngine.cs \
-	$(srcdir)/TrackInfo.cs
+	$(srcdir)/TrackInfo.cs \
+	$(srcdir)/Paths.cs
 
 all: $(ASSEMBLY)
 
