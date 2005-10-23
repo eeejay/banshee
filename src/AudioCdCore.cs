@@ -187,8 +187,11 @@ namespace Banshee
                 if(mb_disc[i].Title != null) {
                     tracks[i].Title = mb_disc[i].Title;
                 }
+                
+                tracks[i].Asin = mb_disc.AmazonAsin;
             }
             
+            string asin = mb_disc.AmazonAsin;
             mb_disc.Dispose();
             
             Gtk.Application.Invoke(delegate {
@@ -196,6 +199,19 @@ namespace Banshee
                     Updated(this, new EventArgs());
                 }
             });
+            
+            string path = Paths.GetCoverArtPath(asin);
+            if(System.IO.File.Exists(path)) {
+                return;
+            }
+            
+            if(AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory)) {
+                Gtk.Application.Invoke(delegate {
+                    if(Updated != null) {
+                        Updated(this, new EventArgs());
+                    }
+                });
+            }
         }
         
         [DllImport("libc")]
