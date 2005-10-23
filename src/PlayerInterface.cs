@@ -75,6 +75,7 @@ namespace Banshee
         private ProgressBar ipodDiskUsageBar;
         private Viewport sourceViewLoadingVP;
         private Button ipodSyncButton;
+        private CoverArtThumbnail cover_art;
         
         private bool incrementedCurrentSongPlayCount;
     
@@ -243,6 +244,11 @@ namespace Banshee
             volumeButton.Visible = true;
             volumeButton.VolumeChanged += 
                 new VolumeButton.VolumeChangedHandler(OnVolumeScaleChanged);
+
+            // Cover Art Thumbnail
+            cover_art = new CoverArtThumbnail(36);
+            (gxml["CoverArtContainer"] as Container).Add(cover_art);
+            cover_art.Hide();
 
             // Source View
             Label sourceViewLoading = new Label();
@@ -565,6 +571,8 @@ namespace Banshee
         {
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
+            
+            cover_art.Track = ti;
             
             if(trayIcon != null) {
                 trayIcon.Tooltip = ti.DisplayArtist + " - " + ti.DisplayTitle;
