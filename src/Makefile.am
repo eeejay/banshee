@@ -86,7 +86,9 @@ banshee_sources = \
 	IpodNewDialog.cs \
 	ExceptionDialog.cs \
 	ThemeIcons.cs \
-	VersionInformationDialog.cs
+	VersionInformationDialog.cs \
+	CoverArtThumbnail.cs \
+	AmazonCoverFetcher.cs
 
 banshee_resources = \
 	../data/Tables.sql \
