@@ -100,6 +100,21 @@ namespace Banshee
 
         public Uri Uri             { get { return uri;                      } 
                                      set { uri = value; WriteUpdate();      } } 
+       
+        public string Asin         { get { return asin;                     }
+                                     set { asin = value;                    } }
+                                     
+        public string CoverArtFileName { 
+            get {
+                string path = Paths.GetCoverArtPath(asin);
+                if(System.IO.File.Exists(path)) {
+                    return path;
+                }
+                
+                return null;
+            }
+        }
+       
         public string MimeType     { get { return mimetype;                 } }
         public string Artist       { get { return artist;                   } 
                                      set { artist = value; WriteUpdate();   } }
