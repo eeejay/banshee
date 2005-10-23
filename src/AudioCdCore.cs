@@ -307,8 +307,6 @@ namespace Banshee
         private Hashtable disks = new Hashtable();
         private HandleRef handle;
         
-        private CddbSlaveClient cddbClient;
-        
         private CdDetectUdiCallback AddedCallback;
         private CdDetectUdiCallback RemovedCallback;
         
