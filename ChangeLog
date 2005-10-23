@@ -1,5 +1,8 @@
 2005-10-23  Aaron Bockover  <aaron@aaronbock.net>
-	
+
+	* src/Makefile.am: removed CddbSlaveClient.cs from build
+	* src/CddbSlaveClient.cs: removed Gnome Media CDDB Slave2 client bindings
+
 	* data/glade/player.glade: Added a container for the CoverArtThumbnail 
 	widget
 	* src/Makefile.am: Added CoverArtThumbnail.cs, AmazonCoverFetcher.cs

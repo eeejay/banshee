@@ -81,7 +81,6 @@ banshee_sources = \
 	GstMisc.cs \
 	PipelineProfile.cs \
 	LogCore.cs \
-	CddbSlaveClient.cs \
 	EllipsizeLabel.cs \
 	IpodNewDialog.cs \
 	ExceptionDialog.cs \
