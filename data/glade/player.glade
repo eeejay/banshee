@@ -47,7 +47,7 @@
 		      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image458">
+			<widget class="GtkImage" id="image499">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-new</property>
 			  <property name="icon_size">1</property>
@@ -69,7 +69,7 @@
 		      <accelerator key="O" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image459">
+			<widget class="GtkImage" id="image500">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -90,7 +90,7 @@
 		      <signal name="activate" handler="OnMenuImportFilesActivate" last_modification_time="Tue, 03 May 2005 00:04:01 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image460">
+			<widget class="GtkImage" id="image501">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -138,7 +138,7 @@
 		      <accelerator key="F2" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image461">
+			<widget class="GtkImage" id="image502">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-edit</property>
 			  <property name="icon_size">1</property>
@@ -160,7 +160,7 @@
 		      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image462">
+			<widget class="GtkImage" id="image503">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-remove</property>
 			  <property name="icon_size">1</property>
@@ -174,6 +174,15 @@
 		  </child>
 
 		  <child>
+		    <widget class="GtkMenuItem" id="ItemRemoveSongsFileSystem">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Delete Song(s) from Drive</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="OnItemRemoveFileSystemActivate" last_modification_time="Sun, 23 Oct 2005 17:03:06 GMT"/>
+		    </widget>
+		  </child>
+
+		  <child>
 		    <widget class="GtkImageMenuItem" id="ItemDeletePlaylist">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Delete Playlist</property>
@@ -182,7 +191,7 @@
 		      <accelerator key="Delete" modifiers="GDK_SHIFT_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image463">
+			<widget class="GtkImage" id="image504">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-delete</property>
 			  <property name="icon_size">1</property>
@@ -236,7 +245,7 @@
 		      <accelerator key="comma" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image464">
+			<widget class="GtkImage" id="image505">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-preferences</property>
 			  <property name="icon_size">1</property>
@@ -1056,7 +1065,7 @@
       <signal name="activate" handler="OnItemRemoveActivate" last_modification_time="Mon, 02 May 2005 23:39:50 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image330">
+	<widget class="GtkImage" id="image479">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-remove</property>
 	  <property name="icon_size">1</property>
@@ -1070,6 +1079,15 @@
   </child>
 
   <child>
+    <widget class="GtkMenuItem" id="ItemDeleteSongsFileSystem">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">Delete from Drive</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="OnItemDeleteSongsFileSystemActivate" last_modification_time="Sun, 23 Oct 2005 17:01:39 GMT"/>
+    </widget>
+  </child>
+
+  <child>
     <widget class="GtkImageMenuItem" id="ItemProperties">
       <property name="visible">True</property>
       <property name="label" translatable="yes">Properties</property>
@@ -1077,7 +1095,7 @@
       <signal name="activate" handler="OnItemPropertiesActivate" last_modification_time="Mon, 02 May 2005 23:39:50 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image331">
+	<widget class="GtkImage" id="image480">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-properties</property>
 	  <property name="icon_size">1</property>

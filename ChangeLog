@@ -1,5 +1,9 @@
 2005-10-23  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/player.glade: Added delete from drive menu items
+	* src/PlayerInterface.cs: Added ability to remove songs permanently from 
+	drive, not just from being referenced in library
+
 	* data/glade/player.glade: Added Full Screen menu item to View menu
 	* src/PlayerInterface.cs: Added Full Screen mode
 

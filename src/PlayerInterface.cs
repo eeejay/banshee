@@ -35,6 +35,7 @@ using Mono.Unix;
 using Gtk;
 using Gdk;
 using Glade;
+using System.IO;
 
 using Sql;
 
@@ -1360,25 +1361,49 @@ namespace Banshee
         
         private void OnItemRemoveActivate(object o, EventArgs args)
         {
+            RemoveSongs(false);
+        }
+        
+        private void OnItemRemoveFileSystemActivate(object o, EventArgs args)
+        {
+            RemoveSongs(true);
+        }
+             
+        private void RemoveSongs(bool deleteFromFileSystem)
+        {
             // Don't steal "Del" key from the search entry
             if (WindowPlayer.Focus is Entry &&
                 Gtk.Global.CurrentEvent is Gdk.EventKey) {
-                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
+                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, 
+                    (Gdk.EventKey)Gtk.Global.CurrentEvent);
                 return;
             }
 
             int selCount = playlistView.Selection.CountSelectedRows();
         
-            if(selCount <= 0)
+            if(selCount <= 0) {
                 return;
-        
+            }
+            
             if(playlistModel.Source.Type == SourceType.Library) {
-                string msg = String.Format(
+                string msg = String.Empty;
+                
+                if(deleteFromFileSystem) {
+                    msg = String.Format(
+                    Catalog.GetPluralString(
+                        "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file.",
+                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files.",
+                        selCount),
+                    selCount);
+                } else {
+                    msg = String.Format(
                     Catalog.GetPluralString(
                         "Are you sure you want to remove the selected song from your library?",
                         "Are you sure you want to remove the selected <b>({0})</b> songs from your library?",
                         selCount),
                     selCount);
+                }
+                    
                 HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
                     DialogFlags.DestroyWithParent, MessageType.Warning,
                     ButtonsType.YesNo,
@@ -1395,9 +1420,10 @@ namespace Banshee
             TreeIter [] iters = new TreeIter[selCount];
             int i = 0;
             
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows())            
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 playlistModel.GetIter(out iters[i++], path);
-        
+            }
+            
             TrackRemoveTransaction transaction;
             
             if(playlistModel.Source.Type == SourceType.Ipod) {
@@ -1410,16 +1436,34 @@ namespace Banshee
                 }
                 sourceView.QueueDraw();
                 return;
-            } else if(playlistModel.Source.Type == SourceType.Library)
+            } else if(playlistModel.Source.Type == SourceType.Library) {
                 transaction = new LibraryTrackRemoveTransaction();
-            else
+            } else {
                 transaction = new PlaylistTrackRemoveTransaction(
                     Playlist.GetId(playlistModel.Source.Name));
-                
+            }
+              
             for(i = 0; i < iters.Length; i++) {
                 TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
                 playlistModel.RemoveTrack(ref iters[i]);
                 transaction.RemoveQueue.Add(ti);
+                
+                if(deleteFromFileSystem) {
+                    try {
+                        File.Delete(ti.Uri.LocalPath);
+                    } catch(Exception) {
+                        Console.WriteLine("Could not delete file: " + ti.Uri.LocalPath);
+                    }
+                    
+                    // trim empty parent directories
+                    try {
+                        string old_dir = Path.GetDirectoryName(ti.Uri.LocalPath);
+                        while(old_dir != null && old_dir != String.Empty) {
+                            Directory.Delete(old_dir);
+                            old_dir = Path.GetDirectoryName(old_dir);
+                        }
+                    } catch(Exception) {}
+                }
             }
             
             transaction.Finished += OnLibraryTrackRemoveFinished;
@@ -1605,7 +1649,12 @@ namespace Banshee
         
         private void OnItemRemoveSongsActivate(object o, EventArgs args)
         {
-            OnItemRemoveActivate(o, args);
+            RemoveSongs(false);
+        }
+        
+        private void OnItemDeleteSongsFileSystemActivate(object o, EventArgs args)
+        {
+            RemoveSongs(true);
         }
         
         private void OnItemDeletePlaylistActivate(object o, EventArgs args)
