@@ -743,6 +743,18 @@ namespace Banshee
         {
             new PreferencesWindow();
         }
+        
+        private bool is_fullscreen = false;
+        private void OnMenuFullScreenActivate(object o, EventArgs args)
+        {
+            if(is_fullscreen) {
+                WindowPlayer.Unfullscreen();
+                is_fullscreen = false;
+            } else {
+                WindowPlayer.Fullscreen();
+                is_fullscreen = true;
+            }
+        }
 
         // ---- Player Event Handlers ----
         

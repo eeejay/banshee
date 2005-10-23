@@ -1,5 +1,8 @@
 2005-10-23  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/player.glade: Added Full Screen menu item to View menu
+	* src/PlayerInterface.cs: Added Full Screen mode
+
 	* src/AudioCdCore.cs: Removed reference to CddbSlaveClient
 	* src/Makefile.am: removed CddbSlaveClient.cs from build
 	* src/CddbSlaveClient.cs: removed Gnome Media CDDB Slave2 client bindings
