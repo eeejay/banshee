@@ -1,3 +1,24 @@
+2005-10-23  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* data/glade/player.glade: Added a container for the CoverArtThumbnail 
+	widget
+	* src/Makefile.am: Added CoverArtThumbnail.cs, AmazonCoverFetcher.cs
+	* src/AudioCdCore.cs: Fetch cover art from Amazon.com after MusicBrainz 
+	returns an ASIN
+	* src/PlayerInterface.cs: Show a CoverArtThumbnail widget in header
+	* src/LibraryTrackInfo.cs: Copy ASIN from AudioCdTrackInfo to 
+	LibraryTrackInfo
+	* src/AmazonCoverFetcher.cs: Fetch cover art from Amazon.com based on ASIN
+	* src/CoverArtThumbnail.cs: Widget to scale and display a thumbnail of
+	cover art and display full-resolution cover art in popup window when
+	cursor hovers over thumbnail
+	* plugincore/Makefile.am: Added Paths.cs
+	* plugincore/TrackInfo.cs: Added Asin property, added CoverArtFileName
+	property that returns cover art path based on Asin
+	* plugincore/Paths.cs: Paths class available to plugins, added property
+	CoverArtDirectory and GetCoverArtPath() method
+	* src/Utilities.cs: Moved Paths class to plugincore/Paths.cs
+
 2005-10-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs: Show/Hide the rip column for the respective view,
