@@ -102,46 +102,6 @@ namespace Banshee
 		}
 	}
 	
-	public class Paths
-	{
-		public static string ApplicationData
-		{
-			get {
-				return Environment.GetFolderPath(
-					Environment.SpecialFolder.ApplicationData) 
-					+ Path.DirectorySeparatorChar 
-					+ "banshee" 
-					+ Path.DirectorySeparatorChar;
-			}
-		}
-		
-		public static string DefaultLibraryPath
-		{
-			get {
-				return Environment.GetFolderPath(
-				    Environment.SpecialFolder.Personal) + 
-				    + Path.DirectorySeparatorChar  
-				    + "My Music"
-				    + Path.DirectorySeparatorChar;
-			}
-		}
-		
-		public static string TempDir 
-		{
-			get {
-				string dir = Paths.ApplicationData 
-					+ Path.DirectorySeparatorChar 
-					+ "temp";
-		
-				if(File.Exists(dir))
-					File.Delete(dir);
-
-				Directory.CreateDirectory(dir);
-				return dir;
-			}
-		}
-	}
-	
 	public class Resource
 	{
 		public static string GetFileContents(string name)
