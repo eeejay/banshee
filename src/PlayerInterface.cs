@@ -634,15 +634,33 @@ namespace Banshee
             Core.GconfClient.Set(GConfKeys.WindowHeight, height);
         }
         
+        [GLib.ConnectBefore]
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
+            bool handled = false;
+            
             switch(args.Event.Key) {
                 case Gdk.Key.J:
                 case Gdk.Key.j:
                 case Gdk.Key.F3:
-                    searchEntry.HasFocus = true;
+                    searchEntry.Focus();
+                    handled = true;
+                    break;
+                case Gdk.Key.Left:
+                    if(args.Event.State == Gdk.ModifierType.ControlMask) {
+                        Core.Instance.Player.Position -= 10;
+                        handled = true;
+                    }
+                    break;
+                case Gdk.Key.Right:
+                    if(args.Event.State == Gdk.ModifierType.ControlMask) {
+                        Core.Instance.Player.Position += 10;
+                        handled = true;
+                    }
                     break;
             }
+            
+            args.RetVal = handled;
         }
               
         // ---- Tray Event Handlers ----
