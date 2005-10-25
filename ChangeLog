@@ -1,3 +1,23 @@
+2005-10-24  Miguel de Icaza  <miguel@novell.com>
+
+	* src/PlayerInterface.cs (OnIpodDeviceChanged): Put all the code
+	in this method inside an Application.Invoke instead of using one
+	Application.Invoke per ListStore.  
+
+	Also surrounds the code that was hanging Banshee after triggering
+	an iPodSync: the second part of the routine was not protected
+	inside an Application.Invoke.
+
+	* src/PlaylistView.cs (RipCellInd): Avoid try/catch and instead
+	use "as" to explicitly state what is going on.  Also helps
+	reduce the exceptions being thrown while tracking issues.
+
+	* src/LibraryTrackInfo.cs (LoadFromDatabaseReader): the values
+	stored were strings, not longs.  Parse them accordingly.
+
+	Use mono --trace=N:nothing banshee.exe to find abuses of exception
+	handling. 
+	
 2005-10-23  Aaron Bockover  <aaron@aaronbock.net>
 
 	* data/glade/player.glade: Added delete from drive menu items

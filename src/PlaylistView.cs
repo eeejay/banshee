@@ -346,13 +346,11 @@ namespace Banshee
             TreeModel tree_model, TreeIter iter)
         {
             CellRendererToggle toggle = (CellRendererToggle)cell;
-            
-            try {
-                AudioCdTrackInfo ti = (AudioCdTrackInfo)model.IterTrackInfo(iter);
-                toggle.Active = ti.CanRip;
-            } catch(Exception) {
-                toggle.Active = false;
-            }
+            AudioCdTrackInfo ti = model.IterTrackInfo(iter) as AudioCdTrackInfo;
+			if (ti != null)
+				toggle.Active = ti.CanRip;
+			else
+				toggle.Active = false;
         }
         
         protected void SyncCellInd(TreeViewColumn tree_column,

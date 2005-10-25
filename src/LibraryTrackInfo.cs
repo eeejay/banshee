@@ -380,7 +380,8 @@ namespace Banshee
 
             try {
                 uri = new Uri(reader["Uri"] as string);
-            } catch(UriFormatException) {
+            } catch(UriFormatException e) {
+				Console.WriteLine ("E0: " + e);
                 uri = new Uri("file://" + (reader["Uri"] as string));
             }
             
@@ -400,16 +401,32 @@ namespace Banshee
             rating = Convert.ToUInt32(reader["Rating"]);
             numberOfPlays = Convert.ToUInt32(reader["NumberOfPlays"]);
 
-            try {
-                lastPlayed = Mono.Unix.Native.NativeConvert.ToDateTime((long)reader["LastPlayedStamp"]);
-            } catch(Exception) {
-                lastPlayed = DateTime.MinValue;
-            }
+			if (reader != null){
+				lastPlayed = DateTime.MinValue;
 
-            try {
-                dateAdded = Mono.Unix.Native.NativeConvert.ToDateTime((long)reader["DateAddedStamp"]);
-            } catch(Exception) {
-                dateAdded = DateTime.MinValue;
+				try {
+					string s = (string)reader ["LastPlayedStamp"];
+					if (s != null){
+						long time = Int64.Parse (s);
+						lastPlayed = Mono.Unix.Native.NativeConvert.ToDateTime(time);
+					}
+				} catch(Exception e) {
+					Console.WriteLine ("E1: " + e);
+				}
+			}
+
+			if (reader != null){
+				dateAdded = DateTime.MinValue;
+				
+				try {
+					string s = (string)reader ["LastPlayedStamp"];
+					if (s != null){
+						long time = Int64.Parse (s);
+						dateAdded = Mono.Unix.Native.NativeConvert.ToDateTime(time);
+					}
+				} catch(Exception e) {
+					Console.WriteLine ("E2: " + e);
+				}
             }
         }
         

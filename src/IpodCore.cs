@@ -304,7 +304,6 @@ namespace Banshee
                     }
                 }
             }
-            
             if(fet != null) {
                 fet.Register();
             } else {

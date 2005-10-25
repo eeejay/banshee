@@ -1079,24 +1079,23 @@ namespace Banshee
         
         private void OnIpodDeviceChanged(object o, EventArgs args)
         {
-            IPod.Device device = o as IPod.Device;
-            
-            foreach(object [] obj in (sourceView.Model as ListStore)) {
-                if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
-                    Application.Invoke(delegate {
-                        (obj[0] as IpodSource).SetSourceName(device.Name);
-                        sourceView.QueueDraw();
-                    });
-                }
-            }
-            
-            if(playlistModel.Source is IpodSource && 
-                (playlistModel.Source as IpodSource).Device == device) {
-                UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
-                (gxml["ViewNameLabel"] as Label).Markup = "<b>" 
-                    + GLib.Markup.EscapeText(device.Name) + "</b>";
-                 sourceView.QueueDraw();
-            }
+			Application.Invoke (delegate {
+				IPod.Device device = o as IPod.Device;
+				
+				foreach(object [] obj in (sourceView.Model as ListStore)) {
+					if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
+						(obj[0] as IpodSource).SetSourceName(device.Name);
+						sourceView.QueueDraw();
+					}
+				}
+				
+				if(playlistModel.Source is IpodSource && (playlistModel.Source as IpodSource).Device == device) {
+					UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
+					(gxml["ViewNameLabel"] as Label).Markup = "<b>" 
+						+ GLib.Markup.EscapeText(device.Name) + "</b>";
+					sourceView.QueueDraw();
+				}
+			});
         }
         
         private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
