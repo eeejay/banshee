@@ -1,5 +1,9 @@
 2005-10-25  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/SearchEntry: Reformatted code, added Focus() method
+	* src/PlayerInterface.cs (OnKeyPressEvent): use GLib.ConnectBefore to
+	handle key press events; J/j/F3 focus the search widget, and 
+	CTRL+Left rewinds by 10 seconds, CTRL+Right fast-forwards 10 seconds
 	* src/CoverArtThumbnail.cs: Fixed segfault when trying to thumbnail
 	a null pixbuf
 
