@@ -90,6 +90,10 @@ namespace Banshee
         public TrackInfo Track {
             set {
                 try {
+                    if(value.CoverArtFileName == null) {
+                        throw new ApplicationException("Track has no artwork");
+                    }
+                    
                     pixbuf = new Pixbuf(value.CoverArtFileName);
                     image.Pixbuf = CreateThumbnail(pixbuf);
                     popup.Image = pixbuf;

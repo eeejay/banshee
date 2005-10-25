@@ -1,3 +1,8 @@
+2005-10-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/CoverArtThumbnail.cs: Fixed segfault when trying to thumbnail
+	a null pixbuf
+
 2005-10-24  Miguel de Icaza  <miguel@novell.com>
 
 	* src/PlayerInterface.cs (OnIpodDeviceChanged): Put all the code
