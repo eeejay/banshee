@@ -52,6 +52,8 @@ AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
+AC_ARG_WITH(internal-mcs, AC_HELP_STRING([--with-internal-mcs], [Use the internal mcs 1.1.9.2 compiler]), internal_mcs="yes", internal_mcs="no")
+
 if test "x$enable_xing" = "xyes"; then
 	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
 fi
@@ -70,14 +72,21 @@ fi
 AC_SUBST(INSTALL)
 AC_SUBST(PKG_CONFIG)
 
-MONO_REQUIRED_VERSION=1.1.9
-PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
+if test "x$internal_mcs" = "xno"; then
+	MONO_REQUIRED_VERSION=1.1.9
+	PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
+fi
 
 dnl Mono programs
 MONODIR=`$PKG_CONFIG --variable=exec_prefix mono`
 MONOBIN="$MONODIR/bin"
 MONO="$MONOBIN/mono"
-MCS="$MONOBIN/mcs"
+
+if test "x$internal_mcs" = "xyes"; then
+	MCS="$MONO `pwd`/src/mcs.exe"
+else
+	MCS="$MONOBIN/mcs"
+fi
 
 AC_MSG_CHECKING([for mono.pc])
 if test -z `$PKG_CONFIG --variable=prefix mono`; then
@@ -101,9 +110,11 @@ if test ! -x "$MONO"; then
 	AC_MSG_ERROR([No Mono runtime found])
 fi
 
-CS="C#"
-if test ! -x "$MCS"; then
-	AC_MSG_ERROR([No $CS compiler found])
+if test "x$internal_mcs" = "xno"; then
+	CS="C#"
+	if test ! -x "$MCS"; then
+		AC_MSG_ERROR([No $CS compiler found])
+	fi
 fi
 
 AC_SUBST(MCS)
