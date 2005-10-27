@@ -431,8 +431,6 @@ namespace Banshee
         
         private void PromptForImport()
         {
-            Application.Invoke(delegate {
-            
             HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
                 DialogFlags.DestroyWithParent, MessageType.Question,
                 Catalog.GetString("Import Music"),
@@ -455,8 +453,6 @@ namespace Banshee
             }
             
             md.Destroy();
-            
-            });
         }
         
         private void ConnectToLibraryTransactionManager()
@@ -522,7 +518,9 @@ namespace Banshee
         private void OnLibraryReloaded(object o, EventArgs args)
         {
             if(Core.Library.Tracks.Count <= 0) {
-                GLib.Timeout.Add(500, PromptForImportTimeout);
+                Application.Invoke(delegate { 
+                    PromptForImport();
+                });
             } else {
                 startupLoadReady = true;
             }
