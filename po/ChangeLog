@@ -1,3 +1,7 @@
+2005-10-27  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Removed libbanshee/cd-info.c
+
 2005-10-25  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added src/ActiveUserEvent.cs
