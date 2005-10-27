@@ -187,7 +187,7 @@ namespace Banshee
                             Core.ArgumentQueue.Dequeue(arg);
                             present = false;
                             break;
-                        case "play-cd":
+                        case "audio-cd":
                             dbusCore.SelectAudioCd(Core.ArgumentQueue[arg]);
                             //Core.ArgumentQueue.Dequeue(arg);
                             present = false;
