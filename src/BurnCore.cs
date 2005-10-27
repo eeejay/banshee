@@ -168,7 +168,7 @@ namespace Banshee
             hbox.Spacing = 10;
             vboxWindow.PackStart(hbox, true, true, 0);
             
-            image = new Image(Gdk.Pixbuf.LoadFromResource("burn-icon.png"));
+            image = new Image(Gdk.Pixbuf.LoadFromResource("cd-action-burn-48.png"));
             image.Xalign = 0.5f;
             image.Yalign = 0.0f;
             hbox.PackStart(image, false, false, 0);

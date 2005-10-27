@@ -88,6 +88,7 @@ namespace Banshee
             }
             
             map["media-rip"] = "cd-action-rip-24";
+            map["media-burn"] = "cd-action-burn-24";
 
             foreach(StockItem item in stock_items) {
                 Pixbuf pixbuf = Pixbuf.LoadFromResource((map[item.StockId] as string) + ".png");

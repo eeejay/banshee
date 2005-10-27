@@ -84,7 +84,7 @@ namespace Banshee
                 Gdk.Pixbuf.LoadFromResource("encoding-icon-32.png");
                 
             ((Image)glade["ImageBurningTab"]).Pixbuf = 
-                Gdk.Pixbuf.LoadFromResource("burn-icon-32.png");
+                Gdk.Pixbuf.LoadFromResource("cd-action-burn-32.png");
                 
             ((Image)glade["ImageAdvancedTab"]).Pixbuf = 
                 Gdk.Pixbuf.LoadFromResource("advanced-icon-32.png");
