@@ -39,10 +39,11 @@ namespace Banshee
         public static string ApplicationData
         {
             get {
-                return Environment.GetFolderPath(
-                    Environment.SpecialFolder.ApplicationData) 
-                    + Path.DirectorySeparatorChar 
-                    + "banshee" 
+                return Environment.GetFolderPath(Environment.SpecialFolder.Personal)
+                    + Path.DirectorySeparatorChar
+                    + ".gnome2"
+                    + Path.DirectorySeparatorChar
+                    + "banshee"
                     + Path.DirectorySeparatorChar;
             }
         }
@@ -50,7 +51,14 @@ namespace Banshee
         public static string CoverArtDirectory
         {
             get {
-                return ApplicationData + "covers" + Path.DirectorySeparatorChar;
+                string path = Path.Combine(ApplicationData, "covers") 
+                    + Path.DirectorySeparatorChar;
+                    
+                if(!Directory.Exists(path)) {
+                    Directory.CreateDirectory(path);
+                }
+                
+                return path;
             }
         }
         
