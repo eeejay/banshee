@@ -87,9 +87,12 @@ banshee_sources = \
 	ThemeIcons.cs \
 	VersionInformationDialog.cs \
 	CoverArtThumbnail.cs \
-	AmazonCoverFetcher.cs
+	AmazonCoverFetcher.cs \
+	ActiveUserEventsManager.cs \
+	ActiveUserEvent.cs
 
 banshee_resources = \
+	../COPYING \
 	../data/Tables.sql \
 	../data/glade/player.glade \
 	../data/glade/preferences.glade \
@@ -99,7 +102,6 @@ banshee_resources = \
 	../data/images/media-pause.png \
 	../data/images/media-play.png \
 	../data/images/media-prev.png \
-	../data/images/media-burn.png \
 	../data/images/volume-decrease.png \
 	../data/images/volume-increase.png \
 	../data/images/volume-max.png \
@@ -126,8 +128,6 @@ banshee_resources = \
 	../data/images/source-ipod-shuffle.png \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
-	../data/images/burn-icon-32.png \
-	../data/images/burn-icon.png \
 	../data/images/blue-speaker.png \
 	../data/images/now-playing-arrow.png \
 	../data/images/circle.png \
@@ -139,7 +139,10 @@ banshee_resources = \
 	../data/images/song-drm.png \
 	../data/images/banshee-logo.png \
 	../data/images/cd-action-rip-16.png \
-	../data/images/cd-action-rip-24.png
+	../data/images/cd-action-rip-24.png \
+	../data/images/cd-action-burn-24.png \
+	../data/images/cd-action-burn-32.png \
+	../data/images/cd-action-burn-48.png
 
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 
