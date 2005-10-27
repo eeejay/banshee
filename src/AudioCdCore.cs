@@ -231,8 +231,8 @@ namespace Banshee
         {
             try {
                 using(UnixStream stream = UnixFile.Open(device_node, 
-                    Mono.Unix.Native.OpenFlags.O_RDONLY | 
-					Mono.Unix.Native.OpenFlags.O_NONBLOCK)) {
+                    (Mono.Unix.OpenFlags)(UnixFileUtil.OpenFlags.O_RDONLY | 
+					UnixFileUtil.OpenFlags.O_NONBLOCK))) {
                     return ioctl(stream.Handle, open
                         ? EjectOperation.Open
                         : EjectOperation.Close) == 0;

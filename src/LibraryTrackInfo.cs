@@ -301,7 +301,7 @@ namespace Banshee
                     "Title", title, 
                     "Genre", genre, 
                     "Year", year,
-                    "DateAddedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(dateAdded), 
+                    "DateAddedStamp", DateTimeUtil.FromDateTime(dateAdded), 
                     "TrackNumber", trackNumber, 
                     "TrackCount", trackCount, 
                     "Duration", duration, 
@@ -311,7 +311,7 @@ namespace Banshee
                     "AlbumPeak", albumPeak, 
                     "Rating", rating, 
                     "NumberOfPlays", numberOfPlays, 
-                    "LastPlayedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(lastPlayed));
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(lastPlayed));
             } else {
                 tracksQuery = new Update("Tracks",
                     "Uri", uri, 
@@ -324,7 +324,7 @@ namespace Banshee
                     "Title", title, 
                     "Genre", genre, 
                     "Year", year,
-                    "DateAddedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(dateAdded), 
+                    "DateAddedStamp", DateTimeUtil.FromDateTime(dateAdded), 
                     "TrackNumber", trackNumber, 
                     "TrackCount", trackCount, 
                     "Duration", duration, 
@@ -334,7 +334,7 @@ namespace Banshee
                     "AlbumPeak", albumPeak, 
                     "Rating", rating, 
                     "NumberOfPlays", numberOfPlays, 
-                    "LastPlayedStamp", Mono.Unix.Native.NativeConvert.FromDateTime(lastPlayed)) +
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(lastPlayed)) +
                     new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
                 //    new Limit(1);
             }
@@ -408,7 +408,7 @@ namespace Banshee
 					string s = (string)reader ["LastPlayedStamp"];
 					if (s != null){
 						long time = Int64.Parse (s);
-						lastPlayed = Mono.Unix.Native.NativeConvert.ToDateTime(time);
+						lastPlayed = DateTimeUtil.ToDateTime(time);
 					}
 				} catch(Exception e) {
 					Console.WriteLine ("E1: " + e);
@@ -422,7 +422,7 @@ namespace Banshee
 					string s = (string)reader ["LastPlayedStamp"];
 					if (s != null){
 						long time = Int64.Parse (s);
-						dateAdded = Mono.Unix.Native.NativeConvert.ToDateTime(time);
+						dateAdded = DateTimeUtil.ToDateTime(time);
 					}
 				} catch(Exception e) {
 					Console.WriteLine ("E2: " + e);
