@@ -156,7 +156,8 @@ namespace Banshee
             
             Core.Log.Updated += OnLogCoreUpdated;
             
-            GLib.Timeout.Add(500, InitialLoadTimeout);
+            InitialLoadTimeout();
+            //GLib.Timeout.Add(500, InitialLoadTimeout);
     
             Gtk.Application.Run();
         }
@@ -170,6 +171,10 @@ namespace Banshee
             foreach(IPod.Device device in Core.Instance.IpodCore.Devices) {
                  device.Changed += OnIpodDeviceChanged;
                  CheckIpodForNew(device);
+            }
+            
+            if(Core.ArgumentQueue.Contains("audio-cd")) {
+                SelectAudioCd(Core.ArgumentQueue["audio-cd"]);
             }
             
             return false;
@@ -431,8 +436,8 @@ namespace Banshee
         
         private void PromptForImport()
         {
-            HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                DialogFlags.DestroyWithParent, MessageType.Question,
+           HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                DialogFlags.Modal, MessageType.Question,
                 Catalog.GetString("Import Music"),
                 Catalog.GetString("Your music library is empty. You may import new music into " +
                 "your library now, or choose to do so later.\n\nAutomatic import " +
@@ -440,19 +445,24 @@ namespace Banshee
                 "be patient."),
                 Catalog.GetString("Import Folder"));
                 
-            md.AddButton(Catalog.GetString("Automatic Import"), 
-                Gtk.ResponseType.Apply, true);
+            md.AddButton(Catalog.GetString("Automatic Import"), ResponseType.Apply, true);
+            md.Response += OnPromptForImportResponse;
+            md.ShowAll();
+        }
+        
+        private void OnPromptForImportResponse(object o, ResponseArgs args)
+        {
+            (o as Dialog).Response -= OnPromptForImportResponse;
+            (o as Dialog).Destroy();
             
-            switch(md.Run()) {
-                case (int)ResponseType.Ok:
+            switch(args.ResponseId) {
+                case ResponseType.Ok:
                     ImportWithFileSelector();
                     break;
-                case (int)ResponseType.Apply:
+                case ResponseType.Apply:
                     ImportHomeDirectory();
                     break;
             }
-            
-            md.Destroy();
         }
         
         private void ConnectToLibraryTransactionManager()
@@ -517,12 +527,12 @@ namespace Banshee
         
         private void OnLibraryReloaded(object o, EventArgs args)
         {
+            startupLoadReady = true;
+            
             if(Core.Library.Tracks.Count <= 0) {
                 Application.Invoke(delegate { 
                     PromptForImport();
                 });
-            } else {
-                startupLoadReady = true;
             }
         }
         
