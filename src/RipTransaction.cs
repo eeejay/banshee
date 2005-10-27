@@ -31,6 +31,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Mono.Unix;
 
 namespace Banshee
@@ -140,7 +141,7 @@ namespace Banshee
         private static extern IntPtr cd_rip_get_error(HandleRef ripper);
     }
 
-    public class RipTransaction : LibraryTransaction
+    public class RipTransaction
     {
         private ArrayList tracks = new ArrayList();
         private AudioCdRipper ripper;
@@ -153,18 +154,16 @@ namespace Banshee
         private int currentSeconds = 0;
         private int lastPollSeconds = 0;
         private uint pollDelay = 1000;
+        private long totalCount;
 
         public event HaveTrackInfoHandler HaveTrackInfo;
-
-        public override string Name {
-            get {
-                return "CD Ripping Transaction";
-            }
-        }
+        
+        private ActiveUserEvent user_event;
         
         public RipTransaction()
         {
-            showCount = false;
+            user_event = new ActiveUserEvent("Ripping CD");
+            user_event.Icon = Gdk.Pixbuf.LoadFromResource("cd-action-rip-24.png");
         }
 
         public void QueueTrack(AudioCdTrackInfo track)
@@ -182,10 +181,16 @@ namespace Banshee
             totalCount += track.Duration;
         }
         
-        public override void Run()
+        public void Run()
+        {
+            Thread thread = new Thread(new ThreadStart(ThreadedRun));
+            thread.Start();
+        }
+        
+        private void ThreadedRun()
         {
             int current = 1;
-            statusMessage = Catalog.GetString("Initializing CD Drive");
+            user_event.Message = Catalog.GetString("Initializing CD Drive");
         
             PipelineProfile profile = 
                 PipelineProfile.GetConfiguredProfile("Ripping");
@@ -208,13 +213,13 @@ namespace Banshee
             uint timeoutId = GLib.Timeout.Add(pollDelay, OnTimeout);
             
             foreach(AudioCdTrackInfo track in tracks) {
-                if(cancelRequested)
+                if(user_event.IsCancelRequested)
                     break;
          
                 status = String.Format(Catalog.GetString(
                     "Ripping {0} of {1} : {2} - {3}"), current++, QueueSize,
                     track.Artist, track.Title);
-                statusMessage = status;
+                user_event.Message = status;
                     
                 string filename = "file://" + 
                     FileNamePattern.BuildFull(track, profile.Extension);
@@ -225,7 +230,7 @@ namespace Banshee
                 
                 overallProgress += (int)track.Duration;
                 
-                if(!cancelRequested) {
+                if(!user_event.IsCancelRequested) {
                     TrackInfo lti;
                     try {
                         lti = new LibraryTrackInfo(new Uri(filename), track);
@@ -250,6 +255,7 @@ namespace Banshee
                 GLib.Source.Remove(timeoutId);
                    
             ripper.Dispose();
+            user_event.Dispose();
         }
         
         private bool OnTimeout()
@@ -258,23 +264,26 @@ namespace Banshee
             lastPollSeconds = currentSeconds;
             
             if(diff <= 0) {
-                statusMessage = status;
+                user_event.Message = status;
                 return true;
             }
             
-            statusMessage = status + String.Format(" ({0}x)", diff);
+            user_event.Message = status + String.Format(" ({0}x)", diff);
             return true;
         }
         
         private void OnRipperProgress(object o, AudioCdRipperProgressArgs args)
         {
-            if(cancelRequested && ripper != null)
+            if(user_event.IsCancelRequested && ripper != null)
                 ripper.Cancel();
                 
             if(args.SecondsEncoded == 0)
                 return;
+
+  
+                user_event.Progress = (double)(args.SecondsEncoded + overallProgress) / (double)(totalCount);          
                 
-            currentCount = args.SecondsEncoded + overallProgress;
+//            currentCount = args.SecondsEncoded + overallProgress;
             currentSeconds = args.SecondsEncoded;
         }
         

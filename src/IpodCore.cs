@@ -183,14 +183,14 @@ namespace Banshee
         public event EventHandler SyncStarted;
         public event EventHandler SyncCompleted;
         
+        private ActiveUserEvent user_event;
+        
         public IpodSync(Device device)
         {
             this.device = device;
+            user_event = new ActiveUserEvent(Catalog.GetString("Syncing iPod"));
             
             encodeProfile = PipelineProfile.GetConfiguredProfile("Ipod", "mp3,aac,mp4,m4a,m4p");
-                
-           // progress = new ProgressDialog(null);
-           // progress.SongDatabase = device.SongDatabase;
         }
         
         public IpodSync(Device device, ArrayList updateTracks, ArrayList removeTracks)
@@ -361,6 +361,29 @@ namespace Banshee
         
         private void ThreadedSave(object o)
         {
+            device.SongDatabase.SaveStarted += delegate(object o, EventArgs args) 
+            {
+                EmitSyncStarted();
+                user_event.Message = "Preparing to sync...";
+            };
+            
+            device.SongDatabase.SaveEnded += delegate(object o, EventArgs args)
+            {
+                EmitSyncCompleted();
+                user_event.Dispose();
+            };
+            
+            device.SongDatabase.SaveProgressChanged += delegate(SongDatabase db, Song song, 
+                double currentPercent, int completed, int total)
+            {
+                user_event.Message = song.Artist + " - " + song.Title;
+                
+                double fraction = (double)completed / (double)total;
+                fraction += (1.0 / (double)total) * currentPercent;
+                
+                user_event.Progress = fraction;
+            };
+            
             device.SongDatabase.Save();
         }    
     }
