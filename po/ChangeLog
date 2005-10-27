@@ -1,3 +1,7 @@
+2005-10-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Added src/ActiveUserEvent.cs
+
 2005-10-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added src/StockIcons.cs
