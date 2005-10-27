@@ -16,7 +16,8 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
-	ipod-sharp.dll.config.in
+	ipod-sharp.dll.config.in \
+	mcs.exe
 
 CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
