@@ -1,3 +1,23 @@
+2005-10-27  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* libbanshee/cd-test.c: Removed #include "cd-info.h"
+	* src/AudioCdCore.cs: Use Utilities OpenFlags flags
+	* src/LibraryTrackInfo.cs: Use DateTimeUtil class for D/T conversion
+	* src/Utilities.cs: Copied Date/Time utils from 
+	Mono.Unix.Native.NativeConvert to DateTimeUtil class, and OpenFlags
+	* src/Main.cs: Arg is audio-cd for now instead of play-cd
+	* src/Makefile.am: Added mcs.exe to EXTRA_DIST
+	* src/PlayerInterface.cs (PromptForImport): Fix initial import 
+	dialog freeze
+	* src/MusicBrainz/Makefile.am: Added $(srcdir)/ prefixes to sources
+	to make distcheck happy
+	* src/mcs.exe: Added precompiled bare assembly of mono mcs 1.1.9.2 
+	for packagers to use who can't upgrade from mono 1.1.8. Assemblies
+	produced by this 1.1.9.2 compiler will run on the 1.1.8 mono stack
+	* configure.ac: Added option to use an internal mcs 1.1.9.2 compiler,
+	--with-internal-mcs. Use only if you can't upgrade your distrobution's
+	mono
+
 2005-10-26  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Library.cs: Use new/permanent library DB path: 
