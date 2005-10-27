@@ -32,7 +32,6 @@
 #include <glib.h>
 
 #include "cd-detect.h"
-#include "cd-info.h"
 #include "cd-rip.h"
 
 void on_cd_added(const gchar *udi)
