@@ -226,6 +226,15 @@ namespace Banshee
             }
         }
         
+        public static void ProxyToMainThread(EventHandler handler)
+        {
+            if(!InMainThread) {
+                Gtk.Application.Invoke(handler);
+            } else {
+                handler(null, new EventArgs());
+            }
+        }
+        
         [DllImport("libglib-2.0.so")]
         static extern IntPtr g_get_real_name();
 
