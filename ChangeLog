@@ -1,5 +1,10 @@
 2005-10-26  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Library.cs: Use new/permanent library DB path: 
+	~/.gnome2/banshee/banshee.db, use and move the old one if it exists
+	* plugincore/Paths.cs: Moved ApplicationData from ~/.config/banshee to
+	~/.gnome2/banshee, create the cover art directory if it doesn't exist
+	when it's requested
 	* data/glade/player.glade: Added a container for the 
 	ActiveUserEventsManager widget
 	* src/banshee.exe.config.in: Map for GTK+
