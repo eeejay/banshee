@@ -60,11 +60,23 @@ namespace Banshee
         public void ReloadDatabase()
         {
             string libraryLocation = Location;
-
-            if(!Directory.Exists(libraryLocation))
-                Directory.CreateDirectory(libraryLocation);
             
-            Db = new Database("Library", libraryLocation + "/.banshee.db");
+            string db_file = Path.Combine(Paths.ApplicationData, "banshee.db");
+            string olddb_file = libraryLocation + Path.DirectorySeparatorChar + ".banshee.db";
+
+            if(!Directory.Exists(libraryLocation)) {
+                Directory.CreateDirectory(libraryLocation);
+            }
+            
+            if(!Directory.Exists(Paths.ApplicationData)) {
+                Directory.CreateDirectory(Paths.ApplicationData);
+            }
+            
+            if(!File.Exists(db_file) && File.Exists(olddb_file)) {
+                File.Move(olddb_file, db_file);
+            }
+            
+            Db = new Database("Library",  db_file);
         }
         
         public void ReloadLibrary()
