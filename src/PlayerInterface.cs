@@ -330,6 +330,8 @@ namespace Banshee
             box.PackStart(ipodEjectButton, false, false, 0);
             ipodEjectButton.ShowAll();
             
+            (gxml["LeftContainer"] as VBox).PackStart(new ActiveUserEventsManager(), false, false, 0);
+            
            // gxml["IpodContainer"].Visible = false;
             
             // Misc
@@ -538,6 +540,7 @@ namespace Banshee
       
         private void Quit()
         {
+            ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
             Core.Instance.Player.Dispose();
             Core.GconfClient.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
@@ -2115,7 +2118,7 @@ namespace Banshee
             }
             
             if(trans.QueueSize > 0) {
-                trans.Register();
+                trans.Run();
             } else {
                 HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
                     MessageType.Info, ButtonsType.Ok, 
