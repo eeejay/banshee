@@ -22,8 +22,6 @@ EXTRA_DIST = \
 	advanced-icon-32.png \
 	banshee-logo.png \
 	blue-speaker.png \
-	burn-icon-32.png \
-	burn-icon.png \
 	busy-spinner-36.png \
 	busy-spinner.png \
 	circle.png \
@@ -33,7 +31,6 @@ EXTRA_DIST = \
 	icon-title.png \
 	ipod-48.png \
 	library-icon-32.png \
-	media-burn.png \
 	media-eject.png \
 	media-next.png \
 	media-pause.png \
@@ -68,5 +65,8 @@ EXTRA_DIST = \
 	volume-min.png \
 	volume-zero.png \
 	cd-action-rip-16.png \
-	cd-action-rip-24.png
+	cd-action-rip-24.png \
+	cd-action-burn-24.png \
+	cd-action-burn-32.png \
+	cd-action-burn-48.png
 
