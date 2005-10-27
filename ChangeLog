@@ -1,3 +1,25 @@
+2005-10-26  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/glade/player.glade: Added a container for the 
+	ActiveUserEventsManager widget
+	* src/banshee.exe.config.in: Map for GTK+
+	* src/Core.cs (ProxyToMainThread): Wrap Application.Invoke to run handler
+	in current thread if already in main thread
+	* src/PlayerInterface.cs: Integrate ActiveUserEventsManager into UI
+	* src/Makefile.am: Add ActiveUserEvent.cs, ActiveUserEventsManager.cs and
+	update for new burn icons
+	* src/StockIcons.cs:
+	* src/Preferences.cs:
+	* src/BurnCore.cs: Use new burn icons
+	* src/RipTransaction.cs:
+	* src/IpodCore.cs: Use the new user events manager
+	* src/ActiveUserEventsManager.cs: user events manager for progress 
+	reporting
+	* src/ActiveUserEvent.cs: Class for user events to use to report progress
+	and messages to a managed user interface
+	* src/AboutBox.cs: Bindings for the GTK About Box (don't exist in 
+	gtk-sharp yet), use it instead of the GNOME About Box.
+
 2005-10-25  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/SearchEntry: Reformatted code, added Focus() method
