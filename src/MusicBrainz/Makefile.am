@@ -6,11 +6,11 @@ musicbrainzdir = $(pkglibdir)
 musicbrainz_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
-	Client.cs \
-	ClientVersion.cs \
-	Rdf.cs \
-	SimpleDisc.cs \
-	SimpleTrack.cs
+	$(srcdir)/Client.cs \
+	$(srcdir)/ClientVersion.cs \
+	$(srcdir)/Rdf.cs \
+	$(srcdir)/SimpleDisc.cs \
+	$(srcdir)/SimpleTrack.cs
 
 all: $(ASSEMBLY)
 
