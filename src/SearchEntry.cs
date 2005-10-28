@@ -339,5 +339,12 @@ namespace Banshee
         {
             entry.HasFocus = true;
         }
+
+        public new bool HasFocus
+        {
+            get {
+                return entry.HasFocus;
+            }
+        }
     }
 }

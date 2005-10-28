@@ -654,12 +654,17 @@ namespace Banshee
                 case Gdk.Key.J:
                 case Gdk.Key.j:
                 case Gdk.Key.F3:
-                    searchEntry.Focus();
-                    handled = true;
+                    if(!searchEntry.HasFocus) {
+                        searchEntry.Focus();
+                        handled = true;
+                    }
                     break;
                 case Gdk.Key.Left:
                     if(args.Event.State == Gdk.ModifierType.ControlMask) {
                         Core.Instance.Player.Position -= 10;
+                        handled = true;
+                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                        Core.Instance.Player.Position = 0;
                         handled = true;
                     }
                     break;
@@ -667,7 +672,7 @@ namespace Banshee
                     if(args.Event.State == Gdk.ModifierType.ControlMask) {
                         Core.Instance.Player.Position += 10;
                         handled = true;
-                    }
+                    } 
                     break;
             }
             
@@ -1258,7 +1263,6 @@ namespace Banshee
         {
             if(playlistModel.Source.Type == SourceType.Ipod 
                 && (playlistModel.Source as IpodSource).IsSyncing) {
-                playlistModel.ClearModel();
                 playlistView.Sensitive = false;
             }
         }
