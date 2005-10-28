@@ -1,5 +1,6 @@
 2005-10-28  David Sedeño <david@alderia.com>
 
+	* src/SearchEntry.cs: Added CanFocus field
 	* src/PlayerInterface.cs: Check if the search entry has already the
 	focus so we can search with anything with 'j' letter.
 
