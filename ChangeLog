@@ -1,3 +1,8 @@
+2005-10-28  David Sedeño <david@alderia.com>
+
+	* src/PlayerInterface.cs: Check if the search entry has already the
+	focus so we can search with anything with 'j' letter.
+
 2005-10-27  Aaron Bockover  <aaron@aaronbock.net>
 	
 	* libbanshee/cd-test.c: Removed #include "cd-info.h"
