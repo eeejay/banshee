@@ -381,7 +381,6 @@ namespace Banshee
             try {
                 uri = new Uri(reader["Uri"] as string);
             } catch(UriFormatException e) {
-				Console.WriteLine ("E0: " + e);
                 uri = new Uri("file://" + (reader["Uri"] as string));
             }
             
