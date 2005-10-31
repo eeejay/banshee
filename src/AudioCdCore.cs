@@ -141,6 +141,7 @@ namespace Banshee
         {
             ArrayList track_list = new ArrayList();
             SimpleDisc mb_disc = new SimpleDisc(device_node);
+            //mb_disc.Client.Debug = true;
             
             foreach(SimpleTrack mb_track in mb_disc) {
                 AudioCdTrackInfo track = new AudioCdTrackInfo(device_node);
