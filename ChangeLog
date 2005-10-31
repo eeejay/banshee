@@ -1,3 +1,13 @@
+2005-10-28  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.9.9, require ipod-sharp 0.5.9, mono 1.1.9.2,
+	GStreamer 0.8.11, libnautilus-burn 2.12
+	* data/glade/trackinfo.glade: Switch order of Save/Cancel buttons
+	* data/glade/player.glade: Add text labels to rip/burn icons
+	* src/Library.cs: Handle exception when thrown when unable to create
+	library directory
+	* src/NotificationAreaIcon.cs: Switch order of Next/Previous menu items
+
 2005-10-28  David Sedeño <david@alderia.com>
 
 	* src/SearchEntry.cs: Added CanFocus field
