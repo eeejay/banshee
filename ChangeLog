@@ -1,3 +1,7 @@
+2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* entagged-sharp/: Updated entagged-sharp snapshot
+
 2005-10-31  Miguel de Icaza  <miguel@novell.com>
 
 	* src/LibraryTrackInfo.cs: Null or empty strings will default to

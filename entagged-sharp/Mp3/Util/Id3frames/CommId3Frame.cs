@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
@@ -26,16 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/08/31 07:59:02  jwillcox
- * 2005-08-31  James Willcox  <snorp@snorp.net>
- *
- *         * add an emacs modeline to all the .cs sources
- *         * src/IpodCore.cs: fix iPod syncing.
- *         * src/PlayerInterface.cs (OnSimpleSearch): fix a null reference that
- *         was causing some crashes.
- *
- * Revision 1.1  2005/08/25 21:03:46  abock
- * New entagged-sharp
+ * Revision 1.3  2005/10/31 19:13:03  abock
+ * Updated entagged-sharp snapshot
  *
  * Revision 1.3  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -78,20 +69,50 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 			
 			this.lang = System.Text.Encoding.GetEncoding("ISO-8859-1").GetString(raw, flags.Length+1, 3);
 			
-			this.shortDesc = GetString(raw, flags.Length+4, raw.Length - flags.Length - 4, Encoding);
-			
-			string[] s = this.shortDesc.Split('\0');
-			this.shortDesc = s[0];
-			
-			this.content = "";
-			if(s.Length >= 2)
-				this.content = s[1];		
+			int commentStart = GetCommentStart(raw,flags.Length + 4, Encoding);
+			this.shortDesc = GetString(raw, flags.Length + 4, commentStart - flags.Length - 4, Encoding);
+			this.content = GetString(raw, commentStart, raw.Length - commentStart, Encoding);	
 		}
 		
+		/**
+		 * This methods interprets content to be a valid comment section. where
+		 * first comes a short comment directly after that the comment section.
+		 * This method searches for the terminal character of the short description,
+		 * and return the index of the first byte of the fulltext comment. 
+		 * 
+		 * @param content The comment data.
+		 * @param offset The offset where the short descriptions is about to start.
+		 * @param encoding the encoding of the field.
+		 * @return the index (including given offset) for the first byte of the fulltext comment.
+		 */
+		public int GetCommentStart (byte[] content, int offset, string encoding) {
+			int result = 0;
+			if (Encoding == "UTF-16") {
+				for (result = offset; result < content.Length; result+=2) {
+					if (content[result] == 0x00 && content[result+1] == 0x00) {
+						result += 2;
+						break;
+					}
+				}
+			} else {
+				for (result = offset; result < content.Length; result++) {
+					if (content[result] == 0x00) {
+						result++;
+						break;
+					}
+				}
+			}
+			return result;
+		}
+	
 		protected override byte[] Build()
 		{
-			string text = this.shortDesc + "\0" + this.content;
-			byte[] data = GetBytes(text, Encoding);
+			byte[] shortDescData = GetBytes(this.shortDesc, Encoding);
+			byte[] contentData = GetBytes(this.content, Encoding);
+			byte[] data = new byte[shortDescData.Length + contentData.Length];
+			Copy(shortDescData, data, 0);
+			Copy(contentData, data, shortDescData.Length);
+			
 			byte[] lan = System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(this.lang);
 			
 			//the return byte[]

@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
@@ -26,16 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/08/31 07:59:06  jwillcox
- * 2005-08-31  James Willcox  <snorp@snorp.net>
- *
- *         * add an emacs modeline to all the .cs sources
- *         * src/IpodCore.cs: fix iPod syncing.
- *         * src/PlayerInterface.cs (OnSimpleSearch): fix a null reference that
- *         was causing some crashes.
- *
- * Revision 1.1  2005/08/25 21:03:49  abock
- * New entagged-sharp
+ * Revision 1.3  2005/10/31 19:13:06  abock
+ * Updated entagged-sharp snapshot
  *
  * Revision 1.3  2005/02/08 12:54:41  kikidonk
  * Added cvs log and header
@@ -48,20 +39,15 @@ using System.Text;
 
 namespace Entagged.Audioformats.Util {
 	public class Utils {
-		private static Encoding utf = Encoding.UTF8;
 		public static string GetExtension(string f) {
 			string name = f.ToLower ();
 			int i = name.LastIndexOf( "." );
 			if(i == -1)
 				return "";
-			
+
 			return name.Substring( i + 1 );
 		}
-		
-		public static byte[] GetUTF8Bytes(string s) {
-			return utf.GetBytes(s);
-		}
-		
+
 		public static long GetLongNumber(byte[] b, int start, int end) {
 			long number = 0;
 			for(int i = 0; i<(end-start+1); i++) {
@@ -79,13 +65,42 @@ namespace Entagged.Audioformats.Util {
 			
 			return number;
 		}
+		
+		public static byte[] GetNumber(int number) {
+			return GetNumber(number, 4);
+		}
+		
+		public static byte[] GetNumber(long number, int size) {
+			byte[] b = new byte[size];
+			
+			for(int i = 0; i<size; i++) {
+				b[i] = (byte) ( ( size & (0xFF << 8*i) ) >> 8*i );
+			}
 
+			return b;
+		}
+		
+		public static byte[] GetBytes(string s, string encoding) {
+			return System.Text.Encoding.GetEncoding(encoding).GetBytes(s);
+		}
+		
+		public static byte[] GetBytes(string s) {
+			return System.Text.Encoding.ASCII.GetBytes(s);
+		}
+		
 		public static string[] FieldListToStringArray(IList taglist)
 		{
 			string[] ret = new string[taglist.Count];
 			int i = 0;
-			foreach (string field in taglist)
-				ret[i++] = field;
+			
+			foreach (string field in taglist) {
+				if(field != null && field.Trim().Length == 0) {
+					ret[i++] = field;
+				} else {
+					ret[i++] = field;
+				}
+			}
+			
 			return ret;
 		}
 

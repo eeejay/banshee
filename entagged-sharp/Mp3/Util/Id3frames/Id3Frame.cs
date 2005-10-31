@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
@@ -26,16 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/08/31 07:59:02  jwillcox
- * 2005-08-31  James Willcox  <snorp@snorp.net>
- *
- *         * add an emacs modeline to all the .cs sources
- *         * src/IpodCore.cs: fix iPod syncing.
- *         * src/PlayerInterface.cs (OnSimpleSearch): fix a null reference that
- *         was causing some crashes.
- *
- * Revision 1.1  2005/08/25 21:03:46  abock
- * New entagged-sharp
+ * Revision 1.3  2005/10/31 19:13:03  abock
+ * Updated entagged-sharp snapshot
  *
  * Revision 1.3  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -152,12 +143,52 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 			return b;
 		}
 		
-		protected string GetString(byte[]b, int offset, int length, string encoding) {
-			return Encoding.GetEncoding(encoding).GetString(b, offset, length);
+		protected String GetString(byte[] b, int offset, int length, string encoding) {
+			string result = null;
+			if (encoding == "UTF-16") {
+				int zerochars = 0;
+				// do we have zero terminating chars (old entagged did not)
+				if (b[offset+length-2] == 0x00 && b[offset+length-1] == 0x00) {
+					zerochars = 2;
+				}
+				if (b[offset] == (byte) 0xFE && b[offset + 1] == (byte) 0xFF) {
+					result = Encoding.GetEncoding("UTF-16BE").GetString(b, offset + 2, length - 2 - zerochars);
+				} else if (b[offset] == (byte) 0xFF && b[offset + 1] == (byte) 0xFE) {
+					result = Encoding.GetEncoding("UTF-16LE").GetString(b, offset + 2, length - 2 - zerochars);
+				} 
+			} else {
+				if (length == 0 || offset+length > b.Length) {
+					result = "";
+				} else {
+					int zerochars = 0;
+					if (b[offset+length-1] == 0x00) {
+						zerochars = 1;
+					}
+					result = Encoding.GetEncoding(encoding).GetString(b, offset, length-zerochars);
+				}
+			}
+			return result;
 		}
-	
+		
 		protected byte[] GetBytes(string s, string encoding) {
-			return System.Text.Encoding.GetEncoding(encoding).GetBytes(s);
+			byte[] result = null;
+			if (encoding == "UTF-16") {
+				result = System.Text.Encoding.GetEncoding("UTF-16LE").GetBytes(s);
+				// 2 for BOM and 2 for terminal character
+				byte[] tmp = new byte[result.Length + 4];
+				Copy(result, tmp, 2);
+				// Create the BOM
+				tmp[0] = (byte) 0xFF;
+				tmp[1] = (byte) 0xFE;
+				result = tmp;
+			} else {
+				// this is encoding ISO-8859-1, for the time of this change.
+				result = System.Text.Encoding.GetEncoding(encoding).GetBytes(s);
+				byte[] tmp = new byte[result.Length + 1];
+				Copy(result, tmp, 0);
+				result = tmp;
+			}
+			return result;
 		}
 	}
 }
