@@ -64,8 +64,12 @@ namespace Banshee
             string db_file = Path.Combine(Paths.ApplicationData, "banshee.db");
             string olddb_file = libraryLocation + Path.DirectorySeparatorChar + ".banshee.db";
 
-            if(!Directory.Exists(libraryLocation)) {
-                Directory.CreateDirectory(libraryLocation);
+            try {
+                if(!Directory.Exists(libraryLocation)) {
+                    Directory.CreateDirectory(libraryLocation);
+                }
+            } catch(Exception) {
+                Console.WriteLine("Could not create Library directory: " + libraryLocation);
             }
             
             if(!Directory.Exists(Paths.ApplicationData)) {
@@ -73,7 +77,15 @@ namespace Banshee
             }
             
             if(!File.Exists(db_file) && File.Exists(olddb_file)) {
-                File.Move(olddb_file, db_file);
+                Console.WriteLine("Copied old library to new location");
+                
+                File.Copy(olddb_file, db_file);
+                
+                try {
+                    File.Delete(olddb_file);
+                } catch(Exception) {
+                    Console.WriteLine("Could not remove old library");
+                }
             }
             
             Db = new Database("Library",  db_file);
