@@ -1,5 +1,7 @@
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/RipTransaction.cs: Removed +1 because MusicBrainz is 1-based and
+	not 0-based in reporting the track index
 	* HACKING: Updated it with revised style guidelines
 	* entagged-sharp/: Updated entagged-sharp snapshot
 

@@ -224,7 +224,7 @@ namespace Banshee
                 string filename = "file://" + 
                     FileNamePattern.BuildFull(track, profile.Extension);
                     
-                if(!ripper.RipTrack(track, track.TrackIndex + 1, filename)) {
+                if(!ripper.RipTrack(track, track.TrackIndex, filename)) {
                     break;
                 }
                 
