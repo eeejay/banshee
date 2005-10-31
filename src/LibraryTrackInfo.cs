@@ -231,7 +231,7 @@ namespace Banshee
             string fileName = StringUtil.UriEscape(path);
             fileName = Path.GetFileNameWithoutExtension(fileName);
         
-            match = Regex.Match(fileName, @"(\d+)\.(.*)$");
+            match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
             if(match.Success) {
                 trackNumber = Convert.ToUInt32(match.Groups[1].ToString());
 //                Console.WriteLine ("trackNumber = {0}", trackNumber);
@@ -438,7 +438,6 @@ namespace Banshee
 		
         private void LoadFromFile(string filename)
         {
-		Console.WriteLine ("fi: " + filename);
             ParseUri(filename);
             trackId = 0;
    
