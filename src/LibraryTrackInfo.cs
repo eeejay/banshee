@@ -428,20 +428,28 @@ namespace Banshee
 				}
             }
         }
-        
+
+		static string Choose (string priority, string fallback)
+		{
+			if (priority == null || priority.Length == 0)
+				return fallback;
+			return priority;
+		}
+		
         private void LoadFromFile(string filename)
         {
+		Console.WriteLine ("fi: " + filename);
             ParseUri(filename);
             trackId = 0;
-    
+   
             AudioFileWrapper af = new AudioFileWrapper(filename);
 
             mimetype = null;
 
-            artist = af.Artist == null ? artist : af.Artist;
-            album = af.Album == null ? album : af.Album;
-            title = af.Title == null ? title : af.Title;
-            genre = af.Genre == null ? genre : af.Genre;
+			artist = Choose (af.Artist, artist);
+            album = Choose  (af.Album, album);
+            title = Choose (af.Title, title);
+            genre = Choose (af.Genre, genre);
             trackNumber = af.TrackNumber == 0 ? trackNumber : (uint)af.TrackNumber;
             trackCount = 0;
             duration = af.Duration;

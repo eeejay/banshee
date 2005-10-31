@@ -1,3 +1,8 @@
+2005-10-31  Miguel de Icaza  <miguel@novell.com>
+
+	* src/LibraryTrackInfo.cs: Null or empty strings will default to
+	the filename guessed values.
+
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Added nb to ALL_LINGUAS 
