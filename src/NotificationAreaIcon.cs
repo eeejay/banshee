@@ -105,17 +105,17 @@ namespace Banshee
 			PlayItem.Image = new Gtk.Image();
 			((Gtk.Image)PlayItem.Image).SetFromStock("media-play", IconSize.Menu);
 			traymenu.Append(PlayItem);
-
-			NextItem = new ImageMenuItem(Catalog.GetString("Next"));
-			NextItem.Image = new Gtk.Image();
-			((Gtk.Image)NextItem.Image).SetFromStock("media-next", IconSize.Menu);
-			traymenu.Append(NextItem);
-
+			
 			PreviousItem = new ImageMenuItem(Catalog.GetString("Previous"));
 			PreviousItem.Image = new Gtk.Image();
 			((Gtk.Image)PreviousItem.Image).SetFromStock("media-prev", 
 				IconSize.Menu);
+				
 			traymenu.Append(PreviousItem);
+			NextItem = new ImageMenuItem(Catalog.GetString("Next"));
+			NextItem.Image = new Gtk.Image();
+			((Gtk.Image)NextItem.Image).SetFromStock("media-next", IconSize.Menu);
+			traymenu.Append(NextItem);
 			
 			traymenu.Append(new SeparatorMenuItem());
 			
