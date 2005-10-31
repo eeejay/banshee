@@ -1,5 +1,6 @@
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
+	* HACKING: Updated it with revised style guidelines
 	* entagged-sharp/: Updated entagged-sharp snapshot
 
 2005-10-31  Miguel de Icaza  <miguel@novell.com>

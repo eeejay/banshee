@@ -1,9 +1,9 @@
 C# Style Guidelines
 ===================
 
-  1. Private variable names should be written like:
+  1. Private variable/field names should be written like:
 
-      lowerCaseStartingLetter
+      lower_case_with_under_scores
 
   2. Property names, public variables, and functions should be written like:
 
@@ -12,30 +12,40 @@ C# Style Guidelines
   3. No spaces before function/conditional parenthesis, braces:
 
       if(condition) {
-	     CallSomeFunction(args);
-	  }
+         CallSomeFunction(args);
+      }
 
-  4. One space before a brace on the same line as a conditional:
+  4. One space before a brace on the same line as a conditional or property:
 
       while(condition) {
-	     ...
-	  }
+         ...
+      }
 
   5. Namespace, Class, Method braces on separate lines:
 
-
       namespace Foo
-	  {
+      {
           public class Bar
-		  {
-		      private void Method()
-	          {
+          {
+              private void Method()
+              {
                   if(condition) {
                       ..
-				  }
-	          }
-		  }
+                  }
+              }
+          }
       }
 
-   6. Use tabs for indention
+  6. The exception to rule 5 is for Properties. The brace in the same line:
+
+      public string Something {
+          get {
+             return "yay";
+          }
+      }
+
+   6. Use 4 space characters for indention, NOT tabs
+   
+   7. Try to observe a 100 character wrap margin. If your lines are over 100 characters, break and
+      indent them logically.
    
