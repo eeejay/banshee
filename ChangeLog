@@ -1,3 +1,7 @@
+2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Added nb to ALL_LINGUAS 
+
 2005-10-28  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Version 0.9.9, require ipod-sharp 0.5.9, mono 1.1.9.2,
