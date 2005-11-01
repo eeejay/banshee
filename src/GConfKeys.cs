@@ -55,6 +55,7 @@ namespace Banshee
 		public const string IpodBitrate = BasePath + "IpodBitrate";
 		public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
 		public const string ColumnPath = BasePath + "PlaylistColumns/";
+		public const string ShowNotificationAreaIcon = BasePath + "ShowNotificationAreaIcon";
 	
 		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
 		public const string CDBurnerId = BasePath + "CDBurnerId";
