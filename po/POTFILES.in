@@ -17,6 +17,7 @@ mediaengines/helix/HelixPlayer.cs
 mediaengines/helix/HxPlayer.cs
 mediaengines/vlc/VlcPlayerEngine.cs
 plugincore/TrackInfo.cs
+src/AboutBox.cs
 src/ActiveUserEvent.cs
 src/AudioCdCore.cs
 src/BurnCore.cs
@@ -45,4 +46,4 @@ src/StockIcons.cs
 src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/Utilities.cs
-
+src/VersionInformationDialog.cs
