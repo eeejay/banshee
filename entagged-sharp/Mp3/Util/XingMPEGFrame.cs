@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/11/01 00:51:12  abock
- * Updated entagged-sharp snapshot
+ * Revision 1.5  2005/11/01 23:32:03  abock
+ * Updated entagged tree
  *
  * Revision 1.5  2005/02/21 00:13:00  kikidonk
  * Should fix the bitrate calculation for mp3

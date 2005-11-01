@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/11/01 00:51:15  abock
- * Updated entagged-sharp snapshot
+ * Revision 1.5  2005/11/01 23:32:06  abock
+ * Updated entagged tree
  *
  * Revision 1.5  2005/02/13 17:30:15  kikidonk
  * Little fix, peek should not forward the ponter

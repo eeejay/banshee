@@ -102,11 +102,10 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 #	$(GACUTIL) /u $(ASSEMBLY_NAME) /package $(PACKAGE) /gacdir $(libdir) /root $(DESTDIR)$(libdir)
 
 EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) \
-	AssemblyInfo.cs.in
+	$(ASSEMBLY_SOURCES) 
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = AssemblyInfo.cs *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
 
 test:
 	$(MCS) -out:entagged-test.exe -r:entagged-sharp.dll EntaggedTest.cs

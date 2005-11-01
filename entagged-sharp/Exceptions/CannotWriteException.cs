@@ -25,8 +25,8 @@
 
 /*
  * $Log$
- * Revision 1.1  2005/11/01 00:52:32  abock
- * Added partial write support for some formats and the generic framework
+ * Revision 1.2  2005/11/01 23:32:02  abock
+ * Updated entagged tree
  *
  *
  */
