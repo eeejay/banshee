@@ -389,6 +389,13 @@ namespace Banshee
         private void InstallTrayIcon()
         {
             try {
+                if(!(bool)Core.GconfClient.Get(GConfKeys.ShowNotificationAreaIcon)) {
+                    return;
+                }
+            } catch(Exception) { }
+                
+            
+            try {
                 trayIcon = new NotificationAreaIcon();
                 trayIcon.ClickEvent += new EventHandler(OnTrayClick);
                 //trayIcon.ScrollEvent += new ScrollEventHandler(OnTrayScroll);
