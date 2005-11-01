@@ -41,9 +41,9 @@ for cs in `find ./$MONO_BRANCH/ | grep -e '\.cs$'`; do
 	fi
 done;
 
-if [ ! -e Makefile.am ]; then
+#if [ ! -e Makefile.am ]; then
 	cp $MONO_BRANCH/src/Makefile.am .
-fi
+#fi
 
 rm -rf $MONO_BRANCH $TRIM_FILES
 
