@@ -1,10 +1,10 @@
 <Combine name="plugincore" fileversion="2.0">
-  <Configurations>
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry build="True" name="plugincore" />
+      <Entry configuration="Debug" build="True" name="plugincore" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="plugincore" />
+      <Entry configuration="Release" build="True" name="plugincore" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="plugincore" single="True">

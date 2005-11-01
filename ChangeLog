@@ -1,3 +1,13 @@
+2005-11-01  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp:
+	* banshee.mds:
+	* mediaengines/gst/gst-mediaengine.mdp:
+	* mediaengines/helix/helix-mediaengine.mdp:
+	* plugincore/plugincore.mdp:
+	* plugincore/plugincore.mds: Committed Ulas SAHIN's patch to update the
+	MonoDevelop project files
+
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
 	* data/banshee.schemas.in: Added schema for ShowNotificationAreaIcon key

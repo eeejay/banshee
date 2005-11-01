@@ -1,4 +1,4 @@
-<Combine name="banshee" fileversion="2.0">
+<Combine name="banshee" fileversion="2.0" outputpath="./build/bin">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry configuration="Debug" build="True" name="banshee" />
