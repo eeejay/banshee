@@ -3,12 +3,15 @@ ASSEMBLY_NAME = entagged-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 entaggedsharpdir=$(pkglibdir)
-entaggedsharp_SCRIPTS=$(ASSEMBLY) $(ASSEMBLY).mdb
+entaggedsharp_SCRIPTS=$(ASSEMBLY)
 
 APE_CSFILES = \
 	$(srcdir)/Ape/MonkeyFileReader.cs \
 	$(srcdir)/Ape/Util/ApeTagReader.cs \
+	$(srcdir)/Ape/Util/ApeTagWriter.cs \
+	$(srcdir)/Ape/Util/ApeTagCreator.cs \
 	$(srcdir)/Ape/Util/MonkeyDescriptor.cs \
+	$(srcdir)/Ape/MonkeyFileWriter.cs \
 	$(srcdir)/Ape/Util/MonkeyHeader.cs \
 	$(srcdir)/Ape/Util/MonkeyInfoReader.cs \
 	$(srcdir)/Ape/Util/WavFormatHeader.cs \
@@ -32,6 +35,7 @@ OGG_CSFILES = \
 
 MPC_CSFILES = \
 	$(srcdir)/Mpc/MpcFileReader.cs \
+	$(srcdir)/Mpc/MpcFileWriter.cs \
 	$(srcdir)/Mpc/Util/MpcHeader.cs \
 	$(srcdir)/Mpc/Util/MpcInfoReader.cs
 
@@ -60,8 +64,12 @@ TRACKER_CSFILES = \
 	$(srcdir)/Tracker/Util/TrackerTagReader.cs
 
 ASSEMBLY_SOURCES = \
+	$(srcdir)/AssemblyInfo.cs \
 	$(srcdir)/Exceptions/CannotReadException.cs \
+	$(srcdir)/Exceptions/CannotWriteException.cs \
+	$(srcdir)/Util/AbstractTagCreator.cs \
 	$(srcdir)/Util/AudioFileReader.cs \
+	$(srcdir)/Util/AudioFileWriter.cs \
 	$(srcdir)/Util/ByteBuffer.cs \
 	$(srcdir)/Util/CustomAttributes.cs \
 	$(srcdir)/Util/TagField.cs \
@@ -94,10 +102,11 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 #	$(GACUTIL) /u $(ASSEMBLY_NAME) /package $(PACKAGE) /gacdir $(libdir) /root $(DESTDIR)$(libdir)
 
 EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) 
+	$(ASSEMBLY_SOURCES) \
+	AssemblyInfo.cs.in
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = AssemblyInfo.cs *.mdb Makefile.in *.dll *.exe
 
 test:
 	$(MCS) -out:entagged-test.exe -r:entagged-sharp.dll EntaggedTest.cs
