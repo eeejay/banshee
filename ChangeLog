@@ -1,5 +1,9 @@
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/banshee.schemas.in: Added schema for ShowNotificationAreaIcon key
+	* src/PlayerInterface.cs: Only install notification area icon if 
+	ShowNotificationAreaIcon gconf key is true
+	* src/GConfKeys.cs: Added key for ShowNotificationAreaIcon
 	* src/RipTransaction.cs: Removed +1 because MusicBrainz is 1-based and
 	not 0-based in reporting the track index
 	* HACKING: Updated it with revised style guidelines
