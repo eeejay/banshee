@@ -1,5 +1,13 @@
 2005-11-01  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/NotificationAreaIcon.cs: Add mouse scroll event support (Ulas SAHIN);
+	tab->space formatting
+	* src/PlayerInterface.cs: Adjust volume when SHIFT+Scroll on notification
+	area icon (NAI) (Ulas SAHIN), Next/Previous track on normal scroll on NAI,
+	seek in current song when CTRL+Scroll on NAI; more tab->space formatting
+
+2005-11-01  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp:
 	* banshee.mds:
 	* mediaengines/gst/gst-mediaengine.mdp:
