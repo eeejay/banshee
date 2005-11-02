@@ -667,16 +667,16 @@ namespace Banshee
                     }
                     break;
                 case Gdk.Key.Left:
-                    if(args.Event.State == Gdk.ModifierType.ControlMask) {
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
                         Core.Instance.Player.Position -= 10;
                         handled = true;
-                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
                         Core.Instance.Player.Position = 0;
                         handled = true;
                     }
                     break;
                 case Gdk.Key.Right:
-                    if(args.Event.State == Gdk.ModifierType.ControlMask) {
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
                         Core.Instance.Player.Position += 10;
                         handled = true;
                     } 
@@ -697,21 +697,21 @@ namespace Banshee
         private void OnTrayScroll(object o, ScrollEventArgs args)
         {
             int tmp_vol = volumeButton.Volume;
-            
+              
             switch(args.Event.Direction) {
                 case Gdk.ScrollDirection.Up:
-                    if(args.Event.State == Gdk.ModifierType.ControlMask) {            
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
                         tmp_vol += 10;
-                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
                         Core.Instance.Player.Position += 10;
                     } else {
                         Next();
                     }
                     break;
                 case Gdk.ScrollDirection.Down:
-                    if(args.Event.State == Gdk.ModifierType.ControlMask) {            
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
                         tmp_vol -= 10;
-                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
                         Core.Instance.Player.Position -= 10;
                     } else {
                         Previous();

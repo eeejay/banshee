@@ -1,3 +1,7 @@
+2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Fix minor bug concerning meta key detection (Ulas)
+
 2005-11-01  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/NotificationAreaIcon.cs: Add mouse scroll event support (Ulas SAHIN);
