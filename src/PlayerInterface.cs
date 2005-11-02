@@ -397,8 +397,8 @@ namespace Banshee
             
             try {
                 trayIcon = new NotificationAreaIcon();
-                trayIcon.ClickEvent += new EventHandler(OnTrayClick);
-                //trayIcon.ScrollEvent += new ScrollEventHandler(OnTrayScroll);
+                trayIcon.ClickEvent += OnTrayClick;
+                trayIcon.MouseScrollEvent += OnTrayScroll;
                 
                 trayIcon.PlayItem.Activated += OnButtonPlayPauseClicked;
                 trayIcon.NextItem.Activated += OnButtonNextClicked;
@@ -696,13 +696,37 @@ namespace Banshee
           
         private void OnTrayScroll(object o, ScrollEventArgs args)
         {
+            int tmp_vol = volumeButton.Volume;
+            
             switch(args.Event.Direction) {
                 case Gdk.ScrollDirection.Up:
-                    OnButtonNextClicked(o, args);
+                    if(args.Event.State == Gdk.ModifierType.ControlMask) {            
+                        tmp_vol += 10;
+                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                        Core.Instance.Player.Position += 10;
+                    } else {
+                        Next();
+                    }
                     break;
                 case Gdk.ScrollDirection.Down:
-                    OnButtonPreviousClicked(o, args);
+                    if(args.Event.State == Gdk.ModifierType.ControlMask) {            
+                        tmp_vol -= 10;
+                    } else if(args.Event.State == Gdk.ModifierType.ShiftMask) {
+                        Core.Instance.Player.Position -= 10;
+                    } else {
+                        Previous();
+                    }
                     break;
+                default:
+                    break;
+            }
+            
+            if(tmp_vol != volumeButton.Volume) {
+                // A CLAMP equiv doesn't seem to exist ... doing that manually
+                tmp_vol = Math.Max(0, Math.Min(100, tmp_vol));
+
+                volumeButton.Volume = tmp_vol;
+                OnVolumeScaleChanged(volumeButton.Volume);
             }
         }
         
@@ -1120,23 +1144,23 @@ namespace Banshee
         
         private void OnIpodDeviceChanged(object o, EventArgs args)
         {
-			Application.Invoke (delegate {
-				IPod.Device device = o as IPod.Device;
-				
-				foreach(object [] obj in (sourceView.Model as ListStore)) {
-					if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
-						(obj[0] as IpodSource).SetSourceName(device.Name);
-						sourceView.QueueDraw();
-					}
-				}
-				
-				if(playlistModel.Source is IpodSource && (playlistModel.Source as IpodSource).Device == device) {
-					UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
-					(gxml["ViewNameLabel"] as Label).Markup = "<b>" 
-						+ GLib.Markup.EscapeText(device.Name) + "</b>";
-					sourceView.QueueDraw();
-				}
-			});
+            Application.Invoke (delegate {
+                IPod.Device device = o as IPod.Device;
+                
+                foreach(object [] obj in (sourceView.Model as ListStore)) {
+                    if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
+                        (obj[0] as IpodSource).SetSourceName(device.Name);
+                        sourceView.QueueDraw();
+                    }
+                }
+                
+                if(playlistModel.Source is IpodSource && (playlistModel.Source as IpodSource).Device == device) {
+                    UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
+                    (gxml["ViewNameLabel"] as Label).Markup = "<b>" 
+                        + GLib.Markup.EscapeText(device.Name) + "</b>";
+                    sourceView.QueueDraw();
+                }
+            });
         }
         
         private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
