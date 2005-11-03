@@ -42,7 +42,6 @@ namespace Banshee
     public class PreferencesWindow
     {
         [Widget] private Window WindowPreferences;
-        [Widget] private TextView LibraryLocationEntry;
         [Widget] private CheckButton CopyOnImport;
         [Widget] private RadioButton RadioImport;
         [Widget] private RadioButton RadioAppend;
@@ -66,6 +65,8 @@ namespace Banshee
         private ComboBox writeSpeedCombo;
         private HBox driveContainer;
         private HBox speedContainer;
+        
+        private FileChooserButton libraryLocationChooser;
         
         private BurnDrive [] burnDevices;
         
@@ -91,7 +92,13 @@ namespace Banshee
                     
             WindowPreferences.Icon = ThemeIcons.WindowManager;
                     
-            LibraryLocationEntry.HasFocus = true;
+            libraryLocationChooser = new FileChooserButton(
+                Catalog.GetString("Select Library Location"), 
+                FileChooserAction.SelectFolder);
+            libraryLocationChooser.SelectionChanged += OnLibraryLocationChooserCurrentFolderChanged;
+            (glade["LibraryLocationChooserContainer"] as Container).Add(libraryLocationChooser);
+            libraryLocationChooser.Show();
+          
             LoadPreferences();
             LoadPlayerEngines();
             
@@ -162,28 +169,13 @@ namespace Banshee
             WindowPreferences.Destroy();
         }
         
-        private void OnButtonLibraryChangeClicked(object o, EventArgs args)
+        private void OnLibraryLocationChooserCurrentFolderChanged(object o, EventArgs args)
         {
-            FileChooserDialog chooser = new FileChooserDialog(
-                Catalog.GetString("Select Banshee Library Location"),
-                null,
-                FileChooserAction.SelectFolder
-            );
-            
-            chooser.AddButton(Stock.Open, ResponseType.Ok);
-            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if(chooser.Run() == (int)ResponseType.Ok) {
-                LibraryLocationEntry.Buffer.Text = chooser.Filename;
-            }
-            
-            chooser.Destroy();
         }
         
         private void OnButtonLibraryResetClicked(object o, EventArgs args)
         {
-            LibraryLocationEntry.Buffer.Text = Paths.DefaultLibraryPath;
+            libraryLocationChooser.SetFilename(Paths.DefaultLibraryPath);
         }
         
         private void LoadPreferences()
@@ -195,7 +187,7 @@ namespace Banshee
                         GConfKeys.LibraryLocation);
             } catch(Exception) { }
             
-            LibraryLocationEntry.Buffer.Text = oldLibraryLocation;
+            libraryLocationChooser.SetFilename(oldLibraryLocation);
             
             try {
                 CopyOnImport.Active = (bool)Core.GconfClient.Get(
@@ -212,7 +204,8 @@ namespace Banshee
         
         private void SavePreferences()
         {
-            string newLibraryLocation = LibraryLocationEntry.Buffer.Text;
+            //string newLibraryLocation = LibraryLocationEntry.Buffer.Text;
+            string newLibraryLocation = libraryLocationChooser.Filename;
         
             if(!oldLibraryLocation.Trim().Equals(newLibraryLocation.Trim())) {
                 Core.GconfClient.Set(GConfKeys.LibraryLocation,
