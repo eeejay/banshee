@@ -1063,6 +1063,7 @@ namespace Banshee
             gxml["ItemRemoveSongsFileSystem"].Sensitive = !(source is AudioCdSource || source is IpodSource) && have_selection;
             gxml["ItemRemoveSongs"].Sensitive = !(source is AudioCdSource) && have_selection;
             gxml["MenuTrackProperties"].Sensitive = have_selection;
+            gxml["ButtonTrackProperties"].Sensitive = have_selection;
             gxml["ItemBurnCD"].Sensitive = !(source is AudioCdSource) && have_selection;
             gxml["ButtonBurn"].Sensitive = gxml["ItemBurnCD"].Sensitive;
         }

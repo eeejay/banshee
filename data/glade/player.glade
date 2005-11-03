@@ -1146,6 +1146,7 @@
 		  <child>
 		    <widget class="GtkButton" id="ButtonTrackProperties">
 		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
 		      <property name="can_focus">True</property>
 		      <property name="relief">GTK_RELIEF_NONE</property>
 		      <property name="focus_on_click">True</property>
