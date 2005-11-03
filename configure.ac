@@ -213,7 +213,18 @@ AC_SUBST(HAL_CFLAGS)
 AC_SUBST(HAL_LIBS)
 
 dnl libnautilus-burn devel deps
-PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.12)
+PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.13, lnb13=yes, lnb13=no)
+if test "x$lnb13" = "xyes"; then
+	LNB_SOVERSION=3
+else
+	PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.12, lnb12=yes, lnb12=no)
+	if test "x$lnb12" = "xyes"; then
+		LNB_SOVERSION=2
+	else
+		AC_MSG_ERROR([You need libnautilus-burn 2.12 or better])
+	fi
+fi
+AC_SUBST(LNB_SOVERSION)
 AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
 AC_SUBST(LIBNAUTILUS_BURN_LIBS)
 
