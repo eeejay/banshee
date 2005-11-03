@@ -29,4 +29,5 @@ make-release.sh
 *.pidb
 cvs-targen.sh
 compile
+RELEASE_NOTES
 
