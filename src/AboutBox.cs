@@ -216,7 +216,8 @@ namespace Banshee
             new Translator("Takeshi AIHANA", "Japanese"),
             new Translator("\u017Dygimantas Beru\u010Dka", "Lithuanian"),
             new Translator("Funda Wang", "Simplified Chinese"),
-            new Translator("Vincent van Adrighem", "Dutch")
+            new Translator("Vincent van Adrighem", "Dutch"),
+            new Translator("Norwegian Bokm\00E5l", "\u00D8ivind Hoel")
         };
     
         private class Translator : IComparable
