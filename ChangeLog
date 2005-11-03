@@ -1,3 +1,14 @@
+2005-11-03  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/glade/preferences.glade: Removed the text view/button for selecting
+	library location, added container for FileChooserButton
+	* src/Preferences.cs: Use the FileChooserButton for selecting the library
+	location instead of a Button+FileChooserDialog+TextView; more Gnomey and
+	less iTunesy
+	* src/Makefile.am: Added src/FileChooserButton.cs
+	* src/FileChooserButton.cs: Adapted Gtk.FileChooserButton from 
+	gtk-sharp-2.6 as Banshee.FileChooserButton
+
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/configure.ac: Version 0.9.10
