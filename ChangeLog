@@ -1,5 +1,9 @@
 2005-11-03  Aaron Bockover  <aaron@aaronbock.net>
 
+	* burn-sharp/burn-sharp.dll.config.in: Map to proper so version with
+	LNB_SOVERSION
+	* configure.ac: Detect whether libnautilus-burn 2.12 or 2.13+, and set
+	LNB_SOVERSION to 2 or 3 accordingly
 	* data/glade/preferences.glade: Removed the text view/button for selecting
 	library location, added container for FileChooserButton
 	* src/Preferences.cs: Use the FileChooserButton for selecting the library
