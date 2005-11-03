@@ -292,7 +292,8 @@ namespace Banshee
             playlistView.ButtonReleaseEvent += OnPlaylistViewButtonReleaseEvent;
             playlistView.DragDataReceived += OnPlaylistViewDragDataReceived;
             playlistView.DragDataGet += OnPlaylistViewDragDataGet;
-            playlistView.DragDrop += OnPlaylistViewDragDrop;    
+            playlistView.DragDrop += OnPlaylistViewDragDrop;
+            playlistView.Selection.Changed += OnPlaylistViewSelectionChanged;
                 
             sourceView.SelectLibrary();
                 
@@ -1049,6 +1050,23 @@ namespace Banshee
             
         }
         
+        private void OnPlaylistViewSelectionChanged(object o, EventArgs args)
+        {
+            int count = playlistView.Selection.CountSelectedRows();
+            bool have_selection = count > 0;
+            
+            Source source = sourceView.SelectedSource;
+            if(source == null) {
+                return;
+            }
+            
+            gxml["ItemRemoveSongsFileSystem"].Sensitive = !(source is AudioCdSource || source is IpodSource) && have_selection;
+            gxml["ItemRemoveSongs"].Sensitive = !(source is AudioCdSource) && have_selection;
+            gxml["MenuTrackProperties"].Sensitive = have_selection;
+            gxml["ItemBurnCD"].Sensitive = !(source is AudioCdSource) && have_selection;
+            gxml["ButtonBurn"].Sensitive = gxml["ItemBurnCD"].Sensitive;
+        }
+        
         private void OnSourceChanged(object o, EventArgs args)
         {
             if(Core.InMainThread) {
@@ -1064,7 +1082,7 @@ namespace Banshee
             if(source == null) {
                 return;
             }
-                
+
             searchEntry.CancelSearch(false);
                 
             if(source.Type == SourceType.Library) {
@@ -1125,6 +1143,12 @@ namespace Banshee
                 playlistView.Sensitive = false;
             else
                 playlistView.Sensitive = true;
+                
+            OnPlaylistViewSelectionChanged(playlistView.Selection, new EventArgs());
+                
+            gxml["ItemRenamePlaylist"].Sensitive = source is PlaylistSource;
+            gxml["ItemDeletePlaylist"].Sensitive = source is PlaylistSource;
+            gxml["ItemImportCD"].Sensitive = source is AudioCdSource;
         }
         
         private void UpdateIpodDiskUsageBar(IpodSource ipodSource)
@@ -1968,18 +1992,22 @@ namespace Banshee
                     ratingMenu.Append(item);
                 }
             
-                (gxmlPlaylistMenu["ItemAddToPlaylist"] 
-                    as MenuItem).Submenu = plMenu;
-                (gxmlPlaylistMenu["ItemRating"] 
-                    as MenuItem).Submenu = ratingMenu;
+                (gxmlPlaylistMenu["ItemAddToPlaylist"] as MenuItem).Submenu = plMenu;
+                (gxmlPlaylistMenu["ItemRating"] as MenuItem).Submenu = ratingMenu;
             }
         
             menu.ShowAll();
             
-            gxmlPlaylistMenu["ItemAddToPlaylist"].Visible = sensitive;
-            gxmlPlaylistMenu["ItemRating"].Visible = sensitive;
+            gxmlPlaylistMenu["ItemAddToPlaylist"].Visible = sensitive
+                && playlistModel.Source.Type != SourceType.AudioCd;;
+            gxmlPlaylistMenu["ItemRating"].Visible = sensitive
+                && playlistModel.Source.Type != SourceType.AudioCd;
             gxmlPlaylistMenu["ItemSep"].Visible = sensitive;
-            gxmlPlaylistMenu["ItemRemove"].Visible = sensitive;
+            gxmlPlaylistMenu["ItemRemove"].Visible = sensitive
+                && playlistModel.Source.Type != SourceType.AudioCd;
+            gxmlPlaylistMenu["ItemDeleteSongsFileSystem"].Visible = sensitive 
+                && playlistModel.Source.Type != SourceType.Ipod 
+                && playlistModel.Source.Type != SourceType.AudioCd;
             gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
             
             menu.Popup(null, null, null, 0, time);
@@ -2139,6 +2167,16 @@ namespace Banshee
             playlistView.Selection.UnselectAll();
             foreach(TreePath path in selrows)
                 playlistView.Selection.SelectPath(path);
+        }
+        
+        private void OnItemImportCDActivate(object o, EventArgs args)
+        {
+            OnButtonRipClicked(o, args);
+        }
+        
+        private void OnItemBurnCDActivate(object o, EventArgs args)
+        {
+            OnButtonBurnClicked(o, args);
         }
         
         private void OnButtonBurnClicked(object o, EventArgs args)
