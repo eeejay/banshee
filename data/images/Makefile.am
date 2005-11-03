@@ -68,5 +68,5 @@ EXTRA_DIST = \
 	cd-action-rip-24.png \
 	cd-action-burn-24.png \
 	cd-action-burn-32.png \
-	cd-action-burn-48.png
-
+	cd-action-burn-48.png \
+	encode-action-24.png 

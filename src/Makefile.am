@@ -143,7 +143,8 @@ banshee_resources = \
 	../data/images/cd-action-rip-24.png \
 	../data/images/cd-action-burn-24.png \
 	../data/images/cd-action-burn-32.png \
-	../data/images/cd-action-burn-48.png
+	../data/images/cd-action-burn-48.png \
+	../data/images/encode-action-24.png
 
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 

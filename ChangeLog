@@ -1,5 +1,8 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/images/encode-action-24.png:
+	* data/images/Makefile.am:
+	* src/Makefile.am: Add icon for encoder progress action
 	* src/PlayerInterface.cs: Fix minor bug concerning meta key detection (Ulas)
 
 2005-11-01  Aaron Bockover  <aaron@aaronbock.net>
