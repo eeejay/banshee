@@ -1,5 +1,8 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/player.glade: Reorder edit menu, add import/burn CD items to
+	music menu
+	* src/PlayerInterface.cs: Set menu items sensitive/insensitive contextually
 	* src/Main.cs: Add --version option
 	* configure.ac: Generate src/banshee from src/banshee.in
 	* src/Makefile.am: Install the Bash wrapper script
