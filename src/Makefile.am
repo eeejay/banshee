@@ -1,15 +1,12 @@
 SUBDIRS = MusicBrainz
 
-bin_PROGRAMS = banshee
-banshee_CFLAGS = -Wall -D_FORTIFY_SOURCE=2 -ggdb3
-banshee_SOURCES = banshee.c
-
 MCS_FLAGS = -debug -nowarn:0169
 
 TARGET = banshee.exe
 
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config ipod-sharp.dll.config
+bin_SCRIPTS = banshee
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	AssemblyInfo.cs.in \
@@ -17,6 +14,7 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
 	ipod-sharp.dll.config.in \
+	banshee.in \
 	mcs.exe
 
 CLEANFILES = banshee banshee.exe *.mdb *.dll
