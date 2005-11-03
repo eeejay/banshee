@@ -299,6 +299,7 @@ libbanshee/xing/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 plugincore/Makefile
+src/banshee
 src/Makefile
 src/AssemblyInfo.cs
 src/ConfigureDefines.cs
