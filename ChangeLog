@@ -1,5 +1,9 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Generate src/banshee from src/banshee.in
+	* src/Makefile.am: Install the Bash wrapper script
+	* src/banshee.in: Bash wrapper script
+	* src/banshee.c: Removed alternative wrapper script, switched back to Bash
 	* src/PlayerInterface.cs: Display current position/total time in NAI 
 	tooltip (patch from Doğacan Güney)
 	* data/images/encode-action-24.png:
