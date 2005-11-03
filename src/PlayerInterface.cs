@@ -566,6 +566,12 @@ namespace Banshee
         private void SetInfoLabel(string text)
         {
             LabelInfo.Markup = "<span size=\"small\">" + GLib.Markup.EscapeText(text) + "</span>";
+            
+            if(trayIcon != null && Core.Instance.Player.Playing) {
+                trayIcon.Tooltip = activeTrackInfo.DisplayArtist + " - " 
+                    + activeTrackInfo.DisplayTitle + "\n"
+                    + Catalog.GetString("Position:") + text;
+            }
         }
           
         public void TogglePlaying()

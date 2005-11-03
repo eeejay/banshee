@@ -1,5 +1,7 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Display current position/total time in NAI 
+	tooltip (patch from Doğacan Güney)
 	* data/images/encode-action-24.png:
 	* data/images/Makefile.am:
 	* src/Makefile.am: Add icon for encoder progress action
