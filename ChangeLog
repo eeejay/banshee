@@ -1,5 +1,6 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Main.cs: Add --version option
 	* configure.ac: Generate src/banshee from src/banshee.in
 	* src/Makefile.am: Install the Bash wrapper script
 	* src/banshee.in: Bash wrapper script

@@ -69,7 +69,8 @@ namespace Banshee
                 new ArgumentLayout("query-uri", "Get URI of current playing song"),
                 new ArgumentLayout("query-status", "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
                 new ArgumentLayout("help",       "List available command line arguments"),
-                new ArgumentLayout("audio-cd <dev>", "Start Banshee and select source mapped to <device>")
+                new ArgumentLayout("audio-cd <dev>", "Start Banshee and select source mapped to <device>"),
+                new ArgumentLayout("version", "Show Banshee Version")
             }, args);
 
             if(Core.ArgumentQueue.Contains("help")) {
@@ -99,6 +100,9 @@ namespace Banshee
 
                 Console.WriteLine("");
 
+                return;
+            } else if(Core.ArgumentQueue.Contains("version")) {
+                Console.WriteLine("Banshee " + ConfigureDefines.VERSION);
                 return;
             }
 
