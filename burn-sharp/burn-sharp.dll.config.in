@@ -1,5 +1,5 @@
 <configuration>
-	<dllmap dll="libnautilus-burn" target="libnautilus-burn.so.2" />
+	<dllmap dll="libnautilus-burn" target="libnautilus-burn.so.@LNB_SOVERSION@" />
 	<dllmap dll="libnautilusburnglue" target="@expanded_libdir@/@PACKAGE@/libnautilusburnglue.so" />
 </configuration>
 
