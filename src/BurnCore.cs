@@ -91,7 +91,7 @@ namespace Banshee
                  return;
             }
         
-            FileEncodeTransaction fet = new FileEncodeTransaction(profile);
+            FileEncodeAction fet = new FileEncodeAction(profile);
             fet.FileEncodeComplete += OnFileEncodeComplete;
             fet.Finished += OnFileEncodeTransactionFinished;
             fet.Canceled += OnFileEncodeTransactionCanceled;
@@ -104,7 +104,7 @@ namespace Banshee
                 fet.AddTrack(ti, new Uri(outputFile));
             }
                 
-            fet.Register();
+            fet.Run();
         }
         
         private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)

@@ -1,5 +1,8 @@
 2005-11-02  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/FileEncodeTransaction.cs: Adapt to use ActiveUserEvent
+	* src/IpodCore.cs:
+	* src/BurnCore.cs: Updated for changes in FileEncodeTransaction
 	* data/glade/player.glade: Reorder edit menu, add import/burn CD items to
 	music menu
 	* src/PlayerInterface.cs: Set menu items sensitive/insensitive contextually

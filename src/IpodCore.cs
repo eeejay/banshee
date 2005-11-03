@@ -250,7 +250,7 @@ namespace Banshee
         private void EncodeFiles()
         {
             copyFiles = new Hashtable();
-            FileEncodeTransaction fet = null;
+            FileEncodeAction fet = null;
             
             Song [] ipodSongs = device.SongDatabase.Songs;
             
@@ -291,7 +291,7 @@ namespace Banshee
                     copyFiles.Add(song, uri);
                     
                     if(fet == null) {
-                        fet = new FileEncodeTransaction(encodeProfile);
+                        fet = new FileEncodeAction(encodeProfile);
                         fet.FileEncodeComplete += OnFileEncodeComplete;
                         fet.Finished += OnFileEncodeBatchFinished;
                     }
@@ -305,7 +305,7 @@ namespace Banshee
                 }
             }
             if(fet != null) {
-                fet.Register();
+                fet.Run();
             } else {
                 SyncIpod();
             }
