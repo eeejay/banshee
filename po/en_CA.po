@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-03 11:40-0500\n"
+"POT-Creation-Date: 2005-11-04 15:24-0500\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -372,66 +372,62 @@ msgid "Burnproof"
 msgstr "Burnproof"
 
 #: data/glade/preferences.glade.h:13
-msgid "Change"
-msgstr "Change"
-
-#: data/glade/preferences.glade.h:14
 msgid "Copy files to Banshee Music Folder when importing to Library"
 msgstr "Copy files to Banshee Music Folder when importing to Library"
 
-#: data/glade/preferences.glade.h:15
+#: data/glade/preferences.glade.h:14
 msgid "Data CD"
 msgstr "Data CD"
 
-#: data/glade/preferences.glade.h:16
+#: data/glade/preferences.glade.h:15
 msgid "Description:"
 msgstr "Description:"
 
-#: data/glade/preferences.glade.h:17
+#: data/glade/preferences.glade.h:16
 msgid "Disk At Once"
 msgstr "Disk-At-Once"
 
-#: data/glade/preferences.glade.h:18
+#: data/glade/preferences.glade.h:17
 msgid "Disk Drive:"
 msgstr "Disk Drive:"
 
-#: data/glade/preferences.glade.h:19
+#: data/glade/preferences.glade.h:18
 msgid "Disk Format:"
 msgstr "Disk Format:"
 
-#: data/glade/preferences.glade.h:20
+#: data/glade/preferences.glade.h:19
 msgid "Eject When Finished"
 msgstr "Eject When Finished"
 
-#: data/glade/preferences.glade.h:21
+#: data/glade/preferences.glade.h:20
 msgid "Encoding Profile:"
 msgstr "Encoding Profile:"
 
-#: data/glade/preferences.glade.h:22
+#: data/glade/preferences.glade.h:21
 msgid "Engine:"
 msgstr "Engine:"
 
-#: data/glade/preferences.glade.h:23
+#: data/glade/preferences.glade.h:22
 msgid "MP3 CD"
 msgstr "MP3 CD"
 
-#: data/glade/preferences.glade.h:24
+#: data/glade/preferences.glade.h:23
 msgid "Overburn"
 msgstr "Overburn"
 
-#: data/glade/preferences.glade.h:25
+#: data/glade/preferences.glade.h:24
 msgid "Preferences"
 msgstr "Preferences"
 
-#: data/glade/preferences.glade.h:26
+#: data/glade/preferences.glade.h:25
 msgid "Reset"
 msgstr "Reset"
 
-#: data/glade/preferences.glade.h:27
+#: data/glade/preferences.glade.h:26
 msgid "Simulate Write"
 msgstr "Simulate Write"
 
-#: data/glade/preferences.glade.h:28
+#: data/glade/preferences.glade.h:27
 msgid "Write Speed:"
 msgstr "Write Speed:"
 
@@ -1395,33 +1391,33 @@ msgstr "Last Played"
 msgid "N/A"
 msgstr "N/A"
 
-#: src/Preferences.cs:168
-msgid "Select Banshee Library Location"
-msgstr "Select Banshee Library Location"
+#: src/Preferences.cs:96
+msgid "Select Library Location"
+msgstr "Select Library Location"
 
-#: src/Preferences.cs:269
+#: src/Preferences.cs:262
 msgid "Unavailable"
 msgstr "Unavailable"
 
-#: src/Preferences.cs:275
+#: src/Preferences.cs:268
 msgid "Loading Drive List..."
 msgstr "Loading Drive List..."
 
-#: src/Preferences.cs:298
+#: src/Preferences.cs:291
 msgid "No CD Burners Detected"
 msgstr "No CD Burners Detected"
 
-#: src/Preferences.cs:396
+#: src/Preferences.cs:389
 msgid "Fastest Possible"
 msgstr "Fastest Possible"
 
 #. Translators: this represents a CD write speed, eg "32x"
-#: src/Preferences.cs:400
+#: src/Preferences.cs:393
 #, csharp-format
 msgid "{0}x"
 msgstr "{0}x"
 
-#: src/Preferences.cs:551
+#: src/Preferences.cs:544
 #, csharp-format
 msgid ""
 "You have changed the Banshee Playback Engine. This change will not take "
@@ -1432,7 +1428,7 @@ msgstr ""
 "affect until the next time Banshee is run. Please restart Banshee to use the "
 "new <b><i>{0}</i></b> Engine"
 
-#: src/Preferences.cs:559
+#: src/Preferences.cs:552
 msgid "Banshee Restart Required"
 msgstr "Banshee Restart Required"
 
