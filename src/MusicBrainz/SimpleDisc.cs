@@ -78,7 +78,7 @@ namespace MusicBrainz
             int track_count = client.GetResultInt(Rdf.MBE_TOCGetLastTrack);
             
             if(track_count <= 0) {
-                throw new ApplicationException("Invalid track count from TOC");
+                throw new ApplicationException("Reading audio CD Table of Contents returned an invalid track count.");
             }
             
             lengths = new int[track_count];
