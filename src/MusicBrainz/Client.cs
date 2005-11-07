@@ -72,6 +72,22 @@ namespace MusicBrainz
             return mb_Query(handle, ToUtf8(rdfObject)) != 0;
         }
         
+       /* public bool Query(string rdfObject, params string [] args)
+        {
+            return Query(rdfObject, args);
+        } */
+        
+        public bool Query(string rdfObject, params string [] args)
+        {
+            IntPtr [] ptrs = ToUtf8PtrArray(args);
+            
+            try {
+                return mb_QueryWithArgs(handle, ToUtf8(rdfObject), ptrs) != 0;
+            } finally {
+                FreeUtf8PtrArray(ptrs);
+            }
+        }
+        
         public bool Select(string rdfObject)
         {
             return Select(rdfObject, 0);
@@ -104,6 +120,19 @@ namespace MusicBrainz
                 buffer.Length, index);
                 
             return result == 0 ? null : FromUtf8(buffer);
+        }
+        
+        public string GetIDFromUrl(string url)
+        {
+            byte [] buffer = new byte[64];
+            mb_GetIDFromURL(handle, ToUtf8(url), buffer, buffer.Length);
+            return FromUtf8(buffer);
+        }
+        
+        public string GetID(string id)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(id, @"^[A-Za-z0-9\-]+$") ?
+                id : GetIDFromUrl(id);
         }
         
         public ClientVersion Version
@@ -168,14 +197,59 @@ namespace MusicBrainz
             return result;
         }
         
+        private IntPtr ToUtf8Ptr(string str)
+        {
+            if(str == null) {
+                return IntPtr.Zero;
+            }
+            
+            byte [] bytes = ToUtf8(str);
+            IntPtr ptr = Marshal.AllocCoTaskMem(bytes.Length);
+            Marshal.Copy(bytes, 0, ptr, bytes.Length);
+            return ptr;
+        }
+        
+        private void FreeUtf8Ptr(IntPtr ptr)
+        {
+            if(ptr == IntPtr.Zero) {
+                return;
+            }
+               
+            Marshal.FreeCoTaskMem(ptr);
+        }
+        
+        private IntPtr [] ToUtf8PtrArray(string [] strs)
+        {
+            if(strs == null || strs.Length == 0) {
+                return null;
+            }
+            
+            IntPtr [] ptrs = new IntPtr[strs.Length];
+            for(int i = 0; i < ptrs.Length; i++) {
+                ptrs[i] = ToUtf8Ptr(strs[i]);
+            }
+            
+            return ptrs;
+        }
+        
+        private void FreeUtf8PtrArray(IntPtr [] ptrs)
+        {
+            for(int i = 0; i < ptrs.Length; i++) {
+                FreeUtf8Ptr(ptrs[i]);
+            }
+            
+            ptrs = null;
+        }
+        
         private string FromUtf8(byte [] buffer)
         {
-            if(buffer == null || buffer.Length == 0)
+            if(buffer == null || buffer.Length == 0) {
                 return null;
-                
+            }
+            
             int pos;
             for(pos = 0; pos < buffer.Length && buffer[pos] != 0; pos++);
-            return utf8encoding.GetString(buffer, 0, pos);
+            return utf8encoding.GetString(buffer, 0, pos); 
         }
         
         [DllImport("libmusicbrainz")]
@@ -219,6 +293,9 @@ namespace MusicBrainz
         private static extern int mb_Query(HandleRef o, byte [] rdfObject); 
         
         [DllImport("libmusicbrainz")]
+        private static extern int mb_QueryWithArgs(HandleRef o, byte [] rdfObject, IntPtr [] args);
+        
+        [DllImport("libmusicbrainz")]
         private static extern int mb_Select1(HandleRef o, byte [] rdfObject, int index);
         
         [DllImport("libmusicbrainz")]
@@ -230,5 +307,9 @@ namespace MusicBrainz
         [DllImport("libmusicbrainz")]
         private static extern int mb_GetResultData1(HandleRef o, byte [] rdfObject,
             byte [] data, int dataLen,  int index);
+            
+        [DllImport("libmusicbrainz")]
+        private static extern void mb_GetIDFromURL(HandleRef o, byte [] url, 
+            byte [] id, int idLen);
     }
 }
