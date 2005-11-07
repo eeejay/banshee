@@ -35,9 +35,7 @@ DISTCLEANFILES = Makefile.in
 EXTRA_DIST = cd-test.c gst-encode-test.c gst-player-engine-test.c
 
 if ENABLE_TESTS
-noinst_PROGRAMS = cd-test gst-player-test gst-encode-test
-cd_test_SOURCES = cd-test.c
-cd_test_LDADD = libbanshee.la
+noinst_PROGRAMS = gst-player-test gst-encode-test
 
 gst_player_test_SOURCES = gst-player-engine-test.c
 gst_player_test_LDADD = libbanshee.la
