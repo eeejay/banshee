@@ -44,6 +44,12 @@ namespace MusicBrainz
             this.length = length;
         }
         
+        public override string ToString()
+        {
+            return String.Format("{0}: {1} - {2} ({3:00}:{4:00})",
+                Index, Artist, Title, Minutes, Seconds);
+        }
+        
         public string Artist {
             get {
                 return artist;
