@@ -164,7 +164,11 @@ namespace Banshee
         {
             SimpleDisc mb_disc = o as SimpleDisc;
             
-            mb_disc.QueryCDMetadata();
+            try {
+                mb_disc.QueryCDMetadata();
+            } catch(Exception) {
+                return;
+            }
             
             int min = tracks.Length < mb_disc.Tracks.Length 
                 ? tracks.Length : mb_disc.Tracks.Length;
@@ -341,6 +345,27 @@ namespace Banshee
             cd_detect_free(handle);
         }
     
+        private AudioCdDisk CreateDisk(DiskInfo halDisk)
+        {
+            try {
+                AudioCdDisk disk = new AudioCdDisk(halDisk);
+                disk.Updated += OnAudioCdDiskUpdated;
+                if(disk.Valid) {
+                    disks[disk.Udi] = disk;
+                }
+                return disk;
+            } catch(Exception e) {
+                Gtk.Application.Invoke(e.Message, new EventArgs(), OnCouldNotReadCDError);
+            }
+            
+            return null;
+        }
+        
+        private void OnCouldNotReadCDError(object o, EventArgs args)
+        {
+            ErrorDialog.Run(Catalog.GetString("Could not Read Audio CD"), o as string);
+        }
+    
         private void OnDiskAdded(IntPtr udiPtr)
         {
             string udi = Marshal.PtrToStringAnsi(udiPtr);
@@ -360,11 +385,10 @@ namespace Banshee
                     continue;
                 }
                 
-                AudioCdDisk disk = new AudioCdDisk(halDisk);
-                disk.Updated += OnAudioCdDiskUpdated;
-
-                if(disk.Valid)
-                    disks[disk.Udi] = disk;
+                AudioCdDisk disk = CreateDisk(halDisk);
+                if(disk == null) {
+                    continue;
+                }
                 
                 HandleUpdated();
                 
@@ -434,12 +458,7 @@ namespace Banshee
                 return;
 
             foreach(DiskInfo halDisk in halDisks) {
-                AudioCdDisk disk = new AudioCdDisk(halDisk);
-                disk.Updated += OnAudioCdDiskUpdated;
-                
-                if(disk.Valid) {
-                    disks[disk.Udi] = disk;
-                }
+                CreateDisk(halDisk);
             }
 
             HandleUpdated();
