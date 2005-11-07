@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-04 15:24-0500\n"
+"POT-Creation-Date: 2005-11-07 13:30-0500\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -624,9 +624,13 @@ msgstr "Unknown Album"
 msgid "Track {0}"
 msgstr "Track {0}"
 
-#: src/AudioCdCore.cs:323
+#: src/AudioCdCore.cs:327
 msgid "Could not initialize HAL for CD Detection"
 msgstr "Could not initialize HAL for CD Detection"
+
+#: src/AudioCdCore.cs:366
+msgid "Could not Read Audio CD"
+msgstr "Could not Read Audio CD"
 
 #: src/BurnCore.cs:89
 msgid "Could Not Burn CD"
@@ -746,6 +750,14 @@ msgstr "Cannot Rename Playlist"
 #: src/Dialogs.cs:81
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "A playlist with this name already exists. Please choose another name."
+
+#: src/Dialogs.cs:90
+msgid "An Error Occurred"
+msgstr "An Error Occurred"
+
+#: src/Dialogs.cs:97
+msgid "Error"
+msgstr "Error"
 
 #: src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
@@ -878,12 +890,12 @@ msgstr "Advanced Details"
 msgid "Library"
 msgstr "Library"
 
-#: src/Library.cs:473 src/Utilities.cs:123
+#: src/Library.cs:473 src/Utilities.cs:119
 #, csharp-format
 msgid "{0} GB"
 msgstr "{0} GB"
 
-#: src/Library.cs:475 src/Utilities.cs:125
+#: src/Library.cs:475 src/Utilities.cs:121
 #, csharp-format
 msgid "{0} MB"
 msgstr "{0} MB"
