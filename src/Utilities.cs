@@ -72,7 +72,7 @@ namespace Banshee
 			if(str == null)
 				return null;
 				
-			return str.Replace("&", "&amp;");
+			return GLib.Markup.EscapeText(str);
 		}
 	
 		private static string RegexHexConvert(Match match)
@@ -89,11 +89,7 @@ namespace Banshee
 		
 		public static string UriToFileName(string uri)
 		{
-			uri = UriEscape(uri).Trim();
-			if(!uri.StartsWith("file://"))
-				return uri;
-				
-			return uri.Substring(7);
+			return new Uri(uri).LocalPath;
 		}
 		
 		public static string UcFirst(string str)
