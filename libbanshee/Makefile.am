@@ -29,10 +29,10 @@ libbanshee_la_SOURCES = \
 
 libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS)
 
-CLEANFILES = cdtest
+CLEANFILES = gst-player-test gst-encode-test
 DISTCLEANFILES = Makefile.in
 
-EXTRA_DIST = cd-test.c gst-encode-test.c gst-player-engine-test.c
+EXTRA_DIST = gst-encode-test.c gst-player-engine-test.c
 
 if ENABLE_TESTS
 noinst_PROGRAMS = gst-player-test gst-encode-test
