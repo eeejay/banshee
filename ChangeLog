@@ -1,3 +1,40 @@
+2005-11-07  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/MusicBrainz/SimpleDisc.cs: Changed 'Invalid track count from TOC'
+	error string to be easier to read and more meaningful
+	* src/Dialogs.cs: Updated formatting, make ErrorDialog class use
+	HigMessageDialog, add support for header argument, do not use Run/Destroy
+	to prevent UI hangs
+	* src/AudioCdCore.cs: Show an error dialog if CD reading failed,
+	merged some similar code into a private helper method
+
+	* configure.ac: Only require mono 1.1.9 instead of 1.1.9.2 for the sake
+	of building with mcs HEAD
+
+	* libbanshee/Makefile.am: Removed cd-test test
+	* libbanshee/cd-test.c: Removed test, functionality handled mainly by
+	MusicBrainz in managed land now
+
+	* src/MusicBrainz/Utilities.cs (StringToDateTime): Convert a MusicBrainz
+	date into a DateTime object
+	* src/MusicBrainz/SimpleArtist.cs: Simple wrapper class for a MusicBrainz 
+	Artist RDF
+	* src/MusicBrainz/SimpleAlbum.cs: Simple wrapper class for a MusicBrainz
+	Album RDF
+	* src/MusicBrainz/SimpleLookupTest.cs: Test program for using new 
+	RDF wrapper classes
+	* src/MusicBrainz/Makefile.am: Added SimpleArtist.cs, SimpleAlbum.cs,
+	SimpleLookupTest.cs, Utilities.cs; created 'make test' rules to 
+	build MusicBrainz tests
+	* src/MusicBrainz/Client.cs: Added support for querying with arguments;
+	added support for marshalling string arrays to UTF8 pointer arrays; Added
+	GetIDFromUrl and GetID methods for transforming a MusicBrainz URL ID into
+	a regular MusicBrainz ID
+	* src/SimpleTrack.cs (ToString): Return a formatted version of the object
+
+	* src/Utilities.cs (StringUtil.UriToFileName): Do a proper conversion
+	using the Uri class; fixes bugs with non-ASCII characters in the path
+
 2005-11-03  Aaron Bockover  <aaron@aaronbock.net>
 
 	* burn-sharp/burn-sharp.dll.config.in: Map to proper so version with
