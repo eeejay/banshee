@@ -10,15 +10,30 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ClientVersion.cs \
 	$(srcdir)/Rdf.cs \
 	$(srcdir)/SimpleDisc.cs \
-	$(srcdir)/SimpleTrack.cs
+	$(srcdir)/SimpleArtist.cs \
+	$(srcdir)/SimpleAlbum.cs \
+	$(srcdir)/SimpleTrack.cs \
+	$(srcdir)/Utilities.cs
 
+if ENABLE_TESTS
+all: $(ASSEMBLY) test
+else
 all: $(ASSEMBLY)
+endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in SimpleDiscTest.cs
+EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in SimpleDiscTest.cs SimpleLookupTest.cs
 
-CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
+CLEANFILES = $(ASSEMBLY) *.dll *.exe
+DISTCLEANFILES = *.mdb Makefile.in 
+
+test: simple-disc-test.exe simple-lookup-test.exe
+
+simple-disc-test.exe: SimpleDiscTest.cs 
+	$(MCS) $(MCS_FLAGS) -out:$@ -r:$(ASSEMBLY) $<
+
+simple-lookup-test.exe: SimpleLookupTest.cs
+	$(MCS) $(MCS_FLAGS) -out:$@ -r:$(ASSEMBLY) $<
 
