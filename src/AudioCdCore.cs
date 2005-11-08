@@ -355,17 +355,15 @@ namespace Banshee
                 }
                 return disk;
             } catch(Exception e) {
-                Gtk.Application.Invoke(e.Message, new EventArgs(), OnCouldNotReadCDError);
+                Exception temp_e = e; // work around mcs #76642
+                Gtk.Application.Invoke(delegate {
+                    ErrorDialog.Run(Catalog.GetString("Could not Read Audio CD"), temp_e.Message);
+                });
             }
             
             return null;
         }
-        
-        private void OnCouldNotReadCDError(object o, EventArgs args)
-        {
-            ErrorDialog.Run(Catalog.GetString("Could not Read Audio CD"), o as string);
-        }
-    
+       
         private void OnDiskAdded(IntPtr udiPtr)
         {
             string udi = Marshal.PtrToStringAnsi(udiPtr);
