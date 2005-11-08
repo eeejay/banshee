@@ -1,4 +1,6 @@
-SUBDIRS = MusicBrainz
+SUBDIRS = \
+	GtkSharpBackports \
+	MusicBrainz
 
 MCS_FLAGS = -debug -nowarn:0169
 
@@ -88,8 +90,7 @@ banshee_sources = \
 	CoverArtThumbnail.cs \
 	AmazonCoverFetcher.cs \
 	ActiveUserEventsManager.cs \
-	ActiveUserEvent.cs \
-	FileChooserButton.cs
+	ActiveUserEvent.cs 
 
 banshee_resources = \
 	../COPYING \
@@ -155,7 +156,8 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/plugincore/plugin-core.dll \
-	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll
+	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
+	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll
 
 SYSTEM_REFERENCES = \
 	System.dll \
