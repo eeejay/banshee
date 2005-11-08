@@ -36,6 +36,7 @@ using Gtk;
 using Glade;
 
 using Nautilus;
+using GtkSharpBackports;
 
 namespace Banshee
 {
