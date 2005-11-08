@@ -70,7 +70,7 @@ namespace Banshee
 		private void Load()
 		{
 			try {
-				uri = new Uri("file://" + song.Filename);
+				uri = new Uri("file://" + song.FileName);
 			} catch(Exception) { 
 				uri = null;
 			}
@@ -81,7 +81,7 @@ namespace Banshee
 			genre = song.Genre == String.Empty ? null : song.Genre;
 			
 			trackId = song.Id;
-			duration = song.Length / 1000;
+			duration = (long) song.Duration.TotalSeconds;
 			numberOfPlays = (uint)song.PlayCount;
 
 			switch(song.Rating) {

@@ -1,3 +1,10 @@
+2005-11-08  James Willcox  <snorp@snorp.net>
+
+	* src/IpodCore.cs:
+	* src/IpodTrackInfo.cs:
+
+	Updated to use new ipod-sharp API.
+
 2005-11-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AudioCdCore.cs (CreateDisk): Use anonymous method, but work 

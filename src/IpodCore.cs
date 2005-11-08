@@ -299,7 +299,7 @@ namespace Banshee
                     fet.AddTrack(libTrack.Uri, uri);
                 } else {
                     if(System.IO.File.Exists(filename)) {
-                        song.Filename = filename;
+                        song.FileName = filename;
                         copyFiles.Add(song, String.Empty);
                     }
                 }
@@ -315,7 +315,7 @@ namespace Banshee
         {
             foreach(Song song in copyFiles.Keys) {
                 if(copyFiles[song] == args.EncodedFileUri) {
-                    song.Filename = args.EncodedFileUri.LocalPath;
+                    song.FileName = args.EncodedFileUri.LocalPath;
                 }
             }
         }
@@ -346,7 +346,7 @@ namespace Banshee
             }
             
             foreach(Song song in copyFiles.Keys) {
-                if(song.Filename != null && song.Filename != String.Empty) {
+                if(song.FileName != null && song.FileName != String.Empty) {
                     doUpdate = true;
                     break;
                 }
@@ -407,7 +407,7 @@ namespace Banshee
             if(libTrack.Genre != null)
                 song.Genre = libTrack.Genre;
             
-            song.Length = (int)(libTrack.Duration * 1000);
+            song.Duration = TimeSpan.FromSeconds ((int) libTrack.Duration);
             song.TrackNumber = (int)libTrack.TrackNumber;
             song.TotalTracks = (int)libTrack.TrackCount;
             song.Year = (int)libTrack.Year;
