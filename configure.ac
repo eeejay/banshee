@@ -318,6 +318,8 @@ src/banshee.exe.config
 src/ipod-sharp.dll.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
+src/GtkSharpBackports/Makefile
+src/GtkSharpBackports/GtkSharpBackports.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile
