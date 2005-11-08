@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+GtkSharpBackports.dll.config
+*.mdb
+*.dll
+*.exe
+
