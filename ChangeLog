@@ -1,3 +1,26 @@
+2005-11-08  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/AudioCdCore.cs (CreateDisk): Use anonymous method, but work 
+	around mcs bug #76642
+
+	* src/GtkSharpBackports/AboutDialogActivateLinkFunc.cs:
+	* src/GtkSharpBackports/GtkSharp.AboutDialogActivateLinkFuncNative.cs:
+	* src/GtkSharpBackports/AboutDialog.cs:
+	* src/GtkSharpBackports/FileChooserButton.cs:
+	* src/GtkSharpBackports/GtkSharpBackports.dll.config.in:
+	* src/GtkSharpBackports/Makefile.am: Imported from gtk-sharp-2.6, 
+	namespaces changed to GtkSharpBackports
+	
+	* src/AboutBox.cs: Remove manual wrapped Gtk.AboutBox, 
+	use GtkSharpBackports.AboutBox
+	* src/Preferences.cs: Use GtkSharpBackports.FileChooserButton
+	* src/FileChooserButton.cs: moved to src/GtkSharpBackports
+	* src/Makefile.am: Removed FileChooserButton.cs, added GtkSharpBackports
+	to SUBDIRS, link against GtkSharpBackports.dll
+
+	* configure.ac: generate src/GtkSharpBackports/Makefile and
+	src/GtkSharpBackports/GtkSharpBackports.dll.config
+
 2005-11-07  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/MusicBrainz/SimpleDisc.cs: Changed 'Invalid track count from TOC'
