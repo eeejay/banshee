@@ -712,8 +712,11 @@ namespace Banshee
 				DateTime startStamp = DateTime.Now;
 				int tid = Convert.ToInt32(reader[0]);
 				TrackInfo ti = Core.Library.Tracks[tid] as TrackInfo;
-				RaiseTrackInfo(ti);
-				UpdateAverageDuration(startStamp);
+				
+				if(ti != null) {
+					RaiseTrackInfo(ti);
+					UpdateAverageDuration(startStamp);
+				}
 			}
 		}
 		
