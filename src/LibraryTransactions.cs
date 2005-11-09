@@ -616,9 +616,9 @@ namespace Banshee
 				try {
 				    new LibraryTrackInfo(reader);
 				} catch(Exception e) {
-				    Core.Log.Push(LogEntryType.Warning,
+				    Core.Log.PushWarning(
 				        Catalog.GetString("Could not load track from library"),
-				        (reader["Uri"] as string) + ": " + e.Message);
+				        (reader["Uri"] as string) + ": " + e.Message, false);
 				}
 				//DateTime startStamp = DateTime.Now;
 				//RaiseTrackInfo(new LibraryTrackInfo(reader));

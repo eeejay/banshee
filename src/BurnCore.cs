@@ -85,7 +85,7 @@ namespace Banshee
             }
             
             if(profile == null) {
-                 Core.Log.Push(LogEntryType.UserError,
+                 Core.Log.PushError(
                      Catalog.GetString("Could Not Burn CD"),
                      Catalog.GetString("No suitable wave encoder could be found to convert selected songs to CD audio format."));
                  return;
