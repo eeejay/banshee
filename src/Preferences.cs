@@ -36,7 +36,6 @@ using Gtk;
 using Glade;
 
 using Nautilus;
-using GtkSharpBackports;
 
 namespace Banshee
 {
@@ -67,7 +66,7 @@ namespace Banshee
         private HBox driveContainer;
         private HBox speedContainer;
         
-        private FileChooserButton libraryLocationChooser;
+        private GtkSharpBackports.FileChooserButton libraryLocationChooser;
         
         private BurnDrive [] burnDevices;
         
@@ -93,7 +92,7 @@ namespace Banshee
                     
             WindowPreferences.Icon = ThemeIcons.WindowManager;
                     
-            libraryLocationChooser = new FileChooserButton(
+            libraryLocationChooser = new GtkSharpBackports.FileChooserButton(
                 Catalog.GetString("Select Library Location"), 
                 FileChooserAction.SelectFolder);
             libraryLocationChooser.SelectionChanged += OnLibraryLocationChooserCurrentFolderChanged;

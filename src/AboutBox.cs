@@ -32,7 +32,6 @@ using Gtk;
 using Mono.Unix;
 
 using System.Runtime.InteropServices;
-using GtkSharpBackports;
 
 namespace Banshee
 {
@@ -110,7 +109,7 @@ namespace Banshee
             Array.Sort(Authors);
             Array.Sort(Artists);
             
-            AboutDialog about_dialog = new AboutDialog();
+            GtkSharpBackports.AboutDialog about_dialog = new GtkSharpBackports.AboutDialog();
             about_dialog.Name = "Banshee";
             about_dialog.Version = ConfigureDefines.VERSION;
             about_dialog.Copyright = Catalog.GetString(

@@ -1,3 +1,8 @@
+2005-11-08  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Preferences.cs:
+	* src/AboutBox.cs: Explicitly use GtkSharpBackports
+
 2005-11-08  James Willcox  <snorp@snorp.net>
 
 	* src/IpodCore.cs:
