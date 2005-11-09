@@ -49,8 +49,7 @@ namespace Banshee
     {
         Debug,
         Warning,
-        Error,
-        UserError
+        Error
     }
     
     public class LogEntry
@@ -58,44 +57,53 @@ namespace Banshee
         private LogEntryType type;
         private string shortMessage;
         private string details;
+        private bool showUser;
         private DateTime timestamp;
         
-        public LogEntry(LogEntryType type, string shortMessage, string details)
+        public LogEntry(LogEntryType type, string shortMessage, string details, bool showUser)
         {
             this.type = type;
             this.shortMessage = shortMessage;
             this.details = details;
+            this.showUser = showUser;
             timestamp = DateTime.Now;
+        }
+        
+        public override string ToString()
+        {
+            return String.Format("{0}: [{1}] ({2}) - {3}",
+                type, timestamp, shortMessage, details);
         }
         
         public LogEntryType Type   { get { return type;         } }
         public string ShortMessage { get { return shortMessage; } }
         public string Details      { get { return details;      } }
-        public DateTime TimeStamp  { get { return timestamp;    } }        
+        public DateTime TimeStamp  { get { return timestamp;    } }
+        public bool ShowUser       { get { return showUser;     } }
     }
     
     public class LogCore
     {
+        private static LogCore instance;
+        public static LogCore Instance {
+            get {
+                if(instance == null) {
+                    instance = new LogCore();
+                }
+                
+                return instance;
+            }
+        }
+         
+        public static bool PrintEntries = true;
+         
+        protected LogCore()
+        {
+        }
+         
         private Hashtable logs = new Hashtable();
-        private ArrayList notifyQueue = new ArrayList();
-        
-        private Gtk.ThreadNotify notify;
-        
-        private bool queueLocked = false;
         
         public event LogCoreUpdatedHandler Updated;
-        
-        public LogCore()
-        {
-            notify = new Gtk.ThreadNotify(new Gtk.ReadyEvent(OnReadyNotify));
-        }
-        
-        private void OnReadyNotify()
-        {
-            foreach(LogEntry entry in notifyQueue)
-                QueueNotify(entry);
-            notifyQueue.Clear();
-        }
         
         private void QueueNotify(LogEntry entry)
         {
@@ -105,21 +113,46 @@ namespace Banshee
              }
         }
         
-        public void Push(LogEntryType type, string shortMessage, 
-            string details)
+        public LogEntry PushError(string shortMessage, string details)
         {
-            Push(new LogEntry(type, shortMessage, details));
+            return PushError(shortMessage, details, true);
+        }
+        
+        public LogEntry PushError(string shortMessage, string details, bool showUser)
+        {
+            return Push(LogEntryType.Error, shortMessage, details, showUser);
+        }
+        
+        public LogEntry PushWarning(string shortMessage, string details)
+        {
+            return PushWarning(shortMessage, details, true);
+        }
+        
+        public LogEntry PushWarning(string shortMessage, string details, bool showUser)
+        {
+            return Push(LogEntryType.Warning, shortMessage, details, showUser);
+        }
+        
+        public LogEntry Push(LogEntryType type, string shortMessage, string details, bool showUser)
+        {
+            LogEntry entry = new LogEntry(type, shortMessage, details, showUser);
+            Push(entry);
+            return entry;
         }
         
         public void Push(LogEntry entry)
         {
-            if(logs[entry.Type] == null)
+            if(logs[entry.Type] == null) {
                 logs[entry.Type] = new ArrayList();
-                
+            }
+            
+            Console.WriteLine(entry);
+            
             (logs[entry.Type] as ArrayList).Insert(0, entry);
             
-            notifyQueue.Add(entry);
-            notify.WakeupMain();
+            Gtk.Application.Invoke(delegate {
+                QueueNotify(entry);
+            });
         }
     }
 }
