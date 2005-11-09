@@ -1369,76 +1369,75 @@ namespace Banshee
         private void OnPlaylistUpdated(object o, EventArgs args)
         {
             long count = playlistModel.Count();
-            long tsec = playlistModel.TotalDuration;
-            long d, h, m, s;
-            
-            d = tsec / 86400;
-            s = tsec - (86400 * d);
-            if(s < 0) {
-                d = 0;
-                s += 86400;
-            }
-            
-            h = s / 3600;
-            s -= 3600 * h;
-            m = s / 60;
-            s -= m * 60;
-        
+            TimeSpan span = new TimeSpan(playlistModel.TotalDuration * TimeSpan.TicksPerSecond);        
             string timeDisp = String.Empty;
             
-            if(d > 0)
-                timeDisp = String.Format(Catalog.GetPluralString("{0} day",
-                    "{0} days", (int)d), d) + " ";
-            if(d > 0 || h > 0)
-                timeDisp += String.Format("{0}:{1}:{2}",
-                    h, m.ToString("00"), s.ToString("00"));
-            else    
-                timeDisp += String.Format("{0}:{1}",
-                    m, s.ToString("00"));
-        
-            Application.Invoke(delegate {
-            
-            if(count == 0 && playlistModel.Source == null) {
-                LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
-            } else if(count == 0) {
-                switch(playlistModel.Source.Type) {
-                    case SourceType.Library:
-                        LabelStatusBar.Text = Catalog.GetString(
-                            "Your Library is Empty - Consider Importing Music");
-                        break;
-                    case SourceType.Playlist:
-                        LabelStatusBar.Text = Catalog.GetString(
-                            "This Playlist is Empty - Consider Adding Music");
-                        break;
-                }
-            } else {
-                string text = String.Format(
-                    Catalog.GetPluralString("{0} Item", "{0} Items", 
-                        (int)count), count);
-                text += ", ";
-                text += String.Format(
-                    Catalog.GetString("{0} Total Play Time"),
-                    timeDisp);
-                text += " ";
-                LabelStatusBar.Text = text;
+            if(span.Days > 0) {
+                timeDisp = String.Format(Catalog.GetPluralString("{0} day", "{0} days", span.Days), 
+                    span.Days) + " ";
             }
-                
+            
+            if(span.Days > 0 || span.Hours > 0) {
+                timeDisp += String.Format("{0}:{1}:{2}", span.Hours, span.Minutes.ToString("00"), 
+                    span.Seconds.ToString("00"));
+            } else {   
+                timeDisp += String.Format("{0}:{1}", span.Minutes, span.Seconds.ToString("00"));
+            }
+            
+            Core.ProxyToMainThread(delegate {
+                if(count == 0 && playlistModel.Source == null) {
+                    LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
+                } else if(count == 0) {
+                    switch(playlistModel.Source.Type) {
+                        case SourceType.Library:
+                            LabelStatusBar.Text = Catalog.GetString(
+                                "Your Library is Empty - Consider Importing Music");
+                            break;
+                        case SourceType.Playlist:
+                            LabelStatusBar.Text = Catalog.GetString(
+                                "This Playlist is Empty - Consider Adding Music");
+                            break;
+                    }
+                } else {
+                    string text = String.Format(Catalog.GetPluralString("{0} Item", "{0} Items", 
+                        (int)count), count) + ", ";
+                    text += String.Format(Catalog.GetString("{0} Total Play Time"), timeDisp);
+                    LabelStatusBar.Text = text;
+                }
             });
         }
         
         private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
         {
-            Console.WriteLine(args.Entry.ShortMessage + ": " + args.Entry.Details);
-        
-            if(args.Entry.Type != LogEntryType.UserError)
-              return;
+            if(!args.Entry.ShowUser || args.Entry.Type == LogEntryType.Debug) {
+                return;
+            }
+            
+            MessageType mtype;
+            
+            switch(args.Entry.Type) {
+                case LogEntryType.Warning:
+                    mtype = MessageType.Warning;
+                    break;
+                case LogEntryType.Error:
+                default:
+                    mtype = MessageType.Error;
+                    break;
+            }
               
-            HigMessageDialog.RunHigMessageDialog(WindowPlayer, 
-              DialogFlags.Modal,
-              MessageType.Error,
-              ButtonsType.Ok,
-              args.Entry.ShortMessage,
-              args.Entry.Details);
+            HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, 
+                DialogFlags.Modal,
+                mtype,
+                ButtonsType.Ok,
+                args.Entry.ShortMessage,
+                args.Entry.Details);
+            
+            dialog.Response += delegate(object o, ResponseArgs args)
+            {
+                (o as Dialog).Destroy();
+            };
+            
+            dialog.ShowAll();
         }
         
         // PlaylistMenu Handlers
