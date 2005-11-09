@@ -356,9 +356,7 @@ namespace Banshee
                 return disk;
             } catch(Exception e) {
                 Exception temp_e = e; // work around mcs #76642
-                Gtk.Application.Invoke(delegate {
-                    ErrorDialog.Run(Catalog.GetString("Could not Read Audio CD"), temp_e.Message);
-                });
+                LogCore.Instance.PushError(Catalog.GetString("Could not Read Audio CD"), temp_e.Message);
             }
             
             return null;
