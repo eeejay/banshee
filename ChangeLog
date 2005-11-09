@@ -1,3 +1,17 @@
+2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs (OnPlaylistUpdated): Got rid of custom time
+	calculations in favour of TimeSpan; cleaned up a little
+	* src/PlayerInterface.cs (OnLogCoreUpdated): Show a dialog for LogEntry
+	entries that have ShowUser set; LogCore is now the preferred
+	method of logging events and presenting errors/warnings to the user
+	* src/LogCore.cs: Added more helper methods for making logging as easy
+	as possible
+	* src/LibraryTransactions.cs:
+	* src/BurnCore.cs: Updated to reflect changes in LogCore
+	* src/Core.cs: LogCore handles its own instance
+	* src/AudioCdCore.cs: Use LogCore
+
 2005-11-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Preferences.cs:
