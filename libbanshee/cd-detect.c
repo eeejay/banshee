@@ -88,14 +88,17 @@ cd_detect_hal_initialize()
 	gint device_count;
 
 	hal_context = libhal_ctx_new();
-	if(hal_context == NULL) 
+	if(hal_context == NULL) {
+		g_warning("Could not create new HAL context");
 		return NULL;
+	}
 	
 	dbus_error_init(&error);
 	if(!hal_mainloop_integrate(hal_context, g_main_context_default(), 
 		&error)) {
 		dbus_error_free(&error);
 		libhal_ctx_free(hal_context);
+		g_warning("Could not integrate HAL with mainloop: %s", error.message);
 		return NULL;
 	}
 	
@@ -104,6 +107,10 @@ cd_detect_hal_initialize()
 	
 	if(!libhal_ctx_init(hal_context, &error)) {
 		libhal_ctx_free(hal_context);
+		if(dbus_error_is_set(&error)) {
+			g_warning("Could not initialize HAL context: %s", error.message);
+			dbus_error_free(&error);
+		}
 		return NULL;
 	}
 
@@ -111,6 +118,7 @@ cd_detect_hal_initialize()
 	if(devices == NULL) {
 		libhal_ctx_shutdown(hal_context, NULL);
 		libhal_ctx_free(hal_context);
+		g_warning("Could not get device list from HAL");
 		hal_context = NULL;
 		return NULL;
 	}
@@ -293,7 +301,7 @@ cd_detect_set_device_removed_callback(CdDetect *cd_detect,
 void
 cd_detect_print_disk_info(DiskInfo *disk)
 {
-	g_printf("UDI:         %s\n", disk->udi);
+	g_printf("UDI:		 %s\n", disk->udi);
 	g_printf("Device Node: %s\n", disk->device_node);
 	g_printf("Drive Name:  %s\n", disk->drive_name);
 }
