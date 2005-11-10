@@ -50,7 +50,7 @@
 		      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image557">
+			<widget class="GtkImage" id="image563">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-new</property>
 			  <property name="icon_size">1</property>
@@ -72,7 +72,7 @@
 		      <accelerator key="O" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image558">
+			<widget class="GtkImage" id="image564">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -93,7 +93,7 @@
 		      <signal name="activate" handler="OnMenuImportFilesActivate" last_modification_time="Tue, 03 May 2005 00:04:01 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image559">
+			<widget class="GtkImage" id="image565">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -124,7 +124,7 @@
 		  <child>
 		    <widget class="GtkMenuItem" id="ItemBurnCD">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Burn CD</property>
+		      <property name="label" translatable="yes">Write CD</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="OnItemBurnCDActivate" last_modification_time="Thu, 03 Nov 2005 07:44:39 GMT"/>
 		    </widget>
@@ -165,7 +165,7 @@
 		      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image560">
+			<widget class="GtkImage" id="image566">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-remove</property>
 			  <property name="icon_size">1</property>
@@ -196,7 +196,7 @@
 		      <accelerator key="F2" modifiers="0" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image561">
+			<widget class="GtkImage" id="image567">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-edit</property>
 			  <property name="icon_size">1</property>
@@ -218,7 +218,7 @@
 		      <accelerator key="Delete" modifiers="GDK_SHIFT_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image562">
+			<widget class="GtkImage" id="image568">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-delete</property>
 			  <property name="icon_size">1</property>
@@ -286,7 +286,7 @@
 		      <accelerator key="comma" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image563">
+			<widget class="GtkImage" id="image569">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-preferences</property>
 			  <property name="icon_size">1</property>
@@ -679,7 +679,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="label1">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Burn CD</property>
+			      <property name="label" translatable="yes">Write CD</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>

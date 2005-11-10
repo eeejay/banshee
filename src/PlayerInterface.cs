@@ -369,8 +369,8 @@ namespace Banshee
             SetTip(gxml["ToggleButtonShuffle"], Catalog.GetString("Toggle Shuffle Playback Mode"));
             SetTip(gxml["ToggleButtonRepeat"], Catalog.GetString("Toggle Repeat Playback Mode"));
             SetTip(gxml["ButtonTrackProperties"], Catalog.GetString("View Selected Song Information"));
-            SetTip(gxml["ButtonBurn"], Catalog.GetString("Burn Selection to CD"));
-            SetTip(gxml["ButtonRip"], Catalog.GetString("Rip CD into Library"));
+            SetTip(gxml["ButtonBurn"], Catalog.GetString("Write Selection to CD"));
+            SetTip(gxml["ButtonRip"], Catalog.GetString("Import CD into Library"));
             SetTip(gxml["ButtonPrevious"], Catalog.GetString("Play Previous Song"));
             SetTip(gxml["ButtonPlayPause"], Catalog.GetString("Play/Pause Current Song"));
             SetTip(gxml["ButtonNext"], Catalog.GetString("Play Next Song"));

@@ -73,8 +73,8 @@ namespace Banshee
             FromDef("icon-title", Catalog.GetString("Title"), 0, ModifierType.ShiftMask, null),
             
             /* Other */
-            FromDef("media-burn", Catalog.GetString("Burn CD"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-rip", Catalog.GetString("Rip CD"), 0, ModifierType.ShiftMask, null)
+            FromDef("media-burn", Catalog.GetString("Write CD"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-rip", Catalog.GetString("Import CD"), 0, ModifierType.ShiftMask, null)
         };    
 
         public static void Initialize()

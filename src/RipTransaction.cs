@@ -162,7 +162,7 @@ namespace Banshee
         
         public RipTransaction()
         {
-            user_event = new ActiveUserEvent("Ripping CD");
+            user_event = new ActiveUserEvent("Importing CD");
             user_event.Icon = Gdk.Pixbuf.LoadFromResource("cd-action-rip-24.png");
         }
 
