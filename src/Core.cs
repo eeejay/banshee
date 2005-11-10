@@ -166,7 +166,12 @@ namespace Banshee
             
             Core.Log.PushDebug("Loaded AudioCdPlayerEngine core", AudioCdPlayer.EngineName);
             
-            AudioCdCore = new AudioCdCore();
+            try {
+                AudioCdCore = new AudioCdCore();
+            } catch(ApplicationException e) {
+                Core.Log.PushWarning("Audio CD support will be disabled for this instance", e.Message, false);
+            }
+            
             IpodCore = new IpodCore();
 
             StockIcons.Initialize();
@@ -211,7 +216,9 @@ namespace Banshee
         {
             library.TransactionManager.CancelAll();
             library.Db.Close();
-            AudioCdCore.Dispose();
+            if(AudioCdCore != null) {
+                AudioCdCore.Dispose();
+            }
             IpodCore.Dispose();
         }
         
