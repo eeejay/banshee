@@ -1,5 +1,8 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* libbanshee/cd-detect.[ch] (cd_detect_new): expects a gchar ** which 
+	may be filled with an allocated error message if function returns NULL,
+	must be freed if non-null
 	* libbanshee/cd-detect.c: Added g_warning calls for potential HAL 
 	initialization problems
 	* vacuum.sh: Runs make maintainer-clean and then cleans extra junk that

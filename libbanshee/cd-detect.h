@@ -50,7 +50,7 @@ typedef struct {
 	gchar *drive_name;
 } DiskInfo;
 
-CdDetect *cd_detect_new();
+CdDetect *cd_detect_new(gchar **error);
 void cd_detect_free(CdDetect *cd_detect);
 DiskInfo **cd_detect_get_disk_array(CdDetect *cd_detect);
 void cd_detect_disk_array_free(DiskInfo **disk_array);

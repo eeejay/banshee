@@ -80,16 +80,19 @@ hal_device_removed(LibHalContext *ctx, const char *udi)
 }
 
 LibHalContext *
-cd_detect_hal_initialize()
+cd_detect_hal_initialize(gchar **error_out)
 {
 	LibHalContext *hal_context;
 	DBusError error;
 	gchar **devices;
 	gint device_count;
 
+	*error_out = NULL;
+
 	hal_context = libhal_ctx_new();
 	if(hal_context == NULL) {
-		g_warning("Could not create new HAL context");
+		*error_out = g_strdup("Could not create new HAL context");
+		g_warning(*error_out);
 		return NULL;
 	}
 	
@@ -98,18 +101,23 @@ cd_detect_hal_initialize()
 		&error)) {
 		dbus_error_free(&error);
 		libhal_ctx_free(hal_context);
-		g_warning("Could not integrate HAL with mainloop: %s", error.message);
+		*error_out = g_strdup_printf("Could not integrate HAL with mainloop: %s", error.message);
+		g_warning(*error_out);
 		return NULL;
 	}
 	
 	libhal_ctx_set_device_added(hal_context, hal_device_added);
 	libhal_ctx_set_device_removed(hal_context, hal_device_removed);
 	
-	if(!libhal_ctx_init(hal_context, &error)) {
+	if(!libhal_ctx_init(NULL, &error)) {
 		libhal_ctx_free(hal_context);
 		if(dbus_error_is_set(&error)) {
-			g_warning("Could not initialize HAL context: %s", error.message);
+			*error_out = g_strdup_printf("Could not initialize HAL context: %s", error.message);
+			g_warning(*error_out);
 			dbus_error_free(&error);
+		} else {
+			*error_out = g_strdup_printf("Could not initialize HAL context");
+			g_warning(*error_out);
 		}
 		return NULL;
 	}
@@ -118,7 +126,8 @@ cd_detect_hal_initialize()
 	if(devices == NULL) {
 		libhal_ctx_shutdown(hal_context, NULL);
 		libhal_ctx_free(hal_context);
-		g_warning("Could not get device list from HAL");
+		*error_out = g_strdup("Could not get device list from HAL");
+		g_warning(*error_out);
 		hal_context = NULL;
 		return NULL;
 	}
@@ -193,12 +202,16 @@ cd_detect_disk_info_free(DiskInfo *disk)
 /* PUBLIC FUNCTIONS */
 
 CdDetect *
-cd_detect_new()
+cd_detect_new(gchar **error)
 {
 	CdDetect *cd_detect = NULL;
-	LibHalContext *hal_ctx = cd_detect_hal_initialize();
+	LibHalContext *hal_ctx;
 	
-	if(hal_ctx == NULL)
+	*error = NULL;
+	
+	hal_ctx = cd_detect_hal_initialize(error);
+	
+	if(hal_ctx == NULL) 
 		return NULL;
 
 	cd_detect = g_new0(CdDetect, 1);
