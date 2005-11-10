@@ -1,5 +1,7 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/AboutBox.cs: Added Ulas Sahin to authors credits, Marco Carvalho to
+	translators credits
 	* src/LogCore.cs: LogCore implements IEnumerable; added more helper methods
 	for pushing different entry types; subclass LogEntry as WarningLogEntry,
 	DebugLogEntry, ErrorLogEntry

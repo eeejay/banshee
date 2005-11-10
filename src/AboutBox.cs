@@ -45,7 +45,8 @@ namespace Banshee
             "Chris Lahey",
             "Ben Maurer",
             "Larry Ewing",
-            "Miguel de Icaza"
+            "Miguel de Icaza",
+            "Ulas Sahin"
         };
         
         private static string [] Artists = {
@@ -63,7 +64,8 @@ namespace Banshee
             new Translator("\u017Dygimantas Beru\u010Dka", "Lithuanian"),
             new Translator("Funda Wang", "Simplified Chinese"),
             new Translator("Vincent van Adrighem", "Dutch"),
-            new Translator("\u00D8ivind Hoel", "Norwegian Bokm\u00E5l")
+            new Translator("\u00D8ivind Hoel", "Norwegian Bokm\u00E5l"),
+            new Translator("Marco Carvalho", "Brazilian Portuguese"),
         };
     
         private class Translator : IComparable
