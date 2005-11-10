@@ -1,5 +1,14 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/ActiveUserEvent.cs: Added a CanCancel property that maps to the
+	sensitivity of the cancel button
+	* src/PlayerInterface.cs:
+	* src/StockIcons.cs:
+	* src/RipTransaction.cs: 
+	* data/glade/player.glade: Ensure all nomenclature is in sync regarding
+	import/write CD. Changed "Rip" to "Import" and "Burn" to "Write"
+	* src/BurnCore.cs: Major overhaul; use ActiveUserEvent for progress 
+	reporting; handle threading and events much better; massive clean up
 	* libbanshee/gst-encode.c: handle gnomevfssink allow-overwrite signal
 	for encoding over possible left over temporary files
 	* src/LogCore.cs: 
