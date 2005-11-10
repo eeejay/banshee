@@ -1,5 +1,23 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LogCore.cs: LogCore implements IEnumerable; added more helper methods
+	for pushing different entry types; subclass LogEntry as WarningLogEntry,
+	DebugLogEntry, ErrorLogEntry
+	* src/LibraryTransactionManager.cs:
+	* src/LibraryTransactions.cs:
+	* src/AudioCdCore.cs:
+	* src/PipelineProfile.cs:
+	* src/Database.cs:
+	* src/Core.cs:
+	* src/RipTransaction.cs: Use the LogCore for debug logging instead 
+	of DebugLog
+	* src/DebugLog.cs: Removed 
+	* src/Makefile.am: Added LogCoreViewer.cs, Removed DebugLog.cs
+	* data/glade/player.glade:
+	* src/PlayerInterface.cs: Add menu item for showing the LogCore Viewer
+	* src/LogCoreViewer.cs: A dialog for viewing the LogCore entries
+	* src/LibraryTransactions.cs (PlaylistLoadTransaction.Run): only
+	raise track info if not null :)
 	* src/PlayerInterface.cs (OnPlaylistUpdated): Got rid of custom time
 	calculations in favour of TimeSpan; cleaned up a little
 	* src/PlayerInterface.cs (OnLogCoreUpdated): Show a dialog for LogEntry
