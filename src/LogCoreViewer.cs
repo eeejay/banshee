@@ -182,14 +182,15 @@ namespace Banshee.Logging
                 return;
             }
             
-            object path = log_store.GetValue(iter, 3);
+            object message = log_store.GetValue(iter, 2);
+            object details = log_store.GetValue(iter, 3);
             
-            if(path == null) {
+            if(message == null || details == null) {
                 details_box.Hide();
                 return;
             }
             
-            details_view.Buffer.Text = path as string;
+            details_view.Buffer.Text = (message as string) + ": " + (details as string);
             details_box.ShowAll();
         }
         
