@@ -90,7 +90,8 @@ banshee_sources = \
 	CoverArtThumbnail.cs \
 	AmazonCoverFetcher.cs \
 	ActiveUserEventsManager.cs \
-	ActiveUserEvent.cs 
+	ActiveUserEvent.cs \
+	LogCoreViewer.cs
 
 banshee_resources = \
 	../COPYING \
