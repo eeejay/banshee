@@ -52,6 +52,7 @@ namespace Banshee
         public event EventHandler CancelRequested;
         
         private bool cancel_requested;
+        private bool can_cancel;
      
         public ActiveUserEvent(string name) 
         {
@@ -185,6 +186,19 @@ namespace Banshee
                 Core.ProxyToMainThread(delegate {
                     progress_bar.Fraction = value;
                     progress_bar.Text = String.Format("{0}%", (int)(value * 100.0));
+                });
+            }
+        }
+        
+        public bool CanCancel {
+            get {
+                return can_cancel;
+            }
+            
+            set {
+                can_cancel = value;
+                Core.ProxyToMainThread(delegate {
+                    cancel_button.Sensitive = value;
                 });
             }
         }
