@@ -109,7 +109,7 @@ cd_detect_hal_initialize(gchar **error_out)
 	libhal_ctx_set_device_added(hal_context, hal_device_added);
 	libhal_ctx_set_device_removed(hal_context, hal_device_removed);
 	
-	if(!libhal_ctx_init(NULL, &error)) {
+	if(!libhal_ctx_init(hal_context, &error)) {
 		libhal_ctx_free(hal_context);
 		if(dbus_error_is_set(&error)) {
 			*error_out = g_strdup_printf("Could not initialize HAL context: %s", error.message);
