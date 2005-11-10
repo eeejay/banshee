@@ -1,5 +1,17 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* mediaengines/gst/GstPlayerEngine.cs: fixed typo in engine description
+	* configure.ac: Add pt_BR to ALL_LINGUAS
+	* src/LogCoreViewer.cs: Show both short message and details in viewer
+	text entry
+	* src/Core.cs: Handle exception from AudioCdCore exception in the case
+	where HAL was not able to become initialized; disable AudioCdCore and
+	allow Banshee to continue with disabled CD support
+	* src/AudioCdCore.cs: marshal native error messages to propagate to 
+	exception if HAL could not be initialized
+	* src/SourceView.cs: 
+	* src/PlayerInterface.cs:
+	* src/Core.cs: Only interact with the AudioCdCore if it is available
 	* libbanshee/cd-detect.[ch] (cd_detect_new): expects a gchar ** which 
 	may be filled with an allocated error message if function returns NULL,
 	must be freed if non-null
