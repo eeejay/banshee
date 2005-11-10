@@ -338,7 +338,7 @@ namespace Banshee
 			get {
 				return Catalog.GetString(
 					"GStreamer is a multimedia framework for playing and " +
-					"xmanipulating media. Any GStreamer plugin " +
+					"manipulating media. Any GStreamer plugin " +
 					"that is available will work through this engine.");
 			}
 		}	
