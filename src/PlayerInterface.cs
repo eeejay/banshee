@@ -89,7 +89,6 @@ namespace Banshee
         }
         
         private IpodCore ipodCore = Core.Instance.IpodCore;
-        private AudioCdCore audioCdCore = Core.Instance.AudioCdCore;
         
         private long plLoaderMax, plLoaderCount;
         private bool startupLoadReady = false;
@@ -147,8 +146,10 @@ namespace Banshee
                 Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;    
             }
             
-            Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-            Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+            if(Core.Instance.AudioCdCore != null) {
+                Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
+                Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+            }
             
             Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
             

@@ -153,9 +153,11 @@ namespace Banshee
             try {
                 Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
                 Core.Instance.IpodCore.DeviceRemoved += OnIpodCoreDeviceRemoved;
-                Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
-                Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-                Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+                if(Core.Instance.AudioCdCore != null) {
+                    Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
+                    Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
+                    Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+                }
                 Core.Library.Updated += OnLibraryUpdated;
             } catch(NullReferenceException) {}
             
@@ -194,10 +196,12 @@ namespace Banshee
             store.Clear();
             store.AppendValues(new LibrarySource());
             
-            try {
-                foreach(AudioCdDisk disk in Core.Instance.AudioCdCore.Disks)
-                    store.AppendValues(new AudioCdSource(disk));
-            } catch(NullReferenceException) {}
+            if(Core.Instance.AudioCdCore != null) {
+                try {
+                    foreach(AudioCdDisk disk in Core.Instance.AudioCdCore.Disks)
+                        store.AppendValues(new AudioCdSource(disk));
+                } catch(NullReferenceException) {}
+            }
         
             // iPod Sources
             try {
