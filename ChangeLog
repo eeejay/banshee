@@ -1,5 +1,7 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* Makefile.am: Made DISTCLEAN a little more standard/correct and moved
+	my extra crazy house cleaning to a script, vacuum.sh
 	* src/AboutBox.cs: Added Ulas Sahin to authors credits, Marco Carvalho to
 	translators credits
 	* src/LogCore.cs: LogCore implements IEnumerable; added more helper methods

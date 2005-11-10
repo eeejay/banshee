@@ -20,28 +20,17 @@ EXTRA_DIST =            \
 	MAINTAINERS         \
 	HACKING
 
-DISTCLEANFILES =        \
+CLEANFILES = \
 	intltool-extract    \
-	intltool-merge      \
 	intltool-update     \
+	intltool-merge
+
+DISTCLEANFILES =        \
 	intltool-extract.in \
 	intltool-merge.in   \
 	intltool-update.in  \
 	banshee.pc    \
-	config.guess  \
-	config.sub    \
-	configure     \
-	install-sh    \
-	missing       \
-	depcomp       \
-	Makefile.in   \
 	*.bak         \
 	*~            \
-	*.pidb        \
-	mkinstalldirs \
-	ltmain.sh     \
-	aclocal.m4    \
-	config.h.in   \
-	INSTALL       \
-	compile
+	*.pidb
 
