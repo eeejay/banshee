@@ -38,6 +38,7 @@ using Glade;
 using System.IO;
 
 using Sql;
+using Banshee.Logging;
 
 namespace Banshee
 {
@@ -395,7 +396,6 @@ namespace Banshee
                 }
             } catch(Exception) { }
                 
-            
             try {
                 trayIcon = new NotificationAreaIcon();
                 trayIcon.ClickEvent += OnTrayClick;
@@ -407,9 +407,10 @@ namespace Banshee
                 trayIcon.ShuffleItem.Activated += OnTrayMenuItemShuffleActivated;
                 trayIcon.RepeatItem.Activated += OnTrayMenuItemRepeatActivated;
                 trayIcon.ExitItem.Activated += OnMenuQuitActivate;
-            } catch(Exception) {
+            } catch(Exception e) {
                 trayIcon = null;
-                DebugLog.Add(Catalog.GetString("Notification Area Icon could not be installed"));
+                Core.Log.PushWarning(Catalog.GetString("Notification Area Icon could not be installed"),
+                    e.Message, false);
             }
         }
     
@@ -827,6 +828,25 @@ namespace Banshee
                 WindowPlayer.Fullscreen();
                 is_fullscreen = true;
             }
+        }
+
+        private LogCoreViewer log_viewer = null;
+        private void OnMenuLoggedEventsActivate(object o, EventArgs args)
+        {
+            if(log_viewer == null) {
+                log_viewer = new LogCoreViewer(Core.Log, WindowPlayer);
+                
+                log_viewer.Response += delegate(object o, ResponseArgs args) {
+                    log_viewer.Hide();
+                };
+                
+                log_viewer.DeleteEvent += delegate(object o, DeleteEventArgs args) {
+                    log_viewer.Destroy();
+                    log_viewer = null;
+                };
+            }
+            
+            log_viewer.Show();
         }
 
         // ---- Player Event Handlers ----
