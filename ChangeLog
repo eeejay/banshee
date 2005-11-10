@@ -1,5 +1,7 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* libbanshee/gst-encode.c: handle gnomevfssink allow-overwrite signal
+	for encoding over possible left over temporary files
 	* src/LogCore.cs: 
 	* src/LogCoreViewer.cs: Added "Information" LogEntry type
 	* mediaengines/gst/GstPlayerEngine.cs: fixed typo in engine description
