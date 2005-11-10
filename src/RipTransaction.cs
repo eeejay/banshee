@@ -200,12 +200,11 @@ namespace Banshee
             try {
                 encodePipeline = profile.Pipeline;
             } catch(PipelineProfileException e) {
-                DebugLog.Add("Cannot Rip CD: " + e.Message);
+                Core.Log.PushError("Cannot Import CD", e.Message);
                 return;
             }
         
-            DebugLog.Add("Ripping CD and Encoding with Pipeline: " 
-                + encodePipeline);
+            Core.Log.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
         
             ripper = new AudioCdRipper(device, 0, encodePipeline);
             ripper.Progress += OnRipperProgress;

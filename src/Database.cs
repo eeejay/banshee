@@ -37,12 +37,12 @@ using Sql;
 
 namespace Banshee
 {
-	public class Database 
-	{
-		private Hashtable threadConnections;
-		private Hashtable tableColumns;
-		private string dbname;
-		private string dbpath;
+    public class Database 
+    {
+        private Hashtable threadConnections;
+        private Hashtable tableColumns;
+        private string dbname;
+        private string dbpath;
 
         private bool writeInProgress;
         
@@ -54,218 +54,219 @@ namespace Banshee
            }
         }
 
-		private IDbConnection dbcon
-		{
-			get {	
-				return Connect();
-			}
-		}
+        private IDbConnection dbcon
+        {
+            get {    
+                return Connect();
+            }
+        }
 
-		public Database(string dbname, string dbpath)
-		{
-			this.dbname = dbname;
-			this.dbpath = dbpath;
-			
-			threadConnections = new Hashtable();
-			tableColumns = new Hashtable();
-			
-			writeInProgress = false;
-			
-			Connect();
-			InitializeTables();
-		}
-		
-		// Returns a connection handle for the current thread... SQLite is 
-		// not thread safe, and needs a new connection for each thread
-		// a hashtable is used to store connection handles, where the key
-		// is a handle to the executing thread
-		private IDbConnection Connect()
-		{
-			if(threadConnections[System.Threading.Thread.CurrentThread] != null)
-				return (IDbConnection)threadConnections[
-					System.Threading.Thread.CurrentThread];
-			
-			IDbConnection conn = new SqliteConnection("Version=3,URI=file:" 
-				+ dbpath);
-			conn.Open();
-			threadConnections[System.Threading.Thread.CurrentThread] = conn;
-			return conn;
-		}
-		
-		public void Close()
-		{
-			foreach(IDbConnection conn in threadConnections.Values) {
-				conn.Close();
-			}
-		}
+        public Database(string dbname, string dbpath)
+        {
+            this.dbname = dbname;
+            this.dbpath = dbpath;
+            
+            threadConnections = new Hashtable();
+            tableColumns = new Hashtable();
+            
+            writeInProgress = false;
+            
+            Connect();
+            InitializeTables();
+        }
+        
+        // Returns a connection handle for the current thread... SQLite is 
+        // not thread safe, and needs a new connection for each thread
+        // a hashtable is used to store connection handles, where the key
+        // is a handle to the executing thread
+        private IDbConnection Connect()
+        {
+            if(threadConnections[System.Threading.Thread.CurrentThread] != null)
+                return (IDbConnection)threadConnections[
+                    System.Threading.Thread.CurrentThread];
+            
+            IDbConnection conn = new SqliteConnection("Version=3,URI=file:" 
+                + dbpath);
+            conn.Open();
+            threadConnections[System.Threading.Thread.CurrentThread] = conn;
+            return conn;
+        }
+        
+        public void Close()
+        {
+            foreach(IDbConnection conn in threadConnections.Values) {
+                conn.Close();
+            }
+        }
 
-		public IDataReader Query(object query)
-		{
-			IDbCommand dbcmd = dbcon.CreateCommand();
-			dbcmd.CommandText = query.ToString();
-			return dbcmd.ExecuteReader();
-		}
-		
-		public int Execute(object query)
-		{
-			IDbCommand dbcmd = dbcon.CreateCommand();
-			dbcmd.CommandText = query.ToString();
-			int ret = dbcmd.ExecuteNonQuery();
-			
-			EventHandler handler = WriteCycleFinished;
-			if(handler != null)
-			     handler(this, new EventArgs());
-			
-			return ret;
-		}
-		
-		public object QuerySingle(object query)
-		{
-			IDbCommand dbcmd = dbcon.CreateCommand();
-			dbcmd.CommandText = query.ToString();
-			return dbcmd.ExecuteScalar();
-		}
-		
-		// -- //
-		
-		private void InitializeTables()
-		{		
-			string data = Resource.GetFileContents("Tables.sql");
-			ArrayList instructions = ParseRawSql(data);
-			ExecuteSqlStatements(instructions);
-			
-			try {
-			   Execute("PRAGMA synchronous = OFF");
-			} catch(ApplicationException) {
-			   DebugLog.Add("Could not set sqlite3 PRAGMA synchronous = OFF");
-			}
-			
-			try {
-			   QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
-			} catch(ApplicationException) {
-			   Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
-			}
-			
-			try {
-			   QuerySingle("SELECT DateAddedStamp FROM Tracks LIMIT 1");
-			} catch(ApplicationException) {
-			   Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
-			}
-		}
-		
-		private ArrayList ParseRawSql(string rawData)
-		{
-			ArrayList validInstructions = new ArrayList();
-			
-			string [] lines = rawData.Split('\n');
-			string filteredData = null;
+        public IDataReader Query(object query)
+        {
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            dbcmd.CommandText = query.ToString();
+            return dbcmd.ExecuteReader();
+        }
+        
+        public int Execute(object query)
+        {
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            dbcmd.CommandText = query.ToString();
+            int ret = dbcmd.ExecuteNonQuery();
+            
+            EventHandler handler = WriteCycleFinished;
+            if(handler != null)
+                 handler(this, new EventArgs());
+            
+            return ret;
+        }
+        
+        public object QuerySingle(object query)
+        {
+            IDbCommand dbcmd = dbcon.CreateCommand();
+            dbcmd.CommandText = query.ToString();
+            return dbcmd.ExecuteScalar();
+        }
+        
+        // -- //
+        
+        private void InitializeTables()
+        {        
+            string data = Resource.GetFileContents("Tables.sql");
+            ArrayList instructions = ParseRawSql(data);
+            ExecuteSqlStatements(instructions);
+            
+            try {
+                Execute("PRAGMA synchronous = OFF");
+            } catch(ApplicationException e) {
+                Banshee.Logging.LogCore.Instance.PushWarning("Could not set sqlite3 PRAGMA synchronous = OFF",
+                    "Database querying, read and write, may be extra slow. (" + e.Message + ")", false);
+            }
+            
+            try {
+               QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
+            } catch(ApplicationException) {
+               Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
+            }
+            
+            try {
+               QuerySingle("SELECT DateAddedStamp FROM Tracks LIMIT 1");
+            } catch(ApplicationException) {
+               Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
+            }
+        }
+        
+        private ArrayList ParseRawSql(string rawData)
+        {
+            ArrayList validInstructions = new ArrayList();
+            
+            string [] lines = rawData.Split('\n');
+            string filteredData = null;
 
-			foreach(string line in lines) {
-				string tline = line.Trim();
-				if(tline.StartsWith("--") && 
-					!tline.StartsWith("--IF TABLE NOT EXISTS")) 
-					continue;
-				filteredData += tline + "\n";
-			}
-			
-			string [] instructions = filteredData.Split(';');
-			
-			foreach(string ins in instructions) {
-				string statement = ins.Trim();
-				if(statement.Length <= 0)
-					continue;
-					
-				validInstructions.Add(statement);	
-			}
-			
-			return validInstructions;
-		}
-		
-		private void ExecuteSqlStatements(ArrayList statements)
-		{
-			string db_use = null;
-			
-			for(int i = 0, n = statements.Count; i < n; i++) {
-				string stmt = (string)statements[i];
-				
-				if(stmt.StartsWith("USE")) {
-					string [] parts = stmt.Split(' ');
-					if(parts.Length != 2)
-						continue;
-						
-					db_use = parts[1].Trim();
-					continue;
-				} 
-				
-				if(!dbname.Equals(db_use))
-					continue;
-				
-				if(stmt.StartsWith("--IF TABLE NOT EXISTS")) {
-					string [] parts = stmt.Split(' ');
-					if(parts.Length != 5)
-						continue;
+            foreach(string line in lines) {
+                string tline = line.Trim();
+                if(tline.StartsWith("--") && 
+                    !tline.StartsWith("--IF TABLE NOT EXISTS")) 
+                    continue;
+                filteredData += tline + "\n";
+            }
+            
+            string [] instructions = filteredData.Split(';');
+            
+            foreach(string ins in instructions) {
+                string statement = ins.Trim();
+                if(statement.Length <= 0)
+                    continue;
+                    
+                validInstructions.Add(statement);    
+            }
+            
+            return validInstructions;
+        }
+        
+        private void ExecuteSqlStatements(ArrayList statements)
+        {
+            string db_use = null;
+            
+            for(int i = 0, n = statements.Count; i < n; i++) {
+                string stmt = (string)statements[i];
+                
+                if(stmt.StartsWith("USE")) {
+                    string [] parts = stmt.Split(' ');
+                    if(parts.Length != 2)
+                        continue;
+                        
+                    db_use = parts[1].Trim();
+                    continue;
+                } 
+                
+                if(!dbname.Equals(db_use))
+                    continue;
+                
+                if(stmt.StartsWith("--IF TABLE NOT EXISTS")) {
+                    string [] parts = stmt.Split(' ');
+                    if(parts.Length != 5)
+                        continue;
 
-					if(TableExists(parts[4])) 
-						i++;
+                    if(TableExists(parts[4])) 
+                        i++;
 
-					continue;
-				}
+                    continue;
+                }
 
-				Execute(stmt);
-			}
-		}
-		
-		public bool TableExists(string table)
-		{
-			int count = Convert.ToInt32(QuerySingle(
-				"SELECT COUNT(*) " +
-				"FROM sqlite_master " + 
-				"WHERE Type='table' AND Name='" + table + "'")
-			);
-			
-			return count > 0;
-		}
-		
-		// The following three methods parse the SQL used to create
-		// a given table to provide information regarding the table
-		
-		private string [] GetRawTableColumnDefinitions(string table)
-		{
-			Statement query = new Select("sqlite_master", new List("sql")) +
-				new Where(new Compare("name", Op.EqualTo, table));
-				
-			string tableDef = (string)QuerySingle(query);
-			
-			if(tableDef == null)
-				return null;
-				
-			string s = tableDef.Substring(tableDef.IndexOf('(') + 1);
-			s = s.Substring(0, s.IndexOf(')'));
-			return s.Split(',');
-		}
-		
-		public Hashtable ColumnMap(string table)
-		{
-			if(tableColumns[table] != null)
-				return (Hashtable)tableColumns[table];
-				
-			Hashtable coltable = new Hashtable();
-			
-			string [] columnDefs = GetRawTableColumnDefinitions(table);
-			
-			for(int i = 0; i < columnDefs.Length; i++) {
-				string [] parts = columnDefs[i].Split(' ');
-				if(parts.Length <= 0)
-					continue;
-					
-				string colname = parts[0].Trim();
-				coltable.Add(i, colname);
-				coltable.Add(colname, i);
-			} 
-			
-			tableColumns[table] = coltable;
-			
-			return coltable;
-		}
-	}
+                Execute(stmt);
+            }
+        }
+        
+        public bool TableExists(string table)
+        {
+            int count = Convert.ToInt32(QuerySingle(
+                "SELECT COUNT(*) " +
+                "FROM sqlite_master " + 
+                "WHERE Type='table' AND Name='" + table + "'")
+            );
+            
+            return count > 0;
+        }
+        
+        // The following three methods parse the SQL used to create
+        // a given table to provide information regarding the table
+        
+        private string [] GetRawTableColumnDefinitions(string table)
+        {
+            Statement query = new Select("sqlite_master", new List("sql")) +
+                new Where(new Compare("name", Op.EqualTo, table));
+                
+            string tableDef = (string)QuerySingle(query);
+            
+            if(tableDef == null)
+                return null;
+                
+            string s = tableDef.Substring(tableDef.IndexOf('(') + 1);
+            s = s.Substring(0, s.IndexOf(')'));
+            return s.Split(',');
+        }
+        
+        public Hashtable ColumnMap(string table)
+        {
+            if(tableColumns[table] != null)
+                return (Hashtable)tableColumns[table];
+                
+            Hashtable coltable = new Hashtable();
+            
+            string [] columnDefs = GetRawTableColumnDefinitions(table);
+            
+            for(int i = 0; i < columnDefs.Length; i++) {
+                string [] parts = columnDefs[i].Split(' ');
+                if(parts.Length <= 0)
+                    continue;
+                    
+                string colname = parts[0].Trim();
+                coltable.Add(i, colname);
+                coltable.Add(colname, i);
+            } 
+            
+            tableColumns[table] = coltable;
+            
+            return coltable;
+        }
+    }
 }

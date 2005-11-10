@@ -36,6 +36,7 @@ using Gnome;
 using GConf;
 using Mono.Unix;
 
+using Banshee.Logging;
 
 namespace Banshee
 {
@@ -111,8 +112,7 @@ namespace Banshee
             
             set {
                 activePlayer = value;
-                DebugLog.Add("Active Player Engine is now '" + 
-                    activePlayer.EngineName + "'");
+                Core.Log.PushDebug("Changed active player engine", activePlayer.EngineName);
             }
         }
         
@@ -150,21 +150,21 @@ namespace Banshee
             }
 
             if(Player == null) {
-                    Console.Error.WriteLine("Could not load A PlayerEngine Core!");
-                    System.Environment.Exit(1);
+                Console.Error.WriteLine("Could not load A PlayerEngine Core!");
+                System.Environment.Exit(1);
             }
 
             Player.Initialize();
-            DebugLog.Add("Loaded PlayerEngine core: " + Player.EngineName);
+            Core.Log.PushDebug("Loaded PlayerEngine core", Player.EngineName);
 
             if(AudioCdPlayer == null) {
-                    Console.Error.WriteLine("Could not load AudioCdPlayer!");
-                    System.Environment.Exit(1);
+                Console.Error.WriteLine("Could not load AudioCdPlayer!");
+                System.Environment.Exit(1);
             }
 
             AudioCdPlayer.Initialize();
-            DebugLog.Add("Loaded AudioCdPlayerEngine core: " + 
-                 AudioCdPlayer.EngineName);
+            
+            Core.Log.PushDebug("Loaded AudioCdPlayerEngine core", AudioCdPlayer.EngineName);
             
             AudioCdCore = new AudioCdCore();
             IpodCore = new IpodCore();

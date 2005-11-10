@@ -92,12 +92,8 @@ namespace Banshee
 			try {
 				Run();
 			} catch(Exception e) {
-				DebugLog.Add(String.Format(Catalog.GetString(
-					"{0} threw an unhandled exception: ending " + 
-					"transaction safely: {1} ({2})"),
-					GetType().ToString(),
-					e.GetType().ToString(), 
-					e.Message));
+				Core.Log.PushDebug(Catalog.GetString("Unhandled Exception, ending IO Transaction safely"),
+				    String.Format("{0} threw {1} ({2})", GetType().ToString(), e.GetType().ToString(), e.Message));
 			}
 			
 			Finish(this);
@@ -122,11 +118,11 @@ namespace Banshee
 					ExecutingThread.Abort();
 				} catch(Exception) {}
 				
-				DebugLog.Add("Forcefully canceled LibraryTransaction");
+				Core.Log.PushDebug("Forcefully canceled LibraryTransaction", GetType().ToString());
 				return;
 			}
 			
-			DebugLog.Add("Peacefully canceled LibraryTransaction");
+			Core.Log.PushDebug("Peacefully canceled LibraryTransaction", GetType().ToString());
 		}
 		
 		protected void UpdateAverageDuration(DateTime start)

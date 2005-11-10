@@ -277,7 +277,7 @@ namespace Banshee
                     try {
                         list.Add(new PipelineProfile(descriptions[i]));
                     } catch(PipelineProfileException e) {
-                        DebugLog.Add(e.Message);
+                        Core.Log.PushWarning("Could not verify encoder profile", e.Message, false);
                     }
                 }
                 

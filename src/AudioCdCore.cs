@@ -323,6 +323,11 @@ namespace Banshee
         {
             IntPtr ptr = cd_detect_new();
             if(ptr == IntPtr.Zero) {
+                Banshee.Logging.LogCore.Instance.PushWarning(
+                    Catalog.GetString("Could not initialize HAL for CD Detection"),
+                    Catalog.GetString("Audio CD support will be disabled in this instance"),
+                    false);
+
                 throw new ApplicationException(
                     Catalog.GetString("Could not initialize HAL for CD Detection"));
             }
@@ -335,7 +340,7 @@ namespace Banshee
             cd_detect_set_device_added_callback(handle, AddedCallback);
             cd_detect_set_device_removed_callback(handle, RemovedCallback);    
             
-            DebugLog.Add("Audio CD Core Initialized");
+            Banshee.Logging.LogCore.Instance.PushDebug("Audio CD Core Initialized", "");
             
             BuildInitialList();
         }
@@ -356,7 +361,8 @@ namespace Banshee
                 return disk;
             } catch(Exception e) {
                 Exception temp_e = e; // work around mcs #76642
-                LogCore.Instance.PushError(Catalog.GetString("Could not Read Audio CD"), temp_e.Message);
+                Banshee.Logging.LogCore.Instance.PushError(Catalog.GetString("Could not Read Audio CD"), 
+                    temp_e.Message);
             }
             
             return null;
