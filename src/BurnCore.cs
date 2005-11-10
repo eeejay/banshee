@@ -318,7 +318,7 @@ namespace Banshee
                 return;
             }
             
-            user_event.Message = "Waiting for Media";
+            user_event.Message = Catalog.GetString("Waiting for Media");
             
             Core.ProxyToMainThread(delegate {
                 HigMessageDialog dialog = new HigMessageDialog(null, DialogFlags.Modal, MessageType.Info,
