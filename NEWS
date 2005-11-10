@@ -1,14 +1,69 @@
-18 February 2005:
-  * Second public release of Sonance (v0.2) 
+Banshee 0.9.11 is Ready.
 
-17 February 2005: 
-  * First public release of Sonance (v0.1)
+Please do not hesitate to file bugs against Banshee in GNOME Bugzilla (http://bugzilla.gnome.org, component: banshee), or discuss Banshee on this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to everyone for viewing and editing is located at http://banshee-project.org.
 
-January 2005: 
-  * GstPlayer engine is written in C#, Sonance is born (again)
 
-November 2004: 
-  * Sonance is started for the first time, under the original name,
-    Remix. It was written in C, and after two months of development,
-    was scrapped in favor of a complete rewrite in C# under Mono.
-    The C version never had a public release.
+NEW FEATURES
+------------
+
+ - CD Writing is much improved, uses integrated progress reporting like other major features (importing, etc)
+ - Nomenclature for CD Importing/Ripping changed to "Import"; for Burning/Writing to "Write"
+ - Many areas that may have resulted in an exit on exception are now handled better, so Banshee can continue when errors are encounted (for instance, HAL not working for the Audio CD layer)
+ - Better UI for selecting the library location in preferences, uses the GTK FileChooserButton
+ - Brazilian Portuguese translation provided by Marco Carvalho (pt_BR)
+ - Dialog for viewing the log (CTRL+SHIFT+L), or from the View menu
+ - New logging core support
+
+
+FIXES AND OPTIMIZATIONS
+-----------------------
+
+ - File with non-ASCII characters should now be imported properly, this was due to differences between the way Gnome-VFS and System.Uri represent character encoding in file URIs (the other half of this fix is in mono itself, in Mono.Data.SqliteClient)
+ - iPod syncing should be much better, there is still a small, but sometimes crashing issue regarding the drawing of the TreeView
+
+
+THE IMPORTANT LINKS
+-------------------
+
+Release Overview Page:
+http://banshee-project.org/Releases/0.9.11
+
+Banshee 0.9.11 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.9.11.tar.gz
+
+ipod-sharp 0.5.10 Tarball:
+http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.10.tar.gz
+
+libipoddevice 0.3.5 Tarball:
+http://banshee-project.org/files/libipoddevice/libipoddevice-0.3.5.tar.gz
+
+Banshee Wiki: 
+http://banshee-project.org/
+
+
+DEPENDENCIES
+------------
+
+- Mono 1.1.9.2 and full stack
+- ipod-sharp 0.5.10; in turn requires libipoddevice 0.3.5
+- gtk-sharp-2.0 (2.3.91)
+- sqlite3
+- GStreamer 0.8.11
+- libmusicbrainz 2.1.1 or better
+- libnautilus-burn 2.12
+- GTK+ 2.6 or better
+- HAL 0.5.2 or better
+
+
+NOTES
+-----
+
+- New versions of Banshee will be released every Thursday. Releases with an odd micro version number, are to be considered essentially CVS snapshots. Even micro version numbers will be considered more stable, and are subject to more testing than odd micro version numbers.
+
+- To distributors: due to a bug in the Mono 1.1.8.x mcs compiler, Banshee code will not compile. Attempting to do so will result in the compiler crashing. Mono 1.1.9.2 must be used to build Banshee. However, the resulting assembly will execute just fine on the 1.1.8.x corlib/runtime. This means that Banshee can be built with 1.1.9.2 and run on 1.1.8.x. For distributions that cannot upgrade the compiler, the bare 1.1.9.2 compiler assembly has been bundled with banshee for now. To build using the bundled compiler, simply pass --with-internal-mcs to configure.
+
+- Bindings to the VLC libraries have been implemented and are available as a Banshee Media Engine. To use the VLC engine, pass --enable-vlc to configure. Additionally, libvlc.so must be copied to banshee/mediaengines/vlc before running "make install". To build libvlc.so, download and build Jon Lech Johansen's snd123:
+
+http://nanocrew.net/2005/09/20/snd123/
+
+Copy the resulting libvlc.so to the aforementioned build directory, and proceed with building Banshee as normal. Keep in mind, VLC support is optional. Banshee also supports GStreamer and Helix engines. GStreamer is required, and Helix is optional, but will be automatically detected and configured if your system is set up properly with either RealPlayer or Helix Player. See http://helixcommunity.org/
