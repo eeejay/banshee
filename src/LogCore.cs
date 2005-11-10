@@ -66,7 +66,8 @@ namespace Banshee.Logging
         None,
         Debug,
         Warning,
-        Error
+        Error,
+        Information
     }
     
     public class LogEntry
@@ -122,6 +123,14 @@ namespace Banshee.Logging
         }
     }
     
+    public class InformationLogEntry : LogEntry
+    {
+        public InformationLogEntry(string shortMessage, string details, bool showUser) :
+            base(LogEntryType.Information, shortMessage, details, showUser)
+        {
+        }
+    }
+    
     public class LogCore : IEnumerable
     {
         private static LogCore instance;
@@ -169,6 +178,16 @@ namespace Banshee.Logging
         public LogEntry PushWarning(string shortMessage, string details, bool showUser)
         {
             return Push(new WarningLogEntry(shortMessage, details, showUser));
+        }
+        
+        public LogEntry PushInformation(string shortMessage, string details)
+        {
+            return PushWarning(shortMessage, details, true);
+        }
+        
+        public LogEntry PushInformation(string shortMessage, string details, bool showUser)
+        {
+            return Push(new InformationLogEntry(shortMessage, details, showUser));
         }
         
         public LogEntry PushDebug(string shortMessage, string details)

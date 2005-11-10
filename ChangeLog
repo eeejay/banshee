@@ -1,5 +1,7 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LogCore.cs: 
+	* src/LogCoreViewer.cs: Added "Information" LogEntry type
 	* mediaengines/gst/GstPlayerEngine.cs: fixed typo in engine description
 	* configure.ac: Add pt_BR to ALL_LINGUAS
 	* src/LogCoreViewer.cs: Show both short message and details in viewer

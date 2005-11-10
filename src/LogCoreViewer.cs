@@ -45,6 +45,7 @@ namespace Banshee.Logging
         private Gdk.Pixbuf error_pixbuf;
         private Gdk.Pixbuf warning_pixbuf;
         private Gdk.Pixbuf debug_pixbuf;
+        private Gdk.Pixbuf information_pixbuf;
         
         public LogCoreViewer(LogCore log, Window parent) : base(Catalog.GetString("Log Viewer"), 
             parent, DialogFlags.DestroyWithParent | DialogFlags.NoSeparator)
@@ -76,7 +77,8 @@ namespace Banshee.Logging
             
             error_pixbuf = log_tree.RenderIcon(Stock.DialogError, IconSize.SmallToolbar, "Error");
             warning_pixbuf = log_tree.RenderIcon(Stock.DialogWarning, IconSize.SmallToolbar, "Warning");
-            debug_pixbuf = log_tree.RenderIcon(Stock.DialogInfo, IconSize.SmallToolbar, "Debug");
+            information_pixbuf = log_tree.RenderIcon(Stock.DialogInfo, IconSize.SmallToolbar, "Information");
+            debug_pixbuf = log_tree.RenderIcon(Stock.Execute, IconSize.SmallToolbar, "Debug");
             
             log_tree.RulesHint = true;
             
@@ -132,6 +134,7 @@ namespace Banshee.Logging
             filter_model.AppendValues(null, Catalog.GetString("All Log Entries"), LogEntryType.None);
             filter_model.AppendValues(error_pixbuf, Catalog.GetString("Only Error Messages"), LogEntryType.Error);
             filter_model.AppendValues(warning_pixbuf, Catalog.GetString("Only Warning Messages"), LogEntryType.Warning);
+            filter_model.AppendValues(information_pixbuf, Catalog.GetString("Only Information Messages"), LogEntryType.Information);
             filter_model.AppendValues(debug_pixbuf, Catalog.GetString("Only Debug Messages"), LogEntryType.Debug);
 
             TreeIter filter_active_iter;
@@ -260,6 +263,9 @@ namespace Banshee.Logging
                     break;
                 case LogEntryType.Debug:
                     pixbuf = debug_pixbuf;
+                    break;
+                case LogEntryType.Information:
+                    pixbuf = information_pixbuf;
                     break;
             }
             
