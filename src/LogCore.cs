@@ -30,7 +30,7 @@
 using System;
 using System.Collections;
 
-namespace Banshee
+namespace Banshee.Logging
 {
     public delegate void LogCoreUpdatedHandler(object o,
          LogCoreUpdatedArgs args);
@@ -47,6 +47,7 @@ namespace Banshee
         
     public enum LogEntryType
     {
+        None,
         Debug,
         Warning,
         Error
@@ -60,7 +61,7 @@ namespace Banshee
         private bool showUser;
         private DateTime timestamp;
         
-        public LogEntry(LogEntryType type, string shortMessage, string details, bool showUser)
+        internal LogEntry(LogEntryType type, string shortMessage, string details, bool showUser)
         {
             this.type = type;
             this.shortMessage = shortMessage;
@@ -71,8 +72,7 @@ namespace Banshee
         
         public override string ToString()
         {
-            return String.Format("{0}: [{1}] ({2}) - {3}",
-                type, timestamp, shortMessage, details);
+            return String.Format("{0}: [{1}] ({2}) - {3}", type, timestamp, shortMessage, details);
         }
         
         public LogEntryType Type   { get { return type;         } }
@@ -82,7 +82,31 @@ namespace Banshee
         public bool ShowUser       { get { return showUser;     } }
     }
     
-    public class LogCore
+    public class ErrorLogEntry : LogEntry
+    {
+        public ErrorLogEntry(string shortMessage, string details, bool showUser) :
+            base(LogEntryType.Error, shortMessage, details, showUser)
+        {
+        }
+    }
+    
+    public class WarningLogEntry : LogEntry
+    {
+        public WarningLogEntry(string shortMessage, string details, bool showUser) :
+            base(LogEntryType.Warning, shortMessage, details, showUser)
+        {
+        }
+    }
+    
+    public class DebugLogEntry : LogEntry
+    {
+        public DebugLogEntry(string shortMessage, string details, bool showUser) :
+            base(LogEntryType.Debug, shortMessage, details, showUser)
+        {
+        }
+    }
+    
+    public class LogCore : IEnumerable
     {
         private static LogCore instance;
         public static LogCore Instance {
@@ -96,15 +120,13 @@ namespace Banshee
         }
          
         public static bool PrintEntries = true;
+        private ArrayList entries = new ArrayList();
+        public event LogCoreUpdatedHandler Updated;
          
         protected LogCore()
         {
         }
          
-        private Hashtable logs = new Hashtable();
-        
-        public event LogCoreUpdatedHandler Updated;
-        
         private void QueueNotify(LogEntry entry)
         {
              LogCoreUpdatedHandler handler = Updated;
@@ -120,7 +142,7 @@ namespace Banshee
         
         public LogEntry PushError(string shortMessage, string details, bool showUser)
         {
-            return Push(LogEntryType.Error, shortMessage, details, showUser);
+            return Push(new ErrorLogEntry(shortMessage, details, showUser));
         }
         
         public LogEntry PushWarning(string shortMessage, string details)
@@ -130,29 +152,37 @@ namespace Banshee
         
         public LogEntry PushWarning(string shortMessage, string details, bool showUser)
         {
-            return Push(LogEntryType.Warning, shortMessage, details, showUser);
+            return Push(new WarningLogEntry(shortMessage, details, showUser));
         }
         
-        public LogEntry Push(LogEntryType type, string shortMessage, string details, bool showUser)
+        public LogEntry PushDebug(string shortMessage, string details)
         {
-            LogEntry entry = new LogEntry(type, shortMessage, details, showUser);
-            Push(entry);
-            return entry;
+            return PushDebug(shortMessage, details, false);
         }
         
-        public void Push(LogEntry entry)
+        public LogEntry PushDebug(string shortMessage, string details, bool showUser)
         {
-            if(logs[entry.Type] == null) {
-                logs[entry.Type] = new ArrayList();
+            return Push(new DebugLogEntry(shortMessage, details, showUser));
+        }
+        
+        public LogEntry Push(LogEntry entry)
+        {
+            if(PrintEntries) {
+                Console.WriteLine(entry);
             }
             
-            Console.WriteLine(entry);
-            
-            (logs[entry.Type] as ArrayList).Insert(0, entry);
+            entries.Insert(0, entry);
             
             Gtk.Application.Invoke(delegate {
                 QueueNotify(entry);
             });
+            
+            return entry;
+        }
+        
+        public IEnumerator GetEnumerator()
+        {
+            return entries.GetEnumerator();
         }
     }
 }
