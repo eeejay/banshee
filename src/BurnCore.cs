@@ -318,6 +318,8 @@ namespace Banshee
                 return;
             }
             
+            user_event.Message = "Waiting for Media";
+            
             Core.ProxyToMainThread(delegate {
                 HigMessageDialog dialog = new HigMessageDialog(null, DialogFlags.Modal, MessageType.Info,
                     ButtonsType.OkCancel, Catalog.GetString("Insert Blank CD"),
