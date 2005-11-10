@@ -1,5 +1,7 @@
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
+	* vacuum.sh: Runs make maintainer-clean and then cleans extra junk that
+	is left behind, returning to essentially a clean cvs checkout
 	* Makefile.am: Made DISTCLEAN a little more standard/correct and moved
 	my extra crazy house cleaning to a script, vacuum.sh
 	* src/AboutBox.cs: Added Ulas Sahin to authors credits, Marco Carvalho to
