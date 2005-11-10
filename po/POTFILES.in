@@ -32,6 +32,8 @@ src/IpodPropertiesWindow.cs
 src/Library.cs
 src/LibraryTransactionStatus.cs
 src/LibraryTransactions.cs
+src/LogCore.cs
+src/LogCoreViewer.cs
 src/NotificationAreaIcon.cs
 src/PipelineProfile.cs
 src/PlayerInterface.cs
