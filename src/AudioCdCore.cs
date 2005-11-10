@@ -237,7 +237,7 @@ namespace Banshee
             try {
                 using(UnixStream stream = UnixFile.Open(device_node, 
                     (Mono.Unix.OpenFlags)(UnixFileUtil.OpenFlags.O_RDONLY | 
-					UnixFileUtil.OpenFlags.O_NONBLOCK))) {
+                    UnixFileUtil.OpenFlags.O_NONBLOCK))) {
                     return ioctl(stream.Handle, open
                         ? EjectOperation.Open
                         : EjectOperation.Close) == 0;
@@ -321,15 +321,17 @@ namespace Banshee
         
         public AudioCdCore()
         {
-            IntPtr ptr = cd_detect_new();
-            if(ptr == IntPtr.Zero) {
-                Banshee.Logging.LogCore.Instance.PushWarning(
-                    Catalog.GetString("Could not initialize HAL for CD Detection"),
-                    Catalog.GetString("Audio CD support will be disabled in this instance"),
-                    false);
+            IntPtr error_ptr = IntPtr.Zero;
+            IntPtr ptr = cd_detect_new(out error_ptr);
+            if(ptr == IntPtr.Zero || error_ptr != IntPtr.Zero) {
+                string error_str = "Unknown HAL initialization error";
+                if(error_ptr != IntPtr.Zero) {
+                    error_str = GLib.Marshaller.Utf8PtrToString(error_ptr);
+                    GLib.Marshaller.Free(error_ptr);
+                }
 
-                throw new ApplicationException(
-                    Catalog.GetString("Could not initialize HAL for CD Detection"));
+                throw new ApplicationException(Catalog.GetString("Could not initialize HAL for CD Detection") 
+                    + ": " + error_str);
             }
             
             handle = new HandleRef(this, ptr);
@@ -487,7 +489,7 @@ namespace Banshee
         }
         
         [DllImport("libbanshee")]
-        private static extern IntPtr cd_detect_new();
+        private static extern IntPtr cd_detect_new(out IntPtr error_ptr);
         
         [DllImport("libbanshee")]
         private static extern void cd_detect_free(HandleRef handle);
