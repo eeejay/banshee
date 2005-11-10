@@ -28,7 +28,6 @@ banshee_generated_sources = $(banshee_sources_in:.in=) \
 
 banshee_sources = \
 	AboutBox.cs \
-	DebugLog.cs \
 	Main.cs \
 	StockIcons.cs \
 	PlayerInterface.cs \
