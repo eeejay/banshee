@@ -124,9 +124,6 @@ banshee_resources = \
 	../data/images/busy-spinner-36.png \
 	../data/images/search-entry-icon.png \
 	../data/images/search-entry-icon-hover.png \
-	../data/images/source-ipod-regular.png \
-	../data/images/source-ipod-color.png \
-	../data/images/source-ipod-shuffle.png \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
 	../data/images/blue-speaker.png \
@@ -144,7 +141,10 @@ banshee_resources = \
 	../data/images/cd-action-burn-24.png \
 	../data/images/cd-action-burn-32.png \
 	../data/images/cd-action-burn-48.png \
-	../data/images/encode-action-24.png
+	../data/images/encode-action-24.png \
+	../data/images/ipod-color-24.png \
+	../data/images/ipod-regular-24.png \
+	../data/images/ipod-shuffle-24.png
 
 banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
 

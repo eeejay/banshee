@@ -50,9 +50,6 @@ EXTRA_DIST = \
 	search-entry-icon.png \
 	song-drm.png \
 	source-cd-audio.png \
-	source-ipod-color.png \
-	source-ipod-regular.png \
-	source-ipod-shuffle.png \
 	source-library.png \
 	source-playlist.png \
 	star.png \
@@ -69,4 +66,8 @@ EXTRA_DIST = \
 	cd-action-burn-24.png \
 	cd-action-burn-32.png \
 	cd-action-burn-48.png \
-	encode-action-24.png 
+	encode-action-24.png \
+	ipod-color-24.png \
+	ipod-regular-24.png \
+	ipod-shuffle-24.png
+
