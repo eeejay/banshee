@@ -45,8 +45,8 @@ namespace Banshee
             Data
         };
     
-        private ArrayList encodeQueue = new ArrayList();
-        private ArrayList burnQueue = new ArrayList();
+        private Queue encodeQueue = new Queue();
+        private Queue burnQueue = new Queue();
         private DiskType diskType;
         private bool canceled;
         
@@ -57,7 +57,7 @@ namespace Banshee
         
         public void AddTrack(TrackInfo track)
         {
-            encodeQueue.Add(track);
+            encodeQueue.Enqueue(track);
         }
         
         public void Burn()
@@ -73,13 +73,13 @@ namespace Banshee
                            profile = new PipelineProfile(cp);
                            break;
                        }
-                    }
+                    }ou
                     break;
                 case DiskType.Mp3:
                 case DiskType.Data:
                 default:
                     foreach(TrackInfo ti in encodeQueue)
-                        burnQueue.Add(ti.Uri);
+                        burnQueue.Enqueue(ti.Uri);
                     DoBurn();
                     return;
             }
@@ -96,7 +96,8 @@ namespace Banshee
             fet.Finished += OnFileEncodeTransactionFinished;
             fet.Canceled += OnFileEncodeTransactionCanceled;
             
-            foreach(TrackInfo ti in encodeQueue) {
+            while(encodeQueue.Count > 0) {
+                TrackInfo ti = encodeQueue.Dequeue() as TrackInfo;
                 string outputFile = Paths.TempDir + "/"  + 
                     Path.GetFileNameWithoutExtension(ti.Uri.LocalPath) + "." + 
                     profile.Extension;
@@ -109,7 +110,8 @@ namespace Banshee
         
         private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
         {
-            burnQueue.Add(args.EncodedFileUri);
+            Console.WriteLine(args.EncodedFileUri);
+            burnQueue.Enqueue(args.EncodedFileUri);
         }
         
         private void OnFileEncodeTransactionFinished(object o, EventArgs args)
@@ -133,7 +135,7 @@ namespace Banshee
     
     public class Burner
     {
-        private ArrayList burnQueue;
+        private Queue burnQueue;
         private BurnCore.DiskType diskType;
         private BurnDrive drive;
         private BurnRecorder recorder;
@@ -141,7 +143,7 @@ namespace Banshee
         private long TotalDuration;
         private ActiveUserEvent user_event;
         
-        public Burner(BurnCore.DiskType diskType, ArrayList burnQueue)
+        public Burner(BurnCore.DiskType diskType, Queue burnQueue)
         {
             this.diskType = diskType;
             this.burnQueue = burnQueue;
