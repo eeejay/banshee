@@ -77,6 +77,9 @@ namespace Banshee
         private ProgressBar ipodDiskUsageBar;
         private Viewport sourceViewLoadingVP;
         private Button ipodSyncButton;
+        private Button ipodPropertiesButton;
+        private Button ipodEjectButton;
+            
         private CoverArtThumbnail cover_art;
         
         private bool incrementedCurrentSongPlayCount;
@@ -326,13 +329,13 @@ namespace Banshee
             box.PackStart(ipodSyncButton, false, false, 0);
             ipodSyncButton.ShowAll();
             
-            Button ipodPropertiesButton = new Button(
+            ipodPropertiesButton = new Button(
                 new Gtk.Image("gtk-properties", IconSize.Menu));
             ipodPropertiesButton.Clicked += OnIpodPropertiesClicked;
             box.PackStart(ipodPropertiesButton, false, false, 0);
             ipodPropertiesButton.ShowAll();
             
-            Button ipodEjectButton = new Button(new Gtk.Image("media-eject",
+            ipodEjectButton = new Button(new Gtk.Image("media-eject",
                 IconSize.Menu));
             ipodEjectButton.Clicked += OnIpodEjectClicked;
             box.PackStart(ipodEjectButton, false, false, 0);
@@ -379,6 +382,7 @@ namespace Banshee
             SetTip(ipodDiskUsageBar, Catalog.GetString("iPod Disk Usage"));
             SetTip(ipodEjectButton, Catalog.GetString("Eject iPod"));
             SetTip(ipodSyncButton, Catalog.GetString("Synchronize Music Library to iPod"));
+            SetTip(gxml["IpodSyncButton"], Catalog.GetString("Synchronize Music Library to iPod"));
             SetTip(ipodPropertiesButton, Catalog.GetString("View iPod Properties"));
             
             playlistMenuMap = new Hashtable();
@@ -1160,11 +1164,11 @@ namespace Banshee
                 && searchEntry.Query == String.Empty;
                 
             if(source.Type != SourceType.Ipod)
-                playlistView.Sensitive = true;
+                ShowPlaylistView();
             else if((source as IpodSource).IsSyncing)
-                playlistView.Sensitive = false;
+                ShowSyncingView();
             else
-                playlistView.Sensitive = true;
+                ShowPlaylistView();
                 
             OnPlaylistViewSelectionChanged(playlistView.Selection, new EventArgs());
                 
@@ -1346,7 +1350,13 @@ namespace Banshee
         {
             if(playlistModel.Source.Type == SourceType.Ipod 
                 && (playlistModel.Source as IpodSource).IsSyncing) {
-                playlistView.Sensitive = false;
+                ShowSyncingView();
+                ipodSyncButton.Sensitive = false;
+                ipodPropertiesButton.Sensitive = false;
+                ipodEjectButton.Sensitive = false;
+                gxml["IpodSyncButton"].Sensitive = false;
+                gxml["SearchLabel"].Sensitive = false;
+                searchEntry.Sensitive = false;
             }
         }
         
@@ -1354,9 +1364,16 @@ namespace Banshee
         {
             if(playlistModel.Source.Type == SourceType.Ipod 
                 && !(playlistModel.Source as IpodSource).IsSyncing) {
-                playlistView.Sensitive = true;
-                playlistModel.LoadFromIpodSource(
-                    (playlistModel.Source as IpodSource));
+                //playlistView.Show();
+                //playlistView.QueueDraw();
+                ShowPlaylistView();
+                ipodSyncButton.Sensitive = true;
+                ipodPropertiesButton.Sensitive = true;
+                ipodEjectButton.Sensitive = true;
+                gxml["IpodSyncButton"].Sensitive = true;
+                gxml["SearchLabel"].Sensitive = true;
+                searchEntry.Sensitive = true;
+                playlistModel.LoadFromIpodSource((playlistModel.Source as IpodSource));
             }
             
             sourceView.QueueDraw();
@@ -2305,6 +2322,46 @@ namespace Banshee
             get {
                 return activeTrackInfo;
             }
+        }
+        
+        private void ShowPlaylistView()
+        {
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
+            
+            if(alignment.Child == playlist_container) {
+                return;
+            } else if(alignment.Child == syncing_label) {
+                alignment.Remove(syncing_label);
+            }
+            
+            alignment.Add(playlist_container);
+            alignment.ShowAll();
+        }
+        
+        
+        private Label syncing_label;
+        
+        private void ShowSyncingView()
+        {
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
+            
+            if(alignment.Child == syncing_label) {
+                return;
+            } else if(alignment.Child == playlist_container) {
+                alignment.Remove(playlist_container);
+            }
+            
+            if(syncing_label == null) {
+                syncing_label = new Label();
+                syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
+                    Catalog.GetString("Syncing your iPod, Please Wait...")) + "</b></big>";
+                syncing_label.Show();
+            }
+            
+            alignment.Add(syncing_label);
+            alignment.ShowAll();
         }
     }
 }
