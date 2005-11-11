@@ -176,8 +176,6 @@ namespace Banshee
         private ArrayList updateTracks;
         private ArrayList removeTracks;
         
-        private ProgressDialog progress;
-        
         private Hashtable copyFiles;
         
         public event EventHandler SyncStarted;
