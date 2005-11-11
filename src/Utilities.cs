@@ -30,96 +30,130 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions; 
 using Mono.Unix;
 
 namespace Banshee
 {
-	public class Error
-	{
-		private string message;
-		private Exception e;	
+    public class Error
+    {
+        private string message;
+        private Exception e;    
 
-		public Error(string message) : this(message, null)
-		{
-		
-		}
+        public Error(string message) : this(message, null)
+        {
+        
+        }
 
-		public Error(string message, Exception e)
-		{
-			this.message = message;
-			this.e = e;
-		
-			//if(e != null)	
-				//Console.WriteLine("Error: {0} ({1})", message, e.Message);
-			//else
-				//Console.WriteLine("Error: {0}", message);	
-		}
-	}
-	
-	public class SonanceException : System.Exception
-	{
-		public SonanceException(string message) 
-		{
-			new Error(message);
-		}
-	}
-	
-	public class StringUtil
-	{
-		public static string EntityEscape(string str)
-		{
-			if(str == null)
-				return null;
-				
-			return GLib.Markup.EscapeText(str);
-		}
-	
-		private static string RegexHexConvert(Match match)
-		{
-			int digit = Convert.ToInt32(match.Groups[1].ToString(), 16);
-			return Convert.ToChar(digit).ToString();
-		}	
-				
-		public static string UriEscape(string uri)
-		{
-			return Regex.Replace(uri, "%([0-9A-Fa-f][0-9A-Fa-f])", 
-				new MatchEvaluator(RegexHexConvert));
-		}
-		
-		public static string UriToFileName(string uri)
-		{
-			return new Uri(uri).LocalPath;
-		}
-		
-		public static string UcFirst(string str)
-		{
-			return Convert.ToString(str[0]).ToUpper() + str.Substring(1);
-		}
-	}
-	
-	public class Resource
-	{
-		public static string GetFileContents(string name)
-		{
-			Assembly asm = Assembly.GetExecutingAssembly();
-			Stream stream = asm.GetManifestResourceStream(name);
-			StreamReader reader = new StreamReader(stream);
-			return reader.ReadToEnd();	
-		}
-	}	
-	
-	public class Utilities
-	{
-		public static string BytesToString(ulong bytes)
-		{
-			ulong mb = bytes / (1024 * 1024);
+        public Error(string message, Exception e)
+        {
+            this.message = message;
+            this.e = e;
+        
+            //if(e != null)    
+                //Console.WriteLine("Error: {0} ({1})", message, e.Message);
+            //else
+                //Console.WriteLine("Error: {0}", message);    
+        }
+    }
+    
+    public class SonanceException : System.Exception
+    {
+        public SonanceException(string message) 
+        {
+            new Error(message);
+        }
+    }
+    
+    public class PathUtil
+    {
+        private static char[] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#' };
+       
+        public static Uri PathToFileUri(string path)
+        {
+            path = Path.GetFullPath(path);
+            
+            StringBuilder builder = new StringBuilder();
+            builder.Append(Uri.UriSchemeFile);
+            builder.Append(Uri.SchemeDelimiter);
+            
+            int i;
+            while((i = path.IndexOfAny(CharsToQuote)) != -1) {
+                if(i > 0) {
+                    builder.Append(path.Substring(0, i));
+                }
+                
+                builder.Append(Uri.HexEscape(path[i]));
+                path = path.Substring(i + 1);
+            }
+            
+            builder.Append(path);
+            
+            return new Uri(builder.ToString(), true);
+        }
+        
+        public static string FileUriToPath(Uri uri)
+        {
+            return uri.LocalPath;
+        }
+    }
+    
+    public class StringUtil
+    {
+        public static string EntityEscape(string str)
+        {
+            if(str == null)
+                return null;
+                
+            return GLib.Markup.EscapeText(str);
+        }
+    
+        private static string RegexHexConvert(Match match)
+        {
+            int digit = Convert.ToInt32(match.Groups[1].ToString(), 16);
+            return Convert.ToChar(digit).ToString();
+        }    
+                
+        public static string UriEscape(string uri)
+        {
+            return Regex.Replace(uri, "%([0-9A-Fa-f][0-9A-Fa-f])", 
+                new MatchEvaluator(RegexHexConvert));
+        }
+        
+        public static string UriToFileName(string uri)
+        {
+            return new Uri(uri).LocalPath;
+        }
+        
+        public static string UcFirst(string str)
+        {
+            return Convert.ToString(str[0]).ToUpper() + str.Substring(1);
+        }
+    }
+    
+    public class Resource
+    {
+        public static string GetFileContents(string name)
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            Stream stream = asm.GetManifestResourceStream(name);
+            StreamReader reader = new StreamReader(stream);
+            return reader.ReadToEnd();    
+        }
+    }    
+    
+    public class Utilities
+    {
+        public static string BytesToString(ulong bytes)
+        {
+            ulong mb = bytes / (1024 * 1024);
 
-			if (mb > 1024)
-				return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
-			else
-				return String.Format(Catalog.GetString("{0} MB"), mb);
-		}
+            if (mb > 1024)
+                return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
+            else
+                return String.Format(Catalog.GetString("{0} MB"), mb);
+        }
     }
 
     public class DateTimeUtil
