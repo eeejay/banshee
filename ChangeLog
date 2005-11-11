@@ -1,5 +1,13 @@
 2005-11-11  Aaron Bockover  <aaron@aaronbock.net>
 	
+	* configure.ac: Version 0.9.11.1
+	* data/glade/player.glade: Added another container for switching out
+	widgets during the ipod sync state
+	* src/IpodCore.cs (EmitSyncStarted), (EmitSyncCompleted): Emit through
+	Core.ProxyToMainThread
+	* src/PlayerInterface.cs: Fixed ipod syncing, was a threading issue,
+	of course; fixed up syncing UI, made things more consistent and feel
+	better, tooltips, labels, etc
 	* data/images/source-ipod-regular.png, data/images/source-ipod-color.png,
 	data/images/source-ipod-shuffle.png: renamed to ipod-regular-24.png,
 	ipod-color-24.png, and ipod-shuffle.png
