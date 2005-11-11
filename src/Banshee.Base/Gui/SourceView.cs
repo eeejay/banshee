@@ -627,18 +627,7 @@ namespace Banshee
                     break;
                 case SourceType.Ipod:
                     IPod.Device device = (source as IpodSource).Device;
-                    switch(device.Model) {
-                        case IPod.DeviceModel.Color:
-                            iconFile = "source-ipod-color.png";
-                            break;
-                        case IPod.DeviceModel.Shuffle:
-                            iconFile = "source-ipod-shuffle.png";
-                            break;
-                        case IPod.DeviceModel.Regular:
-                        default:
-                            iconFile = "source-ipod-regular.png";
-                            break;
-                    }
+                    iconFile = IpodMisc.GetIconString(device) + "-24.png";
                     break;
                 case SourceType.AudioCd:
                     iconFile = "source-cd-audio.png";

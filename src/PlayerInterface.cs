@@ -230,7 +230,7 @@ namespace Banshee
             ((Gtk.Image)gxml["ImageRepeat"]).Pixbuf = 
                 Gdk.Pixbuf.LoadFromResource("media-repeat.png");
             ((Gtk.Image)gxml["ImageIpodSync"]).Pixbuf = 
-                Gdk.Pixbuf.LoadFromResource("source-ipod-regular.png");
+                Gdk.Pixbuf.LoadFromResource("ipod-regular-24.png");
             
             // Header
             headerNotebook = new SimpleNotebook();
@@ -2211,7 +2211,7 @@ namespace Banshee
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 burnCore.AddTrack(playlistModel.PathTrackInfo(path));
             }
-                
+            
             burnCore.Burn();
         }
         
