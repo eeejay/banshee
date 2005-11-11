@@ -202,21 +202,26 @@ namespace Banshee
         
         public void StartSync()
         {
+            EmitSyncStarted();
             EncodeFiles();
         }
         
         private void EmitSyncStarted()
         {
-            EventHandler handler = SyncStarted;
-            if(handler != null)
-                handler(this, new EventArgs());
+            Core.ProxyToMainThread(delegate {
+                EventHandler handler = SyncStarted;
+                if(handler != null)
+                    handler(this, new EventArgs());
+            });
         }
 
         private void EmitSyncCompleted()
         {
-            EventHandler handler = SyncCompleted;
-            if(handler != null)
-                handler(this, new EventArgs());
+            Core.ProxyToMainThread(delegate {
+                EventHandler handler = SyncCompleted;
+                if(handler != null)
+                    handler(this, new EventArgs());
+            });
         }
         
         private bool ExistsOnIpod(Song[] songs, TrackInfo libTrack)
@@ -333,6 +338,7 @@ namespace Banshee
                 SyncIpod();
             } else {
                 user_event.Dispose();
+                EmitSyncCompleted();
             }
         }
         
@@ -374,13 +380,11 @@ namespace Banshee
         {
             device.SongDatabase.SaveStarted += delegate(object o, EventArgs args) 
             {
-                EmitSyncStarted();
                 user_event.Message = "Preparing to sync...";
             };
             
             device.SongDatabase.SaveEnded += delegate(object o, EventArgs args)
             {
-                EmitSyncCompleted();
                 user_event.Dispose();
             };
             
@@ -396,6 +400,7 @@ namespace Banshee
             };
             
             device.SongDatabase.Save();
+            EmitSyncCompleted();
         }    
     }
     
