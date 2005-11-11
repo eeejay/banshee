@@ -1,25 +1,13 @@
-Banshee 0.9.11 is Ready.
+Banshee 0.9.11.1 is Ready.
 
 Please do not hesitate to file bugs against Banshee in GNOME Bugzilla (http://bugzilla.gnome.org, component: banshee), or discuss Banshee on this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to everyone for viewing and editing is located at http://banshee-project.org.
 
+This release addresses a few major iPod-syncing related bugs:
 
-NEW FEATURES
-------------
+ - #320718, #320142: Crashes copying Vorbis files to iPod (Invalid URI)
+ - Unfiled: Crashes after completed sync (GTK Threading Issue)
 
- - CD Writing is much improved, uses integrated progress reporting like other major features (importing, etc)
- - Nomenclature for CD Importing/Ripping changed to "Import"; for Burning/Writing to "Write"
- - Many areas that may have resulted in an exit on exception are now handled better, so Banshee can continue when errors are encounted (for instance, HAL not working for the Audio CD layer)
- - Better UI for selecting the library location in preferences, uses the GTK FileChooserButton
- - Brazilian Portuguese translation provided by Marco Carvalho (pt_BR)
- - Dialog for viewing the log (CTRL+SHIFT+L), or from the View menu
- - New logging core support
-
-
-FIXES AND OPTIMIZATIONS
------------------------
-
- - File with non-ASCII characters should now be imported properly, this was due to differences between the way Gnome-VFS and System.Uri represent character encoding in file URIs (the other half of this fix is in mono itself, in Mono.Data.SqliteClient)
- - iPod syncing should be much better, there is still a small, but sometimes crashing issue regarding the drawing of the TreeView
+Some minor UI elements have been tweaked and improved as well.
 
 
 THE IMPORTANT LINKS
