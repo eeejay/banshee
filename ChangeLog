@@ -1,5 +1,15 @@
 2005-11-11  Aaron Bockover  <aaron@aaronbock.net>
 	
+	* data/images/source-ipod-regular.png, data/images/source-ipod-color.png,
+	data/images/source-ipod-shuffle.png: renamed to ipod-regular-24.png,
+	ipod-color-24.png, and ipod-shuffle.png
+	* src/Makefile.am: 
+	* data/images/Makefile.am: Updated to reflect renaming of ipod icons
+	* src/PlayerInterface.cs:
+	* src/SourceView.cs: Use IpodMisc.GetIconString() to get icon file name
+	* src/IpodCore.cs: Show the actual iPod icon for the progress widget; 
+	added IpodMisc.GetIconString(device) to return the proper string for
+	building an ipod file name to show icon matching actual iPod
 	* src/IpodCore.cs: Hopefully fixed URI translation problem; canceling the
 	ipod encode now cancels the ipod sync, as it should
 	* src/BurnCore.cs: Use Queue instead of ArrayList
