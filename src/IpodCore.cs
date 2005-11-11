@@ -157,7 +157,7 @@ namespace Banshee
             return null;
         }
         
-        public static string ConvertSongName(Uri uri, string newext)
+        public static Uri ConvertSongName(Uri uri, string newext)
         {
             string filename = uri.LocalPath;
             
@@ -165,7 +165,8 @@ namespace Banshee
             string dir = Path.GetDirectoryName(path);
             string file = Path.GetFileNameWithoutExtension(filename);
             
-            return dir + Path.DirectorySeparatorChar + ".banshee-ipod-" + file + "." + newext;
+            return PathUtil.PathToFileUri(dir + Path.DirectorySeparatorChar 
+                + ".banshee-ipod-" + file + "." + newext);
         }
     }
     
@@ -187,6 +188,7 @@ namespace Banshee
         {
             this.device = device;
             user_event = new ActiveUserEvent(Catalog.GetString("Syncing iPod"));
+            user_event.Icon = Gdk.Pixbuf.LoadFromResource("source-ipod-regular.png");
             
             encodeProfile = PipelineProfile.GetConfiguredProfile("Ipod", "mp3,aac,mp4,m4a,m4p");
         }
@@ -283,15 +285,14 @@ namespace Banshee
                         continue;
                     }
 
-                    filename = IpodCore.ConvertSongName(libTrack.Uri, encodeProfile.Extension);
-                    Uri uri = new Uri(filename);
-                    
+                    Uri uri = IpodCore.ConvertSongName(libTrack.Uri, encodeProfile.Extension);
                     copyFiles.Add(song, uri);
                     
                     if(fet == null) {
                         fet = new FileEncodeAction(encodeProfile);
                         fet.FileEncodeComplete += OnFileEncodeComplete;
                         fet.Finished += OnFileEncodeBatchFinished;
+                        fet.Canceled += OnFileEncodeCanceled;
                     }
                         
                     fet.AddTrack(libTrack.Uri, uri);
@@ -302,11 +303,19 @@ namespace Banshee
                     }
                 }
             }
+            
             if(fet != null) {
                 fet.Run();
             } else {
                 SyncIpod();
             }
+        }
+        
+        private bool canceled = false;
+        
+        private void OnFileEncodeCanceled(object o, EventArgs args)
+        {
+            canceled = true;
         }
         
         private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
@@ -320,7 +329,11 @@ namespace Banshee
         
         private void OnFileEncodeBatchFinished(object o, EventArgs args)
         {
-            SyncIpod();
+            if(!canceled) {
+                SyncIpod();
+            } else {
+                user_event.Dispose();
+            }
         }
         
         private void SyncIpod()
