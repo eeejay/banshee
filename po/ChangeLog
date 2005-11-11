@@ -1,3 +1,7 @@
+2005-11-11  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
+
+	* es.po: Updated Spanish translation.
+
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added src/LogCore.cs and src/LogCoreViewer.cs
