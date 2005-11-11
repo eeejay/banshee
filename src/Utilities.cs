@@ -36,36 +36,6 @@ using Mono.Unix;
 
 namespace Banshee
 {
-    public class Error
-    {
-        private string message;
-        private Exception e;    
-
-        public Error(string message) : this(message, null)
-        {
-        
-        }
-
-        public Error(string message, Exception e)
-        {
-            this.message = message;
-            this.e = e;
-        
-            //if(e != null)    
-                //Console.WriteLine("Error: {0} ({1})", message, e.Message);
-            //else
-                //Console.WriteLine("Error: {0}", message);    
-        }
-    }
-    
-    public class SonanceException : System.Exception
-    {
-        public SonanceException(string message) 
-        {
-            new Error(message);
-        }
-    }
-    
     public class PathUtil
     {
         private static char[] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#' };
