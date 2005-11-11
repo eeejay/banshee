@@ -73,7 +73,6 @@
     <File name="./src/Database.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DateButton.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DBusIPC.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/DebugLog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DragDrop.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/EllipsizeLabel.cs" subtype="Code" buildaction="Compile" />
@@ -140,6 +139,11 @@
     <File name="./data/images/encoding-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/ipod-48.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./data/images/song-drm.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./src/GtkSharpBackports/AboutDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/GtkSharpBackports/AboutDialogActivateLinkFunc.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/GtkSharpBackports/FileChooserButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/GtkSharpBackports/GtkSharp.AboutDialogActivateLinkFuncNative.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/LogCoreViewer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -156,13 +160,13 @@
     <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.SqliteClient, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="dbus-sharp, Version=0.36.2.0, Culture=neutral, PublicKeyToken=9eef2692033670f5" />
     <ProjectReference type="Gac" localcopy="True" refto="art-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-dotnet, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />
     <ProjectReference type="Project" localcopy="True" refto="plugincore" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../../../../usr/lib/ipod-sharp/ipod-sharp.dll" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../../../../usr/lib/ipod-sharp/ipod-sharp-ui.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../../../usr/lib/ipod-sharp/ipod-sharp.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="avahi-sharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=4d116c78973743f5" />
+    <ProjectReference type="Gac" localcopy="True" refto="dbus-sharp, Version=0.50.0.0, Culture=neutral, PublicKeyToken=9eef2692033670f5" />
   </References>
 </Project>
