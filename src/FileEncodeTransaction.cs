@@ -46,7 +46,9 @@ namespace Banshee
 
     public class FileEncodeAction
     {
-        private Hashtable tracks = new Hashtable();
+        private ArrayList keys = new ArrayList();
+        private ArrayList values = new ArrayList();
+        
         private FileEncoder encoder;
         private PipelineProfile profile;
         private int encodedFilesFinished;
@@ -70,12 +72,14 @@ namespace Banshee
         
         public void AddTrack(TrackInfo track, Uri outputUri)
         {
-            tracks[track] = outputUri;
+            keys.Add(track);
+            values.Add(outputUri);
         }
         
         public void AddTrack(Uri inputUri, Uri outputUri)
         {
-            tracks[inputUri] = outputUri;
+            keys.Add(inputUri);
+            values.Add(outputUri);
         }
         
         public void Run()
@@ -88,8 +92,9 @@ namespace Banshee
             encoder = new GstFileEncoder();
             encoder.Progress += OnEncoderProgress;
             
-            foreach(object obj in tracks.Keys) {
-                Uri outputUri = tracks[obj] as Uri;
+            for(int i = 0; i < keys.Count; i++) {
+                object obj = keys[i];
+                Uri outputUri = values[i] as Uri;
                 Uri inputUri = null;
                 
                 if(obj is TrackInfo) {
@@ -153,7 +158,7 @@ namespace Banshee
         {
             user_event.Progress = ((double)(progressPrecision * encodedFilesFinished) +
                 (args.Progress * (double)progressPrecision)) / 
-                (double)(progressPrecision * tracks.Count);
+                (double)(progressPrecision * keys.Count);
         }
     }
 }
