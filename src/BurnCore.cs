@@ -73,7 +73,7 @@ namespace Banshee
                            profile = new PipelineProfile(cp);
                            break;
                        }
-                    }ou
+                    }
                     break;
                 case DiskType.Mp3:
                 case DiskType.Data:
