@@ -1,3 +1,14 @@
+2005-11-11  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Utilities.cs: New PathUtil class: PathUtil.PathToFileUri and
+	PathUtil.FileUriToPath; removed old unused cruft; reformatted
+	* src/IpodCore.cs: Removed unused reference to IPod.ProgressDialog
+	* banshee.mdp: Updated MonoDevelop project file
+
+2005-11-10  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.9.11
+
 2005-11-09  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/ActiveUserEvent.cs: Added a CanCancel property that maps to the
