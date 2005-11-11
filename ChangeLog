@@ -1,5 +1,7 @@
 2005-11-11  Aaron Bockover  <aaron@aaronbock.net>
 	
+	* src/IpodCore.cs: Hopefully fixed URI translation problem; canceling the
+	ipod encode now cancels the ipod sync, as it should
 	* src/BurnCore.cs: Use Queue instead of ArrayList
 	* src/FileEncodeTransaction.cs: Do not use a Hashtable, it can scramble
 	the order of the queued items; was the culprit for out of position
