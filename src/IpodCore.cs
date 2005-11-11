@@ -188,7 +188,7 @@ namespace Banshee
         {
             this.device = device;
             user_event = new ActiveUserEvent(Catalog.GetString("Syncing iPod"));
-            user_event.Icon = Gdk.Pixbuf.LoadFromResource("source-ipod-regular.png");
+            user_event.Icon = Gdk.Pixbuf.LoadFromResource(IpodMisc.GetIconString(device) + "-24.png");
             
             encodeProfile = PipelineProfile.GetConfiguredProfile("Ipod", "mp3,aac,mp4,m4a,m4p");
         }
@@ -487,6 +487,23 @@ namespace Banshee
         public static double GetDiskUsageFraction(Device device)
         {
            return (double)device.VolumeUsed / (double)device.VolumeSize;
+        }
+        
+        public static string GetIconString(Device device)
+        {
+            switch(device.Model) {
+                case DeviceModel.Color:
+                case DeviceModel.ColorU2:
+                case DeviceModel.NanoWhite:
+                case DeviceModel.NanoBlack:
+                case DeviceModel.VideoWhite:
+                case DeviceModel.VideoBlack:
+                    return "ipod-color";
+                case DeviceModel.Shuffle:
+                    return "ipod-shuffle";
+                default:
+                    return "ipod-regular";
+            }
         }
     }
 }
