@@ -255,6 +255,10 @@ namespace Banshee
             volumeButton.Visible = true;
             volumeButton.VolumeChanged += 
                 new VolumeButton.VolumeChangedHandler(OnVolumeScaleChanged);
+                
+            // Next/Previous Buttons
+            
+            (gxml["ButtonPrevious"] as Button).ButtonPressEvent += OnButtonPreviousPressed;
 
             // Cover Art Thumbnail
             cover_art = new CoverArtThumbnail(36);
@@ -694,6 +698,10 @@ namespace Banshee
                         handled = true;
                     } 
                     break;
+                case Gdk.Key.space:
+                    PlayPause();
+                    handled = true;
+                    break;
             }
             
             args.RetVal = handled;
@@ -759,6 +767,11 @@ namespace Banshee
 
         private void OnButtonPlayPauseClicked(object o, EventArgs args)
         {
+            PlayPause();
+        }
+        
+        public void PlayPause()
+        {
             if(Core.Instance.Player.Loaded) {
                 TogglePlaying();
             } else {
@@ -780,12 +793,25 @@ namespace Banshee
         
         private void OnButtonPreviousClicked(object o, EventArgs args)
         {
-            Previous();
+            if(Core.Instance.Player.Position < 3) {
+                Previous();
+            } else {
+                Core.Instance.Player.Position = 0;
+            }
         }
         
         private void OnButtonNextClicked(object o, EventArgs args)
         {
             Next();
+        }
+        
+        [GLib.ConnectBefore]
+        private void OnButtonPreviousPressed(object o, ButtonPressEventArgs args)
+        {
+            if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
+                Previous();
+                args.RetVal = true;
+            }
         }
         
         private void OnVolumeScaleChanged(int volume)

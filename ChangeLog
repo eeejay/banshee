@@ -1,3 +1,12 @@
+2005-11-12  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Implement some more key bindings, and changed
+	the default behavior of the previous button to reset the position of
+	the current playing song to 0 seconds if the song has played for more
+	than ~2 seconds (the resolution on this isn't very precise); Shift+Previous
+	Click goes to the previous song no matter what, and pressing space now
+	toggles playback (play/pause)
+
 2005-11-12  James Willcox  <snorp@snorp.net>
 
 	* src/IpodCore.cs: be a little more careful, and update to the
