@@ -296,6 +296,7 @@ namespace Banshee
             ((Gtk.ScrolledWindow)gxml["LibraryContainer"]).Add(playlistView);
             playlistView.Show();
             playlistModel.Updated += OnPlaylistUpdated;
+            playlistView.KeyPressEvent += OnPlaylistViewKeyPressEvent;
             playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
             playlistView.MotionNotifyEvent += OnPlaylistViewMotionNotifyEvent;
             playlistView.ButtonReleaseEvent += OnPlaylistViewButtonReleaseEvent;
@@ -706,6 +707,17 @@ namespace Banshee
             
             args.RetVal = handled;
         }
+        
+        [GLib.ConnectBefore]
+        private void OnPlaylistViewKeyPressEvent(object o, KeyPressEventArgs args)
+        {
+            switch(args.Event.Key) {
+                case Gdk.Key.Return:
+                    playlistView.PlaySelected();
+                    args.RetVal = true;
+                    break;
+            }
+        }       
               
         // ---- Tray Event Handlers ----
       

@@ -1,5 +1,7 @@
 2005-11-12  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Pressing enter on the playlist view will
+	play the first song in a selection
 	* src/PlayerInterface.cs: Implement some more key bindings, and changed
 	the default behavior of the previous button to reset the position of
 	the current playing song to 0 seconds if the song has played for more
