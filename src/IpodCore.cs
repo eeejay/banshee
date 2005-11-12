@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  IpodCore.cs
  *
@@ -368,14 +367,19 @@ namespace Banshee
                     break;
                 }
             }
+
+            foreach (Song song in device.SongDatabase.Songs) {
+                if (song.FileName == null)
+                    throw new ApplicationException (String.Format ("Song '{0}' has no filename", song.Title));
+            }
             
             if(!doUpdate) {
                 return;
             }
-                
+            
             ThreadPool.QueueUserWorkItem(ThreadedSave);
         }
-        
+		
         private void ThreadedSave(object o)
         {
             device.SongDatabase.SaveStarted += delegate(object o, EventArgs args) 
@@ -387,20 +391,21 @@ namespace Banshee
             {
                 user_event.Dispose();
             };
-            
-            device.SongDatabase.SaveProgressChanged += delegate(SongDatabase db, Song song, 
-                double currentPercent, int completed, int total)
-            {
-                user_event.Message = song.Artist + " - " + song.Title;
-                
-                double fraction = (double)completed / (double)total;
-                fraction += (1.0 / (double)total) * currentPercent;
-                
-                user_event.Progress = fraction;
+			
+            device.SongDatabase.SaveProgressChanged += delegate(object o, SaveProgressArgs args)
+	    {
+                user_event.Message = args.CurrentSong.Artist + " - " + args.CurrentSong.Title;
+                user_event.Progress = args.TotalProgress;
             };
             
-            device.SongDatabase.Save();
-            EmitSyncCompleted();
+            try {
+                device.SongDatabase.Save();
+            } catch (Exception e) {
+                Console.Error.WriteLine (e);
+                Core.Log.PushError ("Failed to sync iPod", e.Message);
+            } finally {
+                EmitSyncCompleted();
+            }
         }    
     }
     

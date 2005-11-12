@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  LibraryTrackInfo.cs
  *
@@ -78,7 +77,7 @@ namespace Banshee
 
         private void CheckIfExists(string filename)
         {
-            CheckIfExists (new Uri ("file://" + filename));
+            CheckIfExists(PathUtil.PathToFileUri (filename));
         }
 
         private string MoveToPlace(string old_filename, bool initial_import)
@@ -192,7 +191,7 @@ namespace Banshee
         public LibraryTrackInfo(string filename) : this()
         {
 //            Console.WriteLine ("LibraryTrackInfo(\"{0}\");", filename);
-            Uri old_uri = new Uri ("file://" + filename);
+            Uri old_uri = PathUtil.PathToFileUri (filename);
 
             CheckIfExists(old_uri);
             if(!LoadFromDatabase(old_uri)) {
@@ -201,7 +200,7 @@ namespace Banshee
 
                 string new_filename = MoveToPlace(filename, true);
 
-                uri = new Uri ("file://" + (new_filename != null ? new_filename : filename));
+                uri = PathUtil.PathToFileUri (new_filename != null ? new_filename : filename);
 
                 CheckIfExists(uri);
 
@@ -291,7 +290,7 @@ namespace Banshee
             if(trackId <= 0) {
                 tracksQuery = new Insert("Tracks", true,
                     "TrackID", null, 
-                    "Uri", uri, 
+                    "Uri", uri.AbsoluteUri,
                     "MimeType", mimetype, 
                     "Artist", artist, 
                     "Performer", performer, 
@@ -314,7 +313,7 @@ namespace Banshee
                     "LastPlayedStamp", DateTimeUtil.FromDateTime(lastPlayed));
             } else {
                 tracksQuery = new Update("Tracks",
-                    "Uri", uri, 
+                    "Uri", uri.AbsoluteUri,
                     "MimeType", mimetype, 
                     "Artist", artist, 
                     "Performer", performer, 
@@ -381,7 +380,7 @@ namespace Banshee
             try {
                 uri = new Uri(reader["Uri"] as string);
             } catch(UriFormatException e) {
-                uri = new Uri("file://" + (reader["Uri"] as string));
+                uri = PathUtil.PathToFileUri (reader["Uri"] as string);
             }
             
             mimetype = reader["MimeType"] as string;
@@ -462,7 +461,7 @@ namespace Banshee
             try {
                 string new_filename = MoveToPlace (uri.LocalPath, false);
                 if (new_filename != null) {
-                    this.uri = new Uri ("file://" + new_filename);
+                    this.uri = PathUtil.PathToFileUri (new_filename);
                 }
             } catch {}
 

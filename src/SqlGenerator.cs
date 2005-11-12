@@ -104,7 +104,6 @@ namespace Sql
 		public static string EscapeQuotes(string str)
 		{
 		 	string s = Regex.Replace(str, "'", @"''");
-		 	s = Regex.Replace(s, @"[']+''", @"''");
 		 	return s;
 		}
 		

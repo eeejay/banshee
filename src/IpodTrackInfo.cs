@@ -70,7 +70,7 @@ namespace Banshee
 		private void Load()
 		{
 			try {
-				uri = new Uri("file://" + song.FileName);
+				uri = song.Uri;
 			} catch(Exception) { 
 				uri = null;
 			}

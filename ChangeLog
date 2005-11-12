@@ -1,3 +1,13 @@
+2005-11-12  James Willcox  <snorp@snorp.net>
+
+	* src/IpodCore.cs: be a little more careful, and update to the
+	changed API for progress reporting.
+	* src/IpodTrackInfo.cs: use PathUtil.PathToFileUri
+	* src/LibraryTrackInfo.cs: ditto, and store Uris in the db
+	in escaped form.
+	* src/SqlGenerator.cs: don't unnecessarily remove quotes when
+	escaping them.
+
 2005-11-11  Aaron Bockover  <aaron@aaronbock.net>
 	
 	* configure.ac: Version 0.9.11.1
