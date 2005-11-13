@@ -702,9 +702,11 @@ namespace Banshee
                     } 
                     break;
                 case Gdk.Key.space:
-                    PlayPause();
-                    handled = true;
-                    break;
+                    if(!searchEntry.HasFocus) {
+					    PlayPause();
+                        handled = true;
+                    }
+					break;
             }
             
             args.RetVal = handled;

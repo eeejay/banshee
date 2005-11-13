@@ -1,5 +1,7 @@
 2005-11-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Don't use space as a hotkey if the search box
+	has focus
 	* src/AboutBox.cs: Added Christian Rose to translator credits
 	* src/PlaylistModel.cs: Merged Pat Rondon's (pat@thepatsite.com) advance
 	to random track when playing first track in shuffle mode (#54688)
