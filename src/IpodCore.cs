@@ -187,7 +187,7 @@ namespace Banshee
         {
             this.device = device;
             user_event = new ActiveUserEvent(Catalog.GetString("Syncing iPod"));
-            user_event.Icon = Gdk.Pixbuf.LoadFromResource(IpodMisc.GetIconString(device) + "-24.png");
+            user_event.Icon = IpodMisc.GetIcon(device, 24);
             
             encodeProfile = PipelineProfile.GetConfiguredProfile("Ipod", "mp3,aac,mp4,m4a,m4p");
         }
@@ -499,21 +499,45 @@ namespace Banshee
            return (double)device.VolumeUsed / (double)device.VolumeSize;
         }
         
-        public static string GetIconString(Device device)
+        private static Hashtable ipod_icon_table = new Hashtable();
+        
+        public static Gdk.Pixbuf GetIcon(Device device, int size)
         {
+            string prefix = "portable-media-";
+            string id = null;
+            
             switch(device.Model) {
-                case DeviceModel.Color:
-                case DeviceModel.ColorU2:
-                case DeviceModel.NanoWhite:
-                case DeviceModel.NanoBlack:
+                case DeviceModel.Color: id = "ipod-standard-color"; break;
+                case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
+                case DeviceModel.Regular: id = "ipod-standard-monochrome"; break;
+                case DeviceModel.RegularU2: id = "ipod-U2-monochrome"; break;
+                case DeviceModel.Mini: id = "ipod-mini-silver"; break;
+                case DeviceModel.MiniBlue: id = "ipod-mini-blue"; break;
+                case DeviceModel.MiniPink: id = "ipod-mini-pink"; break;
+                case DeviceModel.MiniGreen: id = "ipod-mini-green"; break;
+                case DeviceModel.MiniGold: id = "ipod-mini-gold"; break;
+                case DeviceModel.Shuffle: id = "ipod-shuffle"; break;
+                case DeviceModel.NanoWhite: id = "ipod-nano-white"; break;
+                case DeviceModel.NanoBlack: id = "ipod-nano-black"; break;
                 case DeviceModel.VideoWhite:
                 case DeviceModel.VideoBlack:
-                    return "ipod-color";
-                case DeviceModel.Shuffle:
-                    return "ipod-shuffle";
+                    id = "ipod-standard-color";
+                    break;
                 default:
-                    return "ipod-regular";
+                    id = "ipod-standard-monochrome";
+                    break;
             }
+            
+            string path = ConfigureDefines.ICON_THEME_DIR 
+                + String.Format("{0}x{0}", size)
+                + Path.DirectorySeparatorChar
+                + "extras" 
+                + Path.DirectorySeparatorChar
+                + "devices" + 
+                + Path.DirectorySeparatorChar
+                + prefix + id + ".png";
+                
+            return new Gdk.Pixbuf(path);
         }
     }
 }
