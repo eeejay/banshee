@@ -616,29 +616,27 @@ namespace Banshee
             bool hideCounts = false;
             
             StateType state = RendererStateToWidgetState(flags);
-            string iconFile = null;
+            Pixbuf icon = null;
             
             if(source == null)
                 return;
             
             switch(source.Type) {
                 case SourceType.Playlist:
-                    iconFile = "source-playlist.png";
+                    icon = Pixbuf.LoadFromResource("source-playlist.png");
                     break;
                 case SourceType.Ipod:
                     IPod.Device device = (source as IpodSource).Device;
-                    iconFile = IpodMisc.GetIconString(device) + "-24.png";
+                    icon = IpodMisc.GetIcon(device, 24);
                     break;
                 case SourceType.AudioCd:
-                    iconFile = "source-cd-audio.png";
+                    icon = Pixbuf.LoadFromResource("source-cd-audio.png");
                     break;
                 case SourceType.Library:
                 default:
-                    iconFile = "source-library.png";
+                    icon = Pixbuf.LoadFromResource("source-library.png");
                     break;
             }
-            
-            Pixbuf icon = Pixbuf.LoadFromResource(iconFile);
             
             Pango.Layout titleLayout = new Pango.Layout(widget.PangoContext);
             Pango.Layout countLayout = new Pango.Layout(widget.PangoContext);
