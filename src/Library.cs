@@ -166,6 +166,18 @@ namespace Banshee
             }
         }
         
+        public void Remove(int trackID, System.Uri trackUri)
+        {
+            lock(Tracks.SyncRoot) {
+              Tracks.Remove(trackID);
+            }
+            
+            lock(TracksFnKeyed.SyncRoot) {
+              TracksFnKeyed.Remove(MakeFilenameKey(trackUri));
+            }
+        
+        }
+        
         public static string MakeFilenameKey(Uri uri)
         {
               string path = uri.LocalPath;
