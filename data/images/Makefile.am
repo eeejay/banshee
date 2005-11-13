@@ -1,3 +1,5 @@
+SUBDIRS = ipod
+
 hicolordir = $(datadir)/icons/hicolor
 
 install-data-local:
@@ -29,7 +31,6 @@ EXTRA_DIST = \
 	icon-album.png \
 	icon-artist.png \
 	icon-title.png \
-	ipod-48.png \
 	library-icon-32.png \
 	media-eject.png \
 	media-next.png \
@@ -66,8 +67,4 @@ EXTRA_DIST = \
 	cd-action-burn-24.png \
 	cd-action-burn-32.png \
 	cd-action-burn-48.png \
-	encode-action-24.png \
-	ipod-color-24.png \
-	ipod-regular-24.png \
-	ipod-shuffle-24.png
-
+	encode-action-24.png 
