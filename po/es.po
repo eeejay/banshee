@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-11 21:31+0100\n"
-"PO-Revision-Date: 2005-11-11 21:36+0100\n"
+"POT-Creation-Date: 2005-11-13 15:25+0100\n"
+"PO-Revision-Date: 2005-11-13 15:45+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/banshee.desktop.in.in.h:1 ../data/glade/player.glade.h:6
-#: ../src/PlayerInterface.cs:1427
+#: ../src/PlayerInterface.cs:1469
 msgid "Banshee Music Player"
 msgstr "Reproductor de música Banshee"
 
@@ -260,7 +260,7 @@ msgid "Logged Events..."
 msgstr "Eventos registrados..."
 
 #: ../data/glade/player.glade.h:18 ../src/Library.cs:588
-#: ../src/PlayerInterface.cs:1989 ../src/SourceView.cs:69
+#: ../src/PlayerInterface.cs:2035 ../src/SourceView.cs:69
 msgid "New Playlist"
 msgstr "Lista de reproducción nueva"
 
@@ -288,7 +288,7 @@ msgstr "Quitar canción(es)"
 msgid "Rename"
 msgstr "Renombrar"
 
-#: ../data/glade/player.glade.h:25 ../src/PlayerInterface.cs:1760
+#: ../data/glade/player.glade.h:25 ../src/PlayerInterface.cs:1802
 msgid "Rename Playlist"
 msgstr "Renombra la lista de reproducción"
 
@@ -308,7 +308,7 @@ msgstr "No seleccionar nada"
 msgid "Toggle Full Screen Mode"
 msgstr "Cambiar al modo de a pantalla completa"
 
-#: ../data/glade/player.glade.h:30 ../src/PlayerInterface.cs:325
+#: ../data/glade/player.glade.h:30 ../src/PlayerInterface.cs:332
 msgid "Update iPod"
 msgstr "Actualización de iPod"
 
@@ -512,7 +512,7 @@ msgstr "El elemento de codificación no soporta etiquetado"
 
 #: ../libbanshee/cd-rip.c:251
 msgid "Could not send seek event to cdparanoia"
-msgstr ""
+msgstr "No se pudo enviar el evento «seek» a cdparanoia"
 
 #: ../libbanshee/cd-rip.c:257
 msgid "Could not get track start position"
@@ -573,7 +573,7 @@ msgid ""
 "The Helix Engine provides multimedia control through the Helix Multimedia "
 "Framework, sponsored by RealNetworks. The engine can play any file that "
 "RealPlayer can. Install RealPlayer for best results."
-msgstr ""
+msgstr "El motor Helix proporciona control multimedia a través de Helix Multimedia Framework, patrocinado por RealNetworks. El motor puede reproducir cualquier archivo que RealPlayer pueda. Instale RealPlayer para los mejores resultados."
 
 #: ../mediaengines/vlc/VlcPlayerEngine.cs:77
 msgid "VLC"
@@ -599,7 +599,7 @@ msgstr "Álbum desconocido"
 msgid "Unknown Title"
 msgstr "Título desconocido"
 
-#: ../src/AboutBox.cs:118
+#: ../src/AboutBox.cs:119
 msgid ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
@@ -607,7 +607,7 @@ msgstr ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
 
-#: ../src/AboutBox.cs:120
+#: ../src/AboutBox.cs:121
 msgid "Music Management and Playback for Gnome."
 msgstr "Gestión y reproducción de música para Gnome."
 
@@ -646,7 +646,7 @@ msgstr "No se pudo grabar el CD"
 msgid ""
 "No suitable wave encoder could be found to convert selected songs to CD "
 "audio format."
-msgstr ""
+msgstr "No se pudo encontrar ningún codificador de ondas apropiado para convertir las canciones seleccionadas al formato de CD de audio."
 
 #: ../src/BurnCore.cs:151
 msgid "Writing CD"
@@ -682,7 +682,6 @@ msgid "An unknown error occurred when attempting to write the CD"
 msgstr "Ocurrió un error desconocido cuando intentaba escribir en el CD"
 
 #: ../src/BurnCore.cs:270
-#, fuzzy
 msgid "CD Writing Complete"
 msgstr "Grabación del CD completada"
 
@@ -691,7 +690,6 @@ msgid "The selected audio was successfully written to the CD."
 msgstr "El sonido seleccionado se ha grabado correctamente en el CD."
 
 #: ../src/BurnCore.cs:275
-#, fuzzy
 msgid "Error Writing CD"
 msgstr "Error al grabar el CD"
 
@@ -708,18 +706,16 @@ msgid "Fixating disk..."
 msgstr "Fijando disco..."
 
 #: ../src/BurnCore.cs:323
-#, fuzzy
 msgid "Waiting for Media"
-msgstr "Esperando el soporte..."
+msgstr "Esperando el soporte"
 
 #: ../src/BurnCore.cs:327 ../src/BurnCore.cs:330
 msgid "Insert Blank CD"
 msgstr "Introduzca un CD virgen"
 
 #: ../src/BurnCore.cs:328
-#, fuzzy
 msgid "Please insert a blank CD disk for the write process."
-msgstr "Introduzca un CD virgen en la unidad para el proceso de grabación."
+msgstr "Introduzca un CD virgen para el proceso de grabación."
 
 #: ../src/Dialogs.cs:80
 msgid "Cannot Rename Playlist"
@@ -745,7 +741,9 @@ msgstr "Banshee Encontro un Error Fatal"
 msgid ""
 "This may be due to a programming error. Please help us make Banshee better "
 "by reporting this error. Thank you in advance!"
-msgstr "Esto puede ser debido a un error de programación. Por favor ayúdenos a mejorar Banshee informando de este error. Gracias por adelantado."
+msgstr ""
+"Esto puede ser debido a un error de programación. Por favor ayúdenos a "
+"mejorar Banshee informando de este error. Gracias por adelantado."
 
 #: ../src/ExceptionDialog.cs:99
 msgid "An unhandled exception was thrown: "
@@ -777,17 +775,17 @@ msgstr "No se pudo crear el codificador"
 msgid "Could not encode file: {0}"
 msgstr "No se pudo codificar el archivo: {0}"
 
-#: ../src/IpodCore.cs:190
+#: ../src/IpodCore.cs:189
 msgid "Syncing iPod"
 msgstr "Sincronizando iPod"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/IpodCore.cs:479 ../src/Library.cs:483 ../src/PlayerInterface.cs:867
+#: ../src/IpodCore.cs:484 ../src/Library.cs:483 ../src/PlayerInterface.cs:907
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} de {1}"
 
-#: ../src/IpodCore.cs:488 ../src/Library.cs:494
+#: ../src/IpodCore.cs:493 ../src/Library.cs:494
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} restantes)"
@@ -904,7 +902,8 @@ msgstr[1] ""
 
 #: ../src/LibraryTransactions.cs:95
 msgid "Unhandled Exception, ending IO Transaction safely"
-msgstr "Excepción sin tratamiento, terminando transacción de E/S de forma segura"
+msgstr ""
+"Excepción sin tratamiento, terminando transacción de E/S de forma segura"
 
 #: ../src/LibraryTransactions.cs:212 ../src/LibraryTransactions.cs:569
 msgid "Library Track Loader"
@@ -1045,46 +1044,46 @@ msgstr "Salir de Banshee"
 
 #: ../src/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
-msgstr ""
+msgstr "El perfil del pipeline está vacío."
 
 #: ../src/PipelineProfile.cs:111
 msgid "Pipeline profile does not have the correct number of components (7)"
-msgstr ""
+msgstr "El perfil del pipeline no tiene un número correcto de componentes (7)"
 
 #: ../src/PipelineProfile.cs:121
 msgid "Pipeline profile does not have a lookup key"
-msgstr ""
+msgstr "El perfil del pipeline no tiene una clave de búsqueda"
 
 #: ../src/PipelineProfile.cs:125
 msgid "Pipeline profile does not have a display name"
-msgstr ""
+msgstr "El perfil del pipeline no tiene un nombre para mostrar"
 
 #: ../src/PipelineProfile.cs:130
 #, csharp-format
 msgid "Pipeline profile '{0}' does not have a file extension"
-msgstr ""
+msgstr "El perfil de pipeline «{0}» no tiene una extensión de archivo"
 
 #: ../src/PipelineProfile.cs:136
 #, csharp-format
 msgid "Pipeline profile '{0}' does not have a GStreamer element"
-msgstr ""
+msgstr "El perfil del pipeline «{0}» no estará disponible: el pipeline de GStreamer «{1}» no se pudo ejecutar"
 
 #: ../src/PipelineProfile.cs:167
 #, csharp-format
 msgid ""
 "Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
 "not be run"
-msgstr ""
+msgstr "El perfil del pipeline «{0}» no estará disponible. El pipeline de GStreamer «{1}» podría no ejecutarse."
 
 #: ../src/PipelineProfile.cs:195
 msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
-msgstr ""
+msgstr "No se pudo usar la tasa de bits interna. Use BuildPipeline(tasa de bists) en su lugar."
 
 #: ../src/PipelineProfile.cs:215
 msgid ""
 "Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
 "PipelineProfile(profile))"
-msgstr ""
+msgstr "No se puede establecer el la tasa de bits interna. Debe copiar el perfil y establecer la tasa de bits al copiar (new PipelineProfile(profile))"
 
 #: ../src/PipelineProfile.cs:370
 msgid "at"
@@ -1094,104 +1093,102 @@ msgstr "en"
 msgid "No iPod-compatible encoders available"
 msgstr "No hay codificadores compatibles con iPod disponibles"
 
-#: ../src/PlayerInterface.cs:268
+#: ../src/PlayerInterface.cs:274
 msgid "Loading..."
 msgstr "Cargando..."
 
 #. gxml["IpodContainer"].Visible = false;
 #. Misc
-#: ../src/PlayerInterface.cs:349 ../src/PlayerInterface.cs:2307
+#: ../src/PlayerInterface.cs:356 ../src/PlayerInterface.cs:2353
 #: ../src/TrackInfoHeader.cs:136
 msgid "Idle"
 msgstr "Funcionando"
 
-#: ../src/PlayerInterface.cs:357
+#: ../src/PlayerInterface.cs:364
 msgid "All"
 msgstr "Todo"
 
-#: ../src/PlayerInterface.cs:359 ../src/PlayerInterface.cs:1850
+#: ../src/PlayerInterface.cs:366 ../src/PlayerInterface.cs:1896
 msgid "Song Name"
 msgstr "Nombre de la canción"
 
-#: ../src/PlayerInterface.cs:360 ../src/PlayerInterface.cs:1848
+#: ../src/PlayerInterface.cs:367 ../src/PlayerInterface.cs:1894
 msgid "Artist Name"
 msgstr "Nombre del artista"
 
-#: ../src/PlayerInterface.cs:361 ../src/PlayerInterface.cs:1852
+#: ../src/PlayerInterface.cs:368 ../src/PlayerInterface.cs:1898
 msgid "Album Title"
 msgstr "Título del álbum"
 
-#: ../src/PlayerInterface.cs:371
+#: ../src/PlayerInterface.cs:378
 msgid "Create New Playlist"
 msgstr "Crear lista de reproducción"
 
-#: ../src/PlayerInterface.cs:372
+#: ../src/PlayerInterface.cs:379
 msgid "Toggle Shuffle Playback Mode"
 msgstr "Cambiar al modo de reproducción aleatorio"
 
-#: ../src/PlayerInterface.cs:373
+#: ../src/PlayerInterface.cs:380
 msgid "Toggle Repeat Playback Mode"
 msgstr "Cambiar al modo de reproducción con repetición"
 
-#: ../src/PlayerInterface.cs:374
+#: ../src/PlayerInterface.cs:381
 msgid "View Selected Song Information"
 msgstr "Ver información de la canción seleccionada"
 
-#: ../src/PlayerInterface.cs:375
-#, fuzzy
+#: ../src/PlayerInterface.cs:382
 msgid "Write Selection to CD"
-msgstr "Grabar selección en un CD"
+msgstr "Grabar selección al CD"
 
-#: ../src/PlayerInterface.cs:376
-#, fuzzy
+#: ../src/PlayerInterface.cs:383
 msgid "Import CD into Library"
-msgstr "Importar archivo en la fonoteca"
+msgstr "Importar CD en la fonoteca"
 
-#: ../src/PlayerInterface.cs:377
+#: ../src/PlayerInterface.cs:384
 msgid "Play Previous Song"
 msgstr "Reproducir canción anterior"
 
-#: ../src/PlayerInterface.cs:378
+#: ../src/PlayerInterface.cs:385
 msgid "Play/Pause Current Song"
 msgstr "Reproducir/Pausar canción actual"
 
-#: ../src/PlayerInterface.cs:379
+#: ../src/PlayerInterface.cs:386
 msgid "Play Next Song"
 msgstr "Reproducir canción siguiente"
 
-#: ../src/PlayerInterface.cs:380
+#: ../src/PlayerInterface.cs:387
 msgid "Current Position in Song"
 msgstr "Posición actual en la canción"
 
-#: ../src/PlayerInterface.cs:381
+#: ../src/PlayerInterface.cs:388
 msgid "Adjust Volume"
 msgstr "Ajustar volumen"
 
-#: ../src/PlayerInterface.cs:382
+#: ../src/PlayerInterface.cs:389
 msgid "iPod Disk Usage"
 msgstr "Uso del disco del iPod"
 
-#: ../src/PlayerInterface.cs:383
+#: ../src/PlayerInterface.cs:390
 msgid "Eject iPod"
 msgstr "Expulsar iPod"
 
-#: ../src/PlayerInterface.cs:384 ../src/PlayerInterface.cs:385
+#: ../src/PlayerInterface.cs:391 ../src/PlayerInterface.cs:392
 msgid "Synchronize Music Library to iPod"
 msgstr "Sincronizar fonoteca al iPod"
 
-#: ../src/PlayerInterface.cs:386
+#: ../src/PlayerInterface.cs:393
 msgid "View iPod Properties"
 msgstr "Ver propiedades de iPod"
 
-#: ../src/PlayerInterface.cs:417
+#: ../src/PlayerInterface.cs:424
 msgid "Notification Area Icon could not be installed"
 msgstr "El icono del área de notificación no se pudo instalar"
 
-#: ../src/PlayerInterface.cs:455
+#: ../src/PlayerInterface.cs:462
 msgid "Import Music"
 msgstr "Importar música"
 
-#: ../src/PlayerInterface.cs:456
+#: ../src/PlayerInterface.cs:463
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later.\n"
@@ -1199,37 +1196,40 @@ msgid ""
 "Automatic import or importing a large folder may take a long time, so please "
 "be patient."
 msgstr ""
+"Su fonoteca está vacía. Puede importar música nueva en su fonoteca ahora, o elegir hacerlo más tarde.\n"
+"\n"
+"La importación automática o la importación de una carpeta grande puede llevar un tiempo largo, así que sea paciente."
 
-#: ../src/PlayerInterface.cs:460
+#: ../src/PlayerInterface.cs:467
 msgid "Import Folder"
 msgstr "Importar carpeta"
 
-#: ../src/PlayerInterface.cs:462
+#: ../src/PlayerInterface.cs:469
 msgid "Automatic Import"
 msgstr "Importar automáticamente"
 
-#: ../src/PlayerInterface.cs:580
+#: ../src/PlayerInterface.cs:587
 msgid "Position:"
 msgstr "Posición:"
 
-#: ../src/PlayerInterface.cs:953
+#: ../src/PlayerInterface.cs:993
 msgid "Import Folder to Library"
 msgstr "Importar carpeta a la fonoteca"
 
-#: ../src/PlayerInterface.cs:1010
+#: ../src/PlayerInterface.cs:1050
 msgid "Import Files to Library"
 msgstr "Importar archivos a la fonoteca"
 
-#: ../src/PlayerInterface.cs:1119
+#: ../src/PlayerInterface.cs:1159
 #, csharp-format
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>Fonoteca de {0}</b>"
 
-#: ../src/PlayerInterface.cs:1294 ../src/PlayerInterface.cs:1324
+#: ../src/PlayerInterface.cs:1335 ../src/PlayerInterface.cs:1365
 msgid "Synchronize iPod"
 msgstr "Sincronizar iPod"
 
-#: ../src/PlayerInterface.cs:1295
+#: ../src/PlayerInterface.cs:1336
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1240,50 +1240,56 @@ msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr ""
+"Ha hecho cambios en su iPod. Por favor elija un método para actualizar los componentes de su iPod.\n"
+"\n"
+"<i>Sincronizar fonoteca</i>: sincroniar la fonoteca de Banshee al iPod\n"
+"<i>Guardar cambios manuales</i>: guarda sólo los cambios manuales que hizo\n"
+"\n"
+"<b>Atención</b>: Las acciones alterarán o borrarán contenidos existentes del iPod y quizá causen incompatibilidades con iTunes."
 
-#: ../src/PlayerInterface.cs:1300 ../src/PlayerInterface.cs:1328
+#: ../src/PlayerInterface.cs:1341 ../src/PlayerInterface.cs:1369
 msgid "Synchronize Library"
 msgstr "Sincronizar fonoteca"
 
-#: ../src/PlayerInterface.cs:1301
+#: ../src/PlayerInterface.cs:1342
 msgid "Save Manual Changes"
 msgstr "Guardar cambios manuales"
 
-#: ../src/PlayerInterface.cs:1325
+#: ../src/PlayerInterface.cs:1366
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
 "of your Banshee library."
-msgstr ""
+msgstr "¿Está seguro de querer sincronizar su iPod con su fonoteca de Banshee? Esto <b>borrará</b> el contenido de su iPod y después copiará el contenido de su fonoteca Banshee."
 
-#: ../src/PlayerInterface.cs:1414
+#: ../src/PlayerInterface.cs:1456
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dia"
-msgstr[1] ""
+msgstr[1] "{0} días"
 
-#: ../src/PlayerInterface.cs:1432
+#: ../src/PlayerInterface.cs:1474
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Su fonoteca está vacía - Considere importar música"
 
-#: ../src/PlayerInterface.cs:1436
+#: ../src/PlayerInterface.cs:1478
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "Esta lista de reproducción está vacía - Considere añadir música"
 
-#: ../src/PlayerInterface.cs:1440
+#: ../src/PlayerInterface.cs:1482
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} elemento"
 msgstr[1] "{0} elementos"
 
-#: ../src/PlayerInterface.cs:1442
+#: ../src/PlayerInterface.cs:1484
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "Tiempo total de reproducción {0}"
 
-#: ../src/PlayerInterface.cs:1525
+#: ../src/PlayerInterface.cs:1567
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -1295,7 +1301,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/PlayerInterface.cs:1532
+#: ../src/PlayerInterface.cs:1574
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1304,44 +1310,44 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/PlayerInterface.cs:1541
+#: ../src/PlayerInterface.cs:1583
 msgid "Remove Selected Songs from Library"
 msgstr "Borrar las canciones seleccionadas de la fonoteca"
 
-#: ../src/PlayerInterface.cs:1761
+#: ../src/PlayerInterface.cs:1803
 msgid "Enter new playlist name"
 msgstr "Introducir nombre de lista de reproducción"
 
-#: ../src/PlayerInterface.cs:1765
+#: ../src/PlayerInterface.cs:1808
 msgid "Rename iPod"
 msgstr "Renombrar iPod"
 
-#: ../src/PlayerInterface.cs:1766
+#: ../src/PlayerInterface.cs:1809
 msgid "Enter new name for your iPod"
 msgstr "Introduzca un nombre nuevo para su iPod"
 
-#: ../src/PlayerInterface.cs:2013
+#: ../src/PlayerInterface.cs:2059
 msgid "Clear"
 msgstr "Limpiar"
 
-#: ../src/PlayerInterface.cs:2250
+#: ../src/PlayerInterface.cs:2296
 msgid "Invalid Selection"
 msgstr "Selección inválida"
 
-#: ../src/PlayerInterface.cs:2251
+#: ../src/PlayerInterface.cs:2297
 msgid "You must select at least one track to import."
 msgstr "Debe seleccionar al menos una pista para importar."
 
-#: ../src/PlayerInterface.cs:2275
+#: ../src/PlayerInterface.cs:2321
 msgid "Could Not Eject"
 msgstr "No se puede expulsar"
 
-#: ../src/PlayerInterface.cs:2312
+#: ../src/PlayerInterface.cs:2358
 msgid "Banshee - Idle"
 msgstr "Banshee - Inactivo"
 
-#: ../src/PlayerInterface.cs:2359
-msgid "Syncing your iPod, Please Wait..."
+#: ../src/PlayerInterface.cs:2411
+msgid "Synchronizing your iPod, Please Wait..."
 msgstr "Sincronizando su iPod, por favor, espere..."
 
 #: ../src/PlaylistColumns.cs:80
@@ -1428,11 +1434,11 @@ msgid ""
 "You have changed the Banshee Playback Engine. This change will not take "
 "affect until the next time Banshee is run. Please restart Banshee to use the "
 "new <b><i>{0}</i></b> Engine"
-msgstr ""
+msgstr "Ha cambiado el motor de reproducción de Banshee. Este cambio no tendrá efecto hasta la siguiente vez que ejecute Banshee. Por favor reinicie Banshee para usar el motor nuevo <b><i>{0}</i></b>"
 
 #: ../src/Preferences.cs:552
 msgid "Banshee Restart Required"
-msgstr "Reinicio de Banshee Requerido"
+msgstr "Se requiere el reinicio de Banshee"
 
 #: ../src/RipTransaction.cs:66
 msgid "Could not create CD Ripper"
@@ -1443,7 +1449,7 @@ msgstr "No se pudo crear el extractor de CDs"
 msgid ""
 "The device node '{0}' differs from the device node already set for "
 "previously queued tracks ({1})"
-msgstr ""
+msgstr "El nodo de dispositivo «{0}» difiere del nodo de dispositivo establecido para las pistas encoladas anteriormente ({1})"
 
 #: ../src/RipTransaction.cs:193
 msgid "Initializing CD Drive"
