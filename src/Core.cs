@@ -37,6 +37,7 @@ using GConf;
 using Mono.Unix;
 
 using Banshee.Logging;
+using Banshee.FileSystemMonitor;
 
 namespace Banshee
 {
@@ -65,6 +66,7 @@ namespace Banshee
         
         private Library library;
         private GConf.Client gconfClient;
+        private Watcher fs_watcher;
         
         public static Core Instance
         {
@@ -178,6 +180,14 @@ namespace Banshee
             MainThread = System.Threading.Thread.CurrentThread;
 
             FindUserRealName();
+            
+            try {
+                if((bool)gconfClient.Get(GConfKeys.EnableFileSystemMonitoring)) {
+                    fs_watcher = new Watcher(gconfClient.Get(GConfKeys.LibraryLocation) as string);
+                } 
+            } catch(Exception e) {
+                Core.Log.PushWarning("File System Monitoring will be disabled for this instance", e.Message, false);
+            }
         }
         
         public void ReloadEngine(IPlayerEngine engine)
@@ -214,6 +224,10 @@ namespace Banshee
         
         public void Shutdown()
         {
+            if(fs_watcher != null) {
+                fs_watcher.Dispose();
+            }
+            
             library.TransactionManager.CancelAll();
             library.Db.Close();
             if(AudioCdCore != null) {
