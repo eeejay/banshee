@@ -236,8 +236,6 @@ namespace Banshee
                 Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
             ((Gtk.Image)gxml["ImageRepeat"]).Pixbuf = 
                 Gdk.Pixbuf.LoadFromResource("media-repeat.png");
-            ((Gtk.Image)gxml["ImageIpodSync"]).Pixbuf = 
-                Gdk.Pixbuf.LoadFromResource("ipod-regular-24.png");
             
             // Header
             headerNotebook = new SimpleNotebook();
@@ -1192,6 +1190,7 @@ namespace Banshee
                 gxml["IpodContainer"].ShowAll();
                 IpodSource ipodSource = source as IpodSource;
                 ipodSyncButton.Visible = ipodSource.Device.CanWrite;
+                ((Gtk.Image)gxml["ImageIpodSync"]).Pixbuf = IpodMisc.GetIcon(ipodSource.Device, 24);
             } else {
                 gxml["IpodContainer"].Visible = false;
             }     
@@ -1342,7 +1341,7 @@ namespace Banshee
                     Catalog.GetString("Synchronize Library"));
                     md.AddButton(Catalog.GetString("Save Manual Changes"), 
                         Gtk.ResponseType.Apply, true);
-                md.Image = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
+                md.Image = IpodMisc.GetIcon(ipodSource.Device, 48);
                 md.Icon = md.Image;
                 switch(md.Run()) {
                     case (int)ResponseType.Ok:
@@ -1368,7 +1367,7 @@ namespace Banshee
                     "with your Banshee library? This will <b>erase</b> the contents of " +
                     "your iPod and then copy the contents of your Banshee library."),
                     Catalog.GetString("Synchronize Library"));
-                md.Image = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
+                md.Image = IpodMisc.GetIcon(ipodSource.Device, 48);
                 md.Icon = md.Image;
                 switch(md.Run()) {
                     case (int)ResponseType.Ok:
@@ -1798,16 +1797,20 @@ namespace Banshee
             
             InputDialog input;
             
-            if(source.Type == SourceType.Playlist)
-             input = new InputDialog(
-                Catalog.GetString("Rename Playlist"),
-                Catalog.GetString("Enter new playlist name"), 
-                "playlist-icon-large.png", source.Name);
-            else
-              input = new InputDialog(
-                  Catalog.GetString("Rename iPod"),
-                  Catalog.GetString("Enter new name for your iPod"),
-                  "ipod-48.png", source.Name);
+            if(source.Type == SourceType.Playlist) {
+                input = new InputDialog(
+                    Catalog.GetString("Rename Playlist"),
+                    Catalog.GetString("Enter new playlist name"), 
+                    Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
+            } else if(source.Type == SourceType.Ipod) {
+                IpodSource ipod_source = source as IpodSource;
+                input = new InputDialog(
+                    Catalog.GetString("Rename iPod"),
+                    Catalog.GetString("Enter new name for your iPod"),
+                    IpodMisc.GetIcon(ipod_source.Device, 48), source.Name);
+            } else {
+                return;
+            }
                 
             string newName = input.Execute();
             if(newName != null)
