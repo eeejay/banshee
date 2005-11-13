@@ -269,6 +269,11 @@ expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   eval echo $libdir )`
 AC_SUBST(expanded_libdir)
 
+expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
+		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
+		   eval echo $datadir )`
+AC_SUBST(expanded_datadir)
+
 dnl Defines for C Exec Wrapper (${prefix}/bin/banshee)
 
 AC_DEFINE_UNQUOTED([PREFIX], ["${prefix}"], [install prefix])
@@ -324,6 +329,7 @@ data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile
 data/images/Makefile
+data/images/ipod/Makefile
 po/Makefile.in
 ])
 
