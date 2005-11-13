@@ -503,10 +503,15 @@ namespace Banshee
         
         public static Gdk.Pixbuf GetIcon(Device device, int size)
         {
+            return GetIcon(device.Model, size);
+        }
+        
+        public static Gdk.Pixbuf GetIcon(DeviceModel model, int size)
+        {
             string prefix = "portable-media-";
             string id = null;
             
-            switch(device.Model) {
+            switch(model) {
                 case DeviceModel.Color: id = "ipod-standard-color"; break;
                 case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
                 case DeviceModel.Regular: id = "ipod-standard-monochrome"; break;
