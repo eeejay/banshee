@@ -4,6 +4,23 @@
 
 2005-11-12  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/images/source-cd-audio.png: Updated with tango icon
+	* src/IpodCore.cs (IpodMisc.GetIcon): Accept either an Ipod.Device or
+	an Ipod.DeviceModel
+	* src/Dialogs.cs: Accept a Gdk.Pixbuf instead of a string for the icon
+	* src/IpodNewDialog.cs: 
+	* src/PlayerInterface.cs:
+	* src/SourceView.cs: Use IpodMisc.GetIcon()
+	* src/PlayerInterface.cs: Show a large version of the iPod icon in the
+	sync view when syncing iPod
+	* configure.ac: Expand $datadir into $expanded_datadir 
+	* src/ConfigureDefines.cs.in: Added ICON_THEME_DIR constant
+	* src/IpodCore.cs (IpodMisc.GetIcon): return a Gdk.Pixbuf of an iPod in
+	a given size, points to the new installed tango icons into the hicolor
+	icon theme
+	* src/Makefile.am: Removed old ipod icon references
+	* data/images/ipod/*: New tango iPod icons from Ryan Collier
+	* data/images/Makefile.am: Added ipod to SUBDIRS, removed old ipod icons
 	* src/PlayerInterface.cs: Pressing enter on the playlist view will
 	play the first song in a selection
 	* src/PlayerInterface.cs: Implement some more key bindings, and changed
