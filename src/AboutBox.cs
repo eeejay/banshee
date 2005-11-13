@@ -46,7 +46,8 @@ namespace Banshee
             "Ben Maurer",
             "Larry Ewing",
             "Miguel de Icaza",
-            "Ulas Sahin"
+            "Ulas Sahin",
+            "Do\u011facan G\u00fcney"
         };
         
         private static string [] Artists = {
