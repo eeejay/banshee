@@ -25,7 +25,10 @@ libbanshee_la_SOURCES = \
 	gst-player-engine.c \
 	gst-player-engine.h \
 	gst-misc.c \
-	gst-misc.h
+	gst-misc.h \
+	inotify-glue.c \
+	inotify.h \
+	inotify-syscalls.h
 
 libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS)
 
@@ -45,4 +48,5 @@ gst_encode_test_LDADD = libbanshee.la
 
 endif
 
-
+player-test:
+	$(CC) -o gst-player-test $(GST_CFLAGS) $(GST_LIBS) gst-player-engine.c gst-player-engine-test.c
