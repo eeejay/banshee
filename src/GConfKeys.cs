@@ -29,35 +29,35 @@
  
 namespace Banshee 
 {
-	public sealed class GConfKeys
-	{
-		public const string BasePath = "/apps/Banshee/";
-		
-		public const string LibraryLocation = BasePath + "LibraryLocation";
-		public const string WindowX = BasePath + "WindowX";
-		public const string WindowY = BasePath + "WindowY";
-		public const string WindowWidth = BasePath + "WindowWidth";
-		public const string WindowHeight = BasePath + "WindowHeight";
-		public const string SourceViewWidth = BasePath + "SourceViewWidth";
-		public const string SearchBarVisible = BasePath + "SearchBarVisible";
-		public const string Volume = BasePath + "Volume";
-		public const string PlaylistShuffle = BasePath + "PlaylistShuffle";
-		public const string PlaylistRepeat = BasePath + "PlaylistRepeat";
-		public const string CopyOnImport = BasePath + "CopyOnImport";
-		public const string MoveOnInfoSave = BasePath + "MoveOnInfoSave";
-		public const string AdditionAction = BasePath + "AdditionAction";
-		public const string PlayerEngine = BasePath + "PlayerEngine";
-		public const string FileNamePattern = BasePath + "FileNamePattern";
-		public const string EncoderProfiles = BasePath + "EncoderProfiles";
-		public const string RippingProfile = BasePath + "RippingProfile";
-		public const string RippingBitrate = BasePath + "RippingBitrate";
-		public const string IpodProfile = BasePath + "IpodProfile";
-		public const string IpodBitrate = BasePath + "IpodBitrate";
-		public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
-		public const string ColumnPath = BasePath + "PlaylistColumns/";
-		public const string ShowNotificationAreaIcon = BasePath + "ShowNotificationAreaIcon";
-	
-		public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
-		public const string CDBurnerId = BasePath + "CDBurnerId";
-	}
+    public sealed class GConfKeys
+    {
+        public const string BasePath = "/apps/Banshee/";
+        
+        public const string LibraryLocation = BasePath + "LibraryLocation";
+        public const string WindowX = BasePath + "WindowX";
+        public const string WindowY = BasePath + "WindowY";
+        public const string WindowWidth = BasePath + "WindowWidth";
+        public const string WindowHeight = BasePath + "WindowHeight";
+        public const string SourceViewWidth = BasePath + "SourceViewWidth";
+        public const string SearchBarVisible = BasePath + "SearchBarVisible";
+        public const string Volume = BasePath + "Volume";
+        public const string PlaylistShuffle = BasePath + "PlaylistShuffle";
+        public const string PlaylistRepeat = BasePath + "PlaylistRepeat";
+        public const string CopyOnImport = BasePath + "CopyOnImport";
+        public const string MoveOnInfoSave = BasePath + "MoveOnInfoSave";
+        public const string AdditionAction = BasePath + "AdditionAction";
+        public const string PlayerEngine = BasePath + "PlayerEngine";
+        public const string FileNamePattern = BasePath + "FileNamePattern";
+        public const string EncoderProfiles = BasePath + "EncoderProfiles";
+        public const string RippingProfile = BasePath + "RippingProfile";
+        public const string RippingBitrate = BasePath + "RippingBitrate";
+        public const string IpodProfile = BasePath + "IpodProfile";
+        public const string IpodBitrate = BasePath + "IpodBitrate";
+        public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
+        public const string ColumnPath = BasePath + "PlaylistColumns/";
+        public const string ShowNotificationAreaIcon = BasePath + "ShowNotificationAreaIcon";
+        public const string EnableFileSystemMonitoring = BasePath + "EnableFileSystemMonitoring";
+        public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
+        public const string CDBurnerId = BasePath + "CDBurnerId";
+    }
 }
