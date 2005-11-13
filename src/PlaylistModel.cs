@@ -293,8 +293,14 @@ namespace Banshee
             }
             
             if(currentPath == null) {
-                if(GetIterFirst(out nextIter))
-                    PlayIter(nextIter);
+                if(shuffle) {
+                    if(!GetRandomTrackIter(out nextIter))
+                        return;
+                } else if(!GetIterFirst(out nextIter)) {
+                    return;
+                }
+
+                PlayIter(nextIter);
                 return;
             }
         
@@ -313,8 +319,7 @@ namespace Banshee
                     if(!IterNthChild(out nextIter, 0))
                         return;
                 } else if(shuffle) {
-                    int randIndex = Core.Instance.Random.Next(0, Count());
-                    if(!IterNthChild(out nextIter, randIndex))
+                    if(!GetRandomTrackIter(out nextIter))
                         return;
                 } else {                
                     currentPath.Next();                
@@ -361,6 +366,12 @@ namespace Banshee
             }
     
             return -1;
+        }
+
+        private bool GetRandomTrackIter(out TreeIter iter)
+        {
+            int randIndex = Core.Instance.Random.Next(0, Count());
+            return IterNthChild(out iter, randIndex);
         }
         
         public void ClearModel()

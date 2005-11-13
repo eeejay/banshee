@@ -1,6 +1,8 @@
-2005-11-12  Aaron Bockover  <aaron@aaronbock.net>
+2005-11-13  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AboutBox.cs: Added Christian Rose to translator credits
+	* src/PlaylistModel.cs: Merged Pat Rondon's (pat@thepatsite.com) advance
+	to random track when playing first track in shuffle mode (#54688)
 
 2005-11-13  Christian Rose  <menthos@menthos.com>
 
