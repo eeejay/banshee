@@ -2,7 +2,7 @@ SUBDIRS = \
 	GtkSharpBackports \
 	MusicBrainz
 
-MCS_FLAGS = -debug -nowarn:0169
+MCS_FLAGS = -debug -unsafe -nowarn:0169
 
 TARGET = banshee.exe
 
@@ -90,7 +90,12 @@ banshee_sources = \
 	AmazonCoverFetcher.cs \
 	ActiveUserEventsManager.cs \
 	ActiveUserEvent.cs \
-	LogCoreViewer.cs
+	LogCoreViewer.cs \
+	FileSystemMonitor/Watcher.cs \
+	FileSystemMonitor/Inotify.cs \
+	FileSystemMonitor/Watch.cs \
+	FileSystemMonitor/InotifyWatch.cs \
+	FileSystemMonitor/FileSystemWatcherWatch.cs
 
 banshee_resources = \
 	../COPYING \
