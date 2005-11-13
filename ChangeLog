@@ -1,5 +1,7 @@
 2005-11-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Added support for using GStreamer 0.9 packages through
+	--enable-gstreamer-dev; currently will break things, do not use yet
 	* src/PlayerInterface.cs: Don't use space as a hotkey if the search box
 	has focus
 	* src/AboutBox.cs: Added Christian Rose to translator credits

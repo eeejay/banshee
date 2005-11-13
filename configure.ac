@@ -54,6 +54,9 @@ AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
 AC_ARG_WITH(internal-mcs, AC_HELP_STRING([--with-internal-mcs], [Use the internal mcs 1.1.9.2 compiler]), internal_mcs="yes", internal_mcs="no")
 
+AC_ARG_WITH(gstreamer-dev, AC_HELP_STRING([--with-gstreamer-dev], [Build the GStreamer 0.9 backends (DEVELOPMENTAL)]), enable_gst_dev="yes", enable_gst_dev="no")
+AM_CONDITIONAL(ENABLE_GST_DEV, test "x$enable_gst_dev" = "xyes")
+
 if test "x$enable_xing" = "xyes"; then
 	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
 fi
@@ -146,34 +149,50 @@ dnl musicbrainz
 PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 
 dnl gstreamer devel deps
-GSTREAMER_REQUIRED_VERSION=0.8.11
-GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.11
-AC_SUBST(GSTREAMER_REQUIRED_VERSION)
-AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
 
-gst_pkg_name="gstreamer"
-
-PKG_CHECK_MODULES(GST,
-	gstreamer >= $GSTREAMER_REQUIRED_VERSION
-	gstreamer-gconf >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-	gstreamer-interfaces >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-	gstreamer-play >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-	gstreamer-plugins >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
-	enable_gst=yes, enable_gst=no)
-
-if test "x$enable_gst" = "xno" ; then
+if test "x$enable_gst_dev" = "xyes"; then
+	GSTREAMER_REQUIRED_VERSION=0.9.5
+	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 	PKG_CHECK_MODULES(GST,
-		gstreamer-0.8 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-gconf-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-interfaces-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-play-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-plugins-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
+		gstreamer-0.9 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-base-0.9 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-plugins-base-0.9 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-controller-0.9 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-dataprotocol-0.9 >= $GSTREAMER_REQUIRED_VERSION)
+
+	if test "x$enable_xing" = "xyes"; then
+		AC_MSG_ERROR([The Xing GStreamer plugin has not been ported to GStreamer 0.9 and cannot be enabled if you enable GStreamer 0.9])
+	fi
+else
+	GSTREAMER_REQUIRED_VERSION=0.8.11
+	GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.11
+	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
+	AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
+
+	gst_pkg_name="gstreamer"
+
+	PKG_CHECK_MODULES(GST,
+		gstreamer >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-gconf >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+		gstreamer-interfaces >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+		gstreamer-play >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+		gstreamer-plugins >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
 		enable_gst=yes, enable_gst=no)
 
-	gst_pkg_name="gstreamer-0.8"
-
 	if test "x$enable_gst" = "xno" ; then
-		AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
+		PKG_CHECK_MODULES(GST,
+			gstreamer-0.8 >= $GSTREAMER_REQUIRED_VERSION
+			gstreamer-gconf-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+			gstreamer-interfaces-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+			gstreamer-play-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
+			gstreamer-plugins-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
+			enable_gst=yes, enable_gst=no)
+
+		gst_pkg_name="gstreamer-0.8"
+
+		if test "x$enable_gst" = "xno" ; then
+			AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
+		fi
 	fi
 fi
 
@@ -333,6 +352,11 @@ data/images/ipod/Makefile
 po/Makefile.in
 ])
 
+gst_version="0.8";
+if test "x${enable_gst_dev}" = "xyes"; then
+	gst_version="0.9";
+fi;
+
 echo "
 banshee-$VERSION
 
@@ -342,7 +366,7 @@ banshee-$VERSION
     Mono Runtime:      ${MONO}
 
     Engines:
-      GStreamer:       yes
+      GStreamer:       yes, ${gst_version}
       Helix:           ${enable_helix}
       VLC:             ${enable_vlc}
 
@@ -353,6 +377,12 @@ banshee-$VERSION
 if test "x${enable_helix}" = "xyes"; then
 	echo "    Helix/RealPlayer:  ${helix_libs}
 	";
+fi;
+
+if test "x${enable_gst_dev}" = "xyes"; then
+	echo "";
+	echo "    ** Warning: GStreamer 0.9 backend may be very unstable **";
+	echo "";
 fi;
 
 if test "x${enable_vlc}" = "xyes"; then
