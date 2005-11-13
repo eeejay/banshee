@@ -80,6 +80,10 @@ namespace Banshee
         private Button ipodPropertiesButton;
         private Button ipodEjectButton;
             
+                
+        private EventBox syncing_container;
+        private Gtk.Image ipod_syncing_image = new Gtk.Image();
+            
         private CoverArtThumbnail cover_art;
         
         private bool incrementedCurrentSongPlayCount;
@@ -1395,6 +1399,7 @@ namespace Banshee
                 gxml["IpodSyncButton"].Sensitive = false;
                 gxml["SearchLabel"].Sensitive = false;
                 searchEntry.Sensitive = false;
+                ipod_syncing_image.Pixbuf = IpodMisc.GetIcon((playlistModel.Source as IpodSource).Device, 128);
             }
         }
         
@@ -2369,36 +2374,42 @@ namespace Banshee
             
             if(alignment.Child == playlist_container) {
                 return;
-            } else if(alignment.Child == syncing_label) {
-                alignment.Remove(syncing_label);
+            } else if(alignment.Child == syncing_container) {
+                alignment.Remove(syncing_container);
             }
             
             alignment.Add(playlist_container);
             alignment.ShowAll();
         }
         
-        
-        private Label syncing_label;
-        
         private void ShowSyncingView()
         {
             Alignment alignment = gxml["LibraryAlignment"] as Alignment;
             ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
             
-            if(alignment.Child == syncing_label) {
+            if(alignment.Child == syncing_container) {
                 return;
             } else if(alignment.Child == playlist_container) {
                 alignment.Remove(playlist_container);
             }
             
-            if(syncing_label == null) {
-                syncing_label = new Label();
+            if(syncing_container == null) {
+                syncing_container = new EventBox();
+                HBox syncing_box = new HBox();
+                syncing_container.Add(syncing_box);
+                syncing_box.Spacing = 20;
+                syncing_box.PackStart(ipod_syncing_image, false, false, 0);
+                Label syncing_label = new Label();
+                                                
+                syncing_container.ModifyBg(StateType.Normal, new Color(0, 0, 0));
+                syncing_label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
+            
                 syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
-                    Catalog.GetString("Syncing your iPod, Please Wait...")) + "</b></big>";
-                syncing_label.Show();
+                    Catalog.GetString("Synchronizing your iPod, Please Wait...")) + "</b></big>";
+                syncing_box.PackStart(syncing_label, false, false, 0);
             }
             
-            alignment.Add(syncing_label);
+            alignment.Add(syncing_container);
             alignment.ShowAll();
         }
     }
