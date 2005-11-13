@@ -47,8 +47,8 @@ namespace Banshee
             glade = new Glade.XML(null, "newipod.glade", "NewIpodWindow", null);
             glade.Autoconnect(this);
                 
-            (glade["NewIpodWindow"] as Window).Icon = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
-            (glade["ImageIpod"] as Image).Pixbuf = Gdk.Pixbuf.LoadFromResource("ipod-48.png");
+            (glade["NewIpodWindow"] as Window).Icon = IpodMisc.GetIcon(device, 48);
+            (glade["ImageIpod"] as Image).Pixbuf = IpodMisc.GetIcon(device, 48);
             
             if(device.SerialNumber != null) {
                 (glade["SerialNumberLabel"] as Label).Markup = "<small>" +
