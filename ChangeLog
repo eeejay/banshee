@@ -1,3 +1,7 @@
+2005-11-12  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/AboutBox.cs: Added Christian Rose to translator credits
+
 2005-11-13  Christian Rose  <menthos@menthos.com>
 
 	* configure.ac: Added "sv" to ALL_LINGUAS.
