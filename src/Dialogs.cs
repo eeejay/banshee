@@ -111,17 +111,18 @@ namespace Banshee
     public class InputDialog
     {
         private Dialog dialog;
-        private string title, message, icon, text;
+        private string title, message, text;
+        private Gdk.Pixbuf icon;
         
         public static string Run(string title, string message, 
-            string icon, string text)
+            Gdk.Pixbuf icon, string text)
         {
             InputDialog d = new InputDialog(title, message, icon, text);
             return d.Execute();
         }
         
         public InputDialog(string title, string message, 
-            string icon, string text)
+            Gdk.Pixbuf icon, string text)
         {
             this.title = title;
             this.message = message;
@@ -131,9 +132,9 @@ namespace Banshee
         
         public string Execute()
         {
-              Dialog dialog = new Dialog();
-             dialog.Title = title;
-             dialog.Resizable = false;
+            Dialog dialog = new Dialog();
+            dialog.Title = title;
+            dialog.Resizable = false;
 
             VBox vbox = dialog.VBox;
             vbox.Show();
@@ -155,7 +156,7 @@ namespace Banshee
                 0, 0, 0);
                 
             Image image = new Image();
-            image.Pixbuf = Gdk.Pixbuf.LoadFromResource(icon);
+            image.Pixbuf = icon;
             image.Show();
             table.Attach(image, 0, 1, 0, 2,
                 AttachOptions.Expand | AttachOptions.Fill,
