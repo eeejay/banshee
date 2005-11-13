@@ -1,5 +1,22 @@
 2005-11-13  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/AboutBox.cs: Added Doğacan Güney
+	* src/GConfKeys.cs: Added key EnableFileSystemMonitoring; reformatted code
+	* src/LibraryTransactions.cs (FileLoadTransaction): Load multiple paths
+	at once without making them raw (Doğacan Güney)
+	* src/Library.cs (Library.Remove): Overloaded to allow removal based on
+	a System.Uri (Doğacan Güney)
+	* src/Core.cs: Instantiate and dispose of FileSystemMonitor.Watcher only
+	if enabled in GConf
+	* libbanshee/Makefile.am: Added inotify glue
+	* libbanshee/inotify-glue.c:
+	* libbanshee/inotify.h:
+	* libbanshee/inotify-syscalls.h: inotify system-level glue
+	* src/FileSystemMonitor/*.cs: Added File System monitoring patch by 
+	Doğacan Güney, uses Inotify. If Inotify is unavailable, it falls back
+	on FileSystemWatcher. 
+	* src/Makefile.am: Added FileSystemMonitor files
+	
 	* configure.ac: Added support for using GStreamer 0.9 packages through
 	--enable-gstreamer-dev; currently will break things, do not use yet
 	* src/PlayerInterface.cs: Don't use space as a hotkey if the search box
