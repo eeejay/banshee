@@ -550,6 +550,13 @@ namespace Banshee
         {
             startupLoadReady = true;
             
+            if(Core.ArgumentQueue.Contains("play")) {
+                GLib.Timeout.Add(1500, delegate {
+                    PlayPause();
+                    return false;
+                });
+            }
+            
             if(Core.Library.Tracks.Count <= 0) {
                 Application.Invoke(delegate { 
                     PromptForImport();
@@ -703,10 +710,10 @@ namespace Banshee
                     break;
                 case Gdk.Key.space:
                     if(!searchEntry.HasFocus) {
-					    PlayPause();
+                        PlayPause();
                         handled = true;
                     }
-					break;
+                    break;
             }
             
             args.RetVal = handled;
@@ -791,7 +798,10 @@ namespace Banshee
             if(Core.Instance.Player.Loaded) {
                 TogglePlaying();
             } else {
-                playlistView.PlaySelected();
+                if(!playlistView.PlaySelected()) {
+                    playlistModel.Advance();
+                    playlistView.UpdateView();
+                }
             }
         }
         
@@ -957,6 +967,7 @@ namespace Banshee
             return false;
         }
         
+        [GLib.ConnectBeforeAttribute]
         private void OnScaleTimeMoveSlider(object o, EventArgs args)
         {
             SetPositionLabel((long)ScaleTime.Value);
