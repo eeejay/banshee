@@ -4,12 +4,11 @@
 # Øivind Hoel <oivind.hoel@gmail.com>, 2005.
 #
 #
-
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2005-10-31 17:33+0100\n"
+"PO-Revision-Date: 2005-11-14 14:54+0100\n"
 "Last-Translator: Øivind Hoel <oivind.hoel@gmail.com>\n"
 "Language-Team: Norwegian Translators <oivind.hoel@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +21,7 @@ msgstr ""
 
 #: ../data/banshee.desktop.in.in.h:1
 #: ../data/glade/player.glade.h:6
-#: ../src/PlayerInterface.cs:1340
+#: ../src/PlayerInterface.cs:1471
 msgid "Banshee Music Player"
 msgstr "Banshee Musikkavspiller"
 
@@ -45,7 +44,7 @@ msgstr "Filnavnmønster"
 #: ../data/banshee.schemas.in.h:5
 #, no-c-format
 msgid "Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
-msgstr ""
+msgstr "Format for oppretting av filnavn/mapper for rippede spor, importert musikk, osv. Formatet er relativt til Banshees musikkmappe... ikke skriv inn en absolutt sti! Variabler: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (ingen null-prefiks), %track_count_nz% (ingen null-prefiks)."
 
 #: ../data/banshee.schemas.in.h:6
 msgid "Height of the main interface window."
@@ -64,82 +63,90 @@ msgid "Name of media playback engine."
 msgstr "Avspillingskjernens navn"
 
 #: ../data/banshee.schemas.in.h:10
+msgid "Only display the notification area (tray) icon if true"
+msgstr ""
+
+#: ../data/banshee.schemas.in.h:11
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Pikselposisjon for hovedvinduet på X-aksen"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:12
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Pikselposisjon for hovedvinduet på Y-aksen"
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:13
 msgid "Player Engine Name"
 msgstr "Navn på avspillingskjerne"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:14
+msgid "Show Notification Area Icon"
+msgstr "Vis varslingsområde-ikon"
+
+#: ../data/banshee.schemas.in.h:15
 msgid "Source View Width"
 msgstr "Kildevisningsbredde"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:16
 msgid "Volume Output Level"
 msgstr "Volumnivå"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:17
 msgid "Volume of playback relative to mixer output (except on Helix, which sets volume directly on PCM"
 msgstr "Avspillingsvolum relativt til mikser-volumet (unntatt på Helix, som setter volumet direkte via PCM)"
 
-#: ../data/banshee.schemas.in.h:16
+#: ../data/banshee.schemas.in.h:18
 msgid "Width of Album Column."
 msgstr "Bredde for albumkolonnen."
 
-#: ../data/banshee.schemas.in.h:17
+#: ../data/banshee.schemas.in.h:19
 msgid "Width of Artist Column."
 msgstr "Bredde for artistkolonnen."
 
-#: ../data/banshee.schemas.in.h:18
-msgid "Width of Last Played Column."
-msgstr "Bredde for sist avspilt-kolonnen."
-
-#: ../data/banshee.schemas.in.h:19
-msgid "Width of Plays Column."
-msgstr "Bredde for avspillingskolonnen."
-
 #: ../data/banshee.schemas.in.h:20
-msgid "Width of Rating Column."
-msgstr "Bredde for Poengkolonnen."
+msgid "Width of Last Played Column."
+msgstr "Bredde for sist spilt-kolonnen."
 
 #: ../data/banshee.schemas.in.h:21
+msgid "Width of Plays Column."
+msgstr "Bredde for antall avspillinger-kolonnen."
+
+#: ../data/banshee.schemas.in.h:22
+msgid "Width of Rating Column."
+msgstr "Bredde for poengkolonnen."
+
+#: ../data/banshee.schemas.in.h:23
 msgid "Width of Source View Comlumn."
 msgstr "Bredde for kildevisningskolonnen."
 
-#: ../data/banshee.schemas.in.h:22
+#: ../data/banshee.schemas.in.h:24
 msgid "Width of Time Column."
 msgstr "Bredde for tidskolonnen."
 
-#: ../data/banshee.schemas.in.h:23
+#: ../data/banshee.schemas.in.h:25
 msgid "Width of Title Column."
 msgstr "Bredde for tittelkolonnen."
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:26
 msgid "Width of Track Column."
 msgstr "Bredde for sporkolonnen."
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:27
 msgid "Width of the main interface window."
 msgstr "Bredde for hovedvinduet."
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:28
 msgid "Window Height"
 msgstr "Vindushøyde"
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:29
 msgid "Window Position X"
 msgstr "Vidusposisjon X"
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:30
 msgid "Window Position Y"
 msgstr "Vindusposisjon Y"
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:31
 msgid "Window Width"
 msgstr "Vindubredde"
 
@@ -185,60 +192,59 @@ msgstr "Legg til i spilleliste"
 
 #: ../data/glade/player.glade.h:5
 #: ../libbanshee/cd-rip.c:227
-#: ../src/NotificationAreaIcon.cs:61
+#: ../src/NotificationAreaIcon.cs:62
 msgid "Banshee"
 msgstr "Banshee"
 
-#. Other
 #: ../data/glade/player.glade.h:7
-#: ../src/StockIcons.cs:76
-msgid "Burn CD"
-msgstr "Brenn CD"
-
-#: ../data/glade/player.glade.h:8
 msgid "Columns..."
 msgstr "Kolonner..."
 
-#: ../data/glade/player.glade.h:9
+#: ../data/glade/player.glade.h:8
 msgid "Delete"
 msgstr "Slett"
 
-#: ../data/glade/player.glade.h:10
+#: ../data/glade/player.glade.h:9
 msgid "Delete Playlist"
 msgstr "Slett spilleliste"
 
-#: ../data/glade/player.glade.h:11
+#: ../data/glade/player.glade.h:10
 msgid "Delete Song(s) from Drive"
 msgstr "Slett sang(er) fra harddisk"
 
-#: ../data/glade/player.glade.h:12
+#: ../data/glade/player.glade.h:11
 msgid "Delete from Drive"
 msgstr "Slett fra harddisk"
 
-#: ../data/glade/player.glade.h:13
+#: ../data/glade/player.glade.h:12
 msgid "Duplicate"
 msgstr "Opprett kopi"
 
-#: ../data/glade/player.glade.h:14
+#: ../data/glade/player.glade.h:13
 #: ../src/StockIcons.cs:60
 msgid "Eject"
 msgstr "Løs ut"
 
-#: ../data/glade/player.glade.h:15
+#: ../data/glade/player.glade.h:14
+#: ../src/StockIcons.cs:77
 msgid "Import CD"
 msgstr "Importér CD"
 
-#: ../data/glade/player.glade.h:16
+#: ../data/glade/player.glade.h:15
 msgid "Import Files..."
 msgstr "Importér Filer..."
 
-#: ../data/glade/player.glade.h:17
+#: ../data/glade/player.glade.h:16
 msgid "Import Folder..."
 msgstr "Importér Mappe"
 
+#: ../data/glade/player.glade.h:17
+msgid "Logged Events..."
+msgstr ""
+
 #: ../data/glade/player.glade.h:18
-#: ../src/Library.cs:588
-#: ../src/PlayerInterface.cs:1890
+#: ../src/Library.cs:600
+#: ../src/PlayerInterface.cs:2037
 #: ../src/SourceView.cs:69
 msgid "New Playlist"
 msgstr "Ny Spilleliste"
@@ -269,7 +275,7 @@ msgid "Rename"
 msgstr "Gi nytt navn"
 
 #: ../data/glade/player.glade.h:25
-#: ../src/PlayerInterface.cs:1661
+#: ../src/PlayerInterface.cs:1804
 msgid "Rename Playlist"
 msgstr "Gi nytt navn til spilleliste"
 
@@ -290,7 +296,7 @@ msgid "Toggle Full Screen Mode"
 msgstr "Veksle mellom Fullskjermmodus"
 
 #: ../data/glade/player.glade.h:30
-#: ../src/PlayerInterface.cs:319
+#: ../src/PlayerInterface.cs:332
 msgid "Update iPod"
 msgstr "Oppdatér iPod"
 
@@ -298,11 +304,17 @@ msgstr "Oppdatér iPod"
 msgid "Version Information"
 msgstr "Versjonsinformasjon"
 
+#. Other
 #: ../data/glade/player.glade.h:32
+#: ../src/StockIcons.cs:76
+msgid "Write CD"
+msgstr "Skriv CD"
+
+#: ../data/glade/player.glade.h:33
 msgid "_Full Screen"
 msgstr "_Fullskjerm"
 
-#: ../data/glade/player.glade.h:33
+#: ../data/glade/player.glade.h:34
 msgid "_Music"
 msgstr "_Musikk"
 
@@ -319,7 +331,6 @@ msgid "<b>CD Burning</b>"
 msgstr "<b>CD-brenning</b>"
 
 #: ../data/glade/preferences.glade.h:4
-#, fuzzy
 msgid "<b>CD Ripping</b>"
 msgstr "<b>CD-Ripping</b>"
 
@@ -353,71 +364,66 @@ msgid "Audio CD"
 msgstr "Lyd-CD"
 
 #: ../data/glade/preferences.glade.h:12
-#, fuzzy
 msgid "Burnproof"
-msgstr "Burnproof"
+msgstr "Sikker brenning (unngå tømming av mellomlager)"
 
 #: ../data/glade/preferences.glade.h:13
-msgid "Change"
-msgstr "Endre"
+msgid "Copy files to Banshee Music Folder when importing to Library"
+msgstr "Kopiér filer til denne mappen under importering til Biblioteket"
 
 #: ../data/glade/preferences.glade.h:14
-msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Kopiér filer til Banshees Musikkmappe under importering til Biblioteket"
-
-#: ../data/glade/preferences.glade.h:15
 msgid "Data CD"
 msgstr "Data-CD"
 
-#: ../data/glade/preferences.glade.h:16
+#: ../data/glade/preferences.glade.h:15
 msgid "Description:"
 msgstr "Beskrivelse:"
 
-#: ../data/glade/preferences.glade.h:17
+#: ../data/glade/preferences.glade.h:16
 msgid "Disk At Once"
-msgstr "Brenn hele platen under ett (Disk At Once)"
+msgstr "Disk At Once"
 
-#: ../data/glade/preferences.glade.h:18
+#: ../data/glade/preferences.glade.h:17
 msgid "Disk Drive:"
 msgstr "Stasjon:"
 
-#: ../data/glade/preferences.glade.h:19
+#: ../data/glade/preferences.glade.h:18
 msgid "Disk Format:"
 msgstr "Plateformat:"
 
-#: ../data/glade/preferences.glade.h:20
+#: ../data/glade/preferences.glade.h:19
 msgid "Eject When Finished"
 msgstr "Løs ut når ferdig"
 
-#: ../data/glade/preferences.glade.h:21
+#: ../data/glade/preferences.glade.h:20
 msgid "Encoding Profile:"
 msgstr "Innkodingsprofil:"
 
-#: ../data/glade/preferences.glade.h:22
+#: ../data/glade/preferences.glade.h:21
 msgid "Engine:"
-msgstr "Kjerne:"
+msgstr "Valgt kjerne:"
 
-#: ../data/glade/preferences.glade.h:23
+#: ../data/glade/preferences.glade.h:22
 msgid "MP3 CD"
 msgstr "MP3-CD"
 
-#: ../data/glade/preferences.glade.h:24
+#: ../data/glade/preferences.glade.h:23
 msgid "Overburn"
 msgstr "Overbrenning"
 
-#: ../data/glade/preferences.glade.h:25
+#: ../data/glade/preferences.glade.h:24
 msgid "Preferences"
 msgstr "Innstillinger"
 
-#: ../data/glade/preferences.glade.h:26
+#: ../data/glade/preferences.glade.h:25
 msgid "Reset"
 msgstr "Nullstill"
 
-#: ../data/glade/preferences.glade.h:27
+#: ../data/glade/preferences.glade.h:26
 msgid "Simulate Write"
 msgstr "Simulér skriving"
 
-#: ../data/glade/preferences.glade.h:28
+#: ../data/glade/preferences.glade.h:27
 msgid "Write Speed:"
 msgstr "Skrivehastighet:"
 
@@ -470,32 +476,26 @@ msgid "_Title"
 msgstr "_Tittel"
 
 #: ../libbanshee/cd-rip.c:85
-#, fuzzy
 msgid "Could not create pipeline"
 msgstr "Kunne ikke opprette pipeline"
 
 #: ../libbanshee/cd-rip.c:94
-#, fuzzy
 msgid "Could not initialize cdparanoia"
 msgstr "Kunne ikke starte cdparanoia"
 
 #: ../libbanshee/cd-rip.c:107
-#, fuzzy
 msgid "Could not create encoder pipeline"
 msgstr "Kunne ikke opprette innkodingspipeline"
 
 #: ../libbanshee/cd-rip.c:113
-#, fuzzy
 msgid "Could not create GNOME VFS File Sink"
 msgstr "Kunne ikke opprette GNOME-VFS fil-sink"
 
 #: ../libbanshee/cd-rip.c:128
-#, fuzzy
 msgid "Could not link pipeline elements"
-msgstr "Kunne ikke linke pipeline-elementer"
+msgstr "Kunne ikke koble pipeline-elementer"
 
 #: ../libbanshee/cd-rip.c:241
-#, fuzzy
 msgid "Encoding element does not support tagging!"
 msgstr "Innkodingselementet støtter ikke tagging!"
 
@@ -511,28 +511,28 @@ msgstr "Kunne ikke finne posisjon for sporets begynnelse"
 msgid "Could not get track position"
 msgstr "Kunne ikke finne posisjon i spor"
 
-#: ../libbanshee/gst-encode.c:111
+#: ../libbanshee/gst-encode.c:118
 msgid "Could not create 'gnomevfssrc' element"
 msgstr ""
 
-#: ../libbanshee/gst-encode.c:117
+#: ../libbanshee/gst-encode.c:124
 msgid "Could not create 'spider' element"
 msgstr ""
 
-#: ../libbanshee/gst-encode.c:124
+#: ../libbanshee/gst-encode.c:131
 #, c-format
 msgid "Could not create encoding pipeline: %s"
 msgstr ""
 
-#: ../libbanshee/gst-encode.c:130
+#: ../libbanshee/gst-encode.c:137
 msgid "Could not create 'filesink' element"
 msgstr ""
 
-#: ../libbanshee/gst-encode.c:209
+#: ../libbanshee/gst-encode.c:219
 msgid "No decoder could be found for source format."
 msgstr "Fant ingen passende innkodingsmekanisme for kildeformatet."
 
-#: ../libbanshee/gst-encode.c:214
+#: ../libbanshee/gst-encode.c:224
 msgid "Could not stat encoded file"
 msgstr "Finner ikke innkodet fil"
 
@@ -545,8 +545,8 @@ msgid "GStreamer Engine"
 msgstr "GStreamer-kjerne"
 
 #: ../mediaengines/gst/GstPlayerEngine.cs:340
-msgid "GStreamer is a multimedia framework for playing and xmanipulating media. Any GStreamer plugin that is available will work through this engine."
-msgstr "GStreamer er et multimediarammeverk for avspilling og manipulering av media. Alle tilgjengelige GStreamer-tillegg vil virke gjennom denne kjernen."
+msgid "GStreamer is a multimedia framework for playing and manipulating media. Any GStreamer plugin that is available will work through this engine."
+msgstr "GStreamer er et multimediarammeverk for avspilling og manipulering av media. Alle tilgjengelige GStreamer-tillegg vil fungere gjennom denne kjernen."
 
 #: ../mediaengines/helix/HelixPlayer.cs:79
 msgid "Helix Framework Engine (hxclientkit)"
@@ -554,7 +554,7 @@ msgstr ""
 
 #: ../mediaengines/helix/HelixPlayer.cs:87
 msgid "The Helix Engine provides multimedia control through the Helix Multimedia Framework, sponsored by RealNetworks. The engine can play any file that RealPlayer can. Install RealPlayer for best results."
-msgstr ""
+msgstr "Helix-kjernen, sponset av RealNetworks, kan spille alle filer som er støttet av RealPlayer. Installér RealPlayer for best resultat."
 
 #: ../mediaengines/vlc/VlcPlayerEngine.cs:77
 msgid "VLC"
@@ -562,7 +562,7 @@ msgstr "VLC"
 
 #: ../mediaengines/vlc/VlcPlayerEngine.cs:85
 msgid "VLC is a highly portable multimedia player for various audio and video formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
-msgstr "VLC er en plattformuavhengig multimediavspiller for forskjellige lyd og videoformat (MP3, AAC, OGG, FLAC, WMA, osv) Se http://videolan.org/vlc/"
+msgstr "VLC er en plattformuavhengig multimedieavspiller for forskjellige lyd- og videoformat (MP3, AAC, OGG, FLAC, WMA, osv) Se http://videolan.org/vlc/"
 
 #: ../plugincore/TrackInfo.cs:158
 #: ../src/AudioCdCore.cs:150
@@ -577,11 +577,23 @@ msgstr "Ukjent Album"
 msgid "Unknown Title"
 msgstr "Ukjent Tittel"
 
-#: ../src/ActiveUserEvent.cs:71
+#: ../src/AboutBox.cs:120
+msgid ""
+"Copyright 2005 Novell, Inc.\n"
+"Copyright 2005 Aaron Bockover"
+msgstr ""
+"Opphavsrett 2005 Novell, Inc.\n"
+"Opphavsrett 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:122
+msgid "Music Management and Playback for Gnome."
+msgstr "Musikkbehandling og Avspilling for Gnome."
+
+#: ../src/ActiveUserEvent.cs:72
 msgid "Cancel Operation"
 msgstr "Avbryt Handling"
 
-#: ../src/ActiveUserEvent.cs:73
+#: ../src/ActiveUserEvent.cs:74
 #, csharp-format
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "Er du sikker på at du vil avbryte følgende handling: {0}?"
@@ -595,121 +607,90 @@ msgstr "Ukjent Album"
 msgid "Track {0}"
 msgstr "Spor {0}"
 
-#: ../src/AudioCdCore.cs:323
-#, fuzzy
+#: ../src/AudioCdCore.cs:333
 msgid "Could not initialize HAL for CD Detection"
-msgstr "Kunne ikke starte HAL for å finne CD-stasjoner"
+msgstr "Kunne ikke starte HAL for å finne CD-stasjoner/CDer"
+
+#. work around mcs #76642
+#: ../src/AudioCdCore.cs:366
+msgid "Could not Read Audio CD"
+msgstr "Kunne ikke lese lyd-CD"
 
 #: ../src/BurnCore.cs:89
-msgid "Could Not Burn CD"
+msgid "Could Not Write CD"
 msgstr "Kunne ikke brenne plate"
 
 #: ../src/BurnCore.cs:90
 msgid "No suitable wave encoder could be found to convert selected songs to CD audio format."
 msgstr "Fant ingen passende wave-koder for å konvertere valgte sanger til lyd-CD-format."
 
-#: ../src/BurnCore.cs:147
-msgid "Banshee CD Burner"
-msgstr "Banshee CD-brenner"
+#: ../src/BurnCore.cs:151
+msgid "Writing CD"
+msgstr "Skriver til platen..."
 
-#: ../src/BurnCore.cs:177
-msgid "Burning CD..."
-msgstr "Skriver til plate..."
-
-#: ../src/BurnCore.cs:240
-#: ../src/BurnCore.cs:243
-msgid "Cancel CD Burn?"
-msgstr "Avbryt skriving til plate?"
-
-#: ../src/BurnCore.cs:241
-msgid "Are you sure you want to cancel the CD Burn?"
-msgstr "Er du sikker på at du vil avbryte skrivingen til platen?"
-
-#: ../src/BurnCore.cs:326
-msgid "Initializing Burner..."
-msgstr "Starter Brenner..."
-
-#: ../src/BurnCore.cs:377
+#: ../src/BurnCore.cs:183
 msgid "The inserted media is not large enough to hold your selected music."
 msgstr "Platen i stasjonen har ikke stor nok kapasitet til å holde på musikken du har valgt."
 
-#: ../src/BurnCore.cs:379
+#: ../src/BurnCore.cs:185
 #, csharp-format
 msgid "{0} more minute is needed on the media."
 msgid_plural "{0} more minutes are needed on the media."
 msgstr[0] "{0} minutt ekstra trengs på platen."
 msgstr[1] "{0} flere minutter trengs på platen."
 
-#: ../src/BurnCore.cs:386
-#: ../src/BurnCore.cs:389
-msgid "Not Enough Space"
-msgstr "Ikke nok plass"
+#: ../src/BurnCore.cs:189
+msgid "Not Enough Space on Disc"
+msgstr "Ikke nok plass på platen"
 
-#: ../src/BurnCore.cs:429
-msgid "No CD Burners Available"
-msgstr "Ingen CD-brennere tilgjengelig"
+#: ../src/BurnCore.cs:220
+msgid "No CD writers were found on your system."
+msgstr "Ingen CD-brennere ble funnet."
 
-#: ../src/BurnCore.cs:471
-#: ../src/BurnCore.cs:485
+#: ../src/BurnCore.cs:260
 msgid "Error Burning CD"
 msgstr "Feil under skriving til plate"
 
-#: ../src/BurnCore.cs:474
+#: ../src/BurnCore.cs:264
 msgid "An unknown error occurred when attempting to write the CD"
 msgstr "En ukjent feil oppstod under skriving til platen"
 
-#: ../src/BurnCore.cs:500
-#: ../src/BurnCore.cs:506
-msgid "Data Loss Warning"
-msgstr "Advarsel om datatap"
+#: ../src/BurnCore.cs:270
+msgid "CD Writing Complete"
+msgstr "Skriving til CD fullført"
 
-#: ../src/BurnCore.cs:502
-msgid ""
-"Attempting to burn this collection may result in data loss. The selected collection may not fit on the media.\n"
-"\n"
-"Would you like to continue?"
-msgstr ""
-"Forsøk på å skrive denne samlingen til platen kan resultere i datatap. Samlingen ser ikke ut til å passe på denne platen.\n"
-"\n"
-"Vil du fortsette?"
+#: ../src/BurnCore.cs:271
+msgid "The selected audio was successfully written to the CD."
+msgstr "Valgte lydsamling ble skrevet til platen."
 
-#: ../src/BurnCore.cs:531
+#: ../src/BurnCore.cs:275
+msgid "Error Writing CD"
+msgstr "Feil under skriving til plate"
+
+#: ../src/BurnCore.cs:298
 msgid "Preparing to write..."
 msgstr "Forbereder skriving..."
 
-#: ../src/BurnCore.cs:535
+#: ../src/BurnCore.cs:302
 msgid "Writing disk..."
 msgstr "Skriver til plate..."
 
-#: ../src/BurnCore.cs:539
+#: ../src/BurnCore.cs:306
 msgid "Fixating disk..."
 msgstr "Fikserer plate..."
 
-#: ../src/BurnCore.cs:567
-msgid "Waiting for media..."
-msgstr "Venterpå media..."
+#: ../src/BurnCore.cs:323
+msgid "Waiting for Media"
+msgstr "Venter på media"
 
-#: ../src/BurnCore.cs:577
-#: ../src/BurnCore.cs:580
+#: ../src/BurnCore.cs:327
+#: ../src/BurnCore.cs:330
 msgid "Insert Blank CD"
 msgstr "Sett inn tom CD"
 
-#: ../src/BurnCore.cs:578
-msgid "Please insert a blank CD disk for the burn process."
+#: ../src/BurnCore.cs:328
+msgid "Please insert a blank CD disk for the write process."
 msgstr "Vennligst sett inn en tom CD til skriving."
-
-#: ../src/BurnCore.cs:610
-msgid "Error Burning Disk"
-msgstr "Feil under skriving til plate"
-
-#: ../src/BurnCore.cs:632
-#: ../src/BurnCore.cs:635
-msgid "CD Burning Complete"
-msgstr "CD-brenning fullført"
-
-#: ../src/BurnCore.cs:633
-msgid "The selected audio was successfully written to the CD."
-msgstr "Valgte lydsamling ble skrevet til platen."
 
 #: ../src/Dialogs.cs:80
 msgid "Cannot Rename Playlist"
@@ -718,6 +699,14 @@ msgstr "Kan ikke endre navn på spillelisten"
 #: ../src/Dialogs.cs:81
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "En spilleliste med dette navnet eksisterer allerede. Vennligst velg et annet navn."
+
+#: ../src/Dialogs.cs:90
+msgid "An Error Occurred"
+msgstr "En feil oppstod"
+
+#: ../src/Dialogs.cs:97
+msgid "Error"
+msgstr "Feil"
 
 #: ../src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
@@ -731,20 +720,20 @@ msgstr "Dette kan være på grunn av en feil i programmeringen. Vennligst hjelp 
 msgid "An unhandled exception was thrown: "
 msgstr ""
 
-#: ../src/FileEncodeTransaction.cs:61
+#: ../src/FileEncodeTransaction.cs:67
 msgid "File Encoder"
 msgstr "Filkonverterer"
 
-#: ../src/FileEncodeTransaction.cs:69
+#: ../src/FileEncodeTransaction.cs:70
 msgid "Initializing Encoder..."
 msgstr "Starter konverterer..."
 
-#: ../src/FileEncodeTransaction.cs:93
+#: ../src/FileEncodeTransaction.cs:101
 #, csharp-format
 msgid "Encoding {0} - {1} ..."
 msgstr "Konverterer {0} - {1}..."
 
-#: ../src/FileEncodeTransaction.cs:97
+#: ../src/FileEncodeTransaction.cs:105
 msgid "Encoding files..."
 msgstr "Konverterer filer..."
 
@@ -757,20 +746,20 @@ msgstr "Kunne ikke opprette koverterer"
 msgid "Could not encode file: {0}"
 msgstr "Kunne ikke konvertere denne filen: {0}"
 
-#: ../src/IpodCore.cs:191
+#: ../src/IpodCore.cs:189
 msgid "Syncing iPod"
 msgstr "Synkronisérer iPod"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/IpodCore.cs:463
-#: ../src/Library.cs:483
-#: ../src/PlayerInterface.cs:804
+#: ../src/IpodCore.cs:484
+#: ../src/Library.cs:495
+#: ../src/PlayerInterface.cs:909
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} av {1}"
 
-#: ../src/IpodCore.cs:472
-#: ../src/Library.cs:494
+#: ../src/IpodCore.cs:493
+#: ../src/Library.cs:506
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} Gjenstår)"
@@ -806,7 +795,7 @@ msgstr "Kapasitet"
 
 #: ../src/IpodPropertiesWindow.cs:134
 msgid "Volume Usage"
-msgstr "Bruk av kapasitet"
+msgstr "Brukt kapasitet"
 
 #: ../src/IpodPropertiesWindow.cs:141
 msgid "Mount Point"
@@ -814,7 +803,7 @@ msgstr "Monteringspunkt"
 
 #: ../src/IpodPropertiesWindow.cs:142
 msgid "Device Node"
-msgstr ""
+msgstr "Maskinnode"
 
 #: ../src/IpodPropertiesWindow.cs:143
 msgid "Write Support"
@@ -830,7 +819,7 @@ msgstr "Nei"
 
 #: ../src/IpodPropertiesWindow.cs:145
 msgid "Volume UUID"
-msgstr ""
+msgstr "Volum-UUID"
 
 #: ../src/IpodPropertiesWindow.cs:146
 msgid "Serial Number"
@@ -848,17 +837,17 @@ msgstr "Databaseversjon"
 msgid "Advanced Details"
 msgstr "Avanserte detaljer"
 
-#: ../src/Library.cs:259
+#: ../src/Library.cs:271
 msgid "Library"
 msgstr "Bibliotek"
 
-#: ../src/Library.cs:473
+#: ../src/Library.cs:485
 #: ../src/Utilities.cs:123
 #, csharp-format
 msgid "{0} GB"
 msgstr "{0} GB"
 
-#: ../src/Library.cs:475
+#: ../src/Library.cs:487
 #: ../src/Utilities.cs:125
 #, csharp-format
 msgid "{0} MB"
@@ -888,116 +877,155 @@ msgid_plural "Really Cancel Operations?"
 msgstr[0] "Virkelig avbryte handlingen?"
 msgstr[1] "Virkelig avbryte handlingene?"
 
-#: ../src/LibraryTransactions.cs:96
-#, csharp-format
-msgid "{0} threw an unhandled exception: ending transaction safely: {1} ({2})"
+#: ../src/LibraryTransactions.cs:95
+#, fuzzy
+msgid "Unhandled Exception, ending IO Transaction safely"
 msgstr "{0} opplevde en uhåndtert feil. Avbryter handlingen på sikkert vis. {1} ({2})"
 
-#: ../src/LibraryTransactions.cs:216
-#: ../src/LibraryTransactions.cs:573
+#: ../src/LibraryTransactions.cs:212
+#: ../src/LibraryTransactions.cs:587
 msgid "Library Track Loader"
-msgstr ""
+msgstr "Lasting av spor i bibliotek"
 
-#: ../src/LibraryTransactions.cs:238
-#: ../src/LibraryTransactions.cs:592
-#: ../src/LibraryTransactions.cs:701
+#: ../src/LibraryTransactions.cs:241
+#: ../src/LibraryTransactions.cs:606
+#: ../src/LibraryTransactions.cs:715
 msgid "Processing"
 msgstr "Behandler"
 
-#: ../src/LibraryTransactions.cs:258
+#: ../src/LibraryTransactions.cs:268
 msgid "Preloading Files"
 msgstr "Forhåndslaster filer"
 
-#: ../src/LibraryTransactions.cs:308
-#: ../src/LibraryTransactions.cs:457
-#: ../src/LibraryTransactions.cs:599
-#: ../src/LibraryTransactions.cs:723
+#: ../src/LibraryTransactions.cs:322
+#: ../src/LibraryTransactions.cs:471
+#: ../src/LibraryTransactions.cs:613
+#: ../src/LibraryTransactions.cs:740
 #, csharp-format
 msgid "Loading {0} - {1} ..."
 msgstr "Laster {0} - {1} ..."
 
-#: ../src/LibraryTransactions.cs:376
-msgid "Playlist Save"
-msgstr ""
-
 #: ../src/LibraryTransactions.cs:390
+msgid "Playlist Save"
+msgstr "Lagring av spilleliste"
+
+#: ../src/LibraryTransactions.cs:404
 msgid "Flushing old entries"
 msgstr "Fjerner gamle spor"
 
-#: ../src/LibraryTransactions.cs:404
+#: ../src/LibraryTransactions.cs:418
 msgid "Saving new entries"
 msgstr "Lagrer nye spor"
 
-#: ../src/LibraryTransactions.cs:433
+#: ../src/LibraryTransactions.cs:447
 msgid "Library Load"
-msgstr ""
+msgstr "Lasting av bibliotek"
 
-#: ../src/LibraryTransactions.cs:444
+#: ../src/LibraryTransactions.cs:458
 msgid "Preloading Library"
 msgstr "Forhåndslaster bibliotek"
 
-#: ../src/LibraryTransactions.cs:486
+#: ../src/LibraryTransactions.cs:500
 msgid "Library Track Remove"
-msgstr ""
+msgstr "Fjerning av spor fra bibliotek"
 
-#: ../src/LibraryTransactions.cs:492
-#: ../src/LibraryTransactions.cs:536
+#: ../src/LibraryTransactions.cs:506
+#: ../src/LibraryTransactions.cs:550
 msgid "Removing Tracks"
 msgstr "Fjerner spor"
 
-#: ../src/LibraryTransactions.cs:505
-#: ../src/LibraryTransactions.cs:551
+#: ../src/LibraryTransactions.cs:519
+#: ../src/LibraryTransactions.cs:565
 #, csharp-format
 msgid "Removing {0} - {1}"
 msgstr "Fjerner {0} - {1}"
 
-#: ../src/LibraryTransactions.cs:511
+#: ../src/LibraryTransactions.cs:525
 msgid "Purging Removed Tracks from Library..."
 msgstr "Fjerner slettede spor fra biblioteket..."
 
-#: ../src/LibraryTransactions.cs:525
-#, fuzzy
+#: ../src/LibraryTransactions.cs:539
 msgid "Playlist Track Remove"
 msgstr "Fjerning av spor fra spilleliste"
 
-#: ../src/LibraryTransactions.cs:558
+#: ../src/LibraryTransactions.cs:572
 msgid "Purging Removed Tracks from Playlist..."
 msgstr "Fjerner slettede spor fra spilleliste..."
 
-#: ../src/LibraryTransactions.cs:620
+#: ../src/LibraryTransactions.cs:634
 msgid "Could not load track from library"
 msgstr "Kunne ikke laste spor fra biblioteket"
 
-#: ../src/LibraryTransactions.cs:683
+#: ../src/LibraryTransactions.cs:697
 msgid "Playlist Track Loader"
+msgstr "Lasting av spor i spilleliste"
+
+#: ../src/LogCoreViewer.cs:50
+msgid "Log Viewer"
+msgstr "Loggvisning"
+
+#: ../src/LogCoreViewer.cs:86
+msgid "Time Stamp"
+msgstr "Datostempel"
+
+#: ../src/LogCoreViewer.cs:105
+msgid "Message"
+msgstr "Melding"
+
+#: ../src/LogCoreViewer.cs:117
+msgid "Show:"
+msgstr "Vis:"
+
+#: ../src/LogCoreViewer.cs:134
+msgid "All Log Entries"
 msgstr ""
 
-#: ../src/NotificationAreaIcon.cs:104
+#: ../src/LogCoreViewer.cs:135
+msgid "Only Error Messages"
+msgstr "Bare feilmeldinger"
+
+#: ../src/LogCoreViewer.cs:136
+msgid "Only Warning Messages"
+msgstr "Bare varselmeldinger"
+
+#: ../src/LogCoreViewer.cs:137
+msgid "Only Information Messages"
+msgstr "Bare informasjonsmeldinger"
+
+#: ../src/LogCoreViewer.cs:138
+msgid "Only Debug Messages"
+msgstr "Bare avlusingsmeldinger"
+
+#: ../src/LogCoreViewer.cs:153
+msgid "Entry Details:"
+msgstr "Detaljer:"
+
+#: ../src/NotificationAreaIcon.cs:113
 msgid "Play / Pause"
 msgstr "Spill / Pause"
 
-#: ../src/NotificationAreaIcon.cs:109
+#: ../src/NotificationAreaIcon.cs:118
 #: ../src/StockIcons.cs:55
 msgid "Previous"
 msgstr "Forrige"
 
 #. Playback Control Icons
-#: ../src/NotificationAreaIcon.cs:115
+#: ../src/NotificationAreaIcon.cs:124
 #: ../src/StockIcons.cs:54
 msgid "Next"
 msgstr "Neste"
 
-#: ../src/NotificationAreaIcon.cs:122
+#: ../src/NotificationAreaIcon.cs:131
 #: ../src/StockIcons.cs:58
 msgid "Shuffle"
 msgstr "Tilfeldig"
 
-#: ../src/NotificationAreaIcon.cs:127
+#: ../src/NotificationAreaIcon.cs:136
 #: ../src/StockIcons.cs:59
 msgid "Repeat"
 msgstr "Gjentagelse"
 
-#: ../src/NotificationAreaIcon.cs:134
+#: ../src/NotificationAreaIcon.cs:143
 msgid "Quit Banshee"
 msgstr "Avslutt Banshee"
 
@@ -1038,116 +1066,117 @@ msgstr ""
 
 #: ../src/PipelineProfile.cs:215
 msgid "Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new PipelineProfile(profile))"
-msgstr ""
+msgstr "Kunne ikke sette intern bitrate. Må kopiere profil og sette bitrate ved kopiering (new PipelineProfile(profile))"
 
 #: ../src/PipelineProfile.cs:370
 msgid "at"
-msgstr ""
+msgstr "ved"
 
 #: ../src/PipelineProfile.cs:412
 msgid "No iPod-compatible encoders available"
 msgstr "Ingen iPod-kompatible innkodere tilgjengelig"
 
-#: ../src/PlayerInterface.cs:263
+#: ../src/PlayerInterface.cs:274
 msgid "Loading..."
 msgstr "Laster..."
 
 #. gxml["IpodContainer"].Visible = false;
 #. Misc
-#: ../src/PlayerInterface.cs:343
-#: ../src/PlayerInterface.cs:2194
+#: ../src/PlayerInterface.cs:356
+#: ../src/PlayerInterface.cs:2355
 #: ../src/TrackInfoHeader.cs:136
 msgid "Idle"
 msgstr "Inaktiv"
 
-#: ../src/PlayerInterface.cs:351
+#: ../src/PlayerInterface.cs:364
 msgid "All"
 msgstr "Alle"
 
-#: ../src/PlayerInterface.cs:353
-#: ../src/PlayerInterface.cs:1751
+#: ../src/PlayerInterface.cs:366
+#: ../src/PlayerInterface.cs:1898
 msgid "Song Name"
-msgstr "Sangens navn"
+msgstr "Sangtittel"
 
-#: ../src/PlayerInterface.cs:354
-#: ../src/PlayerInterface.cs:1749
+#: ../src/PlayerInterface.cs:367
+#: ../src/PlayerInterface.cs:1896
 msgid "Artist Name"
-msgstr "Artistens navn"
+msgstr "Artistnavn"
 
-#: ../src/PlayerInterface.cs:355
-#: ../src/PlayerInterface.cs:1753
+#: ../src/PlayerInterface.cs:368
+#: ../src/PlayerInterface.cs:1900
 msgid "Album Title"
 msgstr "Albumtittel"
 
-#: ../src/PlayerInterface.cs:365
+#: ../src/PlayerInterface.cs:378
 msgid "Create New Playlist"
 msgstr "Lag Ny Spilleliste"
 
-#: ../src/PlayerInterface.cs:366
+#: ../src/PlayerInterface.cs:379
 msgid "Toggle Shuffle Playback Mode"
 msgstr "Veksle tilfeldig avspilling"
 
-#: ../src/PlayerInterface.cs:367
+#: ../src/PlayerInterface.cs:380
 msgid "Toggle Repeat Playback Mode"
 msgstr "Veksle gjentagelsesavspilling"
 
-#: ../src/PlayerInterface.cs:368
+#: ../src/PlayerInterface.cs:381
 msgid "View Selected Song Information"
-msgstr "Vis informasjon for valgte sang"
+msgstr "Vis informasjon om valgt(e) sang(er)"
 
-#: ../src/PlayerInterface.cs:369
-msgid "Burn Selection to CD"
-msgstr "Brenn utvalg til CD"
+#: ../src/PlayerInterface.cs:382
+msgid "Write Selection to CD"
+msgstr "Skriv valgte spor til CD"
 
-#: ../src/PlayerInterface.cs:370
-msgid "Rip CD into Library"
+#: ../src/PlayerInterface.cs:383
+msgid "Import CD into Library"
 msgstr "Legg CD inn i Biblioteket"
 
-#: ../src/PlayerInterface.cs:371
+#: ../src/PlayerInterface.cs:384
 msgid "Play Previous Song"
 msgstr "Spill forrige sang"
 
-#: ../src/PlayerInterface.cs:372
+#: ../src/PlayerInterface.cs:385
 msgid "Play/Pause Current Song"
 msgstr "Spill / Pause nåværende sang"
 
-#: ../src/PlayerInterface.cs:373
+#: ../src/PlayerInterface.cs:386
 msgid "Play Next Song"
 msgstr "Spill neste sang"
 
-#: ../src/PlayerInterface.cs:374
+#: ../src/PlayerInterface.cs:387
 msgid "Current Position in Song"
 msgstr "Nåværende posisjon i sang"
 
-#: ../src/PlayerInterface.cs:375
+#: ../src/PlayerInterface.cs:388
 msgid "Adjust Volume"
 msgstr "Still volum"
 
-#: ../src/PlayerInterface.cs:376
+#: ../src/PlayerInterface.cs:389
 msgid "iPod Disk Usage"
 msgstr "iPod-diskbruk"
 
-#: ../src/PlayerInterface.cs:377
+#: ../src/PlayerInterface.cs:390
 msgid "Eject iPod"
 msgstr "Koble fra iPod"
 
-#: ../src/PlayerInterface.cs:378
+#: ../src/PlayerInterface.cs:391
+#: ../src/PlayerInterface.cs:392
 msgid "Synchronize Music Library to iPod"
 msgstr "Synkronisér musikkbiblioteket til iPod"
 
-#: ../src/PlayerInterface.cs:379
+#: ../src/PlayerInterface.cs:393
 msgid "View iPod Properties"
 msgstr "Vis egenskaper for iPod"
 
-#: ../src/PlayerInterface.cs:404
+#: ../src/PlayerInterface.cs:424
 msgid "Notification Area Icon could not be installed"
 msgstr "Varslingsområde-ikon kunne ikke installeres"
 
-#: ../src/PlayerInterface.cs:441
+#: ../src/PlayerInterface.cs:462
 msgid "Import Music"
 msgstr "Importér Musikk"
 
-#: ../src/PlayerInterface.cs:442
+#: ../src/PlayerInterface.cs:463
 msgid ""
 "Your music library is empty. You may import new music into your library now, or choose to do so later.\n"
 "\n"
@@ -1157,33 +1186,38 @@ msgstr ""
 "\n"
 "Automatisk importering eller importering av en stor mappe kan ta lang tid, så vær tålmodig."
 
-#: ../src/PlayerInterface.cs:446
+#: ../src/PlayerInterface.cs:467
 msgid "Import Folder"
 msgstr "Importér Mappe"
 
-#: ../src/PlayerInterface.cs:448
+#: ../src/PlayerInterface.cs:469
 msgid "Automatic Import"
 msgstr "Automatisk Importering"
 
-#: ../src/PlayerInterface.cs:890
+#: ../src/PlayerInterface.cs:587
+#, fuzzy
+msgid "Position:"
+msgstr "Posisjon:"
+
+#: ../src/PlayerInterface.cs:995
 msgid "Import Folder to Library"
 msgstr "Importér Mappe til Biblioteket"
 
-#: ../src/PlayerInterface.cs:947
+#: ../src/PlayerInterface.cs:1052
 msgid "Import Files to Library"
 msgstr "Importér Filer til Biblioteket"
 
-#: ../src/PlayerInterface.cs:1038
+#: ../src/PlayerInterface.cs:1161
 #, csharp-format
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>{0}s Musikkbibliotek</b>"
 
-#: ../src/PlayerInterface.cs:1207
-#: ../src/PlayerInterface.cs:1237
+#: ../src/PlayerInterface.cs:1337
+#: ../src/PlayerInterface.cs:1367
 msgid "Synchronize iPod"
 msgstr "Synkronisér iPod"
 
-#: ../src/PlayerInterface.cs:1208
+#: ../src/PlayerInterface.cs:1338
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the contents of your iPod.\n"
 "\n"
@@ -1199,96 +1233,99 @@ msgstr ""
 "\n"
 "<b>Advarsel:</b>Handlingene vil endre eller slette eksisterende iPod-innhold og kan føre til inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:1213
-#: ../src/PlayerInterface.cs:1241
+#: ../src/PlayerInterface.cs:1343
+#: ../src/PlayerInterface.cs:1371
 msgid "Synchronize Library"
 msgstr "Synkronisér Bibliotek"
 
-#: ../src/PlayerInterface.cs:1214
+#: ../src/PlayerInterface.cs:1344
 msgid "Save Manual Changes"
 msgstr "Lagre Manuelle Endringer"
 
-#: ../src/PlayerInterface.cs:1238
+#: ../src/PlayerInterface.cs:1368
 msgid "Are you sure you want to synchronize your iPod with your Banshee library? This will <b>erase</b> the contents of your iPod and then copy the contents of your Banshee library."
 msgstr "Er du sikker på at du vil synkronisere iPoden din med Banshee-biblioteket? Dette vil <b>slette</b> innholdet på iPoden for så å kopiere over innholdet i Banshee-biblioteket."
 
-#: ../src/PlayerInterface.cs:1328
+#: ../src/PlayerInterface.cs:1458
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dager"
 
-#: ../src/PlayerInterface.cs:1345
+#: ../src/PlayerInterface.cs:1476
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Biblioteket er tomt - På tide å importere litt musikk?"
 
-#: ../src/PlayerInterface.cs:1349
+#: ../src/PlayerInterface.cs:1480
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "Denne spillelisten er tom - På tide å legge til litt musikk?"
 
-#: ../src/PlayerInterface.cs:1354
-#, fuzzy, csharp-format
+#: ../src/PlayerInterface.cs:1484
+#, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} spor"
 msgstr[1] "{0} spor"
 
-#: ../src/PlayerInterface.cs:1358
+#: ../src/PlayerInterface.cs:1486
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "Total spilletid: {0}"
 
-#: ../src/PlayerInterface.cs:1426
+#: ../src/PlayerInterface.cs:1569
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file."
 msgid_plural "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files."
 msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket <i><b>i tillegg</b></i> til fra harddisken? Denne handlingen vil slette filen permanent."
 msgstr[1] "Er du sikker på at du vil fjerne de {0} valgte sangene fra biblioteket <i><b>i tillegg</b></i> til fra harddisken? Denne handlingen vil slette filene permanent."
 
-#: ../src/PlayerInterface.cs:1433
+#: ../src/PlayerInterface.cs:1576
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected <b>({0})</b> songs from your library?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket?"
+msgstr[1] "Er du sikker på at du vil fjerne de <b>{0}</b> valgte sangene fra biblioteket?"
 
-#: ../src/PlayerInterface.cs:1442
+#: ../src/PlayerInterface.cs:1585
 msgid "Remove Selected Songs from Library"
 msgstr "Fjern valgte sanger fra Biblioteket"
 
-#: ../src/PlayerInterface.cs:1662
+#: ../src/PlayerInterface.cs:1805
 msgid "Enter new playlist name"
-msgstr "Skriv inn navn på ny spilleliste"
+msgstr "Skriv inn nytt navn på spilleliste"
 
-#: ../src/PlayerInterface.cs:1666
+#: ../src/PlayerInterface.cs:1810
 msgid "Rename iPod"
 msgstr "Endre iPodens navn"
 
-#: ../src/PlayerInterface.cs:1667
+#: ../src/PlayerInterface.cs:1811
 msgid "Enter new name for your iPod"
 msgstr "Skriv inn nytt navn for iPoden"
 
-#: ../src/PlayerInterface.cs:1914
-#, fuzzy
+#: ../src/PlayerInterface.cs:2061
 msgid "Clear"
 msgstr "Tøm"
 
-#: ../src/PlayerInterface.cs:2137
+#: ../src/PlayerInterface.cs:2298
 msgid "Invalid Selection"
 msgstr "Ugyldig valg"
 
-#: ../src/PlayerInterface.cs:2138
+#: ../src/PlayerInterface.cs:2299
 msgid "You must select at least one track to import."
 msgstr "Du må velge minst ett spor til importering."
 
-#: ../src/PlayerInterface.cs:2162
+#: ../src/PlayerInterface.cs:2323
 msgid "Could Not Eject"
 msgstr "Kunne ikke løse ut / koble fra"
 
-#: ../src/PlayerInterface.cs:2199
+#: ../src/PlayerInterface.cs:2360
 msgid "Banshee - Idle"
 msgstr "Banshee - Inaktiv"
+
+#: ../src/PlayerInterface.cs:2413
+msgid "Synchronizing your iPod, Please Wait..."
+msgstr "Synkroniserer iPod, vennligst vent..."
 
 #: ../src/PlaylistColumns.cs:80
 msgid "Invalid column width"
@@ -1339,50 +1376,48 @@ msgstr "Avspillinger"
 
 #: ../src/PlaylistView.cs:102
 msgid "Last Played"
-msgstr "Sist avspilt"
+msgstr "Sist spilt"
 
 #: ../src/PlaylistView.cs:417
-#, fuzzy
 msgid "N/A"
 msgstr "-"
 
-#: ../src/Preferences.cs:168
-msgid "Select Banshee Library Location"
+#: ../src/Preferences.cs:96
+msgid "Select Library Location"
 msgstr "Velg mappe for Banshees musikkbibliotek"
 
-#: ../src/Preferences.cs:269
+#: ../src/Preferences.cs:262
 msgid "Unavailable"
 msgstr "Utilgjengelig"
 
-#: ../src/Preferences.cs:275
+#: ../src/Preferences.cs:268
 msgid "Loading Drive List..."
 msgstr "Laster liste over stasjoner"
 
-#: ../src/Preferences.cs:298
+#: ../src/Preferences.cs:291
 msgid "No CD Burners Detected"
 msgstr "Ingen CD-brennere ble funnet"
 
-#: ../src/Preferences.cs:396
+#: ../src/Preferences.cs:389
 msgid "Fastest Possible"
 msgstr "Høyest mulig"
 
 #. Translators: this represents a CD write speed, eg "32x"
-#: ../src/Preferences.cs:400
+#: ../src/Preferences.cs:393
 #, csharp-format
 msgid "{0}x"
 msgstr "{0}x"
 
-#: ../src/Preferences.cs:551
+#: ../src/Preferences.cs:544
 #, csharp-format
 msgid "You have changed the Banshee Playback Engine. This change will not take affect until the next time Banshee is run. Please restart Banshee to use the new <b><i>{0}</i></b> Engine"
 msgstr "Du har skiftet avspillingskjerne. Denne endringen vil ikke tre i kraft før Banshee har blitt startet på nytt. Vennligst start Banshee på nytt for å bruke den nye <b><i>{0}</i></b>-kjernen"
 
-#: ../src/Preferences.cs:559
+#: ../src/Preferences.cs:552
 msgid "Banshee Restart Required"
 msgstr "Omstart av Banshee er nødvendig"
 
 #: ../src/RipTransaction.cs:66
-#, fuzzy
 msgid "Could not create CD Ripper"
 msgstr "Kunne ikke opprette CD-ripper"
 
@@ -1395,7 +1430,7 @@ msgstr ""
 msgid "Initializing CD Drive"
 msgstr "Starter CD-spilleren"
 
-#: ../src/RipTransaction.cs:220
+#: ../src/RipTransaction.cs:219
 #, csharp-format
 msgid "Ripping {0} of {1} : {2} - {3}"
 msgstr "Legger inn {0} av {1} : {2} - {3}"
@@ -1442,11 +1477,6 @@ msgstr "Skru ned volum"
 #: ../src/StockIcons.cs:68
 msgid "Volume Increase"
 msgstr "Skru opp volum"
-
-#: ../src/StockIcons.cs:77
-#, fuzzy
-msgid "Rip CD"
-msgstr "Legg inn CD"
 
 #: ../src/TrackInfoHeader.cs:134
 msgid "Banshee Player"
@@ -1497,4 +1527,16 @@ msgstr "Redigerer sporinformasjon"
 #, csharp-format
 msgid "File: {0}"
 msgstr "Fil: {0}"
+
+#: ../src/VersionInformationDialog.cs:59
+msgid "Assembly Version Information"
+msgstr "Assembly-versjonsinformasjon"
+
+#: ../src/VersionInformationDialog.cs:65
+msgid "Assembly Name"
+msgstr ""
+
+#: ../src/VersionInformationDialog.cs:67
+msgid "Version"
+msgstr "Versjon"
 
