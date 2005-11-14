@@ -1,5 +1,6 @@
 2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LibraryTrackInfo.cs: Always use PathUtil.PathToFileUri()
 	* data/glade/player.glade: Emit OnScaleTimeMoveSlider for MotionNotifyEvent
 	* src/PlayerInterface.cs: Update the position label when the slider is 
 	dragged, enables better seeking (Ruben Vermeersch)
