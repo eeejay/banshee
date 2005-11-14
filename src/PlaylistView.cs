@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  PlaylistView.cs
  *
@@ -452,13 +451,13 @@ namespace Banshee
         {
             model.PlayPath(path);
             QueueDraw();
-            ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.0f);
+            ScrollToPlaying();
         }
         
         public void UpdateView()
         {
             QueueDraw();
-            ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.5f);
+            ScrollToPlaying();
         }
         
         public void ThreadedQueueDraw()
@@ -466,6 +465,21 @@ namespace Banshee
             Application.Invoke(delegate {
                 QueueDraw();
             });
+        }
+
+        public void ScrollToPlaying()
+        {
+            Gdk.Rectangle cellRect = GetCellArea (model.PlayingPath, Columns[0]);
+
+            Point point = new Point ();
+            WidgetToTreeCoords (cellRect.Left, cellRect.Top, out point.X, out point.Y);
+            cellRect.Location = point;
+
+            // we only care about vertical bounds
+            if (cellRect.Location.Y < VisibleRect.Location.Y ||
+                cellRect.Location.Y + cellRect.Size.Height > VisibleRect.Location.Y + VisibleRect.Size.Height) {
+                ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.0f);
+            }
         }
         
         //QueueDraw();

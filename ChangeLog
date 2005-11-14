@@ -1,3 +1,8 @@
+2005-11-14  James Willcox  <snorp@snorp.net
+
+	* src/PlaylistView.cs: only scroll to the playing song if it is
+	outside the current viewable area.
+
 2005-11-13  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AboutBox.cs: Added Doğacan Güney
