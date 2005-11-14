@@ -41,7 +41,7 @@ namespace Banshee
             "Aaron Bockover",
             "Dan Winship",
             "Hans Petter Jansson",
-            "James Wilcox",
+            "James Willcox",
             "Chris Lahey",
             "Ben Maurer",
             "Larry Ewing",
