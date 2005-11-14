@@ -497,6 +497,7 @@
 		  <signal name="button_press_event" handler="OnScaleTimeButtonPressEvent" last_modification_time="Mon, 08 Aug 2005 06:36:26 GMT"/>
 		  <signal name="button_release_event" handler="OnScaleTimeButtonReleaseEvent" last_modification_time="Mon, 08 Aug 2005 06:40:16 GMT"/>
 		  <signal name="move_slider" handler="OnScaleTimeMoveSlider" last_modification_time="Mon, 08 Aug 2005 06:56:54 GMT"/>
+		  <signal name="motion_notify_event" handler="OnScaleTimeMoveSlider" last_modification_time="Sun, 13 Nov 2005 20:30:49 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">3</property>
