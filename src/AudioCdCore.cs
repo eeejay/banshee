@@ -148,7 +148,7 @@ namespace Banshee
                 track.Duration = mb_track.Length;
                 track.TrackIndex = mb_track.Index;
                 track.Artist = Catalog.GetString("Unknown Artist");
-                track.Album = Catalog.GetString("Unkown Album");
+                track.Album = Catalog.GetString("Unknown Album");
                 track.Title = String.Format(Catalog.GetString("Track {0}"), mb_track.Index);
                 
                 track_list.Add(track);
