@@ -63,6 +63,11 @@ namespace Banshee
             return new Uri(builder.ToString(), true);
         }
         
+        public static string FileUriStringToPath(string uri)
+        {
+            return FileUriToPath(new Uri(uri));
+        }
+        
         public static string FileUriToPath(Uri uri)
         {
             return uri.LocalPath;
@@ -85,7 +90,7 @@ namespace Banshee
             return Convert.ToChar(digit).ToString();
         }    
                 
-        public static string UriEscape(string uri)
+        /*public static string UriEscape(string uri)
         {
             return Regex.Replace(uri, "%([0-9A-Fa-f][0-9A-Fa-f])", 
                 new MatchEvaluator(RegexHexConvert));
@@ -94,7 +99,7 @@ namespace Banshee
         public static string UriToFileName(string uri)
         {
             return new Uri(uri).LocalPath;
-        }
+        }*/
         
         public static string UcFirst(string str)
         {
@@ -189,6 +194,34 @@ namespace Banshee
             O_DIRECT    = 0x00004000,
             O_ASYNC     = 0x00002000,
             O_LARGEFILE = 0x00008000
+        }
+    }
+
+    public class Timer : IDisposable
+    {
+        private DateTime start;
+        private string label;
+        
+        public Timer(string label) 
+        {
+            this.label = label;
+            start = DateTime.Now;
+        }
+
+        public TimeSpan ElapsedTime {
+            get {
+                return DateTime.Now - start;
+            }
+        }
+
+        public void WriteElapsed(string message)
+        {
+            Console.WriteLine("{0} {1} {2}", label, message, ElapsedTime);
+        }
+
+        public void Dispose()
+        {
+            WriteElapsed("timer stopped:");
         }
     }
 }
