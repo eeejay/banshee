@@ -15,7 +15,7 @@ namespace Banshee.FileSystemMonitor
     
         public InotifyWatch(ArrayList im, ArrayList rm, string folder) : base(im, rm, folder) 
         {
-            RecurseDirectory(StringUtil.UriToFileName(musicFolder));
+            RecurseDirectory(PathUtil.FileUriStringToPath(musicFolder));
             Inotify.Verbose = verbose;
             Inotify.Start();
         }

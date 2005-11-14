@@ -12,7 +12,7 @@ namespace Banshee.FileSystemMonitor
         public FileSystemWatcherWatch(ArrayList im, ArrayList rm, string folder) : base(im, rm, folder)
         {
             watchMap = new Hashtable();
-            RecurseDirectory(StringUtil.UriToFileName(musicFolder));
+            RecurseDirectory(PathUtil.FileUriStringToPath(musicFolder));
         }
                 
         public override bool IsWatching(string path)

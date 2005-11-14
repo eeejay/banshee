@@ -258,8 +258,8 @@ namespace Banshee
                     continue;
                 }
                     
-                string file = StringUtil.UriToFileName(uri.Trim()).Trim();
-                
+                string file = PathUtil.FileUriStringToPath(uri.Trim());
+                                
                 if(file.Length == 0) {
                     continue;
                 }

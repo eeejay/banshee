@@ -227,7 +227,7 @@ namespace Banshee
             trackNumber = 0;
             Match match;
 
-            string fileName = StringUtil.UriEscape(path);
+            string fileName = PathUtil.FileUriToPath(PathUtil.PathToFileUri(path));
             fileName = Path.GetFileNameWithoutExtension(fileName);
         
             match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
