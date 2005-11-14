@@ -1,4 +1,27 @@
-2005-11-14  James Willcox  <snorp@snorp.net
+2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/glade/player.glade: Emit OnScaleTimeMoveSlider for MotionNotifyEvent
+	* src/PlayerInterface.cs: Update the position label when the slider is 
+	dragged, enables better seeking (Ruben Vermeersch)
+	* src/TrackInfoHeader.cs: Don't escape entities twice
+	* data/banshee.schemas.in: Added /apps/banshee/EnableFileSystemMonitoring;
+	fixed typo
+	* src/AudioCdCore.cs: Fixed typo
+	* src/PlayerInterface.cs: Respect --play on new instance after the library
+	has loaded 
+	* src/PlayerInterface.cs:
+	* src/PlaylistView.cs: call playlistModel.Advance() if nothing is loaded
+	in the engine and playlistView.PlaySelected() fails (pressing "play" on 
+	first start will play work) (Ruben Vermeersch)
+	* src/LibraryTrackInfo.cs:
+	* src/LibraryTransactions.cs:
+	* src/FileSystemMonitor/FileSystemWatcherWatch.cs:
+	* src/FileSystemMonitor/InotifyWatch.cs: change to use 
+	PathUtil.FileUriStringToPath
+	* src/Utilities.cs: Added Timer class from F-Spot; added 
+	PathUtil.FileUriStringToPath to replace StringUtil path methods 
+
+2005-11-14  James Willcox  <snorp@snorp.net>
 
 	* src/PlaylistView.cs: only scroll to the playing song if it is
 	outside the current viewable area.
