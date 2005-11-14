@@ -346,10 +346,10 @@ namespace Banshee
         {
             CellRendererToggle toggle = (CellRendererToggle)cell;
             AudioCdTrackInfo ti = model.IterTrackInfo(iter) as AudioCdTrackInfo;
-			if (ti != null)
-				toggle.Active = ti.CanRip;
-			else
-				toggle.Active = false;
+            if (ti != null)
+                toggle.Active = ti.CanRip;
+            else
+                toggle.Active = false;
         }
         
         protected void SyncCellInd(TreeViewColumn tree_column,
@@ -680,18 +680,19 @@ namespace Banshee
         */
         
         
-        public void PlaySelected()
+        public bool PlaySelected()
         {
             TreeIter selIter;
             
             try {
                 if(!model.GetIter(out selIter, Selection.GetSelectedRows()[0]))
-                    return;
+                    return false;
             } catch(Exception) {
-                return;
+                return false;
             }
             
             model.PlayIter(selIter);
+            return true;
         }
         
         public void AddSelectedToPlayList(string name)
