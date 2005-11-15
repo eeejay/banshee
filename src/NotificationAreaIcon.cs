@@ -147,12 +147,21 @@ namespace Banshee
 
             traymenu.ShowAll();
         }
-        
-        private void PositionMenu(Menu menu, out int x, out int y, 
-            out bool push_in)
+ 
+        private void PositionMenu(Menu menu, out int x, out int y, out bool push_in)
         {
-            x = menu_x;
-            y = menu_y + 22;
+            int button_y, panel_width, panel_height;
+            Gtk.Requisition requisition = menu.SizeRequest();
+            
+            traybox.GdkWindow.GetOrigin(out x, out button_y);
+            (traybox.Toplevel as Gtk.Window).GetSize(out panel_width, out panel_height);
+            
+            if(button_y + panel_height + requisition.Height >= traybox.Screen.Height) {
+                y = button_y - requisition.Height;
+            } else {
+                y = button_y + panel_height;
+            }
+
             push_in = true;
         }
         

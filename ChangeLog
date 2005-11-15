@@ -1,5 +1,7 @@
 2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/NotificationAreaIcon.cs (PositionMenu): Properly position the menu
+	based on panel size and location (Fixes #315227)
 	* src/LibraryTrackInfo.cs: Always use PathUtil.PathToFileUri()
 	* data/glade/player.glade: Emit OnScaleTimeMoveSlider for MotionNotifyEvent
 	* src/PlayerInterface.cs: Update the position label when the slider is 
