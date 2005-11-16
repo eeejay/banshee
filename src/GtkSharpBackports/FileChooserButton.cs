@@ -4,7 +4,7 @@ namespace GtkSharpBackports {
 	using System.Collections;
 	using System.Runtime.InteropServices;
 
-	public  class FileChooserButton : Gtk.HBox, Gtk.FileChooser {
+	public  class FileChooserButton : Gtk.HBox {
 
 		~FileChooserButton()
 		{
