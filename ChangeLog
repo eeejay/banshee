@@ -1,3 +1,14 @@
+2005-11-15  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/GtkSharpBackports/FileChooserButton.cs: Fixed a minor compilation
+	issue against Gtk# 2.7.1
+	* data/banshee.desktop.in.in: Added MimeType field based on entagged-sharp
+	mime-type support attributes; Add %U to exec
+
+2005-11-15  Brad Taylor  <brad@getcoded.net>
+
+	* src/PlayerInterface.cs: Fix typo in tray icon.
+
 2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/NotificationAreaIcon.cs (PositionMenu): Properly position the menu
