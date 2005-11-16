@@ -591,7 +591,7 @@ namespace Banshee
             if(trayIcon != null && Core.Instance.Player.Playing) {
                 trayIcon.Tooltip = activeTrackInfo.DisplayArtist + " - " 
                     + activeTrackInfo.DisplayTitle + "\n"
-                    + Catalog.GetString("Position:") + text;
+                    + Catalog.GetString("Position: ") + text;
             }
         }
           
