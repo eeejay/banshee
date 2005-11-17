@@ -7,8 +7,8 @@ AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
 VERSION_MINOR=9
-VERSION_MICRO=11
-VERSION_REVIS=1
+VERSION_MICRO=12
+VERSION_REVIS=no
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 ASM_VERSION="$VERSION.*"
@@ -124,7 +124,7 @@ AC_SUBST(MCS)
 AC_SUBST(MONO)
 
 dnl gtk-sharp, other CLR deps
-GTKSHARP_REQUIRED=2.3.91
+GTKSHARP_REQUIRED=2.4.0
 PKG_CHECK_MODULES(GTKSHARP,
 	gtk-sharp-2.0 >= $GTKSHARP_REQUIRED \
 	gnome-sharp-2.0 >= $GTKSHARP_REQUIRED \
@@ -133,7 +133,7 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
-IPODSHARP_REQUIRED=0.5.10
+IPODSHARP_REQUIRED=0.5.11
 PKG_CHECK_MODULES(IPODSHARP, 
 	ipod-sharp >= $IPODSHARP_REQUIRED \
 	ipod-sharp-ui >= $IPODSHARP_REQUIRED)	
@@ -207,7 +207,7 @@ fi
 AC_SUBST(GST_PLUGINS_DIR)
 
 dnl GTK+-2.0 C devel deps
-GTK_REQUIRED=2.6
+GTK_REQUIRED=2.8
 PKG_CHECK_MODULES(GTK,
 	glib-2.0 \
 	libgnome-2.0 \
@@ -344,6 +344,8 @@ src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
 src/GtkSharpBackports/Makefile
 src/GtkSharpBackports/GtkSharpBackports.dll.config
+src/Banshee.Widgets/Makefile
+src/Banshee.Widgets/Banshee.Widgets.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile
