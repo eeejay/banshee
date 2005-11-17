@@ -35,6 +35,12 @@ using Sql;
 
 namespace Banshee
 {
+    public enum RepeatMode {
+        None,
+        All,
+        Single
+    }
+
     public class PlaylistModel : ListStore, IPlaybackModel
     {
         private static int uid;
@@ -44,7 +50,7 @@ namespace Banshee
         private bool trackInfoQueueLocked = false;
         private TreeIter playingIter;
         
-        private bool repeat = false;
+        private RepeatMode repeat = RepeatMode.None;
         private bool shuffle = false;
         
         private bool canUpdate;
@@ -314,8 +320,10 @@ namespace Banshee
             currentTrack = PathTrackInfo(currentPath);
             currentIter = playingIter;
         
-            if(forward) {
-                if(lastTrack && repeat) {
+            if(repeat == RepeatMode.Single) {
+                nextIter = currentIter;
+            } else if(forward) {
+                if(lastTrack && repeat == RepeatMode.All) {
                     if(!IterNthChild(out nextIter, 0))
                         return;
                 } else if(shuffle) {
@@ -467,7 +475,7 @@ namespace Banshee
             }
         }
         
-        public bool Repeat {
+        public RepeatMode Repeat {
             set {
                 repeat = value;
             }
