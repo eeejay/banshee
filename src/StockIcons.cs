@@ -55,8 +55,11 @@ namespace Banshee
             FromDef("media-prev", Catalog.GetString("Previous"), 0, ModifierType.ShiftMask, null),
             FromDef("media-play", Catalog.GetString("Play"), 0, ModifierType.ShiftMask, null),
             FromDef("media-pause", Catalog.GetString("Pause"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-shuffle", Catalog.GetString("Shuffle"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-repeat", Catalog.GetString("Repeat"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-shuffle-enabled", Catalog.GetString("Shuffle Enabled"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-shuffle-disabled", Catalog.GetString("Shuffle Disabled"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-repeat-none", Catalog.GetString("Repeat None"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-repeat-all", Catalog.GetString("Repeat All"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-repeat-single", Catalog.GetString("Repeat Single"), 0, ModifierType.ShiftMask, null),
             FromDef("media-eject", Catalog.GetString("Eject"), 0, ModifierType.ShiftMask, null),
             
             /* Volume Button Icons */
