@@ -32,6 +32,8 @@ using System.Reflection;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.Widgets;
+
 namespace Banshee
 {
     public class VersionInformationDialog : Dialog

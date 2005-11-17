@@ -33,6 +33,8 @@ using Gtk;
 using Sql;
 using System.Collections;
 
+using Banshee.Widgets;
+
 namespace Banshee
 {
 	public sealed class QueryFilterOperation

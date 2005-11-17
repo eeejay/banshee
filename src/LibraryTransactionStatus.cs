@@ -33,6 +33,8 @@ using Mono.Unix;
 using Gtk;
 using Glade;
 
+using Banshee.Widgets;
+
 namespace Banshee
 {
 	public class LibraryTransactionStatus : Table

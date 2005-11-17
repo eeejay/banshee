@@ -32,6 +32,8 @@ using System.Collections;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.Widgets;
+
 namespace Banshee
 {
 	public class TrackInfoHeader : HBox

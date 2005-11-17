@@ -31,6 +31,8 @@ using System;
 using Gtk;
 using Mono.Unix;
  
+using Banshee.Widgets;
+ 
 namespace Banshee
 {
     public class ActiveUserEvent : IDisposable
