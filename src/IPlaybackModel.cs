@@ -45,7 +45,7 @@ namespace Banshee
 			get; 
 		}
 		
-		bool Repeat { 
+		RepeatMode Repeat { 
 			get; 
 			set; 
 		}
