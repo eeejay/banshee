@@ -42,10 +42,12 @@ src/PlaylistRowRenderer.cs
 src/PlaylistView.cs
 src/Preferences.cs
 src/RipTransaction.cs
-src/SearchEntry.cs
 src/SourceView.cs
 src/StockIcons.cs
+src/ToggleStates.cs
 src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/Utilities.cs
 src/VersionInformationDialog.cs
+src/Banshee.Widgets/SearchEntry.cs
+

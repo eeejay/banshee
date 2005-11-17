@@ -1,3 +1,8 @@
+2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: moved src/SearchEntry.cs to 
+	src/Banshee.Widgets/SearchEntry.cs; added src/ToggleStates.cs
+
 2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
 
 	* nb.po: Updated Norwegian Bokmål translation by Øivind Hoel
