@@ -110,7 +110,6 @@ namespace Banshee
         
         private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
         {
-            Console.WriteLine(args.EncodedFileUri);
             burnQueue.Enqueue(args.EncodedFileUri);
         }
         

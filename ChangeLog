@@ -1,5 +1,6 @@
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/BurnCore.cs: Removed a Console.WriteLine debug statement
 	* src/NotificationAreaIcon.cs: Disabled shuffle/repeat items in tray menu
 	for now; not sure how to allow these from here, if all, given the new
 	options in the UI for these modes
