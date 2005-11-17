@@ -1,5 +1,8 @@
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/NotificationAreaIcon.cs: Disabled shuffle/repeat items in tray menu
+	for now; not sure how to allow these from here, if all, given the new
+	options in the UI for these modes
 	* src/Paths.cs: DefaultLibraryPath is now ~/Music... thought this was done
 	a month ago...
 	* src/RipTransaction.cs: Fixed another Path/URI bug, using 

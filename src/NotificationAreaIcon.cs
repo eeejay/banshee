@@ -128,7 +128,7 @@ namespace Banshee
             
             traymenu.Append(new SeparatorMenuItem());
             
-            ShuffleItem = new ImageMenuItem(Catalog.GetString("Shuffle"));
+         /*   ShuffleItem = new ImageMenuItem(Catalog.GetString("Shuffle"));
             ShuffleItem.Image = new Gtk.Image();
             ((Gtk.Image)ShuffleItem.Image).SetFromStock("gtk-no", IconSize.Menu);
             traymenu.Append(ShuffleItem);
@@ -138,7 +138,7 @@ namespace Banshee
             ((Gtk.Image)RepeatItem.Image).SetFromStock("gtk-no", IconSize.Menu);
             traymenu.Append(RepeatItem);
             
-            traymenu.Append(new SeparatorMenuItem());
+            traymenu.Append(new SeparatorMenuItem());*/
             
             ExitItem = new ImageMenuItem(Catalog.GetString("Quit Banshee"));
             ExitItem.Image = new Gtk.Image();
