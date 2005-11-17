@@ -40,7 +40,8 @@ EXTRA_DIST = \
 	media-repeat-all.png \
 	media-repeat-none.png \
 	media-repeat-single.png \
-	media-shuffle.png \
+	media-shuffle-enabled.png \
+	media-shuffle-disabled.png \
 	media-stop.png \
 	music-player-banshee-16.png \
 	music-player-banshee-22.png \
