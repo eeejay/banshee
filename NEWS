@@ -1,26 +1,49 @@
-Banshee 0.9.11.1 is Ready.
+Banshee 0.9.12 is Ready.
+
+This release focuses mainly on stability and adds a few very minor User Interface enhancements. A repeat single track repeat mode was also added.
 
 Please do not hesitate to file bugs against Banshee in GNOME Bugzilla (http://bugzilla.gnome.org, component: banshee), or discuss Banshee on this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to everyone for viewing and editing is located at http://banshee-project.org.
 
-This release addresses a few major iPod-syncing related bugs:
 
- - #320718, #320142: Crashes copying Vorbis files to iPod (Invalid URI)
- - Unfiled: Crashes after completed sync (GTK Threading Issue)
+NEW FEATURES
+------------
 
-Some minor UI elements have been tweaked and improved as well.
+# Updated iPod artwork: integrated Ryan Collier's excellent Tango icons
+# More key bindings
+
+    * Pressing Shift while clicking Previous goes immediately to previous song - the behavior of clicking the previous button without holding Shift has been changed to start the current song over if it has been playing for more than 2 seconds, and only go to the previous song if playback has been less than two seconds
+    * Pressing Space Bar will pause or continue playing the current song
+    * Pressing Enter with focus and selection in the playlist view will play the first song in the selection 
+
+# Swedish translation by Christian Rose
+# Only re-center current playing when transitioning tracks if it will scroll out of view (James Willcox)
+# Starting a new instance of banshee with --play will start playing a song immediately after the library has loaded 
+# Show the seek time under the slider when dragging the seek slider (Ruben Vermeersch)
+# Repeat none, repeat one, repeat all modes
+# Repeat and Shuffle options are now available in the edit menu
+# Mime types added to banshee.desktop file
+# Default library path is now ~/Music
+
+
+BUG FIXES
+---------
+
+# Banshee should now play nice with file names with non-Latin characters (321285)
+# iPod track numbers should now be ordered properly (321205)
+# Notification Area Icon menu works properly when panel is in any location on the screen (315227)
 
 
 THE IMPORTANT LINKS
 -------------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.9.11
+http://banshee-project.org/Releases/0.9.12
 
 Banshee 0.9.11 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.9.11.tar.gz
+http://banshee-project.org/files/banshee/banshee-0.9.12.tar.gz
 
 ipod-sharp 0.5.10 Tarball:
-http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.10.tar.gz
+http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.11.tar.gz
 
 libipoddevice 0.3.5 Tarball:
 http://banshee-project.org/files/libipoddevice/libipoddevice-0.3.5.tar.gz
@@ -33,13 +56,13 @@ DEPENDENCIES
 ------------
 
 - Mono 1.1.9.2 and full stack
-- ipod-sharp 0.5.10; in turn requires libipoddevice 0.3.5
-- gtk-sharp-2.0 (2.3.91)
+- ipod-sharp 0.5.11; in turn requires libipoddevice 0.3.5
+- gtk-sharp-2.0 (2.4.0)
 - sqlite3
 - GStreamer 0.8.11
 - libmusicbrainz 2.1.1 or better
 - libnautilus-burn 2.12
-- GTK+ 2.6 or better
+- GTK+ 2.8 or better
 - HAL 0.5.2 or better
 
 
