@@ -377,7 +377,7 @@ namespace Banshee
         {
             trackId = Convert.ToInt32(reader["TrackID"]);
 
-            uri = PathUtil.PathToFileUri(reader["Uri"] as string);
+            uri = new Uri(reader["Uri"] as string);
             
             mimetype = reader["MimeType"] as string;
 

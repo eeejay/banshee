@@ -1,5 +1,8 @@
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LibraryTrackInfo.cs: Do not use PathUtils.PathToFileUri() on
+	the Uri field in the database, as it's already a Uri... fixes a bug 
+	introduced between releases
 	* configure.ac: Version 0.9.12, require Gtk# 2.4.0, GTK+-2.8, and
 	ipod-sharp 0.5.11
 	* banshee.mdp: Updated MonoDevelop project
