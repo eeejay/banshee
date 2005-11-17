@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Banshee.Widgets \
 	GtkSharpBackports \
 	MusicBrainz
 
@@ -34,7 +35,6 @@ banshee_sources = \
 	Utilities.cs \
 	Core.cs \
 	PlaylistView.cs \
-	VolumeButton.cs \
 	Dialogs.cs \
 	TrackProperties.cs \
 	Database.cs \
@@ -49,12 +49,8 @@ banshee_sources = \
 	LibraryTransactionManager.cs \
 	LibraryTransactionStatus.cs \
 	LibraryTrackInfo.cs \
-	ImageAnimation.cs \
 	QueryBuilder.cs \
 	QueryBuilderModel.cs \
-	DateButton.cs \
-	SearchEntry.cs \
-	SimpleNotebook.cs \
 	TrackInfoHeader.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
@@ -73,7 +69,6 @@ banshee_sources = \
 	PlayerEngineLoader.cs \
 	RatingRenderer.cs \
 	IpodTrackInfo.cs \
-	AltProgressBar.cs \
 	AudioCdCore.cs \
 	IpodPropertiesWindow.cs \
 	RipTransaction.cs \
@@ -81,12 +76,10 @@ banshee_sources = \
 	GstMisc.cs \
 	PipelineProfile.cs \
 	LogCore.cs \
-	EllipsizeLabel.cs \
 	IpodNewDialog.cs \
 	ExceptionDialog.cs \
 	ThemeIcons.cs \
 	VersionInformationDialog.cs \
-	CoverArtThumbnail.cs \
 	AmazonCoverFetcher.cs \
 	ActiveUserEventsManager.cs \
 	ActiveUserEvent.cs \
@@ -95,7 +88,8 @@ banshee_sources = \
 	FileSystemMonitor/Inotify.cs \
 	FileSystemMonitor/Watch.cs \
 	FileSystemMonitor/InotifyWatch.cs \
-	FileSystemMonitor/FileSystemWatcherWatch.cs
+	FileSystemMonitor/FileSystemWatcherWatch.cs \
+	ToggleStates.cs
 
 banshee_resources = \
 	../COPYING \
@@ -119,16 +113,17 @@ banshee_resources = \
 	../data/images/icon-artist.png \
 	../data/images/icon-title.png \
 	../data/images/music-player-banshee.png \
-	../data/images/media-repeat.png \
-	../data/images/media-shuffle.png \
+	../data/images/media-repeat-all.png \
+	../data/images/media-repeat-single.png \
+	../data/images/media-repeat-none.png \
+	../data/images/media-shuffle-enabled.png \
+	../data/images/media-shuffle-disabled.png \
 	../data/images/playlist-icon-large.png \
 	../data/images/source-library.png \
 	../data/images/source-playlist.png \
 	../data/images/library-icon-32.png \
 	../data/images/busy-spinner.png \
 	../data/images/busy-spinner-36.png \
-	../data/images/search-entry-icon.png \
-	../data/images/search-entry-icon-hover.png \
 	../data/images/source-cd-audio.png \
 	../data/images/media-eject.png \
 	../data/images/blue-speaker.png \
@@ -158,7 +153,8 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/plugincore/plugin-core.dll \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
-	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll
+	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll \
+	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
 
 SYSTEM_REFERENCES = \
 	System.dll \
