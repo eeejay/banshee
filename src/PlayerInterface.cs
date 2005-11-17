@@ -39,6 +39,7 @@ using System.IO;
 
 using Sql;
 using Banshee.Logging;
+using Banshee.Widgets;
 
 namespace Banshee
 {
@@ -80,6 +81,8 @@ namespace Banshee
         private Button ipodPropertiesButton;
         private Button ipodEjectButton;
             
+        private MultiStateToggleButton repeat_toggle_button;
+        private MultiStateToggleButton shuffle_toggle_button;
                 
         private EventBox syncing_container;
         private Gtk.Image ipod_syncing_image = new Gtk.Image();
@@ -231,12 +234,7 @@ namespace Banshee
             ImageRip.SetFromStock("media-rip", IconSize.LargeToolbar);
 
             gxml["ButtonBurn"].Visible = true;
-                
-            ((Gtk.Image)gxml["ImageShuffle"]).Pixbuf = 
-                Gdk.Pixbuf.LoadFromResource("media-shuffle.png");
-            ((Gtk.Image)gxml["ImageRepeat"]).Pixbuf = 
-                Gdk.Pixbuf.LoadFromResource("media-repeat.png");
-            
+      
             // Header
             headerNotebook = new SimpleNotebook();
             headerNotebook.Show();
@@ -374,10 +372,36 @@ namespace Banshee
             ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, 
                 false, false, 0);
                 
+            // Repeat/Shuffle buttons
+            
+            repeat_toggle_button = new MultiStateToggleButton();
+            repeat_toggle_button.AddState(typeof(RepeatNoneToggleState), gxml["ItemRepeatNone"] as RadioMenuItem);
+            repeat_toggle_button.AddState(typeof(RepeatAllToggleState), gxml["ItemRepeatAll"] as RadioMenuItem);
+            repeat_toggle_button.AddState(typeof(RepeatSingleToggleState), gxml["ItemRepeatSingle"] as RadioMenuItem);
+            repeat_toggle_button.Relief = ReliefStyle.None;
+            repeat_toggle_button.ShowLabel = false;
+            repeat_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
+                HandleRepeatToggleButton();
+            };
+            repeat_toggle_button.ShowAll();
+                
+            shuffle_toggle_button = new MultiStateToggleButton();
+            shuffle_toggle_button.AddState(typeof(ShuffleDisabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, false);
+            shuffle_toggle_button.AddState(typeof(ShuffleEnabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, true);
+            shuffle_toggle_button.Relief = ReliefStyle.None;
+            shuffle_toggle_button.ShowLabel = false;
+            shuffle_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
+                HandleShuffleToggleButton();
+            };
+            shuffle_toggle_button.ShowAll();
+            
+            (gxml["ShuffleButtonContainer"] as Container).Add(shuffle_toggle_button);
+            (gxml["RepeatButtonContainer"] as Container).Add(repeat_toggle_button);
+                
             toolTips = new Tooltips();
             SetTip(gxml["ButtonNewPlaylist"], Catalog.GetString("Create New Playlist"));
-            SetTip(gxml["ToggleButtonShuffle"], Catalog.GetString("Toggle Shuffle Playback Mode"));
-            SetTip(gxml["ToggleButtonRepeat"], Catalog.GetString("Toggle Repeat Playback Mode"));
+            SetTip(shuffle_toggle_button, Catalog.GetString("Shuffle Playback Mode"));
+            SetTip(repeat_toggle_button, Catalog.GetString("Repeat Playback Mode"));
             SetTip(gxml["ButtonTrackProperties"], Catalog.GetString("View Selected Song Information"));
             SetTip(gxml["ButtonBurn"], Catalog.GetString("Write Selection to CD"));
             SetTip(gxml["ButtonRip"], Catalog.GetString("Import CD into Library"));
@@ -440,13 +464,16 @@ namespace Banshee
             }
             
             try {
-                ((ToggleButton)gxml["ToggleButtonShuffle"]).Active = (bool)Core.GconfClient.Get(
-                    GConfKeys.PlaylistShuffle);
-                ((ToggleButton)gxml["ToggleButtonRepeat"]).Active = (bool)Core.GconfClient.Get(
-                    GConfKeys.PlaylistRepeat);
-            } catch(GConf.NoSuchKeyException) {
-                // Default, set in glade file
-            }
+                repeat_toggle_button.ActiveState = 
+                    Type.GetType((string)Core.GconfClient.Get(GConfKeys.PlaylistRepeat));
+                HandleRepeatToggleButton();
+            } catch(Exception) {}
+            
+            try {
+                shuffle_toggle_button.ActiveState = 
+                    Type.GetType((string)Core.GconfClient.Get(GConfKeys.PlaylistShuffle));
+                HandleShuffleToggleButton();
+            } catch(Exception) {}
             
             try {
                 SourceSplitter.Position = (int)Core.GconfClient.Get(GConfKeys.SourceViewWidth);
@@ -618,7 +645,8 @@ namespace Banshee
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
             
-            cover_art.Track = ti;
+            cover_art.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
+            cover_art.FileName = ti.CoverArtFileName;
             
             if(trayIcon != null) {
                 trayIcon.Tooltip = ti.DisplayArtist + " - " + ti.DisplayTitle;
@@ -1435,28 +1463,23 @@ namespace Banshee
             playlistView.QueueDraw();
         }
     
-        private void OnToggleButtonShuffleToggled(object o, EventArgs args)
+        private void HandleRepeatToggleButton()
         {
-            ToggleButton t = (ToggleButton)o;
-            playlistModel.Shuffle = t.Active;
-            Core.GconfClient.Set(GConfKeys.PlaylistShuffle, 
-                t.Active);
-                
-            if(trayIcon != null)
-                ((Gtk.Image)trayIcon.ShuffleItem.Image).SetFromStock(
-                    t.Active ? "gtk-yes" : "gtk-no", IconSize.Menu);
+            if(repeat_toggle_button.ActiveState == typeof(RepeatAllToggleState)) {
+                playlistModel.Repeat = RepeatMode.All;
+            } else if(repeat_toggle_button.ActiveState == typeof(RepeatSingleToggleState)) {
+                playlistModel.Repeat = RepeatMode.Single;
+            } else {
+                playlistModel.Repeat = RepeatMode.None;
+            }
+            
+            Core.GconfClient.Set(GConfKeys.PlaylistRepeat, repeat_toggle_button.ActiveState.ToString());
         }
         
-        private void OnToggleButtonRepeatToggled(object o, EventArgs args)
+        private void HandleShuffleToggleButton()
         {
-            ToggleButton t = (ToggleButton)o;
-            playlistModel.Repeat = t.Active;
-            Core.GconfClient.Set(GConfKeys.PlaylistRepeat, 
-                t.Active);
-                
-            if(trayIcon != null)
-                ((Gtk.Image)trayIcon.RepeatItem.Image).SetFromStock(
-                    t.Active ? "gtk-yes" : "gtk-no", IconSize.Menu);
+            playlistModel.Shuffle = shuffle_toggle_button.ActiveState == typeof(ShuffleEnabledToggleState);
+            Core.GconfClient.Set(GConfKeys.PlaylistShuffle, shuffle_toggle_button.ActiveState.ToString());
         }
         
         private void OnPlaylistUpdated(object o, EventArgs args)
