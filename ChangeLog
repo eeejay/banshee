@@ -1,3 +1,49 @@
+2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.9.12, require Gtk# 2.4.0, GTK+-2.8, and
+	ipod-sharp 0.5.11
+	* banshee.mdp: Updated MonoDevelop project
+	* data/glade/player.glade: Added menu items for repeat none, repeat single,
+	repeat all, and shuffle; removed repeat/shuffle toggle buttons as they
+	have been replaced with the custom MultiStateToggleButton widget
+	* src/ToggleStates.cs: Implemented ToggleState subclasses for repeat and
+	shuffle toggle states
+	* src/LibraryTransactionStatus.cs:
+	* src/QueryBuilderModel.cs:
+	* src/TrackInfoHeader.cs:
+	* src/VersionInformationDialog.cs:
+	* src/ActiveUserEvent.cs: using Banshee.Widgets;
+	* src/StockIcons.cs: Removed media-repeat, media-shuffle; added
+	media-repeat-all, media-repeat-none, media-repeat-single, 
+	media-shuffle-enabled, media-shuffle-disabled
+	* src/IPlaybackModel.cs: Changed Repeat/repeat from bool to RepeatMode
+	* src/PlaylistModel.cs: Changed Repeat/repeat from bool to RepeatMode, 
+	added RepeatMode enum, changed logic to support RepeatMode.None, 
+	RepeatMode.All, RepeatMode.Single
+	* src/PlayerInterface.cs: Implemented Repeat None, Repeat All, 
+	Repeat Single modes using new MultiStateToggleButton widget and menu items,
+	re-implemented Shuffle mode in same way
+	* src/Makefile.am: Link against src/Banshee.Widgets/Banshee.Widgets.dll,
+	updated resources 
+	* src/Banshee.Widgets/Resources/*: resources needed by custom widgets
+	* src/Banshee.Widgets/MultiStateToggleButton.cs: New custom widget that
+	allows cycling between N states, can link CheckMenuItem and RadioMenuItem
+	widgets to states
+	* src/Banshee.Widgets/ToggleState.cs: Abstract base class for defining a
+	toggle state for the MultiStateToggleButton widget
+	* src/Banshee.Widgets/*: New assembly containing moved/new custom 
+	standalone widgets that can possibly be used by other applications. 
+	No ties to Banshee namespaces
+	* src/AltProgressBar.cs:
+	* src/CoverArtThumbnail.cs:
+	* src/DateButton.cs:
+	* src/EllipsizeLabel.cs:
+	* src/ImageAnimation.cs:
+	* src/SearchEntry.cs:
+	* src/SimpleNotebook.cs:
+	* src/VolumeButton.cs: Moved to src/Banshee.Widgets, namespace changed to
+	Banshee.Widgets
+
 2005-11-15  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/GtkSharpBackports/FileChooserButton.cs: Fixed a minor compilation
