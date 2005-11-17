@@ -1,5 +1,7 @@
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Paths.cs: DefaultLibraryPath is now ~/Music... thought this was done
+	a month ago...
 	* src/RipTransaction.cs: Fixed another Path/URI bug, using 
 	PathUtil.PathToFileUri
 	* src/LibraryTrackInfo.cs: Do not use PathUtils.PathToFileUri() on

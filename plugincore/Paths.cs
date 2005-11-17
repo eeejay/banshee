@@ -73,7 +73,7 @@ namespace Banshee
                 return Environment.GetFolderPath(
                     Environment.SpecialFolder.Personal) + 
                     + Path.DirectorySeparatorChar  
-                    + "My Music"
+                    + "Music"
                     + Path.DirectorySeparatorChar;
             }
         }
