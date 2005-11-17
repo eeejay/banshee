@@ -220,10 +220,9 @@ namespace Banshee
                     track.Artist, track.Title);
                 user_event.Message = status;
                     
-                string filename = "file://" + 
-                    FileNamePattern.BuildFull(track, profile.Extension);
+                Uri uri = PathUtil.PathToFileUri(FileNamePattern.BuildFull(track, profile.Extension));
                     
-                if(!ripper.RipTrack(track, track.TrackIndex, filename)) {
+                if(!ripper.RipTrack(track, track.TrackIndex, uri.AbsoluteUri)) {
                     break;
                 }
                 
@@ -232,9 +231,9 @@ namespace Banshee
                 if(!user_event.IsCancelRequested) {
                     TrackInfo lti;
                     try {
-                        lti = new LibraryTrackInfo(new Uri(filename), track);
+                        lti = new LibraryTrackInfo(uri, track);
                     } catch(ApplicationException) {
-                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(new Uri(filename))] as TrackInfo;
+                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] as TrackInfo;
                     }
                     
                     if(lti != null) {                       

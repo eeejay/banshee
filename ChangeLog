@@ -1,5 +1,7 @@
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/RipTransaction.cs: Fixed another Path/URI bug, using 
+	PathUtil.PathToFileUri
 	* src/LibraryTrackInfo.cs: Do not use PathUtils.PathToFileUri() on
 	the Uri field in the database, as it's already a Uri... fixes a bug 
 	introduced between releases
