@@ -1,5 +1,8 @@
 2005-11-18  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlaylistModel.cs: (AddTrack) sets TrackInfo.TreeIter to tree iter
+	in model, (RemoveTrack) unsets TrackInfo.TreeIter
+	* plugincore/TrackInfo.cs: Added a TreeIter field
 	* configure.ac: Whoops, just require Gtk# 2.3.92
 
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>

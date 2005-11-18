@@ -67,6 +67,7 @@ namespace Banshee
         protected bool canPlay = true;
 
         public Gtk.TreeIter PreviousTrack;
+        public Gtk.TreeIter TreeIter;
         
         private static int nextId = 1;
         

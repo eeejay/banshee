@@ -144,7 +144,7 @@ namespace Banshee
                 return;
 
             totalDuration += ti.Duration;
-            AppendValues(ti);
+            ti.TreeIter = AppendValues(ti);
             
             if(raiseUpdate) {
                 RaiseUpdated(this, new EventArgs());
@@ -436,6 +436,7 @@ namespace Banshee
         {
             TrackInfo ti = IterTrackInfo(iter);
             totalDuration -= ti.Duration;
+            ti.TreeIter = TreeIter.Zero;
             Remove(ref iter);
             RaiseUpdated(this, new EventArgs());
         }
