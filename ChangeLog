@@ -1,3 +1,7 @@
+2005-11-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Whoops, just require Gtk# 2.3.92
+
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* NEWS: Updated with 0.9.12 release notes
