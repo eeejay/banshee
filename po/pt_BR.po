@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-14 02:21-0200\n"
+"POT-Creation-Date: 2005-11-17 02:08+0100\n"
 "PO-Revision-Date: 2005-11-10 10:59-0300\n"
-"Last-Translator: Marco Carvalho <marcocarvalho89@yahoo.com.br>\n"
+"Last-Translator: Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -17,29 +17,32 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/banshee.desktop.in.in.h:1 ../data/glade/player.glade.h:6
-#: ../src/PlayerInterface.cs:1471
+#: ../src/PlayerInterface.cs:1482
 msgid "Banshee Music Player"
-msgstr "Reprodutor de Música Banshee"
+msgstr "Reprodutor de Músicas Banshee"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
-msgstr "Reprodutor de Música"
+msgstr "Reprodutor de Músicas"
 
 #: ../data/banshee.schemas.in.h:1
 msgid "Copy and rename music to banshee music library directory when importing"
 msgstr ""
-"Copia e renomeia música para o diretório de biblioteca do banshee quando "
-"importando"
+"Copiar e renomeiar música para o diretório da biblioteca do banshee ao importar"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy music on import"
-msgstr "Copia música na importação"
+msgstr "Copiar música na importação"
 
 #: ../data/banshee.schemas.in.h:3
+msgid "Enable File System Monitoring"
+msgstr "Habilitar Monitoramento do Sistema de Arquivos"
+
+#: ../data/banshee.schemas.in.h:4
 msgid "File Name Pattern"
 msgstr "Máscara de nome de arquivo"
 
-#: ../data/banshee.schemas.in.h:5
+#: ../data/banshee.schemas.in.h:6
 #, no-c-format
 msgid ""
 "Format for creating filenames/directories for ripped tracks, imported music, "
@@ -48,60 +51,66 @@ msgid ""
 "track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
 "prefixed zero)."
 msgstr ""
-"Formato para criação de nomes de arquivo/diretórios para trilhas estraídas, "
+"Formato para criação de nomes de arquivo/diretórios para faixas estraídas, "
 "músicas importadas, etc. O formato é relativo ao diretório de músicas do "
 "Banshee... não use caminho absoluto! Variáveis: %artist%, %album%, %title%, %"
 "track_number%, %track_count%, %track_number_nz% (Sem prefixo zero), %"
 "track_count_nz% (Sem prefixo zero)."
 
-#: ../data/banshee.schemas.in.h:6
+#: ../data/banshee.schemas.in.h:7
 msgid "Height of the main interface window."
 msgstr "Altura da janela da interface principal."
 
-#: ../data/banshee.schemas.in.h:7
-msgid "Move music on info save"
-msgstr "Move música ao salvar informação"
-
 #: ../data/banshee.schemas.in.h:8
+msgid "Move music on info save"
+msgstr "Mover música ao salvar informação"
+
+#: ../data/banshee.schemas.in.h:9
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Move música dentro do diretório de biblioteca de música do banshee quando "
-"salvando informação da trilha"
+"salvando informação da faixa"
 
-#: ../data/banshee.schemas.in.h:9
+#: ../data/banshee.schemas.in.h:10
 msgid "Name of media playback engine."
 msgstr "Nome do motor de reprodução de mídia"
 
-#: ../data/banshee.schemas.in.h:10
+#: ../data/banshee.schemas.in.h:11
 msgid "Only display the notification area (tray) icon if true"
 msgstr "Somente exibe o ícone na área de notificação (bandeija) se verdadeiro"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:12
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Posição do pixel da Janela Principal do Reprodutor no eixo X"
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:13
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Posição do pixel da Janela Principal do Reprodutor no eixo Y"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:14
 msgid "Player Engine Name"
 msgstr "Nome do Motor do Reprodutor"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:15
 msgid "Show Notification Area Icon"
 msgstr "Mostrar Ícone da Área de Notificação"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:16
 msgid "Source View Width"
 msgstr "Largura da Visão de Fonte"
 
-#: ../data/banshee.schemas.in.h:16
+#: ../data/banshee.schemas.in.h:17
+msgid ""
+"Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library "
+"as changes are made in the Library Location in the file system"
+msgstr ""
+
+#: ../data/banshee.schemas.in.h:18
 msgid "Volume Output Level"
 msgstr "Nível do Volume de Saída"
 
-#: ../data/banshee.schemas.in.h:17
+#: ../data/banshee.schemas.in.h:19
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
@@ -109,59 +118,60 @@ msgstr ""
 "Volume de reprodução relativo à saída do mixer (exceto no Helix, que ajusta "
 "o volume diretamente no PCM)"
 
-#: ../data/banshee.schemas.in.h:18
+#: ../data/banshee.schemas.in.h:20
 msgid "Width of Album Column."
 msgstr "Largura da Coluna do Álbum."
 
-#: ../data/banshee.schemas.in.h:19
+#: ../data/banshee.schemas.in.h:21
 msgid "Width of Artist Column."
 msgstr "Largura da Coluna do Artista."
 
-#: ../data/banshee.schemas.in.h:20
+#: ../data/banshee.schemas.in.h:22
 msgid "Width of Last Played Column."
 msgstr "Largura da Coluna da Última Executada."
 
-#: ../data/banshee.schemas.in.h:21
+#: ../data/banshee.schemas.in.h:23
 msgid "Width of Plays Column."
 msgstr "Largura da Coluna de Reprodução."
 
-#: ../data/banshee.schemas.in.h:22
+#: ../data/banshee.schemas.in.h:24
 msgid "Width of Rating Column."
 msgstr "Largura da Coluna de Classificação."
 
-#: ../data/banshee.schemas.in.h:23
-msgid "Width of Source View Comlumn."
+#: ../data/banshee.schemas.in.h:25
+#, fuzzy
+msgid "Width of Source View Column."
 msgstr "Largura da Coluna de Visão de Fonte."
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:26
 msgid "Width of Time Column."
 msgstr "Largura da Coluna de Tempo."
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:27
 msgid "Width of Title Column."
 msgstr "Largura da Coluna de Título."
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:28
 msgid "Width of Track Column."
-msgstr "Largura da Coluna de Trilha."
+msgstr "Largura da Coluna de Faixa."
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:29
 msgid "Width of the main interface window."
 msgstr "Largura da janela principal da interface."
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:30
 msgid "Window Height"
 msgstr "Altura da Janela"
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:31
 msgid "Window Position X"
 msgstr "Posição X da Janela"
 
-#: ../data/banshee.schemas.in.h:30
+#: ../data/banshee.schemas.in.h:32
 msgid "Window Position Y"
 msgstr "Posição Y da Janela"
 
-#: ../data/banshee.schemas.in.h:31
+#: ../data/banshee.schemas.in.h:33
 msgid "Window Width"
 msgstr "Largura da Janela"
 
@@ -178,8 +188,8 @@ msgid ""
 "Banshee has detected that you are plugging in an iPod for the first time. "
 "Please take a moment to give your iPod a name."
 msgstr ""
-"O Banshee detectou que você está conectando um iPod pela primeira vez. Por "
-"favor aguarde um momento para dar um nome ao seu iPod. "
+"O Banshee detectou que você está conectando um iPod pela primeira vez. "
+"Dê um nome ao seu iPod. "
 
 #: ../data/glade/newipod.glade.h:4
 msgid "New iPod Detected"
@@ -199,15 +209,15 @@ msgstr "<b>Lista de Reprodução</b>"
 
 #: ../data/glade/player.glade.h:2
 msgid "<span size=\"small\">Idle</span>"
-msgstr "<span size=\"small\">Ocupado</span>"
+msgstr "<span size=\"small\">Inativo</span>"
 
 #: ../data/glade/player.glade.h:3
 msgid "Add Selected Songs"
-msgstr "Adiciona Músicas Selecionadas"
+msgstr "Adicionar Músicas Selecionadas"
 
 #: ../data/glade/player.glade.h:4
 msgid "Add To Playlist"
-msgstr "Adiciona à Lista de Reprodução"
+msgstr "Adicionar à Lista de Reprodução"
 
 #: ../data/glade/player.glade.h:5 ../libbanshee/cd-rip.c:227
 #: ../src/NotificationAreaIcon.cs:62
@@ -220,11 +230,11 @@ msgstr "Colunas..."
 
 #: ../data/glade/player.glade.h:8
 msgid "Delete"
-msgstr "Apaga"
+msgstr "Apagar"
 
 #: ../data/glade/player.glade.h:9
 msgid "Delete Playlist"
-msgstr "Apaga Lista de Reprodução"
+msgstr "Apagar Lista de Reprodução"
 
 #: ../data/glade/player.glade.h:10
 msgid "Delete Song(s) from Drive"
@@ -236,11 +246,11 @@ msgstr "Apagar do Drive"
 
 #: ../data/glade/player.glade.h:12
 msgid "Duplicate"
-msgstr "Duplica"
+msgstr "Duplicar"
 
 #: ../data/glade/player.glade.h:13 ../src/StockIcons.cs:60
 msgid "Eject"
-msgstr "Ejeta"
+msgstr "Ejetar"
 
 #: ../data/glade/player.glade.h:14 ../src/StockIcons.cs:77
 msgid "Import CD"
@@ -248,18 +258,18 @@ msgstr "Importar CD"
 
 #: ../data/glade/player.glade.h:15
 msgid "Import Files..."
-msgstr "Importa Arquivos..."
+msgstr "Importar Arquivos..."
 
 #: ../data/glade/player.glade.h:16
 msgid "Import Folder..."
-msgstr "Importa Pastas..."
+msgstr "Importar Pasta..."
 
 #: ../data/glade/player.glade.h:17
 msgid "Logged Events..."
 msgstr "Eventos Registrados..."
 
 #: ../data/glade/player.glade.h:18 ../src/Library.cs:600
-#: ../src/PlayerInterface.cs:2037 ../src/SourceView.cs:69
+#: ../src/PlayerInterface.cs:2048 ../src/SourceView.cs:69
 msgid "New Playlist"
 msgstr "Nova Lista de Reprodução"
 
@@ -271,25 +281,25 @@ msgstr "Preferê_ncias"
 msgid "Properties"
 msgstr "Propriedades"
 
-#: ../data/glade/player.glade.h:21 ../src/PlaylistView.cs:95
+#: ../data/glade/player.glade.h:21 ../src/PlaylistView.cs:94
 msgid "Rating"
 msgstr "Classificação"
 
 #: ../data/glade/player.glade.h:22
 msgid "Remove"
-msgstr "Remove"
+msgstr "Remover"
 
 #: ../data/glade/player.glade.h:23
 msgid "Remove Song(s)"
-msgstr "Remove Música(s)"
+msgstr "Remover Música(s)"
 
 #: ../data/glade/player.glade.h:24
 msgid "Rename"
-msgstr "Renomeia"
+msgstr "Renomear"
 
-#: ../data/glade/player.glade.h:25 ../src/PlayerInterface.cs:1804
+#: ../data/glade/player.glade.h:25 ../src/PlayerInterface.cs:1815
 msgid "Rename Playlist"
-msgstr "Renomeia Lista de Reprodução"
+msgstr "Renomear Lista de Reprodução"
 
 #: ../data/glade/player.glade.h:26
 msgid "Search:"
@@ -297,11 +307,11 @@ msgstr "Procura:"
 
 #: ../data/glade/player.glade.h:27
 msgid "Select All"
-msgstr "Seleciona Todos"
+msgstr "Selecionar Todos"
 
 #: ../data/glade/player.glade.h:28
 msgid "Select None"
-msgstr "Selaciona Nenhum"
+msgstr "Selacionar Nenhum"
 
 #: ../data/glade/player.glade.h:29
 msgid "Toggle Full Screen Mode"
@@ -313,13 +323,12 @@ msgstr "Atualizar iPod"
 
 #: ../data/glade/player.glade.h:31
 msgid "Version Information"
-msgstr "Informação de Versão"
+msgstr "Informação da Versão"
 
 #. Other
 #: ../data/glade/player.glade.h:32 ../src/StockIcons.cs:76
-#, fuzzy
 msgid "Write CD"
-msgstr "Velocidade de Gravação"
+msgstr "Gravar CD"
 
 #: ../data/glade/player.glade.h:33
 msgid "_Full Screen"
@@ -389,7 +398,7 @@ msgstr "CD de Dados"
 
 #: ../data/glade/preferences.glade.h:15
 msgid "Description:"
-msgstr "Descrição"
+msgstr "Descrição:"
 
 #: ../data/glade/preferences.glade.h:16
 msgid "Disk At Once"
@@ -429,19 +438,19 @@ msgstr "Preferências"
 
 #: ../data/glade/preferences.glade.h:25
 msgid "Reset"
-msgstr "Reinicia"
+msgstr "Reiniciar"
 
 #: ../data/glade/preferences.glade.h:26
 msgid "Simulate Write"
-msgstr "Simula Gravação"
+msgstr "Simular Gravação"
 
 #: ../data/glade/preferences.glade.h:27
 msgid "Write Speed:"
-msgstr "Velocidade de Gravação"
+msgstr "Velocidade de Gravação:"
 
 #: ../data/glade/trackinfo.glade.h:1
 msgid "<big><b>Editing Track Properties</b></big>"
-msgstr "<big><b>Editando Propriedades de Trilha</b></big>"
+msgstr "<big><b>Editando Propriedades da Faixa</b></big>"
 
 #: ../data/glade/trackinfo.glade.h:2
 msgid "<small><i><Unknown></i></small>"
@@ -465,19 +474,19 @@ msgstr "Número de Reproduções:"
 
 #: ../data/glade/trackinfo.glade.h:7
 msgid "Track Duration:"
-msgstr "Duração da Trilha:"
+msgstr "Duração da Faixa:"
 
 #: ../data/glade/trackinfo.glade.h:8
 msgid "Track Property Editor"
-msgstr "Editor de Propriedades da Trilha"
+msgstr "Editor de Propriedades da Faixa"
 
 #: ../data/glade/trackinfo.glade.h:9
 msgid "Track _Count"
-msgstr "_Número de Trilhas"
+msgstr "_Número de Faixas"
 
 #: ../data/glade/trackinfo.glade.h:10
 msgid "Track _Number"
-msgstr "_Trilha Número"
+msgstr "_Número da Faixa"
 
 #: ../data/glade/trackinfo.glade.h:11
 msgid "_Artist"
@@ -517,11 +526,11 @@ msgstr "Impossível enviar evento de busca ao cdparanoia"
 
 #: ../libbanshee/cd-rip.c:257
 msgid "Could not get track start position"
-msgstr "Impossível pegar a posição inicial da trilha"
+msgstr "Impossível pegar a posição inicial da faixa"
 
 #: ../libbanshee/cd-rip.c:271
 msgid "Could not get track position"
-msgstr "Impossível pegar a posição da trilha"
+msgstr "Impossível pegar a posição da faixa"
 
 #: ../libbanshee/gst-encode.c:118
 msgid "Could not create 'gnomevfssrc' element"
@@ -595,7 +604,7 @@ msgstr ""
 msgid "Unknown Artist"
 msgstr "Artista Desconhecido"
 
-#: ../plugincore/TrackInfo.cs:163
+#: ../plugincore/TrackInfo.cs:163 ../src/AudioCdCore.cs:151
 msgid "Unknown Album"
 msgstr "Álbum Desconhecido"
 
@@ -613,7 +622,7 @@ msgstr ""
 
 #: ../src/AboutBox.cs:122
 msgid "Music Management and Playback for Gnome."
-msgstr "Gerenciador e Reprodutor de Música para o Gnome."
+msgstr "Gerenciador e Reprodutor de Músicas para o Gnome."
 
 #: ../src/ActiveUserEvent.cs:72
 msgid "Cancel Operation"
@@ -624,14 +633,10 @@ msgstr "Cancelar a operação"
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "Tem certeza que quer cancelar a operação '{0}'?"
 
-#: ../src/AudioCdCore.cs:151
-msgid "Unkown Album"
-msgstr "Álbum Desconhecido"
-
 #: ../src/AudioCdCore.cs:152
 #, csharp-format
 msgid "Track {0}"
-msgstr "Trilha {0}"
+msgstr "Faixa {0}"
 
 #: ../src/AudioCdCore.cs:333
 msgid "Could not initialize HAL for CD Detection"
@@ -656,9 +661,8 @@ msgstr ""
 "selecionadas para o formato de CD de áudio."
 
 #: ../src/BurnCore.cs:151
-#, fuzzy
 msgid "Writing CD"
-msgstr "Escrevendo no disco..."
+msgstr "Gravando CD"
 
 #: ../src/BurnCore.cs:183
 msgid "The inserted media is not large enough to hold your selected music."
@@ -674,13 +678,12 @@ msgstr[0] "{0} minuto à mais é necessário na mídia."
 msgstr[1] "{0} minutos à mais são necessários na mídia."
 
 #: ../src/BurnCore.cs:189
-#, fuzzy
 msgid "Not Enough Space on Disc"
-msgstr "Não há espaço suficiente"
+msgstr "Não há espaço em disco suficiente"
 
 #: ../src/BurnCore.cs:220
 msgid "No CD writers were found on your system."
-msgstr ""
+msgstr "Nenhum gravador de CD foi encontrado no seu sistema."
 
 #: ../src/BurnCore.cs:260
 msgid "Error Burning CD"
@@ -691,18 +694,16 @@ msgid "An unknown error occurred when attempting to write the CD"
 msgstr "Um erro desconhecido ocorreu ao tentar escrever no CD"
 
 #: ../src/BurnCore.cs:270
-#, fuzzy
 msgid "CD Writing Complete"
-msgstr "Gravação de CD completa"
+msgstr "Gravação de CD Completada"
 
 #: ../src/BurnCore.cs:271
 msgid "The selected audio was successfully written to the CD."
 msgstr "O áudio selecionado foi gravado com sucesso no CD."
 
 #: ../src/BurnCore.cs:275
-#, fuzzy
 msgid "Error Writing CD"
-msgstr "Erro Gravando CD"
+msgstr "Erro ao Gravar CD"
 
 #: ../src/BurnCore.cs:298
 msgid "Preparing to write..."
@@ -717,18 +718,16 @@ msgid "Fixating disk..."
 msgstr "Fixando disco..."
 
 #: ../src/BurnCore.cs:323
-#, fuzzy
 msgid "Waiting for Media"
-msgstr "Aguardando mídia..."
+msgstr "Aguardando Mídia"
 
 #: ../src/BurnCore.cs:327 ../src/BurnCore.cs:330
 msgid "Insert Blank CD"
-msgstr "Insira um CD vazio"
+msgstr "Insira um CD Vazio"
 
 #: ../src/BurnCore.cs:328
-#, fuzzy
 msgid "Please insert a blank CD disk for the write process."
-msgstr "Por favor insira um CD vazio para o processo de gravação."
+msgstr "Insira um CD vazio para o processo de gravação."
 
 #: ../src/Dialogs.cs:80
 msgid "Cannot Rename Playlist"
@@ -793,7 +792,7 @@ msgid "Syncing iPod"
 msgstr "Sincronizando iPod"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/IpodCore.cs:484 ../src/Library.cs:495 ../src/PlayerInterface.cs:909
+#: ../src/IpodCore.cs:484 ../src/Library.cs:495 ../src/PlayerInterface.cs:919
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} de {1}"
@@ -877,12 +876,12 @@ msgstr "Detalhes Avançados"
 msgid "Library"
 msgstr "Biblioteca"
 
-#: ../src/Library.cs:485 ../src/Utilities.cs:123
+#: ../src/Library.cs:485 ../src/Utilities.cs:128
 #, csharp-format
 msgid "{0} GB"
 msgstr "{0} GB"
 
-#: ../src/Library.cs:487 ../src/Utilities.cs:125
+#: ../src/Library.cs:487 ../src/Utilities.cs:130
 #, csharp-format
 msgid "{0} MB"
 msgstr "{0} MB"
@@ -919,7 +918,7 @@ msgstr "Exceção não Gerenciada, terminando Transação de ES com segurança"
 
 #: ../src/LibraryTransactions.cs:212 ../src/LibraryTransactions.cs:587
 msgid "Library Track Loader"
-msgstr "Leitor de Trilha de Biblioteca"
+msgstr "Leitor de Faixa de Biblioteca"
 
 #: ../src/LibraryTransactions.cs:241 ../src/LibraryTransactions.cs:606
 #: ../src/LibraryTransactions.cs:715
@@ -958,11 +957,11 @@ msgstr "Pré-carregar Biblioteca"
 
 #: ../src/LibraryTransactions.cs:500
 msgid "Library Track Remove"
-msgstr "Remover Trilha da Biblioteca"
+msgstr "Remover Faixa da Biblioteca"
 
 #: ../src/LibraryTransactions.cs:506 ../src/LibraryTransactions.cs:550
 msgid "Removing Tracks"
-msgstr "Removendo Trilhas"
+msgstr "Removendo Faixas"
 
 #: ../src/LibraryTransactions.cs:519 ../src/LibraryTransactions.cs:565
 #, csharp-format
@@ -971,23 +970,23 @@ msgstr "Removendo {0} - {1}"
 
 #: ../src/LibraryTransactions.cs:525
 msgid "Purging Removed Tracks from Library..."
-msgstr "Expurgando Trilhas Removidas da Biblioteca..."
+msgstr "Expurgando Faixas Removidas da Biblioteca..."
 
 #: ../src/LibraryTransactions.cs:539
 msgid "Playlist Track Remove"
-msgstr "Remover Lista de Reprodução de Trilhas"
+msgstr "Remover Lista de Reprodução de Faixas"
 
 #: ../src/LibraryTransactions.cs:572
 msgid "Purging Removed Tracks from Playlist..."
-msgstr "Expurgando Trilhas Removidas da Lista de Reprodução..."
+msgstr "Expurgando Faixas Removidas da Lista de Reprodução..."
 
 #: ../src/LibraryTransactions.cs:634
 msgid "Could not load track from library"
-msgstr "Impossível ler trilha da biblioteca"
+msgstr "Impossível ler faixa da biblioteca"
 
 #: ../src/LibraryTransactions.cs:697
 msgid "Playlist Track Loader"
-msgstr "Leitor de Lista de Reprodução de Trilhas"
+msgstr "Leitor de Lista de Reprodução de Faixas"
 
 #: ../src/LogCoreViewer.cs:50
 msgid "Log Viewer"
@@ -1117,8 +1116,8 @@ msgstr "Lendo..."
 
 #. gxml["IpodContainer"].Visible = false;
 #. Misc
-#: ../src/PlayerInterface.cs:356 ../src/PlayerInterface.cs:2355
-#: ../src/TrackInfoHeader.cs:136
+#: ../src/PlayerInterface.cs:356 ../src/PlayerInterface.cs:2366
+#: ../src/TrackInfoHeader.cs:135
 msgid "Idle"
 msgstr "Inativo"
 
@@ -1126,15 +1125,15 @@ msgstr "Inativo"
 msgid "All"
 msgstr "Todos"
 
-#: ../src/PlayerInterface.cs:366 ../src/PlayerInterface.cs:1898
+#: ../src/PlayerInterface.cs:366 ../src/PlayerInterface.cs:1909
 msgid "Song Name"
 msgstr "Nome da Música"
 
-#: ../src/PlayerInterface.cs:367 ../src/PlayerInterface.cs:1896
+#: ../src/PlayerInterface.cs:367 ../src/PlayerInterface.cs:1907
 msgid "Artist Name"
 msgstr "Nome de Artista"
 
-#: ../src/PlayerInterface.cs:368 ../src/PlayerInterface.cs:1900
+#: ../src/PlayerInterface.cs:368 ../src/PlayerInterface.cs:1911
 msgid "Album Title"
 msgstr "Título do Álbum"
 
@@ -1155,30 +1154,28 @@ msgid "View Selected Song Information"
 msgstr "Apresentar informação sobre a música selecionada"
 
 #: ../src/PlayerInterface.cs:382
-#, fuzzy
 msgid "Write Selection to CD"
-msgstr "Gravar a Seleção em CD"
+msgstr "Gravar Seleção em CD"
 
 #: ../src/PlayerInterface.cs:383
-#, fuzzy
 msgid "Import CD into Library"
-msgstr "Extrair CD dentro da Biblioteca"
+msgstr "Importar CD para Biblioteca"
 
 #: ../src/PlayerInterface.cs:384
 msgid "Play Previous Song"
-msgstr "Reproduzir a música anterior"
+msgstr "Reproduzir a Música Anterior"
 
 #: ../src/PlayerInterface.cs:385
 msgid "Play/Pause Current Song"
-msgstr "Reproduzir/Pausara a música atual"
+msgstr "Reproduzir/Pausar a Música Atual"
 
 #: ../src/PlayerInterface.cs:386
 msgid "Play Next Song"
-msgstr "Reproduzir a música seguinte"
+msgstr "Reproduzir a Música Seguinte"
 
 #: ../src/PlayerInterface.cs:387
 msgid "Current Position in Song"
-msgstr "Posição corrente na música"
+msgstr "Posição Atual na Música"
 
 #: ../src/PlayerInterface.cs:388
 msgid "Adjust Volume"
@@ -1186,7 +1183,7 @@ msgstr "Ajustar o Volume"
 
 #: ../src/PlayerInterface.cs:389
 msgid "iPod Disk Usage"
-msgstr " Uso do Disco do iPod"
+msgstr "Uso do Disco do iPod"
 
 #: ../src/PlayerInterface.cs:390
 msgid "Eject iPod"
@@ -1230,28 +1227,28 @@ msgstr "Importar Pasta"
 msgid "Automatic Import"
 msgstr "Importar Automaticamente"
 
-#: ../src/PlayerInterface.cs:587
-msgid "Position:"
-msgstr "Posição"
+#: ../src/PlayerInterface.cs:594
+msgid "Position: "
+msgstr "Posição: "
 
-#: ../src/PlayerInterface.cs:995
+#: ../src/PlayerInterface.cs:1006
 msgid "Import Folder to Library"
 msgstr "Importar Pasta para Biblioteca"
 
-#: ../src/PlayerInterface.cs:1052
+#: ../src/PlayerInterface.cs:1063
 msgid "Import Files to Library"
 msgstr "Importar Arquivos para Biblioteca"
 
-#: ../src/PlayerInterface.cs:1161
+#: ../src/PlayerInterface.cs:1172
 #, csharp-format
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>Biblioteca de Músicas de {0}</b>"
 
-#: ../src/PlayerInterface.cs:1337 ../src/PlayerInterface.cs:1367
+#: ../src/PlayerInterface.cs:1348 ../src/PlayerInterface.cs:1378
 msgid "Synchronize iPod"
 msgstr "Sincronizar iPod"
 
-#: ../src/PlayerInterface.cs:1338
+#: ../src/PlayerInterface.cs:1349
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1272,15 +1269,15 @@ msgstr ""
 "<b>Atenção:</b> Isto irá alterar ou apagar o conteúdo existente no iPod e "
 "pode causar incompatibilidade com iTunes!"
 
-#: ../src/PlayerInterface.cs:1343 ../src/PlayerInterface.cs:1371
+#: ../src/PlayerInterface.cs:1354 ../src/PlayerInterface.cs:1382
 msgid "Synchronize Library"
 msgstr "Sincronizar Biblioteca"
 
-#: ../src/PlayerInterface.cs:1344
+#: ../src/PlayerInterface.cs:1355
 msgid "Save Manual Changes"
 msgstr "Salvar Mudanças Manuais"
 
-#: ../src/PlayerInterface.cs:1368
+#: ../src/PlayerInterface.cs:1379
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
@@ -1290,34 +1287,34 @@ msgstr ""
 "Banshee? Isto irá <b>apagar</b> o conteúdo do seu iPod e copiar o conteúdo "
 "de sua biblioteca Banshee."
 
-#: ../src/PlayerInterface.cs:1458
+#: ../src/PlayerInterface.cs:1469
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dia"
 msgstr[1] "{0} dias"
 
-#: ../src/PlayerInterface.cs:1476
+#: ../src/PlayerInterface.cs:1487
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Sua Biblioteca está Vazia - Considere Importar Músicas"
 
-#: ../src/PlayerInterface.cs:1480
+#: ../src/PlayerInterface.cs:1491
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "Esta Lista de Reprodução está Vazia - Considere Adicionar Músicas"
 
-#: ../src/PlayerInterface.cs:1484
+#: ../src/PlayerInterface.cs:1495
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} Item"
 msgstr[1] "{0} Itens"
 
-#: ../src/PlayerInterface.cs:1486
+#: ../src/PlayerInterface.cs:1497
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} Tempo Total de Execução"
 
-#: ../src/PlayerInterface.cs:1569
+#: ../src/PlayerInterface.cs:1580
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -1335,7 +1332,7 @@ msgstr[1] ""
 "sua biblioteca <i><b>e</b></i> de seu drive? Esta ação removerá "
 "permanentemente os arquivos."
 
-#: ../src/PlayerInterface.cs:1576
+#: ../src/PlayerInterface.cs:1587
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1347,43 +1344,43 @@ msgstr[1] ""
 "Você tem certeza de que quer remover as <b>({0})</b> músicas selecionadas de "
 "sua biblioteca?"
 
-#: ../src/PlayerInterface.cs:1585
+#: ../src/PlayerInterface.cs:1596
 msgid "Remove Selected Songs from Library"
 msgstr "Remover Músicas Selecionadas da Biblioteca"
 
-#: ../src/PlayerInterface.cs:1805
+#: ../src/PlayerInterface.cs:1816
 msgid "Enter new playlist name"
 msgstr "Entre o novo nome de lista de reprodução"
 
-#: ../src/PlayerInterface.cs:1810
+#: ../src/PlayerInterface.cs:1821
 msgid "Rename iPod"
 msgstr "Renomear iPod"
 
-#: ../src/PlayerInterface.cs:1811
+#: ../src/PlayerInterface.cs:1822
 msgid "Enter new name for your iPod"
 msgstr "Entre o novo nome para seu iPod"
 
-#: ../src/PlayerInterface.cs:2061
+#: ../src/PlayerInterface.cs:2072
 msgid "Clear"
 msgstr "Limpar"
 
-#: ../src/PlayerInterface.cs:2298
+#: ../src/PlayerInterface.cs:2309
 msgid "Invalid Selection"
 msgstr "Seleção Inválida"
 
-#: ../src/PlayerInterface.cs:2299
+#: ../src/PlayerInterface.cs:2310
 msgid "You must select at least one track to import."
-msgstr "Você deve selecionar pelo menos uma trilha para importar."
+msgstr "Você deve selecionar pelo menos uma faixa para importar."
 
-#: ../src/PlayerInterface.cs:2323
+#: ../src/PlayerInterface.cs:2334
 msgid "Could Not Eject"
 msgstr "Incapaz de Ejetar"
 
-#: ../src/PlayerInterface.cs:2360
+#: ../src/PlayerInterface.cs:2371
 msgid "Banshee - Idle"
 msgstr "Banshee - Ocupado"
 
-#: ../src/PlayerInterface.cs:2413
+#: ../src/PlayerInterface.cs:2424
 msgid "Synchronizing your iPod, Please Wait..."
 msgstr ""
 
@@ -1406,36 +1403,36 @@ msgid_plural "{0} Plays"
 msgstr[0] "{0} Tocada"
 msgstr[1] "{0} Tocadas"
 
-#: ../src/PlaylistView.cs:80
+#: ../src/PlaylistView.cs:79
 msgid "Track"
-msgstr "Trilha"
+msgstr "Faixa"
 
 #. Now Playing Images
-#: ../src/PlaylistView.cs:83 ../src/StockIcons.cs:71
+#: ../src/PlaylistView.cs:82 ../src/StockIcons.cs:71
 msgid "Artist"
 msgstr "Artista"
 
-#: ../src/PlaylistView.cs:86 ../src/StockIcons.cs:73
+#: ../src/PlaylistView.cs:85 ../src/StockIcons.cs:73
 msgid "Title"
 msgstr "Título"
 
-#: ../src/PlaylistView.cs:89 ../src/StockIcons.cs:72
+#: ../src/PlaylistView.cs:88 ../src/StockIcons.cs:72
 msgid "Album"
 msgstr "Álbum"
 
-#: ../src/PlaylistView.cs:92
+#: ../src/PlaylistView.cs:91
 msgid "Time"
 msgstr "Tempo"
 
-#: ../src/PlaylistView.cs:98
+#: ../src/PlaylistView.cs:97
 msgid "Plays"
 msgstr "Reproduções"
 
-#: ../src/PlaylistView.cs:102
+#: ../src/PlaylistView.cs:101
 msgid "Last Played"
 msgstr "Última Reproduzida"
 
-#: ../src/PlaylistView.cs:417
+#: ../src/PlaylistView.cs:416
 msgid "N/A"
 msgstr "N/D"
 
@@ -1491,7 +1488,7 @@ msgid ""
 "previously queued tracks ({1})"
 msgstr ""
 "O nó de dispositivo '{0}' difere do nó de dispositivo já configurado para as "
-"trilhas enfileiradas ({1})"
+"faixas enfileiradas ({1})"
 
 #: ../src/RipTransaction.cs:193
 msgid "Initializing CD Drive"
@@ -1513,7 +1510,7 @@ msgstr "Fonte"
 
 #: ../src/StockIcons.cs:56
 msgid "Play"
-msgstr "Tocar"
+msgstr "Reproduzir"
 
 #: ../src/StockIcons.cs:57
 msgid "Pause"
@@ -1544,21 +1541,22 @@ msgstr "Diminuir Volume"
 msgid "Volume Increase"
 msgstr "Aumentar Volume"
 
-#: ../src/TrackInfoHeader.cs:134
+#: ../src/TrackInfoHeader.cs:133
+#, fuzzy
 msgid "Banshee Player"
-msgstr "Reprodutor de Música Banshee"
+msgstr "Reprodutor Banshee"
 
 #: ../src/TrackProperties.cs:156
 msgid "Set all Track Numbers to this value"
-msgstr "Marca todos os Números de Trilha para este valor"
+msgstr "Marca todos os Números de Faixa para este valor"
 
 #: ../src/TrackProperties.cs:159
 msgid "Automatically Set All Track Numbers"
-msgstr "Marca Todos os Números de Trilha Automaticamente"
+msgstr "Marca Todos os Números de Faixa Automaticamente"
 
 #: ../src/TrackProperties.cs:162
 msgid "Set all Track Counts to this value"
-msgstr "Marca Todas as Contagens de Trilha para este valor"
+msgstr "Marca Todas as Contagens de Faixa para este valor"
 
 #: ../src/TrackProperties.cs:165
 msgid "Set all Artists to this value"
@@ -1583,11 +1581,11 @@ msgstr "Desconhecido"
 #: ../src/TrackProperties.cs:214
 #, csharp-format
 msgid "Editing Track Properties ({0} of {1})"
-msgstr "Editando Propriedades da Trilha ({0} of {1})"
+msgstr "Editando Propriedades da Faixa ({0} of {1})"
 
 #: ../src/TrackProperties.cs:218
 msgid "Editing Track Properties"
-msgstr "Editando Propriedades da Trilha"
+msgstr "Editando Propriedades da Faixa"
 
 #: ../src/TrackProperties.cs:223
 #, csharp-format
@@ -1596,15 +1594,18 @@ msgstr "Arquivo: {0}"
 
 #: ../src/VersionInformationDialog.cs:59
 msgid "Assembly Version Information"
-msgstr ""
+msgstr "Informação da Versão do Assembly"
 
 #: ../src/VersionInformationDialog.cs:65
 msgid "Assembly Name"
-msgstr ""
+msgstr "Nome do Assembly"
 
 #: ../src/VersionInformationDialog.cs:67
 msgid "Version"
 msgstr "Versão"
+
+#~ msgid "Unkown Album"
+#~ msgstr "Álbum Desconhecido"
 
 #~ msgid "Burn CD"
 #~ msgstr "Gravar CD"
