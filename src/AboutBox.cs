@@ -46,7 +46,7 @@ namespace Banshee
             "Ben Maurer",
             "Larry Ewing",
             "Miguel de Icaza",
-            "Ulas Sahin",
+            "Aydemir Ula\u015f \u015eahin",
             "Do\u011facan G\u00fcney"
         };
         
@@ -55,6 +55,14 @@ namespace Banshee
             "Jakub Steiner",
             "Ryan Collier"
         };
+        
+        private static string Copyright = Catalog.GetString(
+            "Copyright 2005 Novell, Inc.\n" + 
+             "Copyright 2005 Aaron Bockover"); 
+    
+        private static string Name = Catalog.GetString("Banshee");
+        
+        private static string Comments = Catalog.GetString("Music Management and Playback for Gnome.");
     
         private Translator [] Translators = {
             new Translator("Jordi Mas", "Catalan"),
@@ -113,15 +121,22 @@ namespace Banshee
             Array.Sort(Authors);
             Array.Sort(Artists);
             
+            try {
+                GtkAboutDialog();
+            } catch(Exception) {
+                GnomeAboutDialog();
+            }
+        }
+        
+        private void GtkAboutDialog()
+        {
             GtkSharpBackports.AboutDialog about_dialog = new GtkSharpBackports.AboutDialog();
-            about_dialog.Name = "Banshee";
+            about_dialog.Name = Name;
             about_dialog.Version = ConfigureDefines.VERSION;
-            about_dialog.Copyright = Catalog.GetString(
-                "Copyright 2005 Novell, Inc.\n" + 
-                "Copyright 2005 Aaron Bockover");
-            about_dialog.Comments = Catalog.GetString("Music Management and Playback for Gnome.");
+            about_dialog.Copyright = Copyright;
+            about_dialog.Comments = Comments;
             about_dialog.Website = "http://banshee-project.org/";
-            about_dialog.WebsiteLabel = "Banshee Wiki";
+            about_dialog.WebsiteLabel = Catalog.GetString("Banshee Wiki");
             about_dialog.Authors = Authors;
             about_dialog.TranslatorCredits = Translator.ToString(Translators);
             about_dialog.Artists = Artists;
@@ -129,6 +144,21 @@ namespace Banshee
             about_dialog.Logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
             about_dialog.License = Resource.GetFileContents("COPYING");
             about_dialog.WrapLicense = true;
+            about_dialog.Run();
+            about_dialog.Destroy();
+        }
+        
+        private void GnomeAboutDialog()
+        {
+            Gnome.About about_dialog = new Gnome.About(
+                Name,
+                ConfigureDefines.VERSION,
+                Copyright,
+                Comments,
+                Authors,
+                null,
+                Translator.ToString(Translators),
+                Gdk.Pixbuf.LoadFromResource("banshee-logo.png"));
             about_dialog.Run();
             about_dialog.Destroy();
         }

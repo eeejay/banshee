@@ -207,7 +207,7 @@ fi
 AC_SUBST(GST_PLUGINS_DIR)
 
 dnl GTK+-2.0 C devel deps
-GTK_REQUIRED=2.8
+GTK_REQUIRED=2.6
 PKG_CHECK_MODULES(GTK,
 	glib-2.0 \
 	libgnome-2.0 \
@@ -346,6 +346,10 @@ src/GtkSharpBackports/Makefile
 src/GtkSharpBackports/GtkSharpBackports.dll.config
 src/Banshee.Widgets/Makefile
 src/Banshee.Widgets/Banshee.Widgets.dll.config
+src/Banshee.Base/Makefile
+src/Banshee.Base/Banshee.Base.dll.config
+src/Banshee.Dap/Makefile
+src/Banshee.Dap/Banshee.Dap.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile

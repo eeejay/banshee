@@ -1,3 +1,10 @@
+2005-11-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Require only GTK 2.6, mainly for FC4
+	* src/AboutBox.cs: Fall back on the Gnome.About about dialog if the
+	GTK 2.8 version does not exist; fixed Ulas' name; made common text
+	fields static variables
+
 2005-11-18  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlaylistModel.cs: (AddTrack) sets TrackInfo.TreeIter to tree iter
