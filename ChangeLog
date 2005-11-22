@@ -1,3 +1,8 @@
+2005-11-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Remove references to Banshee.Base/Banshee.Dap, as they
+	are not committed yet
+	
 2005-11-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Require only GTK 2.6, mainly for FC4
