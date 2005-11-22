@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-20 20:04+0100\n"
-"PO-Revision-Date: 2005-11-20 20:10+0100\n"
+"POT-Creation-Date: 2005-11-22 23:25+0100\n"
+"PO-Revision-Date: 2005-11-22 23:25+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -224,7 +224,7 @@ msgid "Add To Playlist"
 msgstr "Añadir a la lista de reproducción"
 
 #: ../data/glade/player.glade.h:5 ../libbanshee/cd-rip.c:227
-#: ../src/NotificationAreaIcon.cs:62
+#: ../src/AboutBox.cs:63 ../src/NotificationAreaIcon.cs:62
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -634,7 +634,7 @@ msgstr "Álbum desconocido"
 msgid "Unknown Title"
 msgstr "Título desconocido"
 
-#: ../src/AboutBox.cs:120
+#: ../src/AboutBox.cs:60
 msgid ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
@@ -642,9 +642,13 @@ msgstr ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
 
-#: ../src/AboutBox.cs:122
+#: ../src/AboutBox.cs:65
 msgid "Music Management and Playback for Gnome."
 msgstr "Gestión y reproducción de música para Gnome."
+
+#: ../src/AboutBox.cs:139
+msgid "Banshee Wiki"
+msgstr "Wiki de Banshee"
 
 #: ../src/ActiveUserEvent.cs:74
 msgid "Cancel Operation"
@@ -1349,8 +1353,13 @@ msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library <i><b>and</b></i> your drive? This action will permanently delete "
 "the files."
-msgstr[0] "¿Seguro que quiere quitar la canción seleccionada de su fonoteca <i><b>y</b></i> de su disco? Esta acción borrará permanentemente el archivo."
-msgstr[1] "¿Seguro que quiere quitar las <b>({0})</b> canciones seleccionadas de su fonoteca <i><b>y</b></i> de su disco? Esta acción borrará permanentemente los archivos."
+msgstr[0] ""
+"¿Seguro que quiere quitar la canción seleccionada de su fonoteca <i><b>y</"
+"b></i> de su disco? Esta acción borrará permanentemente el archivo."
+msgstr[1] ""
+"¿Seguro que quiere quitar las <b>({0})</b> canciones seleccionadas de su "
+"fonoteca <i><b>y</b></i> de su disco? Esta acción borrará permanentemente "
+"los archivos."
 
 #: ../src/PlayerInterface.cs:1610
 #, csharp-format
@@ -1359,7 +1368,9 @@ msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library?"
 msgstr[0] "¿Seguro que quiere eliminar la canción seleccionada de su fonoteca?"
-msgstr[1] "¿Seguro que quiere eliminar las <b>({0})</b> canciones seleccionadas de su fonoteca?"
+msgstr[1] ""
+"¿Seguro que quiere eliminar las <b>({0})</b> canciones seleccionadas de su "
+"fonoteca?"
 
 #: ../src/PlayerInterface.cs:1619
 msgid "Remove Selected Songs from Library"
