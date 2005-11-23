@@ -34,6 +34,9 @@ using Mono.Unix;
 using IPod;
 using Gtk;
 
+using Banshee.Base;
+using Banshee.Widgets;
+
 namespace Banshee
 {
     public delegate void IpodDeviceAddedHandler(object o, IpodDeviceArgs args);
@@ -58,9 +61,9 @@ namespace Banshee
     
         public IpodCore()
         {
-            listener = new DeviceEventListener();
+            /*listener = new DeviceEventListener();
             listener.DeviceAdded += OnDeviceAdded;
-            listener.DeviceRemoved += OnDeviceRemoved;
+            listener.DeviceRemoved += OnDeviceRemoved;*/
             
             devices = new Hashtable();
             
@@ -207,7 +210,7 @@ namespace Banshee
         
         private void EmitSyncStarted()
         {
-            Core.ProxyToMainThread(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 EventHandler handler = SyncStarted;
                 if(handler != null)
                     handler(this, new EventArgs());
@@ -216,7 +219,7 @@ namespace Banshee
 
         private void EmitSyncCompleted()
         {
-            Core.ProxyToMainThread(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 EventHandler handler = SyncCompleted;
                 if(handler != null)
                     handler(this, new EventArgs());
@@ -511,6 +514,10 @@ namespace Banshee
             string prefix = "portable-media-";
             string id = null;
             
+            if(size == 24) {
+                size = 22;
+            }
+
             switch(model) {
                 case DeviceModel.Color: id = "ipod-standard-color"; break;
                 case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
@@ -524,10 +531,8 @@ namespace Banshee
                 case DeviceModel.Shuffle: id = "ipod-shuffle"; break;
                 case DeviceModel.NanoWhite: id = "ipod-nano-white"; break;
                 case DeviceModel.NanoBlack: id = "ipod-nano-black"; break;
-                case DeviceModel.VideoWhite:
-                case DeviceModel.VideoBlack:
-                    id = "ipod-standard-color";
-                    break;
+                case DeviceModel.VideoWhite: id = "ipod-video-white"; break;
+                case DeviceModel.VideoBlack: id = "ipod-video-black"; break;
                 default:
                     id = "ipod-standard-monochrome";
                     break;

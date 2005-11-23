@@ -1,3 +1,11 @@
+2005-11-23  Aaron Bockover  <aaron@aaronbock.net>
+
+	* data/images/ipod/22x22/*:
+	* data/images/ipod/16x16/*: Optimized raster iPod icons from Jakub Steiner
+	* data/images/ipod/Makefile.am: Install rules for new raster sizes
+	* data/images/ipod/scalable/*video*: Placeholder SVG video iPod icons
+	* src/IpodCore.cs: Map 24 to 22 for now, map the video iPod icon
+
 2005-11-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Remove references to Banshee.Base/Banshee.Dap, as they
