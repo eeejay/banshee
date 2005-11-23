@@ -34,7 +34,7 @@ using Mono.Unix;
 using IPod;
 using Gtk;
 
-using Banshee.Base;
+//using Banshee.Base;
 using Banshee.Widgets;
 
 namespace Banshee
@@ -210,7 +210,7 @@ namespace Banshee
         
         private void EmitSyncStarted()
         {
-            ThreadAssist.ProxyToMain(delegate {
+            Gtk.Application.Invoke(delegate {
                 EventHandler handler = SyncStarted;
                 if(handler != null)
                     handler(this, new EventArgs());
@@ -219,7 +219,7 @@ namespace Banshee
 
         private void EmitSyncCompleted()
         {
-            ThreadAssist.ProxyToMain(delegate {
+            Gtk.Application.Invoke(delegate {
                 EventHandler handler = SyncCompleted;
                 if(handler != null)
                     handler(this, new EventArgs());
