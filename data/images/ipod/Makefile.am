@@ -11,6 +11,8 @@ IPOD_ICONS = \
 	portable-media-ipod-standard-monochrome \
 	portable-media-ipod-U2-color \
 	portable-media-ipod-U2-monochrome \
+	portable-media-ipod-video-black \
+	portable-media-ipod-video-white \
 	portable-media-motorola-rokr
 
 SVG_IPOD_ICONS = $(foreach icon, $(IPOD_ICONS), $(srcdir)/scalable/$(icon).svg)
