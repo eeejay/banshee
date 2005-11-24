@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-29 10:08+0200\n"
-"PO-Revision-Date: 2005-10-29 19:58+0800\n"
+"POT-Creation-Date: 2005-11-24 10:06+0100\n"
+"PO-Revision-Date: 2005-11-24 19:55+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/banshee.desktop.in.in.h:1 ../data/glade/player.glade.h:6
-#: ../src/PlayerInterface.cs:1340
+#: ../src/PlayerInterface.cs:1505
 msgid "Banshee Music Player"
 msgstr "Banshee 音乐播放器"
 
@@ -33,10 +33,14 @@ msgid "Copy music on import"
 msgstr "导入时复制音乐"
 
 #: ../data/banshee.schemas.in.h:3
+msgid "Enable File System Monitoring"
+msgstr "启用文件系统监视"
+
+#: ../data/banshee.schemas.in.h:4
 msgid "File Name Pattern"
 msgstr "文件名模式"
 
-#: ../data/banshee.schemas.in.h:5
+#: ../data/banshee.schemas.in.h:6
 #, no-c-format
 msgid ""
 "Format for creating filenames/directories for ripped tracks, imported music, "
@@ -46,102 +50,117 @@ msgid ""
 "prefixed zero)."
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:6
+#: ../data/banshee.schemas.in.h:7
 msgid "Height of the main interface window."
 msgstr "主界面窗口的高度。"
 
-#: ../data/banshee.schemas.in.h:7
+#: ../data/banshee.schemas.in.h:8
 msgid "Move music on info save"
 msgstr "存储信息时移动音乐"
 
-#: ../data/banshee.schemas.in.h:8
+#: ../data/banshee.schemas.in.h:9
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr "保存音轨信息时将音乐移入 Banshee 音乐库目录"
 
-#: ../data/banshee.schemas.in.h:9
+#: ../data/banshee.schemas.in.h:10
 msgid "Name of media playback engine."
 msgstr "媒体回放引擎的名称。"
 
-#: ../data/banshee.schemas.in.h:10
-msgid "Pixel position of Main Player Window on the X Axis"
-msgstr ""
-
 #: ../data/banshee.schemas.in.h:11
-msgid "Pixel position of Main Player Window on the Y Axis"
-msgstr ""
+msgid "Only display the notification area (tray) icon if true"
+msgstr "如果为 true 的话，将只显示通知区域(托盘)图标"
 
 #: ../data/banshee.schemas.in.h:12
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "主播放器窗口像素位置的 X 轴"
+
+#: ../data/banshee.schemas.in.h:13
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "主播放器窗口像素位置的 Y 轴"
+
+#: ../data/banshee.schemas.in.h:14
 msgid "Player Engine Name"
 msgstr "播放器引擎名称"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:15
+msgid "Show Notification Area Icon"
+msgstr "显示通知区域图标"
+
+#: ../data/banshee.schemas.in.h:16
 msgid "Source View Width"
 msgstr "源视图宽度"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:17
+msgid ""
+"Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library "
+"as changes are made in the Library Location in the file system"
+msgstr ""
+"使用 inotify (若 inotify 不可用则使用 FAM)，以便当文件系统中的库位置有更改时更新 Banshee 库"
+
+#: ../data/banshee.schemas.in.h:18
 msgid "Volume Output Level"
 msgstr "音量输出级别"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:19
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:16
+#: ../data/banshee.schemas.in.h:20
 msgid "Width of Album Column."
 msgstr "专辑列的宽度。"
 
-#: ../data/banshee.schemas.in.h:17
+#: ../data/banshee.schemas.in.h:21
 msgid "Width of Artist Column."
 msgstr "艺人列的宽度。"
 
-#: ../data/banshee.schemas.in.h:18
-msgid "Width of Last Played Column."
-msgstr ""
-
-#: ../data/banshee.schemas.in.h:19
-msgid "Width of Plays Column."
-msgstr ""
-
-#: ../data/banshee.schemas.in.h:20
-msgid "Width of Rating Column."
-msgstr ""
-
-#: ../data/banshee.schemas.in.h:21
-msgid "Width of Source View Comlumn."
-msgstr ""
-
 #: ../data/banshee.schemas.in.h:22
-msgid "Width of Time Column."
-msgstr ""
+msgid "Width of Last Played Column."
+msgstr "上次播放列的宽度。"
 
 #: ../data/banshee.schemas.in.h:23
-msgid "Width of Title Column."
-msgstr ""
+msgid "Width of Plays Column."
+msgstr "播放次数列的宽度。"
 
 #: ../data/banshee.schemas.in.h:24
-msgid "Width of Track Column."
-msgstr ""
+msgid "Width of Rating Column."
+msgstr "评分列的宽度。"
 
 #: ../data/banshee.schemas.in.h:25
+msgid "Width of Source View Column."
+msgstr "来源列的宽度。"
+
+#: ../data/banshee.schemas.in.h:26
+msgid "Width of Time Column."
+msgstr "时间列的宽度。"
+
+#: ../data/banshee.schemas.in.h:27
+msgid "Width of Title Column."
+msgstr "标题列的宽度。"
+
+#: ../data/banshee.schemas.in.h:28
+msgid "Width of Track Column."
+msgstr "音轨列的宽度。"
+
+#: ../data/banshee.schemas.in.h:29
 msgid "Width of the main interface window."
 msgstr "主界面窗口的宽度。"
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:30
 msgid "Window Height"
 msgstr "窗口高度"
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:31
 msgid "Window Position X"
-msgstr ""
+msgstr "窗口位置 X"
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:32
 msgid "Window Position Y"
-msgstr ""
+msgstr "窗口位置 Y"
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:33
 msgid "Window Width"
 msgstr "窗口宽度"
 
@@ -189,7 +208,7 @@ msgid "Add To Playlist"
 msgstr "添加到播放列表"
 
 #: ../data/glade/player.glade.h:5 ../libbanshee/cd-rip.c:227
-#: ../src/NotificationAreaIcon.cs:61
+#: ../src/AboutBox.cs:63 ../src/NotificationAreaIcon.cs:62
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -217,76 +236,112 @@ msgstr "从驱动器中删除"
 msgid "Duplicate"
 msgstr "副本"
 
-#: ../data/glade/player.glade.h:13 ../src/StockIcons.cs:60
+#: ../data/glade/player.glade.h:13 ../src/StockIcons.cs:63
 msgid "Eject"
 msgstr "弹出"
 
-#: ../data/glade/player.glade.h:14
+#: ../data/glade/player.glade.h:14 ../src/StockIcons.cs:80
+msgid "Import CD"
+msgstr "导入 CD"
+
+#: ../data/glade/player.glade.h:15
 msgid "Import Files..."
 msgstr "导入文件..."
 
-#: ../data/glade/player.glade.h:15
+#: ../data/glade/player.glade.h:16
 msgid "Import Folder..."
 msgstr "导入文件夹..."
 
-#: ../data/glade/player.glade.h:16 ../src/Library.cs:576
-#: ../src/PlayerInterface.cs:1890 ../src/SourceView.cs:69
+#: ../data/glade/player.glade.h:17
+msgid "Logged Events..."
+msgstr "记录的事件..."
+
+#: ../data/glade/player.glade.h:18 ../src/Library.cs:600
+#: ../src/PlayerInterface.cs:2071 ../src/SourceView.cs:69
 msgid "New Playlist"
 msgstr "新建播放列表"
 
-#: ../data/glade/player.glade.h:17
+#: ../data/glade/player.glade.h:19
 msgid "Prefere_nces"
 msgstr "首选项(_N)"
 
-#: ../data/glade/player.glade.h:18
+#: ../data/glade/player.glade.h:20
 msgid "Properties"
 msgstr "属性"
 
-#: ../data/glade/player.glade.h:19 ../src/PlaylistView.cs:95
+#: ../data/glade/player.glade.h:21 ../src/PlaylistView.cs:94
 msgid "Rating"
 msgstr "评分"
 
-#: ../data/glade/player.glade.h:20
+#: ../data/glade/player.glade.h:22
 msgid "Remove"
 msgstr "删除"
 
-#: ../data/glade/player.glade.h:21
+#: ../data/glade/player.glade.h:23
 msgid "Remove Song(s)"
 msgstr "删除歌曲"
 
-#: ../data/glade/player.glade.h:22
+#: ../data/glade/player.glade.h:24
 msgid "Rename"
 msgstr "重命名"
 
-#: ../data/glade/player.glade.h:23 ../src/PlayerInterface.cs:1661
+#: ../data/glade/player.glade.h:25 ../src/PlayerInterface.cs:1838
 msgid "Rename Playlist"
 msgstr "重命名播放列表"
 
-#: ../data/glade/player.glade.h:24
+#: ../data/glade/player.glade.h:26 ../src/StockIcons.cs:61
+#: ../src/ToggleStates.cs:59
+msgid "Repeat All"
+msgstr "全部重复"
+
+#: ../data/glade/player.glade.h:27 ../src/StockIcons.cs:60
+#: ../src/ToggleStates.cs:41
+msgid "Repeat None"
+msgstr "不重复"
+
+#: ../data/glade/player.glade.h:28 ../src/StockIcons.cs:62
+#: ../src/ToggleStates.cs:50
+msgid "Repeat Single"
+msgstr "单曲重复"
+
+#: ../data/glade/player.glade.h:29
 msgid "Search:"
 msgstr "搜索："
 
-#: ../data/glade/player.glade.h:25
+#: ../data/glade/player.glade.h:30
 msgid "Select All"
 msgstr "全部选中"
 
-#: ../data/glade/player.glade.h:26
+#: ../data/glade/player.glade.h:31
 msgid "Select None"
 msgstr "全部不选"
 
-#: ../data/glade/player.glade.h:27
+#: ../data/glade/player.glade.h:32
+msgid "Shuffle"
+msgstr "乱序"
+
+#: ../data/glade/player.glade.h:33
 msgid "Toggle Full Screen Mode"
 msgstr "切换全屏模式"
 
-#: ../data/glade/player.glade.h:28
+#: ../data/glade/player.glade.h:34 ../src/PlayerInterface.cs:330
+msgid "Update iPod"
+msgstr "更新 iPod"
+
+#: ../data/glade/player.glade.h:35
 msgid "Version Information"
 msgstr "版本信息"
 
-#: ../data/glade/player.glade.h:29
+#. Other
+#: ../data/glade/player.glade.h:36 ../src/StockIcons.cs:79
+msgid "Write CD"
+msgstr "写入 CD"
+
+#: ../data/glade/player.glade.h:37
 msgid "_Full Screen"
 msgstr "全屏(_F)"
 
-#: ../data/glade/player.glade.h:30
+#: ../data/glade/player.glade.h:38
 msgid "_Music"
 msgstr "音乐(_M)"
 
@@ -330,7 +385,7 @@ msgstr "<small>编码</small>"
 msgid "<small>Library</small>"
 msgstr "<small>曲库</small>"
 
-#: ../data/glade/preferences.glade.h:11 ../src/AudioCdCore.cs:156
+#: ../data/glade/preferences.glade.h:11 ../src/AudioCdCore.cs:157
 msgid "Audio CD"
 msgstr "音乐 CD"
 
@@ -339,66 +394,62 @@ msgid "Burnproof"
 msgstr ""
 
 #: ../data/glade/preferences.glade.h:13
-msgid "Change"
-msgstr "更改"
-
-#: ../data/glade/preferences.glade.h:14
 msgid "Copy files to Banshee Music Folder when importing to Library"
 msgstr "导入到曲库时将文件复制到 Banshee 的音乐文件夹"
 
-#: ../data/glade/preferences.glade.h:15
+#: ../data/glade/preferences.glade.h:14
 msgid "Data CD"
 msgstr "数据 CD"
 
-#: ../data/glade/preferences.glade.h:16
+#: ../data/glade/preferences.glade.h:15
 msgid "Description:"
 msgstr "描述："
 
-#: ../data/glade/preferences.glade.h:17
+#: ../data/glade/preferences.glade.h:16
 msgid "Disk At Once"
 msgstr "整盘"
 
-#: ../data/glade/preferences.glade.h:18
+#: ../data/glade/preferences.glade.h:17
 msgid "Disk Drive:"
 msgstr "磁盘驱动器："
 
-#: ../data/glade/preferences.glade.h:19
+#: ../data/glade/preferences.glade.h:18
 msgid "Disk Format:"
 msgstr "磁盘格式："
 
-#: ../data/glade/preferences.glade.h:20
+#: ../data/glade/preferences.glade.h:19
 msgid "Eject When Finished"
 msgstr "完成后弹出"
 
-#: ../data/glade/preferences.glade.h:21
+#: ../data/glade/preferences.glade.h:20
 msgid "Encoding Profile:"
 msgstr "编码配置文件："
 
-#: ../data/glade/preferences.glade.h:22
+#: ../data/glade/preferences.glade.h:21
 msgid "Engine:"
 msgstr "引擎："
 
-#: ../data/glade/preferences.glade.h:23
+#: ../data/glade/preferences.glade.h:22
 msgid "MP3 CD"
 msgstr "MP3 CD"
 
-#: ../data/glade/preferences.glade.h:24
+#: ../data/glade/preferences.glade.h:23
 msgid "Overburn"
 msgstr "超刻"
 
-#: ../data/glade/preferences.glade.h:25
+#: ../data/glade/preferences.glade.h:24
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../data/glade/preferences.glade.h:26
+#: ../data/glade/preferences.glade.h:25
 msgid "Reset"
 msgstr "重置"
 
-#: ../data/glade/preferences.glade.h:27
+#: ../data/glade/preferences.glade.h:26
 msgid "Simulate Write"
 msgstr "模拟写入"
 
-#: ../data/glade/preferences.glade.h:28
+#: ../data/glade/preferences.glade.h:27
 msgid "Write Speed:"
 msgstr "写入速度："
 
@@ -431,8 +482,8 @@ msgid "Track Duration:"
 msgstr "音轨时长："
 
 #: ../data/glade/trackinfo.glade.h:8
-msgid "Track Properties"
-msgstr "音轨属性"
+msgid "Track Property Editor"
+msgstr "音轨属性编辑器"
 
 #: ../data/glade/trackinfo.glade.h:9
 msgid "Track _Count"
@@ -486,28 +537,28 @@ msgstr "无法获得音轨的起始位置"
 msgid "Could not get track position"
 msgstr "无法获得音轨的位置"
 
-#: ../libbanshee/gst-encode.c:111
+#: ../libbanshee/gst-encode.c:118
 msgid "Could not create 'gnomevfssrc' element"
 msgstr "无法创建“gnomevfssrc”元素"
 
-#: ../libbanshee/gst-encode.c:117
+#: ../libbanshee/gst-encode.c:124
 msgid "Could not create 'spider' element"
 msgstr "无法创建“spider”元素"
 
-#: ../libbanshee/gst-encode.c:124
+#: ../libbanshee/gst-encode.c:131
 #, c-format
 msgid "Could not create encoding pipeline: %s"
 msgstr "无法创建编码流水线：%s"
 
-#: ../libbanshee/gst-encode.c:130
+#: ../libbanshee/gst-encode.c:137
 msgid "Could not create 'filesink' element"
 msgstr "无法创建“filesink”元素"
 
-#: ../libbanshee/gst-encode.c:209
+#: ../libbanshee/gst-encode.c:219
 msgid "No decoder could be found for source format."
 msgstr "找不到源格式的解码器。"
 
-#: ../libbanshee/gst-encode.c:214
+#: ../libbanshee/gst-encode.c:224
 msgid "Could not stat encoded file"
 msgstr "无法开始编码文件"
 
@@ -521,7 +572,7 @@ msgstr "GStreamer 引擎"
 
 #: ../mediaengines/gst/GstPlayerEngine.cs:340
 msgid ""
-"GStreamer is a multimedia framework for playing and xmanipulating media. Any "
+"GStreamer is a multimedia framework for playing and manipulating media. Any "
 "GStreamer plugin that is available will work through this engine."
 msgstr ""
 
@@ -546,143 +597,133 @@ msgid ""
 "formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
 msgstr ""
 
-#: ../plugincore/TrackInfo.cs:158 ../src/AudioCdCore.cs:149
+#: ../plugincore/TrackInfo.cs:159 ../src/AudioCdCore.cs:150
 msgid "Unknown Artist"
 msgstr "未知艺人"
 
-#: ../plugincore/TrackInfo.cs:163
+#: ../plugincore/TrackInfo.cs:164 ../src/AudioCdCore.cs:151
 msgid "Unknown Album"
 msgstr "未知专辑"
 
-#: ../plugincore/TrackInfo.cs:168
+#: ../plugincore/TrackInfo.cs:169
 msgid "Unknown Title"
 msgstr "未知标题"
 
-#: ../src/ActiveUserEvent.cs:71
+#: ../src/AboutBox.cs:60
+msgid ""
+"Copyright 2005 Novell, Inc.\n"
+"Copyright 2005 Aaron Bockover"
+msgstr ""
+"版权 2005 Novell, Inc.\n"
+"版权 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:65
+msgid "Music Management and Playback for Gnome."
+msgstr "Gnome 的音乐管理和回放软件。"
+
+#: ../src/AboutBox.cs:139
+msgid "Banshee Wiki"
+msgstr "Banshee Wiki"
+
+#: ../src/ActiveUserEvent.cs:74
 msgid "Cancel Operation"
 msgstr "取消操作"
 
-#: ../src/ActiveUserEvent.cs:73
+#: ../src/ActiveUserEvent.cs:76
 #, csharp-format
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "您确定想要取消“{0}”操作吗？"
 
-#: ../src/AudioCdCore.cs:150
-msgid "Unkown Album"
-msgstr "未知专辑"
-
-#: ../src/AudioCdCore.cs:151
+#: ../src/AudioCdCore.cs:152
 #, csharp-format
 msgid "Track {0}"
 msgstr "音轨 {0}"
 
-#: ../src/AudioCdCore.cs:322
+#: ../src/AudioCdCore.cs:333
 msgid "Could not initialize HAL for CD Detection"
 msgstr "无法初始化 CD 检测的 HAL"
 
+#. work around mcs #76642
+#: ../src/AudioCdCore.cs:366
+msgid "Could not Read Audio CD"
+msgstr "无法读取音频 CD"
+
 #: ../src/BurnCore.cs:89
-msgid "Could Not Burn CD"
-msgstr "无法刻录 CD"
+msgid "Could Not Write CD"
+msgstr "无法写入 CD"
 
 #: ../src/BurnCore.cs:90
 msgid ""
 "No suitable wave encoder could be found to convert selected songs to CD "
 "audio format."
 msgstr ""
+"无法找到将选中歌曲转换为 CD 音频格式所需的波形编码器。"
 
-#: ../src/BurnCore.cs:147
-msgid "Banshee CD Burner"
-msgstr "Banshee CD 刻录"
+#: ../src/BurnCore.cs:150
+msgid "Writing CD"
+msgstr "正在 CD"
 
-#: ../src/BurnCore.cs:177
-msgid "Burning CD..."
-msgstr "正在刻录 CD..."
-
-#: ../src/BurnCore.cs:240 ../src/BurnCore.cs:243
-msgid "Cancel CD Burn?"
-msgstr "取消 CD 刻录吗？"
-
-#: ../src/BurnCore.cs:241
-msgid "Are you sure you want to cancel the CD Burn?"
-msgstr "您确定想要取消 CD 刻录吗？"
-
-#: ../src/BurnCore.cs:326
-msgid "Initializing Burner..."
-msgstr "正在初始化刻录机..."
-
-#: ../src/BurnCore.cs:377
+#: ../src/BurnCore.cs:182
 msgid "The inserted media is not large enough to hold your selected music."
 msgstr "插入的介质太小，无法存放您选中的音乐。"
 
-#: ../src/BurnCore.cs:379
+#: ../src/BurnCore.cs:184
 #, csharp-format
 msgid "{0} more minute is needed on the media."
 msgid_plural "{0} more minutes are needed on the media."
 msgstr[0] "介质上还剩 {0} 分钟。"
 
-#: ../src/BurnCore.cs:386 ../src/BurnCore.cs:389
-msgid "Not Enough Space"
-msgstr "没有足够空间"
+#: ../src/BurnCore.cs:188
+msgid "Not Enough Space on Disc"
+msgstr "盘片上没有足够空间"
 
-#: ../src/BurnCore.cs:429
-msgid "No CD Burners Available"
-msgstr ""
+#: ../src/BurnCore.cs:219
+msgid "No CD writers were found on your system."
+msgstr "您的系统中没有找到合适的刻录机。"
 
-#: ../src/BurnCore.cs:471 ../src/BurnCore.cs:485
+#: ../src/BurnCore.cs:259
 msgid "Error Burning CD"
 msgstr "刻录 CD 出错"
 
-#: ../src/BurnCore.cs:474
+#: ../src/BurnCore.cs:263
 msgid "An unknown error occurred when attempting to write the CD"
-msgstr ""
+msgstr "试图写入 CD 时发生了未知错误"
 
-#: ../src/BurnCore.cs:500 ../src/BurnCore.cs:506
-msgid "Data Loss Warning"
-msgstr "数据丢失警告"
+#: ../src/BurnCore.cs:269
+msgid "CD Writing Complete"
+msgstr "CD 写入完成"
 
-#: ../src/BurnCore.cs:502
-msgid ""
-"Attempting to burn this collection may result in data loss. The selected "
-"collection may not fit on the media.\n"
-"\n"
-"Would you like to continue?"
-msgstr ""
+#: ../src/BurnCore.cs:270
+msgid "The selected audio was successfully written to the CD."
+msgstr "选中的音乐已经成功写入 CD。"
 
-#: ../src/BurnCore.cs:531
+#: ../src/BurnCore.cs:274
+msgid "Error Writing CD"
+msgstr "写入 CD 出错"
+
+#: ../src/BurnCore.cs:297
 msgid "Preparing to write..."
 msgstr "正在准备写入..."
 
-#: ../src/BurnCore.cs:535
+#: ../src/BurnCore.cs:301
 msgid "Writing disk..."
 msgstr "正在写入磁盘..."
 
-#: ../src/BurnCore.cs:539
+#: ../src/BurnCore.cs:305
 msgid "Fixating disk..."
 msgstr ""
 
-#: ../src/BurnCore.cs:567
-msgid "Waiting for media..."
-msgstr "正在等候介质..."
+#: ../src/BurnCore.cs:322
+msgid "Waiting for Media"
+msgstr "正在等候介质"
 
-#: ../src/BurnCore.cs:577 ../src/BurnCore.cs:580
+#: ../src/BurnCore.cs:326 ../src/BurnCore.cs:329
 msgid "Insert Blank CD"
 msgstr "插入空 CD"
 
-#: ../src/BurnCore.cs:578
-msgid "Please insert a blank CD disk for the burn process."
+#: ../src/BurnCore.cs:327
+msgid "Please insert a blank CD disk for the write process."
 msgstr "请插入空的 CD，以便开始刻录。"
-
-#: ../src/BurnCore.cs:610
-msgid "Error Burning Disk"
-msgstr "刻录光盘出错"
-
-#: ../src/BurnCore.cs:632 ../src/BurnCore.cs:635
-msgid "CD Burning Complete"
-msgstr "CD 刻录完成"
-
-#: ../src/BurnCore.cs:633
-msgid "The selected audio was successfully written to the CD."
-msgstr "选中的音乐已经成功写入 CD。"
 
 #: ../src/Dialogs.cs:80
 msgid "Cannot Rename Playlist"
@@ -691,6 +732,14 @@ msgstr "无法重命名播放列表"
 #: ../src/Dialogs.cs:81
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "已经存在该名称的播放列表。请另外选择一个名称。"
+
+#: ../src/Dialogs.cs:90
+msgid "An Error Occurred"
+msgstr "发生了错误"
+
+#: ../src/Dialogs.cs:97
+msgid "Error"
+msgstr "错误"
 
 #: ../src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
@@ -706,20 +755,20 @@ msgstr ""
 msgid "An unhandled exception was thrown: "
 msgstr "放出了一个无法处理的异常："
 
-#: ../src/FileEncodeTransaction.cs:61
+#: ../src/FileEncodeTransaction.cs:67
 msgid "File Encoder"
 msgstr "文件编码器"
 
-#: ../src/FileEncodeTransaction.cs:69
+#: ../src/FileEncodeTransaction.cs:70
 msgid "Initializing Encoder..."
 msgstr "正在初始化编码器..."
 
-#: ../src/FileEncodeTransaction.cs:93
+#: ../src/FileEncodeTransaction.cs:101
 #, csharp-format
 msgid "Encoding {0} - {1} ..."
 msgstr "正在编码 {0} - {1}..."
 
-#: ../src/FileEncodeTransaction.cs:97
+#: ../src/FileEncodeTransaction.cs:105
 msgid "Encoding files..."
 msgstr "正在编码文件..."
 
@@ -732,17 +781,17 @@ msgstr "无法创建编码器"
 msgid "Could not encode file: {0}"
 msgstr "无法编码文件：{0}"
 
-#: ../src/IpodCore.cs:191
+#: ../src/IpodCore.cs:192
 msgid "Syncing iPod"
 msgstr "正同步 iPod"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/IpodCore.cs:463 ../src/Library.cs:471 ../src/PlayerInterface.cs:804
+#: ../src/IpodCore.cs:487 ../src/Library.cs:495 ../src/PlayerInterface.cs:947
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0}/{1}"
 
-#: ../src/IpodCore.cs:472 ../src/Library.cs:482
+#: ../src/IpodCore.cs:496 ../src/Library.cs:506
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "(还剩 {0})"
@@ -817,146 +866,189 @@ msgstr "数据库版本"
 msgid "Advanced Details"
 msgstr "高级细节"
 
-#: ../src/Library.cs:247
+#: ../src/Library.cs:271
 msgid "Library"
 msgstr "库"
 
-#: ../src/Library.cs:461 ../src/Utilities.cs:123
+#: ../src/Library.cs:485 ../src/Utilities.cs:128
 #, csharp-format
 msgid "{0} GB"
 msgstr "{0} GB"
 
-#: ../src/Library.cs:463 ../src/Utilities.cs:125
+#: ../src/Library.cs:487 ../src/Utilities.cs:130
 #, csharp-format
 msgid "{0} MB"
 msgstr "{0} MB"
 
-#: ../src/LibraryTransactionStatus.cs:165
+#: ../src/LibraryTransactionStatus.cs:167
 msgid "Working"
 msgstr "工作中"
 
-#: ../src/LibraryTransactionStatus.cs:203
+#: ../src/LibraryTransactionStatus.cs:205
 msgid ""
 "There are multiple operations executing. You may either cancel the current "
 "operation or all operations.\n"
 "\n"
 msgstr ""
+"目前有多项操作正在进行中。您可以取消当前操作或者全部操作。\n\n"
 
-#: ../src/LibraryTransactionStatus.cs:207
+#: ../src/LibraryTransactionStatus.cs:209
 msgid "Are you sure you want to cancel this operation?"
 msgid_plural "Are you sure you want to cancel these operations?"
 msgstr[0] "您确定想要取消操作吗？"
 
-#: ../src/LibraryTransactionStatus.cs:213
+#: ../src/LibraryTransactionStatus.cs:215
 msgid "Really Cancel Operation?"
 msgid_plural "Really Cancel Operations?"
 msgstr[0] "真的要取消操作吗？"
 
-#: ../src/LibraryTransactions.cs:96
-#, csharp-format
-msgid "{0} threw an unhandled exception: ending transaction safely: {1} ({2})"
-msgstr "{0} 释放了一个无法处理的异常：交易正常结束：{1} ({2})"
+#: ../src/LibraryTransactions.cs:95
+msgid "Unhandled Exception, ending IO Transaction safely"
+msgstr "无法处理的异常，交易正常结束"
 
-#: ../src/LibraryTransactions.cs:216 ../src/LibraryTransactions.cs:573
+#: ../src/LibraryTransactions.cs:212 ../src/LibraryTransactions.cs:587
 msgid "Library Track Loader"
-msgstr ""
+msgstr "库音轨装入器"
 
-#: ../src/LibraryTransactions.cs:238 ../src/LibraryTransactions.cs:592
-#: ../src/LibraryTransactions.cs:701
+#: ../src/LibraryTransactions.cs:241 ../src/LibraryTransactions.cs:606
+#: ../src/LibraryTransactions.cs:715
 msgid "Processing"
 msgstr "正在处理"
 
-#: ../src/LibraryTransactions.cs:258
+#: ../src/LibraryTransactions.cs:268
 msgid "Preloading Files"
 msgstr "正预装入文件"
 
-#: ../src/LibraryTransactions.cs:308 ../src/LibraryTransactions.cs:457
-#: ../src/LibraryTransactions.cs:599 ../src/LibraryTransactions.cs:723
+#: ../src/LibraryTransactions.cs:322 ../src/LibraryTransactions.cs:471
+#: ../src/LibraryTransactions.cs:613 ../src/LibraryTransactions.cs:740
 #, csharp-format
 msgid "Loading {0} - {1} ..."
 msgstr "正在载入 {0} - {1} ..."
 
-#: ../src/LibraryTransactions.cs:376
+#: ../src/LibraryTransactions.cs:390
 msgid "Playlist Save"
 msgstr "播放列表保存"
 
-#: ../src/LibraryTransactions.cs:390
+#: ../src/LibraryTransactions.cs:404
 msgid "Flushing old entries"
 msgstr ""
 
-#: ../src/LibraryTransactions.cs:404
+#: ../src/LibraryTransactions.cs:418
 msgid "Saving new entries"
 msgstr "正保存新项"
 
-#: ../src/LibraryTransactions.cs:433
+#: ../src/LibraryTransactions.cs:447
 msgid "Library Load"
 msgstr "库装入"
 
-#: ../src/LibraryTransactions.cs:444
+#: ../src/LibraryTransactions.cs:458
 msgid "Preloading Library"
 msgstr "正预装入库"
 
-#: ../src/LibraryTransactions.cs:486
+#: ../src/LibraryTransactions.cs:500
 msgid "Library Track Remove"
 msgstr "库音轨删除"
 
-#: ../src/LibraryTransactions.cs:492 ../src/LibraryTransactions.cs:536
+#: ../src/LibraryTransactions.cs:506 ../src/LibraryTransactions.cs:550
 msgid "Removing Tracks"
 msgstr "删除音轨"
 
-#: ../src/LibraryTransactions.cs:505 ../src/LibraryTransactions.cs:551
+#: ../src/LibraryTransactions.cs:519 ../src/LibraryTransactions.cs:565
 #, csharp-format
 msgid "Removing {0} - {1}"
 msgstr "删除 {0} - {1}"
 
-#: ../src/LibraryTransactions.cs:511
+#: ../src/LibraryTransactions.cs:525
 msgid "Purging Removed Tracks from Library..."
 msgstr "从曲库中删除选中的音轨..."
 
-#: ../src/LibraryTransactions.cs:525
+#: ../src/LibraryTransactions.cs:539
 msgid "Playlist Track Remove"
 msgstr "播放列表音轨删除"
 
-#: ../src/LibraryTransactions.cs:558
+#: ../src/LibraryTransactions.cs:572
 msgid "Purging Removed Tracks from Playlist..."
 msgstr "从播放列表中清除已删除的音轨..."
 
-#: ../src/LibraryTransactions.cs:620
+#: ../src/LibraryTransactions.cs:634
 msgid "Could not load track from library"
 msgstr "无法从库中装入音轨"
 
-#: ../src/LibraryTransactions.cs:683
+#: ../src/LibraryTransactions.cs:697
 msgid "Playlist Track Loader"
 msgstr "播放列表音轨装入器"
 
-#: ../src/NotificationAreaIcon.cs:104
+#: ../src/LogCoreViewer.cs:50
+msgid "Log Viewer"
+msgstr "日志查看器"
+
+#: ../src/LogCoreViewer.cs:86
+msgid "Time Stamp"
+msgstr "时间辍"
+
+#: ../src/LogCoreViewer.cs:105
+msgid "Message"
+msgstr "消息"
+
+#: ../src/LogCoreViewer.cs:117
+msgid "Show:"
+msgstr "显示："
+
+#: ../src/LogCoreViewer.cs:134
+msgid "All Log Entries"
+msgstr "全部日志项"
+
+#: ../src/LogCoreViewer.cs:135
+msgid "Only Error Messages"
+msgstr "只有错误消息"
+
+#: ../src/LogCoreViewer.cs:136
+msgid "Only Warning Messages"
+msgstr "只有警告消息"
+
+#: ../src/LogCoreViewer.cs:137
+msgid "Only Information Messages"
+msgstr "只有信息消息"
+
+#: ../src/LogCoreViewer.cs:138
+msgid "Only Debug Messages"
+msgstr "只有调试消息"
+
+#: ../src/LogCoreViewer.cs:153
+msgid "Entry Details:"
+msgstr "项细节："
+
+#: ../src/NotificationAreaIcon.cs:113
 msgid "Play / Pause"
 msgstr "播放/暂停"
 
-#. Playback Control Icons
-#: ../src/NotificationAreaIcon.cs:109 ../src/StockIcons.cs:54
-msgid "Next"
-msgstr "下一首"
-
-#: ../src/NotificationAreaIcon.cs:114 ../src/StockIcons.cs:55
+#: ../src/NotificationAreaIcon.cs:118 ../src/StockIcons.cs:55
 msgid "Previous"
 msgstr "上一首"
 
-#: ../src/NotificationAreaIcon.cs:122 ../src/StockIcons.cs:58
-msgid "Shuffle"
-msgstr "乱序"
+#. Playback Control Icons
+#: ../src/NotificationAreaIcon.cs:124 ../src/StockIcons.cs:54
+msgid "Next"
+msgstr "下一首"
 
-#: ../src/NotificationAreaIcon.cs:127 ../src/StockIcons.cs:59
-msgid "Repeat"
-msgstr "重复"
-
-#: ../src/NotificationAreaIcon.cs:134
+#. ShuffleItem = new ImageMenuItem(Catalog.GetString("Shuffle"));
+#. ShuffleItem.Image = new Gtk.Image();
+#. ((Gtk.Image)ShuffleItem.Image).SetFromStock("gtk-no", IconSize.Menu);
+#. traymenu.Append(ShuffleItem);
+#.
+#. RepeatItem = new ImageMenuItem(Catalog.GetString("Repeat"));
+#. RepeatItem.Image = new Gtk.Image();
+#. ((Gtk.Image)RepeatItem.Image).SetFromStock("gtk-no", IconSize.Menu);
+#. traymenu.Append(RepeatItem);
+#.
+#. traymenu.Append(new SeparatorMenuItem());
+#: ../src/NotificationAreaIcon.cs:143
 msgid "Quit Banshee"
 msgstr "退出 Banshee"
 
 #: ../src/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
-msgstr ""
+msgstr "流水线配置文件为空。"
 
 #: ../src/PipelineProfile.cs:111
 msgid "Pipeline profile does not have the correct number of components (7)"
@@ -1003,108 +1095,104 @@ msgstr ""
 
 #: ../src/PipelineProfile.cs:412
 msgid "No iPod-compatible encoders available"
-msgstr ""
+msgstr "未找到与 iPod 兼容的编码器"
 
-#: ../src/PlayerInterface.cs:263
+#: ../src/PlayerInterface.cs:272
 msgid "Loading..."
 msgstr "正在载入..."
 
-#: ../src/PlayerInterface.cs:319
-msgid "Update iPod"
-msgstr "更新 iPod"
-
 #. gxml["IpodContainer"].Visible = false;
 #. Misc
-#: ../src/PlayerInterface.cs:343 ../src/PlayerInterface.cs:2194
-#: ../src/TrackInfoHeader.cs:136
+#: ../src/PlayerInterface.cs:354 ../src/PlayerInterface.cs:2389
+#: ../src/TrackInfoHeader.cs:137
 msgid "Idle"
 msgstr ""
 
-#: ../src/PlayerInterface.cs:351
+#: ../src/PlayerInterface.cs:362
 msgid "All"
 msgstr "全部"
 
-#: ../src/PlayerInterface.cs:353 ../src/PlayerInterface.cs:1751
+#: ../src/PlayerInterface.cs:364 ../src/PlayerInterface.cs:1932
 msgid "Song Name"
 msgstr "歌曲名称"
 
-#: ../src/PlayerInterface.cs:354 ../src/PlayerInterface.cs:1749
+#: ../src/PlayerInterface.cs:365 ../src/PlayerInterface.cs:1930
 msgid "Artist Name"
 msgstr "艺人姓名"
 
-#: ../src/PlayerInterface.cs:355 ../src/PlayerInterface.cs:1753
+#: ../src/PlayerInterface.cs:366 ../src/PlayerInterface.cs:1934
 msgid "Album Title"
 msgstr "专辑标题"
 
-#: ../src/PlayerInterface.cs:365
+#: ../src/PlayerInterface.cs:402
 msgid "Create New Playlist"
 msgstr "创建新播放列表"
 
-#: ../src/PlayerInterface.cs:366
-msgid "Toggle Shuffle Playback Mode"
-msgstr "切换乱序回放模式"
+#: ../src/PlayerInterface.cs:403
+msgid "Shuffle Playback Mode"
+msgstr "乱序回放模式"
 
-#: ../src/PlayerInterface.cs:367
-msgid "Toggle Repeat Playback Mode"
-msgstr "切换重复播放模式"
+#: ../src/PlayerInterface.cs:404
+msgid "Repeat Playback Mode"
+msgstr "重复回放模式"
 
-#: ../src/PlayerInterface.cs:368
+#: ../src/PlayerInterface.cs:405
 msgid "View Selected Song Information"
 msgstr "查看选中歌曲的信息"
 
-#: ../src/PlayerInterface.cs:369
-msgid "Burn Selection to CD"
-msgstr "将选中内容刻录到 CD"
+#: ../src/PlayerInterface.cs:406
+msgid "Write Selection to CD"
+msgstr "将选中内容写入 CD"
 
-#: ../src/PlayerInterface.cs:370
-msgid "Rip CD into Library"
-msgstr "将 CD 抓渠道库"
+#: ../src/PlayerInterface.cs:407
+msgid "Import CD into Library"
+msgstr "将 CD 导入到库"
 
-#: ../src/PlayerInterface.cs:371
+#: ../src/PlayerInterface.cs:408
 msgid "Play Previous Song"
 msgstr "播放上一首歌"
 
-#: ../src/PlayerInterface.cs:372
+#: ../src/PlayerInterface.cs:409
 msgid "Play/Pause Current Song"
 msgstr "播放/暂停当前歌曲"
 
-#: ../src/PlayerInterface.cs:373
+#: ../src/PlayerInterface.cs:410
 msgid "Play Next Song"
 msgstr "播放下一首歌"
 
-#: ../src/PlayerInterface.cs:374
+#: ../src/PlayerInterface.cs:411
 msgid "Current Position in Song"
 msgstr "歌曲的当前位置"
 
-#: ../src/PlayerInterface.cs:375
+#: ../src/PlayerInterface.cs:412
 msgid "Adjust Volume"
 msgstr "调整音量"
 
-#: ../src/PlayerInterface.cs:376
+#: ../src/PlayerInterface.cs:413
 msgid "iPod Disk Usage"
 msgstr "iPod 磁盘占用"
 
-#: ../src/PlayerInterface.cs:377
+#: ../src/PlayerInterface.cs:414
 msgid "Eject iPod"
 msgstr "弹出 iPod"
 
-#: ../src/PlayerInterface.cs:378
+#: ../src/PlayerInterface.cs:415 ../src/PlayerInterface.cs:416
 msgid "Synchronize Music Library to iPod"
 msgstr "将音乐库同步到 iPod"
 
-#: ../src/PlayerInterface.cs:379
+#: ../src/PlayerInterface.cs:417
 msgid "View iPod Properties"
 msgstr "查看 iPod 属性"
 
-#: ../src/PlayerInterface.cs:404
+#: ../src/PlayerInterface.cs:448
 msgid "Notification Area Icon could not be installed"
 msgstr "通知区域图标无法安装"
 
-#: ../src/PlayerInterface.cs:441
+#: ../src/PlayerInterface.cs:489
 msgid "Import Music"
 msgstr "导入音乐"
 
-#: ../src/PlayerInterface.cs:442
+#: ../src/PlayerInterface.cs:490
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later.\n"
@@ -1112,33 +1200,39 @@ msgid ""
 "Automatic import or importing a large folder may take a long time, so please "
 "be patient."
 msgstr ""
+"您的音乐库目前为空。您可以现在就将新音乐导入到您的库中，也可以稍后再导入。\n\n"
+"自动导入或导入较大文件夹可能要花很长时间，所以请保持耐心。"
 
-#: ../src/PlayerInterface.cs:446
+#: ../src/PlayerInterface.cs:494
 msgid "Import Folder"
 msgstr "导入文件夹"
 
-#: ../src/PlayerInterface.cs:448
+#: ../src/PlayerInterface.cs:496
 msgid "Automatic Import"
 msgstr "自动导入"
 
-#: ../src/PlayerInterface.cs:890
+#: ../src/PlayerInterface.cs:621
+msgid "Position: "
+msgstr "位置："
+
+#: ../src/PlayerInterface.cs:1034
 msgid "Import Folder to Library"
 msgstr "将文件夹导入库"
 
-#: ../src/PlayerInterface.cs:947
+#: ../src/PlayerInterface.cs:1091
 msgid "Import Files to Library"
 msgstr "将文件导入库"
 
-#: ../src/PlayerInterface.cs:1038
+#: ../src/PlayerInterface.cs:1200
 #, csharp-format
 msgid "<b>{0}'s Music Library</b>"
 msgstr "<b>{0} 的音乐库</b>"
 
-#: ../src/PlayerInterface.cs:1207 ../src/PlayerInterface.cs:1237
+#: ../src/PlayerInterface.cs:1376 ../src/PlayerInterface.cs:1406
 msgid "Synchronize iPod"
 msgstr "同步 iPod"
 
-#: ../src/PlayerInterface.cs:1208
+#: ../src/PlayerInterface.cs:1377
 msgid ""
 "You have made changes to your iPod. Please choose a method for updating the "
 "contents of your iPod.\n"
@@ -1149,49 +1243,55 @@ msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr ""
+"您对您的 iPod 进行了更改。请选择更新您 iPod 内容的方式。\n"
+"\n"
+"<i>同步库</i>：将 Banshee 库同步到 iPod\n"
+"<i>保存手动更改</i>：只保存您手动所作的更改\n"
+"\n"
+"<b>警告：</b>此操作将更改或删除 iPod 中的现有内容，并且可能与 iTunes 不兼容！"
 
-#: ../src/PlayerInterface.cs:1213 ../src/PlayerInterface.cs:1241
+#: ../src/PlayerInterface.cs:1382 ../src/PlayerInterface.cs:1410
 msgid "Synchronize Library"
 msgstr "同步库"
 
-#: ../src/PlayerInterface.cs:1214
+#: ../src/PlayerInterface.cs:1383
 msgid "Save Manual Changes"
 msgstr "保存手动更改"
 
-#: ../src/PlayerInterface.cs:1238
+#: ../src/PlayerInterface.cs:1407
 msgid ""
 "Are you sure you want to synchronize your iPod with your Banshee library? "
 "This will <b>erase</b> the contents of your iPod and then copy the contents "
 "of your Banshee library."
 msgstr ""
 
-#: ../src/PlayerInterface.cs:1328
+#: ../src/PlayerInterface.cs:1492
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} 天"
 
-#: ../src/PlayerInterface.cs:1345
+#: ../src/PlayerInterface.cs:1510
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "您的库为空 - 请考虑导入音乐"
 
-#: ../src/PlayerInterface.cs:1349
+#: ../src/PlayerInterface.cs:1514
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "此播放列表为空 - 请考虑添加音乐"
 
-#: ../src/PlayerInterface.cs:1354
+#: ../src/PlayerInterface.cs:1518
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} 项"
 
-#: ../src/PlayerInterface.cs:1358
+#: ../src/PlayerInterface.cs:1520
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} 总计播放时间"
 
-#: ../src/PlayerInterface.cs:1426
-#, fuzzy, csharp-format
+#: ../src/PlayerInterface.cs:1603
+#, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
 "<i><b>and</b></i> your drive? This action will permanently delete the file."
@@ -1199,9 +1299,11 @@ msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library <i><b>and</b></i> your drive? This action will permanently delete "
 "the files."
-msgstr[0] "您确定想要将选中的歌曲从曲库中删除吗？"
+msgstr[0] ""
+"您确定想要将选中的 <b>{0}</b> 首歌曲从曲库<i><b>和</b></i>驱动器中删除吗？"
+"此操作将永久删除文件。"
 
-#: ../src/PlayerInterface.cs:1433
+#: ../src/PlayerInterface.cs:1610
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1209,41 +1311,45 @@ msgid_plural ""
 "library?"
 msgstr[0] "您确定想要将选中的歌曲从曲库中删除吗？"
 
-#: ../src/PlayerInterface.cs:1442
+#: ../src/PlayerInterface.cs:1619
 msgid "Remove Selected Songs from Library"
 msgstr "从曲库中删除选中的歌曲"
 
-#: ../src/PlayerInterface.cs:1662
+#: ../src/PlayerInterface.cs:1839
 msgid "Enter new playlist name"
 msgstr "输入新播放列表的名称"
 
-#: ../src/PlayerInterface.cs:1666
+#: ../src/PlayerInterface.cs:1844
 msgid "Rename iPod"
 msgstr "重命名 iPod"
 
-#: ../src/PlayerInterface.cs:1667
+#: ../src/PlayerInterface.cs:1845
 msgid "Enter new name for your iPod"
 msgstr "输入您 iPod 的新名称"
 
-#: ../src/PlayerInterface.cs:1914
+#: ../src/PlayerInterface.cs:2095
 msgid "Clear"
 msgstr "清除"
 
-#: ../src/PlayerInterface.cs:2137
+#: ../src/PlayerInterface.cs:2332
 msgid "Invalid Selection"
 msgstr "无效的选择"
 
-#: ../src/PlayerInterface.cs:2138
+#: ../src/PlayerInterface.cs:2333
 msgid "You must select at least one track to import."
 msgstr "您必须至少选择一条音轨导入。"
 
-#: ../src/PlayerInterface.cs:2162
+#: ../src/PlayerInterface.cs:2357
 msgid "Could Not Eject"
 msgstr "无法弹出"
 
-#: ../src/PlayerInterface.cs:2199
+#: ../src/PlayerInterface.cs:2394
 msgid "Banshee - Idle"
 msgstr ""
+
+#: ../src/PlayerInterface.cs:2447
+msgid "Synchronizing your iPod, Please Wait..."
+msgstr "正在同步您的 iPod，请稍候..."
 
 #: ../src/PlaylistColumns.cs:80
 msgid "Invalid column width"
@@ -1263,66 +1369,66 @@ msgid "{0} Play"
 msgid_plural "{0} Plays"
 msgstr[0] "播放{0}次"
 
-#: ../src/PlaylistView.cs:80
+#: ../src/PlaylistView.cs:79
 msgid "Track"
 msgstr "音轨"
 
 #. Now Playing Images
-#: ../src/PlaylistView.cs:83 ../src/StockIcons.cs:71
+#: ../src/PlaylistView.cs:82 ../src/StockIcons.cs:74
 msgid "Artist"
 msgstr "艺人"
 
-#: ../src/PlaylistView.cs:86 ../src/StockIcons.cs:73
+#: ../src/PlaylistView.cs:85 ../src/StockIcons.cs:76
 msgid "Title"
 msgstr "标题"
 
-#: ../src/PlaylistView.cs:89 ../src/StockIcons.cs:72
+#: ../src/PlaylistView.cs:88 ../src/StockIcons.cs:75
 msgid "Album"
 msgstr "专辑"
 
-#: ../src/PlaylistView.cs:92
+#: ../src/PlaylistView.cs:91
 msgid "Time"
 msgstr "时间"
 
-#: ../src/PlaylistView.cs:98
+#: ../src/PlaylistView.cs:97
 msgid "Plays"
 msgstr "播放次数"
 
-#: ../src/PlaylistView.cs:102
+#: ../src/PlaylistView.cs:101
 msgid "Last Played"
 msgstr "上次播放"
 
-#: ../src/PlaylistView.cs:417
+#: ../src/PlaylistView.cs:416
 msgid "N/A"
 msgstr "不可用"
 
-#: ../src/Preferences.cs:168
-msgid "Select Banshee Library Location"
-msgstr "选择 Banshee 库位置"
+#: ../src/Preferences.cs:96
+msgid "Select Library Location"
+msgstr "选择库位置"
 
-#: ../src/Preferences.cs:269
+#: ../src/Preferences.cs:262
 msgid "Unavailable"
 msgstr "不可用"
 
-#: ../src/Preferences.cs:275
+#: ../src/Preferences.cs:268
 msgid "Loading Drive List..."
 msgstr "正在装入驱动器列表..."
 
-#: ../src/Preferences.cs:298
+#: ../src/Preferences.cs:291
 msgid "No CD Burners Detected"
 msgstr "未检测到刻录机"
 
-#: ../src/Preferences.cs:396
+#: ../src/Preferences.cs:389
 msgid "Fastest Possible"
 msgstr "尽可能快"
 
 #. Translators: this represents a CD write speed, eg "32x"
-#: ../src/Preferences.cs:400
+#: ../src/Preferences.cs:393
 #, csharp-format
 msgid "{0}x"
 msgstr "{0}x"
 
-#: ../src/Preferences.cs:551
+#: ../src/Preferences.cs:544
 #, csharp-format
 msgid ""
 "You have changed the Banshee Playback Engine. This change will not take "
@@ -1330,7 +1436,7 @@ msgid ""
 "new <b><i>{0}</i></b> Engine"
 msgstr ""
 
-#: ../src/Preferences.cs:559
+#: ../src/Preferences.cs:552
 msgid "Banshee Restart Required"
 msgstr "需要重新启动 Banshee"
 
@@ -1349,15 +1455,10 @@ msgstr ""
 msgid "Initializing CD Drive"
 msgstr "正在初始化 CD 驱动器"
 
-#: ../src/RipTransaction.cs:220
+#: ../src/RipTransaction.cs:219
 #, csharp-format
 msgid "Ripping {0} of {1} : {2} - {3}"
-msgstr ""
-
-#: ../src/SearchEntry.cs:161 ../src/SearchEntry.cs:266
-#, csharp-format
-msgid "Searching: {0}"
-msgstr "搜索：{0}"
+msgstr "正在提取第{1}首中的第{0}首：{2} - {3}"
 
 #: ../src/SourceView.cs:142
 msgid "Source"
@@ -1371,41 +1472,40 @@ msgstr "播放"
 msgid "Pause"
 msgstr "暂停"
 
+#: ../src/StockIcons.cs:58 ../src/ToggleStates.cs:68
+msgid "Shuffle Enabled"
+msgstr "启用了乱序"
+
+#: ../src/StockIcons.cs:59 ../src/ToggleStates.cs:77
+msgid "Shuffle Disabled"
+msgstr "禁用了乱序"
+
 #. Volume Button Icons
-#: ../src/StockIcons.cs:63
+#: ../src/StockIcons.cs:66
 msgid "Volume Maximum"
 msgstr "最大音量"
 
-#: ../src/StockIcons.cs:64
+#: ../src/StockIcons.cs:67
 msgid "Volume Medium"
 msgstr "中等音量"
 
-#: ../src/StockIcons.cs:65
+#: ../src/StockIcons.cs:68
 msgid "Volume Miniumum"
 msgstr "最小音量"
 
-#: ../src/StockIcons.cs:66
+#: ../src/StockIcons.cs:69
 msgid "Volume Mute"
 msgstr "静音"
 
-#: ../src/StockIcons.cs:67
+#: ../src/StockIcons.cs:70
 msgid "Volume Decrease"
 msgstr "音量减少"
 
-#: ../src/StockIcons.cs:68
+#: ../src/StockIcons.cs:71
 msgid "Volume Increase"
 msgstr "音量增加"
 
-#. Other
-#: ../src/StockIcons.cs:76
-msgid "Burn CD"
-msgstr "刻录 CD"
-
-#: ../src/StockIcons.cs:77
-msgid "Rip CD"
-msgstr "抓取 CD"
-
-#: ../src/TrackInfoHeader.cs:134
+#: ../src/TrackInfoHeader.cs:135
 msgid "Banshee Player"
 msgstr "Banshee 播放器"
 
@@ -1455,3 +1555,21 @@ msgstr "编辑音轨属性"
 msgid "File: {0}"
 msgstr "文件：{0}"
 
+#: ../src/VersionInformationDialog.cs:61
+#, fuzzy
+msgid "Assembly Version Information"
+msgstr "版本信息"
+
+#: ../src/VersionInformationDialog.cs:67
+msgid "Assembly Name"
+msgstr ""
+
+#: ../src/VersionInformationDialog.cs:69
+msgid "Version"
+msgstr "版本"
+
+#: ../src/Banshee.Widgets/SearchEntry.cs:161
+#: ../src/Banshee.Widgets/SearchEntry.cs:266
+#, csharp-format
+msgid "Searching: {0}"
+msgstr "搜索：{0}"
