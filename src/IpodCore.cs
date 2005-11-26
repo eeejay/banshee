@@ -34,7 +34,7 @@ using Mono.Unix;
 using IPod;
 using Gtk;
 
-//using Banshee.Base;
+using Banshee.Base;
 using Banshee.Widgets;
 
 namespace Banshee
