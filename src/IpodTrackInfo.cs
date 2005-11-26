@@ -37,6 +37,7 @@ using Entagged;
 
 using Sql;
 using IPod;
+using Banshee.Base;
 
 namespace Banshee
 {

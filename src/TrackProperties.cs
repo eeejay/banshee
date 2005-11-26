@@ -33,6 +33,8 @@ using Glade;
 using System.Collections;
 using Mono.Unix;
 
+using Banshee.Base;
+
 namespace Banshee
 {
 	internal class EditorTrack

@@ -34,6 +34,8 @@ using Gtk;
 using Gdk;
 using Pango;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class CellEdit : Entry, CellEditable
@@ -151,8 +153,8 @@ namespace Banshee
             CursorChanged += OnCursorChanged;
             
             try {
-                Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
-                Core.Instance.IpodCore.DeviceRemoved += OnIpodCoreDeviceRemoved;
+                //Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
+                //Core.Instance.IpodCore.DeviceRemoved += OnIpodCoreDeviceRemoved;
                 if(Core.Instance.AudioCdCore != null) {
                     Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
                     Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
@@ -204,10 +206,10 @@ namespace Banshee
             }
         
             // iPod Sources
-            try {
-                foreach(IPod.Device device in Core.Instance.IpodCore.Devices)
-                    store.AppendValues(new IpodSource(device));
-            } catch(NullReferenceException) {}
+            //try {
+            //    foreach(IPod.Device device in Core.Instance.IpodCore.Devices)
+            //        store.AppendValues(new IpodSource(device));
+            //} catch(NullReferenceException) {}
             
             // Playlist Sources
             string [] names = Playlist.ListAll();

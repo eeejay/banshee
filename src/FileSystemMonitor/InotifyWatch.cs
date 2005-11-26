@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.IO;
 
+using Banshee.Base;
+
 namespace Banshee.FileSystemMonitor
 {
     public sealed class InotifyWatch : Watch 

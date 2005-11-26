@@ -35,6 +35,7 @@ using System.Threading;
 using Entagged;
 
 using Sql;
+using Banshee.Base;
 
 namespace Banshee
 {
@@ -436,7 +437,7 @@ namespace Banshee
             ParseUri(filename);
             trackId = 0;
    
-            AudioFileWrapper af = new AudioFileWrapper(filename);
+            AudioFile af = new AudioFile(filename);
 
             mimetype = null;
 

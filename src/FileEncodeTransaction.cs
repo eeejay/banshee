@@ -33,6 +33,9 @@ using System.Collections;
 using Mono.Unix;
 using Nautilus;
 
+using Banshee.Widgets;
+using Banshee.Base;
+
 namespace Banshee
 {
     public delegate void FileEncodeCompleteHandler(object o, FileEncodeCompleteArgs args);

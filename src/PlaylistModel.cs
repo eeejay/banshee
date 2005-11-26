@@ -33,6 +33,8 @@ using System.Threading;
 using Gtk;
 using Sql;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public enum RepeatMode {
@@ -391,8 +393,7 @@ namespace Banshee
             playingIter = TreeIter.Zero;
             Clear();
                 
-            if(Updated != null && 
-                Core.Instance.MainThread.Equals(Thread.CurrentThread))
+            if(Updated != null && ThreadAssist.InMainThread)
                 Updated(this, new EventArgs());
         }
         

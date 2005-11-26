@@ -37,6 +37,8 @@ using System.Diagnostics;
 using Mono.Unix;
 using Sql; 
 
+using Banshee.Base;
+
 namespace Banshee 
 {
     // --- Base LibraryTransaction Class 

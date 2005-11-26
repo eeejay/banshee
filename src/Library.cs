@@ -35,6 +35,8 @@ using Mono.Unix;
 using Sql;
 using GConf;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class Library

@@ -32,6 +32,8 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using Gtk;
 
+using Banshee.Base;
+
 namespace Banshee 
 {
 	public sealed class Dnd

@@ -31,7 +31,9 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-namespace Banshee.Logging
+using Banshee.Base;
+
+namespace Banshee
 {
     public class LogCoreViewer : Dialog
     {

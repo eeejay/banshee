@@ -36,6 +36,8 @@ using Gtk;
 using Gdk;
 using Pango;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class LoaderAdditionArgs : EventArgs

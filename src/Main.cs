@@ -29,7 +29,7 @@
 
 using System;
 using Gnome;
-
+using Banshee.Base;
 namespace Banshee
 {    
     public class BansheeEntry
@@ -220,6 +220,7 @@ namespace Banshee
             Core.Args = args;
             Core.Instance.Program = new Program(appname, version, Modules.UI, args);
             new Banshee.PlayerUI();
+            Gtk.Application.Run();
         }
     }
 }

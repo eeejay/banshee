@@ -36,6 +36,9 @@ using Gtk;
 using Glade;
 
 using Nautilus;
+using Banshee.Widgets;
+using Banshee.MediaEngine;
+using Banshee.Base;
 
 namespace Banshee
 {

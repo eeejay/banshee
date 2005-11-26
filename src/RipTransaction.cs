@@ -34,6 +34,9 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Mono.Unix;
 
+using Banshee.Widgets;
+using Banshee.Base;
+
 namespace Banshee
 {
     public delegate void CdRipProgressCallback(IntPtr ripper, int seconds,

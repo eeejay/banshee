@@ -38,8 +38,9 @@ using Glade;
 using System.IO;
 
 using Sql;
-using Banshee.Logging;
 using Banshee.Widgets;
+using Banshee.Base;
+using Banshee.MediaEngine;
 
 namespace Banshee
 {
@@ -146,7 +147,6 @@ namespace Banshee
             Core.Instance.DBusServer.RegisterObject(
                 new BansheeCore(Window, this, Core.Instance), "/org/gnome/Banshee/Core");
                         
-            WindowPlayer.Show();
             
             Core.Instance.Player.Iterate += OnPlayerTick;
             Core.Instance.Player.EndOfStream += OnPlayerEos;    
@@ -168,10 +168,10 @@ namespace Banshee
             
             Core.Log.Updated += OnLogCoreUpdated;
             
-            InitialLoadTimeout();
-            //GLib.Timeout.Add(500, InitialLoadTimeout);
-    
-            Gtk.Application.Run();
+            //InitialLoadTimeout();
+            GLib.Timeout.Add(500, InitialLoadTimeout);
+            
+            WindowPlayer.Show();
         }
                   
         private bool InitialLoadTimeout()
@@ -1176,11 +1176,7 @@ namespace Banshee
         
         private void OnSourceChanged(object o, EventArgs args)
         {
-            if(Core.InMainThread) {
-                HandleSourceChanged(o, args);
-            } else {
-                Application.Invoke(HandleSourceChanged);
-            }
+            ThreadAssist.ProxyToMain(HandleSourceChanged);
         }
         
         private void HandleSourceChanged(object o, EventArgs args)
@@ -1336,8 +1332,7 @@ namespace Banshee
                     && playlistModel.FirstTrack.GetType() == 
                     typeof(AudioCdTrackInfo)) {
                     AudioCdSource cdSource = source as AudioCdSource;
-                    AudioCdTrackInfo track = playlistModel.FirstTrack 
-                        as AudioCdTrackInfo;
+                    AudioCdTrackInfo track = playlistModel.FirstTrack as AudioCdTrackInfo;
                     
                     if(cdSource.Disk.DeviceNode == track.Device) 
                         (gxml["ViewNameLabel"] as Label).Markup = 
@@ -1500,7 +1495,7 @@ namespace Banshee
                 timeDisp += String.Format("{0}:{1}", span.Minutes, span.Seconds.ToString("00"));
             }
             
-            Core.ProxyToMainThread(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 if(count == 0 && playlistModel.Source == null) {
                     LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
                 } else if(count == 0) {
