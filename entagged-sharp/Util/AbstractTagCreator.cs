@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Raphal Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -25,53 +25,59 @@
 
 using System.Collections;
 
-namespace Entagged.Audioformats.Util {
-	public abstract class AbstractTagCreator {
-	    
-	    public ByteBuffer Create(Tag tag) {
-	        return Create(tag, 0);
-	    }
-	    
-	    public ByteBuffer Create(Tag tag, int padding) {
-	        IList fields = CreateFields(tag);
-			int tagSize = ComputeTagLength(tag, fields);
-			
-			ByteBuffer buf = new ByteBuffer(tagSize + padding);
-			Create(tag, buf, fields, tagSize, padding);
-			
-			buf.Rewind();
-			return buf;
-	    }
-	    
-	    public int GetTagLength(Tag tag) {
-			return ComputeTagLength(tag, CreateFields(tag));
-		}
-		
-		protected IList CreateFields(Tag tag) {
-		    IList fields = new ArrayList();
-			
-			foreach(DictionaryEntry entry in tag) {
-				foreach(string content in (IList) entry.Value) {
-					fields.Add(CreateField((string) entry.Key, content ));
-				}
-			}
-			
-			return fields;
-		}
-		
-		//Compute the number of bytes the tag will be.
-		protected int ComputeTagLength(Tag tag, IList l) {
-			int length = GetFixedTagLength(tag);
-			
-			foreach(byte[] field in l) {
-				length += field.Length;
-			}
-			
-			return length;
-		}
-							
-		protected abstract int GetFixedTagLength(Tag tag);
-		protected abstract void Create(Tag tag, ByteBuffer buf, IList fields, int tagSize, int padding);
-		protected abstract byte[] CreateField(string id, string content);
-	}
+namespace Entagged.Audioformats.Util 
+{
+    public abstract class AbstractTagCreator 
+    {
+        public ByteBuffer Create(Tag tag) 
+        {
+            return Create(tag, 0);
+        }
+        
+        public ByteBuffer Create(Tag tag, int padding) 
+        {
+            IList fields = CreateFields(tag);
+            int tagSize = ComputeTagLength(tag, fields);
+            
+            ByteBuffer buf = new ByteBuffer(tagSize + padding);
+            Create(tag, buf, fields, tagSize, padding);
+            buf.Rewind();
+            
+            return buf;
+        }
+        
+        public int GetTagLength(Tag tag) 
+        {
+            return ComputeTagLength(tag, CreateFields(tag));
+        }
+        
+        protected IList CreateFields(Tag tag) 
+        {
+            IList fields = new ArrayList();
+            
+            foreach(DictionaryEntry entry in tag) {
+                foreach(string content in (IList) entry.Value) {
+                    fields.Add(CreateField((string) entry.Key, content));
+                }
+            }
+            
+            return fields;
+        }
+        
+        //Compute the number of bytes the tag will be.
+        protected int ComputeTagLength(Tag tag, IList l) 
+        {
+            int length = GetFixedTagLength(tag);
+            
+            foreach(byte[] field in l) {
+                length += field.Length;
+            }
+            
+            return length;
+        }
+                            
+        protected abstract int GetFixedTagLength(Tag tag);
+        protected abstract void Create(Tag tag, ByteBuffer buf, IList fields, int tagSize, int padding);
+        protected abstract byte [] CreateField(string id, string content);
+    }
 }

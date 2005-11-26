@@ -17,16 +17,30 @@ APE_CSFILES = \
 	$(srcdir)/Ape/Util/WavFormatHeader.cs \
 	$(srcdir)/Ape/Util/WavRIFFHeader.cs
 
+ASF_CSFILES = \
+	$(srcdir)/Asf/AsfFileReader.cs \
+	$(srcdir)/Asf/Util/AsfTagReader.cs \
+	$(srcdir)/Asf/Util/AsfInfoReader.cs \
+	$(srcdir)/Asf/Util/GUID.cs
+
 FLAC_CSFILES = \
 	$(srcdir)/Flac/FlacFileReader.cs \
 	$(srcdir)/Flac/Util/FlacInfoReader.cs \
 	$(srcdir)/Flac/Util/FlacTagReader.cs \
+	$(srcdir)/Flac/Util/FlacTagWriter.cs \
+	$(srcdir)/Flac/Util/FlacTagCreator.cs \
+	$(srcdir)/Flac/Util/MetadataBlockData.cs \
 	$(srcdir)/Flac/Util/MetadataBlockDataStreamInfo.cs \
 	$(srcdir)/Flac/Util/MetadataBlockHeader.cs
 
 OGG_CSFILES = \
 	$(srcdir)/Ogg/OggFileReader.cs \
 	$(srcdir)/Ogg/OggTag.cs \
+	$(srcdir)/Ogg/OggFileWriter.cs \
+	$(srcdir)/Ogg/Util/OggCRCFactory.cs \
+	$(srcdir)/Ogg/Util/VorbisTagCreator.cs \
+	$(srcdir)/Ogg/Util/VorbisTagWriter.cs \
+	$(srcdir)/Ogg/Util/OggTagCreator.cs \
 	$(srcdir)/Ogg/Util/OggTagReader.cs \
 	$(srcdir)/Ogg/Util/VorbisTagReader.cs \
 	$(srcdir)/Ogg/Util/OggInfoReader.cs \
@@ -45,7 +59,7 @@ MP3_CSFILES = \
 	$(srcdir)/Mp3/Util/Id3frames/CommId3Frame.cs \
 	$(srcdir)/Mp3/Util/Id3frames/Id3Frame.cs \
 	$(srcdir)/Mp3/Util/Id3frames/TextId3Frame.cs \
-	$(srcdir)/Mp3/Util/Id3v23TagReader.cs \
+	$(srcdir)/Mp3/Util/Id3v24TagReader.cs \
 	$(srcdir)/Mp3/Util/Id3v2TagReader.cs \
 	$(srcdir)/Mp3/Util/Id3v2TagSynchronizer.cs \
 	$(srcdir)/Mp3/Util/Mp3InfoReader.cs \
@@ -74,12 +88,14 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Util/CustomAttributes.cs \
 	$(srcdir)/Util/TagField.cs \
 	$(srcdir)/Util/Utils.cs \
-	$(srcdir)/AudioFile.cs \
+	$(srcdir)/AudioFileContainer.cs \
 	$(srcdir)/AudioFileIO.cs \
-	$(srcdir)/AudioFileWrapper.cs \
+	$(srcdir)/AudioFile.cs \
 	$(srcdir)/EncodingInfo.cs \
 	$(srcdir)/Tag.cs \
+	$(srcdir)/CreativeCommons.cs \
 	$(APE_CSFILES) \
+	$(ASF_CSFILES) \
 	$(FLAC_CSFILES) \
 	$(OGG_CSFILES) \
 	$(MPC_CSFILES) \
@@ -102,7 +118,7 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 #	$(GACUTIL) /u $(ASSEMBLY_NAME) /package $(PACKAGE) /gacdir $(libdir) /root $(DESTDIR)$(libdir)
 
 EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) 
+	$(ASSEMBLY_SOURCES)
 
 CLEANFILES = $(ASSEMBLY)
 DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe

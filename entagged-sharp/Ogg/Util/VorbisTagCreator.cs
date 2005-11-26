@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 RaphaÃ«l Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -23,47 +23,30 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.6  2005/11/26 01:52:39  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
-using System.IO;
 using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Mpc.Util;
-using Entagged.Audioformats.Ape.Util;
+ 
+namespace Entagged.Audioformats.Ogg.Util {
+	public class VorbisTagCreator {
+		private OggTagCreator creator = new OggTagCreator();
+		
+		//Creates the ByteBuffer for the ogg tag
+		public ByteBuffer Convert(Tag tag) {
+			ByteBuffer ogg = creator.Create(tag);
+			int tagLength = ogg.Capacity + 8;
+			
+			ByteBuffer buf = new ByteBuffer(tagLength);
+			
+			//[packet type=comment0x03]['vorbis']
+			buf.Put( new byte[]{(byte) 0x03, (byte) 0x76, (byte) 0x6f, (byte) 0x72, (byte) 0x62, (byte) 0x69, (byte) 0x73} );
+			
+			//The actual tag
+			buf.Put(ogg);
 
-namespace Entagged.Audioformats.Mpc
-{
-	[SupportedMimeType ("audio/mpc")]
-	[SupportedMimeType ("audio/x-mpc")]
-	[SupportedMimeType ("audio/mp+")]
-	[SupportedMimeType ("audio/x-mp+")]
-	[SupportedMimeType ("entagged/mpc")]
-	[SupportedMimeType ("entagged/mp+")]
-	public class MpcFileReader : AudioFileReader 
-	{	
-		private MpcInfoReader ir = new MpcInfoReader();
-		private ApeTagReader tr = new ApeTagReader();
-		
-		protected override EncodingInfo GetEncodingInfo(Stream raf, 
-			string mime)  
-		{
-			return ir.Read(raf);
-		}
-		
-		protected override Tag GetTag(Stream raf, string mime)  
-		{
-			return tr.Read(raf);
+			//Framing bit = 1
+			buf.Put( (byte) 0x01 );
+
+			buf.Rewind();
+			return buf;
 		}
 	}
 }
-

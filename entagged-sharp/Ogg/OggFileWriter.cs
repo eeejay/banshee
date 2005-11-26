@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Raphal Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -23,47 +23,23 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.6  2005/11/26 01:52:39  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
 using System.IO;
 using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Mpc.Util;
-using Entagged.Audioformats.Ape.Util;
+using Entagged.Audioformats.Ogg.Util;
 
-namespace Entagged.Audioformats.Mpc
-{
-	[SupportedMimeType ("audio/mpc")]
-	[SupportedMimeType ("audio/x-mpc")]
-	[SupportedMimeType ("audio/mp+")]
-	[SupportedMimeType ("audio/x-mp+")]
-	[SupportedMimeType ("entagged/mpc")]
-	[SupportedMimeType ("entagged/mp+")]
-	public class MpcFileReader : AudioFileReader 
-	{	
-		private MpcInfoReader ir = new MpcInfoReader();
-		private ApeTagReader tr = new ApeTagReader();
+namespace Entagged.Audioformats.Ogg {
+
+    [SupportedMimeType ("entagged/ogg")]
+	public class OggFileWriter : AudioFileWriter {
+
+		private VorbisTagWriter vorbis = new VorbisTagWriter();
 		
-		protected override EncodingInfo GetEncodingInfo(Stream raf, 
-			string mime)  
-		{
-			return ir.Read(raf);
+		protected override void WriteTag(Tag tag, Stream oggStream, Stream tempStream) {
+			vorbis.Write(tag, oggStream, tempStream);
 		}
 		
-		protected override Tag GetTag(Stream raf, string mime)  
-		{
-			return tr.Read(raf);
+		protected override void DeleteTag(Stream oggStream, Stream tempStream) {
+			vorbis.Delete(oggStream, tempStream);
 		}
 	}
 }
-

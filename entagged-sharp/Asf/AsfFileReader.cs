@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Christian Laireiter <liree@web.de> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -23,47 +23,36 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.6  2005/11/26 01:52:39  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
+using System;
 using System.IO;
+
+using Entagged.Audioformats;
+using Entagged.Audioformats.Asf.Util;
 using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Mpc.Util;
-using Entagged.Audioformats.Ape.Util;
 
-namespace Entagged.Audioformats.Mpc
+namespace Entagged.Audioformats.Asf 
 {
-	[SupportedMimeType ("audio/mpc")]
-	[SupportedMimeType ("audio/x-mpc")]
-	[SupportedMimeType ("audio/mp+")]
-	[SupportedMimeType ("audio/x-mp+")]
-	[SupportedMimeType ("entagged/mpc")]
-	[SupportedMimeType ("entagged/mp+")]
-	public class MpcFileReader : AudioFileReader 
-	{	
-		private MpcInfoReader ir = new MpcInfoReader();
-		private ApeTagReader tr = new ApeTagReader();
-		
-		protected override EncodingInfo GetEncodingInfo(Stream raf, 
-			string mime)  
-		{
-			return ir.Read(raf);
-		}
-		
-		protected override Tag GetTag(Stream raf, string mime)  
-		{
-			return tr.Read(raf);
-		}
-	}
-}
+    // The stream must be seekable and only the information 
+    // of the first audio stream is extracted.
+    
+    [SupportedMimeType("entagged/wma")]
+    [SupportedMimeType("audio/x-ms-wma")]
+    public class AsfFileReader : AudioFileReader 
+    {
+        private static readonly AsfInfoReader info_reader = new AsfInfoReader();
+        private static readonly AsfTagReader tag_reader = new AsfTagReader();
 
+        protected override EncodingInfo GetEncodingInfo(Stream stream, string mime) 
+        {
+            // AsfInfoReader needs the stream to be at position 0
+            stream.Seek(0, SeekOrigin.Begin);
+            return info_reader.Read(stream);
+        }
+
+        protected override Tag GetTag(Stream stream, string mime) 
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+            return tag_reader.Read(stream);
+        }
+    }
+}

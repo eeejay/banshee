@@ -25,8 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.5  2005/11/01 23:32:04  abock
- * Updated entagged tree
+ * Revision 1.6  2005/11/26 01:52:39  abock
+ * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ *
+ *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+ *     WMA support and ID3 2.4 support
  *
  * Revision 1.3  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -51,7 +54,7 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 		public Id3Frame(byte[] raw, byte version)
 		{
 		    byte[] rawNew;
-			if(version == Id3Tag.ID3V23) {
+			if(version == Id3Tag.ID3V23 || version == Id3Tag.ID3V24) {
 				byte size = 2;
 				
 				if((raw[1]&0x80) == 0x80) {
@@ -135,11 +138,16 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 		}
 
 		protected byte[] GetSize(int size) {
-			byte[] b = new byte[4];
-			b[0] = (byte)( ( size >> 24 ) & 0xFF );
-			b[1] = (byte)( ( size >> 16 ) & 0xFF );
-			b[2] = (byte)( ( size >>  8 ) & 0xFF );
-			b[3] = (byte)(   size         & 0xFF );
+			byte[] b = null;
+			if (this.version == Id3Tag.ID3V24) {
+				b = Utils.GetSyncSafe(size);
+			} else {
+				b = new byte[4];
+				b[0] = (byte) ((size >> 24) & 0xFF);
+				b[1] = (byte) ((size >> 16) & 0xFF);
+				b[2] = (byte) ((size >> 8) & 0xFF);
+				b[3] = (byte) (size & 0xFF);
+			}
 			return b;
 		}
 		
@@ -155,16 +163,27 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 					result = Encoding.GetEncoding("UTF-16BE").GetString(b, offset + 2, length - 2 - zerochars);
 				} else if (b[offset] == (byte) 0xFF && b[offset + 1] == (byte) 0xFE) {
 					result = Encoding.GetEncoding("UTF-16LE").GetString(b, offset + 2, length - 2 - zerochars);
-				} 
+				}  else {
+					/*
+					 * Now we have a little problem. The tag is not id3-spec
+					 * conform. And since I don't have a way to see if its little or
+					 * big endian, i decide for the windows default little endian.
+					 */
+					result = Encoding.GetEncoding("UTF-16LE").GetString(b, offset, length - zerochars);
+				}
 			} else {
-				if (length == 0 || offset+length > b.Length) {
+				int zerochars = 0;
+				if (encoding == "UTF-16BE") {
+					if (b[offset + length - 2] == 0x00 && b[offset + length - 1] == 0x00) {
+						zerochars = 2;
+					}
+				} else if (b[offset + length - 1] == 0x00) {
+					zerochars = 1;
+				}
+				if (length == 0 || offset + length > b.Length) {
 					result = "";
 				} else {
-					int zerochars = 0;
-					if (b[offset+length-1] == 0x00) {
-						zerochars = 1;
-					}
-					result = Encoding.GetEncoding(encoding).GetString(b, offset, length-zerochars);
+					result = Encoding.GetEncoding(encoding).GetString(b, offset, length - zerochars);
 				}
 			}
 			return result;
@@ -184,7 +203,11 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 			} else {
 				// this is encoding ISO-8859-1, for the time of this change.
 				result = System.Text.Encoding.GetEncoding(encoding).GetBytes(s);
-				byte[] tmp = new byte[result.Length + 1];
+				int zeroTerm = 1;
+				if (encoding == "UTF-16BE")
+					zeroTerm = 2;
+
+				byte[] tmp = new byte[result.Length + zeroTerm];
 				Copy(result, tmp, 0);
 				result = tmp;
 			}

@@ -25,8 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.5  2005/11/01 23:32:02  abock
- * Updated entagged tree
+ * Revision 1.6  2005/11/26 01:52:37  abock
+ * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ *
+ *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+ *     WMA support and ID3 2.4 support
  *
  * Revision 1.4  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -61,7 +64,7 @@ namespace Entagged.Audioformats.Flac.Util {
 				raf.Read(b, 0, b.Length);
 				MetadataBlockHeader mbh = new MetadataBlockHeader(b);
 
-				if (mbh.BlockType == (int) MetadataBlockHeader.BlockTypes.StreamInfo) {
+				if (mbh.BlockType == MetadataBlockHeader.BlockTypes.StreamInfo) {
 					b = new byte[mbh.DataLength];
 					raf.Read(b, 0, b.Length);
 

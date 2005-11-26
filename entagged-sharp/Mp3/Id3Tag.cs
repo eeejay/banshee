@@ -25,8 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.5  2005/11/01 23:32:03  abock
- * Updated entagged tree
+ * Revision 1.6  2005/11/26 01:52:38  abock
+ * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ *
+ *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+ *     WMA support and ID3 2.4 support
  *
  * Revision 1.3  2005/02/08 12:54:42  kikidonk
  * Added cvs log and header
@@ -44,6 +47,7 @@ namespace Entagged.Audioformats.Mp3 {
 		
 		public static byte ID3V22 = 0;
 		public static byte ID3V23 = 1;
+		public static byte ID3V24 = 2;
 		
 		public Id3Tag()
 		{
@@ -53,6 +57,10 @@ namespace Entagged.Audioformats.Mp3 {
 			AddCommonFieldMapping(CommonField.Track, "TRCK");
 			AddCommonFieldMapping(CommonField.Year, "TYER");
 			AddCommonFieldMapping(CommonField.Genre, "TCON");
+			AddCommonFieldMapping(CommonField.License, "TCOP");
+			//AddCommonFieldAlias(CommonField.License, CommonField.Comment);
 		}
+		
+		//representedversion stuff
 	}
 }

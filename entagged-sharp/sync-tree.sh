@@ -10,7 +10,7 @@
 # sonance/entagged directory
 
 MONO_BRANCH="entagged-sharp"
-TRIM_FILES="Asf"
+TRIM_FILES=""
 MONO_CVS_USER="abock"
 
 #-- don't touch --#
@@ -46,6 +46,8 @@ done;
 #fi
 
 rm -rf $MONO_BRANCH $TRIM_FILES
+
+touch AssemblyInfo.cs
 
 #AM_INC="ASSEMBLY_SOURCES = "
 #for cs in `find ./ | grep -e '\.cs$'`; do

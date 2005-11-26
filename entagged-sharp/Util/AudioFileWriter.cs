@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Raphal Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -28,82 +28,82 @@ using System.IO;
 using Entagged.Audioformats.Exceptions;
 
 namespace Entagged.Audioformats.Util {
-	public abstract class AudioFileWriter {
-		private enum Action {
-			Write,
-			Delete
-		}
-		
-		protected abstract void WriteTag(Tag tag, Stream stream, Stream temp);
-		protected abstract void DeleteTag(Stream stream, Stream temp);
-		
-		public void Delete(string f) {
-			CreateStreams(f, Action.Delete, null);
-		}
-		
-		public void Write(string f, AudioFile af) {
-			//Preliminary checks
-			if (af.Tag.IsEmpty) {
-				Delete(f);
-				return;
-			}
-			
-			CreateStreams(f, Action.Write, af.Tag);
-		}
-					
-		private void CreateStreams(string f, Action action, Tag tag) {
-			FileStream stream;
-			FileStream temp;
-			string tempFile;
-			Exception exception = null;
-				
-			try {
-				stream = File.Open (f, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-			} catch (Exception e) {
-				throw new CannotWriteException("\""+f+"\": "+e.Message);
-			}
-			
-			using (stream) {				
-				if (!stream.CanWrite)
-					throw new CannotWriteException("Can't write to file \""+f+"\"");
-				
-				if(stream.Length <= 150)
-					throw new CannotWriteException("Less than 150 byte \""+f+"\"");
-				
-				try {
-					//Fixme !
-					tempFile = "entagged.tmp";
-					temp = File.Open (tempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-				} catch (Exception e) {
-					throw new CannotWriteException("\""+f+"\": "+e.Message);
-				}
-				
-				using (temp) {
-					try {
-						switch(action) {
-							case Action.Delete:
-								DeleteTag(stream, temp);
-								break;
-							case Action.Write:
-								WriteTag(tag, stream, temp);
-								break;
-						}
-					}
-					catch ( Exception e ) {
-						exception = e;
-					}
-				}
-				
-				if(temp.Length > 0) {
-					File.Delete(f);
-					File.Move(tempFile, f);
-				} else {
-					File.Delete(tempFile);
-				}
-				
-				if (exception != null)
-					throw new CannotWriteException("\""+f+"\" :"+exception.Message);
-			}
-		}
-	}
+    public abstract class AudioFileWriter {
+        private enum Action {
+            Write,
+            Delete
+        }
+        
+        protected abstract void WriteTag(Tag tag, Stream stream, Stream temp);
+        protected abstract void DeleteTag(Stream stream, Stream temp);
+        
+        public void Delete(string f) {
+            CreateStreams(f, Action.Delete, null);
+        }
+        
+        public void Write(string f, AudioFileContainer af) {
+            //Preliminary checks
+            if (af.Tag.IsEmpty) {
+                Delete(f);
+                return;
+            }
+            
+            CreateStreams(f, Action.Write, af.Tag);
+        }
+                    
+        private void CreateStreams(string f, Action action, Tag tag) {
+            FileStream stream;
+            FileStream temp;
+            string tempFile;
+            Exception exception = null;
+                
+            try {
+                stream = File.Open (f, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            } catch (Exception e) {
+                throw new CannotWriteException("\""+f+"\": "+e.Message);
+            }
+            
+            using (stream) {                
+                if (!stream.CanWrite)
+                    throw new CannotWriteException("Can't write to file \""+f+"\"");
+                
+                if(stream.Length <= 150)
+                    throw new CannotWriteException("Less than 150 byte \""+f+"\"");
+                
+                try {
+                    //Fixme !
+                    tempFile = "entagged.tmp";
+                    temp = File.Open (tempFile, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                } catch (Exception e) {
+                    throw new CannotWriteException("\""+f+"\": "+e.Message);
+                }
+                
+                using (temp) {
+                    try {
+                        switch(action) {
+                            case Action.Delete:
+                                DeleteTag(stream, temp);
+                                break;
+                            case Action.Write:
+                                WriteTag(tag, stream, temp);
+                                break;
+                        }
+                    }
+                    catch ( Exception e ) {
+                        exception = e;
+                    }
+                }
+                
+                if(temp.Length > 0) {
+                    File.Delete(f);
+                    File.Move(tempFile, f);
+                } else {
+                    File.Delete(tempFile);
+                }
+                
+                if (exception != null)
+                    throw new CannotWriteException("\""+f+"\" :"+exception.Message);
+            }
+        }
+    }
 }

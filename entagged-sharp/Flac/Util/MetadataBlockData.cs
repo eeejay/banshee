@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Copyright 2005 RaphaÃ«l Slinckx <raphael@slinckx.net> 
+ *  Copyright 2005 Raphaël Slinckx <raphael@slinckx.net> 
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -22,48 +22,30 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
-/*
- * $Log$
- * Revision 1.6  2005/11/26 01:52:39  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
-using System.IO;
-using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Mpc.Util;
-using Entagged.Audioformats.Ape.Util;
-
-namespace Entagged.Audioformats.Mpc
-{
-	[SupportedMimeType ("audio/mpc")]
-	[SupportedMimeType ("audio/x-mpc")]
-	[SupportedMimeType ("audio/mp+")]
-	[SupportedMimeType ("audio/x-mp+")]
-	[SupportedMimeType ("entagged/mpc")]
-	[SupportedMimeType ("entagged/mp+")]
-	public class MpcFileReader : AudioFileReader 
-	{	
-		private MpcInfoReader ir = new MpcInfoReader();
-		private ApeTagReader tr = new ApeTagReader();
+namespace Entagged.Audioformats.Flac.Util {
+	public class MetadataBlockData {
 		
-		protected override EncodingInfo GetEncodingInfo(Stream raf, 
-			string mime)  
-		{
-			return ir.Read(raf);
+		private byte[] data;
+		private MetadataBlockHeader header;
+		
+		public MetadataBlockData(MetadataBlockHeader header, byte[] b) {
+			this.header = header;
+			
+			data = new byte[b.Length];
+			for(int i = 0; i<b.Length; i++)
+				data[i] = b[i];
 		}
 		
-		protected override Tag GetTag(Stream raf, string mime)  
-		{
-			return tr.Read(raf);
+		public byte[] Bytes {
+			get { return data; }
+		}
+		
+		public int Length {
+			get { return data.Length + 4; }
+		}
+		
+		public MetadataBlockHeader Header {
+			get { return header; }
 		}
 	}
 }
-

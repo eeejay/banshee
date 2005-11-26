@@ -23,19 +23,6 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.5  2005/11/01 23:32:06  abock
- * Updated entagged tree
- *
- * Revision 1.5  2005/02/18 13:38:11  kikidonk
- * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
 using System.IO;
 using Entagged.Audioformats.Exceptions;
 

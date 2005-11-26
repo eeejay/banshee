@@ -25,8 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.5  2005/11/01 23:32:04  abock
- * Updated entagged tree
+ * Revision 1.6  2005/11/26 01:52:39  abock
+ * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ *
+ *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+ *     WMA support and ID3 2.4 support
  *
  * Revision 1.3  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -68,7 +71,11 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 			        return "ISO-8859-1";
 			    else if(encoding == 1)
 			        return "UTF-16";
-			    
+			    else if (encoding == 2)
+					return "UTF-16BE";
+				else if (encoding == 3)
+					return "UTF-8";
+					
 			    return "ISO-8859-1";
 			}
 			set {
@@ -76,6 +83,10 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 		        	encoding = 0;
 			    else if(value == "UTF-16")
 			        encoding = 1;
+				else if(value == "UTF-16BE")
+					encoding = 2;
+				else if(value == "UTF-8")
+					encoding = 3;
 			    else
 			        encoding = 1;
 			}
@@ -112,7 +123,7 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 		
 		protected override void Populate(byte[] raw) {
 			this.encoding = raw[flags.Length];
-			if(this.encoding != 0 && this.encoding != 1)
+			if(this.encoding != 0 && this.encoding != 1 && this.encoding != 2 && this.encoding != 3)
 			    this.encoding = 0;
 
 			this.content = GetString(raw, flags.Length+1, raw.Length-flags.Length-1, Encoding);

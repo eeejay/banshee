@@ -25,8 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.2  2005/11/01 23:32:02  abock
- * Updated entagged tree
+ * Revision 1.3  2005/11/26 01:52:37  abock
+ * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ *
+ *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+ *     WMA support and ID3 2.4 support
  *
  *
  */
