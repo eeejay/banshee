@@ -1,8 +1,5 @@
-ConfigureDefines.cs
 Makefile
 Makefile.in
 *.exe
 *.dll
 *.config
-*.mdb
-
