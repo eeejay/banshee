@@ -35,6 +35,9 @@ using Mono.Unix;
 using Gtk;
 using Nautilus;
 
+using Banshee.Base;
+using Banshee.Widgets;
+
 namespace Banshee
 {
     public class BurnCore
@@ -126,7 +129,7 @@ namespace Banshee
         
         private void DoBurn()
         {
-            Core.ProxyToMainThread(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 new Burner(diskType, burnQueue);
             });
         }
@@ -321,7 +324,7 @@ namespace Banshee
             
             user_event.Message = Catalog.GetString("Waiting for Media");
             
-            Core.ProxyToMainThread(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 HigMessageDialog dialog = new HigMessageDialog(null, DialogFlags.Modal, MessageType.Info,
                     ButtonsType.OkCancel, Catalog.GetString("Insert Blank CD"),
                     Catalog.GetString("Please insert a blank CD disk for the write process."));

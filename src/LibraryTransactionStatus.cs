@@ -34,6 +34,7 @@ using Gtk;
 using Glade;
 
 using Banshee.Widgets;
+using Banshee.Base;
 
 namespace Banshee
 {

@@ -30,8 +30,9 @@
 using System;
 using Gtk;
 using Mono.Unix;
-
 using System.Runtime.InteropServices;
+
+using Banshee.Base;
 
 namespace Banshee
 {
@@ -148,6 +149,7 @@ namespace Banshee
             about_dialog.Destroy();
         }
         
+#pragma warning disable 0612
         private void GnomeAboutDialog()
         {
             Gnome.About about_dialog = new Gnome.About(
@@ -162,5 +164,7 @@ namespace Banshee
             about_dialog.Run();
             about_dialog.Destroy();
         }
+#pragma warning restore 0612
+
     }
 }

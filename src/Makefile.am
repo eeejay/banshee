@@ -1,7 +1,10 @@
 SUBDIRS = \
-	Banshee.Widgets \
+	MusicBrainz \
 	GtkSharpBackports \
-	MusicBrainz
+	Banshee.Base \
+	Banshee.MediaEngine \
+	Banshee.Dap \
+	Banshee.Widgets 
 
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
@@ -13,7 +16,6 @@ bin_SCRIPTS = banshee
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	AssemblyInfo.cs.in \
-	ConfigureDefines.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
 	ipod-sharp.dll.config.in \
@@ -23,7 +25,7 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
 
-banshee_sources_in = AssemblyInfo.cs.in ConfigureDefines.cs.in
+banshee_sources_in = AssemblyInfo.cs.in 
 banshee_generated_sources = $(banshee_sources_in:.in=) \
 	AmazonSearchService.cs
 
@@ -32,7 +34,6 @@ banshee_sources = \
 	Main.cs \
 	StockIcons.cs \
 	PlayerInterface.cs \
-	Utilities.cs \
 	Core.cs \
 	PlaylistView.cs \
 	Dialogs.cs \
@@ -44,7 +45,6 @@ banshee_sources = \
 	SignalUtils.cs \
 	SourceView.cs \
 	Preferences.cs \
-	GConfKeys.cs \
 	LibraryTransactions.cs \
 	LibraryTransactionManager.cs \
 	LibraryTransactionStatus.cs \
@@ -56,33 +56,24 @@ banshee_sources = \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
-	PlaylistRowRenderer.cs \
 	DBusIPC.cs \
 	IpodCore.cs \
-	AlbumCoverFetch.cs \
 	FileEncoder.cs \
 	GstFileEncoder.cs \
 	NautilusBurnUtil.cs \
 	FileEncodeTransaction.cs \
 	BurnCore.cs \
 	BurnTransaction.cs \
-	PlayerEngineLoader.cs \
 	RatingRenderer.cs \
 	IpodTrackInfo.cs \
-	AudioCdCore.cs \
 	IpodPropertiesWindow.cs \
 	RipTransaction.cs \
-	FileNamePattern.cs \
 	GstMisc.cs \
 	PipelineProfile.cs \
-	LogCore.cs \
 	IpodNewDialog.cs \
 	ExceptionDialog.cs \
 	ThemeIcons.cs \
 	VersionInformationDialog.cs \
-	AmazonCoverFetcher.cs \
-	ActiveUserEventsManager.cs \
-	ActiveUserEvent.cs \
 	LogCoreViewer.cs \
 	FileSystemMonitor/Watcher.cs \
 	FileSystemMonitor/Inotify.cs \
@@ -151,9 +142,10 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
-	-r:$(top_builddir)/plugincore/plugin-core.dll \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
 	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll \
+	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
+	-r:$(top_builddir)/src/Banshee.Dap/Banshee.Dap.dll \
 	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
 
 SYSTEM_REFERENCES = \
