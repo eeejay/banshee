@@ -27,13 +27,11 @@ EXTRA_DIST =            \
 	$(schema_in_files)  \
 	$(dbusservice_in_files)
 
-CLEANFILES =		\
-	$(desktop_DATA) \
-	$(schema_DATA)
-
 DISTCLEANFILES =	\
 	Makefile.in     \
-	$(dbusservice_DATA)
+	$(dbusservice_DATA) \
+	$(desktop_DATA) \
+	$(schema_DATA)
 
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
