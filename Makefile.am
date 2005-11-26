@@ -1,7 +1,5 @@
 SUBDIRS =          \
 	data           \
-	plugincore     \
-	mediaengines   \
 	libbanshee     \
 	burn-sharp     \
 	entagged-sharp \
