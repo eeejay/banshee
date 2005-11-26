@@ -35,6 +35,8 @@ using Mono.Data.SqliteClient;
 
 using Sql;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class Database 
@@ -137,7 +139,7 @@ namespace Banshee
             try {
                 Execute("PRAGMA synchronous = OFF");
             } catch(ApplicationException e) {
-                Banshee.Logging.LogCore.Instance.PushWarning("Could not set sqlite3 PRAGMA synchronous = OFF",
+                Banshee.Base.LogCore.Instance.PushWarning("Could not set sqlite3 PRAGMA synchronous = OFF",
                     "Database querying, read and write, may be extra slow. (" + e.Message + ")", false);
             }
             
