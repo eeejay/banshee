@@ -1,3 +1,7 @@
+2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Updated with new files and namespace layout
+
 2005-11-25  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
