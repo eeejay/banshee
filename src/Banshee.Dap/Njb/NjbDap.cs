@@ -31,12 +31,12 @@ using System;
 using Hal;
 using Banshee.Dap;
 
-namespace Banshee.Dap.Ipod
+namespace Banshee.Dap.Njb
 {
     [DapProperties(DapType = DapType.NonGeneric)]
-    public class NjbDevice : Dap
+    public class NjbDap : Dap
     {
-        public NjbDevice(Device device)
+        public NjbDap(Device device)
         {
         }
     }

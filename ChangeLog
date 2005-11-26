@@ -1,5 +1,9 @@
 2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/Dap/DapCore.cs: Load DAP implementation assemblies
+	at runtime to build type support table
+	* src/Banshee.Dap/Njb/NjbDap.cs: Fixed namespace/class name typos
+
 	* configure.ac: Output src/Banshee.Dap/{Ipod,Njb}/Makefile
 	* src/Banshee.Base/Dap/DapCore.cs: Static class for all DAP event 
 	management and device detection

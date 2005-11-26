@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections;
 using System.Reflection;
 using Hal;
@@ -14,27 +15,43 @@ namespace Banshee.Dap
     
         static DapCore()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
+            string dap_dir = ConfigureDefines.InstallDir + "Banshee.Dap" + Path.DirectorySeparatorChar;
+            DirectoryInfo di = null;
+            
+            try {
+                di = new DirectoryInfo(dap_dir);
+            } catch(Exception) {
+                return;
+            }
 
-            foreach(Type type in asm.GetTypes()) {
-                if(!type.IsSubclassOf(typeof(Dap))) {
+            foreach(FileInfo file in di.GetFiles()) {
+                Assembly asm;
+                try {
+                    asm = Assembly.LoadFrom(file.FullName);
+                } catch(Exception) {
                     continue;
                 }
                 
-                try {
-                    Attribute [] dap_attrs = Attribute.GetCustomAttributes(type, typeof(DapProperties));
-                    DapProperties dap_props = null;
-                    if(dap_attrs != null && dap_attrs.Length >= 1) {
-                        dap_props = dap_attrs[0] as DapProperties;
+                foreach(Type type in asm.GetTypes()) {
+                    if(!type.IsSubclassOf(typeof(Dap))) {
+                        continue;
                     }
                     
-                    if(dap_props.DapType == DapType.NonGeneric) {
-                        supported_dap_types.Insert(0, type);
-                    } else {
-                        supported_dap_types.Add(type);
+                    try {
+                        Attribute [] dap_attrs = Attribute.GetCustomAttributes(type, typeof(DapProperties));
+                        DapProperties dap_props = null;
+                        if(dap_attrs != null && dap_attrs.Length >= 1) {
+                            dap_props = dap_attrs[0] as DapProperties;
+                        }
+                        
+                        if(dap_props.DapType == DapType.NonGeneric) {
+                            supported_dap_types.Insert(0, type);
+                        } else {
+                            supported_dap_types.Add(type);
+                        }
+                    } catch(Exception) {
+                        continue;
                     }
-                } catch(Exception) {
-                    continue;
                 }
             }
         }
