@@ -14,8 +14,8 @@ bansheelib_LTLIBRARIES = libbanshee.la
 
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES = \
-	cd-detect.c \
-	cd-detect.h \
+	hal-context.c \
+	hal-context.h \
 	cd-rip.c    \
 	cd-rip.h    \
 	gst-init.c  \
