@@ -2,27 +2,15 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry configuration="Debug" build="True" name="banshee" />
-      <Entry configuration="Debug" build="True" name="plugincore" />
-      <Entry configuration="Debug" build="True" name="helix-mediaengine" />
-      <Entry configuration="Debug" build="True" name="gst-mediaengine" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry configuration="Release" build="True" name="banshee" />
-      <Entry configuration="Release" build="True" name="plugincore" />
-      <Entry configuration="Release" build="True" name="helix-mediaengine" />
-      <Entry configuration="Release" build="True" name="gst-mediaengine" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="banshee" single="True">
     <Execute type="None" entry="banshee" />
-    <Execute type="None" entry="plugincore" />
-    <Execute type="None" entry="helix-mediaengine" />
-    <Execute type="None" entry="gst-mediaengine" />
   </StartMode>
   <Entries>
     <Entry filename="./banshee.mdp" />
-    <Entry filename="./plugincore/plugincore.mdp" />
-    <Entry filename="./mediaengines/helix/helix-mediaengine.mdp" />
-    <Entry filename="./mediaengines/gst/gst-mediaengine.mdp" />
   </Entries>
 </Combine>

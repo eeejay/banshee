@@ -322,30 +322,33 @@ banshee.pc
 entagged-sharp/Makefile
 hal-sharp/Makefile
 hal-sharp/hal-sharp.dll.config
-mediaengines/Makefile
-mediaengines/gst/Makefile
-mediaengines/gst/gst-player.dll.config
-mediaengines/helix/Makefile
-mediaengines/helix/helix-sharp.dll.config
-mediaengines/vlc/Makefile
-mediaengines/vlc/vlc-player.dll.config
 libbanshee/Makefile
 libbanshee/xing/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
-plugincore/Makefile
 src/banshee
 src/Makefile
 src/AssemblyInfo.cs
-src/ConfigureDefines.cs
 src/banshee.exe.config
 src/ipod-sharp.dll.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
 src/GtkSharpBackports/Makefile
 src/GtkSharpBackports/GtkSharpBackports.dll.config
+src/Banshee.MediaEngine/Makefile
+src/Banshee.MediaEngine/Gstreamer/Makefile
+src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config
+src/Banshee.MediaEngine/Helix/Makefile
+src/Banshee.MediaEngine/Helix/helix-sharp.dll.config
+src/Banshee.MediaEngine/Vlc/Makefile
+src/Banshee.MediaEngine/Vlc/vlc-player.dll.config
 src/Banshee.Widgets/Makefile
 src/Banshee.Widgets/Banshee.Widgets.dll.config
+src/Banshee.Base/Makefile
+src/Banshee.Base/Banshee.Base.dll.config
+src/Banshee.Base/ConfigureDefines.cs
+src/Banshee.Dap/Makefile
+src/Banshee.Dap/Banshee.Dap.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile
@@ -388,16 +391,16 @@ if test "x${enable_gst_dev}" = "xyes"; then
 fi;
 
 if test "x${enable_vlc}" = "xyes"; then
-	if test ! -e ./mediaengines/vlc/libvlc.so; then
+	if test ! -e ./src/Banshee.MediaEngine/Vlc/libvlc.so; then
 		echo ""
 		echo "    *****************************************************"
 		echo "    NOTICE: You have enabled the VLC engine, but have not"
-		echo "    provided a libvlc.so in ./mediaengines/vlc/"
+		echo "    provided a libvlc.so in ./src/Banshee.MediaEngine/Vlc/"
 		echo ""
 		echo "    You must build your own libvlc.so library and copy it"
-		echo "    to ./mediaengines/vlc/libvlc.so before running"
+		echo "    to ./src/Banshee.MediaEngine/Vlc/libvlc.so before running"
 		echo "    'make install' or copy libvlc.so after the install to"
-		echo "    ${expanded_libdir}/banshee/mediaengines/vlc/libvlc.so"
+		echo "    ${expanded_libdir}/banshee/src/Banshee.MediaEngine/Vlc/libvlc.so"
 		echo ""
 		echo "    libvlc.so is not included in Banshee."
 		echo ""
