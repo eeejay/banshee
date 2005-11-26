@@ -1,3 +1,83 @@
+2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* libbanshee/hal-context.[ch]: new glue for HAL
+	* Makefile.am: removed plugincore and mediaengines
+
+	* data/banshee.desktop.in.in: Removed TryExec
+	* data/Makefile.am: Moved some CLEANFILES items to DISTCLEANFILES
+
+	* libbanshee/Makefile.am:
+	* libbanshee/cd-detect.[ch]: Removed HAL Audio CD detection code; this
+	support is now in Banshee.Base.AudioCdCore using new managed HAL
+
+	* configure.ac: Added new namespace directories for Makefile/config
+	output generation, removed old directories/Makefiles, etc.
+	* banshee.mdp:
+	* banshee.mds: Updated MonoDevelop project
+
+	* src/Banshee.MediaEngine: Moved/renamed from mediaengines/
+
+	* src/Banshee.Widgets/Makefile.am: Updated to reflect new files
+	* src/Banshee.Widgets/ActiveUserEvent.cs:
+	* src/Banshee.Widgets/ActiveUserEventsManager.cs:
+	* src/Banshee.Widgets/HigMessageDialog.cs: Widgets moved from src/
+
+	* src/Makefile.am: Reflect changes to moved/deleted/added files and
+	link to proper new assemblies
+	* src/BurnCore.cs: Use Banshee.Base.ThreadAssist.ProxyToMain
+	* src/LibraryTransactionStatus.cs: use new namespaces
+	* src/AboutBox.cs: Updated with new namespaces; added pragma to ignore
+	Gnome.About deprecation warning
+
+	* src/Core.cs: Moved ArgumentQueue classes, threading helper methods 
+	to Banshee.Base; added DAP/HAL stuff
+	* src/Dialogs.cs: HigMessageDialog moved to Banshee.Widgets
+	* src/Database.cs: Updated namespaces; updated call to LogCore
+	
+	* src/PlayerInterface.cs: use ThreadAssist.ProxyToMain in place of
+	Core.ProxyToMainThread, updated to use new namespaces
+	* src/PlaylistModel.cs: Updated to reflect new namespaces; use 
+	ThreadAssist instead of Core.MainThread	
+	* src/LibraryTrackInfo.cs: use Entagged.AudioFile instead of
+	Entagged.AudioFileWrapper; updated to reflect new namespaces
+	* src/SourceView.cs: Updated with Banshee.Base namespace; iPod support
+	temp. disabled
+	* src/RatingRenderer.cs: Added license to header, updated namespaces
+	
+	* src/DragDrop.cs:
+	* src/FileEncodeTransaction.cs:
+	* src/IpodTrackInfo.cs:
+	* src/Library.cs:
+	* src/LibraryTransactions.cs:
+	* src/Main.cs: 
+	* src/LogCoreViewer.cs:
+	* src/PlaylistView.cs: 
+	* src/Preferences.cs: 
+	* src/RipTransactions.cs
+	* src/TrackProperties.cs:
+	* src/FileSystemMonitor/InotifyWatch.cs:
+	* src/FileSystemMonitor/FileSystemWatcherWatch.cs: updated namespaces
+
+	* src/Banshee.Dap: New namespace/assembly for DAP support; incomplete
+	
+	* src/Banshee.Base/Globals.cs: static global variables
+	* src/Banshee.Base/AudioCd/AudioCdCore.cs: Rewritten Audio CD Core using
+	fully managed HAL
+	* src/Banshee/Base/AudioCd: Rewritten/refactored/moved 
+	from src/AudioCdCore.cs
+	* src/Banshee.Base/HalCore.cs: New core for HAL support off of a single
+	global context
+	* src/Banshee.Base: New namespaces and assembly, contains many classes
+	moved from src/ that can now be reused for plugins
+	
+	* hal-sharp/*: synced with latest hal-sharp in Mono SVN
+	
+	* entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
+	WMA support and ID3 2.4 support
+	
+	* plugincore/*: Moved to src/Banshee.MediaEngine
+	* mediaengines/*.cs: Moved to src/Banshee.Base
+
 2005-11-23  Aaron Bockover  <aaron@aaronbock.net>
 
 	* data/images/ipod/22x22/*:
