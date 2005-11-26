@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  HalExceptions.cs
  *
@@ -31,11 +30,11 @@ using System;
 
 namespace Hal
 {
-	public class HalException : ApplicationException
-	{
-		public HalException(string message) : base(message)
-		{
+    public class HalException : ApplicationException
+    {
+        public HalException(string message) : base(message)
+        {
 
-		}
-	}
+        }
+    }
 }

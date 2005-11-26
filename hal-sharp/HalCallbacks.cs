@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  HalCallbacks.cs
  *
@@ -32,64 +31,58 @@ using System.Runtime.InteropServices;
 
 namespace Hal
 {
-	// Raw HAL Callbacks
-	public delegate void DeviceAddedCallback(IntPtr ctx, IntPtr udi);
-	public delegate void DeviceRemovedCallback(IntPtr ctx, IntPtr udi);
-	public delegate void DeviceNewCapabilityCallback(IntPtr ctx, IntPtr udi, 
-		IntPtr capability);
-	public delegate void DeviceLostCapabilityCallback(IntPtr ctx, IntPtr udi, 
-		IntPtr capability);
-	public delegate void DevicePropertyModifiedCallback(IntPtr ctx, IntPtr udi,
-		IntPtr key, bool is_removed, bool is_added);
-	public delegate void DeviceConditionCallback(IntPtr ctx, IntPtr udi, 
-		IntPtr condition_name, IntPtr condition_details);
-	
-	// Managed Event Handlers
+    // Raw HAL Callbacks
+    internal delegate void DeviceAddedCallback(IntPtr ctx, IntPtr udi);
+    internal delegate void DeviceRemovedCallback(IntPtr ctx, IntPtr udi);
+    internal delegate void DeviceNewCapabilityCallback(IntPtr ctx, IntPtr udi, IntPtr capability);
+    internal delegate void DeviceLostCapabilityCallback(IntPtr ctx, IntPtr udi, IntPtr capability);
+    internal delegate void DevicePropertyModifiedCallback(IntPtr ctx, IntPtr udi, 
+        IntPtr key, bool is_removed, bool is_added);
+    internal delegate void DeviceConditionCallback(IntPtr ctx, IntPtr udi, 
+        IntPtr condition_name, IntPtr condition_details);
+    
+    // Managed Event Handlers
     public delegate void DeviceAddedHandler(object o, DeviceAddedArgs args);
     public delegate void DeviceRemovedHandler(object o, DeviceRemovedArgs args);
-	public delegate void DeviceNewCapabilityHandler(object o, 
-		DeviceNewCapabilityArgs args);
-	public delegate void DeviceLostCapabilityHandler(object o, 
-		DeviceLostCapabilityArgs args);
-	public delegate void DevicePropertyModifiedHandler(object o,
-		DevicePropertyModifiedArgs args);
-	public delegate void DeviceConditionHandler(object o,
-		DeviceConditionArgs args);
-		
-	public class DeviceAddedArgs : EventArgs 
-	{
-		public Device Device;
-	}
-    
-	public class DeviceRemovedArgs : EventArgs
-	{
-		public Device Device;
+    public delegate void DeviceNewCapabilityHandler(object o, DeviceNewCapabilityArgs args);
+    public delegate void DeviceLostCapabilityHandler(object o, DeviceLostCapabilityArgs args);
+    public delegate void DevicePropertyModifiedHandler(object o, DevicePropertyModifiedArgs args);
+    public delegate void DeviceConditionHandler(object o, DeviceConditionArgs args);
+        
+    public class DeviceAddedArgs : EventArgs 
+    {
+        public Device Device;
     }
     
-	public class DeviceNewCapabilityArgs : EventArgs
-	{
-		public Device Device;
-		public string Capability;
-	}
+    public class DeviceRemovedArgs : EventArgs
+    {
+        public Device Device;
+    }
     
-	public class DeviceLostCapabilityArgs : EventArgs
-	{
-		public Device Device;
-		public string Capability;
-	}
-	
-	public class DevicePropertyModifiedArgs : EventArgs
-	{
-		public Device Device;
-		public string Key;
-		public bool IsRemoved;
-		public bool IsAdded;
-	}
-	
-	public class DeviceConditionArgs : EventArgs
-	{
-		public Device Device;
-		public string ConditionName;
-		public string ConditionDetails;
-	}
+    public class DeviceNewCapabilityArgs : EventArgs
+    {
+        public Device Device;
+        public string Capability;
+    }
+    
+    public class DeviceLostCapabilityArgs : EventArgs
+    {
+        public Device Device;
+        public string Capability;
+    }
+    
+    public class DevicePropertyModifiedArgs : EventArgs
+    {
+        public Device Device;
+        public string Key;
+        public bool IsRemoved;
+        public bool IsAdded;
+    }
+    
+    public class DeviceConditionArgs : EventArgs
+    {
+        public Device Device;
+        public string ConditionName;
+        public string ConditionDetails;
+    }
 }
