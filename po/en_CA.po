@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-17 20:51-0500\n"
+"POT-Creation-Date: 2005-11-25 21:14-0500\n"
 "PO-Revision-Date: 2005-09-18 12:11-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -105,8 +105,8 @@ msgid ""
 "Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library "
 "as changes are made in the Library Location in the file system"
 msgstr ""
-"Uses inotify (or FAM if inotify is unavailable) to update the Banshee Library "
-"as changes are made in the Library Location in the file system"
+"Uses inotify (or FAM if inotify is unavailable) to update the Banshee "
+"Library as changes are made in the Library Location in the file system"
 
 #: data/banshee.schemas.in.h:18
 msgid "Volume Output Level"
@@ -220,7 +220,7 @@ msgstr "Add Selected Songs"
 msgid "Add To Playlist"
 msgstr "Add To Playlist"
 
-#: data/glade/player.glade.h:5 libbanshee/cd-rip.c:227
+#: data/glade/player.glade.h:5 libbanshee/cd-rip.c:227 src/AboutBox.cs:63
 #: src/NotificationAreaIcon.cs:62
 msgid "Banshee"
 msgstr "Banshee"
@@ -614,19 +614,19 @@ msgstr ""
 "VLC is a highly portable multimedia player for various audio and video "
 "formats (MP3, AAC, OGG, FLAC, WMA, etc.). See http://videolan.org/vlc/"
 
-#: plugincore/TrackInfo.cs:158 src/AudioCdCore.cs:150
+#: plugincore/TrackInfo.cs:159 src/AudioCdCore.cs:150
 msgid "Unknown Artist"
 msgstr "Unknown Artist"
 
-#: plugincore/TrackInfo.cs:163 src/AudioCdCore.cs:151
+#: plugincore/TrackInfo.cs:164 src/AudioCdCore.cs:151
 msgid "Unknown Album"
 msgstr "Unknown Album"
 
-#: plugincore/TrackInfo.cs:168
+#: plugincore/TrackInfo.cs:169
 msgid "Unknown Title"
 msgstr "Unknown Title"
 
-#: src/AboutBox.cs:120
+#: src/AboutBox.cs:60
 msgid ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
@@ -634,9 +634,13 @@ msgstr ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
 
-#: src/AboutBox.cs:122
+#: src/AboutBox.cs:65
 msgid "Music Management and Playback for Gnome."
 msgstr "Music Management and Playback for GNOME."
+
+#: src/AboutBox.cs:139
+msgid "Banshee Wiki"
+msgstr "Banshee Wiki"
 
 #: src/ActiveUserEvent.cs:74
 msgid "Cancel Operation"
@@ -798,17 +802,17 @@ msgstr "Could not create encoder"
 msgid "Could not encode file: {0}"
 msgstr "Could not encode file: {0}"
 
-#: src/IpodCore.cs:189
+#: src/IpodCore.cs:192
 msgid "Syncing iPod"
 msgstr "Syncing iPod"
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: src/IpodCore.cs:484 src/Library.cs:495 src/PlayerInterface.cs:947
+#: src/IpodCore.cs:487 src/Library.cs:495 src/PlayerInterface.cs:947
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} of {1}"
 
-#: src/IpodCore.cs:493 src/Library.cs:506
+#: src/IpodCore.cs:496 src/Library.cs:506
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} Remaining)"
@@ -1621,4 +1625,3 @@ msgstr "Version"
 #, csharp-format
 msgid "Searching: {0}"
 msgstr "Searching: {0}"
-
