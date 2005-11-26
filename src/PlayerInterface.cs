@@ -440,8 +440,6 @@ namespace Banshee
                 trayIcon.PlayItem.Activated += OnButtonPlayPauseClicked;
                 trayIcon.NextItem.Activated += OnButtonNextClicked;
                 trayIcon.PreviousItem.Activated += OnButtonPreviousClicked;
-                trayIcon.ShuffleItem.Activated += OnTrayMenuItemShuffleActivated;
-                trayIcon.RepeatItem.Activated += OnTrayMenuItemRepeatActivated;
                 trayIcon.ExitItem.Activated += OnMenuQuitActivate;
             } catch(Exception e) {
                 trayIcon = null;

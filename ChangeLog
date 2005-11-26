@@ -1,5 +1,9 @@
 2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Fixed bug/exception in tray icon setup
+
+2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/Banshee.Base/Dap/DapCore.cs: Load DAP implementation assemblies
