@@ -1,4 +1,0 @@
-<configuration>
-	<dllmap dll="libvlc" target="@expanded_libdir@/@PACKAGE@/mediaengines/vlc/libvlc.so" />
-</configuration>
-

@@ -1,8 +1,0 @@
-Makefile
-Makefile.in
-vlc-player.dll
-vlc-player.dll.config
-vlc-player.dll.mdb
-*.pidb
-install.sh
-
