@@ -2,7 +2,7 @@ MCS_FLAGS = -debug -nowarn:0169
 ASSEMBLY_NAME = vlc-player
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
-vlcenginelibdir = $(pkglibdir)/mediaengines/vlc
+vlcenginelibdir = $(pkglibdir)/Banshee.MediaEngine/Vlc
 vlcenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 ASSEMBLY_SOURCES = $(srcdir)/Vlc.cs $(srcdir)/VlcPlayerEngine.cs
 

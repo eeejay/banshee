@@ -1,3 +1,26 @@
+2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Output src/Banshee.Dap/{Ipod,Njb}/Makefile
+	* src/Banshee.Base/Dap/DapCore.cs: Static class for all DAP event 
+	management and device detection
+	* src/Banshee.Base/Dap/Dap.cs: Base DAP class and related types
+	* src/Banshee.Dap/Ipod: Ipod implementation of Banshee.Dap.Dap (incomplete)
+	* src/Banshee.Dap/Njb: NJB implementation of Banshee.Dap.Dap (incomplete)
+	* src/Banshee.MediaEngine/Makefile.am:
+	* src/Banshee.MediaEngine/Gstreamer/Makefile.am:
+	* src/Banshee.MediaEngine/Helix/Makefile.am:
+	* src/Banshee.MediaEngine/Vlc/Makefile.am: Install to 
+	@libdir@/banshee/Banshee.MediaEngine
+	* src/Banshee.MediaEngine/Helix/helix-sharp.dll.config.in:
+	* src/Banshee.MediaEngine/Vlc/vlc-player.dll.config.in: Updated map
+	path to @libdir@/banshee/Banshee.MediaEngine
+	* src/Banshee.Dap/Makefile.am: Previous Banshee.Dap code is now in the
+	Banshee.Base assembly; assemblies built in here will be runtime-loadable
+	actual DAP implementations
+	* src/Banshee.Base/PlayerEngineLoader.cs: engines now load from 
+	Banshee.MediaEngine instead of mediaengines  
+	* src/Core.cs: Banshee.Dap.DeviceEventListener is now Banshee.Dap.DapCore
+
 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
 
 	* libbanshee/hal-context.[ch]: new glue for HAL

@@ -11,4 +11,5 @@ endif
 DISTCLEANFILES = Makefile.in
 
 uninstall-hook:
-	rm -rf $(pkglibdir)/mediaengines
+	rm -rf $(pkglibdir)/Banshee.MediaEngine
+

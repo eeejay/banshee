@@ -85,7 +85,6 @@ namespace Banshee.Base
         private AudioCdDisk CreateDisk(DiskInfo halDisk)
         {
             try {
-                Console.WriteLine("SDKFJDSKF");
                 AudioCdDisk disk = new AudioCdDisk(halDisk.Udi, halDisk.DeviceNode, halDisk.VolumeName);
                 disk.Updated += OnAudioCdDiskUpdated;
                 if(disk.Valid) {
@@ -128,9 +127,6 @@ namespace Banshee.Base
                 DiskInfo disk = CreateHalDisk(device);
                 if(disk != null) {
                     list.Add(disk);
-                    Console.WriteLine(disk.Udi);
-                    Console.WriteLine(disk.DeviceNode);
-                    Console.WriteLine(disk.VolumeName);
                 }
             }
             

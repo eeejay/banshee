@@ -145,7 +145,6 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
 	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll \
 	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
-	-r:$(top_builddir)/src/Banshee.Dap/Banshee.Dap.dll \
 	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
 
 SYSTEM_REFERENCES = \

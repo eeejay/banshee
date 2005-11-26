@@ -45,7 +45,7 @@ namespace Banshee.MediaEngine
 	public class PlayerEngineLoader
 	{
 		private const string RootEngineDir = ConfigureDefines.InstallDir +
-			"mediaengines/";
+			"Banshee.MediaEngine/";
 			
 		private static PlayerEngineSlot [] engineSlots;
 			

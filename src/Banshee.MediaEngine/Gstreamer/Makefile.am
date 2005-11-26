@@ -2,7 +2,7 @@ MCS_FLAGS = -debug -nowarn:0169
 ASSEMBLY_NAME = gst-player
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
-gstenginelibdir = $(pkglibdir)/mediaengines/gst
+gstenginelibdir = $(pkglibdir)/Banshee.MediaEngine/Gstreamer
 gstenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config 
 
 ASSEMBLY_SOURCES = $(srcdir)/GstPlayerEngine.cs

@@ -348,7 +348,8 @@ src/Banshee.Base/Makefile
 src/Banshee.Base/Banshee.Base.dll.config
 src/Banshee.Base/ConfigureDefines.cs
 src/Banshee.Dap/Makefile
-src/Banshee.Dap/Banshee.Dap.dll.config
+src/Banshee.Dap/Ipod/Makefile
+src/Banshee.Dap/Njb/Makefile
 data/Makefile
 data/org.gnome.Banshee.service
 data/glade/Makefile

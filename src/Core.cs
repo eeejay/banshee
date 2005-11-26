@@ -67,8 +67,6 @@ namespace Banshee
         private Library library;
         private Watcher fs_watcher;
         
-        private Banshee.Dap.DeviceEventListener dap_event_listener;
-        
         public static Core Instance
         {
             get {
@@ -177,6 +175,8 @@ namespace Banshee
             
             IpodCore = new IpodCore();
 
+            Banshee.Dap.DapCore.Initialize();
+
             StockIcons.Initialize();
             
             try {
@@ -186,8 +186,6 @@ namespace Banshee
             } catch(Exception e) {
                 Core.Log.PushWarning("File System Monitoring will be disabled for this instance", e.Message, false);
             }
-            
-            dap_event_listener = new Banshee.Dap.DeviceEventListener();
         }
         
         public void ReloadEngine(IPlayerEngine engine)
