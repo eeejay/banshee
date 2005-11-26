@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+gst-player.dll
+gst-player.dll.config
+gst-player.dll.mdb
+*.pidb
+
