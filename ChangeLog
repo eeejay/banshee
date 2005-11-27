@@ -1,3 +1,8 @@
+2005-11-27  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/Utilities.cs: new Event class for smart handling of
+	invoking event delegates
+
 2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs: Fixed bug/exception in tray icon setup

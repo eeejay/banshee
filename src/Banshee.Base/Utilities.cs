@@ -170,6 +170,47 @@ namespace Banshee.Base
         }
     }
     
+    public static class Event
+    {
+        public delegate EventArgs ArgumentRequestCallback();
+       
+        public static void Invoke(Delegate handler, object o)
+        {
+            Invoke(handler, o, new EventArgs());
+        }
+       
+        public static void Invoke(Delegate handler, object o, EventArgs args)
+        {
+            Delegate tmp_handler = handler;
+            if(tmp_handler != null) {
+                tmp_handler.Method.Invoke(o, new object [] { o, args });
+            }
+        }
+
+        public static void Invoke(Delegate handler, object o, ArgumentRequestCallback argumentCallback)
+        {
+            Delegate tmp_handler = handler;
+            if(tmp_handler != null) {
+                tmp_handler.Method.Invoke(o, new object [] { o, argumentCallback() });
+            }
+        }
+        
+        public static void InvokeOnMain(Delegate handler, object o)
+        {
+            ThreadAssist.ProxyToMain(delegate { Invoke(handler, o); });
+        }
+        
+        public static void InvokeOnMain(Delegate handler, object o, EventArgs args)
+        {
+            ThreadAssist.ProxyToMain(delegate { Invoke(handler, o, args); });
+        }
+        
+        public static void InvokeOnMain(Delegate handler, object o, ArgumentRequestCallback argumentCallback)
+        {
+            ThreadAssist.ProxyToMain(delegate { Invoke(handler, o, argumentCallback); });
+        }
+    }
+    
     public static class StringUtil
     {
         public static string EntityEscape(string str)
