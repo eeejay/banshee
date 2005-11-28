@@ -109,6 +109,8 @@ namespace Banshee
         private int clickX, clickY;
 
         private int ipodDiskUsageTextViewState;
+        
+        private SpecialKeys special_keys;
 
         private static TargetEntry [] playlistViewSourceEntries = 
             new TargetEntry [] {
@@ -170,10 +172,21 @@ namespace Banshee
             
             //InitialLoadTimeout();
             GLib.Timeout.Add(500, InitialLoadTimeout);
-            
             WindowPlayer.Show();
+            
+            try {
+                special_keys = new SpecialKeys();
+                special_keys.RegisterHandler(OnSpecialKeysPressed, 
+                    SpecialKey.AudioPlay,
+                    SpecialKey.AudioPrev,
+                    SpecialKey.AudioNext
+                );
+            } catch(Exception e) {
+                special_keys = null;
+                Core.Log.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
+            }   
         }
-                  
+   
         private bool InitialLoadTimeout()
         {
             ConnectToLibraryTransactionManager();
@@ -841,6 +854,21 @@ namespace Banshee
         {
             playlistModel.Advance();
             playlistView.UpdateView();
+        }
+        
+        private void OnSpecialKeysPressed(object o, SpecialKey key)
+        {
+            switch(key) {
+                case SpecialKey.AudioPlay:
+                    PlayPause();
+                    break;
+                case SpecialKey.AudioNext:
+                    Next();
+                    break;
+                case SpecialKey.AudioPrev:
+                    Previous();
+                    break;
+            }
         }
         
         private void OnButtonPreviousClicked(object o, EventArgs args)

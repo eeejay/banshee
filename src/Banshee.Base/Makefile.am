@@ -21,11 +21,13 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/GConfKeys.cs \
 	$(srcdir)/IPlayerEngine.cs \
 	$(srcdir)/PlayerEngineLoader.cs \
+	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
 	$(srcdir)/Dap/Dap.cs \
-	$(srcdir)/Dap/DapCore.cs
+	$(srcdir)/Dap/DapCore.cs \
+	$(srcdir)/Dap/DapTrackInfo.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

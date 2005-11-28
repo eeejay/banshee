@@ -29,6 +29,7 @@
  
 using System; 
 using Hal;
+using IPod;
 using Banshee.Dap;
  
 namespace Banshee.Dap.Ipod
@@ -36,8 +37,64 @@ namespace Banshee.Dap.Ipod
     [DapProperties(DapType = DapType.NonGeneric)]
     public class IpodDap : Dap
     {
-        public IpodDap(Device device)
+        private Hal.Device hal_device;
+        private IPod.Device ipod_device;
+    
+        public IpodDap(Hal.Device device)
         {
+            if(!device.PropertyExists("block.device") || !device.GetPropertyBool("block.is_volume") || 
+                device.Parent["portable_audio_player.type"] != "ipod") {
+                throw new CannotHandleDeviceException();
+            }
+            
+            hal_device = device;
+            
+            try {
+                ipod_device = new IPod.Device(hal_device["block.device"]);
+            } catch(Exception) {
+                throw new CannotHandleDeviceException();
+            }
+            
+            InstallProperty("Generation", ipod_device.Generation.ToString());
+            InstallProperty("Model", ipod_device.Model.ToString());
+            InstallProperty("Model Number", ipod_device.ModelNumber);
+            InstallProperty("Serial Number", ipod_device.SerialNumber);
+            InstallProperty("Firmware Version", ipod_device.FirmwareVersion);
+            InstallProperty("Database Version", ipod_device.SongDatabase.Version.ToString());
+        }
+        
+        public override string Name {
+            get {
+                return ipod_device.Name;
+            }
+            
+            set {
+                ipod_device.Name = value;
+            }
+        }
+        
+        public override ulong StorageCapacity {
+            get {
+                return ipod_device.VolumeSize;
+            }
+        }
+        
+        public override ulong StorageUsed {
+            get {
+                return ipod_device.VolumeUsed;
+            }
+        }
+        
+        public override bool IsReadOnly {
+            get {
+                return !ipod_device.CanWrite;
+            }
+        }
+        
+        public override bool IsPlaybackSupported {
+            get {
+                return true;
+            }
         }
     }
 }

@@ -1,3 +1,30 @@
+2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Consume Banshee.Base.SpecialKeys and support
+	Play/Pause, Next, and Previous MMKeys
+	* src/Banshee.Base/SpecialKeys.cs: new fully managed SpecialKeys class
+	that provides MMKeys support by p/invoking X11 and GDK functions; resolves
+	BGO #319545
+	* src/Banshee.Base/Makefile.am: Add SpecialKeys.cs, DapTrackInfo.cs
+	* src/Banshee.Base/Dap/DapTrackInfo.cs: Currently empty DapTrackInfo class
+	* src/Banshee.Base/Dap/DapCore.cs: Added license header, debug printing
+	for new DAP arbitrary property support
+	* src/Banshee.Base/Dap/Dap.cs: Added more base functionality to the new
+	abstract DAP class (Dap), provides an arbitrary property system
+	* src/Banshee.Dap/Njb/Njb.cs: Do not extend Banshee.Dap.Dap for now,
+	empty placeholder class
+	* src/Banshee.Dap/Ipod/Ipod.cs: Provide iPod implementation of current
+	state of Banshee.Dap.Dap abstract class
+	* src/Banshee.Dap/Ipod/Makefile.am: Install ipod-sharp into Banshee.Dap
+	* src/Banshee.Dap/Ipod/ipod-sharp.dll.config.in: DLL map for ipod-sharp
+	* configure.ac: output src/Banshee.Dap/Ipod/ipod-sharp.dll.config;
+	new variable, IPODSHARP_ASSEMBLIES for use in 
+	src/Banshee.Dap/Ipod/Makefile.am
+	* hal-sharp/HalDevice.cs: Updated hal-sharp snapshot, adds 
+	Hal.Device.Parent, needed by Banshee.Dap.Ipod.IpodDap
+	* libbanshee/hal-context.c: disable debug output
+	* banshee.mdp: Updated MonoDevelop project
+
 2005-11-27  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Base/Utilities.cs: new Event class for smart handling of

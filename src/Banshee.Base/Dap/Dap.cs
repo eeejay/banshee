@@ -28,6 +28,7 @@
  */
  
 using System;
+using System.Collections;
 
 namespace Banshee.Dap
 {
@@ -52,7 +53,87 @@ namespace Banshee.Dap
         }
     }
     
+    public class CannotHandleDeviceException : ApplicationException
+    {
+        public CannotHandleDeviceException() : base("HAL Device cannot be handled by Dap subclass")
+        {
+        }
+    }
+    
     public abstract class Dap
     {
+        public class PropertyTable : IEnumerable
+        {
+            public class Property
+            {
+                public string Name;
+                public string Value;
+            }
+        
+            private ArrayList properties = new ArrayList();
+            
+            private Property Find(string name)
+            {
+                foreach(Property property in properties) {
+                    if(property.Name == name) {
+                        return property;
+                    }
+                }
+                
+                return null;
+            }
+            
+            public void Add(string name, string value)
+            {
+                if(value == null || value.Trim() == String.Empty) {
+                    return;
+                }
+                
+                Property property = Find(name);
+                if(property != null) {
+                    property.Value = value;
+                    return;
+                } 
+                
+                property = new Property();
+                property.Name = name;
+                property.Value = value;
+            
+                properties.Add(property);
+            }
+            
+            public string this [string name] {
+                get {
+                    Property property = Find(name);
+                    return property == null ? null : property.Value;
+                }
+            }
+            
+            public IEnumerator GetEnumerator()
+            {
+                foreach(Property property in properties) {
+                    yield return property.Name;
+                }
+            }
+        }
+
+        private PropertyTable properties = new PropertyTable();
+        
+        protected void InstallProperty(string name, string value)
+        {
+            properties.Add(name, value);
+        }
+        
+        public PropertyTable Properties {
+            get {
+                return properties;
+            }
+        }
+        
+        public abstract string Name { get; set; }
+        public abstract ulong StorageCapacity { get; }
+        public abstract ulong StorageUsed { get; }
+        public abstract bool IsReadOnly { get; }
+        public abstract bool IsPlaybackSupported { get; }
     }
 }

@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  NjbDap.cs
+ *  DapTrackInfo.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -26,18 +26,14 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
+ 
 using System; 
-using Hal;
-using Banshee.Dap;
+using Banshee.Base;
 
-namespace Banshee.Dap.Njb
+namespace Banshee.Dap
 {
-    [DapProperties(DapType = DapType.NonGeneric)]
-    public class NjbDap
+    public class DapTrackInfo : TrackInfo
     {
-        public NjbDap(Device device)
-        {
-        }
+    
     }
 }

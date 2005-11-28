@@ -307,6 +307,9 @@ UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp ipod-sharp-ui"
 INSTALLED_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries $UNSTABLE_INSTALL_ASSEMBLIES`"
 AC_SUBST(INSTALLED_ASSEMBLIES)
 
+IPODSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries ipod-sharp`"
+AC_SUBST(IPODSHARP_ASSEMBLIES)
+
 dnl Intl
 
 ALL_LINGUAS="bg ca en_CA es lt nb nl pt_BR sv zh_CN"
@@ -349,6 +352,7 @@ src/Banshee.Base/Banshee.Base.dll.config
 src/Banshee.Base/ConfigureDefines.cs
 src/Banshee.Dap/Makefile
 src/Banshee.Dap/Ipod/Makefile
+src/Banshee.Dap/Ipod/ipod-sharp.dll.config
 src/Banshee.Dap/Njb/Makefile
 data/Makefile
 data/org.gnome.Banshee.service

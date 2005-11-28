@@ -38,7 +38,7 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 
 	*error_out = NULL;
 
-    g_debug("Trying to create context");
+    //g_debug("Trying to create context");
 
 	hal_context = libhal_ctx_new();
 	if(hal_context == NULL) {
@@ -90,7 +90,7 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 	
 	libhal_free_string_array(devices);
 
-    g_debug("Context created");
+    //g_debug("Context created");
 	
 	return hal_context;
 }

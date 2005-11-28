@@ -211,6 +211,27 @@ namespace Hal
             }
         }
         
+        public Device Parent {
+            get {
+                if(!PropertyExists("info.parent")) {
+                    return null;
+                }
+                
+                string parent_udi = this["info.parent"];
+                if(parent_udi != null && parent_udi != String.Empty) {
+                    return new Device(ctx, parent_udi);
+                }
+                
+                return null;
+            }
+        }
+        
+        public Context Context {
+            get {
+                return ctx;
+            }
+        }
+        
         public override string ToString()
         {
             return udi;
