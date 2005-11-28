@@ -1,5 +1,9 @@
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/SpecialKeys.cs: minor cleanup/trim-down
+
+2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/PlayerInterface.cs: Consume Banshee.Base.SpecialKeys and support
 	Play/Pause, Next, and Previous MMKeys
 	* src/Banshee.Base/SpecialKeys.cs: new fully managed SpecialKeys class

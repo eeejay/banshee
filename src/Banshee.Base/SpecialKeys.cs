@@ -193,7 +193,7 @@ namespace Banshee.Base
         private enum XGrabMode {
             Sync  = 0,
             Async = 1
-        };
+        }
         
         private enum XEventName {
             KeyPress   = 2,
