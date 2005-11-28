@@ -1,5 +1,12 @@
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/glade/trackinfo.glade: Added advanced info expander and table
+	* src/TrackProperties.cs: cleaned/reformatted code, added advanced 
+	properties to dialog (file name, bitrate, channels, samplerate vbr)
+	* data/banshee.schemas.in: 
+	* src/Banshee.Base/GConfKeys.cs: Added TrackPropertiesExpanded key to
+	save state of advanced expander in the track properties dialog
+
 	* banshee.mdp: Added data files to MonoDevelop project
 	* data/banshee.schemas.in: Added schema for /apps/Banshee/WindowMaximized
 	* src/Banshee.Base/GConfKeys.cs: Added new key: WindowMaximized

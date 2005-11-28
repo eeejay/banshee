@@ -60,5 +60,6 @@ namespace Banshee
         public const string EnableFileSystemMonitoring = BasePath + "EnableFileSystemMonitoring";
         public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
         public const string CDBurnerId = BasePath + "CDBurnerId";
+        public const string TrackPropertiesExpanded = BasePath + "TrackPropertiesExpanded";
     }
 }

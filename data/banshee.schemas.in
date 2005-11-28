@@ -13,6 +13,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/Banshee/TrackPropertiesExpanded</key>
+      <applyto>/apps/Banshee/TrackPropertiesExpanded</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Show advanced track properties</short>
+        <long>True if the advanced expander should be expanded in the track properties dialog, false if it should be closed</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/ShowNotificationAreaIcon</key>
       <applyto>/apps/Banshee/ShowNotificationAreaIcon</applyto>
       <owner>banshee</owner>
