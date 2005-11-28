@@ -1,5 +1,13 @@
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Added data files to MonoDevelop project
+	* data/banshee.schemas.in: Added schema for /apps/Banshee/WindowMaximized
+	* src/Banshee.Base/GConfKeys.cs: Added new key: WindowMaximized
+	* src/PlayerInterface.cs: Remember window maximization state, ignore
+	saving maximization state when hiding the window (fixes BGO #316784)
+
+2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Base/SpecialKeys.cs: minor cleanup/trim-down
 
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>

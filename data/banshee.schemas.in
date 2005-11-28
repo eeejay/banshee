@@ -79,6 +79,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/Banshee/WindowMaximized</key>
+      <applyto>/apps/Banshee/WindowMaximized</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Window Maximized</short>
+        <long>True if main window is to be maximized, false if it is not.</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/SourceViewWidth</key>
       <applyto>/apps/Banshee/SourceViewWidth</applyto>
       <owner>banshee</owner>

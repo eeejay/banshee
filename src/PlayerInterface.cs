@@ -216,7 +216,7 @@ namespace Banshee
                 y = (int)Core.GconfClient.Get(GConfKeys.WindowY); 
                 width = (int)Core.GconfClient.Get(GConfKeys.WindowWidth);
                 height = (int)Core.GconfClient.Get(GConfKeys.WindowHeight);
-            } catch(GConf.NoSuchKeyException e) {
+            } catch(GConf.NoSuchKeyException) {
                 width = 800;
                 height = 600;
                 x = 0;
@@ -232,7 +232,24 @@ namespace Banshee
             } else {
                 WindowPlayer.Move(x, y);
             }
-        }   
+            
+            try {
+                if((bool)Core.GconfClient.Get(GConfKeys.WindowMaximized)) {
+                    WindowPlayer.Maximize();
+                } else {
+                    WindowPlayer.Unmaximize();
+                }
+            } catch(GConf.NoSuchKeyException) {
+            }
+        }
+        
+        private void OnWindowStateEvent(object o, WindowStateEventArgs args)
+        {
+            if((args.Event.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
+                Globals.Configuration.Set(GConfKeys.WindowMaximized,
+                    (args.Event.NewWindowState & Gdk.WindowState.Maximized) != 0);
+            }
+        }
           
         private void BuildWindow()
         {
@@ -369,6 +386,7 @@ namespace Banshee
             // Window Events
             WindowPlayer.KeyPressEvent += OnKeyPressEvent;
             WindowPlayer.ConfigureEvent += OnWindowPlayerConfigureEvent;
+            WindowPlayer.WindowStateEvent += OnWindowStateEvent;
             
             // Search Entry
             ArrayList fields = new ArrayList();
@@ -702,16 +720,13 @@ namespace Banshee
         {
             int x, y, width, height;
 
-            // Ignore events when maximized.
-            if((WindowPlayer.GdkWindow.State & Gdk.WindowState.Maximized) > 0) {
+            if((WindowPlayer.GdkWindow.State & Gdk.WindowState.Maximized) != 0) {
                 return;
             }
             
             WindowPlayer.GetPosition(out x, out y);
             WindowPlayer.GetSize(out width, out height);
             
-            // might consider putting this in some kind of time delay queue
-            // so we're not writing to the gconf client every pixel change
             Core.GconfClient.Set(GConfKeys.WindowX, x);
             Core.GconfClient.Set(GConfKeys.WindowY, y);
             Core.GconfClient.Set(GConfKeys.WindowWidth, width);

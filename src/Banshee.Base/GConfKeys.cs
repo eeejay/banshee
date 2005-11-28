@@ -38,6 +38,7 @@ namespace Banshee
         public const string WindowY = BasePath + "WindowY";
         public const string WindowWidth = BasePath + "WindowWidth";
         public const string WindowHeight = BasePath + "WindowHeight";
+        public const string WindowMaximized = BasePath + "WindowMaximized";
         public const string SourceViewWidth = BasePath + "SourceViewWidth";
         public const string SearchBarVisible = BasePath + "SearchBarVisible";
         public const string Volume = BasePath + "Volume";
