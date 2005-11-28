@@ -179,58 +179,25 @@ namespace Banshee.Base
         
         [Flags]
         private enum XModMask {
-            None = 0,
-            Shift = 1 << 0,
-            Lock	 = 1 << 1,
-            Control	= 1 << 2,
-            Mod1	 = 1 << 3,
-            Mod2	 = 1 << 4,
-            Mod3	 = 1 << 5,
-            Mod4 = 1 << 6,
-            Mod5	 = 1 << 7
+            None    = 0,
+            Shift   = 1 << 0,
+            Lock	    = 1 << 1,
+            Control = 1 << 2,
+            Mod1	    = 1 << 3,
+            Mod2	    = 1 << 4,
+            Mod3    = 1 << 5,
+            Mod4    = 1 << 6,
+            Mod5	    = 1 << 7
         }
         
         private enum XGrabMode {
-            Sync = 0,
+            Sync  = 0,
             Async = 1
         };
         
         private enum XEventName {
-            KeyPress                = 2,
-            KeyRelease              = 3,
-            ButtonPress             = 4,
-            ButtonRelease           = 5,
-            MotionNotify            = 6,
-            EnterNotify             = 7,
-            LeaveNotify             = 8,
-            FocusIn                 = 9,
-            FocusOut                = 10,
-            KeymapNotify            = 11,
-            Expose                  = 12,
-            GraphicsExpose          = 13,
-            NoExpose                = 14,
-            VisibilityNotify        = 15,
-            CreateNotify            = 16,
-            DestroyNotify           = 17,
-            UnmapNotify             = 18,
-            MapNotify               = 19,
-            MapRequest              = 20,
-            ReparentNotify          = 21,
-            ConfigureNotify         = 22,
-            ConfigureRequest        = 23,
-            GravityNotify           = 24,
-            ResizeRequest           = 25,
-            CirculateNotify         = 26,
-            CirculateRequest        = 27,
-            PropertyNotify          = 28,
-            SelectionClear          = 29,
-            SelectionRequest        = 30,
-            SelectionNotify         = 31,
-            ColormapNotify          = 32,
-            ClientMessage           = 33,
-            MappingNotify           = 34,
-            TimerNotify             = 100,        
-            LASTEvent
+            KeyPress   = 2,
+            KeyRelease = 3,
         }
     }
 }
