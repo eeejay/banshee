@@ -52,8 +52,6 @@ AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
-AC_ARG_WITH(internal-mcs, AC_HELP_STRING([--with-internal-mcs], [Use the internal mcs 1.1.9.2 compiler]), internal_mcs="yes", internal_mcs="no")
-
 AC_ARG_WITH(gstreamer-dev, AC_HELP_STRING([--with-gstreamer-dev], [Build the GStreamer 0.9 backends (DEVELOPMENTAL)]), enable_gst_dev="yes", enable_gst_dev="no")
 AM_CONDITIONAL(ENABLE_GST_DEV, test "x$enable_gst_dev" = "xyes")
 
@@ -75,21 +73,14 @@ fi
 AC_SUBST(INSTALL)
 AC_SUBST(PKG_CONFIG)
 
-if test "x$internal_mcs" = "xno"; then
-	MONO_REQUIRED_VERSION=1.1.9
-	PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
-fi
+MONO_REQUIRED_VERSION=1.1.10
+PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
 
 dnl Mono programs
 MONODIR=`$PKG_CONFIG --variable=exec_prefix mono`
 MONOBIN="$MONODIR/bin"
 MONO="$MONOBIN/mono"
-
-if test "x$internal_mcs" = "xyes"; then
-	MCS="$MONO `pwd`/src/mcs.exe"
-else
-	MCS="$MONOBIN/mcs"
-fi
+MCS="$MONOBIN/mcs"
 
 AC_MSG_CHECKING([for mono.pc])
 if test -z `$PKG_CONFIG --variable=prefix mono`; then

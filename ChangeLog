@@ -1,5 +1,8 @@
 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/mcs.exe: Removed internal 1.1.9.2 support
+	* configure.ac: Require Mono 1.1.10; removed internal 1.1.9.2. mcs support
+
 	* src/TrackProperties.cs: 
 	* data/glade/trackinfo.glade: Added advanced view support for MimeType and
 	Encoding Type properties
