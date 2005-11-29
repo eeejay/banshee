@@ -25,11 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/11/26 01:52:38  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.7  2005/11/29 05:44:42  abock
+ * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
+ *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
+ *     mimetype because gnome-vfs is dumb
  *
  * Revision 1.5  2005/02/21 00:13:00  kikidonk
  * Should fix the bitrate calculation for mp3

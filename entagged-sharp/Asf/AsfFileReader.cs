@@ -1,5 +1,7 @@
 /***************************************************************************
- *  Copyright 2005 Christian Laireiter <liree@web.de> 
+ *  Copyright 2005 Christian Laireiter <liree@web.de>
+ *  Copyright 2005 Novell, Inc
+ *  Aaron Bockover <aaron@aaronbock.net>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -37,7 +39,8 @@ namespace Entagged.Audioformats.Asf
     
     [SupportedMimeType("entagged/wma")]
     [SupportedMimeType("audio/x-ms-wma")]
-    public class AsfFileReader : AudioFileReader 
+    [SupportedMimeType("video/x-ms-asf")] // stupid gnome-vfs
+	public class AsfFileReader : AudioFileReader 
     {
         private static readonly AsfInfoReader info_reader = new AsfInfoReader();
         private static readonly AsfTagReader tag_reader = new AsfTagReader();

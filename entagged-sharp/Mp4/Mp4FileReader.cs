@@ -33,21 +33,21 @@ using Entagged.Audioformats.Mp4.Util;
  
 namespace Entagged.Audioformats.Mp4
 {
-	[SupportedMimeType ("audio/x-m4a")]
-	[SupportedMimeType ("entagged/m4a")]
-	[SupportedMimeType ("entagged/m4p")]	
-	public class Mp4FileReader : AudioFileReader
-	{
-		private Mp4TagReader tr = new Mp4TagReader();
-		
-		protected override EncodingInfo GetEncodingInfo(Stream raf, string mime)  
-		{
-			return tr.ReadEncodingInfo(raf);
-		}
-		
-		protected override Tag GetTag(Stream raf, string mime)  
-		{
-			return tr.ReadTags(raf);
-		}
-	}
+    [SupportedMimeType ("audio/x-m4a")]
+    [SupportedMimeType ("entagged/m4a")]
+    [SupportedMimeType ("entagged/m4p")]    
+    public class Mp4FileReader : AudioFileReader
+    {
+        private Mp4TagReader tr = new Mp4TagReader();
+        
+        protected override EncodingInfo GetEncodingInfo(Stream raf, string mime)  
+        {
+            return tr.ReadEncodingInfo(raf);
+        }
+        
+        protected override Tag GetTag(Stream raf, string mime)  
+        {
+            return tr.ReadTags(raf);
+        }
+    }
 }

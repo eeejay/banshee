@@ -255,7 +255,6 @@ namespace Entagged.Audioformats
         
         public void AddComment(string s) 
         {
-            Console.WriteLine("Added Comment");
             Add(CommonField.Comment, s);
         }
         

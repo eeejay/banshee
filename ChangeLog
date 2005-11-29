@@ -1,3 +1,12 @@
+2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
+
+	* entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
+	mimetype because gnome-vfs is dumb
+	* entagged-sharp/*: Updated entagged-sharp checkout to latest Mono SVN;
+	fixes BGO #320038; minor API changes and optimizations
+	* data/banshee.desktop.in.in: Updated MimeType field with supported 
+	MimeTypes from entagged-sharp
+
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

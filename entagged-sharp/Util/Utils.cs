@@ -188,4 +188,83 @@ namespace Entagged.Audioformats.Util
             }
         }
     }
+    
+    public static class UnicodeValidator
+    {
+        public static bool ValidateUtf8(byte [] str) 
+        {
+            int i, min = 0, val = 0;
+            
+            try {
+                for(i = 0; i < str.Length; i++) {
+                    if(str[i] < 128) {
+                        continue;
+                    }
+                    
+                    if((str[i] & 0xe0) == 0xc0) { /* 110xxxxx */
+                        if((str[i] & 0x1e) == 0) {
+                            return false;
+                        }
+                        
+                        if((str[++i] & 0xc0) != 0x80) { /* 10xxxxxx */
+                            return false;
+                        }
+                    } else {
+                        bool skip_next_continuation = false;
+                        
+                        if((str[i] & 0xf0) == 0xe0) { /* 1110xxxx */
+                            min = 1 << 11;
+                            val = str[i] & 0x0f;
+                            skip_next_continuation = true;
+                        } else if((str[i] & 0xf8) == 0xf0) { /* 11110xxx */
+                            min = 1 << 16;
+                            val = str[i] & 0x07;  
+                        } else {
+                            return false;
+                        }
+                        
+                        if(!skip_next_continuation && !IsContinuationChar(str, ++i, ref val)) {
+                            return false;
+                        }
+                    
+                        if(!IsContinuationChar(str, ++i, ref val)) {
+                            return false;
+                        }
+                        
+                        if(!IsContinuationChar(str, ++i, ref val)) {
+                            return false;
+                        }
+                        
+                        if(val < min || !IsValidUnicode(val)) {
+                            return false;
+                        }
+                    }
+                }
+            } catch(IndexOutOfRangeException e) {
+                return false;
+            }
+
+            return true;
+        }
+            
+        private static bool IsContinuationChar(byte [] str, int i, ref int val)
+        {
+            if((str[i] & 0xc0) != 0x80) { /* 10xxxxxx */
+                return false;
+            }
+
+            val <<= 6;  
+            val |= str[i] & 0x3f;
+            
+            return true;
+        }
+        
+        private static bool IsValidUnicode(int b)
+        {
+            return (b < 0x110000 && 
+                ((b & 0xFFFFF800) != 0xD800) && 
+                (b < 0xFDD0 || b > 0xFDEF) && 
+                (b & 0xFFFE) != 0xFFFE);
+        }
+    }
 }

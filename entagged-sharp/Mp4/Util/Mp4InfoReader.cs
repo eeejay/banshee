@@ -29,12 +29,12 @@ using Entagged.Audioformats.Util;
  
 namespace Entagged.Audioformats.Mp4.Util
 {
-	public class Mp4InfoReader
-	{
-		public EncodingInfo Read(Stream raf)
-		{
-			EncodingInfo info = new EncodingInfo();
-			return info;
-		}
-	}
+    public class Mp4InfoReader
+    {
+        public EncodingInfo Read(Stream raf)
+        {
+            EncodingInfo info = new EncodingInfo();
+            return info;
+        }
+    }
 }

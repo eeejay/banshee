@@ -1,7 +1,8 @@
 /***************************************************************************
- *  Copyright 2005 Christian Laireiter <liree@web.de> 
+ *  Copyright 2005 Christian Laireiter <liree@web.de>
+ *  Copyright 2005 Novell, Inc
+ *  Aaron Bockover <aaron@aaronbock.net>
  ****************************************************************************/
-
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a

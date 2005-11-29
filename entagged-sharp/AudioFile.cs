@@ -62,7 +62,7 @@ namespace Entagged
             }
         }
 
-        public int ChannelNumber {
+        public int Channels {
             get { 
                 return container.EncodingInfo.ChannelNumber; 
             }
@@ -80,7 +80,7 @@ namespace Entagged
             }
         }
 
-        public int SamplingRate {
+        public int SampleRate {
             get { 
                 return container.EncodingInfo.SamplingRate; 
             }

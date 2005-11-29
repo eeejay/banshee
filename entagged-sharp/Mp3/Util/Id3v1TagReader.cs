@@ -25,11 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/11/26 01:52:38  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.7  2005/11/29 05:44:42  abock
+ * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
+ *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
+ *     mimetype because gnome-vfs is dumb
  *
  * Revision 1.4  2005/02/08 12:54:41  kikidonk
  * Added cvs log and header
@@ -82,7 +82,12 @@ namespace Entagged.Audioformats.Mp3.Util {
 		{
 			byte[] b = new byte[length];
 			mp3Stream.Read( b, 0, b.Length );
-			string ret = Encoding.GetEncoding("ISO-8859-1").GetString(b).Trim();
+			string ret;
+			
+            if(Entagged.Audioformats.Util.UnicodeValidator.ValidateUtf8(b))
+                ret = Encoding.UTF8.GetString(b).Trim();
+            else 
+                ret = Encoding.GetEncoding("ISO-8859-1").GetString(b).Trim();
 
 			int pos = ret.IndexOf('\0');
 			if (pos != -1)

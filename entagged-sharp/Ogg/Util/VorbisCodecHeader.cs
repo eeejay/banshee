@@ -25,11 +25,11 @@
 
 /*
  * $Log$
- * Revision 1.6  2005/11/26 01:52:40  abock
- * 2005-11-25  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.7  2005/11/29 05:44:45  abock
+ * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with latest entagged-sharp in Mono SVN; adds
- *     WMA support and ID3 2.4 support
+ *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
+ *     mimetype because gnome-vfs is dumb
  *
  * Revision 1.4  2005/02/18 13:38:11  kikidonk
  * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR
