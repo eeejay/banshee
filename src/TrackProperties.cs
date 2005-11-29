@@ -109,6 +109,8 @@ namespace Banshee
         [Widget] private Label SampleRate;
         [Widget] private Label Vbr;
         [Widget] private Label Channels;
+        [Widget] private Label MimeType;
+        [Widget] private Label ExtraInfo;
         
         Tooltips tips = new Tooltips();
         
@@ -222,16 +224,21 @@ namespace Banshee
             tips.SetTip(glade["Uri"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
             
             try {
-                Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath);
+                Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
+                    Gnome.Vfs.MimeType.GetMimeTypeForUri(track.Uri.AbsoluteUri));
                 BitRate.Text = (af.Bitrate / 1000).ToString() + " " + Catalog.GetString("KB/Second");
-                SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SamplingRate / 1000.0);
+                SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
                 Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
-                Channels.Text = af.ChannelNumber.ToString();
-            } catch(Exception) {
+                Channels.Text = af.Channels.ToString();
+                MimeType.Text = af.MimeType;
+                ExtraInfo.Text = af.EncodingType;
+            } catch(Exception e) {
                 BitRate.Text = Catalog.GetString("Unknown");
                 SampleRate.Text = Catalog.GetString("Unknown");
                 Vbr.Text = Catalog.GetString("Unknown");
                 Channels.Text = Catalog.GetString("Unknown");
+                MimeType.Text = Catalog.GetString("Unknown");
+                ExtraInfo.Text = Catalog.GetString("Unknown");
             }
             
             Previous.Sensitive = index > 0;

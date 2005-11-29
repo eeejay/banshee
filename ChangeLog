@@ -1,5 +1,8 @@
 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/TrackProperties.cs: 
+	* data/glade/trackinfo.glade: Added advanced view support for MimeType and
+	Encoding Type properties
 	* entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
 	mimetype because gnome-vfs is dumb
 	* entagged-sharp/*: Updated entagged-sharp checkout to latest Mono SVN;
