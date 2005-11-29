@@ -9,6 +9,7 @@ data/glade/preferences.glade
 data/glade/trackinfo.glade
 libbanshee/cd-rip.c
 libbanshee/gst-encode.c
+libbanshee/hal-context.c
 src/AboutBox.cs
 src/BurnCore.cs
 src/BurnTransaction.cs
@@ -36,6 +37,7 @@ src/ToggleStates.cs
 src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/VersionInformationDialog.cs
+src/Banshee.Base/HalCore.cs
 src/Banshee.Base/TrackInfo.cs
 src/Banshee.Base/Utilities.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
