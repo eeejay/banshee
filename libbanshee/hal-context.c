@@ -1,3 +1,32 @@
+/* ex: set ts=4: */
+/***************************************************************************
+ *  hal-context-c
+ *
+ *  Copyright (C) 2005 Novell
+ *  Written by Aaron Bockover (aaron@aaronbock.net)
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+
 #include "hal-context.h"
 
 static LibHalContext *global_instance_context = NULL;
@@ -38,22 +67,18 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 
 	*error_out = NULL;
 
-    //g_debug("Trying to create context");
-
 	hal_context = libhal_ctx_new();
 	if(hal_context == NULL) {
-		*error_out = g_strdup("Could not create new HAL context");
-		g_warning(*error_out);
+		*error_out = g_strdup(_("Could not create new HAL context"));
 		return NULL;
 	}
 	
 	dbus_error_init(&error);
 	if(!hal_mainloop_integrate(hal_context, g_main_context_default(), 
 		&error)) {
-		dbus_error_free(&error);
 		libhal_ctx_free(hal_context);
-		*error_out = g_strdup_printf("Could not integrate HAL with mainloop: %s", error.message);
-		g_warning(*error_out);
+		*error_out = g_strdup_printf(_("Could not integrate HAL with mainloop: %s"), error.message);
+		dbus_error_free(&error);
 		return NULL;
 	}
 	
@@ -68,12 +93,10 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 	if(!libhal_ctx_init(hal_context, &error)) {
 		libhal_ctx_free(hal_context);
 		if(dbus_error_is_set(&error)) {
-			*error_out = g_strdup_printf("Could not initialize HAL context: %s", error.message);
-			g_warning(*error_out);
+			*error_out = g_strdup_printf("%s: %s", _("Could not initialize HAL context"), error.message);
 			dbus_error_free(&error);
 		} else {
-			*error_out = g_strdup_printf("Could not initialize HAL context");
-			g_warning(*error_out);
+			*error_out = g_strdup_printf(_("Could not initialize HAL context"));
 		}
 		return NULL;
 	}
@@ -82,15 +105,12 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 	if(devices == NULL) {
 		libhal_ctx_shutdown(hal_context, NULL);
 		libhal_ctx_free(hal_context);
-		*error_out = g_strdup("Could not get device list from HAL");
-		g_warning(*error_out);
+		*error_out = g_strdup(_("Could not get device list from HAL"));
 		hal_context = NULL;
 		return NULL;
 	}
 	
 	libhal_free_string_array(devices);
-
-    //g_debug("Context created");
 	
 	return hal_context;
 }

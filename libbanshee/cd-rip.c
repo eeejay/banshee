@@ -110,7 +110,7 @@ cd_rip_build_pipeline(CdRip *ripper)
     
     ripper->filesink = gst_element_factory_make("gnomevfssink", "gnomevfssink");
     if(ripper->filesink == NULL) {
-        ripper->error = g_strdup(_("Could not create GNOME VFS File Sink"));
+        ripper->error = g_strdup(_("Could not create GNOME VFS output plugin"));
         return FALSE;
     }
     

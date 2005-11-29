@@ -146,6 +146,7 @@
     <File name="./data/banshee.schemas.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/org.gnome.Banshee.service.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/Tables.sql" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Widgets/NotificationAreaIcon.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

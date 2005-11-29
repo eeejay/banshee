@@ -44,6 +44,10 @@ namespace Banshee.Dap
     
         static DapCore()
         {
+            if(!HalCore.Initialized) {
+                return;
+            }
+            
             string dap_dir = ConfigureDefines.InstallDir + "Banshee.Dap" + Path.DirectorySeparatorChar;
             DirectoryInfo di = null;
             
@@ -87,6 +91,10 @@ namespace Banshee.Dap
         
         public static void Initialize()
         {
+            if(!HalCore.Initialized) {
+                throw new ApplicationException("Cannot initialize DapCore because HalCore is not initialized");
+            }
+            
             if(supported_dap_types.Count <= 0) {
                 return;
             }

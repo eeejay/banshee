@@ -175,7 +175,11 @@ namespace Banshee
             
             IpodCore = new IpodCore();
 
-            Banshee.Dap.DapCore.Initialize();
+            try {
+                Banshee.Dap.DapCore.Initialize();
+            } catch(ApplicationException e) {
+                Core.Log.PushWarning("DAP support will be disabled for this instance", e.Message, false);
+            }
 
             StockIcons.Initialize();
             

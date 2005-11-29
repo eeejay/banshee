@@ -115,13 +115,13 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 
     source_elem = gst_element_factory_make("gnomevfssrc", "source");
     if(source_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'gnomevfssrc' element"));
+        encoder->error = g_strdup(_("Could not create 'gnomevfssrc' plugin"));
         return NULL;
     }
 
     decoder_elem = gst_element_factory_make("spider", "spider");
     if(decoder_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'spider' element"));
+        encoder->error = g_strdup(_("Could not create 'spider' plugin"));
         return NULL;
     }
 
@@ -134,7 +134,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
 
     sink_elem = gst_element_factory_make("gnomevfssink", "sink");
     if(sink_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'filesink' element"));
+        encoder->error = g_strdup(_("Could not create 'filesink' plugin"));
         return NULL;
     }
     

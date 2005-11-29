@@ -1,5 +1,33 @@
 2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Updated MonoDevelop project
+	* libbanshee/cd-rip.c:
+	* libbanshee/gst-encode.c: re-phrased keywords in error messages to 
+	be more friendly (sink->plugin, element->plugin) (BGO #321534)
+	* libbanshee/hal-context.c: _() around error strings, fixed minor bug where
+	dbus error message was freed before being strduped, so it allways rendered
+	as (null); error messages make more sense; removed g_warning() calls as
+	messages will be printed in managed land; Added MIT license header
+	* libbanshee/hal-context.h: Added MIT license header
+	* src/Core.cs: Catch anything Banshee.Base.HalCore.Initialize() may throw
+	and push a warning
+	* src/Banshee.Base/HalCore.cs: Added an Initialized property; safely handle
+	cases where HAL initialization may fail; throw proper exception with
+	verbose warnings from hal-context.c
+	* src/Banshee.Base/AudioCd/AudioCdCore.cs: Throw exception if HalCore is
+	not initialized; disables Audio CD support if that happens
+	* src/Banshee.Base/Dap/DapCore.cs: Same thing as AudioCdCore; do not
+	load DAP assemblies if HalCore is not initialized; effectively disables
+	DAP support in this case
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Better NotificationAreaIcon
+	class (fixes BGO #321684); recovers from panel crashing; moved from
+	src/NotificationAreaIcon.cs (TrayIcon->NotificationAreaIcon)
+	* src/Banshee.Widgets/Makefile.am: Added NotificationAreaIcon.cs
+	* src/NotificationAreaIcon.cs: Use new NotificationAreaIcon in 
+	src/Banshee.Widgets/NotificationAreaIcon.cs
+
+2005-11-28  Aaron Bockover  <aaron@aaronbock.net>
+
 	* data/glade/trackinfo.glade: Added advanced info expander and table
 	* src/TrackProperties.cs: cleaned/reformatted code, added advanced 
 	properties to dialog (file name, bitrate, channels, samplerate vbr)

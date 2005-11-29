@@ -18,7 +18,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/VolumeButton.cs \
 	$(srcdir)/ActiveUserEvent.cs \
 	$(srcdir)/ActiveUserEventsManager.cs \
-	$(srcdir)/HigMessageDialog.cs
+	$(srcdir)/HigMessageDialog.cs \
+	$(srcdir)/NotificationAreaIcon.cs
 
 ASSEMBLY_RESOURCES = \
 	Resources/search-entry-icon.png \

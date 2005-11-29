@@ -74,10 +74,14 @@ namespace Banshee.Base
         
         public AudioCdCore()
         {
+            if(!HalCore.Initialized) {
+                throw new ApplicationException(Catalog.GetString("HAL is not initialized"));
+            }
+            
             HalCore.DeviceAdded += OnDeviceAdded;
             HalCore.DeviceRemoved += OnDeviceRemoved;
             
-            LogCore.Instance.PushDebug("Audio CD Core Initialized", "");
+            LogCore.Instance.PushDebug(Catalog.GetString("Audio CD Core Initialized"), "");
             
             BuildInitialList();
         }
