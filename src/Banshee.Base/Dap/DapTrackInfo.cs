@@ -34,6 +34,6 @@ namespace Banshee.Dap
 {
     public class DapTrackInfo : TrackInfo
     {
-    
+        
     }
 }

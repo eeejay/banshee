@@ -45,7 +45,7 @@ namespace Banshee.Base
         public AudioCdTrackInfo(string device)
         {
             PreviousTrack = Gtk.TreeIter.Zero;
-            canSaveToDatabase = false;
+            CanSaveToDatabase = false;
             this.device = device;
             do_rip = true;
         }

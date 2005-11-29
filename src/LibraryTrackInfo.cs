@@ -57,7 +57,7 @@ namespace Banshee
         
         protected LibraryTrackInfo()
         {
-            canSaveToDatabase = true;
+            CanSaveToDatabase = true;
         }
     
         private void CheckIfExists(Uri uri)
@@ -154,11 +154,11 @@ namespace Banshee
         }
 
         public LibraryTrackInfo(Uri uri, string artist, string album, 
-           string title, string genre, uint trackNumber, uint trackCount,
+           string title, string genre, uint track_number, uint track_count,
            int year, long duration, string asin)
         {
             this.uri = uri;
-            trackId = 0;
+            track_id = 0;
     
             mimetype = null;
             
@@ -166,18 +166,18 @@ namespace Banshee
             this.album = album;
             this.title = title;
             this.genre = genre;
-            this.trackNumber = trackNumber;
-            this.trackCount = trackCount;
+            this.track_number = track_number;
+            this.track_count = track_count;
             this.year = year;
             this.duration = duration;
             this.asin = asin;
             
-            this.dateAdded = DateTime.Now;
+            this.date_added = DateTime.Now;
             
             CheckIfExists(uri);
             
             SaveToDatabase(true);
-            Core.Library.SetTrack(trackId, this);
+            Core.Library.SetTrack(track_id, this);
             
             PreviousTrack = Gtk.TreeIter.Zero;
         }
@@ -186,7 +186,6 @@ namespace Banshee
             uri, track.Artist, track.Album, track.Title, track.Genre,
             track.TrackNumber, track.TrackCount, track.Year, track.Duration, track.Asin)
         {
-            
         }
     
         public LibraryTrackInfo(string filename) : this()
@@ -198,17 +197,13 @@ namespace Banshee
             if(!LoadFromDatabase(old_uri)) {
 //                Console.WriteLine ("LoadFromFile(\"{0}\");", filename);
                 LoadFromFile(filename);
-
                 string new_filename = MoveToPlace(filename, true);
-
                 uri = PathUtil.PathToFileUri (new_filename != null ? new_filename : filename);
-
                 CheckIfExists(uri);
-
                 SaveToDatabase(true);
             }
 
-            Core.Library.SetTrack(trackId, this);
+            Core.Library.SetTrack(track_id, this);
 
             PreviousTrack = Gtk.TreeIter.Zero;
         }
@@ -216,7 +211,7 @@ namespace Banshee
         public LibraryTrackInfo(IDataReader reader) : this()
         {
             LoadFromDatabaseReader(reader);
-            Core.Library.SetTrack(trackId, this);
+            Core.Library.SetTrack(track_id, this);
             PreviousTrack = Gtk.TreeIter.Zero;
         }
         
@@ -225,7 +220,7 @@ namespace Banshee
             artist = String.Empty;
             album = String.Empty;
             title = String.Empty;
-            trackNumber = 0;
+            track_number = 0;
             Match match;
 
             string fileName = PathUtil.FileUriToPath(PathUtil.PathToFileUri(path));
@@ -233,8 +228,8 @@ namespace Banshee
         
             match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
             if(match.Success) {
-                trackNumber = Convert.ToUInt32(match.Groups[1].ToString());
-//                Console.WriteLine ("trackNumber = {0}", trackNumber);
+                track_number = Convert.ToUInt32(match.Groups[1].ToString());
+//                Console.WriteLine ("track_number = {0}", track_number);
                 fileName = match.Groups[2].ToString().Trim();
             }
 
@@ -288,7 +283,7 @@ namespace Banshee
 
 //            Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
 
-            if(trackId <= 0) {
+            if(track_id <= 0) {
                 tracksQuery = new Insert("Tracks", true,
                     "TrackID", null, 
                     "Uri", uri.AbsoluteUri,
@@ -301,17 +296,17 @@ namespace Banshee
                     "Title", title, 
                     "Genre", genre, 
                     "Year", year,
-                    "DateAddedStamp", DateTimeUtil.FromDateTime(dateAdded), 
-                    "TrackNumber", trackNumber, 
-                    "TrackCount", trackCount, 
+                    "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
+                    "TrackNumber", track_number, 
+                    "TrackCount", track_count, 
                     "Duration", duration, 
-                    "TrackGain", trackGain, 
-                    "TrackPeak", trackPeak, 
-                    "AlbumGain", albumGain, 
-                    "AlbumPeak", albumPeak, 
+                    "TrackGain", track_gain, 
+                    "TrackPeak", track_peak, 
+                    "AlbumGain", album_gain, 
+                    "AlbumPeak", album_peak, 
                     "Rating", rating, 
-                    "NumberOfPlays", numberOfPlays, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(lastPlayed));
+                    "NumberOfPlays", play_count, 
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played));
             } else {
                 tracksQuery = new Update("Tracks",
                     "Uri", uri.AbsoluteUri,
@@ -324,30 +319,30 @@ namespace Banshee
                     "Title", title, 
                     "Genre", genre, 
                     "Year", year,
-                    "DateAddedStamp", DateTimeUtil.FromDateTime(dateAdded), 
-                    "TrackNumber", trackNumber, 
-                    "TrackCount", trackCount, 
+                    "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
+                    "TrackNumber", track_number, 
+                    "TrackCount", track_count, 
                     "Duration", duration, 
-                    "TrackGain", trackGain, 
-                    "TrackPeak", trackPeak, 
-                    "AlbumGain", albumGain, 
-                    "AlbumPeak", albumPeak, 
+                    "TrackGain", track_gain, 
+                    "TrackPeak", track_peak, 
+                    "AlbumGain", album_gain, 
+                    "AlbumPeak", album_peak, 
                     "Rating", rating, 
-                    "NumberOfPlays", numberOfPlays, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(lastPlayed)) +
-                    new Where(new Compare("TrackID", Op.EqualTo, trackId));// +
+                    "NumberOfPlays", play_count, 
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played)) +
+                    new Where(new Compare("TrackID", Op.EqualTo, track_id));// +
                 //    new Limit(1);
             }
 
             Core.Library.Db.Execute(tracksQuery);
 
             /*if(Core.Library.Db.Execute(query) <= 0 && retryIfFail) {
-                trackId = 0;
+                track_id = 0;
                 SaveToDatabase(false);
-            } else if(trackId <= 0) {*/
+            } else if(track_id <= 0) {*/
             
-            if(trackId <= 0)
-               trackId = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
+            if(track_id <= 0)
+               track_id = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
 
 //            Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
         }
@@ -376,7 +371,7 @@ namespace Banshee
         
         private void LoadFromDatabaseReader(IDataReader reader)
         {
-            trackId = Convert.ToInt32(reader["TrackID"]);
+            track_id = Convert.ToInt32(reader["TrackID"]);
 
             uri = new Uri(reader["Uri"] as string);
             
@@ -390,20 +385,20 @@ namespace Banshee
 
             year = Convert.ToInt32(reader["Year"]);
 
-            trackNumber = Convert.ToUInt32(reader["TrackNumber"]);
-            trackCount = Convert.ToUInt32(reader["TrackCount"]);
+            track_number = Convert.ToUInt32(reader["TrackNumber"]);
+            track_count = Convert.ToUInt32(reader["TrackCount"]);
             duration = Convert.ToInt64(reader["Duration"]);
             rating = Convert.ToUInt32(reader["Rating"]);
-            numberOfPlays = Convert.ToUInt32(reader["NumberOfPlays"]);
+            play_count = Convert.ToUInt32(reader["NumberOfPlays"]);
 
 			if (reader != null){
-				lastPlayed = DateTime.MinValue;
+				last_played = DateTime.MinValue;
 
 				try {
 					string s = (string)reader ["LastPlayedStamp"];
 					if (s != null){
 						long time = Int64.Parse (s);
-						lastPlayed = DateTimeUtil.ToDateTime(time);
+						last_played = DateTimeUtil.ToDateTime(time);
 					}
 				} catch(Exception e) {
 					Console.WriteLine ("E1: " + e);
@@ -411,13 +406,13 @@ namespace Banshee
 			}
 
 			if (reader != null){
-				dateAdded = DateTime.MinValue;
+				date_added = DateTime.MinValue;
 				
 				try {
 					string s = (string)reader ["LastPlayedStamp"];
 					if (s != null){
 						long time = Int64.Parse (s);
-						dateAdded = DateTimeUtil.ToDateTime(time);
+						date_added = DateTimeUtil.ToDateTime(time);
 					}
 				} catch(Exception e) {
 					Console.WriteLine ("E2: " + e);
@@ -435,7 +430,7 @@ namespace Banshee
         private void LoadFromFile(string filename)
         {
             ParseUri(filename);
-            trackId = 0;
+            track_id = 0;
    
             AudioFile af = new AudioFile(filename);
 
@@ -445,12 +440,12 @@ namespace Banshee
             album = Choose  (af.Album, album);
             title = Choose (af.Title, title);
             genre = Choose (af.Genre, genre);
-            trackNumber = af.TrackNumber == 0 ? trackNumber : (uint)af.TrackNumber;
-            trackCount = 0;
+            track_number = af.TrackNumber == 0 ? track_number : (uint)af.TrackNumber;
+            track_count = 0;
             duration = af.Duration;
             year = af.Year;
             
-            this.dateAdded = DateTime.Now;
+            this.date_added = DateTime.Now;
         }
 
         public override void Save()
@@ -477,13 +472,13 @@ namespace Banshee
         
         public override void IncrementPlayCount()
         {
-            numberOfPlays++;
-            lastPlayed = DateTime.Now;
+            play_count++;
+            last_played = DateTime.Now;
             
             /*Statement query = new Update("Tracks",
-                "NumberOfPlays", numberOfPlays, 
-                "LastPlayed", lastPlayed.ToString(ci.DateTimeFormat)) +
-                new Where(new Compare("TrackID", Op.EqualTo, trackId));
+                "NumberOfPlays", PlayCount, 
+                "LastPlayed", last_played.ToString(ci.DateTimeFormat)) +
+                new Where(new Compare("TrackID", Op.EqualTo, track_id));
                 //new Limit(1);
 
             Core.Library.Db.Execute(query);*/
@@ -495,7 +490,7 @@ namespace Banshee
         {
             /*Statement query = new Update("Tracks",
                 "Rating", rating) +
-                new Where(new Compare("TrackID", Op.EqualTo, trackId));
+                new Where(new Compare("TrackID", Op.EqualTo, track_id));
             Core.Library.Db.Execute(query);*/
             Save();
         }

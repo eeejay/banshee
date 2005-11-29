@@ -40,7 +40,7 @@ namespace Banshee.Base
         protected string artist;
         protected string album;
         protected string title;
-        protected DateTime dateAdded;
+        protected DateTime date_added;
         protected int year;
         protected string genre;
         protected string performer;
@@ -49,61 +49,85 @@ namespace Banshee.Base
         protected string label;
 
         protected uint rating;
-        protected uint numberOfPlays;
-        protected DateTime lastPlayed;
+        protected uint play_count;
+        protected DateTime last_played;
 
         protected long duration;
-        protected uint trackNumber;
-        protected uint trackCount;
-        protected int uid;
-        protected int trackId;
+        protected uint track_number;
+        protected uint track_count;
+        protected int track_id;
 
-        protected double trackGain;
-        protected double trackPeak;
-        protected double albumGain;
-        protected double albumPeak;
+        protected double track_gain;
+        protected double track_peak;
+        protected double album_gain;
+        protected double album_peak;
 
-        protected bool canSaveToDatabase;
-        protected bool canPlay = true;
+        protected bool can_save_to_database;
+        protected bool can_play = true;
 
         public Gtk.TreeIter PreviousTrack;
         public Gtk.TreeIter TreeIter;
         
-        private static int nextId = 1;
+        private int uid;
+        
+        private static int next_id = 1;
         
         protected TrackInfo()
         {
-            uid = nextId++;
+            uid = next_id++;
         }
 
         public virtual void Save()
         {
-
         }
 
         public virtual void IncrementPlayCount()
         {
-
         }
 
         protected virtual void SaveRating()
         {
-        
         }
 
         protected virtual void WriteUpdate()
         {
-   
         }
 
-        public int TrackId         { get { return trackId;                  } }
-        public int Uid             { get { return uid;                      } }
+        public int TrackId { 
+            get { 
+                return track_id;
+            }
+            
+            protected set {
+                track_id = value;
+            }
+        }
+        
+        public int Uid { 
+            get { 
+                return uid;
+            }
+        }
 
-        public Uri Uri             { get { return uri;                      } 
-                                     set { uri = value; WriteUpdate();      } } 
+        public Uri Uri { 
+            get { 
+                return uri;
+            }
+            
+            set { 
+                uri = value; WriteUpdate();
+            } 
+        }
        
-        public string Asin         { get { return asin;                     }
-                                     set { asin = value;                    } }
+        public string Asin { 
+            get { 
+                return asin;
+            }
+            
+            set { 
+                asin = value;
+            } 
+        }
                                      
         public string CoverArtFileName { 
             get {
@@ -116,71 +140,223 @@ namespace Banshee.Base
             }
         }
        
-        public string MimeType     { get { return mimetype;                 } }
-        public string Artist       { get { return artist;                   } 
-                                     set { artist = value; WriteUpdate();   } }
-        public string Album        { get { return album;                    }
-                                     set { album = value; WriteUpdate();    } }
-        public string Title        { get { return title;                    } 
-                                     set { title = value; WriteUpdate();    } }
-        public string Genre        { get { return genre;                    } 
-                                     set { genre = value; WriteUpdate();    } }
+        [BansheeTodo("MimeType should be parsed using gvfs and set accordingly")]
+        public string MimeType { 
+            get { 
+                return mimetype;
+            } 
+            
+            protected set {
+                mimetype = value;
+            }
+        }
+        
+        public string Artist { 
+            get { 
+                return artist;
+            }
+            
+            set { 
+                artist = value; 
+                WriteUpdate();   
+            } 
+        }
+        
+        public string Album { 
+            get { 
+                return album;
+            }
+            
+            set { 
+                album = value; 
+                WriteUpdate();
+            } 
+        }
+        
+        public string Title { 
+            get { 
+                return title;
+            }
+            
+            set { 
+                title = value; 
+                WriteUpdate();
+            } 
+        }
+        
+        [BansheeTodo("Need to figure out how we want to display this")]
+        public string Genre { 
+            get { 
+                return genre;
+            } 
+            
+            set { 
+                genre = value; 
+                WriteUpdate(); 
+            } 
+        }
 
-        public string Performer    { get { return performer;                } }
-        public int Year            { get { return year;                     } 
-                                     set { year = value; WriteUpdate();     } }  
+        [BansheeTodo("Completely unused, should we even have this?")]
+        public string Performer {
+            get { 
+                return performer; 
+            } 
+            
+            set {
+                performer = value;
+                WriteUpdate();
+            }
+        }
+        
+        public int Year { 
+            get { 
+                return year;
+            }
+            
+            set { 
+                year = value; 
+                WriteUpdate(); 
+            }
+        }
 
-        public long Duration       { get { return duration;                 } 
-                                     set { duration = value; WriteUpdate(); } }
+        public long Duration {
+            get { 
+                return duration;
+            }
+            
+            set { 
+                duration = value; 
+                WriteUpdate(); 
+            } 
+        }
 
-        public uint TrackNumber    { get { return trackNumber;              } 
-                                     set { trackNumber = value; 
-                                           WriteUpdate();                   } }
-        public uint TrackCount     { get { return trackCount;               } 
-                                     set { trackCount = value; 
-                                           WriteUpdate();                   } }
+        public uint TrackNumber { 
+            get { 
+                return track_number;
+            } 
+            
+            set { 
+                track_number = value; 
+                WriteUpdate();
+            }
+        }
+        
+        public uint TrackCount { 
+            get { 
+                return track_count;
+            }
+            
+            set { 
+                track_count = value; 
+                WriteUpdate();
+            }
+        }
 
-        public uint NumberOfPlays  { get { return numberOfPlays;            } }
-        public DateTime LastPlayed { get { return lastPlayed;               } }
-        public DateTime DateAdded  { get { return dateAdded;                } }
+        public uint PlayCount { 
+            get { 
+                return play_count;
+            }
+        }
+        
+        public DateTime LastPlayed { 
+            get { 
+                return last_played;
+            }
+        }
+        
+        public DateTime DateAdded { 
+            get { 
+                return date_added;
+            }
+        }
 
-        public uint Rating         { get { return rating;                   } 
-                                     set { rating = value; 
-                                           WriteUpdate(); 
-                                           SaveRating();                    } }
-         
-        public double TrackGain    { get { return trackGain;                } }
-        public double TrackPeak    { get { return trackPeak;                } }
-        public double AlbumGain    { get { return albumGain;                } }
-        public double AlbumPeak    { get { return albumPeak;                } }
+        public uint Rating { 
+            get { 
+                return rating;
+            }
+            
+            set { 
+                rating = value; 
+                WriteUpdate(); 
+                SaveRating();
+            }
+        }
+        
+        [BansheeTodo("Placeholder for ReplayGain support")]
+        public double TrackGain { 
+            get { 
+                return track_gain;
+            }
+        }
+        
+        [BansheeTodo("Placeholder for ReplayGain support")]
+        public double TrackPeak { 
+            get { 
+                return track_peak;
+            }
+        }
+        
+        [BansheeTodo("Placeholder for ReplayGain support")]
+        public double AlbumGain { 
+            get { 
+                return album_gain;
+            }
+        }
+        
+        [BansheeTodo("Placeholder for ReplayGain support")]
+        public double AlbumPeak { 
+            get { 
+                return album_peak;
+            }
+        }
 
         public string DisplayArtist { 
-            get { return artist == null || artist == String.Empty
-                    ? Catalog.GetString("Unknown Artist") : artist; } 
-            }
+            get { 
+                return artist == null || artist == String.Empty
+                    ? Catalog.GetString("Unknown Artist") 
+                    : artist; 
+            } 
+        }
 
         public string DisplayAlbum { 
-            get { return album == null || album == String.Empty 
-                ? Catalog.GetString("Unknown Album") : album; } 
-            }
+            get { 
+                return album == null || album == String.Empty 
+                    ? Catalog.GetString("Unknown Album") 
+                    : album; 
+            } 
+       }
 
         public string DisplayTitle { 
-            get { return title == null || title == String.Empty
-                ? Catalog.GetString("Unknown Title") : title; } 
-        }    	
+            get { 
+                return title == null || title == String.Empty
+                    ? Catalog.GetString("Unknown Title") 
+                    : title; 
+            } 
+        }        
 
         public bool CanSaveToDatabase {
-            get { return canSaveToDatabase; }
+            get { 
+                return can_save_to_database; 
+            }
+            
+            protected set {
+                can_save_to_database = value;
+            }
         }
 
         public bool CanPlay {
-            get { return canPlay; }
+            get { 
+                return can_play; 
+            }
+            
+            protected set {
+                can_play = value;
+            }
         }
 
         public override string ToString()
         {
-            return String.Format ("{0} - {1} - {2} ({3})", artist, 
-                album, title, uri);
+            return String.Format ("{0} - {1} - {2} ({3})", Artist, Album, Title, Uri.AbsoluteUri);
         }
-    }	
+    }    
 }

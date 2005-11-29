@@ -205,7 +205,7 @@ namespace Banshee
             
             (glade["DurationLabel"] as Label).Markup = PrepareStatistic(String.Format("{0}:{1}", 
                 track.Track.Duration / 60, (track.Track.Duration % 60).ToString("00")));
-            (glade["PlayCountLabel"] as Label).Markup = PrepareStatistic(track.Track.NumberOfPlays.ToString());
+            (glade["PlayCountLabel"] as Label).Markup = PrepareStatistic(track.Track.PlayCount.ToString());
             (glade["LastPlayedLabel"] as Label).Markup = PrepareStatistic(track.Track.LastPlayed == DateTime.MinValue ?
                 Catalog.GetString("Never Played") : track.Track.LastPlayed.ToString());
             (glade["ImportedLabel"] as Label).Markup = PrepareStatistic(track.Track.DateAdded == DateTime.MinValue ?

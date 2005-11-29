@@ -22,6 +22,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/IPlayerEngine.cs \
 	$(srcdir)/PlayerEngineLoader.cs \
 	$(srcdir)/SpecialKeys.cs \
+	$(srcdir)/BansheeTodo.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \

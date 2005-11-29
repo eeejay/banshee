@@ -73,6 +73,12 @@ namespace Banshee
                 new ArgumentLayout("version", "Show Banshee Version")
             }, args);
 
+            if(Core.ArgumentQueue.Contains("print-todo")) {
+                BansheeTodo.PrintReport();
+                Console.WriteLine("");
+                System.Environment.Exit(0);
+            }
+            
             if(Core.ArgumentQueue.Contains("help")) {
                 int maxNameLen = 0;
                 int maxVarLen = 0;

@@ -1,4 +1,21 @@
 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
+	
+	* src/PlaylistView.cs:
+	* src/TrackProperties.cs:
+	* src/IpodTrackInfo.cs:
+	* src/LibraryTrackInfo.cs:
+	* src/Banshee.Base/AudioCd/AudioCdTrackInfo.cs: Updated to reflect API
+	changes in Banshee.Base.TrackInfo
+	* src/Banshee.Base/TrackInfo.cs: Minor API changes, more conforming to
+	.NET Framework Guidelines, and adjusted access levels to some properties
+	and fields; added new BansheeTodo attributes to some unfinished properties
+	* src/Banshee.Base/BansheeTodo.cs: Attribute class to mark types and
+	members as "unfinished", two static methods to print TODO reports
+	* src/Banshee.Base/Makefile.am: Added BansheeTodo.cs
+	* src/Main.cs: Added command line option --print-todo to generate a TODO
+	report based on the BansheeTodo attribute
+
+2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/mcs.exe: Removed internal 1.1.9.2 support
 	* configure.ac: Require Mono 1.1.10; removed internal 1.1.9.2. mcs support

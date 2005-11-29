@@ -51,9 +51,8 @@ namespace Banshee
 		{
 			this.song = song;
 			Load();
-			uid = UidGenerator.Next;
 			PreviousTrack = Gtk.TreeIter.Zero;
-			canSaveToDatabase = false;
+			CanSaveToDatabase = false;
 			needSync = false;
 		}
 		
@@ -62,7 +61,7 @@ namespace Banshee
 			song = IpodMisc.TrackInfoToSong(device, lti);
 			Load();
 			PreviousTrack = Gtk.TreeIter.Zero;
-			canSaveToDatabase = false;
+			CanSaveToDatabase = false;
 			needSync = true;
 			libTrack = lti;
 			uri = libTrack.Uri;
@@ -81,9 +80,9 @@ namespace Banshee
 			title = song.Title == String.Empty ? null : song.Title;
 			genre = song.Genre == String.Empty ? null : song.Genre;
 			
-			trackId = song.Id;
+			track_id = song.Id;
 			duration = (long) song.Duration.TotalSeconds;
-			numberOfPlays = (uint)song.PlayCount;
+			play_count = (uint)song.PlayCount;
 
 			switch(song.Rating) {
 				case SongRating.One:   rating = 1; break;
@@ -97,12 +96,12 @@ namespace Banshee
 					break;
 			}
 			
-			lastPlayed = song.LastPlayed;
-			dateAdded = song.DateAdded;
-			trackCount = (uint)song.TotalTracks;
-			trackNumber = (uint)song.TrackNumber;
+			last_played = song.LastPlayed;
+			date_added = song.DateAdded;
+			track_count = (uint)song.TotalTracks;
+			track_number = (uint)song.TrackNumber;
 			year = song.Year;
-			canPlay = !song.IsProtected;
+			can_play = !song.IsProtected;
 		}
 		
 		public override void Save()
@@ -112,7 +111,7 @@ namespace Banshee
 		
 		public override void IncrementPlayCount()
 		{
-			numberOfPlays++;
+			play_count++;
 			Save();
 		}
 		

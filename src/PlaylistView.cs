@@ -277,8 +277,8 @@ namespace Banshee
         public int PlayCountTreeIterCompareFunc(TreeModel _model, TreeIter a,
             TreeIter b)
         {
-            return LongFieldCompare((long)model.IterTrackInfo(a).NumberOfPlays,
-                (long)model.IterTrackInfo(b).NumberOfPlays);
+            return LongFieldCompare((long)model.IterTrackInfo(a).PlayCount,
+                (long)model.IterTrackInfo(b).PlayCount);
         }
         
         public int LastPlayedTreeIterCompareFunc(TreeModel _model, TreeIter a,
@@ -423,7 +423,7 @@ namespace Banshee
         protected void TrackCellPlayCount(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            uint plays = model.IterTrackInfo(iter).NumberOfPlays;
+            uint plays = model.IterTrackInfo(iter).PlayCount;
             SetRendererAttributes((CellRendererText)cell, 
                 plays > 0 ? Convert.ToString(plays) : "", 
                 iter);
