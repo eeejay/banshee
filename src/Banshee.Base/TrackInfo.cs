@@ -52,7 +52,7 @@ namespace Banshee.Base
         protected uint play_count;
         protected DateTime last_played;
 
-        protected long duration;
+        protected TimeSpan duration;
         protected uint track_number;
         protected uint track_count;
         protected int track_id;
@@ -219,7 +219,7 @@ namespace Banshee.Base
             }
         }
 
-        public long Duration {
+        public TimeSpan Duration {
             get { 
                 return duration;
             }

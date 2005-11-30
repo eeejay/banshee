@@ -113,7 +113,7 @@ namespace Banshee
                 return;
                 
             AudioCdRipperProgressArgs args = new AudioCdRipperProgressArgs();
-            args.TotalSeconds = (int)currentTrack.Duration;
+            args.TotalSeconds = (int)currentTrack.Duration.TotalSeconds;
             args.SecondsEncoded = seconds;
             args.Track = currentTrack;
             
@@ -181,7 +181,7 @@ namespace Banshee
             }
             
             tracks.Add(track);
-            totalCount += track.Duration;
+            totalCount += (int)track.Duration.TotalSeconds;
         }
         
         public void Run()
@@ -219,7 +219,7 @@ namespace Banshee
                     break;
          
                 status = String.Format(Catalog.GetString(
-                    "Ripping {0} of {1} : {2} - {3}"), current++, QueueSize,
+                    "Importing {0} of {1} : {2} - {3}"), current++, QueueSize,
                     track.Artist, track.Title);
                 user_event.Message = status;
                     
@@ -229,7 +229,7 @@ namespace Banshee
                     break;
                 }
                 
-                overallProgress += (int)track.Duration;
+                overallProgress += (int)track.Duration.TotalSeconds;
                 
                 if(!user_event.IsCancelRequested) {
                     TrackInfo lti;

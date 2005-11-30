@@ -46,7 +46,7 @@ namespace Banshee
     public class PlaylistModel : ListStore, IPlaybackModel
     {
         private static int uid;
-        private long totalDuration = 0;
+        private TimeSpan totalDuration = new TimeSpan(0);
         
         private ArrayList trackInfoQueue;
         private bool trackInfoQueueLocked = false;
@@ -389,7 +389,7 @@ namespace Banshee
             Core.Library.TransactionManager.Cancel(typeof(FileLoadTransaction));
             trackInfoQueue.Clear();
         
-            totalDuration = 0;
+            totalDuration = new TimeSpan(0);
             playingIter = TreeIter.Zero;
             Clear();
                 
@@ -451,7 +451,7 @@ namespace Banshee
                 handler(o, args);
         }
         
-        public long TotalDuration 
+        public TimeSpan TotalDuration 
         {
             get {
                 return totalDuration;

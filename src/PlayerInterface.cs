@@ -697,7 +697,7 @@ namespace Banshee
 
             incrementedCurrentSongPlayCount = false;
             ScaleTime.Adjustment.Lower = 0;
-            ScaleTime.Adjustment.Upper = ti.Duration;
+            ScaleTime.Adjustment.Upper = ti.Duration.TotalSeconds;
 
             UpdateMetaDisplay(ti);
             
@@ -987,8 +987,8 @@ namespace Banshee
                 // Translators: position in song. eg, "0:37 of 3:48"
                 String.Format(Catalog.GetString("{0} of {1}"),
                           String.Format("{0}:{1:00}", position / 60, position % 60),
-                          String.Format("{0}:{1:00}", activeTrackInfo.Duration / 60, 
-                          activeTrackInfo.Duration % 60))
+                          String.Format("{0}:{1:00}", activeTrackInfo.Duration.Minutes, 
+                          activeTrackInfo.Duration.Seconds))
             );    
         }
         
@@ -999,11 +999,11 @@ namespace Banshee
             }
              
             if(Core.Instance.Player.Length > 0 
-                && activeTrackInfo.Duration <= 0) {
-                activeTrackInfo.Duration = Core.Instance.Player.Length;
+                && activeTrackInfo.Duration.TotalSeconds <= 0.0) {
+                activeTrackInfo.Duration = new TimeSpan(Core.Instance.Player.Length * TimeSpan.TicksPerSecond);
                 activeTrackInfo.Save();
                 playlistView.ThreadedQueueDraw();
-                ScaleTime.Adjustment.Upper = activeTrackInfo.Duration;
+                ScaleTime.Adjustment.Upper = activeTrackInfo.Duration.TotalSeconds;
             }
                 
             if(Core.Instance.Player.Length > 0 && 
@@ -1521,7 +1521,7 @@ namespace Banshee
         private void OnPlaylistUpdated(object o, EventArgs args)
         {
             long count = playlistModel.Count();
-            TimeSpan span = new TimeSpan(playlistModel.TotalDuration * TimeSpan.TicksPerSecond);        
+            TimeSpan span = playlistModel.TotalDuration;       
             string timeDisp = String.Empty;
             
             if(span.Days > 0) {

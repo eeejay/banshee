@@ -1,3 +1,22 @@
+2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/IPlaybackModel.cs:
+	* src/IpodCore.cs:
+	* src/IpodTrackInfo.cs:
+	* src/LibraryTrackInfo.cs:
+	* src/PlayerInterface.cs:
+	* src/PlaylistModel.cs:
+	* src/PlaylistView.cs:
+	* src/RipTransaction.cs:
+	* src/TrackProperties.cs:
+	* src/Banshee.Base/TrackInfo.cs:
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs:
+	typeof(Banshee.Base.TrackInfo.Duration) is now System.TimeSpan,
+	changed from long; all references to TrackInfo.Duration updated to reflect
+	change of type
+
+	* entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
+
 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
 	
 	* src/PlaylistView.cs:

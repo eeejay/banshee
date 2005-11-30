@@ -155,7 +155,7 @@ namespace Banshee
 
         public LibraryTrackInfo(Uri uri, string artist, string album, 
            string title, string genre, uint track_number, uint track_count,
-           int year, long duration, string asin)
+           int year, TimeSpan duration, string asin)
         {
             this.uri = uri;
             track_id = 0;
@@ -299,7 +299,7 @@ namespace Banshee
                     "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
                     "TrackNumber", track_number, 
                     "TrackCount", track_count, 
-                    "Duration", duration, 
+                    "Duration", (int)duration.TotalSeconds, 
                     "TrackGain", track_gain, 
                     "TrackPeak", track_peak, 
                     "AlbumGain", album_gain, 
@@ -322,7 +322,7 @@ namespace Banshee
                     "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
                     "TrackNumber", track_number, 
                     "TrackCount", track_count, 
-                    "Duration", duration, 
+                    "Duration", (int)duration.TotalSeconds, 
                     "TrackGain", track_gain, 
                     "TrackPeak", track_peak, 
                     "AlbumGain", album_gain, 
@@ -387,10 +387,10 @@ namespace Banshee
 
             track_number = Convert.ToUInt32(reader["TrackNumber"]);
             track_count = Convert.ToUInt32(reader["TrackCount"]);
-            duration = Convert.ToInt64(reader["Duration"]);
+            duration = new TimeSpan(Convert.ToInt64(reader["Duration"]) * TimeSpan.TicksPerSecond);
             rating = Convert.ToUInt32(reader["Rating"]);
             play_count = Convert.ToUInt32(reader["NumberOfPlays"]);
-
+          
 			if (reader != null){
 				last_played = DateTime.MinValue;
 

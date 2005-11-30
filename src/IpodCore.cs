@@ -431,7 +431,7 @@ namespace Banshee
             if(libTrack.Genre != null)
                 song.Genre = libTrack.Genre;
             
-            song.Duration = TimeSpan.FromSeconds ((int) libTrack.Duration);
+            song.Duration = libTrack.Duration;
             song.TrackNumber = (int)libTrack.TrackNumber;
             song.TotalTracks = (int)libTrack.TrackCount;
             song.Year = (int)libTrack.Year;

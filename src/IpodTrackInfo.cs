@@ -81,7 +81,7 @@ namespace Banshee
 			genre = song.Genre == String.Empty ? null : song.Genre;
 			
 			track_id = song.Id;
-			duration = (long) song.Duration.TotalSeconds;
+			duration = song.Duration;
 			play_count = (uint)song.PlayCount;
 
 			switch(song.Rating) {

@@ -41,7 +41,7 @@ namespace Banshee
 		void PlayPause();
 		int Count();
 		
-		long TotalDuration { 
+		TimeSpan TotalDuration { 
 			get; 
 		}
 		

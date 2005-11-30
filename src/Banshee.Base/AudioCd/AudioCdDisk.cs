@@ -65,7 +65,7 @@ namespace Banshee.Base
             
             foreach(SimpleTrack mb_track in mb_disc) {
                 AudioCdTrackInfo track = new AudioCdTrackInfo(device_node);
-                track.Duration = mb_track.Length;
+                track.Duration = new TimeSpan(mb_track.Length * TimeSpan.TicksPerSecond);
                 track.TrackIndex = mb_track.Index;
                 track.Artist = Catalog.GetString("Unknown Artist");
                 track.Album = Catalog.GetString("Unknown Album");
@@ -98,7 +98,7 @@ namespace Banshee.Base
             } 
             
             for(int i = 0; i < min; i++) {
-                tracks[i].Duration = mb_disc[i].Length;
+                tracks[i].Duration = new TimeSpan(mb_disc[i].Length * TimeSpan.TicksPerSecond);
                 tracks[i].TrackIndex = mb_disc[i].Index;
                 
                 if(mb_disc[i].Artist != null) {

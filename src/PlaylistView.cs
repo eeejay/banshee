@@ -263,8 +263,10 @@ namespace Banshee
         public int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a,
             TreeIter b)
         {
-            return LongFieldCompare(model.IterTrackInfo(a).Duration,
-                model.IterTrackInfo(b).Duration);
+            //return LongFieldCompare(model.IterTrackInfo(a).Duration,
+            //    model.IterTrackInfo(b).Duration);
+                
+            return model.IterTrackInfo(a).Duration.CompareTo(model.IterTrackInfo(b).Duration);
         }
         
         public int RatingTreeIterCompareFunc(TreeModel _model, TreeIter a,
@@ -415,9 +417,9 @@ namespace Banshee
         {
             TrackInfo Track = model.IterTrackInfo(iter);
             SetRendererAttributes((CellRendererText)cell, 
-                Track.Duration < 0 ? Catalog.GetString("N/A") : 
-                String.Format("{0}:{1}", Track.Duration / 60, 
-                (Track.Duration % 60).ToString("00")), iter);
+                Track.Duration.TotalSeconds < 0.0 ? Catalog.GetString("N/A") : 
+                String.Format("{0}:{1}", Track.Duration.Minutes, 
+                (Track.Duration.Seconds).ToString("00")), iter);
         }
         
         protected void TrackCellPlayCount(TreeViewColumn tree_column,
