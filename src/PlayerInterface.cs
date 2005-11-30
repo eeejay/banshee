@@ -175,12 +175,16 @@ namespace Banshee
             WindowPlayer.Show();
             
             try {
-                special_keys = new SpecialKeys();
-                special_keys.RegisterHandler(OnSpecialKeysPressed, 
-                    SpecialKey.AudioPlay,
-                    SpecialKey.AudioPrev,
-                    SpecialKey.AudioNext
-                );
+                if((bool)Globals.Configuration.Get(GConfKeys.EnableSpecialKeys)) {
+                    special_keys = new SpecialKeys();
+                    special_keys.Delay = new TimeSpan(350 * TimeSpan.TicksPerMillisecond);
+                    special_keys.RegisterHandler(OnSpecialKeysPressed, 
+                        SpecialKey.AudioPlay,
+                        SpecialKey.AudioPrev,
+                        SpecialKey.AudioNext
+                    );
+                }
+            } catch(GConf.NoSuchKeyException) {
             } catch(Exception e) {
                 special_keys = null;
                 Core.Log.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
@@ -674,8 +678,11 @@ namespace Banshee
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
             
-            cover_art.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
-            cover_art.FileName = ti.CoverArtFileName;
+            try {
+                cover_art.FileName = ti.CoverArtFileName;
+                cover_art.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
+            } catch(Exception) {
+            }
             
             if(trayIcon != null) {
                 trayIcon.Tooltip = ti.DisplayArtist + " - " + ti.DisplayTitle;

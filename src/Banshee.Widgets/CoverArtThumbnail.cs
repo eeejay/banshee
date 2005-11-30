@@ -88,7 +88,7 @@ namespace Banshee.Widgets
        
         public string Label {
             set {
-                popup.Label = value;
+                popup.Label = value == null ? String.Empty : value;
             }
         }
         
@@ -103,8 +103,9 @@ namespace Banshee.Widgets
                     image.Pixbuf = CreateThumbnail(pixbuf);
                     popup.Image = pixbuf;
                     Show();
-                } catch(Exception) {
+                } catch(Exception e) {
                     Hide();
+                    throw new ApplicationException(e.Message);
                 }
             }
         }
@@ -162,8 +163,10 @@ namespace Banshee.Widgets
         
         public string Label {
             set {
-                label.Markup = String.Format("<small><b>{0}</b></small>",
-                    GLib.Markup.EscapeText(value));
+                try {
+                    label.Markup = String.Format("<small><b>{0}</b></small>", GLib.Markup.EscapeText(value));
+                } catch(Exception) {
+                }
             }
         }
     }

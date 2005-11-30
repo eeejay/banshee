@@ -50,6 +50,8 @@ namespace Banshee.Base
     {
         private Hashtable key_map = new Hashtable();
         private Hashtable key_registrations = new Hashtable();
+        private TimeSpan raise_delay = new TimeSpan(0);
+        private DateTime last_raise = DateTime.MinValue;
         
         public SpecialKeys()
         {
@@ -123,6 +125,12 @@ namespace Banshee.Base
                 return Gdk.FilterReturn.Continue;
             }
 
+            if(DateTime.Now - last_raise < raise_delay) {
+                return Gdk.FilterReturn.Continue;
+            }
+            
+            last_raise = DateTime.Now;
+
             try {
                 int keycode = (int)xevent.keycode;
                 SpecialKey key = (SpecialKey)key_map[keycode];
@@ -136,6 +144,16 @@ namespace Banshee.Base
             } 
             
             return Gdk.FilterReturn.Continue;
+        }
+        
+        public TimeSpan Delay {
+            get {
+                return raise_delay;
+            }
+            
+            set {
+                raise_delay = value;
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]

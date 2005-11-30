@@ -2,6 +2,17 @@
 <gconfschemafile>
   <schemalist>
     <schema>
+      <key>/schemas/apps/Banshee/EnableSpecialKeys</key>
+      <applyto>/apps/Banshee/EnableSpecialKeys</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Enable Special Keys</short>
+        <long>Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; works with mappings set through Gnome Shortcuts capplet</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/EnableFileSystemMonitoring</key>
       <applyto>/apps/Banshee/EnableFileSystemMonitoring</applyto>
       <owner>banshee</owner>

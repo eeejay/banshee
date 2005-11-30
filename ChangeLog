@@ -1,5 +1,16 @@
 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/SpecialKeys.cs: Added a Delay property; only raise
+	events if duration since last raise has been longer than a set delay;
+	fixes problems with remotes that fire on a very small delay when holding
+	a button down
+	* src/PlayerInterface.cs: Use a 350MS delay for SpecialKeys; catch
+	any exception CoverArtThumbnail may throw; only enable SpecialKeys support
+	if turned on through GConf
+	* src/CoverArtThumbnail.cs: Throw an exception if file can't be found
+	* src/GConfKeys.cs: Added new key: EnableSpecialKeys
+	* data/banshee.schemas.in: Added new schema for key: EnableSpecialKeys
+
 	* src/IPlaybackModel.cs:
 	* src/IpodCore.cs:
 	* src/IpodTrackInfo.cs:
