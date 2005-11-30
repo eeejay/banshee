@@ -23,19 +23,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.7  2005/11/29 05:44:41  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
- *
- * Revision 1.4  2005/02/08 12:54:40  kikidonk
- * Added cvs log and header
- *
- */
-
+using System;
 using System.IO;
 using Entagged.Audioformats.Exceptions;
 
@@ -81,7 +69,7 @@ namespace Entagged.Audioformats.Flac.Util {
 			}
 
 			EncodingInfo info = new EncodingInfo();
-			info.Length = mbdsi.Length;
+			info.Duration = new TimeSpan(mbdsi.Length * TimeSpan.TicksPerSecond);
 			info.ChannelNumber = mbdsi.ChannelNumber;
 			info.SamplingRate = mbdsi.SamplingRate;
 			info.EncodingType = mbdsi.EncodingType;

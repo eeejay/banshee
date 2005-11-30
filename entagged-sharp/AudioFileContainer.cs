@@ -22,7 +22,8 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
+ 
+using System;
 using Entagged.Audioformats.Util;
 
 namespace Entagged.Audioformats 
@@ -94,9 +95,9 @@ namespace Entagged.Audioformats
             }
         }
 
-        public int Length {
+        public TimeSpan Duration {
             get { 
-                return info.Length; 
+                return info.Duration; 
             }
         }
         

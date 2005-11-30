@@ -23,6 +23,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.IO;
 using Entagged.Audioformats.Exceptions;
 
@@ -88,7 +89,7 @@ namespace Entagged.Audioformats.Ogg.Util {
 			VorbisCodecHeader vorbisCodecHeader = new VorbisCodecHeader( vorbisData );
 
 			//Populates encodingInfo----------------------------------------------------
-			info.Length = (int) ( PCMSamplesNumber / vorbisCodecHeader.SamplingRate );
+			info.Duration = new TimeSpan((long)(PCMSamplesNumber / vorbisCodecHeader.SamplingRate) * TimeSpan.TicksPerSecond);
 			info.ChannelNumber = vorbisCodecHeader.ChannelNumber;
 			info.SamplingRate = vorbisCodecHeader.SamplingRate;
 			info.EncodingType = vorbisCodecHeader.EncodingType;
@@ -108,7 +109,7 @@ namespace Entagged.Audioformats.Ogg.Util {
 			    info.Vbr = true;
 			}
 			else {
-				info.Bitrate = ComputeBitrate( info.Length, raf.Length );
+				info.Bitrate = ComputeBitrate( info.Duration.Seconds, raf.Length );
 				info.Vbr = true;
 			}
 

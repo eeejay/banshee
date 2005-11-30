@@ -86,9 +86,9 @@ namespace Entagged
             }
         }
 
-        public int Duration {
+        public TimeSpan Duration {
             get { 
-                return container.EncodingInfo.Length; 
+                return container.EncodingInfo.Duration; 
             }
         }
         

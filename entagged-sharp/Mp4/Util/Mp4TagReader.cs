@@ -86,7 +86,7 @@ namespace Entagged.Audioformats.Mp4.Util
             byte [] bytes = br.ReadBytes((int)size);
             int scale = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bytes, 12));
             int duration = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(bytes, 16));
-            ei.Length = duration / scale;
+            ei.Duration = new TimeSpan((duration / scale) * TimeSpan.TicksPerSecond);
             pos += size;
         }
 

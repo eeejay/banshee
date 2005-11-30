@@ -25,11 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.7  2005/11/29 05:44:42  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.8  2005/11/30 16:12:50  abock
+ * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
+ *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
  *
  * Revision 1.5  2005/02/21 00:13:00  kikidonk
  * Should fix the bitrate calculation for mp3

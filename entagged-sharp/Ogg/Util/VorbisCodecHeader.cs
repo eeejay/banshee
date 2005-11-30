@@ -25,11 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.7  2005/11/29 05:44:45  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.8  2005/11/30 16:12:52  abock
+ * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
+ *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
  *
  * Revision 1.4  2005/02/18 13:38:11  kikidonk
  * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR

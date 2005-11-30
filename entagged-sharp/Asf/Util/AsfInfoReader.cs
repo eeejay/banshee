@@ -105,10 +105,8 @@ namespace Entagged.Audioformats.Asf.Util
                ulong chunk_len = reader.ReadUInt64();
                
                if(GUID.GUID_FILE.Equals(current_guid)) {
-                   // read all necessary encoding information (duration)
-                   // and convert from 100ns (steps) to seconds
                    stream.Seek(48, SeekOrigin.Current);
-                   result.Length = (int)(reader.ReadUInt64() / 10000000);
+                   result.Duration = new TimeSpan((long)reader.ReadUInt64());
                    is_file_header_parsed = true;
                } else if(GUID.GUID_STREAM.Equals(current_guid)) {
                    GUID streamTypeGUID = GUID.ReadGUID(stream);

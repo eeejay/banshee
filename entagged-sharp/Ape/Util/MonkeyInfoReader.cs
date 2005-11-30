@@ -23,19 +23,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.7  2005/11/29 05:44:40  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
+using System;
 using System.IO;
 using Entagged.Audioformats.Util;
 using Entagged.Audioformats.Exceptions;
@@ -88,10 +76,10 @@ namespace Entagged.Audioformats.Ape.Util {
 			if(!wfh.Valid)
 				throw new CannotReadException("No valid WAV Header found");
 			
-			info.Length = mh.Length;
-			info.ChannelNumber = wfh.ChannelNumber ;
-			info.SamplingRate = wfh.SamplingRate ;
-			info.Bitrate = ComputeBitrate(info.Length, raf.Length) ;
+			info.Duration = new TimeSpan(mh.Length * TimeSpan.TicksPerSecond);
+			info.ChannelNumber = wfh.ChannelNumber;
+			info.SamplingRate = wfh.SamplingRate;
+			info.Bitrate = ComputeBitrate(mh.Length, raf.Length);
 			info.EncodingType = "Monkey Audio v" + (((double)version)/1000)+", compression level "+mh.CompressionLevel;
 			info.ExtraEncodingInfos = "";
 			

@@ -23,6 +23,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
+using System;
 using System.Collections;
 using System.Text;
 
@@ -40,7 +41,7 @@ namespace Entagged.Audioformats
             content["TYPE"] =  "";
             content["INFOS"] =  "";
             content["SAMPLING"] =  -1;
-            content["LENGTH"] = -1;
+            content["DURATION"] = -1;
             content["VBR"] = true;
         }
         
@@ -75,9 +76,9 @@ namespace Entagged.Audioformats
         }
         
         //Sets the length of the song in seconds
-        public int Length {
-            set { content["LENGTH"] = value; }
-            get { return (int) content["LENGTH"]; }
+        public TimeSpan Duration {
+            set { content["DURATION"] = value; }
+            get { return (TimeSpan) content["DURATION"]; }
         }
         
         public bool Vbr {

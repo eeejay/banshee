@@ -25,11 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.4  2005/11/29 05:44:41  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.5  2005/11/30 16:12:49  abock
+ * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
+ *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
  *
  *
  */

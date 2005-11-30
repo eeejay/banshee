@@ -23,28 +23,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.7  2005/11/29 05:44:42  abock
- * 2005-11-29  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/Asf/AsfFileReader.cs: Added video/x-ms-asf as supported
- *     mimetype because gnome-vfs is dumb
- *
- * Revision 1.7  2005/02/22 22:21:17  kikidonk
- * Should fixes most times length/bitrate errors
- *
- * Revision 1.6  2005/02/21 00:13:00  kikidonk
- * Should fix the bitrate calculation for mp3
- *
- * Revision 1.5  2005/02/18 13:38:11  kikidonk
- * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR
- *
- * Revision 1.4  2005/02/08 12:54:41  kikidonk
- * Added cvs log and header
- *
- */
-
+using System;
 using System.IO;
 using Entagged.Audioformats.Exceptions;
 
@@ -176,7 +155,7 @@ namespace Entagged.Audioformats.Mp3.Util {
 			}
 		
 			//Populates encodingInfo----------------------------------------------------
-			encodingInfo.Length = (int) lengthInSeconds;
+			encodingInfo.Duration = new TimeSpan((long)lengthInSeconds * TimeSpan.TicksPerSecond);
 			encodingInfo.ChannelNumber = firstFrame.ChannelNumber;
 			encodingInfo.SamplingRate = firstFrame.SamplingRate;
 			encodingInfo.EncodingType = firstFrame.MpegVersionToString( firstFrame.MpegVersion ) + " || " + firstFrame.LayerToString( firstFrame.LayerVersion );
