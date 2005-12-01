@@ -1,4 +1,4 @@
-namespace Banshee
+namespace Banshee.Base
 {    
     public sealed class ConfigureDefines
     {

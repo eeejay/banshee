@@ -32,7 +32,7 @@ using System.Collections;
 using Mono.Unix;
 using Gtk;
 
-namespace Banshee
+namespace Banshee.Widgets
 {
     public class SearchEntry : Frame
     {

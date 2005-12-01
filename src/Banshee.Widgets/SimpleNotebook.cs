@@ -31,7 +31,7 @@ using System;
 using System.Collections;
 using Gtk;
 
-namespace Banshee
+namespace Banshee.Widgets
 {
 	public class SimpleNotebook : Alignment
 	{

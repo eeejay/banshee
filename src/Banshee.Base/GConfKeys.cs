@@ -27,7 +27,7 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
-namespace Banshee 
+namespace Banshee.Base
 {
     public sealed class GConfKeys
     {

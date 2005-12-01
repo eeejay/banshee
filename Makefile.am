@@ -5,6 +5,7 @@ SUBDIRS =          \
 	entagged-sharp \
 	hal-sharp      \
 	src            \
+	docs           \
 	po
 
 pkgconfigdir = $(libdir)/pkgconfig

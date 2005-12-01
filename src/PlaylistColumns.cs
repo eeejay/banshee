@@ -33,6 +33,8 @@ using System.Collections;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class PlaylistColumn

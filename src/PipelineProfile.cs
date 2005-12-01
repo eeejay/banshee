@@ -32,6 +32,8 @@ using System.Collections;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     /* 

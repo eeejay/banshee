@@ -1,5 +1,18 @@
 2005-12-01  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Widgets/SimpleNotebook.cs:
+	* src/Banshee.Widgets/SearchEntry.cs: Changed namespace to Banshee.Widgets
+	* src/Banshee.Base/GConfKeys.cs:
+	* src/Banshee.Base/ConfigureDefines.cs.in: Changed namespace to 
+	Banshee.Base
+	* src/PipelineProfile.cs:
+	* src/PlaylistColumns.cs: Add using Banshee.Base;
+	* Makefile.am: Added docs to SUBDIRS
+
+	* docs/: Added monodoc generated API documentation for Banshee.Base,
+	Banshee.Dap, Banshee.MediaEngine, Banshee.Widgets, and Hal
+	* configure.ac: Added --disable-docs support
+
 	* configure.ac: Use AM_GST_ELEMENT_CHECK to check for GStreamer pipeline
 	elements that are needed at runtime
 
