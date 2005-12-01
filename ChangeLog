@@ -1,5 +1,8 @@
 2005-12-01  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs: DapTrackInfo implementation
+	for the iPod
+
 	* configure.ac: Version 0.9.13; Added Danish translation (da) to 
 	ALL_LINGUAS; ipod-sharp is now optional; detect njb-sharp, also optional;
 	Added --(enable|disable)-(ipod|njb)
