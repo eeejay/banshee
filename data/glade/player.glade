@@ -762,11 +762,11 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkButton" id="IpodSyncButton">
+		    <widget class="GtkButton" id="DapSyncButton">
 		      <property name="can_focus">True</property>
 		      <property name="relief">GTK_RELIEF_NORMAL</property>
 		      <property name="focus_on_click">True</property>
-		      <signal name="clicked" handler="OnIpodSyncButtonClicked" last_modification_time="Mon, 05 Sep 2005 09:52:43 GMT"/>
+		      <signal name="clicked" handler="OnDapSyncButtonClicked" last_modification_time="Thu, 01 Dec 2005 07:26:00 GMT"/>
 
 		      <child>
 			<widget class="GtkHBox" id="hbox8">
@@ -775,7 +775,7 @@
 			  <property name="spacing">5</property>
 
 			  <child>
-			    <widget class="GtkImage" id="ImageIpodSync">
+			    <widget class="GtkImage" id="ImageDapSync">
 			      <property name="visible">True</property>
 			      <property name="xalign">0.5</property>
 			      <property name="yalign">0.5</property>
@@ -792,7 +792,7 @@
 			  <child>
 			    <widget class="GtkLabel" id="label3">
 			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Update iPod</property>
+			      <property name="label" translatable="yes">Update Device</property>
 			      <property name="use_underline">False</property>
 			      <property name="use_markup">False</property>
 			      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1051,7 +1051,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkAlignment" id="IpodContainer">
+			<widget class="GtkAlignment" id="DapContainer">
 			  <property name="visible">True</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>

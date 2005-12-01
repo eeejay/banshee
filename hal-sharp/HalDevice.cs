@@ -188,10 +188,14 @@ namespace Hal
         public bool WatchProperties
         {
             set {
-                bool result = value 
-                    ? Unmanaged.libhal_device_add_property_watch(ctx.Raw, udi, IntPtr.Zero) 
-                    : Unmanaged.libhal_device_remove_property_watch(ctx.Raw, udi, IntPtr.Zero);
+                DBusError error = new DBusError();
                 
+                bool result = value 
+                    ? Unmanaged.libhal_device_add_property_watch(ctx.Raw, udi, error.Raw) 
+                    : Unmanaged.libhal_device_remove_property_watch(ctx.Raw, udi, error.Raw);
+
+                error.ThrowExceptionIfSet("Could not update watch on property");
+
                 if(!result) {
                     throw new HalException("Could not " + (value ? "add" : "remove") + " property watch");
                 }

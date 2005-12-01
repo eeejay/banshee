@@ -190,11 +190,11 @@ namespace Banshee
             RaiseUpdated(this, new EventArgs());
         }
         
-        public void LoadFromIpodSource(IpodSource ipodSource)
+        public void LoadFromDapSource(DapSource dapSource)
         {
             ClearModel();
             
-            foreach(IpodTrackInfo track in ipodSource.Tracks) {
+            foreach(Banshee.Dap.DapTrackInfo track in dapSource.Device) {
                 AddTrack(track);
             }
             

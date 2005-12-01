@@ -1,3 +1,41 @@
+2005-12-01  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.9.13; Added Danish translation (da) to 
+	ALL_LINGUAS; ipod-sharp is now optional; detect njb-sharp, also optional;
+	Added --(enable|disable)-(ipod|njb)
+	* banshee.mdp: Updated MonoDevelop project
+	* data/glade/player.glade: Generalized all iPod references to "DAP" 
+	* hal-sharp/*: Updated to latest hal-sharp
+	* libbanshee/hal-context.[ch]: Allow setting callback for property watching
+	* src/AboutBox.cs: Added Lasse Bang Mikkelsen to translator credits
+	* src/Core.cs: Removed IpodCore
+	* src/Library.cs: Added DapSource, removed IpodSource
+	* src/Makefile.am: Removed Ipod*.cs/ipod-sharp references
+	* src/PlayerInterface.cs: All iPod code generalized to DAP code using
+	new Banshee.Dap classes and DapSource. Syncing is disabled for this build
+	as the iPod sync code needs to be migrated to the new DAP sync model; 
+	same thing with iPod properties dialog
+	* src/PlaylistModel.cs:
+	* src/PlaylistView.cs: iPod code generalized to DAP code
+	* src/SourceView.cs: Removed IpodCore code; read and listen to DapCore;
+	generalized iPod code to DAP code
+	* src/Banshee.Base/HalCore.cs: Add property watching support
+	* src/Banshee.Base/Dap/Dap.cs: Added more base functionality to 
+	generic abstract DapDevice class
+	* src/Banshee.Base/Dap/DapCore.cs: Support queueing potential DAP devices
+	in a wait table; this allows mass storage DAPs to wait for 
+	volume.is_mounted to change to true, and ask to be tested again as a DAP;
+	added events to notify consumer when DAPs are added/removed; added a
+	Devices[] property that lists all connected and initialized DAPs
+	* src/Banshee.Base/Dap/DapTrackInfo.cs: tiny hack added to reduce
+	changes needed in player interface; will fix later
+	* src/Banshee.Dap/Ipod/IpodDap.cs: iPod implementation of DapDevice; 
+	currently read-only; syncing code needs to be migrated to new DAP sync
+	model
+	* src/Banshee.Dap/Ipod/Makefile.am: Link against gtk-sharp-2.0, only
+	build if ipod-sharp is enabled by configure
+	* src/Banshee.MediaEngine/Vlc/Makefile.am: fixed minor build issue
+
 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Base/SpecialKeys.cs: Added a Delay property; only raise

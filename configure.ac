@@ -7,7 +7,7 @@ AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
 VERSION_MINOR=9
-VERSION_MICRO=12
+VERSION_MICRO=13
 VERSION_REVIS=no
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
@@ -42,6 +42,12 @@ AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer e
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
 AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
+
+AC_ARG_ENABLE(ipod, AC_HELP_STRING([--enable-ipod], [Enable iPod DAP support]), , enable_ipod="yes")
+enable_ipodsharp="${enable_ipod}"
+
+AC_ARG_ENABLE(njb, AC_HELP_STRING([--enable-njb], [Enable NJB DAP support]), , enable_njb="yes")
+enable_njbsharp="${enable_njb}"
 
 AC_ARG_ENABLE(vlc, AC_HELP_STRING([--enable-vlc], [Enable VLC Media Engine]), , enable_vlc="no")
 AM_CONDITIONAL(ENABLE_VLC, test "x$enable_vlc" = "xyes")
@@ -124,12 +130,30 @@ PKG_CHECK_MODULES(GTKSHARP,
 	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
 AC_SUBST(GTKSHARP_LIBS)
 
+dnl dap support
 IPODSHARP_REQUIRED=0.5.11
-PKG_CHECK_MODULES(IPODSHARP, 
-	ipod-sharp >= $IPODSHARP_REQUIRED \
-	ipod-sharp-ui >= $IPODSHARP_REQUIRED)	
-AC_SUBST(IPODSHARP_LIBS)
+PKG_CHECK_MODULES(IPODSHARP,
+	ipod-sharp >= $IPODSHARP_REQUIRED,
+	enable_ipodsharp="$enable_ipodsharp", enable_ipodsharp=no)
+if test "x$enable_ipodsharp" = "xyes"; then
+	IPODSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries ipod-sharp`"
+	AC_SUBST(IPODSHARP_ASSEMBLIES)
+	AC_SUBST(IPODSHARP_LIBS)
+fi
+AM_CONDITIONAL(ENABLE_IPOD, test "x$enable_ipodsharp" = "xyes")
 
+NJBSHARP_REQUIRED=0.1.2
+PKG_CHECK_MODULES(NJBSHARP,
+	njb-sharp >= $NJBSHARP_REQUIRED,
+	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
+if test "x$enable_njbsharp" = "xyes"; then
+	NJBSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries njb-sharp`"
+	AC_SUBST(NJBSHARP_ASSEMBLIES)
+	AC_SUBST(NJBSHARP_LIBS)
+fi
+AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
+
+dnl dbus
 PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
 AC_SUBST(DBUSSHARP)
 
@@ -292,18 +316,9 @@ AC_DEFINE_UNQUOTED([MONO], ["${MONO}"], [Mono Runtime])
 AC_DEFINE_UNQUOTED([MONO_PATH], ["${MONO_PATH}"], [MONO_PATH Env])
 AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Library Path])
 
-dnl Unstable assembly installation
-
-UNSTABLE_INSTALL_ASSEMBLIES="ipod-sharp ipod-sharp-ui"
-INSTALLED_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries $UNSTABLE_INSTALL_ASSEMBLIES`"
-AC_SUBST(INSTALLED_ASSEMBLIES)
-
-IPODSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries ipod-sharp`"
-AC_SUBST(IPODSHARP_ASSEMBLIES)
-
 dnl Intl
 
-ALL_LINGUAS="bg ca en_CA es lt nb nl pt_BR sv zh_CN"
+ALL_LINGUAS="bg ca da en_CA es lt nb nl pt_BR sv zh_CN"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
@@ -370,6 +385,10 @@ banshee-$VERSION
       GStreamer:       yes, ${gst_version}
       Helix:           ${enable_helix}
       VLC:             ${enable_vlc}
+
+    Digital Audio Players (DAP):
+      iPod:            ${enable_ipodsharp}
+      NJB:             ${enable_njbsharp}
 
     Xing MP3 Encoder:  ${enable_xing}
     GStreamer Plugins: ${GST_PLUGINS_DIR}

@@ -29,18 +29,6 @@
 
 #include "hal-context.h"
 
-static LibHalContext *global_instance_context = NULL;
-
-LibHalContext *
-hal_get_global_instance_context()
-{
-    if(global_instance_context == NULL) {
-        global_instance_context = hal_context_new(NULL, NULL, NULL);
-    }
-    
-    return global_instance_context;
-}
-
 static dbus_bool_t 
 hal_mainloop_integrate(LibHalContext *ctx, GMainContext *mainctx, 
 	DBusError *error)
@@ -58,7 +46,8 @@ hal_mainloop_integrate(LibHalContext *ctx, GMainContext *mainctx,
 
 LibHalContext *
 hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb, 
-    LibHalDeviceRemoved device_removed_cb)
+    LibHalDeviceRemoved device_removed_cb, 
+    LibHalDevicePropertyModified device_property_modified_cb)
 {
 	LibHalContext *hal_context;
 	DBusError error;
@@ -89,6 +78,10 @@ hal_context_new(gchar **error_out, LibHalDeviceAdded device_added_cb,
 	if(device_removed_cb != NULL) {
 	   libhal_ctx_set_device_removed(hal_context, device_removed_cb);
 	}
+	
+	if(device_property_modified_cb != NULL) {
+	   libhal_ctx_set_device_property_modified(hal_context, device_property_modified_cb);
+    }
 	
 	if(!libhal_ctx_init(hal_context, &error)) {
 		libhal_ctx_free(hal_context);

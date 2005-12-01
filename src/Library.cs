@@ -194,7 +194,8 @@ namespace Banshee
         Library = 1,
         Playlist = 2,
         Ipod = 3,
-        AudioCd
+        AudioCd = 4,
+        Dap = 5
     }
 
     public abstract class Source
@@ -324,7 +325,100 @@ namespace Banshee
         }            
     }
 
-    public class IpodSource : Source
+    public class DapSource : Source
+    {
+        private Banshee.Dap.DapDevice device;
+        
+        public bool IsSyncing;
+        public bool NeedSync;
+        
+        public DapSource(Banshee.Dap.DapDevice device) : base(device.Name, SourceType.Dap)
+        {
+            this.device = device;
+            canRename = true;
+            canEject = true;
+        }
+        
+        public override bool UpdateName(string oldName, string newName)
+        {
+            if(oldName == null || !oldName.Equals(newName)) {
+                device.Name = newName;
+                name = newName;
+                device.Save();
+            }
+            
+            return true;
+        }
+        
+        public void QueueForSync(LibraryTrackInfo lti)
+        {
+            //device.AddTrack(lti);
+        }
+        
+        public void SetSourceName(string name)
+        {
+            this.name = name;
+        }
+        
+        public override int Count
+        {
+            get {
+                return device.TrackCount;
+            }
+        }        
+        
+        public Banshee.Dap.DapDevice Device {
+            get {
+                return device;
+            }
+        }
+        
+        public override bool Eject()
+        {
+            device.Eject();
+            return true;
+        }
+
+        public double DiskUsageFraction
+        {
+            get {
+                return (double)device.StorageUsed / (double)device.StorageCapacity;
+            }
+        }
+        
+        private static string BytesToString(ulong bytes)
+        {
+            ulong mb = bytes / (1024 * 1024);
+
+            if (mb > 1024)
+                return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
+            else
+                return String.Format(Catalog.GetString("{0} MB"), mb);
+        }
+
+        public string DiskUsageString
+        {
+            get {
+                // Translators: iPod disk usage. Each {N} is something like "100 MB"
+                return String.Format(
+                    Catalog.GetString("{0} of {1}"),
+                    BytesToString(device.StorageUsed),
+                    BytesToString(device.StorageCapacity));
+            }
+        }
+
+        public string DiskAvailableString
+        {
+            get {
+                // Translators: iPod disk usage. {0} is something like "100 MB"
+                return String.Format(
+                    Catalog.GetString("({0} Remaining)"),
+                    BytesToString(device.StorageCapacity - device.StorageUsed));
+            }
+        }
+    }
+
+    /*public class IpodSource : Source
     {
         private IPod.Device device;
         private ArrayList tracks = new ArrayList();
@@ -509,7 +603,7 @@ namespace Banshee
                     BytesToString(device.VolumeAvailable));
             }
         }
-    }
+    }*/
     
     public class AudioCdSource : Source
     {

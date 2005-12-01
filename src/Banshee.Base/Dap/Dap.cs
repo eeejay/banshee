@@ -30,6 +30,8 @@
 using System;
 using System.Collections;
 
+using Banshee.Base;
+
 namespace Banshee.Dap
 {
     public enum DapType {
@@ -53,6 +55,14 @@ namespace Banshee.Dap
         }
     }
     
+    public class BrokenDeviceException : ApplicationException
+    {
+        public BrokenDeviceException(string message) : base(message)
+        {
+        }
+    }
+    
+    
     public class CannotHandleDeviceException : ApplicationException
     {
         public CannotHandleDeviceException() : base("HAL Device cannot be handled by Dap subclass")
@@ -60,7 +70,26 @@ namespace Banshee.Dap
         }
     }
     
-    public abstract class Dap
+    public class WaitForPropertyChangeException : ApplicationException
+    {
+        public WaitForPropertyChangeException() : base("Waiting for properties to change on device")
+        {
+        }
+    }
+    
+    public delegate void DapTrackListUpdatedHandler(object o, DapTrackListUpdatedArgs args);
+
+    public class DapTrackListUpdatedArgs : EventArgs
+    {
+        public TrackInfo Track;
+
+        public DapTrackListUpdatedArgs(TrackInfo track)
+        {
+            Track = track;
+        }
+    }
+    
+    public abstract class DapDevice : IEnumerable
     {
         public class PropertyTable : IEnumerable
         {
@@ -118,15 +147,105 @@ namespace Banshee.Dap
         }
 
         private PropertyTable properties = new PropertyTable();
+        private ArrayList tracks = new ArrayList(); 
+        
+        public event DapTrackListUpdatedHandler TrackAdded;
+        public event DapTrackListUpdatedHandler TrackRemoved;
+        public event EventHandler TracksCleared;
+        public event EventHandler PropertiesChanged;
+        
+        public IEnumerator GetEnumerator()
+        {
+            return tracks.GetEnumerator();
+        }
+        
+        protected void InvokePropertiesChanged()
+        {
+            if(PropertiesChanged != null) {
+                PropertiesChanged(this, new EventArgs());
+            }
+        }
         
         protected void InstallProperty(string name, string value)
         {
             properties.Add(name, value);
+            InvokePropertiesChanged();
+        }
+        
+        public void AddTrack(TrackInfo track)
+        {
+            tracks.Add(track);
+            OnTrackAdded(track);
+            Event.Invoke(TrackAdded, this, delegate { return new DapTrackListUpdatedArgs(track); });
+        }
+        
+        public void RemoveTrack(TrackInfo track)
+        {
+            tracks.Remove(track);
+            OnTrackRemoved(track);
+            Event.Invoke(TrackRemoved, this, delegate { return new DapTrackListUpdatedArgs(track); });
+        }
+        
+        public void ClearTracks()
+        {
+            ClearTracks(true);
+        }
+        
+        protected void ClearTracks(bool notify)
+        {
+            tracks.Clear();
+            if(notify) {
+                OnTracksCleared();
+                Event.Invoke(TracksCleared, this);
+            }
+        }
+        
+        protected virtual void OnTrackAdded(TrackInfo track)
+        {
+        }
+        
+        protected virtual void OnTrackRemoved(TrackInfo track)
+        {
+        }
+        
+        protected virtual void OnTracksCleared()
+        {
+        }
+        
+        public virtual void Eject()
+        {
+        }
+        
+        public virtual void Save()
+        {
+        }
+        
+        public virtual Gdk.Pixbuf GetIcon(int size)
+        {
+            return null;
         }
         
         public PropertyTable Properties {
             get {
                 return properties;
+            }
+        }
+        
+        public TrackInfo this [int index] {
+            get {
+                return tracks[index] as TrackInfo;
+            }
+        }
+        
+        public int TrackCount { 
+            get {
+                return tracks.Count;
+            }
+        }
+        
+        public IList Tracks {
+            get {
+                return tracks;
             }
         }
         

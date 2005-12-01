@@ -11,16 +11,14 @@ MCS_FLAGS = -debug -unsafe -nowarn:0169
 TARGET = banshee.exe
 
 bansheedir = $(pkglibdir)
-banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config ipod-sharp.dll.config
+banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config 
 bin_SCRIPTS = banshee
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	AssemblyInfo.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
-	ipod-sharp.dll.config.in \
-	banshee.in \
-	mcs.exe
+	banshee.in 
 
 CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
@@ -57,7 +55,6 @@ banshee_sources = \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
 	DBusIPC.cs \
-	IpodCore.cs \
 	FileEncoder.cs \
 	GstFileEncoder.cs \
 	NautilusBurnUtil.cs \
@@ -65,12 +62,9 @@ banshee_sources = \
 	BurnCore.cs \
 	BurnTransaction.cs \
 	RatingRenderer.cs \
-	IpodTrackInfo.cs \
-	IpodPropertiesWindow.cs \
 	RipTransaction.cs \
 	GstMisc.cs \
 	PipelineProfile.cs \
-	IpodNewDialog.cs \
 	ExceptionDialog.cs \
 	ThemeIcons.cs \
 	VersionInformationDialog.cs \
@@ -138,7 +132,6 @@ banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resou
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
-	$(IPODSHARP_LIBS) \
 	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
@@ -170,16 +163,6 @@ $(TARGET): $(banshee_build_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
-
-install-data-hook:
-	for ASM in $(INSTALLED_ASSEMBLIES); do \
-		$(INSTALL) -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
-	done;
-
-uninstall-hook:
-	for ASM in $(INSTALLED_ASSEMBLIES); do \
-		rm -f $(DESTDIR)$(pkglibdir)/`basename $$ASM`; \
-	done;
 
 run:
 	BANSHEE_BURN_ENABLE=yes banshee

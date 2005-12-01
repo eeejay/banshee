@@ -59,7 +59,6 @@ namespace Banshee
         public DBusServer dbusServer;
         
         public AudioCdCore AudioCdCore;
-        public IpodCore IpodCore;
         
         public string UserRealName;
         public string UserFirstName;
@@ -173,8 +172,6 @@ namespace Banshee
                 Core.Log.PushWarning("Audio CD support will be disabled for this instance", e.Message, false);
             }
             
-            IpodCore = new IpodCore();
-
             try {
                 Banshee.Dap.DapCore.Initialize();
             } catch(ApplicationException e) {
@@ -233,7 +230,6 @@ namespace Banshee
             library.TransactionManager.CancelAll();
             library.Db.Close();
             
-            IpodCore.Dispose();
             HalCore.Dispose();
         }
     }

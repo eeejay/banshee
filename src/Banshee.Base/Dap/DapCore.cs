@@ -31,16 +31,33 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Reflection;
+using Mono.Unix;
 using Hal;
 
 using Banshee.Base;
 
 namespace Banshee.Dap
 {
-    public static class DapCore
+    public delegate void DapEventHandler(object o, DapEventArgs args);
+    
+    public class DapEventArgs : EventArgs
+    {
+        public DapDevice Dap;
+        
+        public DapEventArgs(DapDevice dap)
+        {
+            Dap = dap;
+        }
+    }
+
+    public static class DapCore 
     {
         private static Hashtable device_table = new Hashtable();
+        private static Hashtable device_waiting_table = new Hashtable();
         private static ArrayList supported_dap_types = new ArrayList();
+    
+        public static event DapEventHandler DapAdded;
+        public static event DapEventHandler DapRemoved;
     
         static DapCore()
         {
@@ -66,7 +83,7 @@ namespace Banshee.Dap
                 }
                 
                 foreach(Type type in asm.GetTypes()) {
-                    if(!type.IsSubclassOf(typeof(Dap))) {
+                    if(!type.IsSubclassOf(typeof(DapDevice))) {
                         continue;
                     }
                     
@@ -92,7 +109,8 @@ namespace Banshee.Dap
         public static void Initialize()
         {
             if(!HalCore.Initialized) {
-                throw new ApplicationException("Cannot initialize DapCore because HalCore is not initialized");
+                throw new ApplicationException(Catalog.GetString(
+                    "Cannot initialize DapCore because HalCore is not initialized"));
             }
             
             if(supported_dap_types.Count <= 0) {
@@ -101,12 +119,18 @@ namespace Banshee.Dap
             
             BuildDeviceTable();
             
-            HalCore.DeviceAdded += delegate (object o, DeviceAddedArgs args) {
+            HalCore.DeviceAdded += delegate(object o, DeviceAddedArgs args) {
                 AddDevice(args.Device);
             };
             
-            HalCore.DeviceRemoved += delegate (object o, DeviceRemovedArgs args) {
+            HalCore.DeviceRemoved += delegate(object o, DeviceRemovedArgs args) {
                 RemoveDevice(args.Device);
+            };
+            
+            HalCore.DevicePropertyModified += delegate(object o, DevicePropertyModifiedArgs args) {
+                if(device_waiting_table[args.Device.Udi] != null) {
+                    AddDevice(args.Device, device_waiting_table[args.Device.Udi] as Type);
+                }
             };
         }
         
@@ -120,29 +144,61 @@ namespace Banshee.Dap
         private static void AddDevice(Device device)
         {
             foreach(Type type in supported_dap_types) {
-                try {
-                    AddDevice(device, Activator.CreateInstance(type, new object [] { device }) as Dap);
-                } catch(Exception) {
-                }
+                AddDevice(device, type);
             }    
         }
         
-        private static void AddDevice(Device device, Dap dap)
+        private static void AddDevice(Device device, Type type)
+        {
+            try {
+                AddDevice(device, Activator.CreateInstance(type, new object [] { device }) as DapDevice);
+                device_waiting_table.Remove(device.Udi);
+            } catch(TargetInvocationException te) {
+                try {
+                    throw te.InnerException;
+                } catch(BrokenDeviceException e) {
+                    LogCore.Instance.PushWarning(Catalog.GetString("Could not process connected DAP"), 
+                        e.Message, false);
+                } catch(CannotHandleDeviceException) {
+                } catch(WaitForPropertyChangeException) {
+                    device.WatchProperties = true;
+                    device_waiting_table[device.Udi] = type;
+                } catch(Exception) {
+                }
+            }
+        }
+        
+        private static void AddDevice(Device device, DapDevice dap)
         {
             if(device == null || dap == null) {
                 return;
             }
             
-            foreach(string property in dap.Properties) {
-                Console.WriteLine("{0} : {1}", property, dap.Properties[property]);
-            }
-            
             device_table[device.Udi] = dap;
+            if(DapAdded != null) {
+                DapAdded(dap, new DapEventArgs(dap));
+            }
         }
         
         private static void RemoveDevice(Device device)
         {
+            DapDevice dap = device_table[device.Udi] as DapDevice;
             device_table.Remove(device.Udi);
+            device_waiting_table.Remove(device.Udi);
+            
+            if(DapRemoved != null) {
+                DapRemoved(dap, new DapEventArgs(dap));
+            }
+        }
+        
+        public static DapDevice [] Devices {
+            get {
+                ArrayList devices = new ArrayList();
+                foreach(DapDevice dap in device_table.Values) {
+                    devices.Add(dap);
+                }
+                return devices.ToArray(typeof(DapDevice)) as DapDevice [];
+            }
         }
     }
 }

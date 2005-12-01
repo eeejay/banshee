@@ -2,8 +2,6 @@ MCS_FLAGS = -debug -nowarn:0169
 ASSEMBLY_NAME = vlc-player
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
-vlcenginelibdir = $(pkglibdir)/Banshee.MediaEngine/Vlc
-vlcenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 ASSEMBLY_SOURCES = $(srcdir)/Vlc.cs $(srcdir)/VlcPlayerEngine.cs
 
 DISTCLEANFILES = Makefile.in
@@ -12,7 +10,8 @@ CLEANFILES = *.exe *.dll *.mdb *.pidb
 EXTRA_DIST = $(ASSEMBLY).config.in $(ASSEMBLY_SOURCES)
 
 if ENABLE_VLC
-all: $(ASSEMBLY)
+vlcenginelibdir = $(pkglibdir)/Banshee.MediaEngine/Vlc
+vlcenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ $(GTKSHARP_LIBS) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:Mono.Posix $(ASSEMBLY_SOURCES)
@@ -32,5 +31,4 @@ package:
 	cp vlc-player.dll vlc-player.dll.config vlc-player.dll.mdb libvlc.so banshee-engine-vlc/vlc; \
 	tar cfz banshee-engine-vlc.tar.gz banshee-engine-vlc; \
 	rm -rf banshee-engine-vlc
-	
 endif

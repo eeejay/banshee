@@ -37,7 +37,8 @@
 
 LibHalContext *hal_context_new(gchar **error_out, 
     LibHalDeviceAdded device_added_cb, 
-    LibHalDeviceRemoved device_removed_cb);
+    LibHalDeviceRemoved device_removed_cb,
+    LibHalDevicePropertyModified device_property_modified_cb);
 void hal_context_free(LibHalContext *ctx);
 
 #endif /* HAL_CONTEXT_H */

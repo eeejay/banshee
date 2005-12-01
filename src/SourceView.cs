@@ -35,6 +35,7 @@ using Gdk;
 using Pango;
 
 using Banshee.Base;
+using Banshee.Dap;
 
 namespace Banshee
 {
@@ -76,67 +77,6 @@ namespace Banshee
 
         private int currentTimeout = -1;
 
-        /*
-            I like this method better, packing two cell renderers into 
-            a column and using pure data functions to set the pixbufs/text
-            but there are some flaws when editing... to get a good edit,
-            a custom cell renderer is used with a custom editor. BAH
-        
-        public SourceView()
-        {
-            TreeViewColumn col = new TreeViewColumn();
-            
-            CellRendererPixbuf pixbufRender = new CellRendererPixbuf();
-            CellRendererText textRender = new CellRendererText();
-            
-            col.Title = Catalog.GetString("Source");
-            col.PackStart(pixbufRender, true);
-            col.PackStart(textRender, true);
-            
-            col.SetCellDataFunc(pixbufRender, 
-                new TreeCellDataFunc(PixbufCellDataFunc));
-            col.SetCellDataFunc(textRender, 
-                new TreeCellDataFunc(TextCellDataFunc));
-                
-            AppendColumn(col);
-            
-            store = new ListStore(typeof(Source));
-            Model = store;
-            HeadersVisible = false;
-            
-            RowActivated += new RowActivatedHandler(OnRowActivated);
-            
-            Gtk.Drag.DestSet(this,DestDefaults.All,
-                sourceViewDestEntries, Gdk.DragAction.Copy);
-            
-            RefreshList();
-        }    
-                    
-        protected void PixbufCellDataFunc(TreeViewColumn tree_column,
-            CellRenderer cell, TreeModel tree_model, TreeIter iter)
-        {
-            CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
-            Source source = (Source)store.GetValue(iter, 0);
-            
-            renderer.Pixbuf = Pixbuf.LoadFromResource(
-                source.Type == Source.SourceType.Library ?
-                    "source-library-icon.png" :
-                    "source-playlist-icon.png");
-        }
-        
-        protected void TextCellDataFunc(TreeViewColumn tree_column,
-            CellRenderer cell, TreeModel tree_model, TreeIter iter)
-        {
-            CellRendererText renderer = (CellRendererText)cell;
-            Source source = (Source)store.GetValue(iter, 0);
-            
-            renderer.Text = source.Name;
-            renderer.Weight = source.Equals(selectedSource)
-                ? (int)Pango.Weight.Bold 
-                : (int)Pango.Weight.Normal;
-            renderer.Editable = source.Type != Source.SourceType.Library;
-        }*/
-
         public SourceView()
         {
             TreeViewColumn col = new TreeViewColumn();
@@ -153,8 +93,8 @@ namespace Banshee
             CursorChanged += OnCursorChanged;
             
             try {
-                //Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
-                //Core.Instance.IpodCore.DeviceRemoved += OnIpodCoreDeviceRemoved;
+                DapCore.DapAdded += OnDapCoreDapAdded;
+                DapCore.DapRemoved += OnDapCoreDapRemoved;
                 if(Core.Instance.AudioCdCore != null) {
                     Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
                     Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
@@ -206,10 +146,10 @@ namespace Banshee
             }
         
             // iPod Sources
-            //try {
-            //    foreach(IPod.Device device in Core.Instance.IpodCore.Devices)
-            //        store.AppendValues(new IpodSource(device));
-            //} catch(NullReferenceException) {}
+            try {
+                foreach(DapDevice device in DapCore.Devices)
+                    store.AppendValues(new DapSource(device));
+            } catch(NullReferenceException) {}
             
             // Playlist Sources
             string [] names = Playlist.ListAll();
@@ -288,7 +228,7 @@ namespace Banshee
             if(source == null)
                 return true;
             // TODO: Support other drag destinations
-            if(source.Type != SourceType.Playlist && source.Type != SourceType.Ipod)
+            if(source.Type != SourceType.Playlist && source.Type != SourceType.Dap)
                 return true;
             
             SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
@@ -335,12 +275,17 @@ namespace Banshee
                     pl.Load();
                     pl.Append(tracks);
                     pl.Save();
-                } else if(source.Type == SourceType.Ipod) {
-                    IpodSource ipodSource = source as IpodSource;
+                } else if(source.Type == SourceType.Dap) {
+                    DapSource dapSource = source as DapSource;
                     
                     foreach(LibraryTrackInfo lti in tracks) {
-                        ipodSource.QueueForSync(lti);    
+                        dapSource.QueueForSync(lti);    
                     }
+                    
+                    LogCore.Instance.PushWarning(Catalog.GetString("iPod Syncing Disabled"), 
+                Catalog.GetString("iPod syncing has been disabled in this release because unified DAP " + 
+                "support is under development, and the iPod sync code has not yet been converted to " + 
+                "the DAP sync model. iPod syncing will be back in the next release."));
                 }
             } else {
                 Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
@@ -402,15 +347,15 @@ namespace Banshee
                 
         }
         
-        private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
+        private void OnDapCoreDapAdded(object o, DapEventArgs args)
         {
             int index = FindSourceLastIndex(SourceType.AudioCd);
 
             TreeIter iter = store.Insert(index + 1);
-            store.SetValue(iter, 0, new IpodSource(args.Device));
+            store.SetValue(iter, 0, new DapSource(args.Dap));
         }
         
-        private void OnIpodCoreDeviceRemoved(object o, IpodDeviceArgs args)
+        private void OnDapCoreDapRemoved(object o, DapEventArgs args)
         {
             TreeIter iter = TreeIter.Zero;
             
@@ -420,11 +365,11 @@ namespace Banshee
                 
                 object obj = store.GetValue(iter, 0);
                 
-                if(!(obj is IpodSource))
+                if(!(obj is DapSource))
                     continue;
                     
-                IpodSource source = obj as IpodSource;
-                if(source.Device == args.Device) {
+                DapSource source = obj as DapSource;
+                if(source.Device == args.Dap) {
                     store.Remove(ref iter);
                     return;
                 }
@@ -627,9 +572,8 @@ namespace Banshee
                 case SourceType.Playlist:
                     icon = Pixbuf.LoadFromResource("source-playlist.png");
                     break;
-                case SourceType.Ipod:
-                    IPod.Device device = (source as IpodSource).Device;
-                    icon = IpodMisc.GetIcon(device, 24);
+                case SourceType.Dap:
+                    icon = (source as DapSource).Device.GetIcon(22);
                     break;
                 case SourceType.AudioCd:
                     icon = Pixbuf.LoadFromResource("source-cd-audio.png");
@@ -680,8 +624,8 @@ namespace Banshee
             
             Gdk.GC mainGC = widget.Style.TextGC(state);
                 
-            if(source.Type == SourceType.Ipod 
-                && (source as IpodSource).NeedSync 
+            if(source.Type == SourceType.Dap 
+                && (source as DapSource).NeedSync 
                 && !state.Equals(StateType.Selected)) {
                 mainGC = new Gdk.GC(drawable);
                 mainGC.Copy(widget.Style.TextGC(state));

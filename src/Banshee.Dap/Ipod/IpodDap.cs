@@ -28,66 +28,147 @@
  */
  
 using System; 
+using System.IO;
 using Hal;
 using IPod;
+
+using Banshee.Base;
 using Banshee.Dap;
  
 namespace Banshee.Dap.Ipod
 {
     [DapProperties(DapType = DapType.NonGeneric)]
-    public class IpodDap : Dap
+    public sealed class IpodDap : DapDevice
     {
-        private Hal.Device hal_device;
-        private IPod.Device ipod_device;
+        private IPod.Device device;
     
-        public IpodDap(Hal.Device device)
+        public IpodDap(Hal.Device halDevice)
         {
-            if(!device.PropertyExists("block.device") || !device.GetPropertyBool("block.is_volume") || 
-                device.Parent["portable_audio_player.type"] != "ipod") {
+            if(!halDevice.PropertyExists("block.device") || 
+                !halDevice.GetPropertyBool("block.is_volume") ||
+                halDevice.Parent["portable_audio_player.type"] != "ipod") {
                 throw new CannotHandleDeviceException();
+            } else if(!halDevice.GetPropertyBool("volume.is_mounted")) {
+                throw new WaitForPropertyChangeException();
             }
-            
-            hal_device = device;
             
             try {
-                ipod_device = new IPod.Device(hal_device["block.device"]);
-            } catch(Exception) {
-                throw new CannotHandleDeviceException();
+                device = new IPod.Device(halDevice["block.device"]);
+            } catch(Exception e) {
+                throw new BrokenDeviceException(e.Message);
             }
             
-            InstallProperty("Generation", ipod_device.Generation.ToString());
-            InstallProperty("Model", ipod_device.Model.ToString());
-            InstallProperty("Model Number", ipod_device.ModelNumber);
-            InstallProperty("Serial Number", ipod_device.SerialNumber);
-            InstallProperty("Firmware Version", ipod_device.FirmwareVersion);
-            InstallProperty("Database Version", ipod_device.SongDatabase.Version.ToString());
+            InstallProperty("Generation", device.Generation.ToString());
+            InstallProperty("Model", device.Model.ToString());
+            InstallProperty("Model Number", device.ModelNumber);
+            InstallProperty("Serial Number", device.SerialNumber);
+            InstallProperty("Firmware Version", device.FirmwareVersion);
+            InstallProperty("Database Version", device.SongDatabase.Version.ToString());
+            
+            ReloadDatabase(false);
+        }
+        
+        protected override void OnTrackAdded(TrackInfo track)
+        {
+        
+        }
+        
+        protected override void OnTrackRemoved(TrackInfo track)
+        {
+        
+        }
+        
+        private void ReloadDatabase(bool refresh)
+        {
+            ClearTracks(false);
+            
+            if(refresh) {
+                device.SongDatabase.Reload();
+            }
+            
+            foreach(Song song in device.SongDatabase.Songs) {
+                IpodDapTrackInfo track = new IpodDapTrackInfo(song);
+                AddTrack(track);            
+            }
+        }
+        
+        public override void Eject()
+        {
+            device.Eject();
+        }
+        
+        public override void Save()
+        {
+            device.Save();
+        }
+        
+        public override Gdk.Pixbuf GetIcon(int size)
+        {
+            string prefix = "portable-media-";
+            string id = null;
+
+            switch(device.Model) {
+                case DeviceModel.Color: id = "ipod-standard-color"; break;
+                case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
+                case DeviceModel.Regular: id = "ipod-standard-monochrome"; break;
+                case DeviceModel.RegularU2: id = "ipod-U2-monochrome"; break;
+                case DeviceModel.Mini: id = "ipod-mini-silver"; break;
+                case DeviceModel.MiniBlue: id = "ipod-mini-blue"; break;
+                case DeviceModel.MiniPink: id = "ipod-mini-pink"; break;
+                case DeviceModel.MiniGreen: id = "ipod-mini-green"; break;
+                case DeviceModel.MiniGold: id = "ipod-mini-gold"; break;
+                case DeviceModel.Shuffle: id = "ipod-shuffle"; break;
+                case DeviceModel.NanoWhite: id = "ipod-nano-white"; break;
+                case DeviceModel.NanoBlack: id = "ipod-nano-black"; break;
+                case DeviceModel.VideoWhite: id = "ipod-video-white"; break;
+                case DeviceModel.VideoBlack: id = "ipod-video-black"; break;
+                default:
+                    id = "ipod-standard-monochrome";
+                    break;
+            }
+            
+            string path = ConfigureDefines.ICON_THEME_DIR 
+                + String.Format("{0}x{0}", size)
+                + Path.DirectorySeparatorChar
+                + "extras" 
+                + Path.DirectorySeparatorChar
+                + "devices" + 
+                + Path.DirectorySeparatorChar
+                + prefix + id + ".png";
+                
+            try {
+                return new Gdk.Pixbuf(path);
+            } catch(Exception) {
+                return base.GetIcon(size);
+            }
         }
         
         public override string Name {
             get {
-                return ipod_device.Name;
+                return device.Name;
             }
             
             set {
-                ipod_device.Name = value;
+                device.Name = value;
+                InvokePropertiesChanged();
             }
         }
         
         public override ulong StorageCapacity {
             get {
-                return ipod_device.VolumeSize;
+                return device.VolumeSize;
             }
         }
         
         public override ulong StorageUsed {
             get {
-                return ipod_device.VolumeUsed;
+                return device.VolumeUsed;
             }
         }
         
         public override bool IsReadOnly {
             get {
-                return !ipod_device.CanWrite;
+                return !device.CanWrite;
             }
         }
         

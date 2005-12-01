@@ -37,6 +37,7 @@ using Gdk;
 using Pango;
 
 using Banshee.Base;
+using Banshee.Dap;
 
 namespace Banshee
 {
@@ -329,10 +330,10 @@ namespace Banshee
             renderer.Foreground = null;
             
             TrackInfo ti = model.IterTrackInfo(iter);
-            if(ti.GetType() != typeof(IpodTrackInfo)) 
+            if(ti.GetType() != typeof(DapTrackInfo)) 
                 return;
                 
-            if((ti as IpodTrackInfo).NeedSync)
+            if((ti as DapTrackInfo).NeedSync)
                 renderer.Foreground = "blue";
         }
         
@@ -366,19 +367,19 @@ namespace Banshee
                 return;
             }
             
-            if(model.Source.GetType() != typeof(IpodSource)) {
+            if(model.Source.GetType() != typeof(DapSource)) {
                 renderer.Pixbuf = null;
                 return; 
             }
             
             TrackInfo ti = model.IterTrackInfo(iter);
             
-            if(ti.GetType() != typeof(IpodTrackInfo)) {
+            if(ti.GetType() != typeof(DapTrackInfo)) {
                 renderer.Pixbuf = null;
                 return;
             }
             
-            IpodTrackInfo iti = ti as IpodTrackInfo;
+            DapTrackInfo iti = ti as DapTrackInfo;
             renderer.Pixbuf = iti.NeedSync
                 ? syncNeededPixbuf
                 : (iti.CanPlay ? null : songDrmedPixbuf); 

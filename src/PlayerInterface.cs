@@ -41,6 +41,7 @@ using Sql;
 using Banshee.Widgets;
 using Banshee.Base;
 using Banshee.MediaEngine;
+using Banshee.Dap;
 
 namespace Banshee
 {
@@ -76,17 +77,17 @@ namespace Banshee
         private SearchEntry searchEntry;
         private Tooltips toolTips;
         private Hashtable playlistMenuMap;
-        private ProgressBar ipodDiskUsageBar;
+        private ProgressBar dapDiskUsageBar;
         private Viewport sourceViewLoadingVP;
-        private Button ipodSyncButton;
-        private Button ipodPropertiesButton;
-        private Button ipodEjectButton;
+        private Button dapSyncButton;
+        private Button dapPropertiesButton;
+        private Button dapEjectButton;
             
         private MultiStateToggleButton repeat_toggle_button;
         private MultiStateToggleButton shuffle_toggle_button;
                 
         private EventBox syncing_container;
-        private Gtk.Image ipod_syncing_image = new Gtk.Image();
+        private Gtk.Image dap_syncing_image = new Gtk.Image();
             
         private CoverArtThumbnail cover_art;
         
@@ -99,8 +100,6 @@ namespace Banshee
             }
         }
         
-        private IpodCore ipodCore = Core.Instance.IpodCore;
-        
         private long plLoaderMax, plLoaderCount;
         private bool startupLoadReady = false;
         private bool tickFromEngine = false;
@@ -108,7 +107,7 @@ namespace Banshee
         private bool updateEnginePosition = true;
         private int clickX, clickY;
 
-        private int ipodDiskUsageTextViewState;
+        private int dapDiskUsageTextViewState;
         
         private SpecialKeys special_keys;
 
@@ -163,7 +162,7 @@ namespace Banshee
                 Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
             }
             
-            Core.Instance.IpodCore.DeviceAdded += OnIpodCoreDeviceAdded;
+            DapCore.DapAdded += OnDapCoreDeviceAdded;
             
             LoadSettings();
             Core.Instance.PlayerInterface = this;
@@ -197,9 +196,8 @@ namespace Banshee
             Core.Library.Reloaded += OnLibraryReloaded;
             Core.Library.ReloadLibrary();
             
-            foreach(IPod.Device device in Core.Instance.IpodCore.Devices) {
-                 device.Changed += OnIpodDeviceChanged;
-                 CheckIpodForNew(device);
+            foreach(DapDevice device in DapCore.Devices) {
+                 device.PropertiesChanged += OnDapPropertiesChanged;
             }
             
             if(Core.ArgumentQueue.Contains("audio-cd")) {
@@ -350,39 +348,39 @@ namespace Banshee
                 playlistViewDestEntries, 
                 DragAction.Copy | DragAction.Move);
             
-            // Ipod Container
+            // Dap Container
             HBox box = new HBox();
             box.Spacing = 5;
-            (gxml["IpodContainer"] as Container).Add(box);
-            ipodDiskUsageBar = new ProgressBar();
-            box.PackStart(ipodDiskUsageBar, false, false, 0);
-            ipodDiskUsageBar.ShowAll();
+            (gxml["DapContainer"] as Container).Add(box);
+            dapDiskUsageBar = new ProgressBar();
+            box.PackStart(dapDiskUsageBar, false, false, 0);
+            dapDiskUsageBar.ShowAll();
             
             HBox syncBox = new HBox();
             syncBox.Spacing = 3;
-            ipodSyncButton = new Button(syncBox);
-            Label syncLabel = new Label(Catalog.GetString("Update iPod"));
-            ipodSyncButton.Clicked += OnIpodSyncClicked;
+            dapSyncButton = new Button(syncBox);
+            Label syncLabel = new Label(Catalog.GetString("Update Device"));
+            dapSyncButton.Clicked += OnDapSyncClicked;
             syncBox.PackStart(new Gtk.Image("gtk-copy", IconSize.Menu), false, false, 0);
             syncBox.PackStart(syncLabel, true, true, 0);
-            box.PackStart(ipodSyncButton, false, false, 0);
-            ipodSyncButton.ShowAll();
+            box.PackStart(dapSyncButton, false, false, 0);
+            dapSyncButton.ShowAll();
             
-            ipodPropertiesButton = new Button(
+            dapPropertiesButton = new Button(
                 new Gtk.Image("gtk-properties", IconSize.Menu));
-            ipodPropertiesButton.Clicked += OnIpodPropertiesClicked;
-            box.PackStart(ipodPropertiesButton, false, false, 0);
-            ipodPropertiesButton.ShowAll();
+            dapPropertiesButton.Clicked += OnDapPropertiesClicked;
+            box.PackStart(dapPropertiesButton, false, false, 0);
+            dapPropertiesButton.ShowAll();
             
-            ipodEjectButton = new Button(new Gtk.Image("media-eject",
+            dapEjectButton = new Button(new Gtk.Image("media-eject",
                 IconSize.Menu));
-            ipodEjectButton.Clicked += OnIpodEjectClicked;
-            box.PackStart(ipodEjectButton, false, false, 0);
-            ipodEjectButton.ShowAll();
+            dapEjectButton.Clicked += OnDapEjectClicked;
+            box.PackStart(dapEjectButton, false, false, 0);
+            dapEjectButton.ShowAll();
             
             (gxml["LeftContainer"] as VBox).PackStart(new ActiveUserEventsManager(), false, false, 0);
             
-           // gxml["IpodContainer"].Visible = false;
+           // gxml["DapContainer"].Visible = false;
             
             // Misc
             SetInfoLabel(Catalog.GetString("Idle"));
@@ -445,11 +443,11 @@ namespace Banshee
             SetTip(gxml["ButtonNext"], Catalog.GetString("Play Next Song"));
             SetTip(gxml["ScaleTime"], Catalog.GetString("Current Position in Song"));
             SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
-            SetTip(ipodDiskUsageBar, Catalog.GetString("iPod Disk Usage"));
-            SetTip(ipodEjectButton, Catalog.GetString("Eject iPod"));
-            SetTip(ipodSyncButton, Catalog.GetString("Synchronize Music Library to iPod"));
-            SetTip(gxml["IpodSyncButton"], Catalog.GetString("Synchronize Music Library to iPod"));
-            SetTip(ipodPropertiesButton, Catalog.GetString("View iPod Properties"));
+            SetTip(dapDiskUsageBar, Catalog.GetString("Device Disk Usage"));
+            SetTip(dapEjectButton, Catalog.GetString("Eject Device"));
+            SetTip(dapSyncButton, Catalog.GetString("Synchronize Music Library to Device"));
+            SetTip(gxml["DapSyncButton"], Catalog.GetString("Synchronize Music Library to Device"));
+            SetTip(dapPropertiesButton, Catalog.GetString("View Device Properties"));
             
             playlistMenuMap = new Hashtable();
         }
@@ -1214,7 +1212,7 @@ namespace Banshee
                 return;
             }
             
-            gxml["ItemRemoveSongsFileSystem"].Sensitive = !(source is AudioCdSource || source is IpodSource) && have_selection;
+            gxml["ItemRemoveSongsFileSystem"].Sensitive = !(source is AudioCdSource || source is DapSource) && have_selection;
             gxml["ItemRemoveSongs"].Sensitive = !(source is AudioCdSource) && have_selection;
             gxml["MenuTrackProperties"].Sensitive = have_selection;
             gxml["ButtonTrackProperties"].Sensitive = have_selection;
@@ -1243,14 +1241,12 @@ namespace Banshee
                 (gxml["ViewNameLabel"] as Label).Markup = 
                     String.Format(Catalog.GetString("<b>{0}'s Music Library</b>"),
                     GLib.Markup.EscapeText(Core.Instance.UserFirstName));
-            } else if(source.Type == SourceType.Ipod) {
+            } else if(source.Type == SourceType.Dap) {
                 playlistModel.Clear();
                 playlistModel.Source = source;
-                
-                IpodSource ipodSource = source as IpodSource;
-                playlistModel.LoadFromIpodSource(ipodSource);
-                
-                UpdateIpodDiskUsageBar(ipodSource);
+                DapSource dap_source = source as DapSource;
+                playlistModel.LoadFromDapSource(dap_source);
+                UpdateDapDiskUsageBar(dap_source);
             } else if(source.Type == SourceType.AudioCd) {
                 playlistModel.Clear();
                 playlistModel.Source = source;
@@ -1267,31 +1263,31 @@ namespace Banshee
 
             gxml["ButtonRip"].Visible = source.Type == SourceType.AudioCd;
             gxml["ButtonBurn"].Visible = source.Type != SourceType.AudioCd;
-            gxml["IpodSyncButton"].Visible = source.Type == SourceType.Ipod;
+            gxml["DapSyncButton"].Visible = source.Type == SourceType.Dap;
             (gxml["HeaderActionButtonBox"] as HBox).Spacing = (
-                gxml["ButtonBurn"].Visible && gxml["IpodSyncButton"].Visible) ?  10 : 0;
+                gxml["ButtonBurn"].Visible && gxml["DapSyncButton"].Visible) ?  10 : 0;
             
-            if(source.Type == SourceType.Ipod) {
-                gxml["IpodContainer"].ShowAll();
-                IpodSource ipodSource = source as IpodSource;
-                ipodSyncButton.Visible = ipodSource.Device.CanWrite;
-                ((Gtk.Image)gxml["ImageIpodSync"]).Pixbuf = IpodMisc.GetIcon(ipodSource.Device, 24);
+            if(source.Type == SourceType.Dap) {
+                gxml["DapContainer"].ShowAll();
+                DapSource dapSource = source as DapSource;
+                dapSyncButton.Visible = !dapSource.Device.IsReadOnly;
+                ((Gtk.Image)gxml["ImageDapSync"]).Pixbuf = dapSource.Device.GetIcon(22);
             } else {
-                gxml["IpodContainer"].Visible = false;
+                gxml["DapContainer"].Visible = false;
             }     
                  
-            gxml["SearchLabel"].Sensitive = source.Type == SourceType.Ipod 
+            gxml["SearchLabel"].Sensitive = source.Type == SourceType.Dap 
                  || source.Type == SourceType.Library;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
-            playlistView.SyncColumn.Visible = source.Type == SourceType.Ipod;
+            playlistView.SyncColumn.Visible = source.Type == SourceType.Dap;
             playlistView.RipColumn.Visible = source.Type == SourceType.AudioCd;
             
             playlistModel.ImportCanUpdate = source.Type == SourceType.Library
                 && searchEntry.Query == String.Empty;
                 
-            if(source.Type != SourceType.Ipod)
+            if(source.Type != SourceType.Dap)
                 ShowPlaylistView();
-            else if((source as IpodSource).IsSyncing)
+            else if((source as DapSource).IsSyncing)
                 ShowSyncingView();
             else
                 ShowPlaylistView();
@@ -1303,41 +1299,30 @@ namespace Banshee
             gxml["ItemImportCD"].Sensitive = source is AudioCdSource;
         }
         
-        private void UpdateIpodDiskUsageBar(IpodSource ipodSource)
+        private void UpdateDapDiskUsageBar(DapSource dapSource)
         {
             Application.Invoke(delegate {
-            ipodDiskUsageBar.Fraction = ipodSource.DiskUsageFraction;
-            ipodDiskUsageBar.Text = ipodSource.DiskUsageString;
-            string tooltip = ipodSource.DiskUsageString + " (" +
-                ipodSource.DiskAvailableString + ")";
-            toolTips.SetTip(ipodDiskUsageBar, tooltip, tooltip);
+                dapDiskUsageBar.Fraction = dapSource.DiskUsageFraction;
+                dapDiskUsageBar.Text = dapSource.DiskUsageString;
+                string tooltip = dapSource.DiskUsageString + " (" + dapSource.DiskAvailableString + ")";
+                toolTips.SetTip(dapDiskUsageBar, tooltip, tooltip);
             });
         }
         
-        private void CheckIpodForNew(IPod.Device device)
+        private void OnDapPropertiesChanged(object o, EventArgs args)
         {
-          if(device.IsNew) {
-              Application.Invoke(delegate {
-                new IpodNewDialog(device);
-                 sourceView.QueueDraw();
-              });
-           }
-        }
-        
-        private void OnIpodDeviceChanged(object o, EventArgs args)
-        {
-            Application.Invoke (delegate {
-                IPod.Device device = o as IPod.Device;
+            Application.Invoke(delegate {
+                DapDevice device = o as DapDevice;
                 
                 foreach(object [] obj in (sourceView.Model as ListStore)) {
-                    if(obj[0] is IpodSource && (obj[0] as IpodSource).Device == device) {
-                        (obj[0] as IpodSource).SetSourceName(device.Name);
+                    if(obj[0] is DapSource && (obj[0] as DapSource).Device == device) {
+                        (obj[0] as DapSource).SetSourceName(device.Name);
                         sourceView.QueueDraw();
                     }
                 }
                 
-                if(playlistModel.Source is IpodSource && (playlistModel.Source as IpodSource).Device == device) {
-                    UpdateIpodDiskUsageBar(playlistModel.Source as IpodSource);
+                if(playlistModel.Source is DapSource && (playlistModel.Source as DapSource).Device == device) {
+                    UpdateDapDiskUsageBar(playlistModel.Source as DapSource);
                     (gxml["ViewNameLabel"] as Label).Markup = "<b>" 
                         + GLib.Markup.EscapeText(device.Name) + "</b>";
                     sourceView.QueueDraw();
@@ -1345,10 +1330,9 @@ namespace Banshee
             });
         }
         
-        private void OnIpodCoreDeviceAdded(object o, IpodDeviceArgs args)
+        private void OnDapCoreDeviceAdded(object o, DapEventArgs args)
         {
-            args.Device.Changed += OnIpodDeviceChanged;
-            CheckIpodForNew(args.Device);
+            args.Dap.PropertiesChanged += OnDapPropertiesChanged;
         }
         
         private void OnAudioCdCoreDiskRemoved(object o, AudioCdCoreDiskRemovedArgs args)
@@ -1389,25 +1373,30 @@ namespace Banshee
             });
         }
         
-        private void OnIpodPropertiesClicked(object o, EventArgs args)
+        private void OnDapPropertiesClicked(object o, EventArgs args)
         {
-            if(sourceView.SelectedSource.Type != SourceType.Ipod)
+            if(sourceView.SelectedSource.Type != SourceType.Dap)
                 return;
             
-            ShowSourceProperties(sourceView.SelectedSource);
+            //ShowSourceProperties(sourceView.SelectedSource);
         }
         
-        private void OnIpodSyncButtonClicked(object o, EventArgs args)
+        private void OnDapSyncButtonClicked(object o, EventArgs args)
         {
-            OnIpodSyncClicked(o, args);
+            OnDapSyncClicked(o, args);
         }
         
-        private void OnIpodSyncClicked(object o, EventArgs args)
+        private void OnDapSyncClicked(object o, EventArgs args)
         {
-            if(sourceView.SelectedSource.Type != SourceType.Ipod)
+            if(sourceView.SelectedSource.Type != SourceType.Dap)
                 return;
+                
+           LogCore.Instance.PushWarning(Catalog.GetString("iPod Syncing Disabled"), 
+                Catalog.GetString("iPod syncing has been disabled in this release because unified DAP " + 
+                "support is under development, and the iPod sync code has not yet been converted to " + 
+                "the DAP sync model. iPod syncing will be back in the next release."));
         
-            IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
+           /* IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
             IpodSync sync = null;
             
             if(!ipodSource.Device.CanWrite)
@@ -1463,43 +1452,43 @@ namespace Banshee
                 }
                 
                 md.Destroy();
-            }
+            }*/
         }
         
-        private void OnIpodEjectClicked(object o, EventArgs args)
+        private void OnDapEjectClicked(object o, EventArgs args)
         {
             EjectSource(sourceView.SelectedSource);
         }
         
-        private void OnIpodSyncStarted(object o, EventArgs args)
+        private void OnDapSyncStarted(object o, EventArgs args)
         {
-            if(playlistModel.Source.Type == SourceType.Ipod 
-                && (playlistModel.Source as IpodSource).IsSyncing) {
+            if(playlistModel.Source.Type == SourceType.Dap 
+                && (playlistModel.Source as DapSource).IsSyncing) {
                 ShowSyncingView();
-                ipodSyncButton.Sensitive = false;
-                ipodPropertiesButton.Sensitive = false;
-                ipodEjectButton.Sensitive = false;
-                gxml["IpodSyncButton"].Sensitive = false;
+                dapSyncButton.Sensitive = false;
+                dapPropertiesButton.Sensitive = false;
+                dapEjectButton.Sensitive = false;
+                gxml["DapSyncButton"].Sensitive = false;
                 gxml["SearchLabel"].Sensitive = false;
                 searchEntry.Sensitive = false;
-                ipod_syncing_image.Pixbuf = IpodMisc.GetIcon((playlistModel.Source as IpodSource).Device, 128);
+                dap_syncing_image.Pixbuf = (playlistModel.Source as DapSource).Device.GetIcon(128);
             }
         }
         
-        private void OnIpodSyncCompleted(object o, EventArgs args)
+        private void OnDapSyncCompleted(object o, EventArgs args)
         {
-            if(playlistModel.Source.Type == SourceType.Ipod 
-                && !(playlistModel.Source as IpodSource).IsSyncing) {
+            if(playlistModel.Source.Type == SourceType.Dap 
+                && !(playlistModel.Source as DapSource).IsSyncing) {
                 //playlistView.Show();
                 //playlistView.QueueDraw();
                 ShowPlaylistView();
-                ipodSyncButton.Sensitive = true;
-                ipodPropertiesButton.Sensitive = true;
-                ipodEjectButton.Sensitive = true;
-                gxml["IpodSyncButton"].Sensitive = true;
+                dapSyncButton.Sensitive = true;
+                dapPropertiesButton.Sensitive = true;
+                dapEjectButton.Sensitive = true;
+                gxml["DapSyncButton"].Sensitive = true;
                 gxml["SearchLabel"].Sensitive = true;
                 searchEntry.Sensitive = true;
-                playlistModel.LoadFromIpodSource((playlistModel.Source as IpodSource));
+                playlistModel.LoadFromDapSource((playlistModel.Source as DapSource));
             }
             
             sourceView.QueueDraw();
@@ -1678,13 +1667,13 @@ namespace Banshee
             
             TrackRemoveTransaction transaction;
             
-            if(playlistModel.Source.Type == SourceType.Ipod) {
+            if(playlistModel.Source.Type == SourceType.Dap) {
                 for(i = 0; i < iters.Length; i++) {
                     TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
                     playlistModel.RemoveTrack(ref iters[i]);
                     
-                    IpodTrackInfo iti = ti as IpodTrackInfo;
-                    (playlistModel.Source as IpodSource).Remove(iti);
+                    DapTrackInfo iti = ti as DapTrackInfo;
+                    (playlistModel.Source as DapSource).Device.RemoveTrack(iti);
                 }
                 sourceView.QueueDraw();
                 return;
@@ -1792,7 +1781,7 @@ namespace Banshee
             //    && playlistView.Selection.CountSelectedRows() > 0;
             addSelectedSongs.Visible = false;
             
-            sourceProperties.Visible = source.Type == SourceType.Ipod;
+            sourceProperties.Visible = source.Type == SourceType.Dap;
           
             if(source.CanEject) {
                 ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
@@ -1802,7 +1791,7 @@ namespace Banshee
             menu.Show();
             
             addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
-             source.Type == SourceType.Ipod;
+             source.Type == SourceType.Dap;
             
             sourceDuplicate.Visible = false;
             ejectItem.Visible = source.CanEject;
@@ -1881,12 +1870,12 @@ namespace Banshee
                     Catalog.GetString("Rename Playlist"),
                     Catalog.GetString("Enter new playlist name"), 
                     Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
-            } else if(source.Type == SourceType.Ipod) {
-                IpodSource ipod_source = source as IpodSource;
+            } else if(source.Type == SourceType.Dap) {
+                DapSource dap_source = source as DapSource;
                 input = new InputDialog(
-                    Catalog.GetString("Rename iPod"),
-                    Catalog.GetString("Enter new name for your iPod"),
-                    IpodMisc.GetIcon(ipod_source.Device, 48), source.Name);
+                    Catalog.GetString("Rename Device"),
+                    Catalog.GetString("Enter new name for your device"),
+                    dap_source.Device.GetIcon(48), source.Name);
             } else {
                 return;
             }
@@ -1948,8 +1937,8 @@ namespace Banshee
                 query == null || query == String.Empty;
             
             if(query == null || query == String.Empty) {
-                if(source.Type == SourceType.Ipod)
-                    playlistModel.LoadFromIpodSource(source as IpodSource);
+                if(source.Type == SourceType.Dap)
+                    playlistModel.LoadFromDapSource(source as DapSource);
                 else
                     playlistModel.LoadFromLibrary();
                 
@@ -1960,8 +1949,8 @@ namespace Banshee
             
             ICollection collection = null;
             
-            if(source.Type == SourceType.Ipod) {
-                collection = (source as IpodSource).Tracks;
+            if(source.Type == SourceType.Dap) {
+                collection = (source as DapSource).Device.Tracks;
             } else {
                 collection = Core.Library.Tracks.Values;
             }
@@ -2169,7 +2158,7 @@ namespace Banshee
             gxmlPlaylistMenu["ItemRemove"].Visible = sensitive
                 && playlistModel.Source.Type != SourceType.AudioCd;
             gxmlPlaylistMenu["ItemDeleteSongsFileSystem"].Visible = sensitive 
-                && playlistModel.Source.Type != SourceType.Ipod 
+                && playlistModel.Source.Type != SourceType.Dap 
                 && playlistModel.Source.Type != SourceType.AudioCd;
             gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
             
@@ -2384,8 +2373,8 @@ namespace Banshee
         {
             if(source.CanEject) {
                 try {
-                    if(source.GetType() == typeof(IpodSource)) {
-                        if(activeTrackInfo != null && activeTrackInfo is IpodTrackInfo) {
+                    if(source.GetType() == typeof(DapSource)) {
+                        if(activeTrackInfo != null && activeTrackInfo is DapTrackInfo) {
                             StopPlaying();
                         }
                     }
@@ -2405,8 +2394,8 @@ namespace Banshee
         
         private void ShowSourceProperties(Source source)
         {
-            switch(source.Type) {
-                case SourceType.Ipod:
+           /* switch(source.Type) {
+                case SourceType.Dap:
                     IpodSource ipodSource = source as IpodSource;
                     IPod.Device device = ipodSource.Device;
                     IpodPropertiesDialog propWin = 
@@ -2418,7 +2407,7 @@ namespace Banshee
                     source.Rename(device.Name);
                     sourceView.QueueDraw();
                     break;
-            }
+            }*/
         }
         
         private void StopPlaying()
@@ -2480,14 +2469,14 @@ namespace Banshee
                 HBox syncing_box = new HBox();
                 syncing_container.Add(syncing_box);
                 syncing_box.Spacing = 20;
-                syncing_box.PackStart(ipod_syncing_image, false, false, 0);
+                syncing_box.PackStart(dap_syncing_image, false, false, 0);
                 Label syncing_label = new Label();
                                                 
                 syncing_container.ModifyBg(StateType.Normal, new Color(0, 0, 0));
                 syncing_label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
             
                 syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
-                    Catalog.GetString("Synchronizing your iPod, Please Wait...")) + "</b></big>";
+                    Catalog.GetString("Synchronizing your Device, Please Wait...")) + "</b></big>";
                 syncing_box.PackStart(syncing_label, false, false, 0);
             }
             

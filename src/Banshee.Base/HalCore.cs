@@ -8,44 +8,58 @@ namespace Banshee.Base
     public static class HalCore 
     {
         private delegate void HalDeviceCallback(IntPtr context, IntPtr udi);
+        private delegate void HalDevicePropertyModifiedCallback(IntPtr context, IntPtr udi, IntPtr key, 
+            bool is_removed, bool is_added);
         
         [DllImport("libbanshee")]
         private static extern IntPtr hal_context_new(out IntPtr error_out,
-            HalDeviceCallback added_cb, HalDeviceCallback removed_cb);
+            HalDeviceCallback added_cb, HalDeviceCallback removed_cb, 
+            HalDevicePropertyModifiedCallback property_modified_cb);
         
         public static event DeviceAddedHandler DeviceAdded;
         public static event DeviceRemovedHandler DeviceRemoved;
+        public static event DevicePropertyModifiedHandler DevicePropertyModified;
         
         private static IntPtr hal_context_raw;
         private static Context hal_context;
         
         private static void HalDeviceAdded(IntPtr contextRaw, IntPtr udiRaw)
         {
-            DeviceAddedHandler handler = DeviceAdded;
-            
-            if(handler != null) {
+            Event.Invoke(DeviceAdded, Context, delegate {
                 DeviceAddedArgs args = new DeviceAddedArgs();
                 args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
-                handler(Context, args);
-            }
+                return args;
+            });  
         }
         
         private static void HalDeviceRemoved(IntPtr contextRaw, IntPtr udiRaw)
         {
-            DeviceRemovedHandler handler = DeviceRemoved;
-            
-            if(handler != null) {
+            Event.Invoke(DeviceRemoved, Context, delegate {
                 DeviceRemovedArgs args = new DeviceRemovedArgs();
                 args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
-                handler(Context, args);
-            }    
+                return args;
+            });  
+        }
+        
+        private static void HalDevicePropertyModified(IntPtr contextRaw, IntPtr udiRaw, IntPtr keyRaw,
+            bool isRemoved, bool isAdded)
+        {
+            Event.Invoke(DevicePropertyModified, Context, delegate {
+                DevicePropertyModifiedArgs args = new DevicePropertyModifiedArgs();
+                args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
+                args.Key = UnixMarshal.PtrToString(keyRaw);
+                args.IsRemoved = isRemoved;
+                args.IsAdded = isAdded;
+                return args;
+            });
         }
         
         static HalCore()
         {
             try {
                 IntPtr error_ptr;
-                hal_context_raw = hal_context_new(out error_ptr, HalDeviceAdded, HalDeviceRemoved);
+                hal_context_raw = hal_context_new(out error_ptr, HalDeviceAdded, 
+                    HalDeviceRemoved, HalDevicePropertyModified);
                 if(hal_context_raw == IntPtr.Zero) {
                     string error = error_ptr == IntPtr.Zero 
                         ? Catalog.GetString("HAL could not be initialized")

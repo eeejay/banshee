@@ -101,10 +101,13 @@ namespace Hal
         
         public void Initialize()
         {
-            if(!Unmanaged.libhal_ctx_init(ctx_handle, IntPtr.Zero)) {
-                throw new HalException("Could not initialize HAL Context");
+            DBusError error = new DBusError();
+            if(!Unmanaged.libhal_ctx_init(ctx_handle, error.Raw)) {
+                error.ThrowExceptionIfSet("Could not initialize HAL Context");
+                return;
             }
             
+            error.Dispose();
             initialized = true;
         }
         
