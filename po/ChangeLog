@@ -1,3 +1,7 @@
+2005-12-01  Aaron Bockover  <aaron@aaronbock.net>
+
+	* da.po: Added Danish translation by Lasse Bang Mikkelsen
+
 2005-11-26  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added libbanshee/hal-context.c, src/Banshee.Base/HalCore.cs
