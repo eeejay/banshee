@@ -18,8 +18,6 @@ src/Dialogs.cs
 src/ExceptionDialog.cs
 src/FileEncodeTransaction.cs
 src/GstFileEncoder.cs
-src/IpodCore.cs
-src/IpodPropertiesWindow.cs
 src/Library.cs
 src/LibraryTransactions.cs
 src/LibraryTransactionStatus.cs
@@ -42,6 +40,7 @@ src/Banshee.Base/TrackInfo.cs
 src/Banshee.Base/Utilities.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
+src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
 src/Banshee.MediaEngine/Helix/HelixPlayer.cs
 src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
