@@ -1,0 +1,63 @@
+<Type Name="PlayerEngineLoader" FullName="Banshee.MediaEngine.PlayerEngineLoader">
+  <TypeSignature Language="C#" Value="public class PlayerEngineLoader" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Base</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PlayerEngineLoader ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadEngines">
+      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.PlayerEngineSlot[] LoadEngines ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineSlot[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SelectedEngine">
+      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.IPlayerEngine SelectedEngine { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.IPlayerEngine</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Engines">
+      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.IPlayerEngine[] Engines { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.IPlayerEngine[]</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

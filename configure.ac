@@ -55,6 +55,8 @@ AM_CONDITIONAL(ENABLE_VLC, test "x$enable_vlc" = "xyes")
 AC_ARG_ENABLE(xing, AC_HELP_STRING([--enable-xing], [Enable Real's Xing MP3 Encoder]), , enable_xing="no")
 AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
 
+AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
+
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
@@ -119,6 +121,26 @@ fi
 
 AC_SUBST(MCS)
 AC_SUBST(MONO)
+
+if test "x$with_docs" = "xyes"; then
+	AC_PATH_PROG(MONODOCER, monodocer, no)
+	if test "x$MONODOCER" = "xno"; then
+		AC_MSG_ERROR([You need to install monodoc, or pass --disable-docs to configure to skip documentation installation])
+	fi
+
+	AC_PATH_PROG(MDASSEMBLER, mdassembler, no)
+	if test "x$MDASSEMBLER" = "xno"; then
+		AC_MSG_ERROR([You need to install mdassembler, or pass --disable-docs to configure to skip documentation installation])
+	fi
+
+	DOCDIR=`$PKG_CONFIG monodoc --variable=sourcesdir`
+	AC_SUBST(DOCDIR)
+	AM_CONDITIONAL(BUILD_DOCS, true)
+else
+	AC_MSG_NOTICE([not building Banshee API documentation])
+	AM_CONDITIONAL(BUILD_DOCS, false)
+fi
+
 
 dnl gtk-sharp, other CLR deps
 GTKSHARP_REQUIRED=2.3.92
@@ -374,6 +396,7 @@ data/org.gnome.Banshee.service
 data/glade/Makefile
 data/images/Makefile
 data/images/ipod/Makefile
+docs/Makefile
 po/Makefile.in
 ])
 

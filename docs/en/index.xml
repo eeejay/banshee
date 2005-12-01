@@ -1,0 +1,120 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="hal-sharp" Version="0.0.0.0" />
+    <Assembly Name="Banshee.Base" Version="0.0.0.0" />
+    <Assembly Name="Banshee.Widgets" Version="0.0.0.0" />
+  </Assemblies>
+  <Remarks>To be added.</Remarks>
+  <Copyright>To be added.</Copyright>
+  <Types>
+    <Namespace Name="Hal">
+      <Type Name="DBusError" />
+      <Type Name="DeviceAddedArgs" />
+      <Type Name="DeviceRemovedArgs" />
+      <Type Name="DeviceNewCapabilityArgs" />
+      <Type Name="DeviceLostCapabilityArgs" />
+      <Type Name="DevicePropertyModifiedArgs" />
+      <Type Name="DeviceConditionArgs" />
+      <Type Name="Context" />
+      <Type Name="Device" />
+      <Type Name="Device+FindBy" />
+      <Type Name="HalException" />
+      <Type Name="DeviceAddedHandler" />
+      <Type Name="DeviceRemovedHandler" />
+      <Type Name="DeviceNewCapabilityHandler" />
+      <Type Name="DeviceLostCapabilityHandler" />
+      <Type Name="DevicePropertyModifiedHandler" />
+      <Type Name="DeviceConditionHandler" />
+      <Type Name="DbusBusType" />
+      <Type Name="PropertyType" />
+    </Namespace>
+    <Namespace Name="Banshee.MediaEngine">
+      <Type Name="IPlayerEngine" />
+      <Type Name="PlayerEngineErrorArgs" />
+      <Type Name="PlayerEngineVolumeChangedArgs" />
+      <Type Name="PlayerEngineIterateArgs" />
+      <Type Name="PlayerEngineSlot" />
+      <Type Name="PlayerEngineLoader" />
+      <Type Name="PlayerEngineErrorHandler" />
+      <Type Name="PlayerEngineVolumeChangedHandler" />
+      <Type Name="PlayerEngineIterateHandler" />
+    </Namespace>
+    <Namespace Name="Banshee.Base">
+      <Type Name="HalCore" />
+      <Type Name="UidGenerator" />
+      <Type Name="Utilities" />
+      <Type Name="DateTimeUtil" />
+      <Type Name="Timer" />
+      <Type Name="ThreadAssist" />
+      <Type Name="Event" />
+      <Type Name="Event+ArgumentRequestCallback" />
+      <Type Name="StringUtil" />
+      <Type Name="PathUtil" />
+      <Type Name="Resource" />
+      <Type Name="ArgumentLayout" />
+      <Type Name="ArgumentQueue" />
+      <Type Name="LogCoreUpdatedArgs" />
+      <Type Name="LogEntry" />
+      <Type Name="ErrorLogEntry" />
+      <Type Name="WarningLogEntry" />
+      <Type Name="DebugLogEntry" />
+      <Type Name="InformationLogEntry" />
+      <Type Name="LogCore" />
+      <Type Name="Paths" />
+      <Type Name="TrackInfo" />
+      <Type Name="FileNamePattern" />
+      <Type Name="Globals" />
+      <Type Name="GConfKeys" />
+      <Type Name="SpecialKeys" />
+      <Type Name="BansheeTodo" />
+      <Type Name="AudioCdCoreDiskRemovedArgs" />
+      <Type Name="AudioCdCoreDiskAddedArgs" />
+      <Type Name="AudioCdCore" />
+      <Type Name="AudioCdTrackInfo" />
+      <Type Name="AudioCdDisk" />
+      <Type Name="ConfigureDefines" />
+      <Type Name="LogCoreUpdatedHandler" />
+      <Type Name="SpecialKeyPressedHandler" />
+      <Type Name="AudioCdCoreDiskRemovedHandler" />
+      <Type Name="AudioCdCoreDiskAddedHandler" />
+      <Type Name="LogEntryType" />
+      <Type Name="SpecialKey" />
+    </Namespace>
+    <Namespace Name="Banshee.Dap">
+      <Type Name="DapProperties" />
+      <Type Name="BrokenDeviceException" />
+      <Type Name="CannotHandleDeviceException" />
+      <Type Name="WaitForPropertyChangeException" />
+      <Type Name="DapTrackListUpdatedArgs" />
+      <Type Name="DapDevice" />
+      <Type Name="DapDevice+PropertyTable" />
+      <Type Name="DapDevice+PropertyTable+Property" />
+      <Type Name="DapEventArgs" />
+      <Type Name="DapCore" />
+      <Type Name="DapTrackInfo" />
+      <Type Name="DapTrackListUpdatedHandler" />
+      <Type Name="DapEventHandler" />
+      <Type Name="DapType" />
+    </Namespace>
+    <Namespace Name="Banshee.Widgets">
+      <Type Name="CoverArtThumbnail" />
+      <Type Name="CoverArtPopup" />
+      <Type Name="DateButton" />
+      <Type Name="EllipsizeLabel" />
+      <Type Name="ImageAnimation" />
+      <Type Name="ToggleStateChangedArgs" />
+      <Type Name="MultiStateToggleButton" />
+      <Type Name="SearchEntry" />
+      <Type Name="SimpleNotebook" />
+      <Type Name="ToggleState" />
+      <Type Name="VolumeButton" />
+      <Type Name="VolumeButton+VolumeChangedHandler" />
+      <Type Name="ActiveUserEvent" />
+      <Type Name="ActiveUserEventsManager" />
+      <Type Name="HigMessageDialog" />
+      <Type Name="NotificationAreaIcon" />
+      <Type Name="ToggleStateChangedHandler" />
+    </Namespace>
+  </Types>
+  <Title>Untitled</Title>
+</Overview>

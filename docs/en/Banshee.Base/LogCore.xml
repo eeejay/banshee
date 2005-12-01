@@ -1,0 +1,245 @@
+<Type Name="LogCore" FullName="Banshee.Base.LogCore">
+  <TypeSignature Language="C#" Value="public class LogCore : System.Collections.IEnumerable" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Base</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected LogCore ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Updated">
+      <MemberSignature Language="C#" Value="public event Banshee.Base.LogCoreUpdatedHandler Updated;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogCoreUpdatedHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PrintEntries">
+      <MemberSignature Language="C#" Value="public static bool PrintEntries;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushError">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushError (string shortMessage, string details);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushError">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushError (string shortMessage, string details, bool showUser);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+        <Parameter Name="showUser" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <param name="showUser">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushWarning">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushWarning (string shortMessage, string details);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushWarning">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushWarning (string shortMessage, string details, bool showUser);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+        <Parameter Name="showUser" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <param name="showUser">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushInformation">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushInformation (string shortMessage, string details);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushInformation">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushInformation (string shortMessage, string details, bool showUser);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+        <Parameter Name="showUser" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <param name="showUser">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushDebug">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushDebug (string shortMessage, string details);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PushDebug">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry PushDebug (string shortMessage, string details, bool showUser);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="shortMessage" Type="System.String" />
+        <Parameter Name="details" Type="System.String" />
+        <Parameter Name="showUser" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="shortMessage">To be added.</param>
+        <param name="details">To be added.</param>
+        <param name="showUser">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Push">
+      <MemberSignature Language="C#" Value="public Banshee.Base.LogEntry Push (Banshee.Base.LogEntry entry);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogEntry</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="entry" Type="Banshee.Base.LogEntry" />
+      </Parameters>
+      <Docs>
+        <param name="entry">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.IEnumerator GetEnumerator ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Instance">
+      <MemberSignature Language="C#" Value="public static Banshee.Base.LogCore Instance { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LogCore</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>
