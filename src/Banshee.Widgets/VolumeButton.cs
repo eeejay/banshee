@@ -46,18 +46,18 @@ namespace Banshee.Widgets
 
 		public int Volume {
 			set {
-				string id = "volume-";
+				string id = "audio-volume-";
 				
 				volume = value;
 
 				if (volume <= 0)
-					id += "zero";
+					id += "muted";
 				else if (volume <= 100 / 3)
-					id += "min";
+					id += "low";
 				else if (volume <= 200 / 3)
-					id += "med";
+					id += "medium";
 				else
-					id += "max";
+					id += "high";
 
 			
 				icon.SetFromStock(id, IconSize.LargeToolbar);
@@ -136,11 +136,11 @@ namespace Banshee.Widgets
 			scale.Show ();
 
 
-			image = new Image("volume-increase", IconSize.Menu);
+			image = new Image("audio-volume-increase", IconSize.Menu);
 			image.Show ();
 			box.PackStart (image, false, true, 0);
 
-			image = new Image("volume-decrease", IconSize.Menu);
+			image = new Image("audio-volume-decrease", IconSize.Menu);
 			image.Show ();
 			box.PackEnd (image, false, true, 0);
 

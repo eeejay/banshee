@@ -88,8 +88,7 @@ namespace Banshee.Widgets
             entry.KeyPressEvent += OnEntryKeyPressEvent;
             
             icon = Gdk.Pixbuf.LoadFromResource("search-entry-icon.png");
-            hoverIcon = Gdk.Pixbuf.LoadFromResource(
-                "search-entry-icon-hover.png");
+            hoverIcon = Gdk.Pixbuf.LoadFromResource("search-entry-icon-hover.png");
             
             img = new Image(icon);
             //img.CanFocus = true;
@@ -105,18 +104,15 @@ namespace Banshee.Widgets
             evBox.FocusInEvent += OnFocusInEvent;
             evBox.FocusOutEvent += OnFocusOutEvent;
             evBox.Add(img);
-            evBox.ModifyBg(StateType.Normal, 
-                entry.Style.Base(StateType.Normal));
-            evContainer.ModifyBg(StateType.Normal, 
-                entry.Style.Base(StateType.Normal));
+            evBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
+            evContainer.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             
             cancelImage = new Image("gtk-close", IconSize.Menu);
             cancelImage.Xpad = 2;
             evCancelBox = new EventBox();
             evCancelBox.CanFocus = true;
             evCancelBox.Add(cancelImage);
-            evCancelBox.ModifyBg(StateType.Normal, 
-                entry.Style.Base(StateType.Normal));
+            evCancelBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             evCancelBox.EnterNotifyEvent += OnCancelEnterNotifyEvent;
             evCancelBox.ButtonPressEvent += OnCancelButtonPressEvent;
             evCancelBox.KeyPressEvent += OnCancelKeyPressEvent;
@@ -141,9 +137,9 @@ namespace Banshee.Widgets
             popupMenu.Deactivated += OnMenuDeactivated;
             
             foreach(string menuLabel in searchFields) {
-                if(menuLabel.Equals("-"))
+                if(menuLabel.Equals("-")) {
                     popupMenu.Append(new SeparatorMenuItem());
-                else {
+                } else {
                     CheckMenuItem item = new CheckMenuItem(menuLabel);
                     item.DrawAsRadio = true;
                     item.Toggled += OnMenuItemToggled;
@@ -163,8 +159,7 @@ namespace Banshee.Widgets
         
         private void ShowMenu(uint time)
         {
-            popupMenu.Popup(null, null, new MenuPositionFunc(MenuPosition), 
-                 0, time);
+            popupMenu.Popup(null, null, new MenuPositionFunc(MenuPosition), 0, time);
             popupMenu.ShowAll();
             img.Pixbuf = hoverIcon;
             menuActive = true;
@@ -178,8 +173,9 @@ namespace Banshee.Widgets
         
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
         {
-            if(!evBox.HasFocus && !menuActive)
+            if(!evBox.HasFocus && !menuActive) {
                 img.Pixbuf = icon;
+            }
         }
         
         private void OnButtonPressEvent(object o, ButtonPressEventArgs args)
@@ -194,22 +190,25 @@ namespace Banshee.Widgets
         
         private void OnFocusOutEvent(object o, EventArgs args)
         {
-            if(!menuActive)
+            if(!menuActive) {
                 img.Pixbuf = icon;
+            }
         }
         
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
-            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space)
+            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space) {
                 return;
+            }
                 
             ShowMenu(args.Event.Time);
         }
 
         private void OnEntryKeyPressEvent(object o, KeyPressEventArgs args) 
         {
-            if(args.Event.Key != Gdk.Key.Delete)
+            if(args.Event.Key != Gdk.Key.Delete) {
                 return;
+            }
         }
 
         private void OnCancelEnterNotifyEvent(object o, EnterNotifyEventArgs args)
@@ -224,14 +223,14 @@ namespace Banshee.Widgets
         
         private void OnCancelKeyPressEvent(object o, KeyPressEventArgs args)
         {
-            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space)
+            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space) {
                 return;
+            }
                 
             CancelSearch(true);
         }
 
-        private void MenuPosition(Menu menu, out int x, out int y, 
-            out bool push_in)
+        private void MenuPosition(Menu menu, out int x, out int y, out bool push_in)
         {
             int pX, pY;
             
@@ -246,19 +245,22 @@ namespace Banshee.Widgets
         private void OnMenuItemToggled(object o, EventArgs args)
         {
             CheckMenuItem item = o as CheckMenuItem;
-            if(activeItem == item)
+            if(activeItem == item) {
                 item.Active = true;
-            else
+            } else {
                 activeItem = item;
-                
+            }
+            
             foreach(MenuItem iterItem in popupMenu.Children) {
-                if(!(iterItem is CheckMenuItem))
+                if(!(iterItem is CheckMenuItem)) {
                     continue;
+                }
                 
                 CheckMenuItem checkItem = iterItem as CheckMenuItem;
                     
-                if(checkItem != activeItem)
+                if(checkItem != activeItem) {
                     checkItem.Active = false;
+                }
             }
             
             activeItem.Active = true;
@@ -268,8 +270,9 @@ namespace Banshee.Widgets
             entry.HasFocus = true;
             
             EventHandler handler = Changed;
-            if(handler != null)
-                handler(this, new EventArgs()); 
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
         
         private void OnMenuDeactivated(object o, EventArgs args)
@@ -281,15 +284,17 @@ namespace Banshee.Widgets
         private void OnEntryActivated(object o, EventArgs args)
         {
             EventHandler handler = EnterPress;
-            if(handler != null)
+            if(handler != null) {
                 handler(this, new EventArgs());
+            }
         }
 
-        private bool OnTimeout () {
+        private bool OnTimeout () 
+        {
             EventHandler handler = Changed;
-            
-            if (handler != null && !emptyEmitted)
-                handler (this, new EventArgs ());
+            if(handler != null && !emptyEmitted) {
+                handler(this, new EventArgs());
+            }
 
             emptyEmitted = entry.Text.Length == 0;
             return false;
@@ -305,11 +310,11 @@ namespace Banshee.Widgets
                 evCancelBox.ShowAll();
             }
 
-            if (timeoutId > 0) {
-                GLib.Source.Remove (timeoutId);
+            if(timeoutId > 0) {
+                GLib.Source.Remove(timeoutId);
             }
             
-            timeoutId = GLib.Timeout.Add (300, OnTimeout);
+            timeoutId = GLib.Timeout.Add(300, OnTimeout);
         }
         
         public void CancelSearch(bool focus)
@@ -317,10 +322,9 @@ namespace Banshee.Widgets
             entry.Text = String.Empty;
         }
         
-        public string Query
-        {
+        public string Query {
             get {
-                return entry.Text;
+                return entry.Text.Trim();
             }
             
             set {
@@ -328,8 +332,7 @@ namespace Banshee.Widgets
             }
         }
         
-        public string Field
-        {
+        public string Field {
             get {
                 return menuMap[activeItem] as string;
             }
@@ -340,10 +343,15 @@ namespace Banshee.Widgets
             entry.HasFocus = true;
         }
 
-        public new bool HasFocus
-        {
+        public new bool HasFocus {
             get {
                 return entry.HasFocus;
+            }
+        }
+        
+        public bool IsQueryAvailable {
+            get {
+                return Query != null && Query != String.Empty;
             }
         }
     }

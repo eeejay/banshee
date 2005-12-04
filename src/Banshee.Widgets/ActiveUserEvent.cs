@@ -113,8 +113,9 @@ namespace Banshee.Widgets
         
         public void Cancel()
         {
-            if(CancelRequested != null) {
-                CancelRequested(this, new EventArgs());
+            EventHandler handler = CancelRequested; 
+            if(handler != null) {
+                handler(this, new EventArgs());
             }    
             
             cancel_requested = true;       
@@ -188,6 +189,10 @@ namespace Banshee.Widgets
                     progress_bar.Fraction = value;
                     progress_bar.Text = String.Format("{0}%", (int)(value * 100.0));
                 });
+            }
+            
+            get {
+                return progress_bar.Fraction;
             }
         }
         
