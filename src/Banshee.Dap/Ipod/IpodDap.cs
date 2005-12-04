@@ -95,6 +95,7 @@ namespace Banshee.Dap.Ipod
         public override void Eject()
         {
             device.Eject();
+            base.Eject();
         }
         
         public override void Save()
