@@ -36,6 +36,7 @@ src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/VersionInformationDialog.cs
 src/Banshee.Base/HalCore.cs
+src/Banshee.Base/ImportManager.cs
 src/Banshee.Base/TrackInfo.cs
 src/Banshee.Base/Utilities.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
