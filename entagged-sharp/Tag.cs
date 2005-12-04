@@ -349,13 +349,13 @@ namespace Entagged.Audioformats
         public IList Get(CommonField id)
         {
             IList list = Get(id.ToString());
-            if(list.Count == 0) {
+            /*if(list.Count == 0) {
                 try {
                     return Get(((CommonField)common_field_aliases[id]).ToString());
                 } catch(Exception) {
                     return list;
                 }
-            }
+            }*/
             
             return list;
         }
