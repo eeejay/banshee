@@ -60,7 +60,7 @@ AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
-AC_ARG_WITH(gstreamer-dev, AC_HELP_STRING([--with-gstreamer-dev], [Build the GStreamer 0.9 backends (DEVELOPMENTAL)]), enable_gst_dev="yes", enable_gst_dev="no")
+AC_ARG_WITH(gstreamer-dev, AC_HELP_STRING([--with-gstreamer-dev], [Build the GStreamer 0.10 backends (DEVELOPMENTAL)]), enable_gst_dev="yes", enable_gst_dev="no")
 AM_CONDITIONAL(ENABLE_GST_DEV, test "x$enable_gst_dev" = "xyes")
 
 if test "x$enable_xing" = "xyes"; then
@@ -188,17 +188,17 @@ PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 dnl gstreamer devel deps
 
 if test "x$enable_gst_dev" = "xyes"; then
-	GSTREAMER_REQUIRED_VERSION=0.9.5
+	GSTREAMER_REQUIRED_VERSION=0.9.7
 	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 	PKG_CHECK_MODULES(GST,
-		gstreamer-0.9 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-base-0.9 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-plugins-base-0.9 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-controller-0.9 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-dataprotocol-0.9 >= $GSTREAMER_REQUIRED_VERSION)
+		gstreamer-0.10 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
 
 	if test "x$enable_xing" = "xyes"; then
-		AC_MSG_ERROR([The Xing GStreamer plugin has not been ported to GStreamer 0.9 and cannot be enabled if you enable GStreamer 0.9])
+		AC_MSG_ERROR([The Xing GStreamer plugin has not been ported to GStreamer 0.10 and cannot be enabled if you enable GStreamer 0.10])
 	fi
 else
 	GSTREAMER_REQUIRED_VERSION=0.8.11

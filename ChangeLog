@@ -1,3 +1,7 @@
+2005-12-04  Christian Schaller  <uraeus@gnome.org>
+
+	* configure.ac: change testing to check for GStreamer 0.10
+
 2005-12-01  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Widgets/SimpleNotebook.cs:
