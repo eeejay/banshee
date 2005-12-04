@@ -36,16 +36,16 @@ namespace Banshee
     {    
         public static void Main(string[] args)
         {
-            try {
+          //  try {
                 Startup(args);
-            } catch(Exception e) {
+           /* } catch(Exception e) {
                 Console.Error.WriteLine(e);
                 Gtk.Application.Init();
                 ExceptionDialog dlg = new ExceptionDialog(e);
                 dlg.Run();
                 dlg.Destroy();
                 System.Environment.Exit(1);
-            }
+            }*/
         }
         
         private static void Startup(string [] args)
