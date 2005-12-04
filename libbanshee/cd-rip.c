@@ -44,7 +44,7 @@
 #include <gst/tag/tag.h>
 
 #include "cd-rip.h"
-#include "gst-init.h"
+#include "gst-misc.h"
 
 
 static GstElement *

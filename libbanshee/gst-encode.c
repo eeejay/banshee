@@ -38,7 +38,7 @@
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "gst-encode.h"
-#include "gst-init.h"
+#include "gst-misc.h"
 
 static GstElement *
 gst_file_encoder_build_encoder(const gchar *encoder_pipeline)

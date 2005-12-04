@@ -33,5 +33,7 @@
 #include <gst/gst.h>
 
 gboolean gstreamer_test_encoder(gchar *encoder_pipeline);
+void gstreamer_initialize();
+gchar *gstreamer_detect_mimetype(const gchar *uri);
 
 #endif

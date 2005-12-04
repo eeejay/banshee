@@ -39,6 +39,18 @@
 #include <gst/gst.h>
 #include <gst/gconf/gconf.h>
 
+static gboolean gstreamer_initialized = FALSE;
+
+void gstreamer_initialize()
+{
+	if(gstreamer_initialized)
+		return;
+
+	gst_init(NULL, NULL);
+
+	gstreamer_initialized = TRUE;
+}
+
 gboolean
 gstreamer_test_encoder(gchar *encoder_pipeline)
 {
@@ -69,3 +81,62 @@ gstreamer_test_encoder(gchar *encoder_pipeline)
     
     return FALSE;*/
 }
+
+static void
+gst_type_found_cb(GstElement *typefind, guint probability, GstCaps *caps, 
+	gchar **type)
+{
+	*type = gst_caps_to_string(caps);	
+}
+
+static void
+gst_error_cb(GstElement *pipeline, GstElement *source, GError *error,
+	gchar *debug, gchar **data)
+{
+	*data = "error";
+}
+
+gchar *
+gstreamer_detect_mimetype(const gchar *uri)
+{
+	GstElement *pipeline;
+	GstElement *source;
+	GstElement *typefind;
+	gchar *mimetype = NULL;
+
+	pipeline = gst_pipeline_new("new");
+	g_signal_connect(pipeline, "error", G_CALLBACK(gst_error_cb), &mimetype);
+
+	source = gst_element_factory_make("gnomevfssrc", "source");
+	typefind = gst_element_factory_make("typefind", "typefind");
+
+	if(source == NULL || typefind == NULL) {
+		gst_object_unref(GST_OBJECT(pipeline));
+		return NULL;
+	}
+
+	g_object_set(G_OBJECT(source), "location", uri, NULL);
+	g_signal_connect(typefind, "have-type", G_CALLBACK(gst_type_found_cb), 
+		&mimetype);
+
+	gst_bin_add_many(GST_BIN(pipeline), source, typefind, NULL);
+	gst_element_link(source, typefind);
+	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
+
+	do {
+		if(!gst_bin_iterate(GST_BIN(pipeline))) {
+			break;
+		}
+	} while(mimetype == NULL);
+
+	if(strcmp(mimetype, "error") == 0) {
+		mimetype = NULL;
+	}
+
+	gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_NULL);
+	gst_object_unref(GST_OBJECT(pipeline));
+
+	return mimetype;
+}
+
+

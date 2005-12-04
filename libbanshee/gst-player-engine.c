@@ -37,7 +37,7 @@
 #include <gst/gconf/gconf.h>
 
 #include "gst-player-engine.h"
-#include "gst-init.h"
+#include "gst-misc.h"
 
 static void end_of_stream_cb(GstElement *sink, GstPlayerEngine *engine);
 static gboolean gpe_pipeline_setup(GstPlayerEngine *engine);

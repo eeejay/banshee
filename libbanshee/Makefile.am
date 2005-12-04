@@ -18,8 +18,6 @@ libbanshee_la_SOURCES = \
 	hal-context.h \
 	cd-rip.c    \
 	cd-rip.h    \
-	gst-init.c  \
-	gst-init.h  \
 	gst-encode.c \
 	gst-encode.h \
 	gst-player-engine.c \
