@@ -79,6 +79,12 @@
       <Type Name="AudioCdCoreDiskAddedHandler" />
       <Type Name="LogEntryType" />
       <Type Name="SpecialKey" />
+      <Type Name="IconThemeUtils" />
+      <Type Name="Gstreamer" />
+      <Type Name="ImportEventArgs" />
+      <Type Name="ImportManager" />
+      <Type Name="UriList" />
+      <Type Name="ImportEventHandler" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />

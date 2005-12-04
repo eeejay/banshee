@@ -1,5 +1,5 @@
 <Type Name="DapDevice" FullName="Banshee.Dap.DapDevice">
-  <TypeSignature Language="C#" Value="public abstract class DapDevice : System.Collections.IEnumerable" />
+  <TypeSignature Language="C#" Value="public abstract class DapDevice : System.Collections.IEnumerable, System.IDisposable" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Base</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -10,6 +10,9 @@
   <Interfaces>
     <Interface>
       <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
   <Attributes>
@@ -361,6 +364,40 @@
         <param name="index">To be added.</param>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Ejected">
+      <MemberSignature Language="C#" Value="public event EventHandler Ejected;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HalDevice">
+      <MemberSignature Language="C#" Value="public Hal.Device HalDevice;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue>
+        <ReturnType>Hal.Device</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public virtual void Dispose ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

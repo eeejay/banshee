@@ -96,7 +96,7 @@
       </Docs>
     </Member>
     <Member MemberName="Progress">
-      <MemberSignature Language="C#" Value="public double Progress { set; };" />
+      <MemberSignature Language="C#" Value="public double Progress { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Double</ReturnType>
