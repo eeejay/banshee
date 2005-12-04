@@ -231,6 +231,7 @@ namespace Banshee
             library.Db.Close();
             
             HalCore.Dispose();
+            Banshee.Dap.DapCore.Dispose();
         }
     }
 }

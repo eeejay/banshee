@@ -432,9 +432,9 @@ namespace Banshee
             ParseUri(filename);
             track_id = 0;
    
-            AudioFile af = new AudioFile(filename);
+            AudioFile af = new AudioFile(filename, Gstreamer.DetectMimeType(PathUtil.PathToFileUri(filename)));
 
-            mimetype = null;
+            mimetype = af.MimeType;
 
 			artist = Choose (af.Artist, artist);
             album = Choose  (af.Album, album);

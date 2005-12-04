@@ -169,6 +169,8 @@ namespace Banshee
             
             Core.Log.Updated += OnLogCoreUpdated;
             
+            ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
+            
             //InitialLoadTimeout();
             GLib.Timeout.Add(500, InitialLoadTimeout);
             WindowPlayer.Show();
@@ -256,11 +258,11 @@ namespace Banshee
         private void BuildWindow()
         {
             // Icons and Pixbufs
-            WindowPlayer.Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(WindowPlayer);
             
-            ImagePrevious.SetFromStock("media-prev", IconSize.LargeToolbar);
-            ImageNext.SetFromStock("media-next", IconSize.LargeToolbar);
-            ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+            ImagePrevious.Pixbuf = IconThemeUtils.LoadIcon("media-skip-backward", 22);
+            ImageNext.Pixbuf = IconThemeUtils.LoadIcon("media-skip-forward", 22);
+            ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 22);
             
             ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
             ImageRip.SetFromStock("media-rip", IconSize.LargeToolbar);
@@ -366,14 +368,12 @@ namespace Banshee
             box.PackStart(dapSyncButton, false, false, 0);
             dapSyncButton.ShowAll();
             
-            dapPropertiesButton = new Button(
-                new Gtk.Image("gtk-properties", IconSize.Menu));
+            dapPropertiesButton = new Button(new Gtk.Image(IconThemeUtils.LoadIcon("document-properties", 22)));
             dapPropertiesButton.Clicked += OnDapPropertiesClicked;
             box.PackStart(dapPropertiesButton, false, false, 0);
             dapPropertiesButton.ShowAll();
             
-            dapEjectButton = new Button(new Gtk.Image("media-eject",
-                IconSize.Menu));
+            dapEjectButton = new Button(new Gtk.Image(IconThemeUtils.LoadIcon("media-eject", 22)));
             dapEjectButton.Clicked += OnDapEjectClicked;
             box.PackStart(dapEjectButton, false, false, 0);
             dapEjectButton.ShowAll();
@@ -402,8 +402,10 @@ namespace Banshee
             searchEntry.EnterPress += OnSimpleSearch;
             searchEntry.Changed += OnSimpleSearch;
             searchEntry.Show();
-            ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, 
-                false, false, 0);
+            ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, false, false, 0);
+                
+            gxml["SearchLabel"].Sensitive = false;
+            searchEntry.Sensitive = false;
                 
             // Repeat/Shuffle buttons
             
@@ -586,6 +588,9 @@ namespace Banshee
             ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoadingVP);
             ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
             sourceView.Show();
+            
+            gxml["SearchLabel"].Sensitive = true;
+            searchEntry.Sensitive = true;
         }
         
         private void OnLibraryTransactionStatusStopped(object o, EventArgs args)
@@ -656,17 +661,17 @@ namespace Banshee
         public void TogglePlaying()
         {
             if(Core.Instance.Player.Playing) {
-                ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+                ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 22);
                 Core.Instance.Player.Pause();
                 
                 if(trayIcon != null) {
-                    ((Gtk.Image)trayIcon.PlayItem.Image).SetFromStock("media-play", IconSize.Menu);
+                    ((Gtk.Image)trayIcon.PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 16);
                 }
             } else {
-                ImagePlayPause.SetFromStock("media-pause", IconSize.LargeToolbar);
+                ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-pause", 22);
                 Core.Instance.Player.Play();
                 if(trayIcon != null) {
-                    ((Gtk.Image)trayIcon.PlayItem.Image).SetFromStock("media-pause", IconSize.Menu);
+                    ((Gtk.Image)trayIcon.PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-pause", 16);
                 }
             }
         }
@@ -1083,38 +1088,24 @@ namespace Banshee
             );
             
             try {
-                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(
-                     GConfKeys.LastFileSelectorUri) as string);
+                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
             } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(
-                    Environment.SpecialFolder.Personal));
+                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             }
             
             chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
             chooser.AddButton(Stock.Open, ResponseType.Ok);
             chooser.DefaultResponse = ResponseType.Ok;
             
-            if(chooser.Run() == (int)ResponseType.Ok) 
-                ImportMusic(chooser.Uri);
-                
-            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-                 chooser.CurrentFolderUri);
+            if(chooser.Run() == (int)ResponseType.Ok) { 
+                ImportManager.Instance.QueueSource(chooser.Uri);
+            }
+            
+            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
             
             chooser.Destroy();
         }
-        
-        private void ImportMusic(string path)
-        {
-            if(sourceView.SelectedSource.Type == SourceType.Library &&
-                searchEntry.Query == String.Empty) {
-                playlistModel.AddFile(path);
-            } else {
-                FileLoadTransaction loader = new FileLoadTransaction(path);
-                loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-                loader.Register();
-            }
-        }
-        
+
         private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
         {
             sourceView.QueueDraw();
@@ -1123,7 +1114,7 @@ namespace Banshee
         
         private void ImportHomeDirectory()
         {
-            ImportMusic(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            ImportManager.Instance.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
         }
 
         private void OnMenuImportFolderActivate(object o, EventArgs args)
@@ -1140,11 +1131,9 @@ namespace Banshee
             );
             
             try {
-                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(
-                     GConfKeys.LastFileSelectorUri) as string);
+                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
             } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(
-                    Environment.SpecialFolder.Personal));
+                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             }
             
             chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
@@ -1154,13 +1143,10 @@ namespace Banshee
             chooser.DefaultResponse = ResponseType.Ok;
             
             if(chooser.Run() == (int)ResponseType.Ok) {
-                foreach(string path in chooser.Uris) {
-                    ImportMusic(path);
-                }
+                ImportManager.Instance.QueueSource(chooser.Uris);
             }
             
-            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri,
-                 chooser.CurrentFolderUri);
+            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
             
             chooser.Destroy();
         }
@@ -1281,9 +1267,6 @@ namespace Banshee
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.SyncColumn.Visible = source.Type == SourceType.Dap;
             playlistView.RipColumn.Visible = source.Type == SourceType.AudioCd;
-            
-            playlistModel.ImportCanUpdate = source.Type == SourceType.Library
-                && searchEntry.Query == String.Empty;
                 
             if(source.Type != SourceType.Dap)
                 ShowPlaylistView();
@@ -1924,28 +1907,61 @@ namespace Banshee
             playlistView.Selection.UnselectAll();
         }
         
+        private bool DoesTrackMatchSearch(TrackInfo ti)
+        {
+            if(!searchEntry.IsQueryAvailable) {
+                return false;
+            }
+            
+            string query = searchEntry.Query.ToLower();
+            string field = searchEntry.Field;
+            string match = null;
+            
+            if(field == Catalog.GetString("Artist Name")) {
+                match = ti.Artist;
+            } else if(field == Catalog.GetString("Song Name")) {
+                match = ti.Title;
+            } else if(field == Catalog.GetString("Album Title")) {
+                match = ti.Album;
+            } else {
+                string [] matches = {
+                    ti.Artist,
+                    ti.Album,
+                    ti.Title
+                };
+
+                foreach(string m in matches) {
+                    if(m == null || m == String.Empty) {
+                        continue;
+                    }
+
+                    string ml = m.ToLower();
+                    if(ml.IndexOf(query) >= 0 || ml.IndexOf("the " + query) >= 0) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+                    
+            match = match.ToLower();
+            return match.IndexOf(query) >= 0 || match.IndexOf("the " + query) >= 0;
+        }
+        
         private void OnSimpleSearch(object o, EventArgs args)
         {
             Source source = sourceView.SelectedSource;
             playlistModel.Clear();
             
-            string query = searchEntry.Query;
-            string field = searchEntry.Field;
-            
-            
-            playlistModel.ImportCanUpdate = 
-                query == null || query == String.Empty;
-            
-            if(query == null || query == String.Empty) {
-                if(source.Type == SourceType.Dap)
+            if(!searchEntry.IsQueryAvailable) {
+                if(source.Type == SourceType.Dap) {
                     playlistModel.LoadFromDapSource(source as DapSource);
-                else
+                } else {
                     playlistModel.LoadFromLibrary();
+                }
                 
                 return;
             }
-            
-            query = query.ToLower();
             
             ICollection collection = null;
             
@@ -1956,41 +1972,10 @@ namespace Banshee
             }
             
             foreach(TrackInfo ti in collection) {
-                string match;
-                
                 try {
-                    if(field == Catalog.GetString("Artist Name"))
-                        match = ti.Artist;
-                    else if(field == Catalog.GetString("Song Name"))
-                        match = ti.Title;
-                    else if(field == Catalog.GetString("Album Title"))
-                        match = ti.Album;
-                    else {
-                        string [] matches = {
-                            ti.Artist,
-                            ti.Album,
-                            ti.Title
-                        };
-
-                        foreach(string m in matches) {
-                            if (m == null)
-                                continue;
-                            
-                            string ml = m.ToLower();
-                            if(ml.IndexOf(query) >= 0
-                               || ml.IndexOf("the " + query) >= 0) {
-                                playlistModel.AddTrack(ti);
-                                break;
-                            }
-                        }
-
-                        continue;
-                    }
-                    
-                    match = match.ToLower();
-                    if(match.IndexOf(query) >= 0
-                        || match.IndexOf("the " + query) >= 0)
+                    if(DoesTrackMatchSearch(ti)) {
                         playlistModel.AddTrack(ti);
+                    }
                 } catch(Exception) {
                     continue;
                 }
@@ -2227,9 +2212,9 @@ namespace Banshee
                     // If in Playlist view, we append Library *AND* PlayList
                     // If in SmartPlaylist View WE DO NOT ACCEPT DND
                 
-                    if(rawSelectionData != null 
-                        && rawSelectionData.Trim().Length > 0)
-                        ImportMusic(rawSelectionData);
+                    if(rawSelectionData != null) {
+                        ImportManager.Instance.QueueSource(args.SelectionData);
+                    }
                         
                     break;
                 case (uint)Dnd.TargetType.PlaylistRows:
@@ -2482,6 +2467,25 @@ namespace Banshee
             
             alignment.Add(syncing_container);
             alignment.ShowAll();
+        }
+        
+        private void OnImportManagerImportRequested(object o, ImportEventArgs args)
+        {
+            try {
+                TrackInfo ti = new LibraryTrackInfo(args.FileName);
+                args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
+                if(playlistModel.Source is LibrarySource) {
+                    ThreadAssist.ProxyToMain(delegate {
+                        if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(ti)) {
+                            return;
+                        }
+                        
+                        playlistModel.AddTrack(ti);
+                    });
+                }
+            } catch(Exception) {
+                args.ReturnMessage = "Scanning...";
+            }
         }
     }
 }

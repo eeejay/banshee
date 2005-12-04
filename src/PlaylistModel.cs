@@ -55,9 +55,6 @@ namespace Banshee
         private RepeatMode repeat = RepeatMode.None;
         private bool shuffle = false;
         
-        private bool canUpdate;
-        private FileLoadTransaction importTransaction;
-        
         public Source Source;
         
         public event EventHandler Updated;
@@ -73,7 +70,6 @@ namespace Banshee
         {
             trackInfoQueue = new ArrayList();
             GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
-            canUpdate = true;
         }
     
         private void SyncPlayingIter()
@@ -129,9 +125,6 @@ namespace Banshee
 
         private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
         {
-            if(o == importTransaction && !canUpdate)
-                return;
-                
             QueueAddTrack(args.TrackInfo);
         }
 
@@ -152,22 +145,7 @@ namespace Banshee
                 RaiseUpdated(this, new EventArgs());
             }
         }
-        
-        public void AddFile(string path)
-        {
-            importTransaction = new FileLoadTransaction(path);
-            importTransaction.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            importTransaction.Register();    
-        }
-        
-        public void AddSql(object query)
-        {
-            SqlLoadTransaction loader = 
-                new SqlLoadTransaction(query.ToString());
-            loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            Core.Library.TransactionManager.Register(loader);
-        }
-        
+
         public void LoadFromPlaylist(string name)
         {
             ClearModel();
@@ -179,14 +157,12 @@ namespace Banshee
         public void LoadFromLibrary()
         {
             ClearModel();
-            /*LibraryLoadTransaction loader = new LibraryLoadTransaction();
-            loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            loader.Register();*/
             
             foreach(TrackInfo ti in Core.Library.Tracks.Values) {
                 AddTrack(ti, false);
             }
             
+            SyncPlayingIter();
             RaiseUpdated(this, new EventArgs());
         }
         
@@ -494,16 +470,6 @@ namespace Banshee
             
             get {
                 return shuffle;
-            }
-        }
-        
-        public bool ImportCanUpdate {
-            set {
-                canUpdate = value;
-            } 
-            
-            get {
-                return canUpdate;
             }
         }
         

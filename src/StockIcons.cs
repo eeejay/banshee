@@ -51,24 +51,24 @@ namespace Banshee
         
         private static StockItem [] stock_items = {
             /* Playback Control Icons */
-            FromDef("media-next", Catalog.GetString("Next"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-prev", Catalog.GetString("Previous"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-play", Catalog.GetString("Play"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-pause", Catalog.GetString("Pause"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-shuffle-enabled", Catalog.GetString("Shuffle Enabled"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-shuffle-disabled", Catalog.GetString("Shuffle Disabled"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-skip-forward", Catalog.GetString("Next"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-skip-backward", Catalog.GetString("Previous"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-playback-start", Catalog.GetString("Play"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-playback-pause", Catalog.GetString("Pause"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-playlist-shuffle", Catalog.GetString("Shuffle Enabled"), 0, ModifierType.ShiftMask, null),
+            FromDef("media-playlist-continuous", Catalog.GetString("Shuffle Disabled"), 0, ModifierType.ShiftMask, null),
             FromDef("media-repeat-none", Catalog.GetString("Repeat None"), 0, ModifierType.ShiftMask, null),
             FromDef("media-repeat-all", Catalog.GetString("Repeat All"), 0, ModifierType.ShiftMask, null),
             FromDef("media-repeat-single", Catalog.GetString("Repeat Single"), 0, ModifierType.ShiftMask, null),
             FromDef("media-eject", Catalog.GetString("Eject"), 0, ModifierType.ShiftMask, null),
             
             /* Volume Button Icons */
-            FromDef("volume-max", Catalog.GetString("Volume Maximum"), 0, ModifierType.ShiftMask, null),
-            FromDef("volume-med", Catalog.GetString("Volume Medium"), 0, ModifierType.ShiftMask, null),
-            FromDef("volume-min", Catalog.GetString("Volume Miniumum"), 0, ModifierType.ShiftMask, null),
-            FromDef("volume-zero", Catalog.GetString("Volume Mute"), 0, ModifierType.ShiftMask, null),
-            FromDef("volume-decrease", Catalog.GetString("Volume Decrease"), 0, ModifierType.ShiftMask, null),
-            FromDef("volume-increase", Catalog.GetString("Volume Increase"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-high", Catalog.GetString("Volume High"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-medium", Catalog.GetString("Volume Medium"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-low", Catalog.GetString("Volume Low"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-muted", Catalog.GetString("Volume Muted"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-decrease", Catalog.GetString("Volume Decrease"), 0, ModifierType.ShiftMask, null),
+            FromDef("audio-volume-increase", Catalog.GetString("Volume Increase"), 0, ModifierType.ShiftMask, null),
             
             /* Now Playing Images */
             FromDef("icon-artist", Catalog.GetString("Artist"), 0, ModifierType.ShiftMask, null),

@@ -1,10 +1,10 @@
 SUBDIRS = \
 	MusicBrainz \
 	GtkSharpBackports \
+	Banshee.Widgets \
 	Banshee.Base \
 	Banshee.MediaEngine \
-	Banshee.Dap \
-	Banshee.Widgets 
+	Banshee.Dap
 
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
@@ -63,10 +63,8 @@ banshee_sources = \
 	BurnTransaction.cs \
 	RatingRenderer.cs \
 	RipTransaction.cs \
-	GstMisc.cs \
 	PipelineProfile.cs \
 	ExceptionDialog.cs \
-	ThemeIcons.cs \
 	VersionInformationDialog.cs \
 	LogCoreViewer.cs \
 	FileSystemMonitor/Watcher.cs \
@@ -77,57 +75,61 @@ banshee_sources = \
 	ToggleStates.cs
 
 banshee_resources = \
-	../COPYING \
-	../data/Tables.sql \
-	../data/glade/player.glade \
-	../data/glade/preferences.glade \
-	../data/glade/newipod.glade \
-	../data/images/tray-icon.png \
-	../data/images/media-next.png \
-	../data/images/media-pause.png \
-	../data/images/media-play.png \
-	../data/images/media-prev.png \
-	../data/images/volume-decrease.png \
-	../data/images/volume-increase.png \
-	../data/images/volume-max.png \
-	../data/images/volume-med.png \
-	../data/images/volume-min.png \
-	../data/images/volume-zero.png \
-	../data/glade/trackinfo.glade \
-	../data/images/icon-album.png \
-	../data/images/icon-artist.png \
-	../data/images/icon-title.png \
-	../data/images/music-player-banshee.png \
-	../data/images/media-repeat-all.png \
-	../data/images/media-repeat-single.png \
-	../data/images/media-repeat-none.png \
-	../data/images/media-shuffle-enabled.png \
-	../data/images/media-shuffle-disabled.png \
-	../data/images/playlist-icon-large.png \
-	../data/images/source-library.png \
-	../data/images/source-playlist.png \
-	../data/images/library-icon-32.png \
-	../data/images/busy-spinner.png \
-	../data/images/busy-spinner-36.png \
-	../data/images/source-cd-audio.png \
-	../data/images/media-eject.png \
-	../data/images/blue-speaker.png \
-	../data/images/now-playing-arrow.png \
-	../data/images/circle.png \
-	../data/images/star.png \
-	../data/images/advanced-icon-32.png \
-	../data/images/encoding-icon-32.png \
-	../data/images/sync-needed.png \
-	../data/images/song-drm.png \
-	../data/images/banshee-logo.png \
-	../data/images/cd-action-rip-16.png \
-	../data/images/cd-action-rip-24.png \
-	../data/images/cd-action-burn-24.png \
-	../data/images/cd-action-burn-32.png \
-	../data/images/cd-action-burn-48.png \
-	../data/images/encode-action-24.png 
+	COPYING \
+	data/Tables.sql \
+	data/glade/player.glade \
+	data/glade/preferences.glade \
+	data/glade/newipod.glade \
+	data/glade/trackinfo.glade \
+	data/images/advanced-icon-32.png \
+	data/images/banshee-logo.png \
+	data/images/blue-speaker.png \
+	data/images/busy-spinner-36.png \
+	data/images/busy-spinner.png \
+	data/images/circle.png \
+	data/images/encoding-icon-32.png \
+	data/images/icon-album.png \
+	data/images/icon-artist.png \
+	data/images/icon-title.png \
+	data/images/library-icon-32.png \
+	data/images/media-eject.png \
+	data/images/media-skip-forward.png \
+	data/images/media-playback-pause.png \
+	data/images/media-playback-start.png \
+	data/images/media-skip-backward.png \
+	data/images/media-repeat-all.png \
+	data/images/media-repeat-none.png \
+	data/images/media-repeat-single.png \
+	data/images/media-playlist-shuffle.png \
+	data/images/media-playlist-continuous.png \
+	data/images/music-player-banshee-16.png \
+	data/images/music-player-banshee-22.png \
+	data/images/music-player-banshee-24.png \
+	data/images/music-player-banshee.png \
+	data/images/music-player-banshee.svg \
+	data/images/now-playing-arrow.png \
+	data/images/playlist-icon-large.png \
+	data/images/song-drm.png \
+	data/images/source-cd-audio.png \
+	data/images/source-library.png \
+	data/images/source-playlist.png \
+	data/images/star.png \
+	data/images/sync-needed.png \
+	data/images/tray-icon.png \
+	data/images/audio-volume-decrease.png \
+	data/images/audio-volume-increase.png \
+	data/images/audio-volume-high.png \
+	data/images/audio-volume-medium.png \
+	data/images/audio-volume-low.png \
+	data/images/audio-volume-muted.png \
+	data/images/cd-action-rip-16.png \
+	data/images/cd-action-rip-24.png \
+	data/images/cd-action-burn-24.png \
+	data/images/cd-action-burn-32.png \
+	data/images/cd-action-burn-48.png \
+	data/images/encode-action-24.png
 
-banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
+banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(top_builddir)/$(res)),$(notdir $(res)))
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \

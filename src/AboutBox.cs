@@ -142,7 +142,7 @@ namespace Banshee
             about_dialog.Authors = Authors;
             about_dialog.TranslatorCredits = Translator.ToString(Translators);
             about_dialog.Artists = Artists;
-            about_dialog.Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(about_dialog);
             about_dialog.Logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
             about_dialog.License = Resource.GetFileContents("COPYING");
             about_dialog.WrapLicense = true;
@@ -162,6 +162,7 @@ namespace Banshee
                 null,
                 Translator.ToString(Translators),
                 Gdk.Pixbuf.LoadFromResource("banshee-logo.png"));
+            IconThemeUtils.SetWindowIcon(about_dialog);
             about_dialog.Run();
             about_dialog.Destroy();
         }

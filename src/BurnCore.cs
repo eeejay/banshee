@@ -330,7 +330,7 @@ namespace Banshee
                     Catalog.GetString("Please insert a blank CD disk for the write process."));
                 
                 dialog.Title = Catalog.GetString("Insert Blank CD");
-                dialog.Icon = ThemeIcons.WindowManager;
+                IconThemeUtils.SetWindowIcon(dialog);
                 dialog.DefaultResponse = ResponseType.Ok;
                 dialog.Response += OnMediaRequestResponse;
                 dialog.ShowAll();

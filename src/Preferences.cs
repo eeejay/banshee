@@ -93,7 +93,7 @@ namespace Banshee
             ((Image)glade["ImageAdvancedTab"]).Pixbuf = 
                 Gdk.Pixbuf.LoadFromResource("advanced-icon-32.png");
                     
-            WindowPreferences.Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(WindowPreferences);
                     
             libraryLocationChooser = new GtkSharpBackports.FileChooserButton(
                 Catalog.GetString("Select Library Location"), 

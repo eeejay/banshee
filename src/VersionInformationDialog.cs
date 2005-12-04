@@ -32,6 +32,7 @@ using System.Reflection;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.Base;
 using Banshee.Widgets;
 
 namespace Banshee
@@ -88,7 +89,7 @@ namespace Banshee
             
             scroll.ShowAll();
             
-            Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(this);
         }
         
         private void OnCursorChanged(object o, EventArgs args)

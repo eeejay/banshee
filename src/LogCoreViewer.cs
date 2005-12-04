@@ -169,7 +169,7 @@ namespace Banshee
 
             log_tree.HasFocus = true;
 
-            Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(this);
             log.Updated += OnLogUpdated;
         }
         

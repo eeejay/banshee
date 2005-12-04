@@ -31,6 +31,7 @@ using System;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.Base;
 using Banshee.Widgets;
 
 namespace Banshee
@@ -97,7 +98,7 @@ namespace Banshee
             HigMessageDialog dialog = new HigMessageDialog(null, 
                 DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, header, message);
             dialog.Title = Catalog.GetString("Error");
-            dialog.Icon = ThemeIcons.WindowManager;
+            IconThemeUtils.SetWindowIcon(dialog);
             
             dialog.Response += OnResponse;
             dialog.ShowAll();

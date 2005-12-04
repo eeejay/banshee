@@ -133,8 +133,8 @@ namespace Banshee
             
             glade = new Glade.XML(null, "trackinfo.glade", "WindowTrackInfo", null);
             glade.Autoconnect(this);
-            WindowTrackInfo.Icon = ThemeIcons.WindowManager;
-    
+            IconThemeUtils.SetWindowIcon(WindowTrackInfo);
+            
             (glade["BackImage"] as Image).SetFromStock("gtk-go-back", IconSize.Button);
             (glade["ForwardImage"] as Image).SetFromStock("gtk-go-forward", IconSize.Button);
                 
@@ -225,7 +225,7 @@ namespace Banshee
             
             try {
                 Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
-                    Gnome.Vfs.MimeType.GetMimeTypeForUri(track.Uri.AbsoluteUri));
+                    Gstreamer.DetectMimeType(track.Uri));
                 BitRate.Text = (af.Bitrate / 1000).ToString() + " " + Catalog.GetString("KB/Second");
                 SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
                 Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");

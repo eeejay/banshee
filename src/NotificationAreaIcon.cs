@@ -33,6 +33,8 @@ using Gtk;
 using Gdk;
 using Mono.Unix;
 
+using Banshee.Base;
+
 namespace Banshee
 {
     public class NotificationAreaIcon
@@ -112,18 +114,17 @@ namespace Banshee
             
             PlayItem = new ImageMenuItem(Catalog.GetString("Play / Pause"));
             PlayItem.Image = new Gtk.Image();
-            ((Gtk.Image)PlayItem.Image).SetFromStock("media-play", IconSize.Menu);
+            ((Gtk.Image)PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 16);
             traymenu.Append(PlayItem);
             
             PreviousItem = new ImageMenuItem(Catalog.GetString("Previous"));
             PreviousItem.Image = new Gtk.Image();
-            ((Gtk.Image)PreviousItem.Image).SetFromStock("media-prev", 
-                IconSize.Menu);
+            ((Gtk.Image)PreviousItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-skip-backward", 16);
                 
             traymenu.Append(PreviousItem);
             NextItem = new ImageMenuItem(Catalog.GetString("Next"));
             NextItem.Image = new Gtk.Image();
-            ((Gtk.Image)NextItem.Image).SetFromStock("media-next", IconSize.Menu);
+            ((Gtk.Image)NextItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-skip-forward", 16);
             traymenu.Append(NextItem);
             
             traymenu.Append(new SeparatorMenuItem());
@@ -142,7 +143,14 @@ namespace Banshee
             
             ExitItem = new ImageMenuItem(Catalog.GetString("Quit Banshee"));
             ExitItem.Image = new Gtk.Image();
-            ((Gtk.Image)ExitItem.Image).SetFromStock("gtk-quit", IconSize.Menu);
+            
+            Gdk.Pixbuf quit_pixbuf = IconThemeUtils.LoadIcon("application-exit", 16);
+            if(quit_pixbuf == null) {
+                ((Gtk.Image)ExitItem.Image).SetFromStock("gtk-quit", IconSize.Menu);
+            } else {
+                ((Gtk.Image)ExitItem.Image).Pixbuf = quit_pixbuf;
+            }
+            
             traymenu.Append(ExitItem);
 
             traymenu.ShowAll();
