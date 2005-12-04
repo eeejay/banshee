@@ -129,7 +129,7 @@ banshee_resources = \
 	data/images/cd-action-burn-48.png \
 	data/images/encode-action-24.png
 
-banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(top_builddir)/$(res)),$(notdir $(res)))
+banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/../$(res)),$(notdir $(res)))
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \

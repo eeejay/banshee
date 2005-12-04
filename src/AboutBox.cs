@@ -77,7 +77,8 @@ namespace Banshee
             new Translator("\u00D8ivind Hoel", "Norwegian Bokm\u00E5l"),
             new Translator("Marco Carvalho", "Brazilian Portuguese"),
 			new Translator("Christian Rose", "Swedish"),
-			new Translator("Lasse Bang Mikkelsen", "Danish")
+			new Translator("Lasse Bang Mikkelsen", "Danish"),
+			new Translator("Stephane Raimbault", "French")
         };
     
         private class Translator : IComparable

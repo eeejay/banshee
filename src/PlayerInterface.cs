@@ -2483,8 +2483,13 @@ namespace Banshee
                         playlistModel.AddTrack(ti);
                     });
                 }
-            } catch(Exception) {
-                args.ReturnMessage = "Scanning...";
+            } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
+                Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
+                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
+            } catch(Exception e) {
+                Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"), 
+                    args.FileName, e.GetType(), e.Message);
+                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
         }
     }

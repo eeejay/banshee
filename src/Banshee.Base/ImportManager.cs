@@ -111,7 +111,7 @@ namespace Banshee.Base
             double new_progress = (double)processed_count / (double)total_count;
             double old_progress = user_event.Progress;
             
-            if(new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs(new_progress - old_progress) > 0.01) {
+            if(new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs(new_progress - old_progress) > 0.001) {
                 string disp_message = String.Format(Catalog.GetString("{0} of {1}"),
                     processed_count, total_count);
                 if(message != null) {

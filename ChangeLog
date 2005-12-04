@@ -1,5 +1,15 @@
 2005-12-04  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/AboutBox.cs: Added Stephane Raimbault to translators
+
+	* src/Makefile.am: Make distcheck happy
+
+	* src/PlayerInterface.cs: Report when a song cannot be imported
+	
+	* src/Banshee.Base/ImportManager.cs: Increase progress reporting resolution
+
+2005-12-04  Aaron Bockover  <aaron@aaronbock.net>
+
 	* configure.ac: Bump to 0.10, added fr translation to ALL_LINGUAS
 
 	* banshee.mdp: Updated MonoDevelop project
