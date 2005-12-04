@@ -23,6 +23,10 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/PlayerEngineLoader.cs \
 	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/BansheeTodo.cs \
+	$(srcdir)/IconThemeUtils.cs \
+	$(srcdir)/GstMisc.cs \
+	$(srcdir)/ImportManager.cs \
+	$(srcdir)/UriList.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
@@ -31,7 +35,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Dap/DapTrackInfo.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

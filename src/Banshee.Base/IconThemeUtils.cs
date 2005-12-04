@@ -1,0 +1,93 @@
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/***************************************************************************
+ *  IconThemeUtils.cs
+ *
+ *  Copyright (C) 2005 Novell
+ *  Written by Aaron Bockover (aaron@aaronbock.net)
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+ 
+using System;
+using System.Runtime.InteropServices;
+using Gdk;
+using GLib;
+
+namespace Banshee.Base
+{
+    public static class IconThemeUtils
+    {
+        [DllImport("libgtk-win32-2.0-0.dll")]
+        private extern static IntPtr gtk_icon_theme_get_default();
+
+        [DllImport("libgtk-win32-2.0-0.dll")]
+        private extern static IntPtr gtk_icon_theme_load_icon(IntPtr theme, string name, int size, 
+            int flags, IntPtr error);
+
+        public static Gdk.Pixbuf LoadIcon(string name, int size)
+        {
+            try {
+                IntPtr native = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), name, size, 0, IntPtr.Zero);
+                if(native != IntPtr.Zero) {
+                    Gdk.Pixbuf ret = (Gdk.Pixbuf)GLib.Object.GetObject(native, true);
+                    if(ret != null) {
+                        return ret;
+                    }
+                }
+            } catch(Exception) {
+            }
+            
+            try {
+                return new Gdk.Pixbuf(System.Reflection.Assembly.GetCallingAssembly(), name + ".png");
+            } catch(Exception) {
+                return null;
+            }
+        }
+
+		[DllImport("libgobject-2.0-0.dll")]
+		static extern IntPtr g_type_class_peek(IntPtr gtype);
+
+		[DllImport("libgobject-2.0-0.dll")]
+		static extern IntPtr g_object_class_find_property(IntPtr klass, string name);
+
+		[DllImport("libgobject-2.0-0.dll")]
+		static extern void g_object_set(IntPtr obj, string property, IntPtr value, IntPtr nullarg);
+
+        public static void SetWindowIcon(Gtk.Window window)
+        {
+            SetWindowIcon(window, "music-player-banshee");
+        }
+
+        public static void SetWindowIcon(Gtk.Window window, string iconName)
+        {
+            GType gtype = (GType)typeof(Gtk.Window);
+            IntPtr klass = g_type_class_peek(gtype.Val);
+            IntPtr property = g_object_class_find_property(klass, "icon-name");
+
+            if(property != IntPtr.Zero) {
+                IntPtr str_ptr = GLib.Marshaller.StringToPtrGStrdup(iconName);
+                g_object_set(window.Handle, "icon-name", str_ptr, IntPtr.Zero);
+                GLib.Marshaller.Free(str_ptr);
+            }
+        }
+    }
+}

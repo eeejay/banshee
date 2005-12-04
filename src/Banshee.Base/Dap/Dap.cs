@@ -89,7 +89,7 @@ namespace Banshee.Dap
         }
     }
     
-    public abstract class DapDevice : IEnumerable
+    public abstract class DapDevice : IEnumerable, IDisposable
     {
         public class PropertyTable : IEnumerable
         {
@@ -153,6 +153,9 @@ namespace Banshee.Dap
         public event DapTrackListUpdatedHandler TrackRemoved;
         public event EventHandler TracksCleared;
         public event EventHandler PropertiesChanged;
+        public event EventHandler Ejected;
+        
+        public Hal.Device HalDevice;
         
         public IEnumerator GetEnumerator()
         {
@@ -186,6 +189,10 @@ namespace Banshee.Dap
             Event.Invoke(TrackRemoved, this, delegate { return new DapTrackListUpdatedArgs(track); });
         }
         
+        public virtual void Dispose()
+        {
+        }
+        
         public void ClearTracks()
         {
             ClearTracks(true);
@@ -196,7 +203,10 @@ namespace Banshee.Dap
             tracks.Clear();
             if(notify) {
                 OnTracksCleared();
-                Event.Invoke(TracksCleared, this);
+                EventHandler handler = TracksCleared;
+                if(handler != null) {
+                    handler(this, new EventArgs());
+                }
             }
         }
         
@@ -214,6 +224,10 @@ namespace Banshee.Dap
         
         public virtual void Eject()
         {
+            EventHandler handler = Ejected;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
         
         public virtual void Save()

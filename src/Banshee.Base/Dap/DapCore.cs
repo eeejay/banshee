@@ -134,6 +134,13 @@ namespace Banshee.Dap
             };
         }
         
+        public static void Dispose()
+        {
+            foreach(DapDevice device in Devices) {
+                device.Dispose();
+            }
+        }
+        
         private static void BuildDeviceTable()
         {
             foreach(Device device in Device.GetAll(HalCore.Context)) {
@@ -163,7 +170,7 @@ namespace Banshee.Dap
                 } catch(WaitForPropertyChangeException) {
                     device.WatchProperties = true;
                     device_waiting_table[device.Udi] = type;
-                } catch(Exception) {
+                } catch(Exception e) {
                 }
             }
         }
@@ -174,7 +181,10 @@ namespace Banshee.Dap
                 return;
             }
             
+            dap.HalDevice = device;
+            dap.Ejected += OnDapEjected;
             device_table[device.Udi] = dap;
+            
             if(DapAdded != null) {
                 DapAdded(dap, new DapEventArgs(dap));
             }
@@ -183,12 +193,29 @@ namespace Banshee.Dap
         private static void RemoveDevice(Device device)
         {
             DapDevice dap = device_table[device.Udi] as DapDevice;
+            
             device_table.Remove(device.Udi);
             device_waiting_table.Remove(device.Udi);
+            
+            if(dap == null) {
+                return;
+            }
+            
+            dap.Dispose();
             
             if(DapRemoved != null) {
                 DapRemoved(dap, new DapEventArgs(dap));
             }
+        }
+        
+        private static void OnDapEjected(object o, EventArgs args)
+        {
+            DapDevice dap = o as DapDevice;
+            if(dap == null) {
+                return;
+            }
+            
+            RemoveDevice(dap.HalDevice);
         }
         
         public static DapDevice [] Devices {
