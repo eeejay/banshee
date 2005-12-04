@@ -42,6 +42,7 @@ namespace Banshee.Widgets
         private Button cancel_button;
         private Tooltips tips;
         
+        private double progress = 0.0;
         private string name;
         private string message;
         
@@ -187,12 +188,13 @@ namespace Banshee.Widgets
             
                 Gtk.Application.Invoke(delegate {
                     progress_bar.Fraction = value;
+                    progress = value;
                     progress_bar.Text = String.Format("{0}%", (int)(value * 100.0));
                 });
             }
             
             get {
-                return progress_bar.Fraction;
+                return progress;
             }
         }
         
