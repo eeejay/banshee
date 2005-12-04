@@ -6,8 +6,8 @@ AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
 VERSION_MAJOR=0
-VERSION_MINOR=9
-VERSION_MICRO=13
+VERSION_MINOR=10
+VERSION_MICRO=0
 VERSION_REVIS=no
 
 VERSION="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
@@ -164,13 +164,16 @@ if test "x$enable_ipodsharp" = "xyes"; then
 fi
 AM_CONDITIONAL(ENABLE_IPOD, test "x$enable_ipodsharp" = "xyes")
 
-NJBSHARP_REQUIRED=0.1.2
+NJBSHARP_REQUIRED=0.2
 PKG_CHECK_MODULES(NJBSHARP,
 	njb-sharp >= $NJBSHARP_REQUIRED,
 	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
 if test "x$enable_njbsharp" = "xyes"; then
-	NJBSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries njb-sharp`"
-	AC_SUBST(NJBSHARP_ASSEMBLIES)
+	NJBSHARP_INSTALL_FILES=""
+	for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do
+		NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
+	done;
+	AC_SUBST(NJBSHARP_INSTALL_FILES)
 	AC_SUBST(NJBSHARP_LIBS)
 fi
 AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
@@ -349,7 +352,7 @@ AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Libra
 
 dnl Intl
 
-ALL_LINGUAS="bg ca da en_CA es lt nb nl pt_BR sv zh_CN"
+ALL_LINGUAS="bg ca da en_CA es fr lt nb nl pt_BR sv zh_CN"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])

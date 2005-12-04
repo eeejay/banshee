@@ -1,3 +1,113 @@
+2005-12-04  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Bump to 0.10, added fr translation to ALL_LINGUAS
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* docs/*: Updated API docs
+
+	* entagged-sharp/Tag.cs: minor fix
+	
+	* libbanshee/gst-misc.c: Added gstreamer_initialize from gst-init.c; 
+	added new gstreamer_detect_mimetype function
+	
+	* libbanshee/gst-misc.h: Added gstreamer_initialize, 
+	gstreamer_detect_mimetype
+	
+	* libbanshee/Makefile.am: Removed gst-init.c/gst-init.h
+	
+	* libbanshee/gst-init.[ch]: Removed, gstreamer_initialize moved 
+	to gst-misc.c
+	
+	* libbanshee/gst-player-engine.c:
+	* libbanshee/gst-encode.c: 
+	* libbanshee/cd-rip.c: Include gst-misc.h instead of gst-init.h
+
+	* src/Makefile.am: update icon resources; build Banshee.Widgets before
+	Banshee.Base; removed ThemeIcons.cs, GstMisc.cs (now in Banshee.Base),
+	use $(top_builddir) instead of $(srcdir)../ for resources
+
+	* src/PlaylistModel.cs: removed ImportCanUpdate; now handled by PlayerUI;
+	removed LibraryLoadTransaction/FileLoadTransaction
+
+	* src/PlayerInterface.cs: Removed old FileLoadTransaction method of
+	importing to library; using new ImportManager - fixed BGO #314965, #318330;
+	only show newly imported songs in the view if in library view; only add 
+	newly imported songs to library view if no search is active or the 
+	new song matches the current search; minor fixes to OnSimpleSearch; 
+	moved search matching to separate method: DoesTrackMatchSearch - 
+	fixed BGO #316102; use new IconThemeUtils for loading icons from the 
+	icon theme where applicable; fixed BGO #323202
+
+	* src/LibraryTrackInfo.cs: Use Gstreamer.DetectMimeType to parse mime-type;
+	set the mimetype field to Entagged.AudioFile.MimeType property; mime-type
+	is now saved to the database
+
+	* src/StockIcons.cs: Renamed applicable icons to the proper icon theme name
+
+	* src/Core.cs (Shutdown): Call Banshee.Dap.DapCore.Dispose()
+	
+	* src/AboutBox.cs:
+	* src/BurnCore.cs:
+	* src/Dialogs.cs:
+	* src/LogCoreViewer.cs:
+	* src/Preferences.cs:
+	* src/VersionInformationDialog.cs: Use IconThemeUtils to set window
+	icon and any applicable icon theme icons
+	
+	* src/NotificationAreaIcon.cs:
+	* src/ToggleStates.cs: Use IconThemeUtils
+	
+	* src/TrackProperties.cs: IconThemUtils to set window icon, use
+	Gstreamer.DetectMimeType to load mime type
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs: Fixed up CancelRequest event
+	invokation; added a get accessor for Fraction property
+	
+	* src/Banshee.Widgets/SearchEntry.cs: cleaned up a bit; added 
+	IsQueryAvailable property; return a Trim()med string for Query property
+	
+	* src/Banshee.Widgets/VolumeButton.cs: Use proper icon theme icon names
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs (Eject): Call base.Eject() after
+	iPod specific eject finishes
+
+	* src/Banshee.Dap/Ipod/Makefile.am: Cleand up a bit;
+	
+	* src/Banshee.Dap/Njb/Makefile.am: cleaned up a bit; install all NJB
+	assemblies and shared libraries to Njb banshee DAP directory
+	
+	* src/Banshee.Dap/Njb/NjbDap.cs: More skeleton work on NJB support;
+	devices now will show up, so detection is working; add/remove HAL events
+	are a little out of sync, need to fix that
+
+	* src/Banshee.Base/ImportManager.cs: New import backend for managing
+	import requests and proxying final URIs to be imported; uses new 
+	ActiveUserEvent progress reporting interface
+
+	* src/Banshee.Base/UriList.cs: Class for properly dealing with many
+	forms of path/URI input (string, string with \r\n delimiters, 
+	SelectionData, and string [])
+
+	* src/Banshee.Base/GstMisc.cs: moved from src/; added a DetectMimeType
+	method to find the mime type of a file: uses GStreamer typefind element,
+	falls back on Gnome.Vfs.MimeType, falls back on entagged/<extension>
+
+	* src/Banshee.Base/IconThemeUtils.cs: utility class for loading pixbufs
+	from the icon theme and falling back on pixbuf resources in the calling
+	assembly
+
+	* src/Banshee.Base/Dap/DapCore.cs: Added a Dispose to properly
+	iterate through connected devices and call their Dispose methods; Connect
+	to the Ejected event on all Daps to remove them from the DAP table
+	when they are ejected
+
+	* src/Banshee.Base/Dap/Dap.cs: Added an Ejected event, implement 
+	IDisposable, fixed up invoke for TracksCleared; invoke new Ejected event
+	
+	* src/Banshee.Base/Makefile.am: Added IconThemeUtils.cs, GstMisc.cs,
+	ImportManager.cs and UriList.cs; link against Gtk#
+
 2005-12-04  Christian Schaller  <uraeus@gnome.org>
 
 	* configure.ac: change testing to check for GStreamer 0.10
