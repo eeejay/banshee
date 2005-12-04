@@ -33,16 +33,15 @@ EXTRA_DIST = \
 	icon-title.png \
 	library-icon-32.png \
 	media-eject.png \
-	media-next.png \
-	media-pause.png \
-	media-play.png \
-	media-prev.png \
+	media-skip-forward.png \
+	media-playback-pause.png \
+	media-playback-start.png \
+	media-skip-backward.png \
 	media-repeat-all.png \
 	media-repeat-none.png \
 	media-repeat-single.png \
-	media-shuffle-enabled.png \
-	media-shuffle-disabled.png \
-	media-stop.png \
+	media-playlist-shuffle.png \
+	media-playlist-continuous.png \
 	music-player-banshee-16.png \
 	music-player-banshee-22.png \
 	music-player-banshee-24.png \
@@ -57,12 +56,12 @@ EXTRA_DIST = \
 	star.png \
 	sync-needed.png \
 	tray-icon.png \
-	volume-decrease.png \
-	volume-increase.png \
-	volume-max.png \
-	volume-med.png \
-	volume-min.png \
-	volume-zero.png \
+	audio-volume-decrease.png \
+	audio-volume-increase.png \
+	audio-volume-high.png \
+	audio-volume-medium.png \
+	audio-volume-low.png \
+	audio-volume-muted.png \
 	cd-action-rip-16.png \
 	cd-action-rip-24.png \
 	cd-action-burn-24.png \
