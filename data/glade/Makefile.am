@@ -5,9 +5,7 @@ EXTRA_DIST = \
 	newipod.glade
 
 CLEANFILES = \
-	player.gladep* \
-	trackinfo.gladep* \
-	preferences.gladep* \
+	*.gladep \
 	*.bak
 
 DISTCLEANFILES = Makefile.in
