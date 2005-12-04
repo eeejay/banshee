@@ -68,3 +68,9 @@ EXTRA_DIST = \
 	cd-action-burn-32.png \
 	cd-action-burn-48.png \
 	encode-action-24.png 
+
+generate-resource-list:
+	for i in $(EXTRA_DIST); do \
+		echo "data/images/$$i \\"; \
+	done;
+
