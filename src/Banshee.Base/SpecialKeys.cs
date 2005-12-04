@@ -131,17 +131,20 @@ namespace Banshee.Base
             
             last_raise = DateTime.Now;
 
-            try {
                 int keycode = (int)xevent.keycode;
+		object x = key_map [keycode];
+		if (x == null)
+			return Gdk.FilterReturn.Continue;
+
                 SpecialKey key = (SpecialKey)key_map[keycode];
                 
                 if(key_registrations[keycode] != null) {
-                    (key_registrations[keycode] as SpecialKeyPressedHandler)(this, key);
+		    x = key_registrations [keycode];
+		    if (x is SpecialKeyPressedHandler){
+                        ((SpecialKeyPressedHandler)x)(this, key);	
+		    }
                     return Gdk.FilterReturn.Remove;
                 }
-            } catch(Exception) {
-                Console.Error.WriteLine("Could not invoke key callback");
-            } 
             
             return Gdk.FilterReturn.Continue;
         }
