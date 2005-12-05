@@ -31,44 +31,43 @@
 
 #include <glib.h>
 #include <gst/gst.h>
-#include <gst/gconf/gconf.h>
 
 typedef void (* GpeEndOfStreamCallback) (void *engine);
 typedef void (* GpeIterateCallback) (void *engine, int position, int length);
 typedef void (* GpeErrorCallback) (void *engine, const gchar *error);
 
 typedef struct {
-	GstElement *player_element;
+    GstElement *player_element;
 
-	gchar *file;
-	gchar *cd_device;
-	gchar *error;
-	
-	gboolean have_error;
-	gboolean eos;
-		
-	gint position;
-	gint length;
-	gint volume;
+    gchar *file;
+    gchar *cd_device;
+    gchar *error;
+    
+    gboolean have_error;
+    gboolean eos;
+        
+    gint position;
+    gint length;
+    gint volume;
 
-	GTimer *timer;
-	guint timer_id;
-	
-	guint end_of_stream_idle_id;
-	guint iterate_idle_id;
-	guint error_id;
-	guint iterate_timeout_id;
-	
-	GpeEndOfStreamCallback eos_cb;
-	GpeIterateCallback iterate_cb;
-	GpeErrorCallback error_cb;
+    GTimer *timer;
+    guint timer_id;
+    
+    guint end_of_stream_idle_id;
+    guint iterate_idle_id;
+    guint error_id;
+    guint iterate_timeout_id;
+    
+    GpeEndOfStreamCallback eos_cb;
+    GpeIterateCallback iterate_cb;
+    GpeErrorCallback error_cb;
 } GstPlayerEngine;
 
 GstPlayerEngine *gpe_new();
 void gpe_free(GstPlayerEngine *engine);
 
 void gpe_set_end_of_stream_handler(GstPlayerEngine *engine, 
-	GpeEndOfStreamCallback cb);
+    GpeEndOfStreamCallback cb);
 void gpe_set_iterate_handler(GstPlayerEngine *engine, GpeIterateCallback cb);
 void gpe_set_error_handler(GstPlayerEngine *engine, GpeErrorCallback cb);
 

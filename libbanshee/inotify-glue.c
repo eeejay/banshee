@@ -57,164 +57,164 @@ static int snarf_cancellation_pipe [2];
 static void
 read_int (const char *filename, int *var)
 {
-	int fd, n;
-	char buffer[32];
-	char *buffer_endptr = NULL;
+    int fd, n;
+    char buffer[32];
+    char *buffer_endptr = NULL;
 
-	fd = open (filename, O_RDONLY);
-	if (fd == -1)
-		return;
-	if (read (fd, buffer, 31) > 0) {
-		n = (int) strtol (buffer, &buffer_endptr, 10);
-		if (*buffer != '\0' && *buffer_endptr == '\0')
-			*var = n;
-	}
-	close (fd);
+    fd = open (filename, O_RDONLY);
+    if (fd == -1)
+        return;
+    if (read (fd, buffer, 31) > 0) {
+        n = (int) strtol (buffer, &buffer_endptr, 10);
+        if (*buffer != '\0' && *buffer_endptr == '\0')
+            *var = n;
+    }
+    close (fd);
 }
 
 
 int
 inotify_glue_init (void)
 {
-	static int fd = 0;
+    static int fd = 0;
 
-	if (fd)
-		return fd;
+    if (fd)
+        return fd;
 
-	fd = inotify_init ();
-	if (fd < 0) {
-		int err = errno;
-		perror ("inotify_init");
-		if (err == ENOSYS)
-			fprintf(stderr, "Inotify not supported!  You need a "
-				"2.6.13 kernel or later with CONFIG_INOTIFY "
-				"enabled.");
-		return -1;
-	}
+    fd = inotify_init ();
+    if (fd < 0) {
+        int err = errno;
+        perror ("inotify_init");
+        if (err == ENOSYS)
+            fprintf(stderr, "Inotify not supported!  You need a "
+                "2.6.13 kernel or later with CONFIG_INOTIFY "
+                "enabled.");
+        return -1;
+    }
 
-	if (pipe (snarf_cancellation_pipe) == -1)
-		perror ("Can't create snarf_cancellation_pipe");
-	
-	read_int (PROCFS_MAX_USER_DEVICES, &max_user_instances);
-	read_int (PROCFS_MAX_USER_WATCHES, &max_user_watches);
-	read_int (PROCFS_MAX_QUEUED_EVENTS, &max_queued_events);
+    if (pipe (snarf_cancellation_pipe) == -1)
+        perror ("Can't create snarf_cancellation_pipe");
+    
+    read_int (PROCFS_MAX_USER_DEVICES, &max_user_instances);
+    read_int (PROCFS_MAX_USER_WATCHES, &max_user_watches);
+    read_int (PROCFS_MAX_QUEUED_EVENTS, &max_queued_events);
 
-	return fd;
+    return fd;
 }
 
 
 int
 inotify_glue_watch (int fd, const char *filename, __u32 mask)
 {
-	int wd;
+    int wd;
 
-	wd = inotify_add_watch (fd, filename, mask);
-	if (wd < 0) {
-		int err = errno;
-		perror ("inotify_add_watch");
-		if (err == ENOSPC)
-			fprintf(stderr, "Maximum watch limit hit. "
-				"Try adjusting " PROCFS_MAX_USER_WATCHES ".\n");
-	}
+    wd = inotify_add_watch (fd, filename, mask);
+    if (wd < 0) {
+        int err = errno;
+        perror ("inotify_add_watch");
+        if (err == ENOSPC)
+            fprintf(stderr, "Maximum watch limit hit. "
+                "Try adjusting " PROCFS_MAX_USER_WATCHES ".\n");
+    }
 
-	return wd;
+    return wd;
 }
 
 
 int
 inotify_glue_ignore (int fd, __u32 wd)
 {
-	int ret;
+    int ret;
 
-	ret = inotify_rm_watch (fd, wd);
-	if (ret < 0)
-		perror ("inotify_rm_watch");
+    ret = inotify_rm_watch (fd, wd);
+    if (ret < 0)
+        perror ("inotify_rm_watch");
 
-	return ret;
+    return ret;
 }
 
 void
 inotify_snarf_cancel ()
 {
-	write (snarf_cancellation_pipe [1],
-	       &snarf_cancellation_pipe, 1); // write a convenient byte
+    write (snarf_cancellation_pipe [1],
+           &snarf_cancellation_pipe, 1); // write a convenient byte
 }
 
 
-#define MAX_PENDING_COUNT		5
-#define PENDING_PAUSE_NANOSECONDS	2000000
-#define PENDING_THRESHOLD(qsize)	((unsigned int) (qsize) >> 1)
-#define PENDING_MARGINAL_COST(p)	((unsigned int) (1 << (p)))
+#define MAX_PENDING_COUNT        5
+#define PENDING_PAUSE_NANOSECONDS    2000000
+#define PENDING_THRESHOLD(qsize)    ((unsigned int) (qsize) >> 1)
+#define PENDING_MARGINAL_COST(p)    ((unsigned int) (1 << (p)))
 
 void
 inotify_snarf_events (int fd, int *nr, void **buffer_out)
 {
-	struct pollfd pollfd [2]  = { { fd, POLLIN | POLLPRI, 0 }, { snarf_cancellation_pipe [0], POLLIN, 0} };
-	unsigned int prev_pending = 0, pending_count = 0;
-	static struct inotify_event *buffer = NULL;
-	static size_t buffer_size;
-	int ret;
+    struct pollfd pollfd [2]  = { { fd, POLLIN | POLLPRI, 0 }, { snarf_cancellation_pipe [0], POLLIN, 0} };
+    unsigned int prev_pending = 0, pending_count = 0;
+    static struct inotify_event *buffer = NULL;
+    static size_t buffer_size;
+    int ret;
 
-	/* Allocate our buffer the first time we try to read events. */
-	if (buffer == NULL) {
-		/* guess the avg len */
-		buffer_size = sizeof (struct inotify_event) + 16;
-		buffer_size *= max_queued_events;
-		buffer = malloc (buffer_size);
-		if (!buffer) {
-			perror ("malloc");
-			*buffer_out = NULL;
-			return;
-		}
-	}
+    /* Allocate our buffer the first time we try to read events. */
+    if (buffer == NULL) {
+        /* guess the avg len */
+        buffer_size = sizeof (struct inotify_event) + 16;
+        buffer_size *= max_queued_events;
+        buffer = malloc (buffer_size);
+        if (!buffer) {
+            perror ("malloc");
+            *buffer_out = NULL;
+            return;
+        }
+    }
 
-	/* Set nr to 0, so it will be sure to contain something
-	   valid if the poll times out. */
-	*nr = 0;
+    /* Set nr to 0, so it will be sure to contain something
+       valid if the poll times out. */
+    *nr = 0;
 
-	/* Wait for the file descriptor to be ready to read. */
-	ret = poll (pollfd, 2, -1);
-	if (ret == -1) {
-		if (errno != EINTR)
-			perror ("poll");
-		return;
-	} else if (ret == 0)
-		return;
+    /* Wait for the file descriptor to be ready to read. */
+    ret = poll (pollfd, 2, -1);
+    if (ret == -1) {
+        if (errno != EINTR)
+            perror ("poll");
+        return;
+    } else if (ret == 0)
+        return;
 
-	/* Return immediately if something happened on the
-	   snarf cancellation pipe. */
-	if (pollfd [1].revents != 0)
-		return;
+    /* Return immediately if something happened on the
+       snarf cancellation pipe. */
+    if (pollfd [1].revents != 0)
+        return;
 
-	/* Reading events in groups significantly helps performance.
-	 * If there are some events (but not too many!) ready, wait a
-	 * bit more to see if more events come in. */
+    /* Reading events in groups significantly helps performance.
+     * If there are some events (but not too many!) ready, wait a
+     * bit more to see if more events come in. */
 
-	while (pending_count < MAX_PENDING_COUNT) {
-		struct timespec ts = {0, PENDING_PAUSE_NANOSECONDS};
-		unsigned int pending;
+    while (pending_count < MAX_PENDING_COUNT) {
+        struct timespec ts = {0, PENDING_PAUSE_NANOSECONDS};
+        unsigned int pending;
 
-		if (ioctl (fd, FIONREAD, &pending) == -1)
-			break;
+        if (ioctl (fd, FIONREAD, &pending) == -1)
+            break;
 
-		/* Don't wait if the number of pending events is too close
-		 * to the maximum queue size. */
-		pending /= sizeof (struct inotify_event) + 16;		
-		if (pending > PENDING_THRESHOLD (max_queued_events))
-			break;
+        /* Don't wait if the number of pending events is too close
+         * to the maximum queue size. */
+        pending /= sizeof (struct inotify_event) + 16;        
+        if (pending > PENDING_THRESHOLD (max_queued_events))
+            break;
 
-		/* With each successive iteration, the minimum rate for
-		 * further sleep doubles. */
-		if (pending-prev_pending < PENDING_MARGINAL_COST(pending_count))
-			break;
+        /* With each successive iteration, the minimum rate for
+         * further sleep doubles. */
+        if (pending-prev_pending < PENDING_MARGINAL_COST(pending_count))
+            break;
 
-		prev_pending = pending;
-		++pending_count;
+        prev_pending = pending;
+        ++pending_count;
 
-		nanosleep (&ts, NULL);
-	}
+        nanosleep (&ts, NULL);
+    }
 
-	*nr = read (fd, buffer, buffer_size);
+    *nr = read (fd, buffer, buffer_size);
 
-	*buffer_out = buffer;
+    *buffer_out = buffer;
 }

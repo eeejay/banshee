@@ -1,5 +1,5 @@
-/************************************************************************
- *  gst-encode-test.c
+/***************************************************************************
+ *  gst-encode.c
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -26,63 +26,45 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
+#include <gst/gst.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <glib.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
+#include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
-#include "gst-encode.h"
- 
-static GstFileEncoder *file_encoder = NULL;
- 
-void signal_cb(int signum)
+#include <libgnomevfs/gnome-vfs.h>
+
+#include "gst-transcode.h"
+#include "gst-misc.h"
+
+GstFileEncoder *
+gst_file_encoder_new()
 {
-	g_printf("Caught cancel signal... terminating encode process...\n");
-	gst_file_encoder_encode_cancel(file_encoder);
-	gst_file_encoder_free(file_encoder);
-	g_printf("Encode process canceled by user\n");
-	exit(1);
-}
- 
-void encoder_progress_cb(GstFileEncoder *encoder, gdouble progress)
-{
-	g_printf("Progress: %g\n", progress);	
+    return NULL;
 }
 
-gint main(gint argc, gchar **argv)
+void
+gst_file_encoder_free(GstFileEncoder *encoder)
 {
-	const gchar *infile, *outfile, *encode_pipeline;
-	 
- 	if(argc < 4) {
-		g_printf("Usage: gst-encode <infile> <outfile> <encode-pipeline>\n");
-		exit(1);
-	}
-	
-	infile = argv[1];
-	outfile = argv[2];
-	encode_pipeline = argv[3];
-	
-	file_encoder = gst_file_encoder_new();
-	if(file_encoder == NULL) {
-		g_printerr("Could not construct file encoder\n");
-		exit(1);
-	}
-	
-	signal(SIGINT, signal_cb);
-	
-	g_printf("Starting encoding...\n");
-	
-	if(!gst_file_encoder_encode_file(file_encoder, infile, outfile, 
-		encode_pipeline, encoder_progress_cb)) {
-		g_printerr("Error: %s\n", gst_file_encoder_get_error(file_encoder));
-		gst_file_encoder_free(file_encoder);
-		exit(1);
-	}
-	
-	gst_file_encoder_free(file_encoder);
-	
-	g_printf("\nFinished Encoding!\n");
-	
-	exit(0);
- }
+}
+
+gboolean 
+gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file, 
+    const gchar *output_file, const gchar *encoder_pipeline, 
+    GstFileEncoderProgressCallback progress_cb)
+{
+    return FALSE;
+}
+
+const gchar *
+gst_file_encoder_get_error(GstFileEncoder *encoder)
+{
+    return NULL;
+}
+
+void 
+gst_file_encoder_encode_cancel(GstFileEncoder *encoder)
+{
+}

@@ -37,7 +37,7 @@
 
 #include <libgnomevfs/gnome-vfs.h>
 
-#include "gst-encode.h"
+#include "gst-transcode.h"
 #include "gst-misc.h"
 
 static GstElement *

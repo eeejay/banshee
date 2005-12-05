@@ -43,7 +43,7 @@
 #include <gst/gconf/gconf.h>
 #include <gst/tag/tag.h>
 
-#include "cd-rip.h"
+#include "gst-cd-rip.h"
 #include "gst-misc.h"
 
 
@@ -71,7 +71,7 @@ static void
 cd_rip_gst_error_cb(GstElement *elem, GstElement *arg1, GError *error, 
     gchar *str, CdRip *ripper)
 {
-	ripper->error = g_strdup(str);
+    ripper->error = g_strdup(str);
 }
 
 gboolean
@@ -261,7 +261,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
     ripper->track_start = nanoseconds / GST_SECOND;
     
     gst_element_set_state(ripper->pipeline, GST_STATE_PLAYING);
-		      
+              
     while(gst_bin_iterate(GST_BIN(ripper->pipeline))) {
         if(ripper->cancel == TRUE || ripper->error != NULL)
             break;
@@ -292,7 +292,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
         else if(has_started && seconds == 0)
             break;
     }            
-        	
+            
     gst_element_set_state(GST_ELEMENT(ripper->pipeline), GST_STATE_NULL);
     g_object_unref(G_OBJECT(ripper->pipeline));
 

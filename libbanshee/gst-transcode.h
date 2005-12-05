@@ -30,20 +30,20 @@
 #define GST_ENCODE_H
 
 typedef struct {
-	gboolean cancel;
-	gchar *error;
+    gboolean cancel;
+    gchar *error;
 } GstFileEncoder;
 
 typedef void (* GstFileEncoderProgressCallback) (GstFileEncoder *encoder, 
-	gdouble progress);
+    gdouble progress);
 
 GstFileEncoder *gst_file_encoder_new();
 void gst_file_encoder_free(GstFileEncoder *encoder);
 
 gboolean gst_file_encoder_encode_file(GstFileEncoder *encoder, 
-	const gchar *input_file, const gchar *output_file, 
-	const gchar *encoder_pipeline, 
-	GstFileEncoderProgressCallback progress_cb);
+    const gchar *input_file, const gchar *output_file, 
+    const gchar *encoder_pipeline, 
+    GstFileEncoderProgressCallback progress_cb);
 
 const gchar *gst_file_encoder_get_error(GstFileEncoder *encoder);
 void gst_file_encoder_encode_cancel(GstFileEncoder *encoder);
