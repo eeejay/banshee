@@ -1,3 +1,28 @@
+2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: renamed --with-gstreamer-dev to --with-gstreamer-0-10,
+	fixed some minor GStreamer 0.10 detection issues
+
+	* data/glade/player.glade: Hide the 'new playlist' button, will probably
+	be removed in the future
+
+	* src/ToggleStates.cs: Updated state strings to 'Shuffle' and 'Continuous'
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs: minor thread fix
+	
+	* src/Banshee.Widgets/MultiStateToggleButton.cs: minor display fix
+
+	* libbanshee/Makefile.am: Reorganized the way the GStreamer sources are
+	handled so the -0.8 ones are used if GStreamer 0.8 is enabled and the
+	0.10 ones if --with-gstreamer-0-10 was passed to configure
+	
+	* libbanshee/: Renamed gstreamer to have a gst- prefix and a version 
+	number suffix (-0.8 or -0.10). 0.10 versions have the API skeletons so
+	they will build against GStreamer 0.10 and can be ported one at a time;
+	tabs->spaces on everything too
+
 2005-12-04  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AboutBox.cs: Added Stephane Raimbault to translators
