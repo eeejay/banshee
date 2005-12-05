@@ -12,6 +12,7 @@ ASSEMBLY_SOURCES = \
 if ENABLE_NJB
 bansheedapdir = $(pkglibdir)/Banshee.Dap
 bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
+endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(NJBSHARP_LIBS) $(ASSEMBLY_SOURCES)
@@ -26,5 +27,4 @@ uninstall-hook:
 		rm -f $(DESTDIR)$(bansheedapdir)/`basename $$i`; \
 	done;
 	
-endif
 

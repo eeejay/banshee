@@ -1,3 +1,7 @@
+2005-12-05  Mike Kestner  <mkestner@novell.com>
+
+	* src/Banshee.Dap/*/Makefile.am: only make the _SCRIPTS optional.
+
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
 	* entagged-sharp/*: Updated entagged-sharp checkout

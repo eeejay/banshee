@@ -14,6 +14,8 @@ if ENABLE_IPOD
 bansheedapdir = $(pkglibdir)/Banshee.Dap
 bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb ipod-sharp.dll.config
 
+endif
+
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(IPODSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
@@ -27,5 +29,4 @@ uninstall-hook:
 		rm -f $(DESTDIR)$(bansheedapdir)/`basename $$ASM`; \
 	done;
 
-endif
 
