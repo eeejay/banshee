@@ -81,6 +81,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/AssemblyInfo.cs \
 	$(srcdir)/Exceptions/CannotReadException.cs \
 	$(srcdir)/Exceptions/CannotWriteException.cs \
+	$(srcdir)/Exceptions/UnsupportedFormatException.cs \
 	$(srcdir)/Util/AbstractTagCreator.cs \
 	$(srcdir)/Util/AudioFileReader.cs \
 	$(srcdir)/Util/AudioFileWriter.cs \

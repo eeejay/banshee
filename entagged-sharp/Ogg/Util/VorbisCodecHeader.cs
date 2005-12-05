@@ -25,10 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.8  2005/11/30 16:12:52  abock
- * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.9  2005/12/05 16:55:08  abock
+ * 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
+ *     * entagged-sharp/*: Updated entagged-sharp checkout
  *
  * Revision 1.4  2005/02/18 13:38:11  kikidonk
  * Adds a isVbr method that checks wether the file is vbr or not, added check in OGG and MP3, other formats are always VBR

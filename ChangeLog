@@ -1,5 +1,9 @@
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
+	* entagged-sharp/*: Updated entagged-sharp checkout
+
+2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
+
 	* libbanshee/gst-misc-0.10.c: gstreamer_initialize and 
 	gstreamer_detect_mimetype ported to GStreamer 0.10
 

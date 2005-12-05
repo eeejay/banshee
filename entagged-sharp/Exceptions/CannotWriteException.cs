@@ -25,10 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.5  2005/11/30 16:12:49  abock
- * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.6  2005/12/05 16:55:05  abock
+ * 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
+ *     * entagged-sharp/*: Updated entagged-sharp checkout
  *
  *
  */

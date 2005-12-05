@@ -25,10 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.8  2005/11/30 16:12:50  abock
- * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.9  2005/12/05 16:55:06  abock
+ * 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
+ *     * entagged-sharp/*: Updated entagged-sharp checkout
  *
  * Revision 1.4  2005/02/22 22:21:17  kikidonk
  * Should fixes most times length/bitrate errors

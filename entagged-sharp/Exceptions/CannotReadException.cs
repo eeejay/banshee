@@ -23,18 +23,6 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-/*
- * $Log$
- * Revision 1.8  2005/11/30 16:12:49  abock
- * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
- *
- *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
- *
- * Revision 1.3  2005/02/08 12:54:43  kikidonk
- * Added cvs log and header
- *
- */
-
 using System;
 
 namespace Entagged.Audioformats.Exceptions {

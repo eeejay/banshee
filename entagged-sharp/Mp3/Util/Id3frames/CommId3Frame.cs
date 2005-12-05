@@ -25,10 +25,10 @@
 
 /*
  * $Log$
- * Revision 1.8  2005/11/30 16:12:51  abock
- * 2005-11-30  Aaron Bockover  <aaron@aaronbock.net>
+ * Revision 1.9  2005/12/05 16:55:06  abock
+ * 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
  *
- *     * entagged-sharp/*: synced with SVN; (long)Length->(TimeSpan)Duration
+ *     * entagged-sharp/*: Updated entagged-sharp checkout
  *
  * Revision 1.3  2005/02/08 12:54:40  kikidonk
  * Added cvs log and header
@@ -68,6 +68,12 @@ namespace Entagged.Audioformats.Mp3.Util.Id3Frames {
 		protected override void Populate(byte[] raw)
 		{
 			this.encoding = raw[flags.Length];
+			if (flags.Length + 1 + 3 > raw.Length - 1) {
+				this.lang = "XXX";
+				this.content = "";
+				this.shortDesc = "";
+				return;
+			}
 			
 			this.lang = System.Text.Encoding.GetEncoding("ISO-8859-1").GetString(raw, flags.Length+1, 3);
 			

@@ -66,7 +66,7 @@ namespace Entagged.Audioformats
             object afr = readers[mimetype];
             
             if(afr == null) {
-                throw new CannotReadException("No Reader associated to this MimeType: " + mimetype);
+                throw new UnsupportedFormatException("No reader associated with MimeType: " + mimetype);
             }
             
             return (afr as AudioFileReader).Read(f, mimetype);
@@ -77,7 +77,7 @@ namespace Entagged.Audioformats
             object afr = readers[mimetype];
             
             if(afr == null) {
-                throw new CannotReadException("No Reader associated to this MimeType: " + mimetype);
+                throw new UnsupportedFormatException("No reader associated with MimeType: " + mimetype);
             }
             
             return (afr as AudioFileReader).Read(stream, mimetype);
