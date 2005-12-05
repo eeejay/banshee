@@ -37,6 +37,7 @@ namespace Banshee.Widgets
     {
         private Table table;
         private Image icon;
+        private Label header_label;
         private Label message_label;
         private ProgressBar progress_bar;
         private Button cancel_button;
@@ -45,6 +46,7 @@ namespace Banshee.Widgets
         private double progress = 0.0;
         private string name;
         private string message;
+        private string header;
         
         private uint timeout_id = 0;
         private bool disposed = false;
@@ -59,7 +61,8 @@ namespace Banshee.Widgets
         {
             tips = new Tooltips();
             
-            table = new Table(2, 2, false);
+            table = new Table(3, 2, false);
+            header_label = new EllipsizeLabel();
             message_label = new EllipsizeLabel();
             progress_bar = new ProgressBar();
             icon = new Image();
@@ -81,21 +84,26 @@ namespace Banshee.Widgets
                 md.Destroy();
             };
             
+            header_label.Xalign = 0.0f;
             message_label.Xalign = 0.0f;
             
-            table.Attach(message_label, 0, 3, 0, 1, 
+            table.Attach(header_label, 0, 3, 0, 1, 
+                AttachOptions.Expand | AttachOptions.Fill,
+                AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+            
+            table.Attach(message_label, 0, 3, 1, 2, 
                 AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
                 
-            table.Attach(icon, 0, 1, 1, 2, 
+            table.Attach(icon, 0, 1, 2, 3, 
                 AttachOptions.Shrink | AttachOptions.Fill,
                 AttachOptions.Shrink | AttachOptions.Fill, 0, 0);
                 
-            table.Attach(progress_bar, 1, 2, 1, 2,
+            table.Attach(progress_bar, 1, 2, 2, 3,
                 AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Shrink, 0, 0);
                 
-            table.Attach(cancel_button, 2, 3, 1, 2,
+            table.Attach(cancel_button, 2, 3, 2, 3,
                 AttachOptions.Shrink | AttachOptions.Fill,
                 AttachOptions.Shrink | AttachOptions.Fill, 0, 0);
                 
@@ -145,8 +153,10 @@ namespace Banshee.Widgets
         private void UpdateLabel()
         {
             Gtk.Application.Invoke(delegate {
-                if(name == null) {
-                    name = "Working";
+                header_label.Visible = header != null;
+                
+                if(header != null) {
+                    header_label.Markup = String.Format("<small><b>{0}</b></small>", GLib.Markup.EscapeText(header));
                 }
                 
                 if(message == null && name != null) {
@@ -155,7 +165,7 @@ namespace Banshee.Widgets
                     message = "Performing Task";
                 }
                 
-                message_label.Markup = String.Format("<small>{0}</small>", message);
+                message_label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(message));
                 
                 string tip = name + ": " + message;
                 tips.SetTip(message_label, tip, tip);
@@ -173,6 +183,13 @@ namespace Banshee.Widgets
         public string Message {
             set {
                 message = value;
+                UpdateLabel();
+            }
+        }
+        
+        public string Header {
+            set {
+                header = value;
                 UpdateLabel();
             }
         }

@@ -112,13 +112,11 @@ namespace Banshee.Base
             double old_progress = user_event.Progress;
             
             if(new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs(new_progress - old_progress) > 0.001) {
-                string disp_message = String.Format(Catalog.GetString("{0} of {1}"),
+                string disp_progress = String.Format(Catalog.GetString("Importing {0} of {1}"),
                     processed_count, total_count);
-                if(message != null) {
-                    disp_message += ": " + message;
-                }
                 
-                user_event.Message = disp_message;
+                user_event.Header = disp_progress;
+                user_event.Message = message;
                 user_event.Progress = new_progress;
             }
         }

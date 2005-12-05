@@ -1,5 +1,11 @@
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Widgets/ActiveUserEvent.cs: Added a Header property to
+	show a bold header on top of the regular text message
+
+	* src/Banshee.Base/ImportManager.cs: Set user_event.Header to the
+	count progress and user_event.Message to the returned message (filename)
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* configure.ac: renamed --with-gstreamer-dev to --with-gstreamer-0-10,
