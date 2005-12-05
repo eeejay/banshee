@@ -175,7 +175,7 @@ namespace Banshee
             GLib.Timeout.Add(500, InitialLoadTimeout);
             WindowPlayer.Show();
             
-            try {
+            /*try {
                 if((bool)Globals.Configuration.Get(GConfKeys.EnableSpecialKeys)) {
                     special_keys = new SpecialKeys();
                     special_keys.Delay = new TimeSpan(350 * TimeSpan.TicksPerMillisecond);
@@ -189,7 +189,7 @@ namespace Banshee
             } catch(Exception e) {
                 special_keys = null;
                 Core.Log.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
-            }   
+            }*/
         }
    
         private bool InitialLoadTimeout()

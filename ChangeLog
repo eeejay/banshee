@@ -1,5 +1,7 @@
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: disabled specialkeys for now, there are problems
+
 	* src/Banshee.Widgets/ActiveUserEvent.cs: Added a Header property to
 	show a bold header on top of the regular text message
 
