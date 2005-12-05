@@ -82,21 +82,6 @@
     <File name="./src/Banshee.Widgets/ToggleState.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/VolumeButton.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/ToggleStates.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/cd-rip.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/cd-rip.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-encode.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-encode.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-init.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-init.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-misc.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-misc.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-player-engine.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-player-engine.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-player-engine-test.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/inotify.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/inotify-glue.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/hal-context.c" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/hal-context.h" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Dap" subtype="Directory" buildaction="Nothing" />
     <File name="./src/Banshee.Base/HalCore.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/Utilities.cs" subtype="Code" buildaction="Nothing" />
@@ -149,6 +134,24 @@
     <File name="./src/Banshee.Widgets/ActiveUserEventsManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/UriList.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/ImportManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./libbanshee" subtype="Directory" buildaction="Compile" />
+    <File name="./libbanshee/gst-cd-rip.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-cd-rip-0.8.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-cd-rip-0.10.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-misc.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-misc-0.8.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-misc-0.10.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-playback.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-playback-0.8.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-playback-0.10.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-transcode.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-transcode-0.8.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/gst-transcode-0.10.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/hal-context.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/hal-context.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/inotify.h" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/inotify-glue.c" subtype="Code" buildaction="Nothing" />
+    <File name="./libbanshee/inotify-syscalls.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

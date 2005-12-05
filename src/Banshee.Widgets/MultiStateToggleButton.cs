@@ -315,8 +315,9 @@ namespace Banshee.Widgets
             set {
                 if(show_label != value) {
                     show_label = value;
-                    UpdateButton(true);
                 }
+                
+                UpdateButton(true);
             }
             
             get {
@@ -328,8 +329,9 @@ namespace Banshee.Widgets
             set {
                 if(show_icon != value) {
                     show_icon = value;
-                    UpdateButton(true);
                 }
+                
+                UpdateButton(true);
             }
             
             get {

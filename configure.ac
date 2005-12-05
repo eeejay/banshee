@@ -60,8 +60,8 @@ AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
-AC_ARG_WITH(gstreamer-dev, AC_HELP_STRING([--with-gstreamer-dev], [Build the GStreamer 0.10 backends (DEVELOPMENTAL)]), enable_gst_dev="yes", enable_gst_dev="no")
-AM_CONDITIONAL(ENABLE_GST_DEV, test "x$enable_gst_dev" = "xyes")
+AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the GStreamer 0.10 backends (DEVELOPMENTAL)]), enable_gst_10="yes", enable_gst_10="no")
+AM_CONDITIONAL(ENABLE_GST_10, test "x$enable_gst_10" = "xyes")
 
 if test "x$enable_xing" = "xyes"; then
 	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
@@ -190,7 +190,7 @@ PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 
 dnl gstreamer devel deps
 
-if test "x$enable_gst_dev" = "xyes"; then
+if test "x$enable_gst_10" = "xyes"; then
 	GSTREAMER_REQUIRED_VERSION=0.9.7
 	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 	PKG_CHECK_MODULES(GST,
@@ -203,6 +203,8 @@ if test "x$enable_gst_dev" = "xyes"; then
 	if test "x$enable_xing" = "xyes"; then
 		AC_MSG_ERROR([The Xing GStreamer plugin has not been ported to GStreamer 0.10 and cannot be enabled if you enable GStreamer 0.10])
 	fi
+	
+	gst_pkg_name="gstreamer-0.10"
 else
 	GSTREAMER_REQUIRED_VERSION=0.8.11
 	GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.11
@@ -404,8 +406,8 @@ po/Makefile.in
 ])
 
 gst_version="0.8";
-if test "x${enable_gst_dev}" = "xyes"; then
-	gst_version="0.9";
+if test "x${enable_gst_10}" = "xyes"; then
+	gst_version="0.10";
 fi;
 
 echo "
@@ -434,9 +436,9 @@ if test "x${enable_helix}" = "xyes"; then
 	";
 fi;
 
-if test "x${enable_gst_dev}" = "xyes"; then
+if test "x${enable_gst_10}" = "xyes"; then
 	echo "";
-	echo "    ** Warning: GStreamer 0.9 backend may be very unstable **";
+	echo "    ** Warning: GStreamer 0.10 backend may be incomplete  **";
 	echo "";
 fi;
 

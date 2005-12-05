@@ -219,7 +219,9 @@ namespace Banshee.Widgets
         
         public Gdk.Pixbuf Icon {
             set {
-                icon.Pixbuf = value;
+                Gtk.Application.Invoke(delegate {
+                    icon.Pixbuf = value;
+                });
             }
         }
         

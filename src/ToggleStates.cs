@@ -65,7 +65,7 @@ namespace Banshee
         public ShuffleEnabledToggleState()
         {
             Icon = Gdk.Pixbuf.LoadFromResource("media-playlist-shuffle.png");
-            Label = Catalog.GetString("Shuffle Enabled");
+            Label = Catalog.GetString("Shuffle");
         }
     }
     
@@ -74,7 +74,7 @@ namespace Banshee
         public ShuffleDisabledToggleState()
         {
             Icon = Gdk.Pixbuf.LoadFromResource("media-playlist-continuous.png");
-            Label = Catalog.GetString("Shuffle Disabled");
+            Label = Catalog.GetString("Continuous");
         }
     }
 }
