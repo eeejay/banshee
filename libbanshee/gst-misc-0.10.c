@@ -70,17 +70,8 @@ gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
     gchar **out = (gchar **)data;
 
     switch(GST_MESSAGE_TYPE(message)) {
-        case GST_MESSAGE_ERROR: {
-            GError *error;
-            gchar *debug;
-            gst_message_parse_error(message, &error, &debug);
-            g_debug("Msg: %s, Dbg: %s\n", error->message, debug);
-            g_error_free(error);
-            g_free(debug);
-
-            *out = (gchar *)-1;
-            break;
-        } case GST_MESSAGE_EOS:
+        case GST_MESSAGE_ERROR:
+        case GST_MESSAGE_EOS:
             *out = (gchar *)-1;
             break;
         default:
@@ -93,23 +84,10 @@ gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 gchar *
 gstreamer_detect_mimetype(const gchar *uri)
 {
-    return NULL;
-#if 0
-    /* This seems very problematic for 0.10, though it builds, etc.
-    Only very, very seldomly will it return a mime type. Most of the
-    time it fails with:
-    
-    ** (Banshee:31553): DEBUG: Msg: Internal data flow error., 
-    Dbg: gstbasesrc.c(1032): gst_base_src_loop: /new/source:
-    streaming task paused, reason not-linked
-
-    Disabling for now, Banshee in managed land will fall back on gvfs
-    if we just return NULL
-    */
-
     GstElement *pipeline;
     GstElement *source;
     GstElement *typefind;
+    GstElement *fakesink;
     gchar *mimetype = NULL;
 
     pipeline = gst_pipeline_new("new");
@@ -118,6 +96,7 @@ gstreamer_detect_mimetype(const gchar *uri)
         
     source = gst_element_factory_make("gnomevfssrc", "source");
     typefind = gst_element_factory_make("typefind", "typefind");
+    fakesink = gst_element_factory_make("fakesink", "fakesink");
 
     if(source == NULL || typefind == NULL) {
         gst_object_unref(pipeline);
@@ -128,21 +107,21 @@ gstreamer_detect_mimetype(const gchar *uri)
     g_signal_connect(typefind, "have-type", 
         G_CALLBACK(gst_typefind_type_found_callback), &mimetype);
 
-    gst_bin_add_many(GST_BIN(pipeline), source, typefind, NULL);
+    gst_bin_add_many(GST_BIN(pipeline), source, typefind, 
+        fakesink, NULL);
     gst_element_link(source, typefind);
+    gst_element_link(typefind, fakesink);
+    
     gst_element_set_state(pipeline, GST_STATE_PLAYING);
 
     while(mimetype == NULL);
+    
+    gst_element_set_state(pipeline, GST_STATE_NULL);
+    gst_object_unref(pipeline);
         
     if(mimetype == -1) {
         mimetype = NULL;
     }
 
-    gst_element_set_state(pipeline, GST_STATE_NULL);
-    gst_object_unref(pipeline);
-
-    g_debug("Mimetype: %s", mimetype);
-
     return mimetype;
-#endif
 }
