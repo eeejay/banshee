@@ -1,5 +1,7 @@
 2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Require ipod-sharp 0.5.12
+
 	* docs/*: Updated API Documentation
 
 	* banshee.mdp: updated MonoDevelop project
