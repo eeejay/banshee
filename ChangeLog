@@ -1,3 +1,60 @@
+2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: updated MonoDevelop project
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs: Fixed bug regarding multiple
+	timeouts
+
+	* src/Banshee.Dap/Njb/Makefile.am: Link against Banshee.Widgets.dll
+	
+	* src/Banshee.Dap/Njb/NjbDap.cs: Placeholder implementation of 
+	Synchronize method
+
+	* src/Banshee.Dap/Ipod/Makefile.am: link against Banshee.Widgets.dll
+	and Mono.Posix
+
+	* src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs: Updated with minor fixes
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Full syncing implementation of new 
+	syncing support in generic DAP base class
+
+	* src/Banshee.Base/Dap/DapMisc.cs: Misc/Utility generic DAP supporting 
+	types
+
+	* src/Banshee.Base/Dap/Dap.cs: Now supports manual and automatic generic
+	syncing and transcoding
+
+	* src/Banshee.Base/Utilities.cs: Disabled Event class, added 
+	PathUtil.MakeFileNameKey
+
+	* src/Banshee.Base/Makefile.am: add PipelineProfile.cs, FileEncoder.cs,
+	GstFileEncoder.cs, FileEncodeAction.cs, DapMisc.cs
+
+	* src/Banshee.Base/IconThemeUtils.cs: Use Entry Assembly instead of 
+	Calling Assembly as all the resources are in the Entry Assembly
+
+	* src/Banshee.Base/HalCore.cs: Don't use Event.Invoke for now, it has
+	some issues
+
+	* src/Banshee.Base/GstMisc.cs: Add filter to mime-type fetching in case
+	mime type is returned with attributes (gvfs)
+
+	* src/SourceView.cs: Re-enabled DAP updating through DnD
+
+	* src/PlaylistView.cs: Safe-guard against potential nullrefs in the
+	renderer data functions
+
+	* src/PlayerInterface.cs: Connected DAP GUI elements back to DAP
+	syncing events, simplified DAP syncing entry point, re-enabled DAP syncing;
+	show ripped tracks in library view when they become available and if
+	they match any active search (fixes BGO #316132)
+
+	* src/Makefile.am: Moved FileEncoder.cs, GstFileEncoder.cs, 
+	FileEncodeTransaction.cs, and PipelineProfile.cs to Banshee.Base
+
+	* src/Library.cs: Connected DapSource.IsSyncing to DAP device; moved
+	Library.MakeFileNameKey to Banshee.Base.PathUtils
+
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.MediaEngine/Gstreamer/Makefile.am: Define whether the C

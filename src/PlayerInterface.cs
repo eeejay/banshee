@@ -200,6 +200,8 @@ namespace Banshee
             
             foreach(DapDevice device in DapCore.Devices) {
                  device.PropertiesChanged += OnDapPropertiesChanged;
+                 device.SaveStarted += OnDapSaveStarted;
+                 device.SaveFinished += OnDapSaveFinished;
             }
             
             if(Core.ArgumentQueue.Contains("audio-cd")) {
@@ -1262,7 +1264,7 @@ namespace Banshee
                 gxml["DapContainer"].Visible = false;
             }     
                  
-            gxml["SearchLabel"].Sensitive = source.Type == SourceType.Dap 
+            gxml["SearchLabel"].Sensitive = (source.Type == SourceType.Dap && !((source as DapSource).IsSyncing)) 
                  || source.Type == SourceType.Library;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.SyncColumn.Visible = source.Type == SourceType.Dap;
@@ -1291,7 +1293,7 @@ namespace Banshee
                 toolTips.SetTip(dapDiskUsageBar, tooltip, tooltip);
             });
         }
-        
+
         private void OnDapPropertiesChanged(object o, EventArgs args)
         {
             Application.Invoke(delegate {
@@ -1316,6 +1318,8 @@ namespace Banshee
         private void OnDapCoreDeviceAdded(object o, DapEventArgs args)
         {
             args.Dap.PropertiesChanged += OnDapPropertiesChanged;
+            args.Dap.SaveStarted += OnDapSaveStarted;
+            args.Dap.SaveFinished += OnDapSaveFinished;
         }
         
         private void OnAudioCdCoreDiskRemoved(object o, AudioCdCoreDiskRemovedArgs args)
@@ -1374,68 +1378,32 @@ namespace Banshee
             if(sourceView.SelectedSource.Type != SourceType.Dap)
                 return;
                 
-           LogCore.Instance.PushWarning(Catalog.GetString("iPod Syncing Disabled"), 
-                Catalog.GetString("iPod syncing has been disabled in this release because unified DAP " + 
-                "support is under development, and the iPod sync code has not yet been converted to " + 
-                "the DAP sync model. iPod syncing will be back in the next release."));
+            DapSource dapSource = sourceView.SelectedSource as DapSource;
         
-           /* IpodSource ipodSource = sourceView.SelectedSource as IpodSource;
-            IpodSync sync = null;
-            
-            if(!ipodSource.Device.CanWrite)
-                 return;
-        
-            if(ipodSource.NeedSync) {
-                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                    DialogFlags.DestroyWithParent, MessageType.Question,
-                    Catalog.GetString("Synchronize iPod"),
-                    Catalog.GetString("You have made changes to your iPod. Please choose " +
+            HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                DialogFlags.DestroyWithParent, MessageType.Question,
+                Catalog.GetString("Synchronize iPod"),
+                Catalog.GetString("You have made changes to your iPod. Please choose " +
                     "a method for updating the contents of your iPod.\n\n" + 
                     "<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
                     "<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
                     "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"),
-                    Catalog.GetString("Synchronize Library"));
-                    md.AddButton(Catalog.GetString("Save Manual Changes"), 
-                        Gtk.ResponseType.Apply, true);
-                md.Image = IpodMisc.GetIcon(ipodSource.Device, 48);
-                md.Icon = md.Image;
-                switch(md.Run()) {
-                    case (int)ResponseType.Ok:
-                        sync = ipodSource.Sync(true);
-                        sync.SyncStarted += OnIpodSyncStarted;
-                        sync.SyncCompleted += OnIpodSyncCompleted;
-                        sync.StartSync();
-                        break;
-                    case (int)ResponseType.Apply:
-                        sync = ipodSource.Sync(false);
-                        sync.SyncStarted += OnIpodSyncStarted;
-                        sync.SyncCompleted += OnIpodSyncCompleted;
-                        sync.StartSync();
-                        break;
-                }
-                
-                md.Destroy();
-            } else {
-                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                    DialogFlags.DestroyWithParent, MessageType.Question,
-                    Catalog.GetString("Synchronize iPod"),
-                    Catalog.GetString("Are you sure you want to synchronize your iPod " +
-                    "with your Banshee library? This will <b>erase</b> the contents of " +
-                    "your iPod and then copy the contents of your Banshee library."),
-                    Catalog.GetString("Synchronize Library"));
-                md.Image = IpodMisc.GetIcon(ipodSource.Device, 48);
-                md.Icon = md.Image;
-                switch(md.Run()) {
-                    case (int)ResponseType.Ok:
-                        sync = ipodSource.Sync(true);
-                        sync.SyncStarted += OnIpodSyncStarted;
-                        sync.SyncCompleted += OnIpodSyncCompleted;
-                        sync.StartSync();
-                        break;
-                }
-                
-                md.Destroy();
-            }*/
+                Catalog.GetString("Synchronize Library"));
+            
+            md.AddButton(Catalog.GetString("Save Manual Changes"), Gtk.ResponseType.Apply, true);
+            md.Image = dapSource.Device.GetIcon(48);
+            md.Icon = md.Image;
+            
+            switch(md.Run()) {
+                case (int)ResponseType.Ok:
+                    dapSource.Device.Save(Core.Library.Tracks.Values);
+                    break;
+                case (int)ResponseType.Apply:
+                    dapSource.Device.Save();
+                    break;
+            }
+
+            md.Destroy();
         }
         
         private void OnDapEjectClicked(object o, EventArgs args)
@@ -1443,7 +1411,7 @@ namespace Banshee
             EjectSource(sourceView.SelectedSource);
         }
         
-        private void OnDapSyncStarted(object o, EventArgs args)
+        private void OnDapSaveStarted(object o, EventArgs args)
         {
             if(playlistModel.Source.Type == SourceType.Dap 
                 && (playlistModel.Source as DapSource).IsSyncing) {
@@ -1458,7 +1426,7 @@ namespace Banshee
             }
         }
         
-        private void OnDapSyncCompleted(object o, EventArgs args)
+        private void OnDapSaveFinished(object o, EventArgs args)
         {
             if(playlistModel.Source.Type == SourceType.Dap 
                 && !(playlistModel.Source as DapSource).IsSyncing) {
@@ -2334,6 +2302,7 @@ namespace Banshee
         private void OnButtonRipClicked(object o, EventArgs args)
         {
             RipTransaction trans = new RipTransaction();
+            trans.HaveTrackInfo += OnRipTransactionTrackRipped;
 
             foreach(object [] node in playlistModel) {
                 if(node[0] is AudioCdTrackInfo && ((AudioCdTrackInfo)node[0]).CanRip) {
@@ -2351,6 +2320,19 @@ namespace Banshee
                 );
                 dialog.Run();
                 dialog.Destroy();
+            }
+        }
+        
+        private void OnRipTransactionTrackRipped(object o, HaveTrackInfoArgs args)
+        {
+            if(playlistModel.Source is LibrarySource) {
+                ThreadAssist.ProxyToMain(delegate {
+                    if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(args.TrackInfo)) {
+                        return;
+                    }
+
+                    playlistModel.AddTrack(args.TrackInfo);
+                });
             }
         }
         

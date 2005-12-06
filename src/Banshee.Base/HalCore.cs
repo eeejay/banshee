@@ -25,33 +25,36 @@ namespace Banshee.Base
         
         private static void HalDeviceAdded(IntPtr contextRaw, IntPtr udiRaw)
         {
-            Event.Invoke(DeviceAdded, Context, delegate {
+            DeviceAddedHandler handler = DeviceAdded;
+            if(handler != null) {
                 DeviceAddedArgs args = new DeviceAddedArgs();
                 args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
-                return args;
-            });  
+                handler(Context, args);
+            }
         }
         
         private static void HalDeviceRemoved(IntPtr contextRaw, IntPtr udiRaw)
         {
-            Event.Invoke(DeviceRemoved, Context, delegate {
+            DeviceRemovedHandler handler = DeviceRemoved;
+            if(handler != null) {
                 DeviceRemovedArgs args = new DeviceRemovedArgs();
                 args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
-                return args;
-            });  
+                handler(Context, args);
+            } 
         }
         
         private static void HalDevicePropertyModified(IntPtr contextRaw, IntPtr udiRaw, IntPtr keyRaw,
             bool isRemoved, bool isAdded)
         {
-            Event.Invoke(DevicePropertyModified, Context, delegate {
+            DevicePropertyModifiedHandler handler = DevicePropertyModified;
+            if(handler != null) {
                 DevicePropertyModifiedArgs args = new DevicePropertyModifiedArgs();
                 args.Device = new Device(Context, UnixMarshal.PtrToString(udiRaw));
                 args.Key = UnixMarshal.PtrToString(keyRaw);
                 args.IsRemoved = isRemoved;
                 args.IsAdded = isAdded;
-                return args;
-            });
+                handler(Context, args);
+            }
         }
         
         static HalCore()

@@ -29,6 +29,8 @@
  
 using System; 
 using System.IO;
+using System.Collections;
+using Mono.Unix;
 using Hal;
 using IPod;
 
@@ -37,7 +39,9 @@ using Banshee.Dap;
  
 namespace Banshee.Dap.Ipod
 {
-    [DapProperties(DapType = DapType.NonGeneric)]
+    [DapProperties(DapType = DapType.NonGeneric, PipelineName="Ipod")]
+    [SupportedCodec(CodecType.Mp3)]
+    [SupportedCodec(CodecType.Mp4)]
     public sealed class IpodDap : DapDevice
     {
         private IPod.Device device;
@@ -58,6 +62,8 @@ namespace Banshee.Dap.Ipod
                 throw new BrokenDeviceException(e.Message);
             }
             
+            base.Initialize();
+            
             InstallProperty("Generation", device.Generation.ToString());
             InstallProperty("Model", device.Model.ToString());
             InstallProperty("Model Number", device.ModelNumber);
@@ -66,16 +72,34 @@ namespace Banshee.Dap.Ipod
             InstallProperty("Database Version", device.SongDatabase.Version.ToString());
             
             ReloadDatabase(false);
+            
+            CanCancelSave = false;
         }
         
-        protected override void OnTrackAdded(TrackInfo track)
+        protected override TrackInfo OnTrackAdded(TrackInfo track)
         {
-        
+            if(track is IpodDapTrackInfo) {
+                return track;
+            }
+
+            if(!TrackExistsInList(track, device.SongDatabase.Songs)) {
+                return new IpodDapTrackInfo(track, device.SongDatabase);
+            }
+            
+            return null;
         }
         
         protected override void OnTrackRemoved(TrackInfo track)
         {
-        
+            if(!(track is IpodDapTrackInfo)) {
+                return;
+            }
+            
+            try {
+                IpodDapTrackInfo ipod_track = (IpodDapTrackInfo)track;
+                device.SongDatabase.RemoveSong(ipod_track.Song);
+            } catch(Exception) {
+            }
         }
         
         private void ReloadDatabase(bool refresh)
@@ -98,9 +122,94 @@ namespace Banshee.Dap.Ipod
             base.Eject();
         }
         
-        public override void Save()
+        public override void Synchronize()
         {
-            device.Save();
+            UpdateSaveProgress(
+                Catalog.GetString("Synchronizing iPod"), 
+                Catalog.GetString("Pre-processing tracks"),
+                0.0);
+            
+            foreach(IpodDapTrackInfo track in Tracks) {
+                if(track.Song == null) {
+                    CommitTrackToDevice(track);
+                } else {
+                    track.Song.Uri = track.Uri;
+                }
+            }
+            
+            device.SongDatabase.SaveProgressChanged += delegate(object o, SaveProgressArgs args)
+            {
+                double progress = args.CurrentSong == null ? 0.0 : args.TotalProgress;
+                string message = args.CurrentSong == null 
+                    ? Catalog.GetString("Flushing to Disk (may take time)")
+                    : args.CurrentSong.Artist + " - " + args.CurrentSong.Title;
+                    
+                UpdateSaveProgress(Catalog.GetString("Synchronizing iPod"), message, progress);
+            };
+
+            try {
+                device.SongDatabase.Save();
+            } catch(Exception e) {
+                Console.Error.WriteLine (e);
+                LogCore.Instance.PushError(Catalog.GetString("Failed to synchronize iPod"), e.Message);
+            } finally {
+                ReloadDatabase(true);
+                FinishSave();
+            }
+        }
+        
+        private void CommitTrackToDevice(IpodDapTrackInfo track)
+        {
+            Song song = device.SongDatabase.CreateSong();
+            
+            song.Uri = track.Uri;
+        
+            if(track.Album != null) {
+                song.Album = track.Album;
+            }
+            
+            if(track.Artist != null) {
+                song.Artist = track.Artist;
+            }
+            
+            if(track.Title != null) {
+                song.Title = track.Title;
+            }
+            
+            if(track.Genre != null) {
+                song.Genre = track.Genre;
+            }
+            
+            song.Duration = track.Duration;
+            song.TrackNumber = (int)track.TrackNumber;
+            song.TotalTracks = (int)track.TrackCount;
+            song.Year = (int)track.Year;
+            song.LastPlayed = track.LastPlayed;
+            
+            switch(track.Rating) {
+                case 1: song.Rating = SongRating.Zero; break;
+                case 2: song.Rating = SongRating.Two; break;
+                case 3: song.Rating = SongRating.Three; break;
+                case 4: song.Rating = SongRating.Four; break;
+                case 5: song.Rating = SongRating.Five; break;
+                default: song.Rating = SongRating.Zero; break;
+            }
+            
+            if(song.Artist == null) {
+                song.Artist = String.Empty;
+            }
+            
+            if(song.Album == null) {
+                song.Album = String.Empty;
+            }
+            
+            if(song.Title == null) {
+                song.Title = String.Empty;
+            }
+            
+            if(song.Genre == null) {
+                song.Genre = String.Empty;
+            }
         }
         
         public override Gdk.Pixbuf GetIcon(int size)

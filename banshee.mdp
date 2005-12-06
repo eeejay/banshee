@@ -30,9 +30,6 @@
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/DragDrop.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/ExceptionDialog.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileEncoder.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileEncodeTransaction.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/GstFileEncoder.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/IPlaybackModel.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Library.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LibraryTrackInfo.cs" subtype="Code" buildaction="Nothing" />
@@ -42,7 +39,6 @@
     <File name="./src/Main.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/NautilusBurnUtil.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/NotificationAreaIcon.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/PipelineProfile.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlayerEngineLoader.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlayerInterface.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistColumns.cs" subtype="Code" buildaction="Nothing" />
@@ -152,6 +148,11 @@
     <File name="./libbanshee/inotify.h" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/inotify-glue.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/inotify-syscalls.h" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/Dap/DapMisc.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/PipelineProfile.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/FileEncoder.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/FileEncodeAction.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/GstFileEncoder.cs" subtype="Code" buildaction="Nothing" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

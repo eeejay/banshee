@@ -57,7 +57,7 @@ namespace Banshee.Base
             }
             
             try {
-                return new Gdk.Pixbuf(System.Reflection.Assembly.GetCallingAssembly(), name + ".png");
+                return new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), name + ".png");
             } catch(Exception) {
                 return null;
             }

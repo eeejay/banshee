@@ -55,15 +55,11 @@ banshee_sources = \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
 	DBusIPC.cs \
-	FileEncoder.cs \
-	GstFileEncoder.cs \
 	NautilusBurnUtil.cs \
-	FileEncodeTransaction.cs \
 	BurnCore.cs \
 	BurnTransaction.cs \
 	RatingRenderer.cs \
 	RipTransaction.cs \
-	PipelineProfile.cs \
 	ExceptionDialog.cs \
 	VersionInformationDialog.cs \
 	LogCoreViewer.cs \

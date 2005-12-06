@@ -28,67 +28,15 @@
  */
  
 using System;
+using System.IO;
 using System.Collections;
+using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Widgets;
 
 namespace Banshee.Dap
-{
-    public enum DapType {
-        Generic,
-        NonGeneric
-    }
-
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class DapProperties : Attribute 
-    {
-        private DapType dap_type;
-        
-        public DapType DapType {
-            get {
-                return dap_type;
-            }
-            
-            set {
-                dap_type = value;
-            }
-        }
-    }
-    
-    public class BrokenDeviceException : ApplicationException
-    {
-        public BrokenDeviceException(string message) : base(message)
-        {
-        }
-    }
-    
-    
-    public class CannotHandleDeviceException : ApplicationException
-    {
-        public CannotHandleDeviceException() : base("HAL Device cannot be handled by Dap subclass")
-        {
-        }
-    }
-    
-    public class WaitForPropertyChangeException : ApplicationException
-    {
-        public WaitForPropertyChangeException() : base("Waiting for properties to change on device")
-        {
-        }
-    }
-    
-    public delegate void DapTrackListUpdatedHandler(object o, DapTrackListUpdatedArgs args);
-
-    public class DapTrackListUpdatedArgs : EventArgs
-    {
-        public TrackInfo Track;
-
-        public DapTrackListUpdatedArgs(TrackInfo track)
-        {
-            Track = track;
-        }
-    }
-    
+{    
     public abstract class DapDevice : IEnumerable, IDisposable
     {
         public class PropertyTable : IEnumerable
@@ -148,14 +96,28 @@ namespace Banshee.Dap
 
         private PropertyTable properties = new PropertyTable();
         private ArrayList tracks = new ArrayList(); 
+        private ActiveUserEvent save_report_event;
+        private bool is_syncing = false;
+        private bool can_cancel_save = true;
+        private DapProperties type_properties;
         
         public event DapTrackListUpdatedHandler TrackAdded;
         public event DapTrackListUpdatedHandler TrackRemoved;
         public event EventHandler TracksCleared;
         public event EventHandler PropertiesChanged;
         public event EventHandler Ejected;
+        public event EventHandler SaveStarted;
+        public event EventHandler SaveFinished;
         
         public Hal.Device HalDevice;
+        
+        protected void Initialize()
+        {
+            Attribute [] dap_attrs = Attribute.GetCustomAttributes(GetType(), typeof(DapProperties));
+            if(dap_attrs != null && dap_attrs.Length >= 1) {
+                type_properties = dap_attrs[0] as DapProperties;
+            }
+        }
         
         public IEnumerator GetEnumerator()
         {
@@ -177,16 +139,29 @@ namespace Banshee.Dap
         
         public void AddTrack(TrackInfo track)
         {
-            tracks.Add(track);
-            OnTrackAdded(track);
-            Event.Invoke(TrackAdded, this, delegate { return new DapTrackListUpdatedArgs(track); });
+            TrackInfo dap_track = OnTrackAdded(track);
+            
+            if(track == null) {
+                return;
+            }
+            
+            tracks.Add(dap_track);
+            
+            DapTrackListUpdatedHandler handler = TrackAdded;
+            if(handler != null) {
+                handler(this, new DapTrackListUpdatedArgs(dap_track));
+            }
         }
         
         public void RemoveTrack(TrackInfo track)
         {
             tracks.Remove(track);
             OnTrackRemoved(track);
-            Event.Invoke(TrackRemoved, this, delegate { return new DapTrackListUpdatedArgs(track); });
+            
+            DapTrackListUpdatedHandler handler = TrackRemoved;
+            if(handler != null) {
+                handler(this, new DapTrackListUpdatedArgs(track));
+            }
         }
         
         public virtual void Dispose()
@@ -210,8 +185,9 @@ namespace Banshee.Dap
             }
         }
         
-        protected virtual void OnTrackAdded(TrackInfo track)
+        protected virtual TrackInfo OnTrackAdded(TrackInfo track)
         {
+            return track;
         }
         
         protected virtual void OnTrackRemoved(TrackInfo track)
@@ -230,10 +206,271 @@ namespace Banshee.Dap
             }
         }
         
-        public virtual void Save()
+        private string ToLower(string str)
+        {
+            return str == null ? null : str.ToLower();
+        }
+        
+        private bool TrackCompare(TrackInfo a, TrackInfo b)
+        {
+            return ToLower(a.Title) == ToLower(b.Title) && 
+                ToLower(a.Album) == ToLower(b.Album) &&
+                ToLower(a.Artist) == ToLower(b.Artist) &&
+                a.Year == b.Year &&
+                a.TrackNumber == b.TrackNumber;
+        }
+        
+        protected bool TrackExistsInList(TrackInfo track, ICollection list)
+        {
+            try {
+                foreach(TrackInfo track_b in list) {
+                    if(TrackCompare(track, track_b)) {
+                        return true;
+                    }
+                }
+            } catch(Exception) {
+            }
+            
+            return false;
+        }
+
+        public void Save(ICollection library)
+        {
+            Queue remove_queue = new Queue();
+            
+            foreach(TrackInfo ti in Tracks) {
+                if(TrackExistsInList(ti, library)) {
+                    continue;
+                }
+                
+                remove_queue.Enqueue(ti);
+            }
+            
+            while(remove_queue.Count > 0) {
+                RemoveTrack(remove_queue.Dequeue() as TrackInfo);
+            }
+            
+            foreach(TrackInfo ti in library) {
+                if(TrackExistsInList(ti, Tracks) || ti.Uri == null) {
+                    continue;
+                }
+                
+                AddTrack(ti);
+            }
+            
+            Save();
+        }
+        
+        public void Save()
+        {
+            is_syncing = true;
+            
+            EventHandler handler = SaveStarted;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+            
+            save_report_event = new ActiveUserEvent(Catalog.GetString("Synchronizing Device"));
+            save_report_event.Header = Catalog.GetString("Synchronizing Device");
+            save_report_event.Message = Catalog.GetString("Waiting for transcoder...");
+            save_report_event.Icon = GetIcon(22);
+            save_report_event.CanCancel = can_cancel_save;
+
+            ThreadAssist.Spawn(Transcode);
+        }
+        
+        protected bool ShouldCancelSave {
+            get {
+                return save_report_event.IsCancelRequested;
+            }
+        }
+        
+        protected bool CanCancelSave {
+            set {
+                can_cancel_save = value;
+            }
+        }
+        
+        protected void UpdateSaveProgress(string header, string message, double progress)
+        {
+            save_report_event.Header = header;
+            save_report_event.Message = message;
+            save_report_event.Progress = progress;
+        }
+        
+        protected void FinishSave()
+        {
+            is_syncing = false;
+            
+            ThreadAssist.ProxyToMain(delegate {
+                save_report_event.Dispose();
+                save_report_event = null;
+                
+                EventHandler handler = SaveFinished;
+                if(handler != null) {
+                    handler(this, new EventArgs());
+                }
+            });
+        }
+
+        private FileEncodeAction encoder = null;
+
+        private void Transcode()
+        {
+            PipelineProfile profile = PipelineProfile.GetConfiguredProfile(
+                type_properties.PipelineName, PipelineCodecFilter);
+            
+            Queue remove_queue = new Queue();
+            
+            foreach(TrackInfo track in Tracks) {
+                string cached_filename = GetCachedSongFileName(track.Uri);
+                
+                if(cached_filename == null) {
+                    if(profile == null) {
+                        remove_queue.Enqueue(track);
+                        continue;
+                    }
+
+                    Uri old_uri = track.Uri;
+                    track.Uri = ConvertSongFileName(track.Uri, profile.Extension);
+                    
+                    if(encoder == null) {
+                        encoder = new FileEncodeAction(profile);
+                        encoder.FileEncodeComplete += OnFileEncodeComplete;
+                        encoder.Finished += OnFileEncodeBatchFinished;
+                        encoder.Canceled += OnFileEncodeCanceled;
+                    }
+                        
+                    encoder.AddTrack(old_uri, track.Uri);
+                } else {
+                    if(System.IO.File.Exists(cached_filename)) {
+                        track.Uri = PathUtil.PathToFileUri(cached_filename);
+                    } else {
+                        remove_queue.Enqueue(track);
+                    }
+                }
+            }
+            
+            while(remove_queue.Count > 0) {
+                RemoveTrack(remove_queue.Dequeue() as TrackInfo);
+            }
+            
+            if(encoder == null) {
+                save_report_event.Message = Catalog.GetString("Processing...");
+                Synchronize();
+            } else {
+                encoder.Run();
+            }
+        }
+        
+        private bool encoder_canceled = false;
+        
+        private void OnFileEncodeCanceled(object o, EventArgs args)
+        {
+            encoder_canceled = true;
+        }
+        
+        private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
         {
         }
         
+        private void OnFileEncodeBatchFinished(object o, EventArgs args)
+        {
+            if(!encoder_canceled) {
+                save_report_event.Message = Catalog.GetString("Processing...");
+                Synchronize();
+            } else {
+                FinishSave();
+            }
+        }
+        
+        private string [] supported_extensions = null;
+        protected string [] SupportedExtensions {
+            get {        
+                if(supported_extensions != null) {
+                    return supported_extensions;
+                }
+            
+                Attribute [] attrs = Attribute.GetCustomAttributes(GetType(), typeof(SupportedCodec));
+                ArrayList extensions = new ArrayList();
+                
+                foreach(SupportedCodec codec in attrs) {
+                    foreach(string extension in CodecType.GetExtensions(codec.CodecType)) {
+                        extensions.Add(extension);
+                    }
+                }
+                
+                supported_extensions = extensions.ToArray(typeof(string)) as string [];
+                return supported_extensions;
+            }
+        }
+        
+        protected string PipelineCodecFilter {
+            get {
+                string filter = String.Empty;
+                for(int i = 0, n = SupportedExtensions.Length; i < n; i++) {
+                    filter += String.Format("{0}{1}", SupportedExtensions[i], (i < n - 1) ? "," : "");
+                }
+                return filter;
+            }
+        }
+        
+        private bool ValidSongFormat(string filename)
+        {
+            string ext = Path.GetExtension(filename).ToLower().Trim();
+
+            foreach(string vext in SupportedExtensions) {
+                if(ext == "." + vext) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        private string GetCachedSongFileName(Uri uri)
+        {
+            string filename = uri.LocalPath;
+        
+            if(ValidSongFormat(filename)) {
+                return filename;
+            }
+                
+            string path = PathUtil.MakeFileNameKey(uri);
+            string dir = Path.GetDirectoryName(path);
+            string file = Path.GetFileNameWithoutExtension(filename);
+            
+            foreach(string vext in SupportedExtensions) {
+                string newfile = dir + Path.DirectorySeparatorChar + ".banshee-dap-" + file + "." + vext;
+                
+                if(File.Exists(newfile)) {
+                    return newfile;
+                }
+            }
+            
+            foreach(string vext in SupportedExtensions) {
+                string newfile = path + "." + vext;
+                
+                if(File.Exists(newfile)) {
+                    return newfile;
+                }
+            }   
+                 
+            return null;
+        }
+        
+        private Uri ConvertSongFileName(Uri uri, string newext)
+        {
+            string filename = uri.LocalPath;
+            
+            string path = PathUtil.MakeFileNameKey(uri);
+            string dir = Path.GetDirectoryName(path);
+            string file = Path.GetFileNameWithoutExtension(filename);
+            
+            return PathUtil.PathToFileUri(dir + Path.DirectorySeparatorChar 
+                + ".banshee-dap-" + file + "." + newext);
+        }
+         
         public virtual Gdk.Pixbuf GetIcon(int size)
         {
             return null;
@@ -263,6 +500,13 @@ namespace Banshee.Dap
             }
         }
         
+        public bool IsSyncing {
+            get {
+                return is_syncing;
+            }
+        }
+        
+        public abstract void Synchronize();
         public abstract string Name { get; set; }
         public abstract ulong StorageCapacity { get; }
         public abstract ulong StorageUsed { get; }

@@ -182,11 +182,7 @@ namespace Banshee
         
         public static string MakeFilenameKey(Uri uri)
         {
-              string path = uri.LocalPath;
-        
-                  return Path.GetDirectoryName(path) + 
-                     Path.DirectorySeparatorChar + 
-                     Path.GetFileNameWithoutExtension(path);
+            return Banshee.Base.PathUtil.MakeFileNameKey(uri);
         }
     }
 
@@ -329,7 +325,6 @@ namespace Banshee
     {
         private Banshee.Dap.DapDevice device;
         
-        public bool IsSyncing;
         public bool NeedSync;
         
         public DapSource(Banshee.Dap.DapDevice device) : base(device.Name, SourceType.Dap)
@@ -352,7 +347,7 @@ namespace Banshee
         
         public void QueueForSync(LibraryTrackInfo lti)
         {
-            //device.AddTrack(lti);
+            device.AddTrack(lti);
         }
         
         public void SetSourceName(string name)
@@ -414,6 +409,12 @@ namespace Banshee
                 return String.Format(
                     Catalog.GetString("({0} Remaining)"),
                     BytesToString(device.StorageCapacity - device.StorageUsed));
+            }
+        }
+        
+        public bool IsSyncing {
+            get {
+                return device.IsSyncing;
             }
         }
     }

@@ -31,7 +31,7 @@ using System;
 using System.Runtime.InteropServices;
 using Mono.Unix;
 
-namespace Banshee
+namespace Banshee.Base
 {	
 	internal delegate void GstFileEncoderProgressCallback(IntPtr encoder, 
 		double progress);

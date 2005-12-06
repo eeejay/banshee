@@ -92,6 +92,10 @@ namespace Banshee.Dap.Njb
             device = null;
         }
         
+        public override void Synchronize()
+        {
+        }
+        
         public override Gdk.Pixbuf GetIcon(int size)
         {
             string prefix = "portable-media-";

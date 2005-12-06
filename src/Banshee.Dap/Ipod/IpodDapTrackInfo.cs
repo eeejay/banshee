@@ -38,15 +38,41 @@ namespace Banshee.Dap.Ipod
     public sealed class IpodDapTrackInfo : DapTrackInfo
     {
         private Song song;
-    
+        
         public IpodDapTrackInfo(Song song)
         {
             this.song = song;
-            Load();
+            LoadFromIpodSong();
             CanSaveToDatabase = false;
         }
         
-        private void Load()
+        public IpodDapTrackInfo(TrackInfo track, SongDatabase database)
+        {
+            if(track is IpodDapTrackInfo) {
+                IpodDapTrackInfo ipod_track = (IpodDapTrackInfo)track;
+                this.song = ipod_track.Song;
+                LoadFromIpodSong();
+            } else {
+                uri = track.Uri;
+                album = track.Album;
+                artist = track.Artist;
+                title = track.Title;
+                genre = track.Genre;
+                track_id = track.TrackId;
+                duration = track.Duration;
+                rating = track.Rating;
+                play_count = track.PlayCount;
+                last_played = track.LastPlayed;
+                date_added = track.DateAdded;
+                track_count = track.TrackCount;
+                track_number = track.TrackNumber;
+                year = track.Year;
+            }
+            
+            CanSaveToDatabase = false;
+        }
+        
+        private void LoadFromIpodSong()
         {
             try {
                 uri = song.Uri;

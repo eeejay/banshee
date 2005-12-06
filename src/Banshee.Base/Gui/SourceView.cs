@@ -281,11 +281,6 @@ namespace Banshee
                     foreach(LibraryTrackInfo lti in tracks) {
                         dapSource.QueueForSync(lti);    
                     }
-                    
-                    LogCore.Instance.PushWarning(Catalog.GetString("iPod Syncing Disabled"), 
-                Catalog.GetString("iPod syncing has been disabled in this release because unified DAP " + 
-                "support is under development, and the iPod sync code has not yet been converted to " + 
-                "the DAP sync model. iPod syncing will be back in the next release."));
                 }
             } else {
                 Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));

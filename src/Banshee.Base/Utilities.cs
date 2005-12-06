@@ -170,7 +170,7 @@ namespace Banshee.Base
         }
     }
     
-    public static class Event
+    /*public static class Event
     {
         public delegate EventArgs ArgumentRequestCallback();
        
@@ -209,7 +209,7 @@ namespace Banshee.Base
         {
             ThreadAssist.ProxyToMain(delegate { Invoke(handler, o, argumentCallback); });
         }
-    }
+    }*/
     
     public static class StringUtil
     {
@@ -279,6 +279,14 @@ namespace Banshee.Base
         public static string FileUriToPath(Uri uri)
         {
             return uri.LocalPath;
+        }
+        
+        public static string MakeFileNameKey(Uri uri)
+        {
+            string path = uri.LocalPath;
+            return Path.GetDirectoryName(path) + 
+                Path.DirectorySeparatorChar + 
+                Path.GetFileNameWithoutExtension(path);
         }
     }
     

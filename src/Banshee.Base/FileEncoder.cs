@@ -30,7 +30,7 @@
 using System;
 using System.IO;
 
-namespace Banshee
+namespace Banshee.Base
 {
 	public delegate void FileEncoderProgressHandler(object o, 
 		FileEncoderProgressArgs args);

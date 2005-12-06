@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  FileEncodeTransaction.cs
+ *  FileEncodeAction.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -31,12 +31,10 @@ using System;
 using System.IO;
 using System.Collections;
 using Mono.Unix;
-using Nautilus;
 
 using Banshee.Widgets;
-using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Base
 {
     public delegate void FileEncodeCompleteHandler(object o, FileEncodeCompleteArgs args);
 
@@ -69,7 +67,7 @@ namespace Banshee
             this.profile = profile;
             user_event = new ActiveUserEvent(Catalog.GetString("File Encoder"));
             user_event.CancelRequested += OnCancelRequested;
-            user_event.Icon = Gdk.Pixbuf.LoadFromResource("encode-action-24.png");
+            user_event.Icon = IconThemeUtils.LoadIcon("encode-action-24", 22);
             user_event.Message = Catalog.GetString("Initializing Encoder...");
         }
         

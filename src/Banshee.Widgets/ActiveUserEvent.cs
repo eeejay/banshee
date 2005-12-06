@@ -196,7 +196,7 @@ namespace Banshee.Widgets
         
         public double Progress {
             set {
-                if(value <= 0.0 && !disposed) {
+                if(value <= 0.0 && !disposed && timeout_id == 0) {
                     timeout_id = GLib.Timeout.Add(100, OnTimeout);
                 } else if(timeout_id > 0) {
                     GLib.Source.Remove(timeout_id);

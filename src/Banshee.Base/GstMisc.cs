@@ -70,23 +70,33 @@ namespace Banshee.Base
                 GLib.Marshaller.Free(mime_ptr);
                 
                 if(mime != null) {
-                    return mime;
+                    return FilterMimeType(mime);
                 }
             } 
             
             try {
                 mime = Gnome.Vfs.MimeType.GetMimeTypeForUri(uri.AbsoluteUri);
                 if(mime != null && mime != "application/octet-stream") {
-                    return mime;
+                    return FilterMimeType(mime);
                 }
             } catch(Exception) {
             }
             
             try {
-                return "entagged/" + System.IO.Path.GetExtension(uri.LocalPath).Substring(1);
+                return FilterMimeType("entagged/" + System.IO.Path.GetExtension(uri.LocalPath).Substring(1));
             } catch(Exception) {
                 return null;
             }
+        }
+        
+        private static string FilterMimeType(string mime)
+        {
+            string [] parts = mime.Split(',');
+            if(parts == null || parts.Length <= 0) {
+                return mime.Trim();
+            }
+            
+            return parts[0].Trim();
         }
     }
 }

@@ -27,12 +27,17 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/GstMisc.cs \
 	$(srcdir)/ImportManager.cs \
 	$(srcdir)/UriList.cs \
+	$(srcdir)/PipelineProfile.cs \
+	$(srcdir)/FileEncoder.cs \
+	$(srcdir)/GstFileEncoder.cs \
+	$(srcdir)/FileEncodeAction.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
 	$(srcdir)/Dap/Dap.cs \
 	$(srcdir)/Dap/DapCore.cs \
-	$(srcdir)/Dap/DapTrackInfo.cs
+	$(srcdir)/Dap/DapTrackInfo.cs \
+	$(srcdir)/Dap/DapMisc.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

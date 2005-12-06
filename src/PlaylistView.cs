@@ -330,6 +330,10 @@ namespace Banshee
             renderer.Foreground = null;
             
             TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
             if(ti.GetType() != typeof(DapTrackInfo)) 
                 return;
                 
@@ -374,6 +378,10 @@ namespace Banshee
             
             TrackInfo ti = model.IterTrackInfo(iter);
             
+            if(ti == null) {
+                return;
+            }
+            
             if(ti.GetType() != typeof(DapTrackInfo)) {
                 renderer.Pixbuf = null;
                 return;
@@ -388,35 +396,55 @@ namespace Banshee
         protected void TrackCellTrack(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            SetRendererAttributes((CellRendererText)cell, 
-                Convert.ToString(model.IterTrackInfo(iter).TrackNumber), iter);
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, Convert.ToString(ti.TrackNumber), iter);
         }    
         
         protected void TrackCellArtist(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            SetRendererAttributes((CellRendererText)cell, 
-                model.IterTrackInfo(iter).Artist, iter);
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, ti.Artist, iter);
         }
         
         protected void TrackCellTitle(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            SetRendererAttributes((CellRendererText)cell, 
-                model.IterTrackInfo(iter).Title, iter);
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, ti.Title, iter);
         }
         
         protected void TrackCellAlbum(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            SetRendererAttributes((CellRendererText)cell, 
-                model.IterTrackInfo(iter).Album, iter);
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, ti.Album, iter);
         }
         
         protected void TrackCellTime(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
             TrackInfo Track = model.IterTrackInfo(iter);
+            if(Track == null) {
+                return;
+            }
+            
             SetRendererAttributes((CellRendererText)cell, 
                 Track.Duration.TotalSeconds < 0.0 ? Catalog.GetString("N/A") : 
                 String.Format("{0}:{1}", Track.Duration.Minutes, 
@@ -426,30 +454,43 @@ namespace Banshee
         protected void TrackCellPlayCount(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            uint plays = model.IterTrackInfo(iter).PlayCount;
-            SetRendererAttributes((CellRendererText)cell, 
-                plays > 0 ? Convert.ToString(plays) : "", 
-                iter);
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            uint plays = ti.PlayCount;
+            SetRendererAttributes((CellRendererText)cell, plays > 0 ? Convert.ToString(plays) : "", iter);
         }
         
         protected void TrackCellRating(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
-        {            
-            ((RatingRenderer)cell).Track = model.IterTrackInfo(iter);
+        {           
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+             
+            ((RatingRenderer)cell).Track = ti;
         }
         
         protected void TrackCellLastPlayed(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            DateTime lastPlayed = model.IterTrackInfo(iter).LastPlayed;
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            DateTime lastPlayed = ti.LastPlayed;
             
             string disp = String.Empty;
             
-            if(lastPlayed > DateTime.MinValue)
+            if(lastPlayed > DateTime.MinValue) {
                 disp = lastPlayed.ToString();
+            }
             
-            SetRendererAttributes((CellRendererText)cell, 
-                String.Format("{0}", disp), iter);
+            SetRendererAttributes((CellRendererText)cell, String.Format("{0}", disp), iter);
         }
         
         public void PlayPath(TreePath path)

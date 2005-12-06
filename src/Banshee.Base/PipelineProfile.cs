@@ -32,9 +32,7 @@ using System.Collections;
 using Gtk;
 using Mono.Unix;
 
-using Banshee.Base;
-
-namespace Banshee
+namespace Banshee.Base
 {
     /* 
     A pipeline profile has the format:
@@ -248,18 +246,13 @@ namespace Banshee
             get {
                 string [] descriptions = null;
 
-                GConf.Client gc = Core.IsInstantiated
-                    ? Core.GconfClient
-                    : new GConf.Client();
-
                 try {
-                    descriptions = gc.Get(GConfKeys.EncoderProfiles) 
-                        as string [];
+                    descriptions = Globals.Configuration.Get(GConfKeys.EncoderProfiles) as string [];
                 } catch(Exception) { }
                 
                 if(descriptions == null || descriptions.Length == 0) {
                     descriptions = DefaultProfileDescriptions;
-                    gc.Set(GConfKeys.EncoderProfiles, descriptions);
+                    Globals.Configuration.Set(GConfKeys.EncoderProfiles, descriptions);
                 }
 
                 return descriptions;
@@ -279,7 +272,7 @@ namespace Banshee
                     try {
                         list.Add(new PipelineProfile(descriptions[i]));
                     } catch(PipelineProfileException e) {
-                        Core.Log.PushWarning("Could not verify encoder profile", e.Message, false);
+                        LogCore.Instance.PushWarning("Could not verify encoder profile", e.Message, false);
                     }
                 }
                 
@@ -299,16 +292,12 @@ namespace Banshee
             int bitrate = 160;
             PipelineProfile profile;
 
-            GConf.Client gc = Core.IsInstantiated
-                ? Core.GconfClient
-                : new GConf.Client();
-
             try {
-                key = gc.Get(GConfKeys.BasePath + gckey + "Profile") as string;
+                key = Globals.Configuration.Get(GConfKeys.BasePath + gckey + "Profile") as string;
             } catch(Exception) {}
 
             try {
-                bitrate = (int)gc.Get(GConfKeys.BasePath + gckey + "Bitrate");
+                bitrate = (int)Globals.Configuration.Get(GConfKeys.BasePath + gckey + "Bitrate");
             } catch(Exception) {}
 
             if(Profiles == null || Profiles.Length == 0)
