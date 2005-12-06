@@ -348,8 +348,8 @@ namespace Entagged.Audioformats
 
         public IList Get(CommonField id)
         {
-            IList list = Get(id.ToString());
-            if(list.Count == 0) {
+            return Get(id.ToString());
+       /*     if(list.Count == 0) {
                 try {
                     return Get(((CommonField)common_field_aliases[id]).ToString());
                 } catch(Exception) {
@@ -357,7 +357,7 @@ namespace Entagged.Audioformats
                 }
             }
             
-            return list;
+            return list; */
         }
 
         public void Set(string id, string content) 
