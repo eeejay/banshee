@@ -84,6 +84,13 @@ gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 gchar *
 gstreamer_detect_mimetype(const gchar *uri)
 {
+    return NULL;
+    
+    /* GStreamer 0.10 typefind is reporting everything as
+       application/x-id3, so typefind is disabled for now.
+       Higher level managed Banshee will fall back on gvfs. */
+
+#if 0
     GstElement *pipeline;
     GstElement *source;
     GstElement *typefind;
@@ -122,6 +129,7 @@ gstreamer_detect_mimetype(const gchar *uri)
     if(mimetype == -1) {
         mimetype = NULL;
     }
-
+   
     return mimetype;
+#endif
 }

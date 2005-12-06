@@ -1,10 +1,22 @@
+2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.MediaEngine/Gstreamer/Makefile.am: Define whether the C
+	engine is 0.8 or 0.10 
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Added an 
+	IPlayerEngine implementation for the 0.10 backend
+
+	* libbanshee/gst-playback-0.10.c: Merged the GStreamer 0.10 playback 
+	backend
+
+	* libbanshee/gst-misc-0.10.c: Disabled typefind again, as 0.10 seems to
+	report everything as application/x-id3
+
+	* entagged-sharp/*: Updated entagged-sharp checkout
+
 2005-12-05  Mike Kestner  <mkestner@novell.com>
 
 	* src/Banshee.Dap/*/Makefile.am: only make the _SCRIPTS optional.
-
-2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
-
-	* entagged-sharp/*: Updated entagged-sharp checkout
 
 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
 
