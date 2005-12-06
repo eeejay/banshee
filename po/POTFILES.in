@@ -7,8 +7,8 @@ data/glade/newipod.glade
 data/glade/player.glade
 data/glade/preferences.glade
 data/glade/trackinfo.glade
-libbanshee/cd-rip.c
-libbanshee/gst-encode.c
+libbanshee/gst-cd-rip-0.8.c
+libbanshee/gst-transcode-0.8.c
 libbanshee/hal-context.c
 src/AboutBox.cs
 src/BurnCore.cs
