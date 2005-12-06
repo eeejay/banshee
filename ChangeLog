@@ -1,5 +1,11 @@
 2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Fixed weird VERSION/ASM_VERSION definitions; Version 0.10
+
+	* NEWS: Updated 
+
+2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
+	
 	* configure.ac: Require ipod-sharp 0.5.12
 
 	* docs/*: Updated API Documentation
