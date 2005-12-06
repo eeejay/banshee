@@ -170,7 +170,7 @@ namespace Banshee
         {
             ClearModel();
             
-            foreach(Banshee.Dap.DapTrackInfo track in dapSource.Device) {
+            foreach(TrackInfo track in dapSource.Device) {
                 AddTrack(track);
             }
             

@@ -1,5 +1,9 @@
 2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlaylistModel.cs: Minor fix
+
+2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
+
 	* configure.ac: Fixed weird VERSION/ASM_VERSION definitions; Version 0.10
 
 	* NEWS: Updated 
