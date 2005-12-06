@@ -1,5 +1,7 @@
 2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* docs/*: Updated API Documentation
+
 	* banshee.mdp: updated MonoDevelop project
 
 	* src/Banshee.Widgets/ActiveUserEvent.cs: Fixed bug regarding multiple

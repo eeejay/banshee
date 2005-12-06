@@ -46,8 +46,6 @@
       <Type Name="DateTimeUtil" />
       <Type Name="Timer" />
       <Type Name="ThreadAssist" />
-      <Type Name="Event" />
-      <Type Name="Event+ArgumentRequestCallback" />
       <Type Name="StringUtil" />
       <Type Name="PathUtil" />
       <Type Name="Resource" />
@@ -85,6 +83,16 @@
       <Type Name="ImportManager" />
       <Type Name="UriList" />
       <Type Name="ImportEventHandler" />
+      <Type Name="PipelineProfileException" />
+      <Type Name="PipelineProfile" />
+      <Type Name="PipelineProfileSelector" />
+      <Type Name="FileEncoderProgressArgs" />
+      <Type Name="FileEncoder" />
+      <Type Name="GstFileEncoder" />
+      <Type Name="FileEncodeCompleteArgs" />
+      <Type Name="FileEncodeAction" />
+      <Type Name="FileEncoderProgressHandler" />
+      <Type Name="FileEncodeCompleteHandler" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -101,6 +109,8 @@
       <Type Name="DapTrackListUpdatedHandler" />
       <Type Name="DapEventHandler" />
       <Type Name="DapType" />
+      <Type Name="CodecType" />
+      <Type Name="SupportedCodec" />
     </Namespace>
     <Namespace Name="Banshee.Widgets">
       <Type Name="CoverArtThumbnail" />

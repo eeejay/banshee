@@ -1,0 +1,123 @@
+<Type Name="FileEncodeAction" FullName="Banshee.Base.FileEncodeAction">
+  <TypeSignature Language="C#" Value="public class FileEncodeAction" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Base</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FileEncodeAction (Banshee.Base.PipelineProfile profile);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="profile" Type="Banshee.Base.PipelineProfile" />
+      </Parameters>
+      <Docs>
+        <param name="profile">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FileEncodeComplete">
+      <MemberSignature Language="C#" Value="public event Banshee.Base.FileEncodeCompleteHandler FileEncodeComplete;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.FileEncodeCompleteHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Finished">
+      <MemberSignature Language="C#" Value="public event EventHandler Finished;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Canceled">
+      <MemberSignature Language="C#" Value="public event EventHandler Canceled;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddTrack">
+      <MemberSignature Language="C#" Value="public void AddTrack (Banshee.Base.TrackInfo track, Uri outputUri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="track" Type="Banshee.Base.TrackInfo" />
+        <Parameter Name="outputUri" Type="System.Uri" />
+      </Parameters>
+      <Docs>
+        <param name="track">To be added.</param>
+        <param name="outputUri">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddTrack">
+      <MemberSignature Language="C#" Value="public void AddTrack (Uri inputUri, Uri outputUri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="inputUri" Type="System.Uri" />
+        <Parameter Name="outputUri" Type="System.Uri" />
+      </Parameters>
+      <Docs>
+        <param name="inputUri">To be added.</param>
+        <param name="outputUri">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Run">
+      <MemberSignature Language="C#" Value="public void Run ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ThreadedRun">
+      <MemberSignature Language="C#" Value="public void ThreadedRun (object o);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="o" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="o">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

@@ -1,0 +1,23 @@
+<Type Name="FileEncoderProgressHandler" FullName="Banshee.Base.FileEncoderProgressHandler">
+  <TypeSignature Language="C#" Value="public delegate void FileEncoderProgressHandler(object o, Banshee.Base.FileEncoderProgressArgs args);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Base</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="o" Type="System.Object" />
+    <Parameter Name="args" Type="Banshee.Base.FileEncoderProgressArgs" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="o">To be added.</param>
+    <param name="args">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>
