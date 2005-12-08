@@ -85,7 +85,7 @@ namespace Banshee.Base
         {
             try {
                 State new_state = nm_manager.State;
-                if(new_state != last_state && (new_state == State.Connected || new_state == State.Disconnected) {
+                if(new_state != last_state && (new_state == State.Connected || new_state == State.Disconnected)) {
                     last_state = new_state;
                     
                     NetworkStateChangedHandler handler = StateChanged;
