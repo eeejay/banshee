@@ -1,5 +1,16 @@
 2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/Utilities.cs: Added UnmountVolume and ExecProcess
+	utility methods
+
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: Call Utilities.UnmountVolume
+	if audio CD happens to be mounted (multi-session disk) before calling
+	the eject ioctl
+
+	* src/Banshee.Base/HalCore.cs: Added license header to file
+
+2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Bashee.Base/AudioCd/AudioCdCore.cs: Fixed minor detection bug;
 	multi-session discs were only being detected - regular audio CDs were not
 

@@ -34,6 +34,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions; 
+using System.Diagnostics;
 using Mono.Unix;
  
 namespace Banshee.Base
@@ -74,6 +75,31 @@ namespace Banshee.Base
                 return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
             else
                 return String.Format(Catalog.GetString("{0} MB"), mb);
+        }
+        
+        public static bool UnmountVolume(string device)
+        {
+            try {
+                if(ExecProcess("pumount", device) != 0) {
+                    throw new ApplicationException("pumount returned error");
+                }
+                
+                return true;
+            } catch(Exception) {
+                try {
+                    return ExecProcess("umount", device) == 0;
+                } catch(Exception) {
+                }
+            }
+            
+            return false;
+        }
+        
+        public static int ExecProcess(string command, string args)
+        {
+            Process process = Process.Start(command, args);
+            process.WaitForExit();
+            return process.ExitCode;
         }
     }
     

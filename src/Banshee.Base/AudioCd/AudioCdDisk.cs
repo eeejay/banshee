@@ -178,6 +178,13 @@ namespace Banshee.Base
         public bool Eject(bool open)
         {
             try {
+                Hal.Device device = new Hal.Device(HalCore.Context, udi);
+                if(device.GetPropertyBool("volume.is_mounted")) {
+                    if(!Utilities.UnmountVolume(device_node)) {
+                        return false;
+                    }
+                }
+            
                 using(UnixStream stream = (new UnixFileInfo(device_node)).Open( 
                     Mono.Unix.Native.OpenFlags.O_RDONLY | 
                     Mono.Unix.Native.OpenFlags.O_NONBLOCK)) {
