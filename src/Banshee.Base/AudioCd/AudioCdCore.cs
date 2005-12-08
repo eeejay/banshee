@@ -116,7 +116,8 @@ namespace Banshee.Base
             
             if(!volume.GetPropertyBool("volume.disc.has_audio") || 
                 !volume.PropertyExists("block.device") || 
-                !volume.PropertyExists("info.product")) {
+                !volume.GetPropertyBool("block.is_volume") ||
+                volume["volume.disc.type"] != "cd_rom") {
                 return null;
             }
             

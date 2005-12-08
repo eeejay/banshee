@@ -1,5 +1,10 @@
 2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Bashee.Base/AudioCd/AudioCdCore.cs: Fixed minor detection bug;
+	multi-session discs were only being detected - regular audio CDs were not
+
+2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Base/NetworkDetect.cs: whoops, missing closing parenthesis
 
 2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
