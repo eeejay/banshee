@@ -1,5 +1,12 @@
 2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/NetworkDetect.cs: Only fire StateChanged event
+	if the state change is State.Connected or State.Disconnected
+	* src/Banshee.Base/NetworkManager/Manager.cs: Changed header to 
+	show proper file name
+
+2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 	* src/Banshee.Base/NetworkManager/*.c: C# implementation of the 
 	NetworkManager DBus API using dbus-sharp
