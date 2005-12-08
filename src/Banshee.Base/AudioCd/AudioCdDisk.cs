@@ -42,6 +42,8 @@ namespace Banshee.Base
         private string device_node;
         private string drive_name;
         
+        private bool mb_queried = false;
+        
         private string album_title;
         
         private AudioCdTrackInfo [] tracks;
@@ -53,6 +55,8 @@ namespace Banshee.Base
             this.udi = udi;
             device_node = deviceNode;
             drive_name = driveName;
+            
+            Globals.Network.StateChanged += OnNetworkStateChanged;
             
             LoadDiskInfo();
         }
@@ -80,9 +84,26 @@ namespace Banshee.Base
             ThreadPool.QueueUserWorkItem(QueryMusicBrainz, mb_disc);
         }
         
+        private void OnNetworkStateChanged(object o, NetworkStateChangedArgs args)
+        {
+            if(!mb_queried && args.Connected) {
+                ThreadPool.QueueUserWorkItem(QueryMusicBrainz, null);
+            }
+        }
+        
         private void QueryMusicBrainz(object o)
         {
-            SimpleDisc mb_disc = o as SimpleDisc;
+            if(!Globals.Network.Connected) {
+                return;
+            }
+            
+            SimpleDisc mb_disc;
+            
+            if(o == null) {
+                mb_disc = new SimpleDisc(device_node);
+            } else {
+                mb_disc = o as SimpleDisc;
+            }
             
             try {
                 mb_disc.QueryCDMetadata();
@@ -118,6 +139,8 @@ namespace Banshee.Base
             
             string asin = mb_disc.AmazonAsin;
             mb_disc.Dispose();
+            
+            mb_queried = true;
             
             Gtk.Application.Invoke(delegate {
                 if(Updated != null) {

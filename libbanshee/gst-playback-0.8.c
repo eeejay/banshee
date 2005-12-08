@@ -87,12 +87,21 @@ gpe_pipeline_setup(GstPlayerEngine *engine)
         (GSourceFunc)iterate_timeout, engine);
 
     engine->player_element = gst_element_factory_make("playbin", "play");
-    if(engine->player_element == NULL)
+    if(engine->player_element == NULL) {
+        g_warning(_("Could not find or create the 'playbin' GStreamer plugin"));
         return FALSE;
+    }
 
     sink = gst_gconf_get_default_audio_sink();
-    if(!sink)
-        return FALSE;
+    if(sink == NULL) {
+        sink = gst_element_factory_make("alsasink", "sink");
+        if(sink == NULL) {
+            g_warning(_("Could not load an output sink from GStreamer/GConf and could not fall back on alsasink"));
+            return FALSE;
+        } else {
+            g_warning(_("Could not load an output sink from GStreamer/GConf, falling back on alsasink"));
+        }
+    }
 
     g_object_set(G_OBJECT(engine->player_element), "audio-sink", sink, NULL);
     

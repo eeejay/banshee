@@ -158,7 +158,8 @@ namespace Banshee
             Core.Log.PushDebug("Loaded PlayerEngine core", Player.EngineName);
 
             if(AudioCdPlayer == null) {
-                Console.Error.WriteLine("Could not load AudioCdPlayer!");
+                Console.Error.WriteLine("Could not load AudioCdPlayer as the GStreamer backend could not be " +
+                    "loaded. This is probably a problem with GStreamer. Try running gst-register-0.8");
                 System.Environment.Exit(1);
             }
 
@@ -230,6 +231,7 @@ namespace Banshee
             library.TransactionManager.CancelAll();
             library.Db.Close();
             
+            Globals.Dispose();
             HalCore.Dispose();
             Banshee.Dap.DapCore.Dispose();
         }

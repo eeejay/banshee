@@ -31,16 +31,20 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FileEncoder.cs \
 	$(srcdir)/GstFileEncoder.cs \
 	$(srcdir)/FileEncodeAction.cs \
+	$(srcdir)/NetworkDetect.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
 	$(srcdir)/Dap/Dap.cs \
 	$(srcdir)/Dap/DapCore.cs \
 	$(srcdir)/Dap/DapTrackInfo.cs \
-	$(srcdir)/Dap/DapMisc.cs
+	$(srcdir)/Dap/DapMisc.cs \
+	$(srcdir)/NetworkManager/Manager.cs \
+	$(srcdir)/NetworkManager/Device.cs \
+	$(srcdir)/NetworkManager/Network.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

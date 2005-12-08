@@ -1,3 +1,20 @@
+2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+	* src/Banshee.Base/NetworkManager/*.c: C# implementation of the 
+	NetworkManager DBus API using dbus-sharp
+	* src/Banshee.Base/NetworkDetect.cs: front-end class to basic network
+	detection and notification through NetworkManager; if NetworkManager
+	is not available, NetworkDetect always assumes a connection is available
+	* src/Banshee.Base/AudioCdDisk.cs: Become 'Network Aware': will not
+	attempt to fetch track information from MusicBrainz if there is
+	not a network connection; will fetch information once a connection
+	becomes available
+	* src/Banshee.Base/Makefile.am: Added NetworkManager C# sources
+	* src/Banshee.Base/Globals.cs: Added a Network property and 
+	placeholder Dispose method
+	* src/Core.cs (Shutdown): Call Globals.Dispose()
+
 2005-12-06  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlaylistModel.cs: Minor fix

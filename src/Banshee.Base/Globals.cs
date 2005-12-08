@@ -36,10 +36,16 @@ namespace Banshee.Base
     {
         private static GConf.Client gconf_client;
         private static string library_location;
+        private static NetworkDetect network_detect;
         
         static Globals()
         {
             gconf_client = new GConf.Client();
+            network_detect = NetworkDetect.Instance;
+        }
+        
+        public static void Dispose()
+        {
         }
         
         public static GConf.Client Configuration {
@@ -55,6 +61,12 @@ namespace Banshee.Base
             
             set {
                 library_location = value;
+            }
+        }
+        
+        public static NetworkDetect Network {
+            get {
+                return network_detect;
             }
         }
     }
