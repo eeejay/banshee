@@ -1,3 +1,8 @@
+2005-12-11  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Added missing files
+	* nb.po: Updated Øivind Hoel's Norwegian Bokmål translation 
+
 2005-12-10  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.

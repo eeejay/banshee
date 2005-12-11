@@ -8,6 +8,7 @@ data/glade/player.glade
 data/glade/preferences.glade
 data/glade/trackinfo.glade
 libbanshee/gst-cd-rip-0.8.c
+libbanshee/gst-playback-0.8.c
 libbanshee/gst-transcode-0.8.c
 libbanshee/hal-context.c
 src/AboutBox.cs
@@ -36,6 +37,7 @@ src/Banshee.Base/FileEncodeAction.cs
 src/Banshee.Base/GstFileEncoder.cs
 src/Banshee.Base/HalCore.cs
 src/Banshee.Base/ImportManager.cs
+src/Banshee.Base/NetworkDetect.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/TrackInfo.cs
 src/Banshee.Base/Utilities.cs
