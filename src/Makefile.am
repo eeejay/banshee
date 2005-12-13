@@ -18,7 +18,9 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	AssemblyInfo.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
-	banshee.in 
+	banshee.in  \
+	BansheeDbusClient.cs \
+	BansheeDbusClient.Makefile
 
 CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = Makefile.in entagged-sharp.dll $(banshee_generated_sources)
@@ -164,3 +166,7 @@ AmazonSearchService.cs: AmazonSearchService.wsdl
 
 run:
 	BANSHEE_BURN_ENABLE=yes banshee
+
+dbus-client-sample:
+	make -f BansheeDbusClient.Makefile
+

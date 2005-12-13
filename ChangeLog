@@ -1,3 +1,14 @@
+2005-12-13  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/BansheeDbusClient.cs: Sample program using the the Banshee D-Bus
+	API to do basic playback control and display the current song
+	
+	* src/BansheeDbusClient.Makefile: A simple Makefile to build the 
+	Banshee Dbus Client sample program
+	
+	* src/Makefile.am: Added BansheeDbusClient.{Makefile,cs} to EXTRA_DIST;
+	added a 'dbus-client-sample' rule to build the sample client
+
 2005-12-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Base/Utilities.cs: Added UnmountVolume and ExecProcess
