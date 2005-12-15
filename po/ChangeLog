@@ -1,3 +1,8 @@
+2005-12-15  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Removed old glade files, added data/banshee.glade and
+	src/Banshee.Base/ActionManager.cs
+
 2005-12-11  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
