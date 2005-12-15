@@ -1,31 +1,28 @@
-<Type Name="CoverArtThumbnail" FullName="Banshee.Widgets.CoverArtThumbnail">
-  <TypeSignature Language="C#" Value="public class CoverArtThumbnail : Gtk.EventBox" />
+<Type Name="CoverArtView" FullName="Banshee.Widgets.CoverArtView">
+  <TypeSignature Language="C#" Value="public class CoverArtView : Gtk.DrawingArea" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>Gtk.EventBox</BaseTypeName>
+    <BaseTypeName>Gtk.DrawingArea</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public CoverArtThumbnail (int size);" />
+      <MemberSignature Language="C#" Value="public CoverArtView ();" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="size" Type="System.Int32" />
-      </Parameters>
+      <Parameters />
       <Docs>
-        <param name="size">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Label">
-      <MemberSignature Language="C#" Value="public string Label { set; };" />
+    <Member MemberName="Enabled">
+      <MemberSignature Language="C#" Value="public bool Enabled { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.String</ReturnType>
+        <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -38,18 +35,6 @@
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="NoArtworkPixbuf">
-      <MemberSignature Language="C#" Value="public Gdk.Pixbuf NoArtworkPixbuf { set; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Gdk.Pixbuf</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

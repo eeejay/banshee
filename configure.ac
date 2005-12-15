@@ -226,6 +226,8 @@ else
 			AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
 		fi
 	fi
+
+	AM_GST_ELEMENT_CHECK(spider, , AC_MSG_ERROR([The 'spider' GStreamer plugin was not found.]))
 fi
 
 AC_SUBST(GST_CFLAGS)
@@ -244,7 +246,6 @@ AM_GST_ELEMENT_CHECK(cdparanoia, , AC_MSG_ERROR([The 'cdparanoia' GStreamer plug
 AM_GST_ELEMENT_CHECK(gnomevfssink, , AC_MSG_ERROR([The 'gnomevfssink' GStreamer plugin was not found.]))
 AM_GST_ELEMENT_CHECK(gnomevfssrc, , AC_MSG_ERROR([The 'gnomevfssrc' GStreamer plugin was not found.]))
 AM_GST_ELEMENT_CHECK(audioconvert, , AC_MSG_ERROR([The 'audioconvert' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(spider, , AC_MSG_ERROR([The 'spider' GStreamer plugin was not found.]))
 AM_GST_ELEMENT_CHECK(playbin, , AC_MSG_ERROR([The 'playbin' GStreamer plugin was not found.]))
 
 dnl GTK+-2.0 C devel deps

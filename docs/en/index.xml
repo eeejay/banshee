@@ -93,6 +93,10 @@
       <Type Name="FileEncodeAction" />
       <Type Name="FileEncoderProgressHandler" />
       <Type Name="FileEncodeCompleteHandler" />
+      <Type Name="ActionManager" />
+      <Type Name="NetworkStateChangedArgs" />
+      <Type Name="NetworkDetect" />
+      <Type Name="NetworkStateChangedHandler" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -130,6 +134,16 @@
       <Type Name="HigMessageDialog" />
       <Type Name="NotificationAreaIcon" />
       <Type Name="ToggleStateChangedHandler" />
+      <Type Name="ActionButton" />
+      <Type Name="ActionToggleButton" />
+      <Type Name="CoverArtView" />
+    </Namespace>
+    <Namespace Name="NetworkManager">
+      <Type Name="Manager" />
+      <Type Name="Device" />
+      <Type Name="Network" />
+      <Type Name="State" />
+      <Type Name="DeviceType" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

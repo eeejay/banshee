@@ -81,6 +81,10 @@ namespace Banshee
         private MultiStateToggleButton shuffle_toggle_button;
                 
         private ActionButton playpause_button;
+        private ActionButton next_button;
+        private ActionButton previous_button;
+        private ActionButton burn_button;
+        private ActionButton rip_button;
         
         private ActionButton sync_dap_button;
         private EventBox syncing_container;
@@ -201,7 +205,7 @@ namespace Banshee
                 EventInfo action_event = action.GetType().GetEvent("Activated");
                  
                 if(method == null || action_event == null) {
-                    Console.WriteLine("No method defined for action `{0}'", action.Name);
+                    //Console.WriteLine("No method defined for action `{0}'", action.Name);
                     continue;
                 }
                 
@@ -281,12 +285,12 @@ namespace Banshee
             // Playback Buttons
             HBox playback_box = gxml["LeftToolbarContainer"] as HBox;
             
-            ActionButton previous_button = new ActionButton(Globals.ActionManager["PreviousAction"]);
+            previous_button = new ActionButton(Globals.ActionManager["PreviousAction"]);
             previous_button.LabelVisible = false;
             previous_button.Padding = 1;
             previous_button.ButtonPressEvent += OnButtonPreviousPressed;
             
-            ActionButton next_button = new ActionButton(Globals.ActionManager["NextAction"]);
+            next_button = new ActionButton(Globals.ActionManager["NextAction"]);
             next_button.LabelVisible = false;
             next_button.Padding = 1;
             
@@ -312,12 +316,12 @@ namespace Banshee
             HeaderCycleButton.Clicked += OnHeaderCycleButtonClicked;
             
             // Burn Button
-            ActionButton burn_button = new ActionButton(Globals.ActionManager["WriteCDAction"]);
+            burn_button = new ActionButton(Globals.ActionManager["WriteCDAction"]);
             burn_button.Pixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-burn-24.png");
             (gxml["RightToolbarContainer"] as Box).PackStart(burn_button, false, false, 0);
                         
             // Rip Button
-            ActionButton rip_button = new ActionButton(Globals.ActionManager["ImportCDAction"]);
+            rip_button = new ActionButton(Globals.ActionManager["ImportCDAction"]);
             rip_button.Pixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-24.png");
             (gxml["RightToolbarContainer"] as Box).PackStart(rip_button, false, false, 0);
             
@@ -460,22 +464,16 @@ namespace Banshee
             (gxml["RepeatButtonContainer"] as Container).Add(repeat_toggle_button);*/
                 
             toolTips = new Tooltips();
-            /*SetTip(gxml["ButtonNewPlaylist"], Catalog.GetString("Create New Playlist"));
-            SetTip(shuffle_toggle_button, Catalog.GetString("Shuffle Playback Mode"));
-            SetTip(repeat_toggle_button, Catalog.GetString("Repeat Playback Mode"));
-            SetTip(gxml["ButtonTrackProperties"], Catalog.GetString("View Selected Song Information"));
-            SetTip(gxml["ButtonBurn"], Catalog.GetString("Write Selection to CD"));
-            SetTip(gxml["ButtonRip"], Catalog.GetString("Import CD into Library"));
-            SetTip(gxml["ButtonPrevious"], Catalog.GetString("Play Previous Song"));
-            SetTip(gxml["ButtonPlayPause"], Catalog.GetString("Play/Pause Current Song"));
-            SetTip(gxml["ButtonNext"], Catalog.GetString("Play Next Song"));
+            
+            SetTip(burn_button, Catalog.GetString("Write Selection to CD"));
+            SetTip(rip_button, Catalog.GetString("Import CD into Library"));
+            SetTip(previous_button, Catalog.GetString("Play Previous Song"));
+            SetTip(playpause_button, Catalog.GetString("Play/Pause Current Song"));
+            SetTip(next_button, Catalog.GetString("Play Next Song"));
             SetTip(gxml["ScaleTime"], Catalog.GetString("Current Position in Song"));
-            SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
             SetTip(dapDiskUsageBar, Catalog.GetString("Device Disk Usage"));
-            SetTip(dapEjectButton, Catalog.GetString("Eject Device"));
-            SetTip(dapSyncButton, Catalog.GetString("Synchronize Music Library to Device"));
-            SetTip(gxml["DapSyncButton"], Catalog.GetString("Synchronize Music Library to Device"));
-            SetTip(dapPropertiesButton, Catalog.GetString("View Device Properties"));*/
+            SetTip(sync_dap_button, Catalog.GetString("Synchronize Music Library to Device"));
+            SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
             
             playlistMenuMap = new Hashtable();
         }
@@ -2183,7 +2181,7 @@ namespace Banshee
         
         private void OnSyncDapAction(object o, EventArgs args)
         {
-            if(sourceView.SelectedSource.Type != SourceType.Dap) {
+            if(sourceView.HighlightedSource.Type != SourceType.Dap) {
                 return;
             }
                 
@@ -2218,12 +2216,12 @@ namespace Banshee
         
         private void OnEjectSelectedSourceAction(object o, EventArgs args)
         {
-            EjectSource(sourceView.SelectedSource);
+            EjectSource(sourceView.HighlightedSource);
         }
 
         private void OnSelectedSourcePropertiesAction(object o, EventArgs args)
         {
-            ShowSourceProperties(sourceView.SelectedSource);
+            ShowSourceProperties(sourceView.HighlightedSource);
         }
         
         private void OnQuitAction(object o, EventArgs args)
@@ -2256,7 +2254,7 @@ namespace Banshee
             if(source.Type == SourceType.Playlist) {
                 input = new InputDialog(
                     Catalog.GetString("Rename Playlist"),
-                    Catalog.GetString("Enter new playlist name"), 
+                    Catalog.GetString("Enter new playlist name"),
                     Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
             } else if(source.Type == SourceType.Dap) {
                 DapSource dap_source = source as DapSource;
