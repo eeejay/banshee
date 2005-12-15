@@ -75,10 +75,7 @@ banshee_sources = \
 banshee_resources = \
 	COPYING \
 	data/Tables.sql \
-	data/glade/player.glade \
-	data/glade/preferences.glade \
-	data/glade/newipod.glade \
-	data/glade/trackinfo.glade \
+	data/banshee.glade \
 	data/images/advanced-icon-32.png \
 	data/images/banshee-logo.png \
 	data/images/blue-speaker.png \
@@ -155,7 +152,7 @@ banshee_build_sources += $(banshee_generated_sources)
 
 all: AmazonSearchService.cs $(TARGET)
 
-$(TARGET): $(banshee_build_sources)
+$(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \

@@ -31,6 +31,7 @@ using System;
 using System.Threading;
 using System.Data;
 using System.Collections;
+using System.Reflection;
 using Mono.Unix;
 using Gtk;
 using Gdk;
@@ -47,24 +48,20 @@ namespace Banshee
 {
     public class PlayerUI
     {
+        public static readonly uint SkipDelta = 10;
+        public static readonly int VolumeDelta = 10;
+        
         private Glade.XML gxml;
-        private Glade.XML gxmlPlaylistMenu;
-        private Glade.XML gxmlSourceMenu;
 
         [Widget] private Gtk.Window WindowPlayer;
-        [Widget] private Gtk.Image ImagePrevious;
-        [Widget] private Gtk.Image ImageNext;
-        [Widget] private Gtk.Image ImagePlayPause;
-        [Widget] private Gtk.Image ImageBurn;
-        [Widget] private Gtk.Image ImageRip;
         [Widget] private Gtk.HScale ScaleTime;
         [Widget] private Gtk.Label LabelInfo;
-        [Widget] private Gtk.Label LabelStatusBar;
         [Widget] private HPaned SourceSplitter;
         [Widget] private Button HeaderCycleButton;
 
         private PlaylistModel playlistModel;
 
+        private Label LabelStatusBar;
         private VolumeButton volumeButton;
         private PlaylistView playlistView;
         private SourceView sourceView;
@@ -73,28 +70,26 @@ namespace Banshee
         private ImageAnimation spinner;
         private LibraryTransactionStatus libraryTransactionStatus;
         private TrackInfoHeader trackInfoHeader;
+        private CoverArtView cover_art_view;
         private SimpleNotebook headerNotebook;
         private SearchEntry searchEntry;
         private Tooltips toolTips;
         private Hashtable playlistMenuMap;
-        private ProgressBar dapDiskUsageBar;
         private Viewport sourceViewLoadingVP;
-        private Button dapSyncButton;
-        private Button dapPropertiesButton;
-        private Button dapEjectButton;
-            
+        
         private MultiStateToggleButton repeat_toggle_button;
         private MultiStateToggleButton shuffle_toggle_button;
                 
+        private ActionButton playpause_button;
+        
+        private ActionButton sync_dap_button;
         private EventBox syncing_container;
         private Gtk.Image dap_syncing_image = new Gtk.Image();
-            
-        private CoverArtThumbnail cover_art;
+        [Widget] private ProgressBar dapDiskUsageBar;
         
         private bool incrementedCurrentSongPlayCount;
     
-        public Gtk.Window Window
-        {
+        public Gtk.Window Window {
             get {
                 return WindowPlayer;
             }
@@ -138,16 +133,15 @@ namespace Banshee
         {
             Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
         
-            gxml = new Glade.XML(null, "player.glade", "WindowPlayer", null);
+            gxml = new Glade.XML(null, "banshee.glade", "WindowPlayer", null);
             gxml.Autoconnect(this);
-
+            
             ResizeMoveWindow();
             BuildWindow();   
             InstallTrayIcon();
             
             Core.Instance.DBusServer.RegisterObject(
                 new BansheeCore(Window, this, Core.Instance), "/org/gnome/Banshee/Core");
-                        
             
             Core.Instance.Player.Iterate += OnPlayerTick;
             Core.Instance.Player.EndOfStream += OnPlayerEos;    
@@ -190,6 +184,30 @@ namespace Banshee
                 special_keys = null;
                 Core.Log.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
             }*/
+            
+            // Bind available methods to actions defined in ActionManager
+            Globals.ActionManager.DapActions.Visible = false;
+            Globals.ActionManager.AudioCdActions.Visible = false;
+            Globals.ActionManager.SourceEjectActions.Visible = false;
+            Globals.ActionManager.SongActions.Sensitive = false;
+            Globals.ActionManager.PlaylistActions.Sensitive = false;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].Visible = false;
+            
+            foreach(Action action in Globals.ActionManager) {
+                string method_name = "On" + action.Name;
+                MethodInfo method = GetType().GetMethod(method_name,
+                    BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod);
+                
+                EventInfo action_event = action.GetType().GetEvent("Activated");
+                 
+                if(method == null || action_event == null) {
+                    Console.WriteLine("No method defined for action `{0}'", action.Name);
+                    continue;
+                }
+                
+                action_event.AddEventHandler(action, 
+                    Delegate.CreateDelegate(typeof(EventHandler), this, method_name));
+            }
         }
    
         private bool InitialLoadTimeout()
@@ -202,10 +220,6 @@ namespace Banshee
                  device.PropertiesChanged += OnDapPropertiesChanged;
                  device.SaveStarted += OnDapSaveStarted;
                  device.SaveFinished += OnDapSaveFinished;
-            }
-            
-            if(Core.ArgumentQueue.Contains("audio-cd")) {
-                SelectAudioCd(Core.ArgumentQueue["audio-cd"]);
             }
             
             return false;
@@ -259,17 +273,30 @@ namespace Banshee
           
         private void BuildWindow()
         {
-            // Icons and Pixbufs
             IconThemeUtils.SetWindowIcon(WindowPlayer);
-            
-            ImagePrevious.Pixbuf = IconThemeUtils.LoadIcon("media-skip-backward", 22);
-            ImageNext.Pixbuf = IconThemeUtils.LoadIcon("media-skip-forward", 22);
-            ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 22);
-            
-            ImageBurn.SetFromStock("media-burn", IconSize.LargeToolbar);
-            ImageRip.SetFromStock("media-rip", IconSize.LargeToolbar);
 
-            gxml["ButtonBurn"].Visible = true;
+            // Main Menu
+            (gxml["MainMenuContainer"] as Container).Add(Globals.ActionManager.GetWidget("/MainMenu"));
+      
+            // Playback Buttons
+            HBox playback_box = gxml["LeftToolbarContainer"] as HBox;
+            
+            ActionButton previous_button = new ActionButton(Globals.ActionManager["PreviousAction"]);
+            previous_button.LabelVisible = false;
+            previous_button.Padding = 1;
+            previous_button.ButtonPressEvent += OnButtonPreviousPressed;
+            
+            ActionButton next_button = new ActionButton(Globals.ActionManager["NextAction"]);
+            next_button.LabelVisible = false;
+            next_button.Padding = 1;
+            
+            playpause_button = new ActionButton(Globals.ActionManager["PlayPauseAction"]);
+            playpause_button.LabelVisible = false;
+            playpause_button.Padding = 1;
+            
+            playback_box.PackStart(previous_button, false, false, 0);
+            playback_box.PackStart(playpause_button, false, false, 0);
+            playback_box.PackStart(next_button, false, false, 0);
       
             // Header
             headerNotebook = new SimpleNotebook();
@@ -284,23 +311,50 @@ namespace Banshee
             HeaderCycleButton.Visible = false;
             HeaderCycleButton.Clicked += OnHeaderCycleButtonClicked;
             
+            // Burn Button
+            ActionButton burn_button = new ActionButton(Globals.ActionManager["WriteCDAction"]);
+            burn_button.Pixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-burn-24.png");
+            (gxml["RightToolbarContainer"] as Box).PackStart(burn_button, false, false, 0);
+                        
+            // Rip Button
+            ActionButton rip_button = new ActionButton(Globals.ActionManager["ImportCDAction"]);
+            rip_button.Pixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-24.png");
+            (gxml["RightToolbarContainer"] as Box).PackStart(rip_button, false, false, 0);
+            
+            sync_dap_button = new ActionButton(Globals.ActionManager["SyncDapAction"]);
+            (gxml["RightToolbarContainer"] as Box).PackStart(sync_dap_button, false, false, 0);
+            
             // Volume Button
             volumeButton = new VolumeButton();
-            ((Gtk.Alignment)gxml["VolumeButtonContainer"]).Add(volumeButton);
+            (gxml["RightToolbarContainer"] as Box).PackStart(volumeButton, false, false, 0);
+            volumeButton.Show();
+            volumeButton.VolumeChanged += OnVolumeScaleChanged;
             
-            volumeButton.Visible = true;
-            volumeButton.VolumeChanged += 
-                new VolumeButton.VolumeChangedHandler(OnVolumeScaleChanged);
-                
-            // Next/Previous Buttons
+            // Footer 
+            LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
+            LabelStatusBar.Show();
             
-            (gxml["ButtonPrevious"] as Button).ButtonPressEvent += OnButtonPreviousPressed;
-
-            // Cover Art Thumbnail
-            cover_art = new CoverArtThumbnail(36);
-            (gxml["CoverArtContainer"] as Container).Add(cover_art);
-            cover_art.Hide();
-
+            ActionToggleButton shuffle_button = new ActionToggleButton(Globals.ActionManager["ShuffleAction"]);
+            shuffle_button.IconSize = IconSize.Menu;
+            shuffle_button.Relief = ReliefStyle.None;
+            shuffle_button.ShowAll();
+            
+            ActionButton song_properties_button = new ActionButton(Globals.ActionManager["PropertiesAction"]);
+            song_properties_button.IconSize = IconSize.Menu;
+            song_properties_button.Relief = ReliefStyle.None;
+            song_properties_button.LabelVisible = false;
+            song_properties_button.ShowAll();
+            
+            (gxml["BottomToolbar"] as Box).PackStart(shuffle_button, false, false, 0);
+            (gxml["BottomToolbar"] as Box).PackStart(LabelStatusBar, true, true, 0);
+            (gxml["BottomToolbar"] as Box).PackStart(song_properties_button, false, false, 0);
+            
+            // Cover Art View
+            
+            cover_art_view = new CoverArtView();
+            cover_art_view.Hide();
+            (gxml["LeftContainer"] as Box).PackStart(cover_art_view, false, false, 0);
+            
             // Source View
             Label sourceViewLoading = new Label();
             sourceViewLoading.Yalign = 0.15f;
@@ -352,38 +406,8 @@ namespace Banshee
                 playlistViewDestEntries, 
                 DragAction.Copy | DragAction.Move);
             
-            // Dap Container
-            HBox box = new HBox();
-            box.Spacing = 5;
-            (gxml["DapContainer"] as Container).Add(box);
-            dapDiskUsageBar = new ProgressBar();
-            box.PackStart(dapDiskUsageBar, false, false, 0);
-            dapDiskUsageBar.ShowAll();
-            
-            HBox syncBox = new HBox();
-            syncBox.Spacing = 3;
-            dapSyncButton = new Button(syncBox);
-            Label syncLabel = new Label(Catalog.GetString("Update Device"));
-            dapSyncButton.Clicked += OnDapSyncClicked;
-            syncBox.PackStart(new Gtk.Image("gtk-copy", IconSize.Menu), false, false, 0);
-            syncBox.PackStart(syncLabel, true, true, 0);
-            box.PackStart(dapSyncButton, false, false, 0);
-            dapSyncButton.ShowAll();
-            
-            dapPropertiesButton = new Button(new Gtk.Image(IconThemeUtils.LoadIcon("document-properties", 22)));
-            dapPropertiesButton.Clicked += OnDapPropertiesClicked;
-            box.PackStart(dapPropertiesButton, false, false, 0);
-            dapPropertiesButton.ShowAll();
-            
-            dapEjectButton = new Button(new Gtk.Image(IconThemeUtils.LoadIcon("media-eject", 22)));
-            dapEjectButton.Clicked += OnDapEjectClicked;
-            box.PackStart(dapEjectButton, false, false, 0);
-            dapEjectButton.ShowAll();
-            
             (gxml["LeftContainer"] as VBox).PackStart(new ActiveUserEventsManager(), false, false, 0);
-            
-           // gxml["DapContainer"].Visible = false;
-            
+
             // Misc
             SetInfoLabel(Catalog.GetString("Idle"));
 
@@ -411,14 +435,14 @@ namespace Banshee
                 
             // Repeat/Shuffle buttons
             
-            repeat_toggle_button = new MultiStateToggleButton();
+           /* repeat_toggle_button = new MultiStateToggleButton();
             repeat_toggle_button.AddState(typeof(RepeatNoneToggleState), gxml["ItemRepeatNone"] as RadioMenuItem);
             repeat_toggle_button.AddState(typeof(RepeatAllToggleState), gxml["ItemRepeatAll"] as RadioMenuItem);
             repeat_toggle_button.AddState(typeof(RepeatSingleToggleState), gxml["ItemRepeatSingle"] as RadioMenuItem);
             repeat_toggle_button.Relief = ReliefStyle.None;
             repeat_toggle_button.ShowLabel = false;
             repeat_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
-                HandleRepeatToggleButton();
+                //HandleRepeatToggleButton();
             };
             repeat_toggle_button.ShowAll();
                 
@@ -428,15 +452,15 @@ namespace Banshee
             shuffle_toggle_button.Relief = ReliefStyle.None;
             shuffle_toggle_button.ShowLabel = false;
             shuffle_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
-                HandleShuffleToggleButton();
+                //HandleShuffleToggleButton();
             };
             shuffle_toggle_button.ShowAll();
             
             (gxml["ShuffleButtonContainer"] as Container).Add(shuffle_toggle_button);
-            (gxml["RepeatButtonContainer"] as Container).Add(repeat_toggle_button);
+            (gxml["RepeatButtonContainer"] as Container).Add(repeat_toggle_button);*/
                 
             toolTips = new Tooltips();
-            SetTip(gxml["ButtonNewPlaylist"], Catalog.GetString("Create New Playlist"));
+            /*SetTip(gxml["ButtonNewPlaylist"], Catalog.GetString("Create New Playlist"));
             SetTip(shuffle_toggle_button, Catalog.GetString("Shuffle Playback Mode"));
             SetTip(repeat_toggle_button, Catalog.GetString("Repeat Playback Mode"));
             SetTip(gxml["ButtonTrackProperties"], Catalog.GetString("View Selected Song Information"));
@@ -451,7 +475,7 @@ namespace Banshee
             SetTip(dapEjectButton, Catalog.GetString("Eject Device"));
             SetTip(dapSyncButton, Catalog.GetString("Synchronize Music Library to Device"));
             SetTip(gxml["DapSyncButton"], Catalog.GetString("Synchronize Music Library to Device"));
-            SetTip(dapPropertiesButton, Catalog.GetString("View Device Properties"));
+            SetTip(dapPropertiesButton, Catalog.GetString("View Device Properties"));*/
             
             playlistMenuMap = new Hashtable();
         }
@@ -473,11 +497,6 @@ namespace Banshee
                 trayIcon = new NotificationAreaIcon();
                 trayIcon.ClickEvent += OnTrayClick;
                 trayIcon.MouseScrollEvent += OnTrayScroll;
-                
-                trayIcon.PlayItem.Activated += OnButtonPlayPauseClicked;
-                trayIcon.NextItem.Activated += OnButtonNextClicked;
-                trayIcon.PreviousItem.Activated += OnButtonPreviousClicked;
-                trayIcon.ExitItem.Activated += OnMenuQuitActivate;
             } catch(Exception e) {
                 trayIcon = null;
                 Core.Log.PushWarning(Catalog.GetString("Notification Area Icon could not be installed"),
@@ -499,15 +518,25 @@ namespace Banshee
             }
             
             try {
-                repeat_toggle_button.ActiveState = 
-                    Type.GetType((string)Core.GconfClient.Get(GConfKeys.PlaylistRepeat));
-                HandleRepeatToggleButton();
+                int state = (int)Globals.Configuration.Get(GConfKeys.PlaylistRepeat);
+                
+                foreach(RadioAction radio in (Globals.ActionManager["RepeatAllAction"] as RadioAction).Group) {
+                    if(radio.Value == state) {
+                        radio.Active = true;
+                        break;
+                    }
+                }
             } catch(Exception) {}
             
             try {
-                shuffle_toggle_button.ActiveState = 
-                    Type.GetType((string)Core.GconfClient.Get(GConfKeys.PlaylistShuffle));
-                HandleShuffleToggleButton();
+                (Globals.ActionManager["ShuffleAction"] as ToggleAction).Active = 
+                    (bool)Globals.Configuration.Get(GConfKeys.PlaylistShuffle);
+            } catch(Exception) {}
+            
+            try {
+                bool active = (bool)Globals.Configuration.Get(GConfKeys.ShowCoverArt);
+                cover_art_view.Enabled = active;
+                (Globals.ActionManager["ShowCoverArtAction"] as ToggleAction).Active = active;
             } catch(Exception) {}
             
             try {
@@ -572,16 +601,59 @@ namespace Banshee
             if(startupLoadReady) {
                 startupLoadReady = false;
                 LoadSourceView();
-                
+
                 if(Core.ArgumentQueue.Contains("audio-cd")) {
-                    sourceView.SelectSource(null);
-                    playlistView.Selection.SelectPath(new TreePath("0"));
-                    playlistView.PlaySelected();
-                    //Next();
+                    SelectAudioCd(Core.ArgumentQueue.Dequeue("audio-cd"));
+                } else if(Core.ArgumentQueue.Contains("dap")) {
+                    SelectDap(Core.ArgumentQueue.Dequeue("dap"));
                 } else {
                     sourceView.SelectLibraryForce();
                 }
             }
+        }
+        
+        public void SelectAudioCd(string device)
+        {
+            for(int i = 0, n = ((ListStore)sourceView.Model).IterNChildren(); i < n; i++) {
+                TreeIter iter = TreeIter.Zero;
+                if(!((ListStore)sourceView.Model).IterNthChild(out iter, i)) {
+                    continue;
+                }
+                
+                AudioCdSource source = ((ListStore)sourceView.Model).GetValue(iter, 0) as AudioCdSource;
+                if(source == null) {
+                    continue;
+                }
+                
+                if(source.Disk.DeviceNode == device || source.Disk.Udi == device) {
+                    sourceView.SelectSource(source);
+                    return;
+                }
+            }
+            
+            sourceView.SelectLibraryForce();
+        }
+        
+        public void SelectDap(string device)
+        {
+            for(int i = 0, n = ((ListStore)sourceView.Model).IterNChildren(); i < n; i++) {
+                TreeIter iter = TreeIter.Zero;
+                if(!((ListStore)sourceView.Model).IterNthChild(out iter, i)) {
+                    continue;
+                }
+                
+                DapSource source = ((ListStore)sourceView.Model).GetValue(iter, 0) as DapSource;
+                if(source == null) {
+                    continue;
+                }
+                
+                if(source.Device.HalUdi == device) {
+                    sourceView.SelectSource(source);
+                    return;
+                }
+            }
+            
+            sourceView.SelectLibraryForce();
         }
         
         private void LoadSourceView()
@@ -663,18 +735,13 @@ namespace Banshee
         public void TogglePlaying()
         {
             if(Core.Instance.Player.Playing) {
-                ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 22);
+                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
+                    "media-playback-start");
                 Core.Instance.Player.Pause();
-                
-                if(trayIcon != null) {
-                    ((Gtk.Image)trayIcon.PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 16);
-                }
             } else {
-                ImagePlayPause.Pixbuf = IconThemeUtils.LoadIcon("media-playback-pause", 22);
+                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), 
+                    "media-playback-pause");
                 Core.Instance.Player.Play();
-                if(trayIcon != null) {
-                    ((Gtk.Image)trayIcon.PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-pause", 16);
-                }
             }
         }
         
@@ -682,10 +749,12 @@ namespace Banshee
         {
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
+            trackInfoHeader.Album = ti.DisplayAlbum;
             
             try {
-                cover_art.FileName = ti.CoverArtFileName;
-                cover_art.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
+                trackInfoHeader.Cover.FileName = ti.CoverArtFileName;
+                cover_art_view.FileName = ti.CoverArtFileName;
+                trackInfoHeader.Cover.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
             } catch(Exception) {
             }
             
@@ -727,8 +796,7 @@ namespace Banshee
         }
         
         [GLib.ConnectBefore]
-        private void OnWindowPlayerConfigureEvent(object o, 
-            ConfigureEventArgs args)
+        private void OnWindowPlayerConfigureEvent(object o, ConfigureEventArgs args)
         {
             int x, y, width, height;
 
@@ -761,7 +829,7 @@ namespace Banshee
                     break;
                 case Gdk.Key.Left:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Core.Instance.Player.Position -= 10;
+                        Core.Instance.Player.Position -= SkipDelta;
                         handled = true;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
                         Core.Instance.Player.Position = 0;
@@ -770,7 +838,7 @@ namespace Banshee
                     break;
                 case Gdk.Key.Right:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Core.Instance.Player.Position += 10;
+                        Core.Instance.Player.Position += SkipDelta;
                         handled = true;
                     } 
                     break;
@@ -806,23 +874,21 @@ namespace Banshee
           
         private void OnTrayScroll(object o, ScrollEventArgs args)
         {
-            int tmp_vol = volumeButton.Volume;
-              
             switch(args.Event.Direction) {
                 case Gdk.ScrollDirection.Up:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        tmp_vol += 10;
+                        Volume += VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Core.Instance.Player.Position += 10;
+                        Core.Instance.Player.Position += SkipDelta;
                     } else {
                         Next();
                     }
                     break;
                 case Gdk.ScrollDirection.Down:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        tmp_vol -= 10;
+                        Volume -= VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Core.Instance.Player.Position -= 10;
+                        Core.Instance.Player.Position -= SkipDelta;
                     } else {
                         Previous();
                     }
@@ -830,34 +896,22 @@ namespace Banshee
                 default:
                     break;
             }
+        }
+   
+        public int Volume {
+            get {
+                return volumeButton.Volume;
+            }
             
-            if(tmp_vol != volumeButton.Volume) {
-                // A CLAMP equiv doesn't seem to exist ... doing that manually
-                tmp_vol = Math.Max(0, Math.Min(100, tmp_vol));
-
-                volumeButton.Volume = tmp_vol;
-                OnVolumeScaleChanged(volumeButton.Volume);
+            set {
+                if(value != volumeButton.Volume) {
+                    volumeButton.Volume = Math.Max(0, Math.Min(100, value));
+                    OnVolumeScaleChanged(volumeButton.Volume);
+                }
             }
         }
-        
-        private void OnTrayMenuItemShuffleActivated(object o, EventArgs args)
-        {
-            ToggleButton t = (ToggleButton)gxml["ToggleButtonShuffle"];
-            t.Active = !t.Active;
-        }
-        
-        private void OnTrayMenuItemRepeatActivated(object o, EventArgs args)
-        {
-            ToggleButton t = (ToggleButton)gxml["ToggleButtonRepeat"];
-            t.Active = !t.Active;
-        }
-
+   
         // ---- Playback Event Handlers ----
-
-        private void OnButtonPlayPauseClicked(object o, EventArgs args)
-        {
-            PlayPause();
-        }
         
         public void PlayPause()
         {
@@ -898,95 +952,12 @@ namespace Banshee
             }
         }
         
-        private void OnButtonPreviousClicked(object o, EventArgs args)
-        {
-            if(Core.Instance.Player.Position < 3) {
-                Previous();
-            } else {
-                Core.Instance.Player.Position = 0;
-            }
-        }
-        
-        private void OnButtonNextClicked(object o, EventArgs args)
-        {
-            Next();
-        }
-        
-        [GLib.ConnectBefore]
-        private void OnButtonPreviousPressed(object o, ButtonPressEventArgs args)
-        {
-            if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                Previous();
-                args.RetVal = true;
-            }
-        }
-        
         private void OnVolumeScaleChanged(int volume)
         {
             Core.Instance.Player.Volume = (ushort)volume;
             Core.GconfClient.Set(GConfKeys.Volume, volume);
         }
-        
-        // ---- Main Menu Event Handlers ----
-        
-        private void OnMenuQuitActivate(object o, EventArgs args)
-        {
-            Quit();
-        }
-        
-        private void OnMenuAboutActivate(object o, EventArgs args)
-        {
-            new AboutBox();
-        }
- 
-        public void OnVersionInformationItemActivate(object o, EventArgs args)
-        {
-            VersionInformationDialog dialog = new VersionInformationDialog();
-            dialog.Run();
-            dialog.Destroy();
-        }
-       
-        private void OnMenuSearchBarActivate(object o, EventArgs args)
-        {
-
-        }
-                
-        private void OnMenuPreferencesActivate(object o, EventArgs args)
-        {
-            new PreferencesWindow();
-        }
-        
-        private bool is_fullscreen = false;
-        private void OnMenuFullScreenActivate(object o, EventArgs args)
-        {
-            if(is_fullscreen) {
-                WindowPlayer.Unfullscreen();
-                is_fullscreen = false;
-            } else {
-                WindowPlayer.Fullscreen();
-                is_fullscreen = true;
-            }
-        }
-
-        private LogCoreViewer log_viewer = null;
-        private void OnMenuLoggedEventsActivate(object o, EventArgs args)
-        {
-            if(log_viewer == null) {
-                log_viewer = new LogCoreViewer(Core.Log, WindowPlayer);
-                
-                log_viewer.Response += delegate(object o, ResponseArgs args) {
-                    log_viewer.Hide();
-                };
-                
-                log_viewer.DeleteEvent += delegate(object o, DeleteEventArgs args) {
-                    log_viewer.Destroy();
-                    log_viewer = null;
-                };
-            }
-            
-            log_viewer.Show();
-        }
-
+   
         // ---- Player Event Handlers ----
         
         private void SetPositionLabel(long position)
@@ -1118,52 +1089,6 @@ namespace Banshee
         {
             ImportManager.Instance.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
         }
-
-        private void OnMenuImportFolderActivate(object o, EventArgs args)
-        {
-            ImportWithFileSelector();
-        }
-        
-        private void OnMenuImportFilesActivate(object o, EventArgs args)
-        {
-            FileChooserDialog chooser = new FileChooserDialog(
-                Catalog.GetString("Import Files to Library"),
-                null,
-                FileChooserAction.Open
-            );
-            
-            try {
-                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
-            } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            }
-            
-            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton(Stock.Open, ResponseType.Ok);
-            
-            chooser.SelectMultiple = true;
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if(chooser.Run() == (int)ResponseType.Ok) {
-                ImportManager.Instance.QueueSource(chooser.Uris);
-            }
-            
-            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
-            
-            chooser.Destroy();
-        }
-                
-        private void OnMenuTrackPropertiesActivate(object o, EventArgs args)
-        {
-            OnItemPropertiesActivate(o, args);
-        }
-        
-        private void OnMenuNewPlaylistActivate(object o, EventArgs args)
-        {
-            Playlist pl = new Playlist(Playlist.UniqueName);
-            pl.Saved += OnPlaylistSaved;
-            pl.Save();
-        }
         
         private void OnPlaylistSaved(object o, PlaylistSavedArgs args)
         {    
@@ -1174,43 +1099,53 @@ namespace Banshee
         {
             sourceView.ThreadedQueueDraw();
         }
-        
-        private void OnMenuNewSmartPlaylistActivate(object o, EventArgs args)
-        {
-            new SqlBuilderUI();
-        }
-        
-        private void OnMenuPlaylistRemoveActivate(object o, EventArgs args)
-        {
-            
-        }
-        
-        private void OnMenuPlaylistPropertiesActivate(object o, EventArgs args)
-        {
-            
-        }
-        
+
         private void OnPlaylistViewSelectionChanged(object o, EventArgs args)
         {
             int count = playlistView.Selection.CountSelectedRows();
             bool have_selection = count > 0;
             
+            if(!have_selection) {
+                Globals.ActionManager.SongActions.Sensitive = false;
+                return;
+            }
+            
             Source source = sourceView.SelectedSource;
+
             if(source == null) {
                 return;
             }
             
-            gxml["ItemRemoveSongsFileSystem"].Sensitive = !(source is AudioCdSource || source is DapSource) && have_selection;
-            gxml["ItemRemoveSongs"].Sensitive = !(source is AudioCdSource) && have_selection;
-            gxml["MenuTrackProperties"].Sensitive = have_selection;
-            gxml["ButtonTrackProperties"].Sensitive = have_selection;
-            gxml["ItemBurnCD"].Sensitive = !(source is AudioCdSource) && have_selection;
-            gxml["ButtonBurn"].Sensitive = gxml["ItemBurnCD"].Sensitive;
+            Globals.ActionManager.SongActions.Sensitive = true;
+            Globals.ActionManager["WriteCDAction"].Sensitive = !(source is AudioCdSource);
+            Globals.ActionManager["RemoveSongsAction"].Sensitive = !(source is AudioCdSource);
+            Globals.ActionManager["DeleteSongsFromDriveAction"].Sensitive = 
+                !(source is AudioCdSource || source is DapSource);
         }
         
         private void OnSourceChanged(object o, EventArgs args)
         {
             ThreadAssist.ProxyToMain(HandleSourceChanged);
+        }
+        
+        private void SensitizeActions(Source source)
+        {
+            Globals.ActionManager["WriteCDAction"].Visible = !(source is AudioCdSource);
+            Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;
+            Globals.ActionManager["RenameSourceAction"].Sensitive = source.CanRename;
+            Globals.ActionManager.PlaylistActions.Sensitive = source is PlaylistSource;
+            Globals.ActionManager.SourceEjectActions.Visible = source.CanEject;
+            Globals.ActionManager.DapActions.Visible = source is DapSource;
+            
+            if(source is DapSource) {
+                DapSource dapSource = source as DapSource;
+                Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
+                Globals.ActionManager.SetActionLabel("SyncDapAction", String.Format("{0} {1}",
+                    Catalog.GetString("Synchronize"), dapSource.Device.GenericName));
+                Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Device");
+            } else {
+                Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Playlist");            
+            }
         }
         
         private void HandleSourceChanged(object o, EventArgs args)
@@ -1221,24 +1156,22 @@ namespace Banshee
             }
 
             searchEntry.CancelSearch(false);
-                
-            if(source.Type == SourceType.Library) {
+            
+            string display_name = null;
+            
+            if(source is LibrarySource) {
                 playlistModel.LoadFromLibrary();
                 playlistModel.Source = source;
-               
-                (gxml["ViewNameLabel"] as Label).Markup = 
-                    String.Format(Catalog.GetString("<b>{0}'s Music Library</b>"),
-                    GLib.Markup.EscapeText(Core.Instance.UserFirstName));
-            } else if(source.Type == SourceType.Dap) {
+                display_name = String.Format(Catalog.GetString("{0}'s Music Library"), Core.Instance.UserFirstName);
+            } else if(source is DapSource) {
                 playlistModel.Clear();
                 playlistModel.Source = source;
                 DapSource dap_source = source as DapSource;
                 playlistModel.LoadFromDapSource(dap_source);
                 UpdateDapDiskUsageBar(dap_source);
-            } else if(source.Type == SourceType.AudioCd) {
+            } else if(source is AudioCdSource) {
                 playlistModel.Clear();
                 playlistModel.Source = source;
-                
                 AudioCdSource cdSource = source as AudioCdSource;
                 playlistModel.LoadFromAudioCdSource(cdSource);
             } else {
@@ -1246,42 +1179,33 @@ namespace Banshee
                 playlistModel.Source = source;
             }
             
-            (gxml["ViewNameLabel"] as Label).Markup = 
-                "<b>" + GLib.Markup.EscapeText(source.Name) + "</b>";
+            (gxml["ViewNameLabel"] as Label).Markup = "<b>" + 
+                GLib.Markup.EscapeText(display_name == null ? source.Name : display_name) + "</b>";
 
-            gxml["ButtonRip"].Visible = source.Type == SourceType.AudioCd;
-            gxml["ButtonBurn"].Visible = source.Type != SourceType.AudioCd;
-            gxml["DapSyncButton"].Visible = source.Type == SourceType.Dap;
-            (gxml["HeaderActionButtonBox"] as HBox).Spacing = (
-                gxml["ButtonBurn"].Visible && gxml["DapSyncButton"].Visible) ?  10 : 0;
-            
-            if(source.Type == SourceType.Dap) {
+            SensitizeActions(source);
+
+            if(source is DapSource) {
                 gxml["DapContainer"].ShowAll();
-                DapSource dapSource = source as DapSource;
-                dapSyncButton.Visible = !dapSource.Device.IsReadOnly;
-                ((Gtk.Image)gxml["ImageDapSync"]).Pixbuf = dapSource.Device.GetIcon(22);
+                sync_dap_button.Pixbuf = (source as DapSource).Device.GetIcon(22);
             } else {
-                gxml["DapContainer"].Visible = false;
-            }     
-                 
-            gxml["SearchLabel"].Sensitive = (source.Type == SourceType.Dap && !((source as DapSource).IsSyncing)) 
-                 || source.Type == SourceType.Library;
+                gxml["DapContainer"].Hide();
+            }
+            
+            gxml["SearchLabel"].Sensitive = 
+                (source is DapSource && !((source as DapSource).IsSyncing)) || source is LibrarySource;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
-            playlistView.SyncColumn.Visible = source.Type == SourceType.Dap;
-            playlistView.RipColumn.Visible = source.Type == SourceType.AudioCd;
+            playlistView.SyncColumn.Visible = source is DapSource;
+            playlistView.RipColumn.Visible = source is AudioCdSource;
                 
-            if(source.Type != SourceType.Dap)
+            if(source.Type != SourceType.Dap) {
                 ShowPlaylistView();
-            else if((source as DapSource).IsSyncing)
+            } else if((source as DapSource).IsSyncing) {
                 ShowSyncingView();
-            else
+            } else {
                 ShowPlaylistView();
+            }
                 
             OnPlaylistViewSelectionChanged(playlistView.Selection, new EventArgs());
-                
-            gxml["ItemRenamePlaylist"].Sensitive = source is PlaylistSource;
-            gxml["ItemDeletePlaylist"].Sensitive = source is PlaylistSource;
-            gxml["ItemImportCD"].Sensitive = source is AudioCdSource;
         }
         
         private void UpdateDapDiskUsageBar(DapSource dapSource)
@@ -1360,68 +1284,14 @@ namespace Banshee
             });
         }
         
-        private void OnDapPropertiesClicked(object o, EventArgs args)
-        {
-            if(sourceView.SelectedSource.Type != SourceType.Dap)
-                return;
-            
-            //ShowSourceProperties(sourceView.SelectedSource);
-        }
-        
-        private void OnDapSyncButtonClicked(object o, EventArgs args)
-        {
-            OnDapSyncClicked(o, args);
-        }
-        
-        private void OnDapSyncClicked(object o, EventArgs args)
-        {
-            if(sourceView.SelectedSource.Type != SourceType.Dap)
-                return;
-                
-            DapSource dapSource = sourceView.SelectedSource as DapSource;
-        
-            HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                DialogFlags.DestroyWithParent, MessageType.Question,
-                Catalog.GetString("Synchronize iPod"),
-                Catalog.GetString("You have made changes to your iPod. Please choose " +
-                    "a method for updating the contents of your iPod.\n\n" + 
-                    "<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
-                    "<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
-                    "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"),
-                Catalog.GetString("Synchronize Library"));
-            
-            md.AddButton(Catalog.GetString("Save Manual Changes"), Gtk.ResponseType.Apply, true);
-            md.Image = dapSource.Device.GetIcon(48);
-            md.Icon = md.Image;
-            
-            switch(md.Run()) {
-                case (int)ResponseType.Ok:
-                    dapSource.Device.Save(Core.Library.Tracks.Values);
-                    break;
-                case (int)ResponseType.Apply:
-                    dapSource.Device.Save();
-                    break;
-            }
-
-            md.Destroy();
-        }
-        
-        private void OnDapEjectClicked(object o, EventArgs args)
-        {
-            EjectSource(sourceView.SelectedSource);
-        }
-        
         private void OnDapSaveStarted(object o, EventArgs args)
         {
             if(playlistModel.Source.Type == SourceType.Dap 
                 && (playlistModel.Source as DapSource).IsSyncing) {
                 ShowSyncingView();
-                dapSyncButton.Sensitive = false;
-                dapPropertiesButton.Sensitive = false;
-                dapEjectButton.Sensitive = false;
-                gxml["DapSyncButton"].Sensitive = false;
                 gxml["SearchLabel"].Sensitive = false;
                 searchEntry.Sensitive = false;
+                Globals.ActionManager.DapActions.Sensitive = false;
                 dap_syncing_image.Pixbuf = (playlistModel.Source as DapSource).Device.GetIcon(128);
             }
         }
@@ -1430,41 +1300,64 @@ namespace Banshee
         {
             if(playlistModel.Source.Type == SourceType.Dap 
                 && !(playlistModel.Source as DapSource).IsSyncing) {
-                //playlistView.Show();
-                //playlistView.QueueDraw();
                 ShowPlaylistView();
-                dapSyncButton.Sensitive = true;
-                dapPropertiesButton.Sensitive = true;
-                dapEjectButton.Sensitive = true;
-                gxml["DapSyncButton"].Sensitive = true;
                 gxml["SearchLabel"].Sensitive = true;
                 searchEntry.Sensitive = true;
-                playlistModel.LoadFromDapSource((playlistModel.Source as DapSource));
+                Globals.ActionManager.DapActions.Sensitive = true;
+                playlistModel.LoadFromDapSource(playlistModel.Source as DapSource);
+                UpdateDapDiskUsageBar(playlistModel.Source as DapSource);
             }
             
             sourceView.QueueDraw();
             playlistView.QueueDraw();
         }
-    
-        private void HandleRepeatToggleButton()
+
+        private void ShowPlaylistView()
         {
-            if(repeat_toggle_button.ActiveState == typeof(RepeatAllToggleState)) {
-                playlistModel.Repeat = RepeatMode.All;
-            } else if(repeat_toggle_button.ActiveState == typeof(RepeatSingleToggleState)) {
-                playlistModel.Repeat = RepeatMode.Single;
-            } else {
-                playlistModel.Repeat = RepeatMode.None;
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
+            
+            if(alignment.Child == playlist_container) {
+                return;
+            } else if(alignment.Child == syncing_container) {
+                alignment.Remove(syncing_container);
             }
             
-            Core.GconfClient.Set(GConfKeys.PlaylistRepeat, repeat_toggle_button.ActiveState.ToString());
+            alignment.Add(playlist_container);
+            alignment.ShowAll();
         }
         
-        private void HandleShuffleToggleButton()
+        private void ShowSyncingView()
         {
-            playlistModel.Shuffle = shuffle_toggle_button.ActiveState == typeof(ShuffleEnabledToggleState);
-            Core.GconfClient.Set(GConfKeys.PlaylistShuffle, shuffle_toggle_button.ActiveState.ToString());
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
+            
+            if(alignment.Child == syncing_container) {
+                return;
+            } else if(alignment.Child == playlist_container) {
+                alignment.Remove(playlist_container);
+            }
+            
+            if(syncing_container == null) {
+                syncing_container = new EventBox();
+                HBox syncing_box = new HBox();
+                syncing_container.Add(syncing_box);
+                syncing_box.Spacing = 20;
+                syncing_box.PackStart(dap_syncing_image, false, false, 0);
+                Label syncing_label = new Label();
+                                                
+                syncing_container.ModifyBg(StateType.Normal, new Color(0, 0, 0));
+                syncing_label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
+            
+                syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
+                    Catalog.GetString("Synchronizing your Device, Please Wait...")) + "</b></big>";
+                syncing_box.PackStart(syncing_label, false, false, 0);
+            }
+            
+            alignment.Add(syncing_container);
+            alignment.ShowAll();
         }
-        
+
         private void OnPlaylistUpdated(object o, EventArgs args)
         {
             long count = playlistModel.Count();
@@ -1538,172 +1431,19 @@ namespace Banshee
             
             dialog.ShowAll();
         }
-        
-        // PlaylistMenu Handlers
-    
-        private void OnItemColumnsActivate(object o, EventArgs args)
-        {
-            playlistView.ColumnChooser();
-        }
-        
-        private void OnMenuColumnsActivate(object o, EventArgs args)
-        {
-            OnItemColumnsActivate(o, args);
-        }
-        
-        private void OnItemRemoveActivate(object o, EventArgs args)
-        {
-            RemoveSongs(false);
-        }
-        
-        private void OnItemRemoveFileSystemActivate(object o, EventArgs args)
-        {
-            RemoveSongs(true);
-        }
-             
-        private void RemoveSongs(bool deleteFromFileSystem)
-        {
-            // Don't steal "Del" key from the search entry
-            if (WindowPlayer.Focus is Entry &&
-                Gtk.Global.CurrentEvent is Gdk.EventKey) {
-                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, 
-                    (Gdk.EventKey)Gtk.Global.CurrentEvent);
-                return;
-            }
-
-            int selCount = playlistView.Selection.CountSelectedRows();
-        
-            if(selCount <= 0) {
-                return;
-            }
-            
-            if(playlistModel.Source.Type == SourceType.Library) {
-                string msg = String.Empty;
-                
-                if(deleteFromFileSystem) {
-                    msg = String.Format(
-                    Catalog.GetPluralString(
-                        "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file.",
-                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files.",
-                        selCount),
-                    selCount);
-                } else {
-                    msg = String.Format(
-                    Catalog.GetPluralString(
-                        "Are you sure you want to remove the selected song from your library?",
-                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library?",
-                        selCount),
-                    selCount);
-                }
-                    
-                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                    DialogFlags.DestroyWithParent, MessageType.Warning,
-                    ButtonsType.YesNo,
-                    Catalog.GetString("Remove Selected Songs from Library"),
-                    msg);
-                if(md.Run() != (int)ResponseType.Yes) {
-                    md.Destroy();
-                    return;
-                }
-        
-                md.Destroy();
-            }
-        
-            TreeIter [] iters = new TreeIter[selCount];
-            int i = 0;
-            
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
-                playlistModel.GetIter(out iters[i++], path);
-            }
-            
-            TrackRemoveTransaction transaction;
-            
-            if(playlistModel.Source.Type == SourceType.Dap) {
-                for(i = 0; i < iters.Length; i++) {
-                    TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
-                    playlistModel.RemoveTrack(ref iters[i]);
-                    
-                    DapTrackInfo iti = ti as DapTrackInfo;
-                    (playlistModel.Source as DapSource).Device.RemoveTrack(iti);
-                }
-                sourceView.QueueDraw();
-                return;
-            } else if(playlistModel.Source.Type == SourceType.Library) {
-                transaction = new LibraryTrackRemoveTransaction();
-            } else {
-                transaction = new PlaylistTrackRemoveTransaction(
-                    Playlist.GetId(playlistModel.Source.Name));
-            }
-              
-            for(i = 0; i < iters.Length; i++) {
-                TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
-                playlistModel.RemoveTrack(ref iters[i]);
-                transaction.RemoveQueue.Add(ti);
-                
-                if(deleteFromFileSystem) {
-                    try {
-                        File.Delete(ti.Uri.LocalPath);
-                    } catch(Exception) {
-                        Console.WriteLine("Could not delete file: " + ti.Uri.LocalPath);
-                    }
-                    
-                    // trim empty parent directories
-                    try {
-                        string old_dir = Path.GetDirectoryName(ti.Uri.LocalPath);
-                        while(old_dir != null && old_dir != String.Empty) {
-                            Directory.Delete(old_dir);
-                            old_dir = Path.GetDirectoryName(old_dir);
-                        }
-                    } catch(Exception) {}
-                }
-            }
-            
-            transaction.Finished += OnLibraryTrackRemoveFinished;
-            transaction.Register();
-        }
-        
-        private void OnLibraryTrackRemoveFinished(object o, EventArgs args)
-        {
-            playlistView.QueueDraw();
-            sourceView.QueueDraw();
-        }
-        
-        private void OnItemPropertiesActivate(object o, EventArgs args)
-        {
-            TrackProperties propEdit = new TrackProperties(
-                playlistView.SelectedTrackInfoMultiple);
-            propEdit.Saved += OnTrackPropertyEditorSaved;
-        }
-        
-        private void OnTrackPropertyEditorSaved(object o, EventArgs args)
-        {
-            playlistView.QueueDraw();
-        }
-        
-        private void OnButtonNewPlaylistClicked(object o, EventArgs args)
-        {
-            OnMenuNewPlaylistActivate(o, args);
-        }
-        
-        private void OnButtonTrackPropertiesClicked(object o, EventArgs args)
-        {
-            OnItemPropertiesActivate(o, args);
-        }
-        
-        // SourceMenu Handlers
-        
+     
         private uint popupTime;
+        private Menu source_menu = null;
         
         [GLib.ConnectBefore]
-        private void OnSourceViewButtonPressEvent(object o, 
-            ButtonPressEventArgs args)
+        private void OnSourceViewButtonPressEvent(object o, ButtonPressEventArgs args)
         {
-            if(args.Event.Button != 3)
+            if(args.Event.Button != 3) {
                 return;
+            }
                 
             TreePath path;
-            if(!sourceView.GetPathAtPos((int)args.Event.X, 
-                (int)args.Event.Y, out path)) {
+            if(!sourceView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path)) {
                 args.RetVal = true; 
                 return;
             }
@@ -1711,170 +1451,27 @@ namespace Banshee
             sourceView.HighlightPath(path);
             Source source = sourceView.GetSource(path);
             
-            if(source.Type == SourceType.Library)
+            if(source is LibrarySource) {
+                args.RetVal = true;
                 return;
+            }
 
-            if(gxmlSourceMenu == null) {
-                gxmlSourceMenu = new Glade.XML(null, "player.glade", 
-                    "SourceMenu", null);
-                gxmlSourceMenu.Autoconnect(this);
+            SensitizeActions(source);
+            
+            if(source_menu == null) {
+                source_menu = Globals.ActionManager.GetWidget("/SourceMenu") as Menu;
+                source_menu.SelectionDone += delegate(object o, EventArgs args) {
+                    SensitizeActions(sourceView.SelectedSource);
+                    sourceView.ResetHighlight();
+                };
             }
             
-            Menu menu = gxmlSourceMenu["SourceMenu"] as Menu;
-            MenuItem addSelectedSongs = gxmlSourceMenu["ItemAddSelectedSongs"] as MenuItem;
-            MenuItem sourceDuplicate = gxmlSourceMenu["ItemSourceDuplicate"] as MenuItem;
-            MenuItem sourceRename = gxmlSourceMenu["ItemSourceRename"] as MenuItem;            
-            MenuItem sourceDelete = gxmlSourceMenu["ItemSourceDelete"] as MenuItem;
-            MenuItem sourceProperties = gxmlSourceMenu["ItemSourceProperties"] as MenuItem;
-            ImageMenuItem ejectItem = gxmlSourceMenu["ItemEject"] as ImageMenuItem;
-            
-            //addSelectedSongs.Sensitive = source.Type == SourceType.Playlist
-            //    && playlistView.Selection.CountSelectedRows() > 0;
-            addSelectedSongs.Visible = false;
-            
-            sourceProperties.Visible = source.Type == SourceType.Dap;
-          
-            if(source.CanEject) {
-                ejectItem.Image = new Gtk.Image("media-eject", IconSize.Menu);
-            }
-            
-            menu.Popup(null, null, null, 0, args.Event.Time);
-            menu.Show();
-            
-            addSelectedSongs.Visible = source.Type == SourceType.Playlist ||
-             source.Type == SourceType.Dap;
-            
-            sourceDuplicate.Visible = false;
-            ejectItem.Visible = source.CanEject;
-            sourceDelete.Visible = !source.CanEject;
-            sourceRename.Visible = source.CanRename;
+            source_menu.Popup(null, null, null, 0, args.Event.Time);
+            source_menu.Show();
             
             args.RetVal = true;
         }
-        
-        private void OnItemAddSelectedSongsActivate(object o, EventArgs args)
-        {
-            Source source = sourceView.HighlightedSource;
-            
-            if(source == null || source.Type != SourceType.Playlist)
-                return;
-                
-            playlistView.AddSelectedToPlayList(source.Name);
-        }
-        
-        private void OnItemSourceDuplicateActivate(object o, EventArgs args)
-        {
-    
-        }
-        
-        private void OnItemSourceDeleteActivate(object o, EventArgs args)
-        {
-            Source source = sourceView.HighlightedSource;
-            
-            if(source == null || source.Type != SourceType.Playlist)
-                return;
-                
-            Playlist.Delete(source.Name);
-            
-            TreeIter iter = TreeIter.Zero;
-            ListStore store = sourceView.Model as ListStore;
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                if(!store.IterNthChild(out iter, i))
-                    continue;
-                
-                object obj = store.GetValue(iter, 0);
-                
-                if(!(obj is PlaylistSource))
-                    continue;
-                    
-                PlaylistSource currSource = obj as PlaylistSource;
-                if(currSource.Name == source.Name) {
-                    store.Remove(ref iter);
-                    break;
-                }
-            }
-            
-            sourceView.SelectLibrary();
-        }
-        
-        private void OnItemEjectActivate(object o, EventArgs args)
-        {
-            EjectSource(sourceView.HighlightedSource);
-        }
-        
-        private void OnItemSourcePropertiesActivate(object o, EventArgs args)
-        {
-            ShowSourceProperties(sourceView.HighlightedSource);
-        }
-        
-        private void OnItemSourceRenameActivate(object o, EventArgs args)
-        {
-            Source source = sourceView.HighlightedSource;
-            
-            if(source == null || !source.CanRename)
-                 return;
-            
-            InputDialog input;
-            
-            if(source.Type == SourceType.Playlist) {
-                input = new InputDialog(
-                    Catalog.GetString("Rename Playlist"),
-                    Catalog.GetString("Enter new playlist name"), 
-                    Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
-            } else if(source.Type == SourceType.Dap) {
-                DapSource dap_source = source as DapSource;
-                input = new InputDialog(
-                    Catalog.GetString("Rename Device"),
-                    Catalog.GetString("Enter new name for your device"),
-                    dap_source.Device.GetIcon(48), source.Name);
-            } else {
-                return;
-            }
-                
-            string newName = input.Execute();
-            if(newName != null)
-                source.Rename(newName);
-
-            sourceView.QueueDraw();
-        }
-        
-        private void OnItemRenamePlaylistActivate(object o, EventArgs args)
-        {
-            OnItemSourceRenameActivate(o, args);
-        }
-        
-        private void OnItemRemoveSongsActivate(object o, EventArgs args)
-        {
-            RemoveSongs(false);
-        }
-        
-        private void OnItemDeleteSongsFileSystemActivate(object o, EventArgs args)
-        {
-            RemoveSongs(true);
-        }
-        
-        private void OnItemDeletePlaylistActivate(object o, EventArgs args)
-        {
-            OnItemSourceDeleteActivate(o, args);
-        }
-        
-        private void OnItemSelectAllActivate(object o, EventArgs args)
-        {
-            // Don't steal "Ctrl+A" from the search entry
-            if (WindowPlayer.Focus is Entry &&
-                Gtk.Global.CurrentEvent is Gdk.EventKey) {
-                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
-                return;
-            }
-
-            playlistView.Selection.SelectAll();
-        }
-        
-        private void OnItemSelectNoneActivate(object o, EventArgs args)
-        {
-            playlistView.Selection.UnselectAll();
-        }
-        
+      
         private bool DoesTrackMatchSearch(TrackInfo ti)
         {
             if(!searchEntry.IsQueryAvailable) {
@@ -2037,19 +1634,51 @@ namespace Banshee
                 playlistView.Selection.SelectPath(path);
             }
         }
+        
+        private void OnNewPlaylistFromSelectionActivated(object o, EventArgs args)
+        {
+            ArrayList tracks = new ArrayList();
+            
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                TrackInfo ti = playlistModel.PathTrackInfo(path);
+                tracks.Add(ti);
+            }
+            
+            Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
+            pl.Append(tracks);
+            pl.Save();
+            pl.Saved += OnPlaylistSaved;
+        }
+        
+        private void OnItemAddToPlaylistActivated(object o, EventArgs args)
+        {
+            string name = playlistMenuMap[o] as string;
+            
+            if(name == null)
+                return;
+                
+            playlistView.AddSelectedToPlayList(name);
+        }
 
+        private Menu song_popup_menu = null;
+        private MenuItem add_to_playlist_menu_item = null;
+        private MenuItem rating_menu_item = null;
+        
         private bool PlaylistMenuPopupTimeout(uint time)
         {
-            if(gxmlPlaylistMenu == null) {
-                gxmlPlaylistMenu = new Glade.XML(null, "player.glade", 
-                    "PlaylistMenu", null);
-                gxmlPlaylistMenu.Autoconnect(this);
+            if(song_popup_menu == null) {
+                song_popup_menu = Globals.ActionManager.GetWidget("/SongViewPopup") as Menu;
+                add_to_playlist_menu_item = Globals.ActionManager.GetWidget(
+                    "/SongViewPopup/AddToPlaylist") as MenuItem;
+                rating_menu_item = Globals.ActionManager.GetWidget("/SongViewPopup/Rating") as MenuItem;
             }
-        
+          
             bool sensitive = playlistView.Selection.CountSelectedRows() > 0;
-            Menu menu = gxmlPlaylistMenu["PlaylistMenu"] as Menu;
+
+            if(sensitive && (playlistModel.Source is LibrarySource || playlistModel.Source is PlaylistSource)) {
+                Globals.ActionManager["AddToPlaylistAction"].Visible = true;
+                Globals.ActionManager["RatingAction"].Visible = true;
             
-            if(sensitive) {
                 Menu plMenu = new Menu();
                 playlistMenuMap.Clear();
                 
@@ -2065,8 +1694,7 @@ namespace Banshee
                     
                     foreach(string plName in names) {
                         ImageMenuItem item = new ImageMenuItem(plName);
-                        item.Image = new Gtk.Image(
-                            Pixbuf.LoadFromResource("source-playlist.png"));
+                        item.Image = new Gtk.Image(Pixbuf.LoadFromResource("source-playlist.png"));
                         
                         playlistMenuMap[item] = plName;
                         item.Activated += OnItemAddToPlaylistActivated;
@@ -2088,69 +1716,39 @@ namespace Banshee
                     MenuItem item = new MenuItem();
                     HBox box = new HBox();
                     box.Spacing = 3;
-                    for(int j = 0; j < i + 1; j++)
-                        box.PackStart(new Gtk.Image(RatingRenderer.Star), 
-                            false, false, 0);
+                    
+                    for(int j = 0; j < i + 1; j++) {
+                        box.PackStart(new Gtk.Image(RatingRenderer.Star), false, false, 0);
+                    }
+                    
                     item.Add(box);
                     item.Name = String.Format("{0}", i + 1);
                     item.Activated += OnItemRatingActivated;
                     ratingMenu.Append(item);
                 }
-            
-                (gxmlPlaylistMenu["ItemAddToPlaylist"] as MenuItem).Submenu = plMenu;
-                (gxmlPlaylistMenu["ItemRating"] as MenuItem).Submenu = ratingMenu;
+                
+                add_to_playlist_menu_item.Submenu = plMenu;
+                rating_menu_item.Submenu = ratingMenu;
+                
+                plMenu.ShowAll();
+                ratingMenu.ShowAll();
+            } else {
+                Globals.ActionManager["AddToPlaylistAction"].Visible = false;
+                Globals.ActionManager["RatingAction"].Visible = false;
             }
         
-            menu.ShowAll();
-            
-            gxmlPlaylistMenu["ItemAddToPlaylist"].Visible = sensitive
-                && playlistModel.Source.Type != SourceType.AudioCd;;
-            gxmlPlaylistMenu["ItemRating"].Visible = sensitive
-                && playlistModel.Source.Type != SourceType.AudioCd;
-            gxmlPlaylistMenu["ItemSep"].Visible = sensitive;
-            gxmlPlaylistMenu["ItemRemove"].Visible = sensitive
-                && playlistModel.Source.Type != SourceType.AudioCd;
-            gxmlPlaylistMenu["ItemDeleteSongsFileSystem"].Visible = sensitive 
-                && playlistModel.Source.Type != SourceType.Dap 
-                && playlistModel.Source.Type != SourceType.AudioCd;
-            gxmlPlaylistMenu["ItemProperties"].Visible = sensitive;
-            
-            menu.Popup(null, null, null, 0, time);
+            song_popup_menu.ShowAll();
+            song_popup_menu.Popup(null, null, null, 0, time);
             
             return false;
         }
 
-        private void OnItemAddToPlaylistActivated(object o, EventArgs args)
-        {
-            string name = playlistMenuMap[o] as string;
-            
-            if(name == null)
-                return;
-                
-            playlistView.AddSelectedToPlayList(name);
-        }
-        
         private void OnItemRatingActivated(object o, EventArgs args)
         {
             uint rating = Convert.ToUInt32((o as Widget).Name);
             foreach(TreePath path in playlistView.Selection.GetSelectedRows())
                 playlistModel.PathTrackInfo(path).Rating = rating;
             playlistView.QueueDraw();
-        }
-
-        private void OnNewPlaylistFromSelectionActivated(object o, EventArgs args)
-        {
-            ArrayList tracks = new ArrayList();
-            
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
-                TrackInfo ti = playlistModel.PathTrackInfo(path);
-                tracks.Add(ti);
-            }
-            
-            Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
-            pl.Append(tracks);
-            pl.Save();
-            pl.Saved += OnPlaylistSaved;
         }
 
         private void OnPlaylistViewDragDataReceived(object o, 
@@ -2273,56 +1871,7 @@ namespace Banshee
             foreach(TreePath path in selrows)
                 playlistView.Selection.SelectPath(path);
         }
-        
-        private void OnItemImportCDActivate(object o, EventArgs args)
-        {
-            OnButtonRipClicked(o, args);
-        }
-        
-        private void OnItemBurnCDActivate(object o, EventArgs args)
-        {
-            OnButtonBurnClicked(o, args);
-        }
-        
-        private void OnButtonBurnClicked(object o, EventArgs args)
-        {
-            if(playlistView.Selection.CountSelectedRows() <= 0) {
-                return;
-            }
-        
-            BurnCore burnCore = new BurnCore(BurnCore.DiskType.Audio);
-        
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
-                burnCore.AddTrack(playlistModel.PathTrackInfo(path));
-            }
-            
-            burnCore.Burn();
-        }
-        
-        private void OnButtonRipClicked(object o, EventArgs args)
-        {
-            RipTransaction trans = new RipTransaction();
-            trans.HaveTrackInfo += OnRipTransactionTrackRipped;
-
-            foreach(object [] node in playlistModel) {
-                if(node[0] is AudioCdTrackInfo && ((AudioCdTrackInfo)node[0]).CanRip) {
-                    trans.QueueTrack(node[0] as AudioCdTrackInfo);
-                }
-            }
-            
-            if(trans.QueueSize > 0) {
-                trans.Run();
-            } else {
-                HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
-                    MessageType.Info, ButtonsType.Ok, 
-                    Catalog.GetString("Invalid Selection"),
-                    Catalog.GetString("You must select at least one track to import.")
-                );
-                dialog.Run();
-                dialog.Destroy();
-            }
-        }
-        
+     
         private void OnRipTransactionTrackRipped(object o, HaveTrackInfoArgs args)
         {
             if(playlistModel.Source is LibrarySource) {
@@ -2348,8 +1897,9 @@ namespace Banshee
                         
                     source.Eject();
                     
-                    if(source == sourceView.SelectedSource)
+                    if(source == sourceView.SelectedSource) {
                         sourceView.SelectLibrary();
+                    }
                 } catch(Exception e) {
                     HigMessageDialog.RunHigMessageDialog(null, 
                         DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, 
@@ -2380,8 +1930,7 @@ namespace Banshee
         private void StopPlaying()
         {
             Core.Instance.Player.Close();
-            
-            ImagePlayPause.SetFromStock("media-play", IconSize.LargeToolbar);
+            Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
             ScaleTime.Adjustment.Lower = 0;
             ScaleTime.Adjustment.Upper = 0;
             ScaleTime.Value = 0;
@@ -2393,62 +1942,11 @@ namespace Banshee
                 trayIcon.Tooltip = Catalog.GetString("Banshee - Idle");
         }
 
-        public void SelectAudioCd(string device)
-        {
-            Console.WriteLine("Selecting CD");
-        }
-        
         public TrackInfo ActiveTrackInfo
         {
             get {
                 return activeTrackInfo;
             }
-        }
-        
-        private void ShowPlaylistView()
-        {
-            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
-            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
-            
-            if(alignment.Child == playlist_container) {
-                return;
-            } else if(alignment.Child == syncing_container) {
-                alignment.Remove(syncing_container);
-            }
-            
-            alignment.Add(playlist_container);
-            alignment.ShowAll();
-        }
-        
-        private void ShowSyncingView()
-        {
-            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
-            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
-            
-            if(alignment.Child == syncing_container) {
-                return;
-            } else if(alignment.Child == playlist_container) {
-                alignment.Remove(playlist_container);
-            }
-            
-            if(syncing_container == null) {
-                syncing_container = new EventBox();
-                HBox syncing_box = new HBox();
-                syncing_container.Add(syncing_box);
-                syncing_box.Spacing = 20;
-                syncing_box.PackStart(dap_syncing_image, false, false, 0);
-                Label syncing_label = new Label();
-                                                
-                syncing_container.ModifyBg(StateType.Normal, new Color(0, 0, 0));
-                syncing_label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
-            
-                syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
-                    Catalog.GetString("Synchronizing your Device, Please Wait...")) + "</b></big>";
-                syncing_box.PackStart(syncing_label, false, false, 0);
-            }
-            
-            alignment.Add(syncing_container);
-            alignment.ShowAll();
         }
         
         private void OnImportManagerImportRequested(object o, ImportEventArgs args)
@@ -2473,6 +1971,488 @@ namespace Banshee
                     args.FileName, e.GetType(), e.Message);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
+        }
+        
+        private void RemoveSongs(bool deleteFromFileSystem)
+        {
+            // Don't steal "Del" key from the search entry
+            if (WindowPlayer.Focus is Entry &&
+                Gtk.Global.CurrentEvent is Gdk.EventKey) {
+                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, 
+                    (Gdk.EventKey)Gtk.Global.CurrentEvent);
+                return;
+            }
+
+            int selCount = playlistView.Selection.CountSelectedRows();
+        
+            if(selCount <= 0) {
+                return;
+            }
+            
+            if(playlistModel.Source.Type == SourceType.Library) {
+                string msg = String.Empty;
+                
+                if(deleteFromFileSystem) {
+                    msg = String.Format(
+                    Catalog.GetPluralString(
+                        "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file.",
+                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files.",
+                        selCount),
+                    selCount);
+                } else {
+                    msg = String.Format(
+                    Catalog.GetPluralString(
+                        "Are you sure you want to remove the selected song from your library?",
+                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library?",
+                        selCount),
+                    selCount);
+                }
+                    
+                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                    DialogFlags.DestroyWithParent, MessageType.Warning,
+                    ButtonsType.YesNo,
+                    Catalog.GetString("Remove Selected Songs from Library"),
+                    msg);
+                if(md.Run() != (int)ResponseType.Yes) {
+                    md.Destroy();
+                    return;
+                }
+        
+                md.Destroy();
+            }
+        
+            TreeIter [] iters = new TreeIter[selCount];
+            int i = 0;
+            
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                playlistModel.GetIter(out iters[i++], path);
+            }
+            
+            TrackRemoveTransaction transaction;
+            
+            if(playlistModel.Source.Type == SourceType.Dap) {
+                for(i = 0; i < iters.Length; i++) {
+                    TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
+                    playlistModel.RemoveTrack(ref iters[i]);
+                    
+                    DapTrackInfo iti = ti as DapTrackInfo;
+                    (playlistModel.Source as DapSource).Device.RemoveTrack(iti);
+                }
+                sourceView.QueueDraw();
+                return;
+            } else if(playlistModel.Source.Type == SourceType.Library) {
+                transaction = new LibraryTrackRemoveTransaction();
+            } else {
+                transaction = new PlaylistTrackRemoveTransaction(
+                    Playlist.GetId(playlistModel.Source.Name));
+            }
+              
+            for(i = 0; i < iters.Length; i++) {
+                TrackInfo ti = playlistModel.IterTrackInfo(iters[i]);
+                playlistModel.RemoveTrack(ref iters[i]);
+                transaction.RemoveQueue.Add(ti);
+                
+                if(deleteFromFileSystem) {
+                    try {
+                        File.Delete(ti.Uri.LocalPath);
+                    } catch(Exception) {
+                        Console.WriteLine("Could not delete file: " + ti.Uri.LocalPath);
+                    }
+                    
+                    // trim empty parent directories
+                    try {
+                        string old_dir = Path.GetDirectoryName(ti.Uri.LocalPath);
+                        while(old_dir != null && old_dir != String.Empty) {
+                            Directory.Delete(old_dir);
+                            old_dir = Path.GetDirectoryName(old_dir);
+                        }
+                    } catch(Exception) {}
+                }
+            }
+            
+            transaction.Finished += OnLibraryTrackRemoveFinished;
+            transaction.Register();
+        }
+        
+        private void OnLibraryTrackRemoveFinished(object o, EventArgs args)
+        {
+            playlistView.QueueDraw();
+            sourceView.QueueDraw();
+        }
+        
+        [GLib.ConnectBefore]
+        private void OnButtonPreviousPressed(object o, ButtonPressEventArgs args)
+        {
+            if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
+                Previous();
+                args.RetVal = true;
+            }
+        }
+        
+        // ---------------------------------------------------------------------------------
+        // ActionManager Callbacks --- All entries here should be in order with the MainMenu
+        // defined in UIManagerLayout.xml. NO CODE that is not ActionManager related may be
+        // added below this section! Trying to keep it clean!
+        // ---------------------------------------------------------------------------------
+
+        // --- Music Menu ---
+
+        private void OnNewPlaylistAction(object o, EventArgs args)
+        {
+            Playlist pl = new Playlist(Playlist.UniqueName);
+            pl.Saved += OnPlaylistSaved;
+            pl.Save();
+        }
+        
+        private void OnImportFolderAction(object o, EventArgs args)
+        {
+            ImportWithFileSelector();
+        }
+        
+        private void OnImportFilesAction(object o, EventArgs args)
+        {
+            FileChooserDialog chooser = new FileChooserDialog(
+                Catalog.GetString("Import Files to Library"),
+                null,
+                FileChooserAction.Open
+            );
+            
+            try {
+                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
+            } catch(Exception) {
+                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            }
+            
+            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton(Stock.Open, ResponseType.Ok);
+            
+            chooser.SelectMultiple = true;
+            chooser.DefaultResponse = ResponseType.Ok;
+            
+            if(chooser.Run() == (int)ResponseType.Ok) {
+                ImportManager.Instance.QueueSource(chooser.Uris);
+            }
+            
+            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
+            
+            chooser.Destroy();
+        }
+        
+        private void OnImportCDAction(object o, EventArgs args)
+        {
+            ArrayList list = new ArrayList();
+            
+            foreach(object [] node in playlistModel) {
+                if(node[0] is AudioCdTrackInfo && ((AudioCdTrackInfo)node[0]).CanRip) {
+                    list.Add(node[0] as AudioCdTrackInfo);
+                }
+            }
+            
+            if(list.Count > 0) {
+                RipTransaction trans = new RipTransaction();
+                trans.HaveTrackInfo += OnRipTransactionTrackRipped;
+                foreach(AudioCdTrackInfo track in list) {
+                    trans.QueueTrack(track);
+                }
+                trans.Run();
+            } else {
+                HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
+                    MessageType.Info, ButtonsType.Ok, 
+                    Catalog.GetString("Invalid Selection"),
+                    Catalog.GetString("You must select at least one track to import.")
+                );
+                dialog.Run();
+                dialog.Destroy();
+            }
+        }
+        
+        private void OnWriteCDAction(object o, EventArgs args) 
+        {
+            if(playlistView.Selection.CountSelectedRows() <= 0) {
+                return;
+            }
+        
+            BurnCore burnCore = new BurnCore(BurnCore.DiskType.Audio);
+        
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                burnCore.AddTrack(playlistModel.PathTrackInfo(path));
+            }
+            
+            burnCore.Burn();
+        }
+        
+        private void OnSyncDapAction(object o, EventArgs args)
+        {
+            if(sourceView.SelectedSource.Type != SourceType.Dap) {
+                return;
+            }
+                
+            DapSource dapSource = sourceView.SelectedSource as DapSource;
+        
+            HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                DialogFlags.DestroyWithParent, MessageType.Question,
+                Catalog.GetString("Synchronize iPod"),
+                Catalog.GetString("You have made changes to your iPod. Please choose " +
+                    "a method for updating the contents of your iPod.\n\n" + 
+                    "<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
+                    "<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
+                    "<b>Warning:</b> Actions will alter or erase existing iPod contents and " +
+                    "may cause incompatability with iTunes!"),
+                Catalog.GetString("Synchronize Library"));
+            
+            md.AddButton(Catalog.GetString("Save Manual Changes"), Gtk.ResponseType.Apply, true);
+            md.Image = dapSource.Device.GetIcon(48);
+            md.Icon = md.Image;
+            
+            switch(md.Run()) {
+                case (int)ResponseType.Ok:
+                    dapSource.Device.Save(Core.Library.Tracks.Values);
+                    break;
+                case (int)ResponseType.Apply:
+                    dapSource.Device.Save();
+                    break;
+            }
+
+            md.Destroy();
+        }
+        
+        private void OnEjectSelectedSourceAction(object o, EventArgs args)
+        {
+            EjectSource(sourceView.SelectedSource);
+        }
+
+        private void OnSelectedSourcePropertiesAction(object o, EventArgs args)
+        {
+            ShowSourceProperties(sourceView.SelectedSource);
+        }
+        
+        private void OnQuitAction(object o, EventArgs args)
+        {
+            Quit();
+        }
+        
+        // --- Edit Menu ---
+        
+        private void OnRemoveSongsAction(object o, EventArgs args)
+        {
+            RemoveSongs(false);
+        }
+        
+        private void OnDeleteSongsFromDriveAction(object o, EventArgs args)
+        {
+            RemoveSongs(true);
+        }
+        
+        private void OnRenameSourceAction(object o, EventArgs args)
+        {
+            Source source = sourceView.HighlightedSource;
+            
+            if(source == null || !source.CanRename) {
+                 return;
+            }
+            
+            InputDialog input;
+            
+            if(source.Type == SourceType.Playlist) {
+                input = new InputDialog(
+                    Catalog.GetString("Rename Playlist"),
+                    Catalog.GetString("Enter new playlist name"), 
+                    Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
+            } else if(source.Type == SourceType.Dap) {
+                DapSource dap_source = source as DapSource;
+                input = new InputDialog(
+                    Catalog.GetString("Rename Device"),
+                    Catalog.GetString("Enter new name for your device"),
+                    dap_source.Device.GetIcon(48), source.Name);
+            } else {
+                return;
+            }
+                
+            string newName = input.Execute();
+            if(newName != null) {
+                source.Rename(newName);
+            }
+            
+            sourceView.QueueDraw();
+        }
+
+        private void OnDeletePlaylistAction(object o, EventArgs args)
+        {
+            Source source = sourceView.HighlightedSource;
+            
+            if(source == null || source.Type != SourceType.Playlist) {
+                return;
+            }
+                
+            Playlist.Delete(source.Name);
+            
+            TreeIter iter = TreeIter.Zero;
+            ListStore store = sourceView.Model as ListStore;
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                if(!store.IterNthChild(out iter, i))
+                    continue;
+                
+                object obj = store.GetValue(iter, 0);
+                
+                if(!(obj is PlaylistSource))
+                    continue;
+                    
+                PlaylistSource currSource = obj as PlaylistSource;
+                if(currSource.Name == source.Name) {
+                    store.Remove(ref iter);
+                    break;
+                }
+            }
+            
+            sourceView.SelectLibrary();
+        }
+        
+        private void OnSelectAllAction(object o, EventArgs args)
+        {
+            // Don't steal "Ctrl+A" from the search entry
+            if (WindowPlayer.Focus is Entry &&
+                Gtk.Global.CurrentEvent is Gdk.EventKey) {
+                Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
+                return;
+            }
+
+            playlistView.Selection.SelectAll();
+        }
+        
+        private void OnSelectNoneAction(object o, EventArgs args)
+        {
+            playlistView.Selection.UnselectAll();
+        }
+        
+        private void OnPropertiesAction(object o, EventArgs args)
+        {
+            TrackProperties propEdit = new TrackProperties(playlistView.SelectedTrackInfoMultiple);
+            propEdit.Saved += delegate(object o, EventArgs args) {
+                playlistView.QueueDraw();
+            };
+        }
+        
+        private void OnPreferencesAction(object o, EventArgs args)
+        {
+            new PreferencesWindow();
+        }
+        
+        // -- Playback Menu ---
+        
+        private void OnPlayPauseAction(object o, EventArgs args)
+        {
+            PlayPause();
+        }
+        
+        private void OnPreviousAction(object o, EventArgs args)
+        {
+            if(Core.Instance.Player.Position < 3) {
+                Previous();
+            } else {
+                Core.Instance.Player.Position = 0;
+            }
+        }
+        
+        private void OnNextAction(object o, EventArgs args)
+        {
+            Next();
+        }
+        
+        private void OnSeekForwardAction(object o, EventArgs args)
+        {
+            Core.Instance.Player.Position += SkipDelta;
+        }
+        
+        private void OnSeekBackwardAction(object o, EventArgs args)
+        {
+            Core.Instance.Player.Position -= SkipDelta;
+        }
+        
+        private void SetRepeatMode(RepeatMode mode)
+        {
+            playlistModel.Repeat = mode;
+            Globals.Configuration.Set(GConfKeys.PlaylistRepeat, (int)mode);
+        }
+        
+        private void OnRepeatNoneAction(object o, EventArgs args)
+        {
+            SetRepeatMode(RepeatMode.None);
+        }
+        
+        private void OnRepeatAllAction(object o, EventArgs args)
+        {
+            SetRepeatMode(RepeatMode.All);
+        }
+        
+        private void OnRepeatSingleAction(object o, EventArgs args)
+        {
+            SetRepeatMode(RepeatMode.Single);
+        }
+        
+        private void OnShuffleAction(object o, EventArgs args)
+        {
+            ToggleAction action = o as ToggleAction;
+            playlistModel.Shuffle = action.Active;
+            Globals.Configuration.Set(GConfKeys.PlaylistShuffle, action.Active);
+        }
+        
+        // --- View Menu ---
+        
+        private void OnShowCoverArtAction(object o, EventArgs args)
+        {
+            ToggleAction action = o as ToggleAction;
+            cover_art_view.Enabled = action.Active;
+            Globals.Configuration.Set(GConfKeys.ShowCoverArt, action.Active);
+        }
+        
+        private bool is_fullscreen = false;
+        private void OnFullScreenAction(object o, EventArgs args)
+        {
+            if(is_fullscreen) {
+                WindowPlayer.Unfullscreen();
+                is_fullscreen = false;
+            } else {
+                WindowPlayer.Fullscreen();
+                is_fullscreen = true;
+            } 
+        }
+        
+        private void OnColumnsAction(object o, EventArgs args)
+        {
+            playlistView.ColumnChooser();
+        }
+        
+        private LogCoreViewer log_viewer = null;
+        private void OnLoggedEventsAction(object o, EventArgs args)
+        {
+            if(log_viewer == null) {
+                log_viewer = new LogCoreViewer(Core.Log, WindowPlayer);
+                
+                log_viewer.Response += delegate(object o, ResponseArgs args) {
+                    log_viewer.Hide();
+                };
+                
+                log_viewer.DeleteEvent += delegate(object o, DeleteEventArgs args) {
+                    log_viewer.Destroy();
+                    log_viewer = null;
+                };
+            }
+            
+            log_viewer.Show();
+        }
+        
+        // --- Help Menu ---
+        
+        private void OnVersionInformationAction(object o, EventArgs args)
+        {
+            VersionInformationDialog dialog = new VersionInformationDialog();
+            dialog.Run();
+            dialog.Destroy();
+        }
+        
+        private void OnAboutAction(object o, EventArgs args)
+        {
+            new AboutBox();
         }
     }
 }

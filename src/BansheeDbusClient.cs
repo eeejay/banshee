@@ -33,12 +33,8 @@
 // of the BansheeCore class (or clients can continue to implement the
 // abstract methods like below). 
 //
-// 1. There is currently no event/signal support, which means the client
+// There is currently no event/signal support, which means the client
 // must poll the server in a loop or similar to get status updates, etc.
-//
-// 2. There is missing functionality in the D-Bus API. For example, seeking
-// is not possible. There is also no library API - operations can only
-// be performed on the current playing song.
 
 using System;
 using DBus;
@@ -70,6 +66,12 @@ public abstract class BansheeCore
     [Method] public abstract int GetPlayingPosition();
     [Method] public abstract int GetPlayingDuration();
     [Method] public abstract int GetPlayingStatus();
+    [Method] public abstract void SetPlayingPosition(int position);
+    [Method] public abstract void SkipForward();
+    [Method] public abstract void SkipBackward();
+    [Method] public abstract void SetVolume(int volume);
+    [Method] public abstract void IncreaseVolume();
+    [Method] public abstract void DecreaseVolume();
 }
 
 public class BansheeDbusClient : Window

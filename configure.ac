@@ -5,8 +5,8 @@ AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
-VERSION=0.10
-ASM_VERSION="$VERSION.*.*"
+VERSION=0.10.1
+ASM_VERSION="$VERSION.*"
 
 AM_INIT_AUTOMAKE(banshee, $VERSION)
 AC_SUBST(ASM_VERSION)
@@ -388,7 +388,6 @@ src/Banshee.Dap/Ipod/ipod-sharp.dll.config
 src/Banshee.Dap/Njb/Makefile
 data/Makefile
 data/org.gnome.Banshee.service
-data/glade/Makefile
 data/images/Makefile
 data/images/ipod/Makefile
 docs/Makefile

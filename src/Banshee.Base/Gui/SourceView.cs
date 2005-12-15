@@ -449,6 +449,22 @@ namespace Banshee
             }
         }
         
+        public void ResetHighlight()
+        {
+            TreeIter iter = TreeIter.Zero;
+            
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                if(!store.IterNthChild(out iter, i))
+                    continue;
+                
+                object obj = store.GetValue(iter, 0);
+                
+                if(obj == SelectedSource) {
+                    Selection.SelectIter(iter);
+                }
+            }
+        }
+        
         public Source HighlightedSource
         {
             get {
@@ -514,37 +530,6 @@ namespace Banshee
             y_offset = 0;
             width = text_w;
             height = text_h + 5;
-        }
-        
-        private static Gdk.Color ColorBlend(Gdk.Color a, Gdk.Color b)
-        {
-            // at some point, might be nice to allow any blend?
-            double blend = 0.5;
-        
-            if(blend < 0.0 || blend > 1.0)
-                throw new ApplicationException("blend < 0.0 || blend > 1.0");
-        
-            double blendRatio = 1.0 - blend;
-        
-            int aR = a.Red >> 8;
-            int aG = a.Green >> 8;
-            int aB = a.Blue >> 8;
-            
-            int bR = b.Red >> 8;
-            int bG = b.Green >> 8;
-            int bB = b.Blue >> 8;
-            
-            double mR = aR + bR;
-            double mG = aG + bG;
-            double mB = aB + bB;
-            
-            double blR = mR * blendRatio;
-            double blG = mG * blendRatio;
-            double blB = mB * blendRatio;
-            
-            Gdk.Color color = new Gdk.Color((byte)blR, (byte)blG, (byte)blB);
-            Gdk.Colormap.System.AllocColor(ref color, true, true);
-            return color;
         }
         
         protected override void Render(Gdk.Drawable drawable, 
@@ -650,7 +635,7 @@ namespace Banshee
                 modGC.Copy(widget.Style.TextGC(state));
                 Gdk.Color fgcolor = widget.Style.Foreground(state);
                 Gdk.Color bgcolor = widget.Style.Background(state);
-                modGC.RgbFgColor = ColorBlend(fgcolor, bgcolor);
+                modGC.RgbFgColor = Utilities.ColorBlend(fgcolor, bgcolor);
             } 
             
             drawable.DrawLayout(modGC,

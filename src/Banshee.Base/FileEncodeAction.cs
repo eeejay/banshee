@@ -66,6 +66,7 @@ namespace Banshee.Base
         {
             this.profile = profile;
             user_event = new ActiveUserEvent(Catalog.GetString("File Encoder"));
+            user_event.Header = Catalog.GetString("Encoding Files");
             user_event.CancelRequested += OnCancelRequested;
             user_event.Icon = IconThemeUtils.LoadIcon("encode-action-24", 22);
             user_event.Message = Catalog.GetString("Initializing Encoder...");
@@ -99,12 +100,12 @@ namespace Banshee.Base
                 Uri inputUri = null;
                 
                 if(obj is TrackInfo) {
-                    user_event.Message = String.Format(Catalog.GetString("Encoding {0} - {1} ..."),
+                    user_event.Message = String.Format("{0} - {1}",
                         (obj as TrackInfo).Artist, (obj as TrackInfo).Title);
                     inputUri = (obj as TrackInfo).Uri;
                 } else if(obj is Uri) {
-                    user_event.Message = Catalog.GetString("Encoding files...");
                     inputUri = obj as Uri;
+                    user_event.Message = Path.GetFileName(inputUri.LocalPath);
                 }
                 
                 if(user_event.IsCancelRequested) {

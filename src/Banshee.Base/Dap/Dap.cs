@@ -473,7 +473,12 @@ namespace Banshee.Dap
          
         public virtual Gdk.Pixbuf GetIcon(int size)
         {
-            return null;
+            Gdk.Pixbuf pixbuf = IconThemeUtils.LoadIcon("multimedia-player", size);
+            if(pixbuf == null) {
+                IconThemeUtils.LoadIcon("gnome-dev-ipod", size);
+            }
+            
+            return pixbuf;
         }
         
         public PropertyTable Properties {
@@ -503,6 +508,18 @@ namespace Banshee.Dap
         public bool IsSyncing {
             get {
                 return is_syncing;
+            }
+        }
+        
+        public virtual string GenericName {
+            get {
+                return "DAP";
+            }
+        }
+        
+        public string HalUdi {
+            get {
+                return HalDevice.Udi;
             }
         }
         

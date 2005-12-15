@@ -380,16 +380,6 @@ namespace Banshee
                 return (double)device.StorageUsed / (double)device.StorageCapacity;
             }
         }
-        
-        private static string BytesToString(ulong bytes)
-        {
-            ulong mb = bytes / (1024 * 1024);
-
-            if (mb > 1024)
-                return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
-            else
-                return String.Format(Catalog.GetString("{0} MB"), mb);
-        }
 
         public string DiskUsageString
         {
@@ -397,8 +387,8 @@ namespace Banshee
                 // Translators: iPod disk usage. Each {N} is something like "100 MB"
                 return String.Format(
                     Catalog.GetString("{0} of {1}"),
-                    BytesToString(device.StorageUsed),
-                    BytesToString(device.StorageCapacity));
+                    Utilities.BytesToString(device.StorageUsed),
+                    Utilities.BytesToString(device.StorageCapacity));
             }
         }
 
@@ -408,7 +398,7 @@ namespace Banshee
                 // Translators: iPod disk usage. {0} is something like "100 MB"
                 return String.Format(
                     Catalog.GetString("({0} Remaining)"),
-                    BytesToString(device.StorageCapacity - device.StorageUsed));
+                    Utilities.BytesToString(device.StorageCapacity - device.StorageUsed));
             }
         }
         
@@ -574,7 +564,7 @@ namespace Banshee
             Refresh();
         }
 
-        private static string BytesToString(ulong bytes)
+        private static string Utilities.BytesToString(ulong bytes)
         {
             ulong mb = bytes / (1024 * 1024);
 
@@ -590,8 +580,8 @@ namespace Banshee
                 // Translators: iPod disk usage. Each {N} is something like "100 MB"
                 return String.Format(
                     Catalog.GetString("{0} of {1}"),
-                    BytesToString(device.VolumeUsed),
-                    BytesToString(device.VolumeSize));
+                    Utilities.BytesToString(device.VolumeUsed),
+                    Utilities.BytesToString(device.VolumeSize));
             }
         }
 
@@ -601,7 +591,7 @@ namespace Banshee
                 // Translators: iPod disk usage. {0} is something like "100 MB"
                 return String.Format(
                     Catalog.GetString("({0} Remaining)"),
-                    BytesToString(device.VolumeAvailable));
+                    Utilities.BytesToString(device.VolumeAvailable));
             }
         }
     }*/

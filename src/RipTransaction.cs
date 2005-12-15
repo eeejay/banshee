@@ -193,10 +193,10 @@ namespace Banshee
         private void ThreadedRun()
         {
             int current = 1;
-            user_event.Message = Catalog.GetString("Initializing CD Drive");
+            user_event.Header = Catalog.GetString("Importing Audio CD");
+            user_event.Message = Catalog.GetString("Initializing Drive");
         
-            PipelineProfile profile = 
-                PipelineProfile.GetConfiguredProfile("Ripping");
+            PipelineProfile profile = PipelineProfile.GetConfiguredProfile("Ripping");
             
             string encodePipeline;
             
@@ -218,11 +218,10 @@ namespace Banshee
                 if(user_event.IsCancelRequested)
                     break;
          
-                status = String.Format(Catalog.GetString(
-                    "Importing {0} of {1} : {2} - {3}"), current++, QueueSize,
-                    track.Artist, track.Title);
+                user_event.Header = String.Format(Catalog.GetString("Importing {0} of {1}"), current++, QueueSize);
+                status = String.Format("{0} - {1}", track.Artist, track.Title);
                 user_event.Message = status;
-                    
+                
                 Uri uri = PathUtil.PathToFileUri(FileNamePattern.BuildFull(track, profile.Extension));
                     
                 if(!ripper.RipTrack(track, track.TrackIndex, uri.AbsoluteUri)) {

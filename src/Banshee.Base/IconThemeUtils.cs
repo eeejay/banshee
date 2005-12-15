@@ -42,11 +42,19 @@ namespace Banshee.Base
         [DllImport("libgtk-win32-2.0-0.dll")]
         private extern static IntPtr gtk_icon_theme_load_icon(IntPtr theme, string name, int size, 
             int flags, IntPtr error);
+            
+        [DllImport("libgtk-win32-2.0-0.dll")]
+        private static extern bool gtk_icon_theme_has_icon(IntPtr theme, string name);
+
+        public static bool HasIcon(string name)
+        {
+            return gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name);
+        }
 
         public static Gdk.Pixbuf LoadIcon(string name, int size)
         {
             try {
-                IntPtr native = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), name, size, 0, IntPtr.Zero);
+                IntPtr native = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), name, size, 0, IntPtr.Zero);
                 if(native != IntPtr.Zero) {
                     Gdk.Pixbuf ret = (Gdk.Pixbuf)GLib.Object.GetObject(native, true);
                     if(ret != null) {

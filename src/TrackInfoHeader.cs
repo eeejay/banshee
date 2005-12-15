@@ -36,105 +36,107 @@ using Banshee.Widgets;
 
 namespace Banshee
 {
-	public class TrackInfoHeader : HBox
-	{
-		private Label artistLabel;
-		private Label titleLabel;
-		private Image imageAlbum;
-	
-		public TrackInfoHeader() : base()
-		{
-			ConstructWidget();
-		}
-		
-		/*((Gtk.Image)gxml["ImageAlbum"]).Pixbuf = 
-				Gdk.Pixbuf.LoadFromResource("album-cover-container.png");*/
-		
-		private void ConstructWidget()
-		{
-			Spacing = 5;
-		
-			// Metadata Table
-			Table table = new Table(2, 2, false);
-			table.Show();
-			PackStart(table, true, true, 0);
-			
-			table.ColumnSpacing = 5;
-			table.RowSpacing = 2;
-			
-			Image imageArtistIcon = new Image();
-			imageArtistIcon.Show();
-			imageArtistIcon.SetFromStock("icon-artist", 
-				IconSize.Menu);
-			imageArtistIcon.Xalign = 0.0f;
-			imageArtistIcon.Yalign = 0.5f;
-			
-			Image imageTitleIcon = new Image();
-			imageTitleIcon.Show();
-			imageTitleIcon.SetFromStock("icon-title", 
-				IconSize.Menu);
-			imageTitleIcon.Xalign = 0.0f;
-			imageTitleIcon.Yalign = 0.5f;
-			
-			artistLabel = new EllipsizeLabel();
-			artistLabel.Show();
-			artistLabel.Xalign = 0.0f;
-			artistLabel.Yalign = 0.5f;
-			artistLabel.Selectable = true;
-			
-			titleLabel = new EllipsizeLabel();
-			titleLabel.Show();			
-			titleLabel.Xalign = 0.0f;
-			titleLabel.Yalign = 0.5f;
-			titleLabel.Selectable = true;
-			
-			table.Attach(imageArtistIcon, 0, 1, 0, 1, 
-				AttachOptions.Fill,
-				AttachOptions.Expand | AttachOptions.Fill, 0, 0);
-				
-			table.Attach(imageTitleIcon, 0, 1, 1, 2, 
-				AttachOptions.Fill,
-				AttachOptions.Expand | AttachOptions.Fill, 0, 0);
-			
-			table.Attach(artistLabel, 1, 2, 0, 1,
-				AttachOptions.Expand | AttachOptions.Fill, 
-				(AttachOptions)0, 0, 0);
-				
-			table.Attach(titleLabel, 1, 2, 1, 2,
-				AttachOptions.Expand | AttachOptions.Fill, 
-				(AttachOptions)0, 0, 0);
-			
-			// Album Picture
-			/*imageAlbum = new Image();
-			imageAlbum.Show();
-			imageAlbum.Pixbuf = 
-				Gdk.Pixbuf.LoadFromResource("album-cover-container.png");
-
-			PackStart(imageAlbum, false, false, 5);*/
-						
-			SetIdle();
-		}
-		
-		public string Artist 
-		{
-			set {
-				artistLabel.Markup = "<b>" + GLib.Markup.EscapeText(value) + "</b>";
-			}
-		}
-		
-		public string Title
-		{
-			set {
-				titleLabel.Text = value;
-			}
-		}
-		
-		public void SetIdle()
-		{
-			artistLabel.Markup = 
-				"<span weight=\"bold\">" + Catalog.GetString("Banshee Player") + "</span>";
-			titleLabel.Markup = 
-				"<span size=\"small\">" + Catalog.GetString("Idle") + "</span>";
-		}
-	}
+    public class TrackInfoHeader : HBox
+    {
+        private string artist;
+        private string album;
+        private string title;
+    
+        private Label artist_album_label;
+        private Label title_label;
+        private CoverArtThumbnail cover;
+        
+        public TrackInfoHeader() : base()
+        {
+            ConstructWidget();
+        }
+        
+        private void ConstructWidget()
+        {
+            Spacing = 8;
+        
+            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 48);
+            if(default_pixbuf == null) {
+                default_pixbuf = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), "banshee-logo.png");   
+            }
+            
+            cover = new CoverArtThumbnail(36);
+            cover.NoArtworkPixbuf = default_pixbuf;
+            PackStart(cover, false, false, 0);
+            cover.Show();
+        
+            VBox box = new VBox();
+            box.Spacing = 2;
+        
+            artist_album_label = new EllipsizeLabel();
+            artist_album_label.Show();
+            artist_album_label.Xalign = 0.0f;
+            artist_album_label.Yalign = 0.5f;
+            artist_album_label.Selectable = true;
+            
+            title_label = new EllipsizeLabel();
+            title_label.Show();            
+            title_label.Xalign = 0.0f;
+            title_label.Yalign = 0.5f;
+            title_label.Selectable = true;
+            
+            box.PackStart(title_label, false, false, 0);
+            box.PackStart(artist_album_label, false, false, 0);
+            
+            PackStart(box, true, true, 0);
+            box.ShowAll();
+            Hide();
+        }
+        
+        private void UpdateDisplay()
+        {
+            Gdk.Color blend = Banshee.Base.Utilities.ColorBlend(
+                artist_album_label.Style.Background(StateType.Normal),
+                artist_album_label.Style.Foreground(StateType.Normal));
+            string hex_blend = String.Format("#{0:x2}{1:x2}{2:x2}", blend.Red, blend.Green, blend.Blue);
+            
+            artist_album_label.Markup = String.Format(
+                "<span color=\"{0}\">{1}</span>  {3}  <span color=\"{0}\">{2}</span>  {4}",
+                hex_blend, 
+                Catalog.GetString("by"),
+                Catalog.GetString("from"),
+                GLib.Markup.EscapeText(artist), 
+                GLib.Markup.EscapeText(album));
+                
+            title_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(title));
+            
+            ShowAll();
+        }
+        
+        public string Artist {
+            set {
+                artist = value;
+                UpdateDisplay();
+            }
+        }
+        
+        public string Title {
+            set {
+                title = value;
+                UpdateDisplay();
+            }
+        }
+        
+        public string Album {
+            set {
+                album = value;
+                UpdateDisplay();
+            }
+        }
+        
+        public CoverArtThumbnail Cover {
+            get {
+                return cover;
+            }
+        }
+        
+        public void SetIdle()
+        {
+        }
+    }
 }

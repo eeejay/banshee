@@ -1,0 +1,94 @@
+<ui>
+    <menubar name="MainMenu">
+        <menu name="MusicMenu" action="MusicMenuAction">
+            <menuitem name="NewPlaylist" action="NewPlaylistAction" />
+            <menuitem name="ImportFolder" action="ImportFolderAction" />
+            <menuitem name="ImportFiles" action="ImportFilesAction" />
+            <separator />
+            <menuitem name="ImportCD" action="ImportCDAction" />
+            <menuitem name="WriteCD" action="WriteCDAction" />
+            <separator />
+            <menuitem name="SyncDap" action="SyncDapAction" />
+            <menuitem name="EjectSelectedSource" action="EjectSelectedSourceAction" />
+            <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
+            <separator />
+            <menuitem name="Quit" action="QuitAction" />
+        </menu>
+        <menu name="EditMenu" action="EditMenuAction">
+            <menuitem name="RemoveSongs" action="RemoveSongsAction" />
+            <menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
+            <menuitem name="RenameSource" action="RenameSourceAction" />
+            <menuitem name="DeletePlaylist" action="DeletePlaylistAction" />
+            <separator />
+            <menuitem name="SelectAll" action="SelectAllAction" />
+            <menuitem name="SelectNone" action="SelectNoneAction" />
+            <separator />
+            <menuitem name="Properties" action="PropertiesAction" />
+            <separator />
+            <menuitem name="Preferences" action="PreferencesAction" />
+        </menu>
+        <menu name="PlaybackMenu" action="PlaybackMenuAction">
+            <menuitem name="PlayPause" action="PlayPauseAction" />
+            <separator />
+            <menuitem name="Previous" action="PreviousAction" />
+            <menuitem name="Next" action="NextAction" />
+            <separator />
+            <menuitem name="SeekBackward" action="SeekBackwardAction" />
+            <menuitem name="SeekForward" action="SeekForwardAction" />
+            <separator />
+            <menuitem name="RepeatNone" action="RepeatNoneAction" />
+            <menuitem name="RepeatAll" action="RepeatAllAction" />
+            <menuitem name="RepeatSingle" action="RepeatSingleAction" />
+            <separator />
+            <menuitem name="Shuffle" action="ShuffleAction" />
+        </menu>
+        <menu name="ViewMenu" action="ViewMenuAction">
+            <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
+            <menuitem name="FullScreen" action="FullScreenAction" />
+            <menuitem name="Columns" action="ColumnsAction" />
+            <menuitem name="LoggedEvents" action="LoggedEventsAction" />
+        </menu>
+        <menu name="HelpMenu" action="HelpMenuAction">
+            <menuitem name="VersionInformation" action="VersionInformationAction" />
+            <menuitem name="About" action="AboutAction" />
+        </menu>
+    </menubar>
+    <popup name="SourceMenu" action="SourceMenuAction">
+        <menuitem name="RenameSource" action="RenameSourceAction" />
+        <menuitem name="DeletePlaylist" action="DeletePlaylistAction" />
+        <menuitem name="SyncDap" action="SyncDapAction" />
+        <menuitem name="EjectSelectedSource" action="EjectSelectedSourceAction" />
+        <separator />
+        <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
+    </popup>
+    <popup name="SongViewPopup" action="SongViewPopupAction">
+        <menuitem name="Columns" action="ColumnsAction" />
+        <separator />
+        <menuitem name="AddToPlaylist" action="AddToPlaylistAction" />
+        <menuitem name="Rating" action="RatingAction" />
+        <menuitem name="RemoveSongs" action="RemoveSongsAction" />
+        <menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
+        <separator />
+        <menuitem name="SelectAll" action="SelectAllAction" />
+        <menuitem name="SelectNone" action="SelectNoneAction" />
+        <separator />
+        <menuitem name="Properties" action="PropertiesAction" />
+    </popup>
+    <popup name="TrayMenu" action="TrayMenuAction">
+        <menuitem name="PlayPause" action="PlayPauseAction" />
+        <separator />
+        <menuitem name="Previous" action="PreviousAction" />
+        <menuitem name="Next" action="NextAction" />
+        <separator />
+        <menuitem name="SeekBackward" action="SeekBackwardAction" />
+        <menuitem name="SeekForward" action="SeekForwardAction" />
+        <separator />
+        <menuitem name="RepeatNone" action="RepeatNoneAction" />
+        <menuitem name="RepeatAll" action="RepeatAllAction" />
+        <menuitem name="RepeatSingle" action="RepeatSingleAction" />
+        <separator />
+        <menuitem name="Shuffle" action="ShuffleAction" />
+        <separator />
+        <menuitem name="Quit" action="QuitAction" />
+    </popup>
+</ui>

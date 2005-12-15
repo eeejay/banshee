@@ -37,65 +37,94 @@ namespace Banshee
 {
     public class StockIcons 
     {
-        static StockItem FromDef(string id, string label, uint keyval, 
-            ModifierType modifier, string domain)
-        {
-            StockItem item;
-            item.StockId = id;
-            item.Label = label;
-            item.Keyval = keyval;
-            item.Modifier = modifier;
-            item.TranslationDomain = domain;
-            return item;
-        }
-        
-        private static StockItem [] stock_items = {
+        private static string [] stock_icon_names = {
             /* Playback Control Icons */
-            FromDef("media-skip-forward", Catalog.GetString("Next"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-skip-backward", Catalog.GetString("Previous"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-playback-start", Catalog.GetString("Play"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-playback-pause", Catalog.GetString("Pause"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-playlist-shuffle", Catalog.GetString("Shuffle Enabled"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-playlist-continuous", Catalog.GetString("Shuffle Disabled"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-repeat-none", Catalog.GetString("Repeat None"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-repeat-all", Catalog.GetString("Repeat All"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-repeat-single", Catalog.GetString("Repeat Single"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-eject", Catalog.GetString("Eject"), 0, ModifierType.ShiftMask, null),
+            "media-skip-forward",
+            "media-skip-backward",
+            "media-playback-start",
+            "media-playback-pause",
+            "media-playlist-shuffle",
+            "media-playlist-continuous",
+            "media-repeat-none",
+            "media-repeat-all",
+            "media-repeat-single", 
+            "media-eject",
             
             /* Volume Button Icons */
-            FromDef("audio-volume-high", Catalog.GetString("Volume High"), 0, ModifierType.ShiftMask, null),
-            FromDef("audio-volume-medium", Catalog.GetString("Volume Medium"), 0, ModifierType.ShiftMask, null),
-            FromDef("audio-volume-low", Catalog.GetString("Volume Low"), 0, ModifierType.ShiftMask, null),
-            FromDef("audio-volume-muted", Catalog.GetString("Volume Muted"), 0, ModifierType.ShiftMask, null),
-            FromDef("audio-volume-decrease", Catalog.GetString("Volume Decrease"), 0, ModifierType.ShiftMask, null),
-            FromDef("audio-volume-increase", Catalog.GetString("Volume Increase"), 0, ModifierType.ShiftMask, null),
+            "audio-volume-high", 
+            "audio-volume-medium",
+            "audio-volume-low", 
+            "audio-volume-muted",
+            "audio-volume-decrease",
+            "audio-volume-increase",
             
             /* Now Playing Images */
-            FromDef("icon-artist", Catalog.GetString("Artist"), 0, ModifierType.ShiftMask, null),
-            FromDef("icon-album", Catalog.GetString("Album"), 0, ModifierType.ShiftMask, null),
-            FromDef("icon-title", Catalog.GetString("Title"), 0, ModifierType.ShiftMask, null),
+            "icon-artist",
+            "icon-album",
+            "icon-title",
             
             /* Other */
-            FromDef("media-burn", Catalog.GetString("Write CD"), 0, ModifierType.ShiftMask, null),
-            FromDef("media-rip", Catalog.GetString("Import CD"), 0, ModifierType.ShiftMask, null)
+            "cd-action-burn",
+            "cd-action-rip",
         };    
+
+        private static void AddResourceToIconSet(string stockId, int size, IconSize iconSize, IconSet iconSet)
+        {
+            try {
+                IconSource source = new IconSource();
+                source.Pixbuf = Pixbuf.LoadFromResource(stockId + "-" + size.ToString() + ".png");
+                source.Size = iconSize;
+                iconSet.AddSource(source);
+            } catch(Exception) {
+            }
+        }
+        
+        private static void AddThemeIconToIconSet(string stockId, IconSize iconSize, IconSet iconSet)
+        {
+            try {
+                IconSource source = new IconSource();
+                source.IconName = stockId;
+                source.Size = iconSize;
+                iconSet.AddSource(source);
+            } catch(Exception) {
+            }
+        }
 
         public static void Initialize()
         {
             IconFactory icon_factory = new IconFactory();
             icon_factory.AddDefault();
-            
-            Hashtable map = new Hashtable();
-            foreach(StockItem item in stock_items) {
-                map[item.StockId] = item.StockId;
-            }
-            
-            map["media-rip"] = "cd-action-rip-24";
-            map["media-burn"] = "cd-action-burn-24";
 
-            foreach(StockItem item in stock_items) {
-                Pixbuf pixbuf = Pixbuf.LoadFromResource((map[item.StockId] as string) + ".png");
-                IconSet icon_set = new IconSet(pixbuf);
+            foreach(string item_id in stock_icon_names) {
+                StockItem item = new StockItem(item_id, null, 0, Gdk.ModifierType.ShiftMask, null);
+                
+                IconSet icon_set = null; 
+                
+                if(Banshee.Base.IconThemeUtils.HasIcon(item.StockId)) {
+                    // map available icons from the icon theme to stock 
+                    icon_set = new IconSet();
+                    AddThemeIconToIconSet(item.StockId, IconSize.Menu, icon_set);
+                    AddThemeIconToIconSet(item.StockId, IconSize.SmallToolbar, icon_set);
+                    AddThemeIconToIconSet(item.StockId, IconSize.Dialog, icon_set);
+                } else {
+                    // icon wasn't available in the theme, try to load it as stock from a resource file
+                    Pixbuf default_pixbuf = null;
+                
+                    foreach(string postfix in new string [] { "", "-16", "-24", "-48" }) {
+                        try {
+                            default_pixbuf = Pixbuf.LoadFromResource(item.StockId + postfix + ".png");
+                            break;
+                        } catch(Exception) {
+                            continue;
+                        }
+                    }
+                    
+                    icon_set = new IconSet(default_pixbuf);
+                    AddResourceToIconSet(item.StockId, 16, IconSize.Menu, icon_set);
+                    AddResourceToIconSet(item.StockId, 24, IconSize.SmallToolbar, icon_set);
+                    AddResourceToIconSet(item.StockId, 48, IconSize.Dialog, icon_set);
+                }
+                
                 icon_factory.Add(item.StockId, icon_set);
                 StockManager.Add(item);
             }

@@ -88,9 +88,11 @@ namespace Banshee.Base
             args.Add(arg, val);
         }
 
-        public void Dequeue(string arg)
+        public string Dequeue(string arg)
         {
+            string ret = args[arg] as string;
             args.Remove(arg);
+            return ret;
         }
 
         public bool Contains(string arg)

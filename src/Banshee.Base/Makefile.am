@@ -9,6 +9,7 @@ bansheebase_sources_in = ConfigureDefines.cs.in
 bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
 
 ASSEMBLY_SOURCES = \
+	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
 	$(srcdir)/ArgumentQueue.cs \
@@ -43,8 +44,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/NetworkManager/Device.cs \
 	$(srcdir)/NetworkManager/Network.cs
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
+	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

@@ -390,6 +390,7 @@ namespace Banshee
             duration = new TimeSpan(Convert.ToInt64(reader["Duration"]) * TimeSpan.TicksPerSecond);
             rating = Convert.ToUInt32(reader["Rating"]);
             play_count = Convert.ToUInt32(reader["NumberOfPlays"]);
+            asin = reader["ASIN"] as string;
           
 			if (reader != null){
 				last_played = DateTime.MinValue;

@@ -46,13 +46,6 @@ namespace Banshee
 
         private Menu traymenu;
         
-        public ImageMenuItem PlayItem;
-        public ImageMenuItem NextItem;
-        public ImageMenuItem PreviousItem;
-        public ImageMenuItem ExitItem;
-        public ImageMenuItem RepeatItem;
-        public ImageMenuItem ShuffleItem;
-        
         private int menu_x;
         private int menu_y;
 
@@ -110,49 +103,7 @@ namespace Banshee
 
         private void CreateMenu()
         {
-            traymenu = new Menu();
-            
-            PlayItem = new ImageMenuItem(Catalog.GetString("Play / Pause"));
-            PlayItem.Image = new Gtk.Image();
-            ((Gtk.Image)PlayItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-playback-start", 16);
-            traymenu.Append(PlayItem);
-            
-            PreviousItem = new ImageMenuItem(Catalog.GetString("Previous"));
-            PreviousItem.Image = new Gtk.Image();
-            ((Gtk.Image)PreviousItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-skip-backward", 16);
-                
-            traymenu.Append(PreviousItem);
-            NextItem = new ImageMenuItem(Catalog.GetString("Next"));
-            NextItem.Image = new Gtk.Image();
-            ((Gtk.Image)NextItem.Image).Pixbuf = IconThemeUtils.LoadIcon("media-skip-forward", 16);
-            traymenu.Append(NextItem);
-            
-            traymenu.Append(new SeparatorMenuItem());
-            
-         /*   ShuffleItem = new ImageMenuItem(Catalog.GetString("Shuffle"));
-            ShuffleItem.Image = new Gtk.Image();
-            ((Gtk.Image)ShuffleItem.Image).SetFromStock("gtk-no", IconSize.Menu);
-            traymenu.Append(ShuffleItem);
-            
-            RepeatItem = new ImageMenuItem(Catalog.GetString("Repeat"));
-            RepeatItem.Image = new Gtk.Image();
-            ((Gtk.Image)RepeatItem.Image).SetFromStock("gtk-no", IconSize.Menu);
-            traymenu.Append(RepeatItem);
-            
-            traymenu.Append(new SeparatorMenuItem());*/
-            
-            ExitItem = new ImageMenuItem(Catalog.GetString("Quit Banshee"));
-            ExitItem.Image = new Gtk.Image();
-            
-            Gdk.Pixbuf quit_pixbuf = IconThemeUtils.LoadIcon("application-exit", 16);
-            if(quit_pixbuf == null) {
-                ((Gtk.Image)ExitItem.Image).SetFromStock("gtk-quit", IconSize.Menu);
-            } else {
-                ((Gtk.Image)ExitItem.Image).Pixbuf = quit_pixbuf;
-            }
-            
-            traymenu.Append(ExitItem);
-
+            traymenu = Globals.ActionManager.GetWidget("/TrayMenu") as Menu;
             traymenu.ShowAll();
         }
  

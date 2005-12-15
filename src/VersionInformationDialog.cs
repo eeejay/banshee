@@ -76,7 +76,7 @@ namespace Banshee
             ScrolledWindow scroll = new ScrolledWindow();
             scroll.Add(version_tree);
             scroll.ShadowType = ShadowType.In;
-            scroll.SetSizeRequest(350, 200);
+            scroll.SetSizeRequest(420, 200);
             
             VBox.PackStart(scroll, true, true, 0);
             VBox.Spacing = 5;

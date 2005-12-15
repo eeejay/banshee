@@ -1,3 +1,106 @@
+2005-12-14  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.10.1
+	
+	* banshee.mdp: Updated MonoDevelop project
+	
+	* data/Makefile.am: Added banshee.glade and UIManagerLayout.xml
+
+	* data/banshee.glade: Consolidated multiple glade files from data/glade/*
+
+	* data/UIManagerLayout.xml: XML defining menus for new UIManager/Action
+	layout; actions defined in src/Banshee.Base/ActionManager.cs
+
+	* data/glade/*: Removed; glade is now in data/banshee.glade
+
+	* data/images/ipod/Makefile.am: Install icons to devices/ instead of
+	extras/devices
+
+	* src/BurnCore.cs:
+	* src/RipTransaction.cs:
+	* src/Banshee.Base/FileEncodeAction.cs: Set the Header property on
+	ActiveUserEvent to show more detail when performing actions
+
+	* src/TrackProperties.cs: Load UI from banshee.glade, do not show
+	advanced properties option if tracks are on an audio CD
+
+	* src/Preferences.cs: Load UI from banshee.glade
+
+	* src/DBusIPC.cs: Added more functionality to D-Bus API thanks in part
+	to Thijs Vermeir: set volume/set position
+
+	* src/BansheeDbusClient.cs: Added abstract signatures to BansheeCore 
+	remote D-Bus class
+
+	* src/Library.cs: Moved BytesToString to Banshee.Dap.Utilities; replaced
+	local calls with Utilities.BytesToString
+
+	* src/LibraryTrackInfo.cs: Read ASIN from the database to enable cover
+	art from local tracks where this is set (by the banshee ripper)
+
+	* src/Makefile.am: Removed data/glade/* references; replaced with
+	references to data/banshee.glade
+
+	* src/VersionInformationDialog.cs: Increased default width of dialog
+
+	* src/SourceView.cs: Moved ColorBlend to Banshee.Base.Utilities; added
+	a ResetHighlight method to highlight the selected/active source (this is
+	used by the source popup menu in PlayerInterface.cs)
+
+	* src/Banshee.Widgets/CoverArtThumbnail.cs: Added a new cover art
+	widget class: CoverArtView that simply draws a cover and scales 
+	with the correct ratio; used to display cover art underneath the
+	source view in the main interface
+
+	* src/StockIcons.cs: Load all theme icons that Banshee will need as
+	stock icons, fall back on resource icons if not available as stock
+	or in the theme
+
+	* src/TrackInfoHeader.cs: Redesigned header for displaying track
+	information
+
+	* src/NotificationAreaIcon.cs: Use Globals.ActionManager to load the
+	tray icon menu
+
+	* src/PlayerInterface.cs: Moved all menu and major buttons to the new
+	UIManager/Action setup; cleaned up, refactored, and reorganized a lot
+	of code; added some methods to allow the D-Bus object to set the volume
+	and perform seek operations; Added/fixed --audio-cd, --dap, and --play
+	command line option support; lots of general UI clean up and polish
+
+	* src/Banshee.Widgets/Makefile.am: Added ActionButton.cs
+
+	* src/Banshee.Widgets/ActionButton.cs: Two classes that work with
+	Gtk.Action objects: ActionButton and ActionToggleButton
+
+	* src/Banshee.Base/ActionManager.cs: Define all actions and some
+	helper methods for dealing with Gtk.Action and widgets
+
+	* src/Banshee.Base/Dap/Dap.cs: GetIcon falls back first on the
+	generic multimedia-player icon from the icon theme and then on
+	gnome-dev-ipod; provide GenericName and HalUdi properties
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Load ipod icon from the theme
+	and fall back on loading from a file; implement GenericName, return
+	as "iPod"
+
+	* src/Banshee.Base/ArgumentQueue.cs: Dequeue returns the object just
+	removed from the queue
+
+	* src/Banshee.Base/IconThemeUtils.cs: Added HasIcon() method to
+	determine if an icon is available in the defaul theme
+
+	* src/Banshee.Base/Utilities.cs: Fixed BytesToString implementation
+	to properly round and display fractional GB sizes; added ColorBlend
+	method
+
+	* src/Banshee.Base/Makefile.am: Added UIManagerLayout.xml as a resource
+
+	* src/Banshee.Base/Globals.cs: Added ActionManager property to return
+	global ActionManager instance
+
+	* src/Banshee.Base/GConfKeys.cs: Added ShowCoverArt key
+	
 2005-12-13  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/BansheeDbusClient.cs: Sample program using the the Banshee D-Bus

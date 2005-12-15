@@ -1,5 +1,4 @@
 SUBDIRS = \
-	glade \
 	images
 
 desktopdir = $(datadir)/applications
@@ -21,8 +20,14 @@ dbusservice_in_files = org.gnome.Banshee.service.in
 dbusservicedir = $(libdir)/dbus-1.0/services
 dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 
+CLEANFILES = \
+	*.gladep \
+	*.bak
+
 EXTRA_DIST =            \
 	Tables.sql          \
+	UIManagerLayout.xml \
+	banshee.glade       \
 	$(desktop_in_files) \
 	$(schema_in_files)  \
 	$(dbusservice_in_files)

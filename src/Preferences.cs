@@ -78,7 +78,7 @@ namespace Banshee
 
         public PreferencesWindow()
         {
-            glade = new Glade.XML(null, "preferences.glade", "WindowPreferences", null);
+            glade = new Glade.XML(null, "banshee.glade", "WindowPreferences", null);
             glade.Autoconnect(this);
             
             ((Image)glade["ImageLibraryTab"]).Pixbuf = 

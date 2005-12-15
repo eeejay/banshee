@@ -237,10 +237,14 @@ namespace Banshee.Dap.Ipod
                     break;
             }
             
+            Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(prefix + id, size);
+            
+            if(icon != null) {
+                return icon;
+            }
+            
             string path = ConfigureDefines.ICON_THEME_DIR 
                 + String.Format("{0}x{0}", size)
-                + Path.DirectorySeparatorChar
-                + "extras" 
                 + Path.DirectorySeparatorChar
                 + "devices" + 
                 + Path.DirectorySeparatorChar
@@ -285,6 +289,12 @@ namespace Banshee.Dap.Ipod
         public override bool IsPlaybackSupported {
             get {
                 return true;
+            }
+        }
+        
+        public override string GenericName {
+            get {
+                return "iPod";
             }
         }
     }

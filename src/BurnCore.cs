@@ -151,6 +151,7 @@ namespace Banshee
             this.burnQueue = burnQueue;
             
             user_event = new ActiveUserEvent(Catalog.GetString("Writing CD"));
+            user_event.Header = Catalog.GetString("Writing Audio CD");
             user_event.Icon = Gdk.Pixbuf.LoadFromResource("cd-action-burn-24.png");
             user_event.CancelRequested += OnUserEventCancelRequested;
             

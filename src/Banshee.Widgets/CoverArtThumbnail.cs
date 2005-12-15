@@ -33,12 +33,99 @@ using Gdk;
 
 namespace Banshee.Widgets
 {
+    public class CoverArtView : DrawingArea
+    {
+        private Pixbuf pixbuf;
+        private double ratio;
+        private int last_width;
+        private bool enabled;
+        
+        public CoverArtView() : base()
+        {
+        }
+        
+        protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
+        {
+            if(last_width == evnt.Width) {
+                return true;
+            }
+            
+            last_width = evnt.Width;
+            SetSizeRequest(-1, (int)(ratio * (double)evnt.Width));
+            
+            return true;
+        }
+        
+        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+        {
+            if(pixbuf == null) {
+                return true;
+            }
+            
+            Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(evnt.Area.Width, evnt.Area.Height, 
+                Gdk.InterpType.Bilinear);
+            GdkWindow.DrawPixbuf(Style.BackgroundGC(State), scaled_pixbuf, 0, 0, 
+                evnt.Area.X, evnt.Area.Y, scaled_pixbuf.Width, scaled_pixbuf.Height, RgbDither.Normal, 0, 0);
+                
+            return true;
+        }
+        
+        public bool Enabled {
+            get {
+                return enabled;
+            }
+            
+            set {
+                enabled = value;
+                
+                if(!enabled || pixbuf == null) {
+                    Hide();
+                    return;
+                }
+                
+                if(pixbuf == null) {
+                    Hide();
+                }
+                
+                Show();
+                QueueDraw();
+            }
+        }
+        
+        public string FileName {
+            set {
+                try {
+                    if(value == null || !System.IO.File.Exists(value)) {
+                        throw new ApplicationException("Invalid file name");
+                    }
+                    
+                    pixbuf = new Pixbuf(value);
+                    if(pixbuf == null) {
+                        throw new ApplicationException("Could not create pixbuf");
+                    }
+                    
+                    ratio = (double)pixbuf.Width / (double)pixbuf.Height;
+                    
+                    if(enabled) {
+                        Show();
+                        QueueDraw();
+                    }
+                } catch(Exception) {
+                    pixbuf = null;
+                    Hide();
+                }
+            }
+        }
+    }
+    
     public class CoverArtThumbnail : EventBox
     {
         private Gtk.Image image;
         private Pixbuf pixbuf;
+        private Pixbuf no_artwork_pixbuf;
         private int size;
         private CoverArtPopup popup;
+        private bool loaded;
         
         public CoverArtThumbnail(int size) : base()
         {
@@ -63,7 +150,9 @@ namespace Banshee.Widgets
         
         private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
         {
-            popup.Show();
+            if(loaded) {
+                popup.Show();
+            }
         }
         
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
@@ -92,6 +181,12 @@ namespace Banshee.Widgets
             }
         }
         
+        public Pixbuf NoArtworkPixbuf {
+            set {
+                no_artwork_pixbuf = value;
+            }
+        }
+        
         public string FileName {
             set {
                 try {
@@ -99,15 +194,27 @@ namespace Banshee.Widgets
                         throw new ApplicationException("No Artwork");
                     }
                     
-                    pixbuf = new Pixbuf(value);
-                    image.Pixbuf = CreateThumbnail(pixbuf);
-                    popup.Image = pixbuf;
-                    Show();
+                    SetPixbuf(new Pixbuf(value));
+                    loaded = true;
                 } catch(Exception e) {
+                    loaded = false;
+                    if(no_artwork_pixbuf != null) {
+                        SetPixbuf(no_artwork_pixbuf);
+                        return;
+                    }
+                    
                     Hide();
                     throw new ApplicationException(e.Message);
                 }
             }
+        }
+        
+        private void SetPixbuf(Pixbuf pixbuf)
+        {
+            this.pixbuf = pixbuf;
+            image.Pixbuf = CreateThumbnail(this.pixbuf);
+            popup.Image = this.pixbuf;
+            Show();
         }
     }
 

@@ -34,15 +34,15 @@ namespace Banshee
 {
     public class DBusServer
     {
-        private static DBusServer instance = null;
-        
         private Service service;
-            
-        public static DBusServer Instance
-        {
+        
+        private static DBusServer instance = null;
+        public static DBusServer Instance {
             get {
-                if(instance == null)
+                if(instance == null) {
                     instance = new DBusServer();
+                }
+                
                 return instance;
             }
         }
@@ -74,8 +74,7 @@ namespace Banshee
         {
             Connection connection = Bus.GetSessionBus();
             Service service = Service.Get(connection, "org.gnome.Banshee");        
-            return (BansheeCore)service.GetObject(typeof(BansheeCore), 
-                "/org/gnome/Banshee/Core");
+            return (BansheeCore)service.GetObject(typeof(BansheeCore), "/org/gnome/Banshee/Core");
         }
         
         public BansheeCore(Gtk.Window mainWindow, PlayerUI ui, Core core)
@@ -88,29 +87,33 @@ namespace Banshee
         [Method]
         public virtual void PresentWindow()
         {
-            if(mainWindow != null)
+            if(mainWindow != null) {
                 mainWindow.Present();
+            }
         }
         
         [Method]
         public virtual void ShowWindow()
         {
-            if(mainWindow != null)
+            if(mainWindow != null) {
                 mainWindow.Show();
+            }
         }
         
         [Method]
         public virtual void HideWindow()
         {
-            if(mainWindow != null)
+            if(mainWindow != null) {
                 mainWindow.Hide();
+            }
         }
         
         [Method]
         public virtual void TogglePlaying()
         {
-            if(PlayerUI != null)
+            if(PlayerUI != null) {
                 PlayerUI.TogglePlaying();
+            }
         }
         
         [Method]
@@ -140,22 +143,25 @@ namespace Banshee
         [Method]
         public virtual void Next()
         {
-            if(PlayerUI != null)
+            if(PlayerUI != null) {
                 PlayerUI.Next();
+            }
         }
         
         [Method]
         public virtual void Previous()
         {
-            if(PlayerUI != null)
+            if(PlayerUI != null) {
                 PlayerUI.Previous();
+            }
         }
 
         [Method]
         public virtual void SelectAudioCd(string device)
         {
-            if(PlayerUI != null)
+            if(PlayerUI != null) {
                 PlayerUI.SelectAudioCd(device);
+            }
         }
         
         private bool HaveTrack {
@@ -207,9 +213,57 @@ namespace Banshee
         }
         
         [Method]
+        public virtual string GetPlayingCoverArtFileName()
+        {
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : null;
+        }
+        
+        [Method]
         public virtual int GetPlayingStatus()
         {
             return core.Player.Playing ? 1 : (core.Player.Loaded ? 0 : -1);
+        }
+        
+        [Method]
+        public virtual void SetVolume(int volume)
+        {
+            if(PlayerUI != null) {
+                PlayerUI.Volume = volume;
+            }
+        }
+
+        [Method]
+        public virtual void IncreaseVolume()
+        {
+            if(PlayerUI != null) {
+                PlayerUI.Volume += PlayerUI.VolumeDelta;
+            }
+        }
+        
+        [Method]
+        public virtual void DecreaseVolume()
+        {
+            if(PlayerUI != null) {
+                PlayerUI.Volume -= PlayerUI.VolumeDelta;
+            }
+        }
+        
+        [Method]
+        public virtual void SetPlayingPosition(int position)
+        {
+            core.Player.Position = (uint)position;
+        }
+        
+        [Method]
+        public virtual void SkipForward()
+        {
+            core.Player.Position += PlayerUI.SkipDelta;
+        }
+        
+        [Method]
+        public virtual void SkipBackward()
+        {
+            core.Player.Position -= PlayerUI.SkipDelta;
         }
     }
 }

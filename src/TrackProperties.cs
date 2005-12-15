@@ -131,7 +131,7 @@ namespace Banshee
                 TrackSet.Add(new EditorTrack(track));
             }
             
-            glade = new Glade.XML(null, "trackinfo.glade", "WindowTrackInfo", null);
+            glade = new Glade.XML(null, "banshee.glade", "WindowTrackInfo", null);
             glade.Autoconnect(this);
             IconThemeUtils.SetWindowIcon(WindowTrackInfo);
             
@@ -195,6 +195,8 @@ namespace Banshee
             }
                 
             EditorTrack track = TrackSet[index] as EditorTrack;
+            
+            AdvancedExpander.Visible = !(track.Track is AudioCdTrackInfo);
         
             TrackNumber.Value = track.TrackNumber;
             TrackCount.Value = track.TrackCount;
@@ -223,22 +225,24 @@ namespace Banshee
             tips.SetTip(glade["UriTitle"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
             tips.SetTip(glade["Uri"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
             
-            try {
-                Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
-                    Gstreamer.DetectMimeType(track.Uri));
-                BitRate.Text = (af.Bitrate / 1000).ToString() + " " + Catalog.GetString("KB/Second");
-                SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
-                Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
-                Channels.Text = af.Channels.ToString();
-                MimeType.Text = af.MimeType;
-                ExtraInfo.Text = af.EncodingType;
-            } catch(Exception e) {
-                BitRate.Text = Catalog.GetString("Unknown");
-                SampleRate.Text = Catalog.GetString("Unknown");
-                Vbr.Text = Catalog.GetString("Unknown");
-                Channels.Text = Catalog.GetString("Unknown");
-                MimeType.Text = Catalog.GetString("Unknown");
-                ExtraInfo.Text = Catalog.GetString("Unknown");
+            if(!(track.Track is AudioCdTrackInfo)) {
+                try {
+                    Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
+                        Gstreamer.DetectMimeType(track.Uri));
+                    BitRate.Text = (af.Bitrate / 1000).ToString() + " " + Catalog.GetString("KB/Second");
+                    SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
+                    Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
+                    Channels.Text = af.Channels.ToString();
+                    MimeType.Text = af.MimeType;
+                    ExtraInfo.Text = af.EncodingType;
+                } catch(Exception e) {
+                    BitRate.Text = Catalog.GetString("Unknown");
+                    SampleRate.Text = Catalog.GetString("Unknown");
+                    Vbr.Text = Catalog.GetString("Unknown");
+                    Channels.Text = Catalog.GetString("Unknown");
+                    MimeType.Text = Catalog.GetString("Unknown");
+                    ExtraInfo.Text = Catalog.GetString("Unknown");
+                }
             }
             
             Previous.Sensitive = index > 0;
