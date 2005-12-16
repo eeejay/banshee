@@ -1,3 +1,7 @@
+2005-12-16  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
+
+	* da.po: Updated Danish translation.
+
 2005-12-15  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Removed old glade files, added data/banshee.glade and
