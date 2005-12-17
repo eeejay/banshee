@@ -1,5 +1,3 @@
-SUBDIRS = ipod
-
 hicolordir = $(datadir)/icons/hicolor
 
 install-data-local:

@@ -1,3 +1,14 @@
+2005-12-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac:
+	* data/images/Makefile.am:
+	* data/images/ipod/*: Removed ipod/DAP images as they will be a part of
+	an extended version of the Tango icon theme (http://tango-project.org).
+	A separate package for installing these icons into Tango is available
+	for the time being: 
+
+	http://banshee-project.org/files/misc/tango-extra-devices-0.6.2.tar.gz
+
 2005-12-14  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Version 0.10.1 release; only check for spider GStreamer

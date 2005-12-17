@@ -390,7 +390,6 @@ src/Banshee.Dap/Njb/Makefile
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile
-data/images/ipod/Makefile
 docs/Makefile
 po/Makefile.in
 ])
