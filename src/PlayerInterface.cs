@@ -772,7 +772,7 @@ namespace Banshee
             }
             
             activeTrackInfo = ti;
-            Core.Instance.Player.Open(ti);
+            Core.Instance.Player.Open(ti, ti.Uri);
 
             incrementedCurrentSongPlayCount = false;
             ScaleTime.Adjustment.Lower = 0;
@@ -783,6 +783,16 @@ namespace Banshee
             TogglePlaying();
 
             playlistView.QueueDraw();
+            
+            if(!ti.CanPlay) {
+                LogCore.Instance.PushWarning(
+                    Catalog.GetString("Cannot Play Song"), 
+                    String.Format(Catalog.GetString("{0} cannot be played by Banshee. " +
+                        "The most common reasons for this are:\n\n" +
+                        "  <big>\u2022</big> Song is protected (DRM)\n" +
+                        "  <big>\u2022</big> Song is on a DAP that does not support playback\n"),
+                        ti.Title));
+            }
         }
         
         // ---- Window Event Handlers ----
@@ -1417,6 +1427,9 @@ namespace Banshee
                 ButtonsType.Ok,
                 args.Entry.ShortMessage,
                 args.Entry.Details);
+            
+            dialog.Title = args.Entry.ShortMessage;
+            IconThemeUtils.SetWindowIcon(dialog);
             
             dialog.Response += delegate(object o, ResponseArgs args)
             {

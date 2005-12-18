@@ -135,7 +135,7 @@ namespace Banshee.MediaEngine.Vlc
             player.Dispose();
         }
                 
-        public bool Open(TrackInfo ti)
+        public bool Open(TrackInfo ti, Uri uri)
         {
             if(!ti.CanPlay) {
                 loaded = false;
@@ -143,7 +143,8 @@ namespace Banshee.MediaEngine.Vlc
                 return false;
             }
             
-            player.Open(ti.Uri.AbsoluteUri);
+            track = ti;
+            player.Open(uri.AbsoluteUri);
 
             timerId = GLib.Timeout.Add(500, delegate() {
                 if(!player.IsPlaying && !paused) {

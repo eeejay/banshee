@@ -109,6 +109,19 @@ namespace Banshee.Dap.Njb
                 device.Ping();
                 return true;
             });
+              
+            base.Initialize();
+            
+            InstallProperty("Model", device.Name);
+            InstallProperty("Vendor", halDevice["usb.vendor"]);
+            InstallProperty("Owner", device.Owner);
+            InstallProperty("Serial Number", device.SdmiIdString);
+            InstallProperty("Firmware Revision", device.FirmwareRevision.ToString());
+            InstallProperty("Hardware Revision", device.HardwareRevision.ToString());
+            
+            ReloadDatabase();
+            
+            CanCancelSave = false;
         }
         
         public override void Dispose()
@@ -117,6 +130,16 @@ namespace Banshee.Dap.Njb
             device.Release();
             device.Dispose();
             device = null;
+        }
+        
+        private void ReloadDatabase()
+        {
+            ClearTracks(false);
+
+            foreach(NJB.Song song in device.GetSongs()) {
+                NjbDapTrackInfo track = new NjbDapTrackInfo(song, this);
+                AddTrack(track);            
+            }
         }
         
         public override void Synchronize()

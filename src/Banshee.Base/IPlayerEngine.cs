@@ -68,7 +68,7 @@ namespace Banshee.MediaEngine
 		void   TestInitialize();       // test Initialize and Finalize
 		void   Dispose();              // engine finalization/shutdown
 		
-		bool   Open(TrackInfo track); // load a file into the engine
+		bool   Open(TrackInfo track, Uri uri); // load a file into the engine
 		void   Close();                // close an open file
 		
 		void   Play();                 // play a file

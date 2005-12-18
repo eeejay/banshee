@@ -93,7 +93,15 @@ namespace Banshee.Dap
                 }
             }
         }
-
+        
+        private static uint current_uid = 1;
+        private static uint NextUid {
+            get {
+                return current_uid++;
+            }
+        }
+        
+        private uint uid;
         private PropertyTable properties = new PropertyTable();
         private ArrayList tracks = new ArrayList(); 
         private ActiveUserEvent save_report_event;
@@ -116,6 +124,14 @@ namespace Banshee.Dap
             Attribute [] dap_attrs = Attribute.GetCustomAttributes(GetType(), typeof(DapProperties));
             if(dap_attrs != null && dap_attrs.Length >= 1) {
                 type_properties = dap_attrs[0] as DapProperties;
+            }
+            
+            uid = NextUid;
+        }
+        
+        public uint Uid {
+            get {
+                return uid;
             }
         }
         
@@ -197,7 +213,7 @@ namespace Banshee.Dap
         protected virtual void OnTracksCleared()
         {
         }
-        
+
         public virtual void Eject()
         {
             EventHandler handler = Ejected;

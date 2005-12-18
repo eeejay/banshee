@@ -7,7 +7,8 @@ CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb Makefile.in 
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/NjbDap.cs
+	$(srcdir)/NjbDap.cs \
+	$(srcdir)/NjbDapTrackInfo.cs
 
 if ENABLE_NJB
 bansheedapdir = $(pkglibdir)/Banshee.Dap

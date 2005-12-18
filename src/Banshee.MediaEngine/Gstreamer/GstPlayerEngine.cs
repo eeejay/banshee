@@ -140,7 +140,7 @@ namespace Banshee.MediaEngine.Gstreamer
             gst_playback_free(handle);
         }
         
-        public bool Open(TrackInfo track)
+        public bool Open(TrackInfo track, Uri uri)
         {
             if(!track.CanPlay) {
                 InvokeEndOfStream();
@@ -149,7 +149,7 @@ namespace Banshee.MediaEngine.Gstreamer
             
             this.track = track;
             
-            IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(track.Uri.AbsoluteUri);
+            IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
             gst_playback_open(handle, uri_ptr);
             GLib.Marshaller.Free(uri_ptr);
             
@@ -418,7 +418,7 @@ namespace Banshee.MediaEngine.Gstreamer
             }
         }
             
-        public bool Open(TrackInfo ti)
+        public bool Open(TrackInfo ti, Uri uri)
         {
             if(loaded || playing)
                 Close();
@@ -428,7 +428,7 @@ namespace Banshee.MediaEngine.Gstreamer
                 return false;
             }
             
-            loaded = gpe_open(handle, ti.Uri.AbsoluteUri);
+            loaded = gpe_open(handle, uri.AbsoluteUri);
             
             if(loaded)
                 track = ti;

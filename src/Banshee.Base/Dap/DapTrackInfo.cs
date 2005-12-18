@@ -35,5 +35,10 @@ namespace Banshee.Dap
     public class DapTrackInfo : TrackInfo
     {
         public bool NeedSync;
+        
+        public DapTrackInfo()
+        {
+            CanSaveToDatabase = false;
+        }
     }
 }

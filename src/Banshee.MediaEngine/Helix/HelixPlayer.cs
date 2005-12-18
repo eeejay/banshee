@@ -143,14 +143,14 @@ namespace Banshee.MediaEngine.Helix
 			shutdown = true;
 		}
 		
-		public bool Open(TrackInfo ti)
+		public bool Open(TrackInfo ti, Uri uri)
 		{
 			if(!ti.CanPlay) {
 				EmitEndOfStream();
 				return false;
 			}
 			
-			loaded = player.OpenUri(ti.Uri.AbsoluteUri);
+			loaded = player.OpenUri(uri.AbsoluteUri);
 			
 			if(loaded)
 				track = ti;

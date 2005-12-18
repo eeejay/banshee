@@ -1,5 +1,31 @@
 2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Show a warning dialog when trying to play
+	an "unplayable" track; set the window icon and title for log dialogs
+
+	* src/Banshee.Dap/Njb/Makefile.am: Added NjbDapTrackInfo.cs
+	
+	* src/Banshee.Dap/Njb/NjbDapTrackInfo.cs: DapTrackInfo implementation for
+	NJB devices
+
+	* src/Banshee.Dap/Njb/NjbDap.cs: Added support to list tracks; install
+	device properties from the device
+
+	* src/Banshee.Base/Dap/Dap.cs: Added UID support through the public
+	Uid property
+
+	* src/Banshee.Base/Dap/DapTrackInfo.cs: All implementations now have
+	CanSaveToDatabase = false
+
+	* src/Banshee.Base/IPlayerEngine.cs:
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:
+	* src/Banshee.MediaEngine/Helix/HelixPlayer.cs:
+	* src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs: Changed Open method
+	to accept a System.Uri as a second parameter - use it instead of 
+	TrackInfo.Uri 
+
+2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/PlayerInterface.cs: Updated DAP synchronize dialog to have wording
 	generic for all DAPs (was very iPod specific), use HighlightedSource
 	instead of SelectedSource for getting the DapSource
