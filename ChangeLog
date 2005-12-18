@@ -1,3 +1,49 @@
+2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* vacuum.sh: Removed
+
+	* Makefile.am: Added MAINTAINERCLEANFILES 
+
+2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Do not copy the provided njb-sharp.dll.config from
+	njb-sharp; we provide our own for the sake of libnjbglue.
+
+	* src/Banshee.Dap/Njb/njb-sharp.dll.config.in: Added njb-sharp.dll DLL
+	map for libnjb/libusb/libnjbglue
+
+	* src/Banshee.Dap/Njb/Makefile.am: Install njb-sharp.dll.config
+
+	* src/Banshee.Dap/Njb/NjbDap.cs: Initialize the NJB Discoverer inside
+	the NjbDap type constructor and catch any exceptions it may throw; 
+	rely on Njb.DeviceId table to pre-verify a USB device as an NJB device
+	using usb.vendor_id and usb.product_id properties from HAL (removes
+	requirement of updated FDI files in HAL to expose a 
+	portable_audio_player.type=njb property; Have the discoverer rescan for
+	NJB devices after a new USB device passes the vendor_id/product_id test
+
+	* src/Banshee.Dap/Njb/NjbDap.cs:
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Do not try to fall back on loading
+	custom icon from a path. Only try custom icon from the theme and fall
+	back on base.GetIcon()
+
+	* src/Banshee.Base/Dap/DapCore.cs: Added a timeout+re-probe to handle
+	a device throwing WaitForTimeoutException during probe initialization
+
+	* src/Banshee.Base/Dap/DapMisc.cs: Added WaitForTimeoutException that is
+	similar to WaitForPropertyChangeException only the re-probe mechanism
+	is a timeout instead of a property change signal from HAL; not actually
+	in use, but could be useful for other DAP detection in the future
+
+	* src/Core.cs: Removed UserRealName/UserFirstName fields;
+
+	* src/Library.cs: Removed old IpodSource; show the user's name for
+	the name of the library (i.e. Aaron's Music Library)
+
+	* src/PlayerInterface.cs: All custom source name setting is done in 
+	the proper source (LibrarySource was changed for this); minor syntax
+	cleaning
+
 2005-12-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac:
