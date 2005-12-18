@@ -465,15 +465,15 @@ namespace Banshee
                 
             toolTips = new Tooltips();
             
-            SetTip(burn_button, Catalog.GetString("Write Selection to CD"));
-            SetTip(rip_button, Catalog.GetString("Import CD into Library"));
-            SetTip(previous_button, Catalog.GetString("Play Previous Song"));
-            SetTip(playpause_button, Catalog.GetString("Play/Pause Current Song"));
-            SetTip(next_button, Catalog.GetString("Play Next Song"));
-            SetTip(gxml["ScaleTime"], Catalog.GetString("Current Position in Song"));
-            SetTip(dapDiskUsageBar, Catalog.GetString("Device Disk Usage"));
-            SetTip(sync_dap_button, Catalog.GetString("Synchronize Music Library to Device"));
-            SetTip(volumeButton, Catalog.GetString("Adjust Volume"));
+            SetTip(burn_button, Catalog.GetString("Write selection to CD"));
+            SetTip(rip_button, Catalog.GetString("Import CD into library"));
+            SetTip(previous_button, Catalog.GetString("Play previous song"));
+            SetTip(playpause_button, Catalog.GetString("Play/pause current song"));
+            SetTip(next_button, Catalog.GetString("Play next song"));
+            SetTip(gxml["ScaleTime"], Catalog.GetString("Current position in song"));
+            SetTip(dapDiskUsageBar, Catalog.GetString("Device disk usage"));
+            SetTip(sync_dap_button, Catalog.GetString("Synchronize music library to device"));
+            SetTip(volumeButton, Catalog.GetString("Adjust volume"));
             
             playlistMenuMap = new Hashtable();
         }

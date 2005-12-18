@@ -1,3 +1,14 @@
+2005-12-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/banshee.desktop.in.in: Change Comment to 'Play and organize
+	your music', following suggestions of the HIG.
+
+	* data/banshee.glade: Change CheckButton labels to sentence case.
+
+	* src/PlayerInterface.cs: Change tooltips to sentence case.
+
+	* src/Banshee.Base/PipelineProfile.cs: Add comment for translators.
+
 2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs: Show a warning dialog when trying to play

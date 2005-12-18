@@ -358,6 +358,7 @@ namespace Banshee.Base
         {
             profileCombo = ComboBox.NewText();
             bitrateCombo = ComboBox.NewText();
+	    // Translators: used to specify the bitrate for ripping
             atLabel = new Label(Catalog.GetString("at"));
 
             profiles = PipelineProfile.Profiles;
