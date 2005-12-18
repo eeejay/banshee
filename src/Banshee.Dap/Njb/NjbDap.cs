@@ -37,21 +37,46 @@ using Banshee.Base;
 namespace Banshee.Dap.Njb
 {
     [DapProperties(DapType = DapType.NonGeneric)]
-    public class NjbDap : DapDevice
+    public sealed class NjbDap : DapDevice
     {
-        private static NJB.Discoverer discoverer = new NJB.Discoverer();
+        private static NJB.Discoverer discoverer;
         private NJB.Device device;
+        private NJB.DeviceId device_id;
         private uint ping_timer_id;
+        
+        static NjbDap()
+        {
+            try {
+                discoverer = new NJB.Discoverer();
+            } catch(Exception e) {
+                Console.WriteLine(e);
+                Console.WriteLine("Could not initialize NJB Discoverer: " + e.Message);
+            }
+        }
         
         public NjbDap(Hal.Device halDevice)
         {
-            if(halDevice["portable_audio_player.type"] != "njb") {
+            if(discoverer == null || 
+                !halDevice.PropertyExists("usb.bus_number") ||
+                !halDevice.PropertyExists("usb.linux.device_number") ||
+                !halDevice.PropertyExists("usb.vendor_id") ||
+                !halDevice.PropertyExists("usb.product_id")) {
                 throw new CannotHandleDeviceException();
             }
             
             short usb_bus_number = (short)halDevice.GetPropertyInt("usb.bus_number");
             short usb_device_number = (short)halDevice.GetPropertyInt("usb.linux.device_number");
-
+            
+            device_id = NJB.DeviceId.GetDeviceId(
+                (short)halDevice.GetPropertyInt("usb.vendor_id"),
+                (short)halDevice.GetPropertyInt("usb.product_id"));
+            
+            if(device_id == null) {
+                throw new CannotHandleDeviceException();
+            }
+            
+            discoverer.Rescan();
+            
             foreach(NJB.Device tmp_device in discoverer) {
                 try {
                     tmp_device.Open();
@@ -67,7 +92,7 @@ namespace Banshee.Dap.Njb
                 tmp_device.Dispose();
             }
 
-            if(device == null) {
+            if(device == null) { 
                 throw new CannotHandleDeviceException();
             }
 
@@ -98,28 +123,15 @@ namespace Banshee.Dap.Njb
         
         public override Gdk.Pixbuf GetIcon(int size)
         {
-            string prefix = "portable-media-";
+            string prefix = "multimedia-player-";
             string id = "dell-pocket-dj";
-            
-            string path = ConfigureDefines.ICON_THEME_DIR 
-                + String.Format("{0}x{0}", size)
-                + Path.DirectorySeparatorChar
-                + "extras" 
-                + Path.DirectorySeparatorChar
-                + "devices" + 
-                + Path.DirectorySeparatorChar
-                + prefix + id + ".png";
-                
-            try {
-                return new Gdk.Pixbuf(path);
-            } catch(Exception) {
-                return base.GetIcon(size);
-            }
+            Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(prefix + id, size);
+            return icon == null? base.GetIcon(size) : icon;
         }
         
         public override string Name {
             get {
-                return device.Name;
+                return device_id.DisplayName;
             }
             
             set {

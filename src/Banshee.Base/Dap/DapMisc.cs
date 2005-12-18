@@ -130,6 +130,22 @@ namespace Banshee.Dap
         }
     }
     
+    public class WaitForTimeoutException : ApplicationException
+    {
+        private uint wait_span;
+        
+        public WaitForTimeoutException(uint waitSpan) : base("Waiting for timeout to reprobe device")
+        {
+            wait_span = waitSpan;
+        }
+        
+        public uint WaitSpan {
+            get {
+                return wait_span;
+            }
+        }
+    }
+    
     public delegate void DapTrackListUpdatedHandler(object o, DapTrackListUpdatedArgs args);
 
     public class DapTrackListUpdatedArgs : EventArgs

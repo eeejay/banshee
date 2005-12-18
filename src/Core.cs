@@ -60,9 +60,6 @@ namespace Banshee
         
         public AudioCdCore AudioCdCore;
         
-        public string UserRealName;
-        public string UserFirstName;
-        
         private Library library;
         private Watcher fs_watcher;
         

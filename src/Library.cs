@@ -267,10 +267,17 @@ namespace Banshee
     
     public class LibrarySource : Source
     {
-        public LibrarySource() : base(Catalog.GetString("Library"), 
-          SourceType.Library)
+        public LibrarySource() : base(Catalog.GetString("Library"), SourceType.Library)
         {
-              canRename = false;
+            canRename = false;
+            
+            string username = Utilities.GetRealName();
+            
+            if(username != null && username != String.Empty) {
+                username += (username[username.Length - 1] == 's' ? "'" : "'s") + " ";
+            }
+            
+            name = username + Catalog.GetString("Music Library");
         }
         
         public override int Count
@@ -409,193 +416,6 @@ namespace Banshee
         }
     }
 
-    /*public class IpodSource : Source
-    {
-        private IPod.Device device;
-        private ArrayList tracks = new ArrayList();
-        private ArrayList removeTracks = new ArrayList();
-        private bool needSync = false;
-        public bool IsSyncing;
-        
-        public IpodSource(IPod.Device device) : base(device.Name, 
-            SourceType.Ipod)
-        {
-            this.device = device;
-            canEject = true;
-            canRename = true;
-            
-            Refresh();
-        }
-        
-        private void Refresh()
-        {
-            tracks.Clear();
-            removeTracks.Clear();
-            needSync = false;
-            foreach(IPod.Song song in device.SongDatabase.Songs)
-                tracks.Add(new IpodTrackInfo(song));
-        }
-        
-        public void SetSourceName(string name)
-        {
-          this.name = name;
-        }
-        
-        public override bool UpdateName(string oldName, string newName)
-        {
-            if(oldName == null || !oldName.Equals(newName)) {
-                device.Name = newName;
-                name = newName;
-                device.Save();
-            }
-            
-            return true;
-        }
-        
-        public override int Count
-        {
-            get {
-                //return device.SongDatabase.Songs.Length;
-                return tracks.Count;
-            }
-        }
-        
-        public IPod.Device Device
-        {
-            get {
-                return device;
-            }
-        }
-        
-        public override bool Eject()
-        {
-            device.Eject();
-            return true;
-        }
-
-        public double DiskUsageFraction
-        {
-            get {
-                return (double)device.VolumeUsed /
-                    (double)device.VolumeSize;
-            }
-        }
-        
-        public bool NeedSync
-        {
-            get {
-                if(needSync || removeTracks.Count > 0)
-                    return true;
-                
-                foreach(IpodTrackInfo iti in tracks) {
-                    if(iti.NeedSync)
-                        return true;
-                }
-                
-                return false;
-            }
-        }
-        
-        public ArrayList Tracks
-        {
-            get {
-                return tracks;
-            }
-        }
-        
-        private bool ExistsOnIpod(LibraryTrackInfo libTrack)
-        {
-            foreach(IPod.Song song in device.SongDatabase.Songs) {
-                if(IpodMisc.TrackCompare(libTrack, song))
-                    return true;
-            }
-            
-            return false;
-        }
-        
-        public void QueueForSync(LibraryTrackInfo ti)
-        {
-            if(ti == null)
-                return;
-                
-            foreach(IpodTrackInfo iti in tracks) {
-                if(iti.LibraryTrack != null && ti.Equals(iti.LibraryTrack))
-                    return;
-            }
-            
-            if(ExistsOnIpod(ti))
-                return;
-            
-            tracks.Add(new IpodTrackInfo(device, ti));
-        }
-        
-        public void Remove(IpodTrackInfo iti)
-        {
-            if(!iti.NeedSync)
-                needSync = true;
-            device.SongDatabase.RemoveSong(iti.Song);
-            tracks.Remove(iti);
-            removeTracks.Add(iti);
-        }
-        
-        public IpodSync Sync(bool full)
-        {
-            IpodSync sync;
-            
-            if(full)
-                sync = new IpodSync(device);
-            else
-                sync = new IpodSync(device, tracks, removeTracks);
-                
-            sync.SyncStarted += OnIpodSyncStarted;
-            sync.SyncCompleted += OnIpodSyncCompleted;
-            
-            return sync;
-        }
-        
-        private void OnIpodSyncStarted(object o, EventArgs args)
-        {
-            IsSyncing = true;
-        }
-        
-        private void OnIpodSyncCompleted(object o, EventArgs args)
-        {
-            IsSyncing = false;
-            Refresh();
-        }
-
-        private static string Utilities.BytesToString(ulong bytes)
-        {
-            ulong mb = bytes / (1024 * 1024);
-
-            if (mb > 1024)
-                return String.Format(Catalog.GetString("{0} GB"), mb / 1024);
-            else
-                return String.Format(Catalog.GetString("{0} MB"), mb);
-        }
-
-        public string DiskUsageString
-        {
-            get {
-                // Translators: iPod disk usage. Each {N} is something like "100 MB"
-                return String.Format(
-                    Catalog.GetString("{0} of {1}"),
-                    Utilities.BytesToString(device.VolumeUsed),
-                    Utilities.BytesToString(device.VolumeSize));
-            }
-        }
-
-        public string DiskAvailableString
-        {
-            get {
-                // Translators: iPod disk usage. {0} is something like "100 MB"
-                return String.Format(
-                    Catalog.GetString("({0} Remaining)"),
-                    Utilities.BytesToString(device.VolumeAvailable));
-            }
-        }
-    }*/
-    
     public class AudioCdSource : Source
     {
         private AudioCdDisk disk;

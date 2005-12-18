@@ -170,6 +170,11 @@ namespace Banshee.Dap
                 } catch(WaitForPropertyChangeException) {
                     device.WatchProperties = true;
                     device_waiting_table[device.Udi] = type;
+                } catch(WaitForTimeoutException e) {
+                    GLib.Timeout.Add(e.WaitSpan, delegate {
+                        AddDevice(device);
+                        return false;
+                    });
                 } catch(Exception e) {
                 }
             }

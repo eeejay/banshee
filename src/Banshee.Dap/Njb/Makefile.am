@@ -1,7 +1,7 @@
 MCS_FLAGS = -debug 
 ASSEMBLY_NAME = Banshee.Dap.Njb
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-EXTRA_DIST = $(ASSEMBLY_SOURCES) 
+EXTRA_DIST = $(ASSEMBLY_SOURCES) njb-sharp.dll.config.in
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb Makefile.in 
@@ -11,7 +11,7 @@ ASSEMBLY_SOURCES = \
 
 if ENABLE_NJB
 bansheedapdir = $(pkglibdir)/Banshee.Dap
-bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
+bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb njb-sharp.dll.config
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)

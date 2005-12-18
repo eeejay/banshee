@@ -1155,12 +1155,9 @@ namespace Banshee
 
             searchEntry.CancelSearch(false);
             
-            string display_name = null;
-            
             if(source is LibrarySource) {
                 playlistModel.LoadFromLibrary();
                 playlistModel.Source = source;
-                display_name = String.Format(Catalog.GetString("{0}'s Music Library"), Core.Instance.UserFirstName);
             } else if(source is DapSource) {
                 playlistModel.Clear();
                 playlistModel.Source = source;
@@ -1177,8 +1174,7 @@ namespace Banshee
                 playlistModel.Source = source;
             }
             
-            (gxml["ViewNameLabel"] as Label).Markup = "<b>" + 
-                GLib.Markup.EscapeText(display_name == null ? source.Name : display_name) + "</b>";
+            (gxml["ViewNameLabel"] as Label).Markup = "<b>" + GLib.Markup.EscapeText(source.Name) + "</b>";
 
             SensitizeActions(source);
 
@@ -1189,8 +1185,8 @@ namespace Banshee
                 gxml["DapContainer"].Hide();
             }
             
-            gxml["SearchLabel"].Sensitive = 
-                (source is DapSource && !((source as DapSource).IsSyncing)) || source is LibrarySource;
+            gxml["SearchLabel"].Sensitive = (source is DapSource && !((source as DapSource).IsSyncing)) 
+                || source is LibrarySource;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.SyncColumn.Visible = source is DapSource;
             playlistView.RipColumn.Visible = source is AudioCdSource;

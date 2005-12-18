@@ -214,7 +214,7 @@ namespace Banshee.Dap.Ipod
         
         public override Gdk.Pixbuf GetIcon(int size)
         {
-            string prefix = "portable-media-";
+            string prefix = "multimedia-player-";
             string id = null;
 
             switch(device.Model) {
