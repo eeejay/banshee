@@ -37,6 +37,8 @@ using Banshee.Base;
 namespace Banshee.Dap.Njb
 {
     [DapProperties(DapType = DapType.NonGeneric)]
+    [SupportedCodec(CodecType.Mp3)]
+    [SupportedCodec(CodecType.Wma)]
     public sealed class NjbDap : DapDevice
     {
         private static NJB.Discoverer discoverer;
@@ -135,6 +137,12 @@ namespace Banshee.Dap.Njb
             }
             
             set {
+            }
+        }
+        
+        public override string GenericName {
+            get {
+                return device_id.DisplayName;
             }
         }
         

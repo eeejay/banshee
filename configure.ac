@@ -160,8 +160,10 @@ PKG_CHECK_MODULES(NJBSHARP,
 	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
 if test "x$enable_njbsharp" = "xyes"; then
 	NJBSHARP_INSTALL_FILES=""
-	for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do
-		NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
+	for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do	
+		if test -z "`echo \"$i\" | grep config`"; then	
+			NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
+		fi
 	done;
 	AC_SUBST(NJBSHARP_INSTALL_FILES)
 	AC_SUBST(NJBSHARP_LIBS)
@@ -387,6 +389,7 @@ src/Banshee.Dap/Makefile
 src/Banshee.Dap/Ipod/Makefile
 src/Banshee.Dap/Ipod/ipod-sharp.dll.config
 src/Banshee.Dap/Njb/Makefile
+src/Banshee.Dap/Njb/njb-sharp.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

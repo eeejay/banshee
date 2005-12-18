@@ -1,5 +1,14 @@
 2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Updated DAP synchronize dialog to have wording
+	generic for all DAPs (was very iPod specific), use HighlightedSource
+	instead of SelectedSource for getting the DapSource
+
+	* src/Banshee.Dap/Njb/NjbDap.cs: Added a GenericName override, added
+	SupportedCodec attributes
+
+2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
+
 	* vacuum.sh: Removed
 
 	* Makefile.am: Added MAINTAINERCLEANFILES 

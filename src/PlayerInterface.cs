@@ -2177,21 +2177,28 @@ namespace Banshee
         
         private void OnSyncDapAction(object o, EventArgs args)
         {
-            if(sourceView.HighlightedSource.Type != SourceType.Dap) {
+            if(!(sourceView.HighlightedSource is DapSource)) {
                 return;
             }
                 
-            DapSource dapSource = sourceView.SelectedSource as DapSource;
+            DapSource dapSource = sourceView.HighlightedSource as DapSource;
+        
+            if(dapSource == null) {
+                return;
+            }
         
             HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
                 DialogFlags.DestroyWithParent, MessageType.Question,
-                Catalog.GetString("Synchronize iPod"),
-                Catalog.GetString("You have made changes to your iPod. Please choose " +
-                    "a method for updating the contents of your iPod.\n\n" + 
-                    "<i>Synchronize Library</i>: synchronize Banshee library to iPod\n" +
-                    "<i>Save Manual Changes</i>: save only the manual changes you made\n\n" +
-                    "<b>Warning:</b> Actions will alter or erase existing iPod contents and " +
-                    "may cause incompatability with iTunes!"),
+                // Translators: {0} is the name of the DAP device (i.e. 'iPod')
+                String.Format(Catalog.GetString("Synchronize {0}"), dapSource.Device.GenericName),
+                String.Format(Catalog.GetString("You have made changes to your {0}. Please choose " +
+                    "a method for updating the contents of your {0}.\n\n" + 
+                    "<big>\u2022</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n" +
+                    "<big>\u2022</big> <i>Save Manual Changes</i>: save only the manual changes you made"), 
+                    dapSource.Device.GenericName) + (dapSource.Device.GenericName.ToLower() == "ipod" ?
+                    ("\n\n" + 
+                    Catalog.GetString("<b>Warning:</b> Actions will alter or erase existing iPod contents and " +
+                    "may cause incompatability with iTunes!")) : ""),
                 Catalog.GetString("Synchronize Library"));
             
             md.AddButton(Catalog.GetString("Save Manual Changes"), Gtk.ResponseType.Apply, true);
