@@ -337,16 +337,19 @@ namespace Banshee
         public DapSource(Banshee.Dap.DapDevice device) : base(device.Name, SourceType.Dap)
         {
             this.device = device;
-            canRename = true;
+            canRename = device.CanSetName;
             canEject = true;
         }
         
         public override bool UpdateName(string oldName, string newName)
         {
+            if(!device.CanSetName) {
+                return true;
+            }
+        
             if(oldName == null || !oldName.Equals(newName)) {
-                device.Name = newName;
+                device.SetName(newName);
                 name = newName;
-                device.Save();
             }
             
             return true;

@@ -195,7 +195,6 @@ namespace Banshee
             Globals.ActionManager.SourceEjectActions.Visible = false;
             Globals.ActionManager.SongActions.Sensitive = false;
             Globals.ActionManager.PlaylistActions.Sensitive = false;
-            Globals.ActionManager["SelectedSourcePropertiesAction"].Visible = false;
             
             foreach(Action action in Globals.ActionManager) {
                 string method_name = "On" + action.Name;
@@ -1918,20 +1917,32 @@ namespace Banshee
         
         private void ShowSourceProperties(Source source)
         {
-           /* switch(source.Type) {
+            switch(source.Type) {
                 case SourceType.Dap:
-                    IpodSource ipodSource = source as IpodSource;
-                    IPod.Device device = ipodSource.Device;
-                    IpodPropertiesDialog propWin = 
-                        new IpodPropertiesDialog(ipodSource);
-                    propWin.Run();
-                    propWin.Destroy();
-                    if(propWin.Edited && device.CanWrite)
-                        device.Save();
-                    source.Rename(device.Name);
+                    DapSource dap_source = source as DapSource;
+                    if(dap_source == null) {
+                        return;
+                    }
+                    
+                    //IPod.Device device = ipodSource.Device;
+                    DapPropertiesDialog properties_dialog = new DapPropertiesDialog(dap_source);
+                    properties_dialog.Run();
+                    properties_dialog.Destroy();
+                    
+                    if(properties_dialog.Edited && !dap_source.Device.IsReadOnly) {
+                        if(properties_dialog.UpdatedName != null) {
+                            dap_source.Device.SetName(properties_dialog.UpdatedName);
+                            dap_source.SetSourceName(dap_source.Device.Name);
+                        }
+                        
+                        if(properties_dialog.UpdatedOwner != null) {
+                            dap_source.Device.SetOwner(properties_dialog.UpdatedOwner);
+                        }
+                    }
+                    
                     sourceView.QueueDraw();
                     break;
-            }*/
+            }
         }
         
         private void StopPlaying()

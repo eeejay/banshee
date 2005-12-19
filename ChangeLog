@@ -1,3 +1,30 @@
+2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Library.cs: Updated to allow proper device renaming
+
+	* src/DapPropertiesDialog.cs: Dialog box to show properties of a DAP;
+	allows changing of the Name and Owner properties
+
+	* src/Makefile.am: Added DapPropertiesDialog.cs
+
+	* src/PlayerInterface.cs: Enable showing of the properties dialog for
+	DAPs; properly update DAP devices when name/owner is changed
+
+	* src/Banshee.Base/Utilities.cs: Added a ReflectionUtil class - contains
+	IsVirtualMethodImplemented which determines if a subclass implements
+	a virtual method in its base class; used by Banshee.Dap.DapDevice to 
+	see if a DAP supports setting the name and/or owner on the device
+
+	* src/Banshee.Base/Dap/Dap.cs: Allow detecting whether or not the DAP
+	supports setting name/owner; move setting to SetName/SetOwner as a virtual
+	method for DAP implementations to override
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Implement SetName/SetOwner
+
+	* src/Banshee.Dap/Njb/NjbDap.cs: Implement SetOwner
+
 2005-12-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* data/banshee.desktop.in.in: Change Comment to 'Play and organize

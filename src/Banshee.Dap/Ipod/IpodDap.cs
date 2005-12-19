@@ -257,14 +257,27 @@ namespace Banshee.Dap.Ipod
             }
         }
         
+        public override void SetName(string name)
+        {
+            device.Name = name;
+            device.Save();
+        }
+        
+        public override void SetOwner(string owner)
+        {
+            device.UserName = owner;
+            device.Save();
+        }
+        
         public override string Name {
             get {
                 return device.Name;
             }
-            
-            set {
-                device.Name = value;
-                InvokePropertiesChanged();
+        }
+        
+        public override string Owner {
+            get {
+                return device.UserName;
             }
         }
         

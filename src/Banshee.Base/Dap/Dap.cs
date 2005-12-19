@@ -39,14 +39,34 @@ namespace Banshee.Dap
 {    
     public abstract class DapDevice : IEnumerable, IDisposable
     {
+        public class Property
+        {
+            private string name;
+            private string val;
+            
+            public string Name {
+                get {
+                    return name;
+                }
+                
+                internal set {
+                    name = value;
+                }
+            }
+            
+            public string Value {
+                get {
+                    return val;
+                }
+                
+                internal set {
+                    val = value;
+                }
+            }
+        }
+        
         public class PropertyTable : IEnumerable
         {
-            public class Property
-            {
-                public string Name;
-                public string Value;
-            }
-        
             private ArrayList properties = new ArrayList();
             
             private Property Find(string name)
@@ -89,7 +109,7 @@ namespace Banshee.Dap
             public IEnumerator GetEnumerator()
             {
                 foreach(Property property in properties) {
-                    yield return property.Name;
+                    yield return property;
                 }
             }
         }
@@ -497,6 +517,14 @@ namespace Banshee.Dap
             return pixbuf;
         }
         
+        public virtual void SetName(string name)
+        {
+        }
+        
+        public virtual void SetOwner(string owner)
+        {
+        }
+        
         public PropertyTable Properties {
             get {
                 return properties;
@@ -539,8 +567,26 @@ namespace Banshee.Dap
             }
         }
         
+        public bool CanSetName {
+            get {
+                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetName");
+            }
+        }
+        
+        public bool CanSetOwner {
+            get {
+                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetOwner");
+            }
+        }
+        
+        public virtual string Owner {
+            get {
+                return Catalog.GetString("Unknown");
+            }
+        }
+        
         public abstract void Synchronize();
-        public abstract string Name { get; set; }
+        public abstract string Name { get; }
         public abstract ulong StorageCapacity { get; }
         public abstract ulong StorageUsed { get; }
         public abstract bool IsReadOnly { get; }

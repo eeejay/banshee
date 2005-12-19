@@ -114,10 +114,10 @@ namespace Banshee.Dap.Njb
             
             InstallProperty("Model", device.Name);
             InstallProperty("Vendor", halDevice["usb.vendor"]);
-            InstallProperty("Owner", device.Owner);
-            InstallProperty("Serial Number", device.SdmiIdString);
             InstallProperty("Firmware Revision", device.FirmwareRevision.ToString());
             InstallProperty("Hardware Revision", device.HardwareRevision.ToString());
+            InstallProperty("Serial Number", halDevice.PropertyExists("usb.serial") 
+                ? halDevice["usb.serial"] : device.SdmiIdString);
             
             ReloadDatabase();
             
@@ -158,8 +158,16 @@ namespace Banshee.Dap.Njb
             get {
                 return device_id.DisplayName;
             }
-            
-            set {
+        }
+        
+        public override void SetOwner(string owner)
+        {
+            device.Owner = owner;
+        }
+        
+        public override string Owner {
+            get {
+                return device.Owner;
             }
         }
         

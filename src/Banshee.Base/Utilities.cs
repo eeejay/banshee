@@ -133,10 +133,23 @@ namespace Banshee.Base
         }
     }
     
+    public static class ReflectionUtil
+    {
+        public static bool IsVirtualMethodImplemented(Type type, string methodName)
+        {
+            MethodInfo methodInfo = type.GetMethod(methodName);
+            
+            if(methodInfo == null) {
+                return false;
+            }
+            
+            return methodInfo.IsVirtual ? methodInfo != methodInfo.GetBaseDefinition() : true;
+        }
+    }
+    
     public class DateTimeUtil
     {
-        public static readonly DateTime LocalUnixEpoch = 
-            new DateTime(1970, 1, 1).ToLocalTime();
+        public static readonly DateTime LocalUnixEpoch = new DateTime(1970, 1, 1).ToLocalTime();
 
         public static DateTime ToDateTime(long time)
         {
