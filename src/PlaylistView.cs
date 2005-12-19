@@ -67,13 +67,14 @@ namespace Banshee
         
         PlaylistColumnChooserDialog columnChooser;
         Pixbuf nowPlayingPixbuf;
-        Pixbuf syncNeededPixbuf;
         Pixbuf songDrmedPixbuf;
         Pixbuf ripColumnPixbuf;
 
-        public TreeViewColumn SyncColumn;
         public TreeViewColumn RipColumn;
-
+        public TreeViewColumn RatingColumn;
+        public TreeViewColumn PlaysColumn;
+        public TreeViewColumn LastPlayedColumn;
+        
         public PlaylistView(PlaylistModel model)
         {        
             // set up columns
@@ -94,17 +95,29 @@ namespace Banshee
             columns.Add(new PlaylistColumn(this, Catalog.GetString("Time"), "Time", 
                 new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
                 4, (int)ColumnId.Time));
-            columns.Add(new PlaylistColumn(this, Catalog.GetString("Rating"), "Rating", 
+            
+            PlaylistColumn _RatingColumn = new PlaylistColumn(this, 
+                Catalog.GetString("Rating"), "Rating",
                 new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
-                5, (int)ColumnId.Rating));
-            columns.Add(new PlaylistColumn(this, Catalog.GetString("Plays"), "Plays", 
+                5, (int)ColumnId.Rating);
+            columns.Add(_RatingColumn);
+            RatingColumn = _RatingColumn.Column;
+            
+            PlaylistColumn _PlaysColumn = new PlaylistColumn(this, 
+                Catalog.GetString("Plays"), "Plays",
                 new TreeCellDataFunc(TrackCellPlayCount), 
                 new CellRendererText(),
-                6, (int)ColumnId.PlayCount));
-            columns.Add(new PlaylistColumn(this, Catalog.GetString("Last Played"), "Last-Played", 
+                6, (int)ColumnId.PlayCount);
+            columns.Add(_PlaysColumn);
+            PlaysColumn = _PlaysColumn.Column;
+            
+            PlaylistColumn _LastPlayedColumn = new PlaylistColumn(this, 
+                Catalog.GetString("Last Played"), "Last-Played",
                 new TreeCellDataFunc(TrackCellLastPlayed), 
                 new CellRendererText(),
-                7, (int)ColumnId.LastPlayed));
+                7, (int)ColumnId.LastPlayed);
+            columns.Add(_LastPlayedColumn);
+            LastPlayedColumn = _LastPlayedColumn.Column;
             
             foreach(PlaylistColumn plcol in columns) {
                 InsertColumn(plcol.Column, plcol.Order);
@@ -121,7 +134,6 @@ namespace Banshee
             playIndColumn.Widget = playIndImg;
             
             nowPlayingPixbuf = Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
-            syncNeededPixbuf = Gdk.Pixbuf.LoadFromResource("sync-needed.png");
             songDrmedPixbuf = Gdk.Pixbuf.LoadFromResource("song-drm.png");
             ripColumnPixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-16.png");
             
@@ -130,22 +142,6 @@ namespace Banshee
             playIndColumn.SetCellDataFunc(indRenderer, 
                 new TreeCellDataFunc(TrackCellInd));
             InsertColumn(playIndColumn, 0);
-
-            SyncColumn = new TreeViewColumn();
-            Gtk.Image syncNeededImg = new Gtk.Image(syncNeededPixbuf);
-            syncNeededImg.Show();
-            SyncColumn.Expand = false;
-            SyncColumn.Resizable = false;
-            SyncColumn.Clickable = false;
-            SyncColumn.Reorderable = false;
-            SyncColumn.Visible = false;
-            SyncColumn.Widget = syncNeededImg;
-            
-            CellRendererPixbuf syncRenderer = new CellRendererPixbuf();
-            SyncColumn.PackStart(syncRenderer, true);
-            SyncColumn.SetCellDataFunc(syncRenderer, 
-                new TreeCellDataFunc(SyncCellInd));
-            InsertColumn(SyncColumn, 1);
             
             RipColumn = new TreeViewColumn();
             Gtk.Image ripImage = new Gtk.Image(ripColumnPixbuf);
@@ -345,9 +341,14 @@ namespace Banshee
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
             CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
             renderer.Pixbuf = iter.Equals(model.PlayingIter)
                 ? nowPlayingPixbuf
-                : null;
+                : (ti.CanPlay ? null : songDrmedPixbuf);
         }
         
         protected void RipCellInd(TreeViewColumn tree_column, CellRenderer cell, 
@@ -359,38 +360,6 @@ namespace Banshee
                 toggle.Active = ti.CanRip;
             else
                 toggle.Active = false;
-        }
-        
-        protected void SyncCellInd(TreeViewColumn tree_column,
-            CellRenderer cell, TreeModel tree_model, TreeIter iter)
-        {
-            CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
-            
-            if(model == null || model.Source == null) {
-                renderer.Pixbuf = null;
-                return;
-            }
-            
-            if(model.Source.GetType() != typeof(DapSource)) {
-                renderer.Pixbuf = null;
-                return; 
-            }
-            
-            TrackInfo ti = model.IterTrackInfo(iter);
-            
-            if(ti == null) {
-                return;
-            }
-            
-            if(ti.GetType() != typeof(DapTrackInfo)) {
-                renderer.Pixbuf = null;
-                return;
-            }
-            
-            DapTrackInfo iti = ti as DapTrackInfo;
-            renderer.Pixbuf = iti.NeedSync
-                ? syncNeededPixbuf
-                : (iti.CanPlay ? null : songDrmedPixbuf); 
         }
         
         protected void TrackCellTrack(TreeViewColumn tree_column,

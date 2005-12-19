@@ -70,12 +70,7 @@ namespace Banshee
 		{
 		
 		}
-		
-		~RatingRenderer()
-		{
-			Dispose();
-		}
-		
+
 		private StateType RendererStateToWidgetState(CellRendererState flags)
 		{
 			StateType state = StateType.Normal;
@@ -137,12 +132,16 @@ namespace Banshee
 				rating = offset / (Star.Width + 1);
 			}*/
 			
+			if(Star != null) {
+			
 			for(int i = 0; i < rating; i++) {
 				canvas.DrawPixbuf(widget.Style.TextGC(state), Star, 0, 0,
 					area.X + (i * Star.Width) + 1, area.Y + 1, 
 					Star.Width, Star.Height,
 					RgbDither.None, 0, 0);
 			}
+			
+			} 
 			
 			/*if((flags & CellRendererState.Prelit) == CellRendererState.Prelit) {
 				for(int i = (int)Track.Rating; i < 5; i++) {

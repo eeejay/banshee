@@ -484,6 +484,8 @@ namespace Banshee
                 QueueDraw();
             });
         }
+        
+        public bool EditingRow = false;
     }
 
     public class SourceRowRenderer : CellRendererText
@@ -492,12 +494,7 @@ namespace Banshee
         public bool Italicized = false;
         public Source source;
         public SourceView view;
-        
-        ~SourceRowRenderer()
-        {
-            Dispose();
-        }
-        
+
         public SourceRowRenderer()
         {
             Editable = true;
@@ -550,17 +547,17 @@ namespace Banshee
             
             switch(source.Type) {
                 case SourceType.Playlist:
-                    icon = Pixbuf.LoadFromResource("source-playlist.png");
+                    icon = IconThemeUtils.LoadIcon(22, "source-playlist");
                     break;
                 case SourceType.Dap:
                     icon = (source as DapSource).Device.GetIcon(22);
                     break;
                 case SourceType.AudioCd:
-                    icon = Pixbuf.LoadFromResource("source-cd-audio.png");
+                    icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
                     break;
                 case SourceType.Library:
                 default:
-                    icon = Pixbuf.LoadFromResource("source-library.png");
+                    icon = IconThemeUtils.LoadIcon(22, "source-library");
                     break;
             }
             
@@ -653,6 +650,9 @@ namespace Banshee
             text.Text = source.Name;
             text.path = path;
             text.Show();
+            
+            view.EditingRow = true;
+            
             return text;
         }
         
@@ -661,6 +661,7 @@ namespace Banshee
             CellEdit edit = o as CellEdit;
             if(view == null)
                 return;
+            view.EditingRow = false;
             view.UpdateRow(new TreePath(edit.path), edit.Text);
         }
     }

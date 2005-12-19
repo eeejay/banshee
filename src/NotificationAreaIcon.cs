@@ -37,12 +37,12 @@ using Banshee.Base;
 
 namespace Banshee
 {
-    public class NotificationAreaIcon
+    public class NotificationAreaIconContainer
     {
         private Tooltips tooltips;
         private EventBox traybox;
 
-        private Banshee.Widgets.NotificationAreaIcon ticon;
+        private NotificationAreaIcon ticon;
 
         private Menu traymenu;
         
@@ -52,9 +52,9 @@ namespace Banshee
         public event EventHandler ClickEvent;
         public event ScrollEventHandler MouseScrollEvent;
 
-        public NotificationAreaIcon()
+        public NotificationAreaIconContainer()
         {
-            ticon = new Banshee.Widgets.NotificationAreaIcon(Catalog.GetString("Banshee"));
+            ticon = new NotificationAreaIcon(Catalog.GetString("Banshee"));
             tooltips = new Tooltips();
             CreateMenu();
             Init();
@@ -66,7 +66,7 @@ namespace Banshee
             traybox = new EventBox();
             traybox.ButtonPressEvent += OnTrayIconClick;
             traybox.ScrollEvent += OnMouseScroll;
-            traybox.Add(new Gtk.Image(Gdk.Pixbuf.LoadFromResource("tray-icon.png")));
+            traybox.Add(new Gtk.Image(IconThemeUtils.LoadIcon(22, "music-player-banshee", "tray-icon")));
             
             ticon.Add(traybox);
             ticon.ShowAll();
@@ -124,13 +124,12 @@ namespace Banshee
             push_in = true;
         }
         
-        private void OnDestroyEvent (object o, DestroyEventArgs args)
+        private void OnDestroyEvent(object o, DestroyEventArgs args)
         {
-            Init ();
+            Init();
         }
         
-        public string Tooltip
-        {
+        public string Tooltip {
             set { 
                 tooltips.SetTip(traybox, value, null); 
             }

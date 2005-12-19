@@ -243,18 +243,7 @@ namespace Banshee.Dap.Ipod
                 return icon;
             }
             
-            string path = ConfigureDefines.ICON_THEME_DIR 
-                + String.Format("{0}x{0}", size)
-                + Path.DirectorySeparatorChar
-                + "devices" + 
-                + Path.DirectorySeparatorChar
-                + prefix + id + ".png";
-                
-            try {
-                return new Gdk.Pixbuf(path);
-            } catch(Exception) {
-                return base.GetIcon(size);
-            }
+            return base.GetIcon(size);
         }
         
         public override void SetName(string name)

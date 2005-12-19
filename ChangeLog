@@ -1,3 +1,59 @@
+2005-12-19  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Cleaned up code, and Miguel
+	committed his string marshalling fix regarding 77026 in Ximian Bugzilla;
+	removed Banshee.Widgets namespace to keep maintainence easier for other
+	apps.
+
+	* src/NotificationAreaIcon.cs: class renamed to 
+	NotificationAreaIconContainer; adjust instantiation of NotificationAreaIcon
+	to reflect removal of Banshee.Widgets namespace
+
+	* data/banshee.glade: renamed the main/view container 'Main Container'
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Widgets/HighlightStatusBar.cs: skeleton for new widget
+	to show 'important' status messages
+
+	* src/Banshee.Widgets/Makefile.am: added HighlightStatusBar.cs
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: removed manual path lookup for icon
+	fallback; rely only on base.GetIcon if icon is not in the theme
+
+	* src/Banshee.Base/NetworkDetect.cs: Added Dispose method to chain into
+	manager.Dispose
+
+	* src/Banshee.Base/NetworkManager/Manager.cs: Added a Dispose method
+	to suppress the GC finalizing the D-Bus proxy object to work around
+	the bad IL in finalizer bug
+
+	* src/Banshee.Base/Globals.cs: Call Dispose on NetworkDetect
+
+	* src/Banshee.Base/IconThemeUtils.cs: Added a new LoadIcon overload
+	to accept a params array of icon names for fallbacks: 
+		LoadIcon("multimedia-player-ipod", "multimedia-player", 
+		"gnome-dev-ipod")
+
+	* src/Main.cs: Suppress finalizing the dbusCore D-Bus proxy object
+
+	* src/PlayerInterface.cs: Do not show the rating/playcount/last played 
+	columns in the audio CD view; remove references to the SyncColumn; don't
+	steal space when source view is in edit mode; show the song title in
+	the title bar; unregister the dbus server object when we shut down banshee;
+	NotificationAreaIcon->NotificationAreaIconContainer; add skeleton support
+	for the new HighlightStatusBar for Audio CD status messages
+
+	* src/PlaylistView.cs: expose the rating/playcount/last played columns
+	so the main UI can show/hide as needed for different views; remove the
+	sync column; show DRM/protected status in the play indicator column
+
+	* src/RatingRenderer.cs: minor fixes
+
+	* src/SourceView.cs: pull in the audio cd source icon from the theme;
+	add an EditingRow property to tell the UI that the source view is 
+	in edit mode
+
 2005-12-18  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  Globals.cs
+ *  HighlightStatusBar.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -28,54 +28,25 @@
  */
  
 using System;
-using GConf;
+using Gtk;
+using Gdk;
 
-namespace Banshee.Base
+namespace Banshee.Widgets
 {
-    public static class Globals
+    public class HighlightStatusBar : HBox
     {
-        private static GConf.Client gconf_client;
-        private static string library_location;
-        private static NetworkDetect network_detect;
-        private static ActionManager action_manager;
-        
-        static Globals()
+        private Label label;
+    
+        public HighlightStatusBar()
         {
-            gconf_client = new GConf.Client();
-            network_detect = NetworkDetect.Instance;
-            action_manager = new ActionManager();
+            label = new Label();
+            label.Show();
+            PackStart(label, true, true, 0);
         }
         
-        public static void Dispose()
-        {
-            network_detect.Dispose();
-        }
-        
-        public static GConf.Client Configuration {
-            get {
-                return gconf_client;
-            }
-        }
-        
-        public static string LibraryLocation {
-            get {
-                return library_location;
-            }
-            
+        public string Message {
             set {
-                library_location = value;
-            }
-        }
-        
-        public static NetworkDetect Network {
-            get {
-                return network_detect;
-            }
-        }
-        
-        public static ActionManager ActionManager {
-            get {
-                return action_manager;
+                label.Markup = value;
             }
         }
     }

@@ -51,7 +51,24 @@ namespace Banshee.Base
             return gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name);
         }
 
+        public static Gdk.Pixbuf LoadIcon(int size, params string [] names)
+        {
+            for(int i = 0; i < names.Length; i++) {
+                Gdk.Pixbuf pixbuf = LoadIcon(names[i], size, i == names.Length - 1);
+                if(pixbuf != null) {
+                    return pixbuf;
+                }
+            }
+            
+            return null;
+        }
+
         public static Gdk.Pixbuf LoadIcon(string name, int size)
+        {
+            return LoadIcon(name, size, true);
+        }
+
+        public static Gdk.Pixbuf LoadIcon(string name, int size, bool fallBackOnResource)
         {
             try {
                 IntPtr native = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), name, size, 0, IntPtr.Zero);
@@ -62,6 +79,10 @@ namespace Banshee.Base
                     }
                 }
             } catch(Exception) {
+            }
+            
+            if(!fallBackOnResource) {
+                return null;
             }
             
             try {

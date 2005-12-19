@@ -66,7 +66,7 @@ namespace Banshee
         private PlaylistView playlistView;
         private SourceView sourceView;
         private TrackInfo activeTrackInfo;
-        private NotificationAreaIcon trayIcon;
+        private NotificationAreaIconContainer trayIcon;
         private ImageAnimation spinner;
         private LibraryTransactionStatus libraryTransactionStatus;
         private TrackInfoHeader trackInfoHeader;
@@ -90,6 +90,8 @@ namespace Banshee
         private EventBox syncing_container;
         private Gtk.Image dap_syncing_image = new Gtk.Image();
         [Widget] private ProgressBar dapDiskUsageBar;
+        
+        private HighlightStatusBar audiocd_statusbar;
         
         private bool incrementedCurrentSongPlayCount;
     
@@ -133,6 +135,8 @@ namespace Banshee
                 Dnd.TargetLibraryTrackIds,
             };
 
+        private BansheeCore banshee_dbus_object;
+
         public PlayerUI() 
         {
             Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
@@ -144,8 +148,8 @@ namespace Banshee
             BuildWindow();   
             InstallTrayIcon();
             
-            Core.Instance.DBusServer.RegisterObject(
-                new BansheeCore(Window, this, Core.Instance), "/org/gnome/Banshee/Core");
+            banshee_dbus_object = new BansheeCore(Window, this, Core.Instance);
+            Core.Instance.DBusServer.RegisterObject(banshee_dbus_object, "/org/gnome/Banshee/Core");
             
             Core.Instance.Player.Iterate += OnPlayerTick;
             Core.Instance.Player.EndOfStream += OnPlayerEos;    
@@ -334,6 +338,9 @@ namespace Banshee
             volumeButton.VolumeChanged += OnVolumeScaleChanged;
             
             // Footer 
+            audiocd_statusbar = new HighlightStatusBar();
+            (gxml["MainContainer"] as Box).PackStart(audiocd_statusbar, false, false, 0);
+            
             LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
             LabelStatusBar.Show();
             
@@ -491,7 +498,7 @@ namespace Banshee
             } catch(Exception) { }
                 
             try {
-                trayIcon = new NotificationAreaIcon();
+                trayIcon = new NotificationAreaIconContainer();
                 trayIcon.ClickEvent += OnTrayClick;
                 trayIcon.MouseScrollEvent += OnTrayScroll;
             } catch(Exception e) {
@@ -714,6 +721,7 @@ namespace Banshee
             playlistView.Shutdown();
             Core.Instance.Player.Dispose();
             Core.GconfClient.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
+            DBusServer.Instance.UnregisterObject(banshee_dbus_object);
             Core.Instance.Shutdown();
             Application.Quit();
         }
@@ -747,6 +755,8 @@ namespace Banshee
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
             trackInfoHeader.Album = ti.DisplayAlbum;
+            
+            WindowPlayer.Title = ti.DisplayTitle + " - " + Catalog.GetString("Banshee");
             
             try {
                 trackInfoHeader.Cover.FileName = ti.CoverArtFileName;
@@ -850,7 +860,7 @@ namespace Banshee
                     } 
                     break;
                 case Gdk.Key.space:
-                    if(!searchEntry.HasFocus) {
+                    if(!searchEntry.HasFocus && !sourceView.EditingRow) {
                         PlayPause();
                         handled = true;
                     }
@@ -1197,8 +1207,12 @@ namespace Banshee
             gxml["SearchLabel"].Sensitive = (source is DapSource && !((source as DapSource).IsSyncing)) 
                 || source is LibrarySource;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
-            playlistView.SyncColumn.Visible = source is DapSource;
             playlistView.RipColumn.Visible = source is AudioCdSource;
+            playlistView.RatingColumn.Visible = !(source is AudioCdSource);
+            playlistView.PlaysColumn.Visible = playlistView.RatingColumn.Visible;
+            playlistView.LastPlayedColumn.Visible = playlistView.RatingColumn.Visible;
+            
+            audiocd_statusbar.Visible = source is AudioCdSource;
                 
             if(source.Type != SourceType.Dap) {
                 ShowPlaylistView();
@@ -1924,8 +1938,8 @@ namespace Banshee
                         return;
                     }
                     
-                    //IPod.Device device = ipodSource.Device;
                     DapPropertiesDialog properties_dialog = new DapPropertiesDialog(dap_source);
+                    IconThemeUtils.SetWindowIcon(properties_dialog);
                     properties_dialog.Run();
                     properties_dialog.Destroy();
                     

@@ -64,7 +64,7 @@ namespace NetworkManager
         [Method] public abstract DeviceProxy getActiveDevice();
     }
 
-    public class Manager : IEnumerable
+    public class Manager : IEnumerable, IDisposable
     {
         private static readonly string PATH_NAME = "/org/freedesktop/NetworkManager";
         private static readonly string INTERFACE_NAME = "org.freedesktop.NetworkManager";
@@ -93,6 +93,12 @@ namespace NetworkManager
             manager = (ManagerProxy)dbus_service.GetObject(typeof(ManagerProxy), PATH_NAME);
                 
             dbus_service.SignalCalled += OnSignalCalled;
+        }
+        
+        public void Dispose()
+        {
+            // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
+            System.GC.SuppressFinalize(manager);
         }
         
         private void OnSignalCalled(Signal signal)

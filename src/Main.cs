@@ -214,6 +214,8 @@ namespace Banshee
 
             if(present)
                 dbusCore.PresentWindow();
+                // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
+                System.GC.SuppressFinalize(dbusCore);
                 return;
             }    
 
@@ -225,6 +227,7 @@ namespace Banshee
                 
             Core.Args = args;
             Core.Instance.Program = new Program(appname, version, Modules.UI, args);
+            
             new Banshee.PlayerUI();
             Gtk.Application.Run();
         }
