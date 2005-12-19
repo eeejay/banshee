@@ -82,8 +82,9 @@ namespace Banshee.Widgets
                 ev.window = (IntPtr) Id;
                 ev.format = 8;
                 ev.message_type = (IntPtr) XInternAtom (display, "_NET_SYSTEM_TRAY_MESSAGE_DATA", false);
-                ev.data.str = message.Substring (index, Math.Min (message.Length - index, 20));
-
+				byte [] arr = System.Text.Encoding.UTF8.GetBytes (message.Substring (index));
+				int len = Math.Min (arr.Length, 20);
+				Marshal.Copy (arr, 0, ev.data.ptr1, len);
                 XSendEvent (display, manager_window, false, EventMask.StructureNotifyMask, ref ev);
                 XSync (display, false);
             }
@@ -360,8 +361,6 @@ namespace Banshee.Widgets
         internal int            format;
         [StructLayout(LayoutKind.Explicit)]
         internal struct DataUnion {
-            [FieldOffset(0)] [MarshalAs(UnmanagedType.ByValTStr, SizeConst=20)]
-                internal string str;
             [FieldOffset(0)] internal IntPtr ptr1;
             [FieldOffset(4)] internal IntPtr ptr2;
             [FieldOffset(8)] internal IntPtr ptr3;
