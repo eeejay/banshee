@@ -36,13 +36,24 @@ using MusicBrainz;
 
 namespace Banshee.Base
 {
+    public enum AudioCdLookupStatus {
+        ReadingDisk,
+        SearchingMetadata,
+        SearchingCoverArt,
+        Success,
+        ErrorNoConnection,
+        ErrorLookup
+    }
+    
     public class AudioCdDisk
     {
         private string udi;
         private string device_node;
         private string drive_name;
         
+        private bool mb_querying = false;
         private bool mb_queried = false;
+        private AudioCdLookupStatus status = AudioCdLookupStatus.ReadingDisk;
         
         private string album_title;
         
@@ -58,6 +69,7 @@ namespace Banshee.Base
             
             Globals.Network.StateChanged += OnNetworkStateChanged;
             
+            Status = AudioCdLookupStatus.ReadingDisk;
             LoadDiskInfo();
         }
               
@@ -81,21 +93,41 @@ namespace Banshee.Base
             album_title = Catalog.GetString("Audio CD");
             tracks = track_list.ToArray(typeof(AudioCdTrackInfo)) as AudioCdTrackInfo [];
             
-            ThreadPool.QueueUserWorkItem(QueryMusicBrainz, mb_disc);
+            QueryMetadata(mb_disc);
         }
         
         private void OnNetworkStateChanged(object o, NetworkStateChangedArgs args)
         {
             if(!mb_queried && args.Connected) {
-                ThreadPool.QueueUserWorkItem(QueryMusicBrainz, null);
+                QueryMetadata();
             }
+        }
+        
+        public void QueryMetadata()
+        {
+            QueryMetadata(null);
+        }
+        
+        private void QueryMetadata(SimpleDisc disc)
+        {
+            ThreadPool.QueueUserWorkItem(QueryMusicBrainz, disc);
         }
         
         private void QueryMusicBrainz(object o)
         {
-            if(!Globals.Network.Connected) {
+            if(mb_querying) {
                 return;
             }
+            
+            mb_querying = true;
+            
+            if(!Globals.Network.Connected) {
+                Status = AudioCdLookupStatus.ErrorNoConnection;
+                mb_querying = false;
+                return;
+            }
+            
+            Status = AudioCdLookupStatus.SearchingMetadata;
             
             SimpleDisc mb_disc;
             
@@ -107,7 +139,9 @@ namespace Banshee.Base
             
             try {
                 mb_disc.QueryCDMetadata();
-            } catch(Exception) {
+            } catch(Exception e) {
+                Status = AudioCdLookupStatus.ErrorLookup;
+                mb_querying = false;
                 return;
             }
             
@@ -142,23 +176,43 @@ namespace Banshee.Base
             
             mb_queried = true;
             
-            Gtk.Application.Invoke(delegate {
-                if(Updated != null) {
-                    Updated(this, new EventArgs());
-                }
-            });
+            HandleUpdated();
             
             string path = Paths.GetCoverArtPath(asin);
             if(System.IO.File.Exists(path)) {
+                Status = AudioCdLookupStatus.Success;
+                mb_querying = false;
                 return;
             }
             
+            Status = AudioCdLookupStatus.SearchingCoverArt;
+            
             if(AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory)) {
-                Gtk.Application.Invoke(delegate {
-                    if(Updated != null) {
-                        Updated(this, new EventArgs());
-                    }
-                });
+                HandleUpdated();
+            }
+            
+            Status = AudioCdLookupStatus.Success;
+            mb_querying = false;
+        }
+        
+        private void HandleUpdated()
+        {
+            Gtk.Application.Invoke(delegate {
+                EventHandler handler = Updated;
+                if(handler != null) {
+                    handler(this, new EventArgs());
+                }
+            });
+        }
+        
+        public AudioCdLookupStatus Status {
+            get {
+                return status;
+            }
+            
+            private set {
+                status = value;
+                HandleUpdated();
             }
         }
         

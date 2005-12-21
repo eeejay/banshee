@@ -124,5 +124,11 @@ namespace Banshee.Base
                 }
             }
         }
+        
+        public Manager Manager {
+            get {
+                return nm_manager;
+            }
+        }
     }
 }

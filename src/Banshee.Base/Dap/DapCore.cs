@@ -65,16 +65,22 @@ namespace Banshee.Dap
                 return;
             }
             
-            string dap_dir = ConfigureDefines.InstallDir + "Banshee.Dap" + Path.DirectorySeparatorChar;
             DirectoryInfo di = null;
+            FileInfo [] files = null;
+            string dap_dir = ConfigureDefines.InstallDir + "Banshee.Dap" + Path.DirectorySeparatorChar;
             
             try {
                 di = new DirectoryInfo(dap_dir);
+                files = di.GetFiles();
+                
+                if(files == null || files.Length == 0) {
+                    return;
+                }
             } catch(Exception) {
                 return;
             }
 
-            foreach(FileInfo file in di.GetFiles()) {
+            foreach(FileInfo file in files) {
                 Assembly asm;
                 try {
                     asm = Assembly.LoadFrom(file.FullName);

@@ -81,7 +81,7 @@ namespace Banshee.Base
         {
             if(user_event == null) {
                 user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
-                user_event.Icon = IconThemeUtils.LoadIcon("system-search", 22);
+                user_event.Icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
                 lock(user_event) {
                     user_event.Message = Catalog.GetString("Scanning for songs");
                     total_count = 0;
