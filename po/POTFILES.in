@@ -12,6 +12,7 @@ src/AboutBox.cs
 src/BurnCore.cs
 src/BurnTransaction.cs
 src/Core.cs
+src/DapPropertiesDialog.cs
 src/Dialogs.cs
 src/ExceptionDialog.cs
 src/Library.cs
