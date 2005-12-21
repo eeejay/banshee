@@ -109,6 +109,7 @@ banshee_resources = \
 	data/images/source-cd-audio.png \
 	data/images/source-library.png \
 	data/images/source-playlist.png \
+	data/images/source-localqueue.png \
 	data/images/star.png \
 	data/images/sync-needed.png \
 	data/images/tray-icon.png \

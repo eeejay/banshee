@@ -51,6 +51,7 @@ EXTRA_DIST = \
 	source-cd-audio.png \
 	source-library.png \
 	source-playlist.png \
+	source-localqueue.png \
 	star.png \
 	sync-needed.png \
 	tray-icon.png \
