@@ -28,218 +28,261 @@
  */
 
 using System;
-using Gnome;
-using Banshee.Base;
 using System.Diagnostics;
+using Gnome;
+using Mono.Unix;
+
+using Banshee.Base;
 
 namespace Banshee
 {    
-    public class BansheeEntry
+    public static class BansheeEntry
     {    
-        public static void Main(string[] args)
+        public static void Main(string [] args)
         {
-          //  try {
+#if EXCEPTION_DIALOG        
+            try {
                 Startup(args);
-           /* } catch(Exception e) {
+            } catch(Exception e) {
                 Console.Error.WriteLine(e);
                 Gtk.Application.Init();
                 ExceptionDialog dlg = new ExceptionDialog(e);
                 dlg.Run();
                 dlg.Destroy();
                 System.Environment.Exit(1);
-            }*/
+            }
+#else
+            Startup(args);
+#endif
         }
         
         private static void Startup(string [] args)
         {
-            BansheeCore dbusCore = null;
-
             Core.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
-                new ArgumentLayout("show",       "Show window"),
-                new ArgumentLayout("hide",       "Hide window"),
-                new ArgumentLayout("next",       "Play next song"),
-                new ArgumentLayout("previous",   "Play previous song"),
+                new ArgumentLayout("show",           "Show window"),
+                new ArgumentLayout("hide",           "Hide window"),
+                new ArgumentLayout("next",           "Play next song"),
+                new ArgumentLayout("previous",       "Play previous song"),
                 new ArgumentLayout("toggle-playing", "Toggle playing of current song"),
-                new ArgumentLayout("play",       "Play current song"),
-                new ArgumentLayout("pause",      "Pause current song"),
-                new ArgumentLayout("query-artist", "Get artist name for current playing song"),
-                new ArgumentLayout("query-album", "Get album name for current playing song"),
-                new ArgumentLayout("query-title", "Get track title for current playing song"),
-                new ArgumentLayout("query-genre", "Get track genre for current playing song"),
+                new ArgumentLayout("play",           "Play current song"),
+                new ArgumentLayout("pause",          "Pause current song"),
+                new ArgumentLayout("query-artist",   "Get artist name for current playing song"),
+                new ArgumentLayout("query-album",    "Get album name for current playing song"),
+                new ArgumentLayout("query-title",    "Get track title for current playing song"),
+                new ArgumentLayout("query-genre",    "Get track genre for current playing song"),
                 new ArgumentLayout("query-duration", "Get duration of current playing song in seconds"),
                 new ArgumentLayout("query-position", "Get position of current playing song in seconds"),
-                new ArgumentLayout("query-uri", "Get URI of current playing song"),
-                new ArgumentLayout("query-status", "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
-                new ArgumentLayout("help",       "List available command line arguments"),
-                new ArgumentLayout("audio-cd <dev>", "Start Banshee and select source mapped to <device>"),
-                new ArgumentLayout("version", "Show Banshee Version")
+                new ArgumentLayout("query-uri",      "Get URI of current playing song"),
+                new ArgumentLayout("query-status",   "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
+                new ArgumentLayout("hide-field",     "Do not display field name for --query-* results"),
+                new ArgumentLayout("help",           "List available command line arguments"),
+                new ArgumentLayout("audio-cd <dev>", "Start Banshee and/or select source mapped to <device>"),
+                new ArgumentLayout("dap <dev>",      "Start Banshee and/or select source mapped to <device>"),
+                new ArgumentLayout("version",        "Show Banshee Version")
             }, args);
 
+            HandleShallowCommands();
+            BansheeCore dbus_core = DetectInstanceAndDbus();
+            HandleDbusCommands(dbus_core);
+
+            Core.Args = args;
+            Core.Instance.Program = new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), 
+                ConfigureDefines.VERSION, Modules.UI, args);
+            
+            new Banshee.PlayerUI();
+            Gtk.Application.Run();
+        }
+    
+        private static BansheeCore DetectInstanceAndDbus()
+        {
+            try {
+                return BansheeCore.FindInstance();
+            } catch(Exception) {
+                Process current_process = Process.GetCurrentProcess();
+                foreach(Process process in Process.GetProcesses()) {
+                    if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
+                        Console.WriteLine(Catalog.GetString(""));
+                        Console.WriteLine(Catalog.GetString("Banshee is already running. If you were trying " + 
+                            "to control the already running instance of Banshee, D-Bus must be enabled. " +
+                            "Banshee could not connect to your D-Bus Session Bus."));
+                        System.Environment.Exit(1);
+                    }
+                }
+
+                return null;
+            }
+        }
+        
+        private static void HandleDbusCommands(BansheeCore dbusCore)
+        {
+            if(dbusCore == null) {
+                return;
+            }
+            
+            bool present = true;
+        
+            foreach(string arg in Core.ArgumentQueue.Arguments) {
+                bool dequeue = true;
+                switch(arg) {
+                case "toggle-playing":
+                    dbusCore.TogglePlaying();
+                    present = false;
+                    break;
+                case "play":
+                    dbusCore.Play();
+                    present = false;
+                    break;
+                case "pause":
+                    dbusCore.Pause();
+                    present = false;
+                    break;
+                case "show":
+                    dbusCore.ShowWindow();
+                    present = false;
+                    break;
+                case "hide":
+                    dbusCore.HideWindow();
+                    present = false;
+                    break;
+                case "next":
+                    dbusCore.Next();
+                    present = false;
+                    break;
+                case "previous":
+                    dbusCore.Previous();
+                    present = false;
+                    break;
+                case "query-artist":
+                    PrintQueryResult("Artist", dbusCore.GetPlayingArtist());
+                    present = false;
+                    break;
+                case "query-album":
+                    PrintQueryResult("Album", dbusCore.GetPlayingAlbum());
+                    present = false;
+                    break;
+                case "query-title":
+                    PrintQueryResult("Title", dbusCore.GetPlayingTitle());
+                    present = false;
+                    break;
+                case "query-genre":
+                    PrintQueryResult("Genre", dbusCore.GetPlayingGenre());
+                    present = false;
+                    break;
+                case "query-duration":
+                    PrintQueryResult("Duration", dbusCore.GetPlayingDuration());
+                    present = false;
+                    break;
+                case "query-position":
+                    PrintQueryResult("Position", dbusCore.GetPlayingPosition());
+                    present = false;
+                    break;
+                case "query-uri":
+                    PrintQueryResult("Uri", dbusCore.GetPlayingUri());
+                    present = false;
+                    break;
+                case "query-status":
+                    PrintQueryResult("Status", dbusCore.GetPlayingStatus());
+                    present = false;
+                    break;
+                case "set-position":
+                    string string_position = Core.ArgumentQueue[arg];
+                    int position = 0;
+                    try {
+                        position = Convert.ToInt32(string_position);
+                        dbusCore.SetPlayingPosition(position);
+                    } catch(Exception) {
+                        Console.WriteLine("Invalid position `{0}'. Integer value expected.", string_position);
+                    }
+                    present = false;
+                    break;
+                case "audio-cd":
+                    dbusCore.SelectAudioCd(Core.ArgumentQueue[arg]);
+                    dequeue = false;
+                    Present(dbusCore);
+                    break;
+                case "dap":
+                    dbusCore.SelectDap(Core.ArgumentQueue[arg]);
+                    dequeue = false;
+                    Present(dbusCore);
+                    break;
+                case "hide-field":
+                    dequeue = false;
+                    break;
+                }
+                
+                if(dequeue) {
+                    Core.ArgumentQueue.Dequeue(arg);
+                }
+            }
+            
+            if(present) {
+                Present(dbusCore);
+            }
+            
+            // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
+            System.GC.SuppressFinalize(dbusCore);
+            System.Environment.Exit(0);
+        }
+        
+        private static void PrintQueryResult(string field, object value)
+        {
+            if(Core.ArgumentQueue.Contains("hide-field")) {
+                Console.WriteLine(value);
+            } else {
+                Console.WriteLine("{0}: {1}", field, value);
+            }
+        }
+        
+        private static void Present(BansheeCore dbusCore)
+        {
+            dbusCore.PresentWindow();
+        }
+        
+        private static void HandleShallowCommands()
+        {
             if(Core.ArgumentQueue.Contains("print-todo")) {
                 BansheeTodo.PrintReport();
                 Console.WriteLine("");
                 System.Environment.Exit(0);
             }
             
-            if(Core.ArgumentQueue.Contains("help")) {
-                int maxNameLen = 0;
-                int maxVarLen = 0;
-
-                foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
-                    if(layout.Name.Length > maxNameLen) {
-                        maxNameLen = layout.Name.Length;
-                    }
-
-                    if(layout.ValueKind != null && layout.ValueKind.Length > maxVarLen) {
-                        maxVarLen = layout.ValueKind.Length;
-                    }
-                }
-
-                maxVarLen = maxVarLen > 0 ? maxVarLen + 3 : 0;
-                maxNameLen++;
-
-                Console.WriteLine("Usage: banshee [ options ... ]\n       where options include:\n");
-                
-                foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
-                    Console.WriteLine("  --{0,-" + maxNameLen + "} {1,-" + maxVarLen + "} {2}", 
-                        layout.Name, layout.ValueKind == null ? String.Empty : "<" 
-                        + layout.ValueKind + ">", layout.Description);
-                }
-
-                Console.WriteLine("");
-
-                return;
-            } else if(Core.ArgumentQueue.Contains("version")) {
+            if(Core.ArgumentQueue.Contains("version")) {
                 Console.WriteLine("Banshee " + ConfigureDefines.VERSION);
-                return;
+                System.Environment.Exit(0);
             }
-
-            try {
-                dbusCore = BansheeCore.FindInstance();
-            } catch(Exception) {
-                Process current_process = Process.GetCurrentProcess();
-                foreach(Process process in Process.GetProcesses()) {
-                    if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
-                        Console.WriteLine("Banshee is already running.");
-                        System.Environment.Exit(1);
-                    }
-                }
-            }
-
-            if(dbusCore != null) {
-                bool present = true;
-
-            if(args.Length > 0) {
-                foreach(string arg in Core.ArgumentQueue.Arguments) {
-                    switch(arg) {
-                        case "toggle-playing":
-                            dbusCore.TogglePlaying();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "play":
-                            dbusCore.Play();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "pause":
-                            dbusCore.Pause();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "show":
-                            dbusCore.ShowWindow();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "hide":
-                            dbusCore.HideWindow();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "next":
-                            dbusCore.Next();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "previous":
-                            dbusCore.Previous();
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-artist":
-                            Console.WriteLine("Artist: " + dbusCore.GetPlayingArtist());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-album":
-                            Core.ArgumentQueue.Dequeue(arg);
-                            Console.WriteLine("Album: " + dbusCore.GetPlayingAlbum());
-                            present = false;
-                            break;
-                        case "query-title":
-                            Console.WriteLine("Title: " + dbusCore.GetPlayingTitle());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-genre":
-                            Console.WriteLine("Genre: " + dbusCore.GetPlayingGenre());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-duration":
-                            Console.WriteLine("Duration: " + dbusCore.GetPlayingDuration());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-position":
-                            Console.WriteLine("Position: " + dbusCore.GetPlayingPosition());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-uri":
-                            Console.WriteLine("Uri: " + dbusCore.GetPlayingUri());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "query-status":
-                            Console.WriteLine("Status: " + dbusCore.GetPlayingStatus());
-                            Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "audio-cd":
-                            dbusCore.SelectAudioCd(Core.ArgumentQueue[arg]);
-                            //Core.ArgumentQueue.Dequeue(arg);
-                            present = false;
-                            break;
-                        case "ipod":
-                            Console.WriteLine("IPOD: " + Core.ArgumentQueue[arg]);
-                            break;
-                        case "burn-cd":
-                            Console.WriteLine("BURN: " + Core.ArgumentQueue[arg]);
-                            break;
-                    }
-                }
-            }
-
-            if(present)
-                dbusCore.PresentWindow();
-                // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
-                System.GC.SuppressFinalize(dbusCore);
-                return;
-            }    
-
-            System.Reflection.AssemblyName asm = 
-            System.Reflection.Assembly.GetEntryAssembly().GetName();        
-            string appname = StringUtil.UcFirst(asm.Name);
-            string version = String.Format("{0}.{1}.{2}", asm.Version.Major, 
-                asm.Version.Minor, asm.Version.Build);
-                
-            Core.Args = args;
-            Core.Instance.Program = new Program(appname, version, Modules.UI, args);
             
-            new Banshee.PlayerUI();
-            Gtk.Application.Run();
+            if(!Core.ArgumentQueue.Contains("help")) {
+                return;
+            }
+            
+            int max_name_len = 0;
+            int max_var_len = 0;
+
+            foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+                if(layout.Name.Length > max_name_len) {
+                    max_name_len = layout.Name.Length;
+                }
+
+                if(layout.ValueKind != null && layout.ValueKind.Length > max_var_len) {
+                    max_var_len = layout.ValueKind.Length;
+                }
+            }
+
+            max_var_len = max_var_len > 0 ? max_var_len + 3 : 0;
+            max_name_len++;
+
+            Console.WriteLine("Usage: banshee [ options ... ]\n       where options include:\n");
+
+            foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+                Console.WriteLine("  --{0,-" + max_name_len + "} {1,-" + max_var_len + "} {2}", 
+                    layout.Name, layout.ValueKind == null 
+                        ? String.Empty 
+                        : "<" + layout.ValueKind + ">", layout.Description);
+            }
+
+            Console.WriteLine("");
+            
+            System.Environment.Exit(0);
         }
     }
 }

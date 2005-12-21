@@ -123,7 +123,7 @@ namespace Banshee
         public virtual void TogglePlaying()
         {
             if(PlayerUI != null) {
-                PlayerUI.TogglePlaying();
+                PlayerUI.PlayPause();
             }
         }
         
@@ -135,11 +135,11 @@ namespace Banshee
             }
             
             if(PlayerUI != null && !HaveTrack) {
-                PlayerUI.TogglePlaying();
+                PlayerUI.PlayPause();
             }
             
             if(!core.Player.Playing) {
-                PlayerUI.TogglePlaying();
+                PlayerUI.PlayPause();
             }
         }
         
@@ -147,7 +147,7 @@ namespace Banshee
         public virtual void Pause()
         {
             if(HaveTrack && core.Player.Playing) {
-                PlayerUI.TogglePlaying();
+                PlayerUI.PlayPause();
             }
         }
         
@@ -175,6 +175,14 @@ namespace Banshee
             }
         }
         
+        [Method]
+        public virtual void SelectDap(string device)
+        {
+            if(PlayerUI != null) {
+                PlayerUI.SelectDap(device);
+            }
+        }
+        
         private bool HaveTrack {
             get {
                 return PlayerUI != null && PlayerUI.ActiveTrackInfo != null;
@@ -184,31 +192,31 @@ namespace Banshee
         [Method]
         public virtual string GetPlayingArtist()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Artist : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.Artist : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingAlbum()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Album : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.Album : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingTitle()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Title : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.Title : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingGenre()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Genre : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.Genre : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingUri()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Uri.AbsoluteUri : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.Uri.AbsoluteUri : String.Empty;
         }
         
         [Method]
@@ -226,7 +234,7 @@ namespace Banshee
         [Method]
         public virtual string GetPlayingCoverArtFileName()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : null;
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
         }
         
         [Method]

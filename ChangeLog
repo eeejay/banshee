@@ -1,5 +1,16 @@
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Main.cs: Refactored, organized, and cleaned up the entry
+	code, command line parsing, and instance detection; added three new
+	command line arguments: --set-position, --hide-field, and --dap
+
+	* src/DBusIPC.cs: Added a SelectDap method akin to SelectAudioCd, works
+	with --dap %h (for Gnome Volume Manager); for any D-Bus methods that
+	return string, ensure null is not returned to avoid dbus-sharp bug (return
+	String.Empty instead)
+
+2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Main.cs: if D-Bus support is disabled, fall back on process 
 	checking to do instance detection
 
