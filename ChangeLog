@@ -1,3 +1,17 @@
+2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/NetworkDetect.cs: Do not try to Dispose a null
+	NetworkManager.Manager object
+
+	* src/DBusIPC.cs: Do not die when D-Bus can't be found; log a warning and
+	continue to load the player, but some features will probably be disabled:
+
+	   IPC commands and queries / instance detection (Session Bus)
+	   HAL (System Bus)
+	     - Audio CD detection
+	     - DAP detection
+	   NetworkManager (System Bus)
+
 2005-12-20  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

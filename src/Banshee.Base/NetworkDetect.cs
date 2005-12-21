@@ -61,7 +61,9 @@ namespace Banshee.Base
         
         public void Dispose()
         {
-            nm_manager.Dispose();
+            if(nm_manager != null) {
+                nm_manager.Dispose();
+            }
         }
         
         private NetworkDetect()

@@ -29,6 +29,7 @@
  
 using System;
 using DBus;
+using Banshee.Base;
 
 namespace Banshee
 {
@@ -49,17 +50,27 @@ namespace Banshee
         
         public DBusServer()
         {
-            service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
+            try {
+                service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
+            } catch(Exception e) {
+                LogCore.Instance.PushWarning("Could not connect to D-Bus", 
+                    "D-Bus support will be disabled for this instance: " + e.Message,
+                    false);
+            }
         }
         
         public void RegisterObject(object o, string path)
         {
-            service.RegisterObject(o, path);
+            if(service != null) {
+                service.RegisterObject(o, path);
+            }
         }
         
         public void UnregisterObject(object o)
         {
-            service.UnregisterObject(o);
+            if(service != null) {
+                service.UnregisterObject(o);
+            }
         }
     }
     
