@@ -30,6 +30,8 @@
 using System;
 using Gnome;
 using Banshee.Base;
+using System.Diagnostics;
+
 namespace Banshee
 {    
     public class BansheeEntry
@@ -114,7 +116,15 @@ namespace Banshee
 
             try {
                 dbusCore = BansheeCore.FindInstance();
-            } catch { }
+            } catch(Exception) {
+                Process current_process = Process.GetCurrentProcess();
+                foreach(Process process in Process.GetProcesses()) {
+                    if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
+                        Console.WriteLine("Banshee is already running.");
+                        System.Environment.Exit(1);
+                    }
+                }
+            }
 
             if(dbusCore != null) {
                 bool present = true;

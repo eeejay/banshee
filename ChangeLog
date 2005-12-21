@@ -1,5 +1,8 @@
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Main.cs: if D-Bus support is disabled, fall back on process 
+	checking to do instance detection
+
 	* src/Banshee.Base/NetworkDetect.cs: Do not try to Dispose a null
 	NetworkManager.Manager object
 
