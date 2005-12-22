@@ -1,5 +1,7 @@
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Do not generate src/ipod-sharp.dll.config
+
 	* en/*: Updated docs
 
 	* configure.ac: Version 0.10.2

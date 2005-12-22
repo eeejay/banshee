@@ -368,7 +368,6 @@ src/banshee
 src/Makefile
 src/AssemblyInfo.cs
 src/banshee.exe.config
-src/ipod-sharp.dll.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
 src/GtkSharpBackports/Makefile
