@@ -1,7 +1,132 @@
-Banshee 0.10
+Banshee 0.10.2 is out!
 
-See the Banshee Wiki for release information and other details:
+This release adds NJB support, Audioscrobbler support, Audio CD progress/status 
+reporting for fetching metadata and cover art, a local file source, better 
+D-Bus handling, minor UI changes, and many bugfixes.
 
-   http://banshee-project.org/
+Please do not hesitate to file bugs against Banshee in GNOME Bugzilla
+(http://bugzilla.gnome.org, component: banshee), or discuss Banshee on
+this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to
+everyone for viewing and editing is located at
+http://banshee-project.org.
 
 
+NEW FEATURES
+------------
+
+# NJB Support [1].
+
+# Much better menus: reflect current context along with buttons and context 
+menus thanks to the move to GtkUIManager/GtkAction
+
+# Redesigned metadata header to display title with emphasis, artist, and album.
+
+# First version of basic generic plugin support [2].
+
+# Added Chris Toshok's Audioscrobbler plugin [3].
+
+# NetworkManager support: if NetworkManager is available, it can be used to 
+notify parts of Banshee when a connection is available
+
+# New status reporting for fetching Audio CD metadata. Will alert user when 
+metadata cannot be found, if server could not be contacted, or if no connection 
+is available, with the option to manually refresh. Will automatically refresh 
+if NetworkManager is available.
+
+# More command line options, specifically the --enqueue option that allows 
+local files to be played without importing them. The desktop file was updated 
+to exec: banshee --play --enqueue %U.
+
+# Better D-Bus handling. Banshee should not exit or fail to start if the D-Bus 
+session (or system) bus is not available.
+
+
+IMPORTANT NOTES
+---------------
+
+[1] For NJB support, libnjb (http://libnjb.sourceforge.net) and njb-sharp 
+(http://banshee-project.org/Subprojects/Njb-sharp) must be installed. 
+njb-sharp 0.2.1 was released.
+
+[2] Plugin assemblies can now be created by linking against Banshee.Base.dll
+ and implementing the Banshee.Plugins.Plugin abstract class. Plugin assemblies 
+ can be placed in either $(pkglibdir)/banshee/Banshee.Plugins/ 
+ or ~/.gnome2/banshee/plugins/
+
+[3] The Audioscrobbler plugin is experimental and is disabled by default. 
+To enable and configure it, run these three commands:
+
+$ gconftool-2 --type bool --set /apps/Banshee/Audioscrobbler/Enabled true
+$ gconftool-2 --type string --set /apps/Banshee/Audioscrobbler/Username <username>
+$ gconftool-2 --type string --set /apps/Banshee/Audioscrobbler/Password <last.fm password in plaintext>
+
+The password must be provided in plaintext, so make sure your Last.fm password 
+is not very sensitive, or do not enable this. See Chris Toshok's blog entry 
+for details: http://squeedlyspooch.com/blog/archives/002017.html
+
+
+MAJOR BUG FIXES
+---------------
+
+# Banshee will now run if any bus in D-Bus (session/system) is unavailable, 
+though features may be disabled (BGO #323766)
+
+# Update .desktop Comment to Adhere to HIG (Gabriel Burt) (BGO #324247)
+
+# "banshee --query-artist" let banshee crash (BGO #324354)
+
+# Tray icon crash due to bug exposed by Mono 1.1.11 (BGO #324394)
+
+
+THE IMPORTANT LINKS
+-------------------
+
+Release Overview Page:
+http://banshee-project.org/Releases/0.10.2
+
+Banshee 0.10.2 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.10.2.tar.gz
+
+njb-sharp 0.2.1 Tarball:
+http://banshee-project.org/files/njb-sharp/njb-sharp-0.2.1.tar.gz
+
+ipod-sharp 0.5.12 Tarball:
+http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.12.tar.gz
+
+libipoddevice 0.3.5 Tarball:
+http://banshee-project.org/files/libipoddevice/libipoddevice-0.3.5.tar.gz
+
+Banshee Wiki: 
+http://banshee-project.org/
+
+
+DEPENDENCIES
+------------
+
+- Mono 1.1.10 and full stack
+- gtk-sharp-2.0 (2.3.92)
+- sqlite3
+- GStreamer 0.8.11 or GStreamer 0.10 (experimental)
+- libmusicbrainz 2.1.1 or better
+- libnautilus-burn 2.12
+- GTK+ 2.6 or better
+- HAL 0.5.2 or better
+
+
+MORE NOTES
+----------
+
+# Bindings to the VLC libraries have been implemented and are available
+as a Banshee Media Engine. To use the VLC engine, pass --enable-vlc to
+configure. Additionally, libvlc.so must be copied to
+banshee/mediaengines/vlc before running "make install". To build
+libvlc.so, download and build Jon Lech Johansen's snd123:
+
+http://nanocrew.net/2005/09/20/snd123/
+
+Copy the resulting libvlc.so to the aforementioned build directory, and
+proceed with building Banshee as normal. Keep in mind, VLC support is
+optional. Banshee also supports GStreamer and Helix engines. GStreamer
+is required, and Helix is optional, but will be automatically detected
+and configured if your system is set up properly with either RealPlayer
+or Helix Player. See http://helixcommunity.org/

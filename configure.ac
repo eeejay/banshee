@@ -5,7 +5,7 @@ AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
-VERSION=0.10.1
+VERSION=0.10.2
 ASM_VERSION="$VERSION.*"
 
 AM_INIT_AUTOMAKE(banshee, $VERSION)
@@ -154,7 +154,7 @@ if test "x$enable_ipodsharp" = "xyes"; then
 fi
 AM_CONDITIONAL(ENABLE_IPOD, test "x$enable_ipodsharp" = "xyes")
 
-NJBSHARP_REQUIRED=0.2
+NJBSHARP_REQUIRED=0.2.1
 PKG_CHECK_MODULES(NJBSHARP,
 	njb-sharp >= $NJBSHARP_REQUIRED,
 	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)

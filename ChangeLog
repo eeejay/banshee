@@ -1,3 +1,9 @@
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Version 0.10.2
+
+	* NEWS: Updated with 0.10.2 release notes
+
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Plugin class
