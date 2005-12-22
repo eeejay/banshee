@@ -202,16 +202,27 @@ public class NotificationAreaIcon : Plug
 
     private FilterReturn ManagerFilter (IntPtr xevent, Event evnt)
     {
-        XEvent xev = (XEvent) Marshal.PtrToStructure (xevent, typeof(XEvent));
+        XAnyEvent xev = (XAnyEvent) Marshal.PtrToStructure (xevent, typeof(XAnyEvent));
         
-        if (xev.xany.type == XEventName.ClientMessage 
-                && (int) xev.xclient.message_type == manager_atom 
-                && (int) xev.xclient.data.ptr2 == selection_atom) {
-            UpdateManagerWindow (true);
-        } else if (xev.xany.window == manager_window) {
-            if (xev.xany.type == XEventName.PropertyNotify && xev.xproperty.atom == orientation_atom) {
-                GetOrientationProperty();
-            } else if (xev.xany.type == XEventName.DestroyNotify) {
+        if (xev.type == XEventName.ClientMessage){
+			XClientMessageEvent xclient = (XClientMessageEvent) Marshal.PtrToStructure (xevent, typeof(XClientMessageEvent));
+
+			if ((int) xclient.message_type == manager_atom && (int) xclient.data.ptr2 == selection_atom) {
+				UpdateManagerWindow (true);
+				return FilterReturn.Continue;
+			}
+		}
+
+        if (xev.window == manager_window) {
+            if (xev.type == XEventName.PropertyNotify){
+				XPropertyEvent xproperty = (XPropertyEvent) Marshal.PtrToStructure (xevent, typeof(XPropertyEvent));
+				if (xproperty.atom == orientation_atom) {
+					GetOrientationProperty();
+					return FilterReturn.Continue;
+				}
+            }
+
+			if (xev.type == XEventName.DestroyNotify) {
                 ManagerWindowDestroyed();
             }
         }
@@ -401,14 +412,6 @@ public class NotificationAreaIcon : Plug
 	    LASTAtom
 	}
 	
-	[StructLayout(LayoutKind.Explicit)]
-	private struct XEvent 
-	{
-	    [FieldOffset(0)] public XAnyEvent            xany;
-	    [FieldOffset(0)] public XPropertyEvent       xproperty;
-	    [FieldOffset(0)] public XClientMessageEvent  xclient;
-	}
-
 	[StructLayout(LayoutKind.Sequential)]
 	private struct XAnyEvent 
 	{

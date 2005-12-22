@@ -1,3 +1,14 @@
+2005-12-22  Miguel de Icaza  <miguel@novell.com>
+
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: More fixing of
+	miss-uses.  
+
+2005-12-19  Miguel de Icaza  <miguel@novell.com>
+
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Fix the miss-use of
+	unions and string marshalling.  This should now run with Mono
+	1.1.11 
+
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Makefile.am: Remove Banshee.Plugins dir on uninstall
