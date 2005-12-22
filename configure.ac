@@ -390,6 +390,9 @@ src/Banshee.Dap/Ipod/Makefile
 src/Banshee.Dap/Ipod/ipod-sharp.dll.config
 src/Banshee.Dap/Njb/Makefile
 src/Banshee.Dap/Njb/njb-sharp.dll.config
+src/Banshee.Plugins/Makefile
+src/Banshee.Plugins/Audioscrobbler/Makefile
+src/Banshee.Plugins/Audioscrobbler/Audioscrobbler.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

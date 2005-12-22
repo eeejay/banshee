@@ -62,6 +62,18 @@ namespace Banshee.Base
             }
         }
         
+        public static string SystemPluginDirectory {
+            get {
+                return Path.Combine(ConfigureDefines.InstallDir, "Banshee.Plugins") + Path.DirectorySeparatorChar;
+            }
+        }
+        
+        public static string UserPluginDirectory {
+            get {
+                return Path.Combine(ApplicationData, "plugins") + Path.DirectorySeparatorChar;
+            }
+        }
+        
         public static string GetCoverArtPath(string asin)
         {
             return CoverArtDirectory + asin + ".jpg";

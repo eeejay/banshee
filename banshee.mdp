@@ -165,6 +165,12 @@
     <File name="./src/DapPropertiesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Widgets/HighlightMessageArea.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/Audioscrobbler/Engine.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/PlayerEngineCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Plugins" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Plugins/Plugin.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Plugins/PluginCore.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

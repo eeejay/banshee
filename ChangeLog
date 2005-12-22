@@ -1,3 +1,37 @@
+2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Plugin class
+	for Chris Toshok's Audioscrobbler support
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: toshok's Audioscrobbler
+	protocol implementation/engine class
+
+	* src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in: GConf
+	schemas for the Audioscrobbler plugin
+
+	* src/Banshee.Plugins/Audioscrobbler/Audioscrobbler.dll.config.in: DLL
+	maps for the Audioscrobbler.dll plugin
+
+	* src/Banshee.Plugins/Makefile.am: Added Audioscrobbler to SUBDIRS
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Simple generic plugin base class
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Core to load/unload plugins
+	at runtime from types in assemblies that implement Banshee.Plugins.Plugin
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Generate necessary files for Audioscrobbler plugin
+
+	* src/AboutBox.cs: Added Chris Toshok and Jeff Tickle
+
+	* src/Makefile.am: Added Banshee.Plugins to SUBDIRS
+
+	* src/Banshee.Base/Globals.cs: Initialize/Dispose PluginCore
+
+	* src/Banshee.Base/Paths.cs: Added SystemPluginDirectory 
+	and UserPluginDirectory paths
+
 2005-12-21  Jeff Tickle <jeff@jefftickle.com>
 
 	* src/PlayerInterface.cs: Resurrected the Repeat Toggle Button

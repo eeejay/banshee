@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/apps/Banshee/Audioscrobbler/Enabled</key>
+      <applyto>/apps/Banshee/Audioscrobbler/Enabled</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Enable the Audioscrobbler plugin</short>
+        <long></long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Audioscrobbler/Username</key>
+      <applyto>/apps/Banshee/Audioscrobbler/Username</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>Your last.fm username</short>
+        <long></long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Audioscrobbler/Password</key>
+      <applyto>/apps/Banshee/Audioscrobbler/Password</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>Your last.fm password</short>
+        <long></long>
+      </locale>
+    </schema>
+  </schemalist>
+</gconfschemafile>

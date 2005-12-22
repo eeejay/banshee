@@ -48,7 +48,9 @@ namespace Banshee
             "Larry Ewing",
             "Miguel de Icaza",
             "Aydemir Ula\u015f \u015eahin",
-            "Do\u011facan G\u00fcney"
+            "Do\u011facan G\u00fcney",
+            "Chris Toshok",
+            "Jeff Tickle"
         };
         
         private static string [] Artists = {

@@ -4,7 +4,8 @@ SUBDIRS = \
 	Banshee.Widgets \
 	Banshee.Base \
 	Banshee.MediaEngine \
-	Banshee.Dap
+	Banshee.Dap \
+	Banshee.Plugins
 
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 

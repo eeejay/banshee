@@ -43,7 +43,9 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Dap/DapMisc.cs \
 	$(srcdir)/NetworkManager/Manager.cs \
 	$(srcdir)/NetworkManager/Device.cs \
-	$(srcdir)/NetworkManager/Network.cs
+	$(srcdir)/NetworkManager/Network.cs \
+	$(srcdir)/Plugins/Plugin.cs \
+	$(srcdir)/Plugins/PluginCore.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
