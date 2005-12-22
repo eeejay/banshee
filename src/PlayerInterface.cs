@@ -352,6 +352,17 @@ namespace Banshee
             shuffle_button.IconSize = IconSize.Menu;
             shuffle_button.Relief = ReliefStyle.None;
             shuffle_button.ShowAll();
+
+            repeat_toggle_button = new MultiStateToggleButton();
+            repeat_toggle_button.AddState(typeof(RepeatNoneToggleState),
+                Globals.ActionManager["RepeatNoneAction"] as ToggleAction);
+            repeat_toggle_button.AddState(typeof(RepeatAllToggleState),
+                Globals.ActionManager["RepeatAllAction"] as ToggleAction);
+            repeat_toggle_button.AddState(typeof(RepeatSingleToggleState),
+                Globals.ActionManager["RepeatSingleAction"] as ToggleAction);
+            repeat_toggle_button.Relief = ReliefStyle.None;
+            repeat_toggle_button.ShowLabel = false;
+            repeat_toggle_button.ShowAll();
             
             ActionButton song_properties_button = new ActionButton(Globals.ActionManager["PropertiesAction"]);
             song_properties_button.IconSize = IconSize.Menu;
@@ -360,6 +371,7 @@ namespace Banshee
             song_properties_button.ShowAll();
             
             (gxml["BottomToolbar"] as Box).PackStart(shuffle_button, false, false, 0);
+            (gxml["BottomToolbar"] as Box).PackStart(repeat_toggle_button, false, false, 0);
             (gxml["BottomToolbar"] as Box).PackStart(LabelStatusBar, true, true, 0);
             (gxml["BottomToolbar"] as Box).PackStart(song_properties_button, false, false, 0);
             
@@ -449,18 +461,7 @@ namespace Banshee
                 
             // Repeat/Shuffle buttons
             
-           /* repeat_toggle_button = new MultiStateToggleButton();
-            repeat_toggle_button.AddState(typeof(RepeatNoneToggleState), gxml["ItemRepeatNone"] as RadioMenuItem);
-            repeat_toggle_button.AddState(typeof(RepeatAllToggleState), gxml["ItemRepeatAll"] as RadioMenuItem);
-            repeat_toggle_button.AddState(typeof(RepeatSingleToggleState), gxml["ItemRepeatSingle"] as RadioMenuItem);
-            repeat_toggle_button.Relief = ReliefStyle.None;
-            repeat_toggle_button.ShowLabel = false;
-            repeat_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
-                //HandleRepeatToggleButton();
-            };
-            repeat_toggle_button.ShowAll();
-                
-            shuffle_toggle_button = new MultiStateToggleButton();
+            /* shuffle_toggle_button = new MultiStateToggleButton();
             shuffle_toggle_button.AddState(typeof(ShuffleDisabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, false);
             shuffle_toggle_button.AddState(typeof(ShuffleEnabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, true);
             shuffle_toggle_button.Relief = ReliefStyle.None;
@@ -468,10 +469,7 @@ namespace Banshee
             shuffle_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
                 //HandleShuffleToggleButton();
             };
-            shuffle_toggle_button.ShowAll();
-            
-            (gxml["ShuffleButtonContainer"] as Container).Add(shuffle_toggle_button);
-            (gxml["RepeatButtonContainer"] as Container).Add(repeat_toggle_button);*/
+            shuffle_toggle_button.ShowAll();*/
                 
             toolTips = new Tooltips();
             

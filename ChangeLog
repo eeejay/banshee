@@ -1,3 +1,12 @@
+2005-12-21  Jeff Tickle <jeff@jefftickle.com>
+
+	* src/PlayerInterface.cs: Resurrected the Repeat Toggle Button
+	down in the bottom-left; it now works properly with Gtk.ToggleAction
+
+	* src/Banshee.Widgets/MultiStateToggleButton.cs:
+	* src/Banshee.Widgets/ToggleState.cs: Removed all the menu action
+	crap and replaced it with Gtk.ToggleAction support
+
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Core.cs: Remove all IPlayerEngine code as it is now in Banshee.Base

@@ -49,8 +49,6 @@ namespace Banshee.Widgets
         private HBox box = new HBox();
         private Image icon = new Image();
         private Label label = new Label();
-        private int ignore_menu_toggle = 0;
-        private bool is_boolean = false;
         
         public event ToggleStateChangedHandler Changed;
         
@@ -92,39 +90,6 @@ namespace Banshee.Widgets
             label.Text = this[ActiveStateIndex].Label;
         }
         
-        private Type FindStateTypeFromMenuItem(CheckMenuItem item)
-        {
-            foreach(ToggleState state_instance in states) {
-                if(state_instance.MenuItem.GetHashCode() == item.GetHashCode()) {
-                    return state_instance.GetType();
-                }
-            }
-            
-            return null;
-        }
-        
-        private Type FindBooleanFalseState()
-        {
-            foreach(ToggleState state_instance in states) {
-                if(!state_instance.CheckActive) {
-                    return state_instance.GetType();
-                }
-            }
-            
-            return null;
-        }
-        
-        private Type FindBooleanTrueState()
-        {
-            foreach(ToggleState state_instance in states) {
-                if(state_instance.CheckActive) {
-                    return state_instance.GetType();
-                }
-            }
-            
-            return null;        
-        }
-        
         private void EmitChanged()
         {
             ToggleStateChangedHandler handler = Changed;
@@ -135,44 +100,21 @@ namespace Banshee.Widgets
             }
         }
         
-        private void OnMenuItemToggled(object o, EventArgs args)
-        {
-            if(ignore_menu_toggle > 0) {
-                return;
-            }
-            
-            CheckMenuItem item = o as CheckMenuItem;
-            
-            if(!is_boolean) {
-                if(!item.Active) {
-                    return;
-                }
-                
-                ActiveState = FindStateTypeFromMenuItem(item);
-                EmitChanged();
-            } else {
-                ActiveState = item.Active ? FindBooleanTrueState() : FindBooleanFalseState();
-                EmitChanged();
-            }
-        }
-        
         protected override void OnClicked()
         {
             Cycle();
-            
-            if(is_boolean) {
-                ignore_menu_toggle++;
-                if(ActiveState == FindBooleanFalseState()) {
-                    this[ActiveState].MenuItem.Active = false;
-                } else {
-                    this[ActiveState].MenuItem.Active = true;
+            if(this[ActiveStateIndex].ToggleAction != null) {
+                this[ActiveStateIndex].ToggleAction.Active = true;
+            }
+            EmitChanged();
+        }
+
+        public void OnToggleAction(object o, EventArgs args)
+        {
+            foreach(ToggleState state_instance in states) {
+                if(state_instance.ToggleAction.GetHashCode().Equals(o.GetHashCode())) {
+                    ActiveState = state_instance.GetType();
                 }
-                ignore_menu_toggle--;
-                EmitChanged();
-            } else if(ContainsState(ActiveState)) {
-                this[ActiveState].MenuItem.Active = this[ActiveState].CheckActive;
-            } else {
-                EmitChanged();
             }
         }
         
@@ -226,25 +168,17 @@ namespace Banshee.Widgets
             ToggleState state_instance = Activator.CreateInstance(state) as ToggleState;
             states.Add(state_instance);
             
-            is_boolean = states.Count == 2;
-            
             return state_instance;
-        }
-        
-        public ToggleState AddState(Type state, CheckMenuItem menuItem, bool checkActive)
-        {
-            ToggleState state_instance = AddState(state);
-            state_instance.MenuItem = menuItem;
-            state_instance.CheckActive = checkActive;
-            menuItem.Toggled += OnMenuItemToggled;
-            return state_instance;
-        }
-        
-        public ToggleState AddState(Type state, CheckMenuItem menuItem)
-        {
-            return AddState(state, menuItem, true);
         }
 
+        public ToggleState AddState(Type state, ToggleAction toggleAction)
+        {
+            ToggleState toggle_state = AddState(state);
+            toggle_state.ToggleAction = toggleAction;
+            toggleAction.Activated += OnToggleAction;
+            return toggle_state;
+        }
+        
         public ToggleState this [int index] {
             get {
                 return states[index] as ToggleState;
@@ -294,9 +228,6 @@ namespace Banshee.Widgets
                     if(states[i].GetType() == value) {
                         active_state_index = i;
                         UpdateButton(false);
-                        ignore_menu_toggle++;
-                        this[ActiveState].MenuItem.Active = this[ActiveState].CheckActive;
-                        ignore_menu_toggle--;
                         return;
                     }
                 }

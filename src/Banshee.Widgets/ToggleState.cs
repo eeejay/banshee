@@ -36,20 +36,20 @@ namespace Banshee.Widgets
     {
         private Gdk.Pixbuf icon;
         private string label;
-        private CheckMenuItem menu_item;
+        private ToggleAction toggle_action;
         private bool check_active;
         
         protected ToggleState()
         {
         }
         
-        internal CheckMenuItem MenuItem {
+        internal ToggleAction ToggleAction {
             get {
-                return menu_item;
+                return toggle_action;
             }
             
             set {
-                menu_item = value;
+                toggle_action = value;
             }
         }
         
