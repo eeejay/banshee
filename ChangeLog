@@ -1,5 +1,10 @@
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Changed
+	wording of 'Home page' to 'Profile page'
+
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/UIManagerLayout.xml: Added a placeholder for plugins to insert

@@ -82,8 +82,8 @@ namespace Banshee.Plugins.Audioscrobbler
                     Catalog.GetString("Configure the Audioscrobbler plugin"), OnConfigurePlugin),
                 
                 new ActionEntry("AudioscrobblerVisitAction", null,
-                    Catalog.GetString("Visit Home Page"), null,
-                    Catalog.GetString("Visit your Audioscrobbler page"), OnVisitHomePage)
+                    Catalog.GetString("Visit Profile Page"), null,
+                    Catalog.GetString("Visit your Audioscrobbler profile page"), OnVisitHomePage)
             });
             
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
