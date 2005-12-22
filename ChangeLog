@@ -1,5 +1,7 @@
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Plugins/Makefile.am: Remove Banshee.Plugins dir on uninstall
+
 	* configure.ac: Do not generate src/ipod-sharp.dll.config
 
 	* en/*: Updated docs
