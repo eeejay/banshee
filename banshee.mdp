@@ -17,7 +17,6 @@
     <excludeFiles />
   </DeploymentInformation>
   <Contents>
-    <File name="./" subtype="Directory" buildaction="Nothing" />
     <File name="./src" subtype="Directory" buildaction="Nothing" />
     <File name="./src/AboutBox.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/AmazonSearchService.cs" subtype="Code" buildaction="Nothing" />
@@ -165,6 +164,7 @@
     <File name="./src/Banshee.Dap/Njb/NjbDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DapPropertiesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Widgets/HighlightMessageArea.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

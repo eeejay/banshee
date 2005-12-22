@@ -1,5 +1,33 @@
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.desktop.in.in: Updated Exec pattern
+
+	* src/Library.cs: Added new source for the "Frobinator", LocalQueueSource
+
+	* src/Main.cs: Support --enqueue
+
+	* src/Makefile.am: Added FileTrackInfo.cs
+
+	* src/FileTrackInfo.cs: New TrackInfo class that works only with local
+	files; does not touch the Library
+
+	* src/PlayerInterface.cs: Select the Frobinator if it is filled as the
+	default source; Support the Frobinator when changing sources
+
+	* src/PlaylistModel.cs (LoadFromLocalQueue): Support loading from the
+	the Frobinator
+
+	* src/SourceView.cs: Support adding the Frobinator as a source
+
+	* src/Banshee.Base/ArgumentQueue.cs: Added "File" support with the 
+	--enqueue option... it is very special
+
+	* src/Banshee.Base/Dap/Dap.cs: Fixed minor bug with GetIcon
+
+2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Main.cs: Refactored, organized, and cleaned up the entry
 	code, command line parsing, and instance detection; added three new
 	command line arguments: --set-position, --hide-field, and --dap

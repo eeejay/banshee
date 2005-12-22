@@ -138,6 +138,10 @@ namespace Banshee
             store.Clear();
             store.AppendValues(new LibrarySource());
             
+            if(LocalQueueSource.Instance.Count > 0) {
+                store.AppendValues(LocalQueueSource.Instance);
+            }
+            
             if(Core.Instance.AudioCdCore != null) {
                 try {
                     foreach(AudioCdDisk disk in Core.Instance.AudioCdCore.Disks)
@@ -554,6 +558,9 @@ namespace Banshee
                     break;
                 case SourceType.AudioCd:
                     icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
+                    break;
+                case SourceType.LocalQueue:
+                    icon = IconThemeUtils.LoadIcon(22, "source-localqueue");
                     break;
                 case SourceType.Library:
                 default:

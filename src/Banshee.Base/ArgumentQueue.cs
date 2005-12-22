@@ -53,29 +53,44 @@ namespace Banshee.Base
     {
         private ArgumentLayout [] availableArgs; 
         private Hashtable args = new Hashtable();
+        private ArrayList files = new ArrayList();
 
-        public ArgumentQueue(ArgumentLayout [] availableArgs, string [] args)
+        public ArgumentQueue(ArgumentLayout [] availableArgs, string [] args, string enqueueArg)
         {
             this.availableArgs = availableArgs;
         
             for(int i = 0; i < args.Length; i++) {
                 string arg = null, val = String.Empty;
-                
+        
+                if(args[i] == "--" + enqueueArg && i < args.Length - 1) {
+                    for(int j = i + 1; j < args.Length; j++) {
+                        EnqueueFile(args[j]);
+                    };
+                    break;
+                }
+        
                 if(args[i].StartsWith("--")) {
                     arg = args[i].Substring(2);
                 }
 
-                if(i < args.Length - 1) {
+                if(i < args.Length - 1 && arg != null) {
                     if(!args[i + 1].StartsWith("--")) {
                         val = args[i + 1];
                         i++;
                     }
                 }
-
+                
                 if(arg != null) {
                     Enqueue(arg, val);
+                } else {
+                    EnqueueFile(args[i]);
                 }
             }
+        }
+
+        public void EnqueueFile(string file)
+        {
+            files.Add(file);
         }
 
         public void Enqueue(string arg)
@@ -115,6 +130,12 @@ namespace Banshee.Base
             get {
                 ArrayList list = new ArrayList(args.Keys);
                 return list.ToArray(typeof(string)) as string [];
+            }
+        }
+
+        public string [] Files {
+            get {
+                return files.ToArray(typeof(string)) as string [];
             }
         }
 

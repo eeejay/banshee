@@ -511,7 +511,7 @@ namespace Banshee.Dap
         {
             Gdk.Pixbuf pixbuf = IconThemeUtils.LoadIcon("multimedia-player", size);
             if(pixbuf == null) {
-                IconThemeUtils.LoadIcon("gnome-dev-ipod", size);
+                return IconThemeUtils.LoadIcon("gnome-dev-ipod", size);
             }
             
             return pixbuf;

@@ -145,6 +145,14 @@ namespace Banshee
                 RaiseUpdated(this, new EventArgs());
             }
         }
+        
+        public void LoadFromLocalQueue()
+        {
+            ClearModel();
+            foreach(TrackInfo ti in LocalQueueSource.Instance.Tracks) {
+                AddTrack(ti, false);
+            }
+        }
 
         public void LoadFromPlaylist(string name)
         {

@@ -610,7 +610,9 @@ namespace Banshee
                 startupLoadReady = false;
                 LoadSourceView();
 
-                if(Core.ArgumentQueue.Contains("audio-cd")) {
+                if(LocalQueueSource.Instance.Count > 0) {
+                    sourceView.SelectSource(LocalQueueSource.Instance);
+                } else if(Core.ArgumentQueue.Contains("audio-cd")) {
                     SelectAudioCd(Core.ArgumentQueue.Dequeue("audio-cd"));
                 } else if(Core.ArgumentQueue.Contains("dap")) {
                     SelectDap(Core.ArgumentQueue.Dequeue("dap"));
@@ -777,6 +779,10 @@ namespace Banshee
         public void PlayFile(TrackInfo ti)
         {
             Core.Instance.Player.Close();
+            
+            if(ti.Uri == null) {
+                return;
+            }
             
             if(ti.Uri.Scheme == "cdda") {
                 Core.Instance.LoadCdPlayer();
@@ -1242,6 +1248,9 @@ namespace Banshee
             
             if(source is LibrarySource) {
                 playlistModel.LoadFromLibrary();
+                playlistModel.Source = source;
+            } else if(source is LocalQueueSource) {
+                playlistModel.LoadFromLocalQueue();
                 playlistModel.Source = source;
             } else if(source is DapSource) {
                 playlistModel.Clear();

@@ -71,7 +71,8 @@ banshee_sources = \
 	FileSystemMonitor/InotifyWatch.cs \
 	FileSystemMonitor/FileSystemWatcherWatch.cs \
 	ToggleStates.cs \
-	DapPropertiesDialog.cs
+	DapPropertiesDialog.cs \
+	FileTrackInfo.cs
 
 banshee_resources = \
 	COPYING \

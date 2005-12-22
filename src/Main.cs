@@ -59,6 +59,7 @@ namespace Banshee
         private static void Startup(string [] args)
         {
             Core.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
+                new ArgumentLayout("enqueue <files>","Files to enqueue, must be last argument specified"),
                 new ArgumentLayout("show",           "Show window"),
                 new ArgumentLayout("hide",           "Hide window"),
                 new ArgumentLayout("next",           "Play next song"),
@@ -79,12 +80,12 @@ namespace Banshee
                 new ArgumentLayout("audio-cd <dev>", "Start Banshee and/or select source mapped to <device>"),
                 new ArgumentLayout("dap <dev>",      "Start Banshee and/or select source mapped to <device>"),
                 new ArgumentLayout("version",        "Show Banshee Version")
-            }, args);
+            }, args, "enqueue");
 
             HandleShallowCommands();
             BansheeCore dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
-
+            
             Core.Args = args;
             Core.Instance.Program = new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), 
                 ConfigureDefines.VERSION, Modules.UI, args);

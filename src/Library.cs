@@ -191,7 +191,8 @@ namespace Banshee
         Playlist = 2,
         Ipod = 3,
         AudioCd = 4,
-        Dap = 5
+        Dap = 5,
+        LocalQueue = 6
     }
 
     public abstract class Source
@@ -286,6 +287,54 @@ namespace Banshee
                 return Core.Library.Tracks.Count;    
             }
         }
+    }
+    
+    public class LocalQueueSource : Source
+    {
+        private ArrayList tracks = new ArrayList();
+        
+        private static LocalQueueSource instance;
+        public static LocalQueueSource Instance {
+            get {
+                if(instance == null) {
+                    instance = new LocalQueueSource();
+                }
+                
+                return instance;
+            }
+        }
+        
+        public LocalQueueSource() : base(Catalog.GetString("The Frobnicator"), SourceType.LocalQueue)
+        {
+            canRename = false;
+            
+            foreach(string file in Core.ArgumentQueue.Files) {
+                try {
+                    Uri uri = file.StartsWith("file://") ? new Uri(file) : PathUtil.PathToFileUri(file);
+                    if(!System.IO.File.Exists(uri.LocalPath)) {
+                        uri = PathUtil.PathToFileUri(System.Environment.CurrentDirectory + 
+                            System.IO.Path.DirectorySeparatorChar + file);
+                    }
+                    
+                    tracks.Add(new FileTrackInfo(uri));
+                } catch(Exception e) {
+                    Console.WriteLine("Could not load: {0}", e.Message);
+                }
+            }
+        }
+        
+        public override int Count {
+            get {
+                return tracks.Count;
+            }
+        }
+        
+        public ICollection Tracks {
+            get {
+                return tracks;
+            }
+        }
+            
     }
     
     public class PlaylistSource : Source
