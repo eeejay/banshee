@@ -49,10 +49,6 @@ namespace Banshee
         public static string [] Args = null;
         public static ArgumentQueue ArgumentQueue = null;
         
-        public IPlayerEngine activePlayer;
-        public IPlayerEngine PreferredPlayer;
-        public IPlayerEngine AudioCdPlayer;
-        
         public Program Program;
         public PlayerUI PlayerInterface;
         public Random Random;
@@ -101,18 +97,6 @@ namespace Banshee
             }
         }
 
-        public IPlayerEngine Player
-        {
-            get {
-                return activePlayer;
-            }
-            
-            set {
-                activePlayer = value;
-                Core.Log.PushDebug("Changed active player engine", activePlayer.EngineName);
-            }
-        }
-        
         public static LogCore Log
         {
             get {
@@ -123,47 +107,20 @@ namespace Banshee
         private Core()
         {
             Gtk.Application.Init();
-
-            Gstreamer.Initialize();
-
             dbusServer = new DBusServer();
 
-            if(!Directory.Exists(Paths.ApplicationData))
+            if(!Directory.Exists(Paths.ApplicationData)) {
                 Directory.CreateDirectory(Paths.ApplicationData);
+            }
+            
+            Gstreamer.Initialize();
+            PlayerEngineCore.Initialize();
 
             Random = new Random();
             library = new Library();
 
             Globals.LibraryLocation = library.Location;
 
-            Player = PlayerEngineLoader.SelectedEngine;
-            PreferredPlayer = Player;
-            
-            foreach(IPlayerEngine engine in PlayerEngineLoader.Engines) {
-                if(engine.ConfigName == "gstreamer") {
-                    AudioCdPlayer = engine;
-                    break;
-                }
-            }
-
-            if(Player == null) {
-                Console.Error.WriteLine("Could not load A PlayerEngine Core!");
-                System.Environment.Exit(1);
-            }
-
-            Player.Initialize();
-            Core.Log.PushDebug("Loaded PlayerEngine core", Player.EngineName);
-
-            if(AudioCdPlayer == null) {
-                Console.Error.WriteLine("Could not load AudioCdPlayer as the GStreamer backend could not be " +
-                    "loaded. This is probably a problem with GStreamer. Try running gst-register-0.8");
-                System.Environment.Exit(1);
-            }
-
-            AudioCdPlayer.Initialize();
-            
-            Core.Log.PushDebug("Loaded AudioCdPlayerEngine core", AudioCdPlayer.EngineName);
-            
             try {
                 AudioCdCore = new AudioCdCore();
             } catch(ApplicationException e) {
@@ -185,38 +142,6 @@ namespace Banshee
             } catch(Exception e) {
                 Core.Log.PushWarning("File System Monitoring will be disabled for this instance", e.Message, false);
             }
-        }
-        
-        public void ReloadEngine(IPlayerEngine engine)
-        {
-            if(Player != null) {
-                Player.Dispose();
-                Player = null;
-            }
-            
-            Player = engine;
-            Player.Initialize();
-        }
-        
-        public void LoadCdPlayer()
-        {
-            if(Player == AudioCdPlayer)
-                return;
-                
-            if(AudioCdPlayer == null)
-                throw new ApplicationException(Catalog.GetString(
-                    "CD Playback is not supported in your Banshee Setup"));
-                
-            Player = AudioCdPlayer;
-        }            
-        
-        public void UnloadCdPlayer()
-        {
-            if(Player == PreferredPlayer)
-                return;
-            
-            
-            Player = PreferredPlayer;
         }
         
         public void Shutdown()

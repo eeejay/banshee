@@ -74,7 +74,7 @@ namespace Banshee
     
         private void SyncPlayingIter()
         {
-            if(Core.Instance.Player.Track == null) {
+            if(PlayerEngineCore.ActivePlayer.Track == null) {
                 playingIter = TreeIter.Zero;
             } else {
                 for(int i = 0, n = Count(); i < n; i++) {
@@ -84,7 +84,7 @@ namespace Banshee
                         
                     TrackInfo ti = IterTrackInfo(iter);
                     
-                    if(Core.Instance.Player.Track.Uid == ti.Uid) {
+                    if(PlayerEngineCore.ActivePlayer.Track.Uid == ti.Uid) {
                         playingIter = iter;
                         break;
                     }

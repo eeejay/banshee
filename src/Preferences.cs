@@ -540,7 +540,7 @@ namespace Banshee
         
         private void SaveEngineSettings()
         {
-            if(SelectedEngine.ConfigName != Core.Instance.Player.ConfigName) {
+            if(SelectedEngine.ConfigName != PlayerEngineCore.ActivePlayer.ConfigName) {
                 Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
                 string msg = 
                     String.Format(

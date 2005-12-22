@@ -1,5 +1,20 @@
 2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Core.cs: Remove all IPlayerEngine code as it is now in Banshee.Base
+
+	* src/DBusIPC.cs:
+	* src/PlayerInterface.cs:
+	* src/PlaylistModel.cs:
+	* src/Preferences.cs: Fix references from Core.Instance.Player to
+	Banshee.Base.PlayerEngineCore.ActivePlayer
+
+	* src/Banshee.Base/Makefile.am: Added PlayerEngineCore.cs
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Moved all IPlayerEngine code to
+	new static class accessible to plugins
+
+2005-12-21  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/banshee.desktop.in.in: Updated Exec pattern

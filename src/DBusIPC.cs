@@ -79,8 +79,6 @@ namespace Banshee
     {
         private Gtk.Window mainWindow;
         private PlayerUI PlayerUI;
-        private Core core;
-        
         public static BansheeCore FindInstance()
         {
             Connection connection = Bus.GetSessionBus();
@@ -88,11 +86,10 @@ namespace Banshee
             return (BansheeCore)service.GetObject(typeof(BansheeCore), "/org/gnome/Banshee/Core");
         }
         
-        public BansheeCore(Gtk.Window mainWindow, PlayerUI ui, Core core)
+        public BansheeCore(Gtk.Window mainWindow, PlayerUI ui)
         {
             this.mainWindow = mainWindow;
             this.PlayerUI = ui;
-            this.core = core;
         }
         
         [Method]
@@ -138,7 +135,7 @@ namespace Banshee
                 PlayerUI.PlayPause();
             }
             
-            if(!core.Player.Playing) {
+            if(!PlayerEngineCore.ActivePlayer.Playing) {
                 PlayerUI.PlayPause();
             }
         }
@@ -146,7 +143,7 @@ namespace Banshee
         [Method]
         public virtual void Pause()
         {
-            if(HaveTrack && core.Player.Playing) {
+            if(HaveTrack && PlayerEngineCore.ActivePlayer.Playing) {
                 PlayerUI.PlayPause();
             }
         }
@@ -222,13 +219,13 @@ namespace Banshee
         [Method]
         public virtual int GetPlayingDuration()
         {
-            return HaveTrack ? (int)core.Player.Length : -1;
+            return HaveTrack ? (int)PlayerEngineCore.ActivePlayer.Length : -1;
         }
         
         [Method]
         public virtual int GetPlayingPosition()
         {
-            return HaveTrack ? (int)core.Player.Position : -1;
+            return HaveTrack ? (int)PlayerEngineCore.ActivePlayer.Position : -1;
         }
         
         [Method]
@@ -240,7 +237,7 @@ namespace Banshee
         [Method]
         public virtual int GetPlayingStatus()
         {
-            return core.Player.Playing ? 1 : (core.Player.Loaded ? 0 : -1);
+            return PlayerEngineCore.ActivePlayer.Playing ? 1 : (PlayerEngineCore.ActivePlayer.Loaded ? 0 : -1);
         }
         
         [Method]
@@ -270,19 +267,19 @@ namespace Banshee
         [Method]
         public virtual void SetPlayingPosition(int position)
         {
-            core.Player.Position = (uint)position;
+            PlayerEngineCore.ActivePlayer.Position = (uint)position;
         }
         
         [Method]
         public virtual void SkipForward()
         {
-            core.Player.Position += PlayerUI.SkipDelta;
+            PlayerEngineCore.ActivePlayer.Position += PlayerUI.SkipDelta;
         }
         
         [Method]
         public virtual void SkipBackward()
         {
-            core.Player.Position -= PlayerUI.SkipDelta;
+            PlayerEngineCore.ActivePlayer.Position -= PlayerUI.SkipDelta;
         }
     }
 }

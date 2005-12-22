@@ -148,15 +148,15 @@ namespace Banshee
             BuildWindow();   
             InstallTrayIcon();
             
-            banshee_dbus_object = new BansheeCore(Window, this, Core.Instance);
+            banshee_dbus_object = new BansheeCore(Window, this);
             Core.Instance.DBusServer.RegisterObject(banshee_dbus_object, "/org/gnome/Banshee/Core");
             
-            Core.Instance.Player.Iterate += OnPlayerTick;
-            Core.Instance.Player.EndOfStream += OnPlayerEos;    
+            PlayerEngineCore.ActivePlayer.Iterate += OnPlayerTick;
+            PlayerEngineCore.ActivePlayer.EndOfStream += OnPlayerEos;    
             
-            if(Core.Instance.Player != Core.Instance.AudioCdPlayer) {
-                Core.Instance.AudioCdPlayer.Iterate += OnPlayerTick;
-                Core.Instance.AudioCdPlayer.EndOfStream += OnPlayerEos;    
+            if(PlayerEngineCore.ActivePlayer != PlayerEngineCore.AudioCdPlayer) {
+                PlayerEngineCore.AudioCdPlayer.Iterate += OnPlayerTick;
+                PlayerEngineCore.AudioCdPlayer.EndOfStream += OnPlayerEos;    
             }
             
             if(Core.Instance.AudioCdCore != null) {
@@ -520,9 +520,9 @@ namespace Banshee
                 volumeButton.Volume = 80;
             }
 
-            Core.Instance.Player.Volume = (ushort)volumeButton.Volume;
-            if(Core.Instance.AudioCdPlayer != Core.Instance.Player) {
-                Core.Instance.AudioCdPlayer.Volume = (ushort)volumeButton.Volume;
+            PlayerEngineCore.ActivePlayer.Volume = (ushort)volumeButton.Volume;
+            if(PlayerEngineCore.AudioCdPlayer != PlayerEngineCore.ActivePlayer) {
+                PlayerEngineCore.AudioCdPlayer.Volume = (ushort)volumeButton.Volume;
             }
             
             try {
@@ -725,7 +725,7 @@ namespace Banshee
         {
             ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
-            Core.Instance.Player.Dispose();
+            PlayerEngineCore.ActivePlayer.Dispose();
             Core.GconfClient.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
             DBusServer.Instance.UnregisterObject(banshee_dbus_object);
             Core.Instance.Shutdown();
@@ -736,7 +736,7 @@ namespace Banshee
         {
             LabelInfo.Markup = "<span size=\"small\">" + GLib.Markup.EscapeText(text) + "</span>";
             
-            if(trayIcon != null && Core.Instance.Player.Playing) {
+            if(trayIcon != null && PlayerEngineCore.ActivePlayer.Playing) {
                 trayIcon.Tooltip = activeTrackInfo.DisplayArtist + " - " 
                     + activeTrackInfo.DisplayTitle + "\n"
                     + Catalog.GetString("Position: ") + text;
@@ -745,14 +745,14 @@ namespace Banshee
           
         public void TogglePlaying()
         {
-            if(Core.Instance.Player.Playing) {
+            if(PlayerEngineCore.ActivePlayer.Playing) {
                 Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
                     "media-playback-start");
-                Core.Instance.Player.Pause();
+                PlayerEngineCore.ActivePlayer.Pause();
             } else {
                 Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), 
                     "media-playback-pause");
-                Core.Instance.Player.Play();
+                PlayerEngineCore.ActivePlayer.Play();
             }
         }
         
@@ -778,20 +778,20 @@ namespace Banshee
         
         public void PlayFile(TrackInfo ti)
         {
-            Core.Instance.Player.Close();
+            PlayerEngineCore.ActivePlayer.Close();
             
             if(ti.Uri == null) {
                 return;
             }
             
             if(ti.Uri.Scheme == "cdda") {
-                Core.Instance.LoadCdPlayer();
+                PlayerEngineCore.LoadCdPlayer();
             } else {
-                Core.Instance.UnloadCdPlayer();
+                PlayerEngineCore.UnloadCdPlayer();
             }
             
             activeTrackInfo = ti;
-            Core.Instance.Player.Open(ti, ti.Uri);
+            PlayerEngineCore.ActivePlayer.Open(ti, ti.Uri);
 
             incrementedCurrentSongPlayCount = false;
             ScaleTime.Adjustment.Lower = 0;
@@ -856,16 +856,16 @@ namespace Banshee
                     break;
                 case Gdk.Key.Left:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Core.Instance.Player.Position -= SkipDelta;
+                        PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
                         handled = true;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Core.Instance.Player.Position = 0;
+                        PlayerEngineCore.ActivePlayer.Position = 0;
                         handled = true;
                     }
                     break;
                 case Gdk.Key.Right:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Core.Instance.Player.Position += SkipDelta;
+                        PlayerEngineCore.ActivePlayer.Position += SkipDelta;
                         handled = true;
                     } 
                     break;
@@ -906,7 +906,7 @@ namespace Banshee
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
                         Volume += VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Core.Instance.Player.Position += SkipDelta;
+                        PlayerEngineCore.ActivePlayer.Position += SkipDelta;
                     } else {
                         Next();
                     }
@@ -915,7 +915,7 @@ namespace Banshee
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
                         Volume -= VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Core.Instance.Player.Position -= SkipDelta;
+                        PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
                     } else {
                         Previous();
                     }
@@ -942,7 +942,7 @@ namespace Banshee
         
         public void PlayPause()
         {
-            if(Core.Instance.Player.Loaded) {
+            if(PlayerEngineCore.ActivePlayer.Loaded) {
                 TogglePlaying();
             } else {
                 if(!playlistView.PlaySelected()) {
@@ -981,7 +981,7 @@ namespace Banshee
         
         private void OnVolumeScaleChanged(int volume)
         {
-            Core.Instance.Player.Volume = (ushort)volume;
+            PlayerEngineCore.ActivePlayer.Volume = (ushort)volume;
             Core.GconfClient.Set(GConfKeys.Volume, volume);
         }
    
@@ -1008,16 +1008,16 @@ namespace Banshee
                 return;
             }
              
-            if(Core.Instance.Player.Length > 0 
+            if(PlayerEngineCore.ActivePlayer.Length > 0 
                 && activeTrackInfo.Duration.TotalSeconds <= 0.0) {
-                activeTrackInfo.Duration = new TimeSpan(Core.Instance.Player.Length * TimeSpan.TicksPerSecond);
+                activeTrackInfo.Duration = new TimeSpan(PlayerEngineCore.ActivePlayer.Length * TimeSpan.TicksPerSecond);
                 activeTrackInfo.Save();
                 playlistView.ThreadedQueueDraw();
                 ScaleTime.Adjustment.Upper = activeTrackInfo.Duration.TotalSeconds;
             }
                 
-            if(Core.Instance.Player.Length > 0 && 
-                Core.Instance.Player.Position > Core.Instance.Player.Length / 2
+            if(PlayerEngineCore.ActivePlayer.Length > 0 && 
+                PlayerEngineCore.ActivePlayer.Position > PlayerEngineCore.ActivePlayer.Length / 2
                 && !incrementedCurrentSongPlayCount) {
                 activeTrackInfo.IncrementPlayCount();
                 incrementedCurrentSongPlayCount = true;
@@ -1040,7 +1040,7 @@ namespace Banshee
         {
             setPositionTimeoutId = 0;
             Application.Invoke(delegate {
-                ScaleTime.Value = Core.Instance.Player.Position;
+                ScaleTime.Value = PlayerEngineCore.ActivePlayer.Position;
             });
             
             return false;
@@ -1063,7 +1063,7 @@ namespace Banshee
         private void OnScaleTimeButtonReleaseEvent(object o, 
             ButtonReleaseEventArgs args)
         {
-            Core.Instance.Player.Position = (uint)ScaleTime.Value;
+            PlayerEngineCore.ActivePlayer.Position = (uint)ScaleTime.Value;
             updateEnginePosition = true;
         }
         
@@ -2034,7 +2034,7 @@ namespace Banshee
         
         private void StopPlaying()
         {
-            Core.Instance.Player.Close();
+            PlayerEngineCore.ActivePlayer.Close();
             Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
             ScaleTime.Adjustment.Lower = 0;
             ScaleTime.Adjustment.Upper = 0;
@@ -2460,10 +2460,10 @@ namespace Banshee
         
         private void OnPreviousAction(object o, EventArgs args)
         {
-            if(Core.Instance.Player.Position < 3) {
+            if(PlayerEngineCore.ActivePlayer.Position < 3) {
                 Previous();
             } else {
-                Core.Instance.Player.Position = 0;
+                PlayerEngineCore.ActivePlayer.Position = 0;
             }
         }
         
@@ -2474,12 +2474,12 @@ namespace Banshee
         
         private void OnSeekForwardAction(object o, EventArgs args)
         {
-            Core.Instance.Player.Position += SkipDelta;
+            PlayerEngineCore.ActivePlayer.Position += SkipDelta;
         }
         
         private void OnSeekBackwardAction(object o, EventArgs args)
         {
-            Core.Instance.Player.Position -= SkipDelta;
+            PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
         }
         
         private void SetRepeatMode(RepeatMode mode)

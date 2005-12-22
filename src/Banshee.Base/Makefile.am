@@ -33,6 +33,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/GstFileEncoder.cs \
 	$(srcdir)/FileEncodeAction.cs \
 	$(srcdir)/NetworkDetect.cs \
+	$(srcdir)/PlayerEngineCore.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
