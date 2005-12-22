@@ -1,3 +1,7 @@
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* POTFILES.in: Added missing files
+
 2005-12-21  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
