@@ -97,6 +97,9 @@
       <Type Name="NetworkStateChangedArgs" />
       <Type Name="NetworkDetect" />
       <Type Name="NetworkStateChangedHandler" />
+      <Type Name="ReflectionUtil" />
+      <Type Name="PlayerEngineCore" />
+      <Type Name="AudioCdLookupStatus" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -106,7 +109,6 @@
       <Type Name="DapTrackListUpdatedArgs" />
       <Type Name="DapDevice" />
       <Type Name="DapDevice+PropertyTable" />
-      <Type Name="DapDevice+PropertyTable+Property" />
       <Type Name="DapEventArgs" />
       <Type Name="DapCore" />
       <Type Name="DapTrackInfo" />
@@ -115,6 +117,8 @@
       <Type Name="DapType" />
       <Type Name="CodecType" />
       <Type Name="SupportedCodec" />
+      <Type Name="DapDevice+Property" />
+      <Type Name="WaitForTimeoutException" />
     </Namespace>
     <Namespace Name="Banshee.Widgets">
       <Type Name="CoverArtThumbnail" />
@@ -132,11 +136,11 @@
       <Type Name="ActiveUserEvent" />
       <Type Name="ActiveUserEventsManager" />
       <Type Name="HigMessageDialog" />
-      <Type Name="NotificationAreaIcon" />
       <Type Name="ToggleStateChangedHandler" />
       <Type Name="ActionButton" />
       <Type Name="ActionToggleButton" />
       <Type Name="CoverArtView" />
+      <Type Name="HighlightMessageArea" />
     </Namespace>
     <Namespace Name="NetworkManager">
       <Type Name="Manager" />
@@ -144,6 +148,10 @@
       <Type Name="Network" />
       <Type Name="State" />
       <Type Name="DeviceType" />
+    </Namespace>
+    <Namespace Name="Banshee.Plugins">
+      <Type Name="Plugin" />
+      <Type Name="PluginCore" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

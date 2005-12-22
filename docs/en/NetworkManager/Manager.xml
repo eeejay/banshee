@@ -1,5 +1,5 @@
 <Type Name="Manager" FullName="NetworkManager.Manager">
-  <TypeSignature Language="C#" Value="public class Manager : System.Collections.IEnumerable" />
+  <TypeSignature Language="C#" Value="public class Manager : System.Collections.IEnumerable, System.IDisposable" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Base</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -10,6 +10,9 @@
   <Interfaces>
     <Interface>
       <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
   <Members>
@@ -214,6 +217,18 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

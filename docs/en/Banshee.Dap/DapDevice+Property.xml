@@ -1,4 +1,4 @@
-<Type Name="DapDevice+PropertyTable+Property" FullName="Banshee.Dap.DapDevice+PropertyTable+Property">
+<Type Name="DapDevice+Property" FullName="Banshee.Dap.DapDevice+Property">
   <TypeSignature Language="C#" Value="public class Property" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Base</AssemblyName>
@@ -19,24 +19,26 @@
       </Docs>
     </Member>
     <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name;" />
-      <MemberType>Field</MemberType>
+      <MemberSignature Language="C#" Value="public string Name { get; };" />
+      <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Value">
-      <MemberSignature Language="C#" Value="public string Value;" />
-      <MemberType>Field</MemberType>
+      <MemberSignature Language="C#" Value="public string Value { get; };" />
+      <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
+        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

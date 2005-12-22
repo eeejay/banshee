@@ -120,44 +120,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="AddState">
-      <MemberSignature Language="C#" Value="public Banshee.Widgets.ToggleState AddState (Type state, Gtk.CheckMenuItem menuItem, bool checkActive);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Widgets.ToggleState</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="state" Type="System.Type" />
-        <Parameter Name="menuItem" Type="Gtk.CheckMenuItem" />
-        <Parameter Name="checkActive" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="state">To be added.</param>
-        <param name="menuItem">To be added.</param>
-        <param name="checkActive">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddState">
-      <MemberSignature Language="C#" Value="public Banshee.Widgets.ToggleState AddState (Type state, Gtk.CheckMenuItem menuItem);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Widgets.ToggleState</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="state" Type="System.Type" />
-        <Parameter Name="menuItem" Type="Gtk.CheckMenuItem" />
-      </Parameters>
-      <Docs>
-        <param name="state">To be added.</param>
-        <param name="menuItem">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="StateCount">
       <MemberSignature Language="C#" Value="public int StateCount { get; };" />
       <MemberType>Property</MemberType>
@@ -259,6 +221,41 @@
         <param name="state">To be added.</param>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnToggleAction">
+      <MemberSignature Language="C#" Value="public void OnToggleAction (object o, EventArgs args);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="o" Type="System.Object" />
+        <Parameter Name="args" Type="System.EventArgs" />
+      </Parameters>
+      <Docs>
+        <param name="o">To be added.</param>
+        <param name="args">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddState">
+      <MemberSignature Language="C#" Value="public Banshee.Widgets.ToggleState AddState (Type state, Gtk.ToggleAction toggleAction);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Widgets.ToggleState</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="state" Type="System.Type" />
+        <Parameter Name="toggleAction" Type="Gtk.ToggleAction" />
+      </Parameters>
+      <Docs>
+        <param name="state">To be added.</param>
+        <param name="toggleAction">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
