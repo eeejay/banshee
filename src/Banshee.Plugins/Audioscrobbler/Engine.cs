@@ -173,6 +173,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				    && (player.Position > player.Length / 2
 					|| player.Position > 240)) {
 					queue.Add (new QueuedTrack (track, DateTime.Now - TimeSpan.FromSeconds (player.Position)));
+					queued = true;
 				}
 			}
 
@@ -310,7 +311,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			string line;
 			line = sr.ReadLine ();
-
+			
 			if (line.StartsWith ("FAILED")) {
 				Console.WriteLine ("Failed with {0}", line.Substring ("FAILED".Length).Trim());
 				/* retransmit the queue on the next interval */

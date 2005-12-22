@@ -1,0 +1,12 @@
+<ui>
+    <menubar name="MainMenu">
+        <menu name="MusicMenu" action="MusicMenuAction">
+            <placeholder name="MusicMenuAdditions">
+                <menu name="Audioscrobbler" action="AudioscrobblerAction">
+                    <menuitem name="AudioscrobblerConfigure" action="AudioscrobblerConfigureAction" />
+                    <menuitem name="AudioscrobblerVisit" action="AudioscrobblerVisitAction" />
+                </menu>
+            </placeholder> 
+        </menu>
+    </menubar>
+</ui>

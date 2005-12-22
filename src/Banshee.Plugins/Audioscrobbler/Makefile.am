@@ -5,13 +5,17 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 audioscrobblerdir = $(pkglibdir)/Banshee.Plugins
 audioscrobbler_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
+MENU_RESOURCE=AudioscrobblerMenu.xml
+
 ASSEMBLY_SOURCES = \
 	$(srcdir)/AudioscrobblerPlugin.cs \
+	$(srcdir)/AudioscrobblerConfigDialog.cs \
 	$(srcdir)/Engine.cs
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
-	-r:Mono.Security.dll
+	-r:Mono.Security.dll \
+	-r:Mono.Posix.dll
 
 schema_in_files = audioscrobbler.schemas.in
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
@@ -19,10 +23,10 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll $(PKG_REFERENCES)
+$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(MENU_RESOURCE)
+	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(PKG_REFERENCES) -resource:$(srcdir)/$(MENU_RESOURCE),$(MENU_RESOURCE)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files)
+EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files) $(MENU_RESOURCE)
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb Makefile.in $(schema_DATA)

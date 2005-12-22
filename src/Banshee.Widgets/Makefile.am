@@ -21,7 +21,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ActiveUserEventsManager.cs \
 	$(srcdir)/HigMessageDialog.cs \
 	$(srcdir)/NotificationAreaIcon.cs \
-	$(srcdir)/HighlightMessageArea.cs
+	$(srcdir)/HighlightMessageArea.cs \
+	$(srcdir)/PropertyTable.cs
 
 ASSEMBLY_RESOURCES = \
 	Resources/search-entry-icon.png \

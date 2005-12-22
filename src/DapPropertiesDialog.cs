@@ -33,58 +33,10 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.Dap;
+using Banshee.Widgets;
 
 namespace Banshee
 {
-    public class PropertyTable : Table
-    {
-        public PropertyTable() : base(1, 1, false)
-        {
-        
-        }
-        
-        public void AddWidget(string key, Widget widget)
-        {
-            uint rows = NRows;
-            Label keyLabel = new Label();
-            keyLabel.Markup = "<b>" + GLib.Markup.EscapeText(key) + "</b>:";
-            keyLabel.Xalign = 0.0f;
-            
-            Attach(keyLabel, 0, 1, rows, rows + 1);
-            Attach(widget, 1, 2, rows, rows + 1);
-        }
-        
-        public void AddSeparator()
-        {
-            HSeparator sep = new HSeparator();
-            Attach(sep, 0, 2, NRows, NRows + 1);
-            sep.HeightRequest = 10;
-        }
-        
-        public void AddLabel(string key, object value)
-        {
-            if(value == null)
-                return;
-                
-            Label valLabel = new Label(value.ToString());
-            valLabel.Xalign = 0.0f;
-            valLabel.UseUnderline = false;
-            valLabel.Selectable = true;
-            
-            AddWidget(key, valLabel);
-        }
-        
-        public Entry AddEntry(string key, object value)
-        {        
-            Entry valEntry = new Entry();
-            valEntry.Text = value == null ? String.Empty : value.ToString();
-            
-            AddWidget(key, valEntry);
-            
-            return valEntry;
-        }
-    }
-
     public class DapPropertiesDialog : Dialog
     {
         private DapSource source;

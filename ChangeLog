@@ -1,3 +1,35 @@
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/UIManagerLayout.xml: Added a placeholder for plugins to insert
+	menu items in the music toplevel menu
+
+	* src/DapPropertiesDialog.cs: Moved the PropertyTable class 
+	to Banshee.Widgets
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Fixed a bug regarding
+	track queueing; fixes a few submission bugs noted on the mailing list
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Added
+	UI integration into main menu; added properties to get/set username,
+	password, and enable status; added path to launch the config dialog
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:
+	Configuration dialog for setting username/password and enabling AS support
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml: UIManager
+	menu layout for AS plugin
+
+	* src/Banshee.Plugins/Audioscrobbler/Makefile.am: Link against
+	Banshee.Widgets.dll and embed AudioscrobblerMenu.xml as a resource;
+	added AudioscrobblerConfigDialog.cs
+
+	* src/Banshee.Widgets/Makefile.am: Added PropertyTable.cs
+
+	* src/Banshee.Widgets/PropertyTable.cs: Moved property table class from
+	src/DapPropertiesDialog.cs
+
 2005-12-22  Miguel de Icaza  <miguel@novell.com>
 
 	* src/Banshee.Widgets/NotificationAreaIcon.cs: More fixing of

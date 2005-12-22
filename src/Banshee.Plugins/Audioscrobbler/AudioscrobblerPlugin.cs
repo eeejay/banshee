@@ -4,6 +4,7 @@
  *
  *  Copyright (C) 2005 Novell
  *  Written by Chris Toshok (toshok@ximian.com)
+ *             Aaron Bockover (aaron@aaronbock.net)
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -32,6 +33,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Security.Cryptography;
+using Gtk;
+using Mono.Unix;
 
 using GConf;
 
@@ -58,18 +61,52 @@ namespace Banshee.Plugins.Audioscrobbler
             gconf = Globals.Configuration;
             gconf.AddNotify (GConfKeys.BasePath, GConfNotifier);
 
-            if (GetBoolPref (GConfKeys.Enabled, false)) {
+            InstallInterfaceActions();
+
+            if (Enabled) {
                 StartEngine ();
                 SetPlayer ();
             }
+        }
+        
+        private void InstallInterfaceActions()
+        {
+            ActionGroup actions = new ActionGroup("Audioscrobbler");
+            actions.Add(new ActionEntry [] {
+                new ActionEntry("AudioscrobblerAction", null,
+                    Catalog.GetString("Audioscrobbler"), null,
+                    Catalog.GetString("Configure the Audioscrobbler plugin"), null),
+                
+                new ActionEntry("AudioscrobblerConfigureAction", null,
+                    Catalog.GetString("Configure..."), null,
+                    Catalog.GetString("Configure the Audioscrobbler plugin"), OnConfigurePlugin),
+                
+                new ActionEntry("AudioscrobblerVisitAction", null,
+                    Catalog.GetString("Visit Home Page"), null,
+                    Catalog.GetString("Visit your Audioscrobbler page"), OnVisitHomePage)
+            });
+            
+            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
+            Globals.ActionManager.UI.AddUiFromResource("AudioscrobblerMenu.xml");
+        }
+        
+        private void OnConfigurePlugin(object o, EventArgs args)
+        {
+            AudioscrobblerConfigDialog config = new AudioscrobblerConfigDialog(this);
+            config.Run();
+            config.Destroy();
+        }
+        
+        private void OnVisitHomePage(object o, EventArgs args)
+        {
+            Gnome.Url.Show("http://last.fm/user/" + Username);
         }
 
         void StartEngine ()
         {
             Console.WriteLine ("Audioscrobbler starting protocol engine");
             protocol_engine = new Engine ();
-            protocol_engine.SetUserPassword (GetStringPref (GConfKeys.Username, null),
-                             GetStringPref (GConfKeys.Password, null));
+            protocol_engine.SetUserPassword (Username, Password);
             if (player != null)
                 protocol_engine.SetPlayer (player);
         }
@@ -97,7 +134,7 @@ namespace Banshee.Plugins.Audioscrobbler
 
         void GConfNotifier (object sender, NotifyEventArgs args)
         {
-            Console.WriteLine ("key that changed: {0}", args.Key);
+            //Console.WriteLine ("key that changed: {0}", args.Key);
             if (args.Key == GConfKeys.Enabled) {
                 if ((bool)args.Value == false)
                     StopEngine ();
@@ -108,9 +145,40 @@ namespace Banshee.Plugins.Audioscrobbler
                  || args.Key == GConfKeys.Password)
             {
                 if (protocol_engine != null) {
-                    protocol_engine.SetUserPassword (GetStringPref (GConfKeys.Username, null),
-                                     GetStringPref (GConfKeys.Password, null));
+                    protocol_engine.SetUserPassword (Username, Password);
                 }
+            }
+        }
+
+        internal string Username {
+            get {
+                return GetStringPref (GConfKeys.Username, null);
+            }
+            
+            set {
+                gconf.Set(GConfKeys.Username, value);
+            }
+        }
+        
+        internal string Password {
+            get {
+                return GetStringPref (GConfKeys.Password, null);
+            }
+            
+            set {
+                gconf.Set(GConfKeys.Password, value);
+            }
+        }
+        
+        internal bool Enabled {
+            get {
+                return GetBoolPref(GConfKeys.Enabled, false);
+            }
+            
+            set {
+                gconf.Set(GConfKeys.Enabled, value);
+                Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = 
+                    value && Username != null && Username != String.Empty;
             }
         }
 
@@ -132,6 +200,11 @@ namespace Banshee.Plugins.Audioscrobbler
             catch {
                 return def;
             }
+        }
+        
+        internal void CreateAccount()
+        {
+            Gnome.Url.Show("http://www.last.fm/signup.php");
         }
     }
 }

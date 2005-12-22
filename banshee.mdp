@@ -171,6 +171,9 @@
     <File name="./src/Banshee.Base/Plugins" subtype="Directory" buildaction="Compile" />
     <File name="./src/Banshee.Base/Plugins/Plugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Plugins/PluginCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Widgets/PropertyTable.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />
