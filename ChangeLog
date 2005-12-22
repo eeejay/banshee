@@ -1,3 +1,15 @@
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:
+	Added a cute little Audioscrobbler 'powered by' graphic
+
+	* src/Banshee.Plugins/Audioscrobbler/audioscrobbler-logo.png: AS logo
+
+	* src/Banshee.Plugins/Audioscrobbler/Makefile.am: embed
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Removed old_state to
+	silence the cautionary screams of mcs
+
 2005-12-22  Chris Toshok  <toshok@ximian.com>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:

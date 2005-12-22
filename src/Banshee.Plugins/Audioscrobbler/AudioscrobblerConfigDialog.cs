@@ -63,6 +63,7 @@ namespace Banshee.Plugins.Audioscrobbler
         {
             VBox box = new VBox();
             box.Spacing = 10;
+            Resizable = false;
             
             Label title = new Label();
             title.Markup = String.Format("<big><b>{0}</b></big>", 
@@ -115,6 +116,17 @@ namespace Banshee.Plugins.Audioscrobbler
             box.PackStart(label, false, false, 0);
             box.PackStart(alignment, false, false, 0);
             box.PackStart(frame, true, true, 0);
+            
+            VBox.Remove(ActionArea);
+            
+            HBox bottom_box = new HBox();
+            Image logo = new Image();
+            logo.Pixbuf = Gdk.Pixbuf.LoadFromResource("audioscrobbler-logo.png");
+            logo.Xalign = 0.0f;
+            bottom_box.PackStart(logo, true, true, 5);
+            bottom_box.PackStart(ActionArea, false, false, 0);
+            bottom_box.ShowAll();
+            VBox.PackEnd(bottom_box, false, false, 0);
             
             box.ShowAll();
             VBox.Add(box);

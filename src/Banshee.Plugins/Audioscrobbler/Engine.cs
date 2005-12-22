@@ -92,8 +92,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 		WebRequest current_web_req;
 		IAsyncResult current_async_result;
 		State state;
-		State old_state = State.IDLE;
-
+		
 		public Engine ()
 		{
 			queue = new ArrayList ();
@@ -176,7 +175,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 			//			if (old_state != state)
 			//				Console.WriteLine ("state change ({0} -> {1})", old_state, state);
 
-			old_state = state;
 			/* and address changes in our engine state */
 			switch (state) {
 			case State.IDLE:
