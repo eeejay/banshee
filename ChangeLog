@@ -1,3 +1,16 @@
+2005-12-22  Chris Toshok  <toshok@ximian.com>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:
+	remove the SetPlayer method and calls.  Instead just call
+	protocol_engine.Start.
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: use a GLib.Timeout
+	instead of relying on the Player's tick event; Don't keep a
+	reference to a player around, just fetch it in the EngineTick
+	method; fix up the state assignment around the async calls and
+	deal with exceptions in current_web_req.End*; reformat things to
+	be more in keeping with the style guidelines.
+
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Changed

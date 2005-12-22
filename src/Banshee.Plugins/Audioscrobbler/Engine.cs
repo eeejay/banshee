@@ -35,6 +35,7 @@ using System.Security.Cryptography;
 using Mono.Security.Cryptography;
 using System.Collections;
 
+using GLib;
 using Banshee.MediaEngine;
 using Banshee.Base;
 using Banshee;
@@ -69,6 +70,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 			WAITING_FOR_RESP
 		};
 
+		const int TICK_INTERVAL = 2000; /* 2 seconds */
+		const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
 		const string CLIENT_ID = "bsh";
 		const string CLIENT_VERSION = "0.1";
 		const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
@@ -79,16 +82,17 @@ namespace Banshee.Plugins.Audioscrobbler {
 		string post_url;
 		string security_token;
 
-		DateTime nextInterval;
-
-		bool queued; /* if currentTrack has been queued */
-		TrackInfo currentTrack;
+		uint timeout_id;
+		DateTime next_interval;
+		
+		bool queued; /* if current_track has been queued */
+		TrackInfo current_track;
 		ArrayList queue;
-		IPlayerEngine player;
 
 		WebRequest current_web_req;
 		IAsyncResult current_async_result;
 		State state;
+		State old_state = State.IDLE;
 
 		public Engine ()
 		{
@@ -96,12 +100,18 @@ namespace Banshee.Plugins.Audioscrobbler {
 			state = State.IDLE;
 		}
 
+		public void Start ()
+		{
+			if (timeout_id == 0) {
+				timeout_id = Timeout.Add (TICK_INTERVAL, EngineTick);
+			}
+		}
+
 		public void Stop ()
 		{
-			if (player != null) {
-				player.Iterate -= OnPlayerTick;
-				player.EndOfStream -= OnPlayerEndOfStream;
-				player = null;
+			if (timeout_id != 0) {
+				Source.Remove (timeout_id);
+				timeout_id = 0;
 			}
 
 			/* XXX interrupt the current web requests somehow.. */
@@ -121,19 +131,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 			}
 		}
 
-		public void SetPlayer (IPlayerEngine player)
-		{
-			if (this.player != null) {
-				this.player.Iterate -= OnPlayerTick;
-				this.player.EndOfStream -= OnPlayerEndOfStream;
-			}
-
-			this.player = player;
-
-			this.player.Iterate += OnPlayerTick;
-			this.player.EndOfStream += OnPlayerEndOfStream;
-		}
-
 		string MD5Encode (string pass)
 		{
 			MD5 md5 = MD5.Create ();
@@ -143,26 +140,19 @@ namespace Banshee.Plugins.Audioscrobbler {
 			return CryptoConvert.ToHex (hash).ToLower ();
 		}
 
-		public void OnPlayerEndOfStream (object o, EventArgs args)
+		bool EngineTick ()
 		{
-			currentTrack = null;
-			queued = false;
-		}
-
-		public void OnPlayerTick (object o, PlayerEngineIterateArgs args)
-		{
-			//Console.WriteLine ("OnPlayerTick (state = {0})", state);
+			IPlayerEngine player = PlayerEngineCore.ActivePlayer;
 
 			/* check the currently playing track (if there is one) */
-
 			if (player.Playing
 			    && player.Length != 0) {
 
 				TrackInfo track = player.Track;
 
 				/* did the user switch tracks? */
-				if (track != currentTrack) {
-					currentTrack = track;
+				if (track != current_track) {
+					current_track = track;
 					queued = false;
 				}
 
@@ -172,11 +162,21 @@ namespace Banshee.Plugins.Audioscrobbler {
 				if (!queued
 				    && (player.Position > player.Length / 2
 					|| player.Position > 240)) {
-					queue.Add (new QueuedTrack (track, DateTime.Now - TimeSpan.FromSeconds (player.Position)));
+					queue.Add (new QueuedTrack (track,
+												(DateTime.Now 
+												 - TimeSpan.FromSeconds (player.Position))));
 					queued = true;
 				}
 			}
+			else {
+				current_track = null;
+				queued = false;
+			}
 
+			//			if (old_state != state)
+			//				Console.WriteLine ("state change ({0} -> {1})", old_state, state);
+
+			old_state = state;
 			/* and address changes in our engine state */
 			switch (state) {
 			case State.IDLE:
@@ -188,12 +188,12 @@ namespace Banshee.Plugins.Audioscrobbler {
 				}
 				break;
 			case State.NEED_HANDSHAKE:
-				if (DateTime.Now > nextInterval) {
+				if (DateTime.Now > next_interval) {
 					Handshake ();
 				}
 				break;
 			case State.NEED_TRANSMIT:
-				if (DateTime.Now > nextInterval) {
+				if (DateTime.Now > next_interval) {
 					TransmitQueue ();
 				}
 				break;
@@ -203,6 +203,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 				/* nothing here */
 				break;
 			}
+
+			return true;
 		}
 
 		string UrlEncode (string data)
@@ -236,16 +238,15 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		void TransmitQueue ()
 		{
-			int i;
+			//			Console.WriteLine ("TransmitQueue ():");
 
-			Console.WriteLine ("TransmitQueue ():");
-
-			nextInterval = DateTime.MinValue;
+			next_interval = DateTime.MinValue;
 
 			StringBuilder sb = new StringBuilder ();
 
 			sb.AppendFormat ("u={0}&s={1}", username, security_token);
 
+			int i;
 			for (i = 0; i < queue.Count; i ++) {
 				/* we queue a maximum of 10 tracks per request */
 				if (i == 9) break;
@@ -253,7 +254,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 				QueuedTrack qtrack = (QueuedTrack)queue[i];
 				TrackInfo track = qtrack.Track;
 
-				sb.AppendFormat ("&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
+				sb.AppendFormat (
+						 "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
 						 UrlEncode (track.Artist),
 						 UrlEncode (track.Title),
 						 UrlEncode (track.Album),
@@ -263,7 +265,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 						 i);
 			}
 
-			Console.WriteLine ("data to post = {0}", sb.ToString ());
+			//			Console.WriteLine ("data to post = {0}", sb.ToString ());
 
 			current_web_req = WebRequest.Create (post_url);
 			current_web_req.Method = "POST";
@@ -274,18 +276,30 @@ namespace Banshee.Plugins.Audioscrobbler {
 			ts.Count = i;
 			ts.StringBuilder = sb;
 
-			current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
-			if (current_async_result != null) {
-				state = State.WAITING_FOR_REQ_STREAM;
-			}
-			else {
+			state = State.WAITING_FOR_REQ_STREAM;
+			current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream,
+																		  ts);
+			if (current_async_result == null) {
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
 				state = State.IDLE;
 			}
 		}
 
 		void TransmitGetRequestStream (IAsyncResult ar)
 		{
-			Stream stream = current_web_req.EndGetRequestStream (ar);
+			Stream stream;
+
+			try {
+				stream = current_web_req.EndGetRequestStream (ar);
+			}
+			catch (Exception e) {
+				Console.WriteLine ("Failed to get the request stream: {0}", e);
+
+				state = State.IDLE;
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+				return;
+			}
+
 			TransmitState ts = (TransmitState) ar.AsyncState;
 			StringBuilder sb = ts.StringBuilder;
 
@@ -293,16 +307,29 @@ namespace Banshee.Plugins.Audioscrobbler {
 			writer.Write (sb.ToString ());
 			writer.Close ();
 
+			state = State.WAITING_FOR_RESP;
 			current_async_result = current_web_req.BeginGetResponse (TransmitGetResponse, ts);
-			if (current_async_result != null)
-				state = State.WAITING_FOR_RESP;
-			else
+			if (current_async_result == null) {
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
 				state = State.IDLE;
+			}
 		}
 
 		void TransmitGetResponse (IAsyncResult ar)
 		{
-			WebResponse resp = current_web_req.EndGetResponse (ar);
+			WebResponse resp;
+
+			try {
+				resp = current_web_req.EndGetResponse (ar);
+			}
+			catch (Exception e) {
+				Console.WriteLine ("Failed to get the response: {0}", e);
+
+				state = State.IDLE;
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+				return;
+			}
+
 			TransmitState ts = (TransmitState) ar.AsyncState;
 
 			Stream s = resp.GetResponseStream ();
@@ -319,12 +346,19 @@ namespace Banshee.Plugins.Audioscrobbler {
 			}
 			else if (line.StartsWith ("BADAUTH")) {
 				security_token = null;
+				Console.WriteLine ("Failed with BADAUTH");
 				/* attempt to re-handshake (and retransmit) on the next interval */
-				state = State.NEED_HANDSHAKE;
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+				state = State.IDLE;
+				return;
 			}
 			else if (line.StartsWith ("OK")) {
 				/* we succeeded, pop the elements off our queue */
 				queue.RemoveRange (0, ts.Count);
+				state = State.IDLE;
+			}
+			else {
+				Console.WriteLine ("Unrecognized response: {0}", line);
 				state = State.IDLE;
 			}
 
@@ -332,7 +366,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 			line = sr.ReadLine ();
 			if (line.StartsWith ("INTERVAL")) {
 				int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
-				nextInterval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
+				next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
 			}
 			else {
 				Console.WriteLine ("expected INTERVAL..");
@@ -351,15 +385,31 @@ namespace Banshee.Plugins.Audioscrobbler {
 						    username);
 
 			current_web_req = WebRequest.Create (uri);
+
+			state = State.WAITING_FOR_HANDSHAKE_RESP;
 			current_async_result = current_web_req.BeginGetResponse (HandshakeGetResponse, null);
-			if (current_async_result != null)
-				state = State.WAITING_FOR_HANDSHAKE_RESP;
+			if (current_async_result == null) {
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+				state = State.IDLE;
+			}
 		}
 
 		void HandshakeGetResponse (IAsyncResult ar)
 		{
 			bool success = false;
-			WebResponse resp = current_web_req.EndGetResponse (ar);
+			WebResponse resp;
+
+			try {
+				resp = current_web_req.EndGetResponse (ar);
+			}
+			catch (Exception e) {
+				Console.WriteLine ("failed to handshake: {0}", e);
+
+				/* back off for a time before trying again */
+				state = State.IDLE;
+				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+				return;
+			}
 
 			Stream s = resp.GetResponseStream ();
 
@@ -369,13 +419,16 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			line = sr.ReadLine ();
 			if (line.StartsWith ("FAILED")) {
-				Console.WriteLine ("Audioscrobbler handshake failed with '{0}'", line.Substring ("FAILED".Length).Trim());
+				Console.WriteLine ("Audioscrobbler handshake failed with '{0}'",
+								   line.Substring ("FAILED".Length).Trim());
 			}
 			else if (line.StartsWith ("BADUSER")) {
-				Console.WriteLine ("Audioscrobbler handshake failed with 'unrecognized user/password'");
+				Console.WriteLine (
+							"Audioscrobbler handshake failed with 'unrecognized user/password'");
 			}
 			else if (line.StartsWith ("UPDATE")) {
-				Console.WriteLine ("Succeeded (but client needs updating from url {0})", line.Substring ("UPDATE".Length).Trim());
+				Console.WriteLine ("Succeeded (but client needs updating from url {0})",
+								   line.Substring ("UPDATE".Length).Trim());
 				success = true;
 			}
 			else if (line.StartsWith ("UPTODATE")) {
@@ -397,13 +450,14 @@ namespace Banshee.Plugins.Audioscrobbler {
 			line = sr.ReadLine ();
 			if (line.StartsWith ("INTERVAL")) {
 				int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
-				nextInterval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
+				next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
 			}
 			else {
 				Console.WriteLine ("expected INTERVAL..");
 			}
 
-			state = success ? State.IDLE : State.NEED_HANDSHAKE /* XXX we shouldn't just try to handshake again for BADUSER */;
+			/* XXX we shouldn't just try to handshake again for BADUSER */
+			state = success ? State.IDLE : State.NEED_HANDSHAKE;
 		}
 	}
 }

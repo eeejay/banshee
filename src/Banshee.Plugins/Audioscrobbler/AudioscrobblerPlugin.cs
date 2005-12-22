@@ -54,7 +54,6 @@ namespace Banshee.Plugins.Audioscrobbler
 
         Engine protocol_engine;
         GConf.Client gconf;
-        IPlayerEngine player;
 
         public AudioscrobblerPlugin ()
         {
@@ -65,7 +64,6 @@ namespace Banshee.Plugins.Audioscrobbler
 
             if (Enabled) {
                 StartEngine ();
-                SetPlayer ();
             }
         }
         
@@ -107,8 +105,7 @@ namespace Banshee.Plugins.Audioscrobbler
             Console.WriteLine ("Audioscrobbler starting protocol engine");
             protocol_engine = new Engine ();
             protocol_engine.SetUserPassword (Username, Password);
-            if (player != null)
-                protocol_engine.SetPlayer (player);
+			protocol_engine.Start ();
         }
         
         public override void Dispose()
@@ -123,13 +120,6 @@ namespace Banshee.Plugins.Audioscrobbler
                 protocol_engine.Stop ();
                 protocol_engine = null;
             }
-        }
-
-        public void SetPlayer ()
-        {
-            this.player = PlayerEngineCore.ActivePlayer;
-            if (protocol_engine != null)
-                protocol_engine.SetPlayer (player);
         }
 
         void GConfNotifier (object sender, NotifyEventArgs args)
