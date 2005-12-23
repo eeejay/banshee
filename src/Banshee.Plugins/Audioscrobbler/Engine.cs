@@ -34,6 +34,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Mono.Security.Cryptography;
 using System.Collections;
+using System.Web;
 
 using GLib;
 using Banshee.MediaEngine;
@@ -172,8 +173,10 @@ namespace Banshee.Plugins.Audioscrobbler {
 				queued = false;
 			}
 
-			//			if (old_state != state)
-			//				Console.WriteLine ("state change ({0} -> {1})", old_state, state);
+			/* if we're not connected, don't bother doing anything
+			 * involving the network. */
+			if (!Globals.Network.Connected)
+				return true;
 
 			/* and address changes in our engine state */
 			switch (state) {
@@ -205,27 +208,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 			return true;
 		}
 
-		string UrlEncode (string data)
-		{
-			StringBuilder sb = new StringBuilder ();
-			for (int i = 0; i < data.Length; i ++) {
-				char c = data[i];
-				if (c == ' ')
-					sb.Append ('+');
-				else if (c == '&')
-					sb.Append ("%26");
-				else if (c == '+')
-					sb.Append ("%2b");
-				else if (c == '=')
-					sb.Append ("%3d");
-				else
-					sb.Append (c);
-				/* i know this is lacking.  sue me. */
-			}
-			return sb.ToString ();
-		}
-
-
 		//
 		// Async code for transmitting the current queue of tracks
 		//
@@ -242,7 +224,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			StringBuilder sb = new StringBuilder ();
 
-			sb.AppendFormat ("u={0}&s={1}", username, security_token);
+			sb.AppendFormat ("u={0}&s={1}", HttpUtility.UrlEncode (username), security_token);
 
 			int i;
 			for (i = 0; i < queue.Count; i ++) {
@@ -254,12 +236,12 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 				sb.AppendFormat (
 						 "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
-						 UrlEncode (track.Artist),
-						 UrlEncode (track.Title),
-						 UrlEncode (track.Album),
+						 HttpUtility.UrlEncode (track.Artist),
+						 HttpUtility.UrlEncode (track.Title),
+						 HttpUtility.UrlEncode (track.Album),
 						 "" /* musicbrainz id */,
 						 ((int)track.Duration.TotalSeconds).ToString (),
-						 UrlEncode (qtrack.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
+						 HttpUtility.UrlEncode (qtrack.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
 						 i);
 			}
 
@@ -377,10 +359,10 @@ namespace Banshee.Plugins.Audioscrobbler {
 		void Handshake ()
 		{
 			string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}",
-						    SCROBBLER_URL,
-						    SCROBBLER_VERSION,
-						    CLIENT_ID, CLIENT_VERSION,
-						    username);
+										SCROBBLER_URL,
+										SCROBBLER_VERSION,
+										CLIENT_ID, CLIENT_VERSION,
+										HttpUtility.UrlEncode (username));
 
 			current_web_req = WebRequest.Create (uri);
 

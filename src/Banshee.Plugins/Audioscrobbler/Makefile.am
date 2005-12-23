@@ -14,6 +14,7 @@ ASSEMBLY_SOURCES = \
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
+	-r:System.Web.dll \
 	-r:Mono.Security.dll \
 	-r:Mono.Posix.dll
 

@@ -1,3 +1,13 @@
+2005-12-23  Chris Toshok  <toshok@ximian.com>
+
+	* src/Banshee.Plugins/Audioscrobbler/Makefile.am (PKG_REFERENCES):
+	add -r:System.Web.dll.
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: drop the hacky
+	UrlEncode in favor of HttpUtility.UrlEncode; add a check for
+	Globals.Network.Connected in EngineTick, so we delay any network
+	traffic until we're connected.
+
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Widgets/CoverArtThumbnail.cs (CoverArtView.OnExposeEvent): 
