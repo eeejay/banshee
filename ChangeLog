@@ -1,5 +1,10 @@
 2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Widgets/CoverArtThumbnail.cs (CoverArtView.OnExposeEvent): 
+	Fixed really stupid drawing bug
+
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:
 	Added a cute little Audioscrobbler 'powered by' graphic
 

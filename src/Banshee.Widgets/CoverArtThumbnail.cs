@@ -62,10 +62,10 @@ namespace Banshee.Widgets
                 return true;
             }
             
-            Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(evnt.Area.Width, evnt.Area.Height, 
+            Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(Allocation.Width, Allocation.Height, 
                 Gdk.InterpType.Bilinear);
             GdkWindow.DrawPixbuf(Style.BackgroundGC(State), scaled_pixbuf, 0, 0, 
-                evnt.Area.X, evnt.Area.Y, scaled_pixbuf.Width, scaled_pixbuf.Height, RgbDither.Normal, 0, 0);
+                0, 0, scaled_pixbuf.Width, scaled_pixbuf.Height, RgbDither.Normal, 0, 0);
                 
             return true;
         }
