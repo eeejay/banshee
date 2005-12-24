@@ -24,11 +24,6 @@ endif
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in SimpleDiscTest.cs SimpleLookupTest.cs
-
-CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in 
-
 test: simple-disc-test.exe simple-lookup-test.exe
 
 simple-disc-test.exe: SimpleDiscTest.cs 
@@ -36,4 +31,13 @@ simple-disc-test.exe: SimpleDiscTest.cs
 
 simple-lookup-test.exe: SimpleLookupTest.cs
 	$(MCS) $(MCS_FLAGS) -out:$@ -r:$(ASSEMBLY) $<
+
+EXTRA_DIST = \
+	$(ASSEMBLY_SOURCES) \
+	$(ASSEMBLY).config.in \
+	SimpleDiscTest.cs \
+	SimpleLookupTest.cs 
+
+CLEANFILES = $(ASSEMBLY) *.dll *.exe
+DISTCLEANFILES = *.mdb Makefile.in
 
