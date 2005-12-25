@@ -733,12 +733,6 @@ namespace Banshee
         private void SetInfoLabel(string text)
         {
             LabelInfo.Markup = "<span size=\"small\">" + GLib.Markup.EscapeText(text) + "</span>";
-            
-            if(trayIcon != null && PlayerEngineCore.ActivePlayer.Playing) {
-                trayIcon.Tooltip = activeTrackInfo.DisplayArtist + " - " 
-                    + activeTrackInfo.DisplayTitle + "\n"
-                    + Catalog.GetString("Position: ") + text;
-            }
         }
           
         public void TogglePlaying()
@@ -770,7 +764,7 @@ namespace Banshee
             }
             
             if(trayIcon != null) {
-                trayIcon.Tooltip = ti.DisplayArtist + " - " + ti.DisplayTitle;
+                trayIcon.Track = ti;
             }
         }
         
@@ -1030,6 +1024,9 @@ namespace Banshee
             
                 Application.Invoke(delegate {
                     SetPositionLabel(args.Position);
+                    if(PlayerEngineCore.ActivePlayer.Playing) {
+                        trayIcon.Update();
+                    }
                 });
             }
         }
@@ -2041,8 +2038,9 @@ namespace Banshee
             trackInfoHeader.SetIdle();
             activeTrackInfo = null;
             
-            if(trayIcon != null)
-                trayIcon.Tooltip = Catalog.GetString("Banshee - Idle");
+            if(trayIcon != null) {
+                trayIcon.Track = null;
+            }
         }
 
         public TrackInfo ActiveTrackInfo

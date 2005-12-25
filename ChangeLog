@@ -1,3 +1,41 @@
+2005-12-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Makefile.am: Removed TrackInfoHeader.cs
+
+	* src/NotificationAreaIcon.cs: Show the new TrackInfoPopup widget when
+	user hovers over the icon or the track changes
+
+	* src/PlayerInterface.cs: Send the NotificationAreaIconContainer an entire
+	track instead of just a string for a tooltip
+
+	* src/Banshee.Base/TrackInfoHeader.cs: Moved from src/ so TrackInfoPopup
+	can embed the widget
+
+	* src/Banshee.Base/TrackInfoPopup.cs: A little Christmas candy to display
+	a very nice track info/progress summary in a 'tooltip,' using the same
+	header widget in the main interface, and if Cairo/GTK+-2.8 is available,
+	show track progress using the new RadialProgress widget
+
+	* src/Banshee.Base/Makefile.am: Added TrackInfoHeader.cs, TrackInfoPopup.cs
+
+	* src/Banshee.Widgets/Makefile.am: Added RadialProgress.cs
+
+	* src/Banshee.Widgets/RadialProgress.cs: New progress widget that shows
+	a 'pie' or radial progress; can optionally draw 'clock' ticks; requires
+	Mono.Cairo and GTK+-2.8
+
+2005-12-22  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/MusicBrainz/sync-tree.sh: Added script to keep Banshee checkout of
+	musicbrainz-sharp in sync with the working development repository; the
+	development of this code has been moved outside of Banshee:
+
+		svn://abock.org/svn/trunk/musicbrainz-sharp
+
+	* src/MusicBrainz/Makefile.am: Updated to cleaner, synced version
+
 2005-12-23  Chris Toshok  <toshok@ximian.com>
 
 	* src/Banshee.Plugins/Audioscrobbler/Makefile.am (PKG_REFERENCES):

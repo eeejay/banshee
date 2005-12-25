@@ -32,9 +32,7 @@ using System.Collections;
 using Mono.Unix;
 using Gtk;
 
-using Banshee.Widgets;
-
-namespace Banshee
+namespace Banshee.Widgets
 {
     public class TrackInfoHeader : HBox
     {
@@ -45,36 +43,41 @@ namespace Banshee
         private Label artist_album_label;
         private Label title_label;
         private CoverArtThumbnail cover;
+        private VBox box;
         
-        public TrackInfoHeader() : base()
+        public TrackInfoHeader() : this(true, 36)
         {
-            ConstructWidget();
         }
         
-        private void ConstructWidget()
+        public TrackInfoHeader(bool ellipsize, int size) : base()
+        {
+            ConstructWidget(ellipsize, size);
+        }
+        
+        private void ConstructWidget(bool ellipsize, int size)
         {
             Spacing = 8;
         
-            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 48);
+            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", size);
             if(default_pixbuf == null) {
                 default_pixbuf = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), "banshee-logo.png");   
             }
             
-            cover = new CoverArtThumbnail(36);
+            cover = new CoverArtThumbnail(size);
             cover.NoArtworkPixbuf = default_pixbuf;
             PackStart(cover, false, false, 0);
             cover.Show();
         
-            VBox box = new VBox();
+            box = new VBox();
             box.Spacing = 2;
         
-            artist_album_label = new EllipsizeLabel();
+            artist_album_label = ellipsize ? new EllipsizeLabel() : new Label();
             artist_album_label.Show();
             artist_album_label.Xalign = 0.0f;
             artist_album_label.Yalign = 0.5f;
             artist_album_label.Selectable = true;
             
-            title_label = new EllipsizeLabel();
+            title_label = ellipsize ? new EllipsizeLabel() : new Label();
             title_label.Show();            
             title_label.Xalign = 0.0f;
             title_label.Yalign = 0.5f;
@@ -132,6 +135,12 @@ namespace Banshee
         public CoverArtThumbnail Cover {
             get {
                 return cover;
+            }
+        }
+        
+        public VBox VBox {
+            get {
+                return box;
             }
         }
         

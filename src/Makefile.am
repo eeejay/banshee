@@ -52,7 +52,6 @@ banshee_sources = \
 	LibraryTrackInfo.cs \
 	QueryBuilder.cs \
 	QueryBuilderModel.cs \
-	TrackInfoHeader.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \

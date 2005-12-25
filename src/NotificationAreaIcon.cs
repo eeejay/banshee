@@ -34,12 +34,12 @@ using Gdk;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Widgets;
 
 namespace Banshee
 {
     public class NotificationAreaIconContainer
     {
-        private Tooltips tooltips;
         private EventBox traybox;
 
         private NotificationAreaIcon ticon;
@@ -51,13 +51,16 @@ namespace Banshee
 
         public event EventHandler ClickEvent;
         public event ScrollEventHandler MouseScrollEvent;
+        private TrackInfoPopup popup;
+        private bool can_show_popup = false;
+        private bool cursor_outside_box = true;
 
         public NotificationAreaIconContainer()
         {
             ticon = new NotificationAreaIcon(Catalog.GetString("Banshee"));
-            tooltips = new Tooltips();
             CreateMenu();
             Init();
+            popup = new TrackInfoPopup();
         } 
 
         public void Init()
@@ -65,11 +68,45 @@ namespace Banshee
             ticon.DestroyEvent += OnDestroyEvent;
             traybox = new EventBox();
             traybox.ButtonPressEvent += OnTrayIconClick;
+            traybox.EnterNotifyEvent += OnEnterNotifyEvent;
+            traybox.LeaveNotifyEvent += OnLeaveNotifyEvent;
             traybox.ScrollEvent += OnMouseScroll;
+            
             traybox.Add(new Gtk.Image(IconThemeUtils.LoadIcon(22, "music-player-banshee", "tray-icon")));
             
             ticon.Add(traybox);
             ticon.ShowAll();
+        }
+        
+        private void ShowPopup()
+        {
+            int x, y;
+            Gtk.Requisition traybox_req = traybox.SizeRequest();
+            Gtk.Requisition popup_req = popup.SizeRequest();
+            PositionWidget(popup, out x, out y, 5);
+            
+            x = x - (popup_req.Width / 2) + (traybox_req.Width / 2);
+            
+            popup.Move(x, y);
+            popup.Show();
+        }
+        
+        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
+        {
+            cursor_outside_box = false;
+        
+            if(!can_show_popup) {
+                return;
+            }
+            
+            can_show_popup = true;
+            ShowPopup();
+        }
+        
+        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
+        {
+            cursor_outside_box = true;
+            popup.Hide();
         }
         
         private void OnMouseScroll(object o, ScrollEventArgs args)
@@ -109,30 +146,64 @@ namespace Banshee
  
         private void PositionMenu(Menu menu, out int x, out int y, out bool push_in)
         {
+            PositionWidget(menu, out x, out y, 0);
+            push_in = true;
+        }
+        
+        private void PositionWidget(Widget widget, out int x, out int y, int yPadding)
+        {
             int button_y, panel_width, panel_height;
-            Gtk.Requisition requisition = menu.SizeRequest();
+            Gtk.Requisition requisition = widget.SizeRequest();
             
             traybox.GdkWindow.GetOrigin(out x, out button_y);
             (traybox.Toplevel as Gtk.Window).GetSize(out panel_width, out panel_height);
             
-            if(button_y + panel_height + requisition.Height >= traybox.Screen.Height) {
-                y = button_y - requisition.Height;
-            } else {
-                y = button_y + panel_height;
-            }
-
-            push_in = true;
+            y = (button_y + panel_height + requisition.Height >= traybox.Screen.Height) 
+                ? button_y - requisition.Height - yPadding
+                : button_y + panel_height + yPadding;
         }
         
         private void OnDestroyEvent(object o, DestroyEventArgs args)
         {
             Init();
         }
-        
-        public string Tooltip {
-            set { 
-                tooltips.SetTip(traybox, value, null); 
+
+        public void Update()
+        {
+            if(PlayerEngineCore.ActivePlayer == null || !PlayerEngineCore.ActivePlayer.Loaded) {
+                popup.Duration = 0;
+                popup.Position = 0;
+                return;
             }
-        }   
+            
+            popup.Duration = PlayerEngineCore.ActivePlayer.Length;
+            popup.Position = PlayerEngineCore.ActivePlayer.Position;
+        }
+
+        public TrackInfo Track {
+            set {
+                if(value == null) { 
+                    can_show_popup = false;
+                    popup.Hide();
+                    return;
+                }
+                
+                can_show_popup = true;
+                popup.Artist = value.DisplayArtist;
+                popup.Album = value.DisplayAlbum;
+                popup.TrackTitle = value.DisplayTitle;
+                popup.CoverArtFileName = value.CoverArtFileName;
+                
+                popup.Hide();
+                ShowPopup();
+                
+                GLib.Timeout.Add(6000, delegate {
+                    if(cursor_outside_box) {
+                        popup.Hide();
+                    }
+                    return false;
+                });
+            }
+        } 
     }
 }

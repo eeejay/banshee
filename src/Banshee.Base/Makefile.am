@@ -34,6 +34,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FileEncodeAction.cs \
 	$(srcdir)/NetworkDetect.cs \
 	$(srcdir)/PlayerEngineCore.cs \
+	$(srcdir)/TrackInfoHeader.cs \
+	$(srcdir)/TrackInfoPopup.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \

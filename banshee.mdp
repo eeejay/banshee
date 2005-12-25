@@ -53,7 +53,6 @@
     <File name="./src/SourceView.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/SqlGenerator.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/StockIcons.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/TrackInfoHeader.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/TrackProperties.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/VersionInformationDialog.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/GtkSharpBackports/AboutDialog.cs" subtype="Code" buildaction="Nothing" />
@@ -174,6 +173,10 @@
     <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Widgets/PropertyTable.cs" subtype="Code" buildaction="Compile" />
+    <File name="./libbanshee/misc.c" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Widgets/RadialProgress.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/TrackInfoHeader.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/TrackInfoPopup.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

@@ -22,7 +22,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/HigMessageDialog.cs \
 	$(srcdir)/NotificationAreaIcon.cs \
 	$(srcdir)/HighlightMessageArea.cs \
-	$(srcdir)/PropertyTable.cs
+	$(srcdir)/PropertyTable.cs \
+	$(srcdir)/RadialProgress.cs 
 
 ASSEMBLY_RESOURCES = \
 	Resources/search-entry-icon.png \
@@ -33,7 +34,7 @@ ASSEMBLY_RESOURCES_GENERATED = $(foreach res,$(ASSEMBLY_RESOURCES), $(addprefix 
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix $(ASSEMBLY_RESOURCES_GENERATED) -target:library -out:$@ $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo $(ASSEMBLY_RESOURCES_GENERATED) -target:library -out:$@ $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY_RESOURCES) $(ASSEMBLY).config.in
 
