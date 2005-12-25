@@ -12,12 +12,13 @@
 #        encoding = kodning
 #        cover art = omslag
 #
+#: ../src/Main.cs:105
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-16 10:48+0100\n"
-"PO-Revision-Date: 2005-12-16 10:46+0100\n"
+"POT-Creation-Date: 2005-12-25 17:36+0100\n"
+"PO-Revision-Date: 2005-12-25 17:58+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -25,9 +26,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. Footer
-#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:338
-#: ../src/PlayerInterface.cs:1379
+#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:348
+#: ../src/PlayerInterface.cs:1469
 msgid "Banshee Music Player"
 msgstr "Banshee musikafspiller"
 
@@ -288,12 +288,13 @@ msgstr "<span size=\"small\">Klar</span>"
 msgid "Albu_m"
 msgstr "Albu_m"
 
-#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:81
+#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
 msgid "Audio CD"
 msgstr "Lyd-cd"
 
 #: ../data/banshee.glade.h:20 ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:64 ../src/NotificationAreaIcon.cs:57
+#: ../src/AboutBox.cs:66 ../src/NotificationAreaIcon.cs:57
+#: ../src/PlayerInterface.cs:763
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -330,23 +331,23 @@ msgid "Description:"
 msgstr "Beskrivelse:"
 
 #: ../data/banshee.glade.h:28
-msgid "Disk At Once"
-msgstr "Disk At Once"
-
-#: ../data/banshee.glade.h:29
 msgid "Disk Drive:"
 msgstr "Disk-drev:"
 
-#: ../data/banshee.glade.h:30
+#: ../data/banshee.glade.h:29
 msgid "Disk Format:"
 msgstr "Disk-format:"
 
-#: ../data/banshee.glade.h:31
+#: ../data/banshee.glade.h:30
 msgid "Disk Usage:"
 msgstr "Disk-forbrug:"
 
+#: ../data/banshee.glade.h:31
+msgid "Disk at once"
+msgstr "Disk at once"
+
 #: ../data/banshee.glade.h:32
-msgid "Eject When Finished"
+msgid "Eject when finished"
 msgstr "Skub ud efter fuldførelse"
 
 #: ../data/banshee.glade.h:33
@@ -410,7 +411,7 @@ msgid "Search:"
 msgstr "Søg:"
 
 #: ../data/banshee.glade.h:48
-msgid "Simulate Write"
+msgid "Simulate write"
 msgstr "Simulér skrivning"
 
 #: ../data/banshee.glade.h:49
@@ -433,6 +434,7 @@ msgstr "Spor-nummer"
 #: ../src/TrackProperties.cs:239 ../src/TrackProperties.cs:240
 #: ../src/TrackProperties.cs:241 ../src/TrackProperties.cs:242
 #: ../src/TrackProperties.cs:243 ../src/TrackProperties.cs:244
+#: ../src/Banshee.Base/Dap/Dap.cs:584
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -557,7 +559,7 @@ msgstr "Kunne ikke initialisere HAL-kontekst"
 msgid "Could not get device list from HAL"
 msgstr "Kunne ikke hente enhedsliste fra HAL"
 
-#: ../src/AboutBox.cs:61
+#: ../src/AboutBox.cs:63
 msgid ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
@@ -565,11 +567,11 @@ msgstr ""
 "Copyright 2005 Novell, Inc.\n"
 "Copyright 2005 Aaron Bockover"
 
-#: ../src/AboutBox.cs:66
+#: ../src/AboutBox.cs:68
 msgid "Music Management and Playback for Gnome."
 msgstr "Musik-håndtering og afspilning til Gnome."
 
-#: ../src/AboutBox.cs:142
+#: ../src/AboutBox.cs:144
 msgid "Banshee Wiki"
 msgstr "Banshee Wikien"
 
@@ -656,9 +658,27 @@ msgstr "Indsæt tom cd"
 msgid "Please insert a blank CD disk for the write process."
 msgstr "Indsæt venligst en tom cd til skrivningen."
 
-#: ../src/Core.cs:211
-msgid "CD Playback is not supported in your Banshee Setup"
-msgstr "CD-afspilning er ikke understøttet i din Banshee-installation"
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/DapPropertiesDialog.cs:54
+#, csharp-format
+msgid "{0} Properties"
+msgstr "Egenskaber for {0}"
+
+#: ../src/DapPropertiesDialog.cs:78 ../src/DapPropertiesDialog.cs:81
+msgid "Device Name"
+msgstr "Enhedsnavn"
+
+#: ../src/DapPropertiesDialog.cs:85 ../src/DapPropertiesDialog.cs:88
+msgid "Owner Name"
+msgstr "Ejer-navn"
+
+#: ../src/DapPropertiesDialog.cs:93
+msgid "Volume Usage"
+msgstr "Enheds-forbrug"
+
+#: ../src/DapPropertiesDialog.cs:105
+msgid "Advanced Details"
+msgstr "Avancerede detaljer"
 
 #: ../src/Dialogs.cs:83
 msgid "Cannot Rename Playlist"
@@ -694,22 +714,30 @@ msgstr ""
 msgid "An unhandled exception was thrown: "
 msgstr "En 'unhandled exception' blev kastet: "
 
-#: ../src/Library.cs:270
+#: ../src/Library.cs:271
 msgid "Library"
 msgstr "Bibliotek"
 
+#: ../src/Library.cs:281
+msgid "Music Library"
+msgstr "Musik-bibliotek"
+
+#: ../src/Library.cs:307
+msgid "The Frobnicator"
+msgstr ""
+
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/Library.cs:389 ../src/PlayerInterface.cs:969
+#: ../src/Library.cs:448 ../src/PlayerInterface.cs:996
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} af {1}"
 
-#: ../src/Library.cs:400
+#: ../src/Library.cs:459
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} tilbage)"
 
-#: ../src/Library.cs:687 ../src/PlayerInterface.cs:1683
+#: ../src/Library.cs:559 ../src/PlayerInterface.cs:1776
 #: ../src/SourceView.cs:72 ../src/Banshee.Base/ActionManager.cs:64
 msgid "New Playlist"
 msgstr "Ny spilleliste"
@@ -856,76 +884,83 @@ msgstr "Kun fejlsøgnings-meddelelser"
 msgid "Entry Details:"
 msgstr "Post-detaljer:"
 
-#: ../src/PlayerInterface.cs:366
+#: ../src/Main.cs:106
+msgid ""
+"Banshee is already running. If you were trying to control the already "
+"running instance of Banshee, D-Bus must be enabled. Banshee could not "
+"connect to your D-Bus Session Bus."
+msgstr "Banshee kører allerede. Hvis du forsøgte at kontrollere en instans af Banshee som allerede kører, skal D-Bus være aktiveret. Banshee kunne ikke tilslutte til din D-Bus sessions-bus."
+
+#: ../src/PlayerInterface.cs:388
 msgid "Loading..."
 msgstr "Indlæser..."
 
 #. Misc
-#: ../src/PlayerInterface.cs:416 ../src/PlayerInterface.cs:1935
+#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:2040
 msgid "Idle"
 msgstr "Klar"
 
-#: ../src/PlayerInterface.cs:425
+#: ../src/PlayerInterface.cs:447
 msgid "All"
 msgstr "Alle"
 
-#: ../src/PlayerInterface.cs:427 ../src/PlayerInterface.cs:1485
+#: ../src/PlayerInterface.cs:449 ../src/PlayerInterface.cs:1578
 msgid "Song Name"
 msgstr "Sang"
 
-#: ../src/PlayerInterface.cs:428 ../src/PlayerInterface.cs:1483
+#: ../src/PlayerInterface.cs:450 ../src/PlayerInterface.cs:1576
 msgid "Artist Name"
 msgstr "Kunstner"
 
-#: ../src/PlayerInterface.cs:429 ../src/PlayerInterface.cs:1487
+#: ../src/PlayerInterface.cs:451 ../src/PlayerInterface.cs:1580
 msgid "Album Title"
 msgstr "Album"
 
-#: ../src/PlayerInterface.cs:468
-msgid "Write Selection to CD"
+#: ../src/PlayerInterface.cs:476
+msgid "Write selection to CD"
 msgstr "Skriv valg til cd"
 
-#: ../src/PlayerInterface.cs:469
-msgid "Import CD into Library"
-msgstr "Importér lyd-cd til bibliotek"
+#: ../src/PlayerInterface.cs:477
+msgid "Import CD into library"
+msgstr "Importér cd til bibliotek"
 
-#: ../src/PlayerInterface.cs:470
-msgid "Play Previous Song"
+#: ../src/PlayerInterface.cs:478
+msgid "Play previous song"
 msgstr "Afspil forrige sang"
 
-#: ../src/PlayerInterface.cs:471
-msgid "Play/Pause Current Song"
-msgstr "Afspil/Pause nuværende sang"
+#: ../src/PlayerInterface.cs:479
+msgid "Play/pause current song"
+msgstr "Afspil/pause nuværende sang"
 
-#: ../src/PlayerInterface.cs:472
-msgid "Play Next Song"
+#: ../src/PlayerInterface.cs:480
+msgid "Play next song"
 msgstr "Afspil næste sang"
 
-#: ../src/PlayerInterface.cs:473
-msgid "Current Position in Song"
+#: ../src/PlayerInterface.cs:481
+msgid "Current position in song"
 msgstr "Nuværende position i sang"
 
-#: ../src/PlayerInterface.cs:474
-msgid "Device Disk Usage"
+#: ../src/PlayerInterface.cs:482
+msgid "Device disk usage"
 msgstr "Disk-forbrug på enhed"
 
-#: ../src/PlayerInterface.cs:475
-msgid "Synchronize Music Library to Device"
+#: ../src/PlayerInterface.cs:483
+msgid "Synchronize music library to device"
 msgstr "Synkronisér musik-bibliotek til enhed"
 
-#: ../src/PlayerInterface.cs:476
-msgid "Adjust Volume"
+#: ../src/PlayerInterface.cs:484
+msgid "Adjust volume"
 msgstr "Justér lydstyrke"
 
-#: ../src/PlayerInterface.cs:500
+#: ../src/PlayerInterface.cs:508
 msgid "Notification Area Icon could not be installed"
 msgstr "Statusikon kunne ikke installeres i statusfelt"
 
-#: ../src/PlayerInterface.cs:551
+#: ../src/PlayerInterface.cs:559
 msgid "Import Music"
 msgstr "Importér musik"
 
-#: ../src/PlayerInterface.cs:552
+#: ../src/PlayerInterface.cs:560
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later.\n"
@@ -939,105 +974,138 @@ msgstr ""
 "Automatisk import eller import af en stor mappe kan tage lang tid, så hav "
 "tålmodighed."
 
-#: ../src/PlayerInterface.cs:556
+#: ../src/PlayerInterface.cs:564
 msgid "Import Folder"
 msgstr "Importér mappe"
 
-#: ../src/PlayerInterface.cs:558
+#: ../src/PlayerInterface.cs:566
 msgid "Automatic Import"
 msgstr "Automatisk import"
 
-#: ../src/PlayerInterface.cs:729
+#: ../src/PlayerInterface.cs:740
 msgid "Position: "
 msgstr "Position: "
 
-#: ../src/PlayerInterface.cs:736 ../src/PlayerInterface.cs:1931
+#: ../src/PlayerInterface.cs:747 ../src/PlayerInterface.cs:2036
 #: ../src/Banshee.Base/ActionManager.cs:203
 msgid "Play"
 msgstr "Afspil"
 
-#: ../src/PlayerInterface.cs:740
+#: ../src/PlayerInterface.cs:751
 msgid "Pause"
 msgstr "Pause"
 
-#: ../src/PlayerInterface.cs:1056
+#: ../src/PlayerInterface.cs:806
+msgid "Cannot Play Song"
+msgstr "Kan ikke afspille sang"
+
+#: ../src/PlayerInterface.cs:807
+#, csharp-format
+msgid ""
+"{0} cannot be played by Banshee. The most common reasons for this are:\n"
+"\n"
+"  <big>•</big> Song is protected (DRM)\n"
+"  <big>•</big> Song is on a DAP that does not support playback\n"
+msgstr ""
+"{0} kan ikke afspilles af Banshee. De mest almindelige grunde til dette er:\n"
+"\n"
+"  <big>•</big> Sangen er beskyttet (DRM)\n"
+"  <big>•</big> Sangen er på en DAP som ikke understøtter afspilning\n"
+
+#: ../src/PlayerInterface.cs:1083
 msgid "Import Folder to Library"
 msgstr "Importér mappe til bibliotek"
 
-#: ../src/PlayerInterface.cs:1142 ../src/Banshee.Base/ActionManager.cs:249
+#: ../src/PlayerInterface.cs:1169 ../src/Banshee.Base/ActionManager.cs:249
 msgid "Synchronize"
 msgstr "Synkronisér"
 
-#: ../src/PlayerInterface.cs:1143 ../src/PlayerInterface.cs:2262
+#: ../src/PlayerInterface.cs:1170 ../src/PlayerInterface.cs:2376
 msgid "Rename Device"
 msgstr "Omdøb enhed"
 
-#: ../src/PlayerInterface.cs:1145 ../src/PlayerInterface.cs:2256
+#: ../src/PlayerInterface.cs:1172 ../src/PlayerInterface.cs:2370
 msgid "Rename Playlist"
 msgstr "Omdøb spilleliste"
 
-#: ../src/PlayerInterface.cs:1163
-#, csharp-format
-msgid "{0}'s Music Library"
-msgstr "{0}'s musik-bibliotek"
+#: ../src/PlayerInterface.cs:1193
+msgid "Reading table of contents from CD..."
+msgstr "Læser indholdstabellen fra cd'en..."
 
-#: ../src/PlayerInterface.cs:1351
+#: ../src/PlayerInterface.cs:1198
+msgid "Searching for CD metadata..."
+msgstr "Søger efter cd metadata..."
+
+#: ../src/PlayerInterface.cs:1203
+msgid "Searching for CD cover art..."
+msgstr "Søger efter cd omslag..."
+
+#: ../src/PlayerInterface.cs:1208
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr "Kan ikke søge efter cd metadata: der er ingen tilgængelig Internet-forbindelse"
+
+#: ../src/PlayerInterface.cs:1214
+msgid "Could not fetch metadata for CD."
+msgstr "Kunne ikke hente cd metadata."
+
+#: ../src/PlayerInterface.cs:1441
 msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserer din enhed, vent venligst..."
 
-#: ../src/PlayerInterface.cs:1366
+#: ../src/PlayerInterface.cs:1456
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dage"
 
-#: ../src/PlayerInterface.cs:1384
+#: ../src/PlayerInterface.cs:1474
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Dit bibliotek er tomt - overvej at importere musik"
 
-#: ../src/PlayerInterface.cs:1388
+#: ../src/PlayerInterface.cs:1478
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "Denne spilleliste er tom - overvej at tilføje musik"
 
-#: ../src/PlayerInterface.cs:1392
+#: ../src/PlayerInterface.cs:1482
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} element"
 msgstr[1] "{0} elementer"
 
-#: ../src/PlayerInterface.cs:1394
+#: ../src/PlayerInterface.cs:1484
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} samlet spilletid"
 
-#: ../src/PlayerInterface.cs:1706
+#: ../src/PlayerInterface.cs:1799
 msgid "Clear"
 msgstr "Ryd"
 
-#: ../src/PlayerInterface.cs:1904
+#: ../src/PlayerInterface.cs:1997
 msgid "Could Not Eject"
 msgstr "Kunne ikke skubbe ud"
 
-#: ../src/PlayerInterface.cs:1940
+#: ../src/PlayerInterface.cs:2045
 msgid "Banshee - Idle"
 msgstr "Banshee - klar"
 
-#: ../src/PlayerInterface.cs:1965
+#: ../src/PlayerInterface.cs:2070
 msgid "Cannot Import"
 msgstr "Kan ikke importere"
 
-#: ../src/PlayerInterface.cs:1966 ../src/PlayerInterface.cs:1970
+#: ../src/PlayerInterface.cs:2071 ../src/PlayerInterface.cs:2075
 msgid "Scanning"
 msgstr "Leder"
 
-#: ../src/PlayerInterface.cs:1968
+#: ../src/PlayerInterface.cs:2073
 #, csharp-format
 msgid "Cannot Import: {0} ({1}, {2})"
 msgstr "Kan ikke importere: {0} ({1}, {2})"
 
-#: ../src/PlayerInterface.cs:1996
+#: ../src/PlayerInterface.cs:2101
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -1053,7 +1121,7 @@ msgstr[1] ""
 "Er du sikker på du vil fjerne de valgte <b>({0})</b> sange fra dit bibliotek "
 "<i><b>og</b></i> dit drev? Denne handling vil slette filerne permanent."
 
-#: ../src/PlayerInterface.cs:2003
+#: ../src/PlayerInterface.cs:2110
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1063,59 +1131,64 @@ msgstr[0] "Er du sikker på du vil fjerne den valgte sang fra dit bibliotek?"
 msgstr[1] ""
 "Er du sikker på du vil fjerne de valgte <b>({0})</b> sange fra dit bibliotek?"
 
-#: ../src/PlayerInterface.cs:2012
+#: ../src/PlayerInterface.cs:2119
 msgid "Remove Selected Songs from Library"
 msgstr "Fjern valgte sange fra bibliotek"
 
-#: ../src/PlayerInterface.cs:2113
+#: ../src/PlayerInterface.cs:2220
 msgid "Import Files to Library"
 msgstr "Importér filer til bibliotek"
 
-#: ../src/PlayerInterface.cs:2159
+#: ../src/PlayerInterface.cs:2266
 msgid "Invalid Selection"
 msgstr "Ugyldigt valg"
 
-#: ../src/PlayerInterface.cs:2160
+#: ../src/PlayerInterface.cs:2267
 msgid "You must select at least one track to import."
 msgstr "Du skal vælge mindst én sang at importere."
 
-#: ../src/PlayerInterface.cs:2192
-msgid "Synchronize iPod"
-msgstr "Synkronisér iPod"
+#. Translators: {0} is the name of the DAP device (i.e. 'iPod')
+#: ../src/PlayerInterface.cs:2304
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "Synkronisér {0}"
 
-#: ../src/PlayerInterface.cs:2193
+#: ../src/PlayerInterface.cs:2305
+#, csharp-format
 msgid ""
-"You have made changes to your iPod. Please choose a method for updating the "
-"contents of your iPod.\n"
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
 "\n"
-"<i>Synchronize Library</i>: synchronize Banshee library to iPod\n"
-"<i>Save Manual Changes</i>: save only the manual changes you made\n"
+"<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
+msgstr ""
+"Du har lavet ændringer til din {0}. Vælg venligst en metode til opdatering af indholdet på din {0}.\n"
 "\n"
+"<big>•</big> <i>Synkronisér bibliotek</i>: synkronisér Banshee bibliotek til {0}\n"
+"<big>•</big> <i>Gem manuelle ændringer</i>: gem kun manuelle ændringer lavet af dig\n"
+"\n"
+"<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende iPod indhold og kan medføre inkompatiblitet med iTunes!"
+
+#: ../src/PlayerInterface.cs:2311
+msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
-msgstr ""
-"Du har lavet ændringer til din iPod. Vælg venligst en metode til opdatering "
-"af indholdet på din iPod.\n"
-"\n"
-"<i>Synkronisér bibliotek</i>: synkronisér Banshee bibliotek til iPod\n"
-"<i>Gem manuelle ændringer</i>: gem kun manuelle ændringer lavet af dig\n"
-"\n"
-"<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende iPod indhold "
-"og kan medføre inkompatiblitet med iTunes!"
+msgstr "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende indhold på iPod'en og kan resultere i inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:2199
+#: ../src/PlayerInterface.cs:2313
 msgid "Synchronize Library"
 msgstr "Synkronisér bibliotek"
 
-#: ../src/PlayerInterface.cs:2201
+#: ../src/PlayerInterface.cs:2315
 msgid "Save Manual Changes"
 msgstr "Gem manuelle ændringer"
 
-#: ../src/PlayerInterface.cs:2257
+#: ../src/PlayerInterface.cs:2371
 msgid "Enter new playlist name"
 msgstr "Indtast nyt spilleliste-navn"
 
-#: ../src/PlayerInterface.cs:2263
+#: ../src/PlayerInterface.cs:2377
 msgid "Enter new name for your device"
 msgstr "Indtast nyt navn til din enhed"
 
@@ -1131,39 +1204,39 @@ msgstr "Vælg kolonner"
 msgid "Visible Playlist Columns"
 msgstr "Synlige kolonner i spilleliste"
 
-#: ../src/PlaylistView.cs:82
+#: ../src/PlaylistView.cs:83
 msgid "Track"
 msgstr "Spor"
 
-#: ../src/PlaylistView.cs:85
+#: ../src/PlaylistView.cs:86
 msgid "Artist"
 msgstr "Kunstner"
 
-#: ../src/PlaylistView.cs:88
+#: ../src/PlaylistView.cs:89
 msgid "Title"
 msgstr "Titel"
 
-#: ../src/PlaylistView.cs:91
+#: ../src/PlaylistView.cs:92
 msgid "Album"
 msgstr "Album"
 
-#: ../src/PlaylistView.cs:94
+#: ../src/PlaylistView.cs:95
 msgid "Time"
 msgstr "Varighed"
 
-#: ../src/PlaylistView.cs:97 ../src/Banshee.Base/ActionManager.cs:183
+#: ../src/PlaylistView.cs:100 ../src/Banshee.Base/ActionManager.cs:183
 msgid "Rating"
 msgstr "Bedømmelse"
 
-#: ../src/PlaylistView.cs:100
+#: ../src/PlaylistView.cs:107
 msgid "Plays"
 msgstr "Afspilninger"
 
-#: ../src/PlaylistView.cs:104
+#: ../src/PlaylistView.cs:115
 msgid "Last Played"
 msgstr "Sidst afspillet"
 
-#: ../src/PlaylistView.cs:449
+#: ../src/PlaylistView.cs:418
 msgid "N/A"
 msgstr "I/T"
 
@@ -1633,11 +1706,11 @@ msgstr "Importerer sange"
 msgid "Scanning for songs"
 msgstr "Leder efter sange"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:69
+#: ../src/Banshee.Base/NetworkDetect.cs:76
 msgid "Cannot connect to NetworkManager"
 msgstr "Kan ikke tilslutte til NetworkManager"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:70
+#: ../src/Banshee.Base/NetworkDetect.cs:77
 msgid "An available, working network connection will be assumed"
 msgstr "En tilgængelig, fungerende netværksforbindelse forventes"
 
@@ -1688,21 +1761,26 @@ msgstr ""
 "Kan ikke sætte intern bitrate. Kopiér profil og angiv Bitrate ved kopiering "
 "(new PipelineProfile(profile))"
 
-#: ../src/Banshee.Base/PipelineProfile.cs:361
+#. Translators: used to specify the bitrate for ripping
+#: ../src/Banshee.Base/PipelineProfile.cs:362
 msgid "at"
 msgstr "på"
 
-#: ../src/Banshee.Base/PipelineProfile.cs:403
+#: ../src/Banshee.Base/PipelineProfile.cs:404
 msgid "No iPod-compatible encoders available"
 msgstr "Ingen iPod-kompatible kodere tilgængelige"
 
+#: ../src/Banshee.Base/PlayerEngineCore.cs:93
+msgid "CD playback is not supported for this instance"
+msgstr "CD-afspilning er ikke understøttet i denne instans"
+
 #: ../src/Banshee.Base/TrackInfo.cs:316
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:74
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
 msgid "Unknown Artist"
 msgstr "Ukendt kunstner"
 
 #: ../src/Banshee.Base/TrackInfo.cs:324
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:75
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
 msgid "Unknown Album"
 msgstr "Ukendt album"
 
@@ -1733,28 +1811,28 @@ msgstr "Lyd-cd-kerne initialiseret"
 msgid "Could not Read Audio CD"
 msgstr "Kunne ikke læse lyd-cd"
 
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:76
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:88
 #, csharp-format
 msgid "Track {0}"
 msgstr "Spor {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:273 ../src/Banshee.Base/Dap/Dap.cs:274
+#: ../src/Banshee.Base/Dap/Dap.cs:309 ../src/Banshee.Base/Dap/Dap.cs:310
 msgid "Synchronizing Device"
 msgstr "Synkroniserer enhed"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:275
+#: ../src/Banshee.Base/Dap/Dap.cs:311
 msgid "Waiting for transcoder..."
 msgstr "Venter på koder..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:359 ../src/Banshee.Base/Dap/Dap.cs:380
+#: ../src/Banshee.Base/Dap/Dap.cs:395 ../src/Banshee.Base/Dap/Dap.cs:416
 msgid "Processing..."
 msgstr "Behandler..."
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:113
+#: ../src/Banshee.Base/Dap/DapCore.cs:119
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialiseret"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:167
+#: ../src/Banshee.Base/Dap/DapCore.cs:173
 msgid "Could not process connected DAP"
 msgstr "Kunne ikke behandle tilsluttet DAP"
 
@@ -1827,6 +1905,63 @@ msgid ""
 msgstr ""
 "VLC er en yderst portabel multimedie-afspiller til en række lyd og video "
 "formater (MP3, AAC, OGG, FLAC, WMA etc.) Se http://videolan.org/vlc/."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:50
+msgid "Configure Audioscrobbler"
+msgstr "Konfigurér Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:70
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:75
+msgid "Audioscrobbler"
+msgstr "Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:74
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr "Din profilside på Last.fm opdateres automatisk hver gang du lytter til musik. Den lader andre se hvad du lytter til lige nu og viser grafer over din lytte-historik."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:81
+msgid "Create a free Last.fm account"
+msgstr "Opret en gratis Last.fm konto"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:104
+msgid "Last.fm Username"
+msgstr "Last.fm brugernavn"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:105
+msgid "Last.fm Password"
+msgstr "Last.fm adgangskode"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:76
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:80
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Konfigurér Audioscrobbler udvidelsesmodulet"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:79
+msgid "Configure..."
+msgstr "Konfigurér..."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:83
+msgid "Visit Profile Page"
+msgstr "Besøg profilside"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:84
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Besøg din Audioscrobbler profilside"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
+msgid "Enable the Audioscrobbler plugin"
+msgstr "Aktivér Audioscrobbler udvidelsesmodulet"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
+msgid "Your last.fm password"
+msgstr "Din Last.fm adgangskode"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
+msgid "Your last.fm username"
+msgstr "Dit Last.fm brugernavn"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
 msgid "Cancel Operation"
