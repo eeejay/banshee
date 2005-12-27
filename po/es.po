@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-12-21 17:17+0100\n"
-"PO-Revision-Date: 2005-12-21 17:31+0100\n"
+"PO-Revision-Date: 2005-12-26 21:25+0100\n"
 "Last-Translator: maria <maria.majadas@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,8 +33,7 @@ msgstr "Reproductor de música"
 
 #: ../data/banshee.schemas.in.h:1
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr ""
-"Copia y renombra música al directorio de la fonoteca de Banshee al importar"
+msgstr "Copia y renombra música al directorio de la fonoteca de Banshee al importar"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy music on import"
@@ -85,8 +84,7 @@ msgid "Move music on info save"
 msgstr "Mueve la música al guardar la información"
 
 #: ../data/banshee.schemas.in.h:11
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Mueve la música dentro del directorio de la fonoteca de banshee cuando se "
 "guarda la información de una canción"
@@ -125,8 +123,7 @@ msgstr "Ancho de la vista de fuentes"
 
 #: ../data/banshee.schemas.in.h:20
 msgid "True if main window is to be maximized, false if it is not."
-msgstr ""
-"Verdadero si la ventana principal se va a maximizadar, falso si no lo está."
+msgstr "Verdadero si la ventana principal se va a maximizadar, falso si no lo está."
 
 #: ../data/banshee.schemas.in.h:21
 msgid ""
@@ -321,8 +318,7 @@ msgstr "Canales:"
 
 #: ../data/banshee.glade.h:25
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr ""
-"Copiar archivos a la carpeta de música de Banshee al importar a la fonoteca"
+msgstr "Copiar archivos a la carpeta de música de Banshee al importar a la fonoteca"
 
 #: ../data/banshee.glade.h:26
 msgid "Data CD"
@@ -508,12 +504,11 @@ msgstr "No se pudo encontrar o crear el complemento 'playbin' de GStreamer"
 msgid ""
 "Could not load an output sink from GStreamer/GConf and could not fall back "
 "on alsasink"
-msgstr ""
+msgstr "No se pudo cargar un sumidero de salida desde GStreamer/GConf y no se pudo volver al sumidero alsa"
 
 #: ../libbanshee/gst-playback-0.8.c:102
-msgid ""
-"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
-msgstr ""
+msgid "Could not load an output sink from GStreamer/GConf, falling back on alsasink"
+msgstr "No se pudo cargar un sumidero de salida desde GStreamer/GConf, volviendo al sumidero alsa"
 
 #: ../libbanshee/gst-transcode-0.8.c:118
 msgid "Could not create 'gnomevfssrc' plugin"
@@ -689,7 +684,7 @@ msgid "Cannot Rename Playlist"
 msgstr "No se puede renombrar la lista de reproducción"
 
 #: ../src/Dialogs.cs:84
-msgid "A playlist with this name already exists. Please choose another name."
+msgid "A playlist with this name already exists. Please choose another name"
 msgstr "Ya existe una lista con este nombre. Escoja otro nombre."
 
 #: ../src/Dialogs.cs:93
@@ -742,8 +737,7 @@ msgstr "Lista de reproducción nueva"
 
 #: ../src/LibraryTransactions.cs:97
 msgid "Unhandled Exception, ending IO Transaction safely"
-msgstr ""
-"Excepción sin tratamiento, terminando transacción de E/S de forma segura"
+msgstr "Excepción sin tratamiento, terminando transacción de E/S de forma segura"
 
 #: ../src/LibraryTransactions.cs:214 ../src/LibraryTransactions.cs:589
 msgid "Library Track Loader"
@@ -999,6 +993,10 @@ msgid ""
 "  <big>•</big> Song is protected (DRM)\n"
 "  <big>•</big> Song is on a DAP that does not support playback\n"
 msgstr ""
+"{0} no puede ser reproducido por Banshee. La razón más común para esto es:\n"
+"\n"
+"  <big>•</big> La canción está protegida (DRM)\n"
+"  <big>•</big> La canción está en un DAP que no soporta reproducción\n"
 
 #: ../src/PlayerInterface.cs:1079
 msgid "Import Folder to Library"
@@ -1018,20 +1016,19 @@ msgstr "Renombra la lista de reproducción"
 
 #: ../src/PlayerInterface.cs:1189
 msgid "Reading table of contents from CD..."
-msgstr ""
+msgstr "Leyendo tabla de contenido desde el CD..."
 
 #: ../src/PlayerInterface.cs:1194
 msgid "Searching for CD metadata..."
-msgstr ""
+msgstr "Buscando metadatos del CD..."
 
 #: ../src/PlayerInterface.cs:1199
 msgid "Searching for CD cover art..."
-msgstr ""
+msgstr "Buscando arte de portada del CD..."
 
 #: ../src/PlayerInterface.cs:1204
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
-msgstr ""
+msgid "Cannot search for CD metadata: there is no available Internet connection"
+msgstr "No pueden buscar los metadatos del CD metadata: no hay disponible ninguna conexión a Internet"
 
 #: ../src/PlayerInterface.cs:1210
 msgid "Could not fetch metadata for CD."
@@ -1097,7 +1094,7 @@ msgstr "No se puede importar: {0} ({1}, {2})"
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
-"<i><b>and</b></i> your drive? This action will permanently delete the file."
+"<i><b>and</b></i> your drive? This action will permanently delete the file"
 msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library <i><b>and</b></i> your drive? This action will permanently delete "
@@ -1162,7 +1159,7 @@ msgstr ""
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
-msgstr ""
+msgstr "<b>Atención:</b> Las acciones alterarán o borrarán el contenido existente en el iPod y podría causar incompatibilidades con iTunes."
 
 #: ../src/PlayerInterface.cs:2306
 msgid "Synchronize Library"
@@ -1412,7 +1409,7 @@ msgstr "Importar _carpeta..."
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
-msgstr ""
+msgstr "Importar el contenido de una carpeta entera"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
@@ -1420,7 +1417,7 @@ msgstr "Importar archivos..."
 
 #: ../src/Banshee.Base/ActionManager.cs:73
 msgid "Import files inside a folder"
-msgstr ""
+msgstr "Importar los archivos del interior de una carpeta"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
 msgid "Source Properties..."
@@ -1448,7 +1445,7 @@ msgstr "Renombrar fuente"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
 msgid "Rename the active source"
-msgstr ""
+msgstr "Renombrar la fuente activa"
 
 #: ../src/Banshee.Base/ActionManager.cs:91
 msgid "Select All"
@@ -1456,7 +1453,7 @@ msgstr "Seleccionar todo"
 
 #: ../src/Banshee.Base/ActionManager.cs:92
 msgid "Select all songs in song list"
-msgstr ""
+msgstr "Seleccionar todas las canciones en la lista de canciones"
 
 #: ../src/Banshee.Base/ActionManager.cs:95
 msgid "Select None"
@@ -1464,7 +1461,7 @@ msgstr "No seleccionar nada"
 
 #: ../src/Banshee.Base/ActionManager.cs:96
 msgid "Unselect all songs in song list"
-msgstr ""
+msgstr "Deseleccionar todas las canciones en la lista de canciones"
 
 #: ../src/Banshee.Base/ActionManager.cs:99
 msgid "Preferences..."
@@ -1472,11 +1469,11 @@ msgstr "Preferencias..."
 
 #: ../src/Banshee.Base/ActionManager.cs:100
 msgid "Edit Banshee preferences"
-msgstr ""
+msgstr "Editar preferencias Banshee"
 
 #: ../src/Banshee.Base/ActionManager.cs:103
 msgid "_View"
-msgstr ""
+msgstr "_Ver"
 
 #: ../src/Banshee.Base/ActionManager.cs:106
 msgid "Columns..."
@@ -1484,7 +1481,7 @@ msgstr "Columnas..."
 
 #: ../src/Banshee.Base/ActionManager.cs:107
 msgid "Select which columns to display in the song list"
-msgstr ""
+msgstr "Seleccionar qué columnas mostrar en la lista de canciones"
 
 #: ../src/Banshee.Base/ActionManager.cs:110
 msgid "Logged Events Viewer..."
@@ -1492,7 +1489,7 @@ msgstr "Visor de eventos registrados..."
 
 #: ../src/Banshee.Base/ActionManager.cs:111
 msgid "View a detailed log of events"
-msgstr ""
+msgstr "Ver un registro detallado de los eventos"
 
 #: ../src/Banshee.Base/ActionManager.cs:114
 msgid "_Help"
@@ -1508,7 +1505,7 @@ msgstr "Ver información detallada de la versión y la configuración"
 
 #: ../src/Banshee.Base/ActionManager.cs:121
 msgid "About..."
-msgstr ""
+msgstr "Acerca de..."
 
 #: ../src/Banshee.Base/ActionManager.cs:122
 msgid "View Banshee credits and license information"
@@ -1528,11 +1525,11 @@ msgstr "Cambiar al modo a pantalla completa"
 
 #: ../src/Banshee.Base/ActionManager.cs:143
 msgid "Show Cover Art"
-msgstr ""
+msgstr "Mostrar arte de portada"
 
 #: ../src/Banshee.Base/ActionManager.cs:144
 msgid "Toggle display of album cover art"
-msgstr ""
+msgstr "Cambiar visualización del arte de la portada del álbum"
 
 #: ../src/Banshee.Base/ActionManager.cs:153
 msgid "Delete Playlist"
@@ -1564,7 +1561,7 @@ msgstr "Borrar las canciones de la unidad"
 
 #: ../src/Banshee.Base/ActionManager.cs:172
 msgid "Permanently delete selected song(s) from storage medium"
-msgstr ""
+msgstr "Borrar permanentemente la(s) cancion(es) seleccionadas del medio de almacenamiento"
 
 #: ../src/Banshee.Base/ActionManager.cs:175
 msgid "Properties"
@@ -1580,7 +1577,7 @@ msgstr "Añadir a la lista de reproducción"
 
 #: ../src/Banshee.Base/ActionManager.cs:180
 msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr ""
+msgstr "Agregar las canciones seleccionadas a la lista de reproducción o crear una nueva de la selección"
 
 #: ../src/Banshee.Base/ActionManager.cs:184
 msgid "Set rating for selected songs"
@@ -1610,19 +1607,19 @@ msgstr "Anterior"
 
 #: ../src/Banshee.Base/ActionManager.cs:215
 msgid "Seek Backward"
-msgstr ""
+msgstr "Desplazarse atrás"
 
 #: ../src/Banshee.Base/ActionManager.cs:216
 msgid "Seek backward in current song"
-msgstr ""
+msgstr "Desplazarse hacia atrás en la canción actual"
 
 #: ../src/Banshee.Base/ActionManager.cs:219
 msgid "Seek Forward"
-msgstr ""
+msgstr "Desplazarse adelante"
 
 #: ../src/Banshee.Base/ActionManager.cs:220
 msgid "Seek forward in current song"
-msgstr ""
+msgstr "Desplazarse adelante en la canción actual"
 
 #: ../src/Banshee.Base/ActionManager.cs:226
 msgid "Do not repeat playlist"
@@ -1630,19 +1627,19 @@ msgstr "No repetir la lista de reproducción"
 
 #: ../src/Banshee.Base/ActionManager.cs:230
 msgid "Play all songs before repeating playlist"
-msgstr ""
+msgstr "Reproducir todas las canciones antes de repetir la lista de reproducción"
 
 #: ../src/Banshee.Base/ActionManager.cs:234
 msgid "Repeat the current playing song"
-msgstr ""
+msgstr "Repetir la canción que se está reproduciendo ahora"
 
 #: ../src/Banshee.Base/ActionManager.cs:240
 msgid "Toggle between shuffle or continuous playback modes"
-msgstr ""
+msgstr "Cambiar entre los modos de reproducción aleatorio o continuo"
 
 #: ../src/Banshee.Base/ActionManager.cs:250
 msgid "Save changes to device or synchronize music library"
-msgstr ""
+msgstr "Guardar los cambios del dispositivo o sincronizar la fonoteca"
 
 #: ../src/Banshee.Base/ActionManager.cs:259
 msgid "Eject"
@@ -1650,7 +1647,7 @@ msgstr "Expulsar"
 
 #: ../src/Banshee.Base/ActionManager.cs:260
 msgid "Eject the active source"
-msgstr ""
+msgstr "Expulsar la fuente activa"
 
 #: ../src/Banshee.Base/FileEncodeAction.cs:68
 msgid "File Encoder"
@@ -1695,11 +1692,11 @@ msgstr "Buscando canciones"
 
 #: ../src/Banshee.Base/NetworkDetect.cs:76
 msgid "Cannot connect to NetworkManager"
-msgstr ""
+msgstr "No se puede conectar con NetworkManager"
 
 #: ../src/Banshee.Base/NetworkDetect.cs:77
 msgid "An available, working network connection will be assumed"
-msgstr ""
+msgstr "Se asumirá una conexión disponible y en funcionamiento"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
@@ -1832,7 +1829,7 @@ msgstr "Preprocesando pistas"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:144
 msgid "Flushing to Disk (may take time)"
-msgstr ""
+msgstr "Guardando en el disco (puede tomar tiempo)"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:154
 msgid "Failed to synchronize iPod"
@@ -1906,71 +1903,6 @@ msgstr "¿Está seguro de querer cancelar la operación {0}?"
 msgid "Searching: {0}"
 msgstr "Buscando: {0}"
 
-#~ msgid "<b>Playlist</b>"
-#~ msgstr "<b>Lista de reproducción</b>"
 
-#~ msgid "Delete"
-#~ msgstr "Borrar"
 
-#~ msgid "Delete from Drive"
-#~ msgstr "Borrar de la unidad"
 
-#~ msgid "Duplicate"
-#~ msgstr "Duplicar"
-
-#~ msgid "Prefere_nces"
-#~ msgstr "Prefere_ncias"
-
-#~ msgid "Remove"
-#~ msgstr "Quitar"
-
-#~ msgid "Rename"
-#~ msgstr "Renombrar"
-
-#~ msgid "Update Device"
-#~ msgstr "Actualizar dispositivo"
-
-#~ msgid "Play / Pause"
-#~ msgstr "Reproducir / Pausa"
-
-#~ msgid "Shuffle Playback Mode"
-#~ msgstr "Modo de reproducción aleatorio"
-
-#~ msgid "Repeat Playback Mode"
-#~ msgstr "Modo de reproducción con repetición"
-
-#~ msgid "Eject Device"
-#~ msgstr "Expulsar dispositivo"
-
-#~ msgid "<b>{0}'s Music Library</b>"
-#~ msgstr "<b>Fonoteca de {0}</b>"
-
-#~ msgid "Importing {0} of {1} : {2} - {3}"
-#~ msgstr "Importando {0} de {1} : {2} - {3}"
-
-#~ msgid "Shuffle Enabled"
-#~ msgstr "Aleatorio activado"
-
-#~ msgid "Shuffle Disabled"
-#~ msgstr "Aleatorio desactivado"
-
-#~ msgid "Volume Medium"
-#~ msgstr "Volumen medio"
-
-#~ msgid "Volume Low"
-#~ msgstr "Volumen bajo"
-
-#~ msgid "Volume Muted"
-#~ msgstr "Volumen silenciado"
-
-#~ msgid "Volume Decrease"
-#~ msgstr "Decrementar volumen"
-
-#~ msgid "Volume Increase"
-#~ msgstr "Incrementar volumen"
-
-#~ msgid "Banshee Player"
-#~ msgstr "Reproductor Banshee"
-
-#~ msgid "Encoding {0} - {1} ..."
-#~ msgstr "Codificando {0} - {1} ..."
