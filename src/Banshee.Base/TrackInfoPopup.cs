@@ -38,37 +38,37 @@ namespace Banshee.Widgets
         private uint duration;
         private TrackInfoHeader header;
         private Label position_label;
-        private RadialProgress radial_progress;
+        private LinearProgress linear_progress;
     
         public TrackInfoPopup() : base(Gtk.WindowType.Popup)
         {
             BorderWidth = 8;
             AppPaintable = true;
-            
+            Resizable = false;
+
             HBox box = new HBox();
             box.Spacing = 10;
             
-            header = new TrackInfoHeader(false, 55);
+            header = new TrackInfoHeader(false, 52);
+            
+            HBox position_box = new HBox();
+            position_box.Spacing = 10;
+            
             position_label = new Label();
             position_label.Xalign = 0.0f;
             position_label.Ypad = 5;
             position_label.Yalign = 1.0f;
             
-            header.VBox.PackStart(position_label, false, false, 0);
+            VBox progress_box = new VBox();
+            linear_progress = new LinearProgress();
+            progress_box.PackStart(linear_progress, true, true, 6);
+
+            position_box.PackStart(position_label, false, false, 0);
+            position_box.PackStart(progress_box, true, true, 5);
             
-            try {
-                radial_progress = new RadialProgress();
-                radial_progress.TimeMode = true;
-                radial_progress.SetSizeRequest(55, 55);
-            } catch(Exception) {
-                radial_progress = null;
-            }
-            
+            header.VBox.PackStart(position_box, false, false, 0);
+            header.DefaultCover = null;
             box.PackStart(header, true, true, 0);
-            
-            if(radial_progress != null) {
-                box.PackStart(radial_progress, false, false, 0);
-            }
             
             Add(box);
             box.ShowAll();
@@ -92,10 +92,7 @@ namespace Banshee.Widgets
         
         private void UpdatePosition()
         {
-            if(radial_progress != null) {
-                radial_progress.Fraction = (double)position / (double)duration;
-            }
-            
+            linear_progress.Fraction = (double)position / (double)duration;
             position_label.Markup = String.Format("<small>{0:00}:{1:00} of {2:00}:{3:00}</small>",
                 position / 60, position % 60, duration / 60, duration % 60); 
         }

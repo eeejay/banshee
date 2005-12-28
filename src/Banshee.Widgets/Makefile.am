@@ -23,7 +23,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/NotificationAreaIcon.cs \
 	$(srcdir)/HighlightMessageArea.cs \
 	$(srcdir)/PropertyTable.cs \
-	$(srcdir)/RadialProgress.cs 
+	$(srcdir)/RadialProgress.cs \
+	$(srcdir)/LinearProgress.cs
 
 ASSEMBLY_RESOURCES = \
 	Resources/search-entry-icon.png \

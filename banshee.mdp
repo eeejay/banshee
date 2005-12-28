@@ -177,6 +177,7 @@
     <File name="./src/Banshee.Widgets/RadialProgress.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/TrackInfoHeader.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/TrackInfoPopup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Widgets/LinearProgress.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

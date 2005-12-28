@@ -58,7 +58,7 @@ namespace Banshee.Widgets
         {
             Spacing = 8;
         
-            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", size);
+            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 128);
             if(default_pixbuf == null) {
                 default_pixbuf = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), "banshee-logo.png");   
             }
@@ -135,6 +135,17 @@ namespace Banshee.Widgets
         public CoverArtThumbnail Cover {
             get {
                 return cover;
+            }
+        }
+        
+        public Gdk.Pixbuf DefaultCover {
+            set {
+                if(value != null) {
+                    cover.NoArtworkPixbuf = value;
+                    cover.Show();
+                } else {
+                    cover.Hide();
+                }
             }
         }
         

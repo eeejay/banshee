@@ -1,3 +1,27 @@
+2005-12-28  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/NotificationAreaIcon.cs: Better positioning
+
+	* src/Banshee.Base/TrackInfoHeader.cs: Hide cover if default cover is null
+
+	* src/Banshee.Base/TrackInfoPopup.cs: Remove the radial progress widget,
+	replaced by a subtle linear one to the right of the time label. Much less
+	intrusive and distracting, and reduces size of widget
+
+	* src/Banshee.Widgets/RadialProgress.cs: Some minor fixes, and #ifed out
+	for now
+
+	* src/Banshee.Widgets/LinearProgress.cs: Simple GDK progress bar that
+	draws a line and a bar, very very simple and subtle drawing
+
+	* src/Banshee.Widgets/Makefile.am: added LinearProgress.cs
+
+2005-12-25  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/NotificationAreaIcon.cs: Handle the default timeout a little better
+
 2005-12-25  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

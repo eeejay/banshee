@@ -36,6 +36,7 @@ namespace Banshee.Widgets
 {
     public class RadialProgress : Gtk.DrawingArea
     {
+#if HAVE_CAIRO
         private bool draw_ticks;
         private double fraction;
 
@@ -100,8 +101,8 @@ namespace Banshee.Widgets
             double x = Allocation.Width / 2.0;
             double y = Allocation.Height / 2.0;
             double radius = Math.Min(Allocation.Width / 2, Allocation.Height / 2) - 5;
-            double a1 = 270 * (Math.PI / 180);
-            double a2 = (270 + (360 * fraction)) * (Math.PI / 180);
+            double a1 = 3 * Math.PI / 2;
+            double a2 = a1 + 2 * Math.PI * fraction;
             double sh_offset = Math.Round(Math.Sqrt(radius) / 2);
             
             Color fill_color_a = GdkColorToCairoColor(Style.Background(StateType.Selected));
@@ -202,6 +203,7 @@ namespace Banshee.Widgets
                 QueueDraw();
             }
         }
+#endif
     }
 }
 

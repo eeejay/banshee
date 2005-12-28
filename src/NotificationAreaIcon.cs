@@ -54,6 +54,7 @@ namespace Banshee
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
         private bool cursor_outside_box = true;
+        private uint timeout_source = 0;
 
         public NotificationAreaIconContainer()
         {
@@ -78,17 +79,33 @@ namespace Banshee
             ticon.ShowAll();
         }
         
+        private void HidePopup()
+        {
+            popup.Hide();
+            /*if(timeout_source > 0) {
+                GLib.Source.Remove(timeout_source);
+                timeout_source = 0;
+            }*/
+        }
+        
         private void ShowPopup()
+        {
+            PositionPopup();
+            popup.Show();
+        }
+        
+        private void PositionPopup()
         {
             int x, y;
             Gtk.Requisition traybox_req = traybox.SizeRequest();
             Gtk.Requisition popup_req = popup.SizeRequest();
             PositionWidget(popup, out x, out y, 5);
-            
-            x = x - (popup_req.Width / 2) + (traybox_req.Width / 2);
+            x = x - (popup_req.Width / 2) + (traybox_req.Width / 2);     
+            if(x + popup_req.Width >= traybox.Screen.Width) { 
+                x = traybox.Screen.Width - popup_req.Width - 5;
+            }
             
             popup.Move(x, y);
-            popup.Show();
         }
         
         private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
@@ -106,7 +123,7 @@ namespace Banshee
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
         {
             cursor_outside_box = true;
-            popup.Hide();
+            HidePopup();
         }
         
         private void OnMouseScroll(object o, ScrollEventArgs args)
@@ -193,16 +210,22 @@ namespace Banshee
                 popup.Album = value.DisplayAlbum;
                 popup.TrackTitle = value.DisplayTitle;
                 popup.CoverArtFileName = value.CoverArtFileName;
+
+                if(!popup.Visible) {
+                    PositionPopup();
+                }
                 
-                popup.Hide();
-                ShowPopup();
+                //HidePopup();
+                //ShowPopup();
                 
-                GLib.Timeout.Add(6000, delegate {
-                    if(cursor_outside_box) {
-                        popup.Hide();
-                    }
-                    return false;
-                });
+                /*if(timeout_source == 0) {
+                    timeout_source = GLib.Timeout.Add(6000, delegate {
+                        if(cursor_outside_box) {
+                            popup.Hide();
+                        }
+                        return false;
+                    });
+                }*/
             }
         } 
     }
