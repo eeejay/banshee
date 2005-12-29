@@ -347,7 +347,7 @@ AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Libra
 
 dnl Intl
 
-ALL_LINGUAS="bg ca da en_CA es fr lt nb nl pt_BR sv zh_CN"
+ALL_LINGUAS="bg ca da en_CA es fr ja lt nb nl pt_BR sv zh_CN"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
