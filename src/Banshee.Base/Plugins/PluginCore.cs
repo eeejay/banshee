@@ -96,9 +96,21 @@ namespace Banshee.Plugins
                 
                 try {
                     Plugin plugin = (Plugin)Activator.CreateInstance(type);
+                    plugin.Initialize();
                     plugins.Add(plugin);
-                } catch(Exception e) {
-                    Console.WriteLine(e);
+                } catch(TargetInvocationException te) {
+                    try {
+                        throw te.InnerException;
+                    } catch(InvalidPluginException e) {
+                        // An InvalidPluginException will only be thrown if the *design* of the plugin
+                        // is improper, thus only the plugin developer will see this exception.
+                        // We force an exit to make the design error more obvious.
+                        Console.WriteLine("** Invalid Plugin Design **");
+                        Console.WriteLine(e.Message);
+                        System.Environment.Exit(1);
+                    } catch {
+                    }
+                } catch {
                 }
             }
         }

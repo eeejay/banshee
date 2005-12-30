@@ -137,7 +137,7 @@ namespace Banshee
         private bool GetBoolPref(string key, bool def)
         {
             try {
-                return (bool)Core.GconfClient.Get(key);
+                return (bool)Globals.Configuration.Get(key);
             } catch(Exception) {
                 return def;
             }
@@ -146,7 +146,7 @@ namespace Banshee
         private int GetIntPref(string key, int def)
         {
             try {
-                return (int)Core.GconfClient.Get(key);
+                return (int)Globals.Configuration.Get(key);
             } catch(Exception) {
                 return def;
             }
@@ -155,7 +155,7 @@ namespace Banshee
         private string GetStringPref(string key, string def)
         {
             try {
-                return (string)Core.GconfClient.Get(key);
+                return (string)Globals.Configuration.Get(key);
             } catch(Exception) {
                 return def;
             }
@@ -186,21 +186,21 @@ namespace Banshee
             oldLibraryLocation = Paths.DefaultLibraryPath;
             
             try {
-                oldLibraryLocation = (string)Core.GconfClient.Get(
+                oldLibraryLocation = (string)Globals.Configuration.Get(
                         GConfKeys.LibraryLocation);
             } catch(Exception) { }
             
             libraryLocationChooser.SetFilename(oldLibraryLocation);
             
             try {
-                CopyOnImport.Active = (bool)Core.GconfClient.Get(
+                CopyOnImport.Active = (bool)Globals.Configuration.Get(
                     GConfKeys.CopyOnImport);
             } catch(Exception) {
                 CopyOnImport.Active = false;
             }    
             
             try {
-                selectedBurnerId = (string)Core.GconfClient.Get(
+                selectedBurnerId = (string)Globals.Configuration.Get(
                     GConfKeys.CDBurnerId);
             } catch(Exception) {}
         }
@@ -211,31 +211,31 @@ namespace Banshee
             string newLibraryLocation = libraryLocationChooser.Filename;
         
             if(!oldLibraryLocation.Trim().Equals(newLibraryLocation.Trim())) {
-                Core.GconfClient.Set(GConfKeys.LibraryLocation,
+                Globals.Configuration.Set(GConfKeys.LibraryLocation,
                     newLibraryLocation);
                 // TODO: Move Library Directory?
             }
             
-            Core.GconfClient.Set(GConfKeys.CopyOnImport,
+            Globals.Configuration.Set(GConfKeys.CopyOnImport,
                 CopyOnImport.Active);
                 
               
             if(rippingProfile != null) {
               try { 
-              Core.GconfClient.Set(GConfKeys.RippingProfile,
+              Globals.Configuration.Set(GConfKeys.RippingProfile,
                 rippingProfile.ProfileKey);
                 
-              Core.GconfClient.Set(GConfKeys.RippingBitrate,
+              Globals.Configuration.Set(GConfKeys.RippingBitrate,
                 rippingProfile.Bitrate);
               } catch(Exception) {}
             }
             
             if(ipodProfile != null) {
                try {
-                Core.GconfClient.Set(GConfKeys.IpodProfile,
+                Globals.Configuration.Set(GConfKeys.IpodProfile,
                 ipodProfile.ProfileKey);
                 
-              Core.GconfClient.Set(GConfKeys.IpodBitrate,
+              Globals.Configuration.Set(GConfKeys.IpodBitrate,
                 ipodProfile.Bitrate);
                 } catch(Exception) {}
             }
@@ -397,7 +397,7 @@ namespace Banshee
             }
             writeSpeedCombo.Active = 0;
             
-            Core.GconfClient.Set(GConfKeys.CDBurnerId, selectedBurnerId);
+            Globals.Configuration.Set(GConfKeys.CDBurnerId, selectedBurnerId);
 
             (glade["AudioRadio"] as RadioButton).Active = GetBoolPref(
                 burnKeyParent + "FormatAudio", true);
@@ -418,7 +418,7 @@ namespace Banshee
                 burnKeyParent + "Burnproof", true);
                 
             try {
-                SetComboFromSpeed((int)Core.GconfClient.Get(
+                SetComboFromSpeed((int)Globals.Configuration.Get(
                     burnKeyParent + "Speed"));
             } catch(Exception) {}
         }
@@ -471,25 +471,25 @@ namespace Banshee
         private void SaveBurnSettings()
         {
             if(selectedBurnerId != null && burnKeyParent != null) {
-                Core.GconfClient.Set(burnKeyParent + "FormatAudio", 
+                Globals.Configuration.Set(burnKeyParent + "FormatAudio", 
                     (glade["AudioRadio"] as RadioButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "FormatMp3", 
+                Globals.Configuration.Set(burnKeyParent + "FormatMp3", 
                     (glade["Mp3Radio"] as RadioButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "FormatData", 
+                Globals.Configuration.Set(burnKeyParent + "FormatData", 
                     (glade["DataRadio"] as RadioButton).Active);
                     
-                Core.GconfClient.Set(burnKeyParent + "Eject",
+                Globals.Configuration.Set(burnKeyParent + "Eject",
                     (glade["EjectCheck"] as CheckButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "DAO",
+                Globals.Configuration.Set(burnKeyParent + "DAO",
                     (glade["DAOCheck"] as CheckButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "Overburn",
+                Globals.Configuration.Set(burnKeyParent + "Overburn",
                     (glade["OverburnCheck"] as CheckButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "Simulate",
+                Globals.Configuration.Set(burnKeyParent + "Simulate",
                     (glade["SimulateCheck"] as CheckButton).Active);
-                Core.GconfClient.Set(burnKeyParent + "Burnproof",
+                Globals.Configuration.Set(burnKeyParent + "Burnproof",
                     (glade["BurnproofCheck"] as CheckButton).Active);
                     
-                Core.GconfClient.Set(burnKeyParent + "Speed",
+                Globals.Configuration.Set(burnKeyParent + "Speed",
                     GetSpeedFromCombo());
             }
         }
@@ -541,7 +541,7 @@ namespace Banshee
         private void SaveEngineSettings()
         {
             if(SelectedEngine.ConfigName != PlayerEngineCore.ActivePlayer.ConfigName) {
-                Core.GconfClient.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
+                Globals.Configuration.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
                 string msg = 
                     String.Format(
                         Catalog.GetString("You have changed the Banshee Playback Engine. This change will not " + 

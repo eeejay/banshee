@@ -94,7 +94,7 @@ namespace Banshee
             try {
                 Run();
             } catch(Exception e) {
-                Core.Log.PushDebug(Catalog.GetString("Unhandled Exception, ending IO Transaction safely"),
+                LogCore.Instance.PushDebug(Catalog.GetString("Unhandled Exception, ending IO Transaction safely"),
                     String.Format("{0} threw {1} ({2})", GetType().ToString(), e.GetType().ToString(), e.Message));
             }
             
@@ -120,11 +120,11 @@ namespace Banshee
                     ExecutingThread.Abort();
                 } catch(Exception) {}
                 
-                Core.Log.PushDebug("Forcefully canceled LibraryTransaction", GetType().ToString());
+                LogCore.Instance.PushDebug("Forcefully canceled LibraryTransaction", GetType().ToString());
                 return;
             }
             
-            Core.Log.PushDebug("Peacefully canceled LibraryTransaction", GetType().ToString());
+            LogCore.Instance.PushDebug("Peacefully canceled LibraryTransaction", GetType().ToString());
         }
         
         protected void UpdateAverageDuration(DateTime start)
@@ -189,7 +189,7 @@ namespace Banshee
         
         public virtual void Register()
         {
-            Core.Library.TransactionManager.Register(this);
+           // Globals.Library.TransactionManager.Register(this);
         }
     }
     
@@ -409,13 +409,13 @@ namespace Banshee
 
             if(playlistId == 0) {
                 query = new Insert("Playlists", false, null, pl.name);
-                Core.Library.Db.Execute(query);
+                Globals.Library.Db.Execute(query);
                 playlistId = Playlist.GetId(pl.name);
             }
 
             query = new Delete("PlaylistEntries") +
                 new Where(new Compare("PlaylistID", Op.EqualTo, playlistId));
-            Core.Library.Db.Execute(query);
+            Globals.Library.Db.Execute(query);
 
             statusMessage = Catalog.GetString("Saving new entries");
             
@@ -431,7 +431,7 @@ namespace Banshee
                 query = new Insert("PlaylistEntries", 
                     false, null, playlistId, ti.TrackId);
                     
-                Core.Library.Db.Execute(query);
+                Globals.Library.Db.Execute(query);
                 
                 UpdateAverageDuration(startStamp);
                 currentCount++;
@@ -458,11 +458,11 @@ namespace Banshee
         public override void Run()
         {
             statusMessage = Catalog.GetString("Preloading Library");
-            totalCount = Core.Library.Tracks.Count;
+            totalCount = Globals.Library.Tracks.Count;
             currentCount = 0;
             
-            lock(Core.Library.Tracks.SyncRoot) {
-                foreach(TrackInfo track in Core.Library.Tracks.Values)
+            lock(Globals.Library.Tracks.SyncRoot) {
+                foreach(TrackInfo track in Globals.Library.Tracks.Values)
                     RaiseTrackInfo(track);
             }
         }
@@ -521,13 +521,13 @@ namespace Banshee
                     Catalog.GetString("Removing {0} - {1}"),
                     ti.Artist, ti.Title);
                 currentCount++;
-                Core.Library.Remove(ti);
+                Globals.Library.Remove(ti);
             }
             
             statusMessage = Catalog.GetString("Purging Removed Tracks from Library...");
             currentCount = 0;
             totalCount = 0;
-            Core.Library.Db.Execute(query);
+            Globals.Library.Db.Execute(query);
         }
     }
     
@@ -574,7 +574,7 @@ namespace Banshee
             statusMessage = Catalog.GetString("Purging Removed Tracks from Playlist...");
             currentCount = 0;
             totalCount = 0;
-            Core.Library.Db.Execute(query);
+            Globals.Library.Db.Execute(query);
         }
     }
     
@@ -627,12 +627,12 @@ namespace Banshee
         private void AddSql()
         {
             //totalCount = SqlCount();
-            IDataReader reader = Core.Library.Db.Query(sql);
+            IDataReader reader = Globals.Library.Db.Query(sql);
             while(reader.Read() && !cancelRequested) {
                 try {
                     new LibraryTrackInfo(reader);
                 } catch(Exception e) {
-                    Core.Log.PushWarning(
+                    LogCore.Instance.PushWarning(
                         Catalog.GetString("Could not load track from library"),
                         (reader["Uri"] as string) + ": " + e.Message, false);
                 }
@@ -651,7 +651,7 @@ namespace Banshee
             long count;
             
             try {
-                count = Convert.ToInt64(Core.Library.Db.QuerySingle(countQuery));
+                count = Convert.ToInt64(Globals.Library.Db.QuerySingle(countQuery));
             } catch(Exception) {
                 count = 0;
             }
@@ -723,11 +723,11 @@ namespace Banshee
             totalCount = SqlCount();
             Statement query = new Select("PlaylistEntries", new List("TrackID")) 
                 + new Where("PlaylistId", Op.EqualTo, id);
-            IDataReader reader = Core.Library.Db.Query(query);
+            IDataReader reader = Globals.Library.Db.Query(query);
             while(reader.Read() && !cancelRequested) {
                 DateTime startStamp = DateTime.Now;
                 int tid = Convert.ToInt32(reader[0]);
-                TrackInfo ti = Core.Library.Tracks[tid] as TrackInfo;
+                TrackInfo ti = Globals.Library.Tracks[tid] as TrackInfo;
                 
                 if(ti != null) {
                     RaiseTrackInfo(ti);
@@ -760,7 +760,7 @@ namespace Banshee
             long count;
             
             try {
-                count = Convert.ToInt64(Core.Library.Db.QuerySingle(countQuery));
+                count = Convert.ToInt64(Globals.Library.Db.QuerySingle(countQuery));
             } catch(Exception) {
                 count = 0;
             }

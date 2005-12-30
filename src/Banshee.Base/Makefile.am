@@ -36,6 +36,12 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/PlayerEngineCore.cs \
 	$(srcdir)/TrackInfoHeader.cs \
 	$(srcdir)/TrackInfoPopup.cs \
+	$(srcdir)/Library.cs \
+	$(srcdir)/Database.cs \
+	$(srcdir)/SqlGenerator.cs \
+	$(srcdir)/LibraryTrackInfo.cs \
+	$(srcdir)/FileTrackInfo.cs \
+	$(srcdir)/DBusRemote.cs \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
 	$(srcdir)/AudioCd/AudioCdDisk.cs \
@@ -50,7 +56,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Plugins/PluginCore.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
-	$(MCS) $(MCS_FLAGS) -target:library -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -resource:$(srcdir)/../../data/Tables.sql,Tables.sql -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

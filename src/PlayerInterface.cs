@@ -135,7 +135,7 @@ namespace Banshee
                 Dnd.TargetLibraryTrackIds,
             };
 
-        private BansheeCore banshee_dbus_object;
+        private RemotePlayer banshee_dbus_object;
 
         public PlayerUI() 
         {
@@ -148,8 +148,8 @@ namespace Banshee
             BuildWindow();   
             InstallTrayIcon();
             
-            banshee_dbus_object = new BansheeCore(Window, this);
-            Core.Instance.DBusServer.RegisterObject(banshee_dbus_object, "/org/gnome/Banshee/Core");
+            banshee_dbus_object = new RemotePlayer(Window, this);
+            DBusRemote.RegisterObject(banshee_dbus_object, "Player");
             
             PlayerEngineCore.ActivePlayer.Iterate += OnPlayerTick;
             PlayerEngineCore.ActivePlayer.EndOfStream += OnPlayerEos;    
@@ -159,17 +159,16 @@ namespace Banshee
                 PlayerEngineCore.AudioCdPlayer.EndOfStream += OnPlayerEos;    
             }
             
-            if(Core.Instance.AudioCdCore != null) {
-                Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-                Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+            if(Globals.AudioCdCore != null) {
+                Globals.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
+                Globals.AudioCdCore.Updated += OnAudioCdCoreUpdated;
             }
             
             DapCore.DapAdded += OnDapCoreDeviceAdded;
             
             LoadSettings();
-            Core.Instance.PlayerInterface = this;
             
-            Core.Log.Updated += OnLogCoreUpdated;
+            LogCore.Instance.Updated += OnLogCoreUpdated;
             
             ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
             
@@ -190,7 +189,7 @@ namespace Banshee
             } catch(GConf.NoSuchKeyException) {
             } catch(Exception e) {
                 special_keys = null;
-                Core.Log.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
+                LogCore.Instance.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
             }*/
             
             // Bind available methods to actions defined in ActionManager
@@ -220,8 +219,8 @@ namespace Banshee
         private bool InitialLoadTimeout()
         {
             ConnectToLibraryTransactionManager();
-            Core.Library.Reloaded += OnLibraryReloaded;
-            Core.Library.ReloadLibrary();
+            Globals.Library.Reloaded += OnLibraryReloaded;
+            Globals.Library.ReloadLibrary();
             
             foreach(DapDevice device in DapCore.Devices) {
                  device.PropertiesChanged += OnDapPropertiesChanged;
@@ -239,10 +238,10 @@ namespace Banshee
             int x = 0, y = 0, width = 0, height = 0;
               
             try {
-                x = (int)Core.GconfClient.Get(GConfKeys.WindowX);
-                y = (int)Core.GconfClient.Get(GConfKeys.WindowY); 
-                width = (int)Core.GconfClient.Get(GConfKeys.WindowWidth);
-                height = (int)Core.GconfClient.Get(GConfKeys.WindowHeight);
+                x = (int)Globals.Configuration.Get(GConfKeys.WindowX);
+                y = (int)Globals.Configuration.Get(GConfKeys.WindowY); 
+                width = (int)Globals.Configuration.Get(GConfKeys.WindowWidth);
+                height = (int)Globals.Configuration.Get(GConfKeys.WindowHeight);
             } catch(GConf.NoSuchKeyException) {
                 width = 800;
                 height = 600;
@@ -261,7 +260,7 @@ namespace Banshee
             }
             
             try {
-                if((bool)Core.GconfClient.Get(GConfKeys.WindowMaximized)) {
+                if((bool)Globals.Configuration.Get(GConfKeys.WindowMaximized)) {
                     WindowPlayer.Maximize();
                 } else {
                     WindowPlayer.Unmaximize();
@@ -494,7 +493,7 @@ namespace Banshee
         private void InstallTrayIcon()
         {
             try {
-                if(!(bool)Core.GconfClient.Get(GConfKeys.ShowNotificationAreaIcon)) {
+                if(!(bool)Globals.Configuration.Get(GConfKeys.ShowNotificationAreaIcon)) {
                     return;
                 }
             } catch(Exception) { }
@@ -505,7 +504,7 @@ namespace Banshee
                 trayIcon.MouseScrollEvent += OnTrayScroll;
             } catch(Exception e) {
                 trayIcon = null;
-                Core.Log.PushWarning(Catalog.GetString("Notification Area Icon could not be installed"),
+                LogCore.Instance.PushWarning(Catalog.GetString("Notification Area Icon could not be installed"),
                     e.Message, false);
             }
         }
@@ -513,7 +512,7 @@ namespace Banshee
         private void LoadSettings()
         {    
             try {
-                volumeButton.Volume = (int)Core.GconfClient.Get(GConfKeys.Volume);
+                volumeButton.Volume = (int)Globals.Configuration.Get(GConfKeys.Volume);
             } catch(GConf.NoSuchKeyException) {
                 volumeButton.Volume = 80;
             }
@@ -546,7 +545,7 @@ namespace Banshee
             } catch(Exception) {}
             
             try {
-                SourceSplitter.Position = (int)Core.GconfClient.Get(GConfKeys.SourceViewWidth);
+                SourceSplitter.Position = (int)Globals.Configuration.Get(GConfKeys.SourceViewWidth);
             } catch(GConf.NoSuchKeyException) {
                 SourceSplitter.Position = 125;
             }
@@ -585,8 +584,8 @@ namespace Banshee
         
         private void ConnectToLibraryTransactionManager()
         {
-            Core.Library.TransactionManager.ExecutionStackChanged += OnLTMExecutionStackChanged;
-            Core.Library.TransactionManager.ExecutionStackEmpty += OnLTMExecutionStackEmpty;
+            PlayerCore.TransactionManager.ExecutionStackChanged += OnLTMExecutionStackChanged;
+            PlayerCore.TransactionManager.ExecutionStackEmpty += OnLTMExecutionStackEmpty;
         }
         
         private void OnLTMExecutionStackChanged(object o, EventArgs args)
@@ -604,20 +603,6 @@ namespace Banshee
         
         private void OnLTMExecutionStackEmpty(object o, EventArgs args)
         {
-            if(startupLoadReady) {
-                startupLoadReady = false;
-                LoadSourceView();
-
-                if(LocalQueueSource.Instance.Count > 0) {
-                    sourceView.SelectSource(LocalQueueSource.Instance);
-                } else if(Core.ArgumentQueue.Contains("audio-cd")) {
-                    SelectAudioCd(Core.ArgumentQueue.Dequeue("audio-cd"));
-                } else if(Core.ArgumentQueue.Contains("dap")) {
-                    SelectDap(Core.ArgumentQueue.Dequeue("dap"));
-                } else {
-                    sourceView.SelectLibraryForce();
-                }
-            }
         }
         
         public void SelectAudioCd(string device)
@@ -693,16 +678,26 @@ namespace Banshee
         
         private void OnLibraryReloaded(object o, EventArgs args)
         {
-            startupLoadReady = true;
-            
-            if(Core.ArgumentQueue.Contains("play")) {
+            LoadSourceView();
+
+            if(LocalQueueSource.Instance.Count > 0) {
+                sourceView.SelectSource(LocalQueueSource.Instance);
+            } else if(Globals.ArgumentQueue.Contains("audio-cd")) {
+                SelectAudioCd(Globals.ArgumentQueue.Dequeue("audio-cd"));
+            } else if(Globals.ArgumentQueue.Contains("dap")) {
+                SelectDap(Globals.ArgumentQueue.Dequeue("dap"));
+            } else {
+                sourceView.SelectLibraryForce();
+            }
+
+            if(Globals.ArgumentQueue.Contains("play")) {
                 GLib.Timeout.Add(1500, delegate {
                     PlayPause();
                     return false;
                 });
             }
             
-            if(Core.Library.Tracks.Count <= 0) {
+            if(Globals.Library.Tracks.Count <= 0) {
                 Application.Invoke(delegate { 
                     PromptForImport();
                 });
@@ -719,14 +714,15 @@ namespace Banshee
         
         // ---- Misc. Utility Routines ----
       
-        private void Quit()
+        public void Quit()
         {
             ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
             PlayerEngineCore.ActivePlayer.Dispose();
-            Core.GconfClient.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
-            DBusServer.Instance.UnregisterObject(banshee_dbus_object);
-            Core.Instance.Shutdown();
+            Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
+            DBusRemote.UnregisterObject(banshee_dbus_object);
+            PlayerCore.Dispose();
+            Globals.Dispose();
             Application.Quit();
         }
       
@@ -826,10 +822,10 @@ namespace Banshee
             WindowPlayer.GetPosition(out x, out y);
             WindowPlayer.GetSize(out width, out height);
             
-            Core.GconfClient.Set(GConfKeys.WindowX, x);
-            Core.GconfClient.Set(GConfKeys.WindowY, y);
-            Core.GconfClient.Set(GConfKeys.WindowWidth, width);
-            Core.GconfClient.Set(GConfKeys.WindowHeight, height);
+            Globals.Configuration.Set(GConfKeys.WindowX, x);
+            Globals.Configuration.Set(GConfKeys.WindowY, y);
+            Globals.Configuration.Set(GConfKeys.WindowWidth, width);
+            Globals.Configuration.Set(GConfKeys.WindowHeight, height);
         }
         
         [GLib.ConnectBefore]
@@ -974,7 +970,7 @@ namespace Banshee
         private void OnVolumeScaleChanged(int volume)
         {
             PlayerEngineCore.ActivePlayer.Volume = (ushort)volume;
-            Core.GconfClient.Set(GConfKeys.Volume, volume);
+            Globals.Configuration.Set(GConfKeys.Volume, volume);
         }
    
         // ---- Player Event Handlers ----
@@ -1083,7 +1079,7 @@ namespace Banshee
             );
             
             try {
-                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
+                 chooser.SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
             } catch(Exception) {
                  chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             }
@@ -1096,7 +1092,7 @@ namespace Banshee
                 ImportManager.Instance.QueueSource(chooser.Uri);
             }
             
-            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
+            Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
             
             chooser.Destroy();
         }
@@ -1621,7 +1617,7 @@ namespace Banshee
             if(source.Type == SourceType.Dap) {
                 collection = (source as DapSource).Device.Tracks;
             } else {
-                collection = Core.Library.Tracks.Values;
+                collection = Globals.Library.Tracks.Values;
             }
             
             foreach(TrackInfo ti in collection) {
@@ -2221,7 +2217,7 @@ namespace Banshee
             );
             
             try {
-                 chooser.SetCurrentFolderUri(Core.GconfClient.Get(GConfKeys.LastFileSelectorUri) as string);
+                 chooser.SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
             } catch(Exception) {
                  chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             }
@@ -2236,7 +2232,7 @@ namespace Banshee
                 ImportManager.Instance.QueueSource(chooser.Uris);
             }
             
-            Core.GconfClient.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
+            Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
             
             chooser.Destroy();
         }
@@ -2316,7 +2312,7 @@ namespace Banshee
             
             switch(md.Run()) {
                 case (int)ResponseType.Ok:
-                    dapSource.Device.Save(Core.Library.Tracks.Values);
+                    dapSource.Device.Save(Globals.Library.Tracks.Values);
                     break;
                 case (int)ResponseType.Apply:
                     dapSource.Device.Save();
@@ -2536,7 +2532,7 @@ namespace Banshee
         private void OnLoggedEventsAction(object o, EventArgs args)
         {
             if(log_viewer == null) {
-                log_viewer = new LogCoreViewer(Core.Log, WindowPlayer);
+                log_viewer = new LogCoreViewer(LogCore.Instance, WindowPlayer);
                 
                 log_viewer.Response += delegate(object o, ResponseArgs args) {
                     log_viewer.Hide();

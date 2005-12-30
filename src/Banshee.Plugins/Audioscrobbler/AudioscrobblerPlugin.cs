@@ -45,20 +45,17 @@ namespace Banshee.Plugins.Audioscrobbler
 {
     public class AudioscrobblerPlugin : Banshee.Plugins.Plugin
     {
-        class GConfKeys {
-            public const string BasePath = Banshee.Base.GConfKeys.BasePath + "Audioscrobbler";
-            public const string Enabled = BasePath + "/Enabled";
-            public const string Username = BasePath + "/Username";
-            public const string Password = BasePath + "/Password";
-        }
-
         Engine protocol_engine;
         GConf.Client gconf;
 
-        public AudioscrobblerPlugin ()
+        public override void Initialize()
         {
+            RegisterConfigurationKey("Enabled");
+            RegisterConfigurationKey("Username");
+            RegisterConfigurationKey("Password");
+            
             gconf = Globals.Configuration;
-            gconf.AddNotify (GConfKeys.BasePath, GConfNotifier);
+            gconf.AddNotify (ConfigurationBase, GConfNotifier);
 
             InstallInterfaceActions();
 
@@ -125,14 +122,14 @@ namespace Banshee.Plugins.Audioscrobbler
         void GConfNotifier (object sender, NotifyEventArgs args)
         {
             //Console.WriteLine ("key that changed: {0}", args.Key);
-            if (args.Key == GConfKeys.Enabled) {
+            if (args.Key == ConfigurationKeys["Enabled"]) {
                 if ((bool)args.Value == false)
                     StopEngine ();
                 else
                     StartEngine ();
             }
-            else if (args.Key == GConfKeys.Username
-                 || args.Key == GConfKeys.Password)
+            else if (args.Key == ConfigurationKeys["Username"]
+                 || args.Key == ConfigurationKeys["Password"])
             {
                 if (protocol_engine != null) {
                     protocol_engine.SetUserPassword (Username, Password);
@@ -142,31 +139,31 @@ namespace Banshee.Plugins.Audioscrobbler
 
         internal string Username {
             get {
-                return GetStringPref (GConfKeys.Username, null);
+                return GetStringPref (ConfigurationKeys["Username"], null);
             }
             
             set {
-                gconf.Set(GConfKeys.Username, value);
+                gconf.Set(ConfigurationKeys["Username"], value);
             }
         }
         
         internal string Password {
             get {
-                return GetStringPref (GConfKeys.Password, null);
+                return GetStringPref (ConfigurationKeys["Password"], null);
             }
             
             set {
-                gconf.Set(GConfKeys.Password, value);
+                gconf.Set(ConfigurationKeys["Password"], value);
             }
         }
         
         internal bool Enabled {
             get {
-                return GetBoolPref(GConfKeys.Enabled, false);
+                return GetBoolPref(ConfigurationKeys["Enabled"], false);
             }
             
             set {
-                gconf.Set(GConfKeys.Enabled, value);
+                gconf.Set(ConfigurationKeys["Enabled"], value);
                 Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = 
                     value && Username != null && Username != String.Empty;
             }

@@ -39,40 +39,31 @@ banshee_sources = \
 	PlaylistView.cs \
 	Dialogs.cs \
 	TrackProperties.cs \
-	Database.cs \
 	NotificationAreaIcon.cs \
-	SqlGenerator.cs \
-	Library.cs \
 	SignalUtils.cs \
 	SourceView.cs \
 	Preferences.cs \
 	LibraryTransactions.cs \
 	LibraryTransactionManager.cs \
 	LibraryTransactionStatus.cs \
-	LibraryTrackInfo.cs \
 	QueryBuilder.cs \
 	QueryBuilderModel.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
-	DBusIPC.cs \
+	RemotePlayer.cs \
 	NautilusBurnUtil.cs \
 	BurnCore.cs \
 	BurnTransaction.cs \
 	RatingRenderer.cs \
 	RipTransaction.cs \
+	Sources.cs \
 	ExceptionDialog.cs \
 	VersionInformationDialog.cs \
 	LogCoreViewer.cs \
-	FileSystemMonitor/Watcher.cs \
-	FileSystemMonitor/Inotify.cs \
-	FileSystemMonitor/Watch.cs \
-	FileSystemMonitor/InotifyWatch.cs \
-	FileSystemMonitor/FileSystemWatcherWatch.cs \
 	ToggleStates.cs \
-	DapPropertiesDialog.cs \
-	FileTrackInfo.cs
+	DapPropertiesDialog.cs
 
 banshee_resources = \
 	COPYING \

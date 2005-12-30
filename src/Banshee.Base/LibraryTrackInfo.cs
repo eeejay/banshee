@@ -47,7 +47,7 @@ namespace Banshee
                 new Where(new Compare("Uri", Op.EqualTo, lookup));
 
             try {
-                object result = Core.Library.Db.QuerySingle(query);
+                object result = Globals.Library.Db.QuerySingle(query);
                 int id = Convert.ToInt32(result);
                 return id;
             } catch(Exception) {
@@ -64,7 +64,7 @@ namespace Banshee
         {
               bool exists = false;
               try {
-                exists = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] != null;
+                exists = Globals.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] != null;
               } catch(Exception) {
                 exists = false;
               }
@@ -83,13 +83,13 @@ namespace Banshee
 
         private string MoveToPlace(string old_filename, bool initial_import)
         {
-            bool in_library = old_filename.StartsWith (Core.Library.Location);
+            bool in_library = old_filename.StartsWith (Globals.Library.Location);
 //            Console.WriteLine ("\"{0}\" in \"{1}\": {2}", old_filename, Core.Library.Location, in_library);
 
             if (initial_import && !in_library) {
                 bool copy = false;
                 try {
-                    copy = (bool)Core.GconfClient.Get(GConfKeys.CopyOnImport);
+                    copy = (bool)Globals.Configuration.Get(GConfKeys.CopyOnImport);
                 } catch {}
 
                 if (copy) {
@@ -117,7 +117,7 @@ namespace Banshee
                 bool move = false;
 
                 try {
-                    move = (bool)Core.GconfClient.Get(GConfKeys.MoveOnInfoSave);
+                    move = (bool)Globals.Configuration.Get(GConfKeys.MoveOnInfoSave);
                 } catch {}
     
                 if (move) {
@@ -177,7 +177,7 @@ namespace Banshee
             CheckIfExists(uri);
             
             SaveToDatabase(true);
-            Core.Library.SetTrack(track_id, this);
+            Globals.Library.SetTrack(track_id, this);
             
             PreviousTrack = Gtk.TreeIter.Zero;
         }
@@ -203,7 +203,7 @@ namespace Banshee
                 SaveToDatabase(true);
             }
 
-            Core.Library.SetTrack(track_id, this);
+            Globals.Library.SetTrack(track_id, this);
 
             PreviousTrack = Gtk.TreeIter.Zero;
         }
@@ -211,7 +211,7 @@ namespace Banshee
         public LibraryTrackInfo(IDataReader reader) : this()
         {
             LoadFromDatabaseReader(reader);
-            Core.Library.SetTrack(track_id, this);
+            Globals.Library.SetTrack(track_id, this);
             PreviousTrack = Gtk.TreeIter.Zero;
         }
         
@@ -334,7 +334,7 @@ namespace Banshee
                 //    new Limit(1);
             }
 
-            Core.Library.Db.Execute(tracksQuery);
+            Globals.Library.Db.Execute(tracksQuery);
 
             /*if(Core.Library.Db.Execute(query) <= 0 && retryIfFail) {
                 track_id = 0;
@@ -356,7 +356,7 @@ namespace Banshee
                     new Compare("TrackID", Op.EqualTo, id)) +
                 new Limit(1);
 
-            IDataReader reader = Core.Library.Db.Query(query);
+            IDataReader reader = Globals.Library.Db.Query(query);
             
             if(reader == null)
                 return false;
@@ -459,10 +459,10 @@ namespace Banshee
             } catch {}
 
             try {
-                Core.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
+                Globals.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
                 SaveToDatabase(true);
             } catch {
-                Core.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
+                Globals.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
             }
         }
         

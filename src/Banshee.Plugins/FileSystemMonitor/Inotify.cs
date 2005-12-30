@@ -34,7 +34,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Banshee.FileSystemMonitor {
+namespace Banshee.Plugins.FileSystemMonitor {
 
 	public class Inotify {
 

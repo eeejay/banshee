@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  Library.cs
+ *  Sources.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -30,6 +30,7 @@
 using System;
 using System.Collections;
 using System.Data;
+using Mono.Data.SqliteClient;
 using System.IO;
 using Mono.Unix;
 using Sql;
@@ -39,153 +40,6 @@ using Banshee.Base;
 
 namespace Banshee
 {
-    public class Library
-    {
-        public Database Db;
-        public LibraryTransactionManager TransactionManager;
-        public Hashtable Tracks;
-        public Hashtable TracksFnKeyed;
-        public Hashtable Playlists;
-        
-        public event EventHandler Reloaded;
-        public event EventHandler Updated;
-        
-        public Library()
-        {
-            Tracks = new Hashtable();
-            TracksFnKeyed = new Hashtable();
-            Playlists = new Hashtable();
-            ReloadDatabase();
-            TransactionManager = new LibraryTransactionManager();
-        }
-        
-        public void ReloadDatabase()
-        {
-            string libraryLocation = Location;
-            
-            string db_file = Path.Combine(Paths.ApplicationData, "banshee.db");
-            string olddb_file = libraryLocation + Path.DirectorySeparatorChar + ".banshee.db";
-
-            try {
-                if(!Directory.Exists(libraryLocation)) {
-                    Directory.CreateDirectory(libraryLocation);
-                }
-            } catch(Exception) {
-                Console.WriteLine("Could not create Library directory: " + libraryLocation);
-            }
-            
-            if(!Directory.Exists(Paths.ApplicationData)) {
-                Directory.CreateDirectory(Paths.ApplicationData);
-            }
-            
-            if(!File.Exists(db_file) && File.Exists(olddb_file)) {
-                Console.WriteLine("Copied old library to new location");
-                
-                File.Copy(olddb_file, db_file);
-                
-                try {
-                    File.Delete(olddb_file);
-                } catch(Exception) {
-                    Console.WriteLine("Could not remove old library");
-                }
-            }
-            
-            Db = new Database("Library",  db_file);
-        }
-        
-        public void ReloadLibrary()
-        {
-            SqlLoadTransaction transaction = new SqlLoadTransaction(
-                new Select("Tracks"));
-            
-            Tracks.Clear();
-            transaction.Finished += OnReloadLibraryFinished;
-            transaction.Register();
-            
-            /*string [] names = Playlist.ListAll();
-            if(names == null)
-                return;
-                
-            Playlists.Clear();
-            foreach(string name in names) {
-                Playlist playlist = new Playlist(name);
-                playlist.Load();
-                Playlists[name] = playlist;
-            }*/
-        }
-        
-        private void OnReloadLibraryFinished(object o, EventArgs args)
-        {
-            EventHandler handler = Reloaded;
-            if(handler != null)
-                handler(this, new EventArgs());
-        }
-        
-        public string Location
-        {
-             get {
-                 GConf.Client gc = Core.IsInstantiated
-                     ? Core.GconfClient
-                     : new GConf.Client();
-                     
-                string libraryLocation;
-            
-                try {
-                    libraryLocation = (string)gc.Get(GConfKeys.LibraryLocation);
-                } catch(Exception) {
-                     libraryLocation = Paths.DefaultLibraryPath;
-                }
-            
-                gc.Set(GConfKeys.LibraryLocation, libraryLocation);
-                
-                return libraryLocation;             
-             }    
-        }
-        
-        public void SetTrack(int id, LibraryTrackInfo track)
-        {
-            lock(Tracks.SyncRoot) {
-                    Tracks[id] = track;
-                }
-                
-            lock(TracksFnKeyed.SyncRoot) {
-                    TracksFnKeyed[MakeFilenameKey(track.Uri)] = track;
-                }
-            
-            EventHandler handler = Updated;
-            if(handler != null)
-              handler(this, new EventArgs());
-        }
-        
-        public void Remove(LibraryTrackInfo track)
-        {
-            lock(Tracks.SyncRoot) {
-              Tracks.Remove(track.TrackId);
-            }
-            
-            lock(TracksFnKeyed.SyncRoot) {
-              TracksFnKeyed.Remove(MakeFilenameKey(track.Uri));
-            }
-        }
-        
-        public void Remove(int trackID, System.Uri trackUri)
-        {
-            lock(Tracks.SyncRoot) {
-              Tracks.Remove(trackID);
-            }
-            
-            lock(TracksFnKeyed.SyncRoot) {
-              TracksFnKeyed.Remove(MakeFilenameKey(trackUri));
-            }
-        
-        }
-        
-        public static string MakeFilenameKey(Uri uri)
-        {
-            return Banshee.Base.PathUtil.MakeFileNameKey(uri);
-        }
-    }
-
     public enum SourceType : uint {
         Library = 1,
         Playlist = 2,
@@ -284,7 +138,7 @@ namespace Banshee
         public override int Count
         {
             get {
-                return Core.Library.Tracks.Count;    
+                return Globals.Library.Tracks.Count;    
             }
         }
     }
@@ -308,7 +162,7 @@ namespace Banshee
         {
             canRename = false;
             
-            foreach(string file in Core.ArgumentQueue.Files) {
+            foreach(string file in Globals.ArgumentQueue.Files) {
                 try {
                     Uri uri = file.StartsWith("file://") ? new Uri(file) : PathUtil.PathToFileUri(file);
                     if(!System.IO.File.Exists(uri.LocalPath)) {
@@ -356,10 +210,10 @@ namespace Banshee
                  name = newName;
                  return true;
             }
-            
-            Gtk.Application.Invoke(delegate {
-                MessageDialogs.CannotRenamePlaylist();
-            });
+
+            LogCore.Instance.PushWarning(
+                Catalog.GetString("Cannot Rename Playlist"),
+                Catalog.GetString("A playlist with this name already exists. Please choose another name."));
             
             return false;
         }
@@ -529,7 +383,7 @@ namespace Banshee
                 new Where(new Compare("Name", Op.EqualTo, name));
 
             try {
-                object result = Core.Library.Db.QuerySingle(query);
+                object result = Globals.Library.Db.QuerySingle(query);
                 int id = Convert.ToInt32(result);
                 return id;
             } catch(Exception) {
@@ -576,7 +430,7 @@ namespace Banshee
                 else if(haveAlbum)
                     names.Add(ti.Album);
                 else
-                    names.Add("New Playlist");
+                    names.Add(Catalog.GetString("New Playlist"));
             }
                 
             names.Sort();
@@ -633,8 +487,8 @@ namespace Banshee
                 + new Where("PlaylistID", Op.EqualTo, id);
                 
             try {
-                Core.Library.Db.Execute(query1);
-                Core.Library.Db.Execute(query2);
+                Globals.Library.Db.Execute(query1);
+                Globals.Library.Db.Execute(query2);
             } catch(Exception) {}
         }
         
@@ -645,7 +499,7 @@ namespace Banshee
             ArrayList list = new ArrayList();
             
             try {
-                IDataReader reader = Core.Library.Db.Query(query);
+                IDataReader reader = Globals.Library.Db.Query(query);
                 while(reader.Read())
                     list.Add(reader[0]);
                 
@@ -664,20 +518,21 @@ namespace Banshee
         public void Load()
         {
             /*int id = Playlist.GetId(name);
-            if(id <= 0)
+            
+            if(id <= 0) {
                 return;
+            }
                 
             Statement query = new Statement(
                 "SELECT t.* " + 
                 "FROM PlaylistEntries p, Tracks t " + 
                 "WHERE t.TrackID = p.TrackID AND p.PlaylistID = " + id);
                 
-            SqlLoadTransaction loader = 
-                new SqlLoadTransaction(query.ToString());*/
-                
+            SqlLoadTransaction loader = new SqlLoadTransaction(query.ToString());*/
+            
             PlaylistLoadTransaction loader = new PlaylistLoadTransaction(name);
             loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            Core.Library.TransactionManager.Register(loader);
+            PlayerCore.TransactionManager.Register(loader);
         }
         
         private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
@@ -704,8 +559,9 @@ namespace Banshee
             
             Statement query = new Update("Playlists", "Name", newName) + 
                 new Where("PlaylistID", Op.EqualTo, Playlist.GetId(name));
+                
             try {
-                Core.Library.Db.Execute(query);
+                Globals.Library.Db.Execute(query);
                 name = newName;
                 return true;
             } catch(Exception) {
@@ -717,7 +573,7 @@ namespace Banshee
         {
             PlaylistSaveTransaction pst = new PlaylistSaveTransaction(this);
             pst.Finished += OnPlaylistSaveTransactionFinished;
-            Core.Library.TransactionManager.Register(pst);    
+            PlayerCore.TransactionManager.Register(pst);    
         }
         
         private void OnPlaylistSaveTransactionFinished(object o, 
@@ -738,7 +594,7 @@ namespace Banshee
                     new List("COUNT(*)")) +
                     new Where("PlaylistID", Op.EqualTo, Playlist.GetId(name));
                 
-                object result = Core.Library.Db.QuerySingle(query);
+                object result = Globals.Library.Db.QuerySingle(query);
                 return Convert.ToInt32(result);
             }
         }

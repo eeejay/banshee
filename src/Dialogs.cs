@@ -74,18 +74,6 @@ namespace Banshee
         }
     }
     
-    public class MessageDialogs
-    {
-        public static void CannotRenamePlaylist()
-        {
-            HigMessageDialog.RunHigMessageDialog(null,
-            DialogFlags.Modal, MessageType.Error, ButtonsType.Ok,
-            Catalog.GetString("Cannot Rename Playlist"),
-            Catalog.GetString("A playlist with this name already exists. " + 
-            "Please choose another name."));
-        }
-    }
-    
     public class ErrorDialog
     {
         public static void Run(string message)

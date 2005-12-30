@@ -125,6 +125,10 @@ namespace Banshee
                     AddResourceToIconSet(item.StockId, 48, IconSize.Dialog, icon_set);
                 }
                 
+                if(icon_set == null) {
+                    continue;
+                }
+                
                 icon_factory.Add(item.StockId, icon_set);
                 StockManager.Add(item);
             }

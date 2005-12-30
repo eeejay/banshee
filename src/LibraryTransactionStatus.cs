@@ -113,7 +113,7 @@ namespace Banshee
 		
 		public void Start()
 		{
-			if(active || Core.Library.TransactionManager.TopExecution == null)
+			if(active || PlayerCore.TransactionManager.TopExecution == null)
 				return;
 
 			Clear();
@@ -145,7 +145,7 @@ namespace Banshee
 		private bool UpdateStatus()
 		{
 			LibraryTransaction transaction = 
-				Core.Library.TransactionManager.TopExecution;
+				PlayerCore.TransactionManager.TopExecution;
 				
 			if(transaction == null) {
 				Stop();
@@ -155,7 +155,7 @@ namespace Banshee
 			if(!Visible) 
 				return true;
 
-			//int tableCount = Core.Library.TransactionManager.TableCount;
+			//int tableCount = PlayerCore.TransactionManager.TableCount;
 			
 			//LabelTitle.Markup = "<b>" + transaction.Name + 
 			//	(tableCount > 1 ? " (" + tableCount + ")" : "") + "</b>";
@@ -200,7 +200,7 @@ namespace Banshee
 		
 		private void OnButtonCancelClicked(object o, EventArgs args)
 		{
-			int tableCount = Core.Library.TransactionManager.TableCount;
+			int tableCount = PlayerCore.TransactionManager.TableCount;
 
 			string multiple = Catalog.GetString(
 				"There are multiple operations executing. " +
@@ -232,14 +232,14 @@ namespace Banshee
 			switch(result) {
 				case 1: 
 					LibraryTransaction transaction = 
-						Core.Library.TransactionManager.TopExecution;
+						PlayerCore.TransactionManager.TopExecution;
 				
 					if(transaction != null)
 						transaction.Cancel();
 						
 					return;
 				case 2:
-					Core.Library.TransactionManager.CancelAll();
+					PlayerCore.TransactionManager.CancelAll();
 					return;	
 			}
 		}
@@ -247,7 +247,7 @@ namespace Banshee
 		public bool AllowShow
 		{
 			get {
-				return Core.Library.TransactionManager.TopExecution != null;
+				return PlayerCore.TransactionManager.TopExecution != null;
 			}
 		}
 	}

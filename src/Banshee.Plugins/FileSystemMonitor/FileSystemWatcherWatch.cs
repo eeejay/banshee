@@ -4,7 +4,7 @@ using System.IO;
 
 using Banshee.Base;
 
-namespace Banshee.FileSystemMonitor
+namespace Banshee.Plugins.FileSystemMonitor
 {
     public sealed class FileSystemWatcherWatch : Watch
     {

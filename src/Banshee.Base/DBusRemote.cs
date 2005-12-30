@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  Core.cs
+ *  DBusRemote.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -28,32 +28,36 @@
  */
  
 using System;
-using Banshee.Base;
+using DBus;
 
-namespace Banshee
+namespace Banshee.Base
 {
-    public static class PlayerCore 
+    public static class DBusRemote
     {
-        public static PlayerUI UserInterface;
-        
-        private static LibraryTransactionManager transaction_manager;
-        public static LibraryTransactionManager TransactionManager {
-            get {
-                if(transaction_manager == null) {
-                    transaction_manager = new LibraryTransactionManager();
-                }
-                return transaction_manager;
+        private static Service service;
+       
+        static DBusRemote()
+        {
+            try {
+                service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
+            } catch(Exception e) {
+                LogCore.Instance.PushWarning("Could not connect to D-Bus", 
+                    "D-Bus support will be disabled for this instance: " + e.Message, false);
             }
         }
-        
-        static PlayerCore()
+       
+        public static void RegisterObject(object o, string objectName)
         {
-            StockIcons.Initialize();
+            if(service != null) {
+                service.RegisterObject(o, "/org/gnome/Banshee/" + objectName);
+            }
         }
-        
-        public static void Dispose()
+       
+        public static void UnregisterObject(object o)
         {
-            TransactionManager.CancelAll();
+            if(service != null) {
+                service.UnregisterObject(o);
+            }
         }
     }
 }

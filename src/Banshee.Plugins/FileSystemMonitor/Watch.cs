@@ -3,7 +3,7 @@ using System.Collections;
 using System.Globalization;
 using System.IO;
 
-namespace Banshee.FileSystemMonitor
+namespace Banshee.Plugins.FileSystemMonitor
 {
     public abstract class Watch 
     {

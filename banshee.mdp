@@ -24,21 +24,17 @@
     <File name="./src/BurnCore.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/BurnTransaction.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Core.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Database.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/DBusIPC.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/RemotePlayer.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/DragDrop.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/ExceptionDialog.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/IPlaybackModel.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Library.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/LibraryTrackInfo.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LibraryTransactionManager.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LibraryTransactions.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LibraryTransactionStatus.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Main.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/NautilusBurnUtil.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/NotificationAreaIcon.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/PlayerEngineLoader.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlayerInterface.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistColumns.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistModel.cs" subtype="Code" buildaction="Nothing" />
@@ -51,7 +47,6 @@
     <File name="./src/RipTransaction.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/SignalUtils.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/SourceView.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/SqlGenerator.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/StockIcons.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/TrackProperties.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/VersionInformationDialog.cs" subtype="Code" buildaction="Nothing" />
@@ -60,11 +55,6 @@
     <File name="./src/GtkSharpBackports/FileChooserButton.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/GtkSharpBackports/GtkSharp.AboutDialogActivateLinkFuncNative.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LogCoreViewer.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileSystemMonitor/FileSystemWatcherWatch.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileSystemMonitor/Inotify.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileSystemMonitor/InotifyWatch.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileSystemMonitor/Watch.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/FileSystemMonitor/Watcher.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/AltProgressBar.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/CoverArtThumbnail.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/DateButton.cs" subtype="Code" buildaction="Nothing" />
@@ -163,7 +153,6 @@
     <File name="./src/Banshee.Dap/Njb/NjbDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/DapPropertiesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Widgets/HighlightMessageArea.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Audioscrobbler/Engine.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/PlayerEngineCore.cs" subtype="Code" buildaction="Compile" />
@@ -178,6 +167,18 @@
     <File name="./src/Banshee.Base/TrackInfoHeader.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/TrackInfoPopup.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Widgets/LinearProgress.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Database.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Library.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/LibraryTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/SqlGenerator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/FileSystemMonitor/FileSystemWatcherWatch.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/FileSystemMonitor/Inotify.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/FileSystemMonitor/InotifyWatch.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/FileSystemMonitor/Watch.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/FileSystemMonitor/Watcher.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/DBusRemote.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Sources.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

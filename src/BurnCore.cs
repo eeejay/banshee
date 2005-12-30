@@ -88,7 +88,7 @@ namespace Banshee
             }
             
             if(profile == null) {
-                 Core.Log.PushError(
+                 LogCore.Instance.PushError(
                      Catalog.GetString("Could Not Write CD"),
                      Catalog.GetString("No suitable wave encoder could be found to convert selected songs to CD audio format."));
                  return;
@@ -162,7 +162,7 @@ namespace Banshee
         private bool GetBoolPref(string key, bool def)
         {
             try {
-                return (bool)Core.GconfClient.Get(key);
+                return (bool)Globals.Configuration.Get(key);
             } catch(Exception) {
                 return def;
             }
@@ -189,7 +189,7 @@ namespace Banshee
                         "{0} more minutes are needed on the media.",
                         minutes);
             
-                Core.Log.PushWarning(Catalog.GetString("Not Enough Space on Disc"), msg);
+                LogCore.Instance.PushWarning(Catalog.GetString("Not Enough Space on Disc"), msg);
                 return false;
             }
 
@@ -212,7 +212,7 @@ namespace Banshee
                 string selectedBurnerId;
                 
                 try { 
-                    selectedBurnerId = (string)Core.GconfClient.Get(GConfKeys.CDBurnerId);
+                    selectedBurnerId = (string)Globals.Configuration.Get(GConfKeys.CDBurnerId);
                 } catch(Exception) { 
                     selectedBurnerId = null;
                 }
@@ -267,15 +267,15 @@ namespace Banshee
                         message = Catalog.GetString("An unknown error occurred when attempting to write the CD");
                     }
                     
-                    Core.Log.PushError(header, message);
+                    LogCore.Instance.PushError(header, message);
                 } else if(result != BurnRecorderResult.Cancel) {
-                    Core.Log.PushInformation(
+                    LogCore.Instance.PushInformation(
                         Catalog.GetString("CD Writing Complete"),
                         Catalog.GetString("The selected audio was successfully written to the CD.")
                     );
                 }
             } catch(Exception e) {
-                Core.Log.PushError(Catalog.GetString("Error Writing CD"), e.Message);    
+                LogCore.Instance.PushError(Catalog.GetString("Error Writing CD"), e.Message);    
             } finally {
                 foreach(string file in Directory.GetFiles(Paths.TempDir)) {
                     File.Delete(file);

@@ -110,7 +110,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 		public void Stop ()
 		{
 			if (timeout_id != 0) {
-				Source.Remove (timeout_id);
+				GLib.Source.Remove (timeout_id);
 				timeout_id = 0;
 			}
 

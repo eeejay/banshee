@@ -58,7 +58,9 @@ namespace Banshee
         
         private static void Startup(string [] args)
         {
-            Core.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
+            Gtk.Application.Init();
+        
+            Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
                 new ArgumentLayout("enqueue <files>","Files to enqueue, must be last argument specified"),
                 new ArgumentLayout("show",           "Show window"),
                 new ArgumentLayout("hide",           "Hide window"),
@@ -81,23 +83,21 @@ namespace Banshee
                 new ArgumentLayout("dap <dev>",      "Start Banshee and/or select source mapped to <device>"),
                 new ArgumentLayout("version",        "Show Banshee Version")
             }, args, "enqueue");
-
+            
             HandleShallowCommands();
-            BansheeCore dbus_core = DetectInstanceAndDbus();
+            RemotePlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
-            Core.Args = args;
-            Core.Instance.Program = new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), 
-                ConfigureDefines.VERSION, Modules.UI, args);
+            new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), ConfigureDefines.VERSION, Modules.UI, args);
+            PlayerCore.UserInterface = new Banshee.PlayerUI();
             
-            new Banshee.PlayerUI();
             Gtk.Application.Run();
         }
     
-        private static BansheeCore DetectInstanceAndDbus()
+        private static RemotePlayer DetectInstanceAndDbus()
         {
             try {
-                return BansheeCore.FindInstance();
+                return RemotePlayer.FindInstance();
             } catch(Exception) {
                 Process current_process = Process.GetCurrentProcess();
                 foreach(Process process in Process.GetProcesses()) {
@@ -114,97 +114,97 @@ namespace Banshee
             }
         }
         
-        private static void HandleDbusCommands(BansheeCore dbusCore)
+        private static void HandleDbusCommands(RemotePlayer remote_player)
         {
-            if(dbusCore == null) {
+            if(remote_player == null) {
                 return;
             }
             
             bool present = true;
         
-            foreach(string arg in Core.ArgumentQueue.Arguments) {
+            foreach(string arg in Globals.ArgumentQueue.Arguments) {
                 bool dequeue = true;
                 switch(arg) {
                 case "toggle-playing":
-                    dbusCore.TogglePlaying();
+                    remote_player.TogglePlaying();
                     present = false;
                     break;
                 case "play":
-                    dbusCore.Play();
+                    remote_player.Play();
                     present = false;
                     break;
                 case "pause":
-                    dbusCore.Pause();
+                    remote_player.Pause();
                     present = false;
                     break;
                 case "show":
-                    dbusCore.ShowWindow();
+                    remote_player.ShowWindow();
                     present = false;
                     break;
                 case "hide":
-                    dbusCore.HideWindow();
+                    remote_player.HideWindow();
                     present = false;
                     break;
                 case "next":
-                    dbusCore.Next();
+                    remote_player.Next();
                     present = false;
                     break;
                 case "previous":
-                    dbusCore.Previous();
+                    remote_player.Previous();
                     present = false;
                     break;
                 case "query-artist":
-                    PrintQueryResult("Artist", dbusCore.GetPlayingArtist());
+                    PrintQueryResult("Artist", remote_player.GetPlayingArtist());
                     present = false;
                     break;
                 case "query-album":
-                    PrintQueryResult("Album", dbusCore.GetPlayingAlbum());
+                    PrintQueryResult("Album", remote_player.GetPlayingAlbum());
                     present = false;
                     break;
                 case "query-title":
-                    PrintQueryResult("Title", dbusCore.GetPlayingTitle());
+                    PrintQueryResult("Title", remote_player.GetPlayingTitle());
                     present = false;
                     break;
                 case "query-genre":
-                    PrintQueryResult("Genre", dbusCore.GetPlayingGenre());
+                    PrintQueryResult("Genre", remote_player.GetPlayingGenre());
                     present = false;
                     break;
                 case "query-duration":
-                    PrintQueryResult("Duration", dbusCore.GetPlayingDuration());
+                    PrintQueryResult("Duration", remote_player.GetPlayingDuration());
                     present = false;
                     break;
                 case "query-position":
-                    PrintQueryResult("Position", dbusCore.GetPlayingPosition());
+                    PrintQueryResult("Position", remote_player.GetPlayingPosition());
                     present = false;
                     break;
                 case "query-uri":
-                    PrintQueryResult("Uri", dbusCore.GetPlayingUri());
+                    PrintQueryResult("Uri", remote_player.GetPlayingUri());
                     present = false;
                     break;
                 case "query-status":
-                    PrintQueryResult("Status", dbusCore.GetPlayingStatus());
+                    PrintQueryResult("Status", remote_player.GetPlayingStatus());
                     present = false;
                     break;
                 case "set-position":
-                    string string_position = Core.ArgumentQueue[arg];
+                    string string_position = Globals.ArgumentQueue[arg];
                     int position = 0;
                     try {
                         position = Convert.ToInt32(string_position);
-                        dbusCore.SetPlayingPosition(position);
+                        remote_player.SetPlayingPosition(position);
                     } catch(Exception) {
                         Console.WriteLine("Invalid position `{0}'. Integer value expected.", string_position);
                     }
                     present = false;
                     break;
                 case "audio-cd":
-                    dbusCore.SelectAudioCd(Core.ArgumentQueue[arg]);
+                    remote_player.SelectAudioCd(Globals.ArgumentQueue[arg]);
                     dequeue = false;
-                    Present(dbusCore);
+                    Present(remote_player);
                     break;
                 case "dap":
-                    dbusCore.SelectDap(Core.ArgumentQueue[arg]);
+                    remote_player.SelectDap(Globals.ArgumentQueue[arg]);
                     dequeue = false;
-                    Present(dbusCore);
+                    Present(remote_player);
                     break;
                 case "hide-field":
                     dequeue = false;
@@ -212,54 +212,54 @@ namespace Banshee
                 }
                 
                 if(dequeue) {
-                    Core.ArgumentQueue.Dequeue(arg);
+                    Globals.ArgumentQueue.Dequeue(arg);
                 }
             }
             
             if(present) {
-                Present(dbusCore);
+                Present(remote_player);
             }
             
             // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
-            System.GC.SuppressFinalize(dbusCore);
+            System.GC.SuppressFinalize(remote_player);
             System.Environment.Exit(0);
         }
         
         private static void PrintQueryResult(string field, object value)
         {
-            if(Core.ArgumentQueue.Contains("hide-field")) {
+            if(Globals.ArgumentQueue.Contains("hide-field")) {
                 Console.WriteLine(value);
             } else {
                 Console.WriteLine("{0}: {1}", field, value);
             }
         }
         
-        private static void Present(BansheeCore dbusCore)
+        private static void Present(RemotePlayer remote_player)
         {
-            dbusCore.PresentWindow();
+            remote_player.PresentWindow();
         }
         
         private static void HandleShallowCommands()
         {
-            if(Core.ArgumentQueue.Contains("print-todo")) {
+            if(Globals.ArgumentQueue.Contains("print-todo")) {
                 BansheeTodo.PrintReport();
                 Console.WriteLine("");
                 System.Environment.Exit(0);
             }
             
-            if(Core.ArgumentQueue.Contains("version")) {
+            if(Globals.ArgumentQueue.Contains("version")) {
                 Console.WriteLine("Banshee " + ConfigureDefines.VERSION);
                 System.Environment.Exit(0);
             }
             
-            if(!Core.ArgumentQueue.Contains("help")) {
+            if(!Globals.ArgumentQueue.Contains("help")) {
                 return;
             }
             
             int max_name_len = 0;
             int max_var_len = 0;
 
-            foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+            foreach(ArgumentLayout layout in Globals.ArgumentQueue.AvailableArguments) {
                 if(layout.Name.Length > max_name_len) {
                     max_name_len = layout.Name.Length;
                 }
@@ -274,7 +274,7 @@ namespace Banshee
 
             Console.WriteLine("Usage: banshee [ options ... ]\n       where options include:\n");
 
-            foreach(ArgumentLayout layout in Core.ArgumentQueue.AvailableArguments) {
+            foreach(ArgumentLayout layout in Globals.ArgumentQueue.AvailableArguments) {
                 Console.WriteLine("  --{0,-" + max_name_len + "} {1,-" + max_var_len + "} {2}", 
                     layout.Name, layout.ValueKind == null 
                         ? String.Empty 

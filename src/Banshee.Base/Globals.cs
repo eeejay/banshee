@@ -28,6 +28,7 @@
  */
  
 using System;
+using System.IO;
 using GConf;
 
 namespace Banshee.Base
@@ -35,22 +36,50 @@ namespace Banshee.Base
     public static class Globals
     {
         private static GConf.Client gconf_client;
-        private static string library_location;
         private static NetworkDetect network_detect;
         private static ActionManager action_manager;
+        private static Library library;
+        private static ArgumentQueue argument_queue;
+        private static AudioCdCore audio_cd_core;
+        private static Random random;
         
         static Globals()
         {
+            if(!Directory.Exists(Paths.ApplicationData)) {
+                Directory.CreateDirectory(Paths.ApplicationData);
+            }
+            
             gconf_client = new GConf.Client();
             network_detect = NetworkDetect.Instance;
             action_manager = new ActionManager();
+            library = new Library();
+            random = new Random();
+            
+            Gstreamer.Initialize();
+            PlayerEngineCore.Initialize();
+            
+            try {
+                audio_cd_core = new AudioCdCore();
+            } catch(ApplicationException e) {
+                LogCore.Instance.PushWarning("Audio CD support will be disabled for this instance", e.Message, false);
+            }
+            
+            try {
+                Banshee.Dap.DapCore.Initialize();
+            } catch(ApplicationException e) {
+                LogCore.Instance.PushWarning("DAP support will be disabled for this instance", e.Message, false);
+            }
+            
             Banshee.Plugins.PluginCore.Initialize();
         }
         
         public static void Dispose()
         {
-            network_detect.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
+            network_detect.Dispose();
+            library.Db.Close();
+            Banshee.Dap.DapCore.Dispose();
+            HalCore.Dispose();
         }
         
         public static GConf.Client Configuration {
@@ -58,17 +87,7 @@ namespace Banshee.Base
                 return gconf_client;
             }
         }
-        
-        public static string LibraryLocation {
-            get {
-                return library_location;
-            }
-            
-            set {
-                library_location = value;
-            }
-        }
-        
+
         public static NetworkDetect Network {
             get {
                 return network_detect;
@@ -78,6 +97,34 @@ namespace Banshee.Base
         public static ActionManager ActionManager {
             get {
                 return action_manager;
+            }
+        }
+        
+        public static Library Library {
+            get {
+                return library;
+            }
+        }
+        
+        public static ArgumentQueue ArgumentQueue {
+            set {
+                argument_queue = value;
+            }
+            
+            get {
+                return argument_queue;
+            }
+        }
+        
+        public static AudioCdCore AudioCdCore {
+            get {
+                return audio_cd_core;
+            }
+        }
+        
+        public static Random Random {
+            get {
+                return random;
             }
         }
     }

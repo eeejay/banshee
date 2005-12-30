@@ -13,17 +13,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/EnableFileSystemMonitoring</key>
-      <applyto>/apps/Banshee/EnableFileSystemMonitoring</applyto>
-      <owner>banshee</owner>
-      <type>bool</type>
-      <default>false</default>
-      <locale name="C">
-        <short>Enable File System Monitoring</short>
-        <long>Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library as changes are made in the Library Location in the file system</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/Banshee/TrackPropertiesExpanded</key>
       <applyto>/apps/Banshee/TrackPropertiesExpanded</applyto>
       <owner>banshee</owner>

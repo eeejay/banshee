@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  DBusIPC.cs
+ *  RemotePlayer.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -32,61 +32,21 @@ using DBus;
 using Banshee.Base;
 
 namespace Banshee
-{
-    public class DBusServer
-    {
-        private Service service;
-        
-        private static DBusServer instance = null;
-        public static DBusServer Instance {
-            get {
-                if(instance == null) {
-                    instance = new DBusServer();
-                }
-                
-                return instance;
-            }
-        }
-        
-        public DBusServer()
-        {
-            try {
-                service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
-            } catch(Exception e) {
-                LogCore.Instance.PushWarning("Could not connect to D-Bus", 
-                    "D-Bus support will be disabled for this instance: " + e.Message,
-                    false);
-            }
-        }
-        
-        public void RegisterObject(object o, string path)
-        {
-            if(service != null) {
-                service.RegisterObject(o, path);
-            }
-        }
-        
-        public void UnregisterObject(object o)
-        {
-            if(service != null) {
-                service.UnregisterObject(o);
-            }
-        }
-    }
-    
+{   
     [Interface("org.gnome.Banshee.Core")]
-    public class BansheeCore
+    public class RemotePlayer
     {
         private Gtk.Window mainWindow;
         private PlayerUI PlayerUI;
-        public static BansheeCore FindInstance()
+        
+        public static RemotePlayer FindInstance()
         {
             Connection connection = Bus.GetSessionBus();
             Service service = Service.Get(connection, "org.gnome.Banshee");        
-            return (BansheeCore)service.GetObject(typeof(BansheeCore), "/org/gnome/Banshee/Core");
+            return (RemotePlayer)service.GetObject(typeof(RemotePlayer), "/org/gnome/Banshee/Player");
         }
         
-        public BansheeCore(Gtk.Window mainWindow, PlayerUI ui)
+        public RemotePlayer(Gtk.Window mainWindow, PlayerUI ui)
         {
             this.mainWindow = mainWindow;
             this.PlayerUI = ui;

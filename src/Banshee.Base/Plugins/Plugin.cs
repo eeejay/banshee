@@ -27,12 +27,68 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
+using System;
+using System.Collections.Specialized;
+using Banshee.Base;
+ 
 namespace Banshee.Plugins
 {
+    public class InvalidPluginException : ApplicationException
+    {
+        public InvalidPluginException(string message) : base(message)
+        {
+        }
+    }
+
     public abstract class Plugin
     {
+        private string name;
+        private NameValueCollection configuration_keys;
+    
+        public Plugin()
+        {
+            string full_name = GetType().Namespace;
+            string base_full_name = GetType().BaseType.Namespace;
+
+            if(!full_name.StartsWith(base_full_name + ".")) {
+                throw new InvalidPluginException(
+                    String.Format("Plugin `{0}' has an invalid namespace ({1}). " + 
+                        "Plugin namespace must start with {2}. For example, {2}.MyPlugin", 
+                        GetType().FullName, full_name, base_full_name));
+            }
+            
+            name = full_name.Substring(base_full_name.Length + 1);
+            
+            configuration_keys = new NameValueCollection();
+        }
+        
+        protected void RegisterConfigurationKey(string name)
+        {
+            configuration_keys[name] = ConfigurationBase + "/" + name;
+        }
+        
+        protected NameValueCollection ConfigurationKeys {
+            get {
+                return configuration_keys;
+            }
+        }
+    
+        public abstract void Initialize();
+        
         public virtual void Dispose()
         {
+        }
+        
+        public string Name {
+            get {
+                return name;
+            }
+        }
+        
+        protected string ConfigurationBase {
+            get {
+                return GConfKeys.BasePath + Name;
+            }
         }
     }
 }

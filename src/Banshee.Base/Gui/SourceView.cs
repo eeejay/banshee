@@ -95,12 +95,12 @@ namespace Banshee
             try {
                 DapCore.DapAdded += OnDapCoreDapAdded;
                 DapCore.DapRemoved += OnDapCoreDapRemoved;
-                if(Core.Instance.AudioCdCore != null) {
-                    Core.Instance.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
-                    Core.Instance.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-                    Core.Instance.AudioCdCore.Updated += OnAudioCdCoreUpdated;
+                if(Globals.AudioCdCore != null) {
+                    Globals.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
+                    Globals.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
+                    Globals.AudioCdCore.Updated += OnAudioCdCoreUpdated;
                 }
-                Core.Library.Updated += OnLibraryUpdated;
+                Globals.Library.Updated += OnLibraryUpdated;
             } catch(NullReferenceException) {}
             
             RefreshList();
@@ -142,9 +142,9 @@ namespace Banshee
                 store.AppendValues(LocalQueueSource.Instance);
             }
             
-            if(Core.Instance.AudioCdCore != null) {
+            if(Globals.AudioCdCore != null) {
                 try {
-                    foreach(AudioCdDisk disk in Core.Instance.AudioCdCore.Disks)
+                    foreach(AudioCdDisk disk in Globals.AudioCdCore.Disks)
                         store.AppendValues(new AudioCdSource(disk));
                 } catch(NullReferenceException) {}
             }
@@ -265,7 +265,7 @@ namespace Banshee
             foreach(string trackId in rawDataArray) {
                 try {
                     int tid = Convert.ToInt32(trackId);
-                    tracks.Add(Core.Library.Tracks[tid]);
+                    tracks.Add(Globals.Library.Tracks[tid]);
                 } catch(Exception) {
                     continue;
                 }

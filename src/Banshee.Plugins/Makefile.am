@@ -1,5 +1,6 @@
 SUBDIRS = \
-	Audioscrobbler
+	Audioscrobbler \
+	FileSystemMonitor
 
 DISTCLEANFILES = \
 	Makefile.in

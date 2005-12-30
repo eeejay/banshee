@@ -29,7 +29,9 @@
  
 using System;
 using System.Collections;
- 
+
+using Banshee.Base;
+
 namespace Banshee 
 {
 	public class LibraryTransactionManager
@@ -103,7 +105,7 @@ namespace Banshee
 				(ArrayList)transactionTable[transactionType];
 			transactionQueue.Add(transaction);
 			
-			Core.Log.PushDebug("Registered IO Transaction", transactionType.ToString());
+			LogCore.Instance.PushDebug("Registered IO Transaction", transactionType.ToString());
 			
 			if(transactionQueue.Count == 1) 
 				ExecuteNext(transactionType);
@@ -153,7 +155,7 @@ namespace Banshee
 				return;
 		
 			if(transactionQueue.Count > 0) {
-				Core.Log.PushDebug("Executing IO Transaction", transactionType.ToString());
+				LogCore.Instance.PushDebug("Executing IO Transaction", transactionType.ToString());
 				
 				LibraryTransaction transaction = 
 					(LibraryTransaction)transactionQueue[0];

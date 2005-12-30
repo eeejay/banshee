@@ -72,7 +72,6 @@ namespace Banshee
             tableColumns = new Hashtable();
             
             writeInProgress = false;
-            
             Connect();
             InitializeTables();
         }

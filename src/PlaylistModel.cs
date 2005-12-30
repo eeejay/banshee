@@ -159,14 +159,14 @@ namespace Banshee
             ClearModel();
             PlaylistLoadTransaction loader = new PlaylistLoadTransaction(name);
             loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            Core.Library.TransactionManager.Register(loader);
+            PlayerCore.TransactionManager.Register(loader);
         }
         
         public void LoadFromLibrary()
         {
             ClearModel();
             
-            foreach(TrackInfo ti in Core.Library.Tracks.Values) {
+            foreach(TrackInfo ti in Globals.Library.Tracks.Values) {
                 AddTrack(ti, false);
             }
             
@@ -228,7 +228,7 @@ namespace Banshee
             if(ti == null)
                 return;
                 
-            Core.Instance.PlayerInterface.PlayFile(ti);
+            PlayerCore.UserInterface.PlayFile(ti);
             GetIter(out playingIter, path);
         }
         
@@ -239,7 +239,7 @@ namespace Banshee
                 return;
                 
             if(ti.CanPlay) {
-                Core.Instance.PlayerInterface.PlayFile(ti);
+                PlayerCore.UserInterface.PlayFile(ti);
                 playingIter = iter;
             } else {
                 playingIter = iter;
@@ -364,13 +364,13 @@ namespace Banshee
 
         private bool GetRandomTrackIter(out TreeIter iter)
         {
-            int randIndex = Core.Instance.Random.Next(0, Count());
+            int randIndex = Globals.Random.Next(0, Count());
             return IterNthChild(out iter, randIndex);
         }
         
         public void ClearModel()
         {
-            Core.Library.TransactionManager.Cancel(typeof(FileLoadTransaction));
+            PlayerCore.TransactionManager.Cancel(typeof(FileLoadTransaction));
             trackInfoQueue.Clear();
         
             totalDuration = new TimeSpan(0);

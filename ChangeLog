@@ -1,3 +1,77 @@
+2005-12-29  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+	
+	* configure.ac: Output src/Banshee.Plugins/FileSystemMonitor files
+
+	* data/banshee.schemas.in: Removed key for FileSystemMonitor; the plugin
+	installs its own schemas now
+
+	* src/Core.cs: Moved almost everything to Banshee.Base.Globals; renamed
+	to PlayerCore, and is now a static class
+
+	* src/Dialogs.cs: Removed specific playlist dialog
+
+	* src/BurnCore.cs:
+	* src/LibraryTransactionManager.cs:
+	* src/LibraryTransactionStatus.cs:
+	* src/LibraryTransactions.cs:
+	* src/PlaylistColumns.cs:
+	* src/PlaylistModel.cs:
+	* src/Preferences.cs:
+	* src/RipTransaction.cs:
+	* src/SourceView.cs: 
+	* src/Main.cs: Updated to reflect moves from Banshee.Core to 
+	Banshee.Base.Globals and renaming of Banshee.Core to Banshee.PlayerCore
+
+	* src/PlayerInterface.cs: Same as above changes; handle 
+	Banshee.Base.Library.Reloaded in a much better manner
+
+	* src/Banshee.Base/FileNamePattern.cs: Cleaned up, reformatted; reference
+	proper library path
+
+	* src/Makefile.am: Added new files; removed old files
+
+	* src/StockIcons.cs: Added a null test for the icon_set
+
+	* src/Banshee.Base/Globals.cs: Added initialization code from old
+	Banshee.Core; effectively places Library/Database access in 
+	Banshee.Base, for plugin access
+
+	* src/Banshee.Base/Makefile.am: Added new files
+
+	* src/Banshee.Base/Library.cs: 
+	* src/Banshee.Base/SqlGenerator.cs:
+	* src/Banshee.Base/LibraryTrackInfo.cs:
+	* src/Banshee.Base/FileTrackInfo.cs:
+	* src/Banshee.Base/Database.cs: Library/Database support is now in 
+	Banshee.Base and can be consumed by plugins
+
+	* src/Banshee.Base/Plugins/Plugin.cs:
+	* src/Banshee.Base/Plugins/PluginCore.cs: Plugins must now provide an 
+	override for new Initialize method; may not use constructors for
+	initialization; proper namespace naming is now enforced; added 
+	configuration keys support for GConf
+
+	* src/Banshee.Plugins/Makefile.am: Added FileSystemMonitor to SUBDIRS
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Adapt to 
+	changes in base Plugin class and new GConf support in base class
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Source.Remove changed to
+	GLib.Source.Remove to avoid namespace conflicts
+
+	* src/Banshee.Plugins/FileSystemMonitor/*.cs: Moved from src/
+	
+	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs: Refactored to
+	implement as a Banshee Plugin
+
+	* src/Banshee.Plugins/FileSystemMonitor/FileSystemMonitor.dll.config.in:
+	DLL map for assembly
+	
+	* src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in:
+	GConf schemas for plugin
+
 2005-12-29  Takeshi AIHANA <aihana@gnome.gr.jp>
 
 	* configure.ac: Added 'ja' (Japanese) to ALL_LINGUAS again,

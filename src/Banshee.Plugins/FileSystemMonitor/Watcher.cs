@@ -3,9 +3,11 @@ using System.Collections;
 using System.Data;
 using System.Threading;
 
-namespace Banshee.FileSystemMonitor
+using Banshee.Base;
+
+namespace Banshee.Plugins.FileSystemMonitor
 {
-    public class Watcher : IDisposable
+    public class Watcher : Banshee.Plugins.Plugin, IDisposable
     {
         private ArrayList toImport;
         private ArrayList toRemove;
@@ -14,8 +16,14 @@ namespace Banshee.FileSystemMonitor
         
         private Watch watch;
         
-        public Watcher(string watchDirectory)
+        public override void Initialize()
         {
+            RegisterConfigurationKey("Enabled");
+        
+            if(!(bool)Globals.Configuration.Get(ConfigurationKeys["Enabled"])) {
+                throw new ApplicationException("Plugin is not enabled");
+            }
+            
             toImport = new ArrayList();
             toRemove = new ArrayList();
         
@@ -23,12 +31,14 @@ namespace Banshee.FileSystemMonitor
         
             if(Inotify.Enabled) {
                 Console.WriteLine("The power of inotify!");
-                watch = new InotifyWatch(toImport, toRemove, watchDirectory);
+                watch = new InotifyWatch(toImport, toRemove, Globals.Library.Location);
             } else {
-                watch = new FileSystemWatcherWatch(toImport, toRemove, watchDirectory);
+                watch = new FileSystemWatcherWatch(toImport, toRemove, Globals.Library.Location);
             }
             
             updateThread.Start();
+            
+            Console.WriteLine("FileSystemMonitor plugin started");
         }
         
         private void Update()
@@ -55,31 +65,26 @@ namespace Banshee.FileSystemMonitor
                         string selectQuery = "SELECT TrackID, Uri" + query;
                         string deleteQuery = "DELETE" + query;
                                                
-                        IDataReader reader = Core.Library.Db.Query(selectQuery);
+                        IDataReader reader = Globals.Library.Db.Query(selectQuery);
                         while(reader.Read()) {
-                            Core.Library.Remove(Convert.ToInt32(reader[0] as string), 
+                            Globals.Library.Remove(Convert.ToInt32(reader[0] as string), 
                                                 new System.Uri(reader[1] as string));
                         }                       
-                        Core.Library.Db.Execute(deleteQuery);
+                        Globals.Library.Db.Execute(deleteQuery);
                       
                         toRemove.Clear();
                     }
                     
                     if(toImport.Count != 0) {
-                        FileLoadTransaction transaction = 
-                            new FileLoadTransaction(null, true, true);
-                            
                         Console.WriteLine("toImport begin");
 
               		    foreach(string s in toImport) {
                             Console.WriteLine(s);
-                            transaction.AddPath(s);
+                            ImportManager.Instance.QueueSource(s);
                             watch.RecurseDirectory(s);
                         }
                         
                         Console.WriteLine("toImport end");
-                        
-                        transaction.Register();
                         
                         toImport.Clear();
                     }
@@ -89,7 +94,7 @@ namespace Banshee.FileSystemMonitor
 		    }
 		}
 		
-		public void Dispose()
+		public override void Dispose()
 		{
             updateThread.Abort();
             watch.Stop();

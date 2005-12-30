@@ -203,11 +203,11 @@ namespace Banshee
             try {
                 encodePipeline = profile.Pipeline;
             } catch(PipelineProfileException e) {
-                Core.Log.PushError("Cannot Import CD", e.Message);
+                LogCore.Instance.PushError("Cannot Import CD", e.Message);
                 return;
             }
         
-            Core.Log.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
+            LogCore.Instance.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
         
             ripper = new AudioCdRipper(device, 0, encodePipeline);
             ripper.Progress += OnRipperProgress;
@@ -235,7 +235,7 @@ namespace Banshee
                     try {
                         lti = new LibraryTrackInfo(uri, track);
                     } catch(ApplicationException) {
-                        lti = Core.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] as TrackInfo;
+                        lti = Globals.Library.TracksFnKeyed[Library.MakeFilenameKey(uri)] as TrackInfo;
                     }
                     
                     if(lti != null) {                       
@@ -277,18 +277,15 @@ namespace Banshee
             if(user_event.IsCancelRequested && ripper != null)
                 ripper.Cancel();
                 
-            if(args.SecondsEncoded == 0)
+            if(args.SecondsEncoded == 0) {
                 return;
-
-  
-                user_event.Progress = (double)(args.SecondsEncoded + overallProgress) / (double)(totalCount);          
-                
-//            currentCount = args.SecondsEncoded + overallProgress;
+            }
+            
+            user_event.Progress = (double)(args.SecondsEncoded + overallProgress) / (double)(totalCount);
             currentSeconds = args.SecondsEncoded;
         }
         
-        public int QueueSize
-        {
+        public int QueueSize {
             get {
                 return tracks.Count;
             }

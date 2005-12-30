@@ -75,7 +75,7 @@ namespace Banshee
             }
             
             try {
-                int width = (int)Core.GconfClient.Get(
+                int width = (int)Globals.Configuration.Get(
                     GConfKeys.ColumnPath + keyName + "/Width");
                     
                 if(width <= 1)
@@ -87,9 +87,9 @@ namespace Banshee
             }
             
             try {
-                Column.Visible = (bool)Core.GconfClient.Get(
+                Column.Visible = (bool)Globals.Configuration.Get(
                     GConfKeys.ColumnPath + keyName + "/Visible");
-                this.Order = (int)Core.GconfClient.Get(
+                this.Order = (int)Globals.Configuration.Get(
                     GConfKeys.ColumnPath + keyName + "/Order");
             } catch(Exception) {}
         }
@@ -102,11 +102,11 @@ namespace Banshee
                 if(columns[order_t].Equals(Column))
                     break;
                     
-            Core.GconfClient.Set(GConfKeys.ColumnPath + 
+            Globals.Configuration.Set(GConfKeys.ColumnPath + 
                 keyName + "/Width", Column.Width);
-            Core.GconfClient.Set(GConfKeys.ColumnPath + 
+            Globals.Configuration.Set(GConfKeys.ColumnPath + 
                 keyName + "/Visible", Column.Visible);
-            Core.GconfClient.Set(GConfKeys.ColumnPath + 
+            Globals.Configuration.Set(GConfKeys.ColumnPath + 
                 keyName + "/Order", order_t);    
         }
     }
