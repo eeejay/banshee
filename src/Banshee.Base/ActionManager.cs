@@ -172,7 +172,7 @@ namespace Banshee.Base
                     Catalog.GetString("Permanently delete selected song(s) from storage medium"), null),
                     
                 new ActionEntry("PropertiesAction", Stock.Properties,
-                    Catalog.GetString("Properties"), null,
+                    Catalog.GetString("Edit Song Metadata"), null,
                     Catalog.GetString("Edit metadata on selected songs"), null),
                     
                 new ActionEntry("AddToPlaylistAction", null,

@@ -660,33 +660,6 @@ namespace Banshee
         }
     }
     
-    public class TrackInfoSaveTransaction : LibraryTransaction
-    {
-        private ArrayList list;
-        
-        public override string Name {
-            get {
-                return "Track Save Transaction";
-            }
-        }
-        
-        public TrackInfoSaveTransaction(ArrayList list)
-        {
-            this.list = list;    
-            showStatus = false;
-        }
-        
-        public override void Run()
-        {
-            foreach(TrackInfo track in list) {
-                if(cancelRequested)
-                    break;
-                    
-                track.Save();
-            }
-        }
-    }
-    
     public class PlaylistLoadTransaction : LibraryTransaction
     {
         private string name;

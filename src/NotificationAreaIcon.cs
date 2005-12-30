@@ -193,7 +193,7 @@ namespace Banshee
                 return;
             }
             
-            popup.Duration = PlayerEngineCore.ActivePlayer.Length;
+            popup.Duration = (uint)PlayerEngineCore.ActivePlayer.Track.Duration.TotalSeconds;
             popup.Position = PlayerEngineCore.ActivePlayer.Position;
         }
 

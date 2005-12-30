@@ -118,6 +118,16 @@ namespace Banshee
         {
             return false;
         }
+        
+        public virtual bool HasProperties {
+            get {
+                return false;
+            }
+        }
+        
+        public virtual void ShowPropertiesDialog()
+        {
+        }
     }
     
     public class LibrarySource : Source
@@ -125,14 +135,7 @@ namespace Banshee
         public LibrarySource() : base(Catalog.GetString("Library"), SourceType.Library)
         {
             canRename = false;
-            
-            string username = Utilities.GetRealName();
-            
-            if(username != null && username != String.Empty) {
-                username += (username[username.Length - 1] == 's' ? "'" : "'s") + " ";
-            }
-            
-            name = username + Catalog.GetString("Music Library");
+            name = Catalog.GetString("Music Library");
         }
         
         public override int Count
@@ -318,6 +321,31 @@ namespace Banshee
         public bool IsSyncing {
             get {
                 return device.IsSyncing;
+            }
+        }
+        
+        public override bool HasProperties {
+            get {
+                return true;
+            }
+        }
+        
+        public override void ShowPropertiesDialog()
+        {
+            DapPropertiesDialog properties_dialog = new DapPropertiesDialog(this);
+            IconThemeUtils.SetWindowIcon(properties_dialog);
+            properties_dialog.Run();
+            properties_dialog.Destroy();
+              
+            if(properties_dialog.Edited && !Device.IsReadOnly) {
+                if(properties_dialog.UpdatedName != null) {
+                    Device.SetName(properties_dialog.UpdatedName);
+                    SetSourceName(Device.Name);
+                }
+                  
+                if(properties_dialog.UpdatedOwner != null) {
+                    Device.SetOwner(properties_dialog.UpdatedOwner);
+                }
             }
         }
     }

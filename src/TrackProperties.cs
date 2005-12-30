@@ -149,6 +149,10 @@ namespace Banshee
             ArtistSync.Clicked += OnArtistSyncClicked;
             AlbumSync.Clicked += OnAlbumSyncClicked;
             TitleSync.Clicked += OnTitleSyncClicked;
+            
+            Artist.Changed += OnValueEdited;
+            Album.Changed += OnValueEdited;
+            Title.Changed += OnValueEdited;
                 
             Next.Visible = TrackSet.Count > 1;
             Previous.Visible = TrackSet.Count > 1;
@@ -213,13 +217,12 @@ namespace Banshee
             (glade["ImportedLabel"] as Label).Markup = PrepareStatistic(track.Track.DateAdded == DateTime.MinValue ?
                 Catalog.GetString("Unknown") : track.Track.DateAdded.ToString());
                     
-            if(TrackSet.Count > 1) {
-                TitleLabel.Markup = "<big><b>" + 
-                    String.Format(Catalog.GetString("Editing Track Properties ({0} of {1})"),
-                    index + 1, TrackSet.Count) + "</b></big>";
-            } else {
-                  TitleLabel.Markup = "<big><b>" + Catalog.GetString("Editing Track Properties") + "</b></big>";    
-            }            
+            string title = TrackSet.Count > 1 
+                ? String.Format(Catalog.GetString("Editing Song {0} of {1}"), index + 1, TrackSet.Count)
+                : Catalog.GetString("Editing Song");
+       
+            WindowTrackInfo.Title = title;
+            TitleLabel.Markup = "<big><b>" + title + "</b></big>";
             
             Uri.Text = track.Uri.LocalPath;
             tips.SetTip(glade["UriTitle"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
@@ -263,8 +266,9 @@ namespace Banshee
         
         private void OnTrackNumberSyncClicked(object o, EventArgs args)
         {
-            foreach(EditorTrack track in TrackSet)
+            foreach(EditorTrack track in TrackSet) {
                 track.TrackNumber = (uint)TrackNumber.Value;
+            }
         }
         
         private void OnTrackNumberIteratorClicked(object o, EventArgs args)
@@ -278,6 +282,15 @@ namespace Banshee
             EditorTrack current_track = TrackSet[currentIndex] as EditorTrack;
             TrackNumber.Value = (int)current_track.TrackNumber;
             TrackCount.Value = (int)current_track.TrackCount;
+        }
+        
+        private void OnValueEdited(object o, EventArgs args)
+        {
+            if(currentIndex < 0 || currentIndex >= TrackSet.Count) {
+                return;
+            }
+            
+            //SaveTrack(UpdateCurrent(), false);
         }
         
         private void OnTrackCountSyncClicked(object o, EventArgs args)
@@ -308,10 +321,10 @@ namespace Banshee
             }
         }
         
-        private void UpdateCurrent()
+        private EditorTrack UpdateCurrent()
         {
             if(currentIndex < 0 || currentIndex >= TrackSet.Count) {
-                return;
+                return null;
             }
                 
             EditorTrack track = TrackSet[currentIndex] as EditorTrack;
@@ -321,6 +334,8 @@ namespace Banshee
             track.Artist = Artist.Text;
             track.Album = Album.Text;
             track.Title = Title.Text;
+            
+            return track;
         }
 
         private void OnCancelButtonClicked(object o, EventArgs args)
@@ -332,22 +347,29 @@ namespace Banshee
         {
             UpdateCurrent();
             
-            ArrayList list = new ArrayList();
-            
             foreach(EditorTrack track in TrackSet) {
-                track.Save();
-                list.Add(track.Track);
+                SaveTrack(track, true);
             }
-            
-            TrackInfoSaveTransaction saveTransaction = new TrackInfoSaveTransaction(list);
-            saveTransaction.Register();
-                
+
             EventHandler handler = Saved;
             if(handler != null) {
                 handler(this, new EventArgs());
             }
             
             WindowTrackInfo.Destroy();
+        }
+        
+        private void SaveTrack(EditorTrack track, bool writeToDatabase)
+        {
+            track.Save();
+            
+            if(writeToDatabase) {
+                track.Track.Save();
+            }
+                
+            if(track.Track == PlayerCore.UserInterface.ActiveTrackInfo) {
+                PlayerCore.UserInterface.UpdateMetaDisplay(track.Track);
+            }
         }
     }
 }

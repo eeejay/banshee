@@ -1,3 +1,32 @@
+2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/TrackProperties.cs:
+	* src/Banshee.Base/ActionManager.cs:
+	* data/banshee.glade: Updated wording for the track properties editor to
+	read 'Edit Song Metadata/Editing Song x of y' and so forth
+
+	* src/TrackProperties.cs: Do all track saving in the main thread, it
+	is not expensive, and users probably aren't going to have thousands
+	of tracks in the editor at a time; update the main UI if the current
+	playing track is one that was edited (fixes BGO #325078)
+
+	* src/LibraryTransactions.cs: Removed TrackInfoSaveTransaction
+	
+	* src/NotificationAreaIcon.cs: Pull track duration from TrackInfo object
+	loaded in PlayerEngineCore.ActivePlayer and not from the playing stream
+	directly (read metadata instead of stream length) - fixes BGO #325079
+
+	* src/PlayerInterface.cs: Only sensitize the source properties action
+	when a source has property dialog support (Fixes BGO #325076); Expose
+	UpdateMetaDisplay as public; Call LoadSettings() after registering 
+	handlers for all actions, which will allow the proper action handler 
+	to be called at startup	(Fixes BGO #325139)
+
+	* src/Sources.cs: Name of library source is now just 'Music Library', 
+	Fixes BGO #324652; Source now provides a ShowPropertiesDialog member
+	sources can implement; moved property dialog for the DAP source from
+	PlayerInterface.cs to DapSource.ShowPropertiesDialog
+
 2005-12-29  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

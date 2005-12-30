@@ -166,8 +166,6 @@ namespace Banshee
             
             DapCore.DapAdded += OnDapCoreDeviceAdded;
             
-            LoadSettings();
-            
             LogCore.Instance.Updated += OnLogCoreUpdated;
             
             ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
@@ -214,6 +212,8 @@ namespace Banshee
                 action_event.AddEventHandler(action, 
                     Delegate.CreateDelegate(typeof(EventHandler), this, method_name));
             }
+            
+            LoadSettings();
         }
    
         private bool InitialLoadTimeout()
@@ -744,7 +744,7 @@ namespace Banshee
             }
         }
         
-        private void UpdateMetaDisplay(TrackInfo ti)
+        public void UpdateMetaDisplay(TrackInfo ti)
         {
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
@@ -1154,6 +1154,7 @@ namespace Banshee
             Globals.ActionManager.PlaylistActions.Sensitive = source is PlaylistSource;
             Globals.ActionManager.SourceEjectActions.Visible = source.CanEject;
             Globals.ActionManager.DapActions.Visible = source is DapSource;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
             
             if(source is DapSource) {
                 DapSource dapSource = source as DapSource;
@@ -1993,36 +1994,6 @@ namespace Banshee
             }
         }
         
-        private void ShowSourceProperties(Source source)
-        {
-            switch(source.Type) {
-                case SourceType.Dap:
-                    DapSource dap_source = source as DapSource;
-                    if(dap_source == null) {
-                        return;
-                    }
-                    
-                    DapPropertiesDialog properties_dialog = new DapPropertiesDialog(dap_source);
-                    IconThemeUtils.SetWindowIcon(properties_dialog);
-                    properties_dialog.Run();
-                    properties_dialog.Destroy();
-                    
-                    if(properties_dialog.Edited && !dap_source.Device.IsReadOnly) {
-                        if(properties_dialog.UpdatedName != null) {
-                            dap_source.Device.SetName(properties_dialog.UpdatedName);
-                            dap_source.SetSourceName(dap_source.Device.Name);
-                        }
-                        
-                        if(properties_dialog.UpdatedOwner != null) {
-                            dap_source.Device.SetOwner(properties_dialog.UpdatedOwner);
-                        }
-                    }
-                    
-                    sourceView.QueueDraw();
-                    break;
-            }
-        }
-        
         private void StopPlaying()
         {
             PlayerEngineCore.ActivePlayer.Close();
@@ -2329,7 +2300,7 @@ namespace Banshee
 
         private void OnSelectedSourcePropertiesAction(object o, EventArgs args)
         {
-            ShowSourceProperties(sourceView.HighlightedSource);
+            sourceView.HighlightedSource.ShowPropertiesDialog();
         }
         
         private void OnQuitAction(object o, EventArgs args)
