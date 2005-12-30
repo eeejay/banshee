@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Threading;
+using Mono.Unix;
 
 using Banshee.Base;
 
 namespace Banshee.Plugins.FileSystemMonitor
 {
-    public class Watcher : Banshee.Plugins.Plugin, IDisposable
+    public class Watcher : Banshee.Plugins.Plugin
     {
         private ArrayList toImport;
         private ArrayList toRemove;
@@ -15,31 +16,50 @@ namespace Banshee.Plugins.FileSystemMonitor
         private Thread updateThread;
         
         private Watch watch;
+
+        public override string DisplayName { get { return "File System Monitor"; } }
         
-        public override void Initialize()
-        {
-            RegisterConfigurationKey("Enabled");
-        
-            if(!(bool)Globals.Configuration.Get(ConfigurationKeys["Enabled"])) {
-                throw new ApplicationException("Plugin is not enabled");
+        public override string Description {
+            get {
+                return Catalog.GetString(
+                    "Automatically keep your Banshee library directory in sync " +
+                    "with your music folder. This plugin responds to changes made " +
+                    "in the file system to reflect them in your library."
+                );
             }
-            
+        }
+        
+        public override string [] Authors {
+            get {
+                return new string [] { 
+                    "Do\u011facan G\u00fcney"
+                };
+            }
+        }
+
+        protected override void PluginInitialize()
+        {
             toImport = new ArrayList();
             toRemove = new ArrayList();
+            
+            throw new ApplicationException("This plugin is incomplete and unstable");
         
             updateThread = new Thread(new ThreadStart(Update));
         
             if(Inotify.Enabled) {
-                Console.WriteLine("The power of inotify!");
                 watch = new InotifyWatch(toImport, toRemove, Globals.Library.Location);
             } else {
                 watch = new FileSystemWatcherWatch(toImport, toRemove, Globals.Library.Location);
             }
             
             updateThread.Start();
-            
-            Console.WriteLine("FileSystemMonitor plugin started");
         }
+		
+		protected override void PluginDispose()
+		{
+            updateThread.Abort();
+            watch.Stop();
+		}
         
         private void Update()
         {
@@ -92,12 +112,6 @@ namespace Banshee.Plugins.FileSystemMonitor
                 
                 Thread.Sleep(5000);
 		    }
-		}
-		
-		public override void Dispose()
-		{
-            updateThread.Abort();
-            watch.Stop();
 		}
     }
 }

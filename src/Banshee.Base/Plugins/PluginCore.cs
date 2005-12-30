@@ -96,8 +96,14 @@ namespace Banshee.Plugins
                 
                 try {
                     Plugin plugin = (Plugin)Activator.CreateInstance(type);
-                    plugin.Initialize();
                     plugins.Add(plugin);
+                    
+                    try {
+                        if((bool)Globals.Configuration.Get(plugin.ConfigurationBase + "/Enabled")) {
+                            plugin.Initialize();
+                        }
+                    } catch(GConf.NoSuchKeyException) {
+                    }
                 } catch(TargetInvocationException te) {
                     try {
                         throw te.InnerException;
@@ -108,7 +114,9 @@ namespace Banshee.Plugins
                         Console.WriteLine("** Invalid Plugin Design **");
                         Console.WriteLine(e.Message);
                         System.Environment.Exit(1);
-                    } catch {
+                    } catch(Exception e) {
+                        LogCore.Instance.PushWarning("Could not load plugin '" + type.FullName + "'", 
+                            e.Message, false);
                     }
                 } catch {
                 }
@@ -120,6 +128,13 @@ namespace Banshee.Plugins
             foreach(Plugin plugin in Plugins) {
                 plugin.Dispose();
             }
+        }
+        
+        public static void ShowPluginDialog()
+        {
+            PluginDialog dialog = new PluginDialog();
+            dialog.Run();
+            dialog.Destroy();
         }
         
         public static ICollection Plugins {

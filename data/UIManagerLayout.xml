@@ -26,6 +26,7 @@
             <separator />
             <menuitem name="Properties" action="PropertiesAction" />
             <separator />
+            <menuitem name="Plugins" action="PluginsAction" />
             <menuitem name="Preferences" action="PreferencesAction" />
         </menu>
         <menu name="PlaybackMenu" action="PlaybackMenuAction">

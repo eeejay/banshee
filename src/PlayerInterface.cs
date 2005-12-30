@@ -2408,6 +2408,11 @@ namespace Banshee
                 playlistView.QueueDraw();
             };
         }
+                
+        private void OnPluginsAction(object o, EventArgs args)
+        {
+            Banshee.Plugins.PluginCore.ShowPluginDialog();
+        }
         
         private void OnPreferencesAction(object o, EventArgs args)
         {

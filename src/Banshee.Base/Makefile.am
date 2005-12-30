@@ -53,7 +53,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/NetworkManager/Device.cs \
 	$(srcdir)/NetworkManager/Network.cs \
 	$(srcdir)/Plugins/Plugin.cs \
-	$(srcdir)/Plugins/PluginCore.cs
+	$(srcdir)/Plugins/PluginCore.cs \
+	$(srcdir)/Plugins/PluginDialog.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -resource:$(srcdir)/../../data/Tables.sql,Tables.sql -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

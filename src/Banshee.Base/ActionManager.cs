@@ -95,6 +95,10 @@ namespace Banshee.Base
                     Catalog.GetString("Select None"), "<control><shift>A",
                     Catalog.GetString("Unselect all songs in song list"), null),
                 
+                new ActionEntry("PluginsAction", null,
+                    Catalog.GetString("Plugins..."), null,
+                    Catalog.GetString("Configure Banshee plugins"), null),
+                
                 new ActionEntry("PreferencesAction", Stock.Preferences,
                     Catalog.GetString("Preferences..."), null,
                     Catalog.GetString("Edit Banshee preferences"), null),

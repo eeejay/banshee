@@ -40,14 +40,14 @@ using System;
 using DBus;
 using Gtk;
 
-[Interface("org.gnome.Banshee.Core")]
-public abstract class BansheeCore
+[Interface("org.gnome.Banshee.Player")]
+public abstract class BansheePlayer
 {       
-    public static BansheeCore FindInstance()
+    public static BansheePlayer FindInstance()
     {
         Connection connection = Bus.GetSessionBus();
         Service service = Service.Get(connection, "org.gnome.Banshee");        
-        return (BansheeCore)service.GetObject(typeof(BansheeCore), "/org/gnome/Banshee/Core");
+        return (BansheePlayer)service.GetObject(typeof(BansheePlayer), "/org/gnome/Banshee/Player");
     }
 
     [Method] public abstract void PresentWindow();
@@ -76,12 +76,12 @@ public abstract class BansheeCore
 
 public class BansheeDbusClient : Window
 {
-    private static BansheeCore banshee = null;
+    private static BansheePlayer banshee = null;
 
     public static void Main()
     {   
         try {
-            banshee = BansheeCore.FindInstance();
+            banshee = BansheePlayer.FindInstance();
         } catch(Exception) {
             Console.Error.WriteLine("Could not locate Banshee on D-Bus. Perhaps it's not running?");
             Environment.Exit(1);

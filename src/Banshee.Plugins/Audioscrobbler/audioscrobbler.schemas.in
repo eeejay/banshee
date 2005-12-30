@@ -6,12 +6,23 @@
       <applyto>/apps/Banshee/Audioscrobbler/Enabled</applyto>
       <owner>banshee</owner>
       <type>bool</type>
-      <default>false</default>
+      <default>true</default>
       <locale name="C">
         <short>Enable the Audioscrobbler plugin</short>
         <long></long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Audioscrobbler/EngineEnabled</key>
+      <applyto>/apps/Banshee/Audioscrobbler/EngineEnabled</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Allow engine to submit song data to last.fm in the Audioscrobbler plugin</short>
+        <long></long>
+      </locale>
+    </schema>    
     <schema>
       <key>/schemas/apps/Banshee/Audioscrobbler/Username</key>
       <applyto>/apps/Banshee/Audioscrobbler/Username</applyto>

@@ -70,9 +70,7 @@ namespace Banshee.Plugins.Audioscrobbler
                 GLib.Markup.EscapeText(Catalog.GetString("Audioscrobbler")));
             title.Xalign = 0.0f;
             
-            Label label = new Label(Catalog.GetString(
-                "Your profile page on Last.fm is automatically updated whenever you listen to music. " + 
-                "It lets others see what you're listening to right now, and shows charts of your listening history."));
+            Label label = new Label(plugin.Description);
             label.Wrap = true;
             
             Alignment alignment = new Alignment(0.0f, 0.0f, 1.0f, 1.0f);

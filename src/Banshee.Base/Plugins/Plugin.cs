@@ -42,6 +42,8 @@ namespace Banshee.Plugins
 
     public abstract class Plugin
     {
+        private bool initialized;
+        private bool broken;
         private string name;
         private NameValueCollection configuration_keys;
     
@@ -60,6 +62,7 @@ namespace Banshee.Plugins
             name = full_name.Substring(base_full_name.Length + 1);
             
             configuration_keys = new NameValueCollection();
+            broken = false;
         }
         
         protected void RegisterConfigurationKey(string name)
@@ -72,11 +75,57 @@ namespace Banshee.Plugins
                 return configuration_keys;
             }
         }
-    
-        public abstract void Initialize();
         
-        public virtual void Dispose()
+        internal void Initialize()
         {
+            if(broken) {
+                return;
+            }
+            
+            if(initialized) {
+                Dispose();
+            }
+            
+            try {
+                PluginInitialize();
+                initialized = true;
+            } catch(Exception e) {
+                LogCore.Instance.PushWarning(String.Format("Could not initialize plugin `{0}'", Name),
+                    e.Message, false);
+                broken = true;
+                initialized = false;
+            }
+        }
+        
+        internal void Dispose()
+        {
+            if(initialized && !broken) {
+                PluginDispose();
+                configuration_keys.Clear();
+                initialized = false;
+            }
+        }
+        
+        protected abstract void PluginInitialize();
+        
+        protected virtual void PluginDispose()
+        {
+        }
+        
+        public virtual void ShowConfigurationDialog()
+        {
+        }
+        
+        internal bool HasConfigurationDialog {
+            get {
+                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "ShowConfigurationDialog");
+            }
+        }
+        
+        internal bool Broken {
+            get {
+                return broken;
+            }
         }
         
         public string Name {
@@ -85,10 +134,20 @@ namespace Banshee.Plugins
             }
         }
         
-        protected string ConfigurationBase {
+        public bool Initialized {
+            get {
+                return initialized;
+            }
+        }
+        
+        public string ConfigurationBase {
             get {
                 return GConfKeys.BasePath + Name;
             }
         }
+        
+        public abstract string DisplayName { get; }
+        public abstract string Description { get; }
+        public abstract string [] Authors { get; }
     }
 }

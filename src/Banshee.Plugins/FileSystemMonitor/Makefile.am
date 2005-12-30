@@ -14,7 +14,8 @@ ASSEMBLY_SOURCES = \
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
-	-r:System.Data
+	-r:System.Data \
+	-r:Mono.Posix
 	
 schema_in_files = filesystemmonitor.schemas.in
 schemadir = $(GCONF_SCHEMA_FILE_DIR)

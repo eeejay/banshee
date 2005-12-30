@@ -1,5 +1,52 @@
 2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/UIManagerLayout.xml: Added a plugin menu item
+
+	* src/BansheeDbusClient.cs: Updated to reflect path/interface renaming
+
+	* src/DapPropertiesDialog.cs: Fixed name in source header
+
+	* src/PlayerInterface.cs: Show the plugins dialog on the plugin action
+
+	* src/Banshee.Base/ActionManager.cs: Added a plugin action for showing
+	the plugins dialog
+
+	* src/Banshee.Base/Makefile.am: Added Plugins/PluginDialog.cs
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Plugins can now be loaded and
+	unloaded during execution as well as at startup; the 'Enabled' key
+	belongs to the plugin manager, plugins can show a configuration dialog;
+	added abstract metadata properties; plugin entry/exit methods renamed
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Better plugin handling; plugins
+	can be disabled if they fail, but still remain visible; plugins can
+	be loaded/unloaded during execution
+
+	* src/Banshee.Base/Plugins/PluginDialog.cs: Dialog to allow management
+	of plugins (loading/unloading/configuring)
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs: Use
+	the plugin description from AudioscrobblerPlugin
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Renamed
+	the old 'Enabled' key as the base plugin class uses that key now; properly
+	unload the menu UI on Dispose; updated to reflect changes in base class;
+	implement ShowConfigurationDialog
+
+	* src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in: Added 
+	the EngineEnabled key as the plugin may be enabled (Enabled key used
+	by base class now) but user may want to turn off submissions
+
+	* src/Banshee.Plugins/FileSystemMonitor/Makefile.am: Added Mono.Posix ref
+
+	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs: updated to reflect
+	changes in base class; throw exception to disable this plugin for now as
+	it is incomplete and broken
+
+2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/TrackProperties.cs:
 	* src/Banshee.Base/ActionManager.cs:
 	* data/banshee.glade: Updated wording for the track properties editor to

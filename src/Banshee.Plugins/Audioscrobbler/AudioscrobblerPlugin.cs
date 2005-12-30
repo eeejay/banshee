@@ -45,28 +45,69 @@ namespace Banshee.Plugins.Audioscrobbler
 {
     public class AudioscrobblerPlugin : Banshee.Plugins.Plugin
     {
-        Engine protocol_engine;
-        GConf.Client gconf;
+        private Engine protocol_engine;
+        private GConf.Client gconf;
+        private ActionGroup actions;
+        private uint ui_manager_id;
 
-        public override void Initialize()
+        public override string DisplayName { get { return "Audioscrobbler"; } }
+        
+        public override string Description {
+            get {
+                return Catalog.GetString(
+                    "Your profile page on Last.fm is automatically updated " +
+                    "whenever you listen to music. It lets others see what " +
+                    "you're listening to right now, and shows charts of " + 
+                    "your listening history."
+                );
+            }
+        }
+        
+        public override string [] Authors {
+            get {
+                return new string [] { 
+                    "Chris Toshok",
+                    "Aaron Bockover"
+                };
+            }
+        }
+
+        protected override void PluginInitialize()
         {
-            RegisterConfigurationKey("Enabled");
+            RegisterConfigurationKey("EngineEnabled");
             RegisterConfigurationKey("Username");
             RegisterConfigurationKey("Password");
             
             gconf = Globals.Configuration;
-            gconf.AddNotify (ConfigurationBase, GConfNotifier);
+            gconf.AddNotify(ConfigurationBase, GConfNotifier);
 
             InstallInterfaceActions();
 
-            if (Enabled) {
-                StartEngine ();
+            if(Enabled) {
+                StartEngine();
             }
+        }
+        
+        protected override void PluginDispose()
+        {
+            StopEngine();
+            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+            Globals.ActionManager.UI.RemoveActionGroup(actions);
+            gconf.RemoveNotify(ConfigurationBase, GConfNotifier);
+            actions = null;
+        }
+        
+        public override void ShowConfigurationDialog()
+        {            
+            AudioscrobblerConfigDialog config = new AudioscrobblerConfigDialog(this);
+            config.Run();
+            config.Destroy();
         }
         
         private void InstallInterfaceActions()
         {
-            ActionGroup actions = new ActionGroup("Audioscrobbler");
+            actions = new ActionGroup("Audioscrobbler");
+            
             actions.Add(new ActionEntry [] {
                 new ActionEntry("AudioscrobblerAction", null,
                     Catalog.GetString("Audioscrobbler"), null,
@@ -82,14 +123,12 @@ namespace Banshee.Plugins.Audioscrobbler
             });
             
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
-            Globals.ActionManager.UI.AddUiFromResource("AudioscrobblerMenu.xml");
+            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("AudioscrobblerMenu.xml");
         }
         
         private void OnConfigurePlugin(object o, EventArgs args)
         {
-            AudioscrobblerConfigDialog config = new AudioscrobblerConfigDialog(this);
-            config.Run();
-            config.Destroy();
+            ShowConfigurationDialog();
         }
         
         private void OnVisitHomePage(object o, EventArgs args)
@@ -105,11 +144,6 @@ namespace Banshee.Plugins.Audioscrobbler
 			protocol_engine.Start ();
         }
         
-        public override void Dispose()
-        {
-            StopEngine();
-        }
-
         void StopEngine ()
         {
             if(protocol_engine != null) {
@@ -122,7 +156,7 @@ namespace Banshee.Plugins.Audioscrobbler
         void GConfNotifier (object sender, NotifyEventArgs args)
         {
             //Console.WriteLine ("key that changed: {0}", args.Key);
-            if (args.Key == ConfigurationKeys["Enabled"]) {
+            if (args.Key == ConfigurationKeys["EngineEnabled"]) {
                 if ((bool)args.Value == false)
                     StopEngine ();
                 else
@@ -159,11 +193,11 @@ namespace Banshee.Plugins.Audioscrobbler
         
         internal bool Enabled {
             get {
-                return GetBoolPref(ConfigurationKeys["Enabled"], false);
+                return GetBoolPref(ConfigurationKeys["EngineEnabled"], false);
             }
             
             set {
-                gconf.Set(ConfigurationKeys["Enabled"], value);
+                gconf.Set(ConfigurationKeys["EngineEnabled"], value);
                 Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = 
                     value && Username != null && Username != String.Empty;
             }
