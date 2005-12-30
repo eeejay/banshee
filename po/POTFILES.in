@@ -15,7 +15,6 @@ src/Core.cs
 src/DapPropertiesDialog.cs
 src/Dialogs.cs
 src/ExceptionDialog.cs
-src/Library.cs
 src/LibraryTransactions.cs
 src/LibraryTransactionStatus.cs
 src/LogCoreViewer.cs
@@ -26,10 +25,10 @@ src/PlaylistColumns.cs
 src/PlaylistView.cs
 src/Preferences.cs
 src/RipTransaction.cs
+src/Sources.cs
 src/SourceView.cs
 src/StockIcons.cs
 src/ToggleStates.cs
-src/TrackInfoHeader.cs
 src/TrackProperties.cs
 src/VersionInformationDialog.cs
 src/Banshee.Base/ActionManager.cs
@@ -37,10 +36,12 @@ src/Banshee.Base/FileEncodeAction.cs
 src/Banshee.Base/GstFileEncoder.cs
 src/Banshee.Base/HalCore.cs
 src/Banshee.Base/ImportManager.cs
+src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
 src/Banshee.Base/TrackInfo.cs
+src/Banshee.Base/TrackInfoHeader.cs
 src/Banshee.Base/Utilities.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
@@ -53,6 +54,7 @@ src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
 src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
+src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
 
