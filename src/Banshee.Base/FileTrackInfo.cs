@@ -34,9 +34,7 @@ using System.Collections;
 using System.Threading;
 using Entagged;
 
-using Banshee.Base;
-
-namespace Banshee
+namespace Banshee.Base
 {
     public class FileTrackInfo : TrackInfo
     {

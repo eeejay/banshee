@@ -100,6 +100,11 @@
       <Type Name="ReflectionUtil" />
       <Type Name="PlayerEngineCore" />
       <Type Name="AudioCdLookupStatus" />
+      <Type Name="Library" />
+      <Type Name="DBusRemote" />
+      <Type Name="Database" />
+      <Type Name="LibraryTrackInfo" />
+      <Type Name="FileTrackInfo" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -141,6 +146,11 @@
       <Type Name="ActionToggleButton" />
       <Type Name="CoverArtView" />
       <Type Name="HighlightMessageArea" />
+      <Type Name="TrackInfoHeader" />
+      <Type Name="TrackInfoPopup" />
+      <Type Name="PropertyTable" />
+      <Type Name="RadialProgress" />
+      <Type Name="LinearProgress" />
     </Namespace>
     <Namespace Name="NetworkManager">
       <Type Name="Manager" />
@@ -152,6 +162,30 @@
     <Namespace Name="Banshee.Plugins">
       <Type Name="Plugin" />
       <Type Name="PluginCore" />
+      <Type Name="InvalidPluginException" />
+    </Namespace>
+    <Namespace Name="Banshee">
+    </Namespace>
+    <Namespace Name="Sql">
+      <Type Name="SqlGeneratorException" />
+      <Type Name="ColumnValueParser" />
+      <Type Name="Op" />
+      <Type Name="Statement" />
+      <Type Name="Insert" />
+      <Type Name="Update" />
+      <Type Name="Limit" />
+      <Type Name="Where" />
+      <Type Name="Compare" />
+      <Type Name="Escape" />
+      <Type Name="Quote" />
+      <Type Name="List" />
+      <Type Name="Select" />
+      <Type Name="Delete" />
+      <Type Name="OrderBy" />
+      <Type Name="Or" />
+      <Type Name="And" />
+      <Type Name="ParenGroup" />
+      <Type Name="OrderDirection" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

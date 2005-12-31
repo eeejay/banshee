@@ -35,9 +35,7 @@ using Mono.Data.SqliteClient;
 
 using Sql;
 
-using Banshee.Base;
-
-namespace Banshee
+namespace Banshee.Base
 {
     public class Database 
     {

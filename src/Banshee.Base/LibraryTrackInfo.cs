@@ -35,9 +35,8 @@ using System.Threading;
 using Entagged;
 
 using Sql;
-using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Base
 {
     public class LibraryTrackInfo : TrackInfo
     {

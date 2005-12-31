@@ -1,28 +1,39 @@
-<Type Name="Globals" FullName="Banshee.Base.Globals">
-  <TypeSignature Language="C#" Value="public abstract sealed class Globals" />
+<Type Name="TrackInfoHeader" FullName="Banshee.Widgets.TrackInfoHeader">
+  <TypeSignature Language="C#" Value="public class TrackInfoHeader : Gtk.HBox" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Base</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
+    <BaseTypeName>Gtk.HBox</BaseTypeName>
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName="Configuration">
-      <MemberSignature Language="C#" Value="public static GConf.Client Configuration { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>GConf.Client</ReturnType>
-      </ReturnValue>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TrackInfoHeader ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
       <Docs>
         <summary>To be added.</summary>
-        <value>To be added.</value>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Dispose">
-      <MemberSignature Language="C#" Value="public static void Dispose ();" />
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TrackInfoHeader (bool ellipsize, int size);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="ellipsize" Type="System.Boolean" />
+        <Parameter Name="size" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="ellipsize">To be added.</param>
+        <param name="size">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetIdle">
+      <MemberSignature Language="C#" Value="public void SetIdle ();" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -33,11 +44,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Network">
-      <MemberSignature Language="C#" Value="public static Banshee.Base.NetworkDetect Network { get; };" />
+    <Member MemberName="Artist">
+      <MemberSignature Language="C#" Value="public string Artist { set; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.NetworkDetect</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -45,11 +56,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="ActionManager">
-      <MemberSignature Language="C#" Value="public static Banshee.Base.ActionManager ActionManager { get; };" />
+    <Member MemberName="Title">
+      <MemberSignature Language="C#" Value="public string Title { set; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.ActionManager</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -57,11 +68,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Library">
-      <MemberSignature Language="C#" Value="public static Banshee.Base.Library Library { get; };" />
+    <Member MemberName="Album">
+      <MemberSignature Language="C#" Value="public string Album { set; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.Library</ReturnType>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -69,11 +80,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="ArgumentQueue">
-      <MemberSignature Language="C#" Value="public static Banshee.Base.ArgumentQueue ArgumentQueue { set; get; };" />
+    <Member MemberName="Cover">
+      <MemberSignature Language="C#" Value="public Banshee.Widgets.CoverArtThumbnail Cover { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.ArgumentQueue</ReturnType>
+        <ReturnType>Banshee.Widgets.CoverArtThumbnail</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -81,11 +92,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="AudioCdCore">
-      <MemberSignature Language="C#" Value="public static Banshee.Base.AudioCdCore AudioCdCore { get; };" />
+    <Member MemberName="DefaultCover">
+      <MemberSignature Language="C#" Value="public Gdk.Pixbuf DefaultCover { set; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.AudioCdCore</ReturnType>
+        <ReturnType>Gdk.Pixbuf</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -93,11 +104,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Random">
-      <MemberSignature Language="C#" Value="public static Random Random { get; };" />
+    <Member MemberName="VBox">
+      <MemberSignature Language="C#" Value="public Gtk.VBox VBox { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Random</ReturnType>
+        <ReturnType>Gtk.VBox</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
