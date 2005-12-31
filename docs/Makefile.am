@@ -9,6 +9,11 @@ ASSEMBLIES = \
 ASSEMBLIES_BUILD = $(foreach asm,$(ASSEMBLIES),$(addprefix -assembly:,$(asm)))
 
 if BUILD_DOCS
+all: MonodocNodeConfig.exe
+
+MonodocNodeConfig.exe: MonodocNodeConfig.cs
+	mcs -out:$@ -r:System.Xml $<
+
 docdir = $(DOCDIR)
 doc_DATA = \
 	banshee-docs.zip \
@@ -19,13 +24,28 @@ endif
 update-docs: $(ASSEMBLIES)
 	$(DOC_UPDATER) $(ASSEMBLIES_BUILD) -path:en
 
-banshee-docs.zip banshee-docs.tree: $(srcdir)/en/*/*.xml
+banshee-docs.zip banshee-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
+
+if BUILD_DOCS
+install-data-hook:
+	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --insert "Banshee Libraries" classlib-banshee $(DOCDIR)/../monodoc.xml
+
+uninstall-hook:
+	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --remove classlib-banshee $(DOCDIR)/../monodoc.xml
+endif
 
 EXTRA_DIST = \
 	$(srcdir)/en/*.xml \
 	$(srcdir)/en/*/*.xml \
-	banshee-docs.source
+	banshee-docs.source \
+	MonodocNodeConfig.cs
 	
-DISTCLEANFILES = Makefile.in banshee-docs.zip banshee-docs.tree
+DISTCLEANFILES = \
+	Makefile.in \
+	banshee-docs.zip \
+	banshee-docs.tree
+
+CLEANFILES = \
+	MonodocNodeConfig.exe
 

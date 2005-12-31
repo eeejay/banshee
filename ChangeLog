@@ -1,3 +1,25 @@
+2005-12-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* docs/MonodocNodeConfig.cs: Small utility program to add nodes to
+	monodoc.xml under 'various' to better organize documentation
+
+	* docs/Makefile.am: Build MonodocNodeConfig.cs, run to insert/remove 
+	classlib-banshee node from various in monodoc.xml
+
+	* docs/banhsee-docs.source: Set path to classlib-banshee
+
+	* src/Banshee.Plugins/FileSystemMonitor/Makefile.am: Remove MENU_RESOURCE
+
+2005-12-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/Database.cs:
+	* src/Banshee.Base/FileTrackInfo.cs:
+	* src/Banshee.Base/LibraryTrackInfo.cs: Changed namespace to Banshee.Base
+	
+	* banshee.pc.in: Added two missing assemblies to Libs
+
+	* docs/*: Updated Monodoc Documentation
+
 2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.pc.in: Updated so plugins can actually use it (-pkg:banshee 
