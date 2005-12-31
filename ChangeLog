@@ -1,5 +1,9 @@
 2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/Library.cs: Added a GetTrack method
+
+2005-12-30  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/UIManagerLayout.xml: Added a plugin menu item

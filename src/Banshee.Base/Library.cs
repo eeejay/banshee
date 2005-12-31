@@ -164,6 +164,11 @@ namespace Banshee.Base
             }
         }
         
+        public LibraryTrackInfo GetTrack(int id)
+        {
+            return Tracks[id] as LibraryTrackInfo;
+        }
+        
         public static string MakeFilenameKey(Uri uri)
         {
             return PathUtil.MakeFileNameKey(uri);
