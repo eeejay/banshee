@@ -1,3 +1,7 @@
+2006-01-02  Stanislav Brabec  <utx@penguin.cz>
+
+	* configure.ac: Added cs to ALL_LINGUAS.
+
 2006-01-02  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/MusicBrainz/Client.cs: Null checks on GetID 
