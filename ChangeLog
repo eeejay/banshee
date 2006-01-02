@@ -1,3 +1,49 @@
+2006-01-01  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/MetadataSearch/*: New plugin to search for 
+	well-formed/supplementary metadata and cover art for songs already in
+	the library (and songs that are newly added during the same instance); 
+	this effectively adds 'full' cover art support to Banshee - Happy New Year!
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Generate files for the MetadataSearch plugin
+
+	* data/Tables.sql: Add RemoteLookupStatus column to Tracks SQL table
+
+	* src/Banshee.Base/Database.cs: Add support to ALTER old tables without
+	the RemoteLookupStatus column
+
+	* src/Banshee.Base/Library.cs: Added a TrackAdded event and an IsLoaded
+	property to the Library
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: Support preserving the 
+	RemoteLookupStatus property when constructing from an AudioCdTrackInfo 
+	and support reading/writing this property to/from the database
+
+	* src/Banshee.Base/TrackInfo.cs: Added a RemoteLookupStatus property and
+	enum (NoAttempt, Success, Failure)
+
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: Set RemoteLookupStatus to
+	Success when metadata is found through MusicBrainz
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Added a DisposeRequested property
+	for plugins to check during extensive operations
+
+	* src/Banshee.Plugins/Makefile.am: Added MetadataSearch to SUBDIRS
+
+	* src/MusicBrainz/Client.cs: Minor fix to GetID
+
+	* src/MusicBrainz/Makefile.am: Added SimpleQuery.cs
+
+	* src/MusicBrainz/SimpleQuery.cs: Static class to perform basic arbitrary
+	query operations (FileLookup)
+
+	* src/MusicBrainz/SimpleLookupTest.cs: Test case to SimpleQuery
+
+	* src/MusicBrainz/SimpleTrack.cs: Added new properties so object is
+	suitable for SimpleQuery.FileLookup to return
+
 2005-12-31  Aaron Bockover  <aaron@aaronbock.net>
 
 	* docs/MonodocNodeConfig.cs: Small utility program to add nodes to
