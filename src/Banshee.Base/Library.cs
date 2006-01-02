@@ -37,6 +37,13 @@ using Sql;
 
 namespace Banshee.Base
 {
+    public delegate void LibraryTrackAddedHandler(object o, LibraryTrackAddedArgs args);
+
+    public class LibraryTrackAddedArgs : EventArgs
+    {
+        public LibraryTrackInfo Track;
+    }
+
     public class Library
     {
         public Database Db;
@@ -46,6 +53,9 @@ namespace Banshee.Base
         
         public event EventHandler Reloaded;
         public event EventHandler Updated;
+        public event LibraryTrackAddedHandler TrackAdded;
+        
+        private bool is_loaded;
         
         public Library()
         {
@@ -101,6 +111,8 @@ namespace Banshee.Base
                 }
             }
             
+            is_loaded = true;
+            
             ThreadAssist.ProxyToMain(delegate {
                 EventHandler handler = Reloaded;
                 if(handler != null) {
@@ -108,9 +120,14 @@ namespace Banshee.Base
                 }
             });
         }
+        
+        public bool IsLoaded {
+            get {
+                return is_loaded;
+            }
+        }
 
-        public string Location
-        {
+        public string Location {
              get {
                 string libraryLocation;
             
@@ -139,6 +156,19 @@ namespace Banshee.Base
             EventHandler handler = Updated;
             if(handler != null) {
                 handler(this, new EventArgs());
+            }
+            
+            if(!is_loaded) {
+                return;
+            }
+            
+            LibraryTrackAddedHandler added_handler = TrackAdded;
+            if(added_handler != null) {
+                LibraryTrackAddedArgs args = new LibraryTrackAddedArgs();
+                args.Track = track;
+                ThreadAssist.ProxyToMain(delegate {
+                    added_handler(this, args);
+                });
             }
         }
         

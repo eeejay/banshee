@@ -154,7 +154,7 @@ namespace Banshee.Base
 
         public LibraryTrackInfo(Uri uri, string artist, string album, 
            string title, string genre, uint track_number, uint track_count,
-           int year, TimeSpan duration, string asin)
+           int year, TimeSpan duration, string asin, RemoteLookupStatus remote_lookup_status)
         {
             this.uri = uri;
             track_id = 0;
@@ -170,6 +170,7 @@ namespace Banshee.Base
             this.year = year;
             this.duration = duration;
             this.asin = asin;
+            this.remote_lookup_status = remote_lookup_status;
             
             this.date_added = DateTime.Now;
             
@@ -183,7 +184,8 @@ namespace Banshee.Base
         
         public LibraryTrackInfo(Uri uri, AudioCdTrackInfo track) : this(
             uri, track.Artist, track.Album, track.Title, track.Genre,
-            track.TrackNumber, track.TrackCount, track.Year, track.Duration, track.Asin)
+            track.TrackNumber, track.TrackCount, track.Year, track.Duration, 
+            track.Asin, track.RemoteLookupStatus)
         {
         }
     
@@ -305,7 +307,8 @@ namespace Banshee.Base
                     "AlbumPeak", album_peak, 
                     "Rating", rating, 
                     "NumberOfPlays", play_count, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played));
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played),
+                    "RemoteLookupStatus", (int)remote_lookup_status);
             } else {
                 tracksQuery = new Update("Tracks",
                     "Uri", uri.AbsoluteUri,
@@ -328,7 +331,8 @@ namespace Banshee.Base
                     "AlbumPeak", album_peak, 
                     "Rating", rating, 
                     "NumberOfPlays", play_count, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played)) +
+                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played),
+                    "RemoteLookupStatus", (int)remote_lookup_status) +
                     new Where(new Compare("TrackID", Op.EqualTo, track_id));// +
                 //    new Limit(1);
             }
@@ -390,6 +394,7 @@ namespace Banshee.Base
             rating = Convert.ToUInt32(reader["Rating"]);
             play_count = Convert.ToUInt32(reader["NumberOfPlays"]);
             asin = reader["ASIN"] as string;
+            remote_lookup_status = (RemoteLookupStatus)Convert.ToInt32(reader["RemoteLookupStatus"]);
           
 			if (reader != null){
 				last_played = DateTime.MinValue;

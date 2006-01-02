@@ -13,6 +13,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/SimpleArtist.cs \
 	$(srcdir)/SimpleAlbum.cs \
 	$(srcdir)/SimpleTrack.cs \
+	$(srcdir)/SimpleQuery.cs \
 	$(srcdir)/Utilities.cs
 
 if ENABLE_TESTS

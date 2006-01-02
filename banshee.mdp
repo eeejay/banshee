@@ -180,6 +180,18 @@
     <File name="./src/Banshee.Base/DBusRemote.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Sources.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Plugins/PluginDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/Client.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/ClientVersion.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/Rdf.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleAlbum.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleArtist.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleDisc.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleDiscTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleLookupTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleTrack.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/Utilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/MusicBrainz/SimpleQuery.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

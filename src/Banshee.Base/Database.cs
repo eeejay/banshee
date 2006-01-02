@@ -136,20 +136,29 @@ namespace Banshee.Base
             try {
                 Execute("PRAGMA synchronous = OFF");
             } catch(ApplicationException e) {
-                Banshee.Base.LogCore.Instance.PushWarning("Could not set sqlite3 PRAGMA synchronous = OFF",
+                LogCore.Instance.PushWarning("Could not set sqlite3 PRAGMA synchronous = OFF",
                     "Database querying, read and write, may be extra slow. (" + e.Message + ")", false);
             }
             
             try {
-               QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
+                QuerySingle("SELECT LastPlayedStamp FROM Tracks LIMIT 1");
             } catch(ApplicationException) {
-               Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
+                LogCore.Instance.PushDebug("Adding new database column", "LastPlayedStamp INTEGER");
+                Execute("ALTER TABLE Tracks ADD LastPlayedStamp INTEGER");
             }
             
             try {
-               QuerySingle("SELECT DateAddedStamp FROM Tracks LIMIT 1");
+                QuerySingle("SELECT DateAddedStamp FROM Tracks LIMIT 1");
             } catch(ApplicationException) {
-               Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
+                LogCore.Instance.PushDebug("Adding new database column", "DateAddedStamp INTEGER");
+                Execute("ALTER TABLE Tracks ADD DateAddedStamp INTEGER");
+            }
+            
+            try {
+                QuerySingle("SELECT RemoteLookupStatus FROM Tracks LIMIT 1");
+            } catch(ApplicationException) {
+                LogCore.Instance.PushDebug("Adding new database column", "RemoteLookupStatus INTEGER");
+                Execute("ALTER TABLE Tracks ADD RemoteLookupStatus INTEGER");
             }
         }
         

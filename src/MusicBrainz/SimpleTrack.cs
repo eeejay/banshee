@@ -35,6 +35,10 @@ namespace MusicBrainz
     {
         private string artist;
         private string title;
+        private string album;
+        private string asin;
+        private int track_num;
+        private int track_count;
         private int index;
         private int length;
         
@@ -42,6 +46,10 @@ namespace MusicBrainz
         {
             this.index = index;
             this.length = length;
+        }
+        
+        internal SimpleTrack()
+        {
         }
         
         public override string ToString()
@@ -55,8 +63,28 @@ namespace MusicBrainz
                 return artist;
             }
             
-            set {
+            internal set {
                 artist = value;
+            }
+        }
+                
+        public string Album {
+            get {
+                return album;
+            }
+            
+            internal set {
+                album = value;
+            }
+        }
+                        
+        public string Asin {
+            get {
+                return asin;
+            }
+            
+            internal set {
+                asin = value;
             }
         }
         
@@ -65,7 +93,7 @@ namespace MusicBrainz
                 return title;
             }
             
-            set {
+            internal set {
                 title = value;
             }
         }
@@ -75,8 +103,28 @@ namespace MusicBrainz
                 return index;
             }
             
-            set {
+            internal set {
                 index = value;
+            }
+        }
+                
+        public int TrackNumber {
+            get {
+                return track_num;
+            }
+            
+            internal set {
+                track_num = value;
+            }
+        }
+                
+        public int TrackCount {
+            get {
+                return track_count;
+            }
+            
+            internal set {
+                track_count = value;
             }
         }
         
@@ -85,7 +133,7 @@ namespace MusicBrainz
                 return length;
             }
             
-            set {
+            internal set {
                 length = value;
             }
         }

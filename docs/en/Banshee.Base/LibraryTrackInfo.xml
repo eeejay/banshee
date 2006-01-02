@@ -19,36 +19,6 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Uri uri, string artist, string album, string title, string genre, uint track_number, uint track_count, int year, TimeSpan duration, string asin);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="uri" Type="System.Uri" />
-        <Parameter Name="artist" Type="System.String" />
-        <Parameter Name="album" Type="System.String" />
-        <Parameter Name="title" Type="System.String" />
-        <Parameter Name="genre" Type="System.String" />
-        <Parameter Name="track_number" Type="System.UInt32" />
-        <Parameter Name="track_count" Type="System.UInt32" />
-        <Parameter Name="year" Type="System.Int32" />
-        <Parameter Name="duration" Type="System.TimeSpan" />
-        <Parameter Name="asin" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="uri">To be added.</param>
-        <param name="artist">To be added.</param>
-        <param name="album">To be added.</param>
-        <param name="title">To be added.</param>
-        <param name="genre">To be added.</param>
-        <param name="track_number">To be added.</param>
-        <param name="track_count">To be added.</param>
-        <param name="year">To be added.</param>
-        <param name="duration">To be added.</param>
-        <param name="asin">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public LibraryTrackInfo (Uri uri, Banshee.Base.AudioCdTrackInfo track);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
@@ -99,6 +69,38 @@
         <param name="lookup">To be added.</param>
         <summary>To be added.</summary>
         <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Uri uri, string artist, string album, string title, string genre, uint track_number, uint track_count, int year, TimeSpan duration, string asin, Banshee.Base.RemoteLookupStatus remote_lookup_status);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="uri" Type="System.Uri" />
+        <Parameter Name="artist" Type="System.String" />
+        <Parameter Name="album" Type="System.String" />
+        <Parameter Name="title" Type="System.String" />
+        <Parameter Name="genre" Type="System.String" />
+        <Parameter Name="track_number" Type="System.UInt32" />
+        <Parameter Name="track_count" Type="System.UInt32" />
+        <Parameter Name="year" Type="System.Int32" />
+        <Parameter Name="duration" Type="System.TimeSpan" />
+        <Parameter Name="asin" Type="System.String" />
+        <Parameter Name="remote_lookup_status" Type="Banshee.Base.RemoteLookupStatus" />
+      </Parameters>
+      <Docs>
+        <param name="uri">To be added.</param>
+        <param name="artist">To be added.</param>
+        <param name="album">To be added.</param>
+        <param name="title">To be added.</param>
+        <param name="genre">To be added.</param>
+        <param name="track_number">To be added.</param>
+        <param name="track_count">To be added.</param>
+        <param name="year">To be added.</param>
+        <param name="duration">To be added.</param>
+        <param name="asin">To be added.</param>
+        <param name="remote_lookup_status">To be added.</param>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

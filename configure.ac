@@ -394,6 +394,8 @@ src/Banshee.Plugins/Audioscrobbler/Makefile
 src/Banshee.Plugins/Audioscrobbler/Audioscrobbler.dll.config
 src/Banshee.Plugins/FileSystemMonitor/Makefile
 src/Banshee.Plugins/FileSystemMonitor/FileSystemMonitor.dll.config
+src/Banshee.Plugins/MetadataSearch/Makefile
+src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

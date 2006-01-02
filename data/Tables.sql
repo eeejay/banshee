@@ -36,7 +36,9 @@ CREATE TABLE Tracks (
 	Rating INTEGER,
 	NumberOfPlays INTEGER,
 	LastPlayedStamp INTEGER,
-	DateAddedStamp INTEGER
+	DateAddedStamp INTEGER,
+	
+	RemoteLookupStatus INTEGER
 );
 
 --IF TABLE NOT EXISTS Playlists;

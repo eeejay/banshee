@@ -33,6 +33,12 @@ using Gtk;
  
 namespace Banshee.Base
 {
+    public enum RemoteLookupStatus {
+        NoAttempt = 0,
+        Success,
+        Failure
+    }
+
     public abstract class TrackInfo
     {
         protected Uri uri;
@@ -64,6 +70,7 @@ namespace Banshee.Base
 
         protected bool can_save_to_database;
         protected bool can_play = true;
+        protected RemoteLookupStatus remote_lookup_status = RemoteLookupStatus.NoAttempt;
 
         public Gtk.TreeIter PreviousTrack;
         public Gtk.TreeIter TreeIter;
@@ -127,6 +134,16 @@ namespace Banshee.Base
             set { 
                 asin = value;
             } 
+        }
+        
+        public RemoteLookupStatus RemoteLookupStatus {
+            get {
+                return remote_lookup_status;
+            }
+            
+            set {
+                remote_lookup_status = value;
+            }
         }
                                      
         public string CoverArtFileName { 

@@ -32,11 +32,41 @@ using MusicBrainz;
 
 public class SimpleLookupTest
 {
-    private static void Main()
+    private static void Main(string [] args)
     {
-        string id = "3738da94-663e-44c1-84af-f850b0bdb763";
+        string artist = null;
+        string album = null;
+        string title = null;
+        
+        for(int i = 0; i < args.Length; i++) {
+            switch(args[i]) {
+                case "-artist":
+                    artist = args[++i];
+                    break;
+                case "-album":
+                    album = args[++i];
+                    break;
+                case "-title":
+                    title = args[++i];
+                    break;
+            }
+        }
+    
+        Console.WriteLine("Querying MusicBrainz with FileLookup request:");
+        Console.WriteLine("   Artist [{0}]", artist);
+        Console.WriteLine("   Album  [{0}]", album);
+        Console.WriteLine("   Track  [{0}]", title);
+        Console.WriteLine("---------------------------------------------");
+    
         using(Client client = new Client()) {
-            Console.WriteLine(new SimpleAlbum(client, id));
+            SimpleTrack track = SimpleQuery.FileLookup(client, artist, album, title, 0, 0);
+            Console.WriteLine("Artist: {0}", track.Artist);
+            Console.WriteLine("Album: {0}", track.Album);
+            Console.WriteLine("Track: {0}", track.Title);
+            Console.WriteLine("Duration: {0}", track.Length);
+            Console.WriteLine("Number: {0}", track.TrackNumber);
+            Console.WriteLine("Count: {0}", track.TrackCount);
+            Console.WriteLine("ASIN: {0}", track.Asin);
         }
     }
 }

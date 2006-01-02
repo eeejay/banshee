@@ -46,6 +46,7 @@ namespace Banshee.Plugins
         private bool broken;
         private string name;
         private NameValueCollection configuration_keys;
+        private bool dispose_requested;
     
         public Plugin()
         {
@@ -87,6 +88,7 @@ namespace Banshee.Plugins
             }
             
             try {
+                dispose_requested = false;
                 PluginInitialize();
                 initialized = true;
             } catch(Exception e) {
@@ -100,6 +102,7 @@ namespace Banshee.Plugins
         internal void Dispose()
         {
             if(initialized && !broken) {
+                dispose_requested = true;
                 PluginDispose();
                 configuration_keys.Clear();
                 initialized = false;
@@ -114,6 +117,12 @@ namespace Banshee.Plugins
         
         public virtual void ShowConfigurationDialog()
         {
+        }
+        
+        protected bool DisposeRequested {
+            get {
+                return dispose_requested;
+            }
         }
         
         internal bool HasConfigurationDialog {

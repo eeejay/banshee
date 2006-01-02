@@ -3,6 +3,7 @@
     <Assembly Name="hal-sharp" Version="0.0.0.0" />
     <Assembly Name="Banshee.Base" Version="0.0.0.0" />
     <Assembly Name="Banshee.Widgets" Version="0.0.0.0" />
+    <Assembly Name="MusicBrainz" Version="0.0.0.0" />
   </Assemblies>
   <Remarks>To be added.</Remarks>
   <Copyright>To be added.</Copyright>
@@ -105,6 +106,9 @@
       <Type Name="Database" />
       <Type Name="LibraryTrackInfo" />
       <Type Name="FileTrackInfo" />
+      <Type Name="LibraryTrackAddedArgs" />
+      <Type Name="LibraryTrackAddedHandler" />
+      <Type Name="RemoteLookupStatus" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -186,6 +190,17 @@
       <Type Name="And" />
       <Type Name="ParenGroup" />
       <Type Name="OrderDirection" />
+    </Namespace>
+    <Namespace Name="MusicBrainz">
+      <Type Name="Client" />
+      <Type Name="ClientVersion" />
+      <Type Name="Rdf" />
+      <Type Name="SimpleDisc" />
+      <Type Name="SimpleArtist" />
+      <Type Name="SimpleAlbum" />
+      <Type Name="SimpleTrack" />
+      <Type Name="SimpleQuery" />
+      <Type Name="Utilities" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

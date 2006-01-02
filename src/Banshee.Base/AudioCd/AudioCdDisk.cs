@@ -169,6 +169,7 @@ namespace Banshee.Base
                 }
                 
                 tracks[i].Asin = mb_disc.AmazonAsin;
+                tracks[i].RemoteLookupStatus = RemoteLookupStatus.Success;
             }
             
             string asin = mb_disc.AmazonAsin;

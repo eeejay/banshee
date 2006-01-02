@@ -5,6 +5,8 @@
 	the library (and songs that are newly added during the same instance); 
 	this effectively adds 'full' cover art support to Banshee - Happy New Year!
 
+	* docs/*: Updated Monodoc Documentation
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* configure.ac: Generate files for the MetadataSearch plugin

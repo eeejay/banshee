@@ -1,6 +1,7 @@
 SUBDIRS = \
 	Audioscrobbler \
-	FileSystemMonitor
+	FileSystemMonitor \
+	MetadataSearch
 
 DISTCLEANFILES = \
 	Makefile.in

@@ -126,7 +126,9 @@ namespace MusicBrainz
         {
             byte [] buffer = new byte[64];
             mb_GetIDFromURL(handle, ToUtf8(url), buffer, buffer.Length);
-            return FromUtf8(buffer);
+            string id = FromUtf8(buffer);
+            int offset = id.IndexOf('#') + 1;
+            return (offset >= 0) ? id.Substring(offset) : id;
         }
         
         public string GetID(string id)

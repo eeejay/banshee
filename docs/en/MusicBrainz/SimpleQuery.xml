@@ -1,0 +1,43 @@
+<Type Name="SimpleQuery" FullName="MusicBrainz.SimpleQuery">
+  <TypeSignature Language="C#" Value="public abstract sealed class SimpleQuery" />
+  <AssemblyInfo>
+    <AssemblyName>MusicBrainz</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Members>
+    <Member MemberName="FileLookup">
+      <MemberSignature Language="C#" Value="public static MusicBrainz.SimpleTrack FileLookup (MusicBrainz.Client client, string artistName, string albumName, string trackName, int trackNum, int duration);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>MusicBrainz.SimpleTrack</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="client" Type="MusicBrainz.Client" />
+        <Parameter Name="artistName" Type="System.String" />
+        <Parameter Name="albumName" Type="System.String" />
+        <Parameter Name="trackName" Type="System.String" />
+        <Parameter Name="trackNum" Type="System.Int32" />
+        <Parameter Name="duration" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="client">To be added.</param>
+        <param name="artistName">To be added.</param>
+        <param name="albumName">To be added.</param>
+        <param name="trackName">To be added.</param>
+        <param name="trackNum">To be added.</param>
+        <param name="duration">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

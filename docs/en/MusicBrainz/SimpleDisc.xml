@@ -1,40 +1,54 @@
-<Type Name="Plugin" FullName="Banshee.Plugins.Plugin">
-  <TypeSignature Language="C#" Value="public abstract class Plugin" />
+<Type Name="SimpleDisc" FullName="MusicBrainz.SimpleDisc">
+  <TypeSignature Language="C#" Value="public class SimpleDisc : System.Collections.IEnumerable, System.IDisposable" />
   <AssemblyInfo>
-    <AssemblyName>Banshee.Base</AssemblyName>
+    <AssemblyName>MusicBrainz</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName>System.Reflection.DefaultMember(MemberName="Item")</AttributeName>
+    </Attribute>
+  </Attributes>
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public Plugin ();" />
+      <MemberSignature Language="C#" Value="public SimpleDisc (string device, MusicBrainz.Client client);" />
       <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="RegisterConfigurationKey">
-      <MemberSignature Language="C#" Value="protected void RegisterConfigurationKey (string name);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
       <Parameters>
-        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="device" Type="System.String" />
+        <Parameter Name="client" Type="MusicBrainz.Client" />
       </Parameters>
       <Docs>
-        <param name="name">To be added.</param>
+        <param name="device">To be added.</param>
+        <param name="client">To be added.</param>
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="PluginInitialize">
-      <MemberSignature Language="C#" Value="protected abstract void PluginInitialize ();" />
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SimpleDisc (string device);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="device" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="device">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -45,8 +59,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="PluginDispose">
-      <MemberSignature Language="C#" Value="protected virtual void PluginDispose ();" />
+    <Member MemberName="QueryCDMetadata">
+      <MemberSignature Language="C#" Value="public void QueryCDMetadata ();" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
@@ -57,23 +71,24 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="ShowConfigurationDialog">
-      <MemberSignature Language="C#" Value="public virtual void ShowConfigurationDialog ();" />
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public System.Collections.IEnumerator GetEnumerator ();" />
       <MemberType>Method</MemberType>
       <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
       </ReturnValue>
       <Parameters />
       <Docs>
         <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="ConfigurationKeys">
-      <MemberSignature Language="C#" Value="protected System.Collections.Specialized.NameValueCollection ConfigurationKeys { get; };" />
+    <Member MemberName="Tracks">
+      <MemberSignature Language="C#" Value="public MusicBrainz.SimpleTrack[] Tracks { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Collections.Specialized.NameValueCollection</ReturnType>
+        <ReturnType>MusicBrainz.SimpleTrack[]</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -81,8 +96,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; };" />
+    <Member MemberName="CoverArtUrl">
+      <MemberSignature Language="C#" Value="public string CoverArtUrl { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -93,20 +108,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Initialized">
-      <MemberSignature Language="C#" Value="public bool Initialized { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ConfigurationBase">
-      <MemberSignature Language="C#" Value="public string ConfigurationBase { get; };" />
+    <Member MemberName="AmazonAsin">
+      <MemberSignature Language="C#" Value="public string AmazonAsin { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -117,8 +120,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="DisplayName">
-      <MemberSignature Language="C#" Value="public abstract string DisplayName { get; };" />
+    <Member MemberName="AlbumName">
+      <MemberSignature Language="C#" Value="public string AlbumName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -129,8 +132,8 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Description">
-      <MemberSignature Language="C#" Value="public abstract string Description { get; };" />
+    <Member MemberName="ArtistName">
+      <MemberSignature Language="C#" Value="public string ArtistName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
@@ -141,11 +144,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Authors">
-      <MemberSignature Language="C#" Value="public abstract string[] Authors { get; };" />
+    <Member MemberName="ReleaseDate">
+      <MemberSignature Language="C#" Value="public DateTime ReleaseDate { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.String[]</ReturnType>
+        <ReturnType>System.DateTime</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -153,13 +156,29 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="DisposeRequested">
-      <MemberSignature Language="C#" Value="protected bool DisposeRequested { get; };" />
+    <Member MemberName="Client">
+      <MemberSignature Language="C#" Value="public MusicBrainz.Client Client { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
+        <ReturnType>MusicBrainz.Client</ReturnType>
       </ReturnValue>
       <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public MusicBrainz.SimpleTrack Item[int index] { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>MusicBrainz.SimpleTrack</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">To be added.</param>
         <summary>To be added.</summary>
         <value>To be added.</value>
         <remarks>To be added.</remarks>
