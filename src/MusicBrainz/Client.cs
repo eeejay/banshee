@@ -124,6 +124,10 @@ namespace MusicBrainz
         
         public string GetIDFromUrl(string url)
         {
+            if(url == null) {
+                return null;
+            }
+            
             byte [] buffer = new byte[64];
             mb_GetIDFromURL(handle, ToUtf8(url), buffer, buffer.Length);
             string id = FromUtf8(buffer);
@@ -133,8 +137,8 @@ namespace MusicBrainz
         
         public string GetID(string id)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(id, @"^[A-Za-z0-9\-]+$") ?
-                id : GetIDFromUrl(id);
+            return id == null ? null : (System.Text.RegularExpressions.Regex.IsMatch(id, @"^[A-Za-z0-9\-]+$") ?
+                id : GetIDFromUrl(id));
         }
         
         public ClientVersion Version

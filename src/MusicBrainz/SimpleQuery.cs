@@ -58,24 +58,46 @@ namespace MusicBrainz
                 throw new ApplicationException("Selection failed");
             }
             
-            if(client.GetID(client.GetResultData(Rdf.MBE_LookupGetType)) != "AlbumTrackResult") {
-                throw new ApplicationException("Invalid result type");
-            }
-            
             SimpleTrack track = new SimpleTrack();
+            string result_type = client.GetID(client.GetResultData(Rdf.MBE_LookupGetType));
             
-            client.Select(Rdf.MBS_SelectLookupResultTrack);
-            track.Title = client.GetResultData(Rdf.MBE_TrackGetTrackName);
-            track.Artist = client.GetResultData(Rdf.MBE_TrackGetArtistName);
-            track.Length = client.GetResultInt(Rdf.MBE_TrackGetTrackDuration);
-            client.Select(Rdf.MBS_Back);
-            
-            client.Select(Rdf.MBS_SelectLookupResultAlbum, 1);
-            track.Album = client.GetResultData(Rdf.MBE_AlbumGetAlbumName);
-            track.TrackCount = client.GetResultInt(Rdf.MBE_AlbumGetNumTracks);
-            track.TrackNumber = client.GetResultInt(Rdf.MBE_AlbumGetTrackNum);
-            track.Asin = client.GetResultData(Rdf.MBE_AlbumGetAmazonAsin);
-            client.Select(Rdf.MBS_Back);
+            switch(result_type) {
+                case "AlbumTrackResult":
+                    client.Select(Rdf.MBS_SelectLookupResultTrack);
+                    track.Title = client.GetResultData(Rdf.MBE_TrackGetTrackName);
+                    track.Artist = client.GetResultData(Rdf.MBE_TrackGetArtistName);
+                    track.Length = client.GetResultInt(Rdf.MBE_TrackGetTrackDuration);
+                    client.Select(Rdf.MBS_Back);
+                    
+                    client.Select(Rdf.MBS_SelectLookupResultAlbum, 1);
+                    track.Album = client.GetResultData(Rdf.MBE_AlbumGetAlbumName);
+                    track.TrackCount = client.GetResultInt(Rdf.MBE_AlbumGetNumTracks);
+                    track.TrackNumber = client.GetResultInt(Rdf.MBE_AlbumGetTrackNum);
+                    track.Asin = client.GetResultData(Rdf.MBE_AlbumGetAmazonAsin);
+                    client.Select(Rdf.MBS_Back);
+                    break;
+                case "AlbumResult":
+                    client.Select(Rdf.MBS_SelectLookupResultAlbum, 1);
+                    track.TrackCount = client.GetResultInt(Rdf.MBE_AlbumGetNumTracks);
+                    track.Album = client.GetResultData(Rdf.MBE_AlbumGetAlbumName);
+                    track.Asin = client.GetResultData(Rdf.MBE_AlbumGetAmazonAsin);
+                    
+                    string track_id = client.GetResultData(Rdf.MBE_AlbumGetTrackId, trackNum);
+                    
+                    if(client.Query(Rdf.MBQ_GetTrackById, client.GetID(track_id))) {
+                        client.Select(Rdf.MBS_SelectTrack, 1);
+                        track.Title = client.GetResultData(Rdf.MBE_TrackGetTrackName);
+                        track.Artist = client.GetResultData(Rdf.MBE_TrackGetArtistName);
+                        track.TrackNumber = client.GetResultInt(Rdf.MBE_TrackGetTrackNum);
+                        track.Length = client.GetResultInt(Rdf.MBE_TrackGetTrackDuration);
+                        client.Select(Rdf.MBS_Back);
+                    }
+                    
+                    client.Select(Rdf.MBS_Back);
+                    break;
+                default:
+                    throw new ApplicationException("Invalid result type: " + result_type);
+            }
             
             return track;
         }

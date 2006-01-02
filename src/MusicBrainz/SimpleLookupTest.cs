@@ -37,6 +37,7 @@ public class SimpleLookupTest
         string artist = null;
         string album = null;
         string title = null;
+		int tracknum = 0;
         
         for(int i = 0; i < args.Length; i++) {
             switch(args[i]) {
@@ -49,6 +50,9 @@ public class SimpleLookupTest
                 case "-title":
                     title = args[++i];
                     break;
+				case "-tracknum":
+					tracknum = Convert.ToInt32(args[++i]);
+					break;
             }
         }
     
@@ -56,10 +60,11 @@ public class SimpleLookupTest
         Console.WriteLine("   Artist [{0}]", artist);
         Console.WriteLine("   Album  [{0}]", album);
         Console.WriteLine("   Track  [{0}]", title);
+		Console.WriteLine("   Number [{0}]", tracknum);
         Console.WriteLine("---------------------------------------------");
     
         using(Client client = new Client()) {
-            SimpleTrack track = SimpleQuery.FileLookup(client, artist, album, title, 0, 0);
+            SimpleTrack track = SimpleQuery.FileLookup(client, artist, album, title, tracknum, 0);
             Console.WriteLine("Artist: {0}", track.Artist);
             Console.WriteLine("Album: {0}", track.Album);
             Console.WriteLine("Track: {0}", track.Title);
