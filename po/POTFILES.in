@@ -9,6 +9,8 @@ libbanshee/gst-playback-0.8.c
 libbanshee/gst-transcode-0.8.c
 libbanshee/hal-context.c
 src/AboutBox.cs
+src/Banshee.Base/Plugins/PluginDialog.cs
+src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
 src/BurnCore.cs
 src/BurnTransaction.cs
 src/Core.cs
