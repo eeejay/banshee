@@ -53,6 +53,8 @@ AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the GStreamer 0.10 backends (DEVELOPMENTAL)]), enable_gst_10="yes", enable_gst_10="no")
 AM_CONDITIONAL(ENABLE_GST_10, test "x$enable_gst_10" = "xyes")
 
+AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
+
 if test "x$enable_xing" = "xyes"; then
 	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
 fi
@@ -131,7 +133,6 @@ else
 	AM_CONDITIONAL(BUILD_DOCS, false)
 fi
 
-
 dnl gtk-sharp, other CLR deps
 GTKSHARP_REQUIRED=2.3.92
 PKG_CHECK_MODULES(GTKSHARP,
@@ -175,13 +176,25 @@ PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
 AC_SUBST(DBUSSHARP)
 
 dnl sqlite devel dep
-PKG_CHECK_MODULES(SQLITE, sqlite3)
+PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
 
 dnl musicbrainz
 PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 
-dnl gstreamer devel deps
+dnl daap-sharp
+if test "x$enable_daap" = "xyes"; then 
+	PKG_CHECK_MODULES(DAAPSHARP, daap-sharp)
+	AC_SUBST(DAAPSHARP_LIBS)
+	DAAPSHARP_CSFLAGS="-define:ENABLE_DAAP"
+	AC_SUBST(DAAPSHARP_CSFLAGS)
+	AM_CONDITIONAL(DAAP_ENABLED, true)
+	DAAPSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries daap-sharp`"
+	AC_SUBST(DAAPSHARP_ASSEMBLIES)
+else
+	AM_CONDITIONAL(DAAP_ENABLED, false)
+fi
 
+dnl gstreamer devel deps
 if test "x$enable_gst_10" = "xyes"; then
 	GSTREAMER_REQUIRED_VERSION=0.9.7
 	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
@@ -427,6 +440,7 @@ banshee-$VERSION
 
     Xing MP3 Encoder:  ${enable_xing}
     GStreamer Plugins: ${GST_PLUGINS_DIR}
+    DAAP Support:      ${enable_daap}
 "
 
 if test "x${enable_helix}" = "xyes"; then

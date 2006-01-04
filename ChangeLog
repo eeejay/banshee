@@ -1,3 +1,8 @@
+2006-01-03  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Added DAAP configure support; check for sqlite3 >= 3.2 to
+	guard against no ALTER TABLE ... ADD support (BGO #325697)
+	
 2006-01-02  Stanislav Brabec  <utx@penguin.cz>
 
 	* configure.ac: Added cs to ALL_LINGUAS.
