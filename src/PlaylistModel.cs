@@ -34,6 +34,7 @@ using Gtk;
 using Sql;
 
 using Banshee.Base;
+using Banshee.Sources;
 
 namespace Banshee
 {
@@ -55,8 +56,6 @@ namespace Banshee
         private RepeatMode repeat = RepeatMode.None;
         private bool shuffle = false;
         
-        public Source Source;
-        
         public event EventHandler Updated;
         
         public static int NextUid
@@ -70,6 +69,9 @@ namespace Banshee
         {
             trackInfoQueue = new ArrayList();
             GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
+            SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
+                ReloadSource();
+            };
         }
     
         private void SyncPlayingIter()
@@ -146,52 +148,11 @@ namespace Banshee
             }
         }
         
-        public void LoadFromLocalQueue()
-        {
-            ClearModel();
-            foreach(TrackInfo ti in LocalQueueSource.Instance.Tracks) {
-                AddTrack(ti, false);
-            }
-        }
-
-        public void LoadFromPlaylist(string name)
-        {
-            ClearModel();
-            PlaylistLoadTransaction loader = new PlaylistLoadTransaction(name);
-            loader.HaveTrackInfo += OnLoaderHaveTrackInfo;
-            PlayerCore.TransactionManager.Register(loader);
-        }
-        
-        public void LoadFromLibrary()
+        public void ReloadSource()
         {
             ClearModel();
             
-            foreach(TrackInfo ti in Globals.Library.Tracks.Values) {
-                AddTrack(ti, false);
-            }
-            
-            SyncPlayingIter();
-            RaiseUpdated(this, new EventArgs());
-        }
-        
-        public void LoadFromDapSource(DapSource dapSource)
-        {
-            ClearModel();
-            
-            foreach(TrackInfo track in dapSource.Device) {
-                AddTrack(track);
-            }
-            
-            SyncPlayingIter();
-        }
-        
-        public void LoadFromAudioCdSource(AudioCdSource cdSource)
-        {    
-            ClearModel();
-            
-            AudioCdDisk disk = cdSource.Disk;
-            
-            foreach(AudioCdTrackInfo track in disk.Tracks) {
+            foreach(TrackInfo track in SourceManager.ActiveSource.Tracks) {
                 AddTrack(track);
             }
             
@@ -370,52 +331,16 @@ namespace Banshee
         
         public void ClearModel()
         {
-            PlayerCore.TransactionManager.Cancel(typeof(FileLoadTransaction));
             trackInfoQueue.Clear();
         
             totalDuration = new TimeSpan(0);
             playingIter = TreeIter.Zero;
             Clear();
                 
-            if(Updated != null && ThreadAssist.InMainThread)
+            if(Updated != null && ThreadAssist.InMainThread) {
                 Updated(this, new EventArgs());
-        }
-        
-        /*public void RemoveTrack(TreePath path)
-        {
-            TrackInfo ti = PathTrackInfo(path);
-            TreeIter iter;
-            
-            if(!GetIter(out iter, path))
-                return;
-                
-            if(Source.Type == SourceType.Playlist 
-                || Source.Type == SourceType.Library) {
-                Statement query = new Delete("PlaylistEntries")
-                    + new Where("TrackID", Op.EqualTo, ti.TrackId);
-                try {
-                    Core.Library.Db.Execute(query);
-                } catch(Exception) {}
-                
-                
-                if(Source.Type == SourceType.Library) {
-                    Statement query2 = new Delete("Tracks")
-                        + new Where("TrackID", Op.EqualTo, ti.TrackId);
-                    try {
-                        Core.Library.Db.Execute(query2);
-                    } catch(Exception) {}
-                }
             }
-            
-            RemoveTrack(ref iter, ti);
         }
-        
-        private void RemoveTrack(ref TreeIter iter, TrackInfo ti)
-        {
-            randomQueue.Remove(iter);
-            Remove(ref iter);
-        }
-        */
         
         public void RemoveTrack(ref TreeIter iter)
         {
@@ -424,6 +349,12 @@ namespace Banshee
             ti.TreeIter = TreeIter.Zero;
             Remove(ref iter);
             RaiseUpdated(this, new EventArgs());
+        }
+        
+        public int GetIterIndex(TreeIter iter)
+        {
+            TreePath path = GetPath(iter);
+            return path == null ? - 1 : path.Indices[0];
         }
         
         // --- Event Raise Handlers ---

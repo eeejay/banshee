@@ -130,6 +130,7 @@ namespace Banshee.Dap.Njb
             device.Release();
             device.Dispose();
             device = null;
+            base.Dispose();
         }
         
         private void ReloadDatabase()

@@ -13,15 +13,15 @@
 
 	* src/PlayerInterface.cs: Updated to use SourceManager to handle switching
 	and manipulating of sources
-	
+
 	* src/PlaylistModel.cs: Updated to use SourceManager; added a GetIterIndex
-	method to allow reordering to propagate to sources; removed old unused 
+	method to allow reordering to propagate to sources; removed old unused
 	code
 
 	* src/PlaylistView.cs: AddSelectedToPlaylist disabled for the moment
 
 	* src/SourceView.cs: Updated to adapt to act strictly as a view for
-	SourceManager; sources are now handled centrally in SourceManager 
+	SourceManager; sources are now handled centrally in SourceManager
 
 	* src/Banshee.Base/Database.cs: Added overload Execute method to return
 	the last insert row ID
@@ -31,7 +31,11 @@
 
 	* src/Banshee.Base/Makefile.am: Added new Source files
 
-	* src/Banshee.Base/TrackInfo.cs: Moved HaveTrackInfoArgs and 
+	* src/Banshee.Base/SourceManager.cs: New centralized source manager;
+	handles proper ordering and activation/notification, and acts as a proxy
+	for source update events
+
+	* src/Banshee.Base/TrackInfo.cs: Moved HaveTrackInfoArgs and
 	HaveTrackInfoHandler from old LibraryTransactions.cs
 
 	* src/Banshee.Base/Utilities.cs: ReflectionUtil.IsVirtualMethodImplemented
@@ -40,7 +44,7 @@
 	* src/Banshee.Base/AudioCd/AudioCdCore.cs: Support creating and removing
 	AudioCdSource from SourceManager
 
-	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: If ASIN is empty after a 
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: If ASIN is empty after a
 	successful CD info lookup through MusicBrainz, attempt to find an ASIN
 	using a FileLookup based on data for the first track on the CD
 
@@ -55,7 +59,7 @@
 	completely rewritten playlist support; much faster and supports proper
 	reordering
 
-	* src/Banshee.Base/Sources/AudioCdSource.cs: Refactored source for 
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Refactored source for
 	Audio CDs
 
 	* src/Banshee.Base/Sources/DapSource.cs: Refactored source for DAPs
@@ -66,7 +70,7 @@
 	* src/Banshee.Dap/Njb/NjbDap.cs (Dispose): call base.Dispose()
 
 	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs: Disabled some parts
-	of this plugin until it can be sorted out to work with new API 
+	of this plugin until it can be sorted out to work with new API
 
 2006-01-03  Aaron Bockover  <aaron@aaronbock.net>
 

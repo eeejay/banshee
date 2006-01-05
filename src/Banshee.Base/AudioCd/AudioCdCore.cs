@@ -35,6 +35,8 @@ using Mono.Unix;
 using MusicBrainz;
 using Hal;
 
+using Banshee.Sources;
+
 namespace Banshee.Base
 {
     public delegate void AudioCdCoreDiskRemovedHandler(object o, AudioCdCoreDiskRemovedArgs args);
@@ -94,6 +96,7 @@ namespace Banshee.Base
                 if(disk.Valid) {
                     disks[disk.Udi] = disk;
                 }
+                SourceManager.AddSource(new AudioCdSource(disk));
                 return disk;
             } catch(Exception e) {
                 Exception temp_e = e; // work around mcs #76642
@@ -207,6 +210,13 @@ namespace Banshee.Base
                 diskargs.Udi = udi;
                 handler(this, diskargs);
             }
+            
+            foreach(Source source in SourceManager.Sources) {
+                if(source is AudioCdSource && (source as AudioCdSource).Disk.Udi == udi) {
+                    SourceManager.RemoveSource(source);
+                    break;
+                }
+            }       
         }
         
         private void OnAudioCdDiskUpdated(object o, EventArgs args)

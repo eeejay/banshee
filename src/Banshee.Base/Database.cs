@@ -107,15 +107,21 @@ namespace Banshee.Base
         
         public int Execute(object query)
         {
+            return Execute(query, false);
+        }
+        
+        public int Execute(object query, bool returnLastInsertRowID)
+        {
             IDbCommand dbcmd = dbcon.CreateCommand();
             dbcmd.CommandText = query.ToString();
             int ret = dbcmd.ExecuteNonQuery();
             
             EventHandler handler = WriteCycleFinished;
-            if(handler != null)
-                 handler(this, new EventArgs());
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
             
-            return ret;
+            return returnLastInsertRowID ? (dbcmd as SqliteCommand).LastInsertRowID() : ret;
         }
         
         public object QuerySingle(object query)

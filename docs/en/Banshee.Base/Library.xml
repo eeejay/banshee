@@ -96,23 +96,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Remove">
-      <MemberSignature Language="C#" Value="public void Remove (int trackID, Uri trackUri);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="trackID" Type="System.Int32" />
-        <Parameter Name="trackUri" Type="System.Uri" />
-      </Parameters>
-      <Docs>
-        <param name="trackID">To be added.</param>
-        <param name="trackUri">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="MakeFilenameKey">
       <MemberSignature Language="C#" Value="public static string MakeFilenameKey (Uri uri);" />
       <MemberType>Method</MemberType>
@@ -209,6 +192,59 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackRemoved">
+      <MemberSignature Language="C#" Value="public event Banshee.Base.LibraryTrackRemovedHandler TrackRemoved;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.LibraryTrackRemovedHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Remove">
+      <MemberSignature Language="C#" Value="public void Remove (System.Collections.ICollection tracks);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tracks" Type="System.Collections.ICollection" />
+      </Parameters>
+      <Docs>
+        <param name="tracks">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="QueueRemove">
+      <MemberSignature Language="C#" Value="public void QueueRemove (Banshee.Base.TrackInfo track);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="track" Type="Banshee.Base.TrackInfo" />
+      </Parameters>
+      <Docs>
+        <param name="track">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CommitRemoveQueue">
+      <MemberSignature Language="C#" Value="public void CommitRemoveQueue ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

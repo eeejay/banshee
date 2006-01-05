@@ -36,6 +36,7 @@ using Pango;
 
 using Banshee.Base;
 using Banshee.Dap;
+using Banshee.Sources;
 
 namespace Banshee
 {
@@ -45,12 +46,10 @@ namespace Banshee
     
         public CellEdit() : base()
         {
-        
         }
         
         protected CellEdit(System.IntPtr ptr) : base(ptr)
         {
-        
         }
     }
     
@@ -60,21 +59,15 @@ namespace Banshee
         public string text;
     }
     
-    public delegate void EditedEventHandler(object o, 
-        EditedEventArgs args);
+    public delegate void EditedEventHandler(object o, EditedEventArgs args);
 
     public class SourceView : TreeView
     {
-        private ListStore store;
-        private Source selectedSource;
-        private bool forceReselect = false;
-
-        private Source newPlaylistSource = new PlaylistSource(Catalog.GetString("New Playlist"));
+        private Source newPlaylistSource = new PlaylistSource(-1);
         private TreeIter newPlaylistIter = TreeIter.Zero;
         private bool newPlaylistVisible = false;
         
-        public event EventHandler SourceChanged;
-
+        private ListStore store;
         private int currentTimeout = -1;
 
         public SourceView()
@@ -91,19 +84,34 @@ namespace Banshee
             HeadersVisible = false;
             
             CursorChanged += OnCursorChanged;
-            
-            try {
-                DapCore.DapAdded += OnDapCoreDapAdded;
-                DapCore.DapRemoved += OnDapCoreDapRemoved;
-                if(Globals.AudioCdCore != null) {
-                    Globals.AudioCdCore.DiskAdded += OnAudioCdCoreDiskAdded;
-                    Globals.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-                    Globals.AudioCdCore.Updated += OnAudioCdCoreUpdated;
-                }
-                Globals.Library.Updated += OnLibraryUpdated;
-            } catch(NullReferenceException) {}
-            
             RefreshList();
+            
+            SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
+                TreeIter iter = store.Insert(args.Position);
+                store.SetValue(iter, 0, args.Source);
+            };
+            
+            SourceManager.SourceRemoved += delegate(SourceEventArgs args) {
+                for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                    TreeIter iter = TreeIter.Zero;
+                    if(!store.IterNthChild(out iter, i)) {
+                        continue;
+                    }
+                    
+                    if((store.GetValue(iter, 0) as Source) == args.Source) {
+                        store.Remove(ref iter);
+                        return;
+                    }
+                }
+            };
+            
+            SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
+                ResetHighlight();
+            };
+            
+            SourceManager.SourceUpdated += delegate(SourceEventArgs args) {
+                QueueDraw();
+            };
         }
                     
         protected void SourceCellDataFunc(TreeViewColumn tree_column,
@@ -112,9 +120,10 @@ namespace Banshee
             SourceRowRenderer renderer = (SourceRowRenderer)cell;
             renderer.view = this;
             renderer.source = (Source)store.GetValue(iter, 0);
-            if(renderer.source == null)
+            if(renderer.source == null) {
                 return;
-            renderer.Selected = renderer.source.Equals(selectedSource);
+            }
+            renderer.Selected = renderer.source.Equals(SourceManager.ActiveSource);
             renderer.Italicized = renderer.source.Equals(newPlaylistSource);
             renderer.Editable = renderer.source.CanRename;
         }
@@ -123,63 +132,27 @@ namespace Banshee
         {
             TreeIter iter;
             
-            if(!store.GetIter(out iter,path))
+            if(!store.GetIter(out iter, path)) {
                 return;
+            }
             
             Source source = store.GetValue(iter, 0) as Source;
             source.Rename(text);
-            QueueDraw();
         }
         
         private void RefreshList()
         {
-            Application.Invoke(delegate {
-            
             store.Clear();
-            store.AppendValues(new LibrarySource());
-            
-            if(LocalQueueSource.Instance.Count > 0) {
-                store.AppendValues(LocalQueueSource.Instance);
+            foreach(Source source in SourceManager.Sources) {
+                store.AppendValues(source);
             }
-            
-            if(Globals.AudioCdCore != null) {
-                try {
-                    foreach(AudioCdDisk disk in Globals.AudioCdCore.Disks)
-                        store.AppendValues(new AudioCdSource(disk));
-                } catch(NullReferenceException) {}
-            }
-        
-            // iPod Sources
-            try {
-                foreach(DapDevice device in DapCore.Devices)
-                    store.AppendValues(new DapSource(device));
-            } catch(NullReferenceException) {}
-            
-            // Playlist Sources
-            string [] names = Playlist.ListAll();
-            
-            if(names == null)
-                return;
-                
-            foreach(string name in names) {
-                AddPlaylist(name);
-            }
-            
-            });
         } 
-        
-        public void AddPlaylist(string name)
-        {
-            PlaylistSource plsrc = new PlaylistSource(name);
-            plsrc.Updated += OnSourceUpdated;
-            store.AppendValues(plsrc);
-        }
         
         private void OnCursorChanged(object o, EventArgs args)
         {                
-            if(currentTimeout < 0)
-                currentTimeout = (int)GLib.Timeout.Add(200, 
-                    OnCursorChangedTimeout);
+            if(currentTimeout < 0) {
+                currentTimeout = (int)GLib.Timeout.Add(200, OnCursorChangedTimeout);
+            }
         }
         
         private bool OnCursorChangedTimeout()
@@ -189,22 +162,19 @@ namespace Banshee
             
             currentTimeout = -1;
             
-            if(!Selection.GetSelected(out model, out iter))
+            if(!Selection.GetSelected(out model, out iter)) {
                 return false;
+            }
             
-            Source newSource = store.GetValue(iter, 0) as Source;
-            if(selectedSource == newSource && !forceReselect)
+            Source new_source = store.GetValue(iter, 0) as Source;
+            if(SourceManager.ActiveSource == new_source) {
                 return false;
-                
-            forceReselect = false;
-            selectedSource = newSource;
+            }
+            
+            SourceManager.SetActiveSource(new_source);
             
             QueueDraw();
-            
-            EventHandler handler = SourceChanged;
-            if(handler != null)
-                handler(this, new EventArgs());
-            
+
             return false;
         }
         
@@ -215,8 +185,9 @@ namespace Banshee
             Gdk.Drag.Status(context, 0, time);
 
             // TODO: Support other drag sources
-            if(SelectedSource.Type != SourceType.Library)
+            if(!(SourceManager.ActiveSource is LibrarySource)) {
                 return true;
+            }
             
             if(!newPlaylistVisible) {
                 newPlaylistIter = store.AppendValues(newPlaylistSource);
@@ -225,15 +196,19 @@ namespace Banshee
 
             TreePath path;
             TreeViewDropPosition pos;
-            if(!GetDestRowAtPos(x, y, out path, out pos))
+            if(!GetDestRowAtPos(x, y, out path, out pos)) {
                 path = store.GetPath(newPlaylistIter);
+            }
 
             Source source = GetSource(path);
-            if(source == null)
+            if(source == null) {
                 return true;
+            }
+            
             // TODO: Support other drag destinations
-            if(source.Type != SourceType.Playlist && source.Type != SourceType.Dap)
+            if(!(source is PlaylistSource) && !(source is DapSource)) {
                 return true;
+            }
             
             SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
             Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
@@ -242,7 +217,7 @@ namespace Banshee
         
         protected override void OnDragLeave(Gdk.DragContext context, uint time)
         {
-            if (newPlaylistVisible) {
+            if(newPlaylistVisible) {
                 store.Remove(ref newPlaylistIter);
                 newPlaylistVisible = false;
             }
@@ -273,61 +248,19 @@ namespace Banshee
             
             if(GetDestRowAtPos(x, y, out destPath, out pos)) {
                 Source source = GetSource(destPath);
-                
-                if(source.Type == SourceType.Playlist) {
-                    Playlist pl = new Playlist(source.Name);
-                    pl.Load();
-                    pl.Append(tracks);
-                    pl.Save();
-                } else if(source.Type == SourceType.Dap) {
-                    DapSource dapSource = source as DapSource;
-                    
-                    foreach(LibraryTrackInfo lti in tracks) {
-                        dapSource.QueueForSync(lti);    
-                    }
+                if(source is PlaylistSource || source is DapSource) {
+                    source.AddTrack(tracks);
+                    source.Commit();
                 }
             } else {
-                Playlist pl = new Playlist(Playlist.GoodUniqueName(tracks));
-                pl.Append(tracks);
-                pl.Save();
-                pl.Saved += OnPlaylistSaved;
+                PlaylistSource playlist = new PlaylistSource();
+                playlist.AddTrack(tracks);
+                playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
+                playlist.Commit();
+                SourceManager.AddSource(playlist);
             }
             
             Gtk.Drag.Finish(context, true, false, time);
-        }
-        
-        private void OnPlaylistSaved(object o, PlaylistSavedArgs args)
-        {
-            AddPlaylist(args.Name);
-        }
-        
-        public void SelectLibrary()
-        {
-            Selection.SelectPath(new TreePath("0"));
-            OnCursorChanged(this, new EventArgs());
-        }
-        
-        public void SelectLibraryForce()
-        {
-            forceReselect = true;
-            Selection.SelectPath(new TreePath("0"));
-            OnCursorChangedTimeout();
-        }
-
-        public void SelectSource(Source source)
-        {
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                TreeIter iter = TreeIter.Zero;
-                if(!store.IterNthChild(out iter, i)) {
-                    continue;
-                }
-                
-                if((store.GetValue(iter, 0) as Source) == source) {
-                    Selection.SelectPath(store.GetPath(iter));
-                    OnCursorChanged(this, new EventArgs());
-                    return;
-                }
-            }
         }
         
         public void HighlightPath(TreePath path)
@@ -335,148 +268,36 @@ namespace Banshee
             Selection.SelectPath(path);
         }
         
-        private void OnSourceUpdated(object o, EventArgs args)
-        {
-            ThreadedQueueDraw();
-        }
-        
-        private void OnIpodCoreDeviceChanged(object o, EventArgs args)
-        {
-          //playlistModel.Source.Rename(device.Name);
-                
-        }
-        
-        private void OnDapCoreDapAdded(object o, DapEventArgs args)
-        {
-            int index = FindSourceLastIndex(SourceType.AudioCd);
-
-            TreeIter iter = store.Insert(index + 1);
-            store.SetValue(iter, 0, new DapSource(args.Dap));
-        }
-        
-        private void OnDapCoreDapRemoved(object o, DapEventArgs args)
-        {
-            TreeIter iter = TreeIter.Zero;
-            
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                if(!store.IterNthChild(out iter, i))
-                    continue;
-                
-                object obj = store.GetValue(iter, 0);
-                
-                if(!(obj is DapSource))
-                    continue;
-                    
-                DapSource source = obj as DapSource;
-                if(source.Device == args.Dap) {
-                    store.Remove(ref iter);
-                    return;
-                }
-            }
-        }
-        
-        private int FindSourceLastIndex(SourceType type)
-        {
-            int lastIndex = 0;
-            int index = 0;
-            
-            foreach(object [] obj in store) {
-                if(obj[0].GetType() != typeof(Source)) {
-                    index++;
-                    continue;
-                }
-                
-                if((obj[0] as Source).Type == type)
-                    lastIndex = index;
-            
-                index++;
-            }
-            
-            return lastIndex;
-        }
-        
-        private void OnAudioCdCoreDiskAdded(object o, 
-            AudioCdCoreDiskAddedArgs args)
-        {
-            int index = FindSourceLastIndex(SourceType.Library);
-
-            TreeIter iter = store.Insert(index + 1);
-            store.SetValue(iter, 0, new AudioCdSource(args.Disk));
-        }
-
-        private void OnAudioCdCoreDiskRemoved(object o, 
-            AudioCdCoreDiskRemovedArgs args)
-        {
-            TreeIter iter = TreeIter.Zero;
-            
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                if(!store.IterNthChild(out iter, i))
-                    continue;
-                
-                object obj = store.GetValue(iter, 0);
-                
-                if(obj.GetType() != typeof(AudioCdSource))
-                    continue;
-                    
-                AudioCdSource source = obj as AudioCdSource;
-                if(source.Disk.Udi == args.Udi) {
-                    store.Remove(ref iter);
-                    return;
-                }
-            }
-        }
-        
-        private void OnAudioCdCoreUpdated(object o, EventArgs args)
-        {
-            ThreadedQueueDraw();
-        }
-        
-        private void OnLibraryUpdated(object o, EventArgs args)
-        {
-            ThreadedQueueDraw();
-        }
-        
         public Source GetSource(TreePath path)
         {
             TreeIter iter;
         
-            if(store.GetIter(out iter, path))
+            if(store.GetIter(out iter, path)) {
                 return store.GetValue(iter, 0) as Source;
+            }
             
             return null;
-        }
-        
-        public Source SelectedSource
-        {
-            get {
-                return selectedSource;
-            }
         }
         
         public void ResetHighlight()
         {
             TreeIter iter = TreeIter.Zero;
             
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                if(!store.IterNthChild(out iter, i))
-                    continue;
-                
-                object obj = store.GetValue(iter, 0);
-                
-                if(obj == SelectedSource) {
-                    Selection.SelectIter(iter);
-                }
+            if(!store.IterNthChild(out iter, SourceManager.ActiveSourceIndex)) {
+                return;
             }
+             
+            Selection.SelectIter(iter);
         }
         
-        public Source HighlightedSource
-        {
+        public Source HighlightedSource {
             get {
                 TreeModel model;
                 TreeIter iter;
                 
-                if(!Selection.GetSelected(out model, out iter))
+                if(!Selection.GetSelected(out model, out iter)) {
                     return null;
+                }
                     
                 return store.GetValue(iter, 0) as Source;
             }
@@ -546,26 +367,13 @@ namespace Banshee
             StateType state = RendererStateToWidgetState(flags);
             Pixbuf icon = null;
             
-            if(source == null)
+            if(source == null) {
                 return;
-            
-            switch(source.Type) {
-                case SourceType.Playlist:
-                    icon = IconThemeUtils.LoadIcon(22, "source-playlist");
-                    break;
-                case SourceType.Dap:
-                    icon = (source as DapSource).Device.GetIcon(22);
-                    break;
-                case SourceType.AudioCd:
-                    icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
-                    break;
-                case SourceType.LocalQueue:
-                    icon = IconThemeUtils.LoadIcon(22, "source-localqueue");
-                    break;
-                case SourceType.Library:
-                default:
-                    icon = IconThemeUtils.LoadIcon(22, "source-library");
-                    break;
+            }
+
+            icon = source.Icon;
+            if(icon == null) {
+                icon = IconThemeUtils.LoadIcon(22, "source-library");
             }
             
             Pango.Layout titleLayout = new Pango.Layout(widget.PangoContext);
@@ -573,7 +381,7 @@ namespace Banshee
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy();
             fd.Weight = Selected ? Pango.Weight.Bold : Pango.Weight.Normal;
-            if (Italicized) {
+            if(Italicized) {
                 fd.Style = Pango.Style.Italic;
                 hideCounts = true;
             }
@@ -591,11 +399,12 @@ namespace Banshee
             maxTitleLayoutWidth = cell_area.Width - icon.Width - countLayoutWidth - 10;
             
             while(true) {
-                titleLayout.GetPixelSize(out titleLayoutWidth, 
-                    out titleLayoutHeight);
-                if(titleLayoutWidth <= maxTitleLayoutWidth)
+                titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
+                if(titleLayoutWidth <= maxTitleLayoutWidth) {
                     break;
+                }
                 
+                // FIXME: Gross
                 try {
                     titleText = titleText.Substring(0, titleText.Length - 1);
                     titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText).Trim() + "...");
@@ -607,18 +416,7 @@ namespace Banshee
             }
             
             Gdk.GC mainGC = widget.Style.TextGC(state);
-                
-            if(source.Type == SourceType.Dap 
-                && (source as DapSource).NeedSync 
-                && !state.Equals(StateType.Selected)) {
-                mainGC = new Gdk.GC(drawable);
-                mainGC.Copy(widget.Style.TextGC(state));
-                
-                Gdk.Color color = Gdk.Color.Zero;
-                if(Gdk.Color.Parse("blue", ref color))
-                    mainGC.RgbFgColor = color;
-            } 
-            
+
             drawable.DrawPixbuf(mainGC, icon, 0, 0, 
                 cell_area.X + 0, 
                 cell_area.Y + ((cell_area.Height - icon.Height) / 2),
@@ -630,8 +428,9 @@ namespace Banshee
                 cell_area.Y + ((cell_area.Height - titleLayoutHeight) / 2) + 1, 
                 titleLayout);
             
-            if(hideCounts)
+            if(hideCounts) {
                 return;
+            }
                 
             Gdk.GC modGC = widget.Style.TextGC(state);
             if(!state.Equals(StateType.Selected)) {
@@ -666,8 +465,10 @@ namespace Banshee
         private void OnEditDone(object o, EventArgs args)
         {
             CellEdit edit = o as CellEdit;
-            if(view == null)
+            if(view == null) {
                 return;
+            }
+            
             view.EditingRow = false;
             view.UpdateRow(new TreePath(edit.path), edit.Text);
         }

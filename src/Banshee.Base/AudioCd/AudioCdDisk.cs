@@ -173,10 +173,26 @@ namespace Banshee.Base
             }
             
             string asin = mb_disc.AmazonAsin;
-            mb_disc.Dispose();
+            
+            if(asin == null || asin == String.Empty) {
+                HandleUpdated();
+            
+                // sometimes ASINs aren't associated with a CD disc ID, but they are associated
+                // with file track metadata. If no ASIN was returned for the CD lookup, use the
+                // first track on the CD to attempt a file lookup
+                try {
+                    SimpleTrack mb_track = SimpleQuery.FileLookup(mb_disc.Client,
+                        tracks[0].Artist, tracks[0].Album, tracks[0].Title, 0, 0);
+                    asin = mb_track.Asin;
+                    for(int i = 0; i < min; i++) {
+                        tracks[i].Asin = asin;
+                    }
+                } catch {
+                }
+            }
             
             mb_queried = true;
-            
+            mb_disc.Dispose();
             HandleUpdated();
             
             string path = Paths.GetCoverArtPath(asin);

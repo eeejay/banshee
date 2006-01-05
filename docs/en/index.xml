@@ -109,6 +109,10 @@
       <Type Name="LibraryTrackAddedArgs" />
       <Type Name="LibraryTrackAddedHandler" />
       <Type Name="RemoteLookupStatus" />
+      <Type Name="HaveTrackInfoArgs" />
+      <Type Name="LibraryTrackRemovedArgs" />
+      <Type Name="HaveTrackInfoHandler" />
+      <Type Name="LibraryTrackRemovedHandler" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -128,6 +132,7 @@
       <Type Name="SupportedCodec" />
       <Type Name="DapDevice+Property" />
       <Type Name="WaitForTimeoutException" />
+      <Type Name="DapPropertiesDialog" />
     </Namespace>
     <Namespace Name="Banshee.Widgets">
       <Type Name="CoverArtThumbnail" />
@@ -201,6 +206,20 @@
       <Type Name="SimpleTrack" />
       <Type Name="SimpleQuery" />
       <Type Name="Utilities" />
+    </Namespace>
+    <Namespace Name="Banshee.Sources">
+      <Type Name="SourceEventArgs" />
+      <Type Name="SourceAddedArgs" />
+      <Type Name="SourceManager" />
+      <Type Name="Source" />
+      <Type Name="LibrarySource" />
+      <Type Name="PlaylistSource" />
+      <Type Name="PlaylistUtil" />
+      <Type Name="AudioCdSource" />
+      <Type Name="DapSource" />
+      <Type Name="LocalQueueSource" />
+      <Type Name="SourceEventHandler" />
+      <Type Name="SourceAddedHandler" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

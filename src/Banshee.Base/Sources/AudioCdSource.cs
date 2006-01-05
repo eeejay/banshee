@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  Core.cs
+ *  PlaylistSource.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -28,21 +28,60 @@
  */
  
 using System;
+using System.Data;
+using System.Collections;
+using Mono.Unix;
+
 using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Sources
 {
-    public static class PlayerCore 
+    public class AudioCdSource : Source
     {
-        public static PlayerUI UserInterface;
+        private AudioCdDisk disk;
         
-        static PlayerCore()
+        public AudioCdSource(AudioCdDisk disk) : base(disk.Title, 200)
         {
-            StockIcons.Initialize();
+            this.disk = disk;
+            disk.Updated += OnDiskUpdated;
         }
         
-        public static void Dispose()
+        public override int Count {
+            get {
+                return disk.TrackCount;
+            }
+        }
+        
+        public AudioCdDisk Disk {
+            get {
+                return disk;
+            }
+        }
+        
+        public override bool Eject()
         {
+            disk.Eject();
+            SourceManager.RemoveSource(this);
+            return true;
+        }
+        
+        private void OnDiskUpdated(object o, EventArgs args)
+        {
+            ThreadAssist.ProxyToMain(delegate {
+                Name = disk.Title;
+            });
+        }
+                
+        public override Gdk.Pixbuf Icon {
+            get {
+                return IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
+            }
+        }
+        
+        public override ICollection Tracks {
+            get {
+                return disk.Tracks;
+            }
         }
     }
 }

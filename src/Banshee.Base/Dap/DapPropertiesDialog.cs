@@ -32,10 +32,10 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
-using Banshee.Dap;
 using Banshee.Widgets;
+using Banshee.Sources;
 
-namespace Banshee
+namespace Banshee.Dap
 {
     public class DapPropertiesDialog : Dialog
     {

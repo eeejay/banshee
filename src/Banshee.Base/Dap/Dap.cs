@@ -34,6 +34,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Widgets;
+using Banshee.Sources;
 
 namespace Banshee.Dap
 {    
@@ -138,6 +139,7 @@ namespace Banshee.Dap
         public event EventHandler SaveFinished;
         
         public Hal.Device HalDevice;
+        private Source source;
         
         protected void Initialize()
         {
@@ -147,6 +149,9 @@ namespace Banshee.Dap
             }
             
             uid = NextUid;
+            
+            source = new DapSource(this);
+            SourceManager.AddSource(source);
         }
         
         public uint Uid {
@@ -202,6 +207,7 @@ namespace Banshee.Dap
         
         public virtual void Dispose()
         {
+            SourceManager.RemoveSource(source);
         }
         
         public void ClearTracks()

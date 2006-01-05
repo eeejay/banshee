@@ -38,10 +38,18 @@ using Sql;
 namespace Banshee.Base
 {
     public delegate void LibraryTrackAddedHandler(object o, LibraryTrackAddedArgs args);
+    public delegate void LibraryTrackRemovedHandler(object o, LibraryTrackRemovedArgs args);
 
+    
     public class LibraryTrackAddedArgs : EventArgs
     {
         public LibraryTrackInfo Track;
+    }
+    
+    public class LibraryTrackRemovedArgs : EventArgs
+    {
+        public LibraryTrackInfo Track;
+        public ICollection Tracks;
     }
 
     public class Library
@@ -54,6 +62,7 @@ namespace Banshee.Base
         public event EventHandler Reloaded;
         public event EventHandler Updated;
         public event LibraryTrackAddedHandler TrackAdded;
+        public event LibraryTrackRemovedHandler TrackRemoved;
         
         private bool is_loaded;
         
@@ -100,7 +109,7 @@ namespace Banshee.Base
         {
             Tracks.Clear();
 
-            IDataReader reader = Db.Query(new Select("Tracks"));
+            IDataReader reader = Db.Query("SELECT * FROM Tracks");
             while(reader.Read()) {
                 try {
                     new LibraryTrackInfo(reader);
@@ -172,7 +181,7 @@ namespace Banshee.Base
             }
         }
         
-        public void Remove(LibraryTrackInfo track)
+        private void CollectionRemove(LibraryTrackInfo track)
         {
             lock(Tracks.SyncRoot) {
                 Tracks.Remove(track.TrackId);
@@ -183,7 +192,7 @@ namespace Banshee.Base
             }
         }
         
-        public void Remove(int trackID, System.Uri trackUri)
+        /*private void CollectionRemove(int trackID, System.Uri trackUri)
         {
             lock(Tracks.SyncRoot) {
                 Tracks.Remove(trackID);
@@ -192,6 +201,75 @@ namespace Banshee.Base
             lock(TracksFnKeyed.SyncRoot) {
                 TracksFnKeyed.Remove(MakeFilenameKey(trackUri));
             }
+        }*/
+        
+        public void Remove(LibraryTrackInfo track)
+        {
+            CollectionRemove(track);
+            Db.Execute(String.Format(
+                @"DELETE FROM Tracks
+                    WHERE TrackID = '{0}'",
+                    track.TrackId
+            ));
+                        
+            LibraryTrackRemovedHandler removed_handler = TrackRemoved;
+            if(removed_handler != null) {
+                LibraryTrackRemovedArgs args = new LibraryTrackRemovedArgs();
+                args.Track = track;
+                ThreadAssist.ProxyToMain(delegate {
+                    removed_handler(this, args);
+                });
+            }
+        }
+        
+        public void Remove(ICollection tracks)
+        {
+            string query = "DELETE FROM Tracks WHERE ";
+            int remove_count = 0;
+            int invalid_count = 0;
+            
+            foreach(TrackInfo track in tracks) {
+                if(!(track is LibraryTrackInfo)) {
+                    invalid_count++;
+                    continue;
+                }
+                
+                LibraryTrackInfo library_track = track as LibraryTrackInfo;
+                
+                query += String.Format(" TrackID = '{0}' ", library_track.TrackId);
+                if(remove_count < tracks.Count - invalid_count - 1) {
+                    query += " OR ";
+                }
+                
+                CollectionRemove(library_track);
+                remove_count++;
+            }
+            
+            if(remove_count > 0) {
+                Db.Execute(query);
+                            
+                LibraryTrackRemovedHandler removed_handler = TrackRemoved;
+                if(removed_handler != null) {
+                    LibraryTrackRemovedArgs args = new LibraryTrackRemovedArgs();
+                    args.Tracks = tracks;
+                    ThreadAssist.ProxyToMain(delegate {
+                        removed_handler(this, args);
+                    });
+                }
+            }
+        }
+        
+        private ArrayList remove_queue = new ArrayList();
+        
+        public void QueueRemove(TrackInfo track)
+        {
+            remove_queue.Add(track);
+        }
+        
+        public void CommitRemoveQueue()
+        {
+            Remove(remove_queue);
+            remove_queue.Clear();
         }
         
         public LibraryTrackInfo GetTrack(int id)

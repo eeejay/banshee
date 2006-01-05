@@ -65,7 +65,7 @@ namespace Banshee.Plugins.FileSystemMonitor
         {
             while(true) {
     		    lock(watch) {
-                    if(toRemove.Count != 0) {
+                    /*if(toRemove.Count != 0) {
                         Console.WriteLine("toRemove begin");
                         
                         string query = " FROM TRACKS WHERE";                     
@@ -93,7 +93,7 @@ namespace Banshee.Plugins.FileSystemMonitor
                         Globals.Library.Db.Execute(deleteQuery);
                       
                         toRemove.Clear();
-                    }
+                    }*/
                     
                     if(toImport.Count != 0) {
                         Console.WriteLine("toImport begin");

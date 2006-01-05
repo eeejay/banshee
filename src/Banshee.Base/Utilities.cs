@@ -137,7 +137,8 @@ namespace Banshee.Base
     {
         public static bool IsVirtualMethodImplemented(Type type, string methodName)
         {
-            MethodInfo methodInfo = type.GetMethod(methodName);
+            MethodInfo methodInfo = type.GetMethod(methodName, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             
             if(methodInfo == null) {
                 return false;

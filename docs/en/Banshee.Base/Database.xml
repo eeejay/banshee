@@ -138,6 +138,24 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="Execute">
+      <MemberSignature Language="C#" Value="public int Execute (object query, bool returnLastInsertRowID);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="query" Type="System.Object" />
+        <Parameter Name="returnLastInsertRowID" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="query">To be added.</param>
+        <param name="returnLastInsertRowID">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>To be added.</summary>

@@ -710,7 +710,7 @@ namespace Banshee
             return true;
         }
         
-        public void AddSelectedToPlayList(string name)
+        /*public void AddSelectedToPlayList(string name)
         {
             Playlist pl = new Playlist(name);
             pl.Load();
@@ -723,7 +723,7 @@ namespace Banshee
             }
             
             pl.Save();
-        }
+        }*/
         
         public TrackInfo SelectedTrackInfo {
             get {

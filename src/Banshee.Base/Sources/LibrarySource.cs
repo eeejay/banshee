@@ -1,6 +1,6 @@
 /* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
- *  Core.cs
+ *  LibrarySource.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -28,21 +28,63 @@
  */
  
 using System;
+using System.Collections;
+using Mono.Unix;
+
 using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Sources
 {
-    public static class PlayerCore 
+    public class LibrarySource : Source
     {
-        public static PlayerUI UserInterface;
-        
-        static PlayerCore()
-        {
-            StockIcons.Initialize();
+        private static LibrarySource instance;
+        public static LibrarySource Instance {
+            get {
+                if(instance == null) {
+                    instance = new LibrarySource();
+                }
+                
+                return instance;
+            }
         }
         
-        public static void Dispose()
+        private LibrarySource() : base(Catalog.GetString("Music Library"), 0)
         {
+            Globals.Library.TrackRemoved += delegate(object o, LibraryTrackRemovedArgs args) {
+                OnUpdated();
+            };
+              
+            Globals.Library.TrackAdded += delegate(object o, LibraryTrackAddedArgs args) {
+                OnUpdated();
+            };  
+        }
+        
+        public override void RemoveTrack(TrackInfo track)
+        {
+            Globals.Library.QueueRemove(track);
+        }
+        
+        public override void Commit()
+        {
+            Globals.Library.CommitRemoveQueue();
+        }
+        
+        public override ICollection Tracks {
+            get {
+                return Globals.Library.Tracks.Values;
+            }
+        }
+        
+        public override int Count {
+            get {
+                return Globals.Library.Tracks.Count;    
+            }
+        }  
+        
+        public override Gdk.Pixbuf Icon {
+            get {
+                return IconThemeUtils.LoadIcon(22, "user-home", "source-library");
+            }
         }
     }
 }

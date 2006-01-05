@@ -38,7 +38,14 @@ namespace Banshee.Base
         Success,
         Failure
     }
+    
+    public class HaveTrackInfoArgs : EventArgs
+    {
+        public TrackInfo TrackInfo;
+    }
 
+    public delegate void HaveTrackInfoHandler(object o, HaveTrackInfoArgs args);
+    
     public abstract class TrackInfo
     {
         protected Uri uri;
