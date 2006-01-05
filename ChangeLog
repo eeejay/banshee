@@ -1,3 +1,73 @@
+2006-01-05  Aaron Bockover  <aaron@aaronbock.net>
+
+	* docs/*: Updated Monodoc API documentation
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.glade: removed the header cycle button
+
+	* src/Core.cs: Removed TransactionManager
+
+	* src/Makefile.am: Removed LibraryTransaction*.cs, DapPropertiesDialog.cs,
+	and Sources.cs; added skeleton for daap-sharp linking and installation
+
+	* src/PlayerInterface.cs: Updated to use SourceManager to handle switching
+	and manipulating of sources
+	
+	* src/PlaylistModel.cs: Updated to use SourceManager; added a GetIterIndex
+	method to allow reordering to propagate to sources; removed old unused 
+	code
+
+	* src/PlaylistView.cs: AddSelectedToPlaylist disabled for the moment
+
+	* src/SourceView.cs: Updated to adapt to act strictly as a view for
+	SourceManager; sources are now handled centrally in SourceManager 
+
+	* src/Banshee.Base/Database.cs: Added overload Execute method to return
+	the last insert row ID
+
+	* src/Banshee.Base/Library.cs: All track removal is handled centrally
+	through Banshee.Base.Library
+
+	* src/Banshee.Base/Makefile.am: Added new Source files
+
+	* src/Banshee.Base/TrackInfo.cs: Moved HaveTrackInfoArgs and 
+	HaveTrackInfoHandler from old LibraryTransactions.cs
+
+	* src/Banshee.Base/Utilities.cs: ReflectionUtil.IsVirtualMethodImplemented
+	now works for non-public instance members
+
+	* src/Banshee.Base/AudioCd/AudioCdCore.cs: Support creating and removing
+	AudioCdSource from SourceManager
+
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: If ASIN is empty after a 
+	successful CD info lookup through MusicBrainz, attempt to find an ASIN
+	using a FileLookup based on data for the first track on the CD
+
+	* src/Banshee.Base/Dap/Dap.cs: Handle creating/adding/removing a DapSource
+
+	* src/Banshee.Base/Dap/DapPropertiesDialog.cs: Moved from src/
+
+	* src/Banshee.Base/Sources/LibrarySource.cs: New implementation of the base
+	Source class for the Library
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: New Playlist source and
+	completely rewritten playlist support; much faster and supports proper
+	reordering
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Refactored source for 
+	Audio CDs
+
+	* src/Banshee.Base/Sources/DapSource.cs: Refactored source for DAPs
+
+	* src/Banshee.Base/Source/LocalQueueSource.cs: Refactored source for local
+	files (The Frobnicator)
+
+	* src/Banshee.Dap/Njb/NjbDap.cs (Dispose): call base.Dispose()
+
+	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs: Disabled some parts
+	of this plugin until it can be sorted out to work with new API 
+
 2006-01-03  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Added DAAP configure support; check for sqlite3 >= 3.2 to
