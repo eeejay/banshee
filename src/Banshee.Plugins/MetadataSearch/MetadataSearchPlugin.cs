@@ -38,6 +38,12 @@ using Banshee.Base;
 
 namespace Banshee.Plugins.MetadataSearch 
 {
+    internal enum FetchMethod {
+        CoversOnly,
+        FillBlank,
+        Overwrite
+    }
+
     public class MetadataSearchPlugin : Banshee.Plugins.Plugin
     {
         public override string DisplayName { get { return "Metadata Searcher"; } }
@@ -62,9 +68,11 @@ namespace Banshee.Plugins.MetadataSearch
         private bool processing_queue;
         private Queue scan_queue;
         private Client mb_client;
-
+        
         protected override void PluginInitialize()
         {
+            RegisterConfigurationKey("FetchMethod");
+            
             scan_queue = new Queue();
             processing_queue = false;
             
@@ -83,6 +91,13 @@ namespace Banshee.Plugins.MetadataSearch
             while(processing_queue);
             scan_queue.Clear();
             scan_queue = null;
+        }
+        
+        public override void ShowConfigurationDialog()
+        {            
+            MetadataSearchConfigDialog config = new MetadataSearchConfigDialog(this);
+            config.Run();
+            config.Destroy();
         }
         
         // ----------------------------------------------------
@@ -166,8 +181,29 @@ namespace Banshee.Plugins.MetadataSearch
             }
             
             try {
+                FetchMethod fetch = FetchMethod;
+                
+                if(fetch == FetchMethod.CoversOnly) {
+                    string asin = Globals.Library.Db.QuerySingle(String.Format(
+                        @"SELECT ASIN 
+                            FROM Tracks
+                            WHERE Artist = '{0}'
+                                AND AlbumTitle = '{1}'",
+                                Sql.Statement.EscapeQuotes(track.Artist),
+                                Sql.Statement.EscapeQuotes(track.Album))
+                    ) as string;
+                    
+                    if(asin != null && asin != String.Empty) {
+                        Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
+                        track.Asin = asin;
+                        AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory);
+                        track.Save();
+                        return;
+                    }
+                }
+                
                 Console.Write("Querying MusicBrainz for {0} / {1}... ", track.Artist, track.Title);
-            
+                
                 SimpleTrack mb_track = SimpleQuery.FileLookup(mb_client, 
                     track.Artist, track.Album, track.Title,
                     (int)track.TrackNumber, 
@@ -177,27 +213,32 @@ namespace Banshee.Plugins.MetadataSearch
                     return;
                 }
                 
-                if(mb_track.Artist != null) {
-                    track.Artist = mb_track.Artist;
+                if(fetch != FetchMethod.CoversOnly) {
+                    if(mb_track.Artist != null && (fetch == FetchMethod.Overwrite 
+                        || (track.Artist == null || track.Artist == String.Empty))) {
+                        track.Artist = mb_track.Artist;
+                    }
+                    
+                    if(mb_track.Album != null && (fetch == FetchMethod.Overwrite 
+                        || (track.Album == null || track.Album == String.Empty))) {
+                        track.Album = mb_track.Album;
+                    }
+                    
+                    if(mb_track.Title != null && (fetch == FetchMethod.Overwrite 
+                        || (track.Title == null || track.Title == String.Empty))) {
+                        track.Title = mb_track.Title;
+                    }
+                    
+                    if(mb_track.TrackNumber > 0 && (fetch == FetchMethod.Overwrite || track.TrackNumber == 0)) {
+                        track.TrackNumber = (uint)mb_track.TrackNumber;
+                    }
+                    
+                    if(mb_track.TrackCount > 0 && (fetch == FetchMethod.Overwrite || track.TrackCount == 0)) {
+                        track.TrackCount = (uint)mb_track.TrackCount;
+                    }
                 }
                 
-                if(mb_track.Album != null) {
-                    track.Album = mb_track.Album;
-                }
-                
-                if(mb_track.Title != null) {
-                    track.Title = mb_track.Title;
-                }
-                
-                if(mb_track.TrackNumber > 0) {
-                    track.TrackNumber = (uint)mb_track.TrackNumber;
-                }
-                
-                if(mb_track.TrackCount > 0) {
-                    track.TrackCount = (uint)mb_track.TrackCount;
-                }
-                
-                if(mb_track.Asin != null) {
+                if(mb_track.Asin != null && mb_track.Asin != String.Empty) {
                     track.Asin = mb_track.Asin;
                     AmazonCoverFetcher.Fetch(mb_track.Asin, Paths.CoverArtDirectory);
                 }
@@ -210,6 +251,20 @@ namespace Banshee.Plugins.MetadataSearch
             }
             
             track.Save();
+        }
+        
+        internal FetchMethod FetchMethod {
+            get {
+                try {
+                    return (FetchMethod)Globals.Configuration.Get(ConfigurationKeys["FetchMethod"]);
+                } catch {
+                    return FetchMethod.CoversOnly;
+                }
+            }
+            
+            set {
+                Globals.Configuration.Set(ConfigurationKeys["FetchMethod"], (int)value);
+            }
         }
     }
 }

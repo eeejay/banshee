@@ -6,7 +6,8 @@ fsmondir = $(pkglibdir)/Banshee.Plugins
 fsmon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/MetadataSearchPlugin.cs
+	$(srcdir)/MetadataSearchPlugin.cs \
+	$(srcdir)/MetadataSearchConfigDialog.cs
 	
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \

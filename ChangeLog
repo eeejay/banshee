@@ -1,3 +1,27 @@
+2006-01-06  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Plugins/MetadataSearch/Makefile.am: Added 
+	MetadataSearchConfigDialog.cs
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:
+	Configuration dialog for setting the cover art/metadata fetch method
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Support
+	three different fetch methods for cover art and metadata: covers only
+	will only fetch cover art and uses a SQL query to set the ASIN on all 
+	tracks on an album after one track from the album has been looked up
+	through MusicBrainz (fast method); fill blank will fetch cover art on a
+	per-track basis and will fill in any missing metadata for the track (slow
+	but safe); overwrite will fetch cover art on a per-track basis and will
+	overwrite all metadata fields on a track that were returned from 
+	MusicBrainz (potentially destructive and slow, but most of the time
+	yields pleasant results); the default option is covers only
+
+	* data/Tables.sql: for some reason AlbumTitle was declared as an INTEGER;
+	it's now TEXT... nice
+
 2006-01-05  Brad Taylor  <brad@getcoded.net>
 	
 	* src/PlaylistModel.cs: Implement a more intelligent Shuffle that has a

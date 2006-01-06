@@ -16,7 +16,7 @@ CREATE TABLE Tracks (
 	
 	Artist TEXT,
 	Performer TEXT,
-	AlbumTitle INTEGER,
+	AlbumTitle TEXT,
 	ReleaseDate Date,
 	ASIN TEXT,
 	Label TEXT,
