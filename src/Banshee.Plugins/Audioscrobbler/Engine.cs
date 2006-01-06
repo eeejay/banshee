@@ -42,49 +42,6 @@ using Banshee.Base;
 using Banshee;
 
 namespace Banshee.Plugins.Audioscrobbler {
-	class QueuedTrack {
-		public QueuedTrack (TrackInfo track, DateTime start_time)
-		{
-			this.artist = track.Artist;
-			this.album = track.Album;
-			this.title = track.Title;
-			this.duration = (int)track.Duration.TotalSeconds;
-			this.start_time = start_time.ToUniversalTime ();
-		}
-
-		public QueuedTrack (string artist, string album,
-							string title, int duration, DateTime start_time)
-		{
-			this.artist = artist;
-			this.album = album;
-			this.title = title;
-			this.duration = duration;
-			this.start_time = start_time;
-		}
-
-		public DateTime StartTime {
-			get { return start_time; }
-		}
-		public string Artist {
-			get { return artist; }
-		}
-		public string Album {
-			get { return album; }
-		}
-		public string Title {
-			get { return title; }
-		}
-		public int Duration {
-			get { return duration; }
-		}
-
-		string artist;
-		string album;
-		string title;
-		int duration;
-		DateTime start_time;
-	}
-
 	class Engine
 	{
 		enum State {
@@ -97,12 +54,12 @@ namespace Banshee.Plugins.Audioscrobbler {
 		};
 
 		const int TICK_INTERVAL = 2000; /* 2 seconds */
+		const int FAILURE_LOG_MINUTES = 5; /* 5 minute delay on logging failure to upload information */
 		const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
 		const string CLIENT_ID = "bsh";
 		const string CLIENT_VERSION = "0.1";
 		const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
 		const string SCROBBLER_VERSION = "1.1";
-		string xml_path = System.IO.Path.Combine (Paths.UserPluginDirectory, "AudioscrobblerQueue.xml");
 
 		string username;
 		string md5_pass;
@@ -111,12 +68,14 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		uint timeout_id;
 		DateTime next_interval;
-		
+		DateTime last_upload_failed_logged;
+
+		Queue queue;
+
 		bool queued; /* if current_track has been queued */
 		bool sought; /* if the user has sought in the current playing song */
 		uint position; /* position in the playing song, on previous tick */
 		TrackInfo current_track;
-		ArrayList queue;
 
 		WebRequest current_web_req;
 		IAsyncResult current_async_result;
@@ -124,8 +83,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 		
 		public Engine ()
 		{
-			queue = new ArrayList ();
 			state = State.IDLE;
+			queue = new Queue ();
 		}
 
 		public void Start ()
@@ -134,7 +93,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				timeout_id = Timeout.Add (TICK_INTERVAL, EngineTick);
 			}
 
-			LoadQueue ();
+			queue.Load ();
 		}
 
 		public void Stop ()
@@ -148,66 +107,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				current_web_req.Abort ();
 			}
 
-			WriteQueue ();	
-		}
-
-		private void WriteQueue () {
-			System.Xml.XmlTextWriter writer = new System.Xml.XmlTextWriter (xml_path, System.Text.Encoding.Default);
-
-			writer.Formatting = System.Xml.Formatting.Indented;
-			writer.Indentation = 4;
-			writer.IndentChar = ' ';
-
-			writer.WriteStartDocument (true);
-
-			writer.WriteStartElement ("AudioscrobblerQueue");
-			foreach (QueuedTrack track in queue) {
-				writer.WriteStartElement ("QueuedTrack");	
-				writer.WriteElementString ("Artist", track.Artist);
-				writer.WriteElementString ("Album", track.Album);
-				writer.WriteElementString ("Title", track.Title);
-				writer.WriteElementString ("Duration", track.Duration.ToString());
-				writer.WriteElementString ("StartTime", DateTimeUtil.ToTimeT(track.StartTime).ToString());
-				writer.WriteEndElement (); // Track
-			}
-			writer.WriteEndElement (); // AudioscrobblerQueue
-			writer.WriteEndDocument ();
-			writer.Close ();
-		}
-
-		private void LoadQueue () {
-			try {
-				string query = "//AudioscrobblerQueue/QueuedTrack";
-				System.Xml.XmlDocument doc = new System.Xml.XmlDocument ();
-
-				doc.Load (xml_path);
-				System.Xml.XmlNodeList nodes = doc.SelectNodes (query);
-
-				foreach (System.Xml.XmlNode node in nodes) {
-					string artist = null;	
-					string album = null;
-					string title = null;
-					int duration = 0;
-					DateTime start_time = new DateTime (0);
-
-					foreach (System.Xml.XmlNode child in node.ChildNodes) {
-						if (child.Name == "Artist") {
-							artist = child.ChildNodes [0].Value;
-						} else if (child.Name == "Album") {
-							album = child.ChildNodes [0].Value;
-						} else if (child.Name == "Title") {
-							title = child.ChildNodes [0].Value;
-						} else if (child.Name == "Duration") {
-							duration = Convert.ToInt32 (child.ChildNodes [0].Value);
-						} else if (child.Name == "StartTime") {
-							long time = Convert.ToInt64 (child.ChildNodes [0].Value);
-							start_time = DateTimeUtil.FromTimeT (time);
-						}
-					}
-
-                    queue.Add (new QueuedTrack (artist, album, title, duration, start_time));
-				}
-			} catch (System.Exception e) { }
+			queue.Save ();
 		}
 
 		public void SetUserPassword (string username, string pass)
@@ -263,9 +163,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				if (!queued && !sought
 				    && (player.Position > player.Length / 2
 					|| player.Position > 240)) {
-					queue.Add (new QueuedTrack (track,
-												(DateTime.Now 
-												 - TimeSpan.FromSeconds (player.Position))));
+					queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (player.Position));
 					queued = true;
 				}
 
@@ -321,7 +219,12 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		void TransmitQueue ()
 		{
-			//			Console.WriteLine ("TransmitQueue ():");
+			int num_tracks_transmitted;
+
+			/* save here in case we're interrupted before we complete
+			 * the request.  we save it again when we get an OK back
+			 * from the server */
+			queue.Save ();
 
 			next_interval = DateTime.MinValue;
 
@@ -329,25 +232,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			sb.AppendFormat ("u={0}&s={1}", HttpUtility.UrlEncode (username), security_token);
 
-			int i;
-			for (i = 0; i < queue.Count; i ++) {
-				/* we queue a maximum of 10 tracks per request */
-				if (i == 9) break;
-
-				QueuedTrack track = (QueuedTrack)queue[i];
-
-				sb.AppendFormat (
-						 "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
-						 HttpUtility.UrlEncode (track.Artist),
-						 HttpUtility.UrlEncode (track.Title),
-						 HttpUtility.UrlEncode (track.Album),
-						 "" /* musicbrainz id */,
-						 track.Duration.ToString (),
-						 HttpUtility.UrlEncode (track.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
-						 i);
-			}
-
-			//			Console.WriteLine ("data to post = {0}", sb.ToString ());
+			sb.Append (queue.GetTransmitInfo (out num_tracks_transmitted));
 
 			current_web_req = WebRequest.Create (post_url);
 			current_web_req.Method = "POST";
@@ -355,7 +240,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 			current_web_req.ContentLength = sb.Length;
 
 			TransmitState ts = new TransmitState ();
-			ts.Count = i;
+			ts.Count = num_tracks_transmitted;
 			ts.StringBuilder = sb;
 
 			state = State.WAITING_FOR_REQ_STREAM;
@@ -421,15 +306,23 @@ namespace Banshee.Plugins.Audioscrobbler {
 			string line;
 			line = sr.ReadLine ();
 			
+			DateTime now = DateTime.Now;
 			if (line.StartsWith ("FAILED")) {
-				Console.WriteLine ("Failed with {0}", line.Substring ("FAILED".Length).Trim());
+				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+					LogCore.Instance.PushWarning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
+					last_upload_failed_logged = now;
+				}
 				/* retransmit the queue on the next interval */
 				state = State.NEED_TRANSMIT;
 			}
-			else if (line.StartsWith ("BADAUTH")) {
-				security_token = null;
-				Console.WriteLine ("Failed with BADAUTH");
+			else if (line.StartsWith ("BADUSER")
+					 || line.StartsWith ("BADAUTH")) {
+				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+					LogCore.Instance.PushWarning ("Audioscrobbler upload failed", "invalid authentication", false);
+					last_upload_failed_logged = now;
+				}
 				/* attempt to re-handshake (and retransmit) on the next interval */
+				security_token = null;
 				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
 				state = State.IDLE;
 				return;
@@ -437,10 +330,14 @@ namespace Banshee.Plugins.Audioscrobbler {
 			else if (line.StartsWith ("OK")) {
 				/* we succeeded, pop the elements off our queue */
 				queue.RemoveRange (0, ts.Count);
+				queue.Save ();
 				state = State.IDLE;
 			}
 			else {
-				Console.WriteLine ("Unrecognized response: {0}", line);
+				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+					LogCore.Instance.PushDebug ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
+					last_upload_failed_logged = now;
+				}
 				state = State.IDLE;
 			}
 
@@ -501,20 +398,19 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			line = sr.ReadLine ();
 			if (line.StartsWith ("FAILED")) {
-				Console.WriteLine ("Audioscrobbler handshake failed with '{0}'",
-								   line.Substring ("FAILED".Length).Trim());
+				LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", line.Substring ("FAILED".Length).Trim(), false);
+								   
 			}
 			else if (line.StartsWith ("BADUSER")) {
-				Console.WriteLine (
-							"Audioscrobbler handshake failed with 'unrecognized user/password'");
+				LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", "unrecognized user/password", false);
 			}
 			else if (line.StartsWith ("UPDATE")) {
-				Console.WriteLine ("Succeeded (but client needs updating from url {0})",
-								   line.Substring ("UPDATE".Length).Trim());
+				LogCore.Instance.PushInformation ("Audioscrobbler plugin needs updating",
+											String.Format ("Fetch a newer version at {0}\nor update to a newer version of Banshee",
+														   line.Substring ("UPDATE".Length).Trim()), false);
 				success = true;
 			}
 			else if (line.StartsWith ("UPTODATE")) {
-				Console.WriteLine ("Succeeded (client up-to-date)");
 				success = true;
 			}
 			
@@ -525,7 +421,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				post_url = sr.ReadLine ().Trim ();
 
 				security_token = MD5Encode (md5_pass + challenge);
-				Console.WriteLine ("security token = {0}", security_token);
+				//Console.WriteLine ("security token = {0}", security_token);
 			}
 
 			/* read the trailing interval */

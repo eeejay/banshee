@@ -10,7 +10,8 @@ MENU_RESOURCE=AudioscrobblerMenu.xml
 ASSEMBLY_SOURCES = \
 	$(srcdir)/AudioscrobblerPlugin.cs \
 	$(srcdir)/AudioscrobblerConfigDialog.cs \
-	$(srcdir)/Engine.cs
+	$(srcdir)/Engine.cs \
+	$(srcdir)/Queue.cs
 
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
