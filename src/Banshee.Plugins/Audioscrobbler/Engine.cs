@@ -42,21 +42,46 @@ using Banshee.Base;
 using Banshee;
 
 namespace Banshee.Plugins.Audioscrobbler {
-	public class QueuedTrack {
+	class QueuedTrack {
 		public QueuedTrack (TrackInfo track, DateTime start_time)
 		{
-			this.track = track;
+			this.artist = track.Artist;
+			this.album = track.Album;
+			this.title = track.Title;
+			this.duration = (int)track.Duration.TotalSeconds;
 			this.start_time = start_time.ToUniversalTime ();
+		}
+
+		public QueuedTrack (string artist, string album,
+							string title, int duration, DateTime start_time)
+		{
+			this.artist = artist;
+			this.album = album;
+			this.title = title;
+			this.duration = duration;
+			this.start_time = start_time;
 		}
 
 		public DateTime StartTime {
 			get { return start_time; }
 		}
-		public TrackInfo Track {
-			get { return track; }
+		public string Artist {
+			get { return artist; }
+		}
+		public string Album {
+			get { return album; }
+		}
+		public string Title {
+			get { return title; }
+		}
+		public int Duration {
+			get { return duration; }
 		}
 
-		TrackInfo track;
+		string artist;
+		string album;
+		string title;
+		int duration;
 		DateTime start_time;
 	}
 
@@ -77,6 +102,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 		const string CLIENT_VERSION = "0.1";
 		const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
 		const string SCROBBLER_VERSION = "1.1";
+		string xml_path = System.IO.Path.Combine (Paths.UserPluginDirectory, "AudioscrobblerQueue.xml");
 
 		string username;
 		string md5_pass;
@@ -105,6 +131,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 			if (timeout_id == 0) {
 				timeout_id = Timeout.Add (TICK_INTERVAL, EngineTick);
 			}
+
+			LoadQueue ();
 		}
 
 		public void Stop ()
@@ -114,7 +142,70 @@ namespace Banshee.Plugins.Audioscrobbler {
 				timeout_id = 0;
 			}
 
-			/* XXX interrupt the current web requests somehow.. */
+			if (current_web_req != null) {
+				current_web_req.Abort ();
+			}
+
+			WriteQueue ();	
+		}
+
+		private void WriteQueue () {
+			System.Xml.XmlTextWriter writer = new System.Xml.XmlTextWriter (xml_path, System.Text.Encoding.Default);
+
+			writer.Formatting = System.Xml.Formatting.Indented;
+			writer.Indentation = 4;
+			writer.IndentChar = ' ';
+
+			writer.WriteStartDocument (true);
+
+			writer.WriteStartElement ("AudioscrobblerQueue");
+			foreach (QueuedTrack track in queue) {
+				writer.WriteStartElement ("QueuedTrack");	
+				writer.WriteElementString ("Artist", track.Artist);
+				writer.WriteElementString ("Album", track.Album);
+				writer.WriteElementString ("Title", track.Title);
+				writer.WriteElementString ("Duration", track.Duration.ToString());
+				writer.WriteElementString ("StartTime", DateTimeUtil.ToTimeT(track.StartTime).ToString());
+				writer.WriteEndElement (); // Track
+			}
+			writer.WriteEndElement (); // AudioscrobblerQueue
+			writer.WriteEndDocument ();
+			writer.Close ();
+		}
+
+		private void LoadQueue () {
+			try {
+				string query = "//AudioscrobblerQueue/QueuedTrack";
+				System.Xml.XmlDocument doc = new System.Xml.XmlDocument ();
+
+				doc.Load (xml_path);
+				System.Xml.XmlNodeList nodes = doc.SelectNodes (query);
+
+				foreach (System.Xml.XmlNode node in nodes) {
+					string artist = null;	
+					string album = null;
+					string title = null;
+					int duration = 0;
+					DateTime start_time = new DateTime (0);
+
+					foreach (System.Xml.XmlNode child in node.ChildNodes) {
+						if (child.Name == "Artist") {
+							artist = child.ChildNodes [0].Value;
+						} else if (child.Name == "Album") {
+							album = child.ChildNodes [0].Value;
+						} else if (child.Name == "Title") {
+							title = child.ChildNodes [0].Value;
+						} else if (child.Name == "Duration") {
+							duration = Convert.ToInt32 (child.ChildNodes [0].Value);
+						} else if (child.Name == "StartTime") {
+							long time = Convert.ToInt64 (child.ChildNodes [0].Value);
+							start_time = DateTimeUtil.FromTimeT (time);
+						}
+					}
+
+                    queue.Add (new QueuedTrack (artist, album, title, duration, start_time));
+				}
+			} catch (System.Exception e) { }
 		}
 
 		public void SetUserPassword (string username, string pass)
@@ -231,8 +322,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 				/* we queue a maximum of 10 tracks per request */
 				if (i == 9) break;
 
-				QueuedTrack qtrack = (QueuedTrack)queue[i];
-				TrackInfo track = qtrack.Track;
+				QueuedTrack track = (QueuedTrack)queue[i];
 
 				sb.AppendFormat (
 						 "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
@@ -240,8 +330,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 						 HttpUtility.UrlEncode (track.Title),
 						 HttpUtility.UrlEncode (track.Album),
 						 "" /* musicbrainz id */,
-						 ((int)track.Duration.TotalSeconds).ToString (),
-						 HttpUtility.UrlEncode (qtrack.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
+						 track.Duration.ToString (),
+						 HttpUtility.UrlEncode (track.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
 						 i);
 			}
 
