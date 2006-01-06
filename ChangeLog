@@ -1,5 +1,11 @@
 2006-01-06  Chris Toshok  <toshok@ximian.com>
 
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Another patch from
+	Ruben Vermeersch, to add rudimentary seek detection.  Slightly
+	modified from the patch on the list, to check for reverse seeking.
+
+2006-01-06  Chris Toshok  <toshok@ximian.com>
+
 	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: apply Ruben
 	Vermeersch excellent queue saving/loading patch.
 

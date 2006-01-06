@@ -113,6 +113,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 		DateTime next_interval;
 		
 		bool queued; /* if current_track has been queued */
+		bool sought; /* if the user has sought in the current playing song */
+		uint position; /* position in the playing song, on previous tick */
 		TrackInfo current_track;
 		ArrayList queue;
 
@@ -245,12 +247,20 @@ namespace Banshee.Plugins.Audioscrobbler {
 				if (track != current_track) {
 					current_track = track;
 					queued = false;
+					sought = false;
+					position = 0;
+				}
+
+				/* did the user seek? */
+				if (player.Position < position
+					|| player.Position > position + TICK_INTERVAL * 2) {
+					sought = true;
 				}
 
 				/* Each song should be posted to the server
 				   when it is 50% or 240 seconds complete,
 				   whichever comes first. */
-				if (!queued
+				if (!queued && !sought
 				    && (player.Position > player.Length / 2
 					|| player.Position > 240)) {
 					queue.Add (new QueuedTrack (track,
@@ -258,6 +268,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 												 - TimeSpan.FromSeconds (player.Position))));
 					queued = true;
 				}
+
+				position = player.Position;
 			}
 			else {
 				current_track = null;
