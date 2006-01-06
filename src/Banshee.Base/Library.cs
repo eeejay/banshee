@@ -191,21 +191,20 @@ namespace Banshee.Base
                 TracksFnKeyed.Remove(MakeFilenameKey(track.Uri));
             }
         }
-        
-        /*private void CollectionRemove(int trackID, System.Uri trackUri)
+
+        private void Remove(Uri trackUri)
         {
-            lock(Tracks.SyncRoot) {
-                Tracks.Remove(trackID);
-            }
-            
-            lock(TracksFnKeyed.SyncRoot) {
-                TracksFnKeyed.Remove(MakeFilenameKey(trackUri));
-            }
-        }*/
+            Remove(TracksFnKeyed[MakeFilenameKey(trackUri)] as LibraryTrackInfo);
+        }
         
         public void Remove(LibraryTrackInfo track)
         {
+            if(track == null) {
+                return;
+            }
+            
             CollectionRemove(track);
+            
             Db.Execute(String.Format(
                 @"DELETE FROM Tracks
                     WHERE TrackID = '{0}'",
@@ -228,20 +227,26 @@ namespace Banshee.Base
             int remove_count = 0;
             int invalid_count = 0;
             
-            foreach(TrackInfo track in tracks) {
-                if(!(track is LibraryTrackInfo)) {
+            foreach(object o in tracks) {
+                LibraryTrackInfo track = null;
+                
+                if(o is Uri) {
+                    track = TracksFnKeyed[MakeFilenameKey(o as Uri)] as LibraryTrackInfo;
+                } else if(o is LibraryTrackInfo) {
+                    track = o as LibraryTrackInfo;
+                } 
+                
+                if(track == null) {
                     invalid_count++;
                     continue;
                 }
-                
-                LibraryTrackInfo library_track = track as LibraryTrackInfo;
-                
-                query += String.Format(" TrackID = '{0}' ", library_track.TrackId);
+
+                query += String.Format(" TrackID = '{0}' ", track.TrackId);
                 if(remove_count < tracks.Count - invalid_count - 1) {
                     query += " OR ";
                 }
                 
-                CollectionRemove(library_track);
+                CollectionRemove(track);
                 remove_count++;
             }
             
@@ -264,6 +269,11 @@ namespace Banshee.Base
         public void QueueRemove(TrackInfo track)
         {
             remove_queue.Add(track);
+        }
+        
+        public void QueueRemove(Uri trackUri)
+        {
+            remove_queue.Add(trackUri);
         }
         
         public void CommitRemoveQueue()

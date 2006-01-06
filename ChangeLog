@@ -1,5 +1,26 @@
 2006-01-05  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/AboutBox.cs: Added Lukas Novotny to Translator Credits (Czech)
+
+	* src/Banshee.Base/Library.cs: Allow single, collection, and queued 
+	removal of tracks based on URI as well as LibraryTrackInfo object reference
+	
+	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs: Implement removal
+	and importing of files using a threaded queue processor instead of 
+	looping in an always-running thread to 'listen' for changes on 
+	two ArrayLists; removal and importing updated to use new mechanisims in
+	Banshee.Base for interacting with the Library
+
+	* src/Banshee.Plugins/FileSystemMonitor/Watch.cs: Simplified many aspects
+	of the base Watch class; use events for notification instead of collections
+	on which a thread 'listens'
+	
+	* src/Banshee.Plugins/FileSystemMonitor/InotifyWatch.cs: 
+	* src/Banshee.Plugins/FileSystemMonitor/FileSystemWatcherWatch.cs: 
+	Updated to implement changes in updated and simplified base class
+
+2006-01-05  Aaron Bockover  <aaron@aaronbock.net>
+
 	* docs/*: Updated Monodoc API documentation
 
 	* banshee.mdp: Updated MonoDevelop project

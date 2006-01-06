@@ -1,3 +1,33 @@
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/***************************************************************************
+ *  Watcher.cs
+ *
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Doğacan Güney  <dogacan@gmail.com>
+ *             Aaron Bockover <aaron@aaronbock.net>
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+ 
 using System;
 using System.Collections;
 using System.Data;
@@ -10,13 +40,6 @@ namespace Banshee.Plugins.FileSystemMonitor
 {
     public class Watcher : Banshee.Plugins.Plugin
     {
-        private ArrayList toImport;
-        private ArrayList toRemove;
-        
-        private Thread updateThread;
-        
-        private Watch watch;
-
         public override string DisplayName { get { return "File System Monitor"; } }
         
         public override string Description {
@@ -32,86 +55,140 @@ namespace Banshee.Plugins.FileSystemMonitor
         public override string [] Authors {
             get {
                 return new string [] { 
-                    "Do\u011facan G\u00fcney"
+                    "Do\u011facan G\u00fcney",
+                    "Aaron Bockover"
                 };
             }
         }
 
+        private Queue import_queue;
+        private Queue remove_queue;
+        private bool processing_queues;
+        
+        private Watch watch;
+
         protected override void PluginInitialize()
         {
-            toImport = new ArrayList();
-            toRemove = new ArrayList();
+            import_queue = new Queue();
+            remove_queue = new Queue();
             
-            throw new ApplicationException("This plugin is incomplete and unstable");
+            processing_queues = false;
+            
+            watch = Inotify.Enabled 
+                ? (Watch)new InotifyWatch(Globals.Library.Location)
+                : (Watch)new FileSystemWatcherWatch(Globals.Library.Location);
+                
+            watch.QueueImportRequest += OnWatchQueueImportRequest;
+            watch.QueueRemoveRequest += OnWatchQueueRemoveRequest;
+        }
         
-            updateThread = new Thread(new ThreadStart(Update));
+        protected override void PluginDispose()
+        {
+            watch.QueueImportRequest -= OnWatchQueueImportRequest;
+            watch.QueueRemoveRequest -= OnWatchQueueRemoveRequest;
+            
+            while(processing_queues);
+            
+            import_queue.Clear();
+            remove_queue.Clear();
+            import_queue = null;
+            remove_queue = null;
+            
+            watch.Dispose();
+        }
         
-            if(Inotify.Enabled) {
-                watch = new InotifyWatch(toImport, toRemove, Globals.Library.Location);
-            } else {
-                watch = new FileSystemWatcherWatch(toImport, toRemove, Globals.Library.Location);
+        private void OnWatchQueueImportRequest(object o, FileSystemMonitorPathEventArgs args)
+        {
+            lock(import_queue.SyncRoot) {
+                import_queue.Enqueue(args.Path);
             }
             
-            updateThread.Start();
+            ProcessQueues();
         }
-		
-		protected override void PluginDispose()
-		{
-            updateThread.Abort();
-            watch.Stop();
-		}
         
-        private void Update()
+        private void OnWatchQueueRemoveRequest(object o, FileSystemMonitorPathEventArgs args)
         {
-            while(true) {
-    		    lock(watch) {
-                    /*if(toRemove.Count != 0) {
-                        Console.WriteLine("toRemove begin");
-                        
-                        string query = " FROM TRACKS WHERE";                     
-    		    
-            		    foreach(string s in toRemove) {
-            		        Console.WriteLine(s as string);
-                            query +=" Uri LIKE \"file://" + s + "/%\"";
-                            query += " OR Uri LIKE \"file://" + s + "\"";
-                            
-                            query += " OR";                            
-                        }
-                        
-                        Console.WriteLine("toRemove end");
-                        
-                        query = query.Substring(0, query.Length - 3);
-                        
-                        string selectQuery = "SELECT TrackID, Uri" + query;
-                        string deleteQuery = "DELETE" + query;
-                                               
-                        IDataReader reader = Globals.Library.Db.Query(selectQuery);
-                        while(reader.Read()) {
-                            Globals.Library.Remove(Convert.ToInt32(reader[0] as string), 
-                                                new System.Uri(reader[1] as string));
-                        }                       
-                        Globals.Library.Db.Execute(deleteQuery);
-                      
-                        toRemove.Clear();
-                    }*/
-                    
-                    if(toImport.Count != 0) {
-                        Console.WriteLine("toImport begin");
-
-              		    foreach(string s in toImport) {
-                            Console.WriteLine(s);
-                            ImportManager.Instance.QueueSource(s);
-                            watch.RecurseDirectory(s);
-                        }
-                        
-                        Console.WriteLine("toImport end");
-                        
-                        toImport.Clear();
+            lock(remove_queue.SyncRoot) {
+                remove_queue.Enqueue(args.Path);
+            }
+            
+            ProcessQueues();
+        }
+        
+        private void ProcessQueues()
+        {
+            if(!processing_queues) {
+                ThreadAssist.Spawn(ProcessQueuesThread);
+            }
+        }
+        
+        private void ProcessQueuesThread()
+        {
+            processing_queues = true;
+            
+            if(remove_queue.Count > 0) {
+                while(remove_queue.Count > 0) {
+                    if(DisposeRequested) {
+                        processing_queues = false;
+                        return;
                     }
+    
+                    string path = null;
+
+                    lock(remove_queue.SyncRoot) {
+                        path = remove_queue.Dequeue() as string;
+                    }
+                    
+                    if(path == null) {
+                        continue;
+                    }
+                    
+                    Uri uri = new Uri(path);
+                    if(uri == null) {
+                        continue;
+                    }
+                    
+                    string query = String.Format(
+                        @"SELECT TrackID
+                            FROM Tracks 
+                            WHERE Uri LIKE '{0}/%'
+                                OR Uri = '{0}'",
+                                Sql.Statement.EscapeQuotes(uri.AbsoluteUri)
+                    );
+                    
+                    IDataReader reader = Globals.Library.Db.Query(query);
+                    
+                    while(reader.Read()) {
+                        int id = Convert.ToInt32(reader[0]);
+                        if(id > 0) {
+                            Globals.Library.QueueRemove(Globals.Library.Tracks[id] as LibraryTrackInfo);
+                        }
+                    }
+                    
+                    reader.Dispose();
                 }
                 
-                Thread.Sleep(5000);
-		    }
-		}
+                Globals.Library.CommitRemoveQueue();
+            }
+
+            while(import_queue.Count > 0) {
+                if(DisposeRequested) {
+                    processing_queues = false;
+                    return;
+                }
+
+                lock(import_queue.SyncRoot) {
+                    string path = import_queue.Dequeue() as string;
+                    ImportManager.Instance.QueueSource(path);
+                    watch.RecurseDirectory(path);
+                }
+            }
+
+            if(import_queue.Count > 0 || remove_queue.Count > 0) {
+                ProcessQueuesThread();
+            }
+            
+            processing_queues = false;
+        }
     }
 }

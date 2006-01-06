@@ -1,3 +1,33 @@
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/***************************************************************************
+ *  FileSystemWatcherWatch.cs
+ *
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Doğacan Güney  <dogacan@gmail.com>
+ *             Aaron Bockover <aaron@aaronbock.net>
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+ 
 using System;
 using System.Collections;
 using System.IO;
@@ -6,35 +36,33 @@ using Banshee.Base;
 
 namespace Banshee.Plugins.FileSystemMonitor
 {
-    public sealed class FileSystemWatcherWatch : Watch
+    internal sealed class FileSystemWatcherWatch : Watch
     {
-        private Hashtable watchMap;
-        private bool verbose = false;
+        private Hashtable watch_map;
         
-        public FileSystemWatcherWatch(ArrayList im, ArrayList rm, string folder) : base(im, rm, folder)
+        internal FileSystemWatcherWatch(string watchFolder) : base(watchFolder)
         {
-            watchMap = new Hashtable();
-            RecurseDirectory(PathUtil.FileUriStringToPath(musicFolder));
+            watch_map = new Hashtable();
+            RecurseDirectory(PathUtil.FileUriStringToPath(WatchFolder));
         }
                 
-        public override bool IsWatching(string path)
+        internal override bool IsWatching(string path)
         {
-            return watchMap.ContainsKey(path);
+            return watch_map.ContainsKey(path);
         }
         
-        public override bool AddWatch(string path)
+        internal override bool AddWatch(string path)
         {
-           if(IsWatching(path) || !Directory.Exists(path))
+            if(IsWatching(path) || !Directory.Exists(path)) {
                 return false;
-                
-            if(verbose)
-               Console.WriteLine ("Adding watch to {0}", path);
+            }
+
+            LogCore.Instance.PushDebug("Registering FileSystemWatcher watch", path);
             
             FileSystemWatcher watcher = new FileSystemWatcher();
             
             watcher.Path = path;
-            watcher.NotifyFilter = NotifyFilters.LastWrite 
-                | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
             watcher.IncludeSubdirectories = false;
             watcher.Filter = "";
 
@@ -45,34 +73,30 @@ namespace Banshee.Plugins.FileSystemMonitor
 
             watcher.EnableRaisingEvents = true;
             
-            watchMap.Add(path, watcher);
+            watch_map.Add(path, watcher);
             
             return true;
         }
         
-        public override void Stop()
-        {
-        }
-
-        private void OnChanged(object source, FileSystemEventArgs e)
+        private void OnChanged(object source, FileSystemEventArgs args)
         {
             lock(this) {
-                UniqueAdd(toImport, e.FullPath);
+                QueueImport(args.FullPath);
             }
         }
         
-        private void OnDeleted(object source, FileSystemEventArgs e)
+        private void OnDeleted(object source, FileSystemEventArgs args)
         {
             lock(this) {
-                UniqueAdd(toRemove, e.FullPath);
+                QueueRemove(args.FullPath);
             }
         }
 
-        private void OnRenamed(object source, RenamedEventArgs e)
+        private void OnRenamed(object source, RenamedEventArgs args)
         {
             lock(this) {
-                UniqueAdd(toImport, e.FullPath);
-                UniqueAdd(toRemove, e.OldFullPath);
+                QueueImport(args.FullPath);
+                QueueRemove(args.OldFullPath);
             }
         }
     }
