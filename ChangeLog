@@ -1,3 +1,10 @@
+2006-01-05  Brad Taylor  <brad@getcoded.net>
+	
+	* src/PlaylistModel.cs: Implement a more intelligent Shuffle that has a
+	60% chance of hovering inside the current genre, making the transitions
+	between songs slightly more fluid.  Of course, this value should be
+	tweaked for better results.
+
 2006-01-05  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AboutBox.cs: Added Lukas Novotny to Translator Credits (Czech)

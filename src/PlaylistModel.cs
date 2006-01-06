@@ -325,6 +325,33 @@ namespace Banshee
 
         private bool GetRandomTrackIter(out TreeIter iter)
         {
+            const double HOVER_FREQUENCY = 0.60;
+
+            if(SourceManager.ActiveSource is LibrarySource
+               && !playingIter.Equals(TreeIter.Zero)
+               && Count () == Globals.Library.Tracks.Count) {   // XXX: Gross way to check that there isn't a search active
+                TrackInfo last_track = IterTrackInfo(playingIter);
+                
+                if(Globals.Random.NextDouble() < HOVER_FREQUENCY) {
+                    string query = "SELECT TrackID FROM Tracks "
+                        + "WHERE Genre = '" + Statement.EscapeQuotes(last_track.Genre) + "' "
+                        + "ORDER BY RANDOM() LIMIT 1";
+
+                    int id = 0;
+                    try {
+                        id = Convert.ToInt32(Globals.Library.Db.QuerySingle(query) as string);
+                    } catch { } 
+    
+                    if(id > 0) {
+                        LibraryTrackInfo track = Globals.Library.GetTrack(id);
+                        if (track != null) {
+                            iter = track.TreeIter;
+                            return true;
+                        }
+                    }
+                }
+            }
+
             int randIndex = Globals.Random.Next(0, Count());
             return IterNthChild(out iter, randIndex);
         }
