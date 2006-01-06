@@ -1,5 +1,32 @@
 2006-01-06  Chris Toshok  <toshok@ximian.com>
 
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: if we've
+	previously logged failures uploading tracks, log the first
+	successful one.
+
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: make sure to clear
+	the queue before loading, so we don't append multiple copies
+	when/if the user disables/re-enables the plugin.
+
+2006-01-06  Chris Toshok  <toshok@ximian.com>
+
+	* src/Banshee.Plugins/Audioscrobbler/Makefile.am
+	(ASSEMBLY_SOURCES): add Queue.cs
+
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: new home for all
+	the queue internals.
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: move all the queue
+	internals (including the new saving/loading code) out to a
+	separate class; Use LogCore to report problems with
+	uploading/handshaking, and try to avoid spamming the log by only
+	logging upload failures once every 5 minutes; lastly, increase the
+	places where we save queue data.  We now save just before
+	transmitting, and again after getting the OK back from the server,
+	after we remove the tracks that were transmitted.
+
+2006-01-06  Chris Toshok  <toshok@ximian.com>
+
 	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Another patch from
 	Ruben Vermeersch, to add rudimentary seek detection.  Slightly
 	modified from the patch on the list, to check for reverse seeking.

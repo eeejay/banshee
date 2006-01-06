@@ -132,6 +132,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		public void Load ()
 		{
+			queue.Clear ();
+
 			try {
 				string query = "//AudioscrobblerQueue/QueuedTrack";
 				XmlDocument doc = new XmlDocument ();

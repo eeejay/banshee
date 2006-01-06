@@ -328,6 +328,11 @@ namespace Banshee.Plugins.Audioscrobbler {
 				return;
 			}
 			else if (line.StartsWith ("OK")) {
+				/* if we've previously logged failures, be nice and log the successful upload. */
+				if (last_upload_failed_logged != DateTime.MinValue) {
+					LogCore.Instance.PushInformation ("Audioscrobbler upload succeeded", "", false);
+					last_upload_failed_logged = DateTime.MinValue;
+				}
 				/* we succeeded, pop the elements off our queue */
 				queue.RemoveRange (0, ts.Count);
 				queue.Save ();
