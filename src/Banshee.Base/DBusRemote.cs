@@ -32,28 +32,30 @@ using DBus;
 
 namespace Banshee.Base
 {
-    public static class DBusRemote
+    public class DBusRemote
     {
-        private static Service service;
-       
-        static DBusRemote()
+        private Service service;
+        private Connection connection;
+        
+        public DBusRemote()
         {
             try {
-                service = new Service(Bus.GetSessionBus(), "org.gnome.Banshee");
+                connection = Bus.GetSessionBus();
+                service = new Service(connection, "org.gnome.Banshee");
             } catch(Exception e) {
                 LogCore.Instance.PushWarning("Could not connect to D-Bus", 
                     "D-Bus support will be disabled for this instance: " + e.Message, false);
             }
         }
        
-        public static void RegisterObject(object o, string objectName)
+        public void RegisterObject(object o, string objectName)
         {
             if(service != null) {
                 service.RegisterObject(o, "/org/gnome/Banshee/" + objectName);
             }
         }
        
-        public static void UnregisterObject(object o)
+        public void UnregisterObject(object o)
         {
             if(service != null) {
                 service.UnregisterObject(o);

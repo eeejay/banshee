@@ -43,7 +43,7 @@ namespace Banshee
         {
             Connection connection = Bus.GetSessionBus();
             Service service = Service.Get(connection, "org.gnome.Banshee");        
-            return (RemotePlayer)service.GetObject(typeof(RemotePlayer), "/org/gnome/Banshee/Player");
+            return service.GetObject(typeof(RemotePlayer), "/org/gnome/Banshee/Player") as RemotePlayer;
         }
         
         public RemotePlayer(Gtk.Window mainWindow, PlayerUI ui)

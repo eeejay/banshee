@@ -42,8 +42,9 @@ namespace Banshee.Base
         private static ArgumentQueue argument_queue;
         private static AudioCdCore audio_cd_core;
         private static Random random;
+        private static DBusRemote dbus_remote;
         
-        static Globals()
+        public static void Initialize()
         {
             if(!Directory.Exists(Paths.ApplicationData)) {
                 Directory.CreateDirectory(Paths.ApplicationData);
@@ -125,6 +126,16 @@ namespace Banshee.Base
         public static Random Random {
             get {
                 return random;
+            }
+        }
+        
+        public static DBusRemote DBusRemote {
+            get {
+                return dbus_remote;
+            }
+            
+            set {
+                dbus_remote = value;
             }
         }
     }

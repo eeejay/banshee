@@ -378,6 +378,11 @@ namespace Banshee
             RaiseUpdated(this, new EventArgs());
         }
         
+        public void RemoveTrack(TrackInfo track)
+        {
+        
+        }
+        
         public int GetIterIndex(TreeIter iter)
         {
             TreePath path = GetPath(iter);

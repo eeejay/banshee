@@ -1,3 +1,80 @@
+2005-01-09  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Makefile.am: Added Daap to SUBDIRS
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*: Added daap-sharp sources; these
+	sources are maintained in the 'daap-sharp' Mono SVN module and are synced
+	into the Banshee tree using the 'sync-tree.sh' script
+
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs: Plugin to initialize/dispose
+	the DaapCore
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: DAAP core that listens for 
+	service updates from daap-sharp/avahi and creates sources out of new
+	services; central point for DAAP client support
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs: Banshee.Sources.Source 
+	implementation for DAAP client support
+
+	* src/Banshee.Plugins/Daap/DatabaseProxy.cs: A custom IEnumerable 
+	collection that proxies DAAP.Song objects to TrackInfo objects on the fly
+
+	* src/Banshee.Plugins/Daap/DaapTrackInfo.cs: TrackInfo implementation
+	for DAAP songs
+
+	* src/Banshee.Plugins/Daap/DaapLoginDialog.cs: A login dialog that is
+	presented when a DAAP server requires authentication
+
+2005-01-09  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Removed daap-sharp references as daap-sharp sources are
+	synced directly into the tree; check for avahi-sharp
+
+	* src/Main.cs: Handle a potential DBus exception
+
+	* src/Makefile.am: Removed daap-sharp unstable assembly installation rules
+
+	* src/PlayerInterface.cs: Skeleton for handling Source.TrackAdded and
+	Source.TrackRemoved events; if Source.Updated is fired and the track count
+	in the model is 0 and the source is not, reload the model from the source;
+	the DBusRemote is now instance-accessible through a Globals proxy; handle
+	Source.Tracks change from ICollection to IEnumerable
+
+	* src/PlaylistModel.cs: Added a placeholder RemoveTrack(TrackInfo) method
+
+	* src/RemotePlayer.cs (FindInstance): use a dynamic cast to RemotePlayer
+	type instead of a static
+
+	* src/SourceView.cs: Do not draw count in source row if Source.Count < 0
+
+	* src/Banshee.Base/DBusRemote.cs: make DBusRemote a instantiable class
+
+	* src/Banshee.Base/Globals.cs: Add a DBusRemote proxy property
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: LastPlayedStamp and DateAddedStamp
+	values are now read from the database a little differently to work with
+	updated Mono.Data.SqliteClient from HEAD, should also be a little faster
+
+	* src/Banshee.Base/Makefile.am: Removed DAAPSHARP_LIBS reference
+
+	* src/Banshee.Base/Source.cs: Make Count virtual; Tracks is now 
+	IEnumerable; Added TrackAdded and TrackRemoved events; added OnTrackAdded
+	and OnTrackRemoved virtual methods for raising those events; added
+	InvalidSourceException exception class
+
+	* src/Banshee.Base/SourceManager.cs: Added SourceTrackAdded and 
+	SourceTrackRemove 'proxy' events for propagating TrackAdded/TrackRemoved
+	events from sources
+
+	* src/Banshee.Base/AudioCdSource.cs:
+	* src/Banshee.Base/DapSource.cs:
+	* src/Banshee.Base/LibrarySource.cs:
+	* src/Banshee.Base/LocalQueueSource.cs:
+	* src/Banshee.Base/PlaylistSource.cs: Reflect change from Source.Tracks
+	as an ICollection to an IEnumerable
+
 2006-01-06  Chris Toshok  <toshok@ximian.com>
 
 	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: if we've

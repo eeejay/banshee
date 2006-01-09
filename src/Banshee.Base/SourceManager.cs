@@ -55,6 +55,8 @@ namespace Banshee.Sources
         public static event SourceAddedHandler SourceAdded;
         public static event SourceEventHandler SourceRemoved;
         public static event SourceEventHandler ActiveSourceChanged;
+        public static event TrackEventHandler SourceTrackAdded;
+        public static event TrackEventHandler SourceTrackRemoved;
         
         public static void AddSource(Source source, bool isDefault)
         {
@@ -66,6 +68,8 @@ namespace Banshee.Sources
             }
             
             source.Updated += OnSourceUpdated;
+            source.TrackAdded += OnSourceTrackAdded;
+            source.TrackRemoved += OnSourceTrackRemoved;
             
             SourceAddedHandler handler = SourceAdded;
             if(handler != null) {
@@ -90,6 +94,8 @@ namespace Banshee.Sources
             sources.Remove(source);
             
             source.Updated -= OnSourceUpdated;
+            source.TrackAdded -= OnSourceTrackAdded;
+            source.TrackRemoved -= OnSourceTrackRemoved;
             
             if(source == active_source) {
                 SetActiveSource(default_source);
@@ -110,6 +116,22 @@ namespace Banshee.Sources
                 SourceEventArgs evargs = new SourceEventArgs();
                 evargs.Source = o as Source;
                 handler(evargs);
+            }
+        }
+        
+        private static void OnSourceTrackAdded(object o, TrackEventArgs args)
+        {
+            TrackEventHandler handler = SourceTrackAdded;
+            if(handler != null) {
+                handler(o, args);
+            }
+        }
+        
+        private static void OnSourceTrackRemoved(object o, TrackEventArgs args)
+        {
+            TrackEventHandler handler = SourceTrackRemoved;
+            if(handler != null) {
+                handler(o, args);
             }
         }
         
@@ -154,6 +176,7 @@ namespace Banshee.Sources
         public static void SetActiveSource(Source source, bool notify)
         {
             active_source = source;
+            source.Activate();
                
             if(!notify) {
                 return;

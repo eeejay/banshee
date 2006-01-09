@@ -181,15 +181,13 @@ PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
 dnl musicbrainz
 PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 
-dnl daap-sharp
+dnl avahi-sharp for DAAP
 if test "x$enable_daap" = "xyes"; then 
-	PKG_CHECK_MODULES(DAAPSHARP, daap-sharp)
-	AC_SUBST(DAAPSHARP_LIBS)
-	DAAPSHARP_CSFLAGS="-define:ENABLE_DAAP"
+	PKG_CHECK_MODULES(AVAHISHARP, avahi-sharp)
+	AC_SUBST(AVAHISHARP_LIBS)
+	DAAPSHARP_CSFLAGS="-define:DAAP_ENABLED"
 	AC_SUBST(DAAPSHARP_CSFLAGS)
 	AM_CONDITIONAL(DAAP_ENABLED, true)
-	DAAPSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries daap-sharp`"
-	AC_SUBST(DAAPSHARP_ASSEMBLIES)
 else
 	AM_CONDITIONAL(DAAP_ENABLED, false)
 fi
@@ -409,6 +407,8 @@ src/Banshee.Plugins/FileSystemMonitor/Makefile
 src/Banshee.Plugins/FileSystemMonitor/FileSystemMonitor.dll.config
 src/Banshee.Plugins/MetadataSearch/Makefile
 src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config
+src/Banshee.Plugins/Daap/Makefile
+src/Banshee.Plugins/Daap/Daap.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

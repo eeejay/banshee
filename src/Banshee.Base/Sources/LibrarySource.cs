@@ -69,7 +69,7 @@ namespace Banshee.Sources
             Globals.Library.CommitRemoveQueue();
         }
         
-        public override ICollection Tracks {
+        public override IEnumerable Tracks {
             get {
                 return Globals.Library.Tracks.Values;
             }

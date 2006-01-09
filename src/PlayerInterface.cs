@@ -147,8 +147,9 @@ namespace Banshee
             BuildWindow();   
             InstallTrayIcon();
             
+            Globals.DBusRemote = new DBusRemote();
             banshee_dbus_object = new RemotePlayer(Window, this);
-            DBusRemote.RegisterObject(banshee_dbus_object, "Player");
+            Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
             
             PlayerEngineCore.ActivePlayer.Iterate += OnPlayerTick;
             PlayerEngineCore.ActivePlayer.EndOfStream += OnPlayerEos;    
@@ -382,6 +383,8 @@ namespace Banshee
             sourceView.Sensitive = false;
             SourceManager.ActiveSourceChanged += OnSourceManagerActiveSourceChanged;
             SourceManager.SourceUpdated += OnSourceManagerSourceUpdated;
+            SourceManager.SourceTrackAdded += OnSourceTrackAdded;
+            SourceManager.SourceTrackRemoved += OnSourceTrackRemoved;
             
             /*sourceView.EnableModelDragSource(
                 Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
@@ -660,7 +663,7 @@ namespace Banshee
             playlistView.Shutdown();
             PlayerEngineCore.ActivePlayer.Dispose();
             Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
-            DBusRemote.UnregisterObject(banshee_dbus_object);
+            Globals.DBusRemote.UnregisterObject(banshee_dbus_object);
             PlayerCore.Dispose();
             Globals.Dispose();
             Application.Quit();
@@ -1079,7 +1082,25 @@ namespace Banshee
         {
             if(args.Source == SourceManager.ActiveSource) {
                 UpdateViewName(args.Source);
-            }   
+                
+                if(playlistModel.Count() == 0 && args.Source.Count > 0) {
+                    playlistModel.ReloadSource();
+                }
+            }
+        }
+        
+        private void OnSourceTrackAdded(object o, TrackEventArgs args)
+        {
+            if(SourceManager.ActiveSource == o) {
+                playlistModel.AddTrack(args.Track);
+            }
+        }
+        
+        private void OnSourceTrackRemoved(object o, TrackEventArgs args)
+        {
+            if(SourceManager.ActiveSource == o) {
+                playlistModel.RemoveTrack(args.Track);
+            }
         }
         
         private void UpdateViewName(Source source)
@@ -1529,9 +1550,7 @@ namespace Banshee
                 return;
             }
             
-            ICollection collection = SourceManager.ActiveSource.Tracks;
-            
-            foreach(TrackInfo track in collection) {
+            foreach(TrackInfo track in SourceManager.ActiveSource.Tracks) {
                 try {
                     if(DoesTrackMatchSearch(track)) {
                         playlistModel.AddTrack(track);

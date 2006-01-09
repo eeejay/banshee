@@ -34,12 +34,29 @@ using Banshee.Base;
 
 namespace Banshee.Sources
 {
+    public class InvalidSourceException : ApplicationException
+    {
+        public InvalidSourceException(string message) : base(message)
+        {
+        }
+    }
+
+    public delegate void TrackEventHandler(object o, TrackEventArgs args);
+
+    public class TrackEventArgs : EventArgs
+    {
+        public TrackInfo Track;
+        public IEnumerable Tracks;
+    }
+    
     public abstract class Source
     {
         private int order;
         private string name;
 
         public event EventHandler Updated;
+        public event TrackEventHandler TrackAdded;
+        public event TrackEventHandler TrackRemoved;
         
         protected Source(string name, int order)
         {
@@ -47,16 +64,19 @@ namespace Banshee.Sources
             this.order = order;
         }
         
-        public string Name {
-            get {
-                return name;
-            }
-            
-            protected set {
-                name = value;
-            }
+        public void Dispose()
+        {
+            OnDispose();
         }
         
+        public virtual void Activate()
+        {
+        }
+        
+        protected virtual void OnDispose()
+        {
+        }
+
         public bool Rename(string newName)
         {
             if(!UpdateName(name, newName)) {
@@ -81,20 +101,47 @@ namespace Banshee.Sources
         public virtual void ShowPropertiesDialog()
         {
         }
-
+        
         public virtual void AddTrack(TrackInfo track)
         {
         }
         
-        public void AddTrack(ICollection tracks)
+        public virtual void RemoveTrack(TrackInfo track)
+        {
+        }
+        
+        public void AddTrack(IEnumerable tracks)
         {
             foreach(TrackInfo track in tracks) {
                 AddTrack(track);
             }
         }
         
-        public virtual void RemoveTrack(TrackInfo track)
+        public void RemoveTrack(IEnumerable tracks)
         {
+            foreach(TrackInfo track in tracks) {
+                RemoveTrack(track);
+            }
+        }
+        
+        public virtual void OnTrackAdded(TrackInfo track)
+        {
+            TrackEventHandler handler = TrackAdded;
+            if(handler != null) {
+                TrackEventArgs args = new TrackEventArgs();
+                args.Track = track;
+                handler(this, args);
+            }
+        }
+        
+        public virtual void OnTrackRemoved(TrackInfo track)
+        {
+            TrackEventHandler handler = TrackRemoved;
+            if(handler != null) {
+                TrackEventArgs args = new TrackEventArgs();
+                args.Track = track;
+                handler(this, args);
+            }
         }
         
         public virtual void Commit()
@@ -113,11 +160,23 @@ namespace Banshee.Sources
             }
         }
         
-        public abstract int Count {
-            get;
+        public virtual int Count {
+            get {
+                return -1;
+            }
+        }
+                
+        public string Name {
+            get {
+                return name;
+            }
+            
+            protected set {
+                name = value;
+            }
         }
         
-        public virtual ICollection Tracks {
+        public virtual IEnumerable Tracks {
             get {
                 return new ArrayList();
             }

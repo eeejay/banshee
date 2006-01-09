@@ -377,51 +377,36 @@ namespace Banshee.Base
             track_id = Convert.ToInt32(reader["TrackID"]);
 
             uri = new Uri(reader["Uri"] as string);
-            
             mimetype = reader["MimeType"] as string;
-
+            
             album = reader["AlbumTitle"] as string;
             artist = reader["Artist"] as string;
             performer = reader["Performer"] as string;
             title = reader["Title"] as string;
             genre = reader["Genre"] as string;
-
+            asin = reader["ASIN"] as string;
+            
             year = Convert.ToInt32(reader["Year"]);
-
             track_number = Convert.ToUInt32(reader["TrackNumber"]);
             track_count = Convert.ToUInt32(reader["TrackCount"]);
-            duration = new TimeSpan(Convert.ToInt64(reader["Duration"]) * TimeSpan.TicksPerSecond);
             rating = Convert.ToUInt32(reader["Rating"]);
             play_count = Convert.ToUInt32(reader["NumberOfPlays"]);
-            asin = reader["ASIN"] as string;
+            
             remote_lookup_status = (RemoteLookupStatus)Convert.ToInt32(reader["RemoteLookupStatus"]);
-          
-			if (reader != null){
-				last_played = DateTime.MinValue;
-
-				try {
-					string s = (string)reader ["LastPlayedStamp"];
-					if (s != null){
-						long time = Int64.Parse (s);
-						last_played = DateTimeUtil.ToDateTime(time);
-					}
-				} catch(Exception e) {
-					Console.WriteLine ("E1: " + e);
-				}
-			}
-
-			if (reader != null){
-				date_added = DateTime.MinValue;
-				
-				try {
-					string s = (string)reader ["LastPlayedStamp"];
-					if (s != null){
-						long time = Int64.Parse (s);
-						date_added = DateTimeUtil.ToDateTime(time);
-					}
-				} catch(Exception e) {
-					Console.WriteLine ("E2: " + e);
-				}
+            
+            duration = new TimeSpan(Convert.ToInt64(reader["Duration"]) * TimeSpan.TicksPerSecond);
+            
+            last_played = DateTime.MinValue;
+            date_added = DateTime.MinValue;
+            
+            long temp_stamp = Convert.ToInt64(reader["LastPlayedStamp"]);
+            if(temp_stamp > 0) {
+                last_played = DateTimeUtil.ToDateTime(temp_stamp);
+            }
+            
+            temp_stamp = Convert.ToInt64(reader["DateAddedStamp"]);
+            if(temp_stamp > 0) {
+                date_added = DateTimeUtil.ToDateTime(temp_stamp);
             }
         }
 

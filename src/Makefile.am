@@ -118,7 +118,6 @@ banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resou
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
-	$(DAAPSHARP_LIBS) \
 	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
@@ -150,16 +149,6 @@ $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
-
-install-data-hook:
-	for ASM in $(DAAPSHARP_ASSEMBLIES); do \
-		$(INSTALL) -m 0755 $$ASM $(DESTDIR)$(pkglibdir); \
-	done;
-
-uninstall-hook:
-	for ASM in $(DAAPSHARP_ASSEMBLIES); do \
-		rm -f $(DESTDIR)$(pkglibdir)/`basename $$ASM`; \
-	done;
 
 run:
 	BANSHEE_BURN_ENABLE=yes banshee

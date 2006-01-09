@@ -212,7 +212,7 @@ namespace Banshee.Sources
             }
         }
         
-        public override ICollection Tracks {
+        public override IEnumerable Tracks {
             get {
                 return tracks;
             }
@@ -285,14 +285,12 @@ namespace Banshee.Sources
             }
         }
         
-        public static string GoodUniqueName(ICollection tracks)
+        public static string GoodUniqueName(IEnumerable tracks)
         {
             ArrayList names = new ArrayList();
             Hashtable groups = new Hashtable();
             
-            if(tracks.Count == 0) {
-                names.Add(Catalog.GetString("New Playlist"));
-            }
+            int track_count = 0;
             
             foreach(TrackInfo ti in tracks) {
                 bool haveArtist = ti.Artist != null && !ti.Artist.Equals(String.Empty);
@@ -307,6 +305,12 @@ namespace Banshee.Sources
                 } else {
                     names.Add(Catalog.GetString("New Playlist"));
                 }
+                
+                track_count++;
+            }
+            
+            if(track_count == 0) {
+                names.Add(Catalog.GetString("New Playlist"));
             }
                 
             names.Sort();

@@ -78,7 +78,7 @@ namespace Banshee.Sources
             }
         }
         
-        public override ICollection Tracks {
+        public override IEnumerable Tracks {
             get {
                 return disk.Tracks;
             }

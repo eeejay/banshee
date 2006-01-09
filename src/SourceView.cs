@@ -362,7 +362,7 @@ namespace Banshee
             int titleLayoutWidth, titleLayoutHeight;
             int countLayoutWidth, countLayoutHeight;
             int maxTitleLayoutWidth;
-            bool hideCounts = false;
+            bool hideCounts = source.Count < 0;
             
             StateType state = RendererStateToWidgetState(flags);
             Pixbuf icon = null;

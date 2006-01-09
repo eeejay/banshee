@@ -88,6 +88,7 @@ namespace Banshee
             RemotePlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
+            Globals.Initialize();
             new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), ConfigureDefines.VERSION, Modules.UI, args);
             PlayerCore.UserInterface = new Banshee.PlayerUI();
             
@@ -98,7 +99,7 @@ namespace Banshee
         {
             try {
                 return RemotePlayer.FindInstance();
-            } catch(Exception) {
+            } catch {
                 Process current_process = Process.GetCurrentProcess();
                 foreach(Process process in Process.GetProcesses()) {
                     if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
@@ -217,7 +218,11 @@ namespace Banshee
             }
             
             if(present) {
-                Present(remote_player);
+                try {
+                    Present(remote_player);
+                } catch(DBus.DBusException) {
+                    return;
+                }
             }
             
             // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
