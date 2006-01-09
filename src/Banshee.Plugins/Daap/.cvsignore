@@ -1,0 +1,7 @@
+Makefile
+Makefile.in
+*.config
+*.dll
+*.mdb
+*.schemas
+
