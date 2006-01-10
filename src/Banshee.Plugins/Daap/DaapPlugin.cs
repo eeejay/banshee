@@ -32,7 +32,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     public class DaapPlugin : Banshee.Plugins.Plugin
     {

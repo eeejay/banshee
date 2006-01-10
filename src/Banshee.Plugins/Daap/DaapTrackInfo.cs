@@ -33,19 +33,21 @@ using Mono.Unix;
 using DAAP;
 using Banshee.Base;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     public sealed class DaapTrackInfo : TrackInfo
     {
         private DAAP.Song song;
+        private DAAP.Database database;
         
-        internal DaapTrackInfo(DAAP.Song song) : this(song, true)
+        internal DaapTrackInfo(DAAP.Song song, DAAP.Database database) : this(song, database, true)
         {
         }
         
-        internal DaapTrackInfo(DAAP.Song song, bool sync)
+        internal DaapTrackInfo(DAAP.Song song, DAAP.Database database, bool sync)
         {
             this.song = song;
+            this.database = database;
             CanSaveToDatabase = false;
             
             if(!sync) {
@@ -61,7 +63,7 @@ namespace Banshee.Plugins.DaapPlugin
         
         private void LoadFromDaapSong()
         {
-            uri = null;
+            uri = new Uri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, database.Id, song.Id));
             
             album = song.Album == String.Empty ? null : song.Album;
             artist = song.Artist == String.Empty ? null : song.Artist;
@@ -95,7 +97,7 @@ namespace Banshee.Plugins.DaapPlugin
         {
             play_count++;
         }
-        
+
         public DAAP.Song Song {
             get {
                 return song;

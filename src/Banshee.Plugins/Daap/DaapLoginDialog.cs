@@ -34,7 +34,7 @@ using Gtk;
 
 using Banshee.Base;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     internal class DaapLoginDialog : Dialog
     {

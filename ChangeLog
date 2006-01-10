@@ -1,4 +1,35 @@
-2005-01-09  Aaron Bockover  <aaron@aaronbock.net>
+2006-01-10  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Plugins/Daap/DaapProxyWebServer.cs: A new 'proxy' server
+	that handles streaming of DAAP songs from a DAAP server over a normal
+	HTTP stream; this makes DAAP streaming audio available from any normal
+	HTTP client; listening to DAAP streams is now possible (GStreamer 0.8,
+	GStreamer 0.10, Helix/RealPlayer, VLC); also provides a simple web-based
+	browser to connected databases and allows downloading songs through this
+	interface (http://localhost:8089)
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Added a property to access the
+	new DaapProxyWebServer; start/stop the server when applicable; corrected
+	namespace
+
+	* src/Banshee.Plugins/Daap/DaapTrackInfo.cs: Set the uri property to
+	the proper HTTP URI for requesting DAAP streaming of the audio through
+	the proxy server; corrected namespace
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs: register/unregister database
+	with the proxy server; corrected namespace
+
+	* src/Banshee.Plugins/Daap/DaapLoginDialog.cs: 
+	* src/Banshee.Plugins/Daap/DatabaseProxy.cs:
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs: corrected namespace
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Added DaapProxyWebServer.cs
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*.cs: Updated daap-sharp checkout
+
+2006-01-09  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Makefile.am: Added Daap to SUBDIRS
 
@@ -25,7 +56,7 @@
 	* src/Banshee.Plugins/Daap/DaapLoginDialog.cs: A login dialog that is
 	presented when a DAAP server requires authentication
 
-2005-01-09  Aaron Bockover  <aaron@aaronbock.net>
+2006-01-09  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project
 

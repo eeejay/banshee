@@ -35,7 +35,7 @@ using DAAP;
 using Banshee.Base;
 using Banshee.Sources;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     public class DaapSource : Source
     {
@@ -111,6 +111,7 @@ namespace Banshee.Plugins.DaapPlugin
             if(database != null) {
                 database.SongAdded -= OnDatabaseSongAdded;
                 database.SongRemoved -= OnDatabaseSongRemoved;
+                DaapCore.ProxyServer.UnregisterDatabase(database);
                 database = null;
             }
             
@@ -124,6 +125,7 @@ namespace Banshee.Plugins.DaapPlugin
                 database.SongAdded += OnDatabaseSongAdded;
                 database.SongRemoved += OnDatabaseSongRemoved;
                 database_proxy.Database = database;
+                DaapCore.ProxyServer.RegisterDatabase(database);
             }
             
             Name = client.Name;
@@ -135,12 +137,12 @@ namespace Banshee.Plugins.DaapPlugin
         
         private void OnDatabaseSongAdded(object o, Song song)
         {
-            OnTrackAdded(new DaapTrackInfo(song));
+            OnTrackAdded(new DaapTrackInfo(song, database));
         }
         
         private void OnDatabaseSongRemoved(object o, Song song)
         {
-            OnTrackRemoved(new DaapTrackInfo(song, false));
+            OnTrackRemoved(new DaapTrackInfo(song, database, false));
         }
         
         public override IEnumerable Tracks {

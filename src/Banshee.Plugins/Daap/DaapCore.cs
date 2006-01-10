@@ -35,11 +35,12 @@ using DAAP;
 using Banshee.Base;
 using Banshee.Sources;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     internal static class DaapCore
     {
         private static ServiceLocator locator;
+        private static DaapProxyWebServer proxy_server;
         private static Hashtable source_map;
         
         internal static void Initialize()
@@ -50,6 +51,9 @@ namespace Banshee.Plugins.DaapPlugin
             locator.Removed += OnServiceRemoved;
             locator.ShowLocalServices = true;
             locator.Start();
+            
+            proxy_server = new DaapProxyWebServer(8089);
+            proxy_server.Start();
         }
         
         internal static void Dispose()
@@ -59,6 +63,10 @@ namespace Banshee.Plugins.DaapPlugin
                 locator.Found -= OnServiceFound;
                 locator.Removed -= OnServiceRemoved;
                 locator = null;
+            }
+            
+            if(proxy_server != null) {
+                proxy_server.Stop();
             }
             
             if(source_map != null) {
@@ -92,6 +100,12 @@ namespace Banshee.Plugins.DaapPlugin
             source.Dispose();
             SourceManager.RemoveSource(source);
             source_map.Remove(args.Service);
+        }
+        
+        public static DaapProxyWebServer ProxyServer {
+            get {
+                return proxy_server;
+            }
         }
     }
 }

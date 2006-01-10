@@ -31,7 +31,7 @@ using System;
 using System.Collections;
 using DAAP;
 
-namespace Banshee.Plugins.DaapPlugin
+namespace Banshee.Plugins.Daap
 {
     internal class DatabaseProxy : IEnumerable
     {
@@ -86,7 +86,7 @@ namespace Banshee.Plugins.DaapPlugin
                     if(database != null) {
                         DAAP.Song song = database.SongAt(index);
                         if(song != null) {
-                            return new DaapTrackInfo(song);
+                            return new DaapTrackInfo(song, database);
                         }
                     }
                     
