@@ -55,9 +55,10 @@ src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
 src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
+src/Banshee.Plugins/Daap/DaapLoginDialog.cs
+src/Banshee.Plugins/Daap/daap.schemas.in
 src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in
 src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs
 src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
-
