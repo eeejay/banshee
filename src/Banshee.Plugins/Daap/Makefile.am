@@ -1,3 +1,4 @@
+if DAAP_ENABLED
 MCS_FLAGS = -debug 
 ASSEMBLY_NAME = Daap
 ASSEMBLY = $(ASSEMBLY_NAME).dll
@@ -24,6 +25,8 @@ schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
+
+endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
 	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(AVAHISHARP_LIBS) -r:System.Web -r:ICSharpCode.SharpZipLib $(PKG_REFERENCES) -resource:$(srcdir)/daap-sharp/content-codes,content-codes
