@@ -1,3 +1,8 @@
+2005-01-11  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Added missing if DAAP_ENABLED 
+	check; makes --disable-daap actually work
+
 2006-01-11  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Base/Plugins/Plugin.cs: Do not enforce namespace naming;

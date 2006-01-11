@@ -26,6 +26,13 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
 
+if GCONF_SCHEMAS_INSTALL
+install-data-local:
+	if [ -z "$(DESTDIR)" ]; then \
+		GCONF_CONFIG_SOURCE="" $(GCONFTOOL) --makefile-install-rule $(builddir)$(schema_DATA); \
+	fi;
+endif
+
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
@@ -35,11 +42,4 @@ EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files)
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb Makefile.in $(schema_DATA)
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if [ -z "$(DESTDIR)" ]; then \
-		GCONF_CONFIG_SOURCE="" $(GCONFTOOL) --makefile-install-rule $(builddir)$(schema_DATA); \
-	fi;
-endif
 
