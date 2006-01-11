@@ -44,24 +44,15 @@ namespace Banshee.Plugins
     {
         private bool initialized;
         private bool broken;
-        private string name;
         private NameValueCollection configuration_keys;
         private bool dispose_requested;
     
+        protected abstract string ConfigurationName {
+            get;
+        }
+    
         public Plugin()
         {
-            string full_name = GetType().Namespace;
-            string base_full_name = GetType().BaseType.Namespace;
-
-            if(!full_name.StartsWith(base_full_name + ".")) {
-                throw new InvalidPluginException(
-                    String.Format("Plugin `{0}' has an invalid namespace ({1}). " + 
-                        "Plugin namespace must start with {2}. For example, {2}.MyPlugin", 
-                        GetType().FullName, full_name, base_full_name));
-            }
-            
-            name = full_name.Substring(base_full_name.Length + 1);
-            
             configuration_keys = new NameValueCollection();
             broken = false;
         }
@@ -139,7 +130,7 @@ namespace Banshee.Plugins
         
         public string Name {
             get {
-                return name;
+                return ConfigurationName;
             }
         }
         

@@ -36,6 +36,7 @@ namespace Banshee.Plugins.Daap
 {
     public class DaapPlugin : Banshee.Plugins.Plugin
     {
+        protected override string ConfigurationName { get { return "DaapPlugin"; } }
         public override string DisplayName { get { return "Music Sharing"; } }
         
         public override string Description {

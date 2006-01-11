@@ -46,6 +46,7 @@ namespace Banshee.Plugins.MetadataSearch
 
     public class MetadataSearchPlugin : Banshee.Plugins.Plugin
     {
+        protected override string ConfigurationName { get { return "MetadataSearch"; } }
         public override string DisplayName { get { return "Metadata Searcher"; } }
         
         public override string Description {

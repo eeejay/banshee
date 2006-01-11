@@ -1,3 +1,15 @@
+2006-01-11  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Do not enforce namespace naming;
+	instead require an abstract ConfigurationName property to be set by
+	the plugin (tberman was yelling)
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs:
+	* src/Banshee.Plugins/FileSystemMonitor/Watcher.cs:
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Implement
+	new abstract ConfigurationName
+
 2006-01-10  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Updated MonoDevelop project

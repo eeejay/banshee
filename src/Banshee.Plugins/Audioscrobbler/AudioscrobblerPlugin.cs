@@ -50,6 +50,7 @@ namespace Banshee.Plugins.Audioscrobbler
         private ActionGroup actions;
         private uint ui_manager_id;
 
+        protected override string ConfigurationName { get { return "Audioscrobbler"; } }
         public override string DisplayName { get { return "Audioscrobbler"; } }
         
         public override string Description {

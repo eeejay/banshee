@@ -40,6 +40,7 @@ namespace Banshee.Plugins.FileSystemMonitor
 {
     public class Watcher : Banshee.Plugins.Plugin
     {
+        protected override string ConfigurationName { get { return "FileSystemMonitor"; } }
         public override string DisplayName { get { return "File System Monitor"; } }
         
         public override string Description {
