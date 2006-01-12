@@ -40,7 +40,6 @@ namespace Banshee.Plugins.Audioscrobbler
     public class AudioscrobblerConfigDialog : Dialog
     {
         private AudioscrobblerPlugin plugin;
-        private Button create_account_button;
         private CheckButton toggle_enable_button;
         private PropertyTable table;
         private Entry user_entry;
@@ -67,20 +66,28 @@ namespace Banshee.Plugins.Audioscrobbler
             
             Label title = new Label();
             title.Markup = String.Format("<big><b>{0}</b></big>", 
-                GLib.Markup.EscapeText(Catalog.GetString("Audioscrobbler")));
+                GLib.Markup.EscapeText(Catalog.GetString("Audioscrobbler Reporting")));
             title.Xalign = 0.0f;
             
             Label label = new Label(plugin.Description);
             label.Wrap = true;
             
             Alignment alignment = new Alignment(0.0f, 0.0f, 1.0f, 1.0f);
-            alignment.LeftPadding = 20;
-            HBox button_box = new HBox();
-            create_account_button = new Button(Catalog.GetString("Create a free Last.fm account"));
+            alignment.LeftPadding = 10;
+            alignment.RightPadding = 10;
+            HButtonBox button_box = new HButtonBox();
+            button_box.Spacing = 10;
+            button_box.Layout = ButtonBoxStyle.Spread;
+            Button create_account_button = new Button(Catalog.GetString("Create an account"));
             create_account_button.Clicked += delegate(object o, EventArgs args) {
                 plugin.CreateAccount();
             };
+            Button join_group_button = new Button(Catalog.GetString("Join the Banshee group"));
+            join_group_button.Clicked += delegate(object o, EventArgs args) {
+                plugin.JoinGroup();
+            };
             button_box.PackStart(create_account_button, false, false, 0);
+            button_box.PackStart(join_group_button, false, false, 0);
             alignment.Add(button_box);
             
             Frame frame = new Frame();
@@ -89,7 +96,7 @@ namespace Banshee.Plugins.Audioscrobbler
             frame_alignment.LeftPadding = 10;
             frame_alignment.RightPadding = 10;
             frame_alignment.BottomPadding = 10;
-            toggle_enable_button = new CheckButton("Enable Audioscrobbler");
+            toggle_enable_button = new CheckButton("Enable song reporting");
             toggle_enable_button.Active = plugin.Enabled;
             toggle_enable_button.Toggled += OnEnableToggled;
             frame.LabelWidget = toggle_enable_button;

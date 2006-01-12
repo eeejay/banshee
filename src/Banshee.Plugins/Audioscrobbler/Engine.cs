@@ -126,6 +126,9 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		string MD5Encode (string pass)
 		{
+			if(pass == null || pass == String.Empty)
+				return String.Empty;
+				
 			MD5 md5 = MD5.Create ();
 
 			byte[] hash = md5.ComputeHash (Encoding.ASCII.GetBytes (pass));

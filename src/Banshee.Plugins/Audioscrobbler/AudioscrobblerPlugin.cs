@@ -113,18 +113,27 @@ namespace Banshee.Plugins.Audioscrobbler
                 new ActionEntry("AudioscrobblerAction", null,
                     Catalog.GetString("Audioscrobbler"), null,
                     Catalog.GetString("Configure the Audioscrobbler plugin"), null),
+                    
+                new ActionEntry("AudioscrobblerVisitAction", null,
+                    Catalog.GetString("Visit Profile Page"), null,
+                    Catalog.GetString("Visit your Audioscrobbler profile page"), OnVisitHomePage),
                 
                 new ActionEntry("AudioscrobblerConfigureAction", null,
                     Catalog.GetString("Configure..."), null,
-                    Catalog.GetString("Configure the Audioscrobbler plugin"), OnConfigurePlugin),
-                
-                new ActionEntry("AudioscrobblerVisitAction", null,
-                    Catalog.GetString("Visit Profile Page"), null,
-                    Catalog.GetString("Visit your Audioscrobbler profile page"), OnVisitHomePage)
+                    Catalog.GetString("Configure the Audioscrobbler plugin"), OnConfigurePlugin)
+            });
+            
+            actions.Add(new ToggleActionEntry [] { 
+                new ToggleActionEntry("AudioscrobblerEnableAction", null,
+                    Catalog.GetString("Enable Song Reporting"), "<control>L",
+                    Catalog.GetString("Enable Song Reporting"), OnToggleEnabled, Enabled)
             });
             
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
             ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("AudioscrobblerMenu.xml");
+            
+            Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = Username != null 
+                && Username != String.Empty;
         }
         
         private void OnConfigurePlugin(object o, EventArgs args)
@@ -136,55 +145,72 @@ namespace Banshee.Plugins.Audioscrobbler
         {
             Gnome.Url.Show("http://last.fm/user/" + Username);
         }
-
-        void StartEngine ()
+        
+        private void OnToggleEnabled(object o, EventArgs args)
         {
-            Console.WriteLine ("Audioscrobbler starting protocol engine");
-            protocol_engine = new Engine ();
-            protocol_engine.SetUserPassword (Username, Password);
-			protocol_engine.Start ();
+            Enabled = (o as ToggleAction).Active;
+        }
+
+        private void StartEngine()
+        {
+            Console.WriteLine("Audioscrobbler starting protocol engine");
+            protocol_engine = new Engine();
+            protocol_engine.SetUserPassword(Username, Password);
+			protocol_engine.Start();
         }
         
-        void StopEngine ()
+        private void StopEngine()
         {
             if(protocol_engine != null) {
-                Console.WriteLine ("Audioscrobbler stopping protocol engine");
-                protocol_engine.Stop ();
+                Console.WriteLine("Audioscrobbler stopping protocol engine");
+                protocol_engine.Stop();
                 protocol_engine = null;
             }
         }
 
-        void GConfNotifier (object sender, NotifyEventArgs args)
+        private void GConfNotifier(object sender, NotifyEventArgs args)
         {
             //Console.WriteLine ("key that changed: {0}", args.Key);
-            if (args.Key == ConfigurationKeys["EngineEnabled"]) {
-                if ((bool)args.Value == false)
-                    StopEngine ();
-                else
-                    StartEngine ();
-            }
-            else if (args.Key == ConfigurationKeys["Username"]
-                 || args.Key == ConfigurationKeys["Password"])
-            {
-                if (protocol_engine != null) {
-                    protocol_engine.SetUserPassword (Username, Password);
+            if(args.Key == ConfigurationKeys["EngineEnabled"]) {
+                if((bool)args.Value == false) {
+                    StopEngine();
+                } else {
+                    StartEngine();
+                }
+                
+                (Globals.ActionManager["AudioscrobblerEnableAction"] as ToggleAction).Active = (bool)args.Value;
+            } else if(args.Key == ConfigurationKeys["Username"] || args.Key == ConfigurationKeys["Password"]) {
+                if(protocol_engine != null) {
+                    protocol_engine.SetUserPassword(Username, Password);
                 }
             }
         }
 
+        internal void CreateAccount()
+        {
+            Gnome.Url.Show("http://www.last.fm/signup.php");
+        }
+        
+        internal void JoinGroup()
+        {
+            Gnome.Url.Show("http://www.last.fm/group/Banshee");
+        }
+
         internal string Username {
             get {
-                return GetStringPref (ConfigurationKeys["Username"], null);
+                return GetStringPref(ConfigurationKeys["Username"], String.Empty);
             }
             
             set {
                 gconf.Set(ConfigurationKeys["Username"], value);
+                Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = Username != null 
+                    && Username != String.Empty;
             }
         }
         
         internal string Password {
             get {
-                return GetStringPref (ConfigurationKeys["Password"], null);
+                return GetStringPref(ConfigurationKeys["Password"], String.Empty);
             }
             
             set {
@@ -199,34 +225,25 @@ namespace Banshee.Plugins.Audioscrobbler
             
             set {
                 gconf.Set(ConfigurationKeys["EngineEnabled"], value);
-                Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = 
-                    value && Username != null && Username != String.Empty;
             }
         }
 
-        string GetStringPref (string key, string def)
+        private string GetStringPref(string key, string def)
         {
             try {
-                return (string) gconf.Get(key);
-            }
-            catch {
+                return (string)gconf.Get(key);
+            } catch {
                 return def;
             }
         }
 
-        bool GetBoolPref (string key, bool def)
+        private bool GetBoolPref(string key, bool def)
         {
             try {
-                return (bool) gconf.Get(key);
-            }
-            catch {
+                return (bool)gconf.Get(key);
+            } catch {
                 return def;
             }
-        }
-        
-        internal void CreateAccount()
-        {
-            Gnome.Url.Show("http://www.last.fm/signup.php");
         }
     }
 }

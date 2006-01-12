@@ -3,8 +3,10 @@
         <menu name="MusicMenu" action="MusicMenuAction">
             <placeholder name="MusicMenuAdditions">
                 <menu name="Audioscrobbler" action="AudioscrobblerAction">
-                    <menuitem name="AudioscrobblerConfigure" action="AudioscrobblerConfigureAction" />
+                    <menuitem name="AudioscrobblerEnable" action="AudioscrobblerEnableAction" />
                     <menuitem name="AudioscrobblerVisit" action="AudioscrobblerVisitAction" />
+                    <separator />
+                    <menuitem name="AudioscrobblerConfigure" action="AudioscrobblerConfigureAction" />
                 </menu>
             </placeholder> 
         </menu>

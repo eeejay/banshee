@@ -1,3 +1,18 @@
+2005-01-12  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Added an
+	enabled action item that allows easy toggling of reporting, with a
+	key binding and menu item; fixed a few very minor bugs and a nullref
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs (MD5Encode): Guard against
+	a nullref and return String.Empty on failure
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:
+	Added a button to pimp the Banshee last.fm Group
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml: Added a
+	reporting enabled action item
+
 2005-01-11  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Daap/Makefile.am: Added missing if DAAP_ENABLED 
