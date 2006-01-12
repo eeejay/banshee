@@ -115,8 +115,12 @@ namespace Banshee.Plugins.Audioscrobbler
                     Catalog.GetString("Configure the Audioscrobbler plugin"), null),
                     
                 new ActionEntry("AudioscrobblerVisitAction", null,
-                    Catalog.GetString("Visit Profile Page"), null,
+                    Catalog.GetString("Visit user profile page"), null,
                     Catalog.GetString("Visit your Audioscrobbler profile page"), OnVisitHomePage),
+                
+                new ActionEntry("AudioscrobblerGroupAction", null,
+                    Catalog.GetString("Visit group page"), null,
+                    Catalog.GetString("Visit the Banshee last.fm group page"), OnVisitGroupPage),
                 
                 new ActionEntry("AudioscrobblerConfigureAction", null,
                     Catalog.GetString("Configure..."), null,
@@ -125,8 +129,8 @@ namespace Banshee.Plugins.Audioscrobbler
             
             actions.Add(new ToggleActionEntry [] { 
                 new ToggleActionEntry("AudioscrobblerEnableAction", null,
-                    Catalog.GetString("Enable Song Reporting"), "<control>L",
-                    Catalog.GetString("Enable Song Reporting"), OnToggleEnabled, Enabled)
+                    Catalog.GetString("Enable song reporting"), "<control>L",
+                    Catalog.GetString("Enable song reporting"), OnToggleEnabled, Enabled)
             });
             
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
@@ -144,6 +148,11 @@ namespace Banshee.Plugins.Audioscrobbler
         private void OnVisitHomePage(object o, EventArgs args)
         {
             Gnome.Url.Show("http://last.fm/user/" + Username);
+        }        
+        
+        private void OnVisitGroupPage(object o, EventArgs args)
+        {
+            JoinGroup();
         }
         
         private void OnToggleEnabled(object o, EventArgs args)

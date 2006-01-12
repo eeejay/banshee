@@ -1,4 +1,10 @@
-2005-01-12  Aaron Bockover  <aaron@aaronbock.net>
+2006-01-12  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: 
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml: Added a
+	visit group action to the menu and changed menu items to sentence case
+
+2006-01-12  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Added an
 	enabled action item that allows easy toggling of reporting, with a
@@ -13,7 +19,7 @@
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerMenu.xml: Added a
 	reporting enabled action item
 
-2005-01-11  Aaron Bockover  <aaron@aaronbock.net>
+2006-01-11  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Daap/Makefile.am: Added missing if DAAP_ENABLED 
 	check; makes --disable-daap actually work

@@ -5,6 +5,7 @@
                 <menu name="Audioscrobbler" action="AudioscrobblerAction">
                     <menuitem name="AudioscrobblerEnable" action="AudioscrobblerEnableAction" />
                     <menuitem name="AudioscrobblerVisit" action="AudioscrobblerVisitAction" />
+                    <menuitem name="AudioscrobblerGroup" action="AudioscrobblerGroupAction" />
                     <separator />
                     <menuitem name="AudioscrobblerConfigure" action="AudioscrobblerConfigureAction" />
                 </menu>
