@@ -37,32 +37,24 @@ using Banshee.Widgets;
 
 namespace Banshee.Plugins.Audioscrobbler 
 {
-    public class AudioscrobblerConfigDialog : Dialog
+    public class AudioscrobblerConfigPage : VBox
     {
         private AudioscrobblerPlugin plugin;
         private CheckButton toggle_enable_button;
         private PropertyTable table;
         private Entry user_entry;
         private Entry pass_entry;
+        private Image logo;
 
-        public AudioscrobblerConfigDialog(AudioscrobblerPlugin plugin) :  base(
-            Catalog.GetString("Configure Audioscrobbler"),
-            null,
-            DialogFlags.Modal | DialogFlags.NoSeparator,
-            Stock.Close,
-            ResponseType.Close)
+        public AudioscrobblerConfigPage(AudioscrobblerPlugin plugin, bool showLogo) :  base()
         {
             this.plugin = plugin;
-            IconThemeUtils.SetWindowIcon(this);
-            
-            BuildWindow();
+            BuildWidget(showLogo);
         }
         
-        private void BuildWindow()
+        private void BuildWidget(bool showLogo)
         {
-            VBox box = new VBox();
-            box.Spacing = 10;
-            Resizable = false;
+            Spacing = 10;
             
             Label title = new Label();
             title.Markup = String.Format("<big><b>{0}</b></big>", 
@@ -117,26 +109,26 @@ namespace Banshee.Plugins.Audioscrobbler
             frame_alignment.Add(table);
             frame.Add(frame_alignment);
             
-            box.PackStart(title, false, false, 0);
-            box.PackStart(label, false, false, 0);
-            box.PackStart(alignment, false, false, 0);
-            box.PackStart(frame, true, true, 0);
-            
-            VBox.Remove(ActionArea);
-            
-            HBox bottom_box = new HBox();
-            Image logo = new Image();
+            logo = new Image();
             logo.Pixbuf = Gdk.Pixbuf.LoadFromResource("audioscrobbler-logo.png");
             logo.Xalign = 0.0f;
-            bottom_box.PackStart(logo, true, true, 5);
-            bottom_box.PackStart(ActionArea, false, false, 0);
-            bottom_box.ShowAll();
-            VBox.PackEnd(bottom_box, false, false, 0);
             
-            box.ShowAll();
-            VBox.Add(box);
-            VBox.Spacing = 10;
-            BorderWidth = 10;
+            PackStart(title, false, false, 0);
+            PackStart(label, false, false, 0);
+            PackStart(alignment, false, false, 0);
+            PackStart(frame, true, true, 0);
+            
+            if(showLogo) {
+                PackStart(logo, false, false, 0);
+            }
+            
+            ShowAll();
+        }
+        
+        internal Image Logo {
+            get {
+                return logo;
+            }
         }
         
         private void OnUserPassChanged(object o, EventArgs args)

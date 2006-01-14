@@ -98,13 +98,11 @@ namespace Banshee.Plugins.Audioscrobbler
             actions = null;
         }
         
-        public override void ShowConfigurationDialog()
+        public override Gtk.Widget GetConfigurationWidget()
         {            
-            AudioscrobblerConfigDialog config = new AudioscrobblerConfigDialog(this);
-            config.Run();
-            config.Destroy();
+            return new AudioscrobblerConfigPage(this, true);
         }
-        
+
         private void InstallInterfaceActions()
         {
             actions = new ActionGroup("Audioscrobbler");
@@ -142,7 +140,25 @@ namespace Banshee.Plugins.Audioscrobbler
         
         private void OnConfigurePlugin(object o, EventArgs args)
         {
-            ShowConfigurationDialog();
+            AudioscrobblerConfigPage page = new AudioscrobblerConfigPage(this, false);
+            Dialog dialog = new Dialog();
+            dialog.Title = Catalog.GetString("Audioscrobbler Reporting");
+            dialog.BorderWidth = 12;
+            dialog.VBox.Spacing = 10;
+            dialog.HasSeparator = false;
+            IconThemeUtils.SetWindowIcon(dialog);
+            dialog.VBox.Add(page);
+            dialog.VBox.Remove(dialog.ActionArea);
+            dialog.AddButton(Stock.Close, ResponseType.Close);
+                
+            HBox bottom_box = new HBox();
+            bottom_box.PackStart(page.Logo, true, true, 5);
+            bottom_box.PackStart(dialog.ActionArea, false, false, 0);
+            bottom_box.ShowAll();
+            dialog.VBox.PackEnd(bottom_box, false, false, 0);
+            
+            dialog.Run();
+            dialog.Destroy();
         }
         
         private void OnVisitHomePage(object o, EventArgs args)

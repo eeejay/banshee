@@ -94,11 +94,9 @@ namespace Banshee.Plugins.MetadataSearch
             scan_queue = null;
         }
         
-        public override void ShowConfigurationDialog()
+        public override Gtk.Widget GetConfigurationWidget()
         {            
-            MetadataSearchConfigDialog config = new MetadataSearchConfigDialog(this);
-            config.Run();
-            config.Destroy();
+            return new MetadataSearchConfigPage(this);
         }
         
         // ----------------------------------------------------
@@ -197,6 +195,7 @@ namespace Banshee.Plugins.MetadataSearch
                     if(asin != null && asin != String.Empty) {
                         Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
                         track.Asin = asin;
+                        track.RemoteLookupStatus = RemoteLookupStatus.Success;
                         AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory);
                         track.Save();
                         return;

@@ -105,9 +105,10 @@ namespace Banshee.Plugins
         protected virtual void PluginDispose()
         {
         }
-        
-        public virtual void ShowConfigurationDialog()
+
+        public virtual Gtk.Widget GetConfigurationWidget()
         {
+            return null;
         }
         
         protected bool DisposeRequested {
@@ -116,9 +117,9 @@ namespace Banshee.Plugins
             }
         }
         
-        internal bool HasConfigurationDialog {
+        internal bool HasConfigurationWidget {
             get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "ShowConfigurationDialog");
+                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "GetConfigurationWidget");
             }
         }
         

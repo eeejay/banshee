@@ -43,7 +43,7 @@ namespace Banshee.Plugins
         private Label description_label;
         private Label authors_label;
         private HBox disabled_box;
-        private Button configure_button;
+        private Notebook plugin_notebook;
         
         private Gdk.Color normal_color;
         private Gdk.Color disabled_color;
@@ -56,7 +56,6 @@ namespace Banshee.Plugins
             ResponseType.Close)
         {
             BorderWidth = 10;
-            
             HBox box = new HBox();
             box.Spacing = 10;
             
@@ -82,8 +81,13 @@ namespace Banshee.Plugins
             scroll.ShadowType = ShadowType.In;
             scroll.HscrollbarPolicy = PolicyType.Never;
             
+            plugin_notebook = new Notebook();
+            
             VBox info_box = new VBox();
+            info_box.BorderWidth = 12;
             info_box.Spacing = 10;
+            
+            plugin_notebook.AppendPage(info_box, new Label(Catalog.GetString("Overview")));
             
             name_label = new Label();
             CreateInfoRow(info_box, Catalog.GetString("Plugin Name"), name_label);
@@ -95,18 +99,6 @@ namespace Banshee.Plugins
             authors_label = new Label();
             CreateInfoRow(info_box, Catalog.GetString("Author(s)"), authors_label);
             
-            HBox configure_button_box = new HBox();
-            configure_button = new Button();
-            configure_button.Clicked += OnConfigureButtonClicked;
-            HBox configure_box = new HBox();
-            configure_box.Spacing = 5;
-            configure_box.PackStart(new Image(Stock.Preferences, IconSize.Button), false, false, 0);
-            configure_box.PackStart(new Label(Catalog.GetString("Configure Plugin")));
-            configure_button.Add(configure_box);
-            configure_button_box.PackStart(configure_button, false, false, 0);
-            info_box.PackStart(configure_button_box, false, false, 0);
-            configure_button.Sensitive = false;
-            
             disabled_box = new HBox();
             disabled_box.Spacing = 5;
             Image disabled_image = new Image(Stock.DialogError, IconSize.Menu);
@@ -117,8 +109,10 @@ namespace Banshee.Plugins
             info_box.PackStart(disabled_box, false, false, 0);
             
             box.PackStart(scroll, false, false, 0);
-            box.PackStart(info_box, true, true, 0);
+            box.PackStart(plugin_notebook, true, true, 0);
             VBox.PackStart(box, true, true, 0);
+            
+            VBox.Spacing = 10;
             
             normal_color = plugin_tree.Style.Foreground(StateType.Normal);
             disabled_color = plugin_tree.Style.Foreground(StateType.Insensitive);
@@ -158,23 +152,6 @@ namespace Banshee.Plugins
             plugin_tree.Model = plugin_store;
         }
         
-        private void OnConfigureButtonClicked(object o, EventArgs args)
-        {
-            TreeIter iter;
-            
-            if(!plugin_tree.Selection.GetSelected(out iter)) {
-                return;
-            }
-            
-            Plugin plugin = plugin_store.GetValue(iter, 2) as Plugin;
-            
-            if(plugin == null) {
-                return;
-            }
-            
-            plugin.ShowConfigurationDialog();
-        }
-        
         private void OnCursorChanged(object o, EventArgs args)
         {
             TreeIter iter;
@@ -204,7 +181,19 @@ namespace Banshee.Plugins
                 disabled_box.Hide();
             }
             
-            configure_button.Sensitive = !plugin.Broken && plugin.Initialized && plugin.HasConfigurationDialog;
+            if(plugin_notebook.NPages > 1) {
+                plugin_notebook.RemovePage(1);
+            }
+            
+            if(!plugin.Broken && plugin.Initialized && plugin.HasConfigurationWidget) {
+                Alignment alignment = new Alignment(0.0f, 0.0f, 1.0f, 1.0f);
+                alignment.BorderWidth = 12;
+                Widget widget = plugin.GetConfigurationWidget();
+                alignment.Add(widget);
+                plugin_notebook.AppendPage(alignment, new Label("Configuration"));
+                widget.Show();
+                alignment.Show();
+            } 
         }
 
         private void OnActiveToggled(object o, ToggledArgs args) 

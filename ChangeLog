@@ -1,3 +1,52 @@
+2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Removed virtual 
+	ShowConfigurationDialog method; replaced with GetConfigurationWidget
+	
+	* src/Banshee.Base/Plugins/PluginDialog.cs: Remove configuration button;
+	added a notebook for showing description/overview and configuration pages;
+	If a plugin implements GetConfigurationWidget, show it in a 
+	configuration tab in the notebook
+	
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs: 
+	Changed from a Dialog subclass to a VBox subclass; ability to show/hide the 
+	Audioscrobbler logo; logo widget exposed as an internal property
+	
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Added dialog
+	to show the configuration widget in case configuration is invoked through
+	the plugin menu; implement GetConfigurationWidget
+	
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs: 
+	Changed from Dialog subclass to a VBox subclass; removed label and frame
+	as they look goofy in the notebook and are unnecessary; fixed a minor
+	display bug regarding the warning widget on the last option
+	
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Implement	
+	GetConfigurationWidget; fixed a minor database update bug
+
+
+2006-01-13  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Request engine change before playing a song
+	based on file extension; this will be used for falling back on GStreamer
+	for some formats when using Helix as the primary engine
+
+	* src/Preferences.cs: A restart is no longer needed to change the
+	primary playback engine
+
+	* src/Banshee.Base/IPlayerEngine.cs: Added SupportedExtensions property
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Allow switching engines from
+	anything other than the primary based on file extension 
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: claim to support
+	WMA in SupportedExtensions as Helix/RP can't (better chance of it working
+	in GStreamer than in Helix)
+
+	* src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:
+	* src/Banshee.MediaEngine/Helix/HelixPlayer.cs: Implement 
+	SupportedExtensions, but return null
+
 2006-01-12  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: 

@@ -37,7 +37,7 @@ using Banshee.Widgets;
 
 namespace Banshee.Plugins.MetadataSearch 
 {
-    public class MetadataSearchConfigDialog : Dialog
+    public class MetadataSearchConfigPage : VBox
     {
         private MetadataSearchPlugin plugin;
         private Alignment warning_align;
@@ -45,39 +45,15 @@ namespace Banshee.Plugins.MetadataSearch
         private RadioButton fill_blank_info;
         private RadioButton overwrite_info;
         
-        public MetadataSearchConfigDialog(MetadataSearchPlugin plugin) :  base(
-            Catalog.GetString("Configure Metadata Searcher"),
-            null,
-            DialogFlags.Modal | DialogFlags.NoSeparator,
-            Stock.Close,
-            ResponseType.Close)
+        public MetadataSearchConfigPage(MetadataSearchPlugin plugin) : base()
         {
             this.plugin = plugin;
-            IconThemeUtils.SetWindowIcon(this);
-            BuildWindow();
+            BuildWidget();
         }
         
-        private void BuildWindow()
+        private void BuildWidget()
         {
-            VBox box = new VBox();
-            box.Spacing = 10;
-            Resizable = false;
-            
-            Label title = new Label();
-            title.Markup = String.Format("<big><b>{0}</b></big>", 
-                GLib.Markup.EscapeText(Catalog.GetString("Metadata Searching")));
-            title.Xalign = 0.0f;
-            
-            Frame frame = new Frame(Catalog.GetString("Search Options"));
-            Alignment frame_alignment = new Alignment(0.0f, 0.0f, 1.0f, 1.0f);
-            frame_alignment.BorderWidth = 5;
-            frame_alignment.LeftPadding = 10;
-            frame_alignment.RightPadding = 10;
-            frame_alignment.BottomPadding = 10;
-            frame.ShadowType = ShadowType.EtchedIn;
-            
-            VBox options_box = new VBox();
-            options_box.Spacing = 5;
+            Spacing = 5;
             
             fetch_covers_only = new RadioButton(Catalog.GetString(
                 "Only download album cover artwork"));
@@ -110,20 +86,14 @@ namespace Banshee.Plugins.MetadataSearch
             warning_box.PackStart(warning_label, false, false, 0);
             warning_align.Add(warning_box);
             
-            options_box.PackStart(fetch_covers_only, false, false, 0);
-            options_box.PackStart(fill_blank_info, false, false, 0);
-            options_box.PackStart(overwrite_info, false, false, 0);
-            options_box.PackStart(warning_align, false, false, 0);
+            PackStart(fetch_covers_only, false, false, 0);
+            PackStart(fill_blank_info, false, false, 0);
+            PackStart(overwrite_info, false, false, 0);
+            PackStart(warning_align, false, false, 0);
             
-            options_box.ShowAll();
+            ShowAll();
             
-            frame_alignment.Add(options_box);
-            frame.Add(frame_alignment);
-            
-            box.PackStart(title, false, false, 0);
-            box.PackStart(frame, true, true, 0);
-            
-            box.ShowAll();
+            warning_align.Hide();
             
             switch(plugin.FetchMethod) {
                 case FetchMethod.FillBlank:
@@ -131,15 +101,12 @@ namespace Banshee.Plugins.MetadataSearch
                     break;
                 case FetchMethod.Overwrite:
                     overwrite_info.Active = true;
+                    warning_align.Show();
                     break;
                 default:
                     fetch_covers_only.Active = true;
                     break;
             }
-            
-            VBox.Add(box);
-            VBox.Spacing = 10;
-            BorderWidth = 10;
         }
         
         private void OnToggled(object o, EventArgs args)
