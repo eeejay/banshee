@@ -1,5 +1,29 @@
 2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Bump to 0.10.3; note to non-Novell distributors: I do
+	not advise packaging this release... it was made to meet an internal
+	package submission deadline. 0.10.4 will be released early next week
+	with a number of fixes to known issues
+
+	* data/banshee.glade: Add a _ prefix/accelerator to search label
+
+	* src/banshee.in: Fixed wrapper script to properly run an uninstalled copy
+
+	* src/Makefile.am: Fixed up run to invoke sh ./banshee
+
+	* src/PlayerInterface.cs: Pressing 's' or 'S' will focus the search
+	entry (along with 'j', 'J', or F3); enabled searching on all 
+	sources (playlists, DAAP) except for audio CDs
+
+	* src/TrackProperties.cs: Only sniff mime type for local tracks
+
+	* src/Banshee.Base/ActionManager.cs: Use stock for about menu item
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Added daap-sharp/content-codes
+	to EXTRA_DIST
+
+2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/SourceView.cs: Guard against a possible nullref

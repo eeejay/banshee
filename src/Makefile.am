@@ -151,7 +151,7 @@ AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
 
 run:
-	BANSHEE_BURN_ENABLE=yes banshee
+	sh ./banshee
 
 dbus-client-sample:
 	make -f BansheeDbusClient.Makefile

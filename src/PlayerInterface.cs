@@ -784,6 +784,8 @@ namespace Banshee
             switch(args.Event.Key) {
                 case Gdk.Key.J:
                 case Gdk.Key.j:
+                case Gdk.Key.S:
+                case Gdk.Key.s:
                 case Gdk.Key.F3:
                     if(!searchEntry.HasFocus) {
                         searchEntry.Focus();
@@ -1223,8 +1225,11 @@ namespace Banshee
                 gxml["DapContainer"].Hide();
             }
             
-            gxml["SearchLabel"].Sensitive = (source is DapSource && !((source as DapSource).IsSyncing)) 
-                || source is LibrarySource;
+            gxml["SearchLabel"].Sensitive = !(source is AudioCdSource);
+            if(source is DapSource && ((source as DapSource).IsSyncing)) {
+                gxml["SearchLabel"].Sensitive = false;
+            }
+            
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.RipColumn.Visible = source is AudioCdSource;
             playlistView.RatingColumn.Visible = !(source is AudioCdSource);

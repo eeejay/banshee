@@ -121,9 +121,7 @@ namespace Banshee.Base
                     Catalog.GetString("Version Information..."), null,
                     Catalog.GetString("View detailed version and configuration information"), null),
                     
-                new ActionEntry("AboutAction", "gtk-about",
-                    Catalog.GetString("About..."), null,
-                    Catalog.GetString("View Banshee credits and license information"), null),
+                new ActionEntry("AboutAction", "gtk-about", null),
                     
                 new ActionEntry("PlaybackMenuAction", null,
                     Catalog.GetString("_Playback"), null, null, null),

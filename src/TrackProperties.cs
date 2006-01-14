@@ -228,7 +228,7 @@ namespace Banshee
             tips.SetTip(glade["UriTitle"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
             tips.SetTip(glade["Uri"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
             
-            if(!(track.Track is AudioCdTrackInfo)) {
+            if(!(track.Track is AudioCdTrackInfo) && track.Uri.Scheme == System.Uri.UriSchemeFile) {
                 try {
                     Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
                         Gstreamer.DetectMimeType(track.Uri));
