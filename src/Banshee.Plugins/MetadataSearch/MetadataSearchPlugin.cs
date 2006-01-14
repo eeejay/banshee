@@ -69,6 +69,7 @@ namespace Banshee.Plugins.MetadataSearch
         private bool processing_queue;
         private Queue scan_queue;
         private Client mb_client;
+        private Thread processing_thread;
         
         protected override void PluginInitialize()
         {
@@ -114,7 +115,9 @@ namespace Banshee.Plugins.MetadataSearch
             
             scan_queue.Enqueue(args.Track);
             if(!processing_queue) {
-                ThreadAssist.Spawn(ProcessQueue);
+                processing_thread = new Thread(new ThreadStart(ProcessQueue));
+                processing_thread.IsBackground = true;
+                processing_thread.Start();
             }
         }
                 

@@ -50,6 +50,8 @@ namespace Banshee.Base
                 Directory.CreateDirectory(Paths.ApplicationData);
             }
             
+            Mono.Unix.Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
+        
             gconf_client = new GConf.Client();
             network_detect = NetworkDetect.Instance;
             action_manager = new ActionManager();

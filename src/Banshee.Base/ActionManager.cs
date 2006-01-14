@@ -99,9 +99,7 @@ namespace Banshee.Base
                     Catalog.GetString("Plugins..."), null,
                     Catalog.GetString("Configure Banshee plugins"), null),
                 
-                new ActionEntry("PreferencesAction", Stock.Preferences,
-                    Catalog.GetString("Preferences..."), null,
-                    Catalog.GetString("Edit Banshee preferences"), null),
+                new ActionEntry("PreferencesAction", Stock.Preferences, null),
                 
                 new ActionEntry("ViewMenuAction", null,
                     Catalog.GetString("_View"), null, null, null),

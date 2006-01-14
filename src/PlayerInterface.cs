@@ -138,8 +138,6 @@ namespace Banshee
 
         public PlayerUI() 
         {
-            Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
-        
             gxml = new Glade.XML(null, "banshee.glade", "WindowPlayer", null);
             gxml.Autoconnect(this);
             
@@ -334,7 +332,8 @@ namespace Banshee
             LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
             LabelStatusBar.Show();
             
-            ActionToggleButton shuffle_button = new ActionToggleButton(Globals.ActionManager["ShuffleAction"]);
+            ActionToggleButton shuffle_button = new ActionToggleButton(
+                Globals.ActionManager["ShuffleAction"], IconSize.Menu);
             shuffle_button.IconSize = IconSize.Menu;
             shuffle_button.Relief = ReliefStyle.None;
             shuffle_button.ShowAll();
@@ -350,7 +349,8 @@ namespace Banshee
             repeat_toggle_button.ShowLabel = false;
             repeat_toggle_button.ShowAll();
             
-            ActionButton song_properties_button = new ActionButton(Globals.ActionManager["PropertiesAction"]);
+            ActionButton song_properties_button = new ActionButton(
+                Globals.ActionManager["PropertiesAction"], IconSize.Menu);
             song_properties_button.IconSize = IconSize.Menu;
             song_properties_button.Relief = ReliefStyle.None;
             song_properties_button.LabelVisible = false;
@@ -438,7 +438,12 @@ namespace Banshee
             fields.Add(Catalog.GetString("Album Title"));
             
             searchEntry = new SearchEntry(fields);
-            searchEntry.EnterPress += OnSimpleSearch;
+            searchEntry.EnterPress += delegate(object o, EventArgs args) {
+                if(playlistView.Selection.CountSelectedRows() == 0 && playlistModel.Count() > 0) {
+                    playlistView.Selection.SelectPath(new TreePath(new int [] { 0 }));
+                }
+                playlistView.HasFocus = true;
+            };
             searchEntry.Changed += OnSimpleSearch;
             searchEntry.Show();
             ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, false, false, 0);
@@ -469,6 +474,9 @@ namespace Banshee
             SetTip(dapDiskUsageBar, Catalog.GetString("Device disk usage"));
             SetTip(sync_dap_button, Catalog.GetString("Synchronize music library to device"));
             SetTip(volumeButton, Catalog.GetString("Adjust volume"));
+            SetTip(repeat_toggle_button, Catalog.GetString("Change repeat playback mode"));
+            SetTip(shuffle_button, Catalog.GetString("Toggle shuffle playback mode"));
+            SetTip(song_properties_button, Catalog.GetString("Edit and view metadata of selected songs"));
             
             playlistMenuMap = new Hashtable();
         }

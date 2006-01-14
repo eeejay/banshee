@@ -42,10 +42,16 @@ namespace Banshee.Widgets
         private Image image = new Image();
         private Label label = new Label();
         private Gdk.Pixbuf pixbuf;
+        private IconSize default_size;
         
-        public ActionButton(Action action) : base()
+        public ActionButton(Action action) : this(action, IconSize.SmallToolbar)
+        {
+        }
+        
+        public ActionButton(Action action, IconSize defaultSize) : base()
         {
             this.action = action;
+            default_size = defaultSize;
             
             BuildButton();
             Sync();
@@ -69,7 +75,7 @@ namespace Banshee.Widgets
                 image.Hide();
             } else if(pixbuf == null) {
                 image.Stock = action.StockId;
-                image.IconSize = (int)IconSize.SmallToolbar;
+                image.IconSize = (int)default_size;
                 image.Show();
             }
             
@@ -143,10 +149,17 @@ namespace Banshee.Widgets
         private Action action;
         private HBox box = new HBox();
         private Image image = new Image();
+        private IconSize default_size;
         
-        public ActionToggleButton(Action action) : base()
+        public ActionToggleButton(Action action) : this(action, IconSize.SmallToolbar)
+        {
+        }
+    
+        public ActionToggleButton(Action action, IconSize defaultSize) : base()
         {
             this.action = action;
+            
+            default_size = defaultSize;
             
             BuildButton();
             Sync();
@@ -169,7 +182,7 @@ namespace Banshee.Widgets
                 image.Hide();
             } else {
                 image.Stock = action.StockId;
-                image.IconSize = (int)IconSize.SmallToolbar;
+                image.IconSize = (int)default_size;
                 image.Show();
             }
             

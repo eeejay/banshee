@@ -232,7 +232,7 @@ namespace Banshee
                 try {
                     Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
                         Gstreamer.DetectMimeType(track.Uri));
-                    BitRate.Text = (af.Bitrate / 1000).ToString() + " " + Catalog.GetString("KB/Second");
+                    BitRate.Text = (af.Bitrate / 1024).ToString() + " " + Catalog.GetString("KB/Second");
                     SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
                     Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
                     Channels.Text = af.Channels.ToString();

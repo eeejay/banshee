@@ -46,7 +46,7 @@ public class AmazonCoverFetcher
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(
             String.Format(AmazonImageUri, asin));
         
-        request.Timeout = System.Threading.Timeout.Infinite;
+        request.Timeout = 10000;
         
         HttpWebResponse response = (HttpWebResponse)request.GetResponse();
         
