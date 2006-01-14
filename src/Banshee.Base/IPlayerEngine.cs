@@ -91,6 +91,8 @@ namespace Banshee.MediaEngine
 		string AuthorEmail    { get; } // Email address of above
 		int    MajorVersion   { get; } // Major version of Engine
 		int    MinorVersion   { get; } // Minor version of Engine
+		
+		string [] SupportedExtensions { get; }
 	}
 	
 	public delegate void PlayerEngineErrorHandler(object o, 

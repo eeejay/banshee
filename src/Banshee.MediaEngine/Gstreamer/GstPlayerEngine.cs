@@ -288,6 +288,8 @@ namespace Banshee.MediaEngine.Gstreamer
                 handler(this, new EventArgs());
             }
         }
+        
+        public string [] SupportedExtensions { get { return null; } }
 
         public string ConfigName     { get { return "gstreamer"; } }
         public string EngineName     { get { return "GStreamer 0.10"; } }
@@ -598,6 +600,16 @@ namespace Banshee.MediaEngine.Gstreamer
             if(handler != null)
                 handler(this, new EventArgs());
         }
+
+        private static string [] supported_extensions = {
+            "wma"
+        };
+
+        public string [] SupportedExtensions {
+            get {
+                return supported_extensions;
+            }
+        } 
 
         public string ConfigName     { get { return "gstreamer"; } }
         public string EngineName     { get { return "GStreamer"; } }

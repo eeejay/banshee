@@ -718,7 +718,12 @@ namespace Banshee
             if(ti.Uri.Scheme == "cdda") {
                 PlayerEngineCore.LoadCdPlayer();
             } else {
-                PlayerEngineCore.UnloadCdPlayer();
+                if(ti.Uri != null) {
+                    string ext = ti.Uri.AbsoluteUri.Substring(ti.Uri.AbsoluteUri.LastIndexOf('.') + 1);
+                    PlayerEngineCore.LoadEngineByExtension(ext);
+                } else {
+                    PlayerEngineCore.UnloadCdPlayer();
+                }
             }
             
             activeTrackInfo = ti;

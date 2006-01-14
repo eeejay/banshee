@@ -121,6 +121,12 @@ namespace Banshee.MediaEngine.Helix
 			}
 		}
 		
+		public string [] SupportedExtensions {
+		  get {
+		      return null;
+		  }
+	   }
+		
 		public void Initialize()
 		{
 			player = new HxPlayer();

@@ -542,19 +542,7 @@ namespace Banshee
         {
             if(SelectedEngine.ConfigName != PlayerEngineCore.ActivePlayer.ConfigName) {
                 Globals.Configuration.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
-                string msg = 
-                    String.Format(
-                        Catalog.GetString("You have changed the Banshee Playback Engine. This change will not " + 
-                                  "take affect until the next time Banshee is run. Please restart " + 
-                                  "Banshee to use the new <b><i>{0}</i></b> Engine"),
-                        SelectedEngine.EngineName);
-                HigMessageDialog.RunHigMessageDialog(WindowPreferences,
-                    DialogFlags.Modal,
-                    MessageType.Info,
-                    ButtonsType.Ok,
-                    Catalog.GetString("Banshee Restart Required"),
-                    msg
-                );
+                PlayerEngineCore.PreferredPlayer = SelectedEngine;
             }
         }
     }

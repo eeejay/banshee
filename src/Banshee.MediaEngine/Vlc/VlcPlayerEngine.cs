@@ -55,6 +55,8 @@ namespace Banshee.MediaEngine.Vlc
         private bool disabled;
         private bool shutdown;
         
+        public string [] SupportedExtensions { get { return null; } }
+        
         public bool Disabled {
             get { return disabled;  }
             set { disabled = value; }

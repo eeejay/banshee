@@ -74,13 +74,37 @@ namespace Banshee.Base
     
         public static void ReloadEngine(IPlayerEngine engine)
         {
+            if(ActivePlayer == engine) {
+                return;
+            }
+        
             if(ActivePlayer != null) {
                 ActivePlayer.Dispose();
-                ActivePlayer = null;
             }
             
             ActivePlayer = engine;
             ActivePlayer.Initialize();
+        }
+        
+        public static void LoadEngineByExtension(string extension)
+        {
+            UnloadCdPlayer();
+            
+            foreach(IPlayerEngine engine in PlayerEngineLoader.Engines) {
+                if(engine.SupportedExtensions == null) {
+                    continue;
+                }
+                
+                foreach(string engine_ext in engine.SupportedExtensions) {
+                    if(engine_ext == extension) {
+                        Console.WriteLine("Loading " + engine.EngineName);
+                        ReloadEngine(engine);
+                        return;
+                    }
+                }       
+            }
+            
+            Console.WriteLine("Keeping existing engine " + ActivePlayer.EngineName);
         }
         
         public static void LoadCdPlayer()
@@ -119,6 +143,10 @@ namespace Banshee.Base
         public static IPlayerEngine PreferredPlayer {
             get {
                 return preferred_player;
+            } 
+            
+            set {
+                preferred_player = value;
             }
         }
         
