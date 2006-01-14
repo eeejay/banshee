@@ -55,6 +55,8 @@ src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
 src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
+src/Banshee.Plugins/Daap/DaapConfigPage.cs
+src/Banshee.Plugins/Daap/DaapCore.cs
 src/Banshee.Plugins/Daap/DaapLoginDialog.cs
 src/Banshee.Plugins/Daap/daap.schemas.in
 src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in
