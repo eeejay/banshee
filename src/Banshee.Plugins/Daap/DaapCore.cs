@@ -39,12 +39,19 @@ namespace Banshee.Plugins.Daap
 {
     internal static class DaapCore
     {
+        private static DaapPlugin plugin;
+        private static Server server;
+        private static DAAP.Database database;
         private static ServiceLocator locator;
         private static DaapProxyWebServer proxy_server;
         private static Hashtable source_map;
         
-        internal static void Initialize()
+        private static bool initial_db_committed = false;
+        
+        internal static void Initialize(DaapPlugin plugin)
         {
+            DaapCore.plugin = plugin;
+            
             source_map = new Hashtable();
             locator = new ServiceLocator();
             locator.Found += OnServiceFound;
@@ -54,6 +61,27 @@ namespace Banshee.Plugins.Daap
             
             proxy_server = new DaapProxyWebServer(8089);
             proxy_server.Start();
+            
+            string share_name = null;
+            
+            try {
+                share_name = Globals.Configuration.Get(plugin.ConfigurationKeys["ShareName"]) as string;
+            } catch {
+            }
+            
+            if(share_name == null || share_name == String.Empty) {
+                share_name = Catalog.GetString("Banshee Music Share");
+            }
+            
+            database = new DAAP.Database(share_name);
+            server = new Server(share_name);
+            server.AddDatabase(database);
+            
+            if(Globals.Library.IsLoaded) {
+                LoadInitialServerDatabase();
+            } else {
+                Globals.Library.Reloaded += OnLibraryReloaded;
+            }
         }
         
         internal static void Dispose()
@@ -67,6 +95,10 @@ namespace Banshee.Plugins.Daap
             
             if(proxy_server != null) {
                 proxy_server.Stop();
+            }
+            
+            if(server != null) {
+                server.Stop();
             }
             
             if(source_map != null) {
@@ -102,9 +134,95 @@ namespace Banshee.Plugins.Daap
             source_map.Remove(args.Service);
         }
         
+        internal static void StartServer()
+        {
+            Console.WriteLine("Starting DAAP Server");
+            server.Start();
+            Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], true);
+            
+            if(!initial_db_committed) {
+                server.Commit();
+                initial_db_committed = true;
+            }
+        }
+        
+        internal static void StopServer()
+        {
+            Console.WriteLine("Stopping DAAP Server");
+            server.Stop();
+            Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], false);
+        }
+        
+        private static DAAP.Song TrackInfoToSong(TrackInfo track)
+        {
+            if(track == null || track.Uri == null || track.Uri.Scheme != Uri.UriSchemeFile) {
+                return null;
+            }
+            
+            DAAP.Song song = new DAAP.Song();
+            song.Album = track.Album;
+            song.Artist = track.Artist;
+            song.DateAdded = track.DateAdded;
+            song.Duration = track.Duration;
+            song.FileName = track.Uri.LocalPath;
+            song.Genre = track.Genre;
+            song.Title = track.Title;
+            song.TrackCount = (int)track.TrackCount;
+            song.TrackNumber = (int)track.TrackNumber;
+            song.Year = track.Year;
+            return song;
+        }
+        
+        private static void LoadInitialServerDatabase()
+        {
+            Console.WriteLine("Building initial DAAP database from local library...");
+            
+            lock(Globals.Library.Tracks.Values) {
+                foreach(TrackInfo track in Globals.Library.Tracks.Values) {
+                    DAAP.Song song = TrackInfoToSong(track);
+                    if(song != null) {
+                        database.AddSong(song);
+                    }
+                }
+            }
+            
+            try {
+                if((bool)Globals.Configuration.Get(plugin.ConfigurationKeys["ServerEnabled"])) {
+                    StartServer();
+                }
+            } catch {
+            }
+        }
+        
+        private static void OnLibraryReloaded(object o, EventArgs args)
+        {
+            Globals.Library.Reloaded -= OnLibraryReloaded;
+            LoadInitialServerDatabase();
+        }
+
         public static DaapProxyWebServer ProxyServer {
             get {
                 return proxy_server;
+            }
+        }
+        
+        internal static string ServerName {
+            get {
+                return server.Name;
+            }
+            
+            set {
+                if(value != null && value != String.Empty) {
+                    server.Name = value;
+                    database.Name = value;
+                    Globals.Configuration.Set(plugin.ConfigurationKeys["ShareName"], value);
+                }
+            }
+        }
+        
+        internal static bool IsServerRunning {
+            get {
+                return server.IsRunning;
             }
         }
     }

@@ -14,6 +14,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DaapLoginDialog.cs \
 	$(srcdir)/DatabaseProxy.cs \
 	$(srcdir)/DaapProxyWebServer.cs \
+	$(srcdir)/DaapConfigPage.cs \
 	$(srcdir)/daap-sharp/*.cs
 	
 PKG_REFERENCES = \

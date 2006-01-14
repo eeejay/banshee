@@ -60,6 +60,10 @@ namespace Banshee.Sources
         
         public static void AddSource(Source source, bool isDefault)
         {
+            if(source == null) {
+                return;
+            }
+            
             int position = FindSourceInsertPosition(source);
             sources.Insert(position, source);
             

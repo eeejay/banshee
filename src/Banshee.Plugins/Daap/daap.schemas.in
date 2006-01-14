@@ -12,6 +12,28 @@
         <long></long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Daap/ServerEnabled</key>
+      <applyto>/apps/Banshee/Daap/ServerEnabled</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Enable DAAP Server support</short>
+        <long>Allow others to browse and listen to your music from other DAAP clients</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/Daap/ShareName</key>
+      <applyto>/apps/Banshee/Daap/ShareName</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default>Banshee Music Share</default>
+      <locale name="C">
+        <short>Name of DAAP server share</short>
+        <long></long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>
 

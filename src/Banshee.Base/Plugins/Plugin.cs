@@ -62,7 +62,7 @@ namespace Banshee.Plugins
             configuration_keys[name] = ConfigurationBase + "/" + name;
         }
         
-        protected NameValueCollection ConfigurationKeys {
+        public NameValueCollection ConfigurationKeys {
             get {
                 return configuration_keys;
             }

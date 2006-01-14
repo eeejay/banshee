@@ -1,5 +1,32 @@
 2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/SourceView.cs: Guard against a possible nullref
+
+	* src/Banshee.Base/SourceManager.cs: Do not allow registering of null
+	sources... that's not so good
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Make ConfigurationKeys public
+
+	* src/Banshee.Plugins/Daap/daap.schemas.in: Added schemas for two new keys
+
+	* src/Banshee.Plugins/Daap/DaapConfigPage.cs: Configuration page for
+	notebook in plugins dialog
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Add DAAP server support
+
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs: register two configuration keys
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Add DaapConfigPage.cs
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*: Updated daap-sharp sync
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs: 
+	Added a header label to config page
+
+2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Base/Plugins/Plugin.cs: Removed virtual 
 	ShowConfigurationDialog method; replaced with GetConfigurationWidget
 	

@@ -53,7 +53,17 @@ namespace Banshee.Plugins.MetadataSearch
         
         private void BuildWidget()
         {
-            Spacing = 5;
+            Spacing = 10;
+            
+            Label title = new Label();
+            title.Markup = String.Format("<big><b>{0}</b></big>", 
+                GLib.Markup.EscapeText(Catalog.GetString("Metadata and Cover Art Searching")));
+            title.Xalign = 0.0f;
+            
+            PackStart(title, false, false, 0);
+
+            VBox box = new VBox();
+            box.Spacing = 5;
             
             fetch_covers_only = new RadioButton(Catalog.GetString(
                 "Only download album cover artwork"));
@@ -86,10 +96,12 @@ namespace Banshee.Plugins.MetadataSearch
             warning_box.PackStart(warning_label, false, false, 0);
             warning_align.Add(warning_box);
             
-            PackStart(fetch_covers_only, false, false, 0);
-            PackStart(fill_blank_info, false, false, 0);
-            PackStart(overwrite_info, false, false, 0);
-            PackStart(warning_align, false, false, 0);
+            box.PackStart(fetch_covers_only, false, false, 0);
+            box.PackStart(fill_blank_info, false, false, 0);
+            box.PackStart(overwrite_info, false, false, 0);
+            box.PackStart(warning_align, false, false, 0);
+            
+            PackStart(box, false, false, 0);
             
             ShowAll();
             

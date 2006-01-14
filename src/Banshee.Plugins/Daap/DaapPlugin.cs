@@ -36,7 +36,7 @@ namespace Banshee.Plugins.Daap
 {
     public class DaapPlugin : Banshee.Plugins.Plugin
     {
-        protected override string ConfigurationName { get { return "DaapPlugin"; } }
+        protected override string ConfigurationName { get { return "Daap"; } }
         public override string DisplayName { get { return "Music Sharing"; } }
         
         public override string Description {
@@ -59,12 +59,19 @@ namespace Banshee.Plugins.Daap
 
         protected override void PluginInitialize()
         {
-            DaapCore.Initialize();
+            RegisterConfigurationKey("ShareName");
+            RegisterConfigurationKey("ServerEnabled");
+            DaapCore.Initialize(this);
         }
         
         protected override void PluginDispose()
         {
             DaapCore.Dispose();
+        }
+                
+        public override Gtk.Widget GetConfigurationWidget()
+        {
+            return new DaapConfigPage();
         }
     }
 }
