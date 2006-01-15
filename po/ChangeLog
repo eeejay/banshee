@@ -1,6 +1,11 @@
+2006-01-15  Øivind Hoel  <ohoel@cvs.gnome.org>
+
+	* nb.po: Updated Norwegian translation.
+	* ChangeLog: Correct 2006-01-14 to reflect actual changed file
+	
 2006-01-14  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* da.po: Updated Norwegian translation.
+	* nb.po: Updated Norwegian translation.
 
 2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
 
