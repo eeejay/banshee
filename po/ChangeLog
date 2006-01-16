@@ -1,3 +1,8 @@
+2006-01-16  Stephane Raimbault  <stephane.raimbault@free.fr>
+
+	* po/POTFILES.in: Add Watcher.cs and MetadataSearchPlugin.cs files
+	for translation
+	
 2006-01-16  Øivind Hoel  <ohoel@cvs.gnome.org>
 
 	* nb.po: Updated Norwegian translation to reflect gnome-wide NB policy
@@ -15,6 +20,7 @@
 
 	* nb.po: Updated Norwegian translation.
 
+>>>>>>> 1.83
 2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added new/missing files
