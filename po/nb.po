@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-15 17:14+0100\n"
-"PO-Revision-Date: 2006-01-15 17:16+0100\n"
+"POT-Creation-Date: 2006-01-16 17:36+0100\n"
+"PO-Revision-Date: 2006-01-16 18:01+0100\n"
 "Last-Translator: Øivind Hoel <oivind.hoel@gmail.com>\n"
 "Language-Team: Norwegian Translators <oivind.hoel@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -39,11 +39,11 @@ msgstr "Musikkavspiller"
 
 #: ../data/banshee.schemas.in.h:1
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr "Kopiér musikk til banshees musikkbibliotekmappe under importering"
+msgstr "Kopier musikk til banshees musikkbibliotekmappe under importering"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy music on import"
-msgstr "Kopiér musikk under importering"
+msgstr "Kopier musikk under importering"
 
 #: ../data/banshee.schemas.in.h:3
 msgid "Enable Special Keys"
@@ -60,7 +60,7 @@ msgstr "Filnavnmønster"
 #: ../data/banshee.schemas.in.h:7
 #, no-c-format
 msgid "Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
-msgstr "Format for oppretting av filnavn/mapper for rippede spor, importert musikk, osv. Formatet er relativt til Banshees musikkmappe... ikke skriv inn en absolutt sti! Variabler: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (ingen null-prefiks), %track_count_nz% (ingen null-prefiks)."
+msgstr "Format for oppretting av filnavn/mapper for rippede spor, importert musikk, osv. Formatet er relativt til Banshees musikkmappe; ikke skriv inn en absolutt sti! Variabler: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (ingen null-prefiks), %track_count_nz% (ingen null-prefiks)."
 
 #: ../data/banshee.schemas.in.h:8
 msgid "Height of the main interface window."
@@ -192,7 +192,7 @@ msgstr "<b>Utvidede egenskaper</b>"
 
 #: ../data/banshee.glade.h:3
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Plassering av Banshees Musikkmappe</b>"
+msgstr "<b>Plassering av Banshees musikkmappe</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>CD Burning</b>"
@@ -200,7 +200,7 @@ msgstr "<b>CD-brenning</b>"
 
 #: ../data/banshee.glade.h:5
 msgid "<b>CD Ripping</b>"
-msgstr "<b>CD-Ripping</b>"
+msgstr "<b>CD-ripping</b>"
 
 #: ../data/banshee.glade.h:6
 msgid "<b>Loading...</b>"
@@ -216,7 +216,7 @@ msgstr "<b>iPod-Konvertering</b>"
 
 #: ../data/banshee.glade.h:9
 msgid "<big><b>Editing Song</b></big>"
-msgstr "<big><b>Redigerer Sang</b></big>"
+msgstr "<big><b>Redigerer sang</b></big>"
 
 #: ../data/banshee.glade.h:10
 msgid "<big><b>New iPod Detected <small><sup>TM</sup></small></b></big>"
@@ -285,7 +285,7 @@ msgstr "Kanaler:"
 
 #: ../data/banshee.glade.h:25
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Kopiér filer til denne mappen under importering til Biblioteket"
+msgstr "Kopier filer til denne mappen under importering til Biblioteket"
 
 #: ../data/banshee.glade.h:26
 msgid "Data CD"
@@ -314,7 +314,7 @@ msgstr "Disk at once"
 #: ../data/banshee.glade.h:32
 #: ../src/TrackProperties.cs:222
 msgid "Editing Song"
-msgstr "Redigerer Sang"
+msgstr "Redigerer sang"
 
 #: ../data/banshee.glade.h:33
 msgid "Eject when finished"
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../src/AboutBox.cs:68
 msgid "Music Management and Playback for Gnome."
-msgstr "Musikkbehandling og Avspilling for Gnome."
+msgstr "Musikkbehandling og avspilling for Gnome."
 
 #: ../src/AboutBox.cs:145
 msgid "Banshee Wiki"
@@ -633,7 +633,7 @@ msgstr "Fatal feil i Banshee"
 
 #: ../src/ExceptionDialog.cs:52
 msgid "This may be due to a programming error. Please help us make Banshee better by reporting this error. Thank you in advance!"
-msgstr "Dette kan være på grunn av en feil i programmeringen. Vennligst hjelp oss med å gjøre Banshee bedre ved å rapportere denne feilen. På forhånd takk!"
+msgstr "Dette kan være på grunn av en programmeringsfeil. Vennligst hjelp oss å gjøre Banshee bedre ved å rapportere denne feilen. På forhånd takk!"
 
 #: ../src/ExceptionDialog.cs:99
 msgid "An unhandled exception was thrown: "
@@ -718,7 +718,7 @@ msgstr "Skriv valgte spor til CD"
 
 #: ../src/PlayerInterface.cs:469
 msgid "Import CD into library"
-msgstr "Legg CD inn i Biblioteket"
+msgstr "Legg CD inn i biblioteket"
 
 #: ../src/PlayerInterface.cs:470
 msgid "Play previous song"
@@ -758,7 +758,7 @@ msgstr "Veksle tilfeldig avspilling"
 
 #: ../src/PlayerInterface.cs:479
 msgid "Edit and view metadata of selected songs"
-msgstr "Redigér og vis metadata for valgte sanger"
+msgstr "Rediger og vis metadata for valgte sanger"
 
 #: ../src/PlayerInterface.cs:503
 msgid "Notification Area Icon could not be installed"
@@ -766,7 +766,7 @@ msgstr "Varslingsområde-ikon kunne ikke installeres"
 
 #: ../src/PlayerInterface.cs:554
 msgid "Import Music"
-msgstr "Importér Musikk"
+msgstr "Importer musikk"
 
 #: ../src/PlayerInterface.cs:555
 msgid ""
@@ -780,7 +780,7 @@ msgstr ""
 
 #: ../src/PlayerInterface.cs:559
 msgid "Import Folder"
-msgstr "Importér Mappe"
+msgstr "Importer mappe"
 
 #: ../src/PlayerInterface.cs:561
 msgid "Automatic Import"
@@ -822,7 +822,7 @@ msgstr "{0} av {1}"
 
 #: ../src/PlayerInterface.cs:1034
 msgid "Import Folder to Library"
-msgstr "Importér Mappe til Biblioteket"
+msgstr "Importer mappe til biblioteket"
 
 #: ../src/PlayerInterface.cs:1140
 #: ../src/Banshee.Base/ActionManager.cs:249
@@ -853,7 +853,7 @@ msgstr "Søker etter albumcover..."
 
 #: ../src/PlayerInterface.cs:1179
 msgid "Cannot search for CD metadata: there is no available Internet connection"
-msgstr "Kan ikke søke etter CD-metadata: ingen forbindelse til internett er tilgjengelig"
+msgstr "Kan ikke hente CD-metadata: ingen forbindelse til internett er tilgjengelig"
 
 #: ../src/PlayerInterface.cs:1185
 msgid "Could not fetch metadata for CD."
@@ -897,7 +897,7 @@ msgstr "Total spilletid: {0}"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:306
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:313
 msgid "New Playlist"
-msgstr "Ny Spilleliste"
+msgstr "Ny spilleliste"
 
 #: ../src/PlayerInterface.cs:1739
 msgid "Clear"
@@ -925,8 +925,8 @@ msgstr "Kan ikke importere {0} ({1}, {2})"
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file."
 msgid_plural "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files."
-msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket <i><b>i tillegg</b></i> til fra harddisken? Denne handlingen vil slette filen permanent."
-msgstr[1] "Er du sikker på at du vil fjerne de {0} valgte sangene fra biblioteket <i><b>i tillegg</b></i> til fra harddisken? Denne handlingen vil slette filene permanent."
+msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket <i><b>i tillegg</b></i> til harddisken? Denne handlingen vil slette filen permanent."
+msgstr[1] "Er du sikker på at du vil fjerne de {0} valgte sangene fra biblioteket <i><b>i tillegg</b></i> til harddisken? Denne handlingen vil slette filene permanent."
 
 #: ../src/PlayerInterface.cs:2048
 #, csharp-format
@@ -941,7 +941,7 @@ msgstr "Fjern valgte sanger fra Biblioteket"
 
 #: ../src/PlayerInterface.cs:2127
 msgid "Import Files to Library"
-msgstr "Importér Filer til Biblioteket"
+msgstr "Importer filer til biblioteket"
 
 #: ../src/PlayerInterface.cs:2173
 msgid "Invalid Selection"
@@ -976,11 +976,11 @@ msgstr "<b>Advarsel:</b> Handingene vil endre eller slette eksisterende spor på
 
 #: ../src/PlayerInterface.cs:2220
 msgid "Synchronize Library"
-msgstr "Synkronisér Bibliotek"
+msgstr "Synkronisér bibliotek"
 
 #: ../src/PlayerInterface.cs:2222
 msgid "Save Manual Changes"
-msgstr "Lagre Manuelle Endringer"
+msgstr "Lagre manuelle endringer"
 
 #: ../src/PlayerInterface.cs:2278
 msgid "Enter new playlist name"
@@ -1195,19 +1195,19 @@ msgstr "Opprett ny tom spilleliste"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
 msgid "Import _Folder..."
-msgstr "Importér Mappe..."
+msgstr "Importer mappe..."
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
-msgstr "Importér alt innholdet i en mappe"
+msgstr "Importer alt innholdet i en mappe"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
-msgstr "Importér Filer..."
+msgstr "Importer filer..."
 
 #: ../src/Banshee.Base/ActionManager.cs:73
 msgid "Import files inside a folder"
-msgstr "Importér spesifikke filer i en mappe"
+msgstr "Importer spesifikke filer i en mappe"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
 msgid "Source Properties..."
@@ -1227,7 +1227,7 @@ msgstr "Avslutt Banshee"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
 msgid "_Edit"
-msgstr "_Redigér"
+msgstr "R_ediger"
 
 #: ../src/Banshee.Base/ActionManager.cs:87
 msgid "Rename Source"
@@ -1239,7 +1239,7 @@ msgstr "Endre navn på aktiv kilde"
 
 #: ../src/Banshee.Base/ActionManager.cs:91
 msgid "Select All"
-msgstr "Velg Alle"
+msgstr "Velg alle"
 
 #: ../src/Banshee.Base/ActionManager.cs:92
 msgid "Select all songs in song list"
@@ -1247,7 +1247,7 @@ msgstr "Velg alle sanger i listen"
 
 #: ../src/Banshee.Base/ActionManager.cs:95
 msgid "Select None"
-msgstr "Velg Ingen"
+msgstr "Velg ingen"
 
 #: ../src/Banshee.Base/ActionManager.cs:96
 msgid "Unselect all songs in song list"
@@ -1259,7 +1259,7 @@ msgstr "Tillegg..."
 
 #: ../src/Banshee.Base/ActionManager.cs:100
 msgid "Configure Banshee plugins"
-msgstr "Konfigurér Banshee-tillegg"
+msgstr "Konfigurer Banshee-tillegg"
 
 #: ../src/Banshee.Base/ActionManager.cs:105
 msgid "_View"
@@ -1275,7 +1275,7 @@ msgstr "Velg hvilke kolonner som skal vises i sporlisten"
 
 #: ../src/Banshee.Base/ActionManager.cs:112
 msgid "Logged Events Viewer..."
-msgstr "Visning for loggførte hendelser..."
+msgstr "Vis hendelseslogg..."
 
 #: ../src/Banshee.Base/ActionManager.cs:113
 msgid "View a detailed log of events"
@@ -1331,11 +1331,11 @@ msgstr "Skriv valgte spor til CD"
 
 #: ../src/Banshee.Base/ActionManager.cs:167
 msgid "Remove Song(s)"
-msgstr "Fjern Sang(er)"
+msgstr "Fjern sang(er)"
 
 #: ../src/Banshee.Base/ActionManager.cs:168
 msgid "Remove selected song(s) from library"
-msgstr "Fjern valgte sanger fra Biblioteket"
+msgstr "Fjern valgte sanger fra biblioteket"
 
 #: ../src/Banshee.Base/ActionManager.cs:171
 msgid "Delete Song(s) From Drive"
@@ -1347,11 +1347,11 @@ msgstr "Slett valgte sanger permanent fra lagringsmediet"
 
 #: ../src/Banshee.Base/ActionManager.cs:175
 msgid "Edit Song Metadata"
-msgstr "Redigér Sang-metadata"
+msgstr "Rediger metadata"
 
 #: ../src/Banshee.Base/ActionManager.cs:176
 msgid "Edit metadata on selected songs"
-msgstr "Redigér metadata for valgte sanger"
+msgstr "Rediger metadata for valgte sanger"
 
 #: ../src/Banshee.Base/ActionManager.cs:179
 msgid "Add to Playlist"
@@ -1367,11 +1367,11 @@ msgstr "Sett poengsum for valgte sanger"
 
 #: ../src/Banshee.Base/ActionManager.cs:193
 msgid "Import CD"
-msgstr "Importér CD"
+msgstr "Importer CD"
 
 #: ../src/Banshee.Base/ActionManager.cs:194
 msgid "Import audio CD to library"
-msgstr "Legg CD inn i Biblioteket"
+msgstr "Legg CD inn i biblioteket"
 
 #: ../src/Banshee.Base/ActionManager.cs:204
 #: ../src/Banshee.Base/ActionManager.cs:208
@@ -1589,7 +1589,7 @@ msgstr "Spor {0}"
 #: ../src/Banshee.Base/Dap/Dap.cs:315
 #: ../src/Banshee.Base/Dap/Dap.cs:316
 msgid "Synchronizing Device"
-msgstr "Synkronisér medie"
+msgstr "Synkronisér mediet"
 
 #: ../src/Banshee.Base/Dap/Dap.cs:317
 msgid "Waiting for transcoder..."
@@ -1634,7 +1634,7 @@ msgstr "Utvidede detaljer"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
 msgid "Banshee Plugins"
-msgstr "Banshee-Tillegg"
+msgstr "Banshee-tillegg"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
@@ -1715,7 +1715,7 @@ msgstr "GStreamer 0.10"
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:306
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:627
 msgid "GStreamer is a multimedia framework for playing and manipulating media. Any GStreamer plugin that is available will work through this engine."
-msgstr "GStreamer er et multimediarammeverk for avspilling og manipulering av media. Alle tilgjengelige GStreamer-tillegg vil fungere gjennom denne kjernen."
+msgstr "GStreamer er et multimedierammeverk for avspilling og manipulering av media. Alle tilgjengelige GStreamer-tillegg vil fungere gjennom denne kjernen."
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:616
 msgid "GStreamer Engine"
@@ -1748,7 +1748,7 @@ msgstr "Opprett en konto"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
 msgid "Join the Banshee group"
-msgstr "Bli med i Banshee-gruppen"
+msgstr "Bli med i Banshees gruppe"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
 msgid "Last.fm Username"
@@ -1760,7 +1760,7 @@ msgstr "Passord"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:59
 msgid "Your profile page on Last.fm is automatically updated whenever you listen to music. It lets others see what you're listening to right now, and shows charts of your listening history."
-msgstr "Din profilside på Last.fm blir automatisk oppdatert når du hører på musikk. Dette lar andre se hva du hører på akkurat nå, og viser dine egne hitlister."
+msgstr "Din profilside på Last.fm blir automatisk oppdatert når du hører på musikk. Dette lar andre se hva du hører på akkurat nå, og lar deg se dine egne personlige hitlister."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
 msgid "Audioscrobbler"
@@ -1769,7 +1769,7 @@ msgstr "Audioscrobbler"
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
 msgid "Configure the Audioscrobbler plugin"
-msgstr "Konfigurér Audioscrobbler-tillegget"
+msgstr "Konfigurer Audioscrobbler-tillegget"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
 msgid "Visit user profile page"
@@ -1789,12 +1789,12 @@ msgstr "Besøk gruppesiden for Banshee"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
 msgid "Configure..."
-msgstr "Konfigurér.."
+msgstr "Brukervalg..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:131
 msgid "Enable song reporting"
-msgstr "Rapportér sanger til Last.fm"
+msgstr "Rapporter sanger til Last.fm"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
 msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
@@ -1826,7 +1826,7 @@ msgstr "Navn på delt musikk:"
 
 #: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
 msgid "Banshee Music Share"
-msgstr "Banshee Musikkdeling"
+msgstr "Banshee musikkdeling"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
 msgid "Login to Music Share"
@@ -1870,7 +1870,7 @@ msgstr "Skru på tillegget for overvåking av musikkmappen"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:60
 msgid "Metadata and Cover Art Searching"
-msgstr "Søking etter Metadata og CD-cover"
+msgstr "Henting av metadata og CD-cover"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:69
 msgid "Only download album cover artwork"
