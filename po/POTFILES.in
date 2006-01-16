@@ -59,8 +59,10 @@ src/Banshee.Plugins/Daap/DaapConfigPage.cs
 src/Banshee.Plugins/Daap/DaapCore.cs
 src/Banshee.Plugins/Daap/DaapLoginDialog.cs
 src/Banshee.Plugins/Daap/daap.schemas.in
+src/Banshee.Plugins/FileSystemMonitor/Watcher.cs
 src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in
 src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs
+src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs
 src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
