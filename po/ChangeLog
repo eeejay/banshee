@@ -1,3 +1,8 @@
+2006-01-16  Aaron Bockover  <aaron@aaronbock.net>
+
+	* fr.po: Updated French translation from 
+	Stephane Raimbault <stephane.raimbault@free.fr>
+
 2006-01-16  Stephane Raimbault  <stephane.raimbault@free.fr>
 
 	* po/POTFILES.in: Add Watcher.cs and MetadataSearchPlugin.cs files
