@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  SourceManager.cs
  *
@@ -29,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Banshee.Base;
 
 namespace Banshee.Sources
 {
@@ -70,18 +70,20 @@ namespace Banshee.Sources
             if(isDefault) {
                 default_source = source;
             }
-            
+
             source.Updated += OnSourceUpdated;
             source.TrackAdded += OnSourceTrackAdded;
             source.TrackRemoved += OnSourceTrackRemoved;
-            
-            SourceAddedHandler handler = SourceAdded;
-            if(handler != null) {
-                SourceAddedArgs args = new SourceAddedArgs();
-                args.Position = position;
-                args.Source = source;
-                handler(args);
-            }
+
+            ThreadAssist.ProxyToMain(delegate {
+                SourceAddedHandler handler = SourceAdded;
+                if(handler != null) {
+                    SourceAddedArgs args = new SourceAddedArgs();
+                    args.Position = position;
+                    args.Source = source;
+                    handler(args);
+                }
+            });
         }
         
         public static void AddSource(Source source)
@@ -96,21 +98,23 @@ namespace Banshee.Sources
             }
             
             sources.Remove(source);
-            
+
             source.Updated -= OnSourceUpdated;
             source.TrackAdded -= OnSourceTrackAdded;
             source.TrackRemoved -= OnSourceTrackRemoved;
-            
-            if(source == active_source) {
-                SetActiveSource(default_source);
-            }
-            
-            SourceEventHandler handler = SourceRemoved;
-            if(handler != null) {
-                SourceEventArgs args = new SourceEventArgs();
-                args.Source = source;
-                handler(args);
-            }
+
+            ThreadAssist.ProxyToMain(delegate {
+                if(source == active_source) {
+                    SetActiveSource(default_source);
+                }
+                
+                SourceEventHandler handler = SourceRemoved;
+                if(handler != null) {
+                    SourceEventArgs args = new SourceEventArgs();
+                    args.Source = source;
+                    handler(args);
+                }
+            });
         }
         
         private static void OnSourceUpdated(object o, EventArgs args)

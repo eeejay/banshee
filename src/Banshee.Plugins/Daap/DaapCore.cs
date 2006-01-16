@@ -1,4 +1,3 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  DaapCore.cs
  *
@@ -116,7 +115,7 @@ namespace Banshee.Plugins.Daap
         {
             try {
                 Source source = new DaapSource(args.Service);
-                source_map.Add(args.Service, source);
+                source_map.Add(args.Service.Name, source);
                 SourceManager.AddSource(source);
             } catch(InvalidSourceException) {
             }
@@ -124,14 +123,14 @@ namespace Banshee.Plugins.Daap
         
         private static void OnServiceRemoved(object o, ServiceArgs args)
         {
-            Source source = source_map[args.Service] as DaapSource;
-            if(source != null) {
+            Source source = source_map[args.Service.Name] as DaapSource;
+            if(source == null) {
                 return;
             }
             
             source.Dispose();
             SourceManager.RemoveSource(source);
-            source_map.Remove(args.Service);
+            source_map.Remove(args.Service.Name);
         }
         
         internal static void StartServer()

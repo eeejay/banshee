@@ -1,3 +1,11 @@
+2006-01-16  James Willcox  <james@ximian.com>
+
+	* src/Banshee.Base/SourceManager.cs: proxy add/remove events to
+	the main thread.
+	* src/Banshee.Plugins/Daap/DaapCore.cs: hash on the service name
+	instead of the whole service object.
+	* src/Banshee.Plugins/Daap/daap-sharp/*: synced
+
 2006-01-16  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/PlayerInterface.cs: Add the global actions accelerator group to
