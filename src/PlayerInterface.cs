@@ -208,6 +208,8 @@ namespace Banshee
                     Delegate.CreateDelegate(typeof(EventHandler), this, method_name));
             }
             
+            WindowPlayer.AddAccelGroup(Globals.ActionManager.UI.AccelGroup);
+            
             LoadSettings();
         }
    

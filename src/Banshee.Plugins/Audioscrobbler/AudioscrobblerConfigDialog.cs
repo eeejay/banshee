@@ -88,7 +88,7 @@ namespace Banshee.Plugins.Audioscrobbler
             frame_alignment.LeftPadding = 10;
             frame_alignment.RightPadding = 10;
             frame_alignment.BottomPadding = 10;
-            toggle_enable_button = new CheckButton("Enable song reporting");
+            toggle_enable_button = new CheckButton(Catalog.GetString("Enable song reporting"));
             toggle_enable_button.Active = plugin.Enabled;
             toggle_enable_button.Toggled += OnEnableToggled;
             frame.LabelWidget = toggle_enable_button;

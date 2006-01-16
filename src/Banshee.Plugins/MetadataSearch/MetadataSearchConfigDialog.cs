@@ -88,7 +88,7 @@ namespace Banshee.Plugins.MetadataSearch
             warning_label.Markup = "<small><b>" + GLib.Markup.EscapeText(Catalog.GetString("Warning")) + ":</b> " + 
                 GLib.Markup.EscapeText(Catalog.GetString(
                     "This option can usually correct minor mistakes in metadata, however on rare occasions " + 
-                    "metadata may be incorrectly updated from MusizBrainz.")) + "</small>";
+                    "metadata may be incorrectly updated from MusicBrainz.")) + "</small>";
             warning_label.Wrap = true;
             warning_label.Selectable = true;
             

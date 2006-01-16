@@ -190,7 +190,7 @@ namespace Banshee.Plugins
                 alignment.BorderWidth = 12;
                 Widget widget = plugin.GetConfigurationWidget();
                 alignment.Add(widget);
-                plugin_notebook.AppendPage(alignment, new Label("Configuration"));
+                plugin_notebook.AppendPage(alignment, new Label(Catalog.GetString("Configuration")));
                 widget.Show();
                 alignment.Show();
             } 

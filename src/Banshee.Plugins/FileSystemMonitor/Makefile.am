@@ -16,7 +16,7 @@ PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	-r:System.Data \
 	-r:Mono.Posix
-	
+
 schema_in_files = filesystemmonitor.schemas.in
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
@@ -25,7 +25,7 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
 	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(PKG_REFERENCES)
-	
+
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files)
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

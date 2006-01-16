@@ -1,3 +1,24 @@
+2006-01-16  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Add the global actions accelerator group to
+	the main window (BGO #326923)
+	
+	* src/Banshee.Base/Plugins/PluginDialog.cs: Wrapped missing string for
+	translation (Øivind Hoel)
+
+2006-01-16  Stephane Raimbault  <stephane.raimbault@free.fr>
+
+	reviewed by: Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:
+	Marked a string to translate
+	
+	* src/Banshee.Plugins/FileSystemMonitor/Makefile.am: Deleted some
+	bad tabs
+	
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:
+	Fixed a typo s/MusizBrainz/MusicBrainz/
+
 2006-01-14  Aaron Bockover  <aaron@aaronbock.net>
 
 	* engagged-sharp/Ogg/Util/OggInfoReader.cs: bitrate calculation fix
