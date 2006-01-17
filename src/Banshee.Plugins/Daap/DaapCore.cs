@@ -74,6 +74,10 @@ namespace Banshee.Plugins.Daap
             
             database = new DAAP.Database(share_name);
             server = new Server(share_name);
+            server.Collision += delegate {
+                server.Name = server.Name + " [2]"; // FIXME
+            };
+            
             server.AddDatabase(database);
             
             if(Globals.Library.IsLoaded) {
@@ -113,6 +117,9 @@ namespace Banshee.Plugins.Daap
         
         private static void OnServiceFound(object o, ServiceArgs args)
         {
+            if (args.Service.Name == ServerName)
+                return;
+            
             try {
                 Source source = new DaapSource(args.Service);
                 source_map.Add(args.Service.Name, source);

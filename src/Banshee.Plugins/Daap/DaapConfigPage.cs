@@ -69,7 +69,7 @@ namespace Banshee.Plugins.Daap
             
             Entry share_entry = new Entry();
             share_entry.Text = DaapCore.ServerName;
-            share_entry.Changed += delegate(object o, EventArgs args) {
+            share_entry.FocusOutEvent += delegate(object o, FocusOutEventArgs args) {
                 DaapCore.ServerName = share_entry.Text;
             };
             
