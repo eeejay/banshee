@@ -1,3 +1,16 @@
+2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Uncommented and fixed adding to playlists
+	through song context menu to work with the new PlaylistSource
+
+	* src/PlaylistView.cs: Removed unused code that has been commented out
+	for months
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Added two static properties
+	to keep track of and access a collection of PlaylistSource instances
+
+	* docs/Makefile.am: Minor cleanup/fix
+
 2006-01-16  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/DaapConfigPage.cs: only change the service

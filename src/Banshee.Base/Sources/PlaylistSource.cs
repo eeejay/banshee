@@ -38,6 +38,19 @@ namespace Banshee.Sources
 {
     public class PlaylistSource : Source
     {
+        private static ArrayList playlists = new ArrayList();
+        public static IEnumerable Playlists {
+            get {
+                return playlists;
+            }
+        }
+        
+        public static int PlaylistCount {
+            get {
+                return playlists.Count;
+            }
+        }
+        
         private ArrayList tracks = new ArrayList();
         private int id;
     
@@ -49,13 +62,16 @@ namespace Banshee.Sources
         {
             this.id = id;
             
-            if(id == 0) {
+            if(id < 0) {
+                return;
+            } else if(id == 0) {
                 CreateNewPlaylist();
-            } else if(id > 0) {
+            } else {
                 LoadFromDatabase();
             }
             
             Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
+            playlists.Add(this);
         }
         
         private void CreateNewPlaylist()
@@ -148,6 +164,7 @@ namespace Banshee.Sources
             ));
             
             SourceManager.RemoveSource(this);
+            playlists.Remove(this);
         }
         
         public override void Commit()

@@ -1683,15 +1683,22 @@ namespace Banshee
             SourceManager.AddSource(playlist);
         }
         
-        /*private void OnItemAddToPlaylistActivated(object o, EventArgs args)
+        private void OnItemAddToPlaylistActivated(object o, EventArgs args)
         {
-            string name = playlistMenuMap[o] as string;
+            PlaylistSource playlist = playlistMenuMap[o] as PlaylistSource;
             
-            if(name == null)
+            if(playlist == null)
                 return;
                 
-            playlistView.AddSelectedToPlayList(name);
-        }*/
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                TrackInfo track = playlistModel.PathTrackInfo(path);
+                if(track != null) {
+                    playlist.AddTrack(track);
+                }
+            }
+            
+            playlist.Commit();
+        }
 
         private Menu song_popup_menu = null;
         private MenuItem add_to_playlist_menu_item = null;
@@ -1720,21 +1727,17 @@ namespace Banshee
                 newPlItem.Activated += OnNewPlaylistFromSelectionActivated;
                 plMenu.Append(newPlItem);
                 
-                /*//string [] names = Playlist.ListAll();
-                string 
-                if(names.Length > 0) {
+                if(PlaylistSource.PlaylistCount > 0) {
                     plMenu.Append(new SeparatorMenuItem());
                     
-                    foreach(string plName in names) {
-                        ImageMenuItem item = new ImageMenuItem(plName);
+                    foreach(PlaylistSource playlist in PlaylistSource.Playlists) {
+                        ImageMenuItem item = new ImageMenuItem(playlist.Name);
                         item.Image = new Gtk.Image(Pixbuf.LoadFromResource("source-playlist.png"));
-                        
-                        playlistMenuMap[item] = plName;
                         item.Activated += OnItemAddToPlaylistActivated;
-                        
+                        playlistMenuMap[item] = playlist;
                         plMenu.Append(item);
                     }
-                }*/
+                }
                 
                 Menu ratingMenu = new Menu();
                 

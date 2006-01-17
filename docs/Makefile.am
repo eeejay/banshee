@@ -20,7 +20,6 @@ doc_DATA = \
 	banshee-docs.zip \
 	banshee-docs.tree \
 	banshee-docs.source
-endif
 
 update-docs: $(ASSEMBLIES)
 	$(DOC_UPDATER) $(ASSEMBLIES_BUILD) -path:en
@@ -28,7 +27,6 @@ update-docs: $(ASSEMBLIES)
 banshee-docs.zip banshee-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
-if BUILD_DOCS
 install-data-hook:
 	$(MONO) $(top_builddir)/docs/MonodocNodeConfig.exe --insert "Banshee Libraries" classlib-banshee $(DOCDIR)/../monodoc.xml
 
