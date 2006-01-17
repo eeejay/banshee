@@ -231,6 +231,10 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			next_interval = DateTime.MinValue;
 
+            if(post_url == null) {
+                return;
+            }
+
 			StringBuilder sb = new StringBuilder ();
 
 			sb.AppendFormat ("u={0}&s={1}", HttpUtility.UrlEncode (username), security_token);

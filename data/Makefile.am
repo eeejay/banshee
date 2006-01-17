@@ -17,7 +17,7 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 dbusservice_in_files = org.gnome.Banshee.service.in
-dbusservicedir = $(libdir)/dbus-1.0/services
+dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 
 CLEANFILES = \
