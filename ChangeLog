@@ -1,5 +1,16 @@
 2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Bumped version to 0.10.4
+
+	* NEWS: Updated with the 0.10.4 release notes
+
+	* docs/*: Updated Monodoc API documentation
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Removed some debug 
+	Console.WriteLine calls
+
+2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/PlayerInterface.cs: Uncommented and fixed adding to playlists
 	through song context menu to work with the new PlaylistSource
 

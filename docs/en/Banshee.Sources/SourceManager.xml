@@ -180,6 +180,28 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="SourceTrackAdded">
+      <MemberSignature Language="C#" Value="public static event Banshee.Sources.TrackEventHandler SourceTrackAdded;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Sources.TrackEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SourceTrackRemoved">
+      <MemberSignature Language="C#" Value="public static event Banshee.Sources.TrackEventHandler SourceTrackRemoved;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Sources.TrackEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>To be added.</summary>

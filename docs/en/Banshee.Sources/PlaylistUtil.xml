@@ -21,22 +21,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="GoodUniqueName">
-      <MemberSignature Language="C#" Value="public static string GoodUniqueName (System.Collections.ICollection tracks);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="tracks" Type="System.Collections.ICollection" />
-      </Parameters>
-      <Docs>
-        <param name="tracks">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="UniqueName">
       <MemberSignature Language="C#" Value="public static string UniqueName { get; };" />
       <MemberType>Property</MemberType>
@@ -46,6 +30,22 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GoodUniqueName">
+      <MemberSignature Language="C#" Value="public static string GoodUniqueName (System.Collections.IEnumerable tracks);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tracks" Type="System.Collections.IEnumerable" />
+      </Parameters>
+      <Docs>
+        <param name="tracks">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

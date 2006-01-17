@@ -248,6 +248,21 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="QueueRemove">
+      <MemberSignature Language="C#" Value="public void QueueRemove (Uri trackUri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="trackUri" Type="System.Uri" />
+      </Parameters>
+      <Docs>
+        <param name="trackUri">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>To be added.</summary>

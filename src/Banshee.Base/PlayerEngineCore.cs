@@ -97,14 +97,11 @@ namespace Banshee.Base
                 
                 foreach(string engine_ext in engine.SupportedExtensions) {
                     if(engine_ext == extension) {
-                        Console.WriteLine("Loading " + engine.EngineName);
                         ReloadEngine(engine);
                         return;
                     }
                 }       
             }
-            
-            Console.WriteLine("Keeping existing engine " + ActivePlayer.EngineName);
         }
         
         public static void LoadCdPlayer()

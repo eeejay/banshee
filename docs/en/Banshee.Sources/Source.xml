@@ -108,21 +108,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="AddTrack">
-      <MemberSignature Language="C#" Value="public void AddTrack (System.Collections.ICollection tracks);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="tracks" Type="System.Collections.ICollection" />
-      </Parameters>
-      <Docs>
-        <param name="tracks">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="RemoveTrack">
       <MemberSignature Language="C#" Value="public virtual void RemoveTrack (Banshee.Base.TrackInfo track);" />
       <MemberType>Method</MemberType>
@@ -192,7 +177,7 @@
       </Docs>
     </Member>
     <Member MemberName="Count">
-      <MemberSignature Language="C#" Value="public abstract int Count { get; };" />
+      <MemberSignature Language="C#" Value="public virtual int Count { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Int32</ReturnType>
@@ -204,10 +189,10 @@
       </Docs>
     </Member>
     <Member MemberName="Tracks">
-      <MemberSignature Language="C#" Value="public virtual System.Collections.ICollection Tracks { get; };" />
+      <MemberSignature Language="C#" Value="public virtual System.Collections.IEnumerable Tracks { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Collections.ICollection</ReturnType>
+        <ReturnType>System.Collections.IEnumerable</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -284,6 +269,124 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackAdded">
+      <MemberSignature Language="C#" Value="public event Banshee.Sources.TrackEventHandler TrackAdded;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Sources.TrackEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackRemoved">
+      <MemberSignature Language="C#" Value="public event Banshee.Sources.TrackEventHandler TrackRemoved;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Sources.TrackEventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Dispose">
+      <MemberSignature Language="C#" Value="public void Dispose ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Activate">
+      <MemberSignature Language="C#" Value="public virtual void Activate ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnDispose">
+      <MemberSignature Language="C#" Value="protected virtual void OnDispose ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AddTrack">
+      <MemberSignature Language="C#" Value="public void AddTrack (System.Collections.IEnumerable tracks);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tracks" Type="System.Collections.IEnumerable" />
+      </Parameters>
+      <Docs>
+        <param name="tracks">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveTrack">
+      <MemberSignature Language="C#" Value="public void RemoveTrack (System.Collections.IEnumerable tracks);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="tracks" Type="System.Collections.IEnumerable" />
+      </Parameters>
+      <Docs>
+        <param name="tracks">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnTrackAdded">
+      <MemberSignature Language="C#" Value="public virtual void OnTrackAdded (Banshee.Base.TrackInfo track);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="track" Type="Banshee.Base.TrackInfo" />
+      </Parameters>
+      <Docs>
+        <param name="track">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnTrackRemoved">
+      <MemberSignature Language="C#" Value="public virtual void OnTrackRemoved (Banshee.Base.TrackInfo track);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="track" Type="Banshee.Base.TrackInfo" />
+      </Parameters>
+      <Docs>
+        <param name="track">To be added.</param>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -105,6 +105,20 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ActionButton (Gtk.Action action, Gtk.IconSize defaultSize);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="action" Type="Gtk.Action" />
+        <Parameter Name="defaultSize" Type="Gtk.IconSize" />
+      </Parameters>
+      <Docs>
+        <param name="action">To be added.</param>
+        <param name="defaultSize">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
   </Members>
   <Docs>
     <summary>To be added.</summary>

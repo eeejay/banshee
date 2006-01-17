@@ -73,7 +73,7 @@
       </Docs>
     </Member>
     <Member MemberName="PreferredPlayer">
-      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.IPlayerEngine PreferredPlayer { get; };" />
+      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.IPlayerEngine PreferredPlayer { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>Banshee.MediaEngine.IPlayerEngine</ReturnType>
@@ -93,6 +93,21 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LoadEngineByExtension">
+      <MemberSignature Language="C#" Value="public static void LoadEngineByExtension (string extension);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="extension" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="extension">To be added.</param>
+        <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
