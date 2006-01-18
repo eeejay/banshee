@@ -82,7 +82,7 @@ msgstr "Nom del motor de reproducció de suports."
 
 #: ../data/banshee.schemas.in.h:12
 msgid "Only display the notification area (tray) icon if true"
-msgstr "Mostra només l'àrea de notificació (safata) si és cert"
+msgstr "Mostra només la icona de l'àrea de notificació (safata) si és cert"
 
 #: ../data/banshee.schemas.in.h:13
 msgid "Pixel position of Main Player Window on the X Axis"
@@ -265,7 +265,7 @@ msgstr "<small>Número de sèrie</small>"
 
 #: ../data/banshee.glade.h:17
 msgid "<span size=\"small\">Idle</span>"
-msgstr "<span size=\"small\">Espera</span>"
+msgstr "<span size=\"small\">Inactiu</span>"
 
 #: ../data/banshee.glade.h:18
 msgid "Albu_m"
@@ -475,7 +475,7 @@ msgstr "No es poden enllaçar els elements del conducte"
 
 #: ../libbanshee/gst-cd-rip-0.8.c:241
 msgid "Encoding element does not support tagging!"
-msgstr "Els elements de la codificació no poden suportar etiquetatge!"
+msgstr "Els elements de la codificació no suporten etiquetatge!"
 
 #: ../libbanshee/gst-cd-rip-0.8.c:251
 msgid "Could not send seek event to cdparanoia"
@@ -492,7 +492,7 @@ msgstr "No s'ha pogut obtenir la posició de la pista"
 #: ../libbanshee/gst-playback-0.8.c:91
 #
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "No s'ha pogut trobar o crear el connector 'playbin' del GStreamer"
+msgstr "No s'ha trobat o creat el connector 'playbin' del GStreamer"
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid ""
@@ -563,7 +563,7 @@ msgstr ""
 
 #: ../src/AboutBox.cs:68
 msgid "Music Management and Playback for Gnome."
-msgstr "Gestió de la música i reproducció per al Gnome."
+msgstr "Gestió i reproducció de la música per al Gnome."
 
 #: ../src/AboutBox.cs:145
 #
@@ -1356,7 +1356,7 @@ msgstr "Visualitza un registre detallat dels esdeveniments"
 
 #: ../src/Banshee.Base/ActionManager.cs:118
 msgid "_Help"
-msgstr "_Ayuda"
+msgstr "Aj_uda"
 
 #: ../src/Banshee.Base/ActionManager.cs:121
 #
@@ -1918,11 +1918,11 @@ msgstr "La vostra darrera contrasenya a last.fm"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:4
 msgid "Your last.fm username"
-msgstr "El vostre darrer nom d'usuari a last.fm"
+msgstr "El vostre nom d'usuari a last.fm"
 
 #: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
 msgid "Enable the FileSystemMonitor plugin"
-msgstr "Habibilita el connector FileSystemMonitor"
+msgstr "Habilita el connector FileSystemMonitor"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:49
 msgid "Configure Metadata Searcher"
