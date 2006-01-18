@@ -40,7 +40,6 @@ banshee_sources = \
 	Dialogs.cs \
 	TrackProperties.cs \
 	NotificationAreaIcon.cs \
-	SignalUtils.cs \
 	SourceView.cs \
 	Preferences.cs \
 	QueryBuilder.cs \

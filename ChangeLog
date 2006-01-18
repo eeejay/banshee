@@ -1,5 +1,12 @@
 2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp:
+	* src/SignalUtils.cs:
+	* src/Makefile.am: Removed SignalUtils.cs; it has not been used in many
+	months and is not necessary
+
+2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
+
 	* configure.ac: Bumped version to 0.10.4
 
 	* NEWS: Updated with the 0.10.4 release notes

@@ -42,7 +42,6 @@
     <File name="./src/QueryBuilderModel.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/RatingRenderer.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/RipTransaction.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/SignalUtils.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/SourceView.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/StockIcons.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/TrackProperties.cs" subtype="Code" buildaction="Nothing" />
