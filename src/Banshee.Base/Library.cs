@@ -54,7 +54,7 @@ namespace Banshee.Base
 
     public class Library
     {
-        public Database Db;
+        public BansheeDatabase Db;
         public Hashtable Tracks = new Hashtable();
         public Hashtable TracksFnKeyed = new Hashtable();
         public Hashtable Playlists = new Hashtable();
@@ -97,7 +97,7 @@ namespace Banshee.Base
                 }
             }
             
-            Db = new Database("Library",  db_file);
+            Db = new BansheeDatabase(db_file);
         }
         
         public void ReloadLibrary()

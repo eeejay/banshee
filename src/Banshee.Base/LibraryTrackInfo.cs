@@ -446,18 +446,8 @@ namespace Banshee.Base
                     this.uri = PathUtil.PathToFileUri (new_filename);
                 }
             } catch {}
-
-            try {
-                Globals.Library.Db.WriteCycleFinished -= OnDbWriteCycleFinished;
-                SaveToDatabase(true);
-            } catch {
-                Globals.Library.Db.WriteCycleFinished += OnDbWriteCycleFinished;
-            }
-        }
-        
-        private void OnDbWriteCycleFinished(object o, EventArgs args)
-        {
-            Save();
+            
+            SaveToDatabase(true);
         }
         
         public override void IncrementPlayCount()

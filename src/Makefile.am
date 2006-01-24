@@ -61,7 +61,6 @@ banshee_sources = \
 
 banshee_resources = \
 	COPYING \
-	data/Tables.sql \
 	data/banshee.glade \
 	data/images/advanced-icon-32.png \
 	data/images/banshee-logo.png \

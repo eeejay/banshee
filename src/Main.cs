@@ -100,7 +100,7 @@ namespace Banshee
             try {
                 return RemotePlayer.FindInstance();
             } catch {
-                Process current_process = Process.GetCurrentProcess();
+                /*Process current_process = Process.GetCurrentProcess();
                 foreach(Process process in Process.GetProcesses()) {
                     if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
                         Console.WriteLine(Catalog.GetString(""));
@@ -109,7 +109,7 @@ namespace Banshee
                             "Banshee could not connect to your D-Bus Session Bus."));
                         System.Environment.Exit(1);
                     }
-                }
+                }*/
 
                 return null;
             }

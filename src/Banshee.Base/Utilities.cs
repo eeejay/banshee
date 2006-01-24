@@ -228,6 +228,7 @@ namespace Banshee.Base
         public static Thread Spawn(ThreadStart threadedMethod, bool autoStart)
         {
             Thread thread = new Thread(threadedMethod);
+            thread.IsBackground = true;
             if(autoStart) {
                 thread.Start();
             }

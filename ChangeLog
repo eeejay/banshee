@@ -1,3 +1,42 @@
+2006-01-23  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+	
+	* data/Tables.sql: Removed; Tables are now defined in code
+
+	* data/banshe.desktop.in.in: Added more standard desktop categories
+
+	* src/Makefile.am: 
+	* src/Banshee.Base/Makefile.am: Removed resource  data/Tracks.sql
+
+	* src/Main.cs: Disabled process-based instance detection for now; it
+	is causing problems for some and needs investigating
+
+	* src/Banshee.Base/Database.cs: Rewritten database layer; class now
+	extends new QueuedSqliteDatabase class and all table detection and
+	creation SQL is now embedded in code
+
+	* src/Banshee.Base/QueuedSqliteDatabase.cs: New database layer that
+	queues queries to execute sequentially on a single thread; fixes many
+	various sqlite-related database issues including database/thread
+	synchronization and database locking
+
+	* src/Banshee.Base/Globals.cs:
+	* src/Banshee.Base/Library.cs:
+	* src/Banshee.Base/LibraryTrackInfo.cs:
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Updated to reflect minor
+	API changes in database layer
+
+	* src/Banshee.Base/SqlGenerator.cs (Statement.EscapeQuotes): Minor fix
+	to return empty string if input is null (gonzalo)
+
+	* src/Banshee.Base/Utilities.cs (ThreadAssist.Spawn): Threads spawned here
+	should be background threads (gonzalo)
+
+2006-01-18  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee: Branched for NLD10/stable Banshee '1.0' release (BANSHEE_NLD10)
+
 2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp:

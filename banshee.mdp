@@ -103,7 +103,6 @@
     <File name="./data/banshee.desktop.in.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/banshee.schemas.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/org.gnome.Banshee.service.in" subtype="Code" buildaction="Nothing" />
-    <File name="./data/Tables.sql" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/NotificationAreaIcon.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/BansheeTodo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
@@ -207,6 +206,7 @@
     <File name="./src/Banshee.Plugins/Daap/DatabaseProxy.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Daap/DaapProxyWebServer.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Daap/DaapConfigPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/QueuedSqliteDatabase.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

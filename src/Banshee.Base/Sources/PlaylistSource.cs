@@ -79,7 +79,7 @@ namespace Banshee.Sources
             id = Globals.Library.Db.Execute(String.Format(
                 @"INSERT INTO Playlists
                     VALUES (NULL, '{0}')",
-                    Sql.Statement.EscapeQuotes(Name)), true
+                    Sql.Statement.EscapeQuotes(Name))
             );
         }
         

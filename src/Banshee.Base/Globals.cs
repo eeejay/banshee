@@ -80,7 +80,7 @@ namespace Banshee.Base
         {
             Banshee.Plugins.PluginCore.Dispose();
             network_detect.Dispose();
-            library.Db.Close();
+            library.Db.Dispose();
             Banshee.Dap.DapCore.Dispose();
             HalCore.Dispose();
         }

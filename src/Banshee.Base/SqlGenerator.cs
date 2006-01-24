@@ -103,8 +103,7 @@ namespace Sql
 		
 		public static string EscapeQuotes(string str)
 		{
-		 	string s = Regex.Replace(str, "'", @"''");
-		 	return s;
+		 	return str == null ? String.Empty : Regex.Replace(str, "'", @"''");
 		}
 		
 		public static Statement Empty
