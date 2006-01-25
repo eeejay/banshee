@@ -41,12 +41,12 @@ namespace Banshee.Database
         private Thread queue_thread;
         private bool dispose_requested = false;
         private bool processing_queue = false;
+        private string dbpath;
+        private bool connected;
         
         public QueuedSqliteDatabase(string dbpath)
         {
-            connection = new SqliteConnection("Version=3,URI=file:" + dbpath);
-            connection.Open();
-            
+            this.dbpath = dbpath;
             queue_thread = new Thread(ProcessQueue);
             queue_thread.IsBackground = true;
             queue_thread.Start();
@@ -56,6 +56,11 @@ namespace Banshee.Database
         {
             dispose_requested = true;
             while(processing_queue);
+        }
+        
+        private void WaitForConnection()
+        {
+            while(!connected);
         }
 
         private void QueueCommand(QueuedSqliteCommand command)
@@ -67,6 +72,7 @@ namespace Banshee.Database
         
         public SqliteDataReader Query(object query)
         {
+            WaitForConnection();
             QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
                 query.ToString(), Banshee.Database.CommandType.Reader);
             QueueCommand(command);
@@ -75,6 +81,7 @@ namespace Banshee.Database
                 
         public object QuerySingle(object query)
         {
+            WaitForConnection();
             QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
                 query.ToString(), Banshee.Database.CommandType.Scalar);
             QueueCommand(command);
@@ -83,6 +90,7 @@ namespace Banshee.Database
         
         public int Execute(object query)
         {
+            WaitForConnection();
             QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
                 query.ToString(), Banshee.Database.CommandType.Execute);
             QueueCommand(command);
@@ -101,7 +109,13 @@ namespace Banshee.Database
         
         private void ProcessQueue()
         {         
-            processing_queue = true;            
+            if(connection == null) {
+                connection = new SqliteConnection("Version=3,URI=file:" + dbpath);
+                connection.Open();
+                connected = true;
+            }
+            
+            processing_queue = true;
             bool in_dispose_transaction = false;
             
             while(true) {
