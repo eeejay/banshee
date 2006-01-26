@@ -267,7 +267,6 @@ PKG_CHECK_MODULES(GTK,
 	glib-2.0 \
 	libgnome-2.0 \
 	libgnomeui-2.0 \
-	libbonobo-2.0 \
 	gconf-2.0 \
 	gdk-pixbuf-2.0 \
 	gnome-vfs-2.0 \
@@ -285,6 +284,16 @@ PKG_CHECK_MODULES(HAL,
 	hal >= 0.5.2)
 AC_SUBST(HAL_CFLAGS)
 AC_SUBST(HAL_LIBS)
+
+dnl DBus devel detect .so version for dll maps
+PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.60, dbus60=yes, dbus60=no)
+if test "x$dbus60" = "xyes"; then
+	DBUS_SOVERSION=2
+else
+	DBUS_SOVERSION=1
+fi
+AC_SUBST(DBUS_SOVERSION)
+
 
 dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.13, lnb13=yes, lnb13=no)

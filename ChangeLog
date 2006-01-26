@@ -1,5 +1,22 @@
 2006-01-25  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Check for DBus 0.60 or better and set DBUS_SOVERSION 
+	accordingly to either 2 or 1
+
+	* data/banshee.desktop.in.in: Changed --play to --play-enqueued so 
+	playing will only happen if songs were passed to --enqueue; was a small
+	bug where just clicking on the desktop file would cause banshee to
+	start playing no matter what - quite annoying 
+
+	* src/PlayerInterface.cs: Support --play-enqueued which can now be
+	passed with a populated --enqueue to auto-play conditionally
+
+	* hal-sharp/hal-sharp.dll.config.in: 
+	* src/Banshee.Dap/Ipod/ipod-sharp.dll.config.in: Use @DBUS_SOVERSION@
+	for mapping to the proper dbus libraries
+
+2006-01-25  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Base/QueuedSqliteDatabase.cs: Open the connection to the
 	database on the processing thread; otherwise that kinda defeats the entire
 	purpose of the threaded queue processor ;)

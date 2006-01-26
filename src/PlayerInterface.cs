@@ -643,7 +643,8 @@ namespace Banshee
                 SourceManager.SetActiveSource(LibrarySource.Instance);
             }
 
-            if(Globals.ArgumentQueue.Contains("play")) {
+            if(Globals.ArgumentQueue.Contains("play") || 
+                (Globals.ArgumentQueue.Contains("play-enqueued") && LocalQueueSource.Instance.Count > 0)) {
                 GLib.Timeout.Add(1500, delegate {
                     PlayPause();
                     return false;
