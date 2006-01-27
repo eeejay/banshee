@@ -136,7 +136,7 @@ namespace Banshee
         
         private void GtkAboutDialog()
         {
-            GtkSharpBackports.AboutDialog about_dialog = new GtkSharpBackports.AboutDialog();
+            AboutDialog about_dialog = new AboutDialog();
             about_dialog.Name = Name;
             about_dialog.Version = ConfigureDefines.VERSION;
             about_dialog.Copyright = Copyright;

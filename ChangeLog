@@ -1,5 +1,19 @@
 2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Require Gtk# 2.7+; remove references to GtkSharpBackports
+
+	* src/AboutBox.cs:
+	* src/Preferences.cs: Remove GtkSharpBackports namespace prefix on
+	widgets that were available only in Gtk# 2.8
+
+	* src/Makefile.am: Remove GtkSharpBackports from SUBDIRS and do not
+	link against GtkSharpBackports.dll
+
+	* src/GtkSharpBackports: Removed; everything that was in GtkSharpBackports
+	was backported from 2.8 to use in 2.4; now using 2.8
+
+2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/StockIcons.cs: Instead of relying on an exception, check the
 	resource manifest to see if a resource icon exists; reduces exception
 	overhead and thwarts GdkPixbufLoader warnings from being spewed to

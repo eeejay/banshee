@@ -69,7 +69,7 @@ namespace Banshee
         private HBox driveContainer;
         private HBox speedContainer;
         
-        private GtkSharpBackports.FileChooserButton libraryLocationChooser;
+        private FileChooserButton libraryLocationChooser;
         
         private BurnDrive [] burnDevices;
         
@@ -95,7 +95,7 @@ namespace Banshee
                     
             IconThemeUtils.SetWindowIcon(WindowPreferences);
                     
-            libraryLocationChooser = new GtkSharpBackports.FileChooserButton(
+            libraryLocationChooser = new FileChooserButton(
                 Catalog.GetString("Select Library Location"), 
                 FileChooserAction.SelectFolder);
             libraryLocationChooser.SelectionChanged += OnLibraryLocationChooserCurrentFolderChanged;

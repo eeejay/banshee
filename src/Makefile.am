@@ -1,6 +1,5 @@
 SUBDIRS = \
 	MusicBrainz \
-	GtkSharpBackports \
 	Banshee.Widgets \
 	Banshee.Base \
 	Banshee.MediaEngine \
@@ -120,7 +119,6 @@ PKG_REFERENCES = \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
-	-r:$(top_builddir)/src/GtkSharpBackports/GtkSharpBackports.dll \
 	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
 	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
 

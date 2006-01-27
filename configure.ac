@@ -134,7 +134,7 @@ else
 fi
 
 dnl gtk-sharp, other CLR deps
-GTKSHARP_REQUIRED=2.3.92
+GTKSHARP_REQUIRED=2.7
 PKG_CHECK_MODULES(GTKSHARP,
 	gtk-sharp-2.0 >= $GTKSHARP_REQUIRED \
 	gnome-sharp-2.0 >= $GTKSHARP_REQUIRED \
@@ -390,8 +390,6 @@ src/AssemblyInfo.cs
 src/banshee.exe.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
-src/GtkSharpBackports/Makefile
-src/GtkSharpBackports/GtkSharpBackports.dll.config
 src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
 src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config
