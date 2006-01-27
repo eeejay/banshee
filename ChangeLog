@@ -1,5 +1,10 @@
 2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/PlayerInterface.cs: Minor cosmetic bug fixed regarding sensitivity 
+	of search box after a DAP sync completes
+
+2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/PlayerInterface.cs: Moved the custom DAP syncing view to DapSource;
 	support switching between the default playlist view and custom source
 	views (Source.ViewWidget); sources can now provide custom and hybrid

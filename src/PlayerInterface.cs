@@ -1289,10 +1289,6 @@ namespace Banshee
             }
             
             gxml["SearchLabel"].Sensitive = !(source is AudioCdSource);
-            if(source is DapSource && ((source as DapSource).IsSyncing)) {
-                gxml["SearchLabel"].Sensitive = false;
-            }
-            
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.RipColumn.Visible = source is AudioCdSource;
             playlistView.RatingColumn.Visible = !(source is AudioCdSource);
