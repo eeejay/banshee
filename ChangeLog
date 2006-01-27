@@ -1,5 +1,15 @@
 2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/StockIcons.cs: Instead of relying on an exception, check the
+	resource manifest to see if a resource icon exists; reduces exception
+	overhead and thwarts GdkPixbufLoader warnings from being spewed to
+	the console (BNC #145487)
+
+	* src/Banshee.MediaEngine/Helix/HelixPlayer.cs: Make the iterate thread
+	a background thread; does not hang on exit
+
+2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/PlayerInterface.cs: Minor cosmetic bug fixed regarding sensitivity 
 	of search box after a DAP sync completes
 

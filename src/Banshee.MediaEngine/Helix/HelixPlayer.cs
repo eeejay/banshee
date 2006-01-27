@@ -136,6 +136,7 @@ namespace Banshee.MediaEngine.Helix
 			player.ContentStateChanged += OnContentStateChanged;
 			
 			iterateThread = new Thread(new ThreadStart(DoIterate));
+			iterateThread.IsBackground = true;
 			iterateThread.Start();
 		}
 		

@@ -28,10 +28,11 @@
  */
 
 using System;
+using System.Collections;
+using System.Reflection;
 using Gtk;
 using Gdk;
 using Mono.Unix;
-using System.Collections;
 
 namespace Banshee
 {
@@ -68,15 +69,19 @@ namespace Banshee
             "cd-action-rip",
         };    
 
-        private static void AddResourceToIconSet(string stockId, int size, IconSize iconSize, IconSet iconSet)
+        private static void AddResourceToIconSet(Assembly entryAsm, string stockId, int size, 
+            IconSize iconSize, IconSet iconSet)
         {
-            try {
-                IconSource source = new IconSource();
-                source.Pixbuf = Pixbuf.LoadFromResource(stockId + "-" + size.ToString() + ".png");
-                source.Size = iconSize;
-                iconSet.AddSource(source);
-            } catch(Exception) {
+            string resource_name = stockId + "-" + size.ToString() + ".png";
+            
+            if(entryAsm.GetManifestResourceInfo(resource_name) == null) {
+                return;
             }
+            
+            IconSource source = new IconSource();
+            source.Pixbuf = new Pixbuf(entryAsm, resource_name);
+            source.Size = iconSize;
+            iconSet.AddSource(source);
         }
         
         private static void AddThemeIconToIconSet(string stockId, IconSize iconSize, IconSet iconSet)
@@ -94,6 +99,8 @@ namespace Banshee
         {
             IconFactory icon_factory = new IconFactory();
             icon_factory.AddDefault();
+            
+            Assembly entry_asm = System.Reflection.Assembly.GetEntryAssembly();
 
             foreach(string item_id in stock_icon_names) {
                 StockItem item = new StockItem(item_id, null, 0, Gdk.ModifierType.ShiftMask, null);
@@ -111,18 +118,18 @@ namespace Banshee
                     Pixbuf default_pixbuf = null;
                 
                     foreach(string postfix in new string [] { "", "-16", "-24", "-48" }) {
-                        try {
-                            default_pixbuf = Pixbuf.LoadFromResource(item.StockId + postfix + ".png");
-                            break;
-                        } catch(Exception) {
+                        string resource_name = item.StockId + postfix + ".png";
+                        if(entry_asm.GetManifestResourceInfo(resource_name) == null) {
                             continue;
                         }
+                        
+                        default_pixbuf = new Pixbuf(entry_asm, resource_name);
                     }
                     
                     icon_set = new IconSet(default_pixbuf);
-                    AddResourceToIconSet(item.StockId, 16, IconSize.Menu, icon_set);
-                    AddResourceToIconSet(item.StockId, 24, IconSize.SmallToolbar, icon_set);
-                    AddResourceToIconSet(item.StockId, 48, IconSize.Dialog, icon_set);
+                    AddResourceToIconSet(entry_asm, item.StockId, 16, IconSize.Menu, icon_set);
+                    AddResourceToIconSet(entry_asm, item.StockId, 24, IconSize.SmallToolbar, icon_set);
+                    AddResourceToIconSet(entry_asm, item.StockId, 48, IconSize.Dialog, icon_set); 
                 }
                 
                 if(icon_set == null) {
