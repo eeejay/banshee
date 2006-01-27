@@ -86,8 +86,6 @@ namespace Banshee
         private ActionButton rip_button;
         
         private ActionButton sync_dap_button;
-        private EventBox syncing_container;
-        private Gtk.Image dap_syncing_image = new Gtk.Image();
         [Widget] private ProgressBar dapDiskUsageBar;
         
         private HighlightMessageArea audiocd_statusbar;
@@ -220,7 +218,6 @@ namespace Banshee
             
             foreach(DapDevice device in DapCore.Devices) {
                  device.PropertiesChanged += OnDapPropertiesChanged;
-                 device.SaveStarted += OnDapSaveStarted;
                  device.SaveFinished += OnDapSaveFinished;
             }
             
@@ -385,6 +382,7 @@ namespace Banshee
             sourceView.Sensitive = false;
             SourceManager.ActiveSourceChanged += OnSourceManagerActiveSourceChanged;
             SourceManager.SourceUpdated += OnSourceManagerSourceUpdated;
+            SourceManager.SourceViewChanged += OnSourceManagerSourceViewChanged;
             SourceManager.SourceTrackAdded += OnSourceTrackAdded;
             SourceManager.SourceTrackRemoved += OnSourceTrackRemoved;
             
@@ -400,6 +398,7 @@ namespace Banshee
             // Playlist View
             playlistModel = new PlaylistModel();
             playlistView = new PlaylistView(playlistModel);
+            InterfaceElements.PlaylistView = playlistView;
             ((Gtk.ScrolledWindow)gxml["LibraryContainer"]).Add(playlistView);
             playlistView.Show();
             playlistModel.Updated += OnPlaylistUpdated;
@@ -1107,6 +1106,59 @@ namespace Banshee
             }
         }
         
+        private void OnSourceManagerSourceViewChanged(SourceEventArgs args)
+        {
+            if(args.Source == SourceManager.ActiveSource) {
+                UpdateSourceView();
+            }
+        }
+        
+        private void UpdateSourceView()
+        {
+            if(SourceManager.ActiveSource.ViewWidget != null) {
+                ShowSourceWidget();
+            } else {
+                ShowPlaylistView();
+            }
+        }
+        
+        private void ShowPlaylistView()
+        {
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
+            
+            if(alignment.Child == playlist_container) {
+                return;
+            } else if(alignment.Child != null) {
+                alignment.Remove(alignment.Child);
+            }
+            
+            alignment.Add(playlist_container);
+            alignment.ShowAll();
+            
+            gxml["PlaylistHeaderBox"].Show();
+        }
+        
+        private void ShowSourceWidget()
+        {
+            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            
+            if(alignment.Child == SourceManager.ActiveSource.ViewWidget) {
+                return;
+            }
+            
+            if(SourceManager.ActiveSource.ViewWidget == null) {
+                ShowPlaylistView();
+                return;
+            } 
+            
+            alignment.Remove(alignment.Child);
+            alignment.Add(SourceManager.ActiveSource.ViewWidget);
+            alignment.ShowAll();
+            
+            gxml["PlaylistHeaderBox"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
+        }
+        
         private void OnSourceTrackAdded(object o, TrackEventArgs args)
         {
             if(SourceManager.ActiveSource == o) {
@@ -1247,13 +1299,7 @@ namespace Banshee
             playlistView.PlaysColumn.Visible = playlistView.RatingColumn.Visible;
             playlistView.LastPlayedColumn.Visible = playlistView.RatingColumn.Visible;
                 
-            if(!(source is DapSource)) {
-                ShowPlaylistView();
-            } else if((source as DapSource).IsSyncing) {
-                ShowSyncingView();
-            } else {
-                ShowPlaylistView();
-            }
+            UpdateSourceView();
                 
             OnPlaylistViewSelectionChanged(playlistView.Selection, new EventArgs());
         }
@@ -1292,7 +1338,6 @@ namespace Banshee
         private void OnDapCoreDeviceAdded(object o, DapEventArgs args)
         {
             args.Dap.PropertiesChanged += OnDapPropertiesChanged;
-            args.Dap.SaveStarted += OnDapSaveStarted;
             args.Dap.SaveFinished += OnDapSaveFinished;
         }
         
@@ -1333,78 +1378,16 @@ namespace Banshee
             }
         }
         
-        private void OnDapSaveStarted(object o, EventArgs args)
-        {
-            if(SourceManager.ActiveSource is DapSource
-                && (SourceManager.ActiveSource as DapSource).IsSyncing) {
-                ShowSyncingView();
-                gxml["SearchLabel"].Sensitive = false;
-                searchEntry.Sensitive = false;
-                Globals.ActionManager.DapActions.Sensitive = false;
-                dap_syncing_image.Pixbuf = (SourceManager.ActiveSource as DapSource).Device.GetIcon(128);
-            }
-        }
-        
         private void OnDapSaveFinished(object o, EventArgs args)
         {
             if(SourceManager.ActiveSource is DapSource
                 && !(SourceManager.ActiveSource as DapSource).IsSyncing) {
-                ShowPlaylistView();
-                gxml["SearchLabel"].Sensitive = true;
-                searchEntry.Sensitive = true;
-                Globals.ActionManager.DapActions.Sensitive = true;
                 playlistModel.ReloadSource();
                 UpdateDapDiskUsageBar(SourceManager.ActiveSource as DapSource);
             }
             
             sourceView.QueueDraw();
             playlistView.QueueDraw();
-        }
-
-        private void ShowPlaylistView()
-        {
-            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
-            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
-            
-            if(alignment.Child == playlist_container) {
-                return;
-            } else if(alignment.Child == syncing_container) {
-                alignment.Remove(syncing_container);
-            }
-            
-            alignment.Add(playlist_container);
-            alignment.ShowAll();
-        }
-        
-        private void ShowSyncingView()
-        {
-            Alignment alignment = gxml["LibraryAlignment"] as Alignment;
-            ScrolledWindow playlist_container = gxml["LibraryContainer"] as ScrolledWindow;
-            
-            if(alignment.Child == syncing_container) {
-                return;
-            } else if(alignment.Child == playlist_container) {
-                alignment.Remove(playlist_container);
-            }
-            
-            if(syncing_container == null) {
-                syncing_container = new EventBox();
-                HBox syncing_box = new HBox();
-                syncing_container.Add(syncing_box);
-                syncing_box.Spacing = 20;
-                syncing_box.PackStart(dap_syncing_image, false, false, 0);
-                Label syncing_label = new Label();
-                                                
-                syncing_container.ModifyBg(StateType.Normal, new Color(0, 0, 0));
-                syncing_label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
-            
-                syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
-                    Catalog.GetString("Synchronizing your Device, Please Wait...")) + "</b></big>";
-                syncing_box.PackStart(syncing_label, false, false, 0);
-            }
-            
-            alignment.Add(syncing_container);
-            alignment.ShowAll();
         }
 
         private void OnPlaylistUpdated(object o, EventArgs args)

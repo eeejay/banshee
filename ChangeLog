@@ -1,3 +1,24 @@
+2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Moved the custom DAP syncing view to DapSource;
+	support switching between the default playlist view and custom source
+	views (Source.ViewWidget); sources can now provide custom and hybrid
+	views
+
+	* src/Banshee.Base/Globals.cs: Provide a basic InterfaceElements proxy
+	class; Currently only provides access to the PlaylistView widget as
+	a TreeView; but is sufficient enough for plugins and sources to directly
+	access selections
+
+	* src/Banshee.Base/Source.cs: Added virtual ViewWidget and 
+	ShowPlaylistHeader properties; added a ViewUpdated event
+
+	* src/Banshee.Base/SourceManager.cs: Proxy the Source.ViewUpdated event
+	for sources
+
+	* src/Banshee.Base/Sources/DapSource.cs: Moved the DAP syncing view from
+	PlayerInterface and implemented as a ViewWidget
+
 2006-01-25  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Check for DBus 0.60 or better and set DBUS_SOVERSION 

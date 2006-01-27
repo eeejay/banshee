@@ -52,6 +52,7 @@ namespace Banshee.Sources
         private static Source default_source;
         
         public static event SourceEventHandler SourceUpdated;
+        public static event SourceEventHandler SourceViewChanged;
         public static event SourceAddedHandler SourceAdded;
         public static event SourceEventHandler SourceRemoved;
         public static event SourceEventHandler ActiveSourceChanged;
@@ -72,6 +73,7 @@ namespace Banshee.Sources
             }
 
             source.Updated += OnSourceUpdated;
+            source.ViewChanged += OnSourceViewChanged;
             source.TrackAdded += OnSourceTrackAdded;
             source.TrackRemoved += OnSourceTrackRemoved;
 
@@ -100,6 +102,7 @@ namespace Banshee.Sources
             sources.Remove(source);
 
             source.Updated -= OnSourceUpdated;
+            source.ViewChanged -= OnSourceViewChanged;
             source.TrackAdded -= OnSourceTrackAdded;
             source.TrackRemoved -= OnSourceTrackRemoved;
 
@@ -120,6 +123,16 @@ namespace Banshee.Sources
         private static void OnSourceUpdated(object o, EventArgs args)
         {
             SourceEventHandler handler = SourceUpdated;
+            if(handler != null) {
+                SourceEventArgs evargs = new SourceEventArgs();
+                evargs.Source = o as Source;
+                handler(evargs);
+            }
+        }
+        
+        private static void OnSourceViewChanged(object o, EventArgs args)
+        {
+            SourceEventHandler handler = SourceViewChanged;
             if(handler != null) {
                 SourceEventArgs evargs = new SourceEventArgs();
                 evargs.Source = o as Source;

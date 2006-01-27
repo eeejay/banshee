@@ -57,6 +57,7 @@ namespace Banshee.Sources
         public event EventHandler Updated;
         public event TrackEventHandler TrackAdded;
         public event TrackEventHandler TrackRemoved;
+        public event EventHandler ViewChanged;
         
         protected Source(string name, int order)
         {
@@ -160,6 +161,14 @@ namespace Banshee.Sources
             }
         }
         
+        protected virtual void OnViewChanged()
+        {
+            EventHandler handler = ViewChanged;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+        
         public virtual int Count {
             get {
                 return -1;
@@ -176,15 +185,29 @@ namespace Banshee.Sources
             }
         }
         
+        private static readonly ArrayList empty_track_list = new ArrayList();
+        
         public virtual IEnumerable Tracks {
             get {
-                return new ArrayList();
+                return empty_track_list;
             }
         }
         
         public virtual Gdk.Pixbuf Icon {
             get {
                 return null;
+            }
+        }
+        
+        public virtual Gtk.Widget ViewWidget {
+            get {
+                return null;
+            }
+        }
+        
+        public virtual bool ShowPlaylistHeader {
+            get {
+                return true;
             }
         }
         

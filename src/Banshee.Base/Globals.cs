@@ -141,4 +141,21 @@ namespace Banshee.Base
             }
         }
     }
+    
+    public static class InterfaceElements
+    {
+        private static Gtk.TreeView playlist_view;
+        
+        public static Gtk.TreeView PlaylistView {
+            get {
+                return playlist_view;
+            }
+            
+            set {
+                if(playlist_view == null) {
+                    playlist_view = value;
+                }
+            }
+        }
+    }
 }
