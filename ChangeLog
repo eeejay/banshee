@@ -1,3 +1,8 @@
+2006-01-28  Aaron Bockover  <aaron@aaronbock.net>
+
+	* configure.ac: Use libdir instead of $prefix/lib for detecting mono
+	fixes BGO #328916
+
 2006-01-27  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Require Gtk# 2.7+; remove references to GtkSharpBackports
