@@ -171,7 +171,6 @@
     <File name="./src/Banshee.Plugins/FileSystemMonitor/Watch.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/FileSystemMonitor/Watcher.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/DBusRemote.cs" subtype="Code" buildaction="Compile" />
-    <File name="./src/Sources.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Plugins/PluginDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/MusicBrainz/Client.cs" subtype="Code" buildaction="Compile" />
@@ -197,7 +196,6 @@
     <File name="./src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Audioscrobbler/Queue.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Dap/DapCore.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/SourceBrowser.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Daap/DaapCore.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Daap/DaapPlugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Plugins/Daap/DaapSource.cs" subtype="Code" buildaction="Compile" />

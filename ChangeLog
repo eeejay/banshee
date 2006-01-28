@@ -1,5 +1,9 @@
 2006-01-28  Aaron Bockover  <aaron@aaronbock.net>
 
+	* banshee.mdp: Removed obsolete files (BGO #328931)
+
+2006-01-28  Aaron Bockover  <aaron@aaronbock.net>
+
 	* configure.ac: Use libdir instead of $prefix/lib for detecting mono
 	fixes BGO #328916
 
