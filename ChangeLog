@@ -1,5 +1,9 @@
 2006-01-30  Aaron Bockover  <aaron@aaronbock.net>
 
+	* autogen.sh: Require automake 1.9
+
+2006-01-30  Aaron Bockover  <aaron@aaronbock.net>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* conifgure.ac: Generate necessary files for MMKeys plugin
