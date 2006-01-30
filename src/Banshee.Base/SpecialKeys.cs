@@ -2,8 +2,9 @@
 /***************************************************************************
  *  SpecialKeys.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@aaronbock.net>
+ *             Danilo Reinhardt <danilo.reinhardt@gmx.net>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -50,48 +51,80 @@ namespace Banshee.Base
     {
         private Hashtable key_map = new Hashtable();
         private Hashtable key_registrations = new Hashtable();
+        private IEnumerable keycode_list;
         private TimeSpan raise_delay = new TimeSpan(0);
         private DateTime last_raise = DateTime.MinValue;
         
         public SpecialKeys()
         {
+            keycode_list = BuildKeyCodeList();
             InitializeKeys();
+        }
+        
+        public void Dispose()
+        {
+            UnitializeKeys();
         }
         
         public void RegisterHandler(SpecialKeyPressedHandler handler, params SpecialKey [] specialKeys)
         {
             foreach(SpecialKey specialKey in specialKeys) {
-                int key = (int)key_map[specialKey];
-                key_registrations[key] = Delegate.Combine(key_registrations[key] as Delegate, handler);
+                if(key_map.Contains(specialKey)) {
+                    int key = (int)key_map[specialKey];
+                    key_registrations[key] = Delegate.Combine(key_registrations[key] as Delegate, handler);
+                }
             }
         }
         
         public void UnregisterHandler(SpecialKeyPressedHandler handler, params SpecialKey [] specialKeys)
         {
             foreach(SpecialKey specialKey in specialKeys) {
-                int key = (int)key_map[specialKey];
-                key_registrations[key] = Delegate.Remove(key_registrations[key] as Delegate, handler); 
+                if(key_map.Contains(specialKey)) {
+                    int key = (int)key_map[specialKey];
+                    key_registrations[key] = Delegate.Remove(key_registrations[key] as Delegate, handler); 
+                }
             }
         }
         
-        private void InitializeKeys()
+        private IEnumerable BuildKeyCodeList()
         {
             ArrayList kc_list = new ArrayList();
-            
+
             foreach(SpecialKey key in Enum.GetValues(typeof(SpecialKey))) {
-                int keycode = XKeysymToKeycode(gdk_x11_get_default_xdisplay(), key);
-                key_map[keycode] = key;
-                key_map[key] = keycode;
-                kc_list.Add(keycode);
+                IntPtr xdisplay = gdk_x11_get_default_xdisplay();
+                
+                if(!xdisplay.Equals(IntPtr.Zero)) {
+                    int keycode = XKeysymToKeycode(xdisplay, key);
+                    if(keycode != 0) {
+                        key_map[keycode] = key;
+                        key_map[key] = keycode;
+                        kc_list.Add(keycode);
+                    }
+                }
             }
             
+            return kc_list;
+        }
+
+        private void InitializeKeys()
+        {
             for(int i = 0; i < Gdk.Display.Default.NScreens; i++) {
                 Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
-                foreach(int keycode in kc_list) {
+                foreach(int keycode in keycode_list) {
                     GrabKey(screen.RootWindow, keycode);
                 }
-                
                 screen.RootWindow.AddFilter(FilterKey);
+            }
+        }
+        
+        private void UnitializeKeys() 
+        {
+            for(int i = 0; i < Gdk.Display.Default.NScreens; i++) {
+                Gdk.Screen screen = Gdk.Display.Default.GetScreen(i);
+                foreach(int keycode in keycode_list) {
+                    UngrabKey(screen.RootWindow, keycode);
+                }
+                screen.RootWindow.RemoveFilter(FilterKey);
             }
         }
         
@@ -112,39 +145,66 @@ namespace Banshee.Base
             XGrabKey(xdisplay, keycode, XModMask.Mod2 | XModMask.Mod5 | XModMask.Lock, xid, true, 
                 XGrabMode.Async, XGrabMode.Async);
         
+            gdk_flush();
+            
             if(gdk_error_trap_pop() != 0) {
-                Console.Error.WriteLine("Could not grab key {0}", keycode);
+                Console.Error.WriteLine(": Could not grab key {0} (maybe another application has grabbed this key)", keycode);
+            }
+        }
+        
+        private void UngrabKey(Gdk.Window root, int keycode)
+        {
+            IntPtr xid = gdk_x11_drawable_get_xid(root.Handle);
+            IntPtr xdisplay = gdk_x11_get_default_xdisplay();
+            
+            gdk_error_trap_push();
+            
+            XUngrabKey(xdisplay, keycode, XModMask.None, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod2, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod5, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Lock, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod2 | XModMask.Mod5, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod2 | XModMask.Lock, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod5 | XModMask.Lock, xid);
+            XUngrabKey(xdisplay, keycode, XModMask.Mod2 | XModMask.Mod5 | XModMask.Lock,xid);
+        
+            gdk_flush();
+            
+            if(gdk_error_trap_pop() != 0) {
+                Console.Error.WriteLine(": Could not ungrab key {0} (maybe another application has grabbed this key)", keycode);
             }
         }
         
         private Gdk.FilterReturn FilterKey(IntPtr xeventPtr, Gdk.Event gdkEvent)
         {
+            if(DateTime.Now - last_raise < raise_delay) {
+                return Gdk.FilterReturn.Continue;
+            }
+
+            last_raise = DateTime.Now;
+            
             XKeyEvent xevent = (XKeyEvent)Marshal.PtrToStructure(xeventPtr, typeof(XKeyEvent));
             
             if(xevent.type != XEventName.KeyPress) {
                 return Gdk.FilterReturn.Continue;
             }
 
-            if(DateTime.Now - last_raise < raise_delay) {
+            int keycode = (int)xevent.keycode;
+            object x = key_map[keycode];
+            
+            if(x == null) {
                 return Gdk.FilterReturn.Continue;
             }
             
-            last_raise = DateTime.Now;
-
-                int keycode = (int)xevent.keycode;
-		object x = key_map [keycode];
-		if (x == null)
-			return Gdk.FilterReturn.Continue;
-
-                SpecialKey key = (SpecialKey)key_map[keycode];
-                
-                if(key_registrations[keycode] != null) {
-		    x = key_registrations [keycode];
-		    if (x is SpecialKeyPressedHandler){
-                        ((SpecialKeyPressedHandler)x)(this, key);	
-		    }
-                    return Gdk.FilterReturn.Remove;
+            SpecialKey key = (SpecialKey)key_map[keycode];
+            
+            if(key_registrations[keycode] != null) {
+                x = key_registrations[keycode];
+                if(x is SpecialKeyPressedHandler) {
+                    ((SpecialKeyPressedHandler)x)(this, key);    
                 }
+                return Gdk.FilterReturn.Remove;
+            }
             
             return Gdk.FilterReturn.Continue;
         }
@@ -180,23 +240,30 @@ namespace Banshee.Base
         }
 
         [DllImport("libX11")]
-        extern static int XKeysymToKeycode(IntPtr display, SpecialKey keysym);
+        private static extern int XKeysymToKeycode(IntPtr display, SpecialKey keysym);
 
         [DllImport("libX11")]
-        extern static void XGrabKey(IntPtr display, int keycode, XModMask modifiers, 
+        private static extern void XGrabKey(IntPtr display, int keycode, XModMask modifiers, 
             IntPtr window, bool owner_events, XGrabMode pointer_mode, XGrabMode keyboard_mode);
+            
+        [DllImport("libX11")]
+        private static extern void XUngrabKey(IntPtr display, int keycode, XModMask modifiers, 
+            IntPtr window);
 
         [DllImport("gdk-x11-2.0")]
-        static extern IntPtr gdk_x11_drawable_get_xid(IntPtr window);
+        private static extern IntPtr gdk_x11_drawable_get_xid(IntPtr window);
         
         [DllImport("gdk-x11-2.0")]
-        static extern IntPtr gdk_x11_get_default_xdisplay();
+        private static extern IntPtr gdk_x11_get_default_xdisplay();
         
         [DllImport("gdk-x11-2.0")]
-        static extern void gdk_error_trap_push();
+        private static extern void gdk_error_trap_push();
         
         [DllImport("gdk-x11-2.0")]
-        static extern int gdk_error_trap_pop();
+        private static extern int gdk_error_trap_pop();
+        
+        [DllImport("gdk-x11-2.0")]
+        private static extern void gdk_flush();
         
         [Flags]
         private enum XModMask {

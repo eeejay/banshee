@@ -1,3 +1,22 @@
+2006-01-30  Aaron Bockover  <aaron@aaronbock.net>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* conifgure.ac: Generate necessary files for MMKeys plugin
+
+	* src/PlayerInterface.cs: Removed old commented out special keys code
+
+	* src/Banshee.Base/SpecialKeys.cs: Minor fixes and ungrab support based 
+	on patch by Danilo Reinhardt
+
+	* src/Banshee.Base/Utilities.cs (Utilities.ExecProcess): Minor fix
+	to work around 77393 (SIGSEGV) in Ximian/Mono bugzilla
+
+	* src/Banshee.Plugins/Makefile.am: Add MMKeys to SUBDIRS
+
+	* src/Banshee.Plugins/MMKeys/*: Initial commit of the MMKeys plugin
+	by Danilo Reinhardt
+
 2006-01-28  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp: Removed obsolete files (BGO #328931)

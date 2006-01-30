@@ -166,23 +166,7 @@ namespace Banshee
             
             InitialLoadTimeout();
             WindowPlayer.Show();
-            
-            /*try {
-                if((bool)Globals.Configuration.Get(GConfKeys.EnableSpecialKeys)) {
-                    special_keys = new SpecialKeys();
-                    special_keys.Delay = new TimeSpan(350 * TimeSpan.TicksPerMillisecond);
-                    special_keys.RegisterHandler(OnSpecialKeysPressed, 
-                        SpecialKey.AudioPlay,
-                        SpecialKey.AudioPrev,
-                        SpecialKey.AudioNext
-                    );
-                }
-            } catch(GConf.NoSuchKeyException) {
-            } catch(Exception e) {
-                special_keys = null;
-                LogCore.Instance.PushWarning(Catalog.GetString("Could not setup special keys"), e.Message, false);
-            }*/
-            
+
             // Bind available methods to actions defined in ActionManager
             Globals.ActionManager.DapActions.Visible = false;
             Globals.ActionManager.AudioCdActions.Visible = false;
@@ -911,22 +895,7 @@ namespace Banshee
             playlistModel.Advance();
             playlistView.UpdateView();
         }
-        
-        private void OnSpecialKeysPressed(object o, SpecialKey key)
-        {
-            switch(key) {
-                case SpecialKey.AudioPlay:
-                    PlayPause();
-                    break;
-                case SpecialKey.AudioNext:
-                    Next();
-                    break;
-                case SpecialKey.AudioPrev:
-                    Previous();
-                    break;
-            }
-        }
-        
+         
         private void OnVolumeScaleChanged(int volume)
         {
             PlayerEngineCore.ActivePlayer.Volume = (ushort)volume;

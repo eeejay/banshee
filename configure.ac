@@ -414,6 +414,8 @@ src/Banshee.Plugins/FileSystemMonitor/Makefile
 src/Banshee.Plugins/FileSystemMonitor/FileSystemMonitor.dll.config
 src/Banshee.Plugins/MetadataSearch/Makefile
 src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config
+src/Banshee.Plugins/MMKeys/Makefile
+src/Banshee.Plugins/MMKeys/MMKeys.dll.config
 src/Banshee.Plugins/Daap/Makefile
 src/Banshee.Plugins/Daap/Daap.dll.config
 data/Makefile

@@ -95,7 +95,7 @@ namespace Banshee.Base
         
         public static int ExecProcess(string command, string args)
         {
-            Process process = Process.Start(command, args);
+            Process process = Process.Start(command, args == null ? "" : args);
             process.WaitForExit();
             return process.ExitCode;
         }

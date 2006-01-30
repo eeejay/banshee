@@ -2,7 +2,8 @@ SUBDIRS = \
 	Audioscrobbler \
 	Daap \
 	FileSystemMonitor \
-	MetadataSearch 
+	MetadataSearch \
+	MMKeys
 
 DISTCLEANFILES = \
 	Makefile.in
