@@ -30,15 +30,14 @@
 using System;
 using Gtk;
 using Mono.Unix;
-using System.Runtime.InteropServices;
 
 using Banshee.Base;
 
 namespace Banshee
 {
-    public class AboutBox
+    public class BansheeAboutDialog : AboutDialog
     {
-        private static string [] Authors = {
+        private static string [] authors = {
             "Aaron Bockover",
             "Dan Winship",
             "Hans Petter Jansson",
@@ -50,24 +49,17 @@ namespace Banshee
             "Aydemir Ula\u015f \u015eahin",
             "Do\u011facan G\u00fcney",
             "Chris Toshok",
-            "Jeff Tickle"
+            "Jeff Tickle",
+            "Ruben Vermeersch"
         };
         
-        private static string [] Artists = {
+        private static string [] artists = {
             "Garrett LeSage",
             "Jakub Steiner",
             "Ryan Collier"
         };
         
-        private static string Copyright = Catalog.GetString(
-            "Copyright 2005 Novell, Inc.\n" + 
-             "Copyright 2005 Aaron Bockover"); 
-    
-        private static string Name = Catalog.GetString("Banshee");
-        
-        private static string Comments = Catalog.GetString("Music Management and Playback for Gnome.");
-    
-        private Translator [] Translators = {
+        private static Translator [] translators = {
             new Translator("Jordi Mas", "Catalan"),
             new Translator("Alexander Shopov, Rostislav Raykov", "Bulgarian"),
             new Translator("Adam Weinberger", "Canadian English"),
@@ -122,55 +114,35 @@ namespace Banshee
             }
         }
     
-        public AboutBox()
+        public BansheeAboutDialog() : base()
         {
-            Array.Sort(Authors);
-            Array.Sort(Artists);
+            Array.Sort(authors);
+            Array.Sort(artists);
             
-            try {
-                GtkAboutDialog();
-            } catch(Exception) {
-                GnomeAboutDialog();
-            }
+            IconThemeUtils.SetWindowIcon(this);
+            
+            Logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
+            Name = Catalog.GetString("Banshee"); 
+            Version = ConfigureDefines.VERSION;
+            Comments = Catalog.GetString("Music Management and Playback for Gnome.");
+            Copyright = Catalog.GetString(
+                "Copyright \u00a9 2005-2006 Novell, Inc.\n" + 
+                "Copyright \u00a9 2005 Aaron Bockover"
+            );
+            
+            Website = "http://banshee-project.org/";
+            WebsiteLabel = Catalog.GetString("Banshee Wiki");
+            
+            Authors = authors;
+            TranslatorCredits = Translator.ToString(translators);
+            Artists = artists;
+            
+            License = Resource.GetFileContents("COPYING");
+            WrapLicense = true;
+            
+            SetUrlHook(delegate(AboutDialog dialog, string link) {
+                Gnome.Url.Show(link);
+            });
         }
-        
-        private void GtkAboutDialog()
-        {
-            AboutDialog about_dialog = new AboutDialog();
-            about_dialog.Name = Name;
-            about_dialog.Version = ConfigureDefines.VERSION;
-            about_dialog.Copyright = Copyright;
-            about_dialog.Comments = Comments;
-            about_dialog.Website = "http://banshee-project.org/";
-            about_dialog.WebsiteLabel = Catalog.GetString("Banshee Wiki");
-            about_dialog.Authors = Authors;
-            about_dialog.TranslatorCredits = Translator.ToString(Translators);
-            about_dialog.Artists = Artists;
-            IconThemeUtils.SetWindowIcon(about_dialog);
-            about_dialog.Logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
-            about_dialog.License = Resource.GetFileContents("COPYING");
-            about_dialog.WrapLicense = true;
-            about_dialog.Run();
-            about_dialog.Destroy();
-        }
-        
-#pragma warning disable 0612
-        private void GnomeAboutDialog()
-        {
-            Gnome.About about_dialog = new Gnome.About(
-                Name,
-                ConfigureDefines.VERSION,
-                Copyright,
-                Comments,
-                Authors,
-                null,
-                Translator.ToString(Translators),
-                Gdk.Pixbuf.LoadFromResource("banshee-logo.png"));
-            IconThemeUtils.SetWindowIcon(about_dialog);
-            about_dialog.Run();
-            about_dialog.Destroy();
-        }
-#pragma warning restore 0612
-
     }
 }

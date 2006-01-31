@@ -1,3 +1,31 @@
+2006-01-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/AboutBox.cs: Class renamed to BansheeAboutDialog, which now
+	extends Gtk.AboutDialog; no more Gnome.About support as Gtk# 2.8 is 
+	required now; updated copyright; added Ruben Vermeersch
+
+	* src/PlayerInterface.cs (OnAboutAction): Updated to reflect change
+	from AboutBox to BansheeAboutDialog
+
+	* src/Banshee.Widgets/VolumeButton.cs: Turned the +/- icons into
+	buttons that allow click and hold to adjust the volume (Ruben 
+	Vermeersch, BGO #329360); removed the +/- icons and replaced with
+	text
+
+2006-01-31  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/PlayerInterface.cs: Use search icon for the search entry from the
+	theme; do not respond to search if the source is to handle it
+
+	* src/Banshee.Base/Globals.cs: Added InterfaceElements.SearchEntry
+
+	* src/Banshee.Base/Source.cs: Added virtual property HandlesSearch; 
+	sources can override this and return true, and then connect to
+	events on InterfaceElements.SearchEntry to do custom searching
+
+	* src/Banshee.Widgets/SearchEntry.cs: Allow setting of custom search
+	icons through the Icon and HoverIcon properties
+
 2006-01-30  Aaron Bockover  <aaron@aaronbock.net>
 
 	* autogen.sh: Require automake 1.9

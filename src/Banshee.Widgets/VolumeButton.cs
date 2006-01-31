@@ -38,8 +38,11 @@ namespace Banshee.Widgets
 	{
 		private Image icon;
 		private Window popup;
+		private VScale scale;
 		private int volume;
 		private int revert_volume;
+		private bool button_pressed;
+		private uint timeoutId = 0;
 
 		/* GDK_CURRENT_TIME doesn't seem to have an equiv in gtk-sharp yet. */
 		const uint CURRENT_TIME = 0;
@@ -95,11 +98,11 @@ namespace Banshee.Widgets
 
 		private void ShowScale ()
 		{
-			VScale scale;
 			VBox box;
 			Adjustment adj;
 			Frame frame;
-			Image image;
+			Label label;
+			Button button;
 			Requisition req;
 			int x, y;
 
@@ -136,13 +139,26 @@ namespace Banshee.Widgets
 			scale.Show ();
 
 
-			image = new Image("audio-volume-increase", IconSize.Menu);
-			image.Show ();
-			box.PackStart (image, false, true, 0);
+            label = new Label();
+            label.Markup = "<b><big>+</big></b>";
+			button = new Button(label);
+			button.Relief = ReliefStyle.None;
+			button.Pressed += new EventHandler (PlusButtonPressed);
+			button.Released += new EventHandler (ButtonReleased);
+			button.ScrollEvent += new ScrollEventHandler (ScrollHandler);
+			button.ShowAll();
+			box.PackStart (button, false, true, 0);
 
-			image = new Image("audio-volume-decrease", IconSize.Menu);
-			image.Show ();
-			box.PackEnd (image, false, true, 0);
+
+            label = new Label();
+            label.Markup = "<b><big>\u2212</big></b>";
+			button = new Button(label);
+			button.Relief = ReliefStyle.None;
+			button.Pressed += new EventHandler (MinusButtonPressed);
+			button.Released += new EventHandler (ButtonReleased);
+			button.ScrollEvent += new ScrollEventHandler (ScrollHandler);
+			button.ShowAll();
+			box.PackEnd (button, false, true, 0);
 
 			box.PackStart (scale, true, true, 0);
 
@@ -156,7 +172,7 @@ namespace Banshee.Widgets
 			popup.Move (x + Allocation.X, y + Allocation.Y + req.Height);
 			popup.Show ();
 
-			popup.GrabFocus ();
+			scale.GrabFocus ();
 
 			Grab.Add (popup);
 
@@ -190,6 +206,7 @@ namespace Banshee.Widgets
 				Gdk.Pointer.Ungrab (CURRENT_TIME);
 				Gdk.Keyboard.Ungrab (CURRENT_TIME);
 
+				scale = null;
 				popup.Destroy ();
 				popup = null;
 			}
@@ -208,26 +225,11 @@ namespace Banshee.Widgets
 
 		private void ScrollHandler (object obj, ScrollEventArgs args)
 		{
-			int tmp_vol = Volume;
-			
-			switch (args.Event.Direction) {
-			case Gdk.ScrollDirection.Up:
-				tmp_vol += 10;
-				break;
-			case Gdk.ScrollDirection.Down:
-				tmp_vol -= 10;
-				break;
-			default:
-				break;
+			if (args.Event.Direction == Gdk.ScrollDirection.Up) {
+				AdjustVolume (1);
+			} else if (args.Event.Direction == Gdk.ScrollDirection.Down) {
+				AdjustVolume (-1);
 			}
-
-			// A CLAMP equiv doesn't seem to exist ... doing that manually
-			tmp_vol = Math.Min (100, tmp_vol);
-			tmp_vol = Math.Max (0, tmp_vol);
-
-			Volume = tmp_vol;
-
-			VolumeChanged (Volume);
 		}
 
 		private void ScaleValueChanged (object obj, EventArgs args)
@@ -261,6 +263,62 @@ namespace Banshee.Widgets
 		{
 			if (popup != null) {
 				HideScale ();
+			}
+		}
+
+		private void PlusButtonPressed (object obj, EventArgs args)
+		{
+			button_pressed = true;
+			OnPlusButtonPressedTimeout();
+		}
+
+		private void MinusButtonPressed (object obj, EventArgs args)
+		{
+			button_pressed = true;
+			OnMinusButtonPressedTimeout();
+		}
+
+		private bool OnPlusButtonPressedTimeout () {
+			if (button_pressed) {
+				AdjustVolume (1);
+
+				if (timeoutId == 0) {
+					timeoutId = GLib.Timeout.Add(250, OnPlusButtonPressedTimeout);
+				}
+			}
+			return button_pressed;
+		}
+
+		private bool OnMinusButtonPressedTimeout () {
+			if (button_pressed) {
+				AdjustVolume (-1);
+
+				if (timeoutId == 0) {
+					timeoutId = GLib.Timeout.Add(250, OnMinusButtonPressedTimeout);
+				}
+			}
+			return button_pressed;
+		}
+
+		private void ButtonReleased (object obj, EventArgs args) {
+			button_pressed = false;
+			if (timeoutId > 0) {
+				GLib.Source.Remove(timeoutId);
+				timeoutId = 0;
+			}
+		}
+
+		private void AdjustVolume (int direction) {
+			int tmp_vol = Volume + direction * 10;
+
+			// A CLAMP equiv doesn't seem to exist ... doing that manually
+			tmp_vol = Math.Min (100, tmp_vol);
+			tmp_vol = Math.Max (0, tmp_vol);
+
+			Volume = tmp_vol;
+
+			if (scale != null) {
+				scale.Value = tmp_vol;
 			}
 		}
 	}

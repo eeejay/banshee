@@ -2427,7 +2427,9 @@ namespace Banshee
         
         private void OnAboutAction(object o, EventArgs args)
         {
-            new AboutBox();
+            BansheeAboutDialog about = new BansheeAboutDialog();
+            about.Run();
+            about.Destroy();
         }
     }
 }
