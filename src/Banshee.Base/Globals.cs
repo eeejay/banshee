@@ -157,5 +157,19 @@ namespace Banshee.Base
                 }
             }
         }
+        
+        private static Banshee.Widgets.SearchEntry search_entry;
+        
+        public static Banshee.Widgets.SearchEntry SearchEntry {
+            get {
+                return search_entry;
+            }
+            
+            set {
+                if(search_entry == null) {
+                    search_entry = value;
+                }
+            }
+        }
     }
 }

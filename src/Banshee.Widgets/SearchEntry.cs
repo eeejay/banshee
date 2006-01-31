@@ -50,6 +50,7 @@ namespace Banshee.Widgets
     
         private Gdk.Pixbuf icon;
         private Gdk.Pixbuf hoverIcon;
+        
         private Gdk.Cursor handCursor;
         
         private CheckMenuItem activeItem;
@@ -352,6 +353,19 @@ namespace Banshee.Widgets
         public bool IsQueryAvailable {
             get {
                 return Query != null && Query != String.Empty;
+            }
+        }
+        
+        public Gdk.Pixbuf Icon {
+            set {
+                icon = value;
+                img.Pixbuf = value;
+            }
+        }
+        
+        public Gdk.Pixbuf HoverIcon {
+            set {
+                hoverIcon = value;
             }
         }
     }

@@ -423,14 +423,25 @@ namespace Banshee
             fields.Add(Catalog.GetString("Album Title"));
             
             searchEntry = new SearchEntry(fields);
+            Pixbuf search_icon = IconThemeUtils.LoadIcon(16, "system-search", Stock.Find);
+            if(search_icon != null) {
+                Pixbuf light_search_icon = new Pixbuf(Colorspace.Rgb, true, 8, search_icon.Width, search_icon.Height);
+                search_icon.SaturateAndPixelate(light_search_icon, 0.0f, false);
+                searchEntry.Icon = light_search_icon;
+                searchEntry.HoverIcon = search_icon;
+            }
+            
             searchEntry.EnterPress += delegate(object o, EventArgs args) {
-                if(playlistView.Selection.CountSelectedRows() == 0 && playlistModel.Count() > 0) {
-                    playlistView.Selection.SelectPath(new TreePath(new int [] { 0 }));
+                if(!SourceManager.ActiveSource.HandlesSearch) {
+                    if(playlistView.Selection.CountSelectedRows() == 0 && playlistModel.Count() > 0) {
+                        playlistView.Selection.SelectPath(new TreePath(new int [] { 0 }));
+                    }
+                    playlistView.HasFocus = true;
                 }
-                playlistView.HasFocus = true;
             };
             searchEntry.Changed += OnSimpleSearch;
             searchEntry.Show();
+            InterfaceElements.SearchEntry = searchEntry;
             ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, false, false, 0);
                 
             gxml["SearchLabel"].Sensitive = false;
@@ -1512,6 +1523,10 @@ namespace Banshee
         
         private void OnSimpleSearch(object o, EventArgs args)
         {
+            if(SourceManager.ActiveSource.HandlesSearch) {
+                return;
+            }
+            
             playlistModel.Clear();
             
             if(!searchEntry.IsQueryAvailable) {
