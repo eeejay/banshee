@@ -1,3 +1,13 @@
+2006-02-01  Fredrik Hedberg <fredrik@avafan.com>
+
+        * banshee.pc.in: Added gconf-sharp-2.0 as a requirement for
+        our pkg-config file, as many plugins most certainly will use gconf.
+
+        * src/Banshee.Base/SourceManager.cs: Call Deactivate() on the
+        current source when the user switches to a new one.
+
+        * src/Banshee.Base/Source.cs: Add the empty virtual method Deactivate.
+
 2006-01-31  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/AboutBox.cs: Class renamed to BansheeAboutDialog, which now

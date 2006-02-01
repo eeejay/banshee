@@ -196,9 +196,12 @@ namespace Banshee.Sources
         
         public static void SetActiveSource(Source source, bool notify)
         {
+	    if (active_source != null)
+		active_source.Deactivate ();
+
             active_source = source;
             source.Activate();
-               
+             
             if(!notify) {
                 return;
             }

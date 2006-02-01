@@ -73,6 +73,10 @@ namespace Banshee.Sources
         public virtual void Activate()
         {
         }
+
+        public virtual void Deactivate()
+        {
+        }
         
         protected virtual void OnDispose()
         {
