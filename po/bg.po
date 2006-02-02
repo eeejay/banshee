@@ -5,13 +5,12 @@
 #
 #
 #
-#: ../src/Main.cs:106
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-22 20:14+0200\n"
-"PO-Revision-Date: 2006-01-22 20:13+0200\n"
+"POT-Creation-Date: 2006-02-02 14:56+0200\n"
+"PO-Revision-Date: 2006-02-02 14:54+0200\n"
 "Last-Translator: Rostislav \"zbrox\" Raykov <zbrox@i-space.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:334
-#: ../src/PlayerInterface.cs:1429
+#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:315
+#: ../src/PlayerInterface.cs:1389
 msgid "Banshee Music Player"
 msgstr "Слушане на музика (Banshee)"
 
@@ -271,8 +270,8 @@ msgid "Audio CD"
 msgstr "Аудио диск"
 
 #: ../data/banshee.glade.h:20 ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:66 ../src/NotificationAreaIcon.cs:61
-#: ../src/PlayerInterface.cs:706
+#: ../src/AboutBox.cs:125 ../src/NotificationAreaIcon.cs:61
+#: ../src/PlayerInterface.cs:701
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -479,9 +478,8 @@ msgid "Could not get track position"
 msgstr "Не може да се вземе позицията на песента"
 
 #: ../libbanshee/gst-playback-0.8.c:91
-#, fuzzy
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Не може да създаде \"spider\" приставка"
+msgstr ""
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid ""
@@ -496,11 +494,11 @@ msgstr ""
 
 #: ../libbanshee/gst-transcode-0.8.c:118
 msgid "Could not create 'gnomevfssrc' plugin"
-msgstr "Не може да се създаде \"gnomevfssrc\" приставка"
+msgstr "Не може да се създаде приставка „gnomevfssrc“"
 
 #: ../libbanshee/gst-transcode-0.8.c:124
 msgid "Could not create 'spider' plugin"
-msgstr "Не може да създаде \"spider\" приставка"
+msgstr "Не може да създаде приставка „spider“"
 
 #: ../libbanshee/gst-transcode-0.8.c:131
 #, c-format
@@ -509,7 +507,7 @@ msgstr ""
 
 #: ../libbanshee/gst-transcode-0.8.c:137
 msgid "Could not create 'filesink' plugin"
-msgstr "Не може да се създаде \"filesync\" приставка"
+msgstr "Не може да се създаде приставка „filesync“"
 
 #: ../libbanshee/gst-transcode-0.8.c:219
 msgid "No decoder could be found for source format."
@@ -536,19 +534,19 @@ msgstr ""
 msgid "Could not get device list from HAL"
 msgstr "Не може да се вземе списъка с устройства от HAL"
 
-#: ../src/AboutBox.cs:63
-msgid ""
-"Copyright 2005 Novell, Inc.\n"
-"Copyright 2005 Aaron Bockover"
-msgstr ""
-"Всички права запазени 2005 Novell, Inc.\n"
-"Всички права запазени 2005 Aaron Bockover"
-
-#: ../src/AboutBox.cs:68
+#: ../src/AboutBox.cs:127
 msgid "Music Management and Playback for Gnome."
 msgstr "Организиране и слушане на музика за GNOME"
 
-#: ../src/AboutBox.cs:145
+#: ../src/AboutBox.cs:129
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Авторски права: 2005 Novell, Inc.\n"
+"Авторски права: 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:134
 msgid "Banshee Wiki"
 msgstr "Уики на Banshee"
 
@@ -700,100 +698,88 @@ msgstr "Само съобщения за проследяване на греш�
 msgid "Entry Details:"
 msgstr "Информация за записа:"
 
-#: ../src/Main.cs:107
-msgid ""
-"Banshee is already running. If you were trying to control the already "
-"running instance of Banshee, D-Bus must be enabled. Banshee could not "
-"connect to your D-Bus Session Bus."
-msgstr ""
-
-#: ../src/PlayerInterface.cs:376
+#: ../src/PlayerInterface.cs:357
 msgid "Loading..."
 msgstr "Зарежда се..."
 
 #. Misc
-#: ../src/PlayerInterface.cs:427 ../src/PlayerInterface.cs:1966
+#: ../src/PlayerInterface.cs:410 ../src/PlayerInterface.cs:1930
 msgid "Idle"
 msgstr "В покой"
 
-#: ../src/PlayerInterface.cs:436
+#: ../src/PlayerInterface.cs:419
 msgid "All"
 msgstr "Всички"
 
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1535
+#: ../src/PlayerInterface.cs:421 ../src/PlayerInterface.cs:1495
 msgid "Song Name"
 msgstr "Име на песен"
 
-#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1533
+#: ../src/PlayerInterface.cs:422 ../src/PlayerInterface.cs:1493
 msgid "Artist Name"
 msgstr "Име на изпълнител"
 
-#: ../src/PlayerInterface.cs:440 ../src/PlayerInterface.cs:1537
+#: ../src/PlayerInterface.cs:423 ../src/PlayerInterface.cs:1497
 msgid "Album Title"
 msgstr "Заглавие на албум"
 
-#: ../src/PlayerInterface.cs:470
+#: ../src/PlayerInterface.cs:464
 msgid "Write selection to CD"
 msgstr "Записване на избраното върху диск (CD)"
 
-#: ../src/PlayerInterface.cs:471
+#: ../src/PlayerInterface.cs:465
 msgid "Import CD into library"
 msgstr "Внасяне на CD във фонотеката"
 
-#: ../src/PlayerInterface.cs:472
+#: ../src/PlayerInterface.cs:466
 msgid "Play previous song"
 msgstr "Предишна песен"
 
-#: ../src/PlayerInterface.cs:473
+#: ../src/PlayerInterface.cs:467
 msgid "Play/pause current song"
 msgstr "Слушане/пауза на текущата песен"
 
-#: ../src/PlayerInterface.cs:474
+#: ../src/PlayerInterface.cs:468
 msgid "Play next song"
 msgstr "Следваща песен"
 
-#: ../src/PlayerInterface.cs:475
-#, fuzzy
+#: ../src/PlayerInterface.cs:469
 msgid "Current position in song"
 msgstr "Текущата позиция в песента"
 
-#: ../src/PlayerInterface.cs:476
-#, fuzzy
+#: ../src/PlayerInterface.cs:470
 msgid "Device disk usage"
 msgstr "Заето пространство на устройството"
 
-#: ../src/PlayerInterface.cs:477
-#, fuzzy
+#: ../src/PlayerInterface.cs:471
 msgid "Synchronize music library to device"
 msgstr "Синхронизиране на фонотеката с устройството"
 
-#: ../src/PlayerInterface.cs:478
+#: ../src/PlayerInterface.cs:472
 msgid "Adjust volume"
 msgstr "Промяна силата на звука"
 
-#: ../src/PlayerInterface.cs:479
-#, fuzzy
+#: ../src/PlayerInterface.cs:473
 msgid "Change repeat playback mode"
-msgstr "Режим \"Повтаряне\""
+msgstr "Промяна на режима „Повтаряне“"
 
-#: ../src/PlayerInterface.cs:480
-#, fuzzy
+#: ../src/PlayerInterface.cs:474
 msgid "Toggle shuffle playback mode"
-msgstr "Режим \"Произволен ред\""
+msgstr "Смяна на режима „Произволен ред“"
 
-#: ../src/PlayerInterface.cs:481
+#: ../src/PlayerInterface.cs:475
 msgid "Edit and view metadata of selected songs"
 msgstr "Редактиране и преглед на мета-данните за избраните песни"
 
-#: ../src/PlayerInterface.cs:505
+#: ../src/PlayerInterface.cs:499
 msgid "Notification Area Icon could not be installed"
 msgstr "Иконата в района за уведомения не може да бъде инсталирана"
 
-#: ../src/PlayerInterface.cs:556
+#: ../src/PlayerInterface.cs:550
 msgid "Import Music"
 msgstr "Внасяне на музика"
 
-#: ../src/PlayerInterface.cs:557
+#: ../src/PlayerInterface.cs:551
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later.\n"
@@ -807,28 +793,28 @@ msgstr ""
 "Автоматичното внасяне или внасянето на голяма папка може да отнеме много "
 "време, затова бъдете търпеливи."
 
-#: ../src/PlayerInterface.cs:561
+#: ../src/PlayerInterface.cs:555
 msgid "Import Folder"
 msgstr "Внасяне на папка"
 
-#: ../src/PlayerInterface.cs:563
+#: ../src/PlayerInterface.cs:557
 msgid "Automatic Import"
 msgstr "Автоматично внасяне"
 
-#: ../src/PlayerInterface.cs:690 ../src/PlayerInterface.cs:1962
+#: ../src/PlayerInterface.cs:685 ../src/PlayerInterface.cs:1926
 #: ../src/Banshee.Base/ActionManager.cs:203
 msgid "Play"
 msgstr "Слушане"
 
-#: ../src/PlayerInterface.cs:694
+#: ../src/PlayerInterface.cs:689
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/PlayerInterface.cs:754
+#: ../src/PlayerInterface.cs:749
 msgid "Cannot Play Song"
 msgstr "Песента не може да бъде изпълнена"
 
-#: ../src/PlayerInterface.cs:755
+#: ../src/PlayerInterface.cs:750
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -838,81 +824,76 @@ msgid ""
 msgstr ""
 
 #. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/PlayerInterface.cs:946 ../src/Banshee.Base/Sources/DapSource.cs:116
+#: ../src/PlayerInterface.cs:926 ../src/Banshee.Base/Sources/DapSource.cs:157
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} от {1}"
 
-#: ../src/PlayerInterface.cs:1036
+#: ../src/PlayerInterface.cs:1016
 msgid "Import Folder to Library"
 msgstr "Внасяне на папка във фонотеката"
 
-#: ../src/PlayerInterface.cs:1142 ../src/Banshee.Base/ActionManager.cs:249
+#: ../src/PlayerInterface.cs:1175 ../src/Banshee.Base/ActionManager.cs:249
 msgid "Synchronize"
 msgstr "Синхронизиране"
 
-#: ../src/PlayerInterface.cs:1143 ../src/PlayerInterface.cs:2288
+#: ../src/PlayerInterface.cs:1176 ../src/PlayerInterface.cs:2252
 msgid "Rename Device"
 msgstr "Преименуване на устройство"
 
-#: ../src/PlayerInterface.cs:1145 ../src/PlayerInterface.cs:2282
+#: ../src/PlayerInterface.cs:1178 ../src/PlayerInterface.cs:2246
 msgid "Rename Playlist"
 msgstr "Преименуване на списък"
 
-#: ../src/PlayerInterface.cs:1166
+#: ../src/PlayerInterface.cs:1199
 msgid "Reading table of contents from CD..."
 msgstr "Четене на съдържанието на диска"
 
-#: ../src/PlayerInterface.cs:1171
+#: ../src/PlayerInterface.cs:1204
 msgid "Searching for CD metadata..."
 msgstr "Търсене за мета-данни за диска..."
 
-#: ../src/PlayerInterface.cs:1176
+#: ../src/PlayerInterface.cs:1209
 msgid "Searching for CD cover art..."
 msgstr "Търсене за обложка на диска..."
 
-#: ../src/PlayerInterface.cs:1181
+#: ../src/PlayerInterface.cs:1214
 msgid ""
 "Cannot search for CD metadata: there is no available Internet connection"
 msgstr ""
 
-#: ../src/PlayerInterface.cs:1187
-#, fuzzy
+#: ../src/PlayerInterface.cs:1220
 msgid "Could not fetch metadata for CD."
-msgstr "Не може да се прочете аудио диска"
+msgstr "Не може да се вземе мета информацията за диска."
 
-#: ../src/PlayerInterface.cs:1401
-msgid "Synchronizing your Device, Please Wait..."
-msgstr "Синхронизиране на устройството. Изчакайте..."
-
-#: ../src/PlayerInterface.cs:1416
+#: ../src/PlayerInterface.cs:1376
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} ден"
 msgstr[1] "{0} дни"
 
-#: ../src/PlayerInterface.cs:1433
+#: ../src/PlayerInterface.cs:1393
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "Фонотеката Ви е празна - Трябва да внесете музика"
 
-#: ../src/PlayerInterface.cs:1436
+#: ../src/PlayerInterface.cs:1396
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "Списъкът е празен - трябва да добавите музика в него"
 
-#: ../src/PlayerInterface.cs:1439
+#: ../src/PlayerInterface.cs:1399
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} обект"
 msgstr[1] "{0} обекта"
 
-#: ../src/PlayerInterface.cs:1441
+#: ../src/PlayerInterface.cs:1401
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "Общо времетраене - {0}"
 
-#: ../src/PlayerInterface.cs:1725 ../src/Banshee.Base/ActionManager.cs:64
+#: ../src/PlayerInterface.cs:1689 ../src/Banshee.Base/ActionManager.cs:64
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:301
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:323
@@ -920,28 +901,28 @@ msgstr "Общо времетраене - {0}"
 msgid "New Playlist"
 msgstr "Нов списък"
 
-#: ../src/PlayerInterface.cs:1744
+#: ../src/PlayerInterface.cs:1708
 msgid "Clear"
 msgstr "Изчистване"
 
-#: ../src/PlayerInterface.cs:1953
+#: ../src/PlayerInterface.cs:1917
 msgid "Could Not Eject"
 msgstr "Не може да се извади"
 
-#: ../src/PlayerInterface.cs:1997
+#: ../src/PlayerInterface.cs:1961
 msgid "Cannot Import"
 msgstr "Не може да се внесе"
 
-#: ../src/PlayerInterface.cs:1998 ../src/PlayerInterface.cs:2002
+#: ../src/PlayerInterface.cs:1962 ../src/PlayerInterface.cs:1966
 msgid "Scanning"
 msgstr "Сканиране"
 
-#: ../src/PlayerInterface.cs:2000
+#: ../src/PlayerInterface.cs:1964
 #, csharp-format
 msgid "Cannot Import: {0} ({1}, {2})"
 msgstr "Не може да се внесе: {0} ({1}, {2})"
 
-#: ../src/PlayerInterface.cs:2044
+#: ../src/PlayerInterface.cs:2008
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -958,7 +939,7 @@ msgstr[1] ""
 "фонотеката си <i><b>и</b></i> твърдия·диск? Това действие ще изтрие за "
 "постоянно файловете."
 
-#: ../src/PlayerInterface.cs:2053
+#: ../src/PlayerInterface.cs:2017
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -970,30 +951,30 @@ msgstr[1] ""
 "Сигурни ли сте, че искате да премахнете избраните <b>({0})</b> песни от "
 "фонотеката си?"
 
-#: ../src/PlayerInterface.cs:2062
+#: ../src/PlayerInterface.cs:2026
 msgid "Remove Selected Songs from Library"
 msgstr "Премахване на избраните песни от фонотеката"
 
-#: ../src/PlayerInterface.cs:2132
+#: ../src/PlayerInterface.cs:2096
 msgid "Import Files to Library"
 msgstr "Внасяне на файлове във фонотеката"
 
-#: ../src/PlayerInterface.cs:2178
+#: ../src/PlayerInterface.cs:2142
 msgid "Invalid Selection"
 msgstr "Невалидна селекция"
 
-#: ../src/PlayerInterface.cs:2179
+#: ../src/PlayerInterface.cs:2143
 msgid "You must select at least one track to import."
 msgstr "Трябва да изберете поне една песен за внасяне"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2216
+#: ../src/PlayerInterface.cs:2180
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Синхронизиране на {0}"
 
-#: ../src/PlayerInterface.cs:2217
-#, fuzzy, csharp-format
+#: ../src/PlayerInterface.cs:2181
+#, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
 "contents of your {0}.\n"
@@ -1002,35 +983,33 @@ msgid ""
 "<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
 "made"
 msgstr ""
-"Направили сте промени по iPod устройството си. Изберете метод за обновяване "
-"на съдържанието му.\n"
+"Направили сте промени по {0}. Изберете метод за обновяване на съдържанието "
+"на {0}.\n"
 "\n"
-"<i>Синхронизиране на фонотеката</i>: синхронизиране на фонотеката на Banshee "
-"с iPod\n"
-"<i>Запазване на ръчни промени</i>: запазване само на ръчните промени "
-"направени по устройството\n"
-"<b>Внимание<b>: Действията ще променят или изтрият съществуващото съдържание "
-"на iPod устройството Ви и може да причинят несъвместимост с iTunes!"
+"<big>•</big> <i>Синхронизиране на фонотеката</i>: синхронизиране на "
+"фонотеката на Banshee с{0}\n"
+"<big>•</big> <i>Запазване на ръчни промени</i>: запазване само на ръчните "
+"промени направени от Вас"
 
-#: ../src/PlayerInterface.cs:2223
+#: ../src/PlayerInterface.cs:2187
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr ""
 
-#: ../src/PlayerInterface.cs:2225
+#: ../src/PlayerInterface.cs:2189
 msgid "Synchronize Library"
 msgstr "Синхронизиране на фонотеката"
 
-#: ../src/PlayerInterface.cs:2227
+#: ../src/PlayerInterface.cs:2191
 msgid "Save Manual Changes"
 msgstr "Запазване на ръчните промени"
 
-#: ../src/PlayerInterface.cs:2283
+#: ../src/PlayerInterface.cs:2247
 msgid "Enter new playlist name"
 msgstr "Въведете име за новия списък"
 
-#: ../src/PlayerInterface.cs:2289
+#: ../src/PlayerInterface.cs:2253
 msgid "Enter new name for your device"
 msgstr "Въведете ново име за Вашето устройство"
 
@@ -1237,7 +1216,7 @@ msgstr "Внасяне на _папка..."
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
-msgstr ""
+msgstr "Внасяне цялото съдържание на папка"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
@@ -1245,7 +1224,7 @@ msgstr "Внасяне на файлове..."
 
 #: ../src/Banshee.Base/ActionManager.cs:73
 msgid "Import files inside a folder"
-msgstr ""
+msgstr "Внасяне на файлове в папка"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
 msgid "Source Properties..."
@@ -1273,7 +1252,7 @@ msgstr "Преименуване на източник"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
 msgid "Rename the active source"
-msgstr ""
+msgstr "Преименуване на активния източник"
 
 #: ../src/Banshee.Base/ActionManager.cs:91
 msgid "Select All"
@@ -1281,7 +1260,7 @@ msgstr "Избиране на всичко"
 
 #: ../src/Banshee.Base/ActionManager.cs:92
 msgid "Select all songs in song list"
-msgstr ""
+msgstr "Избиране на всички песни в списъка"
 
 #: ../src/Banshee.Base/ActionManager.cs:95
 msgid "Select None"
@@ -1289,7 +1268,7 @@ msgstr "Отизбиране на всичко"
 
 #: ../src/Banshee.Base/ActionManager.cs:96
 msgid "Unselect all songs in song list"
-msgstr ""
+msgstr "Махане избора от всички песни в списъка"
 
 #: ../src/Banshee.Base/ActionManager.cs:99
 msgid "Plugins..."
@@ -1297,7 +1276,7 @@ msgstr "Приставки..."
 
 #: ../src/Banshee.Base/ActionManager.cs:100
 msgid "Configure Banshee plugins"
-msgstr ""
+msgstr "Настройки на приставките"
 
 #: ../src/Banshee.Base/ActionManager.cs:105
 msgid "_View"
@@ -1309,16 +1288,15 @@ msgstr "Колони..."
 
 #: ../src/Banshee.Base/ActionManager.cs:109
 msgid "Select which columns to display in the song list"
-msgstr ""
+msgstr "Избиране кои колони да се показват в списъците"
 
 #: ../src/Banshee.Base/ActionManager.cs:112
-#, fuzzy
 msgid "Logged Events Viewer..."
 msgstr "Записани събития..."
 
 #: ../src/Banshee.Base/ActionManager.cs:113
 msgid "View a detailed log of events"
-msgstr ""
+msgstr "Преглед на подробен запис на събитията"
 
 #: ../src/Banshee.Base/ActionManager.cs:116
 msgid "_Help"
@@ -1329,9 +1307,8 @@ msgid "Version Information..."
 msgstr "Информация за версията..."
 
 #: ../src/Banshee.Base/ActionManager.cs:120
-#, fuzzy
 msgid "View detailed version and configuration information"
-msgstr "Преглед на информацията за избраната песен"
+msgstr "Преглед на подробна информация за версията и конфигурацията"
 
 #: ../src/Banshee.Base/ActionManager.cs:125
 msgid "_Playback"
@@ -1342,7 +1319,6 @@ msgid "Fullscreen"
 msgstr "На цял екран"
 
 #: ../src/Banshee.Base/ActionManager.cs:140
-#, fuzzy
 msgid "Toggle Fullscreen Mode"
 msgstr "Включване/изключване на режим пълен екран"
 
@@ -1352,7 +1328,7 @@ msgstr "Показване на обложката на диска"
 
 #: ../src/Banshee.Base/ActionManager.cs:144
 msgid "Toggle display of album cover art"
-msgstr ""
+msgstr "Превключване на показването на обложки"
 
 #: ../src/Banshee.Base/ActionManager.cs:153
 msgid "Delete Playlist"
@@ -1367,9 +1343,8 @@ msgid "Write CD"
 msgstr "Запис на диск"
 
 #: ../src/Banshee.Base/ActionManager.cs:164
-#, fuzzy
 msgid "Write selection to audio CD"
-msgstr "Записване на избраното на диск"
+msgstr "Записване на избраното на аудио диск"
 
 #: ../src/Banshee.Base/ActionManager.cs:167
 msgid "Remove Song(s)"
@@ -1385,7 +1360,7 @@ msgstr "Изтриване на песен(и) от твърдия диск"
 
 #: ../src/Banshee.Base/ActionManager.cs:172
 msgid "Permanently delete selected song(s) from storage medium"
-msgstr ""
+msgstr "Окончателно изтриване на избраната песен(и) от носителя"
 
 #: ../src/Banshee.Base/ActionManager.cs:175
 msgid "Edit Song Metadata"
@@ -1402,6 +1377,8 @@ msgstr "Добавяне към списък с песни"
 #: ../src/Banshee.Base/ActionManager.cs:180
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
+"Добавяне на избраните песни към списък или създаване на нов списък с песни "
+"от избраното"
 
 #: ../src/Banshee.Base/ActionManager.cs:184
 msgid "Set rating for selected songs"
@@ -1431,19 +1408,19 @@ msgstr "Предишна"
 
 #: ../src/Banshee.Base/ActionManager.cs:215
 msgid "Seek Backward"
-msgstr ""
+msgstr "Прескачане назад"
 
 #: ../src/Banshee.Base/ActionManager.cs:216
 msgid "Seek backward in current song"
-msgstr ""
+msgstr "Прескачане назад в текущата песен"
 
 #: ../src/Banshee.Base/ActionManager.cs:219
 msgid "Seek Forward"
-msgstr ""
+msgstr "Прескачане напред"
 
 #: ../src/Banshee.Base/ActionManager.cs:220
 msgid "Seek forward in current song"
-msgstr ""
+msgstr "Прескачане напред в текущата песен"
 
 #: ../src/Banshee.Base/ActionManager.cs:226
 msgid "Do not repeat playlist"
@@ -1451,19 +1428,20 @@ msgstr "Списъкът с песни да не бъде изпълняван �
 
 #: ../src/Banshee.Base/ActionManager.cs:230
 msgid "Play all songs before repeating playlist"
-msgstr ""
+msgstr "Слушане на всички песни преди да се повтаря списъкът"
 
 #: ../src/Banshee.Base/ActionManager.cs:234
 msgid "Repeat the current playing song"
-msgstr ""
+msgstr "Повтаряне на текущата песен"
 
 #: ../src/Banshee.Base/ActionManager.cs:240
 msgid "Toggle between shuffle or continuous playback modes"
-msgstr ""
+msgstr "Превключване между режимите за произволно и последователно слушане"
 
 #: ../src/Banshee.Base/ActionManager.cs:250
 msgid "Save changes to device or synchronize music library"
 msgstr ""
+"Запазване на промените върху устройството или синхронизиране на фонотеката"
 
 #: ../src/Banshee.Base/ActionManager.cs:259
 msgid "Eject"
@@ -1471,7 +1449,7 @@ msgstr "Изваждане"
 
 #: ../src/Banshee.Base/ActionManager.cs:260
 msgid "Eject the active source"
-msgstr ""
+msgstr "Изкарване на активния източник"
 
 #: ../src/Banshee.Base/FileEncodeAction.cs:68
 msgid "File Encoder"
@@ -1572,14 +1550,13 @@ msgstr ""
 #. Translators: used to specify the bitrate for ripping
 #: ../src/Banshee.Base/PipelineProfile.cs:362
 msgid "at"
-msgstr ""
+msgstr "на"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:404
 msgid "No iPod-compatible encoders available"
 msgstr ""
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:114
-#, fuzzy
 msgid "CD playback is not supported for this instance"
 msgstr ""
 "Слушането на аудио дискове не е поддържано от текущата конфигурация на "
@@ -1672,9 +1649,8 @@ msgid "Owner Name"
 msgstr "Собственик"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
-#, fuzzy
 msgid "Volume Usage"
-msgstr "Силен звук"
+msgstr "Заето пространство"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
 msgid "Advanced Details"
@@ -1711,9 +1687,13 @@ msgstr "Приставката не може да бъде инициализи�
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
 msgid "Configuration"
-msgstr ""
+msgstr "Настройки"
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:126
+#: ../src/Banshee.Base/Sources/DapSource.cs:103
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Синхронизиране на устройството. Изчакайте..."
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:167
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "(остават {0})"
@@ -1802,7 +1782,7 @@ msgstr ""
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
 msgid "Audioscrobbler Reporting"
-msgstr ""
+msgstr "Докладване на Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:73
 msgid "Create an account"
@@ -1810,7 +1790,7 @@ msgstr "Създаване на акаунт"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
 msgid "Join the Banshee group"
-msgstr ""
+msgstr "Влючване към групата на Banshee"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
@@ -1832,6 +1812,9 @@ msgid ""
 "music. It lets others see what you're listening to right now, and shows "
 "charts of your listening history."
 msgstr ""
+"Страницата с профила Ви на Last.fm се обновява автоматично, когато слушате "
+"музика. Другите могат да виждат какво слушате на момента и класации свързани "
+"с слушаното от Васпреди."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
 msgid "Audioscrobbler"
@@ -1840,23 +1823,23 @@ msgstr "Audioscrobbler"
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
 msgid "Configure the Audioscrobbler plugin"
-msgstr ""
+msgstr "Настройване на приставката за Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
 msgid "Visit user profile page"
-msgstr ""
+msgstr "Страница с профила на потребител"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
 msgid "Visit your Audioscrobbler profile page"
-msgstr ""
+msgstr "Вашият профил на Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:120
 msgid "Visit group page"
-msgstr ""
+msgstr "Страница на групата"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
 msgid "Visit the Banshee last.fm group page"
-msgstr ""
+msgstr "Страницата на групата на Banshee в last.fm"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
 msgid "Configure..."
@@ -1869,7 +1852,7 @@ msgstr ""
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
 msgid "Enable the Audioscrobbler plugin"
-msgstr ""
+msgstr "Включване на приставката за Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
 msgid "Your last.fm password"
@@ -1885,20 +1868,19 @@ msgstr "Споделяне на музика"
 
 #: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
 msgid "Share my music library with others"
-msgstr ""
+msgstr "Споделяне на фонотеката Ви с други хора"
 
 #: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
 msgid "Share name:"
-msgstr ""
+msgstr "Име на споделеното:"
 
 #: ../src/Banshee.Plugins/Daap/DaapCore.cs:72
-#, fuzzy
 msgid "Banshee Music Share"
-msgstr "Слушане на музика (Banshee)"
+msgstr "Споделяне на музика с Banshee"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
 msgid "Login to Music Share"
-msgstr ""
+msgstr "Преглед на споделената музика"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
 msgid "Authentication Required"
@@ -1919,14 +1901,16 @@ msgstr "Вход"
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
 msgstr ""
+"Позволяване на другите да разглеждат и слушат музиката Ви чрез други DAAP "
+"програми"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
 msgid "Enable DAAP Server support"
-msgstr ""
+msgstr "Включване на поддръжка за DAAP сървър"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
 msgid "Enable the DAAP Music Sharing plugin"
-msgstr ""
+msgstr "Включване на приставката за споделяне на музика, чрез DAAP"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
 msgid "Name of DAAP server share"
@@ -1938,27 +1922,29 @@ msgid ""
 "folder. This plugin responds to changes made in the file system to reflect "
 "them in your library."
 msgstr ""
+"Автоматично поддържане на синхронизацията между папката за фонотеката на "
+"Banshee с вашата папка за музика. Тази приставка отговаря на промените "
+"направени по файловата система, така че те да се отразят във фонотеката Ви."
 
 #: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
-#, fuzzy
 msgid "Enable the FileSystemMonitor plugin"
 msgstr "Включване на наблюдението на файловата система"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:60
 msgid "Metadata and Cover Art Searching"
-msgstr ""
+msgstr "Търсене на обложки и мета-информация"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:69
 msgid "Only download album cover artwork"
-msgstr ""
+msgstr "Само изтегляне на обложките"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:71
 msgid "Download album cover artwork and fill in missing track data"
-msgstr ""
+msgstr "Изтегляне на обложките и попълване на липсващата информация за песните"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:73
 msgid "Download album cover artwork and overwrite any existing track data"
-msgstr ""
+msgstr "Изтегляне на обложките и презаписване на цялата информация за песните"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:88
 msgid "Warning"
@@ -1969,26 +1955,34 @@ msgid ""
 "This option can usually correct minor mistakes in metadata, however on rare "
 "occasions metadata may be incorrectly updated from MusicBrainz."
 msgstr ""
+"Обикновено, тази опция може да поправи малки грешки в мета-информацията. Има "
+"също така и рядки случаи, при които мета-информацията може да бъде обновена "
+"неправилно от MusicBrainz."
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:55
 msgid ""
 "Automatically search for missing and supplementary metadata and cover art "
 "for songs in your library."
 msgstr ""
+"Автоматично търсене за липсваща и допълнителна мета-информация и обложки за "
+"песните във фонотеката Ви."
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
 msgid ""
 "0 - Download only cover art 1 - Download cover art, fill in missing metadata "
 "2 - Download cover art, overwrite metadata"
 msgstr ""
+"0 - Само изтегляне на обложките 1 - Изтегляне на обложките и попълване на "
+"липсващата информация за песните 2 - Изтегляне на обложките и презаписване "
+"на цялата информация за песните"
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
 msgid "Enable the MetadataSearch plugin"
-msgstr ""
+msgstr "Включване на приставката за търсене на мета-информация"
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
 msgid "Method of fetching cover art and supplementary metadata"
-msgstr ""
+msgstr "Метод на взимане на обложки и допълнителна мета-информация"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
 msgid "Cancel Operation"
@@ -1999,8 +1993,8 @@ msgstr "Отказ на операция"
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "Сигурни ли сте, че искате да откажете операцията '{0}'?"
 
-#: ../src/Banshee.Widgets/SearchEntry.cs:157
-#: ../src/Banshee.Widgets/SearchEntry.cs:268
+#: ../src/Banshee.Widgets/SearchEntry.cs:158
+#: ../src/Banshee.Widgets/SearchEntry.cs:269
 #, csharp-format
 msgid "Searching: {0}"
 msgstr "Търси се: {0}"
