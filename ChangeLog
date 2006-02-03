@@ -1,3 +1,10 @@
+2006-02-03  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/banshee.exe.config.in:
+	* src/Banshee.Base/Banshee.Base.dll.config.in:
+	* src/Banshee.Widgets/Banshee.Widgets.dll.config.in: Added libX11 map;
+	fixes strange GtkUIManager crashes in NLD
+	
 2006-02-02  Aaron Bockover  <aaron@aaronbock.net>
 
 	* configure.ac: Require GTK+-2.8
