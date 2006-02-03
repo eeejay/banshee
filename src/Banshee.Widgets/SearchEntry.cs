@@ -80,7 +80,7 @@ namespace Banshee.Widgets
             Add(evContainer);
             
             box = new HBox();
-            evContainer.Add(box);;
+            evContainer.Add(box);
             
             entry = new Entry();
             entry.HasFrame = false;
@@ -88,12 +88,25 @@ namespace Banshee.Widgets
             entry.Activated += OnEntryActivated;
             entry.KeyPressEvent += OnEntryKeyPressEvent;
             
-            icon = Gdk.Pixbuf.LoadFromResource("search-entry-icon.png");
-            hoverIcon = Gdk.Pixbuf.LoadFromResource("search-entry-icon-hover.png");
+            IconSet icon_set = IconFactory.LookupDefault(Stock.Find);
+            icon = icon_set.RenderIcon(entry.Style, entry.Direction, entry.State, IconSize.Menu, null, null);
+
+            /*Gdk.Pixbuf arrow_overlay = new Gdk.Pixbuf(new string [] {
+                "5 3 2 1",
+                "   c None",
+                ".  c #000000",
+                ".....",
+                " ... ",
+                "  .  "
+            });
+            
+            // Currently this SIGSEGVs in Gdk.Pixbuf:gdk_pixbuf_copy_area
+            arrow_overlay.CopyArea(0, 0, arrow_overlay.Width, arrow_overlay.Height, icon, 0, 0);*/
+            
+            hoverIcon = PixbufColorshift(icon, 30);
             
             img = new Image(icon);
-            //img.CanFocus = true;
-            img.Xpad = 5;
+            img.Xpad = 1;
             img.Ypad = 1;
             
             evBox = new EventBox();
@@ -108,7 +121,7 @@ namespace Banshee.Widgets
             evBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             evContainer.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             
-            cancelImage = new Image("gtk-close", IconSize.Menu);
+            cancelImage = new Image(Stock.Clear, IconSize.Menu);
             cancelImage.Xpad = 2;
             evCancelBox = new EventBox();
             evCancelBox.CanFocus = true;
@@ -128,6 +141,36 @@ namespace Banshee.Widgets
             SetSizeRequest(175, -1);
             
             entry.Changed += OnEntryChanged;
+        }
+        
+        private static byte PixelClamp(int val)
+        {
+            return (byte)Math.Max(0, Math.Min(255, val));
+        }
+        
+        private unsafe Gdk.Pixbuf PixbufColorshift(Gdk.Pixbuf src, byte shift)
+        {
+            Gdk.Pixbuf dest = new Gdk.Pixbuf(src.Colorspace, src.HasAlpha, src.BitsPerSample, src.Width, src.Height);
+            
+            byte *src_pixels_orig = (byte *)src.Pixels;
+            byte *dest_pixels_orig = (byte *)dest.Pixels;
+            
+            for(int i = 0; i < src.Height; i++) {
+                byte *src_pixels = src_pixels_orig + i * src.Rowstride;
+                byte *dest_pixels = dest_pixels_orig + i * dest.Rowstride;
+                
+                for(int j = 0; j < src.Width; j++) {
+                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
+                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
+                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
+                    
+                    if(src.HasAlpha) {
+                        *(dest_pixels++) = *(src_pixels++);
+                    }
+                }
+            }
+            
+            return dest;
         }
         
         private void BuildMenu()
@@ -219,7 +262,7 @@ namespace Banshee.Widgets
         
         private void OnCancelButtonPressEvent(object o, ButtonPressEventArgs args)
         {
-            CancelSearch(true);
+            CancelSearch();
         }
         
         private void OnCancelKeyPressEvent(object o, KeyPressEventArgs args)
@@ -228,7 +271,7 @@ namespace Banshee.Widgets
                 return;
             }
                 
-            CancelSearch(true);
+            CancelSearch();
         }
 
         private void MenuPosition(Menu menu, out int x, out int y, out bool push_in)
@@ -318,7 +361,7 @@ namespace Banshee.Widgets
             timeoutId = GLib.Timeout.Add(300, OnTimeout);
         }
         
-        public void CancelSearch(bool focus)
+        public void CancelSearch()
         {
             entry.Text = String.Empty;
         }
@@ -353,19 +396,6 @@ namespace Banshee.Widgets
         public bool IsQueryAvailable {
             get {
                 return Query != null && Query != String.Empty;
-            }
-        }
-        
-        public Gdk.Pixbuf Icon {
-            set {
-                icon = value;
-                img.Pixbuf = value;
-            }
-        }
-        
-        public Gdk.Pixbuf HoverIcon {
-            set {
-                hoverIcon = value;
             }
         }
     }

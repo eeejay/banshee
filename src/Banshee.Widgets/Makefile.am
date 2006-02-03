@@ -26,18 +26,12 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/RadialProgress.cs \
 	$(srcdir)/LinearProgress.cs
 
-ASSEMBLY_RESOURCES = \
-	Resources/search-entry-icon.png \
-	Resources/search-entry-icon-hover.png
-
-ASSEMBLY_RESOURCES_GENERATED = $(foreach res,$(ASSEMBLY_RESOURCES), $(addprefix -resource:,$(srcdir)/$(res)),$(notdir $(res)))
-
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo $(ASSEMBLY_RESOURCES_GENERATED) -target:library -out:$@ $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo -target:library -unsafe -out:$@ $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY_RESOURCES) $(ASSEMBLY).config.in
+EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in
 
 CLEANFILES = $(ASSEMBLY)
 DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe *.pidb

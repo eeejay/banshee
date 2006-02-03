@@ -423,14 +423,6 @@ namespace Banshee
             fields.Add(Catalog.GetString("Album Title"));
             
             searchEntry = new SearchEntry(fields);
-            Pixbuf search_icon = IconThemeUtils.LoadIcon(16, "system-search", Stock.Find);
-            if(search_icon != null) {
-                Pixbuf light_search_icon = new Pixbuf(Colorspace.Rgb, true, 8, search_icon.Width, search_icon.Height);
-                search_icon.SaturateAndPixelate(light_search_icon, 0.0f, false);
-                searchEntry.Icon = light_search_icon;
-                searchEntry.HoverIcon = search_icon;
-            }
-            
             searchEntry.EnterPress += delegate(object o, EventArgs args) {
                 if(!SourceManager.ActiveSource.HandlesSearch) {
                     if(playlistView.Selection.CountSelectedRows() == 0 && playlistModel.Count() > 0) {
@@ -1247,7 +1239,7 @@ namespace Banshee
                 return;
             }
 
-            searchEntry.CancelSearch(false);
+            searchEntry.CancelSearch();
             audiocd_statusbar.Visible = false;
             
             if(source is DapSource) {

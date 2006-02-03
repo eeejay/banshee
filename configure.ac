@@ -262,7 +262,7 @@ AM_GST_ELEMENT_CHECK(audioconvert, , AC_MSG_ERROR([The 'audioconvert' GStreamer 
 AM_GST_ELEMENT_CHECK(playbin, , AC_MSG_ERROR([The 'playbin' GStreamer plugin was not found.]))
 
 dnl GTK+-2.0 C devel deps
-GTK_REQUIRED=2.6
+GTK_REQUIRED=2.8
 PKG_CHECK_MODULES(GTK,
 	glib-2.0 \
 	libgnome-2.0 \
