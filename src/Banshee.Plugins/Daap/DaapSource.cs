@@ -60,11 +60,17 @@ namespace Banshee.Plugins.Daap
                 ThreadAssist.Spawn(delegate {
                     client = new Client(service);
                     client.Updated += OnClientUpdated;
-                    if(client.AuthenticationMethod == AuthenticationMethod.None) {
-                        client.Login();
-                    } else {
-                        ThreadAssist.ProxyToMain(PromptLogin);
+                    try {
+                        if(client.AuthenticationMethod == AuthenticationMethod.None) {
+                            client.Login();
+                        } else {
+                            ThreadAssist.ProxyToMain(PromptLogin);
+                        }
+                    } catch(Exception e) {
+                        LogCore.Instance.PushError(Catalog.GetString("Cannot login to DAAP share"),
+                            e.Message);
                     }
+                    
                     is_activating = false;
                 });
             }
