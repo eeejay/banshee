@@ -50,7 +50,8 @@ namespace Banshee
             "Do\u011facan G\u00fcney",
             "Chris Toshok",
             "Jeff Tickle",
-            "Ruben Vermeersch"
+            "Ruben Vermeersch",
+            "Fredrik Hedberg"
         };
         
         private static string [] artists = {

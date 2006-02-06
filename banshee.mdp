@@ -46,10 +46,6 @@
     <File name="./src/StockIcons.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/TrackProperties.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/VersionInformationDialog.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/GtkSharpBackports/AboutDialog.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/GtkSharpBackports/AboutDialogActivateLinkFunc.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/GtkSharpBackports/FileChooserButton.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/GtkSharpBackports/GtkSharp.AboutDialogActivateLinkFuncNative.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/LogCoreViewer.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/AltProgressBar.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Widgets/CoverArtThumbnail.cs" subtype="Code" buildaction="Nothing" />

@@ -41,10 +41,10 @@
       </Docs>
     </Member>
     <Member MemberName="Db">
-      <MemberSignature Language="C#" Value="public Banshee.Base.Database Db;" />
+      <MemberSignature Language="C#" Value="public Banshee.Base.BansheeDatabase Db;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.Database</ReturnType>
+        <ReturnType>Banshee.Base.BansheeDatabase</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

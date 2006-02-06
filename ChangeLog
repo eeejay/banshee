@@ -1,5 +1,17 @@
 2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* configure.ac: Bumped version to 0.10.5
+
+	* NEWS: Updated for 0.10.5 release notes
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* docs/*: Updated Monodoc documentation
+
+	* src/AboutBox.cs: Added Fredrik
+
+2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
+
 	* data/data/UIManagerLayout.xml: Removed seek and repeat menu items
 	from tray menu
 
@@ -295,7 +307,6 @@
 
 	* banshee: Branched for NLD10/stable Banshee '1.0' release (BANSHEE_NLD10)
 
->>>>>>> 1.318.2.3
 2006-01-17  Aaron Bockover  <aaron@aaronbock.net>
 
 	* banshee.mdp:

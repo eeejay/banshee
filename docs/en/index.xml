@@ -103,7 +103,6 @@
       <Type Name="AudioCdLookupStatus" />
       <Type Name="Library" />
       <Type Name="DBusRemote" />
-      <Type Name="Database" />
       <Type Name="LibraryTrackInfo" />
       <Type Name="FileTrackInfo" />
       <Type Name="LibraryTrackAddedArgs" />
@@ -113,6 +112,8 @@
       <Type Name="LibraryTrackRemovedArgs" />
       <Type Name="HaveTrackInfoHandler" />
       <Type Name="LibraryTrackRemovedHandler" />
+      <Type Name="InterfaceElements" />
+      <Type Name="BansheeDatabase" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
@@ -223,6 +224,9 @@
       <Type Name="InvalidSourceException" />
       <Type Name="TrackEventArgs" />
       <Type Name="TrackEventHandler" />
+    </Namespace>
+    <Namespace Name="Banshee.Database">
+      <Type Name="QueuedSqliteDatabase" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

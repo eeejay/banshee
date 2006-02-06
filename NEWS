@@ -1,101 +1,76 @@
-Banshee 0.10.4 is out!
+Banshee 0.10.5 is out!
 
-This release features faster and more efficient source management, improved 
-playlist support, a complete plugin system, and the first four official plugins. 
-Plugins include DAAP (iTunes music share) support (client and server), cover
- art fetching, Audioscrobbler song submitting, and file system monitoring.
+This release features a new database layer, which addresses potential locking
+issues in 0.10.4. A new official plugin was added that allows for special
+multimedia key support, configurable through the Gnome keyboard shortcuts
+capplet.
+
+
+NOTES
+-----
+
+This release contains mainly bug fixes. Gtk# 2.8 and GTK+ 2.8 is now a
+requirement as Gtk# 2.8 is now stable and most distributions should be
+shipping it.
+
 
 NEW FEATURES
 ------------
 
-* New plugin system and management/configuration dialog; allows for easy 
-loading/unloading of plugins while Banshee is running [1]
-
-* DAAP (iTunes Music Share) plugin that provides the ability to browse and 
-listen to songs over DAAP and publish the local Banshee database as a DAAP 
-share for other clients to browse; features a light weight embedded web-server 
-for proxying DAAP over HTTP which enables streaming within all supported media 
-engines (GStreamer 0.8, GStreamer 0.10, Helix/RealPlayer, VLC). A simple 
-web-based front-end to the DAAP is also available at http://localhost:8089 [2]
-
-* Audioscrobbler plugin by Chris Toshok now features queue saving, main 
-menu integration, and a configuration pane for entering account information
-
-* Metadata Searcher plugin will download cover art automatically for songs 
-in the library, and can optionally supplement or correct song metadtaa
-
-* File System Monitor plugin can monitor the library directory in the file 
-system and automatically import or remove songs added or removed from the 
-file system
-
-* Rewritten source management; sources are centrally managed and abstracted 
-from the view; sources are accessible to plugins (DAAP plugin implements 
-sources)
-
-* Playlist support has been overhauled; much faster, and reordering a songs 
-in a playlist now works properly
-
-* All "legacy" transaction/threading code has been removed, resulting in 
-various performance gains in many areas
-
-* New popup window "tooltip" is displayed when hovering over the tray icon; 
-shows cover art and track information
-
-* Added "intelligent" shuffle that has a 60% chance of hovering inside the 
-current genre, making the transitions between songs slightly more 
-fluid. (Brad Taylor)
-
-* New Czech translation by Lukas Novotny; other various translations 
-have been updated
-
-* Many other improvements and minor features
-
-
-[1] For details on developing new plugins, please read the Plugin Developers 
-Guide on the Banshee Wiki: http://banshee-project.org/Developers/Plugins
-
-[2] The DAAP plugin requires at least the latest release of Avahi core and 
-avahi-sharp from HEAD. The mDNS layer in the DAAP plugin is being rewritten 
-to also work with the legacy mDNSResponder. The DAAP plugin can be disabled 
-by passing --disable-daap to configure.
+ * New queued/single-threaded database layer; much safer and potentially
+   faster in some areas
+ 
+ * Multimedia keys plugin by Danilo Reinhardt
+ 
+ * Improved custom source API. Sources can now provide custom or hybrid
+   views. See the banshee-sample-plugin module in Banshee subversion:
+      svn://svn.banshee-project.org/trunk/banshee-sample-plugin
+   
+ * Improved search entry; uses stock/theme icons now
+ 
+ * Improved volume widget; +/- are now clickable (Ruben Vermeersch)
+ 
+ * Banshee now shows up in process listings (top, gnome system monitor) as
+   'banshee' (not 'mono'); and 'killall banshee' will now work 
 
 
 BUG FIXES
 ---------
 
-315955 (crashes at startup, IPod.DatabaseReadException)
-316105 (playlist d&d sort doesn't stick)
-320327 (Errors loading library)
-321101 (The play icon disappears)
-324113 (Banshee does not start when pressing play)
-324652 (Library name should be i18ned)
-325011 (Help & Contact on website may lead users to wrong channel)
-325076 (""source properties"" menuitem does not do anything)
-325078 (Updating the preferences of a song doesn't refresh)
-325079 (play time in notification area is wrong)
-325139 (Shuffle/Repeat buttons do not remember state.)
-325697 (Can't add column to database table)
-325705 (Menu items aren't displayed in localized string)
-325956 (Metadata Searcher freezes after ~100 tracks)
-326045 (please add a description for the repeat/random buttons)
-326567 (""about..."" menu item should not be ellipsized)
-326568 (search entry keynav)
-326863 (Crash on metadata scan.)
-326922 (Can't execute uninstalled banshee)
-326923 (Accelerator(shortcut key) doesn't work)
-327046 (org.gnome.Banshee.service installed in wrong directory)
-327047 (menu entry Music/Source Properties... has no effect)
-327123 (random playback isnt working correctling when banshee is started)
+ * 320608: "Copy files on import" option can kill files.
+ * 320799: Left pane stays empty because of markup problems
+ * 324143: Playlist initially displays library contents
+ * 324326: iPod transcoding dies on filenames containing %
+ * 324923: Banshee crash on clicking any menu item
+ * 325078: Updating the preferences of a song doesn't refresh
+ * 325636: Banshee consumes CPU even when not playing
+ * 325770: Crash in 0.10.2 with GStreamer 0.10
+ * 325956: Metadata Searcher freezes after ~100 tracks
+ * 326836: Dragging a track to ipod causes crash on exit
+ * 326863: Crash on metadata scan.
+ * 326922: Can't execute uninstalled banshee
+ * 327046: org.gnome.Banshee.service installed in wrong directory
+ * 327047: menu entry Music/Source Properties... has no effect
+ * 327123: random playback isnt working correctling when banshee is started
+ * 328058: Database locking issues with metadata plugin enabled
+ * 328642: Simple right-click meno on tray icon
+ * 328916: Compile fails to detect Mono on AMD64 systems
+ * 329012: Using "libdbus-1.so.1" for DllImport can fail (libdbus-1.so.2 present)
+ * 329292: use/detect search and close icons for the search box from the GTK theme
+ * 329540: banshee wrapper script looks for executable in CWD
+ * 329554: cursor jumps from new list to the search box
+ * 329875: Banshee should use standard volume button
+ * 328201: add --query-cover-uri
 
 
 THE IMPORTANT LINKS
 -------------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.10.4
+http://banshee-project.org/Releases/0.10.5
 
-Banshee 0.10.4 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.10.4.tar.gz
+Banshee 0.10.5 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.10.5.tar.gz
 
 njb-sharp 0.2.1 Tarball:
 http://banshee-project.org/files/njb-sharp/njb-sharp-0.2.1.tar.gz
@@ -114,12 +89,12 @@ DEPENDENCIES
 ------------
 
 - Mono 1.1.10 and full stack
-- gtk-sharp-2.0 (2.3.92)
+- gtk-sharp-2.0 (2.8)
 - sqlite3
 - GStreamer 0.8.11 or GStreamer 0.10 (experimental)
 - libmusicbrainz 2.1.1 or better
 - libnautilus-burn 2.12
-- GTK+ 2.6 or better
+- GTK+ 2.8 or better
 - HAL 0.5.2 or better
 
 
