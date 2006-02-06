@@ -131,6 +131,17 @@ namespace Banshee.Base
             Gdk.Colormap.System.AllocColor(ref color, true, true);
             return color;
         }
+        
+        [DllImport("libc")]
+        private static extern int prctl(int option, byte [] arg2, ulong arg3 , ulong arg4, ulong arg5);
+        
+        public static void SetProcessName(string name)
+        {
+            if(prctl(15 /* PR_SET_NAME */, Encoding.ASCII.GetBytes(name), 0, 0, 0) != 0) {
+                throw new ApplicationException("Error setting process name: " + 
+                    Mono.Unix.Native.Stdlib.GetLastError());
+            }
+        }
     }
     
     public static class ReflectionUtil

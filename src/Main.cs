@@ -58,6 +58,10 @@ namespace Banshee
         
         private static void Startup(string [] args)
         {
+            try {
+                Utilities.SetProcessName("banshee");
+            } catch {}
+            
             Gtk.Application.Init();
         
             Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {

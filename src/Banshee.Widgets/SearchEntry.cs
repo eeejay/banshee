@@ -76,6 +76,8 @@ namespace Banshee.Widgets
         
         private void BuildWidget()
         {
+            ShadowType = ShadowType.In;
+        
             EventBox evContainer = new EventBox();
             Add(evContainer);
             

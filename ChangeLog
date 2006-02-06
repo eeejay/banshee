@@ -1,3 +1,18 @@
+2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Main.cs: Call Banshee.Base.Utilities.SetProcessName to set process
+	name to 'banshee'; enables 'killall banshee' to work and shows up
+	properly in 'top' and the Gnome system monitor (BNC #147947)
+
+	* src/Banshee.Base/Utilities.cs: Added Utilities.SetProcessName to
+	set the process name via the prctl system call
+
+	* src/banshee.in: Removed --debug; added -a 'banshee' on exec to
+	change argv[0]; removed support to run uninstalled copy as it could
+	be a security hole
+
+	* src/Banshee.Widgets/SearchEntry.cs: Use an inset frame border
+	
 2006-02-03  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Daap/DaapSource.cs: Catch an exception that
