@@ -1,5 +1,10 @@
 2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Base/Utilities (Utilities.SetProcessName): NUL terminate
+	the process name as ASIIEncoding does not do this (sigh)
+
+2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
+
 	* configure.ac: Bumped version to 0.10.5
 
 	* NEWS: Updated for 0.10.5 release notes
