@@ -80,6 +80,7 @@ namespace Banshee
                 new ArgumentLayout("query-duration", "Get duration of current playing song in seconds"),
                 new ArgumentLayout("query-position", "Get position of current playing song in seconds"),
                 new ArgumentLayout("query-uri",      "Get URI of current playing song"),
+                new ArgumentLayout("query-cover-uri","Get URI of the album cover of current playing song"),
                 new ArgumentLayout("query-status",   "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
                 new ArgumentLayout("hide-field",     "Do not display field name for --query-* results"),
                 new ArgumentLayout("help",           "List available command line arguments"),
@@ -184,6 +185,10 @@ namespace Banshee
                     break;
                 case "query-uri":
                     PrintQueryResult("Uri", remote_player.GetPlayingUri());
+                    present = false;
+                    break;
+                case "query-cover-uri":
+                    PrintQueryResult("CoverUri", remote_player.GetPlayingCoverUri());
                     present = false;
                     break;
                 case "query-status":

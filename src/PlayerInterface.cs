@@ -784,7 +784,7 @@ namespace Banshee
                 case Gdk.Key.S:
                 case Gdk.Key.s:
                 case Gdk.Key.F3:
-                    if(!searchEntry.HasFocus) {
+                    if(!searchEntry.HasFocus && !sourceView.EditingRow) {
                         searchEntry.Focus();
                         handled = true;
                     }

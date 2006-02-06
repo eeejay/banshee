@@ -1,5 +1,22 @@
 2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* data/data/UIManagerLayout.xml: Removed seek and repeat menu items
+	from tray menu
+
+	* src/PlayerInterface.cs: Do not focus search on s/j press if source
+	view is in edit mode (BGO #329540)
+
+	* src/Banshee.Base/Utilities.cs (PathUtil.CharsToQuote): Do not 
+	escape ' ' characters as they cause problems with importing
+
+	* src/banshee.in: Run mono --debug if --debug is passed to wrapper
+
+	* src/RemotePlayer.cs:
+	* src/Main.cs: Add remote support for querying the cover art 
+	filename (BGO #328201, patch by Ruben Vermeersch)
+
+2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Dap/Ipod/IpodDap.cs: Use the volume or product name of
 	the iPod from HAL if the user hasn't set a custom name
 

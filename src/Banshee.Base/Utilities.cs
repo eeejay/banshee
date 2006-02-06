@@ -328,7 +328,7 @@ namespace Banshee.Base
     
     public static class PathUtil
     {
-        private static char[] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#', '%', ' ' };
+        private static char[] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#', '%' };
        
         public static Uri PathToFileUri(string path)
         {

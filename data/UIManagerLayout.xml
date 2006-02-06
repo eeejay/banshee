@@ -78,16 +78,12 @@
     </popup>
     <popup name="TrayMenu" action="TrayMenuAction">
         <menuitem name="PlayPause" action="PlayPauseAction" />
-        <separator />
         <menuitem name="Previous" action="PreviousAction" />
         <menuitem name="Next" action="NextAction" />
-        <separator />
-        <menuitem name="SeekBackward" action="SeekBackwardAction" />
-        <menuitem name="SeekForward" action="SeekForwardAction" />
-        <separator />
+        <!--<separator />
         <menuitem name="RepeatNone" action="RepeatNoneAction" />
         <menuitem name="RepeatAll" action="RepeatAllAction" />
-        <menuitem name="RepeatSingle" action="RepeatSingleAction" />
+        <menuitem name="RepeatSingle" action="RepeatSingleAction" />-->
         <separator />
         <menuitem name="Shuffle" action="ShuffleAction" />
         <separator />

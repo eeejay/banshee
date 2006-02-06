@@ -9,6 +9,10 @@ export DYLD_LIBRARY_PATH=@expanded_libdir@${DYLD_LIBRARY_PATH+:$DYLD_LIBRARY_PAT
 export LD_LIBRARY_PATH=@expanded_libdir@${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
 export HELIX_LIBS="@HELIX_LIBRARY_PATH@"
 
-exec -a banshee @MONO@ $MONO_EXE "$@"
+if [ "x$1" = "x--debug" ]; then
+	MONO_OPTIONS="--debug"
+	echo "** Running Banshee in Debug Mode **"
+fi
 
+exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
 

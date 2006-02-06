@@ -175,6 +175,12 @@ namespace Banshee
         {
             return HaveTrack ? PlayerUI.ActiveTrackInfo.Uri.AbsoluteUri : String.Empty;
         }
+
+        [Method]
+        public virtual string GetPlayingCoverUri()
+        {
+            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
+        }
         
         [Method]
         public virtual int GetPlayingDuration()
