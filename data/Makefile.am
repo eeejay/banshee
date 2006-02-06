@@ -25,7 +25,6 @@ CLEANFILES = \
 	*.bak
 
 EXTRA_DIST =            \
-	Tables.sql          \
 	UIManagerLayout.xml \
 	banshee.glade       \
 	$(desktop_in_files) \
