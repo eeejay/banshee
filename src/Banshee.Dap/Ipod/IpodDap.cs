@@ -45,19 +45,22 @@ namespace Banshee.Dap.Ipod
     public sealed class IpodDap : DapDevice
     {
         private IPod.Device device;
+        private Hal.Device hal_device;
     
         public IpodDap(Hal.Device halDevice)
         {
-            if(!halDevice.PropertyExists("block.device") || 
-                !halDevice.GetPropertyBool("block.is_volume") ||
-                halDevice.Parent["portable_audio_player.type"] != "ipod") {
+            hal_device = halDevice;
+            
+            if(!hal_device.PropertyExists("block.device") || 
+                !hal_device.GetPropertyBool("block.is_volume") ||
+                hal_device.Parent["portable_audio_player.type"] != "ipod") {
                 throw new CannotHandleDeviceException();
-            } else if(!halDevice.GetPropertyBool("volume.is_mounted")) {
+            } else if(!hal_device.GetPropertyBool("volume.is_mounted")) {
                 throw new WaitForPropertyChangeException();
             }
             
             try {
-                device = new IPod.Device(halDevice["block.device"]);
+                device = new IPod.Device(hal_device["block.device"]);
             } catch(Exception e) {
                 throw new BrokenDeviceException(e.Message);
             }
@@ -260,7 +263,15 @@ namespace Banshee.Dap.Ipod
         
         public override string Name {
             get {
-                return device.Name;
+                if(device.Name != null && device.Name != String.Empty) {
+                    return device.Name;
+                } else if(hal_device.PropertyExists("volume.label")) {
+                    return hal_device["volume.label"];
+                } else if(hal_device.PropertyExists("info.product")) {
+                    return hal_device["info.product"];
+                }
+                
+                return "iPod";
             }
         }
         

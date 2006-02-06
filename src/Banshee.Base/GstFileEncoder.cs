@@ -46,7 +46,7 @@ namespace Banshee.Base
 		
 		[DllImport("libbanshee")]
 		private static extern bool gst_file_encoder_encode_file(
-			HandleRef encoder, string input_file, string output_file, 
+			HandleRef encoder, IntPtr input_file, IntPtr output_file, 
 			string encode_pipeline, GstFileEncoderProgressCallback progress_cb);
 	
 		[DllImport("libbanshee")]
@@ -76,17 +76,24 @@ namespace Banshee.Base
 			gst_file_encoder_free(encoderHandle);
 		}
 		
-		public override Uri Encode(Uri inputUri, Uri outputUri,
-		   PipelineProfile profile)
-		{	
-			if(!gst_file_encoder_encode_file(encoderHandle, inputUri.AbsoluteUri, 
-				outputUri.AbsoluteUri, profile.Pipeline, ProgressCallback)) {
+		public override Uri Encode(Uri inputUri, Uri outputUri, PipelineProfile profile)
+		{
+			IntPtr input_uri = GLib.Marshaller.StringToPtrGStrdup(inputUri.AbsoluteUri);
+			IntPtr output_uri = GLib.Marshaller.StringToPtrGStrdup(outputUri.AbsoluteUri);
+
+			bool have_error = !gst_file_encoder_encode_file(encoderHandle, input_uri, output_uri,
+				profile.Pipeline, ProgressCallback);
+			
+			GLib.Marshaller.Free(input_uri);
+			GLib.Marshaller.Free(output_uri);
+			
+			if(have_error) {
 				IntPtr errPtr = gst_file_encoder_get_error(encoderHandle);
 				string error = Marshal.PtrToStringAnsi(errPtr);
 				throw new ApplicationException(String.Format(
 					Catalog.GetString("Could not encode file: {0}"), error));
 			}
-		
+			
 			return outputUri;
 		}
 		

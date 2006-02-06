@@ -1,5 +1,19 @@
 2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Use the volume or product name of
+	the iPod from HAL if the user hasn't set a custom name
+
+	* src/Banshee.Base/Utilities.cs (PathUtil.CharsToQuote): Escape 
+	the '%' and ' ' to hex sequences
+
+	* src/Banshee.Base/ImportManager.cs: Handle a potential Win32IOException
+	regarding recursive symlinks
+
+	* src/Banshee.Base/GstFileEncoder.cs (Encode): Reworked to manually
+	alloc/marshal/free file strings
+
+2006-02-06  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Main.cs: Call Banshee.Base.Utilities.SetProcessName to set process
 	name to 'banshee'; enables 'killall banshee' to work and shows up
 	properly in 'top' and the Gnome system monitor (BNC #147947)

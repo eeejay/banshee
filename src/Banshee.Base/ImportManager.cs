@@ -187,7 +187,15 @@ namespace Banshee.Base
             CheckForCanceled();
             scan_ref_count++;
 
-            if(File.Exists(source) && !Path.GetFileName(source).StartsWith(".")) {
+			bool file_exists = false;
+			try {
+				file_exists = File.Exists(source);
+			} catch(System.IO.IOException) {
+				scan_ref_count--;
+				return;
+			}
+
+            if(file_exists && !Path.GetFileName(source).StartsWith(".")) {
                 Enqueue(source);
             } else if(Directory.Exists(source) && 
                 !Path.GetFileName(Path.GetDirectoryName(source)).StartsWith(".")) {
@@ -219,7 +227,7 @@ namespace Banshee.Base
                 CheckForCanceled();
                 
                 string filename = path_queue.Dequeue() as string;
-                
+                    
                 ImportEventHandler handler = ImportRequested;
                 if(handler != null && filename != null) {
                     ImportEventArgs args = new ImportEventArgs();
