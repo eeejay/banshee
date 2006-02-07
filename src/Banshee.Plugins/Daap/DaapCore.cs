@@ -214,7 +214,7 @@ namespace Banshee.Plugins.Daap
         
         internal static string ServerName {
             get {
-                return server.Name;
+                return server != null ? server.Name : null;
             }
             
             set {
