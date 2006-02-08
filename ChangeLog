@@ -1,5 +1,10 @@
 2006-02-07  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
+	(StartEngine): Only instantiate the engine if it is null
+
+2006-02-07  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Widgets/NotificationAreaIcon.cs: Updated with fixes
 	for AMD64 by Dan Winship (from Beagle, #327944); class renamed from
 	NotificationAreaIcon to NotificationArea

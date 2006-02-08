@@ -178,10 +178,12 @@ namespace Banshee.Plugins.Audioscrobbler
 
         private void StartEngine()
         {
-            Console.WriteLine("Audioscrobbler starting protocol engine");
-            protocol_engine = new Engine();
-            protocol_engine.SetUserPassword(Username, Password);
-			protocol_engine.Start();
+            if(protocol_engine == null) {
+                Console.WriteLine("Audioscrobbler starting protocol engine");
+                protocol_engine = new Engine();
+                protocol_engine.SetUserPassword(Username, Password);
+        			protocol_engine.Start();
+        	    }
         }
         
         private void StopEngine()
