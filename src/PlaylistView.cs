@@ -71,9 +71,9 @@ namespace Banshee
         Pixbuf ripColumnPixbuf;
 
         public TreeViewColumn RipColumn;
-        public TreeViewColumn RatingColumn;
-        public TreeViewColumn PlaysColumn;
-        public TreeViewColumn LastPlayedColumn;
+        public PlaylistColumn RatingColumn;
+        public PlaylistColumn PlaysColumn;
+        public PlaylistColumn LastPlayedColumn;
         
         public PlaylistView(PlaylistModel model)
         {        
@@ -96,33 +96,31 @@ namespace Banshee
                 new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
                 4, (int)ColumnId.Time));
             
-            PlaylistColumn _RatingColumn = new PlaylistColumn(this, 
+            RatingColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Rating"), "Rating",
                 new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
                 5, (int)ColumnId.Rating);
-            columns.Add(_RatingColumn);
-            RatingColumn = _RatingColumn.Column;
+            columns.Add(RatingColumn);
             
-            PlaylistColumn _PlaysColumn = new PlaylistColumn(this, 
+            PlaysColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Plays"), "Plays",
                 new TreeCellDataFunc(TrackCellPlayCount), 
                 new CellRendererText(),
                 6, (int)ColumnId.PlayCount);
-            columns.Add(_PlaysColumn);
-            PlaysColumn = _PlaysColumn.Column;
+            columns.Add(PlaysColumn);
             
-            PlaylistColumn _LastPlayedColumn = new PlaylistColumn(this, 
+            LastPlayedColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Last Played"), "Last-Played",
                 new TreeCellDataFunc(TrackCellLastPlayed), 
                 new CellRendererText(),
                 7, (int)ColumnId.LastPlayed);
-            columns.Add(_LastPlayedColumn);
-            LastPlayedColumn = _LastPlayedColumn.Column;
+            columns.Add(LastPlayedColumn);
             
             foreach(PlaylistColumn plcol in columns) {
                 InsertColumn(plcol.Column, plcol.Order);
             }
 
+            // FIXME: would be nice to have these as PlaylistColumns too...
             TreeViewColumn playIndColumn = new TreeViewColumn();
             Gtk.Image playIndImg = new Gtk.Image(
                 Gdk.Pixbuf.LoadFromResource("blue-speaker.png"));

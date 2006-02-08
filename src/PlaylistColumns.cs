@@ -46,6 +46,8 @@ namespace Banshee
         private PlaylistView view;
         private TreeCellDataFunc datafunc;
         private string keyName;
+        private bool preference;    // User preference
+        private bool hidden;        // Source preference
     
         public PlaylistColumn(PlaylistView view, string name, string keyName,
             TreeCellDataFunc datafunc, CellRenderer renderer, 
@@ -87,7 +89,7 @@ namespace Banshee
             }
             
             try {
-                Column.Visible = (bool)Globals.Configuration.Get(
+                preference = Column.Visible = (bool)Globals.Configuration.Get(
                     GConfKeys.ColumnPath + keyName + "/Visible");
                 this.Order = (int)Globals.Configuration.Get(
                     GConfKeys.ColumnPath + keyName + "/Order");
@@ -105,9 +107,31 @@ namespace Banshee
             Globals.Configuration.Set(GConfKeys.ColumnPath + 
                 keyName + "/Width", Column.Width);
             Globals.Configuration.Set(GConfKeys.ColumnPath + 
-                keyName + "/Visible", Column.Visible);
-            Globals.Configuration.Set(GConfKeys.ColumnPath + 
                 keyName + "/Order", order_t);    
+            Globals.Configuration.Set(GConfKeys.ColumnPath + 
+                keyName + "/Visible", preference);
+        }
+
+        // This is what the user wants (and what's stored in GConf)
+        public bool VisibilityPreference {
+            set {
+                preference = value;
+                Column.Visible = (preference && !hidden);
+            }
+            get {
+                return preference;
+            }
+        }
+
+        // This can be set by the source, to hide a specific column
+        public bool Hidden {
+            set {
+                hidden = value;
+                Column.Visible = (preference && !hidden);
+            }
+            get {
+                return hidden;
+            }
         }
     }
 
@@ -179,7 +203,7 @@ namespace Banshee
         {
             CheckButton button = (CheckButton)o;
             
-            ((PlaylistColumn)boxes[button]).Column.Visible = button.Active;
+            ((PlaylistColumn)boxes[button]).VisibilityPreference = button.Active;
         }
         
         private void OnCloseButtonClicked(object o, EventArgs args)

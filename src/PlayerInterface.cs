@@ -1232,6 +1232,7 @@ namespace Banshee
             audiocd_statusbar.Pixbuf = icon;
         }
         
+        // Called when SourceManager emits an ActiveSourceChanged event.
         private void HandleSourceChanged(object o, EventArgs args)
         {
             Source source = SourceManager.ActiveSource;
@@ -1250,22 +1251,24 @@ namespace Banshee
                 UpdateAudioCdStatus(cdSource.Disk);
             }
             
-            UpdateViewName(source);
-            SensitizeActions(source);
+            UpdateViewName(source);   // Bold label below track info
+            SensitizeActions(source); // Right-click actions, buttons above search
 
-            if(source is DapSource) {
+            if(source is DapSource) { // Show disk usage bar for DAPs
                 gxml["DapContainer"].ShowAll();
                 sync_dap_button.Pixbuf = (source as DapSource).Device.GetIcon(22);
             } else {
                 gxml["DapContainer"].Hide();
             }
             
+            // Make some choices for audio CDs, they can't be rated, nor have plays or
+            // last-played info. Only show the rip button for audio CDs
             gxml["SearchLabel"].Sensitive = !(source is AudioCdSource);
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.RipColumn.Visible = source is AudioCdSource;
-            playlistView.RatingColumn.Visible = !(source is AudioCdSource);
-            playlistView.PlaysColumn.Visible = playlistView.RatingColumn.Visible;
-            playlistView.LastPlayedColumn.Visible = playlistView.RatingColumn.Visible;
+            playlistView.RatingColumn.Hidden = (source is AudioCdSource);
+            playlistView.PlaysColumn.Hidden = (source is AudioCdSource);
+            playlistView.LastPlayedColumn.Hidden = (source is AudioCdSource);
                 
             UpdateSourceView();
                 

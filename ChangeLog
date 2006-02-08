@@ -1,3 +1,19 @@
+2006-02-07  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Updated with fixes
+	for AMD64 by Dan Winship (from Beagle, #327944); class renamed from
+	NotificationAreaIcon to NotificationArea
+
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Reflect change from
+	NotificationAreaIcon to NotificationArea
+
+	* src/PlayerInterface.cs:
+	* src/PlaylistColumns.cs:
+	* src/PlaylistView.cs: Patch from Ruben Vermeersch to fix column
+	visibility bug (#326947)
+
+	* src/AboutBox.cs: Added Theppitak Karoonboonyana to translator credits
+
 2006-02-07  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/DaapCore.cs: avoid a null ref exception

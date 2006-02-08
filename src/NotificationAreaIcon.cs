@@ -42,7 +42,7 @@ namespace Banshee
     {
         private EventBox traybox;
 
-        private NotificationAreaIcon ticon;
+        private NotificationArea ticon;
 
         private Menu traymenu;
         
@@ -58,7 +58,7 @@ namespace Banshee
 
         public NotificationAreaIconContainer()
         {
-            ticon = new NotificationAreaIcon(Catalog.GetString("Banshee"));
+            ticon = new NotificationArea(Catalog.GetString("Banshee"));
             CreateMenu();
             Init();
             popup = new TrackInfoPopup();
