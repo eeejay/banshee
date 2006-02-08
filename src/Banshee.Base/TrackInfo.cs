@@ -28,6 +28,7 @@
  */
 
 using System;
+using System.IO;
 using Mono.Unix;
 using Gtk;
  
@@ -152,12 +153,39 @@ namespace Banshee.Base
                 remote_lookup_status = value;
             }
         }
-                                     
+        
+        private string cover_art_file = null;
         public string CoverArtFileName { 
             get {
+                if(cover_art_file != null) {
+                    return cover_art_file;
+                }
+                
                 string path = Paths.GetCoverArtPath(asin);
-                if(System.IO.File.Exists(path)) {
+                if(File.Exists(path)) {
+                    cover_art_file = path;
                     return path;
+                }
+               
+                string basepath = Path.GetDirectoryName(Uri.LocalPath) + Path.DirectorySeparatorChar;
+               
+                path = basepath + Asin + ".01._SCLZZZZZZZ_.jpg";
+                if(File.Exists(path)) { 
+                    cover_art_file = path;
+                    return path;
+                }
+               
+                string [] cover_names = { "cover", "Cover", "folder", "Folder" };
+                string [] cover_extensions = { "jpg", "png", "jpeg", "gif" };
+                
+                foreach(string cover in cover_names) {
+                    foreach(string ext in cover_extensions) {
+                        string img = basepath + cover + "." + ext;
+                        if(File.Exists(img)) {
+                            cover_art_file = img;
+                            return img;
+                        }
+                    }
                 }
                 
                 return null;

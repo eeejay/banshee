@@ -1,3 +1,11 @@
+2006-02-08  Aaron Bockover  <aaron@aaronbock.net>
+
+	* src/Banshee.Base/TrackInfo.cs: 
+	Use {[Cc]over,[Ff]older}.{jpg,png,jpeg,gif} as cover art if one exists
+	in the song's directory
+
+	* src/PlayerInterface.cs: Show song title and artist in window title
+
 2006-02-07  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs

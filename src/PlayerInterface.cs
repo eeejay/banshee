@@ -690,7 +690,7 @@ namespace Banshee
             trackInfoHeader.Title = ti.DisplayTitle;
             trackInfoHeader.Album = ti.DisplayAlbum;
             
-            WindowPlayer.Title = ti.DisplayTitle + " - " + Catalog.GetString("Banshee");
+            WindowPlayer.Title = ti.DisplayTitle + " (" + ti.DisplayArtist + ")";
             
             try {
                 trackInfoHeader.Cover.FileName = ti.CoverArtFileName;
