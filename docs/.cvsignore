@@ -2,4 +2,5 @@ Makefile
 Makefile.in
 banshee-docs.tree
 banshee-docs.zip
+cvs-update-docs.sh
 
