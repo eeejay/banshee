@@ -410,5 +410,24 @@ namespace Banshee.Base
         {
             return String.Format ("{0} - {1} - {2} ({3})", Artist, Album, Title, Uri.AbsoluteUri);
         }
+        
+        public override bool Equals(object o)
+        {
+            if(!(o is TrackInfo)) {
+                return false;
+            }
+            
+            if(o == this) {
+                return true;
+            }
+            
+            TrackInfo t = o as TrackInfo;
+            return t.Artist == Artist && t.Album == Album && t.Title == Title;
+        }
+        
+        public override int GetHashCode()
+        {
+            return Artist.GetHashCode() ^ Album.GetHashCode() ^ Title.GetHashCode();
+        }
     }    
 }

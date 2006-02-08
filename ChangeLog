@@ -1,5 +1,26 @@
 2006-02-08  Aaron Bockover  <aaron@aaronbock.net>
 
+	* src/LogCoreViewer.cs: Do null-detection on the raw objects returned
+	from the model before casting and comparing; fixes a potential crasher
+
+	* src/PlayerInterface.cs: Update the playlist view after a search is done
+
+	* src/PlaylistModel.cs: Sync the playing iter off TrackInfo.Equals 
+	instead of a UID, which is TrackInfo subclass-specific; this allows
+	for spreading the current song across multiple sources (say you start
+	playing a song in the library that is also on an iPod... switching from
+	the library to the iPod results in the version on the iPod to be 
+	indicated as currently playing)
+	
+	Fixed a GTK tree iter warning when trying to get a path for a null iter
+	
+	* src/PlaylistView.cs (UpdateView): Call model.SyncPlayingIter()
+	
+	* src/Banshee.Base/TrackInfo.cs: Added Equal and GetHashCode overrides;
+	value-equality is based on Artist, Album, and Track strings matching
+
+2006-02-08  Aaron Bockover  <aaron@aaronbock.net>
+
 	* src/Banshee.Base/TrackInfo.cs: 
 	Use {[Cc]over,[Ff]older}.{jpg,png,jpeg,gif} as cover art if one exists
 	in the song's directory

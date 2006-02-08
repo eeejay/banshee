@@ -74,7 +74,7 @@ namespace Banshee
             };
         }
     
-        private void SyncPlayingIter()
+        public void SyncPlayingIter()
         {
             if(PlayerEngineCore.ActivePlayer.Track == null) {
                 playingIter = TreeIter.Zero;
@@ -86,7 +86,7 @@ namespace Banshee
                         
                     TrackInfo ti = IterTrackInfo(iter);
                     
-                    if(PlayerEngineCore.ActivePlayer.Track.Uid == ti.Uid) {
+                    if(PlayerEngineCore.ActivePlayer.Track.Equals(ti)) {
                         playingIter = iter;
                         break;
                     }
@@ -235,14 +235,15 @@ namespace Banshee
             // TODO: Implement random playback without repeating a track 
             // until all Tracks have been played first (see Legacy Sonance)
             
-            TreePath currentPath;
+            TreePath currentPath = null;
             TreeIter currentIter, nextIter = TreeIter.Zero;
             TrackInfo currentTrack = null, nextTrack;
             
-            try {
-                currentPath = GetPath(playingIter);
-            } catch(NullReferenceException) {
-                currentPath = null;
+            if(!playingIter.Equals(TreeIter.Zero)) {
+                try {
+                    currentPath = GetPath(playingIter);
+                } catch(NullReferenceException) {
+                }
             }
             
             if(currentPath == null) {

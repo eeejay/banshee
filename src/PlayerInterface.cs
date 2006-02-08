@@ -1538,6 +1538,8 @@ namespace Banshee
                     continue;
                 }
             }
+            
+            playlistView.UpdateView();
         }
         
         // PlaylistView DnD

@@ -469,6 +469,7 @@ namespace Banshee
         
         public void UpdateView()
         {
+            model.SyncPlayingIter();
             QueueDraw();
             ScrollToPlaying();
         }

@@ -205,13 +205,14 @@ namespace Banshee
                 typeof(string), typeof(string), typeof(LogEntryType));
 
             log_store.SetSortFunc(1, delegate(TreeModel model, TreeIter a, TreeIter b) {
-                try {
-                    DateTime a_stamp = (DateTime)log_store.GetValue(a, 1);
-                    DateTime b_stamp = (DateTime)log_store.GetValue(b, 1);
-                    return DateTime.Compare(a_stamp, b_stamp);
-                } catch(Exception) {
+                object a_obj = log_store.GetValue(a, 1);
+                object b_obj = log_store.GetValue(b, 1);
+                
+                if(a_obj == null || b_obj == null) {
                     return 0;
                 }
+                
+                return DateTime.Compare((DateTime)a_obj, (DateTime)b_obj);
             });
             
             log_store.SetSortColumnId(1, SortType.Descending);
