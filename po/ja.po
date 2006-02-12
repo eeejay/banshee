@@ -2,30 +2,29 @@
 # Copyright (C) 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the 'banshee' package.
 # Takeshi AIHANA <aihana@gnome.gr.jp>, 2005.
-# Koike Kazuhiko <kazhik@gmail.com>, 2005
+# Koike Kazuhiko <kazhik@mozilla.gr.jp>, 2005
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-17 12:18+0900\n"
-"PO-Revision-Date: 2005-12-13 18:15+0900\n"
-"Last-Translator: Koike Kazuhiko <kazhik@gmail.com>\n"
+"POT-Creation-Date: 2006-02-12 11:53+0900\n"
+"PO-Revision-Date: 2006-01-27 22:38+0900\n"
+"Last-Translator: Koike Kazuhiko <kazhik@mozilla.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#. Footer
-#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:338
-#: ../src/PlayerInterface.cs:1379
+#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:315
+#: ../src/PlayerInterface.cs:1384
 msgid "Banshee Music Player"
-msgstr "Banshee 楽曲プレイヤー"
+msgstr "Banshee 音楽プレイヤー"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
-msgstr "楽曲プレイヤー"
+msgstr "音楽プレイヤー"
 
 #: ../data/banshee.schemas.in.h:1
 msgid "Copy and rename music to banshee music library directory when importing"
@@ -38,25 +37,21 @@ msgid "Copy music on import"
 msgstr "インポート時に楽曲をコピーする"
 
 #: ../data/banshee.schemas.in.h:3
-msgid "Enable File System Monitoring"
-msgstr "ファイルシステムの監視を有効にする"
-
-#: ../data/banshee.schemas.in.h:4
 msgid "Enable Special Keys"
 msgstr "特殊キーを有効にする"
 
-#: ../data/banshee.schemas.in.h:5
+#: ../data/banshee.schemas.in.h:4
 msgid ""
 "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
 "works with mappings set through Gnome Shortcuts capplet"
 msgstr ""
 "再生／一時停止／次／前に対応する特殊キー(マルチメディアキー)を有効にする"
 
-#: ../data/banshee.schemas.in.h:6
+#: ../data/banshee.schemas.in.h:5
 msgid "File Name Pattern"
 msgstr "ファイル名のパターン"
 
-#: ../data/banshee.schemas.in.h:8
+#: ../data/banshee.schemas.in.h:7
 #, no-c-format
 msgid ""
 "Format for creating filenames/directories for ripped tracks, imported music, "
@@ -71,76 +66,68 @@ msgstr ""
 "track_number%、%track_count%、%track_number_nz% (0 にはしないこと)、%"
 "track_count_nz% (0 にはしないこと)"
 
-#: ../data/banshee.schemas.in.h:9
+#: ../data/banshee.schemas.in.h:8
 msgid "Height of the main interface window."
 msgstr "メイン・ウィンドウの高さです。"
 
-#: ../data/banshee.schemas.in.h:10
+#: ../data/banshee.schemas.in.h:9
 msgid "Move music on info save"
 msgstr "保存時に楽曲を移動する"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:10
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "トラック情報を保存する際にbanshee 楽曲ライブラリのフォルダへコピーして名前を"
 "変更します。"
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:11
 msgid "Name of media playback engine."
 msgstr "楽曲再生エンジンの名前です。"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:12
 msgid "Only display the notification area (tray) icon if true"
 msgstr "trueなら通知スペース(トレイ)にアイコンを表示する"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:13
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "メイン・ウィンドウを配置する位置 X (ピクセル単位) です。"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:14
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "メイン・ウィンドウを配置する位置 Y (ピクセル単位) です。"
 
-#: ../data/banshee.schemas.in.h:16
+#: ../data/banshee.schemas.in.h:15
 msgid "Player Engine Name"
 msgstr "再生エンジンの名前"
 
-#: ../data/banshee.schemas.in.h:17
+#: ../data/banshee.schemas.in.h:16
 msgid "Show Notification Area Icon"
 msgstr "通知スペースのアイコンを表示する"
 
-#: ../data/banshee.schemas.in.h:18
+#: ../data/banshee.schemas.in.h:17
 msgid "Show advanced track properties"
 msgstr "詳細なトラック情報を表示する"
 
-#: ../data/banshee.schemas.in.h:19
+#: ../data/banshee.schemas.in.h:18
 msgid "Source View Width"
-msgstr "ソース・ビューの幅"
+msgstr "再生元ビューの幅"
 
-#: ../data/banshee.schemas.in.h:20
+#: ../data/banshee.schemas.in.h:19
 msgid "True if main window is to be maximized, false if it is not."
 msgstr "メインウィンドウを最大化するならtrue、しないならfalse"
 
-#: ../data/banshee.schemas.in.h:21
+#: ../data/banshee.schemas.in.h:20
 msgid ""
 "True if the advanced expander should be expanded in the track properties "
 "dialog, false if it should be closed"
 msgstr "詳細なトラック情報を表示するならtrue、しないならfalse"
 
-#: ../data/banshee.schemas.in.h:22
-msgid ""
-"Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library "
-"as changes are made in the Library Location in the file system"
-msgstr ""
-"inotify（またはFAM)を使い、ライブラリの場所にあるファイルに変化があった場合に"
-"Bansheeのライブラリを更新する"
-
-#: ../data/banshee.schemas.in.h:23
+#: ../data/banshee.schemas.in.h:21
 msgid "Volume Output Level"
 msgstr "音量レベル"
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:22
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
@@ -148,63 +135,63 @@ msgstr ""
 "ミキサ出力に対応した再生時の音量です (Helix を使用した場合は PCM に音量レベル"
 "を直接セットしてくれます)。"
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:23
 msgid "Width of Album Column."
 msgstr "項目 \"アルバム名\" の幅"
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:24
 msgid "Width of Artist Column."
 msgstr "項目 \"アーティスト\" の幅"
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:25
 msgid "Width of Last Played Column."
 msgstr "項目 \"最終再生日時\" の幅"
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:26
 msgid "Width of Plays Column."
 msgstr "項目 \"再生\" の幅"
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:27
 msgid "Width of Rating Column."
 msgstr "項目 \"評価\" の幅"
 
-#: ../data/banshee.schemas.in.h:30
+#: ../data/banshee.schemas.in.h:28
 msgid "Width of Source View Column."
-msgstr "項目 \"ソース・ビュー\" の幅"
+msgstr "項目 \"再生元ビュー\" の幅"
 
-#: ../data/banshee.schemas.in.h:31
+#: ../data/banshee.schemas.in.h:29
 msgid "Width of Time Column."
 msgstr "項目 \"再生時間\" の幅"
 
-#: ../data/banshee.schemas.in.h:32
+#: ../data/banshee.schemas.in.h:30
 msgid "Width of Title Column."
 msgstr "項目 \"タイトル\" の幅"
 
-#: ../data/banshee.schemas.in.h:33
+#: ../data/banshee.schemas.in.h:31
 msgid "Width of Track Column."
 msgstr "項目 \"トラック番号\" の幅"
 
-#: ../data/banshee.schemas.in.h:34
+#: ../data/banshee.schemas.in.h:32
 msgid "Width of the main interface window."
 msgstr "メイン・ウィンドウの幅です。"
 
-#: ../data/banshee.schemas.in.h:35
+#: ../data/banshee.schemas.in.h:33
 msgid "Window Height"
 msgstr "ウィンドウの高さ"
 
-#: ../data/banshee.schemas.in.h:36
+#: ../data/banshee.schemas.in.h:34
 msgid "Window Maximized"
 msgstr "ウィンドウを最大化"
 
-#: ../data/banshee.schemas.in.h:37
+#: ../data/banshee.schemas.in.h:35
 msgid "Window Position X"
 msgstr "ウィンドウの X-座標"
 
-#: ../data/banshee.schemas.in.h:38
+#: ../data/banshee.schemas.in.h:36
 msgid "Window Position Y"
 msgstr "ウィンドウの Y-座標"
 
-#: ../data/banshee.schemas.in.h:39
+#: ../data/banshee.schemas.in.h:37
 msgid "Window Width"
 msgstr "ウィンドウの幅"
 
@@ -213,7 +200,6 @@ msgid "<b>Advanced Options</b>"
 msgstr "<b>拡張オプション</b>"
 
 #: ../data/banshee.glade.h:2
-#, fuzzy
 msgid "<b>Advanced Properties</b>"
 msgstr "<b>拡張オプション</b>"
 
@@ -230,7 +216,6 @@ msgid "<b>CD Ripping</b>"
 msgstr "<b>CD の切り出し</b>"
 
 #: ../data/banshee.glade.h:6
-#, fuzzy
 msgid "<b>Loading...</b>"
 msgstr "読み込み中です"
 
@@ -243,7 +228,7 @@ msgid "<b>iPod Transcoding</b>"
 msgstr "<b>iPod トランスコード</b>"
 
 #: ../data/banshee.glade.h:9
-msgid "<big><b>Editing Track Properties</b></big>"
+msgid "<big><b>Editing Song</b></big>"
 msgstr "<big><b>トラック情報の編集</b></big>"
 
 #: ../data/banshee.glade.h:10
@@ -280,14 +265,14 @@ msgstr "<span size=\"small\">待機中</span>"
 
 #: ../data/banshee.glade.h:18
 msgid "Albu_m"
-msgstr "アルバム"
+msgstr "アルバム(_M)"
 
-#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:81
+#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
 msgid "Audio CD"
 msgstr "音楽 CD"
 
 #: ../data/banshee.glade.h:20 ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:64 ../src/NotificationAreaIcon.cs:57
+#: ../src/AboutBox.cs:127 ../src/NotificationAreaIcon.cs:61
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -323,88 +308,87 @@ msgid "Description:"
 msgstr "説明:"
 
 #: ../data/banshee.glade.h:28
-msgid "Disk At Once"
-msgstr "ディスク・アット・ワンス"
-
-#: ../data/banshee.glade.h:29
 msgid "Disk Drive:"
 msgstr "ドライブ:"
 
-#: ../data/banshee.glade.h:30
+#: ../data/banshee.glade.h:29
 msgid "Disk Format:"
 msgstr "ディスクの種類:"
 
-#: ../data/banshee.glade.h:31
-#, fuzzy
+#: ../data/banshee.glade.h:30
 msgid "Disk Usage:"
-msgstr "iPod ディスクの容量を表示します"
+msgstr "ディスク使用量:"
 
-#: ../data/banshee.glade.h:32
-msgid "Eject When Finished"
-msgstr "完了したら取り出す"
+#: ../data/banshee.glade.h:31
+msgid "Disk at once"
+msgstr "ディスク・アット・ワンス"
+
+#: ../data/banshee.glade.h:32 ../src/TrackProperties.cs:222
+msgid "Editing Song"
+msgstr "楽曲情報を編集"
 
 #: ../data/banshee.glade.h:33
+msgid "Eject when finished"
+msgstr "完了したら取り出す"
+
+#: ../data/banshee.glade.h:34
 msgid "Encoding Profile:"
 msgstr "エンコーディングのプロファイル:"
 
-#: ../data/banshee.glade.h:34
+#: ../data/banshee.glade.h:35
 msgid "Encoding:"
 msgstr "エンコーディング:"
 
-#: ../data/banshee.glade.h:35
+#: ../data/banshee.glade.h:36
 msgid "Engine:"
 msgstr "エンジン:"
 
-#: ../data/banshee.glade.h:36
+#: ../data/banshee.glade.h:37
 msgid "File Name:"
 msgstr "ファイル名:"
 
-#: ../data/banshee.glade.h:37
+#: ../data/banshee.glade.h:38
 msgid "Imported On:"
 msgstr "インポート日時:"
 
-#: ../data/banshee.glade.h:38
+#: ../data/banshee.glade.h:39
 msgid "Last Played On:"
 msgstr "最終再生日時:"
 
-#: ../data/banshee.glade.h:39
+#: ../data/banshee.glade.h:40
 msgid "MP3 CD"
 msgstr "MP3 CD"
 
-#: ../data/banshee.glade.h:40
+#: ../data/banshee.glade.h:41
 msgid "Mime Type:"
 msgstr "MIMEタイプ:"
 
-#: ../data/banshee.glade.h:41
+#: ../data/banshee.glade.h:42
 msgid "New iPod Detected"
 msgstr "新しい iPod を検出しました"
 
-#: ../data/banshee.glade.h:42
+#: ../data/banshee.glade.h:43
 msgid "Number of Plays:"
 msgstr "再生数:"
 
-#: ../data/banshee.glade.h:43
+#: ../data/banshee.glade.h:44
 msgid "Overburn"
 msgstr "オーバーラン"
 
-#: ../data/banshee.glade.h:44
+#: ../data/banshee.glade.h:45
 msgid "Preferences"
 msgstr "設定"
 
-#: ../data/banshee.glade.h:45
+#: ../data/banshee.glade.h:46
 msgid "Reset"
 msgstr "戻す"
 
-#: ../data/banshee.glade.h:46
+#: ../data/banshee.glade.h:47
 msgid "Sample Rate:"
 msgstr "サンプルレート:"
 
-#: ../data/banshee.glade.h:47
-msgid "Search:"
-msgstr "検索:"
-
 #: ../data/banshee.glade.h:48
-msgid "Simulate Write"
+msgid "Simulate write"
 msgstr "ダミーな書き込み"
 
 #: ../data/banshee.glade.h:49
@@ -412,43 +396,44 @@ msgid "Track Duration:"
 msgstr "トラックの再生時間:"
 
 #: ../data/banshee.glade.h:50
-msgid "Track Property Editor"
-msgstr "トラックのプロパティ"
+msgid "Track _Count"
+msgstr "トラックのカウント(_C)"
 
 #: ../data/banshee.glade.h:51
-msgid "Track _Count"
-msgstr "トラックのカウント"
-
-#: ../data/banshee.glade.h:52
 msgid "Track _Number"
-msgstr "トラック番号"
+msgstr "トラック番号(_N)"
 
-#: ../data/banshee.glade.h:53 ../src/TrackProperties.cs:214
-#: ../src/TrackProperties.cs:239 ../src/TrackProperties.cs:240
-#: ../src/TrackProperties.cs:241 ../src/TrackProperties.cs:242
-#: ../src/TrackProperties.cs:243 ../src/TrackProperties.cs:244
+#: ../data/banshee.glade.h:52 ../src/TrackProperties.cs:218
+#: ../src/TrackProperties.cs:242 ../src/TrackProperties.cs:243
+#: ../src/TrackProperties.cs:244 ../src/TrackProperties.cs:245
+#: ../src/TrackProperties.cs:246 ../src/TrackProperties.cs:247
+#: ../src/Banshee.Base/Dap/Dap.cs:590
 msgid "Unknown"
 msgstr "不明"
 
-#: ../data/banshee.glade.h:54
+#: ../data/banshee.glade.h:53
 msgid "VBR:"
-msgstr ""
+msgstr "VBR:"
 
-#: ../data/banshee.glade.h:55
+#: ../data/banshee.glade.h:54
 msgid "Write Speed:"
 msgstr "書き込み速度:"
 
-#: ../data/banshee.glade.h:56
+#: ../data/banshee.glade.h:55
 msgid "Your Name:"
 msgstr "あなたの名前:"
 
-#: ../data/banshee.glade.h:57
+#: ../data/banshee.glade.h:56
 msgid "_Artist"
-msgstr "アーティスト"
+msgstr "アーティスト(_A)"
+
+#: ../data/banshee.glade.h:57
+msgid "_Search:"
+msgstr "検索(_S):"
 
 #: ../data/banshee.glade.h:58
 msgid "_Title"
-msgstr "タイトル"
+msgstr "タイトル(_T)"
 
 #: ../data/banshee.glade.h:59
 msgid "iPod Name:"
@@ -491,20 +476,23 @@ msgid "Could not get track position"
 msgstr "トラックの位置を取得できませんでした"
 
 #: ../libbanshee/gst-playback-0.8.c:91
-#, fuzzy
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "要素 'spider' を生成できませんでした"
+msgstr "GStreamerプラグイン 'spider' を発見または生成できませんでした"
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid ""
 "Could not load an output sink from GStreamer/GConf and could not fall back "
 "on alsasink"
 msgstr ""
+"GStreamer/GConfから出力sinkを読み込めず、alsasinkへもフォールバックできません"
+"でした"
 
 #: ../libbanshee/gst-playback-0.8.c:102
 msgid ""
 "Could not load an output sink from GStreamer/GConf, falling back on alsasink"
 msgstr ""
+"GStreamer/GConfから出力sinkを読み込めませんでした。alsasinkへフォールバックし"
+"ます"
 
 #: ../libbanshee/gst-transcode-0.8.c:118
 msgid "Could not create 'gnomevfssrc' plugin"
@@ -525,7 +513,7 @@ msgstr "要素 'filesink'を生成できませんでした"
 
 #: ../libbanshee/gst-transcode-0.8.c:219
 msgid "No decoder could be found for source format."
-msgstr "ソースのフォーマットからデコーダを検出できませんでした"
+msgstr "再生元のフォーマットからデコーダを検出できませんでした"
 
 #: ../libbanshee/gst-transcode-0.8.c:224
 msgid "Could not stat encoded file"
@@ -548,17 +536,20 @@ msgstr "CD の検出に必要な HAL を初期化できませんでした"
 msgid "Could not get device list from HAL"
 msgstr "HALからデバイスのリストを取得できませんでした"
 
-#: ../src/AboutBox.cs:61
-msgid ""
-"Copyright 2005 Novell, Inc.\n"
-"Copyright 2005 Aaron Bockover"
-msgstr ""
-
-#: ../src/AboutBox.cs:66
+#: ../src/AboutBox.cs:129
 msgid "Music Management and Playback for Gnome."
 msgstr "GNOME楽曲管理・再生ソフトウェア"
 
-#: ../src/AboutBox.cs:142
+#: ../src/AboutBox.cs:131
+#, fuzzy
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright 2005 Novell, Inc.\n"
+"Copyright 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:136
 msgid "Banshee Wiki"
 msgstr "Banshee Wiki"
 
@@ -579,7 +570,6 @@ msgid "Writing CD"
 msgstr "書き込み中..."
 
 #: ../src/BurnCore.cs:154
-#, fuzzy
 msgid "Writing Audio CD"
 msgstr "書き込み中..."
 
@@ -647,23 +637,11 @@ msgstr "空のディスクを挿入して下さい"
 msgid "Please insert a blank CD disk for the write process."
 msgstr "CD 書き込みを行うために空のディスクを挿入して下さい。"
 
-#: ../src/Core.cs:211
-msgid "CD Playback is not supported in your Banshee Setup"
-msgstr "CDの再生がサポートされていません"
-
-#: ../src/Dialogs.cs:83
-msgid "Cannot Rename Playlist"
-msgstr "再生リストの名前を変更できません"
-
-#: ../src/Dialogs.cs:84
-msgid "A playlist with this name already exists. Please choose another name."
-msgstr "この名前の付いた再生リストが既に存在します。別の名前を付けて下さい。"
-
-#: ../src/Dialogs.cs:93
+#: ../src/Dialogs.cs:81
 msgid "An Error Occurred"
 msgstr "エラーが発生しました"
 
-#: ../src/Dialogs.cs:100
+#: ../src/Dialogs.cs:88
 msgid "Error"
 msgstr "エラー"
 
@@ -682,127 +660,6 @@ msgstr ""
 #: ../src/ExceptionDialog.cs:99
 msgid "An unhandled exception was thrown: "
 msgstr "想定外の例外が発生しました"
-
-#: ../src/Library.cs:270
-msgid "Library"
-msgstr "ライブラリ"
-
-#. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/Library.cs:389 ../src/PlayerInterface.cs:969
-#, csharp-format
-msgid "{0} of {1}"
-msgstr "{0} / {1}"
-
-#: ../src/Library.cs:400
-#, csharp-format
-msgid "({0} Remaining)"
-msgstr "(残り {0})"
-
-#: ../src/Library.cs:687 ../src/PlayerInterface.cs:1683
-#: ../src/SourceView.cs:72 ../src/Banshee.Base/ActionManager.cs:64
-msgid "New Playlist"
-msgstr "新しい再生リスト"
-
-#: ../src/LibraryTransactions.cs:97
-msgid "Unhandled Exception, ending IO Transaction safely"
-msgstr "想定外の例外が発生しました。入出力処理を終了します"
-
-#: ../src/LibraryTransactions.cs:214 ../src/LibraryTransactions.cs:589
-msgid "Library Track Loader"
-msgstr "ライブラリへのトラックの読み込み"
-
-#: ../src/LibraryTransactions.cs:243 ../src/LibraryTransactions.cs:608
-#: ../src/LibraryTransactions.cs:717
-msgid "Processing"
-msgstr "処理中"
-
-#: ../src/LibraryTransactions.cs:270
-msgid "Preloading Files"
-msgstr "ファイルのプレロード中"
-
-#: ../src/LibraryTransactions.cs:324 ../src/LibraryTransactions.cs:473
-#: ../src/LibraryTransactions.cs:615 ../src/LibraryTransactions.cs:742
-#, csharp-format
-msgid "Loading {0} - {1} ..."
-msgstr "{0} - {1} の読み込み中..."
-
-#: ../src/LibraryTransactions.cs:392
-msgid "Playlist Save"
-msgstr "再生リストの保存"
-
-#: ../src/LibraryTransactions.cs:406
-msgid "Flushing old entries"
-msgstr "古いエントリを消去しています"
-
-#: ../src/LibraryTransactions.cs:420
-msgid "Saving new entries"
-msgstr "新しいエントリを保存しています"
-
-#: ../src/LibraryTransactions.cs:449
-msgid "Library Load"
-msgstr "ライブラリの読み込み"
-
-#: ../src/LibraryTransactions.cs:460
-msgid "Preloading Library"
-msgstr "ライブラリを読み込んでいます"
-
-#: ../src/LibraryTransactions.cs:502
-msgid "Library Track Remove"
-msgstr "ライブラリからトラックを削除"
-
-#: ../src/LibraryTransactions.cs:508 ../src/LibraryTransactions.cs:552
-msgid "Removing Tracks"
-msgstr "トラックを削除しています"
-
-#: ../src/LibraryTransactions.cs:521 ../src/LibraryTransactions.cs:567
-#, csharp-format
-msgid "Removing {0} - {1}"
-msgstr "{1}曲中{1}曲目を削除しています"
-
-#: ../src/LibraryTransactions.cs:527
-msgid "Purging Removed Tracks from Library..."
-msgstr "削除されたトラックをライブラリから削除しています"
-
-#: ../src/LibraryTransactions.cs:541
-msgid "Playlist Track Remove"
-msgstr "再生リストからトラックを削除"
-
-#: ../src/LibraryTransactions.cs:574
-msgid "Purging Removed Tracks from Playlist..."
-msgstr "削除されたトラックを再生リストから削除しています"
-
-#: ../src/LibraryTransactions.cs:636
-msgid "Could not load track from library"
-msgstr "ライブラリからトラックを読み込めませんでした"
-
-#: ../src/LibraryTransactions.cs:699
-msgid "Playlist Track Loader"
-msgstr "再生リストへのトラックの読み込み"
-
-#: ../src/LibraryTransactionStatus.cs:168
-msgid "Working"
-msgstr "処理中"
-
-#: ../src/LibraryTransactionStatus.cs:206
-msgid ""
-"There are multiple operations executing. You may either cancel the current "
-"operation or all operations.\n"
-"\n"
-msgstr ""
-"いくつかの操作が輻輳しています。現在の操作または全ての操作をキャンセルした方"
-"が良いかもしれません。\n"
-"\n"
-
-#: ../src/LibraryTransactionStatus.cs:210
-msgid "Are you sure you want to cancel this operation?"
-msgid_plural "Are you sure you want to cancel these operations?"
-msgstr[0] "この操作を本当にキャンセルしてもよろしいですか？"
-msgstr[1] "この操作を本当にキャンセルしてもよろしいですか？"
-
-#: ../src/LibraryTransactionStatus.cs:216
-msgid "Really Cancel Operation?"
-msgid_plural "Really Cancel Operations?"
-msgstr[0] "本当に操作をキャンセルしますか？"
 
 #: ../src/LogCoreViewer.cs:52
 msgid "Log Viewer"
@@ -844,76 +701,88 @@ msgstr "デバッグメッセージのみ"
 msgid "Entry Details:"
 msgstr "詳細情報"
 
-#: ../src/PlayerInterface.cs:366
+#: ../src/PlayerInterface.cs:357
 msgid "Loading..."
 msgstr "読み込み中です"
 
 #. Misc
-#: ../src/PlayerInterface.cs:416 ../src/PlayerInterface.cs:1935
+#: ../src/PlayerInterface.cs:410 ../src/PlayerInterface.cs:1927
 msgid "Idle"
 msgstr "待機中"
 
-#: ../src/PlayerInterface.cs:425
+#: ../src/PlayerInterface.cs:419
 msgid "All"
 msgstr "全て"
 
-#: ../src/PlayerInterface.cs:427 ../src/PlayerInterface.cs:1485
+#: ../src/PlayerInterface.cs:421 ../src/PlayerInterface.cs:1490
 msgid "Song Name"
 msgstr "タイトル"
 
-#: ../src/PlayerInterface.cs:428 ../src/PlayerInterface.cs:1483
+#: ../src/PlayerInterface.cs:422 ../src/PlayerInterface.cs:1488
 msgid "Artist Name"
 msgstr "アーティスト"
 
-#: ../src/PlayerInterface.cs:429 ../src/PlayerInterface.cs:1487
+#: ../src/PlayerInterface.cs:423 ../src/PlayerInterface.cs:1492
 msgid "Album Title"
 msgstr "アルバム"
 
-#: ../src/PlayerInterface.cs:468
-msgid "Write Selection to CD"
+#: ../src/PlayerInterface.cs:456
+msgid "Write selection to CD"
 msgstr "CD を作成します"
 
-#: ../src/PlayerInterface.cs:469
-msgid "Import CD into Library"
-msgstr "CD からライブラリへ切り出します"
+#: ../src/PlayerInterface.cs:457
+msgid "Import CD into library"
+msgstr "CDをライブラリへインポートします"
 
-#: ../src/PlayerInterface.cs:470
-msgid "Play Previous Song"
+#: ../src/PlayerInterface.cs:458
+msgid "Play previous song"
 msgstr "前の曲を再生します"
 
-#: ../src/PlayerInterface.cs:471
-msgid "Play/Pause Current Song"
-msgstr "選択した曲の再生/一時停止を行います"
+#: ../src/PlayerInterface.cs:459
+msgid "Play/pause current song"
+msgstr "現在の曲の再生/一時停止を行います"
 
-#: ../src/PlayerInterface.cs:472
-msgid "Play Next Song"
+#: ../src/PlayerInterface.cs:460
+msgid "Play next song"
 msgstr "次の曲を再生します"
 
-#: ../src/PlayerInterface.cs:473
-msgid "Current Position in Song"
+#: ../src/PlayerInterface.cs:461
+msgid "Current position in song"
 msgstr "現在再生している位置です"
 
-#: ../src/PlayerInterface.cs:474
-msgid "Device Disk Usage"
-msgstr "iPod ディスクの容量を表示します"
+#: ../src/PlayerInterface.cs:462
+msgid "Device disk usage"
+msgstr "デバイスのディスク使用量"
 
-#: ../src/PlayerInterface.cs:475
-msgid "Synchronize Music Library to Device"
-msgstr "楽曲ライブラリと iPod を同期します"
+#: ../src/PlayerInterface.cs:463
+msgid "Synchronize music library to device"
+msgstr "楽曲ライブラリとデバイスを同期します"
 
-#: ../src/PlayerInterface.cs:476
-msgid "Adjust Volume"
+#: ../src/PlayerInterface.cs:464
+msgid "Adjust volume"
 msgstr "音量を調整します"
 
-#: ../src/PlayerInterface.cs:500
+#: ../src/PlayerInterface.cs:465
+msgid "Change repeat playback mode"
+msgstr "リピート再生モードの ON/OFF を切り替えます"
+
+#: ../src/PlayerInterface.cs:466
+msgid "Toggle shuffle playback mode"
+msgstr "シャッフル再生モードの ON/OFF を切り替えます"
+
+#: ../src/PlayerInterface.cs:467
+msgid "Edit and view metadata of selected songs"
+msgstr "選択した曲の楽曲情報を編集"
+
+#: ../src/PlayerInterface.cs:491
 msgid "Notification Area Icon could not be installed"
 msgstr "通知スペースのアイコンをインストールできませんでした"
 
-#: ../src/PlayerInterface.cs:551
+#: ../src/PlayerInterface.cs:542
 msgid "Import Music"
 msgstr "楽曲のインポート"
 
-#: ../src/PlayerInterface.cs:552
+#: ../src/PlayerInterface.cs:543
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later.\n"
@@ -927,106 +796,140 @@ msgstr ""
 "ファイル数が多いフォルダに対して [フォルダのインポート] または [自動インポー"
 "ト] を実行すると、それ相応の処理時間がかかります。ご了承下さい。"
 
-#: ../src/PlayerInterface.cs:556
+#: ../src/PlayerInterface.cs:547
 msgid "Import Folder"
 msgstr "フォルダのインポート"
 
-#: ../src/PlayerInterface.cs:558
+#: ../src/PlayerInterface.cs:549
 msgid "Automatic Import"
 msgstr "自動インポート"
 
-#: ../src/PlayerInterface.cs:729
-msgid "Position: "
-msgstr "ウィンドウの Y-座標"
-
-#: ../src/PlayerInterface.cs:736 ../src/PlayerInterface.cs:1931
+#: ../src/PlayerInterface.cs:677 ../src/PlayerInterface.cs:1923
 #: ../src/Banshee.Base/ActionManager.cs:203
 msgid "Play"
 msgstr "再生"
 
-#: ../src/PlayerInterface.cs:740
+#: ../src/PlayerInterface.cs:681
 msgid "Pause"
 msgstr "一時停止"
 
-#: ../src/PlayerInterface.cs:1056
+#: ../src/PlayerInterface.cs:741
+msgid "Cannot Play Song"
+msgstr "楽曲を再生できません"
+
+#: ../src/PlayerInterface.cs:742
+#, csharp-format
+msgid ""
+"{0} cannot be played by Banshee. The most common reasons for this are:\n"
+"\n"
+"  <big>•</big> Song is protected (DRM)\n"
+"  <big>•</big> Song is on a DAP that does not support playback\n"
+msgstr ""
+"{0} は再生できません。よくある理由は以下の通りです:\n"
+"\n"
+"  <big>•</big> 楽曲がDRM技術で著作権保護されています\n"
+"  <big>•</big> 再生をサポートしていないプレーヤー上にあります\n"
+
+#. Translators: position in song. eg, "0:37 of 3:48"
+#: ../src/PlayerInterface.cs:918 ../src/Banshee.Base/Sources/DapSource.cs:157
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} / {1}"
+
+#: ../src/PlayerInterface.cs:1008
 msgid "Import Folder to Library"
 msgstr "インポートするフォルダの選択"
 
-#: ../src/PlayerInterface.cs:1142 ../src/Banshee.Base/ActionManager.cs:249
-#, fuzzy
+#: ../src/PlayerInterface.cs:1167 ../src/Banshee.Base/ActionManager.cs:249
 msgid "Synchronize"
-msgstr "iPod との同期"
+msgstr "同期"
 
-#: ../src/PlayerInterface.cs:1143 ../src/PlayerInterface.cs:2262
+#: ../src/PlayerInterface.cs:1168 ../src/PlayerInterface.cs:2249
 msgid "Rename Device"
 msgstr "名前の変更"
 
-#: ../src/PlayerInterface.cs:1145 ../src/PlayerInterface.cs:2256
+#: ../src/PlayerInterface.cs:1170 ../src/PlayerInterface.cs:2243
 msgid "Rename Playlist"
 msgstr "再生リストの名前の変更"
 
-#: ../src/PlayerInterface.cs:1163
-#, fuzzy, csharp-format
-msgid "{0}'s Music Library"
-msgstr "<b>{0}の楽曲ライブラリ</b>"
+#: ../src/PlayerInterface.cs:1191
+msgid "Reading table of contents from CD..."
+msgstr "CDの内容を読み込んでいます..."
 
-#: ../src/PlayerInterface.cs:1351
-msgid "Synchronizing your Device, Please Wait..."
-msgstr "デバイスと同期しています。しばらくお待ちください。"
+#: ../src/PlayerInterface.cs:1196
+msgid "Searching for CD metadata..."
+msgstr "CDの情報を検索しています..."
 
-#: ../src/PlayerInterface.cs:1366
+#: ../src/PlayerInterface.cs:1201
+msgid "Searching for CD cover art..."
+msgstr "CDのジャケットを検索しています..."
+
+#: ../src/PlayerInterface.cs:1206
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr "CDの情報を検索できません: インターネットに接続されていません"
+
+#: ../src/PlayerInterface.cs:1212
+msgid "Could not fetch metadata for CD."
+msgstr "CDの情報を取得できませんでした"
+
+#: ../src/PlayerInterface.cs:1371
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} 日"
 msgstr[1] "{0} 日"
 
-#: ../src/PlayerInterface.cs:1384
+#: ../src/PlayerInterface.cs:1388
 msgid "Your Library is Empty - Consider Importing Music"
 msgstr "ライブラリが空です"
 
-#: ../src/PlayerInterface.cs:1388
+#: ../src/PlayerInterface.cs:1391
 msgid "This Playlist is Empty - Consider Adding Music"
 msgstr "再生リストが空です"
 
-#: ../src/PlayerInterface.cs:1392
+#: ../src/PlayerInterface.cs:1394
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0}個のアイテム"
 msgstr[1] "{0}個のアイテム"
 
-#: ../src/PlayerInterface.cs:1394
+#: ../src/PlayerInterface.cs:1396
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "再生時間 {0}"
 
-#: ../src/PlayerInterface.cs:1706
+#: ../src/PlayerInterface.cs:1686 ../src/Banshee.Base/ActionManager.cs:64
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:301
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:323
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:330
+msgid "New Playlist"
+msgstr "新しい再生リスト"
+
+#: ../src/PlayerInterface.cs:1705
 msgid "Clear"
 msgstr "クリア"
 
-#: ../src/PlayerInterface.cs:1904
+#: ../src/PlayerInterface.cs:1914
 msgid "Could Not Eject"
 msgstr "取り出せませんでした"
 
-#: ../src/PlayerInterface.cs:1940
-msgid "Banshee - Idle"
-msgstr "Banshee - 待機中"
-
-#: ../src/PlayerInterface.cs:1965
+#: ../src/PlayerInterface.cs:1958
 msgid "Cannot Import"
 msgstr "インポートできません"
 
-#: ../src/PlayerInterface.cs:1966 ../src/PlayerInterface.cs:1970
+#: ../src/PlayerInterface.cs:1959 ../src/PlayerInterface.cs:1963
 msgid "Scanning"
 msgstr "スキャンしています"
 
-#: ../src/PlayerInterface.cs:1968
+#: ../src/PlayerInterface.cs:1961
 #, csharp-format
 msgid "Cannot Import: {0} ({1}, {2})"
 msgstr "インポートできません: {0} ({1}, {2})"
 
-#: ../src/PlayerInterface.cs:1996
+#: ../src/PlayerInterface.cs:2005
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -1039,7 +942,7 @@ msgstr[0] ""
 "選択した楽曲をライブラリ<i><b>と</b></i>ドライブから本当に削除したいですか？ "
 "この操作はファイルを永久に削除します。"
 
-#: ../src/PlayerInterface.cs:2003
+#: ../src/PlayerInterface.cs:2014
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1047,106 +950,112 @@ msgid_plural ""
 "library?"
 msgstr[0] "選択した楽曲をライブラリから本当に削除したいですか？"
 
-#: ../src/PlayerInterface.cs:2012
+#: ../src/PlayerInterface.cs:2023
 msgid "Remove Selected Songs from Library"
 msgstr "選択した曲をライブラリから削除"
 
-#: ../src/PlayerInterface.cs:2113
+#: ../src/PlayerInterface.cs:2093
 msgid "Import Files to Library"
 msgstr "インポートするファイルの選択"
 
-#: ../src/PlayerInterface.cs:2159
+#: ../src/PlayerInterface.cs:2139
 msgid "Invalid Selection"
 msgstr "不正な選択です"
 
-#: ../src/PlayerInterface.cs:2160
+#: ../src/PlayerInterface.cs:2140
 msgid "You must select at least one track to import."
 msgstr "インポートするトラックを少なくとも一つ選択しなければなりません"
 
-#: ../src/PlayerInterface.cs:2192
-msgid "Synchronize iPod"
-msgstr "iPod との同期"
+#. Translators: {0} is the name of the DAP device (i.e. 'iPod')
+#: ../src/PlayerInterface.cs:2177
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "{0} との同期"
 
-#: ../src/PlayerInterface.cs:2193
+#: ../src/PlayerInterface.cs:2178
+#, csharp-format
 msgid ""
-"You have made changes to your iPod. Please choose a method for updating the "
-"contents of your iPod.\n"
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
 "\n"
-"<i>Synchronize Library</i>: synchronize Banshee library to iPod\n"
-"<i>Save Manual Changes</i>: save only the manual changes you made\n"
+"<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
+msgstr ""
+"{0}に変更がありました。{0}のコンテンツを更新する方法を選んでください。\n"
 "\n"
+"<i>ライブラリを同期</i>: Bansheeのライブラリを{0}と同期させる\n"
+"<i>変更を保存</i>: 変更内容を保存する"
+
+#: ../src/PlayerInterface.cs:2184
+msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr ""
-"iPodに変更がありました。iPodのコンテンツを更新する方法を選んでください。\n"
-"\n"
-"<i>ライブラリを同期</i>: BansheeのライブラリをiPodと同期させる\n"
-"<i>変更を保存</i>: 変更内容を保存する\n"
-"\n"
-"<b>警告:</b> 現在のiPodのコンテンツを変更または削除し、iTunesとの互換性を損な"
-"うおそれがあります"
+"<b>警告:</b> iPodのコンテンツを変更または消去します。iTunesとの互換性が損なわ"
+"れるかもしれません"
 
-#: ../src/PlayerInterface.cs:2199
+#: ../src/PlayerInterface.cs:2186
 msgid "Synchronize Library"
 msgstr "ライブラリと同期"
 
-#: ../src/PlayerInterface.cs:2201
+#: ../src/PlayerInterface.cs:2188
 msgid "Save Manual Changes"
 msgstr "変更を保存する"
 
-#: ../src/PlayerInterface.cs:2257
+#: ../src/PlayerInterface.cs:2244
 msgid "Enter new playlist name"
 msgstr "再生リストの新しい名前を入力してください"
 
-#: ../src/PlayerInterface.cs:2263
+#: ../src/PlayerInterface.cs:2250
 msgid "Enter new name for your device"
 msgstr "デバイスの新しい名前を入力してください"
 
-#: ../src/PlaylistColumns.cs:82
+#: ../src/PlaylistColumns.cs:84
 msgid "Invalid column width"
 msgstr "カラム幅が不正です"
 
-#: ../src/PlaylistColumns.cs:119
+#: ../src/PlaylistColumns.cs:143
 msgid "Choose Columns"
 msgstr "表示する項目の選択"
 
-#: ../src/PlaylistColumns.cs:133
+#: ../src/PlaylistColumns.cs:157
 msgid "Visible Playlist Columns"
 msgstr "再生リストで表示する項目"
 
-#: ../src/PlaylistView.cs:82
+#: ../src/PlaylistView.cs:83
 msgid "Track"
 msgstr "トラック番号"
 
-#: ../src/PlaylistView.cs:85
+#: ../src/PlaylistView.cs:86
 msgid "Artist"
 msgstr "アーティスト"
 
-#: ../src/PlaylistView.cs:88
+#: ../src/PlaylistView.cs:89
 msgid "Title"
 msgstr "タイトル"
 
-#: ../src/PlaylistView.cs:91
+#: ../src/PlaylistView.cs:92
 msgid "Album"
 msgstr "アルバム"
 
-#: ../src/PlaylistView.cs:94
+#: ../src/PlaylistView.cs:95
 msgid "Time"
 msgstr "再生時間"
 
-#: ../src/PlaylistView.cs:97 ../src/Banshee.Base/ActionManager.cs:183
+#: ../src/PlaylistView.cs:100 ../src/Banshee.Base/ActionManager.cs:183
 msgid "Rating"
 msgstr "評価"
 
-#: ../src/PlaylistView.cs:100
+#: ../src/PlaylistView.cs:106
 msgid "Plays"
 msgstr "再生"
 
-#: ../src/PlaylistView.cs:104
+#: ../src/PlaylistView.cs:113
 msgid "Last Played"
 msgstr "最終再生日時"
 
-#: ../src/PlaylistView.cs:449
+#: ../src/PlaylistView.cs:416
 msgid "N/A"
 msgstr "N/A"
 
@@ -1176,21 +1085,6 @@ msgstr "最大速度"
 msgid "{0}x"
 msgstr "{0}倍"
 
-#: ../src/Preferences.cs:547
-#, csharp-format
-msgid ""
-"You have changed the Banshee Playback Engine. This change will not take "
-"affect until the next time Banshee is run. Please restart Banshee to use the "
-"new <b><i>{0}</i></b> Engine"
-msgstr ""
-"Banshee の再生エンジンを変更しました。この変更は次回 Banshee を起動するまで有"
-"効になりません。新しいエンジン <b><i>{0}</i></b> を利用する場合は Banshee を"
-"再起動して下さい。"
-
-#: ../src/Preferences.cs:555
-msgid "Banshee Restart Required"
-msgstr "Banshee を再起動して下さい"
-
 #: ../src/RipTransaction.cs:69
 msgid "Could not create CD Ripper"
 msgstr "CD リッパーを生成できませんでした"
@@ -1203,27 +1097,25 @@ msgid ""
 msgstr "デバイスノード '{0}' が既にセットされているもの({1})と違います"
 
 #: ../src/RipTransaction.cs:196
-#, fuzzy
 msgid "Importing Audio CD"
-msgstr "楽曲をインポートしています"
+msgstr "音楽CDをインポートしています"
 
 #: ../src/RipTransaction.cs:197
-#, fuzzy
 msgid "Initializing Drive"
-msgstr "CDドライブを初期化中"
+msgstr "ドライブを初期化中"
 
 #: ../src/RipTransaction.cs:221 ../src/Banshee.Base/ImportManager.cs:115
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "{1}曲中{0}曲目をインポートしています"
 
-#: ../src/SourceView.cs:84 ../src/Banshee.Base/ActionManager.cs:128
+#: ../src/SourceView.cs:77 ../src/Banshee.Base/ActionManager.cs:128
 msgid "Source"
-msgstr ""
+msgstr "再生元"
 
 #: ../src/ToggleStates.cs:41 ../src/Banshee.Base/ActionManager.cs:225
 msgid "Repeat None"
-msgstr "リピート解除"
+msgstr "リピートしない"
 
 #: ../src/ToggleStates.cs:50 ../src/Banshee.Base/ActionManager.cs:233
 msgid "Repeat Single"
@@ -1241,70 +1133,58 @@ msgstr "シャッフル"
 msgid "Continuous"
 msgstr "連続"
 
-#: ../src/TrackInfoHeader.cs:101
-msgid "by"
-msgstr ""
-
-#: ../src/TrackInfoHeader.cs:102
-msgid "from"
-msgstr ""
-
-#: ../src/TrackProperties.cs:164
+#: ../src/TrackProperties.cs:168
 msgid "Set all Track Numbers to this value"
 msgstr "トラック番号を全てこの値にする"
 
-#: ../src/TrackProperties.cs:165
+#: ../src/TrackProperties.cs:169
 msgid "Automatically Set All Track Numbers"
 msgstr "全トラック番号を自動的にセットする"
 
-#: ../src/TrackProperties.cs:166
+#: ../src/TrackProperties.cs:170
 msgid "Set all Track Counts to this value"
 msgstr "トラックカウントを全てこの値にする"
 
-#: ../src/TrackProperties.cs:167
+#: ../src/TrackProperties.cs:171
 msgid "Set all Artists to this value"
 msgstr "アーティスト名を全てこの値にする"
 
-#: ../src/TrackProperties.cs:168
+#: ../src/TrackProperties.cs:172
 msgid "Set all Albums to this value"
 msgstr "アルバム名を全てこの値にする"
 
-#: ../src/TrackProperties.cs:169
+#: ../src/TrackProperties.cs:173
 msgid "Set all Titles to this value"
 msgstr "タイトルを全てこの値にする"
 
-#: ../src/TrackProperties.cs:212
+#: ../src/TrackProperties.cs:216
 msgid "Never Played"
 msgstr "再生情報なし"
 
-#: ../src/TrackProperties.cs:218
-#, csharp-format
-msgid "Editing Track Properties ({0} of {1})"
-msgstr "トラック情報の編集 ({0} / {1})"
-
 #: ../src/TrackProperties.cs:221
-msgid "Editing Track Properties"
-msgstr "トラック情報の編集"
+#, csharp-format
+msgid "Editing Song {0} of {1}"
+msgstr "{1}曲中{0}曲目を編集しています"
 
-#: ../src/TrackProperties.cs:225 ../src/TrackProperties.cs:226
+#: ../src/TrackProperties.cs:228 ../src/TrackProperties.cs:229
 #, csharp-format
 msgid "File: {0}"
 msgstr "ファイル: {0}"
 
-#: ../src/TrackProperties.cs:232
+#: ../src/TrackProperties.cs:235
 msgid "KB/Second"
 msgstr "KB/秒"
 
-#: ../src/TrackProperties.cs:233
+#: ../src/TrackProperties.cs:236
 #, csharp-format
 msgid "{0} KHz"
 msgstr "{0} KHz"
 
-#: ../src/TrackProperties.cs:234
+#: ../src/TrackProperties.cs:237
 msgid "Yes"
 msgstr "はい"
 
-#: ../src/TrackProperties.cs:234
+#: ../src/TrackProperties.cs:237
 msgid "No"
 msgstr "いいえ"
 
@@ -1314,7 +1194,7 @@ msgstr "バージョン情報"
 
 #: ../src/VersionInformationDialog.cs:68
 msgid "Assembly Name"
-msgstr ""
+msgstr "アセンブリ名"
 
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
@@ -1325,18 +1205,16 @@ msgid "_Music"
 msgstr "楽曲(_M)"
 
 #: ../src/Banshee.Base/ActionManager.cs:65
-#, fuzzy
 msgid "Create a new empty playlist"
 msgstr "新しい再生リストを生成します"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
-#, fuzzy
 msgid "Import _Folder..."
-msgstr "フォルダのインポート..."
+msgstr "フォルダのインポート(_F)..."
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
-msgstr ""
+msgstr "フォルダ内の全ファイルをインポートします"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
@@ -1344,21 +1222,19 @@ msgstr "ファイルのインポート..."
 
 #: ../src/Banshee.Base/ActionManager.cs:73
 msgid "Import files inside a folder"
-msgstr ""
+msgstr "フォルダ内のファイルをインポートします"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
-#, fuzzy
 msgid "Source Properties..."
-msgstr "プロパティ"
+msgstr "再生元のプロパティ..."
 
 #: ../src/Banshee.Base/ActionManager.cs:77
-#, fuzzy
 msgid "View source properties"
-msgstr "iPod のプロパティを表示します"
+msgstr "再生元のプロパティを表示します"
 
 #: ../src/Banshee.Base/ActionManager.cs:80
 msgid "_Quit"
-msgstr ""
+msgstr "終了(_Q)"
 
 #: ../src/Banshee.Base/ActionManager.cs:81
 msgid "Quit Banshee"
@@ -1366,16 +1242,15 @@ msgstr "Banshee の終了"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
 msgid "_Edit"
-msgstr ""
+msgstr "編集(_E)"
 
 #: ../src/Banshee.Base/ActionManager.cs:87
-#, fuzzy
 msgid "Rename Source"
-msgstr "名前の変更"
+msgstr "再生元の名前の変更"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
 msgid "Rename the active source"
-msgstr ""
+msgstr "アクティブな再生元の名前を変更"
 
 #: ../src/Banshee.Base/ActionManager.cs:91
 msgid "Select All"
@@ -1383,7 +1258,7 @@ msgstr "全て選択"
 
 #: ../src/Banshee.Base/ActionManager.cs:92
 msgid "Select all songs in song list"
-msgstr ""
+msgstr "楽曲リスト中の全曲を選択"
 
 #: ../src/Banshee.Base/ActionManager.cs:95
 msgid "Select None"
@@ -1391,159 +1266,133 @@ msgstr "選択解除"
 
 #: ../src/Banshee.Base/ActionManager.cs:96
 msgid "Unselect all songs in song list"
-msgstr ""
+msgstr "楽曲リスト中の全曲を選択解除"
 
 #: ../src/Banshee.Base/ActionManager.cs:99
-#, fuzzy
-msgid "Preferences..."
-msgstr "設定"
+msgid "Plugins..."
+msgstr "プラグイン..."
 
 #: ../src/Banshee.Base/ActionManager.cs:100
-msgid "Edit Banshee preferences"
-msgstr ""
+msgid "Configure Banshee plugins"
+msgstr "Bansheeのプラグインを設定"
 
-#: ../src/Banshee.Base/ActionManager.cs:103
+#: ../src/Banshee.Base/ActionManager.cs:105
 msgid "_View"
-msgstr ""
+msgstr "表示(_V)"
 
-#: ../src/Banshee.Base/ActionManager.cs:106
+#: ../src/Banshee.Base/ActionManager.cs:108
 msgid "Columns..."
 msgstr "表示項目..."
 
-#: ../src/Banshee.Base/ActionManager.cs:107
+#: ../src/Banshee.Base/ActionManager.cs:109
 msgid "Select which columns to display in the song list"
-msgstr ""
+msgstr "楽曲リストでどのカラムを表示するか選択します"
 
-#: ../src/Banshee.Base/ActionManager.cs:110
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:112
 msgid "Logged Events Viewer..."
 msgstr "イベントログ"
 
-#: ../src/Banshee.Base/ActionManager.cs:111
+#: ../src/Banshee.Base/ActionManager.cs:113
 msgid "View a detailed log of events"
-msgstr ""
+msgstr "詳細なイベントログを表示"
 
-#: ../src/Banshee.Base/ActionManager.cs:114
+#: ../src/Banshee.Base/ActionManager.cs:116
 msgid "_Help"
-msgstr ""
+msgstr "ヘルプ(_H)"
 
-#: ../src/Banshee.Base/ActionManager.cs:117
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:119
 msgid "Version Information..."
 msgstr "バージョン情報"
 
-#: ../src/Banshee.Base/ActionManager.cs:118
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:120
 msgid "View detailed version and configuration information"
-msgstr "選択した曲の情報を表示します"
-
-#: ../src/Banshee.Base/ActionManager.cs:121
-#, fuzzy
-msgid "About..."
-msgstr "情報"
-
-#: ../src/Banshee.Base/ActionManager.cs:122
-#, fuzzy
-msgid "View Banshee credits and license information"
-msgstr "選択した曲の情報を表示します"
+msgstr "詳細なバージョン情報と設定情報を表示します"
 
 #: ../src/Banshee.Base/ActionManager.cs:125
-#, fuzzy
 msgid "_Playback"
-msgstr "再生"
+msgstr "再生(_P)"
 
 #: ../src/Banshee.Base/ActionManager.cs:139
-#, fuzzy
 msgid "Fullscreen"
 msgstr "全画面"
 
 #: ../src/Banshee.Base/ActionManager.cs:140
-#, fuzzy
 msgid "Toggle Fullscreen Mode"
 msgstr "全画面モードの ON/OFF を切り替えます"
 
 #: ../src/Banshee.Base/ActionManager.cs:143
 msgid "Show Cover Art"
-msgstr ""
+msgstr "ジャケットを表示"
 
 #: ../src/Banshee.Base/ActionManager.cs:144
 msgid "Toggle display of album cover art"
-msgstr ""
+msgstr "ジャケット表示のON/OFFを切り替えます"
 
 #: ../src/Banshee.Base/ActionManager.cs:153
 msgid "Delete Playlist"
 msgstr "再生リストの削除"
 
 #: ../src/Banshee.Base/ActionManager.cs:154
-#, fuzzy
 msgid "Delete the active playlist"
-msgstr "再生リストの削除"
+msgstr "アクティブな再生リストの削除"
 
 #: ../src/Banshee.Base/ActionManager.cs:163
 msgid "Write CD"
 msgstr "CDを作成"
 
 #: ../src/Banshee.Base/ActionManager.cs:164
-#, fuzzy
 msgid "Write selection to audio CD"
-msgstr "CD を作成します"
+msgstr "選択した曲を音楽CDに書き込みます"
 
 #: ../src/Banshee.Base/ActionManager.cs:167
 msgid "Remove Song(s)"
-msgstr "曲の削除"
+msgstr "曲を削除"
 
 #: ../src/Banshee.Base/ActionManager.cs:168
-#, fuzzy
 msgid "Remove selected song(s) from library"
 msgstr "選択した曲をライブラリから削除"
 
 #: ../src/Banshee.Base/ActionManager.cs:171
-#, fuzzy
 msgid "Delete Song(s) From Drive"
 msgstr "ドライブから曲を削除"
 
 #: ../src/Banshee.Base/ActionManager.cs:172
 msgid "Permanently delete selected song(s) from storage medium"
-msgstr ""
+msgstr "選択した曲を記憶媒体から永久に削除します"
 
 #: ../src/Banshee.Base/ActionManager.cs:175
-msgid "Properties"
-msgstr "プロパティ"
+msgid "Edit Song Metadata"
+msgstr "楽曲情報を編集"
 
 #: ../src/Banshee.Base/ActionManager.cs:176
-#, fuzzy
 msgid "Edit metadata on selected songs"
-msgstr "選択した曲の追加"
+msgstr "選択した曲の楽曲情報を編集"
 
 #: ../src/Banshee.Base/ActionManager.cs:179
-#, fuzzy
 msgid "Add to Playlist"
 msgstr "再生リストへ追加"
 
 #: ../src/Banshee.Base/ActionManager.cs:180
 msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr ""
+msgstr "選択した曲を再生リストに追加、または新しい再生リストを生成します"
 
 #: ../src/Banshee.Base/ActionManager.cs:184
-#, fuzzy
 msgid "Set rating for selected songs"
-msgstr "楽曲をスキャンしています"
+msgstr "選択した曲の評価をセット"
 
 #: ../src/Banshee.Base/ActionManager.cs:193
 msgid "Import CD"
 msgstr "楽曲のインポート"
 
 #: ../src/Banshee.Base/ActionManager.cs:194
-#, fuzzy
 msgid "Import audio CD to library"
-msgstr "CD からライブラリへ切り出します"
+msgstr "音楽CDをライブラリへインポートします"
 
 #: ../src/Banshee.Base/ActionManager.cs:204
 #: ../src/Banshee.Base/ActionManager.cs:208
 #: ../src/Banshee.Base/ActionManager.cs:212
-#, fuzzy
 msgid "Play or pause the current song"
-msgstr "選択した曲の再生/一時停止を行います"
+msgstr "現在の曲の再生/一時停止を行います"
 
 #: ../src/Banshee.Base/ActionManager.cs:207
 msgid "Next"
@@ -1555,40 +1404,39 @@ msgstr "前へ"
 
 #: ../src/Banshee.Base/ActionManager.cs:215
 msgid "Seek Backward"
-msgstr ""
+msgstr "10秒戻る"
 
 #: ../src/Banshee.Base/ActionManager.cs:216
 msgid "Seek backward in current song"
-msgstr ""
+msgstr "現在の曲中の10秒前に戻る"
 
 #: ../src/Banshee.Base/ActionManager.cs:219
 msgid "Seek Forward"
-msgstr ""
+msgstr "10秒進む"
 
 #: ../src/Banshee.Base/ActionManager.cs:220
 msgid "Seek forward in current song"
-msgstr ""
+msgstr "現在の曲中の10秒後に進む"
 
 #: ../src/Banshee.Base/ActionManager.cs:226
-#, fuzzy
 msgid "Do not repeat playlist"
-msgstr "再生リストの削除"
+msgstr "再生リストを繰り返しません"
 
 #: ../src/Banshee.Base/ActionManager.cs:230
 msgid "Play all songs before repeating playlist"
-msgstr ""
+msgstr "再生リストを繰り返す前に全ての曲を再生します"
 
 #: ../src/Banshee.Base/ActionManager.cs:234
 msgid "Repeat the current playing song"
-msgstr ""
+msgstr "現在再生中の曲を繰り返します"
 
 #: ../src/Banshee.Base/ActionManager.cs:240
 msgid "Toggle between shuffle or continuous playback modes"
-msgstr ""
+msgstr "シャッフル再生と連続再生を切り替える"
 
 #: ../src/Banshee.Base/ActionManager.cs:250
 msgid "Save changes to device or synchronize music library"
-msgstr ""
+msgstr "変更をデバイスに保存するか、または楽曲ライブラリと同期します"
 
 #: ../src/Banshee.Base/ActionManager.cs:259
 msgid "Eject"
@@ -1596,14 +1444,13 @@ msgstr "取り出し"
 
 #: ../src/Banshee.Base/ActionManager.cs:260
 msgid "Eject the active source"
-msgstr ""
+msgstr "アクティブな再生元を取り出す"
 
 #: ../src/Banshee.Base/FileEncodeAction.cs:68
 msgid "File Encoder"
 msgstr "ファイルのエンコーダ"
 
 #: ../src/Banshee.Base/FileEncodeAction.cs:69
-#, fuzzy
 msgid "Encoding Files"
 msgstr "ファイルのエンコーディング中..."
 
@@ -1615,7 +1462,7 @@ msgstr "エンコーダの初期化中..."
 msgid "Could not create encoder"
 msgstr "エンコーダを生成できませんでした"
 
-#: ../src/Banshee.Base/GstFileEncoder.cs:87
+#: ../src/Banshee.Base/GstFileEncoder.cs:94
 #, csharp-format
 msgid "Could not encode file: {0}"
 msgstr "ファイルをエンコードできませんでした: {0}"
@@ -1626,7 +1473,7 @@ msgstr "HALを初期化できませんでした"
 
 #: ../src/Banshee.Base/HalCore.cs:104
 msgid "HAL context could not be created"
-msgstr ""
+msgstr "HALコンテキストを作成できませんでした"
 
 #: ../src/Banshee.Base/HalCore.cs:105
 msgid "D-Bus may not be working or configured properly"
@@ -1640,11 +1487,15 @@ msgstr "楽曲をインポートしています"
 msgid "Scanning for songs"
 msgstr "楽曲をスキャンしています"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:69
-msgid "Cannot connect to NetworkManager"
-msgstr ""
+#: ../src/Banshee.Base/Library.cs:118
+msgid "Could not load track from library"
+msgstr "ライブラリからトラックを読み込めませんでした"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:70
+#: ../src/Banshee.Base/NetworkDetect.cs:76
+msgid "Cannot connect to NetworkManager"
+msgstr "ネットワークマネージャに接続できません"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:77
 msgid "An available, working network connection will be assumed"
 msgstr ""
 
@@ -1695,95 +1546,190 @@ msgid ""
 "PipelineProfile(profile))"
 msgstr ""
 
-#: ../src/Banshee.Base/PipelineProfile.cs:361
+#. Translators: used to specify the bitrate for ripping
+#: ../src/Banshee.Base/PipelineProfile.cs:362
 msgid "at"
 msgstr ""
 
-#: ../src/Banshee.Base/PipelineProfile.cs:403
+#: ../src/Banshee.Base/PipelineProfile.cs:404
 msgid "No iPod-compatible encoders available"
 msgstr "iPod互換のエンコーダがありません"
 
-#: ../src/Banshee.Base/TrackInfo.cs:316
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:74
+#: ../src/Banshee.Base/PlayerEngineCore.cs:114
+msgid "CD playback is not supported for this instance"
+msgstr "CDの再生がサポートされていません"
+
+#: ../src/Banshee.Base/TrackInfo.cs:368
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
 msgid "Unknown Artist"
 msgstr "不明"
 
-#: ../src/Banshee.Base/TrackInfo.cs:324
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:75
+#: ../src/Banshee.Base/TrackInfo.cs:376
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
 msgid "Unknown Album"
 msgstr "不明"
 
-#: ../src/Banshee.Base/TrackInfo.cs:332
+#: ../src/Banshee.Base/TrackInfo.cs:384
 msgid "Unknown Title"
 msgstr "不明"
 
+#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+msgid "by"
+msgstr ""
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:105
+msgid "from"
+msgstr ""
+
 #: ../src/Banshee.Base/Utilities.cs:74
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0:0.00} GB"
-msgstr "{0} GB"
+msgstr "{0:0.00} GB"
 
 #: ../src/Banshee.Base/Utilities.cs:75
 #, csharp-format
 msgid "{0} MB"
 msgstr "{0} MB"
 
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:78
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:80
 msgid "HAL is not initialized"
 msgstr "HALが初期化されていません"
 
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:84
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
 msgid "Audio CD Core Initialized"
 msgstr "Audio CD Coreが初期化されました"
 
 #. work around mcs #76642
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:100
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
 msgid "Could not Read Audio CD"
 msgstr "音楽CD を読み込めませんでした"
 
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:76
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:88
 #, csharp-format
 msgid "Track {0}"
 msgstr "トラック番号 {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:273 ../src/Banshee.Base/Dap/Dap.cs:274
+#: ../src/Banshee.Base/Dap/Dap.cs:315 ../src/Banshee.Base/Dap/Dap.cs:316
 msgid "Synchronizing Device"
 msgstr "iPod との同期"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:275
+#: ../src/Banshee.Base/Dap/Dap.cs:317
 msgid "Waiting for transcoder..."
 msgstr ""
 
-#: ../src/Banshee.Base/Dap/Dap.cs:359 ../src/Banshee.Base/Dap/Dap.cs:380
+#: ../src/Banshee.Base/Dap/Dap.cs:401 ../src/Banshee.Base/Dap/Dap.cs:422
 msgid "Processing..."
 msgstr "処理中"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:113
+#: ../src/Banshee.Base/Dap/DapCore.cs:119
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "HALCoreが初期化されていないのでDapCoreを初期化できません"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:167
+#: ../src/Banshee.Base/Dap/DapCore.cs:173
 msgid "Could not process connected DAP"
 msgstr ""
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:128
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:147
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} 個のプロパティ"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device Name"
+msgstr "デバイス名"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner Name"
+msgstr "あなたの名前"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
+msgid "Volume Usage"
+msgstr "音量"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
+msgid "Advanced Details"
+msgstr "<b>拡張オプション</b>"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Bansheeプラグイン"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "プラグイン名"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
+msgid "Enabled"
+msgstr "有効"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "概要"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "説明:"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "作者"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "このプラグインを初期化できませんでした"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "設定"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:103
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "デバイスと同期しています。しばらくお待ちください。"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:167
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "(残り {0})"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:51
+msgid "Music Library"
+msgstr "楽曲ライブラリ"
+
+#: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "ローカルキュー"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:117
+msgid "Cannot Rename Playlist"
+msgstr "再生リストの名前を変更できません"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:118
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr "この名前の付いた再生リストが既に存在します。別の名前を付けて下さい。"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:131
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:150
 msgid "Synchronizing iPod"
 msgstr "iPod との同期"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:129
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:132
 msgid "Pre-processing tracks"
 msgstr "処理中"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:144
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:147
 msgid "Flushing to Disk (may take time)"
 msgstr "ディスクに書き出しています(時間がかかります)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:154
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:157
 msgid "Failed to synchronize iPod"
 msgstr "iPod と同期できませんでした"
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:113
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:406
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:408
 msgid "Could not initialize GStreamer library"
 msgstr "GStreamer ライブラリを初期化できませんでした"
 
@@ -1791,12 +1737,12 @@ msgstr "GStreamer ライブラリを初期化できませんでした"
 msgid "Unknown Error"
 msgstr "未知のエラー"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:294
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
 msgid "GStreamer 0.10 Engine"
 msgstr "GStreamer エンジン"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:304
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:615
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:306
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:627
 msgid ""
 "GStreamer is a multimedia framework for playing and manipulating media. Any "
 "GStreamer plugin that is available will work through this engine."
@@ -1804,7 +1750,7 @@ msgstr ""
 "GStreamer はメディアを再生したり操作するためのマルチメディア・フレームワーク"
 "です。このエンジンを介して GStreamer プラグインを利用します。"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:604
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:616
 msgid "GStreamer Engine"
 msgstr "GStreamer エンジン"
 
@@ -1822,17 +1768,235 @@ msgstr ""
 "制御する機能を提供します。このエンジンは RealPlayer で扱えるファイルを再生で"
 "きます。ベストな状況で再生する場合は RealPlayer をインストールして下さい。"
 
-#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:80
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:82
 msgid "VLC"
 msgstr "VLC"
 
-#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:88
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:90
 msgid ""
 "VLC is a highly portable multimedia player for various audio and video "
 "formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
 msgstr ""
 "VLCは様々なオーディオ・ビデオフォーマット(MP3, AAC, OGG, FLAC, WMAなど)に対応"
 "する移植性の高いマルチメディアプレーヤーです。http://videolan.org/vlc/"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
+msgid "Audioscrobbler Reporting"
+msgstr "Audioscrobblerへの情報送信"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:73
+msgid "Create an account"
+msgstr "アカウントを作成"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
+msgid "Join the Banshee group"
+msgstr "Bansheeのグループに参加する"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:131
+msgid "Enable song reporting"
+msgstr "楽曲情報の送信を有効にする"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
+msgid "Last.fm Username"
+msgstr "Last.fmのユーザー名"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:102
+msgid "Last.fm Password"
+msgstr "Last.fmのパスワード"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:59
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr ""
+"Last.fmのあなたのプロフィールページがあなたが音楽を聴くたびに自動的に更新され"
+"ます。人はあなたが現在何を聴いているか、過去に何を聴いたかを見ることができま"
+"す。"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
+msgid "Audioscrobbler"
+msgstr "Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Audioscrobblerプラグインの設定"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
+msgid "Visit user profile page"
+msgstr "ユーザープロフィールのページにアクセスする"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Audioscrobblerのプロフィールページにアクセスします"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:120
+msgid "Visit group page"
+msgstr "グループページにアクセスする"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
+msgid "Visit the Banshee last.fm group page"
+msgstr "Last.fmのBansheeグループのページにアクセスします"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
+msgid "Configure..."
+msgstr "設定..."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
+msgid ""
+"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr "再生エンジンがlast.fmに楽曲情報を送ることを許可します"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
+msgid "Enable the Audioscrobbler plugin"
+msgstr "Audioscrobblerプラグインを有効にする"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
+msgid "Your last.fm password"
+msgstr "last.fmのパスワード"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:4
+msgid "Your last.fm username"
+msgstr "last.fmのユーザー名"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:50
+msgid "Music Sharing"
+msgstr "音楽共有"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
+msgid "Share my music library with others"
+msgstr "楽曲ライブラリを他者と共有する"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
+msgid "Share name:"
+msgstr "共有名:"
+
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:72
+msgid "Banshee Music Share"
+msgstr "Banshee 音楽共有"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
+msgid "Login to Music Share"
+msgstr "音楽共有にログインする"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
+msgid "Authentication Required"
+msgstr "認証が必要です"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
+msgid "Username:"
+msgstr "ユーザー名:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+msgid "Password:"
+msgstr "パスワード:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "ログイン"
+
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+msgid "Cannot login to DAAP share"
+msgstr ""
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
+msgid "Allow others to browse and listen to your music from other DAAP clients"
+msgstr ""
+"他者がDAAPクライアントであなたの音楽を見たり聴いたりすることを可能にします"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
+msgid "Enable DAAP Server support"
+msgstr ""
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
+msgid "Enable the DAAP Music Sharing plugin"
+msgstr "DAAP音楽共有プラグインを有効にする"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
+msgid "Name of DAAP server share"
+msgstr "DAAPサーバー共有名"
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/Watcher.cs:49
+msgid ""
+"Automatically keep your Banshee library directory in sync with your music "
+"folder. This plugin responds to changes made in the file system to reflect "
+"them in your library."
+msgstr ""
+"楽曲ライブラリとフォルダを自動的に同期します。このプラグインはファイルシステ"
+"ム上の変化をライブラリに反映させます。"
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
+msgid "Enable the FileSystemMonitor plugin"
+msgstr "ファイルシステムの監視を有効にする"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:60
+msgid "Metadata and Cover Art Searching"
+msgstr "楽曲情報とジャケットの検索"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:69
+msgid "Only download album cover artwork"
+msgstr "ジャケットだけをダウンロードする"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:71
+msgid "Download album cover artwork and fill in missing track data"
+msgstr "ジャケットをダウンロードし、不足しているトラック情報を補完する"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:73
+msgid "Download album cover artwork and overwrite any existing track data"
+msgstr "ジャケットをダウンロードし、既存のトラック情報を上書きする"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:88
+msgid "Warning"
+msgstr "警告"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:90
+msgid ""
+"This option can usually correct minor mistakes in metadata, however on rare "
+"occasions metadata may be incorrectly updated from MusicBrainz."
+msgstr ""
+"このオプションは通常は楽曲情報の小さな誤りを訂正することができますが、まれに"
+"楽曲情報を間違って更新してしまうこともあります。"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:55
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
+msgstr "不足する楽曲情報とジャケットを自動的に検索します"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
+msgid ""
+"0 - Download only cover art 1 - Download cover art, fill in missing metadata "
+"2 - Download cover art, overwrite metadata"
+msgstr ""
+"0 - ジャケットだけをダウンロード 1 - ジャケットをダウンロードし、不足している"
+"トラック情報を補完 2 - ジャケットをダウンロードし、トラック情報を上書き"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
+msgid "Enable the MetadataSearch plugin"
+msgstr "MetadataSearchプラグインを有効にする"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
+msgid "Method of fetching cover art and supplementary metadata"
+msgstr "ジャケットと楽曲情報の取得方法"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:48
+msgid "Multimedia Keyboard Shortcuts"
+msgstr ""
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+
+#: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
+#, fuzzy
+msgid "Enable the MultimediaKeys plugin"
+msgstr "MetadataSearchプラグインを有効にする"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
 msgid "Cancel Operation"
@@ -1843,11 +2007,148 @@ msgstr "操作のキャンセル"
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "この '{0}' の操作を本当にキャンセルしてもよろしいですか？"
 
-#: ../src/Banshee.Widgets/SearchEntry.cs:157
-#: ../src/Banshee.Widgets/SearchEntry.cs:268
+#: ../src/Banshee.Widgets/SearchEntry.cs:203
+#: ../src/Banshee.Widgets/SearchEntry.cs:314
 #, csharp-format
 msgid "Searching: {0}"
 msgstr "検索中: {0}"
+
+#~ msgid "Can't remove Active track"
+#~ msgstr "再生中のトラックは削除できません"
+
+#~ msgid ""
+#~ "Banshee is already running. If you were trying to control the already "
+#~ "running instance of Banshee, D-Bus must be enabled. Banshee could not "
+#~ "connect to your D-Bus Session Bus."
+#~ msgstr ""
+#~ "Bansheeは既に起動されています。動作中のBansheeをコントロールしたいのであれ"
+#~ "ばD-Busを有効にしなければなりません。BansheeはあなたのD-Busセッションバス"
+#~ "に接続できませんでした。"
+
+#~ msgid ""
+#~ "You have changed the Banshee Playback Engine. This change will not take "
+#~ "affect until the next time Banshee is run. Please restart Banshee to use "
+#~ "the new <b><i>{0}</i></b> Engine"
+#~ msgstr ""
+#~ "Banshee の再生エンジンを変更しました。この変更は次回 Banshee を起動するま"
+#~ "で有効になりません。新しいエンジン <b><i>{0}</i></b> を利用する場合は "
+#~ "Banshee を再起動して下さい。"
+
+#~ msgid "Banshee Restart Required"
+#~ msgstr "Banshee を再起動して下さい"
+
+#~ msgid "Preferences..."
+#~ msgstr "設定..."
+
+#~ msgid "About..."
+#~ msgstr "情報"
+
+#, fuzzy
+#~ msgid "View Banshee credits and license information"
+#~ msgstr "選択した曲の情報を表示します"
+
+#~ msgid "Search Options"
+#~ msgstr "検索オプション"
+
+#~ msgid ""
+#~ "Uses inotify (or FAM if inotify is unavailable) updating the Banshee "
+#~ "Library as changes are made in the Library Location in the file system"
+#~ msgstr ""
+#~ "inotify（またはFAM)を使い、ライブラリの場所にあるファイルに変化があった場"
+#~ "合にBansheeのライブラリを更新する"
+
+#~ msgid "Track Property Editor"
+#~ msgstr "トラックのプロパティ"
+
+#~ msgid "Library"
+#~ msgstr "ライブラリ"
+
+#~ msgid "Unhandled Exception, ending IO Transaction safely"
+#~ msgstr "想定外の例外が発生しました。入出力処理を終了します"
+
+#~ msgid "Library Track Loader"
+#~ msgstr "ライブラリへのトラックの読み込み"
+
+#~ msgid "Processing"
+#~ msgstr "処理中"
+
+#~ msgid "Preloading Files"
+#~ msgstr "ファイルのプレロード中"
+
+#~ msgid "Loading {0} - {1} ..."
+#~ msgstr "{0} - {1} の読み込み中..."
+
+#~ msgid "Playlist Save"
+#~ msgstr "再生リストの保存"
+
+#~ msgid "Flushing old entries"
+#~ msgstr "古いエントリを消去しています"
+
+#~ msgid "Saving new entries"
+#~ msgstr "新しいエントリを保存しています"
+
+#~ msgid "Library Load"
+#~ msgstr "ライブラリの読み込み"
+
+#~ msgid "Preloading Library"
+#~ msgstr "ライブラリを読み込んでいます"
+
+#~ msgid "Library Track Remove"
+#~ msgstr "ライブラリからトラックを削除"
+
+#~ msgid "Removing Tracks"
+#~ msgstr "トラックを削除しています"
+
+#~ msgid "Removing {0} - {1}"
+#~ msgstr "{1}曲中{1}曲目を削除しています"
+
+#~ msgid "Purging Removed Tracks from Library..."
+#~ msgstr "削除されたトラックをライブラリから削除しています"
+
+#~ msgid "Playlist Track Remove"
+#~ msgstr "再生リストからトラックを削除"
+
+#~ msgid "Purging Removed Tracks from Playlist..."
+#~ msgstr "削除されたトラックを再生リストから削除しています"
+
+#~ msgid "Playlist Track Loader"
+#~ msgstr "再生リストへのトラックの読み込み"
+
+#~ msgid ""
+#~ "There are multiple operations executing. You may either cancel the "
+#~ "current operation or all operations.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "いくつかの操作が輻輳しています。現在の操作または全ての操作をキャンセルした"
+#~ "方が良いかもしれません。\n"
+#~ "\n"
+
+#~ msgid "Are you sure you want to cancel this operation?"
+#~ msgid_plural "Are you sure you want to cancel these operations?"
+#~ msgstr[0] "この操作を本当にキャンセルしてもよろしいですか？"
+#~ msgstr[1] "この操作を本当にキャンセルしてもよろしいですか？"
+
+#~ msgid "Really Cancel Operation?"
+#~ msgid_plural "Really Cancel Operations?"
+#~ msgstr[0] "本当に操作をキャンセルしますか？"
+
+#~ msgid "Position: "
+#~ msgstr "ウィンドウの Y-座標"
+
+#~ msgid "Banshee - Idle"
+#~ msgstr "Banshee - 待機中"
+
+#~ msgid "Synchronize iPod"
+#~ msgstr "iPod との同期"
+
+#~ msgid "Editing Track Properties ({0} of {1})"
+#~ msgstr "トラック情報の編集 ({0} / {1})"
+
+#~ msgid "Editing Track Properties"
+#~ msgstr "トラック情報の編集"
+
+#~ msgid "Properties"
+#~ msgstr "プロパティ"
 
 #~ msgid "<b>Playlist</b>"
 #~ msgstr "<b>再生リスト</b>"
@@ -1867,23 +2168,11 @@ msgstr "検索中: {0}"
 #~ msgid "Remove"
 #~ msgstr "削除"
 
-#~ msgid "Rename"
-#~ msgstr "名前の変更"
-
 #~ msgid "Update Device"
 #~ msgstr "デバイスの更新"
 
-#~ msgid "<b>Advanced/Details:</b>"
-#~ msgstr "<b>拡張オプション</b>"
-
 #~ msgid "Play / Pause"
 #~ msgstr "再生 / 一時停止"
-
-#~ msgid "Shuffle Playback Mode"
-#~ msgstr "シャッフル再生モードの ON/OFF を切り替えます"
-
-#~ msgid "Repeat Playback Mode"
-#~ msgstr "リピート再生モードの ON/OFF を切り替えます"
 
 #~ msgid "Eject Device"
 #~ msgstr "iPod を取り出します"
@@ -1891,14 +2180,8 @@ msgstr "検索中: {0}"
 #~ msgid "Importing {0} of {1} : {2} - {3}"
 #~ msgstr "{1}曲中{0}曲目をインポートしています : {2} - {3}"
 
-#~ msgid "Shuffle Enabled"
-#~ msgstr "シャッフル"
-
 #~ msgid "Shuffle Disabled"
 #~ msgstr "シャッフル"
-
-#~ msgid "Volume High"
-#~ msgstr "音量大"
 
 #~ msgid "Volume Medium"
 #~ msgstr "音量中"
@@ -1914,9 +2197,6 @@ msgstr "検索中: {0}"
 
 #~ msgid "Volume Increase"
 #~ msgstr "音量増"
-
-#~ msgid "Banshee Player"
-#~ msgstr "Banshee プレイヤー"
 
 #~ msgid "Encoding {0} - {1} ..."
 #~ msgstr "{0} - {1} のエンコーディング中..."
@@ -1962,14 +2242,8 @@ msgstr "検索中: {0}"
 #~ msgid "Error Burning Disk"
 #~ msgstr "ディスクの書き込みでエラー"
 
-#~ msgid "{0} Properties"
-#~ msgstr "{0} 個のプロパティ"
-
 #~ msgid "iPod Name"
 #~ msgstr "iPod の名前"
-
-#~ msgid "Your Name"
-#~ msgstr "あなたの名前"
 
 #~ msgid "Computer Name"
 #~ msgstr "コンピュータの名前"
@@ -1982,9 +2256,6 @@ msgstr "検索中: {0}"
 
 #~ msgid "Mount Point"
 #~ msgstr "マウント・ポイント"
-
-#~ msgid "Device Node"
-#~ msgstr "デバイス・ノード"
 
 #~ msgid "Write Support"
 #~ msgstr "書き込み可否"
