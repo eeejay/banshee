@@ -179,7 +179,8 @@ namespace Banshee
         [Method]
         public virtual string GetPlayingCoverUri()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
+            string cover = HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
+            return cover == null ? String.Empty : cover;
         }
         
         [Method]
@@ -192,12 +193,6 @@ namespace Banshee
         public virtual int GetPlayingPosition()
         {
             return HaveTrack ? (int)PlayerEngineCore.ActivePlayer.Position : -1;
-        }
-        
-        [Method]
-        public virtual string GetPlayingCoverArtFileName()
-        {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
         }
         
         [Method]

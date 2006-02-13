@@ -137,7 +137,14 @@ namespace Banshee.Dap.Ipod
             user_event.CanCancel = false;
             user_event.Message = Catalog.GetString("Saving new database...");
             user_event.Progress = 0.0;
-            dap.Device.SongDatabase.Save();
+            
+            try {
+                dap.Device.SongDatabase.Save();
+            } catch(Exception e) {
+                LogCore.Instance.PushError(
+                    Catalog.GetString("Error rebuilding iPod database"),
+                    e.Message);
+            }
         }
         
         protected virtual void OnFinished()

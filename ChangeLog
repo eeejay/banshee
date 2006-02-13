@@ -1,3 +1,17 @@
+2006-02-13  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Version 0.10.6
+
+	* src/Banshee.Base/Utilities.cs (SetProcessName): Use IntPtr instead
+	of ulong to avoid potential 64 bit issues
+
+	* src/RemotePlayer.cs: Fix a potential dbus-sharp crash (BGO #330903) 
+	
+	* src/Banshee.Widgets/VolumeButton.cs: Adjust volume fix (BGO #330524)
+
+	* src/Banshee.Dap/Ipod/DatabaseRebuilder.cs: Handle the exceptions
+	SongDatabase.Save may throw, display error to user
+
 2006-02-12  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Updated MonoDevelop project

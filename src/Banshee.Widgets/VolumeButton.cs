@@ -319,6 +319,8 @@ namespace Banshee.Widgets
 
 			if (scale != null) {
 				scale.Value = tmp_vol;
+			} else {
+				VolumeChanged (Volume);
 			}
 		}
 	}
