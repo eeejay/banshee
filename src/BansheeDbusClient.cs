@@ -40,7 +40,7 @@ using System;
 using DBus;
 using Gtk;
 
-[Interface("org.gnome.Banshee.Player")]
+[Interface("org.gnome.Banshee.Core")]
 public abstract class BansheePlayer
 {       
     public static BansheePlayer FindInstance()

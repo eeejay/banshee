@@ -1,4 +1,8 @@
 2006-02-13  Aaron Bockover  <aaron@abock.org>
+	
+	* src/BansheeDbusClient.cs: Fixed interface name
+
+2006-02-13  Aaron Bockover  <aaron@abock.org>
 
 	Banshee 0.10.6 Released
 
