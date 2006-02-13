@@ -1,4 +1,4 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 /***************************************************************************
  *  MetadataSearchPlugin.cs
  *
@@ -46,6 +46,8 @@ namespace Banshee.Plugins.MetadataSearch
 
     public class MetadataSearchPlugin : Banshee.Plugins.Plugin
     {
+        private const string NotFoundAsin = "NOTFOUND";
+        
         protected override string ConfigurationName { get { return "MetadataSearch"; } }
         public override string DisplayName { get { return "Metadata Searcher"; } }
         
@@ -54,7 +56,7 @@ namespace Banshee.Plugins.MetadataSearch
                 return Catalog.GetString(
                     "Automatically search for missing and supplementary " + 
                     "metadata and cover art for songs in your library."
-                );
+                    );
             }
         }
 
@@ -65,11 +67,19 @@ namespace Banshee.Plugins.MetadataSearch
                 };
             }
         }
+
+        public bool IsScanning {
+            get { return is_scanning; }
+        }
+
+        public event EventHandler ScanStarted;
+        public event EventHandler ScanEnded;
         
         private bool processing_queue;
         private Queue scan_queue;
         private Client mb_client;
         private Thread processing_thread;
+        private bool is_scanning;
         
         protected override void PluginInitialize()
         {
@@ -120,10 +130,25 @@ namespace Banshee.Plugins.MetadataSearch
                 processing_thread.Start();
             }
         }
+
+        internal void RescanLibrary()
+        {
+            Globals.Library.Db.Query("UPDATE Tracks SET RemoteLookupStatus = 0");
+            ScanLibrary();
+        }
                 
         private void ScanLibrary()
         {
-            ThreadAssist.Spawn(ScanLibraryThread);
+            lock (this) {
+                if (is_scanning)
+                    return;
+
+                is_scanning = true;
+                if (ScanStarted != null)
+                    ScanStarted(this, new EventArgs ());
+                
+                ThreadAssist.Spawn(ScanLibraryThread);
+            }
         }
         
         private void ScanLibraryThread()
@@ -148,6 +173,10 @@ namespace Banshee.Plugins.MetadataSearch
             if(!DisposeRequested) {
                 ProcessQueue();
             }
+
+            is_scanning = false;
+            if (ScanEnded != null)
+                ScanEnded(this, new EventArgs());
         }
         
         private void ProcessQueue()
@@ -194,8 +223,13 @@ namespace Banshee.Plugins.MetadataSearch
                                 Sql.Statement.EscapeQuotes(track.Artist),
                                 Sql.Statement.EscapeQuotes(track.Album))
                     ) as string;
-                    
-                    if(asin != null && asin != String.Empty) {
+
+                    if(asin == NotFoundAsin) {
+                        track.Asin = NotFoundAsin;
+                        track.RemoteLookupStatus = RemoteLookupStatus.Success;
+                        track.Save();
+                        return;
+                    } else if(asin != null && asin != String.Empty) {
                         Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
                         track.Asin = asin;
                         track.RemoteLookupStatus = RemoteLookupStatus.Success;
@@ -244,6 +278,8 @@ namespace Banshee.Plugins.MetadataSearch
                 if(mb_track.Asin != null && mb_track.Asin != String.Empty) {
                     track.Asin = mb_track.Asin;
                     AmazonCoverFetcher.Fetch(mb_track.Asin, Paths.CoverArtDirectory);
+                } else {
+                    track.Asin = NotFoundAsin;
                 }
                 
                 track.RemoteLookupStatus = RemoteLookupStatus.Success;

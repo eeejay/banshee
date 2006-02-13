@@ -1,3 +1,11 @@
+2006-02-13  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:
+	Add a IsScanning property.  When in album cover only mode, don't
+	try to lookup the same album more than once.
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchConfDialog.cs:
+	Add a 'Rescan Library' button.
+
 2006-02-13  Aaron Bockover  <aaron@abock.org>
 	
 	* src/BansheeDbusClient.cs: Fixed interface name

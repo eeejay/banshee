@@ -1,4 +1,4 @@
-/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 /***************************************************************************
  *  MetadataSearchConfigDialog.cs
  *
@@ -44,6 +44,7 @@ namespace Banshee.Plugins.MetadataSearch
         private RadioButton fetch_covers_only;
         private RadioButton fill_blank_info;
         private RadioButton overwrite_info;
+        private Button rescan_button;
         
         public MetadataSearchConfigPage(MetadataSearchPlugin plugin) : base()
         {
@@ -57,7 +58,7 @@ namespace Banshee.Plugins.MetadataSearch
             
             Label title = new Label();
             title.Markup = String.Format("<big><b>{0}</b></big>", 
-                GLib.Markup.EscapeText(Catalog.GetString("Metadata and Cover Art Searching")));
+                                         GLib.Markup.EscapeText(Catalog.GetString("Metadata and Cover Art Searching")));
             title.Xalign = 0.0f;
             
             PackStart(title, false, false, 0);
@@ -71,6 +72,13 @@ namespace Banshee.Plugins.MetadataSearch
                 "Download album cover artwork and fill in missing track data"));
             overwrite_info = new RadioButton(fetch_covers_only, Catalog.GetString(
                 "Download album cover artwork and overwrite any existing track data"));
+
+            rescan_button = new Button (Catalog.GetString ("Rescan Library"));
+            rescan_button.Sensitive = !plugin.IsScanning;
+            rescan_button.Clicked += OnRescan;
+            HBox rescan_box = new HBox ();
+            rescan_box.PackStart(rescan_button, false, false, 0);
+            rescan_box.PackStart(new Label(""), true, true, 0);
             
             fetch_covers_only.Toggled += OnToggled;
             fill_blank_info.Toggled += OnToggled;
@@ -100,6 +108,7 @@ namespace Banshee.Plugins.MetadataSearch
             box.PackStart(fill_blank_info, false, false, 0);
             box.PackStart(overwrite_info, false, false, 0);
             box.PackStart(warning_align, false, false, 0);
+            box.PackStart(rescan_box, false, false, 0);
             
             PackStart(box, false, false, 0);
             
@@ -108,17 +117,40 @@ namespace Banshee.Plugins.MetadataSearch
             warning_align.Hide();
             
             switch(plugin.FetchMethod) {
-                case FetchMethod.FillBlank:
-                    fill_blank_info.Active = true;
-                    break;
-                case FetchMethod.Overwrite:
-                    overwrite_info.Active = true;
-                    warning_align.Show();
-                    break;
-                default:
-                    fetch_covers_only.Active = true;
-                    break;
+            case FetchMethod.FillBlank:
+                fill_blank_info.Active = true;
+                break;
+            case FetchMethod.Overwrite:
+                overwrite_info.Active = true;
+                warning_align.Show();
+                break;
+            default:
+                fetch_covers_only.Active = true;
+                break;
             }
+
+            plugin.ScanStarted += OnScanStarted;
+            plugin.ScanEnded += OnScanEnded;
+        }
+
+        private void OnScanStarted(object o, EventArgs args)
+        {
+            Application.Invoke(delegate {
+                rescan_button.Sensitive = false;
+            });
+        }
+
+        private void OnScanEnded(object o, EventArgs args)
+        {
+            Application.Invoke(delegate {
+                rescan_button.Sensitive = true;
+            });
+        }
+
+        private void OnRescan(object o, EventArgs args)
+        {
+            plugin.RescanLibrary ();
+            rescan_button.Sensitive = false;
         }
         
         private void OnToggled(object o, EventArgs args)
