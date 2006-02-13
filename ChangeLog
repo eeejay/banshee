@@ -1,5 +1,9 @@
 2006-02-13  James Willcox  <snorp@snorp.net>
 
+	* nuke all the (incorrect) emacs mode lines
+
+2006-02-13  James Willcox  <snorp@snorp.net>
+
 	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:
 	Add a IsScanning property.  When in album cover only mode, don't
 	try to lookup the same album more than once.
