@@ -56,14 +56,14 @@ namespace Banshee.Dap.Njb
             }
         }
         
-        public NjbDap(Hal.Device halDevice)
+        public override InitializeResult Initialize(Hal.Device halDevice)
         {
             if(discoverer == null || 
                 !halDevice.PropertyExists("usb.bus_number") ||
                 !halDevice.PropertyExists("usb.linux.device_number") ||
                 !halDevice.PropertyExists("usb.vendor_id") ||
                 !halDevice.PropertyExists("usb.product_id")) {
-                throw new CannotHandleDeviceException();
+                return InitializeResult.Invalid;
             }
             
             short usb_bus_number = (short)halDevice.GetPropertyInt("usb.bus_number");
@@ -74,7 +74,7 @@ namespace Banshee.Dap.Njb
                 (short)halDevice.GetPropertyInt("usb.product_id"));
             
             if(device_id == null) {
-                throw new CannotHandleDeviceException();
+                return InitializeResult.Invalid;
             }
             
             discoverer.Rescan();
@@ -95,7 +95,7 @@ namespace Banshee.Dap.Njb
             }
 
             if(device == null) { 
-                throw new CannotHandleDeviceException();
+                return InitializeResult.Invalid;
             }
 
             device.Capture();
@@ -110,7 +110,7 @@ namespace Banshee.Dap.Njb
                 return true;
             });
               
-            base.Initialize();
+            base.Initialize(halDevice);
             
             InstallProperty("Model", device.Name);
             InstallProperty("Vendor", halDevice["usb.vendor"]);
@@ -122,6 +122,7 @@ namespace Banshee.Dap.Njb
             ReloadDatabase();
             
             CanCancelSave = false;
+            return InitializeResult.Valid;
         }
         
         public override void Dispose()

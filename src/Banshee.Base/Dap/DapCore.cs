@@ -149,47 +149,62 @@ namespace Banshee.Dap
         
         private static void BuildDeviceTable()
         {
-            foreach(Device device in Device.GetAll(HalCore.Context)) {
-                AddDevice(device);
-            }
-        }
-        
-        private static void AddDevice(Device device)
-        {
-            foreach(Type type in supported_dap_types) {
-                AddDevice(device, type);
-            }    
-        }
-        
-        private static void AddDevice(Device device, Type type)
-        {
-            try {
-                AddDevice(device, Activator.CreateInstance(type, new object [] { device }) as DapDevice);
-                device_waiting_table.Remove(device.Udi);
-            } catch(TargetInvocationException te) {
-                try {
-                    throw te.InnerException;
-                } catch(BrokenDeviceException e) {
-                    LogCore.Instance.PushWarning(Catalog.GetString("Could not process connected DAP"), 
-                        e.Message, false);
-                } catch(CannotHandleDeviceException) {
-                } catch(WaitForPropertyChangeException) {
-                    device.WatchProperties = true;
-                    device_waiting_table[device.Udi] = type;
-                } catch(WaitForTimeoutException e) {
-                    GLib.Timeout.Add(e.WaitSpan, delegate {
-                        AddDevice(device);
-                        return false;
-                    });
-                } catch(Exception e) {
+            foreach(Device device in Device.FindByStringMatch(HalCore.Context, 
+                "info.category", "portable_audio_player")) {
+                // Find the actual storage device that is mountable;
+                // this should probably just be possible by accessing
+                // portable_audio_player.storage_device, but for me
+                // as of HAL 0.5.6, this property just points to its own UDI
+                if(device["portable_audio_player.access_method"] == "storage" &&
+                    !device.GetPropertyBool("block.is_volume")) {
+                    foreach(Device storage_device in Hal.Device.FindByStringMatch(device.Context, 
+                        "info.parent", device.Udi)) {
+                        if(AddDevice(storage_device)) {
+                            break;
+                        }
+                    }
+                } else {
+                    AddDevice(device);
                 }
             }
         }
         
-        private static void AddDevice(Device device, DapDevice dap)
+        private static bool AddDevice(Device device)
+        {
+            foreach(Type type in supported_dap_types) {
+                if(AddDevice(device, type)) {
+                    return true;
+                }
+            }    
+            
+            return false;
+        }
+        
+        private static bool AddDevice(Device device, Type type)
+        {
+            try {
+                DapDevice dap = Activator.CreateInstance(type) as DapDevice;
+                switch(dap.Initialize(device)) {
+                    case InitializeResult.Valid:
+                        AddDevice(device, dap);
+                        device_waiting_table.Remove(device.Udi);
+                        return true;
+                    case InitializeResult.WaitForPropertyChange:
+                        device.WatchProperties = true;
+                        device_waiting_table[device.Udi] = type;
+                        return false;
+                }
+            } catch(Exception e) {
+                Console.WriteLine(e);
+            }
+            
+            return false;
+        }
+        
+        private static bool AddDevice(Device device, DapDevice dap)
         {
             if(device == null || dap == null) {
-                return;
+                return false;
             }
             
             dap.HalDevice = device;
@@ -199,6 +214,8 @@ namespace Banshee.Dap
             if(DapAdded != null) {
                 DapAdded(dap, new DapEventArgs(dap));
             }
+            
+            return true;
         }
         
         private static void RemoveDevice(Device device)

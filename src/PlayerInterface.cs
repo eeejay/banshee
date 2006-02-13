@@ -1075,6 +1075,9 @@ namespace Banshee
                 if(playlistModel.Count() == 0 && args.Source.Count > 0) {
                     playlistModel.ReloadSource();
                 }
+                
+                gxml["SearchLabel"].Sensitive = args.Source.SearchEnabled;
+                searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             }
         }
         
@@ -1263,7 +1266,7 @@ namespace Banshee
             
             // Make some choices for audio CDs, they can't be rated, nor have plays or
             // last-played info. Only show the rip button for audio CDs
-            gxml["SearchLabel"].Sensitive = !(source is AudioCdSource);
+            gxml["SearchLabel"].Sensitive = source.SearchEnabled;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
             playlistView.RipColumn.Visible = source is AudioCdSource;
             playlistView.RatingColumn.Hidden = (source is AudioCdSource);

@@ -51,6 +51,7 @@ namespace Banshee.Sources
             this.device = device;
             device.SaveStarted += OnDapSaveStarted;
             device.SaveFinished += OnDapSaveFinished;
+            device.Reactivate += OnDapReactivate;
             CanRename = device.CanSetName;
         }
         
@@ -118,6 +119,12 @@ namespace Banshee.Sources
             }
             
             OnViewChanged();
+        }
+        
+        private void OnDapReactivate(object o, EventArgs args)
+        {
+            OnViewChanged();
+            OnUpdated();
         }
 
         public override int Count {
@@ -202,13 +209,19 @@ namespace Banshee.Sources
         
         public override Gtk.Widget ViewWidget {
             get {
-                return IsSyncing ? syncing_container : null;
+                return IsSyncing ? syncing_container : Device.ViewWidget;
             }
         }
         
         public override bool ShowPlaylistHeader {
             get {
                 return !IsSyncing;
+            }
+        }
+        
+        public override bool SearchEnabled {
+            get {
+                return !IsSyncing && Device.ViewWidget == null;
             }
         }
     }

@@ -109,43 +109,12 @@ namespace Banshee.Dap
         }
     }
     
-    public class BrokenDeviceException : ApplicationException
-    {
-        public BrokenDeviceException(string message) : base(message)
-        {
-        }
+    public enum InitializeResult {
+        Valid,
+        Invalid,
+        WaitForPropertyChange
     }
-    
-    public class CannotHandleDeviceException : ApplicationException
-    {
-        public CannotHandleDeviceException() : base("HAL Device cannot be handled by Dap subclass")
-        {
-        }
-    }
-    
-    public class WaitForPropertyChangeException : ApplicationException
-    {
-        public WaitForPropertyChangeException() : base("Waiting for properties to change on device")
-        {
-        }
-    }
-    
-    public class WaitForTimeoutException : ApplicationException
-    {
-        private uint wait_span;
-        
-        public WaitForTimeoutException(uint waitSpan) : base("Waiting for timeout to reprobe device")
-        {
-            wait_span = waitSpan;
-        }
-        
-        public uint WaitSpan {
-            get {
-                return wait_span;
-            }
-        }
-    }
-    
+
     public delegate void DapTrackListUpdatedHandler(object o, DapTrackListUpdatedArgs args);
 
     public class DapTrackListUpdatedArgs : EventArgs

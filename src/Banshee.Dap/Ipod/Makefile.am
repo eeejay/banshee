@@ -7,7 +7,9 @@ DISTCLEANFILES = *.mdb Makefile.in
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/IpodDap.cs \
-	$(srcdir)/IpodDapTrackInfo.cs
+	$(srcdir)/IpodDapTrackInfo.cs \
+	$(srcdir)/UnsupportedDatabaseView.cs \
+	$(srcdir)/DatabaseRebuilder.cs
 
 if ENABLE_IPOD
 
@@ -17,7 +19,7 @@ bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb ipod-sharp.dll.config
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll -r:Mono.Posix $(GTKSHARP_LIBS) $(IPODSHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:Mono.Posix $(GTKSHARP_LIBS) $(IPODSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 install-data-hook:
 	for ASM in $(IPODSHARP_ASSEMBLIES); do \

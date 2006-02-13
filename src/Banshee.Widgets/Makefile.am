@@ -24,7 +24,9 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/HighlightMessageArea.cs \
 	$(srcdir)/PropertyTable.cs \
 	$(srcdir)/RadialProgress.cs \
-	$(srcdir)/LinearProgress.cs
+	$(srcdir)/LinearProgress.cs \
+	$(srcdir)/MessagePane.cs \
+	$(srcdir)/LinkLabel.cs
 
 all: $(ASSEMBLY)
 

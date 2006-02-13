@@ -137,11 +137,12 @@ namespace Banshee.Dap
         public event EventHandler Ejected;
         public event EventHandler SaveStarted;
         public event EventHandler SaveFinished;
+        public event EventHandler Reactivate;
         
         public Hal.Device HalDevice;
         private Source source;
         
-        protected void Initialize()
+        public virtual InitializeResult Initialize(Hal.Device halDevice)
         {
             Attribute [] dap_attrs = Attribute.GetCustomAttributes(GetType(), typeof(DapProperties));
             if(dap_attrs != null && dap_attrs.Length >= 1) {
@@ -152,6 +153,8 @@ namespace Banshee.Dap
             
             source = new DapSource(this);
             SourceManager.AddSource(source);
+            
+            return InitializeResult.Valid;
         }
         
         public uint Uid {
@@ -165,17 +168,25 @@ namespace Banshee.Dap
             return tracks.GetEnumerator();
         }
         
-        protected void InvokePropertiesChanged()
+        protected void OnPropertiesChanged()
         {
             if(PropertiesChanged != null) {
                 PropertiesChanged(this, new EventArgs());
             }
         }
         
+        protected void OnReactivate()
+        {
+            EventHandler handler = Reactivate;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+        
         protected void InstallProperty(string name, string value)
         {
             properties.Add(name, value);
-            InvokePropertiesChanged();
+            OnPropertiesChanged();
         }
         
         public void AddTrack(TrackInfo track)
@@ -588,6 +599,12 @@ namespace Banshee.Dap
         public virtual string Owner {
             get {
                 return Catalog.GetString("Unknown");
+            }
+        }
+        
+        public virtual Gtk.Widget ViewWidget {
+            get {
+                return null;
             }
         }
         

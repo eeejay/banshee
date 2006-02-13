@@ -83,5 +83,11 @@ namespace Banshee.Sources
                 return disk.Tracks;
             }
         }
+        
+        public override bool SearchEnabled {
+            get {
+                return false;
+            }
+        }
     }
 }

@@ -221,6 +221,12 @@ namespace Banshee.Sources
             }
         }
         
+        public virtual bool SearchEnabled {
+            get {
+                return true;
+            }
+        }
+        
         public int Order {
             get {
                 return order;

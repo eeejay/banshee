@@ -31,6 +31,7 @@ using System;
 using System.IO;
 using System.Collections;
 using Mono.Unix;
+using Gtk;
 using Hal;
 using IPod;
 
@@ -46,26 +47,26 @@ namespace Banshee.Dap.Ipod
     {
         private IPod.Device device;
         private Hal.Device hal_device;
+        private bool database_supported;
+        private UnsupportedDatabaseView db_unsupported_container;
     
-        public IpodDap(Hal.Device halDevice)
+        public override InitializeResult Initialize(Hal.Device halDevice)
         {
             hal_device = halDevice;
             
             if(!hal_device.PropertyExists("block.device") || 
                 !hal_device.GetPropertyBool("block.is_volume") ||
                 hal_device.Parent["portable_audio_player.type"] != "ipod") {
-                throw new CannotHandleDeviceException();
+                return InitializeResult.Invalid;
             } else if(!hal_device.GetPropertyBool("volume.is_mounted")) {
-                throw new WaitForPropertyChangeException();
+                return InitializeResult.WaitForPropertyChange;
             }
             
-            try {
-                device = new IPod.Device(hal_device["block.device"]);
-            } catch(Exception e) {
-                throw new BrokenDeviceException(e.Message);
+            if(LoadIpod() == InitializeResult.Invalid) {
+                return InitializeResult.Invalid;
             }
-            
-            base.Initialize();
+
+            base.Initialize(halDevice);
             
             InstallProperty("Generation", device.Generation.ToString());
             InstallProperty("Model", device.Model.ToString());
@@ -73,10 +74,27 @@ namespace Banshee.Dap.Ipod
             InstallProperty("Serial Number", device.SerialNumber);
             InstallProperty("Firmware Version", device.FirmwareVersion);
             InstallProperty("Database Version", device.SongDatabase.Version.ToString());
-            
+          
             ReloadDatabase(false);
             
             CanCancelSave = false;
+            return InitializeResult.Valid;
+        }
+        
+        private InitializeResult LoadIpod()
+        {
+            try {
+                device = new IPod.Device(hal_device["block.device"]);
+                device.LoadSongDatabase();
+                database_supported = true;
+            } catch(DatabaseReadException) {
+                device.LoadSongDatabase(true);
+                database_supported = false;
+            } catch(Exception e) {
+                return InitializeResult.Invalid;
+            }
+            
+            return InitializeResult.Valid;
         }
         
         protected override TrackInfo OnTrackAdded(TrackInfo track)
@@ -107,15 +125,25 @@ namespace Banshee.Dap.Ipod
         
         private void ReloadDatabase(bool refresh)
         {
+            bool previous_database_supported = database_supported;
+            
             ClearTracks(false);
             
             if(refresh) {
                 device.SongDatabase.Reload();
             }
             
-            foreach(Song song in device.SongDatabase.Songs) {
-                IpodDapTrackInfo track = new IpodDapTrackInfo(song);
-                AddTrack(track);            
+            if(database_supported) {
+                foreach(Song song in device.SongDatabase.Songs) {
+                    IpodDapTrackInfo track = new IpodDapTrackInfo(song);
+                    AddTrack(track);            
+                }
+            } else {
+                BuildDatabaseUnsupportedWidget();
+            }
+            
+            if(previous_database_supported != database_supported) {
+                OnPropertiesChanged();
             }
         }
         
@@ -261,6 +289,16 @@ namespace Banshee.Dap.Ipod
             device.Save();
         }
         
+        private void BuildDatabaseUnsupportedWidget()
+        {
+            db_unsupported_container = new UnsupportedDatabaseView(this);
+            db_unsupported_container.Refresh += delegate(object o, EventArgs args) {
+                LoadIpod();
+                ReloadDatabase(false);
+                OnReactivate();
+            };
+        }
+        
         public override string Name {
             get {
                 if(device.Name != null && device.Name != String.Empty) {
@@ -308,6 +346,18 @@ namespace Banshee.Dap.Ipod
         public override string GenericName {
             get {
                 return "iPod";
+            }
+        }
+        
+        public override Gtk.Widget ViewWidget {
+            get {
+                return !database_supported ? db_unsupported_container : null;
+            }
+        }
+        
+        internal IPod.Device Device {
+            get {
+                return device;
             }
         }
     }

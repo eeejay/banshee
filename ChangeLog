@@ -1,3 +1,56 @@
+2006-02-12  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Require ipod-sharp 0.5.15
+
+	* src/PlayerInterface.cs: Sensitize the search widget based on
+	Source.SearchEnabled; do this on source changes and updates
+
+	* src/Banshee.Base/Source.cs: Added a virtual SearchEnabled property
+
+	* src/Banshee.Base/Dap/Dap.cs: Initialize using new Initialize 
+	override method instead of constructor; support an error-type enum
+	for detection flow instead of using exceptions - nice speed up
+
+	* src/Banshee.Base/Dap/DapCore.cs: Only try to load DAP devices from
+	HAL that support the portable_audio_player value for info.category; note
+	this will affect NJB devices for now as there are no FDI entries
+	upstream; a patch will be available soon; this is a major speed up
+
+	* src/Banshee.Base/Dap/DapMisc.cs: Get rid of the DAP exceptions used
+	for detection flow... bad style and inefficient/slow; using an enum
+	
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Override SearchEnabled
+	
+	* src/Banshee.Base/Sources/DapSource.cs: Support propagating a custom
+	view from the DAP; support DAP reactivation
+	
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Support new detection/initialization
+	model from base; show a nice error resolution view if iPod has a
+	database that cannot be read
+	
+	* src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs: A custom view to
+	detail why an iPod may not be supported; offers the ability to 
+	rebuild the database
+	
+	* src/Banshee.Dap/Ipod/DatabaseRebuilder.cs: Class to scan an iPod
+	for music in iPod_Control/Music/F*/* and rebuild a supported database
+	
+	* src/Banshee.Dap/Ipod/Makefile.am: Added DatabaseRebuilder.cs and
+	UnsupportedDatabaseView.cs; link against entagged-sharp.dll
+	
+	* src/Banshee.Dap/Njb/NjbDap.cs: Updated to reflect detection/init
+	model from base
+	
+	* src/Banshee.Widgets/MessagePane.cs: A custom widget to show 
+	a header/icon and bullets of text/widgets; derived from beagle-search
+	
+	* src/Banshee.Widgets/LinkLabel.cs: Custom Label widget that allows
+	for click/keypress activation; draws a blue link and shows a focus rect
+	
+	* src/Banshee.Widgets/Makefile.am: Added MessagePane.cs and LinkLabel.cs
+
 2006-02-08  Aaron Bockover  <aaron@aaronbock.net>
 
 	* src/LogCoreViewer.cs: Do null-detection on the raw objects returned
