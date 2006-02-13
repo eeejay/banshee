@@ -48,7 +48,9 @@ src/Banshee.Base/Sources/DapSource.cs
 src/Banshee.Base/Sources/LibrarySource.cs
 src/Banshee.Base/Sources/LocalQueueSource.cs
 src/Banshee.Base/Sources/PlaylistSource.cs
+src/Banshee.Dap/Ipod/DatabaseRebuilder.cs
 src/Banshee.Dap/Ipod/IpodDap.cs
+src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
 src/Banshee.MediaEngine/Helix/HelixPlayer.cs
 src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
