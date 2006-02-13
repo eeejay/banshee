@@ -1386,13 +1386,7 @@ namespace Banshee
                 if(count == 0 && SourceManager.ActiveSource == null) {
                     LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
                 } else if(count == 0) {
-                    if(SourceManager.ActiveSource is LibrarySource) {
-                        LabelStatusBar.Text = Catalog.GetString(
-                           "Your Library is Empty - Consider Importing Music");
-                    } else if(SourceManager.ActiveSource is PlaylistSource) {
-                        LabelStatusBar.Text = Catalog.GetString(
-                            "This Playlist is Empty - Consider Adding Music");
-                    }
+                    LabelStatusBar.Text = String.Empty;
                 } else {
                     string text = String.Format(Catalog.GetPluralString("{0} Item", "{0} Items", 
                         (int)count), count) + ", ";

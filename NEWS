@@ -1,85 +1,70 @@
-Banshee 0.10.5 is out!
+Banshee 0.10.6 is out!
 
-This release features a new database layer, which addresses potential locking
-issues in 0.10.4. A new official plugin was added that allows for special
-multimedia key support, configurable through the Gnome keyboard shortcuts
-capplet.
+This release features much improved iPod support. A few large bugs were
+fixed regarding iPod syncing, and a database reconstruction was added
+if Banshee ever encounters an iPod database it cannot read (iTunes frequently
+updates the database format). 
 
 
 NOTES
 -----
 
-This release contains mainly bug fixes. Gtk# 2.8 and GTK+ 2.8 is now a
-requirement as Gtk# 2.8 is now stable and most distributions should be
-shipping it.
+This release requires ipod-sharp 0.5.15 for iPod support. Installing 
+libipoddevice 0.4.1 is recommended (especially if you have HAL 0.5.6+), 
+though not required.
 
 
 NEW FEATURES
 ------------
 
- * New queued/single-threaded database layer; much safer and potentially
-   faster in some areas
+ * If an unsupported iPod database is encountered, Banshee will offer
+ to scan the iPod and reconstruct a database; either way, unsupported
+ database errors are handled very gracefully now
  
- * Multimedia keys plugin by Danilo Reinhardt
+ * Use cover.jpg/folder.jpg and others as cover art if it exists
  
- * Improved custom source API. Sources can now provide custom or hybrid
-   views. See the banshee-sample-plugin module in Banshee subversion:
-      svn://svn.banshee-project.org/trunk/banshee-sample-plugin
-   
- * Improved search entry; uses stock/theme icons now
+ * Improved startup time 
+
+ * Thai translation by Theppitak Karoonboonyanan
  
- * Improved volume widget; +/- are now clickable (Ruben Vermeersch)
+ * ipod-sharp now has fixed logic for syncing, fixes a few bugs
  
- * Banshee now shows up in process listings (top, gnome system monitor) as
-   'banshee' (not 'mono'); and 'killall banshee' will now work 
+ * libipoddevice 0.4.1 can be used which now supports ejecting over HAL/DBus
 
 
 BUG FIXES
 ---------
 
- * 320608: "Copy files on import" option can kill files.
- * 320799: Left pane stays empty because of markup problems
- * 324143: Playlist initially displays library contents
  * 324326: iPod transcoding dies on filenames containing %
  * 324923: Banshee crash on clicking any menu item
- * 325078: Updating the preferences of a song doesn't refresh
- * 325636: Banshee consumes CPU even when not playing
- * 325770: Crash in 0.10.2 with GStreamer 0.10
- * 325956: Metadata Searcher freezes after ~100 tracks
- * 326836: Dragging a track to ipod causes crash on exit
- * 326863: Crash on metadata scan.
- * 326922: Can't execute uninstalled banshee
- * 327046: org.gnome.Banshee.service installed in wrong directory
- * 327047: menu entry Music/Source Properties... has no effect
- * 327123: random playback isnt working correctling when banshee is started
- * 328058: Database locking issues with metadata plugin enabled
+ * 326947: Visibility of Rating/Plays/LastPlayed columns are reset to default
+ * 327225: Banshee should listen for multimedia keypresses
+ * 328183: Multiple manual syncronizations of an iPod cause it to corrupt its database
  * 328642: Simple right-click meno on tray icon
- * 328916: Compile fails to detect Mono on AMD64 systems
- * 329012: Using "libdbus-1.so.1" for DllImport can fail (libdbus-1.so.2 present)
- * 329292: use/detect search and close icons for the search box from the GTK theme
  * 329540: banshee wrapper script looks for executable in CWD
  * 329554: cursor jumps from new list to the search box
- * 329875: Banshee should use standard volume button
- * 328201: add --query-cover-uri
+ * 330288: crash on amd64 when playing ANY file
+ * 330524: [PATCH] Doesn't adjust volume when scrolling over the volume widget
+ * 330903: [PATCH] Banshee crashes when requesting album cover for an album without one
 
 
 THE IMPORTANT LINKS
 -------------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.10.5
+http://banshee-project.org/Releases/0.10.6
 
-Banshee 0.10.5 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.10.5.tar.gz
+Banshee 0.10.6 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.10.6.tar.gz
+
+ipod-sharp 0.5.15 Tarball:
+http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.15.tar.gz
+
+libipoddevice 0.4.1 Tarball:
+http://banshee-project.org/files/libipoddevice/libipoddevice-0.4.1.tar.gz
 
 njb-sharp 0.2.1 Tarball:
 http://banshee-project.org/files/njb-sharp/njb-sharp-0.2.1.tar.gz
-
-ipod-sharp 0.5.12 Tarball:
-http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.12.tar.gz
-
-libipoddevice 0.3.5 Tarball:
-http://banshee-project.org/files/libipoddevice/libipoddevice-0.3.5.tar.gz
 
 Banshee Wiki: 
 http://banshee-project.org/
@@ -95,7 +80,7 @@ DEPENDENCIES
 - libmusicbrainz 2.1.1 or better
 - libnautilus-burn 2.12
 - GTK+ 2.8 or better
-- HAL 0.5.2 or better
+- HAL 0.5.2 or better (0.5.6+ Recommended)
 
 
 MORE NOTES
