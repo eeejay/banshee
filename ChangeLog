@@ -1,3 +1,10 @@
+2006-02-14  Chris Toshok  <toshok@ximian.com>
+
+	* src/Banshee.Base/NetworkDetect.cs: rename "last_state" to
+	"current_state", and make get_Connected just consult that field,
+	instead of using nm_manager.State (which requires a dbus rpc).
+	Fixes gc/dbus related hang.
+
 2006-02-13  James Willcox  <snorp@snorp.net>
 
 	* nuke all the (incorrect) emacs mode lines

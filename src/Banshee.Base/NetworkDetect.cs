@@ -46,7 +46,7 @@ namespace Banshee.Base
         public event NetworkStateChangedHandler StateChanged;
         
         private Manager nm_manager;
-        private State last_state;
+        private State current_state;
         
         private static NetworkDetect instance;
         public static NetworkDetect Instance {
@@ -85,15 +85,15 @@ namespace Banshee.Base
             nm_manager.StateChange += OnNetworkManagerEvent;
             nm_manager.DeviceNowActive += OnNetworkManagerEvent;
             nm_manager.DeviceNoLongerActive += OnNetworkManagerEvent;
-            last_state = nm_manager.State;
+            current_state = nm_manager.State;
         }
         
         private void OnNetworkManagerEvent(object o, EventArgs args)
         {
             try {
                 State new_state = nm_manager.State;
-                if(new_state != last_state && (new_state == State.Connected || new_state == State.Disconnected)) {
-                    last_state = new_state;
+                if(new_state != current_state && (new_state == State.Connected || new_state == State.Disconnected)) {
+                    current_state = new_state;
                     
                     NetworkStateChangedHandler handler = StateChanged;
                     if(handler != null) {
@@ -119,11 +119,7 @@ namespace Banshee.Base
         
         public bool Connected {
             get {
-                try {
-                    return nm_manager == null ? true : nm_manager.State == State.Connected;
-                } catch(Exception) {
-                    return true;
-                }
+                return nm_manager == null ? true : current_state == State.Connected;
             }
         }
         
