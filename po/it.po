@@ -1,0 +1,2117 @@
+# Italian translation of Banshee.
+# Copyright (C) 2006 Alessandro Gervaso
+# This file is distributed under the same license as the Banshee package.
+# Alessandro Gervaso <alessandro@truelite.it>, 2006.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Banshee 0.10.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-15 23:03+0100\n"
+"PO-Revision-Date: 2006-02-15 23:07+0100\n"
+"Last-Translator: Alessandro Gervaso <alessandro@truelite.it>\n"
+"Language-Team: Italian <tp@lists.linux.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:315
+#: ../src/PlayerInterface.cs:1387
+msgid "Banshee Music Player"
+msgstr "Riproduttore Musicale Banshee"
+
+#: ../data/banshee.desktop.in.in.h:2
+msgid "Music Player"
+msgstr "Riproduttore Musicale"
+
+#: ../data/banshee.schemas.in.h:1
+msgid "Copy and rename music to banshee music library directory when importing"
+msgstr ""
+"Copia e rinomina la musica quando viene importata  nella collezione musicale "
+"di Banshee"
+
+#: ../data/banshee.schemas.in.h:2
+msgid "Copy music on import"
+msgstr "Copia la musica importata"
+
+#: ../data/banshee.schemas.in.h:3
+msgid "Enable Special Keys"
+msgstr "Abilita i tasti speciali"
+
+#: ../data/banshee.schemas.in.h:4
+msgid ""
+"Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
+"works with mappings set through Gnome Shortcuts capplet"
+msgstr ""
+"Il supporto per i tasti speciali (Tasti multimediali) Suona/Pausa/Successiva/"
+"Precedente è abilitato;funziona con le mappature impostate attraverso le "
+"\"scorciatoie da tastiera\" di Gnome."
+
+#: ../data/banshee.schemas.in.h:5
+msgid "File Name Pattern"
+msgstr "Schema per il nome dei file"
+
+#: ../data/banshee.schemas.in.h:7
+#, no-c-format
+msgid ""
+"Format for creating filenames/directories for ripped tracks, imported music, "
+"etc. Format is relative to the Banshee music directory... do not form an "
+"absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero)."
+msgstr ""
+"Formato per la creazione dei nomi di file e directory per la musica "
+"importata o acquisita da cd, etc.·Il formato è relativo alla directory "
+"contenente la musica di Banshee, quindi non va creato un percorso assoluto! "
+"Tokens:·%artist%,·%album%,·%title%,·%track_number%,·%track_count%,·%"
+"track_number_nz%·(No·prefixed·zero),·%track_count_nz%·(No·prefixed·zero)."
+
+#: ../data/banshee.schemas.in.h:8
+msgid "Height of the main interface window."
+msgstr "Altezza della finestra principale"
+
+#: ../data/banshee.schemas.in.h:9
+msgid "Move music on info save"
+msgstr "Sposta la musica al salvataggio delle informazioni"
+
+#: ../data/banshee.schemas.in.h:10
+msgid ""
+"Move music within banshee music library directory when saving track info"
+msgstr ""
+"Sposta la musica nella collezione musicale di Banshee al salvataggio delle "
+"informazioni su una traccia"
+
+#: ../data/banshee.schemas.in.h:11
+msgid "Name of media playback engine."
+msgstr "Nome del motore utilizzato per la riproduzione."
+
+#: ../data/banshee.schemas.in.h:12
+msgid "Only display the notification area (tray) icon if true"
+msgstr "Visualizza l'icona nell'area di notifica solo se e' true."
+
+#: ../data/banshee.schemas.in.h:13
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "Posizione della finestra principale sull'asse delle X"
+
+#: ../data/banshee.schemas.in.h:14
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "Posizione della finestra principale sull'asse delle Y"
+
+#: ../data/banshee.schemas.in.h:15
+msgid "Player Engine Name"
+msgstr "Nome del motore di riproduzione"
+
+#: ../data/banshee.schemas.in.h:16
+msgid "Show Notification Area Icon"
+msgstr "Mostra l'icona nell'area di notifica"
+
+#: ../data/banshee.schemas.in.h:17
+msgid "Show advanced track properties"
+msgstr "Mostra le proprietà avanzate delle tracce"
+
+#: ../data/banshee.schemas.in.h:18
+msgid "Source View Width"
+msgstr "Larghezza della visualizzazione sorgente"
+
+#: ../data/banshee.schemas.in.h:19
+msgid "True if main window is to be maximized, false if it is not."
+msgstr ""
+"True se la finestra principale deve essere massimizzata, false in caso "
+"contrario"
+
+#: ../data/banshee.schemas.in.h:20
+msgid ""
+"True if the advanced expander should be expanded in the track properties "
+"dialog, false if it should be closed"
+msgstr ""
+"True se l'expander avanzato deve essere espanso nella finestra delle "
+"proprietà della traccia, false se deve rimanere chiuso"
+
+#: ../data/banshee.schemas.in.h:21
+msgid "Volume Output Level"
+msgstr "Livello del volume in uscita"
+
+#: ../data/banshee.schemas.in.h:22
+msgid ""
+"Volume of playback relative to mixer output (except on Helix, which sets "
+"volume directly on PCM"
+msgstr ""
+"Volume della riproduzione relativo all'output del mixer (eccetto con Helix "
+"che imposta il volume direttamente su PCM)"
+
+#: ../data/banshee.schemas.in.h:23
+msgid "Width of Album Column."
+msgstr "Larghezza della colonna Album"
+
+#: ../data/banshee.schemas.in.h:24
+msgid "Width of Artist Column."
+msgstr "Larghezza della colonna Artista"
+
+#: ../data/banshee.schemas.in.h:25
+msgid "Width of Last Played Column."
+msgstr "Larghezza della colonna Ultimo passaggio"
+
+#: ../data/banshee.schemas.in.h:26
+msgid "Width of Plays Column."
+msgstr "Larghezza della colonna Numero di passaggi"
+
+#: ../data/banshee.schemas.in.h:27
+msgid "Width of Rating Column."
+msgstr "Larghezza della colonna Voto"
+
+#: ../data/banshee.schemas.in.h:28
+msgid "Width of Source View Column."
+msgstr "Larghezza della colonna della visualizzazione sorgente"
+
+#: ../data/banshee.schemas.in.h:29
+msgid "Width of Time Column."
+msgstr "Larghezza della colonna Durata"
+
+#: ../data/banshee.schemas.in.h:30
+msgid "Width of Title Column."
+msgstr "Larghezza della colonna Titolo"
+
+#: ../data/banshee.schemas.in.h:31
+msgid "Width of Track Column."
+msgstr "Larghezza della colonna Traccia"
+
+#: ../data/banshee.schemas.in.h:32
+msgid "Width of the main interface window."
+msgstr "Larghezza della finestra principale"
+
+#: ../data/banshee.schemas.in.h:33
+msgid "Window Height"
+msgstr "Altezza della finestra"
+
+#: ../data/banshee.schemas.in.h:34
+msgid "Window Maximized"
+msgstr "Finestra massimizzata"
+
+#: ../data/banshee.schemas.in.h:35
+msgid "Window Position X"
+msgstr "Posizione della finestra sull'asse delle X"
+
+#: ../data/banshee.schemas.in.h:36
+msgid "Window Position Y"
+msgstr "Posizione della finestra sull'asse delle Y"
+
+#: ../data/banshee.schemas.in.h:37
+msgid "Window Width"
+msgstr "Larghezza della finestra"
+
+#: ../data/banshee.glade.h:1
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Opzioni avanzate</b>"
+
+#: ../data/banshee.glade.h:2
+msgid "<b>Advanced Properties</b>"
+msgstr "<b>Proprietà avanzate</b>"
+
+#: ../data/banshee.glade.h:3
+msgid "<b>Banshee Music Folder Location</b>"
+msgstr "<b>Posizione della collezione musicale di Banshee</b>"
+
+#: ../data/banshee.glade.h:4
+msgid "<b>CD Burning</b>"
+msgstr "<b>Masterizzazione CD</b>"
+
+#: ../data/banshee.glade.h:5
+msgid "<b>CD Ripping</b>"
+msgstr "<b>Importazione CD</b>"
+
+#: ../data/banshee.glade.h:6
+msgid "<b>Loading...</b>"
+msgstr "<b>Caricamento in corso...</b>"
+
+#: ../data/banshee.glade.h:7
+msgid "<b>Playback Engines</b>"
+msgstr "<b>Motori per la riproduzione</b>"
+
+#: ../data/banshee.glade.h:8
+msgid "<b>iPod Transcoding</b>"
+msgstr "<b>Transcodifica per iPod</b>"
+
+#: ../data/banshee.glade.h:9
+msgid "<big><b>Editing Song</b></big>"
+msgstr "<big><b>Modifica dei metadati canzone</b></big>"
+
+#: ../data/banshee.glade.h:10
+msgid "<big><b>New iPod Detected <small><sup>TM</sup></small></b></big>"
+msgstr ""
+"<big><b>È stato rilevato un nuovo iPod <small><sup>TM</sup></small></b></big>"
+
+#: ../data/banshee.glade.h:11
+msgid "<small><i><Unknown></i></small>"
+msgstr "<small><i><Sconosciuto></i></small>"
+
+#: ../data/banshee.glade.h:12
+msgid "<small>Advanced</small>"
+msgstr "<small>Avanzato</small>"
+
+#: ../data/banshee.glade.h:13
+msgid "<small>Burning</small>"
+msgstr "<small>Masterizzazione</small>"
+
+#: ../data/banshee.glade.h:14
+msgid "<small>Encoding</small>"
+msgstr "<small>Conversione</small>"
+
+#: ../data/banshee.glade.h:15
+msgid "<small>Library</small>"
+msgstr "<small>Archivio</small>"
+
+#: ../data/banshee.glade.h:16
+msgid "<small>Serial Number</small>"
+msgstr "<small>Numero seriale</small>"
+
+#: ../data/banshee.glade.h:17
+msgid "<span size=\"small\">Idle</span>"
+msgstr "<span·size=\"small\">Fermo</span>"
+
+#: ../data/banshee.glade.h:18
+msgid "Albu_m"
+msgstr "Albu_m"
+
+#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
+msgid "Audio CD"
+msgstr "CD Audio"
+
+#: ../data/banshee.glade.h:20 ../libbanshee/gst-cd-rip-0.8.c:227
+#: ../src/AboutBox.cs:127 ../src/NotificationAreaIcon.cs:61
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../data/banshee.glade.h:21
+msgid ""
+"Banshee has detected that you are plugging in an iPod for the first time. "
+"Please take a moment to give your iPod a name."
+msgstr ""
+"Banshee ha rilevato che stai connettendo un iPod per la prima volta.Per "
+"favore, dai un nome al tuo iPod."
+
+#: ../data/banshee.glade.h:22
+msgid "Bit Rate:"
+msgstr "Bitrate:"
+
+#: ../data/banshee.glade.h:23
+msgid "Burnproof"
+msgstr "Burnproof"
+
+#: ../data/banshee.glade.h:24
+msgid "Channels:"
+msgstr "Canali:"
+
+#: ../data/banshee.glade.h:25
+msgid "Copy files to Banshee Music Folder when importing to Library"
+msgstr ""
+"Copia i file nella Cartella Musicale di Banshee quando questi vengono "
+"importati nell'Archivio"
+
+#: ../data/banshee.glade.h:26
+msgid "Data CD"
+msgstr "CD Dati"
+
+#: ../data/banshee.glade.h:27
+msgid "Description:"
+msgstr "Descrizione:"
+
+#: ../data/banshee.glade.h:28
+msgid "Disk Drive:"
+msgstr "Unità disco:"
+
+#: ../data/banshee.glade.h:29
+msgid "Disk Format:"
+msgstr "Formato del disco:"
+
+#: ../data/banshee.glade.h:30
+msgid "Disk Usage:"
+msgstr "Utilizzo del disco:"
+
+#: ../data/banshee.glade.h:31
+msgid "Disk at once"
+msgstr "Disk at once"
+
+#: ../data/banshee.glade.h:32 ../src/TrackProperties.cs:222
+msgid "Editing Song"
+msgstr "Modifica della canzone"
+
+#: ../data/banshee.glade.h:33
+msgid "Eject when finished"
+msgstr "Espelli al termine"
+
+#: ../data/banshee.glade.h:34
+msgid "Encoding Profile:"
+msgstr "Profilo per la conversione:"
+
+#: ../data/banshee.glade.h:35
+msgid "Encoding:"
+msgstr "Conversione:"
+
+#: ../data/banshee.glade.h:36
+msgid "Engine:"
+msgstr "Motore:"
+
+#: ../data/banshee.glade.h:37
+msgid "File Name:"
+msgstr "Nome del file:"
+
+#: ../data/banshee.glade.h:38
+msgid "Imported On:"
+msgstr "Importata Il:"
+
+#: ../data/banshee.glade.h:39
+msgid "Last Played On:"
+msgstr "Ultimo passaggio:"
+
+#: ../data/banshee.glade.h:40
+msgid "MP3 CD"
+msgstr "CD MP3"
+
+#: ../data/banshee.glade.h:41
+msgid "Mime Type:"
+msgstr "Tipo Mime:"
+
+#: ../data/banshee.glade.h:42
+msgid "New iPod Detected"
+msgstr "Rilevato un nuovo iPod"
+
+#: ../data/banshee.glade.h:43
+msgid "Number of Plays:"
+msgstr "Numero di passaggi:"
+
+#: ../data/banshee.glade.h:44
+msgid "Overburn"
+msgstr "Overburn"
+
+#: ../data/banshee.glade.h:45
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: ../data/banshee.glade.h:46
+msgid "Reset"
+msgstr "Azzera"
+
+#: ../data/banshee.glade.h:47
+msgid "Sample Rate:"
+msgstr "Sample Rate:"
+
+#: ../data/banshee.glade.h:48
+msgid "Simulate write"
+msgstr "Simula la scrittura"
+
+#: ../data/banshee.glade.h:49
+msgid "Track Duration:"
+msgstr "Durata della traccia:"
+
+#: ../data/banshee.glade.h:50
+msgid "Track _Count"
+msgstr "Numero di tracce"
+
+#: ../data/banshee.glade.h:51
+msgid "Track _Number"
+msgstr "Numero della traccia"
+
+#: ../data/banshee.glade.h:52 ../src/TrackProperties.cs:218
+#: ../src/TrackProperties.cs:242 ../src/TrackProperties.cs:243
+#: ../src/TrackProperties.cs:244 ../src/TrackProperties.cs:245
+#: ../src/TrackProperties.cs:246 ../src/TrackProperties.cs:247
+#: ../src/Banshee.Base/Dap/Dap.cs:601
+msgid "Unknown"
+msgstr "Sconosciuto"
+
+#: ../data/banshee.glade.h:53
+msgid "VBR:"
+msgstr "VBR:"
+
+#: ../data/banshee.glade.h:54
+msgid "Write Speed:"
+msgstr "Velocità di scrittura:"
+
+#: ../data/banshee.glade.h:55
+msgid "Your Name:"
+msgstr "Il tuo nome:"
+
+#: ../data/banshee.glade.h:56
+msgid "_Artist"
+msgstr "_Artista"
+
+#: ../data/banshee.glade.h:57
+msgid "_Search:"
+msgstr "_Search:"
+
+#: ../data/banshee.glade.h:58
+msgid "_Title"
+msgstr "_Titolo"
+
+#: ../data/banshee.glade.h:59
+msgid "iPod Name:"
+msgstr "Nome dell'iPod:"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:85
+msgid "Could not create pipeline"
+msgstr "Non è stato possibile creare una pipeline"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:94
+msgid "Could not initialize cdparanoia"
+msgstr "Non è stato possibile inizializzare cdparanoia"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:107
+msgid "Could not create encoder pipeline"
+msgstr "Non è stato possibile creare una pipeline per il motore di conversione"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:113
+msgid "Could not create GNOME VFS output plugin"
+msgstr "Non è stato possibile creare un plugin per l'output su GNOME VFS"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:128
+msgid "Could not link pipeline elements"
+msgstr "Non è stato possibile collegare gli elementi di una pipeline"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:241
+msgid "Encoding element does not support tagging!"
+msgstr ""
+
+#: ../libbanshee/gst-cd-rip-0.8.c:251
+msgid "Could not send seek event to cdparanoia"
+msgstr ""
+
+#: ../libbanshee/gst-cd-rip-0.8.c:257
+msgid "Could not get track start position"
+msgstr ""
+
+#: ../libbanshee/gst-cd-rip-0.8.c:271
+msgid "Could not get track position"
+msgstr ""
+
+#: ../libbanshee/gst-playback-0.8.c:91
+msgid "Could not find or create the 'playbin' GStreamer plugin"
+msgstr ""
+
+#: ../libbanshee/gst-playback-0.8.c:99
+msgid ""
+"Could not load an output sink from GStreamer/GConf and could not fall back "
+"on alsasink"
+msgstr ""
+
+#: ../libbanshee/gst-playback-0.8.c:102
+msgid ""
+"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
+msgstr ""
+
+#: ../libbanshee/gst-transcode-0.8.c:118
+msgid "Could not create 'gnomevfssrc' plugin"
+msgstr ""
+
+#: ../libbanshee/gst-transcode-0.8.c:124
+msgid "Could not create 'spider' plugin"
+msgstr ""
+
+#: ../libbanshee/gst-transcode-0.8.c:131
+#, c-format
+msgid "Could not create encoding pipeline: %s"
+msgstr ""
+
+#: ../libbanshee/gst-transcode-0.8.c:137
+msgid "Could not create 'filesink' plugin"
+msgstr ""
+
+#: ../libbanshee/gst-transcode-0.8.c:219
+msgid "No decoder could be found for source format."
+msgstr ""
+"Non è stato possibile trovare alcun decodificatore per il formato sorgente"
+
+#: ../libbanshee/gst-transcode-0.8.c:224
+msgid "Could not stat encoded file"
+msgstr ""
+
+#: ../libbanshee/hal-context.c:61
+msgid "Could not create new HAL context"
+msgstr "Non è stato possibile creare un nuovo contesto per HAL"
+
+#: ../libbanshee/hal-context.c:69
+#, c-format
+msgid "Could not integrate HAL with mainloop: %s"
+msgstr "Non è stato possibile integrare HAL con il mainloop:·%s"
+
+#: ../libbanshee/hal-context.c:89 ../libbanshee/hal-context.c:92
+msgid "Could not initialize HAL context"
+msgstr "Non è stato possibile inizialzzare il contesto per HAL"
+
+#: ../libbanshee/hal-context.c:101
+msgid "Could not get device list from HAL"
+msgstr "Non è stato possibile ricevere la lista dei dispositivi da HAL"
+
+#: ../src/AboutBox.cs:129
+msgid "Music Management and Playback for Gnome."
+msgstr "Gestione e riproduzione musicale per Gnome."
+
+#: ../src/AboutBox.cs:131
+#, fuzzy
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright·2005·Novell,·Inc.\n"
+"Copyright·2005·Aaron·Bockover"
+
+#: ../src/AboutBox.cs:136
+msgid "Banshee Wiki"
+msgstr "Il Wiki di Banshee"
+
+#: ../src/BurnCore.cs:92
+msgid "Could Not Write CD"
+msgstr "Non è stato possibile masterizzare il CD"
+
+#: ../src/BurnCore.cs:93
+msgid ""
+"No suitable wave encoder could be found to convert selected songs to CD "
+"audio format."
+msgstr ""
+"Non è stata trovata alcuna codifica adatta a convertire le tracce "
+"selezionate in un formato adatto ad un CD Audio."
+
+#: ../src/BurnCore.cs:153
+msgid "Writing CD"
+msgstr "Scrittura del CD in corso"
+
+#: ../src/BurnCore.cs:154
+msgid "Writing Audio CD"
+msgstr "Scrittura del CD audio in corso"
+
+#: ../src/BurnCore.cs:186
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr ""
+"Il disco inserito non ha spazio a sufficienza per contenere la musica che "
+"hai selezionato."
+
+#: ../src/BurnCore.cs:188
+#, fuzzy, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "È necessario ancora {0} minuto sul disco"
+msgstr[1] "È necessario ancora {0} minuto sul disco"
+
+#: ../src/BurnCore.cs:192
+msgid "Not Enough Space on Disc"
+msgstr "Sul disco non c'è spazio a sufficienza"
+
+#: ../src/BurnCore.cs:223
+msgid "No CD writers were found on your system."
+msgstr ""
+"Nel tuo sistema non sono stati rilevati dispositivi di masterizzazione."
+
+#: ../src/BurnCore.cs:263
+msgid "Error Burning CD"
+msgstr "Errore durante la scrittura su CD"
+
+#: ../src/BurnCore.cs:267
+msgid "An unknown error occurred when attempting to write the CD"
+msgstr ""
+"Si è verificato un errore sconosciuto nel tentativo di scrittura sul CD"
+
+#: ../src/BurnCore.cs:273
+msgid "CD Writing Complete"
+msgstr "Scrittura del CD completata"
+
+#: ../src/BurnCore.cs:274
+msgid "The selected audio was successfully written to the CD."
+msgstr "La musica selezionata è stata scritta con successo sul CD."
+
+#: ../src/BurnCore.cs:278
+msgid "Error Writing CD"
+msgstr "Errore durante la scrittura su CD"
+
+#: ../src/BurnCore.cs:301
+msgid "Preparing to write..."
+msgstr "Preparazione alla scrittura in corso..."
+
+#: ../src/BurnCore.cs:305
+msgid "Writing disk..."
+msgstr "Scrittura sul disco in corso..."
+
+#: ../src/BurnCore.cs:309
+msgid "Fixating disk..."
+msgstr "Fine della scrittura in corso..."
+
+#: ../src/BurnCore.cs:326
+msgid "Waiting for Media"
+msgstr "In attesa di un disco"
+
+#: ../src/BurnCore.cs:330 ../src/BurnCore.cs:333
+msgid "Insert Blank CD"
+msgstr "Inserire un CD vuoto"
+
+#: ../src/BurnCore.cs:331
+msgid "Please insert a blank CD disk for the write process."
+msgstr "Per favore, inserisci un CD vuoto per il processo di scrittura"
+
+#: ../src/Dialogs.cs:81
+msgid "An Error Occurred"
+msgstr "Si è verificato un errore"
+
+#: ../src/Dialogs.cs:88
+msgid "Error"
+msgstr "Errore"
+
+#: ../src/ExceptionDialog.cs:24
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Si è verificato un errore fatale in Banshee"
+
+#: ../src/ExceptionDialog.cs:52
+msgid ""
+"This may be due to a programming error. Please help us make Banshee better "
+"by reporting this error. Thank you in advance!"
+msgstr ""
+"Questo può essere causato da un errore di programmazione. Per favore aiutaci "
+"a migliorare Banshee segnalando questo errore. Grazie in anticipo!"
+
+#: ../src/ExceptionDialog.cs:99
+msgid "An unhandled exception was thrown: "
+msgstr "È stata lanciata un'eccezione non gestita"
+
+#: ../src/LogCoreViewer.cs:52
+msgid "Log Viewer"
+msgstr "Visualizzatore di log"
+
+#: ../src/LogCoreViewer.cs:88
+msgid "Time Stamp"
+msgstr "Timestamp"
+
+#: ../src/LogCoreViewer.cs:107
+msgid "Message"
+msgstr "Messaggio"
+
+#: ../src/LogCoreViewer.cs:119
+msgid "Show:"
+msgstr "Mostra:"
+
+#: ../src/LogCoreViewer.cs:136
+msgid "All Log Entries"
+msgstr "Tutte le voci"
+
+#: ../src/LogCoreViewer.cs:137
+msgid "Only Error Messages"
+msgstr "Solo i messaggi d'errore"
+
+#: ../src/LogCoreViewer.cs:138
+msgid "Only Warning Messages"
+msgstr "Solo i messaggi di avvertimento"
+
+#: ../src/LogCoreViewer.cs:139
+msgid "Only Information Messages"
+msgstr "Solo i messaggi informativi"
+
+#: ../src/LogCoreViewer.cs:140
+msgid "Only Debug Messages"
+msgstr "Solo i messaggi di debug"
+
+#: ../src/LogCoreViewer.cs:155
+msgid "Entry Details:"
+msgstr "Dettagli:"
+
+#: ../src/PlayerInterface.cs:357
+msgid "Loading..."
+msgstr "Caricamento in corso..."
+
+#. Misc
+#: ../src/PlayerInterface.cs:410 ../src/PlayerInterface.cs:1924
+msgid "Idle"
+msgstr "Fermo"
+
+#: ../src/PlayerInterface.cs:419
+msgid "All"
+msgstr "Tutto"
+
+#: ../src/PlayerInterface.cs:421 ../src/PlayerInterface.cs:1487
+msgid "Song Name"
+msgstr "Titolo della canzone"
+
+#: ../src/PlayerInterface.cs:422 ../src/PlayerInterface.cs:1485
+msgid "Artist Name"
+msgstr "Nome dell'artista"
+
+#: ../src/PlayerInterface.cs:423 ../src/PlayerInterface.cs:1489
+msgid "Album Title"
+msgstr "Titolo dell'album"
+
+#: ../src/PlayerInterface.cs:456
+msgid "Write selection to CD"
+msgstr "Scrivi la selezione su un cd"
+
+#: ../src/PlayerInterface.cs:457
+msgid "Import CD into library"
+msgstr "Importa il CD nella collezione musicale"
+
+#: ../src/PlayerInterface.cs:458
+msgid "Play previous song"
+msgstr "Riproduci la canzone precedente"
+
+#: ../src/PlayerInterface.cs:459
+msgid "Play/pause current song"
+msgstr "Riproduci/Pausa la canzone corrente"
+
+#: ../src/PlayerInterface.cs:460
+msgid "Play next song"
+msgstr "Riproduci la canzone successiva"
+
+#: ../src/PlayerInterface.cs:461
+msgid "Current position in song"
+msgstr "Posizione corrente nella canzone"
+
+#: ../src/PlayerInterface.cs:462
+msgid "Device disk usage"
+msgstr "Spazio utilizzato sul dispositivo"
+
+#: ../src/PlayerInterface.cs:463
+msgid "Synchronize music library to device"
+msgstr "Sincronizza la collezione musicale con il dispositivo"
+
+#: ../src/PlayerInterface.cs:464
+msgid "Adjust volume"
+msgstr "Regola il volume"
+
+#: ../src/PlayerInterface.cs:465
+msgid "Change repeat playback mode"
+msgstr "Cambia la modalità di ripetizione"
+
+#: ../src/PlayerInterface.cs:466
+msgid "Toggle shuffle playback mode"
+msgstr "Attiva o disattiva la modalità di riproduzione casuale"
+
+#: ../src/PlayerInterface.cs:467
+msgid "Edit and view metadata of selected songs"
+msgstr "Visualizza e modifica i metadati delle canzoni selezionate"
+
+#: ../src/PlayerInterface.cs:491
+msgid "Notification Area Icon could not be installed"
+msgstr "Non è stato possibile installare l'icona nell'area di notifica"
+
+#: ../src/PlayerInterface.cs:542
+msgid "Import Music"
+msgstr "Importa la musica"
+
+#: ../src/PlayerInterface.cs:543
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later.\n"
+"\n"
+"Automatic import or importing a large folder may take a long time, so please "
+"be patient."
+msgstr ""
+"La tua collezione musicale è vuota. Puoi importare della nuova musica ora, "
+"oppure decidere di farlo in un secondo momento.\n"
+"\n"
+"Il caricamento automatico o il caricamento di una grossa cartella potrebbero "
+"richiedere molto tempo, quindi dovrai cortesemente pazientare un po'."
+
+#: ../src/PlayerInterface.cs:547
+msgid "Import Folder"
+msgstr "Importa una cartella"
+
+#: ../src/PlayerInterface.cs:549
+msgid "Automatic Import"
+msgstr "Importazione Automatica"
+
+#: ../src/PlayerInterface.cs:677 ../src/PlayerInterface.cs:1920
+#: ../src/Banshee.Base/ActionManager.cs:203
+msgid "Play"
+msgstr "Suona"
+
+#: ../src/PlayerInterface.cs:681
+msgid "Pause"
+msgstr "Pausa"
+
+#: ../src/PlayerInterface.cs:741
+msgid "Cannot Play Song"
+msgstr "Impossibile riprodurre la canzone"
+
+#: ../src/PlayerInterface.cs:742
+#, csharp-format
+msgid ""
+"{0} cannot be played by Banshee. The most common reasons for this are:\n"
+"\n"
+"  <big>•</big> Song is protected (DRM)\n"
+"  <big>•</big> Song is on a DAP that does not support playback\n"
+msgstr ""
+"Banshee non ha potuto riprodurre {0}.·È possibile che:\n"
+"\n"
+"··<big>•</big>·La canzone sia protetta·(DRM)\n"
+"··<big>•</big>·La canzone sia su un dispositivo che non supporti la "
+"riproduzione\n"
+
+#. Translators: position in song. eg, "0:37 of 3:48"
+#: ../src/PlayerInterface.cs:918 ../src/Banshee.Base/Sources/DapSource.cs:164
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} di {1}"
+
+#: ../src/PlayerInterface.cs:1008
+msgid "Import Folder to Library"
+msgstr "Importa una cartella nella collezione musicale"
+
+#: ../src/PlayerInterface.cs:1170 ../src/Banshee.Base/ActionManager.cs:249
+msgid "Synchronize"
+msgstr "Sincronizza"
+
+#: ../src/PlayerInterface.cs:1171 ../src/PlayerInterface.cs:2246
+msgid "Rename Device"
+msgstr "Rinomina il dispositivo"
+
+#: ../src/PlayerInterface.cs:1173 ../src/PlayerInterface.cs:2240
+msgid "Rename Playlist"
+msgstr "Rinomina una playlist"
+
+#: ../src/PlayerInterface.cs:1194
+msgid "Reading table of contents from CD..."
+msgstr "Lettura della tabella dei contenuti del CD in corso..."
+
+#: ../src/PlayerInterface.cs:1199
+msgid "Searching for CD metadata..."
+msgstr "Ricerca di metadati sul CD in corso..."
+
+#: ../src/PlayerInterface.cs:1204
+msgid "Searching for CD cover art..."
+msgstr "Ricerca per la copertina del CD in corso..."
+
+#: ../src/PlayerInterface.cs:1209
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr ""
+"Non è stato possibile cercare i metadati per il CD: non è disponibile alcuna "
+"connessione ad Internet"
+
+#: ../src/PlayerInterface.cs:1215
+msgid "Could not fetch metadata for CD."
+msgstr "Non è stato possibile recuperare i metadati per il CD."
+
+#: ../src/PlayerInterface.cs:1374
+#, fuzzy, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} giorno"
+msgstr[1] "{0} giorno"
+
+#: ../src/PlayerInterface.cs:1391
+#, fuzzy, csharp-format
+msgid "{0} Item"
+msgid_plural "{0} Items"
+msgstr[0] "{0} Oggetti"
+msgstr[1] "{0} Oggetti"
+
+#: ../src/PlayerInterface.cs:1393
+#, csharp-format
+msgid "{0} Total Play Time"
+msgstr "{0} Tempo totale di riproduzione"
+
+#: ../src/PlayerInterface.cs:1683 ../src/Banshee.Base/ActionManager.cs:64
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:301
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:323
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:330
+msgid "New Playlist"
+msgstr "Nuova playlist"
+
+#: ../src/PlayerInterface.cs:1702
+msgid "Clear"
+msgstr "Pulisci"
+
+#: ../src/PlayerInterface.cs:1911
+msgid "Could Not Eject"
+msgstr "Non è stato possibile espellere il dispositivo"
+
+#: ../src/PlayerInterface.cs:1955
+msgid "Cannot Import"
+msgstr "Importazione impossibile"
+
+#: ../src/PlayerInterface.cs:1956 ../src/PlayerInterface.cs:1960
+msgid "Scanning"
+msgstr "Scansione in corso"
+
+#: ../src/PlayerInterface.cs:1958
+#, csharp-format
+msgid "Cannot Import: {0} ({1}, {2})"
+msgstr "Non è stato possibile importare: {0}·({1},·{2})"
+
+#: ../src/PlayerInterface.cs:2002
+#, fuzzy, csharp-format
+msgid ""
+"Are you sure you want to remove the selected song from your library "
+"<i><b>and</b></i> your drive? This action will permanently delete the file."
+msgid_plural ""
+"Are you sure you want to remove the selected <b>({0})</b> songs from your "
+"library <i><b>and</b></i> your drive? This action will permanently delete "
+"the files."
+msgstr[0] ""
+"Sei sicuro di voler eliminare la canzone selezionata dalla tua collezione "
+"musicale <i><b>e</b></i> dal tuo disco? Questa azione cancellerà "
+"permanentemente il file.Sei sicuro di voler eliminare le canzoni selezionate "
+"<b>({0})</b> dalla tua collezione musicale <i><b>e</b></i> dal tuo disco? "
+"Questa azione cancellerà permanentemente i file."
+msgstr[1] ""
+"Sei sicuro di voler eliminare la canzone selezionata dalla tua collezione "
+"musicale <i><b>e</b></i> dal tuo disco? Questa azione cancellerà "
+"permanentemente il file.Sei sicuro di voler eliminare le canzoni selezionate "
+"<b>({0})</b> dalla tua collezione musicale <i><b>e</b></i> dal tuo disco? "
+"Questa azione cancellerà permanentemente i file."
+
+#: ../src/PlayerInterface.cs:2011
+#, fuzzy, csharp-format
+msgid "Are you sure you want to remove the selected song from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected <b>({0})</b> songs from your "
+"library?"
+msgstr[0] ""
+"Sei sicuro di voler rimuovere dalla collezione musicale la canzone "
+"selezionata?Sei sicuro di voler rimuovere dalla collezione musicale le<b>"
+"({0})</b> canzoni selezionate?"
+msgstr[1] ""
+"Sei sicuro di voler rimuovere dalla collezione musicale la canzone "
+"selezionata?Sei sicuro di voler rimuovere dalla collezione musicale le<b>"
+"({0})</b> canzoni selezionate?"
+
+#: ../src/PlayerInterface.cs:2020
+msgid "Remove Selected Songs from Library"
+msgstr "Elimina dalla collezione musicale le canzoni selezionate"
+
+#: ../src/PlayerInterface.cs:2090
+msgid "Import Files to Library"
+msgstr "Importa i file nella collezione musicale"
+
+#: ../src/PlayerInterface.cs:2136
+msgid "Invalid Selection"
+msgstr "Selezione non valida"
+
+#: ../src/PlayerInterface.cs:2137
+msgid "You must select at least one track to import."
+msgstr "Devi selezionare almeno una traccia da importare"
+
+#. Translators: {0} is the name of the DAP device (i.e. 'iPod')
+#: ../src/PlayerInterface.cs:2174
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "Sincronizza·{0}"
+
+#: ../src/PlayerInterface.cs:2175
+#, csharp-format
+msgid ""
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
+"\n"
+"<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
+msgstr ""
+"Hai effettuato del cambiamenti al tuo·{0}.·Per favore, scegli un metodo per "
+"aggiornare i contenuti del tuo·{0}.\n"
+"\n"
+"<big>•</big>·<i>Sincronizza la collezione musicale</i>:·Sincronizza la "
+"collezione musicale di Banshee con {0}\n"
+"<big>•</big>·<i>Salva le modifiche manuali</i>:·salva solo i cambiamenti che "
+"hai apportato manualmente"
+
+#: ../src/PlayerInterface.cs:2181
+msgid ""
+"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+"cause incompatability with iTunes!"
+msgstr ""
+"<b>Attenzione:</b>·Queste azioni modificheranno o cancelleranno i contenuti "
+"dell'iPod e potrebbero causare una incompatiblità con iTunes!"
+
+#: ../src/PlayerInterface.cs:2183
+msgid "Synchronize Library"
+msgstr "Sincronizza la collezione musicale"
+
+#: ../src/PlayerInterface.cs:2185
+msgid "Save Manual Changes"
+msgstr "Salva i cambiamenti manuali"
+
+#: ../src/PlayerInterface.cs:2241
+msgid "Enter new playlist name"
+msgstr "Inserisci il nome per la nuova playlist"
+
+#: ../src/PlayerInterface.cs:2247
+msgid "Enter new name for your device"
+msgstr "Inserisci un nuovo nome per il tuo dispositivo"
+
+#: ../src/PlaylistColumns.cs:84
+msgid "Invalid column width"
+msgstr "La larghezza della colonna non è valida"
+
+#: ../src/PlaylistColumns.cs:143
+msgid "Choose Columns"
+msgstr "Seleziona le colonne"
+
+#: ../src/PlaylistColumns.cs:157
+msgid "Visible Playlist Columns"
+msgstr "Colonne visibili della playlist"
+
+#: ../src/PlaylistView.cs:83
+msgid "Track"
+msgstr "Traccia"
+
+#: ../src/PlaylistView.cs:86
+msgid "Artist"
+msgstr "Artista"
+
+#: ../src/PlaylistView.cs:89
+msgid "Title"
+msgstr "Titolo"
+
+#: ../src/PlaylistView.cs:92
+msgid "Album"
+msgstr "Album"
+
+#: ../src/PlaylistView.cs:95
+msgid "Time"
+msgstr "Durata"
+
+#: ../src/PlaylistView.cs:100 ../src/Banshee.Base/ActionManager.cs:183
+msgid "Rating"
+msgstr "Voto"
+
+#: ../src/PlaylistView.cs:106
+msgid "Plays"
+msgstr "Passaggi"
+
+#: ../src/PlaylistView.cs:113
+msgid "Last Played"
+msgstr "Ultimo passaggio"
+
+#: ../src/PlaylistView.cs:416
+msgid "N/A"
+msgstr "N/D"
+
+#: ../src/Preferences.cs:99
+msgid "Select Library Location"
+msgstr "Seleziona la posizione della collezione musicale"
+
+#: ../src/Preferences.cs:265
+msgid "Unavailable"
+msgstr "Non Disponibile"
+
+#: ../src/Preferences.cs:271
+msgid "Loading Drive List..."
+msgstr "Caricamento della lista delle unità"
+
+#: ../src/Preferences.cs:294
+msgid "No CD Burners Detected"
+msgstr "Non è stata rilevata alcuna unità di masterizzazione"
+
+#: ../src/Preferences.cs:392
+msgid "Fastest Possible"
+msgstr "Massima possibile"
+
+#. Translators: this represents a CD write speed, eg "32x"
+#: ../src/Preferences.cs:396
+#, csharp-format
+msgid "{0}x"
+msgstr "{0}x"
+
+#: ../src/RipTransaction.cs:69
+msgid "Could not create CD Ripper"
+msgstr "Non è stato possibile creare un estrattore di CD"
+
+#: ../src/RipTransaction.cs:178
+#, csharp-format
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
+msgstr ""
+"Il device node '{0}' è diverso dal device node già impostato per le tracce "
+"accodate in precedenza ({1})"
+
+#: ../src/RipTransaction.cs:196
+msgid "Importing Audio CD"
+msgstr "Importazione del CD Audio"
+
+#: ../src/RipTransaction.cs:197
+msgid "Initializing Drive"
+msgstr "Inizializzazione della periferica"
+
+#: ../src/RipTransaction.cs:221 ../src/Banshee.Base/ImportManager.cs:115
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Importazione della traccia {0}·di·{1}"
+
+#: ../src/SourceView.cs:77 ../src/Banshee.Base/ActionManager.cs:128
+msgid "Source"
+msgstr "Sorgente"
+
+#: ../src/ToggleStates.cs:41 ../src/Banshee.Base/ActionManager.cs:225
+msgid "Repeat None"
+msgstr "Non ripetere"
+
+#: ../src/ToggleStates.cs:50 ../src/Banshee.Base/ActionManager.cs:233
+msgid "Repeat Single"
+msgstr "Ripeti una singola canzone"
+
+#: ../src/ToggleStates.cs:59 ../src/Banshee.Base/ActionManager.cs:229
+msgid "Repeat All"
+msgstr "Ripeti tutte"
+
+#: ../src/ToggleStates.cs:68 ../src/Banshee.Base/ActionManager.cs:239
+msgid "Shuffle"
+msgstr "Casuale"
+
+#: ../src/ToggleStates.cs:77
+msgid "Continuous"
+msgstr "Continua"
+
+#: ../src/TrackProperties.cs:168
+msgid "Set all Track Numbers to this value"
+msgstr "Imposta questo valore a tutti i numeri di traccia"
+
+#: ../src/TrackProperties.cs:169
+msgid "Automatically Set All Track Numbers"
+msgstr "Imposta automaticamente tutti i numeri di traccia"
+
+#: ../src/TrackProperties.cs:170
+msgid "Set all Track Counts to this value"
+msgstr "Imposta a questo valore il numero totale delle tracce"
+
+#: ../src/TrackProperties.cs:171
+msgid "Set all Artists to this value"
+msgstr "Imposta questo valore a tutti i nomi di Artista"
+
+#: ../src/TrackProperties.cs:172
+msgid "Set all Albums to this value"
+msgstr "Imposta questo valore a tutti i nomi di Album"
+
+#: ../src/TrackProperties.cs:173
+msgid "Set all Titles to this value"
+msgstr "Imposta questo valore a tutti i Titoli"
+
+#: ../src/TrackProperties.cs:216
+msgid "Never Played"
+msgstr "Mai suonata"
+
+#: ../src/TrackProperties.cs:221
+#, csharp-format
+msgid "Editing Song {0} of {1}"
+msgstr "Modifica in corso della canzone {0}·di·{1}"
+
+#: ../src/TrackProperties.cs:228 ../src/TrackProperties.cs:229
+#, csharp-format
+msgid "File: {0}"
+msgstr "File:·{0}"
+
+#: ../src/TrackProperties.cs:235
+msgid "KB/Second"
+msgstr "KB/Secondo"
+
+#: ../src/TrackProperties.cs:236
+#, csharp-format
+msgid "{0} KHz"
+msgstr "{0}·KHz"
+
+#: ../src/TrackProperties.cs:237
+msgid "Yes"
+msgstr "Si"
+
+#: ../src/TrackProperties.cs:237
+msgid "No"
+msgstr "No"
+
+#: ../src/VersionInformationDialog.cs:62
+msgid "Assembly Version Information"
+msgstr "Informazioni sulla versione dell'assembly"
+
+#: ../src/VersionInformationDialog.cs:68
+msgid "Assembly Name"
+msgstr "Nome dell'assembly"
+
+#: ../src/VersionInformationDialog.cs:70
+msgid "Version"
+msgstr "Versione"
+
+#: ../src/Banshee.Base/ActionManager.cs:61
+msgid "_Music"
+msgstr "_Musica"
+
+#: ../src/Banshee.Base/ActionManager.cs:65
+msgid "Create a new empty playlist"
+msgstr "Crea una nuova playlist vuota"
+
+#: ../src/Banshee.Base/ActionManager.cs:68
+msgid "Import _Folder..."
+msgstr "Importa una _Cartella"
+
+#: ../src/Banshee.Base/ActionManager.cs:69
+msgid "Import the contents of an entire folder"
+msgstr "Importa tutti i contenuti di una cartella"
+
+#: ../src/Banshee.Base/ActionManager.cs:72
+msgid "Import Files..."
+msgstr "Importa dei file..."
+
+#: ../src/Banshee.Base/ActionManager.cs:73
+msgid "Import files inside a folder"
+msgstr "Importa dei file contenuti in una cartella"
+
+#: ../src/Banshee.Base/ActionManager.cs:76
+msgid "Source Properties..."
+msgstr "Proprietà della sorgente"
+
+#: ../src/Banshee.Base/ActionManager.cs:77
+msgid "View source properties"
+msgstr "Visualizza le proprietà della sorgente"
+
+#: ../src/Banshee.Base/ActionManager.cs:80
+msgid "_Quit"
+msgstr "_Esci"
+
+#: ../src/Banshee.Base/ActionManager.cs:81
+msgid "Quit Banshee"
+msgstr "Esci da Banshee"
+
+#: ../src/Banshee.Base/ActionManager.cs:84
+msgid "_Edit"
+msgstr "_Modifica"
+
+#: ../src/Banshee.Base/ActionManager.cs:87
+msgid "Rename Source"
+msgstr "Rinomina la sorgente"
+
+#: ../src/Banshee.Base/ActionManager.cs:88
+msgid "Rename the active source"
+msgstr "Rinomina la sorgente attiva"
+
+#: ../src/Banshee.Base/ActionManager.cs:91
+msgid "Select All"
+msgstr "Seleziona tutto"
+
+#: ../src/Banshee.Base/ActionManager.cs:92
+msgid "Select all songs in song list"
+msgstr "Seleziona tutte le canzoni nella lista"
+
+#: ../src/Banshee.Base/ActionManager.cs:95
+msgid "Select None"
+msgstr "Non selezionare niente"
+
+#: ../src/Banshee.Base/ActionManager.cs:96
+msgid "Unselect all songs in song list"
+msgstr "Deseleziona tutte le canzoni nella lista"
+
+#: ../src/Banshee.Base/ActionManager.cs:99
+msgid "Plugins..."
+msgstr "Plugins..."
+
+#: ../src/Banshee.Base/ActionManager.cs:100
+msgid "Configure Banshee plugins"
+msgstr "Configura i plugin di Banshee"
+
+#: ../src/Banshee.Base/ActionManager.cs:105
+msgid "_View"
+msgstr "_Visualizza"
+
+#: ../src/Banshee.Base/ActionManager.cs:108
+msgid "Columns..."
+msgstr "Colonne..."
+
+#: ../src/Banshee.Base/ActionManager.cs:109
+msgid "Select which columns to display in the song list"
+msgstr "Seleziona quali colonne visualizzare nella lista delle canzoni"
+
+#: ../src/Banshee.Base/ActionManager.cs:112
+msgid "Logged Events Viewer..."
+msgstr "Visualizzatore degli eventi loggati..."
+
+#: ../src/Banshee.Base/ActionManager.cs:113
+msgid "View a detailed log of events"
+msgstr "Visualizza il log dettagliato di un evento"
+
+#: ../src/Banshee.Base/ActionManager.cs:116
+msgid "_Help"
+msgstr "_Aiuto"
+
+#: ../src/Banshee.Base/ActionManager.cs:119
+msgid "Version Information..."
+msgstr "Informazioni sulla versione..."
+
+#: ../src/Banshee.Base/ActionManager.cs:120
+msgid "View detailed version and configuration information"
+msgstr ""
+"Visualizza informazioni dettagliate sulla versione e sulla configurazione"
+
+#: ../src/Banshee.Base/ActionManager.cs:125
+msgid "_Playback"
+msgstr "_Controlli"
+
+#: ../src/Banshee.Base/ActionManager.cs:139
+msgid "Fullscreen"
+msgstr "A tutto schermo"
+
+#: ../src/Banshee.Base/ActionManager.cs:140
+msgid "Toggle Fullscreen Mode"
+msgstr "Seleziona la modalità a tutto schermo"
+
+#: ../src/Banshee.Base/ActionManager.cs:143
+msgid "Show Cover Art"
+msgstr "Mostra la copertina"
+
+#: ../src/Banshee.Base/ActionManager.cs:144
+msgid "Toggle display of album cover art"
+msgstr "Seleziona la visualizzazione delle copertine"
+
+#: ../src/Banshee.Base/ActionManager.cs:153
+msgid "Delete Playlist"
+msgstr "Cancella la playlist"
+
+#: ../src/Banshee.Base/ActionManager.cs:154
+msgid "Delete the active playlist"
+msgstr "Cancella la playlist attiva"
+
+#: ../src/Banshee.Base/ActionManager.cs:163
+msgid "Write CD"
+msgstr "Scrivi il CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:164
+msgid "Write selection to audio CD"
+msgstr "Scrivi la selezione su un CD Audio"
+
+#: ../src/Banshee.Base/ActionManager.cs:167
+msgid "Remove Song(s)"
+msgstr "Rimuovi la canzone(i)"
+
+#: ../src/Banshee.Base/ActionManager.cs:168
+msgid "Remove selected song(s) from library"
+msgstr "Elimina la canzone(i) selezionata(e) dalla collezione musicale"
+
+#: ../src/Banshee.Base/ActionManager.cs:171
+msgid "Delete Song(s) From Drive"
+msgstr "Cancella la canzone(i) dal disco"
+
+#: ../src/Banshee.Base/ActionManager.cs:172
+msgid "Permanently delete selected song(s) from storage medium"
+msgstr ""
+"Cancella permanentemente le canzoni selezionate dall'unità di memorizzazione"
+
+#: ../src/Banshee.Base/ActionManager.cs:175
+msgid "Edit Song Metadata"
+msgstr "Modifica i metadati della canzone"
+
+#: ../src/Banshee.Base/ActionManager.cs:176
+msgid "Edit metadata on selected songs"
+msgstr "Modifica i metadati delle canzoni selezionate"
+
+#: ../src/Banshee.Base/ActionManager.cs:179
+msgid "Add to Playlist"
+msgstr "Aggiungi alla playlist"
+
+#: ../src/Banshee.Base/ActionManager.cs:180
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr ""
+"Accoda alla playlist le canzoni selezionatte oppure crea una nuova playlist "
+"dalla selezione"
+
+#: ../src/Banshee.Base/ActionManager.cs:184
+msgid "Set rating for selected songs"
+msgstr "Assegna un voto alle canzoni selezionate"
+
+#: ../src/Banshee.Base/ActionManager.cs:193
+msgid "Import CD"
+msgstr "Importa un CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:194
+msgid "Import audio CD to library"
+msgstr "Importa un CD Audio nella collezione musicale"
+
+#: ../src/Banshee.Base/ActionManager.cs:204
+#: ../src/Banshee.Base/ActionManager.cs:208
+#: ../src/Banshee.Base/ActionManager.cs:212
+msgid "Play or pause the current song"
+msgstr "Suona o metti in pausa la canzone corrente"
+
+#: ../src/Banshee.Base/ActionManager.cs:207
+msgid "Next"
+msgstr "Successiva"
+
+#: ../src/Banshee.Base/ActionManager.cs:211
+msgid "Previous"
+msgstr "Precedente"
+
+#: ../src/Banshee.Base/ActionManager.cs:215
+msgid "Seek Backward"
+msgstr "Salta indietro"
+
+#: ../src/Banshee.Base/ActionManager.cs:216
+msgid "Seek backward in current song"
+msgstr "Salta indietro nella canzone corrente"
+
+#: ../src/Banshee.Base/ActionManager.cs:219
+msgid "Seek Forward"
+msgstr "Salta avanti"
+
+#: ../src/Banshee.Base/ActionManager.cs:220
+msgid "Seek forward in current song"
+msgstr "Salta avanti nella canzone corrente"
+
+#: ../src/Banshee.Base/ActionManager.cs:226
+msgid "Do not repeat playlist"
+msgstr "Non ripetere la playlist"
+
+#: ../src/Banshee.Base/ActionManager.cs:230
+msgid "Play all songs before repeating playlist"
+msgstr "Riproduci tutte le canzoni prima di ripetere la playlist"
+
+#: ../src/Banshee.Base/ActionManager.cs:234
+msgid "Repeat the current playing song"
+msgstr "Ripete la canzone attualmente in riproduzione"
+
+#: ../src/Banshee.Base/ActionManager.cs:240
+msgid "Toggle between shuffle or continuous playback modes"
+msgstr "Seleziona tra le modalità di riproduzione casuali oppure continue"
+
+#: ../src/Banshee.Base/ActionManager.cs:250
+msgid "Save changes to device or synchronize music library"
+msgstr ""
+"Salva le modifiche sul dispositivo oppure sincronizza la collezione musicale"
+
+#: ../src/Banshee.Base/ActionManager.cs:259
+msgid "Eject"
+msgstr "Espelli"
+
+#: ../src/Banshee.Base/ActionManager.cs:260
+msgid "Eject the active source"
+msgstr "Espelli la sorgente attiva"
+
+#: ../src/Banshee.Base/FileEncodeAction.cs:68
+msgid "File Encoder"
+msgstr "Convertitore di file"
+
+#: ../src/Banshee.Base/FileEncodeAction.cs:69
+msgid "Encoding Files"
+msgstr "Conversione dei file in corso"
+
+#: ../src/Banshee.Base/FileEncodeAction.cs:72
+msgid "Initializing Encoder..."
+msgstr "Inizializzazione del convertitore..."
+
+#: ../src/Banshee.Base/GstFileEncoder.cs:67
+msgid "Could not create encoder"
+msgstr "Non è stato possibile creare un convertitore"
+
+#: ../src/Banshee.Base/GstFileEncoder.cs:94
+#, csharp-format
+msgid "Could not encode file: {0}"
+msgstr "Non e' stato possibile convertire il file: {0}"
+
+#: ../src/Banshee.Base/HalCore.cs:97
+msgid "HAL could not be initialized"
+msgstr "Non è stato possibile inizializzare HAL"
+
+#: ../src/Banshee.Base/HalCore.cs:104
+msgid "HAL context could not be created"
+msgstr "Non è stato possibile creare il contesto per HAL"
+
+#: ../src/Banshee.Base/HalCore.cs:105
+msgid "D-Bus may not be working or configured properly"
+msgstr ""
+"D-Bus potrebbe non essere attivo o non essere configurato correttamente"
+
+#: ../src/Banshee.Base/ImportManager.cs:83
+msgid "Importing Songs"
+msgstr "Importazione delle canzoni"
+
+#: ../src/Banshee.Base/ImportManager.cs:86
+msgid "Scanning for songs"
+msgstr "Ricerca di canzoni in corso"
+
+#: ../src/Banshee.Base/Library.cs:118
+msgid "Could not load track from library"
+msgstr "Non è stato possibile caricare la traccia dalla collezione musicale"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:76
+msgid "Cannot connect to NetworkManager"
+msgstr "Non è stato possibile connettersi a NetworkManager"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:77
+msgid "An available, working network connection will be assumed"
+msgstr ""
+"La connessione ad internet verrà considerata come disponibile e funzionante"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:105
+msgid "Pipeline profile is empty."
+msgstr "Il profilo della pipeline è vuoto"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:111
+msgid "Pipeline profile does not have the correct number of components (7)"
+msgstr ""
+
+#: ../src/Banshee.Base/PipelineProfile.cs:121
+msgid "Pipeline profile does not have a lookup key"
+msgstr ""
+
+#: ../src/Banshee.Base/PipelineProfile.cs:125
+msgid "Pipeline profile does not have a display name"
+msgstr ""
+
+#: ../src/Banshee.Base/PipelineProfile.cs:130
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a file extension"
+msgstr ""
+
+#: ../src/Banshee.Base/PipelineProfile.cs:136
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a GStreamer element"
+msgstr ""
+
+#: ../src/Banshee.Base/PipelineProfile.cs:167
+#, csharp-format
+msgid ""
+"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
+"not be run"
+msgstr ""
+"Il profilo della pipeline '{0}' non sarà disponibile: La pipeline '{1}' di "
+"GStreamer non può essere eseguita"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:195
+msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
+msgstr ""
+"Non è possibile usare il bitrate interno. Usa BuildPipeline(bitrate) invece."
+
+#: ../src/Banshee.Base/PipelineProfile.cs:215
+msgid ""
+"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
+"PipelineProfile(profile))"
+msgstr ""
+"Non è possibile usare il bitrate interno. Devi copiare il profilo ed "
+"impostare il bitrate·sulla nuova copia (new PipelineProfile(profile))"
+
+#. Translators: used to specify the bitrate for ripping
+#: ../src/Banshee.Base/PipelineProfile.cs:362
+msgid "at"
+msgstr "a"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:404
+msgid "No iPod-compatible encoders available"
+msgstr "Non è disponibile alcun motore di conversione compatibile con iPod"
+
+#: ../src/Banshee.Base/PlayerEngineCore.cs:114
+msgid "CD playback is not supported for this instance"
+msgstr "La riproduzione di CD non è supportata in questa istanza"
+
+#: ../src/Banshee.Base/TrackInfo.cs:368
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
+msgid "Unknown Artist"
+msgstr "Artista Sconosciuto"
+
+#: ../src/Banshee.Base/TrackInfo.cs:376
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
+msgid "Unknown Album"
+msgstr "Album Sconosciuto"
+
+#: ../src/Banshee.Base/TrackInfo.cs:384
+msgid "Unknown Title"
+msgstr "Titolo Sconosciuto"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+msgid "by"
+msgstr "di"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:105
+msgid "from"
+msgstr "da"
+
+#: ../src/Banshee.Base/Utilities.cs:74
+#, csharp-format
+msgid "{0:0.00} GB"
+msgstr "{0:0.00}·GB"
+
+#: ../src/Banshee.Base/Utilities.cs:75
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0}·MB"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:80
+msgid "HAL is not initialized"
+msgstr "HAL non è stato inizializzato"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
+msgid "Audio CD Core Initialized"
+msgstr "È stato inizializzato l'Audio CD Core"
+
+#. work around mcs #76642
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
+msgid "Could not Read Audio CD"
+msgstr "Non è stato possibile leggere il CD Audio"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:88
+#, csharp-format
+msgid "Track {0}"
+msgstr "Traccia {0}"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:326 ../src/Banshee.Base/Dap/Dap.cs:327
+msgid "Synchronizing Device"
+msgstr "Sincronizzazione del dispositivo in corso"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:328
+msgid "Waiting for transcoder..."
+msgstr "In attesa del convertitore..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:412 ../src/Banshee.Base/Dap/Dap.cs:433
+msgid "Processing..."
+msgstr "Elaborazione in corso..."
+
+#: ../src/Banshee.Base/Dap/DapCore.cs:119
+msgid "Cannot initialize DapCore because HalCore is not initialized"
+msgstr ""
+"Non è stato possibile inizializzare DapCore perchè HalCore non è stato "
+"inizializzato"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} Proprietà"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device Name"
+msgstr "Nome del dispositivo"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner Name"
+msgstr "Nome del proprietario"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
+msgid "Volume Usage"
+msgstr "Utilizzo dello spazio"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
+msgid "Advanced Details"
+msgstr "Dettagli avanzati"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Plugin di Banshee"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "Nome del Plugin"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
+msgid "Enabled"
+msgstr "Abilitato"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "Vista completa"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "Autore(i)"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "Non è stato possibile inizializzare questo plugin"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "Configurazione"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:104
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Sincronizzazione del tuo dispositivo in corso. Attendi, per favore..."
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:174
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "({0} Rimanenti)"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:51
+msgid "Music Library"
+msgstr "Archivio musicale"
+
+#: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "Coda locale"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:117
+msgid "Cannot Rename Playlist"
+msgstr "Non è stato possibile rinominare la playlist"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:118
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr ""
+"Esiste già una playlist con questo nome. Per favore scegli un nome diverso."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
+msgid "Rebuilding Database"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
+#, fuzzy
+msgid "Scanning iPod..."
+msgstr "Scansione in corso"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
+#, fuzzy
+msgid "Processing Songs..."
+msgstr "Elaborazione in corso..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
+msgid "Saving new database..."
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
+msgid "Error rebuilding iPod database"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
+msgid "Synchronizing iPod"
+msgstr "Sincronizzazione dell'iPod in corso"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:160
+msgid "Pre-processing tracks"
+msgstr "Pre eleborazione delle tracce"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:175
+msgid "Flushing to Disk (may take time)"
+msgstr "Scrittura su disco (può richiedere del tempo)"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:185
+msgid "Failed to synchronize iPod"
+msgstr "La sincronizzazione dell'iPod è fallita"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
+msgid "What is the reason for this?"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
+msgid "Rebuild iPod Database..."
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
+msgid "Confirm Rebuild iPod Database"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
+msgid "Rebuild Database"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
+msgid "Rebuilding iPod Database..."
+msgstr ""
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:113
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:408
+msgid "Could not initialize GStreamer library"
+msgstr "Non è stato possibile inizializzare la libreria GStreamer"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:237
+msgid "Unknown Error"
+msgstr "Errore sconosciuto"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
+msgid "GStreamer 0.10 Engine"
+msgstr "GStreamer 0.10 Engine"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:306
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:627
+msgid ""
+"GStreamer is a multimedia framework for playing and manipulating media. Any "
+"GStreamer plugin that is available will work through this engine."
+msgstr ""
+"GStreamer è un framework multimediale per la riproduzione e la manipolazione "
+"di diversi media. Qualsiasi plugin disponibile per GStreamer funzionerà "
+"attraverso questo motore."
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:616
+msgid "GStreamer Engine"
+msgstr "GStreamer·Engine"
+
+#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:81
+msgid "Helix Framework Engine (hxclientkit)"
+msgstr "Helix Framework Engine (hxclientkit)"
+
+#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:89
+msgid ""
+"The Helix Engine provides multimedia control through the Helix Multimedia "
+"Framework, sponsored by RealNetworks. The engine can play any file that "
+"RealPlayer can. Install RealPlayer for best results."
+msgstr ""
+"Helix fornisce un controllo multimediale attraversil l'Helix Multimedia "
+"Framework sponsorizzato da RealNetworks. Questo motore può riprodurre "
+"qualsiasi file riproducibile da RealPlayer. Installa RealPlayer per dei "
+"risultati migliori."
+
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:82
+msgid "VLC"
+msgstr "VLC"
+
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:90
+msgid ""
+"VLC is a highly portable multimedia player for various audio and video "
+"formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
+msgstr ""
+"VLC è un riproduttore multimediale per diversi formati audio e video (MP3,"
+"·AAC,·OGG,·FLAC,·WMA,·etc.) ed è molto portabile. Per informazioni guarda "
+"http://videolan.org/vlc/"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
+msgid "Audioscrobbler Reporting"
+msgstr "Invio delle informazioni ad Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:73
+msgid "Create an account"
+msgstr "Crea un account"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
+msgid "Join the Banshee group"
+msgstr "Unisciti al gruppo di Banshee"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:131
+msgid "Enable song reporting"
+msgstr "Abilita l'invio delle informazioni sulla canzone"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
+msgid "Last.fm Username"
+msgstr "Nome utente per Last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:102
+msgid "Last.fm Password"
+msgstr "Password per Last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:59
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr ""
+"La pagina con il tuo profilo su Last.fm viene automaticamente aggiornata "
+"mentre ascolti della musica. Questo permette ad altri di vedere che cosa "
+"stai ascoltando in questo momento e mostra dei grafici su quello che ascolti "
+"di solito."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
+msgid "Audioscrobbler"
+msgstr "Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Configura il plugin per Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
+msgid "Visit user profile page"
+msgstr "Visita la pagina con il profilo utente"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Visita la pagina con il tuo profilo su Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:120
+msgid "Visit group page"
+msgstr "Visita la pagina del gruppo"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
+msgid "Visit the Banshee last.fm group page"
+msgstr "Visita la pagina del gruppo Banshee su last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
+msgid "Configure..."
+msgstr "Configurazione..."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
+msgid ""
+"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr ""
+"Permetti al plugin per Audioscrobbler di inviare i dati delle canzoni a last."
+"fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
+msgid "Enable the Audioscrobbler plugin"
+msgstr "Abilita il plugin per Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
+msgid "Your last.fm password"
+msgstr "La tua password per last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:4
+msgid "Your last.fm username"
+msgstr "Il tuo nome utente per last.fm"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:50
+msgid "Music Sharing"
+msgstr "Condivisione della musica"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
+msgid "Share my music library with others"
+msgstr "Condividi la mia collezione musicale"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
+msgid "Share name:"
+msgstr "Nome della condivisione:"
+
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:72
+msgid "Banshee Music Share"
+msgstr "Condivisione della musica di Banshee"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
+msgid "Login to Music Share"
+msgstr "Effettua l'accesso alla condivisione musicale"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
+msgid "Authentication Required"
+msgstr "È richiesta l'autenticazione"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
+msgid "Username:"
+msgstr "Nome utente:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+msgid "Password:"
+msgstr "Password"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "Login"
+
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+msgid "Cannot login to DAAP share"
+msgstr ""
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
+msgid "Allow others to browse and listen to your music from other DAAP clients"
+msgstr "Permetti di ascoltare e sfogliare la tua musica da altri client DAAP"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
+msgid "Enable DAAP Server support"
+msgstr "Abilita il supporto per un server DAAP"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
+msgid "Enable the DAAP Music Sharing plugin"
+msgstr "Abilita il plugin per la condivisione della musica con DAAP"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
+msgid "Name of DAAP server share"
+msgstr "Nome del server DAAP"
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/Watcher.cs:49
+msgid ""
+"Automatically keep your Banshee library directory in sync with your music "
+"folder. This plugin responds to changes made in the file system to reflect "
+"them in your library."
+msgstr ""
+"Tieni la collezione musicale di Banshee automaticamente aggiornato con la "
+"tua cartella contenente i file musicali. Questo plugin controlla i "
+"cambiamenti del file system riflettendoli sulla sua collezione musicale."
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
+msgid "Enable the FileSystemMonitor plugin"
+msgstr "Abilita il plugin per il monitoraggio dei cambiamenti al filesystem"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
+msgid "Metadata and Cover Art Searching"
+msgstr "Ricerca di metadati e copertine degli album"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:70
+msgid "Only download album cover artwork"
+msgstr "Scarica solamente la copertina dell'album"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:72
+msgid "Download album cover artwork and fill in missing track data"
+msgstr "Scarica la copertina dell'album e riempi i dati mancanti nelle tracce"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:74
+msgid "Download album cover artwork and overwrite any existing track data"
+msgstr ""
+"Scarica la copertina dell'album e sovrascrivi tutti i dati delle tracce"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
+#, fuzzy
+msgid "Rescan Library"
+msgstr "Archivio musicale"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
+msgid "Warning"
+msgstr "Attenzione"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
+msgid ""
+"This option can usually correct minor mistakes in metadata, however on rare "
+"occasions metadata may be incorrectly updated from MusicBrainz."
+msgstr ""
+"Questa opzione in genere può correggere dei piccoli errori nei metadati, ma "
+"in ogni caso i metadati possono essere aggiornati erroneamente da "
+"MusicBrainz."
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:57
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
+msgstr ""
+"Cerca automaticamente copertine degli album e metadati mancanti ed "
+"aggiuntivi per le canzoni nella tua collezione."
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
+msgid ""
+"0 - Download only cover art 1 - Download cover art, fill in missing metadata "
+"2 - Download cover art, overwrite metadata"
+msgstr ""
+"0 - Scarica solo la copertina 1 - Scarica la copertina, riempi i metadati "
+"mancanti 2 - Scarica la copertina, sovrascrivi i metadati"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
+msgid "Enable the MetadataSearch plugin"
+msgstr "Abilita il plugin per la ricerca di metadati"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
+msgid "Method of fetching cover art and supplementary metadata"
+msgstr "Metodo per la raccolta di copertine degli album e metadati aggiuntivi"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:48
+msgid "Multimedia Keyboard Shortcuts"
+msgstr ""
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+
+#: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
+#, fuzzy
+msgid "Enable the MultimediaKeys plugin"
+msgstr "Abilita il plugin per la ricerca di metadati"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
+msgid "Cancel Operation"
+msgstr "Annulla l'operazione"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
+#, csharp-format
+msgid "Are you sure you want to cancel the '{0}' operation?"
+msgstr "Sei sicuro di voler annullare l'operazione {0}?"
+
+#: ../src/Banshee.Widgets/SearchEntry.cs:203
+#: ../src/Banshee.Widgets/SearchEntry.cs:314
+#, csharp-format
+msgid "Searching: {0}"
+msgstr "Ricerca in corso di: {0}"

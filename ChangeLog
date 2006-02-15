@@ -1,3 +1,7 @@
+2006-02-15  Alessio Frusciante  <algol@firenze.linux.it>
+
+	* configure.ac: Added "it" (Italian) to ALL_LINGUAS.
+
 2006-02-14  Chris Toshok  <toshok@ximian.com>
 
 	* src/Banshee.Base/NetworkDetect.cs: rename "last_state" to
