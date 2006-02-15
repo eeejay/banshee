@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-07 19:57+0100\n"
-"PO-Revision-Date: 2006-02-07 20:00+0100\n"
+"POT-Creation-Date: 2006-02-15 15:29+0100\n"
+"PO-Revision-Date: 2006-02-15 15:34+0100\n"
 "Last-Translator: Øivind Hoel <oivind.hoel@gmail.com>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr ""
 
 #: ../data/banshee.desktop.in.in.h:1
 #: ../src/PlayerInterface.cs:315
-#: ../src/PlayerInterface.cs:1381
+#: ../src/PlayerInterface.cs:1387
 msgid "Banshee Music Player"
 msgstr "Banshee musikkavspiller"
 
@@ -261,9 +261,8 @@ msgstr "Lyd-CD"
 
 #: ../data/banshee.glade.h:20
 #: ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:126
+#: ../src/AboutBox.cs:127
 #: ../src/NotificationAreaIcon.cs:61
-#: ../src/PlayerInterface.cs:693
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -400,7 +399,7 @@ msgstr "Spornummer"
 #: ../src/TrackProperties.cs:245
 #: ../src/TrackProperties.cs:246
 #: ../src/TrackProperties.cs:247
-#: ../src/Banshee.Base/Dap/Dap.cs:590
+#: ../src/Banshee.Base/Dap/Dap.cs:601
 msgid "Unknown"
 msgstr "Ukjent"
 
@@ -523,11 +522,11 @@ msgstr "Kunne ikke initialisere HAL-kontekst"
 msgid "Could not get device list from HAL"
 msgstr "Kunne ikke skaffe maskinvareliste fra HAL"
 
-#: ../src/AboutBox.cs:128
+#: ../src/AboutBox.cs:129
 msgid "Music Management and Playback for Gnome."
 msgstr "Musikkbehandling og avspilling for Gnome."
 
-#: ../src/AboutBox.cs:130
+#: ../src/AboutBox.cs:131
 msgid ""
 "Copyright © 2005-2006 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
@@ -535,7 +534,7 @@ msgstr ""
 "Opphavsrett 2005-2006 Novell, Inc.\n"
 "Opphavsrett 2005 Aaron Bockover"
 
-#: ../src/AboutBox.cs:135
+#: ../src/AboutBox.cs:136
 msgid "Banshee Wiki"
 msgstr "Banshee-Wiki"
 
@@ -685,7 +684,7 @@ msgstr "Laster..."
 
 #. Misc
 #: ../src/PlayerInterface.cs:410
-#: ../src/PlayerInterface.cs:1922
+#: ../src/PlayerInterface.cs:1924
 msgid "Idle"
 msgstr "Inaktiv"
 
@@ -783,7 +782,7 @@ msgid "Automatic Import"
 msgstr "Automatisk Importering"
 
 #: ../src/PlayerInterface.cs:677
-#: ../src/PlayerInterface.cs:1918
+#: ../src/PlayerInterface.cs:1920
 #: ../src/Banshee.Base/ActionManager.cs:203
 msgid "Play"
 msgstr "Spill"
@@ -811,7 +810,7 @@ msgstr ""
 
 #. Translators: position in song. eg, "0:37 of 3:48"
 #: ../src/PlayerInterface.cs:918
-#: ../src/Banshee.Base/Sources/DapSource.cs:157
+#: ../src/Banshee.Base/Sources/DapSource.cs:164
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} av {1}"
@@ -820,55 +819,47 @@ msgstr "{0} av {1}"
 msgid "Import Folder to Library"
 msgstr "Importer mappe til biblioteket"
 
-#: ../src/PlayerInterface.cs:1167
+#: ../src/PlayerInterface.cs:1170
 #: ../src/Banshee.Base/ActionManager.cs:249
 msgid "Synchronize"
 msgstr "Synkroniser"
 
-#: ../src/PlayerInterface.cs:1168
-#: ../src/PlayerInterface.cs:2244
+#: ../src/PlayerInterface.cs:1171
+#: ../src/PlayerInterface.cs:2246
 msgid "Rename Device"
 msgstr "Endre mediets navn"
 
-#: ../src/PlayerInterface.cs:1170
-#: ../src/PlayerInterface.cs:2238
+#: ../src/PlayerInterface.cs:1173
+#: ../src/PlayerInterface.cs:2240
 msgid "Rename Playlist"
 msgstr "Gi nytt navn til spilleliste"
 
-#: ../src/PlayerInterface.cs:1191
+#: ../src/PlayerInterface.cs:1194
 msgid "Reading table of contents from CD..."
 msgstr "Leser CDens innholdsfortegnelse..."
 
-#: ../src/PlayerInterface.cs:1196
+#: ../src/PlayerInterface.cs:1199
 msgid "Searching for CD metadata..."
 msgstr "Søker etter CD-metadata..."
 
-#: ../src/PlayerInterface.cs:1201
+#: ../src/PlayerInterface.cs:1204
 msgid "Searching for CD cover art..."
 msgstr "Søker etter albumcover..."
 
-#: ../src/PlayerInterface.cs:1206
+#: ../src/PlayerInterface.cs:1209
 msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Kan ikke hente CD-metadata: ingen forbindelse til internett er tilgjengelig"
 
-#: ../src/PlayerInterface.cs:1212
+#: ../src/PlayerInterface.cs:1215
 msgid "Could not fetch metadata for CD."
 msgstr "Fant ikke CD-metadata"
 
-#: ../src/PlayerInterface.cs:1368
+#: ../src/PlayerInterface.cs:1374
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dager"
-
-#: ../src/PlayerInterface.cs:1385
-msgid "Your Library is Empty - Consider Importing Music"
-msgstr "Biblioteket er tomt - På tide å importere litt musikk?"
-
-#: ../src/PlayerInterface.cs:1388
-msgid "This Playlist is Empty - Consider Adding Music"
-msgstr "Denne spillelisten er tom - På tide å legge til litt musikk?"
 
 #: ../src/PlayerInterface.cs:1391
 #, csharp-format
@@ -882,7 +873,7 @@ msgstr[1] "{0} spor"
 msgid "{0} Total Play Time"
 msgstr "Total spilletid: {0}"
 
-#: ../src/PlayerInterface.cs:1681
+#: ../src/PlayerInterface.cs:1683
 #: ../src/Banshee.Base/ActionManager.cs:64
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:301
@@ -891,65 +882,65 @@ msgstr "Total spilletid: {0}"
 msgid "New Playlist"
 msgstr "Ny spilleliste"
 
-#: ../src/PlayerInterface.cs:1700
+#: ../src/PlayerInterface.cs:1702
 msgid "Clear"
 msgstr "Tøm"
 
-#: ../src/PlayerInterface.cs:1909
+#: ../src/PlayerInterface.cs:1911
 msgid "Could Not Eject"
 msgstr "Kunne ikke løse ut / koble fra"
 
-#: ../src/PlayerInterface.cs:1953
+#: ../src/PlayerInterface.cs:1955
 msgid "Cannot Import"
 msgstr "Kan ikke importere"
 
-#: ../src/PlayerInterface.cs:1954
-#: ../src/PlayerInterface.cs:1958
+#: ../src/PlayerInterface.cs:1956
+#: ../src/PlayerInterface.cs:1960
 msgid "Scanning"
 msgstr "Søker"
 
-#: ../src/PlayerInterface.cs:1956
+#: ../src/PlayerInterface.cs:1958
 #, csharp-format
 msgid "Cannot Import: {0} ({1}, {2})"
 msgstr "Kan ikke importere {0} ({1}, {2})"
 
-#: ../src/PlayerInterface.cs:2000
+#: ../src/PlayerInterface.cs:2002
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library <i><b>and</b></i> your drive? This action will permanently delete the file."
 msgid_plural "Are you sure you want to remove the selected <b>({0})</b> songs from your library <i><b>and</b></i> your drive? This action will permanently delete the files."
 msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket <i><b>i tillegg</b></i> til harddisken? Denne handlingen vil slette filen permanent."
 msgstr[1] "Er du sikker på at du vil fjerne de {0} valgte sangene fra biblioteket <i><b>i tillegg</b></i> til harddisken? Denne handlingen vil slette filene permanent."
 
-#: ../src/PlayerInterface.cs:2009
+#: ../src/PlayerInterface.cs:2011
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected <b>({0})</b> songs from your library?"
 msgstr[0] "Er du sikker på at du vil fjerne valgte sang fra biblioteket?"
 msgstr[1] "Er du sikker på at du vil fjerne de <b>{0}</b> valgte sangene fra biblioteket?"
 
-#: ../src/PlayerInterface.cs:2018
+#: ../src/PlayerInterface.cs:2020
 msgid "Remove Selected Songs from Library"
 msgstr "Fjern valgte sanger fra Biblioteket"
 
-#: ../src/PlayerInterface.cs:2088
+#: ../src/PlayerInterface.cs:2090
 msgid "Import Files to Library"
 msgstr "Importer filer til biblioteket"
 
-#: ../src/PlayerInterface.cs:2134
+#: ../src/PlayerInterface.cs:2136
 msgid "Invalid Selection"
 msgstr "Ugyldig valg"
 
-#: ../src/PlayerInterface.cs:2135
+#: ../src/PlayerInterface.cs:2137
 msgid "You must select at least one track to import."
 msgstr "Du må velge minst ett spor til importering."
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2172
+#: ../src/PlayerInterface.cs:2174
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkroniser {0}"
 
-#: ../src/PlayerInterface.cs:2173
+#: ../src/PlayerInterface.cs:2175
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
@@ -962,35 +953,35 @@ msgstr ""
 "<big>•</big> <i>Synkroniser Bibliotek</i>: synkroniserer Banshee-biblioteket til {0}\n"
 "<big>•</big> <i>Lagre Manuelle Endringer</i>: bare lagre de manuelle endringene du har utført"
 
-#: ../src/PlayerInterface.cs:2179
+#: ../src/PlayerInterface.cs:2181
 msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"
 msgstr "<b>Advarsel:</b> Handingene vil endre eller slette eksisterende spor på iPod, og kan føre til inkompatibilitet med iTunes."
 
-#: ../src/PlayerInterface.cs:2181
+#: ../src/PlayerInterface.cs:2183
 msgid "Synchronize Library"
 msgstr "Synkroniser bibliotek"
 
-#: ../src/PlayerInterface.cs:2183
+#: ../src/PlayerInterface.cs:2185
 msgid "Save Manual Changes"
 msgstr "Lagre manuelle endringer"
 
-#: ../src/PlayerInterface.cs:2239
+#: ../src/PlayerInterface.cs:2241
 msgid "Enter new playlist name"
 msgstr "Skriv inn nytt navn på spilleliste"
 
-#: ../src/PlayerInterface.cs:2245
+#: ../src/PlayerInterface.cs:2247
 msgid "Enter new name for your device"
 msgstr "Skriv inn nytt navn for mediet"
 
-#: ../src/PlaylistColumns.cs:82
+#: ../src/PlaylistColumns.cs:84
 msgid "Invalid column width"
 msgstr "Ugyldig kolonnebredde"
 
-#: ../src/PlaylistColumns.cs:119
+#: ../src/PlaylistColumns.cs:143
 msgid "Choose Columns"
 msgstr "Velg kolonner"
 
-#: ../src/PlaylistColumns.cs:133
+#: ../src/PlaylistColumns.cs:157
 msgid "Visible Playlist Columns"
 msgstr "Synlige spillelistekolonner"
 
@@ -1019,15 +1010,15 @@ msgstr "Tid"
 msgid "Rating"
 msgstr "Poeng"
 
-#: ../src/PlaylistView.cs:107
+#: ../src/PlaylistView.cs:106
 msgid "Plays"
 msgstr "Avspillinger"
 
-#: ../src/PlaylistView.cs:115
+#: ../src/PlaylistView.cs:113
 msgid "Last Played"
 msgstr "Sist spilt"
 
-#: ../src/PlaylistView.cs:418
+#: ../src/PlaylistView.cs:416
 msgid "N/A"
 msgstr "-"
 
@@ -1528,17 +1519,17 @@ msgstr "Ingen iPod-kompatible innkodere tilgjengelig"
 msgid "CD playback is not supported for this instance"
 msgstr "CD-spilling er ikke støttet i kjørende utgave av Banshee"
 
-#: ../src/Banshee.Base/TrackInfo.cs:340
+#: ../src/Banshee.Base/TrackInfo.cs:368
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
 msgid "Unknown Artist"
 msgstr "Ukjent Artist"
 
-#: ../src/Banshee.Base/TrackInfo.cs:348
+#: ../src/Banshee.Base/TrackInfo.cs:376
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
 msgid "Unknown Album"
 msgstr "Ukjent Album"
 
-#: ../src/Banshee.Base/TrackInfo.cs:356
+#: ../src/Banshee.Base/TrackInfo.cs:384
 msgid "Unknown Title"
 msgstr "Ukjent Tittel"
 
@@ -1578,27 +1569,23 @@ msgstr "Kunne ikke lese lyd-CD"
 msgid "Track {0}"
 msgstr "Spor {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:315
-#: ../src/Banshee.Base/Dap/Dap.cs:316
+#: ../src/Banshee.Base/Dap/Dap.cs:326
+#: ../src/Banshee.Base/Dap/Dap.cs:327
 msgid "Synchronizing Device"
 msgstr "Synkroniser mediet"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:317
+#: ../src/Banshee.Base/Dap/Dap.cs:328
 msgid "Waiting for transcoder..."
 msgstr "Venter på konverterer..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:401
-#: ../src/Banshee.Base/Dap/Dap.cs:422
+#: ../src/Banshee.Base/Dap/Dap.cs:412
+#: ../src/Banshee.Base/Dap/Dap.cs:433
 msgid "Processing..."
 msgstr "Behandler..."
 
 #: ../src/Banshee.Base/Dap/DapCore.cs:119
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialisert"
-
-#: ../src/Banshee.Base/Dap/DapCore.cs:173
-msgid "Could not process connected DAP"
-msgstr "Kunne ikke jobbe med tilkoblet digital lydspiller"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1657,11 +1644,11 @@ msgstr "Dette tillegget kunne ikke startes."
 msgid "Configuration"
 msgstr "Brukervalg"
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:103
+#: ../src/Banshee.Base/Sources/DapSource.cs:104
 msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserer mediet, vennligst vent..."
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:167
+#: ../src/Banshee.Base/Sources/DapSource.cs:174
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} Gjenstår)"
@@ -1682,22 +1669,77 @@ msgstr "Kan ikke endre navn på spillelisten"
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "En spilleliste med dette navnet eksisterer allerede. Vennligst velg et annet navn."
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:131
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:150
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
+msgid "Rebuilding Database"
+msgstr "Gjenoppretter database"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
+msgid "Scanning iPod..."
+msgstr "Leser iPod..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
+msgid "Processing Songs..."
+msgstr "Behandler spor..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
+msgid "Saving new database..."
+msgstr "Lagrer ny database..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
+msgid "Error rebuilding iPod database"
+msgstr "Feil under gjenoppretting av iPod-databasen"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
 msgid "Synchronizing iPod"
 msgstr "Synkroniserer iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:132
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:160
 msgid "Pre-processing tracks"
 msgstr "Forbehandler spor"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:147
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:175
 msgid "Flushing to Disk (may take time)"
 msgstr "Overfører (kan ta en stund)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:157
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:185
 msgid "Failed to synchronize iPod"
 msgstr "Klarte ikke å synkronisere iPod"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr "Kan ikke lese fra iPod"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
+msgid "What is the reason for this?"
+msgstr "Hva er grunnen til dette?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
+msgid "Rebuild iPod Database..."
+msgstr "Gjenopprett iPod-databasen..."
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
+msgid "Confirm Rebuild iPod Database"
+msgstr "Bekreft gjenopprettelse av iPod-database"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"Gjenopprettelse av iPod-databasen vil ta en stund. Merk at spillelister du måtte ha på din iPod vil bli tapt.\n"
+"\n"
+"Er du sikker på at du vil gjenopprette iPod-databasen?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
+msgid "Rebuild Database"
+msgstr "Gjenopprett database"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
+msgid "Rebuilding iPod Database..."
+msgstr "Gjenoppretter iPod-databasen..."
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:113
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:408
@@ -1877,31 +1919,35 @@ msgstr "Holder Banshee-biblioteket synkronisert med musikkmappen. Dette tillegge
 msgid "Enable the FileSystemMonitor plugin"
 msgstr "Skru på tillegget for overvåking av musikkmappen"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:60
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
 msgid "Metadata and Cover Art Searching"
 msgstr "Henting av metadata og CD-cover"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:69
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:70
 msgid "Only download album cover artwork"
 msgstr "Bare last ned albumcover"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:71
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:72
 msgid "Download album cover artwork and fill in missing track data"
 msgstr "Last ned albumcover og fyll inn manglende data i sporet"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:73
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:74
 msgid "Download album cover artwork and overwrite any existing track data"
 msgstr "Last ned albumcover og skriv over eksisterende data i sporet"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:88
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
+msgid "Rescan Library"
+msgstr "Hent metadata på nytt"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
 msgid "Warning"
 msgstr "Advarsel"
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:90
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
 msgid "This option can usually correct minor mistakes in metadata, however on rare occasions metadata may be incorrectly updated from MusicBrainz."
 msgstr "Dette valget vil vanligvis rette opp små feil i metadata, men ved noen sjeldne tilfeller kan metadata som hentes via MusicBrainz være feilaktig."
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:55
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:57
 msgid "Automatically search for missing and supplementary metadata and cover art for songs in your library."
 msgstr "Automatisk henting av manglende og supplerende metadata og albumcover til sanger i biblioteket."
 
@@ -1944,6 +1990,12 @@ msgstr "Er du sikker på at du vil avbryte følgende handling: {0}?"
 msgid "Searching: {0}"
 msgstr "Søker: {0}"
 
+#~ msgid "Your Library is Empty - Consider Importing Music"
+#~ msgstr "Biblioteket er tomt - På tide å importere litt musikk?"
+#~ msgid "This Playlist is Empty - Consider Adding Music"
+#~ msgstr "Denne spillelisten er tom - På tide å legge til litt musikk?"
+#~ msgid "Could not process connected DAP"
+#~ msgstr "Kunne ikke jobbe med tilkoblet digital lydspiller"
 #~ msgid ""
 #~ "Banshee is already running. If you were trying to control the already "
 #~ "running instance of Banshee, D-Bus must be enabled. Banshee could not "
