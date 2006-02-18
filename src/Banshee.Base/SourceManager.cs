@@ -196,22 +196,24 @@ namespace Banshee.Sources
         
         public static void SetActiveSource(Source source, bool notify)
         {
-	    if (active_source != null)
-		active_source.Deactivate ();
-
+            if (active_source != null)
+                active_source.Deactivate ();
+            
             active_source = source;
             source.Activate();
-             
+            
             if(!notify) {
                 return;
             }
-               
-            SourceEventHandler handler = ActiveSourceChanged;
-            if(handler != null) {
-                SourceEventArgs args = new SourceEventArgs();
-                args.Source = active_source;
-                handler(args);
-            } 
+                
+            ThreadAssist.ProxyToMain(delegate {
+                SourceEventHandler handler = ActiveSourceChanged;
+                if(handler != null) {
+                    SourceEventArgs args = new SourceEventArgs();
+                    args.Source = active_source;
+                    handler(args);
+                } 
+            });
         }
         
         public static int ActiveSourceIndex {

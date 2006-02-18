@@ -1,3 +1,13 @@
+2006-02-18  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Base/SourceManager.cs: emit the
+	ActiveChanged event in the main thread.
+	* src/Banshee.Widgets/CoverArtThumbnail.cs: fix the nasty
+	flashing problem that occurred when the popup appears
+	above the thumbnail.
+	* src/SourceView.cs: don't allow a source to be added
+	more than once.
+
 2006-02-15  Alessio Frusciante  <algol@firenze.linux.it>
 
 	* configure.ac: Added "it" (Italian) to ALL_LINGUAS.

@@ -87,21 +87,16 @@ namespace Banshee
             RefreshList();
             
             SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
-                TreeIter iter = store.Insert(args.Position);
-                store.SetValue(iter, 0, args.Source);
+                if(FindSource(args.Source).Equals(TreeIter.Zero)) {
+                    TreeIter iter = store.Insert(args.Position);
+                    store.SetValue(iter, 0, args.Source);
+                }
             };
             
             SourceManager.SourceRemoved += delegate(SourceEventArgs args) {
-                for(int i = 0, n = store.IterNChildren(); i < n; i++) {
-                    TreeIter iter = TreeIter.Zero;
-                    if(!store.IterNthChild(out iter, i)) {
-                        continue;
-                    }
-                    
-                    if((store.GetValue(iter, 0) as Source) == args.Source) {
-                        store.Remove(ref iter);
-                        return;
-                    }
+                TreeIter iter = FindSource(args.Source);
+                if(!iter.Equals(TreeIter.Zero)) {
+                    store.Remove(ref iter);
                 }
             };
             
@@ -112,6 +107,21 @@ namespace Banshee
             SourceManager.SourceUpdated += delegate(SourceEventArgs args) {
                 QueueDraw();
             };
+        }
+
+        private TreeIter FindSource(Source source) {
+            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+                TreeIter iter = TreeIter.Zero;
+                if(!store.IterNthChild(out iter, i)) {
+                    continue;
+                }
+                
+                if((store.GetValue(iter, 0) as Source) == source) {
+                    return iter;
+                }
+            }
+
+            return TreeIter.Zero;
         }
                     
         protected void SourceCellDataFunc(TreeViewColumn tree_column,

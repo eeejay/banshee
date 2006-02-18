@@ -126,6 +126,7 @@ namespace Banshee.Widgets
         private int size;
         private CoverArtPopup popup;
         private bool loaded;
+        private bool in_popup;
         
         public CoverArtThumbnail(int size) : base()
         {
@@ -135,6 +136,9 @@ namespace Banshee.Widgets
             {
                 popup.Hide();
             };
+
+            popup.EnterNotifyEvent += OnPopupEnterNotifyEvent;
+            popup.LeaveNotifyEvent += OnPopupLeaveNotifyEvent;
             
             image = new Gtk.Image();
             image.Show();
@@ -147,6 +151,17 @@ namespace Banshee.Widgets
             
             this.size = size;
         }
+
+        private void OnPopupEnterNotifyEvent(object o, EnterNotifyEventArgs args)
+        {
+            in_popup = true;
+        }
+        
+        private void OnPopupLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
+        {
+            in_popup = false;
+            popup.Hide();
+        }
         
         private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
         {
@@ -157,7 +172,13 @@ namespace Banshee.Widgets
         
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
         {
-            popup.Hide();
+            GLib.Timeout.Add (100, delegate {
+                if (!in_popup) {
+                    popup.Hide();
+                }
+
+                return false;
+            });
         }
         
         private Pixbuf CreateThumbnail(Pixbuf srcPixbuf)
