@@ -182,11 +182,18 @@ dnl musicbrainz
 PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
 
 dnl avahi-sharp for DAAP
+AC_ARG_ENABLE(mdnsd, AC_HELP_STRING([--enable-mdnsd], [Use mDNSResponder instead of Avahi for DAAP]), enable_mdnsd="yes", enable_mdnsd="no")
+AM_CONDITIONAL(ENABLE_MDNSD, test "x$enable_mdnsd" = "yes")
+
 if test "x$enable_daap" = "xyes"; then 
-	PKG_CHECK_MODULES(AVAHISHARP, avahi-sharp)
-	AC_SUBST(AVAHISHARP_LIBS)
-	DAAPSHARP_CSFLAGS="-define:DAAP_ENABLED"
-	AC_SUBST(DAAPSHARP_CSFLAGS)
+	if test "x$enable_mdnsd" = "xyes"; then
+		DAAPSHARP_FLAGS="-define:ENABLE_MDNSD"
+		AC_SUBST(DAAPSHARP_FLAGS)
+	else
+		PKG_CHECK_MODULES(AVAHISHARP, avahi-sharp)
+		DAAPSHARP_FLAGS=$AVAHISHARP_LIBS
+		AC_SUBST(DAAPSHARP_FLAGS)
+	fi
 	AM_CONDITIONAL(DAAP_ENABLED, true)
 else
 	AM_CONDITIONAL(DAAP_ENABLED, false)
@@ -430,6 +437,13 @@ if test "x${enable_gst_10}" = "xyes"; then
 	gst_version="0.10";
 fi;
 
+if test "x${enable_daap}" = "xyes"; then
+	zeroconf_lib=", Avahi"
+	if test "x${enable_mdnsd}" = "xyes"; then
+		zeroconf_lib=", mDNSResponder"
+	fi
+fi
+
 echo "
 banshee-$VERSION
 
@@ -449,7 +463,7 @@ banshee-$VERSION
 
     Xing MP3 Encoder:  ${enable_xing}
     GStreamer Plugins: ${GST_PLUGINS_DIR}
-    DAAP Support:      ${enable_daap}
+    DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
 
 if test "x${enable_helix}" = "xyes"; then

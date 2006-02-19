@@ -15,7 +15,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DatabaseProxy.cs \
 	$(srcdir)/DaapProxyWebServer.cs \
 	$(srcdir)/DaapConfigPage.cs \
-	$(srcdir)/daap-sharp/*.cs
+	$(srcdir)/daap-sharp/*.cs \
+	$(srcdir)/daap-sharp/Mono.Zeroconf/*.cs
 	
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
@@ -37,7 +38,7 @@ endif
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(AVAHISHARP_LIBS) -r:System.Web -r:ICSharpCode.SharpZipLib $(PKG_REFERENCES) -resource:$(srcdir)/daap-sharp/content-codes,content-codes
+	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(DAAPSHARP_FLAGS) -r:System.Web -r:ICSharpCode.SharpZipLib $(PKG_REFERENCES) -resource:$(srcdir)/daap-sharp/content-codes,content-codes
 	
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files) $(srcdir)/daap-sharp/content-codes
 

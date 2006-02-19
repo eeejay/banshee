@@ -1,5 +1,23 @@
 2006-02-19  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Support using either Avahi or the bundled mDNSResponder
+	support for the DAAP plugin. Avahi is used by default - if the system
+	has Apple's mDNSResponder, pass --enable-mdnsd to configure
+
+	* src/Banshee.Plugins/Daap/Daap.dll.config.in: Added mdns map to
+	libdns_sd.so
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Pass DAAPSHARP_FLAGS to 
+	mcs and build the Mono.Zeroconf sources into the plugin assembly
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*.cs: Updated to latest
+	daap-sharp, which has support for mDNSResponder
+
+	* src/Banshee.Plugins/Daap/daap-sharp/Mono.Zeroconf/*: Bundled 
+	mDNSResponder C# bindings (Mono.Zeroconf)
+
+2006-02-19  Aaron Bockover  <aaron@abock.org>
+
 	* entagged-sharp/Mpc/MpcFileReader.cs: Added application/x-apetag
 
 2006-02-18  James Willcox  <snorp@snorp.net>
