@@ -1,3 +1,7 @@
+2006-02-19  Aaron Bockover  <aaron@abock.org>
+
+	* entagged-sharp/Mpc/MpcFileReader.cs: Added application/x-apetag
+
 2006-02-18  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Base/SourceManager.cs: emit the

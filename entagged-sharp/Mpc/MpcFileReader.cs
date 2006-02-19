@@ -25,6 +25,11 @@
 
 /*
  * $Log$
+ * Revision 1.10  2006/02/19 18:01:13  abock
+ * 2006-02-19  Aaron Bockover  <aaron@abock.org>
+ *
+ *     * entagged-sharp/Mpc/MpcFileReader.cs: Added application/x-apetag
+ *
  * Revision 1.9  2005/12/05 16:55:07  abock
  * 2005-12-05  Aaron Bockover  <aaron@aaronbock.net>
  *
@@ -48,6 +53,7 @@ namespace Entagged.Audioformats.Mpc
 	[SupportedMimeType ("audio/x-mp+")]
 	[SupportedMimeType ("entagged/mpc")]
 	[SupportedMimeType ("entagged/mp+")]
+	[SupportedMimeType ("application/x-apetag")]
 	public class MpcFileReader : AudioFileReader 
 	{	
 		private MpcInfoReader ir = new MpcInfoReader();
