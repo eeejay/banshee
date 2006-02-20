@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  DaapTrackInfo.cs
  *
@@ -63,7 +62,8 @@ namespace Banshee.Plugins.Daap
         
         private void LoadFromDaapSong()
         {
-            uri = new Uri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, database.Id, song.Id));
+            uri = new Uri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, 
+                database.GetHashCode(), song.Id));
             
             album = song.Album == String.Empty ? null : song.Album;
             artist = song.Artist == String.Empty ? null : song.Artist;

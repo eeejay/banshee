@@ -188,7 +188,7 @@ namespace Banshee.Plugins.Daap
                    body += "<ul>";
                    foreach(DAAP.Database database in (ArrayList)databases.Clone()) {
                        body += String.Format("<li><a href=\"/{0}\">{1} ({2} Songs)</a></li>",
-                           database.Id, database.Name, database.SongCount);
+                           database.GetHashCode(), database.Name, database.SongCount);
                    }
                    body += "</ul>";
                }
@@ -201,7 +201,7 @@ namespace Banshee.Plugins.Daap
                 }
                 
                 foreach(DAAP.Database database in (ArrayList)databases.Clone()) {
-                    if(database.Id != id) {
+                    if(database.GetHashCode() != id) {
                         continue;
                     }
                     
@@ -213,7 +213,7 @@ namespace Banshee.Plugins.Daap
                         body += "<p>Showing all " + database.SongCount + " songs:</p><ul>";
                         foreach(DAAP.Song song in database.Songs) {
                             body += String.Format("<li><a href=\"/{0}/{1}\">{2} - {3}</a> ({4}:{5})</li>",
-                                database.Id, song.Id, song.Artist, song.Title, 
+                                database.GetHashCode(), song.Id, song.Artist, song.Title, 
                                 song.Duration.Minutes, song.Duration.Seconds.ToString("00"));
                         }
                         body += "</ul>";
@@ -240,7 +240,7 @@ namespace Banshee.Plugins.Daap
                 }
                 
                 foreach(DAAP.Database database in (ArrayList)databases.Clone()) {
-                    if(database.Id != db_id) {
+                    if(database.GetHashCode() != db_id) {
                         continue;
                     }
                     
@@ -280,7 +280,7 @@ namespace Banshee.Plugins.Daap
         {
             long length;
             Stream stream = database.StreamSong(song, out length);
-            WriteResponseStream(client, stream, length);
+            WriteResponseStream(client, stream, length, song.FileName);
             stream.Close();
         }
 
@@ -307,11 +307,15 @@ namespace Banshee.Plugins.Daap
             }
         }
 
-        private void WriteResponseStream(Socket client, Stream response, long length) 
+        private void WriteResponseStream(Socket client, Stream response, long length, string filename)
         {
             using(BinaryWriter writer = new BinaryWriter(new NetworkStream(client, false))) {
                 string headers = "HTTP/1.1 200 OK\r\n";
                 headers += String.Format("Content-Length: {0}\r\n", length);
+                if(filename != null) {
+                    headers += String.Format("Content-Disposition: attachment; filename=\"{0}\"\r\n",
+                        filename.Replace("\"", "\\\""));
+                }
                 headers += "\r\n";
                 
                 writer.Write(Encoding.UTF8.GetBytes(headers));
@@ -356,15 +360,16 @@ namespace Banshee.Plugins.Daap
             }
         }
         
-        public IPAddress BoundAddress {
+        private static IPAddress local_address = IPAddress.Parse("127.0.0.1");
+        public IPAddress IPAddress {
             get {
-                return (server.LocalEndPoint as IPEndPoint).Address;
+                return local_address;
             }
         }
         
         public string HttpBaseAddress {
             get {
-                return String.Format("http://{0}:{1}/", BoundAddress, BoundPort);
+                return String.Format("http://{0}:{1}/", IPAddress, BoundPort);
             }
         }
     }

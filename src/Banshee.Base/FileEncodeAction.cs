@@ -50,7 +50,7 @@ namespace Banshee.Base
         private ArrayList keys = new ArrayList();
         private ArrayList values = new ArrayList();
         
-        private FileEncoder encoder;
+        private Transcoder transcoder;
         private PipelineProfile profile;
         private int encodedFilesFinished;
         
@@ -91,8 +91,8 @@ namespace Banshee.Base
         
         public void ThreadedRun(object o)
         {
-            encoder = new GstFileEncoder();
-            encoder.Progress += OnEncoderProgress;
+            transcoder = new GstTranscoder();
+            transcoder.Progress += OnTranscoderProgress;
             
             for(int i = 0; i < keys.Count; i++) {
                 object obj = keys[i];
@@ -113,7 +113,7 @@ namespace Banshee.Base
                 }
                     
                 try {
-                    Uri encUri = encoder.Encode(inputUri, outputUri, profile);
+                    Uri encUri = transcoder.Transcode(inputUri, outputUri, profile);
                        
                     FileEncodeCompleteHandler handler = FileEncodeComplete;
                     if(handler != null) {
@@ -149,14 +149,14 @@ namespace Banshee.Base
                 Canceled(this, new EventArgs());
             }
         
-            if(encoder == null) {
+            if(transcoder == null) {
                 return;
             }
             
-            encoder.Cancel();
+            transcoder.Cancel();
         }
         
-        private void OnEncoderProgress(object o, FileEncoderProgressArgs args)
+        private void OnTranscoderProgress(object o, TranscoderProgressArgs args)
         {
             user_event.Progress = ((double)(progressPrecision * encodedFilesFinished) +
                 (args.Progress * (double)progressPrecision)) / 

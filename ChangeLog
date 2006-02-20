@@ -1,3 +1,32 @@
+2006-02-20  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated Banshee MonoDevelop project
+
+	* src/Banshee.Plugins/Daap/DaapProxyWebServer.cs: Use the local address
+	and not the bound address for passing URIs to clients; use
+	DAAP.Database.GetHashCode instead of DAAP.Database.ID, which is not
+	unique; send a Content-Disposition header with the song file name if
+	it is not null
+	
+	* src/Banshee.Plugins/Daap/DaapTrackInfo.cs: Use DAAP.Database.GetHashCode
+	to build the URI
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*: Updated daap-sharp sources
+
+	* libbanshee/gst-transcode-0.8.c:
+	* libbanshee/gst-transcode.h: Renamed gst_file_encoder/GstFileEncoder to
+	gst_transcoder/GstTranscoder
+
+	* src/AboutBox.cs: Added Alessandro Gervaso (Italian) and 
+	Ilkka Tuohela (Finnish) to translator credits
+
+	* src/Banshee.Base/FileEncoder.cs:
+	* src/Banshee.Base/GstFileEncoder.cs: Renamed to Transcoder/GstTranscoder
+	
+	* src/Banshee.Base/FileEncodeAction.cs: Updated to reflect rename changes
+
+	* src/Banshee.Base/Makefile.am: Updated to reflect renamed files
+
 2006-02-20  Ilkka Tuohela  <hile@iki.fi>
 
 	* configure.ac: Added "fi" to ALL_LINGUAS

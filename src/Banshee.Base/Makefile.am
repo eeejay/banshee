@@ -65,8 +65,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ImportManager.cs \
 	$(srcdir)/UriList.cs \
 	$(srcdir)/PipelineProfile.cs \
-	$(srcdir)/FileEncoder.cs \
-	$(srcdir)/GstFileEncoder.cs \
+	$(srcdir)/Transcoder.cs \
+	$(srcdir)/GstTranscoder.cs \
 	$(srcdir)/FileEncodeAction.cs \
 	$(srcdir)/NetworkDetect.cs \
 	$(srcdir)/PlayerEngineCore.cs \

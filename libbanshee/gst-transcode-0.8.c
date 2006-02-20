@@ -1,8 +1,8 @@
 /***************************************************************************
- *  gst-encode.c
+ *  gst-transcode-0.8.c
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -40,8 +40,10 @@
 #include "gst-transcode.h"
 #include "gst-misc.h"
 
+// private methods
+
 static GstElement *
-gst_file_encoder_build_encoder(const gchar *encoder_pipeline)
+gst_transcoder_build_encoder(const gchar *encoder_pipeline)
 {
     GstElement *encoder = NULL;
     gchar *pipeline;
@@ -53,38 +55,8 @@ gst_file_encoder_build_encoder(const gchar *encoder_pipeline)
     return encoder;
 }    
 
-GstFileEncoder *
-gst_file_encoder_new()
-{
-    GstFileEncoder *encoder;
-    
-    gstreamer_initialize();
-    
-    encoder = g_new0(GstFileEncoder, 1);
-    encoder->cancel = FALSE;
-    encoder->error = NULL;
-    
-    return encoder;
-}
-
-void
-gst_file_encoder_free(GstFileEncoder *encoder)
-{
-    if(encoder == NULL)
-        return;
-    
-    encoder->cancel = TRUE;
-    
-    if(encoder->error != NULL)
-       g_free(encoder->error);
-    encoder->error = NULL;
-    
-    g_free(encoder);
-    encoder = NULL;
-}
-
 static gboolean
-gst_file_encoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
+gst_transcoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
     gpointer user_data)
 {
     return TRUE;
@@ -92,13 +64,13 @@ gst_file_encoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
 
 static void 
 gst_error_callback(GstElement *elem, GstElement *arg1, 
-    GError *error, gchar *str, GstFileEncoder *encoder)
+    GError *error, gchar *str, GstTranscoder *transcoder)
 {
-    encoder->error = g_strdup(str);
+    transcoder->error = g_strdup(str);
 }
 
 static GstElement *
-gst_file_encoder_create_pipeline(GstFileEncoder *encoder, 
+gst_transcoder_create_pipeline(GstTranscoder *transcoder, 
     const char *input_file, const char *output_file, 
     const gchar *encoder_pipeline, GstElement **out_sink)
 {
@@ -108,38 +80,38 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
     GstElement *encoder_elem;
     GstElement *sink_elem;
 
-    if(encoder == NULL)
+    if(transcoder == NULL)
         return NULL;
     
     pipeline = gst_pipeline_new("pipeline");
 
     source_elem = gst_element_factory_make("gnomevfssrc", "source");
     if(source_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'gnomevfssrc' plugin"));
+        transcoder->error = g_strdup(_("Could not create 'gnomevfssrc' plugin"));
         return NULL;
     }
 
     decoder_elem = gst_element_factory_make("spider", "spider");
     if(decoder_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'spider' plugin"));
+        transcoder->error = g_strdup(_("Could not create 'spider' plugin"));
         return NULL;
     }
 
-    encoder_elem = gst_file_encoder_build_encoder(encoder_pipeline);
+    encoder_elem = gst_transcoder_build_encoder(encoder_pipeline);
     if(encoder_elem == NULL) {
-         encoder->error = g_strdup_printf(
+         transcoder->error = g_strdup_printf(
            _("Could not create encoding pipeline: %s"), encoder_pipeline);
          return NULL;
     }
 
     sink_elem = gst_element_factory_make("gnomevfssink", "sink");
     if(sink_elem == NULL) {
-        encoder->error = g_strdup(_("Could not create 'filesink' plugin"));
+        transcoder->error = g_strdup(_("Could not create 'filesink' plugin"));
         return NULL;
     }
     
     g_signal_connect(G_OBJECT(sink_elem), "allow-overwrite",
-        G_CALLBACK(gst_file_encoder_gvfs_allow_overwrite_cb), encoder);
+        G_CALLBACK(gst_transcoder_gvfs_allow_overwrite_cb), transcoder);
     
     gst_bin_add_many(GST_BIN(pipeline), 
         source_elem, 
@@ -153,7 +125,7 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
         sink_elem, NULL);
     
     g_signal_connect(pipeline, "error", G_CALLBACK(gst_error_callback),
-        encoder);
+        transcoder);
     
     g_object_set(source_elem, "location", input_file, NULL);
     g_object_set(sink_elem, "location", output_file, NULL);
@@ -163,10 +135,61 @@ gst_file_encoder_create_pipeline(GstFileEncoder *encoder,
     return pipeline;
 }
 
+// public methods
+
+GstTranscoder *
+gst_transcoder_new()
+{
+    GstTranscoder *transcoder;
+    
+    gstreamer_initialize();
+    
+    transcoder = g_new0(GstTranscoder, 1);
+    transcoder->cancel = FALSE;
+    transcoder->error = NULL;
+    
+    return transcoder;
+}
+
+void
+gst_transcoder_free(GstTranscoder *transcoder)
+{
+    if(transcoder == NULL)
+        return;
+    
+    transcoder->cancel = TRUE;
+    
+    if(transcoder->error != NULL)
+       g_free(transcoder->error);
+    transcoder->error = NULL;
+    
+    g_free(transcoder);
+    transcoder = NULL;
+}
+
+
+const gchar *
+gst_transcoder_get_error(GstTranscoder *transcoder)
+{
+    if(transcoder == NULL)
+        return NULL;
+    
+    return transcoder->error;
+}
+
+void 
+gst_transcoder_cancel(GstTranscoder *transcoder)
+{
+    if(transcoder == NULL)
+        return;
+    
+    transcoder->cancel = TRUE;
+}
+
 gboolean 
-gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file, 
-    const gchar *output_file, const gchar *encoder_pipeline, 
-    GstFileEncoderProgressCallback progress_cb)
+gst_transcoder_transcode(GstTranscoder *transcoder, const gchar *input_uri, 
+    const gchar *output_uri, const gchar *encoder_pipeline, 
+    GstTranscoderProgressCallback progress_cb)
 {
     GstElement *pipeline;
     GstElement *sink = NULL;
@@ -175,18 +198,18 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
     gdouble last_fraction = 0.0, fraction = 0.0;
     GnomeVFSFileInfo fileinfo;
 
-    if(encoder == NULL)
+    if(transcoder == NULL)
         return FALSE;
     
-    if(encoder->error != NULL) {
-        g_free(encoder->error);
-        encoder->error = NULL;
+    if(transcoder->error != NULL) {
+        g_free(transcoder->error);
+        transcoder->error = NULL;
     }
     
-    encoder->cancel = FALSE;
+    transcoder->cancel = FALSE;
     
-    pipeline = gst_file_encoder_create_pipeline(encoder, input_file,
-        output_file, encoder_pipeline, &sink);
+    pipeline = gst_transcoder_create_pipeline(transcoder, input_uri,
+        output_uri, encoder_pipeline, &sink);
     
     if(pipeline == NULL)
         return FALSE;
@@ -194,7 +217,7 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
     gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_PLAYING);
     
     while(gst_bin_iterate(GST_BIN(pipeline))) {
-        if(encoder->cancel == TRUE || encoder->error != NULL)
+        if(transcoder->cancel == TRUE || transcoder->error != NULL)
             break;
         
         gst_element_query(sink, GST_QUERY_POSITION, &format, &position);
@@ -204,7 +227,7 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
             fraction = (double)position / (double)total;
             if(fraction - 0.01 > last_fraction) {
                 last_fraction = fraction;
-                progress_cb(encoder, fraction);
+                progress_cb(transcoder, fraction);
             }
         }
     }
@@ -212,38 +235,20 @@ gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file,
     gst_element_set_state(GST_ELEMENT(pipeline), GST_STATE_NULL);
     g_object_unref(G_OBJECT(pipeline));
 
-    if(encoder->error == NULL) {
-        if(gnome_vfs_get_file_info(output_file, &fileinfo, 
+    if(transcoder->error == NULL) {
+        if(gnome_vfs_get_file_info(output_uri, &fileinfo, 
             GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
             if(fileinfo.size < 100) {
-                encoder->error = g_strdup(_("No decoder could be found "
+                transcoder->error = g_strdup(_("No decoder could be found "
                                 "for source format."));
-                g_remove(output_file);
+                g_remove(output_uri);
             }
         } else {
-            encoder->error = g_strdup(_("Could not stat encoded file"));
+            transcoder->error = g_strdup(_("Could not stat encoded file"));
         }
     }
     
-    encoder->cancel = FALSE;
+    transcoder->cancel = FALSE;
     
-    return encoder->error == NULL;
-}
-
-const gchar *
-gst_file_encoder_get_error(GstFileEncoder *encoder)
-{
-    if(encoder == NULL)
-        return NULL;
-    
-    return encoder->error;
-}
-
-void 
-gst_file_encoder_encode_cancel(GstFileEncoder *encoder)
-{
-    if(encoder == NULL)
-        return;
-    
-    encoder->cancel = TRUE;
+    return transcoder->error == NULL;
 }

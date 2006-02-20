@@ -1,8 +1,8 @@
 /***************************************************************************
- *  gst-encode.h
+ *  gst-transcode.h
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -26,26 +26,27 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef GST_ENCODE_H
-#define GST_ENCODE_H
+#ifndef GST_TRANSCODE_H
+#define GST_TRANSCODE_H
 
-typedef struct {
-    gboolean cancel;
-    gchar *error;
-} GstFileEncoder;
+typedef struct GstTranscoder GstTranscoder;
 
-typedef void (* GstFileEncoderProgressCallback) (GstFileEncoder *encoder, 
+typedef void (* GstTranscoderProgressCallback) (GstTranscoder *transcoder, 
     gdouble progress);
 
-GstFileEncoder *gst_file_encoder_new();
-void gst_file_encoder_free(GstFileEncoder *encoder);
+struct GstTranscoder {
+    gboolean cancel;
+    gchar *error;
+    GstTranscoderProgressCallback process_cb;
+};
 
-gboolean gst_file_encoder_encode_file(GstFileEncoder *encoder, 
-    const gchar *input_file, const gchar *output_file, 
+GstTranscoder *gst_transcoder_new();
+void gst_transcoder_free(GstTranscoder *encoder);
+const gchar *gst_transcoder_get_error(GstTranscoder *encoder);
+void gst_transcoder_cancel(GstTranscoder *encoder);
+gboolean gst_transcoder_transcode(GstTranscoder *encoder, 
+    const gchar *input_uri, const gchar *output_uri, 
     const gchar *encoder_pipeline, 
-    GstFileEncoderProgressCallback progress_cb);
+    GstTranscoderProgressCallback progress_cb);
 
-const gchar *gst_file_encoder_get_error(GstFileEncoder *encoder);
-void gst_file_encoder_encode_cancel(GstFileEncoder *encoder);
-
-#endif // GST_ENCODE_H
+#endif // GST_TRANSCODE_H
