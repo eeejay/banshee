@@ -28,7 +28,7 @@ src/TrackProperties.cs
 src/VersionInformationDialog.cs
 src/Banshee.Base/ActionManager.cs
 src/Banshee.Base/FileEncodeAction.cs
-src/Banshee.Base/GstFileEncoder.cs
+src/Banshee.Base/GstTranscoder.cs
 src/Banshee.Base/HalCore.cs
 src/Banshee.Base/ImportManager.cs
 src/Banshee.Base/Library.cs

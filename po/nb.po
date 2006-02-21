@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-15 15:29+0100\n"
-"PO-Revision-Date: 2006-02-15 15:34+0100\n"
+"POT-Creation-Date: 2006-02-21 22:36+0100\n"
+"PO-Revision-Date: 2006-02-21 22:36+0100\n"
 "Last-Translator: Øivind Hoel <oivind.hoel@gmail.com>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "Slå på spesialknapper"
 
 #: ../data/banshee.schemas.in.h:4
 msgid "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; works with mappings set through Gnome Shortcuts capplet"
-msgstr "Multimedieknapper for Spill/Pause/Neste/Forrige er nå støttet. Du kan stille inn disse knappene via programmet for Tastatursnarveier i GNOME-menyen"
+msgstr "Aktivert støtte for Spill/Pause/Neste/Forrige-multimediaknapper. Du kan stille inn disse knappene via programmet for Tastatursnarveier i GNOME-menyen"
 
 #: ../data/banshee.schemas.in.h:5
 msgid "File Name Pattern"
@@ -261,7 +261,7 @@ msgstr "Lyd-CD"
 
 #: ../data/banshee.glade.h:20
 #: ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:127
+#: ../src/AboutBox.cs:129
 #: ../src/NotificationAreaIcon.cs:61
 msgid "Banshee"
 msgstr "Banshee"
@@ -479,28 +479,28 @@ msgstr "Kunne ikke laste en utgangssink fra GStreamer/GConf, og kunne ikke falle
 msgid "Could not load an output sink from GStreamer/GConf, falling back on alsasink"
 msgstr "Kunne ikke laste en utgangssink fra GStreamer/GConf, faller tilbake på alsasink"
 
-#: ../libbanshee/gst-transcode-0.8.c:118
+#: ../libbanshee/gst-transcode-0.8.c:90
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Kunne ikke opprette \"gnomevfssrc\"-tillegget"
 
-#: ../libbanshee/gst-transcode-0.8.c:124
+#: ../libbanshee/gst-transcode-0.8.c:96
 msgid "Could not create 'spider' plugin"
 msgstr "Kunne ikke opprette \"spider\"-tillegget"
 
-#: ../libbanshee/gst-transcode-0.8.c:131
+#: ../libbanshee/gst-transcode-0.8.c:103
 #, c-format
 msgid "Could not create encoding pipeline: %s"
 msgstr "Kunne ikke opprette innkodingspipeline: %s"
 
-#: ../libbanshee/gst-transcode-0.8.c:137
+#: ../libbanshee/gst-transcode-0.8.c:109
 msgid "Could not create 'filesink' plugin"
 msgstr "Kunne ikke opprette \"filesink\"-tillegget"
 
-#: ../libbanshee/gst-transcode-0.8.c:219
+#: ../libbanshee/gst-transcode-0.8.c:242
 msgid "No decoder could be found for source format."
 msgstr "Fant ingen passende innkodingsmekanisme for kildeformatet."
 
-#: ../libbanshee/gst-transcode-0.8.c:224
+#: ../libbanshee/gst-transcode-0.8.c:247
 msgid "Could not stat encoded file"
 msgstr "Finner ikke innkodet fil"
 
@@ -522,11 +522,11 @@ msgstr "Kunne ikke initialisere HAL-kontekst"
 msgid "Could not get device list from HAL"
 msgstr "Kunne ikke skaffe maskinvareliste fra HAL"
 
-#: ../src/AboutBox.cs:129
+#: ../src/AboutBox.cs:131
 msgid "Music Management and Playback for Gnome."
 msgstr "Musikkbehandling og avspilling for Gnome."
 
-#: ../src/AboutBox.cs:131
+#: ../src/AboutBox.cs:133
 msgid ""
 "Copyright © 2005-2006 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
@@ -534,7 +534,7 @@ msgstr ""
 "Opphavsrett 2005-2006 Novell, Inc.\n"
 "Opphavsrett 2005 Aaron Bockover"
 
-#: ../src/AboutBox.cs:136
+#: ../src/AboutBox.cs:138
 msgid "Banshee Wiki"
 msgstr "Banshee-Wiki"
 
@@ -612,11 +612,11 @@ msgstr "Venter på media"
 #: ../src/BurnCore.cs:330
 #: ../src/BurnCore.cs:333
 msgid "Insert Blank CD"
-msgstr "Sett inn tom CD"
+msgstr "Sett inn en tom CD"
 
 #: ../src/BurnCore.cs:331
 msgid "Please insert a blank CD disk for the write process."
-msgstr "Vennligst sett inn en tom CD til skriving."
+msgstr "Vennligst sett inn en tom CD du vil bruke til skriving av valgte spor."
 
 #: ../src/Dialogs.cs:81
 msgid "An Error Occurred"
@@ -1282,7 +1282,7 @@ msgstr "_Avspilling"
 
 #: ../src/Banshee.Base/ActionManager.cs:139
 msgid "Fullscreen"
-msgstr "Full skjerm"
+msgstr "Fullskjerm"
 
 #: ../src/Banshee.Base/ActionManager.cs:140
 msgid "Toggle Fullscreen Mode"
@@ -1426,11 +1426,11 @@ msgstr "Konverterer filer"
 msgid "Initializing Encoder..."
 msgstr "Starter konverterer..."
 
-#: ../src/Banshee.Base/GstFileEncoder.cs:67
-msgid "Could not create encoder"
-msgstr "Kunne ikke opprette koverterer"
+#: ../src/Banshee.Base/GstTranscoder.cs:63
+msgid "Could not create transcoder"
+msgstr "Kunne ikke starte konvertering"
 
-#: ../src/Banshee.Base/GstFileEncoder.cs:94
+#: ../src/Banshee.Base/GstTranscoder.cs:90
 #, csharp-format
 msgid "Could not encode file: {0}"
 msgstr "Kunne ikke konvertere denne filen: {0}"
@@ -1576,7 +1576,7 @@ msgstr "Synkroniser mediet"
 
 #: ../src/Banshee.Base/Dap/Dap.cs:328
 msgid "Waiting for transcoder..."
-msgstr "Venter på konverterer..."
+msgstr "Venter på konvertering..."
 
 #: ../src/Banshee.Base/Dap/Dap.cs:412
 #: ../src/Banshee.Base/Dap/Dap.cs:433
