@@ -50,11 +50,22 @@ void gstreamer_initialize()
     gstreamer_initialized = TRUE;
 }
 
-// TODO: needs porting
 gboolean
 gstreamer_test_encoder(gchar *encoder_pipeline)
 {
-    return FALSE;
+    GstElement *element = NULL;
+    gchar *pipeline;
+    GError *error = NULL;
+    
+    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
+    element = gst_parse_launch(pipeline, &error);
+    g_free(pipeline);
+    
+    if(element != NULL) {
+        gst_object_unref(GST_OBJECT(element));
+    }
+    
+    return error == NULL;
 }
 
 static void
@@ -84,13 +95,6 @@ gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 gchar *
 gstreamer_detect_mimetype(const gchar *uri)
 {
-    return NULL;
-    
-    /* GStreamer 0.10 typefind is reporting everything as
-       application/x-id3, so typefind is disabled for now.
-       Higher level managed Banshee will fall back on gvfs. */
-
-#if 0
     GstElement *pipeline;
     GstElement *source;
     GstElement *typefind;
@@ -129,7 +133,6 @@ gstreamer_detect_mimetype(const gchar *uri)
     if(mimetype == -1) {
         mimetype = NULL;
     }
-   
+    
     return mimetype;
-#endif
 }

@@ -31,13 +31,17 @@
 
 typedef struct GstTranscoder GstTranscoder;
 
-typedef void (* GstTranscoderProgressCallback) (GstTranscoder *transcoder, 
-    gdouble progress);
+typedef void (* GstTranscoderProgressCallback) (GstTranscoder *transcoder, gdouble progress);
+typedef void (* GstTranscoderFinishedCallback) (GstTranscoder *transcoder);
+typedef void (* GstTranscoderErrorCallback) (GstTranscoder *transcoder, gchar *error);
 
 struct GstTranscoder {
     gboolean cancel;
     gchar *error;
-    GstTranscoderProgressCallback process_cb;
+    gboolean is_transcoding;
+    GstTranscoderProgressCallback progress_cb;
+    GstTranscoderFinishedCallback finished_cb;
+    GstTranscoderErrorCallback error_cb);
 };
 
 GstTranscoder *gst_transcoder_new();

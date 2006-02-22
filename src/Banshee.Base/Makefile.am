@@ -2,6 +2,10 @@ MCS_FLAGS = -debug
 ASSEMBLY_NAME = Banshee.Base
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
+if ENABLE_GST_10
+MCS_FLAGS +=  -define:GSTREAMER_0_10
+endif
+
 bansheebasedir = $(pkglibdir)
 bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
@@ -67,7 +71,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/PipelineProfile.cs \
 	$(srcdir)/Transcoder.cs \
 	$(srcdir)/GstTranscoder.cs \
-	$(srcdir)/FileEncodeAction.cs \
+	$(srcdir)/BatchTranscoder.cs \
 	$(srcdir)/NetworkDetect.cs \
 	$(srcdir)/PlayerEngineCore.cs \
 	$(srcdir)/TrackInfoHeader.cs \

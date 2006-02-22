@@ -36,35 +36,328 @@
 
 #include <libgnomevfs/gnome-vfs.h>
 
-#include "gst-transcode.h"
 #include "gst-misc.h"
 
-GstFileEncoder *
-gst_file_encoder_new()
+typedef struct GstTranscoder GstTranscoder;
+
+typedef void (* GstTranscoderProgressCallback) (GstTranscoder *transcoder, gdouble progress);
+typedef void (* GstTranscoderFinishedCallback) (GstTranscoder *transcoder);
+typedef void (* GstTranscoderErrorCallback) (GstTranscoder *transcoder, const gchar *error, const gchar *debug);
+
+struct GstTranscoder {
+    gboolean is_transcoding;
+    guint iterate_timeout_id;
+    GstElement *pipeline;
+    GstElement *decodebin;
+    const gchar *output_uri;
+    GstTranscoderProgressCallback progress_cb;
+    GstTranscoderFinishedCallback finished_cb;
+    GstTranscoderErrorCallback error_cb;
+};
+
+// private methods
+
+static void
+gst_transcoder_raise_error(GstTranscoder *transcoder, const gchar *error, const gchar *debug)
 {
-    return NULL;
+    g_return_if_fail(transcoder != NULL);
+    g_return_if_fail(transcoder->error_cb != NULL);
+    
+    transcoder->error_cb(transcoder, error, debug);
+}
+
+static gboolean
+gst_transcoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
+    gpointer user_data)
+{
+    return TRUE;
+}
+
+static gboolean
+gst_transcoder_iterate_timeout(GstTranscoder *transcoder)
+{
+    GstFormat format = GST_FORMAT_BYTES;
+    gint64 position;
+    gint64 duration;
+
+    g_return_val_if_fail(transcoder != NULL, FALSE);
+
+    if(!gst_element_query_duration(transcoder->decodebin, &format, &duration)) {
+        return TRUE;
+    }
+  
+    if(!gst_element_query_position(transcoder->decodebin, &format, &position)) {
+        return TRUE;
+    }
+
+    if(transcoder->progress_cb != NULL) {
+        transcoder->progress_cb(transcoder, (double)position / (double)duration);
+    }
+    
+    return TRUE;
+}
+
+static void
+gst_transcoder_start_iterate_timeout(GstTranscoder *transcoder)
+{
+    g_return_if_fail(transcoder != NULL);
+
+    if(transcoder->iterate_timeout_id != 0) {
+        return;
+    }
+    
+    transcoder->iterate_timeout_id = g_timeout_add(200, 
+        (GSourceFunc)gst_transcoder_iterate_timeout, transcoder);
+}
+
+static void
+gst_transcoder_stop_iterate_timeout(GstTranscoder *transcoder)
+{
+    g_return_if_fail(transcoder != NULL);
+    
+    if(transcoder->iterate_timeout_id == 0) {
+        return;
+    }
+    
+    g_source_remove(transcoder->iterate_timeout_id);
+    transcoder->iterate_timeout_id = 0;
+}
+
+static gboolean
+gst_transcoder_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
+{
+    GnomeVFSFileInfo fileinfo;
+    GstTranscoder *transcoder = (GstTranscoder *)data;
+
+    g_return_val_if_fail(transcoder != NULL, FALSE);
+
+    switch(GST_MESSAGE_TYPE(message)) {
+        case GST_MESSAGE_ERROR: {
+            GError *error;
+            gchar *debug;
+            
+            if(transcoder->error_cb != NULL) {
+                gst_message_parse_error(message, &error, &debug);
+                gst_transcoder_raise_error(transcoder, error->message, debug);
+                g_error_free(error);
+                g_free(debug);
+            }
+            
+            transcoder->is_transcoding = FALSE;
+            gst_transcoder_stop_iterate_timeout(transcoder);
+            
+            break;
+        }        
+        case GST_MESSAGE_EOS:
+            gst_element_set_state(GST_ELEMENT(transcoder->pipeline), GST_STATE_NULL);
+            g_object_unref(G_OBJECT(transcoder->pipeline));
+            
+            transcoder->is_transcoding = FALSE;
+            gst_transcoder_stop_iterate_timeout(transcoder);
+
+            if(gnome_vfs_get_file_info(transcoder->output_uri, &fileinfo, 
+                GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
+                if(fileinfo.size < 100) {
+                    gst_transcoder_raise_error(transcoder, 
+                        _("No decoder could be found for source format."), NULL);
+                    g_remove(transcoder->output_uri);
+                    break;
+                }
+            } else {
+                gst_transcoder_raise_error(transcoder, _("Could not stat encoded file"), NULL);
+                break;
+            }
+            
+            if(transcoder->finished_cb != NULL) {
+                transcoder->finished_cb(transcoder);
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return TRUE;
+}
+
+static GstElement *
+gst_transcoder_build_encoder(const gchar *encoder_pipeline)
+{
+    GstElement *encoder = NULL;
+    gchar *pipeline;
+    GError *error = NULL;
+    
+    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
+    encoder = gst_parse_launch(pipeline, &error);
+    g_free(pipeline);
+    
+    if(error != NULL) {
+        return NULL;
+    }
+    
+    return encoder;
+}    
+
+static gboolean
+gst_transcoder_create_pipeline(GstTranscoder *transcoder, 
+    const char *input_file, const char *output_file, 
+    const gchar *encoder_pipeline)
+{
+    GstElement *source_elem;
+    GstElement *decoder_elem;
+    GstElement *encoder_elem;
+    GstElement *sink_elem;
+
+    if(transcoder == NULL) {
+        return FALSE;
+    }
+    
+    transcoder->pipeline = gst_pipeline_new("pipeline");
+
+    source_elem = gst_element_factory_make("gnomevfssrc", "source");
+    if(source_elem == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'gnomevfssrc' plugin"), NULL);
+        return FALSE;
+    }
+
+    decoder_elem = gst_element_factory_make("decodebin", "decodebin");
+    if(decoder_elem == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'decodebin' plugin"), NULL);
+        return FALSE;
+    }
+    
+    transcoder->decodebin = decoder_elem;
+
+    encoder_elem = gst_transcoder_build_encoder(encoder_pipeline);
+    if(encoder_elem == NULL) {
+         gst_transcoder_raise_error(transcoder, _("Could not create encoding pipeline"), encoder_pipeline);
+         return FALSE;
+    }
+
+    sink_elem = gst_element_factory_make("gnomevfssink", "sink");
+    if(sink_elem == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'filesink' plugin"), NULL);
+        return FALSE;
+    }
+    
+    g_signal_connect(G_OBJECT(sink_elem), "allow-overwrite",
+        G_CALLBACK(gst_transcoder_gvfs_allow_overwrite_cb), transcoder);
+    
+    gst_bin_add_many(GST_BIN(transcoder->pipeline), 
+        source_elem, 
+        decoder_elem, 
+        encoder_elem, 
+        sink_elem, NULL);
+    
+    gst_element_link_many(source_elem,
+        decoder_elem,
+        encoder_elem, 
+        sink_elem, NULL);
+
+    g_object_set(source_elem, "location", input_file, NULL);
+    g_object_set(sink_elem, "location", output_file, NULL);
+
+    gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(transcoder->pipeline)), 
+        gst_transcoder_bus_callback, transcoder);
+        
+    return TRUE;
+}
+
+// public methods
+
+GstTranscoder *
+gst_transcoder_new()
+{
+    GstTranscoder *transcoder;
+    
+    gstreamer_initialize();
+    
+    transcoder = g_new0(GstTranscoder, 1);
+    transcoder->is_transcoding = FALSE;
+    transcoder->pipeline = NULL;
+    transcoder->decodebin = NULL;
+    transcoder->output_uri = NULL;
+    transcoder->progress_cb = NULL;
+    transcoder->error_cb = NULL;
+    transcoder->finished_cb = NULL;
+    
+    return transcoder;
 }
 
 void
-gst_file_encoder_free(GstFileEncoder *encoder)
+gst_transcoder_free(GstTranscoder *transcoder)
 {
-}
-
-gboolean 
-gst_file_encoder_encode_file(GstFileEncoder *encoder, const gchar *input_file, 
-    const gchar *output_file, const gchar *encoder_pipeline, 
-    GstFileEncoderProgressCallback progress_cb)
-{
-    return FALSE;
-}
-
-const gchar *
-gst_file_encoder_get_error(GstFileEncoder *encoder)
-{
-    return NULL;
+    g_return_if_fail(transcoder != NULL);
+    
+    g_object_unref(G_OBJECT(transcoder->pipeline));
+    gst_transcoder_stop_iterate_timeout(transcoder);
+    
+    g_free(transcoder);
+    transcoder = NULL;
 }
 
 void 
-gst_file_encoder_encode_cancel(GstFileEncoder *encoder)
+gst_transcoder_transcode(GstTranscoder *transcoder, const gchar *input_uri, 
+    const gchar *output_uri, const gchar *encoder_pipeline)
 {
+    g_return_if_fail(transcoder != NULL);
+    
+    if(transcoder->is_transcoding) {
+        return;
+    }
+    
+    if(!gst_transcoder_create_pipeline(transcoder, input_uri, output_uri, encoder_pipeline)) {
+        gst_transcoder_raise_error(transcoder, _("Could not construct pipeline"), NULL); 
+        return;
+    }
+    
+    transcoder->output_uri = output_uri;
+    transcoder->is_transcoding = TRUE;
+    
+    gst_element_set_state(GST_ELEMENT(transcoder->pipeline), GST_STATE_PLAYING);
+    gst_transcoder_start_iterate_timeout(transcoder);
+}
+
+void 
+gst_transcoder_cancel(GstTranscoder *transcoder)
+{
+    g_return_if_fail(transcoder != NULL);
+    gst_transcoder_stop_iterate_timeout(transcoder);
+    
+    if(GST_IS_ELEMENT(transcoder->pipeline)) {
+        gst_element_set_state(GST_ELEMENT(transcoder->pipeline), GST_STATE_NULL);
+        gst_object_unref(GST_OBJECT(transcoder->pipeline));
+    }
+    
+    g_remove(transcoder->output_uri);
+}
+
+void
+gst_transcoder_set_progress_callback(GstTranscoder *transcoder, 
+    GstTranscoderProgressCallback cb)
+{
+    g_return_if_fail(transcoder != NULL);
+    transcoder->progress_cb = cb;
+}
+
+void
+gst_transcoder_set_finished_callback(GstTranscoder *transcoder, 
+    GstTranscoderFinishedCallback cb)
+{
+    g_return_if_fail(transcoder != NULL);
+    transcoder->finished_cb = cb;
+}
+
+void
+gst_transcoder_set_error_callback(GstTranscoder *transcoder, 
+    GstTranscoderErrorCallback cb)
+{
+    g_return_if_fail(transcoder != NULL);
+    transcoder->error_cb = cb;
+}
+
+gboolean
+gst_transcoder_get_is_transcoding(GstTranscoder *transcoder)
+{
+    g_return_val_if_fail(transcoder != NULL, FALSE);
+    return transcoder->is_transcoding;
 }

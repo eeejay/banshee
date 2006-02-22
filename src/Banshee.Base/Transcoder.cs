@@ -27,7 +27,6 @@
  */
 
 using System;
-using System.IO;
 
 namespace Banshee.Base
 {
@@ -41,17 +40,37 @@ namespace Banshee.Base
     public abstract class Transcoder : IDisposable
     {        
         public event TranscoderProgressHandler Progress;
-    
-        public abstract Uri Transcode(Uri inputUri, Uri outputUri, PipelineProfile profile);
-        public abstract void Cancel();
+        public event EventHandler Finished;
+        public event EventHandler Error;
         
-        protected void UpdateProgress(double progress)
+        public abstract void BeginTranscode(Uri inputUri, Uri outputUri, PipelineProfile profile);
+        public abstract void Cancel();
+        public abstract bool IsTranscoding { get; }
+        public abstract string ErrorMessage { get; }
+        
+        protected virtual void OnProgress(double progress)
         {
             TranscoderProgressHandler handler = Progress;
             if(handler != null) {
                 TranscoderProgressArgs args = new TranscoderProgressArgs();
                 args.Progress = progress;
                 handler(this, args);
+            }
+        }
+        
+        protected virtual void OnFinished()
+        {
+            EventHandler handler = Finished;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+        
+        protected virtual void OnError()
+        {
+            EventHandler handler = Error;
+            if(handler != null) {
+                handler(this, new EventArgs());
             }
         }
         

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  BurnCore.cs
  *
@@ -81,8 +80,10 @@ namespace Banshee
                 case DiskType.Mp3:
                 case DiskType.Data:
                 default:
-                    foreach(TrackInfo ti in encodeQueue)
+                    foreach(TrackInfo ti in encodeQueue) {
                         burnQueue.Enqueue(ti.Uri);
+                    }
+                    
                     DoBurn();
                     return;
             }
@@ -94,10 +95,10 @@ namespace Banshee
                  return;
             }
         
-            FileEncodeAction fet = new FileEncodeAction(profile);
-            fet.FileEncodeComplete += OnFileEncodeComplete;
-            fet.Finished += OnFileEncodeTransactionFinished;
-            fet.Canceled += OnFileEncodeTransactionCanceled;
+            BatchTranscoder transcoder = new BatchTranscoder(profile);
+            transcoder.FileFinished += OnFileEncodeComplete;
+            transcoder.BatchFinished += OnFileEncodeTransactionFinished;
+            transcoder.Canceled += OnFileEncodeTransactionCanceled;
             
             while(encodeQueue.Count > 0) {
                 TrackInfo ti = encodeQueue.Dequeue() as TrackInfo;
@@ -105,21 +106,22 @@ namespace Banshee
                     Path.GetFileNameWithoutExtension(ti.Uri.LocalPath) + "." + 
                     profile.Extension;
                 
-                fet.AddTrack(ti, new Uri(outputFile));
+                transcoder.AddTrack(ti, new Uri(outputFile));
             }
                 
-            fet.Run();
+            transcoder.Start();
         }
         
-        private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
+        private void OnFileEncodeComplete(object o, FileCompleteArgs args)
         {
             burnQueue.Enqueue(args.EncodedFileUri);
         }
         
         private void OnFileEncodeTransactionFinished(object o, EventArgs args)
         {
-            if(!canceled)
+            if(!canceled) {
                 DoBurn();
+            }
         }
         
         private void OnFileEncodeTransactionCanceled(object o, EventArgs args)
@@ -155,8 +157,7 @@ namespace Banshee
             user_event.Icon = Gdk.Pixbuf.LoadFromResource("cd-action-burn-24.png");
             user_event.CancelRequested += OnUserEventCancelRequested;
             
-            Thread burnThread = new Thread(new ThreadStart(BurnThread));
-            burnThread.Start();
+            ThreadAssist.Spawn(BurnThread);
         }
         
         private bool GetBoolPref(string key, bool def)

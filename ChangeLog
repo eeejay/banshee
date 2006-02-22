@@ -1,3 +1,37 @@
+2006-02-22  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Updated required GStreamer 0.10 version
+
+	* libbanshee/gst-misc-0.10.c: Implement pipeline testing for 0.10
+
+	* libbanshee/gst-transcode-0.10.c: Implement a new transcoder for 
+	Gstreamer 0.10
+
+	* libbanshee/gst-transcode.h: Updated for the 0.8 transcoder
+	
+	* src/BurnCore.cs: Updated to reflect changes in top-level batch 
+	transcoding API
+
+	* src/Banshee.Base/FileEncodeAction.cs: 
+	* src/Banshee.Base/BatchTranscoder.cs: Renamed to BatchTranscoder and
+	updated to reflect changes in base Transcoder class; transcoder 
+	implementations handle threading instead of the BatchTranscoder to
+	work best with the new GStreamer 0.10 threading model
+
+	* src/Banshee.Base/Makefile.am: Reflect rename from FileEncodeAction.cs
+	to BatchTranscoder.cs
+
+	* src/Banshee.Base/GstTranscoder.cs: Implement managed layer for
+	the 0.10 transcoder backend
+
+	* src/Banshee.Base/Transcoder.cs: Updated API; Transcoder should handle
+	threading; API is Async and event-based now
+
+	* src/Banshee.Base/Dap/Dap.cs: Updated to reflect changes in 
+	BatchTranscoder API
+
 2006-02-20  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Updated Banshee MonoDevelop project

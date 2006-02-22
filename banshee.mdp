@@ -129,7 +129,7 @@
     <File name="./src/Banshee.Base/Dap/DapMisc.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/PipelineProfile.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/Transcoder.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.Base/FileEncodeAction.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Base/BatchTranscoder.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/GstTranscoder.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/NetworkDetect.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/NetworkManager" subtype="Directory" buildaction="Compile" />

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  Dap.cs
  *
@@ -366,7 +365,7 @@ namespace Banshee.Dap
             });
         }
 
-        private FileEncodeAction encoder = null;
+        private BatchTranscoder encoder = null;
 
         private void Transcode()
         {
@@ -388,9 +387,9 @@ namespace Banshee.Dap
                     track.Uri = ConvertSongFileName(track.Uri, profile.Extension);
                     
                     if(encoder == null) {
-                        encoder = new FileEncodeAction(profile);
-                        encoder.FileEncodeComplete += OnFileEncodeComplete;
-                        encoder.Finished += OnFileEncodeBatchFinished;
+                        encoder = new BatchTranscoder(profile);
+                        encoder.FileFinished += OnFileEncodeComplete;
+                        encoder.BatchFinished += OnFileEncodeBatchFinished;
                         encoder.Canceled += OnFileEncodeCanceled;
                     }
                         
@@ -412,7 +411,7 @@ namespace Banshee.Dap
                 save_report_event.Message = Catalog.GetString("Processing...");
                 Synchronize();
             } else {
-                encoder.Run();
+                encoder.Start();
             }
         }
         
@@ -423,7 +422,7 @@ namespace Banshee.Dap
             encoder_canceled = true;
         }
         
-        private void OnFileEncodeComplete(object o, FileEncodeCompleteArgs args)
+        private void OnFileEncodeComplete(object o, FileCompleteArgs args)
         {
         }
         
