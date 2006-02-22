@@ -41,7 +41,7 @@ struct GstTranscoder {
     gboolean is_transcoding;
     GstTranscoderProgressCallback progress_cb;
     GstTranscoderFinishedCallback finished_cb;
-    GstTranscoderErrorCallback error_cb);
+    GstTranscoderErrorCallback error_cb;
 };
 
 GstTranscoder *gst_transcoder_new();
