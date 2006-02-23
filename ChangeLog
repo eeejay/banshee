@@ -1,5 +1,11 @@
 2006-02-23  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-transcode-0.10.c: Fixed progress reporting by
+	doing a duration query on the pipeline bin and a position query
+	directly on audioconvert element
+
+2006-02-23  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-playback-0.10.c: Use the audio sink specified
 	in gconf (Zaheer Abbas Merali, BGO #332350)
 

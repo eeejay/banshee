@@ -49,8 +49,7 @@ struct GstTranscoder {
     guint iterate_timeout_id;
     GstElement *pipeline;
     GstElement *sink_bin;
-    GstElement *decodebin;
-    GstElement *sink_elem;
+    GstElement *conv_elem;
     const gchar *output_uri;
     GstTranscoderProgressCallback progress_cb;
     GstTranscoderFinishedCallback finished_cb;
@@ -78,25 +77,20 @@ gst_transcoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
 static gboolean
 gst_transcoder_iterate_timeout(GstTranscoder *transcoder)
 {
-    GstFormat format = GST_FORMAT_BYTES;
+    GstFormat format = GST_FORMAT_TIME;
     gint64 position;
     gint64 duration;
 
     g_return_val_if_fail(transcoder != NULL, FALSE);
     
-    if(!gst_element_query_duration(transcoder->sink_elem, &format, &duration)) {
-        return TRUE;
-    }
-  
-    if(!gst_element_query_position(transcoder->sink_elem, &format, &position)) {
+    if(!gst_element_query_duration(transcoder->pipeline, &format, &duration) ||
+        !gst_element_query_position(transcoder->conv_elem, &format, &position)) {
         return TRUE;
     }
     
-    g_printf("Progress Reporting Broken: %lld / %lld\n", position, duration);
-    
-    //if(transcoder->progress_cb != NULL) {
-    //    transcoder->progress_cb(transcoder, (double)position / (double)duration);
-    //}
+    if(transcoder->progress_cb != NULL) {
+        transcoder->progress_cb(transcoder, (double)position / (double)duration);
+    }
     
     return TRUE;
 }
@@ -315,8 +309,7 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(transcoder->pipeline)), 
         gst_transcoder_bus_callback, transcoder);
         
-    transcoder->decodebin = decoder_elem;
-    transcoder->sink_elem = sink_elem;
+    transcoder->conv_elem = conv_elem;
     
     return TRUE;
 }
@@ -334,8 +327,7 @@ gst_transcoder_new()
     transcoder->is_transcoding = FALSE;
     transcoder->pipeline = NULL;
     transcoder->sink_bin = NULL;
-    transcoder->decodebin = NULL;
-    transcoder->sink_elem = NULL;
+    transcoder->conv_elem = NULL;
     transcoder->output_uri = NULL;
     transcoder->progress_cb = NULL;
     transcoder->error_cb = NULL;
