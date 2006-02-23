@@ -1,5 +1,10 @@
 2006-02-23  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-playback-0.10.c: Use the audio sink specified
+	in gconf (Zaheer Abbas Merali, BGO #332350)
+
+2006-02-23  Aaron Bockover  <aaron@abock.org>
+
 	* configure.ac: If GStreamer 0.10 is enabled, require 0.10.3 (for
 	gst_parse_bin_from_description)
 

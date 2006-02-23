@@ -73,12 +73,18 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
+    GstElement* audiosink;
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
     engine->playbin = gst_element_factory_make("playbin", "playbin");
     
     g_return_val_if_fail(engine->playbin != NULL, FALSE);
     
+    audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
+    
+    g_return_val_if_fail(audiosink != NULL, FALSE);
+    g_object_set(G_OBJECT(engine->playbin), "audio-sink", audiosink, NULL);
+
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
         gst_playback_bus_callback, engine);
         
