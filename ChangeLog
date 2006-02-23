@@ -1,3 +1,14 @@
+2006-02-23  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: If GStreamer 0.10 is enabled, require 0.10.3 (for
+	gst_parse_bin_from_description)
+
+	* libbanshee/gst-transcode-0.10.c: Transcoding now works; use
+	ghost padding with new-decoded-pad from decodebin, and 
+	gst_parse_bin_from_description to create a bubble-wrapped encoder
+	pipeline from a user-string description; progress reporting is still
+	busted
+
 2006-02-22  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Updated MonoDevelop project

@@ -1,8 +1,8 @@
 /***************************************************************************
- *  gst-encode.c
+ *  gst-transcode-0.10.c
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -48,7 +48,9 @@ struct GstTranscoder {
     gboolean is_transcoding;
     guint iterate_timeout_id;
     GstElement *pipeline;
+    GstElement *sink_bin;
     GstElement *decodebin;
+    GstElement *sink_elem;
     const gchar *output_uri;
     GstTranscoderProgressCallback progress_cb;
     GstTranscoderFinishedCallback finished_cb;
@@ -81,18 +83,20 @@ gst_transcoder_iterate_timeout(GstTranscoder *transcoder)
     gint64 duration;
 
     g_return_val_if_fail(transcoder != NULL, FALSE);
-
-    if(!gst_element_query_duration(transcoder->decodebin, &format, &duration)) {
+    
+    if(!gst_element_query_duration(transcoder->sink_elem, &format, &duration)) {
         return TRUE;
     }
   
-    if(!gst_element_query_position(transcoder->decodebin, &format, &position)) {
+    if(!gst_element_query_position(transcoder->sink_elem, &format, &position)) {
         return TRUE;
     }
-
-    if(transcoder->progress_cb != NULL) {
-        transcoder->progress_cb(transcoder, (double)position / (double)duration);
-    }
+    
+    g_printf("Progress Reporting Broken: %lld / %lld\n", position, duration);
+    
+    //if(transcoder->progress_cb != NULL) {
+    //    transcoder->progress_cb(transcoder, (double)position / (double)duration);
+    //}
     
     return TRUE;
 }
@@ -186,8 +190,8 @@ gst_transcoder_build_encoder(const gchar *encoder_pipeline)
     gchar *pipeline;
     GError *error = NULL;
     
-    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
-    encoder = gst_parse_launch(pipeline, &error);
+    pipeline = g_strdup_printf("%s", encoder_pipeline);
+    encoder = gst_parse_bin_from_description(pipeline, TRUE, &error);
     g_free(pipeline);
     
     if(error != NULL) {
@@ -196,6 +200,37 @@ gst_transcoder_build_encoder(const gchar *encoder_pipeline)
     
     return encoder;
 }    
+
+static void
+gst_transcoder_new_decoded_pad(GstElement *decodebin, GstPad *pad, 
+    gboolean last, gpointer data)
+{
+    GstCaps *caps;
+    GstStructure *str;
+    GstPad *audiopad;
+    GstTranscoder *transcoder = (GstTranscoder *)data;
+
+    g_return_if_fail(transcoder != NULL);
+
+    audiopad = gst_element_get_pad(transcoder->sink_bin, "sink");
+    
+    if(GST_PAD_IS_LINKED(audiopad)) {
+        g_object_unref(audiopad);
+        return;
+    }
+
+    caps = gst_pad_get_caps(pad);
+    str = gst_caps_get_structure(caps, 0);
+    
+    if(!g_strrstr(gst_structure_get_name(str), "audio")) {
+        gst_caps_unref(caps);
+        gst_object_unref(audiopad);
+        return;
+    }
+   
+    gst_caps_unref(caps);
+    gst_pad_link(pad, audiopad);
+}
 
 static gboolean
 gst_transcoder_create_pipeline(GstTranscoder *transcoder, 
@@ -206,6 +241,8 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
     GstElement *decoder_elem;
     GstElement *encoder_elem;
     GstElement *sink_elem;
+    GstElement *conv_elem;
+    GstPad *encoder_pad;
 
     if(transcoder == NULL) {
         return FALSE;
@@ -225,40 +262,62 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
         return FALSE;
     }
     
-    transcoder->decodebin = decoder_elem;
-
+    sink_elem = gst_element_factory_make("gnomevfssink", "sink");
+    if(sink_elem == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'gnomevfssink' plugin"), NULL);
+        return FALSE;
+    }
+    
+    transcoder->sink_bin = gst_bin_new("sinkbin");
+    if(transcoder->sink_bin == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'sinkben' plugin"), NULL);
+        return FALSE;
+    }
+    
+    conv_elem = gst_element_factory_make("audioconvert", "audioconvert");
+    if(conv_elem == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not create 'audioconvert' plugin"), NULL);
+        return FALSE;
+    }
+    
     encoder_elem = gst_transcoder_build_encoder(encoder_pipeline);
     if(encoder_elem == NULL) {
          gst_transcoder_raise_error(transcoder, _("Could not create encoding pipeline"), encoder_pipeline);
          return FALSE;
     }
 
-    sink_elem = gst_element_factory_make("gnomevfssink", "sink");
-    if(sink_elem == NULL) {
-        gst_transcoder_raise_error(transcoder, _("Could not create 'filesink' plugin"), NULL);
+    encoder_pad = gst_element_get_pad(conv_elem, "sink");
+    if(encoder_pad == NULL) {
+        gst_transcoder_raise_error(transcoder, _("Could not get sink pad from encoder"), NULL);
         return FALSE;
     }
+    
+    gst_bin_add_many(GST_BIN(transcoder->sink_bin), conv_elem, encoder_elem, sink_elem, NULL);
+    gst_element_link_many(conv_elem, encoder_elem, sink_elem, NULL);
+    
+    gst_element_add_pad(transcoder->sink_bin, gst_ghost_pad_new("sink", encoder_pad));
+    gst_object_unref(encoder_pad);
     
     g_signal_connect(G_OBJECT(sink_elem), "allow-overwrite",
         G_CALLBACK(gst_transcoder_gvfs_allow_overwrite_cb), transcoder);
     
-    gst_bin_add_many(GST_BIN(transcoder->pipeline), 
-        source_elem, 
-        decoder_elem, 
-        encoder_elem, 
-        sink_elem, NULL);
-    
-    gst_element_link_many(source_elem,
-        decoder_elem,
-        encoder_elem, 
-        sink_elem, NULL);
+    gst_bin_add_many(GST_BIN(transcoder->pipeline), source_elem, decoder_elem, 
+        transcoder->sink_bin, NULL);
+        
+    gst_element_link(source_elem, decoder_elem);
 
     g_object_set(source_elem, "location", input_file, NULL);
     g_object_set(sink_elem, "location", output_file, NULL);
 
+    g_signal_connect(decoder_elem, "new-decoded-pad", 
+        G_CALLBACK(gst_transcoder_new_decoded_pad), transcoder);
+
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(transcoder->pipeline)), 
         gst_transcoder_bus_callback, transcoder);
         
+    transcoder->decodebin = decoder_elem;
+    transcoder->sink_elem = sink_elem;
+    
     return TRUE;
 }
 
@@ -274,11 +333,14 @@ gst_transcoder_new()
     transcoder = g_new0(GstTranscoder, 1);
     transcoder->is_transcoding = FALSE;
     transcoder->pipeline = NULL;
+    transcoder->sink_bin = NULL;
     transcoder->decodebin = NULL;
+    transcoder->sink_elem = NULL;
     transcoder->output_uri = NULL;
     transcoder->progress_cb = NULL;
     transcoder->error_cb = NULL;
     transcoder->finished_cb = NULL;
+    transcoder->iterate_timeout_id = 0;
     
     return transcoder;
 }
