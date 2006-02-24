@@ -52,7 +52,6 @@ banshee_sources = \
 	BurnCore.cs \
 	BurnTransaction.cs \
 	RatingRenderer.cs \
-	RipTransaction.cs \
 	ExceptionDialog.cs \
 	VersionInformationDialog.cs \
 	LogCoreViewer.cs \

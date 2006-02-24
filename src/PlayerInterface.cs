@@ -1877,7 +1877,7 @@ namespace Banshee
                 playlistView.Selection.SelectPath(path);
         }
      
-        private void OnRipTransactionTrackRipped(object o, HaveTrackInfoArgs args)
+        private void OnAudioCdRipperTrackRipped(object o, HaveTrackInfoArgs args)
         {
             if(SourceManager.ActiveSource is LibrarySource) {
                 ThreadAssist.ProxyToMain(delegate {
@@ -2124,12 +2124,12 @@ namespace Banshee
             }
             
             if(list.Count > 0) {
-                RipTransaction trans = new RipTransaction();
-                trans.HaveTrackInfo += OnRipTransactionTrackRipped;
+                AudioCdRipper ripper = new AudioCdRipper();
+                ripper.HaveTrackInfo += OnAudioCdRipperTrackRipped;
                 foreach(AudioCdTrackInfo track in list) {
-                    trans.QueueTrack(track);
+                    ripper.QueueTrack(track);
                 }
-                trans.Run();
+                ripper.Start();
             } else {
                 HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
                     MessageType.Info, ButtonsType.Ok, 

@@ -104,11 +104,9 @@ if test ! -x "$MONO"; then
 	AC_MSG_ERROR([No Mono runtime found])
 fi
 
-if test "x$internal_mcs" = "xno"; then
-	CS="C#"
-	if test ! -x "$MCS"; then
-		AC_MSG_ERROR([No $CS compiler found])
-	fi
+CS="C#"
+if test ! -x "$MCS"; then
+	AC_MSG_ERROR([No $CS compiler found])
 fi
 
 AC_SUBST(MCS)
@@ -185,7 +183,16 @@ dnl avahi-sharp for DAAP
 AC_ARG_ENABLE(mdnsd, AC_HELP_STRING([--enable-mdnsd], [Use mDNSResponder instead of Avahi for DAAP]), enable_mdnsd="yes", enable_mdnsd="no")
 AM_CONDITIONAL(ENABLE_MDNSD, test "x$enable_mdnsd" = "yes")
 
+AC_ARG_ENABLE(avahi, AC_HELP_STRING([--enable-avahi], [Use Avahi for DAAP]), enable_avahi="yes", enable_avahi="no")
+
 if test "x$enable_daap" = "xyes"; then 
+	if test "x$enable_avahi" = "xno"; then
+		AC_PATH_PROG(MDNSRESPONDER, mdnsd, no, /sbin:/usr/sbin:/usr/bin)
+		if test ! "x$MDNSRESPONDER" = "xno"; then
+			enable_mdnsd="yes"
+		fi
+	fi
+
 	if test "x$enable_mdnsd" = "xyes"; then
 		DAAPSHARP_FLAGS="-define:ENABLE_MDNSD"
 		AC_SUBST(DAAPSHARP_FLAGS)

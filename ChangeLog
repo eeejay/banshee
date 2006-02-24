@@ -1,3 +1,32 @@
+2006-02-24  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Automatically detect mDNSResponder; Added an explicit
+	--enable-avahi option to override mDNSResponder detection in case a 
+	system has both Zeroconf services (which is not recommended); 
+	--enable-mdnsd can be used to force enable mDNSResponder as well
+
+	* libbanshee/gst-cd-rip-0.10.c:
+	* libbanshee/gst-cd-rip-0.8.c:
+	* libbanshee/gst-cd-rip.h:
+	* libbanshee/gst-playback-0.10.c: Renamed API from cd_rip_*/CdRip* 
+	to gst_cd_ripper_*/GstCdRipper*
+
+	* src/RipTransaction.cs:
+	* src/Makefile.am: Moved RipTranscation.cs to 
+	Banshee.Base/AudioCdRipper.cs
+	
+	* src/PlayerInterface.cs: Updated to reflect API renaming of
+	RipTransaction->AudioCdRipper
+
+	* src/Banshee.Base/AudioCdRipper.cs: Moved pieces around so threading
+	is handled inside the track ripper instead of the batch wrapper to
+	prepare managed layer for GStreamer 0.10, which handles threading
+	magically; update P/Invoke calls to new gst_cd_ripper_* API
+
+	* src/Banshee.Base/Makefile.am: Added AudioCdRipper.cs
+	
 2006-02-23  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-playback-0.10.c: fix minor duration calculation bug;

@@ -32,7 +32,7 @@
 
 #include <gst/gst.h>
 
-typedef void (* CdRipProgressCallback) (gpointer ripper, gint seconds, 
+typedef void (* GstCdRipperProgressCallback) (gpointer ripper, gint seconds, 
     gpointer user_info);
 
 typedef struct {
@@ -54,17 +54,17 @@ typedef struct {
     GstFormat track_format;
     GstPad *source_pad;
     
-    CdRipProgressCallback progress_callback;
-} CdRip;
+    GstCdRipperProgressCallback progress_callback;
+} GstCdRipper;
 
-CdRip *cd_rip_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline);
-void cd_rip_free(CdRip *ripper);
-gboolean cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number, 
+GstCdRipper *gst_cd_ripper_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline);
+void gst_cd_ripper_free(GstCdRipper *ripper);
+gboolean gst_cd_ripper_rip_track(GstCdRipper *ripper, gchar *uri, gint track_number, 
     gchar *md_artist, gchar *md_album, gchar *md_title, gchar *md_genre,
     gint md_track_number, gint md_track_count, gpointer user_info);
-void cd_rip_set_progress_callback(CdRip *ripper, CdRipProgressCallback cb);
-void cd_rip_cancel(CdRip *ripper);
-gchar *cd_rip_get_error(CdRip *ripper);
+void gst_cd_ripper_set_progress_callback(GstCdRipper *ripper, GstCdRipperProgressCallback cb);
+void gst_cd_ripper_cancel(GstCdRipper *ripper);
+gchar *gst_cd_ripper_get_error(GstCdRipper *ripper);
 
 #endif /* CD_RIP_H */
 

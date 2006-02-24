@@ -46,9 +46,8 @@
 #include "gst-cd-rip.h"
 #include "gst-misc.h"
 
-
 static GstElement *
-cd_rip_build_encoder(CdRip *ripper)
+gst_cd_ripper_build_encoder(GstCdRipper *ripper)
 {
     GstElement *encoder = NULL;
     gchar *pipeline;
@@ -61,21 +60,21 @@ cd_rip_build_encoder(CdRip *ripper)
 }    
 
 static gboolean
-cd_rip_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
+gst_cd_ripper_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
     gpointer user_data)
 {
     return TRUE;
 }
 
 static void 
-cd_rip_gst_error_cb(GstElement *elem, GstElement *arg1, GError *error, 
-    gchar *str, CdRip *ripper)
+gst_cd_ripper_gst_error_cb(GstElement *elem, GstElement *arg1, GError *error, 
+    gchar *str, GstCdRipper *ripper)
 {
     ripper->error = g_strdup(str);
 }
 
 gboolean
-cd_rip_build_pipeline(CdRip *ripper)
+gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
 {
     if(ripper == NULL)
         return FALSE;
@@ -87,7 +86,7 @@ cd_rip_build_pipeline(CdRip *ripper)
     }
 
     g_signal_connect(G_OBJECT(ripper->pipeline), "error", 
-        G_CALLBACK(cd_rip_gst_error_cb), ripper);
+        G_CALLBACK(gst_cd_ripper_gst_error_cb), ripper);
 
     ripper->cdparanoia = gst_element_factory_make("cdparanoia", "cdparanoia");
     if(ripper->cdparanoia == NULL) {
@@ -102,7 +101,7 @@ cd_rip_build_pipeline(CdRip *ripper)
     ripper->track_format = gst_format_get_by_nick("track");
     ripper->source_pad = gst_element_get_pad(ripper->cdparanoia, "src");
     
-    ripper->encoder = cd_rip_build_encoder(ripper);
+    ripper->encoder = gst_cd_ripper_build_encoder(ripper);
     if(ripper->encoder == NULL) {
         ripper->error = g_strdup(_("Could not create encoder pipeline"));
         return FALSE;
@@ -115,7 +114,7 @@ cd_rip_build_pipeline(CdRip *ripper)
     }
     
     g_signal_connect(G_OBJECT(ripper->filesink), "allow-overwrite",
-        G_CALLBACK(cd_rip_gvfs_allow_overwrite_cb), ripper);
+        G_CALLBACK(gst_cd_ripper_gvfs_allow_overwrite_cb), ripper);
     
     gst_bin_add_many(GST_BIN(ripper->pipeline),
         ripper->cdparanoia,
@@ -134,10 +133,10 @@ cd_rip_build_pipeline(CdRip *ripper)
 
 /* Public Methods */
 
-CdRip *
-cd_rip_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
+GstCdRipper *
+gst_cd_ripper_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
 {
-    CdRip *ripper = g_new0(CdRip, 1);
+    GstCdRipper *ripper = g_new0(GstCdRipper, 1);
     
     if(ripper == NULL)
         return NULL;
@@ -166,7 +165,7 @@ cd_rip_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
 }
 
 void
-cd_rip_free(CdRip *ripper)
+gst_cd_ripper_free(GstCdRipper *ripper)
 {
     if(ripper == NULL)
         return;
@@ -178,7 +177,7 @@ cd_rip_free(CdRip *ripper)
 }
 
 gboolean
-cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number, 
+gst_cd_ripper_rip_track(GstCdRipper *ripper, gchar *uri, gint track_number, 
     gchar *md_artist, gchar *md_album, gchar *md_title, gchar *md_genre,
     gint md_track_number, gint md_track_count, gpointer user_info)
 {
@@ -201,7 +200,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
     
     ripper->cancel = FALSE;
         
-    if(!cd_rip_build_pipeline(ripper))
+    if(!gst_cd_ripper_build_pipeline(ripper))
         return FALSE;
 
     gst_element_set_state(ripper->filesink, GST_STATE_NULL);
@@ -302,7 +301,7 @@ cd_rip_rip_track(CdRip *ripper, gchar *uri, gint track_number,
 }
 
 void
-cd_rip_set_progress_callback(CdRip *ripper, CdRipProgressCallback cb)
+gst_cd_ripper_set_progress_callback(GstCdRipper *ripper, GstCdRipperProgressCallback cb)
 {
     if(ripper == NULL)
         return;
@@ -311,7 +310,7 @@ cd_rip_set_progress_callback(CdRip *ripper, CdRipProgressCallback cb)
 }
 
 void
-cd_rip_cancel(CdRip *ripper)
+gst_cd_ripper_cancel(GstCdRipper *ripper)
 {
     if(ripper == NULL)
         return;
@@ -320,7 +319,7 @@ cd_rip_cancel(CdRip *ripper)
 }
 
 gchar *
-cd_rip_get_error(CdRip *ripper)
+gst_cd_ripper_get_error(GstCdRipper *ripper)
 {
     if(ripper == NULL)
         return NULL;
