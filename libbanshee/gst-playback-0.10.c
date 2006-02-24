@@ -277,7 +277,7 @@ gst_playback_get_duration(GstPlayback *engine)
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), 0);
 
     if(gst_element_query_duration(engine->playbin, &format, &duration)) {
-        return format / 1000000;
+        return duration / 1000000;
     }
     
     return 0;

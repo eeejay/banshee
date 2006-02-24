@@ -1,5 +1,10 @@
 2006-02-23  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-playback-0.10.c: fix minor duration calculation bug;
+	fixes audioscrobbler reporting and last-played update (slomo)
+
+2006-02-23  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-transcode-0.10.c: Fixed progress reporting by
 	doing a duration query on the pipeline bin and a position query
 	directly on audioconvert element
