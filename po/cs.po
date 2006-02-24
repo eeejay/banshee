@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:347
 #: ../src/PlayerInterface.cs:1463
@@ -193,7 +193,7 @@ msgstr ""
 
 #: ../data/banshee.glade.h:3
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Výchozí umístění adresáře s muzikou pro aplikaci Banshee</b>"
+msgstr "<b>Výchozí adresáře s hudbou pro Banshee</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>CD Burning</b>"
@@ -531,7 +531,7 @@ msgstr ""
 
 #: ../src/AboutBox.cs:68
 msgid "Music Management and Playback for Gnome."
-msgstr "Správa a přehrávání muziky pro prostředí Gnome"
+msgstr "Správa a přehrávání hudby pro prostředí Gnome."
 
 #: ../src/AboutBox.cs:144
 msgid "Banshee Wiki"
@@ -870,7 +870,7 @@ msgstr ""
 
 #: ../src/PlayerInterface.cs:558
 msgid "Import Music"
-msgstr "Import muziky"
+msgstr "Import hudby"
 
 #: ../src/PlayerInterface.cs:559
 msgid ""
@@ -880,7 +880,7 @@ msgid ""
 "Automatic import or importing a large folder may take a long time, so please "
 "be patient."
 msgstr ""
-"Vaše knihovna s muzikou je prázdná. Můžete ji importovat nyní, nebo později.\n"
+"Vaše knihovna s hudbou je prázdná. Můžete ji importovat nyní, nebo později.\n"
 "\n"
 "Automatický import nebo importování velkého adresáře může trvat delší dobu, buďte trpělivý prosím."
 
@@ -1313,7 +1313,7 @@ msgstr "Verze"
 
 #: ../src/Banshee.Base/ActionManager.cs:61
 msgid "_Music"
-msgstr "_Muzika"
+msgstr "H_udba"
 
 #: ../src/Banshee.Base/ActionManager.cs:65
 msgid "Create a new empty playlist"
