@@ -52,7 +52,7 @@ namespace Banshee.Plugins.Daap
             get {
                 return new string [] { 
                     "Aaron Bockover",
-                    "James Wilcox"
+                    "James Willcox"
                 };
             }
         }
