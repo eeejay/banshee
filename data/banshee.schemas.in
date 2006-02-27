@@ -138,21 +138,21 @@
       <applyto>/apps/Banshee/PlaylistColumns/Album/Width</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>700</default>
+      <default>145</default>
       <locale name="C">
         <short>Width of Album Column.</short>
         <long>Width of Album Column.</long>
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/PlaylistColumns/Album/Width</key>
-      <applyto>/apps/Banshee/PlaylistColumns/Album/Width</applyto>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Album/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Album/Visible</applyto>
       <owner>banshee</owner>
-      <type>int</type>
-      <default>145</default>
+      <type>bool</type>
+      <default>true</default>
       <locale name="C">
-        <short>Width of Album Column.</short>
-        <long>Width of Album Column.</long>
+        <short>Visibility of Album Column.</short>
+        <long>Visibility of Album Column.</long>
       </locale>
     </schema>
     <schema>
@@ -164,6 +164,17 @@
       <locale name="C">
         <short>Width of Artist Column.</short>
         <long>Width of Artist Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Artist/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Artist/Visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Visibility of Artist Column.</short>
+        <long>Visibility of Artist Column.</long>
       </locale>
     </schema>
     <schema>
@@ -211,6 +222,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Time/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Time/Visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Visibility of Time Column.</short>
+        <long>Visibility of Time Column.</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/PlaylistColumns/Title/Width</key>
       <applyto>/apps/Banshee/PlaylistColumns/Title/Width</applyto>
       <owner>banshee</owner>
@@ -219,6 +241,17 @@
       <locale name="C">
         <short>Width of Title Column.</short>
         <long>Width of Title Column.</long>
+      </locale>
+    </schema>
+        <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Title/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Title/Visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Visibility of Title Column.</short>
+        <long>Visibility of Title Column.</long>
       </locale>
     </schema>
     <schema>
@@ -230,6 +263,17 @@
       <locale name="C">
         <short>Width of Track Column.</short>
         <long>Width of Track Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Track/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Track/Visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Visibility of Track Column.</short>
+        <long>Visibility of Track Column.</long>
       </locale>
     </schema>
     <schema>

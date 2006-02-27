@@ -1,3 +1,8 @@
+2006-02-27  Aaron Bockover  <aaron@abock.org>
+
+	* data/banshee.schemas.in: Added schemas for default column visibility
+	settings; fixes BNC #153153
+
 2006-02-24  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Updated MonoDevelop project
