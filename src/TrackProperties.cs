@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  TrackProperties.cs
  *
@@ -44,6 +43,7 @@ namespace Banshee
         public string Artist;
         public string Album;
         public string Title;
+        public string Genre;
         public Uri Uri;
     
         public uint TrackNumber;
@@ -60,6 +60,7 @@ namespace Banshee
             Artist = track.Artist;
             Album = track.Album;
             Title = track.Title;
+            Genre = track.Genre;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
             Uri = track.Uri;
@@ -70,6 +71,7 @@ namespace Banshee
             track.Artist = Artist;
             track.Album = Album;
             track.Title = Title;
+            track.Genre = Genre;
             track.TrackNumber = TrackNumber;
             track.TrackCount = TrackCount;
             track.Uri = Uri;
@@ -97,11 +99,14 @@ namespace Banshee
         [Widget] private Button AlbumSync;
         [Widget] private Button TitleSync;
         [Widget] private Label TitleLabel;
+        [Widget] private Button GenreSync;
+        [Widget] private Label GenreLabel;
         [Widget] private SpinButton TrackCount;
         [Widget] private SpinButton TrackNumber;
         [Widget] private Entry Artist;
         [Widget] private Entry Album;
         [Widget] private Entry Title;
+        [Widget] private ComboBoxEntry Genre;
         [Widget] private Container EditorContainer;
         [Widget] private Expander AdvancedExpander;
         [Widget] private Label Uri;
@@ -149,11 +154,21 @@ namespace Banshee
             ArtistSync.Clicked += OnArtistSyncClicked;
             AlbumSync.Clicked += OnAlbumSyncClicked;
             TitleSync.Clicked += OnTitleSyncClicked;
+            GenreSync.Clicked += OnGenreSyncClicked;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
             Title.Changed += OnValueEdited;
-                
+            Genre.Entry.Changed += OnValueEdited;
+            ListStore genre_model = new ListStore(typeof(string));
+
+            Genre.Model = genre_model;
+            Genre.TextColumn = 0;
+            
+            foreach(string genre in Globals.Library.GetGenreList()) {
+                genre_model.AppendValues(genre);            
+            }
+            
             Next.Visible = TrackSet.Count > 1;
             Previous.Visible = TrackSet.Count > 1;
                 
@@ -164,6 +179,7 @@ namespace Banshee
             ArtistSync.Visible = TrackSet.Count > 1;
             AlbumSync.Visible = TrackSet.Count > 1;
             TitleSync.Visible = TrackSet.Count > 1;
+            GenreSync.Visible = TrackSet.Count > 1;
             
             tips.SetTip(TrackNumberSync, Catalog.GetString("Set all Track Numbers to this value"), "track numbers");
             tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically Set All Track Numbers"), "track iterator");
@@ -171,6 +187,7 @@ namespace Banshee
             tips.SetTip(ArtistSync, Catalog.GetString("Set all Artists to this value"), "artists");
             tips.SetTip(AlbumSync, Catalog.GetString("Set all Albums to this value"), "albums");
             tips.SetTip(TitleSync, Catalog.GetString("Set all Titles to this value"), "titles");
+            tips.SetTip(GenreSync, Catalog.GetString("Set all Genres to this value"), "genres");
                 
             LoadTrack(0);
             
@@ -208,6 +225,7 @@ namespace Banshee
             (glade["Artist"] as Entry).Text = track.Artist;
             (glade["Album"] as Entry).Text = track.Album;
             (glade["Title"] as Entry).Text = track.Title;
+            (glade["Genre"] as ComboBoxEntry).Entry.Text = track.Genre;
             
             (glade["DurationLabel"] as Label).Markup = PrepareStatistic(String.Format("{0}:{1}", 
                 track.Track.Duration.Minutes, (track.Track.Duration.Seconds).ToString("00")));
@@ -321,6 +339,13 @@ namespace Banshee
             }
         }
         
+        private void OnGenreSyncClicked(object o, EventArgs args)
+        {
+            foreach(EditorTrack track in TrackSet) {
+                track.Genre = Genre.Entry.Text;
+            }
+        }
+        
         private EditorTrack UpdateCurrent()
         {
             if(currentIndex < 0 || currentIndex >= TrackSet.Count) {
@@ -334,6 +359,7 @@ namespace Banshee
             track.Artist = Artist.Text;
             track.Album = Album.Text;
             track.Title = Title.Text;
+            track.Genre = Genre.Entry.Text;
             
             return track;
         }

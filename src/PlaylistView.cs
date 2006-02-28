@@ -56,6 +56,7 @@ namespace Banshee
             Artist,
             Title,
             Album,
+            Genre,
             Time,
             Rating,
             PlayCount,
@@ -92,28 +93,31 @@ namespace Banshee
             columns.Add(new PlaylistColumn(this, Catalog.GetString("Album"), "Album", 
                 new TreeCellDataFunc(TrackCellAlbum), new CellRendererText(),
                 3, (int)ColumnId.Album));
+            columns.Add(new PlaylistColumn(this, Catalog.GetString("Genre"), "Genre", 
+                new TreeCellDataFunc(TrackCellGenre), new CellRendererText(),
+                4, (int)ColumnId.Genre));
             columns.Add(new PlaylistColumn(this, Catalog.GetString("Time"), "Time", 
                 new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
-                4, (int)ColumnId.Time));
+                5, (int)ColumnId.Time));
             
             RatingColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Rating"), "Rating",
                 new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
-                5, (int)ColumnId.Rating);
+                6, (int)ColumnId.Rating);
             columns.Add(RatingColumn);
             
             PlaysColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Plays"), "Plays",
                 new TreeCellDataFunc(TrackCellPlayCount), 
                 new CellRendererText(),
-                6, (int)ColumnId.PlayCount);
+                7, (int)ColumnId.PlayCount);
             columns.Add(PlaysColumn);
             
             LastPlayedColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Last Played"), "Last-Played",
                 new TreeCellDataFunc(TrackCellLastPlayed), 
                 new CellRendererText(),
-                7, (int)ColumnId.LastPlayed);
+                8, (int)ColumnId.LastPlayed);
             columns.Add(LastPlayedColumn);
             
             foreach(PlaylistColumn plcol in columns) {
@@ -177,6 +181,8 @@ namespace Banshee
                 new TreeIterCompareFunc(TitleTreeIterCompareFunc));
             model.SetSortFunc((int)ColumnId.Album, 
                 new TreeIterCompareFunc(AlbumTreeIterCompareFunc));
+            model.SetSortFunc((int)ColumnId.Genre, 
+                new TreeIterCompareFunc(GenreTreeIterCompareFunc));
             model.SetSortFunc((int)ColumnId.Time, 
                 new TreeIterCompareFunc(TimeTreeIterCompareFunc));
             model.SetSortFunc((int)ColumnId.Rating, 
@@ -253,6 +259,13 @@ namespace Banshee
                 return v;
 
             return TrackTreeIterCompareFunc (_model, a, b);
+        }
+        
+        public int GenreTreeIterCompareFunc(TreeModel _model, TreeIter a,
+            TreeIter b)
+        {
+            return StringFieldCompare(model.IterTrackInfo(a).Genre, 
+                model.IterTrackInfo(b).Genre);
         }
         
         public int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a,
@@ -402,6 +415,17 @@ namespace Banshee
             }
             
             SetRendererAttributes((CellRendererText)cell, ti.Album, iter);
+        }
+        
+        protected void TrackCellGenre(TreeViewColumn tree_column,
+            CellRenderer cell, TreeModel tree_model, TreeIter iter)
+        {
+            TrackInfo ti = model.IterTrackInfo(iter);
+            if(ti == null) {
+                return;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, ti.Genre, iter);
         }
         
         protected void TrackCellTime(TreeViewColumn tree_column,

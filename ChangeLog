@@ -1,5 +1,25 @@
 2006-02-27  Aaron Bockover  <aaron@abock.org>
 
+	Commit based on Oscar Forero's  <oforero@novell.com> Genre support patch
+
+	* data/banshee.glade: Add input/dropdown for editing genre field
+
+	* src/AboutBox.cs: Added Oscar
+
+	* src/PlayerInterface.cs: Allow filtering by genre in search
+
+	* src/PlaylistView.cs:
+	* src/PlaylistColumns.cs: Added genre column support
+
+	* src/TrackProperties.cs: Connect and fill the genre dropdown
+
+	* src/Banshee.Base/Library.cs (GetGenreList): Return a list of genres
+	that exist in the database
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: If genre is unkown, then unset it
+
+2006-02-27  Aaron Bockover  <aaron@abock.org>
+
 	* data/banshee.schemas.in: Added schemas for default column visibility
 	settings; fixes BNC #153153
 

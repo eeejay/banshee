@@ -421,6 +421,7 @@ namespace Banshee
             fields.Add(Catalog.GetString("Song Name"));
             fields.Add(Catalog.GetString("Artist Name"));
             fields.Add(Catalog.GetString("Album Title"));
+            fields.Add(Catalog.GetString("Genre"));
             
             searchEntry = new SearchEntry(fields);
             searchEntry.EnterPress += delegate(object o, EventArgs args) {
@@ -1488,11 +1489,14 @@ namespace Banshee
                 match = ti.Title;
             } else if(field == Catalog.GetString("Album Title")) {
                 match = ti.Album;
+            } else if(field == Catalog.GetString("Genre")) {
+                match = ti.Genre;
             } else {
                 string [] matches = {
                     ti.Artist,
                     ti.Album,
-                    ti.Title
+                    ti.Title,
+                    ti.Genre
                 };
 
                 foreach(string m in matches) {

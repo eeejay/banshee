@@ -146,6 +146,8 @@ namespace Banshee
             SetPosition(WindowPosition.Center);
             TypeHint = Gdk.WindowTypeHint.Utility;
             Resizable = false;
+            
+            IconThemeUtils.SetWindowIcon(this);
         
             VBox vbox = new VBox();
             vbox.Spacing = 10;

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  Library.cs
  *
@@ -105,6 +104,15 @@ namespace Banshee.Base
             ThreadAssist.Spawn(ReloadLibraryThread);
         }
         
+        public IEnumerable GetGenreList() 
+        {
+            IDataReader reader = Db.Query("SELECT DISTINCT Genre FROM Tracks ORDER BY Genre");
+            while(reader.Read()) {
+                yield return reader["Genre"];
+            }
+            reader.Dispose();
+        }
+
         private void ReloadLibraryThread()
         {
             Tracks.Clear();
@@ -119,6 +127,8 @@ namespace Banshee.Base
                         (reader["Uri"] as string) + ": " + e.Message, false);
                 }
             }
+            
+            reader.Dispose();
             
             is_loaded = true;
             

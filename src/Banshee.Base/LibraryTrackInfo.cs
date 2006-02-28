@@ -386,6 +386,10 @@ namespace Banshee.Base
             genre = reader["Genre"] as string;
             asin = reader["ASIN"] as string;
             
+            if(genre == "Unknown") {
+                genre = String.Empty;
+            }
+            
             year = Convert.ToInt32(reader["Year"]);
             track_number = Convert.ToUInt32(reader["TrackNumber"]);
             track_count = Convert.ToUInt32(reader["TrackCount"]);

@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  AboutBox.cs
  *
@@ -51,7 +50,8 @@ namespace Banshee
             "Chris Toshok",
             "Jeff Tickle",
             "Ruben Vermeersch",
-            "Fredrik Hedberg"
+            "Fredrik Hedberg",
+            "Oscar Forero"
         };
         
         private static string [] artists = {
