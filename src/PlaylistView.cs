@@ -351,15 +351,16 @@ namespace Banshee
         protected void TrackCellInd(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
-            CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
-            TrackInfo ti = model.IterTrackInfo(iter);
-            if(ti == null) {
-                return;
+            TrackInfo ti = tree_model.GetValue(iter, 0) as TrackInfo;
+            if((ti != null) && (PlayerEngineCore.ActivePlayer.Track != null)) {
+                CellRendererPixbuf renderer = (CellRendererPixbuf) cell;
+                if(PlayerEngineCore.ActivePlayer.Track.Equals(ti)) {
+                    renderer.Pixbuf = nowPlayingPixbuf;
+                    model.PlayingIter = iter;
+                } else {
+                    renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
+                }
             }
-            
-            renderer.Pixbuf = iter.Equals(model.PlayingIter)
-                ? nowPlayingPixbuf
-                : (ti.CanPlay ? null : songDrmedPixbuf);
         }
         
         protected void RipCellInd(TreeViewColumn tree_column, CellRenderer cell, 
@@ -493,7 +494,6 @@ namespace Banshee
         
         public void UpdateView()
         {
-            model.SyncPlayingIter();
             QueueDraw();
             ScrollToPlaying();
         }

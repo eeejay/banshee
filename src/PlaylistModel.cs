@@ -74,28 +74,7 @@ namespace Banshee
             };
         }
     
-        public void SyncPlayingIter()
-        {
-            if(PlayerEngineCore.ActivePlayer.Track == null) {
-                playingIter = TreeIter.Zero;
-            } else {
-                for(int i = 0, n = Count(); i < n; i++) {
-                    TreeIter iter;
-                    if(!IterNthChild(out iter, i))
-                        continue;
-                        
-                    TrackInfo ti = IterTrackInfo(iter);
-                    
-                    if(PlayerEngineCore.ActivePlayer.Track.Equals(ti)) {
-                        playingIter = iter;
-                        break;
-                    }
-                }
-            }
-        }
-    
         // --- Load Queue and Additions ---
-    
         private bool OnIdle()
         {
             QueueSync();
@@ -114,7 +93,7 @@ namespace Banshee
 
             trackInfoQueue.Clear();
             trackInfoQueueLocked = false;
-            SyncPlayingIter();
+            //SyncPlayingIter();
             
             return;
         }
@@ -134,6 +113,7 @@ namespace Banshee
         {
             AddTrack(ti, true);
         }
+
         
         public void AddTrack(TrackInfo ti, bool raiseUpdate)
         {
@@ -155,8 +135,6 @@ namespace Banshee
             foreach(TrackInfo track in SourceManager.ActiveSource.Tracks) {
                 AddTrack(track);
             }
-            
-            SyncPlayingIter();
         }
 
         // --- Helper Methods ---
@@ -418,8 +396,11 @@ namespace Banshee
             }
         }
         
-        public TreeIter PlayingIter
-        {
+        public TreeIter PlayingIter {
+            set {
+                playingIter = value;
+            }
+
             get {
                 return playingIter;
             }

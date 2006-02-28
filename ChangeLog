@@ -1,5 +1,11 @@
 2006-02-28  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlaylistModel.cs: 
+	* src/PlaylistView.cs: Remove the need for SyncPlayingIter; big 
+	performance increase (Oscar Forero)
+
+2006-02-28  Aaron Bockover  <aaron@abock.org>
+
 	* src/banshee.in: Set MONO_EXTERNAL_ENCODINGS=UTF8:Latin1
 
 2006-02-27  Aaron Bockover  <aaron@abock.org>
