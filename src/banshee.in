@@ -14,5 +14,5 @@ if [ "x$1" = "x--debug" ]; then
 	echo "** Running Banshee in Debug Mode **"
 fi
 
-exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
+MONO_EXTERNAL_ENCODINGS=UTF8:Latin1 exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
 

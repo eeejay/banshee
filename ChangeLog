@@ -1,3 +1,7 @@
+2006-02-28  Aaron Bockover  <aaron@abock.org>
+
+	* src/banshee.in: Set MONO_EXTERNAL_ENCODINGS=UTF8:Latin1
+
 2006-02-27  Aaron Bockover  <aaron@abock.org>
 
 	Commit based on Oscar Forero's  <oforero@novell.com> Genre support patch
