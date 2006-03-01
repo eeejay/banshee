@@ -1,3 +1,10 @@
+2006-03-01  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-cd-rip-0.10.c: Implemented the 0.10 CD ripping backend
+
+	* src/Banshee.Base/AudioCdRipper.cs: Support both the 0.8 and 0.10 
+	backends and better error reporting with 0.10
+
 2006-02-28  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlaylistModel.cs: 

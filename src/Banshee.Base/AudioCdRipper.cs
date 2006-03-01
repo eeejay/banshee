@@ -57,14 +57,26 @@ namespace Banshee.Base
 
     public class AudioCdTrackRipper : IDisposable
     {
-        private delegate void CdRipProgressCallback(IntPtr ripper, int seconds, IntPtr user_info);
-        
+        private delegate void GstCdRipperProgressCallback(IntPtr transcoder, int seconds, IntPtr user_info);
+        private delegate void GstCdRipperFinishedCallback(IntPtr transcoder);
+        private delegate void GstCdRipperErrorCallback(IntPtr transcoder, IntPtr error, IntPtr debug);
+
         private HandleRef handle;
-        private CdRipProgressCallback progress_callback;
+        private GstCdRipperProgressCallback progress_callback;
+
+#if GSTREAMER_0_10
+        private GstCdRipperFinishedCallback finished_callback;
+        private GstCdRipperErrorCallback error_callback;
+        private string error_message;
+        private Uri output_uri;
+        private int track_number;
+#endif
+
         private AudioCdTrackInfo current_track;
         
         public event AudioCdRipperProgressHandler Progress;
         public event AudioCdRipperTrackFinishedHandler TrackFinished;
+        public event EventHandler Error;
         
         public AudioCdTrackRipper(string device, int paranoiaMode, string encoderPipeline)
         {
@@ -75,8 +87,16 @@ namespace Banshee.Base
             
             handle = new HandleRef(this, ptr);
             
-            progress_callback = new CdRipProgressCallback(OnProgress);
+            progress_callback = new GstCdRipperProgressCallback(OnProgress);
             gst_cd_ripper_set_progress_callback(handle, progress_callback);
+
+#if GSTREAMER_0_10
+            finished_callback = new GstCdRipperFinishedCallback(OnFinished);
+            gst_cd_ripper_set_finished_callback(handle, finished_callback);
+            
+            error_callback = new GstCdRipperErrorCallback(OnError);
+            gst_cd_ripper_set_error_callback(handle, error_callback);
+#endif
         }
         
         public void Dispose()
@@ -86,11 +106,30 @@ namespace Banshee.Base
         
         public void RipTrack(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
         {
+#if GSTREAMER_0_10
+            error_message = null;
+            RipTrack_010(track, trackNumber, outputUri);
+#else
             ThreadAssist.Spawn(delegate {
                 RipTrack_08(track, trackNumber, outputUri);
             });
+#endif
         }
-        
+  
+#if GSTREAMER_0_10
+        private void RipTrack_010(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
+        {
+            current_track = track;
+            track_number = trackNumber;
+            output_uri = outputUri;
+            
+            gst_cd_ripper_rip_track(handle, outputUri.AbsoluteUri, trackNumber, 
+                track.Artist, track.Album, track.Title, track.Genre, 
+                (int)track.TrackNumber, (int)track.TrackCount, IntPtr.Zero);
+                
+            track = null;
+        }
+#else        
         private void RipTrack_08(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
         {
             current_track = track;
@@ -107,6 +146,7 @@ namespace Banshee.Base
             
             track = null;
         }
+#endif   
         
         private void OnTrackFinished(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
         {
@@ -125,13 +165,18 @@ namespace Banshee.Base
             gst_cd_ripper_cancel(handle);
         }
         
-        public string Error {
+        public string ErrorMessage {
             get {
+#if GSTREAMER_0_10
+                return error_message;
+#else
                 IntPtr errPtr = gst_cd_ripper_get_error(handle);
-                if(errPtr == IntPtr.Zero)
+                if(errPtr == IntPtr.Zero) {
                     return null;
+                }
                 
                 return GLib.Marshaller.Utf8PtrToString(errPtr);
+#endif
             }
         }
         
@@ -149,6 +194,29 @@ namespace Banshee.Base
             handler(this, args); 
         }
         
+#if GSTREAMER_0_10        
+        private void OnFinished(IntPtr ripper)
+        {
+            OnTrackFinished(current_track, track_number, output_uri);
+        }
+        
+        private void OnError(IntPtr ripper, IntPtr error, IntPtr debug)
+        {
+            error_message = GLib.Marshaller.Utf8PtrToString(error);
+            
+            if(debug != IntPtr.Zero) {
+                string debug_string = GLib.Marshaller.Utf8PtrToString(debug);
+                if(debug_string != null && debug_string != String.Empty) {
+                    error_message += ": " + debug_string;
+                }
+            }
+            
+            if(Error != null) {
+                Error(this, new EventArgs());
+            }
+        }
+#endif
+
         [DllImport("libbanshee")]
         private static extern IntPtr gst_cd_ripper_new(string device,
             int paranoia_mode, string encoder_pipeline);
@@ -164,8 +232,18 @@ namespace Banshee.Base
             
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_progress_callback(
-            HandleRef ripper, CdRipProgressCallback cb);
+            HandleRef ripper, GstCdRipperProgressCallback cb);
             
+#if GSTREAMER_0_10 
+        [DllImport("libbanshee")]
+        private static extern void gst_cd_ripper_set_error_callback(
+            HandleRef ripper, GstCdRipperErrorCallback cb);
+            
+        [DllImport("libbanshee")]
+        private static extern void gst_cd_ripper_set_finished_callback(
+            HandleRef ripper, GstCdRipperFinishedCallback cb);
+#endif  
+
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_cancel(HandleRef ripper);
         
@@ -236,6 +314,7 @@ namespace Banshee.Base
                 ripper = new AudioCdTrackRipper(device, 0, encodePipeline);
                 ripper.Progress += OnRipperProgress;
                 ripper.TrackFinished += OnTrackRipped;
+                ripper.Error += OnRipperError;
                 
                 timeout_id = GLib.Timeout.Add(pollDelay, OnTimeout);
                 
@@ -243,7 +322,7 @@ namespace Banshee.Base
                 
                 RipNextTrack();
             } catch(PipelineProfileException e) {
-                LogCore.Instance.PushError("Cannot Import CD", e.Message);
+                LogCore.Instance.PushError(Catalog.GetString("Cannot Import CD"), e.Message);
             }
         }
         
@@ -301,6 +380,13 @@ namespace Banshee.Base
             user_event.Dispose();
         }
         
+        private void OnRipperError(object o, EventArgs args)
+        {
+            ripper.Dispose();
+            user_event.Dispose();
+            LogCore.Instance.PushError(Catalog.GetString("Cannot Import CD"), ripper.ErrorMessage); 
+        }
+        
         private bool OnTimeout()
         {
             int diff = currentSeconds - lastPollSeconds;  
@@ -329,7 +415,10 @@ namespace Banshee.Base
         {
             if(ripper != null) {
                 ripper.Cancel();
+                ripper.Dispose();
             }
+            
+            user_event.Dispose();
         }
         
         public int QueueSize {
