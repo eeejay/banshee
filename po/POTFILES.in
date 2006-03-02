@@ -1,33 +1,24 @@
-# List of source files containing translatable strings.
-# Please keep this file in alphabetical order.
-[encoding: UTF-8]
 data/banshee.desktop.in.in
-data/banshee.schemas.in
 data/banshee.glade
+data/banshee.schemas.in
+[encoding: UTF-8]
+libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-cd-rip-0.8.c
 libbanshee/gst-playback-0.8.c
+libbanshee/gst-transcode-0.10.c
 libbanshee/gst-transcode-0.8.c
 libbanshee/hal-context.c
+# List of source files containing translatable strings.
+# Please keep this file in alphabetical order.
 src/AboutBox.cs
-src/BurnCore.cs
-src/BurnTransaction.cs
-src/Dialogs.cs
-src/ExceptionDialog.cs
-src/LogCoreViewer.cs
-src/Main.cs
-src/NotificationAreaIcon.cs
-src/PlayerInterface.cs
-src/PlaylistColumns.cs
-src/PlaylistView.cs
-src/Preferences.cs
-src/RipTransaction.cs
-src/SourceView.cs
-src/StockIcons.cs
-src/ToggleStates.cs
-src/TrackProperties.cs
-src/VersionInformationDialog.cs
 src/Banshee.Base/ActionManager.cs
-src/Banshee.Base/FileEncodeAction.cs
+src/Banshee.Base/AudioCd/AudioCdCore.cs
+src/Banshee.Base/AudioCd/AudioCdDisk.cs
+src/Banshee.Base/AudioCdRipper.cs
+src/Banshee.Base/BatchTranscoder.cs
+src/Banshee.Base/Dap/DapCore.cs
+src/Banshee.Base/Dap/Dap.cs
+src/Banshee.Base/Dap/DapPropertiesDialog.cs
 src/Banshee.Base/GstTranscoder.cs
 src/Banshee.Base/HalCore.cs
 src/Banshee.Base/ImportManager.cs
@@ -35,19 +26,14 @@ src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
-src/Banshee.Base/TrackInfo.cs
-src/Banshee.Base/TrackInfoHeader.cs
-src/Banshee.Base/Utilities.cs
-src/Banshee.Base/AudioCd/AudioCdCore.cs
-src/Banshee.Base/AudioCd/AudioCdDisk.cs
-src/Banshee.Base/Dap/Dap.cs
-src/Banshee.Base/Dap/DapCore.cs
-src/Banshee.Base/Dap/DapPropertiesDialog.cs
 src/Banshee.Base/Plugins/PluginDialog.cs
 src/Banshee.Base/Sources/DapSource.cs
 src/Banshee.Base/Sources/LibrarySource.cs
 src/Banshee.Base/Sources/LocalQueueSource.cs
 src/Banshee.Base/Sources/PlaylistSource.cs
+src/Banshee.Base/TrackInfo.cs
+src/Banshee.Base/TrackInfoHeader.cs
+src/Banshee.Base/Utilities.cs
 src/Banshee.Dap/Ipod/DatabaseRebuilder.cs
 src/Banshee.Dap/Ipod/IpodDap.cs
 src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
@@ -60,10 +46,10 @@ src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
 src/Banshee.Plugins/Daap/DaapConfigPage.cs
 src/Banshee.Plugins/Daap/DaapCore.cs
 src/Banshee.Plugins/Daap/DaapLoginDialog.cs
-src/Banshee.Plugins/Daap/DaapSource.cs
 src/Banshee.Plugins/Daap/daap.schemas.in
-src/Banshee.Plugins/FileSystemMonitor/Watcher.cs
+src/Banshee.Plugins/Daap/DaapSource.cs
 src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in
+src/Banshee.Plugins/FileSystemMonitor/Watcher.cs
 src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs
 src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs
 src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
@@ -71,3 +57,19 @@ src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs
 src/Banshee.Plugins/MMKeys/mmkeys.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
+src/BurnCore.cs
+src/BurnTransaction.cs
+src/Dialogs.cs
+src/ExceptionDialog.cs
+src/LogCoreViewer.cs
+src/Main.cs
+src/NotificationAreaIcon.cs
+src/PlayerInterface.cs
+src/PlaylistColumns.cs
+src/PlaylistView.cs
+src/Preferences.cs
+src/SourceView.cs
+src/StockIcons.cs
+src/ToggleStates.cs
+src/TrackProperties.cs
+src/VersionInformationDialog.cs
