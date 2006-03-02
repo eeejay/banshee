@@ -478,12 +478,6 @@ if test "x${enable_helix}" = "xyes"; then
 	";
 fi;
 
-if test "x${enable_gst_10}" = "xyes"; then
-	echo "";
-	echo "    ** Warning: GStreamer 0.10 backend may be incomplete  **";
-	echo "";
-fi;
-
 if test "x${enable_vlc}" = "xyes"; then
 	if test ! -e ./src/Banshee.MediaEngine/Vlc/libvlc.so; then
 		echo ""

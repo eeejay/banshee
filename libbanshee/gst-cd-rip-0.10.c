@@ -102,7 +102,7 @@ gst_cd_ripper_iterate_timeout(GstCdRipper *ripper)
     
     g_return_val_if_fail(ripper != NULL, FALSE);
 
-    gst_element_get_state(ripper->pipeline, &state, NULL, GST_CLOCK_TIME_NONE);
+    gst_element_get_state(ripper->pipeline, &state, NULL, 0);
     if(state != GST_STATE_PLAYING) {
         return TRUE;
     }

@@ -233,7 +233,10 @@ namespace Banshee.Base
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_progress_callback(
             HandleRef ripper, GstCdRipperProgressCallback cb);
-            
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_cd_ripper_cancel(HandleRef ripper);
+                    
 #if GSTREAMER_0_10 
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_error_callback(
@@ -242,13 +245,10 @@ namespace Banshee.Base
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_finished_callback(
             HandleRef ripper, GstCdRipperFinishedCallback cb);
-#endif  
-
-        [DllImport("libbanshee")]
-        private static extern void gst_cd_ripper_cancel(HandleRef ripper);
-        
+#else
         [DllImport("libbanshee")]
         private static extern IntPtr gst_cd_ripper_get_error(HandleRef ripper);
+#endif
     }
 
     public class AudioCdRipper

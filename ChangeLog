@@ -1,5 +1,15 @@
 2006-03-01  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Removed the 'GStreamer 0.10 may be incomplete' warning
+
+	* libbanshee/gst-cd-rip-0.10.c: Using CLOCK_TIME_NONE may block; 
+	__tim recommends using 0 instead
+
+	* src/Banshee.Base/AudioCdRipper.cs: #ifdef around some more stuff
+	to avoid warnings when building for 0.10
+
+2006-03-01  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-cd-rip-0.10.c: Implemented the 0.10 CD ripping backend
 
 	* src/Banshee.Base/AudioCdRipper.cs: Support both the 0.8 and 0.10 
