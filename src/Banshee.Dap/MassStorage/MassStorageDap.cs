@@ -35,83 +35,83 @@ using Banshee.Base;
 
 namespace Banshee.Dap.MassStorage
 {
-	// FIXME the codecs shouldn't be hard coded here, they should be set
-	// by looking at the hal device's accepted formats
+    // FIXME the codecs shouldn't be hard coded here, they should be set
+    // by looking at the hal device's accepted formats
     [DapProperties(DapType = DapType.Generic)]
     [SupportedCodec(CodecType.Mp3)]
     public class MassStorageDap : DapDevice
     {
-		private static Gnome.Vfs.VolumeMonitor monitor;
+        private static Gnome.Vfs.VolumeMonitor monitor;
 
-		static MassStorageDap () {
-			Gnome.Vfs.Vfs.Initialize ();
-			monitor = Gnome.Vfs.VolumeMonitor.Get ();
-		}
+        static MassStorageDap () {
+            Gnome.Vfs.Vfs.Initialize ();
+            monitor = Gnome.Vfs.VolumeMonitor.Get ();
+        }
 
-		protected Hal.Device usb_device = null;
-		protected Hal.Device player_device = null;
-		protected Hal.Device volume_device = null;
+        protected Hal.Device usb_device = null;
+        protected Hal.Device player_device = null;
+        protected Hal.Device volume_device = null;
 
-		protected Gnome.Vfs.Volume volume = null;
+        protected Gnome.Vfs.Volume volume = null;
 
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
             volume_device = halDevice;
 
-			try {
-				player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
-				usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
-			} catch (Exception e) {
+        try {
+            player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
+            usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
+        } catch (Exception e) {
                 return InitializeResult.Invalid;
-			}
+        }
 
-            if (player_device ["portable_audio_player.access_method"] != "storage" ||
-				!usb_device.PropertyExists("usb.vendor_id") ||
-                !usb_device.PropertyExists("usb.product_id") ||
-				!volume_device.PropertyExists("block.device") ||
-				!CheckDeviceMatches (usb_device)) {
-				Console.WriteLine ("failed in first check: {0} {1} {2} {3} {4}", 
-					player_device ["portable_audio_player.access_method"] != "storage",
-					!usb_device.PropertyExists("usb.vendor_id"),
-					!usb_device.PropertyExists("usb.product_id"),
-					!volume_device.PropertyExists("block.device"),
-					!CheckDeviceMatches (usb_device));
+        if (player_device ["portable_audio_player.access_method"] != "storage" ||
+            !usb_device.PropertyExists("usb.vendor_id") ||
+            !usb_device.PropertyExists("usb.product_id") ||
+            !volume_device.PropertyExists("block.device") ||
+            !CheckDeviceMatches (usb_device)) {
+            Console.WriteLine ("failed in first check: {0} {1} {2} {3} {4}", 
+                player_device ["portable_audio_player.access_method"] != "storage",
+                !usb_device.PropertyExists("usb.vendor_id"),
+                !usb_device.PropertyExists("usb.product_id"),
+                !volume_device.PropertyExists("block.device"),
+                !CheckDeviceMatches (usb_device));
                 return InitializeResult.Invalid;
             }
 
-			if(!volume_device.GetPropertyBool("volume.is_mounted"))
+            if(!volume_device.GetPropertyBool("volume.is_mounted"))
                 return InitializeResult.WaitForPropertyChange;
 
-			string block_device = volume_device ["block_device"];
-			foreach (Gnome.Vfs.Volume vol in monitor.MountedVolumes) {
-				if (vol.DevicePath == block_device) {
-					this.volume = vol;
-					break;
-				}
-			}
+            string block_device = volume_device ["block_device"];
+            foreach (Gnome.Vfs.Volume vol in monitor.MountedVolumes) {
+                if (vol.DevicePath == block_device) {
+                    this.volume = vol;
+                    break;
+                }
+            }
 
-			if (volume == null)
+            if (volume == null)
                 return InitializeResult.Invalid;
             
-			base.Initialize(usb_device);
+            base.Initialize(usb_device);
  
             InstallProperty("Vendor", usb_device["usb.vendor"]);
 
             ReloadDatabase();
             
-			// FIXME probably should be able to cancel at some point when you can actually sync
+            // FIXME probably should be able to cancel at some point when you can actually sync
             CanCancelSave = false;
             return InitializeResult.Valid;
         }
 
-		public virtual bool CheckDeviceMatches (Hal.Device device)
-		{
-			return true;
-		}
+        public virtual bool CheckDeviceMatches (Hal.Device device)
+        {
+            return true;
+        }
         
         public override void Dispose()
         {
-			// FIXME anything else to do here?
+            // FIXME anything else to do here?
             volume = null;
             base.Dispose();
         }
@@ -120,20 +120,20 @@ namespace Banshee.Dap.MassStorage
         {
             ClearTracks (false);
 
-			string music_dir = System.IO.Path.Combine (MountPoint, MusicPath);
-			
-			ImportManager importer = new ImportManager ();
-			importer.ImportRequested += HandleImportRequested;
-			importer.QueueSource (music_dir);
-		}
+            string music_dir = System.IO.Path.Combine (MountPoint, MusicPath);
 
-		private void HandleImportRequested (object o, ImportEventArgs args)
-		{
+            ImportManager importer = new ImportManager ();
+            importer.ImportRequested += HandleImportRequested;
+            importer.QueueSource (music_dir);
+        }
+
+        private void HandleImportRequested (object o, ImportEventArgs args)
+        {
             try {
                 TrackInfo ti = new FileTrackInfo (new Uri (args.FileName));
                 args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
 
-				AddTrack (ti);
+            AddTrack (ti);
             } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
                 //Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
@@ -142,9 +142,9 @@ namespace Banshee.Dap.MassStorage
                     //args.FileName, e.GetType(), e.Message);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
-		}
+        }
 
-		// FIXME not implemented
+        // FIXME not implemented
         public override void Synchronize()
         {
             UpdateSaveProgress (
@@ -153,28 +153,28 @@ namespace Banshee.Dap.MassStorage
                 0.0);
         }
 
-		public override void Eject ()
-		{
-			volume.Eject (EjectCallback);
-
-			base.Eject ();
-		}
-
-		private void EjectCallback (bool succeeded, string error, string detailed_error)
-		{
-			Console.WriteLine ("bool succeeded = {0}, string error = {1}, string detailed_error = {2}", succeeded, error, detailed_error);
-		}
-        
-		// FIXME handle this
-		protected override TrackInfo OnTrackAdded(TrackInfo track)
+        public override void Eject ()
         {
-			return track;
-		}
-        
-		// FIXME handle this
-		protected override void OnTrackRemoved(TrackInfo track)
+            volume.Eject (EjectCallback);
+
+            base.Eject ();
+        }
+
+        private void EjectCallback (bool succeeded, string error, string detailed_error)
         {
-		}
+            Console.WriteLine ("bool succeeded = {0}, string error = {1}, string detailed_error = {2}", succeeded, error, detailed_error);
+        }
+        
+        // FIXME handle this
+        protected override TrackInfo OnTrackAdded(TrackInfo track)
+        {
+            return track;
+        }
+        
+        // FIXME handle this
+        protected override void OnTrackRemoved(TrackInfo track)
+        {
+        }
 
         public override Gdk.Pixbuf GetIcon(int size)
         {
@@ -183,46 +183,46 @@ namespace Banshee.Dap.MassStorage
             return icon == null ? base.GetIcon(size) : icon;
         }
 
-		public virtual string IconId {
-			get {
-				return null;
-			}
-		}
+        public virtual string IconId {
+            get {
+                return null;
+            }
+        }
  
         public override string Name {
             get {
                 if (volume_device.PropertyExists("volume.label"))
                     return volume_device["volume.label"];
-				
-				if (player_device.PropertyExists("info.product"))
+
+                if (player_device.PropertyExists("info.product"))
                     return player_device["info.product"];
 
-				return GenericName;
+                return GenericName;
             }
         }
         
         public override string GenericName {
             get {
-				return Catalog.GetString ("USB Audio Player");
+                return Catalog.GetString ("USB Audio Player");
             }
         }
         
         public override ulong StorageCapacity {
             get {
-				return volume_device.GetPropertyUint64 ("volume.size");
+                return volume_device.GetPropertyUint64 ("volume.size");
             }
         }
         
         public override ulong StorageUsed {
             get {
-				// FIXME this is wrong, it returns the same things as volume.size (eg capacity)
+                // FIXME this is wrong, it returns the same things as volume.size (eg capacity)
                 return (ulong) volume_device.GetPropertyInt ("volume.num_blocks") * (ulong) volume_device.GetPropertyInt ("volume.block_size");
             }
         }
         
         public override bool IsReadOnly {
             get {
-				return volume.IsReadOnly;
+                return volume.IsReadOnly;
             }
         }
         
@@ -231,19 +231,19 @@ namespace Banshee.Dap.MassStorage
                 return true;
             }
         }
-		
-		public virtual string MountPoint {
-			get {
-				return volume_device ["volume.mount_point"];
-			}
-		}
 
-		// The path relative to the mount point where music is stored
-		public virtual string MusicPath {
-			get {
-				return "";
-			}
-		}
+        public virtual string MountPoint {
+            get {
+                return volume_device ["volume.mount_point"];
+            }
+        }
+
+        // The path relative to the mount point where music is stored
+        public virtual string MusicPath {
+            get {
+                return "";
+            }
+        }
     }
 
     //[DapProperties(DapType = DapType.NonGeneric)]
