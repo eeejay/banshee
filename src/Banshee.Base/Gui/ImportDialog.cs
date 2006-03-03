@@ -47,10 +47,14 @@ namespace Banshee.Gui
         public ImportDialog(bool doNotShowAgainVisible) : base("ImportDialog")
         {
             DoNotShowAgainVisible = doNotShowAgainVisible;
+            
             PopulateSourceList();
+            
             SourceManager.SourceAdded += OnSourceAdded;
             SourceManager.SourceRemoved += OnSourceRemoved;
             SourceManager.SourceUpdated += OnSourceUpdated;
+            
+            Glade["MessageLabel"].Visible = Globals.Library.Tracks.Count == 0;
         }
         
         private void PopulateSourceList()
@@ -80,9 +84,8 @@ namespace Banshee.Gui
             
             // Find active sources that implement IImportSource
             foreach(Source source in SourceManager.Sources) {
-                try {
+                if(source is IImportSource) {
                     AddSource((IImportSource)source);
-                } catch(InvalidCastException) {
                 }
             }
             
@@ -106,31 +109,28 @@ namespace Banshee.Gui
         
         private void OnSourceAdded(SourceAddedArgs args)
         {
-           try {
+           if(args.Source is IImportSource) {
                 AddSource((IImportSource)args.Source);
-            } catch(InvalidCastException) {
-            }
+           }
         }
         
         private void OnSourceRemoved(SourceEventArgs args)
         {
-            try {
+            if(args.Source is IImportSource) {
                 TreeIter iter;
                 if(FindSourceIter(out iter, (IImportSource)args.Source)) {
                     source_model.Remove(ref iter);
                 }
-            } catch(InvalidCastException) {
             }
         }
         
         private void OnSourceUpdated(SourceEventArgs args)
         {
-            try {
+            if(args.Source is IImportSource) {
                 TreeIter iter;
                 if(FindSourceIter(out iter, (IImportSource)args.Source)) {
                     source_model.SetValue(iter, 1, args.Source.Name);
                 }
-            } catch(InvalidCastException) {
             }
         }
         

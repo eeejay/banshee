@@ -3637,7 +3637,7 @@
 	  <property name="column_spacing">16</property>
 
 	  <child>
-	    <widget class="GtkLabel" id="label65">
+	    <widget class="GtkLabel" id="MessageLabel">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">Your music library is empty. You may import new music into your library now, or choose to do so later.</property>
 	      <property name="use_underline">False</property>

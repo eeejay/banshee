@@ -1,5 +1,27 @@
 2006-03-03  Aaron Bockover  <aaron@abock.org>
 
+	* data/UIManagerLayout.xml: Removed the ImportCDAction; replaced with
+	ImportSourceAction; added ImportSourceAction to the source context menu
+
+	* data/banshee.glade: Minor UI naming changes in the Import Dialog
+
+	* src/PlayerInterface.cs: Contextually show new ImportSourceAction when
+	a IImportSource is active; implemented OnImportSourceAction to call
+	IImportSource.Import on an active IImportSource
+
+	* src/Banshee.Base/ActionManager.cs: Implemented an action for
+	ImportSourceAction
+
+	* src/Banshee.Base/Gui/ImportDialog.cs: Use dynamic typechecking for
+	IImportSource instead of handling a possible exception; only show
+	the 'your library is empty' label if the library is actually empty
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Activate the import CD
+	action on Import() to actually import the CD when the import is
+	requested by the user
+
+2006-03-03  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/UIManagerLayout.xml: Commented out import folder/files and

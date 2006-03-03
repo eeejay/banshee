@@ -68,6 +68,7 @@ namespace Banshee.Sources
         public void Import()
         {
             SourceManager.SetActiveSource(this);
+            Globals.ActionManager["ImportCDAction"].Activate();
         }
         
         private void OnDiskUpdated(object o, EventArgs args)

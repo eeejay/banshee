@@ -7,7 +7,7 @@
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <placeholder name="MusicMenuAdditions" />
             <separator />
-            <menuitem name="ImportCD" action="ImportCDAction" />
+            <menuitem name="ImportSource" action="ImportSourceAction" />
             <menuitem name="WriteCD" action="WriteCDAction" />
             <separator />
             <menuitem name="SyncDap" action="SyncDapAction" />
@@ -57,6 +57,8 @@
         </menu>
     </menubar>
     <popup name="SourceMenu" action="SourceMenuAction">
+        <menuitem name="ImportSource" action="ImportSourceAction" />
+        <separator />
         <menuitem name="RenameSource" action="RenameSourceAction" />
         <menuitem name="DeletePlaylist" action="DeletePlaylistAction" />
         <menuitem name="SyncDap" action="SyncDapAction" />

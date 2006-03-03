@@ -1136,6 +1136,14 @@ namespace Banshee
             Globals.ActionManager.DapActions.Visible = source is DapSource;
             Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
             
+            if(source is IImportSource) {
+                Globals.ActionManager["ImportSourceAction"].Visible = source is IImportSource;
+                Globals.ActionManager["ImportSourceAction"].Label = Catalog.GetString("Import") + " '" + 
+                    source.Name + "'";
+            } else {
+                Globals.ActionManager["ImportSourceAction"].Visible = false;
+            }
+            
             if(source is DapSource) {
                 DapSource dapSource = source as DapSource;
                 Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
@@ -2068,6 +2076,13 @@ namespace Banshee
         private void OnImportMusicAction(object o, EventArgs args)
         {
             PromptForImport(false);
+        }
+        
+        private void OnImportSourceAction(object o, EventArgs args)
+        {
+            if(sourceView.HighlightedSource is IImportSource) {
+                ((IImportSource)sourceView.HighlightedSource).Import();
+            }
         }
         
         private void OnImportCDAction(object o, EventArgs args)

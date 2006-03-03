@@ -75,6 +75,10 @@ namespace Banshee.Base
                     Catalog.GetString("Import Music..."), null,
                     Catalog.GetString("Import music from a variety of sources"), null),
                     
+                new ActionEntry("ImportSourceAction", null,
+                    Catalog.GetString("Import Source"), null,
+                    Catalog.GetString("Import source to library"), null),
+                    
                 new ActionEntry("SelectedSourcePropertiesAction", Stock.Properties,
                     Catalog.GetString("Source Properties..."), null,
                     Catalog.GetString("View source properties"), null),
