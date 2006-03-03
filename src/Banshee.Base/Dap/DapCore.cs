@@ -89,7 +89,7 @@ namespace Banshee.Dap
                 }
                 
                 foreach(Type type in asm.GetTypes()) {
-                    if(!type.IsSubclassOf(typeof(DapDevice))) {
+                    if(!type.IsSubclassOf(typeof(DapDevice)) || type.IsAbstract) {
                         continue;
                     }
                     
@@ -100,7 +100,7 @@ namespace Banshee.Dap
                             dap_props = dap_attrs[0] as DapProperties;
                         }
                         
-                        if(dap_props.DapType == DapType.NonGeneric) {
+                        if(dap_props != null && dap_props.DapType == DapType.NonGeneric) {
                             supported_dap_types.Insert(0, type);
                         } else {
                             supported_dap_types.Add(type);

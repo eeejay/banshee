@@ -1,3 +1,17 @@
+2006-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/ImportManager.cs: Make constructor public so DAPs
+	can create a new importer just for them.
+
+	* src/Banshee.Base/Dap/DapCore.cs: Check for null object and check
+	Dap types for not IsAbstract.
+	
+	* src/Banshee.Dap/MassStorage/Makefile.am: New file.
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: New file for generic
+	USB mass storage device DAP support.  Not connected to buils system,
+	so not run except by develpers.  In CVS to further development.
+
 2006-03-02  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Plugins/Daap/DaapCore.cs: More properly account for 

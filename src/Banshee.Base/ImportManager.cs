@@ -72,7 +72,7 @@ namespace Banshee.Base
         
         public event ImportEventHandler ImportRequested;
         
-        private ImportManager()
+        public ImportManager()
         {
             path_queue = new Queue();
         }
