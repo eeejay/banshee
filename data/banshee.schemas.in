@@ -2,6 +2,17 @@
 <gconfschemafile>
   <schemalist>
     <schema>
+      <key>/schemas/apps/Banshee/ShowInitialImportDialog</key>
+      <applyto>/apps/Banshee/ShowInitialImportDialog</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Show the Initial Import Dialog</short>
+        <long>Show the Initial Import Dialog when the Banshee library is empty</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/EnableSpecialKeys</key>
       <applyto>/apps/Banshee/EnableSpecialKeys</applyto>
       <owner>banshee</owner>

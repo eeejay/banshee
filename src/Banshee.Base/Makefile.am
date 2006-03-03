@@ -12,6 +12,10 @@ bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 bansheebase_sources_in = ConfigureDefines.cs.in
 bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
 
+GUI_SOURCES = \
+	$(srcdir)/Gui/GladeDialog.cs \
+	$(srcdir)/Gui/ImportDialog.cs
+
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
 	$(srcdir)/AudioCd/AudioCdTrackInfo.cs \
@@ -49,6 +53,7 @@ ASSEMBLY_SOURCES = \
     $(SOURCES_SOURCES) \
     $(NETWORKMANAGER_SOURCES) \
     $(PLUGINS_SOURCES) \
+	$(GUI_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
@@ -83,7 +88,12 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FileTrackInfo.cs \
 	$(srcdir)/DBusRemote.cs \
 	$(srcdir)/QueuedSqliteDatabase.cs \
-	$(srcdir)/AudioCdRipper.cs
+	$(srcdir)/AudioCdRipper.cs \
+	$(srcdir)/IImportSource.cs \
+	$(srcdir)/ImportSources.cs \
+	$(srcdir)/FolderImportSource.cs \
+	$(srcdir)/FileImportSource.cs \
+	$(srcdir)/HomeDirectoryImportSource.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

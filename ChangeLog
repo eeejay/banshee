@@ -1,3 +1,56 @@
+2006-03-03  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/UIManagerLayout.xml: Commented out import folder/files and
+	added a import music menu item that launches the import dialog
+
+	* data/banshee.glade: Added a new import dialog that allows selecting
+	from a list of import sources
+
+	* data/banshee.schemas.in: Added a ShowInitialImportDialog key
+
+	* src/AboutBox.cs: Added Gabriel Burt
+
+	* src/PlayerInterface.cs: Moved all the import methods into
+	new classes that implement IImportSource; show the generic import
+	dialog on initial startup; removed obsolete importing code
+
+	* src/Banshee.Base/ActionManager.cs: Implemented an action for ImportMusic
+
+	* src/Banshee.Base/GConfKeys.cs: Added ShowInitialImportDialog key
+
+	* src/Banshee.Base/Makefile.am: Added new Import-related files
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Call the OnUpdated method
+	to propagate name changes; fix to implement IImportSource
+
+	* src/Banshee.Base/Gui/GladeDialog.cs: Abstract base class for 
+	implementing Glade dialogs
+
+	* src/Banshee.Base/Gui/ImportDialog.cs: New import dialog that allows
+	choosing from a list of sources from which to import; shows active
+	sources that implement IImportSource as well as registered IImportSources
+	in the ImportSources class; this makes it possible for plugins to 
+	register IImportSources (i.e. an 'Import from beagle' or 'Import over
+	GNOME VFS' plugin)
+
+	* src/Banshee.Base/IImportSource.cs: Very simple interface to define
+	classes that can import from some data source to the Banshee library
+
+	* src/Banshee.Base/HomeDirectoryImportSource.cs: An IImportSource that
+	loads all music from the user's home directory
+
+	* src/Banshee.Base/FolderImportSource: An IImportSource that shows a 
+	folder selection dialog and imports recursively from that folder
+
+	* src/Banshee.Base/FileImportSource.cs: An IImportSource that shows a
+	file selection dialog and imports over the file selection
+
+	* src/Banshee.Base/ImportSources.cs: Simple static class to act as an
+	IImportSource registry that ImportDialog can use to show a list of
+	import sources
+
 2006-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/ImportManager.cs: Make constructor public so DAPs

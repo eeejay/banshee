@@ -1,9 +1,8 @@
-
 /***************************************************************************
- *  PlaylistSource.cs
+ *  HomeDirectoryImportSource.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -26,73 +25,42 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
-using System.Data;
-using System.Collections;
 using Mono.Unix;
+using Gtk;
 
-using Banshee.Base;
-
-namespace Banshee.Sources
+namespace Banshee.Base
 {
-    public class AudioCdSource : Source, IImportSource
+    public class HomeDirectoryImportSource : IImportSource
     {
-        private AudioCdDisk disk;
-        
-        public AudioCdSource(AudioCdDisk disk) : base(disk.Title, 200)
-        {
-            this.disk = disk;
-            disk.Updated += OnDiskUpdated;
-        }
-        
-        public override int Count {
+        private static HomeDirectoryImportSource instance;
+        public static HomeDirectoryImportSource Instance {
             get {
-                return disk.TrackCount;
+                if(instance == null) {
+                    instance = new HomeDirectoryImportSource();
+                }
+                
+                return instance;
             }
         }
         
-        public AudioCdDisk Disk {
-            get {
-                return disk;
-            }
-        }
-        
-        public override bool Eject()
+        private HomeDirectoryImportSource()
         {
-            disk.Eject();
-            SourceManager.RemoveSource(this);
-            return true;
         }
-        
+    
         public void Import()
         {
-            SourceManager.SetActiveSource(this);
+            ImportManager.Instance.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
         }
         
-        private void OnDiskUpdated(object o, EventArgs args)
-        {
-            ThreadAssist.ProxyToMain(delegate {
-                Name = disk.Title;
-                OnUpdated();
-            });
+        public string Name {
+            get { return Catalog.GetString("Home Directory"); }
         }
-                
-        private Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
-        public override Gdk.Pixbuf Icon {
+        
+        private Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Stock.Home);
+        public Gdk.Pixbuf Icon {
             get { return icon; }
-        }
-        
-        public override IEnumerable Tracks {
-            get {
-                return disk.Tracks;
-            }
-        }
-        
-        public override bool SearchEnabled {
-            get {
-                return false;
-            }
         }
     }
 }

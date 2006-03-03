@@ -51,7 +51,8 @@ namespace Banshee
             "Jeff Tickle",
             "Ruben Vermeersch",
             "Fredrik Hedberg",
-            "Oscar Forero"
+            "Oscar Forero",
+            "Gabriel Burt"
         };
         
         private static string [] artists = {

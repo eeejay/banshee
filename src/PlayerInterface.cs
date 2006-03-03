@@ -538,35 +538,39 @@ namespace Banshee
         
         private void PromptForImport()
         {
-           HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
-                DialogFlags.Modal, MessageType.Question,
-                Catalog.GetString("Import Music"),
-                Catalog.GetString("Your music library is empty. You may import new music into " +
-                "your library now, or choose to do so later.\n\nAutomatic import " +
-                "or importing a large folder may take a long time, so please " +
-                "be patient."),
-                Catalog.GetString("Import Folder"));
-                
-            md.AddButton(Catalog.GetString("Automatic Import"), ResponseType.Apply, true);
-            md.Response += OnPromptForImportResponse;
-            md.ShowAll();
+            PromptForImport(true);
         }
         
-        private void OnPromptForImportResponse(object o, ResponseArgs args)
+        private void PromptForImport(bool startup)
         {
-            (o as Dialog).Response -= OnPromptForImportResponse;
-            (o as Dialog).Destroy();
+            if(startup) {
+                try {
+                    if(!(bool)Globals.Configuration.Get(GConfKeys.ShowInitialImportDialog)) {
+                        return;
+                    }
+                } catch {
+                }
+            }
             
-            switch(args.ResponseId) {
-                case ResponseType.Ok:
-                    ImportWithFileSelector();
-                    break;
-                case ResponseType.Apply:
-                    ImportHomeDirectory();
-                    break;
+            Banshee.Gui.ImportDialog dialog = new Banshee.Gui.ImportDialog(startup);
+            ResponseType response = dialog.Run();
+            IImportSource import_source = dialog.ActiveSource;
+            
+            if(startup) {
+                Globals.Configuration.Set(GConfKeys.ShowInitialImportDialog, !dialog.DoNotShowAgain);
+            }
+            
+            dialog.Destroy();
+            
+            if(response != ResponseType.Ok) {
+                return;
+            }
+            
+            if(import_source != null) {
+                import_source.Import();
             }
         }
-     
+
         public void SelectAudioCd(string device)
         {
             foreach(Source source in SourceManager.Sources) {
@@ -1002,38 +1006,6 @@ namespace Banshee
         }
         
         // ---- Playlist Event Handlers ----
-
-        private void ImportWithFileSelector()
-        {
-            FileChooserDialog chooser = new FileChooserDialog(
-                Catalog.GetString("Import Folder to Library"),
-                null,
-                FileChooserAction.SelectFolder
-            );
-            
-            try {
-                 chooser.SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
-            } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            }
-            
-            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton(Stock.Open, ResponseType.Ok);
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if(chooser.Run() == (int)ResponseType.Ok) { 
-                ImportManager.Instance.QueueSource(chooser.Uri);
-            }
-            
-            Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
-            
-            chooser.Destroy();
-        }
-
-        private void ImportHomeDirectory()
-        {
-            ImportManager.Instance.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-        }
         
         private void OnPlaylistObjectUpdated(object o, EventArgs args)
         {
@@ -2085,36 +2057,17 @@ namespace Banshee
         
         private void OnImportFolderAction(object o, EventArgs args)
         {
-            ImportWithFileSelector();
+            FolderImportSource.Instance.Import();
         }
         
         private void OnImportFilesAction(object o, EventArgs args)
         {
-            FileChooserDialog chooser = new FileChooserDialog(
-                Catalog.GetString("Import Files to Library"),
-                null,
-                FileChooserAction.Open
-            );
-            
-            try {
-                 chooser.SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
-            } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            }
-            
-            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton(Stock.Open, ResponseType.Ok);
-            
-            chooser.SelectMultiple = true;
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if(chooser.Run() == (int)ResponseType.Ok) {
-                ImportManager.Instance.QueueSource(chooser.Uris);
-            }
-            
-            Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
-            
-            chooser.Destroy();
+            FileImportSource.Instance.Import();
+        }
+        
+        private void OnImportMusicAction(object o, EventArgs args)
+        {
+            PromptForImport(false);
         }
         
         private void OnImportCDAction(object o, EventArgs args)

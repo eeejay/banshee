@@ -63,5 +63,6 @@ namespace Banshee.Base
         public const string TrackPropertiesExpanded = BasePath + "TrackPropertiesExpanded";
         public const string EnableSpecialKeys = BasePath + "EnableSpecialKeys";
         public const string ShowCoverArt = BasePath + "ShowCoverArt";
+        public const string ShowInitialImportDialog = BasePath + "ShowInitialImportDialog";
     }
 }
