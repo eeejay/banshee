@@ -1,3 +1,8 @@
+2006-03-02  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: More properly account for 
+	collisions/key duplications (BGO #332840) (Sebastian Dröge)
+
 2006-03-01  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Removed the 'GStreamer 0.10 may be incomplete' warning

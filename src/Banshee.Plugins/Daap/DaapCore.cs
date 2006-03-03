@@ -44,6 +44,7 @@ namespace Banshee.Plugins.Daap
         private static ServiceLocator locator;
         private static DaapProxyWebServer proxy_server;
         private static Hashtable source_map;
+        private static int collision_count;
         
         private static bool initial_db_committed = false;
         
@@ -71,11 +72,12 @@ namespace Banshee.Plugins.Daap
             if(share_name == null || share_name == String.Empty) {
                 share_name = Catalog.GetString("Banshee Music Share");
             }
+            collision_count = 0;
             
             database = new DAAP.Database(share_name);
             server = new Server(share_name);
             server.Collision += delegate {
-                server.Name = server.Name + " [2]"; // FIXME
+                server.Name = share_name + " [" + ++collision_count + "]";
             };
             
             server.AddDatabase(database);
@@ -122,7 +124,11 @@ namespace Banshee.Plugins.Daap
             
             try {
                 Source source = new DaapSource(args.Service);
-                source_map.Add(args.Service.Name, source);
+                int collision = 0;
+                string service_name = args.Service.Name;
+                while (source_map.Contains(service_name))
+                    service_name = args.Service.Name + " [" + ++collision + "]";
+                source_map.Add(service_name, source);
                 SourceManager.AddSource(source);
             } catch(InvalidSourceException) {
             }
@@ -219,6 +225,7 @@ namespace Banshee.Plugins.Daap
             
             set {
                 if(value != null && value != String.Empty) {
+                    collision_count = 0;
                     server.Name = value;
                     database.Name = value;
                     Globals.Configuration.Set(plugin.ConfigurationKeys["ShareName"], value);
