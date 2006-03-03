@@ -1,3 +1,3 @@
 <configuration>
-  <dllmap dll="libmusicbrainz" target="libmusicbrainz.so.4.0.0" />
+  <dllmap dll="libmusicbrainz" target="libmusicbrainz.so.4" />
 </configuration>

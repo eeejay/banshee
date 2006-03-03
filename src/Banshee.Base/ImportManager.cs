@@ -32,6 +32,7 @@ using System.Collections;
 using System.IO;
 using System.Threading;
 using Mono.Unix;
+using Mono.Unix.Native;
 using Gtk;
 
 using Banshee.Widgets;
@@ -187,17 +188,21 @@ namespace Banshee.Base
             CheckForCanceled();
             scan_ref_count++;
 
-			bool file_exists = false;
+			bool is_regular_file = false;
+			bool is_directory = false;
 			try {
-				file_exists = File.Exists(source);
+				Stat buf = new Stat();
+				is_directory = is_regular_file = Syscall.stat(source, out buf) == 0;
+				is_regular_file &= (buf.st_mode & FilePermissions.S_IFREG) == FilePermissions.S_IFREG;
+				is_directory &= (buf.st_mode & FilePermissions.S_IFDIR) == FilePermissions.S_IFDIR;
 			} catch(System.IO.IOException) {
 				scan_ref_count--;
 				return;
 			}
 
-            if(file_exists && !Path.GetFileName(source).StartsWith(".")) {
+            if(is_regular_file && !Path.GetFileName(source).StartsWith(".")) {
                 Enqueue(source);
-            } else if(Directory.Exists(source) && 
+            } else if(is_directory && 
                 !Path.GetFileName(Path.GetDirectoryName(source)).StartsWith(".")) {
 
                 try {

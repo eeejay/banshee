@@ -1,5 +1,20 @@
 2006-03-03  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/ImportManager.cs: FIFO patch to not try and import
+	named pipes (Debian Bugzilla #354914) (Sebastian Dröge)
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs (Import): Call OnUpdated()
+	to ensure UI redraws properly
+
+	* src/AboutBox.cs: Added Sebastian
+
+	* src/Banshee.Dap/Ipod/ipod-sharp.dll.config.in:
+	* src/Banshee.Dap/Njb/njb-sharp.dll.config.in: 
+	* src/MusicBrainz/MusicBrainz.dll.config.in: Map to slightly less
+	precise SOs (Sebastian Dröge)
+
+2006-03-03  Aaron Bockover  <aaron@abock.org>
+
 	* data/UIManagerLayout.xml: Removed the ImportCDAction; replaced with
 	ImportSourceAction; added ImportSourceAction to the source context menu
 

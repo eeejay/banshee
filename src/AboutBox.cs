@@ -52,7 +52,8 @@ namespace Banshee
             "Ruben Vermeersch",
             "Fredrik Hedberg",
             "Oscar Forero",
-            "Gabriel Burt"
+            "Gabriel Burt",
+            "Sebastian Dr\u00f6ge"
         };
         
         private static string [] artists = {

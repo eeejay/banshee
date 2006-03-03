@@ -1,6 +1,5 @@
-
 /***************************************************************************
- *  PlaylistSource.cs
+ *  AudioCdSource.cs
  *
  *  Copyright (C) 2005 Novell
  *  Written by Aaron Bockover (aaron@aaronbock.net)
@@ -69,6 +68,7 @@ namespace Banshee.Sources
         {
             SourceManager.SetActiveSource(this);
             Globals.ActionManager["ImportCDAction"].Activate();
+            OnUpdated();
         }
         
         private void OnDiskUpdated(object o, EventArgs args)
