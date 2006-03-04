@@ -42,9 +42,13 @@ namespace Banshee.Base
     {
         public static int GetId(Uri lookup)
         {
-            Statement query = new Select("Tracks", new List("TrackID")) +
-                new Where(new Compare("Uri", Op.EqualTo, lookup));
-
+            string query = String.Format(@"
+                SELECT TrackID
+                FROM Tracks
+                WHERE Uri = '{0}'
+                LIMIT 1", Sql.Escape.EscapeQuotes(lookup.AbsoluteUri)
+            );
+            
             try {
                 object result = Globals.Library.Db.QuerySingle(query);
                 int id = Convert.ToInt32(result);
@@ -67,7 +71,7 @@ namespace Banshee.Base
               } catch(Exception) {
                 exists = false;
               }
-//              Console.WriteLine ("{0} {1}", uri.LocalPath, exists ? "exists" : "does not exist");
+              
               if(exists) {
                   // TODO: we should actually probably take this as a hint to
                   // reparse metadata
@@ -191,12 +195,10 @@ namespace Banshee.Base
     
         public LibraryTrackInfo(string filename) : this()
         {
-//            Console.WriteLine ("LibraryTrackInfo(\"{0}\");", filename);
             Uri old_uri = PathUtil.PathToFileUri (filename);
 
             CheckIfExists(old_uri);
             if(!LoadFromDatabase(old_uri)) {
-//                Console.WriteLine ("LoadFromFile(\"{0}\");", filename);
                 LoadFromFile(filename);
                 string new_filename = MoveToPlace(filename, true);
                 uri = PathUtil.PathToFileUri (new_filename != null ? new_filename : filename);
@@ -336,28 +338,31 @@ namespace Banshee.Base
                     new Where(new Compare("TrackID", Op.EqualTo, track_id));// +
                 //    new Limit(1);
             }
-
-            Globals.Library.Db.Execute(tracksQuery);
+            
+            try {
+                Globals.Library.Db.Execute(tracksQuery);
+            } catch(Exception e) {
+                Console.WriteLine(e);
+            }
 
             /*if(Core.Library.Db.Execute(query) <= 0 && retryIfFail) {
                 track_id = 0;
                 SaveToDatabase(false);
             } else if(track_id <= 0) {*/
             
-            if(track_id <= 0)
+            if(track_id <= 0) 
                track_id = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
-
-//            Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
         }
         
         private bool LoadFromDatabase(object id)
         {
-            Statement query = 
-                new Select("Tracks") +
-                new Where(
-                    new Compare("Uri", Op.EqualTo, id), Op.Or,
-                    new Compare("TrackID", Op.EqualTo, id)) +
-                new Limit(1);
+            string query = String.Format(@"
+                SELECT * 
+                FROM Tracks
+                WHERE Uri = '{0}'
+                    OR TrackID = '{0}'
+                LIMIT 1", Sql.Escape.EscapeQuotes(id is string ? id as string : Convert.ToString(id))
+            );
 
             IDataReader reader = Globals.Library.Db.Query(query);
             

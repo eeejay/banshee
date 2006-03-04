@@ -1,3 +1,12 @@
+2006-03-04  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: Rewrote some queries without the
+	use of the SQL Query Builder APIs; in GetID, use System.Uri.AbsoluteUri
+	instead of System.Uri.ToString(), (BGO #330580)
+
+	* src/Banshee.Base/AudioCd/AudioCdCore.cs: Only check for 
+	volume.disc.has_audio for media in a cdrom drive (BGO #329966)
+
 2006-03-03  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/ImportManager.cs: FIFO patch to not try and import
