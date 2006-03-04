@@ -1,16 +1,15 @@
 # Lithuanian translation of Banshee.
-# Copyright (C) 2005 Free Software Foundation, Inc.
+# Copyright (C) 2005-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Banshee package.
-# Žygimantas Beručka <zygis@gnome.org>, 2005.
+# Žygimantas Beručka <zygis@gnome.org>, 2005-2006.
 #
 #
-#: ../src/Main.cs:105
 msgid ""
 msgstr ""
 "Project-Id-Version: Banshee HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-25 13:02+0200\n"
-"PO-Revision-Date: 2005-12-25 19:58+0200\n"
+"POT-Creation-Date: 2006-03-04 19:55+0200\n"
+"PO-Revision-Date: 2006-03-04 21:01+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -18,196 +17,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:348
-#: ../src/PlayerInterface.cs:1469
+#: ../data/banshee.desktop.in.in.h:1 ../src/PlayerInterface.cs:315
+#: ../src/PlayerInterface.cs:1368
 msgid "Banshee Music Player"
 msgstr "Banshee muzikos grotuvas"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
 msgstr "Muzikos grotuvas"
-
-#: ../data/banshee.schemas.in.h:1
-msgid "Copy and rename music to banshee music library directory when importing"
-msgstr ""
-"Importuojant kopijuoti bei pervadinti bylas į Banshee muzikos biblioteką"
-
-#: ../data/banshee.schemas.in.h:2
-msgid "Copy music on import"
-msgstr "Importuojant nukopijuoti muziką"
-
-#: ../data/banshee.schemas.in.h:3
-msgid "Enable File System Monitoring"
-msgstr "Įjungti bylų sistemos stebėjimą"
-
-#: ../data/banshee.schemas.in.h:4
-msgid "Enable Special Keys"
-msgstr "Įjungti specialius klavišus"
-
-#: ../data/banshee.schemas.in.h:5
-msgid ""
-"Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
-"works with mappings set through Gnome Shortcuts capplet"
-msgstr ""
-"Įjungta Specialiųjų klavišų (multimedijos klavišų) palaikymas grojimui/pauzei/""sekančiai/kitai dainai; mygtukams veiksmai priskiriami Klavišų susiejimuose."
-
-#: ../data/banshee.schemas.in.h:6
-msgid "File Name Pattern"
-msgstr "Bylų pavadinimų trafaretas"
-
-#: ../data/banshee.schemas.in.h:8
-#, no-c-format
-msgid ""
-"Format for creating filenames/directories for ripped tracks, imported music, "
-"etc. Format is relative to the Banshee music directory... do not form an "
-"absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %"
-"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
-"prefixed zero)."
-msgstr ""
-"Importuotos muzikos, iš CD įsirašytų dainų ir t.t. bylų vardų/aplankų kūrimo "
-"formatas. Formatas yra reliatyvus Banshee muzikos aplankui... nerašykite "
-"viso kelio! Žymės: %artist%, %album%, %title%, %track_number%, %track_count%, "
-"%track_number_nz% (be nulio priekyje), %track_count_nz% (be nulio priekyje)."
-
-#: ../data/banshee.schemas.in.h:9
-msgid "Height of the main interface window."
-msgstr "Pagrindinio sąsajos lango aukštis."
-
-#: ../data/banshee.schemas.in.h:10
-msgid "Move music on info save"
-msgstr "Išsaugant informaciją perkelti muziką"
-
-#: ../data/banshee.schemas.in.h:11
-msgid ""
-"Move music within banshee music library directory when saving track info"
-msgstr ""
-"Išsaugant takelių informaciją perkelti muziką į Banshee muzikos bibliotekos "
-"aplanką"
-
-#: ../data/banshee.schemas.in.h:12
-msgid "Name of media playback engine."
-msgstr "Grojimo posistemės pavadinimas."
-
-#: ../data/banshee.schemas.in.h:13
-msgid "Only display the notification area (tray) icon if true"
-msgstr "Rodyti pranešimų vietoje piktogramą tik jei reikšmė teigiama"
-
-#: ../data/banshee.schemas.in.h:14
-msgid "Pixel position of Main Player Window on the X Axis"
-msgstr "Pagrindinio grotuvo lango pozicija X ašyje."
-
-#: ../data/banshee.schemas.in.h:15
-msgid "Pixel position of Main Player Window on the Y Axis"
-msgstr "Pagrindinio grotuvo lango pozicija Y ašyje"
-
-#: ../data/banshee.schemas.in.h:16
-msgid "Player Engine Name"
-msgstr "Grotuvo varikliuko pavadinimas"
-
-#: ../data/banshee.schemas.in.h:17
-msgid "Show Notification Area Icon"
-msgstr "Rodyti pranešimų vietoje piktrogramą"
-
-#: ../data/banshee.schemas.in.h:18
-msgid "Show advanced track properties"
-msgstr "Rodyti sudėtingesnes takelio savybes"
-
-#: ../data/banshee.schemas.in.h:19
-msgid "Source View Width"
-msgstr "Šaltinių vaizdo plotis"
-
-#: ../data/banshee.schemas.in.h:20
-msgid "True if main window is to be maximized, false if it is not."
-msgstr ""
-"Teigiama, jei pagrindinis langas yra išdidintinas, kitu atveju - neigiama."
-
-#: ../data/banshee.schemas.in.h:21
-msgid ""
-"True if the advanced expander should be expanded in the track properties "
-"dialog, false if it should be closed"
-msgstr ""
-"Teigiama, jei sudėtingesnis plėtiklis takelio savybių dialoge turėtų būti "
-"išplėstas, kitu atveju - neigiama."
-
-#: ../data/banshee.schemas.in.h:22
-msgid ""
-"Uses inotify (or FAM if inotify is unavailable) updating the Banshee Library "
-"as changes are made in the Library Location in the file system"
-msgstr ""
-"Naudoja inotify (arba FAM, jei inotify neprieinama) Banshee bibliotekos "
-"atnaujinimui, kai atliekami pakeitimai Bibliotekoje arba bylų sistemoje"
-
-#: ../data/banshee.schemas.in.h:23
-msgid "Volume Output Level"
-msgstr "Išvesties garsumo lygis"
-
-#: ../data/banshee.schemas.in.h:24
-msgid ""
-"Volume of playback relative to mixer output (except on Helix, which sets "
-"volume directly on PCM"
-msgstr ""
-"Santykinis mikšerio išvesčiai grojimo garsumas (išskyrus Helix, kuris "
-"nustato garsumą tiesiogiai per PCM)"
-
-#: ../data/banshee.schemas.in.h:25
-msgid "Width of Album Column."
-msgstr "Albumo stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:26
-msgid "Width of Artist Column."
-msgstr "Atlikėjo stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:27
-msgid "Width of Last Played Column."
-msgstr "„Vėliausiai grota“ stulpelio aukštis."
-
-#: ../data/banshee.schemas.in.h:28
-msgid "Width of Plays Column."
-msgstr "Grojimų skaičiaus stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:29
-msgid "Width of Rating Column."
-msgstr "Įvertinimo stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:30
-msgid "Width of Source View Column."
-msgstr "Šaltinių vaizdo stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:31
-msgid "Width of Time Column."
-msgstr "Laiko stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:32
-msgid "Width of Title Column."
-msgstr "Pavadinimo stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:33
-msgid "Width of Track Column."
-msgstr "Takelio stulpelio plotis."
-
-#: ../data/banshee.schemas.in.h:34
-msgid "Width of the main interface window."
-msgstr "Pagrindinio grotuvo lango plotis."
-
-#: ../data/banshee.schemas.in.h:35
-msgid "Window Height"
-msgstr "Lango aukštis"
-
-#: ../data/banshee.schemas.in.h:36
-msgid "Window Maximized"
-msgstr "Langas išdidintas"
-
-#: ../data/banshee.schemas.in.h:37
-msgid "Window Position X"
-msgstr "Lango X pozicija"
-
-#: ../data/banshee.schemas.in.h:38
-msgid "Window Position Y"
-msgstr "Lango Y pozicija"
-
-#: ../data/banshee.schemas.in.h:39
-msgid "Window Width"
-msgstr "Lango plotis"
 
 #: ../data/banshee.glade.h:1
 msgid "<b>Advanced Options</b>"
@@ -242,56 +59,60 @@ msgid "<b>iPod Transcoding</b>"
 msgstr "<b>iPod kodavimas</b>"
 
 #: ../data/banshee.glade.h:9
-msgid "<big><b>Editing Track Properties</b></big>"
-msgstr "<big><b>Keičiamos takelio savybės</b></big>"
+msgid "<big><b>Editing Song</b></big>"
+msgstr "<big><b>Redaguojama daina</b></big>"
 
 #: ../data/banshee.glade.h:10
+msgid "<big><b>Import Music to Library</b></big>"
+msgstr "<big><b>Importuoti muziką į biblioteką</b></big>"
+
+#: ../data/banshee.glade.h:11
 msgid "<big><b>New iPod Detected <small><sup>TM</sup></small></b></big>"
 msgstr "<big><b>Aptiktas naujas iPod <small><sup>TM</sup></small></b></big>"
 
-#: ../data/banshee.glade.h:11
+#: ../data/banshee.glade.h:12
 msgid "<small><i><Unknown></i></small>"
 msgstr "<small><i><Nežinoma></i></small>"
 
-#: ../data/banshee.glade.h:12
+#: ../data/banshee.glade.h:13
 msgid "<small>Advanced</small>"
 msgstr "<small>Sudėtingesni</small>"
 
-#: ../data/banshee.glade.h:13
+#: ../data/banshee.glade.h:14
 msgid "<small>Burning</small>"
 msgstr "<small>Įrašymas</small>"
 
-#: ../data/banshee.glade.h:14
+#: ../data/banshee.glade.h:15
 msgid "<small>Encoding</small>"
 msgstr "<small>Koduotė</small>"
 
-#: ../data/banshee.glade.h:15
+#: ../data/banshee.glade.h:16
 msgid "<small>Library</small>"
 msgstr "<small>Biblioteka</small>"
 
-#: ../data/banshee.glade.h:16
+#: ../data/banshee.glade.h:17
 msgid "<small>Serial Number</small>"
 msgstr "<small>Serijinis numeris</small>"
 
-#: ../data/banshee.glade.h:17
+#: ../data/banshee.glade.h:18
 msgid "<span size=\"small\">Idle</span>"
 msgstr "<span size=\"small\">Negroja</span>"
 
-#: ../data/banshee.glade.h:18
+#: ../data/banshee.glade.h:19
 msgid "Albu_m"
 msgstr "Albu_mas"
 
-#: ../data/banshee.glade.h:19 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
+#: ../data/banshee.glade.h:20 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
 msgid "Audio CD"
 msgstr "Audio CD"
 
-#: ../data/banshee.glade.h:20 ../libbanshee/gst-cd-rip-0.8.c:227
-#: ../src/AboutBox.cs:66 ../src/NotificationAreaIcon.cs:57
-#: ../src/PlayerInterface.cs:763
+#: ../data/banshee.glade.h:21 ../libbanshee/gst-cd-rip-0.10.c:353
+#: ../libbanshee/gst-cd-rip-0.8.c:226 ../src/AboutBox.cs:131
+#: ../src/NotificationAreaIcon.cs:61
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../data/banshee.glade.h:21
+#: ../data/banshee.glade.h:22
 msgid ""
 "Banshee has detected that you are plugging in an iPod for the first time. "
 "Please take a moment to give your iPod a name."
@@ -299,195 +120,429 @@ msgstr ""
 "Banshee aptiko, kad prijungėte iPod pirmą kartą. Skirkite laiko suteikti "
 "savo iPod vardą."
 
-#: ../data/banshee.glade.h:22
+#: ../data/banshee.glade.h:23
 msgid "Bit Rate:"
 msgstr "Bitų dažnis:"
 
-#: ../data/banshee.glade.h:23
+#: ../data/banshee.glade.h:24
 msgid "Burnproof"
 msgstr "Burnproof"
 
-#: ../data/banshee.glade.h:24
+#: ../data/banshee.glade.h:25
 msgid "Channels:"
 msgstr "Kanalai:"
 
-#: ../data/banshee.glade.h:25
-msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Importuojant į biblioteką kopijuoti bylas į Banshee muzikos aplanką"
-
 #: ../data/banshee.glade.h:26
+msgid "Choose an import source:"
+msgstr "Pasirinkite importavimo šaltinį:"
+
+#: ../data/banshee.glade.h:27
+msgid "Copy files to Banshee Music Folder when importing to Library"
+msgstr ""
+"Importuojant į biblioteką kopijuoti rinkmenas į Banshee muzikos aplanką"
+
+#: ../data/banshee.glade.h:28
 msgid "Data CD"
 msgstr "Duomenų CD"
 
-#: ../data/banshee.glade.h:27
+#: ../data/banshee.glade.h:29
 msgid "Description:"
 msgstr "Aprašymas:"
 
-#: ../data/banshee.glade.h:28
+#: ../data/banshee.glade.h:30
 msgid "Disk Drive:"
 msgstr "Diskinis įrenginys:"
 
-#: ../data/banshee.glade.h:29
+#: ../data/banshee.glade.h:31
 msgid "Disk Format:"
 msgstr "Disko formatas:"
 
-#: ../data/banshee.glade.h:30
+#: ../data/banshee.glade.h:32
 msgid "Disk Usage:"
 msgstr "Disko naudojimas:"
 
-#: ../data/banshee.glade.h:31
+#: ../data/banshee.glade.h:33
 msgid "Disk at once"
 msgstr "Diską iš karto"
 
-#: ../data/banshee.glade.h:32
+#: ../data/banshee.glade.h:34
+msgid "Do not show this dialog again"
+msgstr "Daugiau nerodyti šio lango"
+
+#: ../data/banshee.glade.h:35 ../src/TrackProperties.cs:240
+msgid "Editing Song"
+msgstr "Redaguojama daina"
+
+#: ../data/banshee.glade.h:36
 msgid "Eject when finished"
 msgstr "Baigus išstumti"
 
-#: ../data/banshee.glade.h:33
+#: ../data/banshee.glade.h:37
 msgid "Encoding Profile:"
 msgstr "Kodavimo profilis:"
 
-#: ../data/banshee.glade.h:34
+#: ../data/banshee.glade.h:38
 msgid "Encoding:"
 msgstr "Koduotė:"
 
-#: ../data/banshee.glade.h:35
+#: ../data/banshee.glade.h:39
 msgid "Engine:"
 msgstr "Posistemė:"
 
-#: ../data/banshee.glade.h:36
+#: ../data/banshee.glade.h:40
 msgid "File Name:"
-msgstr "Bylos vardas:"
+msgstr "Rinkmenos pavadinimas:"
 
-#: ../data/banshee.glade.h:37
+#: ../data/banshee.glade.h:41
+msgid "Import Music Source"
+msgstr "Importuoti muzikos šaltinį"
+
+#: ../data/banshee.glade.h:42
+msgid "Import Music to Library"
+msgstr "Importuoti muziką į biblioteką"
+
+#: ../data/banshee.glade.h:43
 msgid "Imported On:"
 msgstr "Kada importuota:"
 
-#: ../data/banshee.glade.h:38
+#: ../data/banshee.glade.h:44
 msgid "Last Played On:"
 msgstr "Vėliausiai grota:"
 
-#: ../data/banshee.glade.h:39
+#: ../data/banshee.glade.h:45
 msgid "MP3 CD"
 msgstr "MP3 CD"
 
-#: ../data/banshee.glade.h:40
+#: ../data/banshee.glade.h:46
 msgid "Mime Type:"
 msgstr "Mime tipas:"
 
-#: ../data/banshee.glade.h:41
+#: ../data/banshee.glade.h:47
 msgid "New iPod Detected"
 msgstr "Aptiktas naujas iPod"
 
-#: ../data/banshee.glade.h:42
+#: ../data/banshee.glade.h:48
 msgid "Number of Plays:"
 msgstr "Kartų grota:"
 
-#: ../data/banshee.glade.h:43
+#: ../data/banshee.glade.h:49
 msgid "Overburn"
 msgstr "Overburn"
 
-#: ../data/banshee.glade.h:44
+#: ../data/banshee.glade.h:50
 msgid "Preferences"
 msgstr "Nustatymai"
 
-#: ../data/banshee.glade.h:45
+#: ../data/banshee.glade.h:51
 msgid "Reset"
 msgstr "Atstatyti"
 
-#: ../data/banshee.glade.h:46
+#: ../data/banshee.glade.h:52
 msgid "Sample Rate:"
 msgstr "Semplų dažnis:"
 
-#: ../data/banshee.glade.h:47
-msgid "Search:"
-msgstr "Ieškoti:"
-
-#: ../data/banshee.glade.h:48
+#: ../data/banshee.glade.h:53
 msgid "Simulate write"
 msgstr "Simuliuoti rašymą"
 
-#: ../data/banshee.glade.h:49
+#: ../data/banshee.glade.h:54
 msgid "Track Duration:"
 msgstr "Takelio trukmė:"
 
-#: ../data/banshee.glade.h:50
-msgid "Track Property Editor"
-msgstr "Takelio savybių redaktorius"
-
-#: ../data/banshee.glade.h:51
+#: ../data/banshee.glade.h:55
 msgid "Track _Count"
 msgstr "Takelių _skaičius"
 
-#: ../data/banshee.glade.h:52
+#: ../data/banshee.glade.h:56
 msgid "Track _Number"
 msgstr "Takelio _numeris"
 
-#: ../data/banshee.glade.h:53 ../src/TrackProperties.cs:214
-#: ../src/TrackProperties.cs:239 ../src/TrackProperties.cs:240
-#: ../src/TrackProperties.cs:241 ../src/TrackProperties.cs:242
-#: ../src/TrackProperties.cs:243 ../src/TrackProperties.cs:244
-#: ../src/Banshee.Base/Dap/Dap.cs:584
+#: ../data/banshee.glade.h:57 ../src/Banshee.Base/Dap/Dap.cs:600
+#: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
+#: ../src/TrackProperties.cs:261 ../src/TrackProperties.cs:262
+#: ../src/TrackProperties.cs:263 ../src/TrackProperties.cs:264
+#: ../src/TrackProperties.cs:265
 msgid "Unknown"
 msgstr "Nežinoma"
 
-#: ../data/banshee.glade.h:54
+#: ../data/banshee.glade.h:58
 msgid "VBR:"
 msgstr "VBR:"
 
-#: ../data/banshee.glade.h:55
+#: ../data/banshee.glade.h:59
 msgid "Write Speed:"
 msgstr "Rašymo greitis:"
 
-#: ../data/banshee.glade.h:56
+#: ../data/banshee.glade.h:60
 msgid "Your Name:"
 msgstr "Jūsų vardas:"
 
-#: ../data/banshee.glade.h:57
+#: ../data/banshee.glade.h:61
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later."
+msgstr ""
+"Jūsų muzikos biblioteka yra tuščia. Galite importuoti naują muziką į "
+"biblioteką dabar arba pasirinkti tai padaryti vėliau."
+
+#: ../data/banshee.glade.h:62
 msgid "_Artist"
 msgstr "_Atlikėjas"
 
-#: ../data/banshee.glade.h:58
+#: ../data/banshee.glade.h:63
+msgid "_Genre"
+msgstr "Žanra_s"
+
+#: ../data/banshee.glade.h:64
+msgid "_Search:"
+msgstr "_Ieškoti:"
+
+#: ../data/banshee.glade.h:65
 msgid "_Title"
 msgstr "_Pavadinimas"
 
-#: ../data/banshee.glade.h:59
+#: ../data/banshee.glade.h:66
 msgid "iPod Name:"
 msgstr "iPod vardas:"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:85
+#: ../data/banshee.schemas.in.h:1
+msgid "Copy and rename music to banshee music library directory when importing"
+msgstr ""
+"Importuojant kopijuoti bei pervadinti rinkmenas į Banshee muzikos biblioteką"
+
+#: ../data/banshee.schemas.in.h:2
+msgid "Copy music on import"
+msgstr "Importuojant nukopijuoti muziką"
+
+#: ../data/banshee.schemas.in.h:3
+msgid "Enable Special Keys"
+msgstr "Įjungti specialius klavišus"
+
+#: ../data/banshee.schemas.in.h:4
+msgid ""
+"Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
+"works with mappings set through Gnome Shortcuts capplet"
+msgstr ""
+"Įjungta Specialiųjų klavišų (multimedijos klavišų) palaikymas grojimui/"
+"pauzei/sekančiai/kitai dainai; mygtukams veiksmai priskiriami Klavišų "
+"susiejimuose."
+
+#: ../data/banshee.schemas.in.h:5
+msgid "File Name Pattern"
+msgstr "Rinkmenų pavadinimų trafaretas"
+
+#: ../data/banshee.schemas.in.h:7
+#, no-c-format
+msgid ""
+"Format for creating filenames/directories for ripped tracks, imported music, "
+"etc. Format is relative to the Banshee music directory... do not form an "
+"absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero)."
+msgstr ""
+"Importuotos muzikos, iš CD įsirašytų dainų ir t.t. rinkmenų vardų/aplankų "
+"kūrimo formatas. Formatas yra reliatyvus Banshee muzikos aplankui... "
+"nerašykite viso kelio! Žymės: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (be nulio priekyje), %track_count_nz% (be "
+"nulio priekyje)."
+
+#: ../data/banshee.schemas.in.h:8
+msgid "Height of the main interface window."
+msgstr "Pagrindinio sąsajos lango aukštis."
+
+#: ../data/banshee.schemas.in.h:9
+msgid "Move music on info save"
+msgstr "Išsaugant informaciją perkelti muziką"
+
+#: ../data/banshee.schemas.in.h:10
+msgid ""
+"Move music within banshee music library directory when saving track info"
+msgstr ""
+"Išsaugant takelių informaciją perkelti muziką į Banshee muzikos bibliotekos "
+"aplanką"
+
+#: ../data/banshee.schemas.in.h:11
+msgid "Name of media playback engine."
+msgstr "Grojimo posistemės pavadinimas."
+
+#: ../data/banshee.schemas.in.h:12
+msgid "Only display the notification area (tray) icon if true"
+msgstr "Rodyti pranešimų vietoje piktogramą tik jei reikšmė teigiama"
+
+#: ../data/banshee.schemas.in.h:13
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "Pagrindinio grotuvo lango pozicija X ašyje."
+
+#: ../data/banshee.schemas.in.h:14
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "Pagrindinio grotuvo lango pozicija Y ašyje"
+
+#: ../data/banshee.schemas.in.h:15
+msgid "Player Engine Name"
+msgstr "Grotuvo varikliuko pavadinimas"
+
+#: ../data/banshee.schemas.in.h:16
+msgid "Show Notification Area Icon"
+msgstr "Rodyti pranešimų vietoje piktrogramą"
+
+#: ../data/banshee.schemas.in.h:17
+msgid "Show advanced track properties"
+msgstr "Rodyti sudėtingesnes takelio savybes"
+
+#: ../data/banshee.schemas.in.h:18
+msgid "Show the Initial Import Dialog"
+msgstr "Rodyti pradinį importavimo dialogą"
+
+#: ../data/banshee.schemas.in.h:19
+msgid "Show the Initial Import Dialog when the Banshee library is empty"
+msgstr "Rodyti pradinį importavimo dialogą, kai Banshee biblioteka tuščia"
+
+#: ../data/banshee.schemas.in.h:20
+msgid "Source View Width"
+msgstr "Šaltinių vaizdo plotis"
+
+#: ../data/banshee.schemas.in.h:21
+msgid "True if main window is to be maximized, false if it is not."
+msgstr ""
+"Teigiama, jei pagrindinis langas yra išdidintinas, kitu atveju - neigiama."
+
+#: ../data/banshee.schemas.in.h:22
+msgid ""
+"True if the advanced expander should be expanded in the track properties "
+"dialog, false if it should be closed"
+msgstr ""
+"Teigiama, jei sudėtingesnis plėtiklis takelio savybių dialoge turėtų būti "
+"išplėstas, kitu atveju - neigiama."
+
+#: ../data/banshee.schemas.in.h:23
+msgid "Visibility of Album Column."
+msgstr "Albumų stulpelio matomumas."
+
+#: ../data/banshee.schemas.in.h:24
+msgid "Visibility of Artist Column."
+msgstr "Atlikėjų stulpelio matomumas."
+
+#: ../data/banshee.schemas.in.h:25
+msgid "Visibility of Time Column."
+msgstr "Laiko stulpelio matomumas."
+
+#: ../data/banshee.schemas.in.h:26
+msgid "Visibility of Title Column."
+msgstr "Pavadinimų stulpelio matomumas."
+
+#: ../data/banshee.schemas.in.h:27
+msgid "Visibility of Track Column."
+msgstr "Takelių stulpelio matomumas."
+
+#: ../data/banshee.schemas.in.h:28
+msgid "Volume Output Level"
+msgstr "Išvesties garsumo lygis"
+
+#: ../data/banshee.schemas.in.h:29
+msgid ""
+"Volume of playback relative to mixer output (except on Helix, which sets "
+"volume directly on PCM"
+msgstr ""
+"Santykinis mikšerio išvesčiai grojimo garsumas (išskyrus Helix, kuris "
+"nustato garsumą tiesiogiai per PCM)"
+
+#: ../data/banshee.schemas.in.h:30
+msgid "Width of Album Column."
+msgstr "Albumo stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:31
+msgid "Width of Artist Column."
+msgstr "Atlikėjo stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:32
+msgid "Width of Last Played Column."
+msgstr "„Vėliausiai grota“ stulpelio aukštis."
+
+#: ../data/banshee.schemas.in.h:33
+msgid "Width of Plays Column."
+msgstr "Grojimų skaičiaus stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:34
+msgid "Width of Rating Column."
+msgstr "Įvertinimo stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:35
+msgid "Width of Source View Column."
+msgstr "Šaltinių vaizdo stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:36
+msgid "Width of Time Column."
+msgstr "Laiko stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:37
+msgid "Width of Title Column."
+msgstr "Pavadinimo stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:38
+msgid "Width of Track Column."
+msgstr "Takelio stulpelio plotis."
+
+#: ../data/banshee.schemas.in.h:39
+msgid "Width of the main interface window."
+msgstr "Pagrindinio grotuvo lango plotis."
+
+#: ../data/banshee.schemas.in.h:40
+msgid "Window Height"
+msgstr "Lango aukštis"
+
+#: ../data/banshee.schemas.in.h:41
+msgid "Window Maximized"
+msgstr "Langas išdidintas"
+
+#: ../data/banshee.schemas.in.h:42
+msgid "Window Position X"
+msgstr "Lango X pozicija"
+
+#: ../data/banshee.schemas.in.h:43
+msgid "Window Position Y"
+msgstr "Lango Y pozicija"
+
+#: ../data/banshee.schemas.in.h:44
+msgid "Window Width"
+msgstr "Lango plotis"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:216 ../libbanshee/gst-cd-rip-0.8.c:84
 msgid "Could not create pipeline"
 msgstr "Nepavyko sukurti konvejerio"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:94
+#: ../libbanshee/gst-cd-rip-0.10.c:222 ../libbanshee/gst-cd-rip-0.8.c:93
 msgid "Could not initialize cdparanoia"
 msgstr "Nepavyko inicializuoti cdparanoia"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:107
+#: ../libbanshee/gst-cd-rip-0.10.c:233 ../libbanshee/gst-cd-rip-0.8.c:106
 msgid "Could not create encoder pipeline"
 msgstr "Nepavyko sukurti koderio konvejerio"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:113
+#: ../libbanshee/gst-cd-rip-0.10.c:239
+msgid "Could not create queue plugin"
+msgstr "Nepavyko sukurti eilės įskiepio"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:247 ../libbanshee/gst-cd-rip-0.8.c:112
 msgid "Could not create GNOME VFS output plugin"
 msgstr "Nepavyko sukurti GNOME VFS išvesties įskiepio"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:128
+#: ../libbanshee/gst-cd-rip-0.10.c:262 ../libbanshee/gst-cd-rip-0.8.c:127
 msgid "Could not link pipeline elements"
 msgstr "Nepavyko susieti konvejerio elementų"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:241
+#: ../libbanshee/gst-cd-rip-0.10.c:379 ../libbanshee/gst-cd-rip-0.8.c:240
 msgid "Encoding element does not support tagging!"
 msgstr "Koderio elementas nepalaiko žymėjimo!"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:251
+#: ../libbanshee/gst-cd-rip-0.8.c:250
 msgid "Could not send seek event to cdparanoia"
 msgstr "Nepavyko cdparanoia perduoti peršokimo įvykio"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:257
+#: ../libbanshee/gst-cd-rip-0.8.c:256
 msgid "Could not get track start position"
 msgstr "Nepavyko gauti takelio pradžios pozicijos"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:271
+#: ../libbanshee/gst-cd-rip-0.8.c:270
 msgid "Could not get track position"
 msgstr "Nepavyko gauti takelio pozicijos"
 
@@ -509,30 +564,60 @@ msgid ""
 msgstr ""
 "Nepavyko iš GStreamer/GConf įkelti išvesties kriauklės; naudojama alsasink"
 
-#: ../libbanshee/gst-transcode-0.8.c:118
+#: ../libbanshee/gst-transcode-0.10.c:160
+#: ../libbanshee/gst-transcode-0.8.c:242
+msgid "No decoder could be found for source format."
+msgstr "Nerastas šaltinio formatui tinkamas dekoderis."
+
+#: ../libbanshee/gst-transcode-0.10.c:165
+#: ../libbanshee/gst-transcode-0.8.c:247
+msgid "Could not stat encoded file"
+msgstr "Nepavyko sukurti koduotos rinkmenos"
+
+#: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Nepavyko sukurti „gnomevfssrc“ įskiepio"
 
-#: ../libbanshee/gst-transcode-0.8.c:124
+#: ../libbanshee/gst-transcode-0.10.c:255
+msgid "Could not create 'decodebin' plugin"
+msgstr "Nepavyko sukurti „decodebin“ įskiepio"
+
+#: ../libbanshee/gst-transcode-0.10.c:261
+msgid "Could not create 'gnomevfssink' plugin"
+msgstr "Nepavyko sukurti „gnomevfssink“ įskiepio"
+
+#: ../libbanshee/gst-transcode-0.10.c:267
+msgid "Could not create 'sinkben' plugin"
+msgstr "Nepavyko sukurti „sinkben“ įskiepio"
+
+#: ../libbanshee/gst-transcode-0.10.c:273
+msgid "Could not create 'audioconvert' plugin"
+msgstr "Nepavyko sukurti „audioconvert“ įskiepio"
+
+#: ../libbanshee/gst-transcode-0.10.c:279
+msgid "Could not create encoding pipeline"
+msgstr "Nepavyko sukurti kodavimo konvejerio"
+
+#: ../libbanshee/gst-transcode-0.10.c:285
+msgid "Could not get sink pad from encoder"
+msgstr "Nepavyko iš enkoderio gauti šaltinio pagrindo"
+
+#: ../libbanshee/gst-transcode-0.10.c:363
+msgid "Could not construct pipeline"
+msgstr "Nepavyko sukurti konvejerio"
+
+#: ../libbanshee/gst-transcode-0.8.c:96
 msgid "Could not create 'spider' plugin"
 msgstr "Nepavyko sukurti „spider“ įskiepio"
 
-#: ../libbanshee/gst-transcode-0.8.c:131
+#: ../libbanshee/gst-transcode-0.8.c:103
 #, c-format
 msgid "Could not create encoding pipeline: %s"
 msgstr "Nepavyko sukurti kodavimo konvejerio: %s"
 
-#: ../libbanshee/gst-transcode-0.8.c:137
+#: ../libbanshee/gst-transcode-0.8.c:109
 msgid "Could not create 'filesink' plugin"
 msgstr "Nepavyko sukurti „filesink“ įskiepio"
-
-#: ../libbanshee/gst-transcode-0.8.c:219
-msgid "No decoder could be found for source format."
-msgstr "Nerastas šaltinio formatui tinkamas dekoderis."
-
-#: ../libbanshee/gst-transcode-0.8.c:224
-msgid "Could not stat encoded file"
-msgstr "Nepavyko sukurti koduotos bylos"
 
 #: ../libbanshee/hal-context.c:61
 msgid "Could not create new HAL context"
@@ -551,27 +636,1002 @@ msgstr "Nepavyko inicializuoti HAL konteksto"
 msgid "Could not get device list from HAL"
 msgstr "Nepavyko iš HAL gauti įrenginių sąrašo"
 
-#: ../src/AboutBox.cs:63
-msgid ""
-"Copyright 2005 Novell, Inc.\n"
-"Copyright 2005 Aaron Bockover"
-msgstr ""
-"Autorinės teisės priklauso 2005 Novell, Inc.\n"
-"Autorinės teisės priklauso 2005 Aaron Bockover"
-
-#: ../src/AboutBox.cs:68
+#: ../src/AboutBox.cs:133
 msgid "Music Management and Playback for Gnome."
 msgstr "Muzikos valdymo ir grojimo programa skirta GNOME."
 
-#: ../src/AboutBox.cs:144
+#: ../src/AboutBox.cs:135
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Autorinės teisės priklauso © 2005-2006 Novell, Inc.\n"
+"Autorinės teisės priklauso © 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:140
 msgid "Banshee Wiki"
 msgstr "Banshee Wiki"
 
-#: ../src/BurnCore.cs:92
+#: ../src/Banshee.Base/ActionManager.cs:60
+msgid "_Music"
+msgstr "_Muzika"
+
+#: ../src/Banshee.Base/ActionManager.cs:63
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:301
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:323
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:330
+#: ../src/PlayerInterface.cs:1667
+msgid "New Playlist"
+msgstr "Naujas grojaraštis"
+
+#: ../src/Banshee.Base/ActionManager.cs:64
+msgid "Create a new empty playlist"
+msgstr "Sukurti naują tuščią grojaraštį"
+
+#: ../src/Banshee.Base/ActionManager.cs:67
+msgid "Import _Folder..."
+msgstr "Importuoti _aplanką..."
+
+#: ../src/Banshee.Base/ActionManager.cs:68
+msgid "Import the contents of an entire folder"
+msgstr "Importuoti visą aplanko turinį"
+
+#: ../src/Banshee.Base/ActionManager.cs:71
+msgid "Import Files..."
+msgstr "Importuoti rinkmenas..."
+
+#: ../src/Banshee.Base/ActionManager.cs:72
+msgid "Import files inside a folder"
+msgstr "Importuoti rinkmenas esančias aplanke"
+
+#: ../src/Banshee.Base/ActionManager.cs:75
+msgid "Import Music..."
+msgstr "Importuoti muziką..."
+
+#: ../src/Banshee.Base/ActionManager.cs:76
+msgid "Import music from a variety of sources"
+msgstr "Importuoti muziką iš įvairių šaltinių"
+
+#: ../src/Banshee.Base/ActionManager.cs:79
+msgid "Import Source"
+msgstr "Importuoti šaltinį"
+
+#: ../src/Banshee.Base/ActionManager.cs:80
+msgid "Import source to library"
+msgstr "Importuoti šaltinį į biblioteką"
+
+#: ../src/Banshee.Base/ActionManager.cs:83
+msgid "Source Properties..."
+msgstr "Šaltinio savybės..."
+
+#: ../src/Banshee.Base/ActionManager.cs:84
+msgid "View source properties"
+msgstr "Žiūrėti šaltinio savybes"
+
+#: ../src/Banshee.Base/ActionManager.cs:87
+msgid "_Quit"
+msgstr "Iš_eiti"
+
+#: ../src/Banshee.Base/ActionManager.cs:88
+msgid "Quit Banshee"
+msgstr "Palikti Banshee"
+
+#: ../src/Banshee.Base/ActionManager.cs:91
+msgid "_Edit"
+msgstr "_Keisti"
+
+#: ../src/Banshee.Base/ActionManager.cs:94
+msgid "Rename Source"
+msgstr "Pervadinti šaltinį"
+
+#: ../src/Banshee.Base/ActionManager.cs:95
+msgid "Rename the active source"
+msgstr "Pervadinti aktyvų šaltinį"
+
+#: ../src/Banshee.Base/ActionManager.cs:98
+msgid "Select All"
+msgstr "Pasirinkti visas"
+
+#: ../src/Banshee.Base/ActionManager.cs:99
+msgid "Select all songs in song list"
+msgstr "Pasirinkti visas dainas dainų sąraše"
+
+#: ../src/Banshee.Base/ActionManager.cs:102
+msgid "Select None"
+msgstr "Nepasirinkti jokių"
+
+#: ../src/Banshee.Base/ActionManager.cs:103
+msgid "Unselect all songs in song list"
+msgstr "Nepasirinkti jokių dainų dainų sąraše"
+
+#: ../src/Banshee.Base/ActionManager.cs:106
+msgid "Plugins..."
+msgstr "Įskiepiai..."
+
+#: ../src/Banshee.Base/ActionManager.cs:107
+msgid "Configure Banshee plugins"
+msgstr "Konfigūruoti Banshee įskiepius"
+
+#: ../src/Banshee.Base/ActionManager.cs:112
+msgid "_View"
+msgstr "_Rodymas"
+
+#: ../src/Banshee.Base/ActionManager.cs:115
+msgid "Columns..."
+msgstr "Stulpeliai..."
+
+#: ../src/Banshee.Base/ActionManager.cs:116
+msgid "Select which columns to display in the song list"
+msgstr "Pasirinkite kokius stulpelius rodyti dainų sąraše"
+
+#: ../src/Banshee.Base/ActionManager.cs:119
+msgid "Logged Events Viewer..."
+msgstr "Užfiksuotų įvykių žiūryklė..."
+
+#: ../src/Banshee.Base/ActionManager.cs:120
+msgid "View a detailed log of events"
+msgstr "Rodyti detalų įvykių žurnalą"
+
+#: ../src/Banshee.Base/ActionManager.cs:123
+msgid "_Help"
+msgstr "_Žinynas"
+
+#: ../src/Banshee.Base/ActionManager.cs:126
+msgid "Version Information..."
+msgstr "Versijos informacija..."
+
+#: ../src/Banshee.Base/ActionManager.cs:127
+msgid "View detailed version and configuration information"
+msgstr "Žiūrėti detalią versijos ir konfigūracijos informaciją"
+
+#: ../src/Banshee.Base/ActionManager.cs:132
+msgid "_Playback"
+msgstr "_Grojimas"
+
+#: ../src/Banshee.Base/ActionManager.cs:135 ../src/SourceView.cs:77
+msgid "Source"
+msgstr "Šaltinis"
+
+#: ../src/Banshee.Base/ActionManager.cs:146
+msgid "Fullscreen"
+msgstr "Visame ekrane"
+
+#: ../src/Banshee.Base/ActionManager.cs:147
+msgid "Toggle Fullscreen Mode"
+msgstr "Perjungti viso ekrano režimą"
+
+#: ../src/Banshee.Base/ActionManager.cs:150
+msgid "Show Cover Art"
+msgstr "Rodyti viršelių paveikslėlius"
+
+#: ../src/Banshee.Base/ActionManager.cs:151
+msgid "Toggle display of album cover art"
+msgstr "Rodyti albumų viršelių paveikslėlių rodymą"
+
+#: ../src/Banshee.Base/ActionManager.cs:160
+msgid "Delete Playlist"
+msgstr "Ištrinti grojaraštį"
+
+#: ../src/Banshee.Base/ActionManager.cs:161
+msgid "Delete the active playlist"
+msgstr "Ištrinti aktyvų grojaraštį"
+
+#: ../src/Banshee.Base/ActionManager.cs:170
+msgid "Write CD"
+msgstr "Rašyti CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:171
+msgid "Write selection to audio CD"
+msgstr "Rašyti pasirinkimą į Audio CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:174
+msgid "Remove Song(s)"
+msgstr "Pašalinti dainą(as)"
+
+#: ../src/Banshee.Base/ActionManager.cs:175
+msgid "Remove selected song(s) from library"
+msgstr "Pašalinti pasirinktą(as) dainą(as) iš bibliotekos"
+
+#: ../src/Banshee.Base/ActionManager.cs:178
+msgid "Delete Song(s) From Drive"
+msgstr "Ištrinti dainą(as) iš disko"
+
+#: ../src/Banshee.Base/ActionManager.cs:179
+msgid "Permanently delete selected song(s) from storage medium"
+msgstr "Negrįžtamai ištrinti pasirinktą(as) dainą(as) iš kaupiklio"
+
+#: ../src/Banshee.Base/ActionManager.cs:182
+msgid "Edit Song Metadata"
+msgstr "Redaguoti dainos metaduomenis"
+
+#: ../src/Banshee.Base/ActionManager.cs:183
+msgid "Edit metadata on selected songs"
+msgstr "Keisti pasirinktų dainų metaduomenis"
+
+#: ../src/Banshee.Base/ActionManager.cs:186
+msgid "Add to Playlist"
+msgstr "Įdėti į grojaraštį"
+
+#: ../src/Banshee.Base/ActionManager.cs:187
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr "Pridėti pasirinktas dainas į grojaraštį arba sukurti naują grojaraštį"
+
+#: ../src/Banshee.Base/ActionManager.cs:190 ../src/PlaylistView.cs:104
+msgid "Rating"
+msgstr "Įvertinimas"
+
+#: ../src/Banshee.Base/ActionManager.cs:191
+msgid "Set rating for selected songs"
+msgstr "Nustatyti pasirinktų dainų įvertinimą"
+
+#: ../src/Banshee.Base/ActionManager.cs:200
+msgid "Import CD"
+msgstr "Importuoti CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:201
+msgid "Import audio CD to library"
+msgstr "Importuoti Audio CD į biblioteką"
+
+#: ../src/Banshee.Base/ActionManager.cs:210 ../src/PlayerInterface.cs:682
+#: ../src/PlayerInterface.cs:1904
+msgid "Play"
+msgstr "Groti"
+
+#: ../src/Banshee.Base/ActionManager.cs:211
+#: ../src/Banshee.Base/ActionManager.cs:215
+#: ../src/Banshee.Base/ActionManager.cs:219
+msgid "Play or pause the current song"
+msgstr "Groti/pristabdyti šią dainą"
+
+#: ../src/Banshee.Base/ActionManager.cs:214
+msgid "Next"
+msgstr "Sekanti"
+
+#: ../src/Banshee.Base/ActionManager.cs:218
+msgid "Previous"
+msgstr "Ankstesnė"
+
+#: ../src/Banshee.Base/ActionManager.cs:222
+msgid "Seek Backward"
+msgstr "Prasukti atgal"
+
+#: ../src/Banshee.Base/ActionManager.cs:223
+msgid "Seek backward in current song"
+msgstr "Prasukti šią dainą atgal"
+
+#: ../src/Banshee.Base/ActionManager.cs:226
+msgid "Seek Forward"
+msgstr "Prasukti į priekį"
+
+#: ../src/Banshee.Base/ActionManager.cs:227
+msgid "Seek forward in current song"
+msgstr "Prasukti šią dainą į priekį"
+
+#: ../src/Banshee.Base/ActionManager.cs:232 ../src/ToggleStates.cs:41
+msgid "Repeat None"
+msgstr "Nekartoti jokių"
+
+#: ../src/Banshee.Base/ActionManager.cs:233
+msgid "Do not repeat playlist"
+msgstr "Nekartoti grojaraščio"
+
+#: ../src/Banshee.Base/ActionManager.cs:236 ../src/ToggleStates.cs:59
+msgid "Repeat All"
+msgstr "Kartoti visas"
+
+#: ../src/Banshee.Base/ActionManager.cs:237
+msgid "Play all songs before repeating playlist"
+msgstr "Prieš grojaraščio kartojimą pagroti visas dainas"
+
+#: ../src/Banshee.Base/ActionManager.cs:240 ../src/ToggleStates.cs:50
+msgid "Repeat Single"
+msgstr "Kartoti vieną"
+
+#: ../src/Banshee.Base/ActionManager.cs:241
+msgid "Repeat the current playing song"
+msgstr "Kartoti dabar grojamą dainą"
+
+#: ../src/Banshee.Base/ActionManager.cs:246 ../src/ToggleStates.cs:68
+msgid "Shuffle"
+msgstr "Maišyti"
+
+#: ../src/Banshee.Base/ActionManager.cs:247
+msgid "Toggle between shuffle or continuous playback modes"
+msgstr "Perjungti tarp maišymo ir ištisinio grojimo režimų"
+
+#: ../src/Banshee.Base/ActionManager.cs:256 ../src/PlayerInterface.cs:1151
+msgid "Synchronize"
+msgstr "Sinchronizuoti"
+
+#: ../src/Banshee.Base/ActionManager.cs:257
+msgid "Save changes to device or synchronize music library"
+msgstr "Išsaugoti pakeitimus į įrenginį arba sinchronizuoti muzikos biblioteką"
+
+#: ../src/Banshee.Base/ActionManager.cs:266
+msgid "Eject"
+msgstr "Išmesti"
+
+#: ../src/Banshee.Base/ActionManager.cs:267
+msgid "Eject the active source"
+msgstr "Išmesti aktyvų šaltinį"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:80
+msgid "HAL is not initialized"
+msgstr "HAL neinicializuotas"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
+msgid "Audio CD Core Initialized"
+msgstr "Inicializuota Audio CD šerdis"
+
+#. work around mcs #76642
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
+msgid "Could not Read Audio CD"
+msgstr "Nepavyko perskaityti Audio CD"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
+#: ../src/Banshee.Base/TrackInfo.cs:368
+msgid "Unknown Artist"
+msgstr "Nežinomas atlikėjas"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
+#: ../src/Banshee.Base/TrackInfo.cs:376
+msgid "Unknown Album"
+msgstr "Nežinomas albumas"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:88
+#, csharp-format
+msgid "Track {0}"
+msgstr "Takelis {0}"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:85
+msgid "Could not create CD Ripper"
+msgstr "Nepavyko sukurti CD išskleidiklio"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:291
+#, csharp-format
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
+msgstr ""
+"Įrenginio mazgas „{0}“ skiriasi nuo anksčiau į eilę padėtų dainų įrenginio "
+"mazgo ({1})"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:304
+msgid "Importing Audio CD"
+msgstr "Importuojamas Audio CD"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:305
+msgid "Initializing Drive"
+msgstr "Inicializuojamas įrenginys"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:325
+#: ../src/Banshee.Base/AudioCdRipper.cs:387
+msgid "Cannot Import CD"
+msgstr "Nepavyko importuoti CD"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:337
+#: ../src/Banshee.Base/ImportManager.cs:116
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Importuojama {0} iš {1}"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:93
+msgid "File Transcoder"
+msgstr "Rinkmenos transkoderis"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:94
+msgid "Transcoding Files"
+msgstr "Transkoduojamos rinkmenos"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:97
+msgid "Initializing Transcoder..."
+msgstr "Inicializuojamas transkoderis..."
+
+#: ../src/Banshee.Base/Dap/DapCore.cs:119
+msgid "Cannot initialize DapCore because HalCore is not initialized"
+msgstr "Nepavyko Inicializuoti DapCore, nes neinicializuotas HalCore"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:325 ../src/Banshee.Base/Dap/Dap.cs:326
+msgid "Synchronizing Device"
+msgstr "Sinchronizuojamas įrenginys"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:327
+msgid "Waiting for transcoder..."
+msgstr "Laukiama transkoderio..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:411 ../src/Banshee.Base/Dap/Dap.cs:432
+msgid "Processing..."
+msgstr "Apdorojama..."
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} savybės"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device Name"
+msgstr "Įrenginio pavadinimas"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner Name"
+msgstr "Sąvininko vardas"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
+msgid "Volume Usage"
+msgstr "Kaupiklio naudojimas"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
+msgid "Advanced Details"
+msgstr "Išsamesnė informacija"
+
+#: ../src/Banshee.Base/GstTranscoder.cs:82
+#: ../src/Banshee.Base/GstTranscoder.cs:182
+msgid "Could not create transcoder"
+msgstr "Nepavyko sukurti transkoderio"
+
+#: ../src/Banshee.Base/HalCore.cs:97
+msgid "HAL could not be initialized"
+msgstr "Nepavyko inicializuoti HAL"
+
+#: ../src/Banshee.Base/HalCore.cs:104
+msgid "HAL context could not be created"
+msgstr "Nepavyko sukurti HAL konteksto"
+
+#: ../src/Banshee.Base/HalCore.cs:105
+msgid "D-Bus may not be working or configured properly"
+msgstr "Gali būti, kad D-Bus neveikia arba neteisingai sukonfigūruotas"
+
+#: ../src/Banshee.Base/ImportManager.cs:84
+msgid "Importing Songs"
+msgstr "Importuojamos dainos"
+
+#: ../src/Banshee.Base/ImportManager.cs:87
+msgid "Scanning for songs"
+msgstr "Ieškoma dainų"
+
+#: ../src/Banshee.Base/Library.cs:126
+msgid "Could not load track from library"
+msgstr "Nepavyko iš bibliotekos įkelti takelio"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:76
+msgid "Cannot connect to NetworkManager"
+msgstr "Nepavyko prisijungti prie NetworkManager"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:77
+msgid "An available, working network connection will be assumed"
+msgstr "Bus naudojamas prienamas, veikiantis tinklo prisijungimas"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:105
+msgid "Pipeline profile is empty."
+msgstr "Konvejerio profilis tuščias."
+
+#: ../src/Banshee.Base/PipelineProfile.cs:111
+msgid "Pipeline profile does not have the correct number of components (7)"
+msgstr "Konvejerio profilyje neteisingas komponentų skaičius (7)"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:121
+msgid "Pipeline profile does not have a lookup key"
+msgstr "Konvejerio profilyje nėra peržiūros rakto"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:125
+msgid "Pipeline profile does not have a display name"
+msgstr "Konvejerio profilyje nėra ekrano pavadinimo"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:130
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a file extension"
+msgstr "Konvejerio profilis „{0}“ nėturi rinkmenos plėtinio"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:136
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a GStreamer element"
+msgstr "Konvejerio profilis „{0}“ neturi GStreamer elemento"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:167
+#, csharp-format
+msgid ""
+"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
+"not be run"
+msgstr ""
+"Konvejerio profilis „{0}“ bus neprieinamas: nepavyko paleisti GStreamer "
+"konvejerio „{1}“"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:195
+msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
+msgstr ""
+"Negalima naudoti vidinio bitų dažnio. Vietoj to naudokite BuildPipeline(bitų "
+"dažnis)"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:215
+msgid ""
+"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
+"PipelineProfile(profile))"
+msgstr ""
+"Nepavyko nurodyti vidinio bitų dažnio. Turite nukopijuoti profilį ir "
+"nustatyti bitų dažnį kopijoje (naujas PipelineProfile(profilis))"
+
+#. Translators: used to specify the bitrate for ripping
+#: ../src/Banshee.Base/PipelineProfile.cs:362
+msgid "at"
+msgstr "Kokybė:"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:404
+msgid "No iPod-compatible encoders available"
+msgstr "Nėra prieinamų su iPod suderinamų enkoderių"
+
+#: ../src/Banshee.Base/PlayerEngineCore.cs:114
+msgid "CD playback is not supported for this instance"
+msgstr "Ši instancija nepalaiko CD grojimo"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Banshee įskiepiai"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "Įskiepio pavadinimas"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
+msgid "Enabled"
+msgstr "Įjungta"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "Apžvalga"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "Aprašymas"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "Autorius(iai)"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "Šio įskiepio nepavyko inicializuoti."
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "Konfigūracija"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:104
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Palaukite, sinchronizuojamas Jūsų įrenginys..."
+
+#. Translators: position in song. eg, "0:37 of 3:48"
+#: ../src/Banshee.Base/Sources/DapSource.cs:164 ../src/PlayerInterface.cs:923
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} iš {1}"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:174
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "(Liko {0})"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:51
+msgid "Music Library"
+msgstr "Muzikos biblioteka"
+
+#: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "Vietinė eilė"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:117
+msgid "Cannot Rename Playlist"
+msgstr "Negalima pervadinti grojaraščio"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:118
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr "Grojaraštis tokiu pavadinimu jau yra. Pasirinkite kitą pavadinimą."
+
+#: ../src/Banshee.Base/TrackInfo.cs:384
+msgid "Unknown Title"
+msgstr "Nežinomas pavadinimas"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+msgid "by"
+msgstr "atlieka"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:105
+msgid "from"
+msgstr "iš"
+
+#: ../src/Banshee.Base/Utilities.cs:74
+#, csharp-format
+msgid "{0:0.00} GB"
+msgstr "{0:0.00} GB"
+
+#: ../src/Banshee.Base/Utilities.cs:75
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0} MB"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
+msgid "Rebuilding Database"
+msgstr "Perkuriama duomenų bazė"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
+msgid "Scanning iPod..."
+msgstr "Skanuojamas iPod..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
+msgid "Processing Songs..."
+msgstr "Apdorojamos dainos..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
+msgid "Saving new database..."
+msgstr "Saugoma nauja duomenų bazė..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
+msgid "Error rebuilding iPod database"
+msgstr "Klaida perkuriant iPod duomenų bazę"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
+msgid "Synchronizing iPod"
+msgstr "Sinchronizuojamas iPod"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:160
+msgid "Pre-processing tracks"
+msgstr "Ruošiamasi apdoroti takelius"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:175
+msgid "Flushing to Disk (may take time)"
+msgstr "Perkeliama į diską (gali šiek tiek užtrukti)"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:185
+msgid "Failed to synchronize iPod"
+msgstr "Nepavyko sinchronizuoti iPod"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr "Nepavyko perskaityti Jūsų iPod"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
+msgid "What is the reason for this?"
+msgstr "Kokia to priežastis?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
+msgid "Rebuild iPod Database..."
+msgstr "Perkurti iPod duomenų bazę..."
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
+msgid "Confirm Rebuild iPod Database"
+msgstr "Patvirtinkite iPod duomenų bazės perkūrimą"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"iPod duomenų bazės perkūrimas gali šiek tiek užtrukti. Taip pat turėkite "
+"omenyje, kad bet kokie grojaraščiai esantys Jūsų iPod bus prarasti.\n"
+"\n"
+"Ar tikrai norite perkurti Jūsų iPod duomenų bazę?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
+msgid "Rebuild Database"
+msgstr "Perkurti duomenų bazę"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
+msgid "Rebuilding iPod Database..."
+msgstr "Perkuriama iPod duomenų bazė..."
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:113
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:408
+msgid "Could not initialize GStreamer library"
+msgstr "Nepavyko inicializuoti GStreamer bibliotekos"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:237
+msgid "Unknown Error"
+msgstr "Nežinoma klaida"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
+msgid "GStreamer 0.10 Engine"
+msgstr "GStreamer 0.10 posistemė"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:306
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:627
+msgid ""
+"GStreamer is a multimedia framework for playing and manipulating media. Any "
+"GStreamer plugin that is available will work through this engine."
+msgstr ""
+"GStreamer yra multimedijos sistema skirta garso bei vaizdo apdorojimui. "
+"Naudojant šią posistemę veiks bet kokie prieinami GStreamer įskiepiai."
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:616
+msgid "GStreamer Engine"
+msgstr "GStreamer posistemė"
+
+#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:81
+msgid "Helix Framework Engine (hxclientkit)"
+msgstr "Helix Framework Engine (hxclientkit)"
+
+#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:89
+msgid ""
+"The Helix Engine provides multimedia control through the Helix Multimedia "
+"Framework, sponsored by RealNetworks. The engine can play any file that "
+"RealPlayer can. Install RealPlayer for best results."
+msgstr ""
+"Helix posistemė suteikia multimedijos valdymą naudojant Helix Multimedia "
+"Framework, remiamą RealNetworks kompanijos. Ši posistemė gali groti bet "
+"kokio formato, palaikomo RealPlayer, dainas. Norėdami pasiekti geriausių "
+"rezultatų turite įdiegti RealPlayer."
+
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:82
+msgid "VLC"
+msgstr "VLC"
+
+#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:90
+msgid ""
+"VLC is a highly portable multimedia player for various audio and video "
+"formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
+msgstr ""
+"VLC yra daugiaplatformis įvairių video ir audio formatų grotuvas (MP3, AAC, "
+"OGG, FLAC, WMA, kt.) Žr. http://videolan.org/vlc/"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
+msgid "Audioscrobbler Reporting"
+msgstr "Audioscrobbler pranešinėjimas"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:73
+msgid "Create an account"
+msgstr "Sukurti abonementą"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
+msgid "Join the Banshee group"
+msgstr "Prisijungti prie Banshee grupės"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:131
+msgid "Enable song reporting"
+msgstr "Įjungti pranešimą apie dainas"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
+msgid "Last.fm Username"
+msgstr "Last.fm naudotojo vardas"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:102
+msgid "Last.fm Password"
+msgstr "Last.fm slaptažodis"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:59
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr ""
+"Kai Jūs klausote muzikos Jūsų Last.fm profilio puslapis atnaujinamas "
+"automatiškai. Ten kiti gali pamatyti ko Jūs šiuo metu klausotės bei rodo "
+"Jūsų klausymosi istorijos diagramas."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
+msgid "Audioscrobbler"
+msgstr "Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Konfigūruoti Audioscrobbler įskiepį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
+msgid "Visit user profile page"
+msgstr "Aplankyti naudotojo profilio puslapį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Aplankyti Jūsų Audioscrobbler profilio puslapį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:120
+msgid "Visit group page"
+msgstr "Aplankyti grupės puslapį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
+msgid "Visit the Banshee last.fm group page"
+msgstr "Aplankyti Banshee last.fm grupės puslapį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
+msgid "Configure..."
+msgstr "Konfigūruoti..."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
+msgid ""
+"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr ""
+"Leisti varikliukui publikuoti dainų duomenis į last.fm Audioscrobbler "
+"įskiepyje"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
+msgid "Enable the Audioscrobbler plugin"
+msgstr "Įjungti Audioscrobbler įskiepį"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
+msgid "Your last.fm password"
+msgstr "Jūsų last.fm slaptažodis"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:4
+msgid "Your last.fm username"
+msgstr "Jūsų last.fm naudotojo vardas"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:50
+msgid "Music Sharing"
+msgstr "Muzikos viešinimas"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
+msgid "Share my music library with others"
+msgstr "Dalintis mano muzikos biblioteka su kitais"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
+msgid "Share name:"
+msgstr "Viešinio pavadinimas:"
+
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
+msgid "Banshee Music Share"
+msgstr "Banshee muzikos viešinys"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
+msgid "Login to Music Share"
+msgstr "Prisijungti prie muzikos viešinio"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
+msgid "Authentication Required"
+msgstr "Reikalinga autentikacija"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
+msgid "Username:"
+msgstr "Naudotojo vardas:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "Prisijungti"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
+msgid "Allow others to browse and listen to your music from other DAAP clients"
+msgstr "Leisti kitiems naršyti ir klausytis Jūsų muzikos iš kitų DAAP klientų"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
+msgid "Enable DAAP Server support"
+msgstr "Įjungti DAAP serverio palaikymą"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
+msgid "Enable the DAAP Music Sharing plugin"
+msgstr "Įjungti DAAP muzikos viešinimo įskiepį"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
+msgid "Name of DAAP server share"
+msgstr "DAAP serverio viešinio pavadinimas"
+
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+msgid "Cannot login to DAAP share"
+msgstr "Nepavyko prisijungti prie DAAP viešinio"
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
+msgid "Enable the FileSystemMonitor plugin"
+msgstr "Įjungti FileSystemMonitor įskiepį"
+
+#: ../src/Banshee.Plugins/FileSystemMonitor/Watcher.cs:49
+msgid ""
+"Automatically keep your Banshee library directory in sync with your music "
+"folder. This plugin responds to changes made in the file system to reflect "
+"them in your library."
+msgstr ""
+"Automatišai sinchronizuoti Banshee bibliotekos aplanką su Jūsų muzikos "
+"aplanku. Šis įskiepis reaguoja į pakeitimus atliktus rinkmenų sistemoje "
+"perteikdamas juos Jūsų bibliotekai."
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
+msgid "Metadata and Cover Art Searching"
+msgstr "Metaduomenų ir albumų viršelių paieška"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:70
+msgid "Only download album cover artwork"
+msgstr "Tik atsiųsti albumų viršelių paveiksliukus"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:72
+msgid "Download album cover artwork and fill in missing track data"
+msgstr ""
+"Atsiųsti albumų viršelių paveikslėlius ir užpildyti trūkstamus takelių "
+"duomenis"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:74
+msgid "Download album cover artwork and overwrite any existing track data"
+msgstr ""
+"Atsiųsti albumų viršelių paveikslius ir perrašyti esamus takelių duomenis"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
+msgid "Rescan Library"
+msgstr "Perskanuotų biblioteką"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
+msgid "Warning"
+msgstr "Įspėjimas"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
+msgid ""
+"This option can usually correct minor mistakes in metadata, however on rare "
+"occasions metadata may be incorrectly updated from MusicBrainz."
+msgstr ""
+"Ši parinktis paprastai gali pataisyti nedideles metaduomenų klaidas, tačiau, "
+"nors ir retai, bet gali pasitaikyti, kad iš MusicBrainz gali būti atnaujinti "
+"neteisingi duomenys."
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:57
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
+msgstr ""
+"Automatiškai Jūsų biblitekoje ieškoti trūkstamų bei papildomų dainų "
+"metaduomenų ir viršelių paveikslėlių."
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
+msgid ""
+"0 - Download only cover art 1 - Download cover art, fill in missing metadata "
+"2 - Download cover art, overwrite metadata"
+msgstr ""
+"0 - atsiųsti tik viršelių paveikslėlius, 1 - atsiųsti viršelių "
+"paveikslėlius, užpildyti trūkstamus metaduomenis, 2 - atsiųsti viršelių "
+"paveikslėlius, perrašyti metaduomenis"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
+msgid "Enable the MetadataSearch plugin"
+msgstr "Įjungti MetadataSearch įskiepį"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
+msgid "Method of fetching cover art and supplementary metadata"
+msgstr "Viršelių paveikslėlių bei papildomų metaduomenų gavimo metodas"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:48
+msgid "Multimedia Keyboard Shortcuts"
+msgstr "Multimedijos greitieji klavišai"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+"Multimedijos greituosius klavišus galima konfigūruoti Gnome Klavišų susiejimų "
+"konfigūracimo įtaise."
+
+#: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
+msgid "Enable the MultimediaKeys plugin"
+msgstr "Įjungti MultimediaKeys įskiepį"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
+msgid "Cancel Operation"
+msgstr "Atšaukti operaciją"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
+#, csharp-format
+msgid "Are you sure you want to cancel the '{0}' operation?"
+msgstr "Ar tikrai norite atšaukti „{0}“ operaciją?"
+
+#: ../src/Banshee.Widgets/SearchEntry.cs:203
+#: ../src/Banshee.Widgets/SearchEntry.cs:314
+#, csharp-format
+msgid "Searching: {0}"
+msgstr "Ieškoma: {0}"
+
+#: ../src/BurnCore.cs:93
 msgid "Could Not Write CD"
 msgstr "Nepavyko įrašyti CD"
 
-#: ../src/BurnCore.cs:93
+#: ../src/BurnCore.cs:94
 msgid ""
 "No suitable wave encoder could be found to convert selected songs to CD "
 "audio format."
@@ -579,21 +1639,21 @@ msgstr ""
 "Nerastas tinkamas wav enkoderis galintis konvertuoti pažymėtas dainas į CD "
 "audio formatą."
 
-#: ../src/BurnCore.cs:153
+#: ../src/BurnCore.cs:155
 msgid "Writing CD"
 msgstr "Rašoma į CD"
 
-#: ../src/BurnCore.cs:154
+#: ../src/BurnCore.cs:156
 msgid "Writing Audio CD"
 msgstr "Rašoma į Audio CD"
 
-#: ../src/BurnCore.cs:186
+#: ../src/BurnCore.cs:187
 msgid "The inserted media is not large enough to hold your selected music."
 msgstr ""
 "Įdėta laikmena yra nepakankamai didelė, kad sutalpintų Jūsų pasirinktą "
 "muziką."
 
-#: ../src/BurnCore.cs:188
+#: ../src/BurnCore.cs:189
 #, csharp-format
 msgid "{0} more minute is needed on the media."
 msgid_plural "{0} more minutes are needed on the media."
@@ -601,93 +1661,63 @@ msgstr[0] "Šioje laikmenoje trūksta {0} minutės."
 msgstr[1] "Šioje laikmenoje trūksta {0} minučių."
 msgstr[2] "Šioje laikmenoje trūksta {0} minučių."
 
-#: ../src/BurnCore.cs:192
+#: ../src/BurnCore.cs:193
 msgid "Not Enough Space on Disc"
 msgstr "Diske nepakanka vietos"
 
-#: ../src/BurnCore.cs:223
+#: ../src/BurnCore.cs:224
 msgid "No CD writers were found on your system."
 msgstr "Sistemoje nerasta CD rašymo įrenginių."
 
-#: ../src/BurnCore.cs:263
+#: ../src/BurnCore.cs:264
 msgid "Error Burning CD"
 msgstr "Klaida rašant CD"
 
-#: ../src/BurnCore.cs:267
+#: ../src/BurnCore.cs:268
 msgid "An unknown error occurred when attempting to write the CD"
 msgstr "Bandant įrašyti CD įvyko nežinoma klaida"
 
-#: ../src/BurnCore.cs:273
+#: ../src/BurnCore.cs:274
 msgid "CD Writing Complete"
 msgstr "CD rašymas baigtas"
 
-#: ../src/BurnCore.cs:274
+#: ../src/BurnCore.cs:275
 msgid "The selected audio was successfully written to the CD."
 msgstr "Pasirinkta muzika buvo sėkmingai įrašyta į CD."
 
-#: ../src/BurnCore.cs:278
+#: ../src/BurnCore.cs:279
 msgid "Error Writing CD"
 msgstr "Klaida rašant CD"
 
-#: ../src/BurnCore.cs:301
+#: ../src/BurnCore.cs:302
 msgid "Preparing to write..."
 msgstr "Ruošiamasi rašyti..."
 
-#: ../src/BurnCore.cs:305
+#: ../src/BurnCore.cs:306
 msgid "Writing disk..."
 msgstr "Rašomas diskas..."
 
-#: ../src/BurnCore.cs:309
+#: ../src/BurnCore.cs:310
 msgid "Fixating disk..."
 msgstr "Uždaromas diskas..."
 
-#: ../src/BurnCore.cs:326
+#: ../src/BurnCore.cs:327
 msgid "Waiting for Media"
 msgstr "Laukiama laikmenos"
 
-#: ../src/BurnCore.cs:330 ../src/BurnCore.cs:333
+#: ../src/BurnCore.cs:331 ../src/BurnCore.cs:334
 msgid "Insert Blank CD"
 msgstr "Įdėkite tuščią CD"
 
-#: ../src/BurnCore.cs:331
+#: ../src/BurnCore.cs:332
 msgid "Please insert a blank CD disk for the write process."
 msgstr "Norėdami tęsti įrašymą, įdėkite tuščią CD."
 
-#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
-#: ../src/DapPropertiesDialog.cs:54
-#, csharp-format
-msgid "{0} Properties"
-msgstr "{0} savybės"
-
-#: ../src/DapPropertiesDialog.cs:78 ../src/DapPropertiesDialog.cs:81
-msgid "Device Name"
-msgstr "Įrenginio pavadinimas"
-
-#: ../src/DapPropertiesDialog.cs:85 ../src/DapPropertiesDialog.cs:88
-msgid "Owner Name"
-msgstr "Sąvininko vardas"
-
-#: ../src/DapPropertiesDialog.cs:93
-msgid "Volume Usage"
-msgstr "Kaupiklio naudojimas"
-
-#: ../src/DapPropertiesDialog.cs:105
-msgid "Advanced Details"
-msgstr "Išsamesnės detalės"
-
-#: ../src/Dialogs.cs:83
-msgid "Cannot Rename Playlist"
-msgstr "Negalima pervadinti grojaraščio"
-
-#: ../src/Dialogs.cs:84
-msgid "A playlist with this name already exists. Please choose another name."
-msgstr "Grojaraštis tokiu pavadinimu jau yra. Pasirinkite kitą pavadinimą."
-
-#: ../src/Dialogs.cs:93
+#: ../src/Dialogs.cs:81
 msgid "An Error Occurred"
 msgstr "Įvyko klaida"
 
-#: ../src/Dialogs.cs:100
+#: ../src/Dialogs.cs:88
 msgid "Error"
 msgstr "Klaia"
 
@@ -706,138 +1736,6 @@ msgstr ""
 #: ../src/ExceptionDialog.cs:99
 msgid "An unhandled exception was thrown: "
 msgstr "Buvo išvesta neapdorota išimtis: "
-
-#: ../src/Library.cs:271
-msgid "Library"
-msgstr "Biblioteka"
-
-#: ../src/Library.cs:281
-msgid "Music Library"
-msgstr "Muzikos biblioteka"
-
-#: ../src/Library.cs:307
-msgid "The Frobnicator"
-msgstr "Frobnikatorius"
-
-#. Translators: position in song. eg, "0:37 of 3:48"
-#: ../src/Library.cs:448 ../src/PlayerInterface.cs:996
-#, csharp-format
-msgid "{0} of {1}"
-msgstr "{0} iš {1}"
-
-#: ../src/Library.cs:459
-#, csharp-format
-msgid "({0} Remaining)"
-msgstr "(Liko {0})"
-
-#: ../src/Library.cs:559 ../src/PlayerInterface.cs:1776
-#: ../src/SourceView.cs:72 ../src/Banshee.Base/ActionManager.cs:64
-msgid "New Playlist"
-msgstr "Naujas grojaraštis"
-
-#: ../src/LibraryTransactions.cs:97
-msgid "Unhandled Exception, ending IO Transaction safely"
-msgstr "Neapdorota išimtis, saugiau baigiama IO transakcija"
-
-#: ../src/LibraryTransactions.cs:214 ../src/LibraryTransactions.cs:589
-msgid "Library Track Loader"
-msgstr "Bibliotekos takelių įkėlimas"
-
-#: ../src/LibraryTransactions.cs:243 ../src/LibraryTransactions.cs:608
-#: ../src/LibraryTransactions.cs:717
-msgid "Processing"
-msgstr "Apdorojama"
-
-#: ../src/LibraryTransactions.cs:270
-msgid "Preloading Files"
-msgstr "Ruošiamasi įkelti dainas"
-
-#: ../src/LibraryTransactions.cs:324 ../src/LibraryTransactions.cs:473
-#: ../src/LibraryTransactions.cs:615 ../src/LibraryTransactions.cs:742
-#, csharp-format
-msgid "Loading {0} - {1} ..."
-msgstr "Įkeliama {0} - {1}..."
-
-#: ../src/LibraryTransactions.cs:392
-msgid "Playlist Save"
-msgstr "Grojaraščio saugojimas"
-
-#: ../src/LibraryTransactions.cs:406
-msgid "Flushing old entries"
-msgstr "Išvalomi seni įrašai"
-
-#: ../src/LibraryTransactions.cs:420
-msgid "Saving new entries"
-msgstr "Saugomi nauji įrašai"
-
-#: ../src/LibraryTransactions.cs:449
-msgid "Library Load"
-msgstr "Bibliotekos įkėlimas"
-
-#: ../src/LibraryTransactions.cs:460
-msgid "Preloading Library"
-msgstr "Ruošiamasi įkelti biblioteką"
-
-#: ../src/LibraryTransactions.cs:502
-msgid "Library Track Remove"
-msgstr "Bibliotekos takelių šalinimas"
-
-#: ../src/LibraryTransactions.cs:508 ../src/LibraryTransactions.cs:552
-msgid "Removing Tracks"
-msgstr "Šalinami takeliai"
-
-#: ../src/LibraryTransactions.cs:521 ../src/LibraryTransactions.cs:567
-#, csharp-format
-msgid "Removing {0} - {1}"
-msgstr "Šalinama {0} - {1}"
-
-#: ../src/LibraryTransactions.cs:527
-msgid "Purging Removed Tracks from Library..."
-msgstr "Iš bibliotekos išvalomi pašalinti takeliai..."
-
-#: ../src/LibraryTransactions.cs:541
-msgid "Playlist Track Remove"
-msgstr "Grojaraščio takelio šalinimas"
-
-#: ../src/LibraryTransactions.cs:574
-msgid "Purging Removed Tracks from Playlist..."
-msgstr "Iš grojaraščio išvalomi pašalinti takeliai..."
-
-#: ../src/LibraryTransactions.cs:636
-msgid "Could not load track from library"
-msgstr "Nepavyko iš bibliotekos įkelti takelio"
-
-#: ../src/LibraryTransactions.cs:699
-msgid "Playlist Track Loader"
-msgstr "Grojaraščio takelių įkėliklis"
-
-#: ../src/LibraryTransactionStatus.cs:168
-msgid "Working"
-msgstr "Dirbama"
-
-#: ../src/LibraryTransactionStatus.cs:206
-msgid ""
-"There are multiple operations executing. You may either cancel the current "
-"operation or all operations.\n"
-"\n"
-msgstr ""
-"Vykdoma daugiau nei viena operacija. Galite nutraukti tik šią operaciją arba "
-"visas operacijas.\n"
-"\n"
-
-#: ../src/LibraryTransactionStatus.cs:210
-msgid "Are you sure you want to cancel this operation?"
-msgid_plural "Are you sure you want to cancel these operations?"
-msgstr[0] "Ar tikrai norite atšaukti šią operaciją?"
-msgstr[1] "Ar tikrai norite atšaukti šias operacijas?"
-msgstr[2] "Ar tikrai norite atšaukti šias operacijas?"
-
-#: ../src/LibraryTransactionStatus.cs:216
-msgid "Really Cancel Operation?"
-msgid_plural "Really Cancel Operations?"
-msgstr[0] "Ar tikrai atšaukti operaciją?"
-msgstr[1] "Ar tikrai atšaukti operacijas?"
-msgstr[2] "Ar tikrai atšaukti operacijas?"
 
 #: ../src/LogCoreViewer.cs:52
 msgid "Log Viewer"
@@ -879,124 +1777,97 @@ msgstr "Tik derinimo pranešimus"
 msgid "Entry Details:"
 msgstr "Įrašo detalės:"
 
-#: ../src/Main.cs:106
-msgid ""
-"Banshee is already running. If you were trying to control the already "
-"running instance of Banshee, D-Bus must be enabled. Banshee could not "
-"connect to your D-Bus Session Bus."
-msgstr ""
-"Banshee jau paleistas. Jeigu bandėte valdyti jau veikiantį Banshee, turi "
-"būti įjungtas D-Bus. Banshee nepavyko prisijungti prie D-Bus sesijos."
-
-#: ../src/PlayerInterface.cs:388
+#: ../src/PlayerInterface.cs:357
 msgid "Loading..."
 msgstr "Įkeliama..."
 
 #. Misc
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:2040
+#: ../src/PlayerInterface.cs:410 ../src/PlayerInterface.cs:1908
 msgid "Idle"
 msgstr "Negroja"
 
-#: ../src/PlayerInterface.cs:447
+#: ../src/PlayerInterface.cs:419
 msgid "All"
 msgstr "Visi"
 
-#: ../src/PlayerInterface.cs:449 ../src/PlayerInterface.cs:1578
+#: ../src/PlayerInterface.cs:421 ../src/PlayerInterface.cs:1468
 msgid "Song Name"
 msgstr "Dainos pavadinimas"
 
-#: ../src/PlayerInterface.cs:450 ../src/PlayerInterface.cs:1576
+#: ../src/PlayerInterface.cs:422 ../src/PlayerInterface.cs:1466
 msgid "Artist Name"
 msgstr "Atlikėjas"
 
-#: ../src/PlayerInterface.cs:451 ../src/PlayerInterface.cs:1580
+#: ../src/PlayerInterface.cs:423 ../src/PlayerInterface.cs:1470
 msgid "Album Title"
 msgstr "Albumo pavadinimas"
 
-#: ../src/PlayerInterface.cs:476
+#: ../src/PlayerInterface.cs:424 ../src/PlayerInterface.cs:1472
+#: ../src/PlaylistView.cs:96
+msgid "Genre"
+msgstr "Žanras"
+
+#: ../src/PlayerInterface.cs:457
 msgid "Write selection to CD"
 msgstr "Rašyti pasirinkimą į CD"
 
-#: ../src/PlayerInterface.cs:477
+#: ../src/PlayerInterface.cs:458
 msgid "Import CD into library"
 msgstr "Importuoti CD į biblioteką"
 
-#: ../src/PlayerInterface.cs:478
+#: ../src/PlayerInterface.cs:459
 msgid "Play previous song"
 msgstr "Groti ankstesnę dainą"
 
-#: ../src/PlayerInterface.cs:479
+#: ../src/PlayerInterface.cs:460
 msgid "Play/pause current song"
 msgstr "Groti/pristabdyti šią dainą"
 
-#: ../src/PlayerInterface.cs:480
+#: ../src/PlayerInterface.cs:461
 msgid "Play next song"
 msgstr "Groti sekančią dainą"
 
-#: ../src/PlayerInterface.cs:481
+#: ../src/PlayerInterface.cs:462
 msgid "Current position in song"
 msgstr "Esama pozicija dainoje"
 
-#: ../src/PlayerInterface.cs:482
+#: ../src/PlayerInterface.cs:463
 msgid "Device disk usage"
 msgstr "Įrenginio disko naudojimas"
 
-#: ../src/PlayerInterface.cs:483
+#: ../src/PlayerInterface.cs:464
 msgid "Synchronize music library to device"
 msgstr "Sinchronizuoti muzikos biblioteką su įrenginiu"
 
-#: ../src/PlayerInterface.cs:484
+#: ../src/PlayerInterface.cs:465
 msgid "Adjust volume"
 msgstr "Keisti garsumą"
 
-#: ../src/PlayerInterface.cs:508
+#: ../src/PlayerInterface.cs:466
+msgid "Change repeat playback mode"
+msgstr "Pakeisti grojimo kartojimo režimą"
+
+#: ../src/PlayerInterface.cs:467
+msgid "Toggle shuffle playback mode"
+msgstr "Perjungti grojimo maišymo režimą"
+
+#: ../src/PlayerInterface.cs:468
+msgid "Edit and view metadata of selected songs"
+msgstr "Keisti ir žiūrėti pasirinktų dainų metaduomenis"
+
+#: ../src/PlayerInterface.cs:492
 msgid "Notification Area Icon could not be installed"
-msgstr "Nepavyko įdiegti pranešimų vietos ikonos"
+msgstr "Nepavyko įdiegti pranešimų vietos piktogramos"
 
-#: ../src/PlayerInterface.cs:559
-msgid "Import Music"
-msgstr "Importuoti muziką"
-
-#: ../src/PlayerInterface.cs:560
-msgid ""
-"Your music library is empty. You may import new music into your library now, "
-"or choose to do so later.\n"
-"\n"
-"Automatic import or importing a large folder may take a long time, so please "
-"be patient."
-msgstr ""
-"Jūsų muzikos biblioteka yra tuščia. Galite importuoti naują muziką dabar "
-"arba tai padaryti vėliau.\n"
-"\n"
-"Automatinis bei didelių aplankų importavimas gali ilgai užtrukti, tad būkite "
-"kantrūs."
-
-#: ../src/PlayerInterface.cs:564
-msgid "Import Folder"
-msgstr "Importuoti aplanką"
-
-#: ../src/PlayerInterface.cs:566
-msgid "Automatic Import"
-msgstr "Automatiškas importavimas"
-
-#: ../src/PlayerInterface.cs:740
-msgid "Position: "
-msgstr "Pozicija: "
-
-#: ../src/PlayerInterface.cs:747 ../src/PlayerInterface.cs:2036
-#: ../src/Banshee.Base/ActionManager.cs:203
-msgid "Play"
-msgstr "Groti"
-
-#: ../src/PlayerInterface.cs:751
+#: ../src/PlayerInterface.cs:686
 msgid "Pause"
 msgstr "Pauzė"
 
-#: ../src/PlayerInterface.cs:806
+#: ../src/PlayerInterface.cs:746
 msgid "Cannot Play Song"
 msgstr "Nepavyko pagroti dainos"
 
-#: ../src/PlayerInterface.cs:807
+#: ../src/PlayerInterface.cs:747
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -1009,49 +1880,40 @@ msgstr ""
 "  <big>•</big> Daina yra apsaugota (DRM)\n"
 "  <big>•</big> Daina yra grotuve, kuris nepalaiko grojimo\n"
 
-#: ../src/PlayerInterface.cs:1083
-msgid "Import Folder to Library"
-msgstr "Importuoti aplanką į biblioteką"
+#: ../src/PlayerInterface.cs:1141
+msgid "Import"
+msgstr "Importuoti"
 
-#: ../src/PlayerInterface.cs:1169 ../src/Banshee.Base/ActionManager.cs:249
-msgid "Synchronize"
-msgstr "Sinchronizuoti"
-
-#: ../src/PlayerInterface.cs:1170 ../src/PlayerInterface.cs:2376
+#: ../src/PlayerInterface.cs:1152 ../src/PlayerInterface.cs:2218
 msgid "Rename Device"
 msgstr "Pervadinti įrenginį"
 
-#: ../src/PlayerInterface.cs:1172 ../src/PlayerInterface.cs:2370
+#: ../src/PlayerInterface.cs:1154 ../src/PlayerInterface.cs:2212
 msgid "Rename Playlist"
 msgstr "Pervadinti grojaraštį"
 
-#: ../src/PlayerInterface.cs:1193
+#: ../src/PlayerInterface.cs:1175
 msgid "Reading table of contents from CD..."
 msgstr "Skaitomas CD turinys..."
 
-#: ../src/PlayerInterface.cs:1198
+#: ../src/PlayerInterface.cs:1180
 msgid "Searching for CD metadata..."
 msgstr "Ieškoma CD metaduomenų..."
 
-#: ../src/PlayerInterface.cs:1203
+#: ../src/PlayerInterface.cs:1185
 msgid "Searching for CD cover art..."
 msgstr "Ieškoma CD viršelio paveikslėlio..."
 
-#: ../src/PlayerInterface.cs:1208
+#: ../src/PlayerInterface.cs:1190
 msgid ""
 "Cannot search for CD metadata: there is no available Internet connection"
-msgstr ""
-"CD metaduomenų paieška negalima: neprisijungta prie Interneto"
+msgstr "CD metaduomenų paieška negalima: neprisijungta prie Interneto"
 
-#: ../src/PlayerInterface.cs:1214
+#: ../src/PlayerInterface.cs:1196
 msgid "Could not fetch metadata for CD."
 msgstr "Nepavyko gauti CD metaduomenų."
 
-#: ../src/PlayerInterface.cs:1441
-msgid "Synchronizing your Device, Please Wait..."
-msgstr "Palaukite, sinchronizuojamas Jūsų įrenginys..."
-
-#: ../src/PlayerInterface.cs:1456
+#: ../src/PlayerInterface.cs:1355
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
@@ -1059,15 +1921,7 @@ msgstr[0] "{0} diena"
 msgstr[1] "{0} dienos"
 msgstr[2] "{0} dienų"
 
-#: ../src/PlayerInterface.cs:1474
-msgid "Your Library is Empty - Consider Importing Music"
-msgstr "Jūsų biblioteka tuščia - importuokite į ją muzikos"
-
-#: ../src/PlayerInterface.cs:1478
-msgid "This Playlist is Empty - Consider Adding Music"
-msgstr "Šis grojaraštis tuščias - įdėkite į jį muzikos"
-
-#: ../src/PlayerInterface.cs:1482
+#: ../src/PlayerInterface.cs:1372
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
@@ -1075,37 +1929,33 @@ msgstr[0] "{0} elementas"
 msgstr[1] "{0} elementai"
 msgstr[2] "{0} elementų"
 
-#: ../src/PlayerInterface.cs:1484
+#: ../src/PlayerInterface.cs:1374
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "bendras grojimo laikas {0}"
 
-#: ../src/PlayerInterface.cs:1799
+#: ../src/PlayerInterface.cs:1686
 msgid "Clear"
 msgstr "Išvalyti"
 
-#: ../src/PlayerInterface.cs:1997
+#: ../src/PlayerInterface.cs:1895
 msgid "Could Not Eject"
 msgstr "Nepavyko išmesti CD"
 
-#: ../src/PlayerInterface.cs:2045
-msgid "Banshee - Idle"
-msgstr "Banshee - Negroja"
-
-#: ../src/PlayerInterface.cs:2070
+#: ../src/PlayerInterface.cs:1939
 msgid "Cannot Import"
 msgstr "Nepavyko importuoti"
 
-#: ../src/PlayerInterface.cs:2071 ../src/PlayerInterface.cs:2075
+#: ../src/PlayerInterface.cs:1940 ../src/PlayerInterface.cs:1944
 msgid "Scanning"
 msgstr "Skanuojama"
 
-#: ../src/PlayerInterface.cs:2073
+#: ../src/PlayerInterface.cs:1942
 #, csharp-format
 msgid "Cannot Import: {0} ({1}, {2})"
 msgstr "Nepavyko importuoti: {0} ({1}. {2})"
 
-#: ../src/PlayerInterface.cs:2101
+#: ../src/PlayerInterface.cs:1986
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -1115,16 +1965,18 @@ msgid_plural ""
 "library <i><b>and</b></i> your drive? This action will permanently delete "
 "the files."
 msgstr[0] ""
-"Ar tikrai norite pašalinti pasirinktą dainą iš Jūsų bibliotekos <i><b>ir</b>"
-"</i> disko? Atlikus šį veiksmą bylą bus negrįžtamai ištrinta."
+"Ar tikrai norite pašalinti pasirinktą dainą iš Jūsų bibliotekos <i><b>ir</"
+"b></i> disko? Atlikus šį veiksmą rinkmeną bus negrįžtamai ištrinta."
 msgstr[1] ""
 "Ar tikrai norite pašalinti <b>{0}</b> pasirinktas dainas iš Jūsų bibliotekos "
-"<i><b>ir</b></i> disko? Atlikus šį veiksmą bylos bus negrįžtamai ištrintos."
+"<i><b>ir</b></i> disko? Atlikus šį veiksmą rinkmenos bus negrįžtamai "
+"ištrintos."
 msgstr[2] ""
 "Ar tikrai norite pašalinti <b>{0}</b> pasirinktų dainų iš Jūsų bibliotekos "
-"<i><b>ir</b></i> disko? Atlikus šį veiksmą bylos bus negrįžtamai ištrintos."
+"<i><b>ir</b></i> disko? Atlikus šį veiksmą rinkmenos bus negrįžtamai "
+"ištrintos."
 
-#: ../src/PlayerInterface.cs:2110
+#: ../src/PlayerInterface.cs:1995
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -1136,29 +1988,25 @@ msgstr[1] ""
 msgstr[2] ""
 "Ar tikrai norite iš bibliotekos pašalinti <b>({0})</b> pasirinktų dainų?"
 
-#: ../src/PlayerInterface.cs:2119
+#: ../src/PlayerInterface.cs:2004
 msgid "Remove Selected Songs from Library"
 msgstr "Pašalinti pažymėtas dainas iš bibliotekos"
 
-#: ../src/PlayerInterface.cs:2220
-msgid "Import Files to Library"
-msgstr "Importuoti bylas į biblioteką"
-
-#: ../src/PlayerInterface.cs:2266
+#: ../src/PlayerInterface.cs:2108
 msgid "Invalid Selection"
 msgstr "Netinkamas pasirinkimas"
 
-#: ../src/PlayerInterface.cs:2267
+#: ../src/PlayerInterface.cs:2109
 msgid "You must select at least one track to import."
 msgstr "Turite pasirinkti bent vieną importuotiną takelį."
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2304
+#: ../src/PlayerInterface.cs:2146
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Sinchronizuoti {0}"
 
-#: ../src/PlayerInterface.cs:2305
+#: ../src/PlayerInterface.cs:2147
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -1168,15 +2016,15 @@ msgid ""
 "<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
 "made"
 msgstr ""
-"Atlikote pakeitimus savo {0}. Pasirinkite Jūsų {0} turinio atnaujinimo metodą."
-"\n"
+"Atlikote pakeitimus savo {0}. Pasirinkite Jūsų {0} turinio atnaujinimo "
+"metodą.\n"
 "\n"
 "<big>•</big> <i>Sinchronizuoti biblioteką</i>: sinchronizuoti Banshee "
 "biblioteką su {0}\n"
 "<big>•</big> <i>Išsaugoti rankinius pakeitimus</i>: išsaugoti tik Jūsų "
 "atliktus pakeitimus"
 
-#: ../src/PlayerInterface.cs:2311
+#: ../src/PlayerInterface.cs:2153
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -1184,67 +2032,63 @@ msgstr ""
 "<b>Dėmesio:</b> atlikus šiuos veiksmus bus pakeistas arba ištrintas iPod "
 "turinys, šito pasekmė gali būti nesuderinamumas su iTunes!"
 
-#: ../src/PlayerInterface.cs:2313
+#: ../src/PlayerInterface.cs:2155
 msgid "Synchronize Library"
 msgstr "Sinchronizuoti biblioteką"
 
-#: ../src/PlayerInterface.cs:2315
+#: ../src/PlayerInterface.cs:2157
 msgid "Save Manual Changes"
 msgstr "Išsaugoti rankinius pakeitimus"
 
-#: ../src/PlayerInterface.cs:2371
+#: ../src/PlayerInterface.cs:2213
 msgid "Enter new playlist name"
 msgstr "Įveskite naujo grojaraščio pavadinimą"
 
-#: ../src/PlayerInterface.cs:2377
+#: ../src/PlayerInterface.cs:2219
 msgid "Enter new name for your device"
 msgstr "Įveskite naują pavadinimą Jūsų įrenginiui"
 
-#: ../src/PlaylistColumns.cs:82
+#: ../src/PlaylistColumns.cs:84
 msgid "Invalid column width"
 msgstr "Netinkamas stulpelio plotis"
 
-#: ../src/PlaylistColumns.cs:119
+#: ../src/PlaylistColumns.cs:143
 msgid "Choose Columns"
 msgstr "Pasirinkite stulpelius"
 
-#: ../src/PlaylistColumns.cs:133
+#: ../src/PlaylistColumns.cs:159
 msgid "Visible Playlist Columns"
 msgstr "Matomi grojaraščio stulpeliai"
 
-#: ../src/PlaylistView.cs:83
+#: ../src/PlaylistView.cs:84
 msgid "Track"
 msgstr "Takelis"
 
-#: ../src/PlaylistView.cs:86
+#: ../src/PlaylistView.cs:87
 msgid "Artist"
 msgstr "Atlikėjas"
 
-#: ../src/PlaylistView.cs:89
+#: ../src/PlaylistView.cs:90
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: ../src/PlaylistView.cs:92
+#: ../src/PlaylistView.cs:93
 msgid "Album"
 msgstr "Albumas"
 
-#: ../src/PlaylistView.cs:95
+#: ../src/PlaylistView.cs:99
 msgid "Time"
 msgstr "Laikas"
 
-#: ../src/PlaylistView.cs:100 ../src/Banshee.Base/ActionManager.cs:183
-msgid "Rating"
-msgstr "Įvertinimas"
-
-#: ../src/PlaylistView.cs:107
+#: ../src/PlaylistView.cs:110
 msgid "Plays"
 msgstr "Grojimai"
 
-#: ../src/PlaylistView.cs:115
+#: ../src/PlaylistView.cs:117
 msgid "Last Played"
 msgstr "Vėliausiai grota"
 
-#: ../src/PlaylistView.cs:418
+#: ../src/PlaylistView.cs:441
 msgid "N/A"
 msgstr "Nėra"
 
@@ -1274,718 +2118,77 @@ msgstr "Greičiausias galimas"
 msgid "{0}x"
 msgstr "{0}x"
 
-#: ../src/Preferences.cs:547
-#, csharp-format
-msgid ""
-"You have changed the Banshee Playback Engine. This change will not take "
-"affect until the next time Banshee is run. Please restart Banshee to use the "
-"new <b><i>{0}</i></b> Engine"
-msgstr ""
-"Pakeitėte Banshee grojimo posistemę. Šis pakeitimas neįsigalios, kol "
-"nepaleistie Banshee iš naujo. Jei norite naudoti naują <b><i>{0}</i></b> "
-"posistemę, paleiskite Banshee iš naujo."
-
-#: ../src/Preferences.cs:555
-msgid "Banshee Restart Required"
-msgstr "Reikia perkrauti Banshee"
-
-#: ../src/RipTransaction.cs:69
-msgid "Could not create CD Ripper"
-msgstr "Nepavyko sukurti CD išskleidiklio"
-
-#: ../src/RipTransaction.cs:178
-#, csharp-format
-msgid ""
-"The device node '{0}' differs from the device node already set for "
-"previously queued tracks ({1})"
-msgstr ""
-"Įrenginio mazgas „{0}“ skiriasi nuo anksčiau į eilę padėtų dainų įrenginio "
-"mazgo ({1})"
-
-#: ../src/RipTransaction.cs:196
-msgid "Importing Audio CD"
-msgstr "Importuojamas Audio CD"
-
-#: ../src/RipTransaction.cs:197
-msgid "Initializing Drive"
-msgstr "Inicializuojamas įrenginys"
-
-#: ../src/RipTransaction.cs:221 ../src/Banshee.Base/ImportManager.cs:115
-#, csharp-format
-msgid "Importing {0} of {1}"
-msgstr "Importuojama {0} iš {1}"
-
-#: ../src/SourceView.cs:84 ../src/Banshee.Base/ActionManager.cs:128
-msgid "Source"
-msgstr "Šaltinis"
-
-#: ../src/ToggleStates.cs:41 ../src/Banshee.Base/ActionManager.cs:225
-msgid "Repeat None"
-msgstr "Nekartoti jokių"
-
-#: ../src/ToggleStates.cs:50 ../src/Banshee.Base/ActionManager.cs:233
-msgid "Repeat Single"
-msgstr "Kartoti vieną"
-
-#: ../src/ToggleStates.cs:59 ../src/Banshee.Base/ActionManager.cs:229
-msgid "Repeat All"
-msgstr "Kartoti visas"
-
-#: ../src/ToggleStates.cs:68 ../src/Banshee.Base/ActionManager.cs:239
-msgid "Shuffle"
-msgstr "Maišyti"
-
 #: ../src/ToggleStates.cs:77
 msgid "Continuous"
 msgstr "Ištisinis"
 
-#: ../src/TrackInfoHeader.cs:101
-msgid "by"
-msgstr "atlieka"
-
-#: ../src/TrackInfoHeader.cs:102
-msgid "from"
-msgstr "iš"
-
-#: ../src/TrackProperties.cs:164
+#: ../src/TrackProperties.cs:184
 msgid "Set all Track Numbers to this value"
 msgstr "Nustatyti visų takelių numerius į šią reikšmę"
 
-#: ../src/TrackProperties.cs:165
+#: ../src/TrackProperties.cs:185
 msgid "Automatically Set All Track Numbers"
 msgstr "Automatiškai nustatyti visų takelių numerius"
 
-#: ../src/TrackProperties.cs:166
+#: ../src/TrackProperties.cs:186
 msgid "Set all Track Counts to this value"
 msgstr "Nustatyti visų takelių skaičių į šią reikšmę"
 
-#: ../src/TrackProperties.cs:167
+#: ../src/TrackProperties.cs:187
 msgid "Set all Artists to this value"
 msgstr "Nustatyti visus atlikėjus į šią reikšmę"
 
-#: ../src/TrackProperties.cs:168
+#: ../src/TrackProperties.cs:188
 msgid "Set all Albums to this value"
 msgstr "Nustatyti visus albumus į šią reikšmę"
 
-#: ../src/TrackProperties.cs:169
+#: ../src/TrackProperties.cs:189
 msgid "Set all Titles to this value"
 msgstr "Nustatyti visus pavadinimus į šią reikšmę"
 
-#: ../src/TrackProperties.cs:212
+#: ../src/TrackProperties.cs:190
+msgid "Set all Genres to this value"
+msgstr "Nustatyti visus žanrus į šią reikšmę"
+
+#: ../src/TrackProperties.cs:234
 msgid "Never Played"
 msgstr "Niekada negrota"
 
-#: ../src/TrackProperties.cs:218
+#: ../src/TrackProperties.cs:239
 #, csharp-format
-msgid "Editing Track Properties ({0} of {1})"
-msgstr "Keičiamos takelio savybės ({0} iš {1}"
+msgid "Editing Song {0} of {1}"
+msgstr "Redaguojama {0} daina iš {1}"
 
-#: ../src/TrackProperties.cs:221
-msgid "Editing Track Properties"
-msgstr "Keičiamos takelio savybės"
-
-#: ../src/TrackProperties.cs:225 ../src/TrackProperties.cs:226
+#: ../src/TrackProperties.cs:246 ../src/TrackProperties.cs:247
 #, csharp-format
 msgid "File: {0}"
-msgstr "Byla: {0}"
+msgstr "Rinkmena: {0}"
 
-#: ../src/TrackProperties.cs:232
+#: ../src/TrackProperties.cs:253
 msgid "KB/Second"
 msgstr "KB/sekundę"
 
-#: ../src/TrackProperties.cs:233
+#: ../src/TrackProperties.cs:254
 #, csharp-format
 msgid "{0} KHz"
 msgstr "{0} KHz"
 
-#: ../src/TrackProperties.cs:234
+#: ../src/TrackProperties.cs:255
 msgid "Yes"
 msgstr "Taip"
 
-#: ../src/TrackProperties.cs:234
+#: ../src/TrackProperties.cs:255
 msgid "No"
 msgstr "Ne"
 
 #: ../src/VersionInformationDialog.cs:62
 msgid "Assembly Version Information"
-msgstr "Rinkinio versijos informacija"
+msgstr "Asemblerio versijos informacija"
 
 #: ../src/VersionInformationDialog.cs:68
 msgid "Assembly Name"
-msgstr "Rinkinio pavadinimas"
+msgstr "Asemblerio pavadinimas"
 
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "Versija"
-
-#: ../src/Banshee.Base/ActionManager.cs:61
-msgid "_Music"
-msgstr "_Muzika"
-
-#: ../src/Banshee.Base/ActionManager.cs:65
-msgid "Create a new empty playlist"
-msgstr "Sukurti naują tuščią grojaraštį"
-
-#: ../src/Banshee.Base/ActionManager.cs:68
-msgid "Import _Folder..."
-msgstr "Importuoti _aplanką..."
-
-#: ../src/Banshee.Base/ActionManager.cs:69
-msgid "Import the contents of an entire folder"
-msgstr "Importuoti visą aplanko turinį"
-
-#: ../src/Banshee.Base/ActionManager.cs:72
-msgid "Import Files..."
-msgstr "Importuoti bylas..."
-
-#: ../src/Banshee.Base/ActionManager.cs:73
-msgid "Import files inside a folder"
-msgstr "Importuoti bylas esančias aplanke"
-
-#: ../src/Banshee.Base/ActionManager.cs:76
-msgid "Source Properties..."
-msgstr "Šaltinio savybės..."
-
-#: ../src/Banshee.Base/ActionManager.cs:77
-msgid "View source properties"
-msgstr "Žiūrėti šaltinio savybes"
-
-#: ../src/Banshee.Base/ActionManager.cs:80
-msgid "_Quit"
-msgstr "Iš_eiti"
-
-#: ../src/Banshee.Base/ActionManager.cs:81
-msgid "Quit Banshee"
-msgstr "Palikti Banshee"
-
-#: ../src/Banshee.Base/ActionManager.cs:84
-msgid "_Edit"
-msgstr "_Keisti"
-
-#: ../src/Banshee.Base/ActionManager.cs:87
-msgid "Rename Source"
-msgstr "Pervadinti šaltinį"
-
-#: ../src/Banshee.Base/ActionManager.cs:88
-msgid "Rename the active source"
-msgstr "Pervadinti aktyvų šaltinį"
-
-#: ../src/Banshee.Base/ActionManager.cs:91
-msgid "Select All"
-msgstr "Pasirinkti visas"
-
-#: ../src/Banshee.Base/ActionManager.cs:92
-msgid "Select all songs in song list"
-msgstr "Pasirinkti visas dainas dainų sąraše"
-
-#: ../src/Banshee.Base/ActionManager.cs:95
-msgid "Select None"
-msgstr "Nepasirinkti jokių"
-
-#: ../src/Banshee.Base/ActionManager.cs:96
-msgid "Unselect all songs in song list"
-msgstr "Nepasirinkti jokių dainų dainų sąraše"
-
-#: ../src/Banshee.Base/ActionManager.cs:99
-msgid "Preferences..."
-msgstr "Nustatymai..."
-
-#: ../src/Banshee.Base/ActionManager.cs:100
-msgid "Edit Banshee preferences"
-msgstr "Keisti Banshee nustatymus"
-
-#: ../src/Banshee.Base/ActionManager.cs:103
-msgid "_View"
-msgstr "_Rodymas"
-
-#: ../src/Banshee.Base/ActionManager.cs:106
-msgid "Columns..."
-msgstr "Stulpeliai..."
-
-#: ../src/Banshee.Base/ActionManager.cs:107
-msgid "Select which columns to display in the song list"
-msgstr "Pasirinkite kokius stulpelius rodyti dainų sąraše"
-
-#: ../src/Banshee.Base/ActionManager.cs:110
-msgid "Logged Events Viewer..."
-msgstr "Užfiksuotų įvykių žiūryklė..."
-
-#: ../src/Banshee.Base/ActionManager.cs:111
-msgid "View a detailed log of events"
-msgstr "Rodyti detalų įvykių žurnalą"
-
-#: ../src/Banshee.Base/ActionManager.cs:114
-msgid "_Help"
-msgstr "Ž_inynas"
-
-#: ../src/Banshee.Base/ActionManager.cs:117
-msgid "Version Information..."
-msgstr "Versijos informacija..."
-
-#: ../src/Banshee.Base/ActionManager.cs:118
-msgid "View detailed version and configuration information"
-msgstr "Žiūrėti detalią versijos ir konfigūracijos informaciją"
-
-#: ../src/Banshee.Base/ActionManager.cs:121
-msgid "About..."
-msgstr "Apie..."
-
-#: ../src/Banshee.Base/ActionManager.cs:122
-msgid "View Banshee credits and license information"
-msgstr "Žiūrėti Banshee padėkas ir licencijos informaciją"
-
-#: ../src/Banshee.Base/ActionManager.cs:125
-msgid "_Playback"
-msgstr "_Grojimas"
-
-#: ../src/Banshee.Base/ActionManager.cs:139
-msgid "Fullscreen"
-msgstr "Visame ekrane"
-
-#: ../src/Banshee.Base/ActionManager.cs:140
-msgid "Toggle Fullscreen Mode"
-msgstr "Perjungti viso ekrano režimą"
-
-#: ../src/Banshee.Base/ActionManager.cs:143
-msgid "Show Cover Art"
-msgstr "Rodyti viršelių paveikslėlius"
-
-#: ../src/Banshee.Base/ActionManager.cs:144
-msgid "Toggle display of album cover art"
-msgstr "Rodyti albumų viršelių paveikslėlių rodymą"
-
-#: ../src/Banshee.Base/ActionManager.cs:153
-msgid "Delete Playlist"
-msgstr "Ištrinti grojaraštį"
-
-#: ../src/Banshee.Base/ActionManager.cs:154
-msgid "Delete the active playlist"
-msgstr "Ištrinti aktyvų grojaraštį"
-
-#: ../src/Banshee.Base/ActionManager.cs:163
-msgid "Write CD"
-msgstr "Rašyti CD"
-
-#: ../src/Banshee.Base/ActionManager.cs:164
-msgid "Write selection to audio CD"
-msgstr "Rašyti pasirinkimą į Audio CD"
-
-#: ../src/Banshee.Base/ActionManager.cs:167
-msgid "Remove Song(s)"
-msgstr "Pašalinti dainą(as)"
-
-#: ../src/Banshee.Base/ActionManager.cs:168
-msgid "Remove selected song(s) from library"
-msgstr "Pašalinti pasirinktą(as) dainą(as) iš bibliotekos"
-
-#: ../src/Banshee.Base/ActionManager.cs:171
-msgid "Delete Song(s) From Drive"
-msgstr "Ištrinti dainą(as) iš disko"
-
-#: ../src/Banshee.Base/ActionManager.cs:172
-msgid "Permanently delete selected song(s) from storage medium"
-msgstr "Negrįžtamai ištrinti pasirinktą(as) dainą(as) iš kaupiklio"
-
-#: ../src/Banshee.Base/ActionManager.cs:175
-msgid "Properties"
-msgstr "Savybės"
-
-#: ../src/Banshee.Base/ActionManager.cs:176
-msgid "Edit metadata on selected songs"
-msgstr "Keisti pasirinktų dainų metaduomenis"
-
-#: ../src/Banshee.Base/ActionManager.cs:179
-msgid "Add to Playlist"
-msgstr "Įdėti į grojaraštį"
-
-#: ../src/Banshee.Base/ActionManager.cs:180
-msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr "Pridėti pasirinktas dainas į grojaraštį arba sukurti naują grojaraštį"
-
-#: ../src/Banshee.Base/ActionManager.cs:184
-msgid "Set rating for selected songs"
-msgstr "Nustatyti pasirinktų dainų įvertinimą"
-
-#: ../src/Banshee.Base/ActionManager.cs:193
-msgid "Import CD"
-msgstr "Importuoti CD"
-
-#: ../src/Banshee.Base/ActionManager.cs:194
-msgid "Import audio CD to library"
-msgstr "Importuoti Audio CD į biblioteką"
-
-#: ../src/Banshee.Base/ActionManager.cs:204
-#: ../src/Banshee.Base/ActionManager.cs:208
-#: ../src/Banshee.Base/ActionManager.cs:212
-msgid "Play or pause the current song"
-msgstr "Groti/pristabdyti šią dainą"
-
-#: ../src/Banshee.Base/ActionManager.cs:207
-msgid "Next"
-msgstr "Sekanti"
-
-#: ../src/Banshee.Base/ActionManager.cs:211
-msgid "Previous"
-msgstr "Ankstesnė"
-
-#: ../src/Banshee.Base/ActionManager.cs:215
-msgid "Seek Backward"
-msgstr "Prasukti atgal"
-
-#: ../src/Banshee.Base/ActionManager.cs:216
-msgid "Seek backward in current song"
-msgstr "Prasukti šią dainą atgal"
-
-#: ../src/Banshee.Base/ActionManager.cs:219
-msgid "Seek Forward"
-msgstr "Prasukti į priekį"
-
-#: ../src/Banshee.Base/ActionManager.cs:220
-msgid "Seek forward in current song"
-msgstr "Prasukti šią dainą į priekį"
-
-#: ../src/Banshee.Base/ActionManager.cs:226
-msgid "Do not repeat playlist"
-msgstr "Nekartoti grojaraščio"
-
-#: ../src/Banshee.Base/ActionManager.cs:230
-msgid "Play all songs before repeating playlist"
-msgstr "Prieš grojaraščio kartojimą pagroti visas dainas"
-
-#: ../src/Banshee.Base/ActionManager.cs:234
-msgid "Repeat the current playing song"
-msgstr "Kartoti dabar grojamą dainą"
-
-#: ../src/Banshee.Base/ActionManager.cs:240
-msgid "Toggle between shuffle or continuous playback modes"
-msgstr "Perjungti tarp maišymo ir ištisinio grojimo režimų"
-
-#: ../src/Banshee.Base/ActionManager.cs:250
-msgid "Save changes to device or synchronize music library"
-msgstr "Išsaugoti pakeitimus į įrenginį arba sinchronizuoti muzikos biblioteką"
-
-#: ../src/Banshee.Base/ActionManager.cs:259
-msgid "Eject"
-msgstr "Išmesti"
-
-#: ../src/Banshee.Base/ActionManager.cs:260
-msgid "Eject the active source"
-msgstr "Išmesti aktyvų šaltinį"
-
-#: ../src/Banshee.Base/FileEncodeAction.cs:68
-msgid "File Encoder"
-msgstr "Bylos enkoderis"
-
-#: ../src/Banshee.Base/FileEncodeAction.cs:69
-msgid "Encoding Files"
-msgstr "Koduojamos bylos"
-
-#: ../src/Banshee.Base/FileEncodeAction.cs:72
-msgid "Initializing Encoder..."
-msgstr "Inicializuojamas enkoderis..."
-
-#: ../src/Banshee.Base/GstFileEncoder.cs:67
-msgid "Could not create encoder"
-msgstr "Nepavyko sukurti enkoderio"
-
-#: ../src/Banshee.Base/GstFileEncoder.cs:87
-#, csharp-format
-msgid "Could not encode file: {0}"
-msgstr "Nepavyko enkoduoti bylos: {0}"
-
-#: ../src/Banshee.Base/HalCore.cs:97
-msgid "HAL could not be initialized"
-msgstr "Nepavyko inicializuoti HAL"
-
-#: ../src/Banshee.Base/HalCore.cs:104
-msgid "HAL context could not be created"
-msgstr "Nepavyko sukurti HAL konteksto"
-
-#: ../src/Banshee.Base/HalCore.cs:105
-msgid "D-Bus may not be working or configured properly"
-msgstr "Gali būti, kad D-Bus neveikia arba neteisingai sukonfigūruotas"
-
-#: ../src/Banshee.Base/ImportManager.cs:83
-msgid "Importing Songs"
-msgstr "Importuojamos dainos"
-
-#: ../src/Banshee.Base/ImportManager.cs:86
-msgid "Scanning for songs"
-msgstr "Ieškoma dainų"
-
-#: ../src/Banshee.Base/NetworkDetect.cs:76
-msgid "Cannot connect to NetworkManager"
-msgstr "Nepavyko prisijungti prie NetworkManager"
-
-#: ../src/Banshee.Base/NetworkDetect.cs:77
-msgid "An available, working network connection will be assumed"
-msgstr "Bus naudojamas prienamas, veikiantis tinklo prisijungimas"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:105
-msgid "Pipeline profile is empty."
-msgstr "Konvejerio profilis tuščias."
-
-#: ../src/Banshee.Base/PipelineProfile.cs:111
-msgid "Pipeline profile does not have the correct number of components (7)"
-msgstr "Konvejerio profilyje neteisingas komponentų skaičius (7)"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:121
-msgid "Pipeline profile does not have a lookup key"
-msgstr "Konvejerio profilyje nėra peržiūros rakto"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:125
-msgid "Pipeline profile does not have a display name"
-msgstr "Konvejerio profilyje nėra ekrano pavadinimo"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:130
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a file extension"
-msgstr "Konvejerio profilis „{0}“ nėturi bylos plėtinio"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:136
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a GStreamer element"
-msgstr "Konvejerio profilis „{0}“ neturi GStreamer elemento"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:167
-#, csharp-format
-msgid ""
-"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
-"not be run"
-msgstr ""
-"Konvejerio profilis „{0}“ bus neprieinamas: nepavyko paleisti GStreamer "
-"konvejerio „{1}“"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:195
-msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
-msgstr ""
-"Negalima naudoti vidinio bitų dažnio. Vietoj to naudokite BuildPipeline(bitų "
-"dažnis)"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:215
-msgid ""
-"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
-"PipelineProfile(profile))"
-msgstr ""
-"Nepavyko nurodyti vidinio bitų dažnio. Turite nukopijuoti profilį ir "
-"nustatyti bitų dažnį kopijoje (naujas PipelineProfile(profilis))"
-
-#. Translators: used to specify the bitrate for ripping
-#: ../src/Banshee.Base/PipelineProfile.cs:362
-msgid "at"
-msgstr "Kokybė:"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:404
-msgid "No iPod-compatible encoders available"
-msgstr "Nėra prieinamų su iPod suderinamų enkoderių"
-
-#: ../src/Banshee.Base/PlayerEngineCore.cs:93
-msgid "CD playback is not supported for this instance"
-msgstr "Ši instancija nepalaiko CD grojimo"
-
-#: ../src/Banshee.Base/TrackInfo.cs:316
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
-msgid "Unknown Artist"
-msgstr "Nežinomas atlikėjas"
-
-#: ../src/Banshee.Base/TrackInfo.cs:324
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
-msgid "Unknown Album"
-msgstr "Nežinomas albumas"
-
-#: ../src/Banshee.Base/TrackInfo.cs:332
-msgid "Unknown Title"
-msgstr "Nežinomas pavadinimas"
-
-#: ../src/Banshee.Base/Utilities.cs:74
-#, csharp-format
-msgid "{0:0.00} GB"
-msgstr "{0:0.00} GB"
-
-#: ../src/Banshee.Base/Utilities.cs:75
-#, csharp-format
-msgid "{0} MB"
-msgstr "{0} MB"
-
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:78
-msgid "HAL is not initialized"
-msgstr "HAL neinicializuotas"
-
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:84
-msgid "Audio CD Core Initialized"
-msgstr "Inicializuota Audio CD šerdis"
-
-#. work around mcs #76642
-#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:100
-msgid "Could not Read Audio CD"
-msgstr "Nepavyko perskaityti Audio CD"
-
-#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:88
-#, csharp-format
-msgid "Track {0}"
-msgstr "Takelis {0}"
-
-#: ../src/Banshee.Base/Dap/Dap.cs:309 ../src/Banshee.Base/Dap/Dap.cs:310
-msgid "Synchronizing Device"
-msgstr "Sinchronizuojamas įrenginys"
-
-#: ../src/Banshee.Base/Dap/Dap.cs:311
-msgid "Waiting for transcoder..."
-msgstr "Laukiama transkoderio..."
-
-#: ../src/Banshee.Base/Dap/Dap.cs:395 ../src/Banshee.Base/Dap/Dap.cs:416
-msgid "Processing..."
-msgstr "Apdorojama..."
-
-#: ../src/Banshee.Base/Dap/DapCore.cs:119
-msgid "Cannot initialize DapCore because HalCore is not initialized"
-msgstr "Nepavyko Inicializuoti DapCore, nes neinicializuotas HalCore"
-
-#: ../src/Banshee.Base/Dap/DapCore.cs:173
-msgid "Could not process connected DAP"
-msgstr "Nepavyko apdoroti prijungto DAP"
-
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:128
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:147
-msgid "Synchronizing iPod"
-msgstr "Sinchronizuojamas iPod"
-
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:129
-msgid "Pre-processing tracks"
-msgstr "Ruošiamasi apdoroti takelius"
-
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:144
-msgid "Flushing to Disk (may take time)"
-msgstr "Perkeliama į diską (gali šiek tiek užtrukti)"
-
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:154
-msgid "Failed to synchronize iPod"
-msgstr "Nepavyko sinchronizuoti iPod"
-
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:113
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:406
-msgid "Could not initialize GStreamer library"
-msgstr "Nepavyko inicializuoti GStreamer bibliotekos"
-
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:237
-msgid "Unknown Error"
-msgstr "Nežinoma klaida"
-
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:294
-msgid "GStreamer 0.10 Engine"
-msgstr "GStreamer 0.10 posistemė"
-
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:304
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:615
-msgid ""
-"GStreamer is a multimedia framework for playing and manipulating media. Any "
-"GStreamer plugin that is available will work through this engine."
-msgstr ""
-"GStreamer yra multimedijos sistema skirta garso bei vaizdo apdorojimui. "
-"Naudojant šią posistemę veiks bet kokie prieinami GStreamer įskiepiai."
-
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:604
-msgid "GStreamer Engine"
-msgstr "GStreamer posistemė"
-
-#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:81
-msgid "Helix Framework Engine (hxclientkit)"
-msgstr "Helix Framework Engine (hxclientkit)"
-
-#: ../src/Banshee.MediaEngine/Helix/HelixPlayer.cs:89
-msgid ""
-"The Helix Engine provides multimedia control through the Helix Multimedia "
-"Framework, sponsored by RealNetworks. The engine can play any file that "
-"RealPlayer can. Install RealPlayer for best results."
-msgstr ""
-"Helix posistemė suteikia multimedijos valdymą naudojant Helix Multimedia "
-"Framework, remiamą RealNetworks kompanijos. Ši posistemė gali groti bet "
-"kokio formato, palaikomo RealPlayer, dainas. Norėdami pasiekti geriausių "
-"rezultatų turite įdiegti RealPlayer."
-
-#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:80
-msgid "VLC"
-msgstr "VLC"
-
-#: ../src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs:88
-msgid ""
-"VLC is a highly portable multimedia player for various audio and video "
-"formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
-msgstr ""
-"VLC yra daugiaplatformis įvairių video ir audio formatų grotuvas (MP3, AAC, "
-"OGG, FLAC, WMA, kt.) Žr. http://videolan.org/vlc/"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:50
-msgid "Configure Audioscrobbler"
-msgstr "Konfigūruoti Audioscrobbler"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:70
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:75
-msgid "Audioscrobbler"
-msgstr "Audioscrobbler"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:74
-msgid ""
-"Your profile page on Last.fm is automatically updated whenever you listen to "
-"music. It lets others see what you're listening to right now, and shows "
-"charts of your listening history."
-msgstr ""
-"Kai Jūs klausote muzikos Jūsų Last.fm profilio puslapis atnaujinamas "
-"automatiškai. Ten kiti gali pamatyti ko Jūs šiuo metu klausotės bei rodo "
-"Jūsų klausymosi istorijos diagramas."
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:81
-msgid "Create a free Last.fm account"
-msgstr "Sukurti nemokamą Last.fm abonementą"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:104
-msgid "Last.fm Username"
-msgstr "Last.fm naudotojo vardas"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:105
-msgid "Last.fm Password"
-msgstr "Last.fm slaptažodis"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:76
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:80
-msgid "Configure the Audioscrobbler plugin"
-msgstr "Konfigūruoti Audioscrobbler įskiepį"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:79
-msgid "Configure..."
-msgstr "Konfigūruoti..."
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:83
-msgid "Visit Profile Page"
-msgstr "Aplankyti profilio puslapį"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:84
-msgid "Visit your Audioscrobbler profile page"
-msgstr "Aplankyti Jūsų Audioscrobbler profilio puslapį"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
-msgid "Enable the Audioscrobbler plugin"
-msgstr "Įjungti Audioscrobbler įskiepį"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
-msgid "Your last.fm password"
-msgstr "Jūsų last.fm slaptažodis"
-
-#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
-msgid "Your last.fm username"
-msgstr "Jūsų last.fm naudotojo vardas"
-
-#: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
-msgid "Cancel Operation"
-msgstr "Atšaukti operaciją"
-
-#: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
-#, csharp-format
-msgid "Are you sure you want to cancel the '{0}' operation?"
-msgstr "Ar tikrai norite atšaukti „{0}“ operaciją?"
-
-#: ../src/Banshee.Widgets/SearchEntry.cs:157
-#: ../src/Banshee.Widgets/SearchEntry.cs:268
-#, csharp-format
-msgid "Searching: {0}"
-msgstr "Ieškoma: {0}"
