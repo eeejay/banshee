@@ -142,22 +142,22 @@ namespace Banshee.Plugins.Audioscrobbler {
 				XmlNodeList nodes = doc.SelectNodes (query);
 
 				foreach (XmlNode node in nodes) {
-					string artist = null;	
-					string album = null;
-					string title = null;
+					string artist = "";	
+					string album = "";
+					string title = "";
 					int duration = 0;
 					DateTime start_time = new DateTime (0);
 
 					foreach (XmlNode child in node.ChildNodes) {
-						if (child.Name == "Artist") {
+						if (child.Name == "Artist" && child.ChildNodes.Count != 0) {
 							artist = child.ChildNodes [0].Value;
-						} else if (child.Name == "Album") {
+						} else if (child.Name == "Album" && child.ChildNodes.Count != 0) {
 							album = child.ChildNodes [0].Value;
-						} else if (child.Name == "Title") {
+						} else if (child.Name == "Title" && child.ChildNodes.Count != 0) {
 							title = child.ChildNodes [0].Value;
-						} else if (child.Name == "Duration") {
+						} else if (child.Name == "Duration" && child.ChildNodes.Count != 0) {
 							duration = Convert.ToInt32 (child.ChildNodes [0].Value);
-						} else if (child.Name == "StartTime") {
+						} else if (child.Name == "StartTime" && child.ChildNodes.Count != 0) {
 							long time = Convert.ToInt64 (child.ChildNodes [0].Value);
 							start_time = DateTimeUtil.FromTimeT (time);
 						}

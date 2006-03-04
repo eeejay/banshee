@@ -1,5 +1,10 @@
 2006-03-04  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: Patch from Ruben to fix
+	BGO #332205
+
+2006-03-04  Aaron Bockover  <aaron@abock.org>
+
 	* data/banshee.glade: Window title changed to 'Banshee Music Player'
 
 	* src/PlayerInterface.cs: Handle PlaylistView.Stopped event to
