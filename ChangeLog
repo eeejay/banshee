@@ -1,5 +1,20 @@
 2006-03-04  Aaron Bockover  <aaron@abock.org>
 
+	* data/banshee.glade: Window title changed to 'Banshee Music Player'
+
+	* src/PlayerInterface.cs: Handle PlaylistView.Stopped event to
+	hide the metadata header and close the track on the player engine; reset
+	interface to idle state
+
+	* src/PlaylistModel.cs:	Added a Stopped event to raise when the end
+	of the model is reached and no track is to be played 
+	by automatic transition
+
+	* src/PlaylistView.cs:  Do not show the play indicator if stopped; fixes
+	small bug slomo noticed due to changes/optimizations from Oscar; 
+
+2006-03-04  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/LibraryTrackInfo.cs: Rewrote some queries without the
 	use of the SQL Query Builder APIs; in GetID, use System.Uri.AbsoluteUri
 	instead of System.Uri.ToString(), (BGO #330580)

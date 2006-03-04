@@ -1,8 +1,8 @@
 /***************************************************************************
  *  PlaylistView.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -352,14 +352,28 @@ namespace Banshee
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
             TrackInfo ti = tree_model.GetValue(iter, 0) as TrackInfo;
-            if((ti != null) && (PlayerEngineCore.ActivePlayer.Track != null)) {
-                CellRendererPixbuf renderer = (CellRendererPixbuf) cell;
+            CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
+            
+            if(PlayerEngineCore.ActivePlayer.Track == null) {
+                model.PlayingIter = TreeIter.Zero;
+                if(ti != null) {
+                    renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
+                } else {
+                    renderer.Pixbuf = null;
+                }
+                
+                return;
+            }
+        
+            if(ti != null) {
                 if(PlayerEngineCore.ActivePlayer.Track.Equals(ti)) {
                     renderer.Pixbuf = nowPlayingPixbuf;
                     model.PlayingIter = iter;
                 } else {
                     renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
                 }
+            } else {
+                renderer.Pixbuf = null;
             }
         }
         

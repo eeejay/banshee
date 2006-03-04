@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  PlaylistModel.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -57,6 +56,7 @@ namespace Banshee
         private bool shuffle = false;
         
         public event EventHandler Updated;
+        public event EventHandler Stopped;
         
         public static int NextUid
         {
@@ -208,6 +208,16 @@ namespace Banshee
             Advance();
         }
         
+        private void StopPlaying()
+        {
+            EventHandler handler = Stopped;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+            
+            playingIter = TreeIter.Zero;
+        }
+        
         private void ChangeDirection(bool forward)
         {
             // TODO: Implement random playback without repeating a track 
@@ -226,9 +236,12 @@ namespace Banshee
             
             if(currentPath == null) {
                 if(shuffle) {
-                    if(!GetRandomTrackIter(out nextIter))
+                    if(!GetRandomTrackIter(out nextIter)) {
+                        StopPlaying();
                         return;
+                    }
                 } else if(!GetIterFirst(out nextIter)) {
+                    StopPlaying();
                     return;
                 }
 
@@ -240,8 +253,10 @@ namespace Banshee
             int index = FindIndex(currentPath);
             bool lastTrack = index == count - 1;
         
-            if(count <= 0 || index >= count || index < 0)
+            if(count <= 0 || index >= count || index < 0) {
+                StopPlaying();
                 return;
+            }
                 
             currentTrack = PathTrackInfo(currentPath);
             currentIter = playingIter;
@@ -250,15 +265,21 @@ namespace Banshee
                 nextIter = currentIter;
             } else if(forward) {
                 if(lastTrack && repeat == RepeatMode.All) {
-                    if(!IterNthChild(out nextIter, 0))
+                    if(!IterNthChild(out nextIter, 0)) {
+                        StopPlaying();
                         return;
+                    }
                 } else if(shuffle) {
-                    if(!GetRandomTrackIter(out nextIter))
+                    if(!GetRandomTrackIter(out nextIter)) {
+                        StopPlaying();
                         return;
+                    }
                 } else {                
                     currentPath.Next();                
-                    if(!GetIter(out nextIter, currentPath))
+                    if(!GetIter(out nextIter, currentPath)) {
+                        StopPlaying();
                         return;
+                    }
                 }
                 
                 nextTrack = IterTrackInfo(nextIter);
@@ -267,9 +288,11 @@ namespace Banshee
                 if(currentTrack.PreviousTrack.Equals(TreeIter.Zero)) {
                     if(index > 0 && currentPath.Prev()) {
                         if(!GetIter(out nextIter, currentPath)) {
+                            StopPlaying();
                             return;
                         }
                     } else {
+                        StopPlaying();
                         return;
                     }
                 } else {
@@ -277,8 +300,11 @@ namespace Banshee
                 }
             }
             
-            if(!nextIter.Equals(TreeIter.Zero))
+            if(!nextIter.Equals(TreeIter.Zero)) {
                 PlayIter(nextIter);
+            } else {
+                StopPlaying();
+            }
         }
 
         public int Count()

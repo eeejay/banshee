@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  PlayerInterface.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -386,6 +385,7 @@ namespace Banshee
             ((Gtk.ScrolledWindow)gxml["LibraryContainer"]).Add(playlistView);
             playlistView.Show();
             playlistModel.Updated += OnPlaylistUpdated;
+            playlistModel.Stopped += OnPlaylistStopped;
             playlistView.KeyPressEvent += OnPlaylistViewKeyPressEvent;
             playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
             playlistView.MotionNotifyEvent += OnPlaylistViewMotionNotifyEvent;
@@ -691,9 +691,20 @@ namespace Banshee
         
         public void UpdateMetaDisplay(TrackInfo ti)
         {
+            if(ti == null) {
+                WindowPlayer.Title = Catalog.GetString("Banshee Music Player");
+                trackInfoHeader.Visible = false;
+                if(trayIcon != null) {
+                    trayIcon.Track = null;
+                }
+                return;
+            }
+        
             trackInfoHeader.Artist = ti.DisplayArtist;
             trackInfoHeader.Title = ti.DisplayTitle;
             trackInfoHeader.Album = ti.DisplayAlbum;
+            
+            trackInfoHeader.Visible = true;
             
             WindowPlayer.Title = ti.DisplayTitle + " (" + ti.DisplayArtist + ")";
             
@@ -1343,6 +1354,12 @@ namespace Banshee
             
             sourceView.QueueDraw();
             playlistView.QueueDraw();
+        }
+
+        private void OnPlaylistStopped(object o, EventArgs args)
+        {
+            PlayerEngineCore.ActivePlayer.Close();
+            UpdateMetaDisplay(null);
         }
 
         private void OnPlaylistUpdated(object o, EventArgs args)
