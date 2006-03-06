@@ -59,7 +59,7 @@ namespace Banshee.Plugins.Daap
             locator.ShowLocalServices = true;
             locator.Start();
             
-            proxy_server = new DaapProxyWebServer(8089);
+            proxy_server = new DaapProxyWebServer();
             proxy_server.Start();
             
             string share_name = null;
@@ -149,7 +149,12 @@ namespace Banshee.Plugins.Daap
         internal static void StartServer()
         {
             Console.WriteLine("Starting DAAP Server");
-            server.Start();
+            try {
+                server.Start();
+            } catch (System.Net.Sockets.SocketException) {
+                server.Port = 0;
+                server.Start();
+            }
             Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], true);
             
             if(!initial_db_committed) {

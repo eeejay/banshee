@@ -51,15 +51,19 @@ namespace Banshee.Plugins.Daap
         private ArrayList clients = new ArrayList();
         private ArrayList databases = new ArrayList();
       
-        public DaapProxyWebServer(ushort port) 
+        public DaapProxyWebServer() 
         {
-            this.port = port;
         }
 
         public void Start() 
         {
             server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            server.Bind(new IPEndPoint(IPAddress.Any, port));
+            try {
+                server.Bind(new IPEndPoint(IPAddress.Any, 8089));
+            } catch (System.Net.Sockets.SocketException) {
+                server.Bind(new IPEndPoint(IPAddress.Any, 0));
+            }
+            port = (ushort)(server.LocalEndPoint as IPEndPoint).Port;
             server.Listen(10);
 
             running = true;
@@ -344,22 +348,12 @@ namespace Banshee.Plugins.Daap
                 DateTime.Now.ToString());
         }
 
-        public ushort RequestedPort {
+        public ushort Port {
             get { 
                 return port;
             }
-            
-            set {
-                port = value; 
-            }
         }
 
-        public ushort BoundPort {
-            get { 
-                return (ushort)(server.LocalEndPoint as IPEndPoint).Port; 
-            }
-        }
-        
         private static IPAddress local_address = IPAddress.Parse("127.0.0.1");
         public IPAddress IPAddress {
             get {
@@ -369,7 +363,7 @@ namespace Banshee.Plugins.Daap
         
         public string HttpBaseAddress {
             get {
-                return String.Format("http://{0}:{1}/", IPAddress, BoundPort);
+                return String.Format("http://{0}:{1}/", IPAddress, Port);
             }
         }
     }

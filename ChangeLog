@@ -1,5 +1,16 @@
 2006-03-05  Aaron Bockover  <aaron@abock.org>
 
+	DAAP Port Binding Patch by Sebastian Dröge
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Try to start DAAP server on
+	default port, then fall back on any available port
+	
+	* src/Banshee.Plugins/Daap/DaapProxyWebServer.cs: Try to start proxy
+	server on default port, then fall back on any available port; removed
+	BoundPort/RequestedPort properties, replaced by a get-only Port property
+
+2006-03-05  Aaron Bockover  <aaron@abock.org>
+
 	* configure.ac: Version 0.10.7
 
 	* NEWS: Updated with 0.10.7 release notes
