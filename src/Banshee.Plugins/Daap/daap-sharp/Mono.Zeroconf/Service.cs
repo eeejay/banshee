@@ -116,7 +116,7 @@ namespace Mono.Zeroconf
                     hosttarget = hosttarget.Substring(0, hosttarget.Length - 7);
                 }
                 
-                hostentry = Dns.GetHostByName(value);
+                hostentry = Dns.GetHostByName(hosttarget);
             }
         }
         

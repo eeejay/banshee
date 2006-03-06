@@ -79,7 +79,8 @@ namespace Banshee
 			new Translator("Lukas Novotny", "Czech"),
 			new Translator("Theppitak Karoonboonyanan", "Thai"),
 			new Translator("Alessandro Gervaso", "Italian"),
-			new Translator("Ilkka Tuohela", "Finnish")
+			new Translator("Ilkka Tuohela", "Finnish"),
+            new Translator("Christopher Orr", "British English")
         };
     
         private class Translator : IComparable
