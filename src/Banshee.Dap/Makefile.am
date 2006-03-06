@@ -1,4 +1,4 @@
-SUBDIRS = Ipod Njb
+SUBDIRS = Ipod MassStorage Njb
 
 
 DISTCLEANFILES = Makefile.in

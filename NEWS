@@ -1,51 +1,43 @@
-Banshee 0.10.6 is out!
+Banshee 0.10.7 is out!
 
-This release features much improved iPod support. A few large bugs were
-fixed regarding iPod syncing, and a database reconstruction was added
-if Banshee ever encounters an iPod database it cannot read (iTunes frequently
-updates the database format). 
-
-
-NOTES
------
-
-This release requires ipod-sharp 0.5.15 for iPod support. Installing 
-libipoddevice 0.4.1 is recommended (especially if you have HAL 0.5.6+), 
-though not required.
+This release features the completion of the GStreamer 0.10 port. Ripping
+and Transcoding now work with GStreamer 0.10. Also featured is a new 
+importing dialog that allows initial importing from Audio CDs, and Genre
+support in the UI. DAAP support can now also use either Avahi or Bonjour
+(mDNSResponder) for Zeroconf mDNS support.
 
 
 NEW FEATURES
 ------------
 
- * If an unsupported iPod database is encountered, Banshee will offer
- to scan the iPod and reconstruct a database; either way, unsupported
- database errors are handled very gracefully now
+ * Full GStreamer 0.10 support
  
- * Use cover.jpg/folder.jpg and others as cover art if it exists
+ * New importing system and UI; plugins can provide custom import sources
  
- * Improved startup time 
-
- * Thai translation by Theppitak Karoonboonyanan
+ * Bonjour/mDNSResponder support in addition to Avahi for Zeroconf support
  
- * ipod-sharp now has fixed logic for syncing, fixes a few bugs
+ * Genre playlist column and entry in track editor
  
- * libipoddevice 0.4.1 can be used which now supports ejecting over HAL/DBus
+ * Shuffle button now has the same behavior as the repeat button
+ 
+ * New translations: British English (Christopher Orr), Finnish (Ilkka Tuohela),
+   and Italian (Alessandro Gervaso)
 
 
 BUG FIXES
 ---------
 
- * 324326: iPod transcoding dies on filenames containing %
- * 324923: Banshee crash on clicking any menu item
- * 326947: Visibility of Rating/Plays/LastPlayed columns are reset to default
- * 327225: Banshee should listen for multimedia keypresses
+ * 324924: Systemtray does not appear
+ * 326915: Automatic syncronization with an iPod hangs
  * 328183: Multiple manual syncronizations of an iPod cause it to corrupt its database
- * 328642: Simple right-click meno on tray icon
- * 329540: banshee wrapper script looks for executable in CWD
- * 329554: cursor jumps from new list to the search box
- * 330288: crash on amd64 when playing ANY file
+ * 329645: Cover art flashing
+ * 329966: CDs Fail to Show Up in Library List
+ * 330003: Banshee crash loading NotificationAreaIcon
+ * 330284: crash at startup with daap plugin when there is a daap share on the network
  * 330524: [PATCH] Doesn't adjust volume when scrolling over the volume widget
  * 330903: [PATCH] Banshee crashes when requesting album cover for an album without one
+ * 332350: [PATCH] make banshee use gconf audio sink with gstreamer 0.10
+ * 326876: daap shares not being removed 
 
 
 THE IMPORTANT LINKS
@@ -70,13 +62,24 @@ Banshee Wiki:
 http://banshee-project.org/
 
 
+CONTRIBUTORS FOR THIS RELEASE
+-----------------------------
+
+Gabriel Burt
+James Willcox
+Jeff Tickle
+Oscar Forero
+Ruben Vermeersch
+Sebastian Dröge
+
+
 DEPENDENCIES
 ------------
 
 - Mono 1.1.10 and full stack
 - gtk-sharp-2.0 (2.8)
 - sqlite3
-- GStreamer 0.8.11 or GStreamer 0.10 (experimental)
+- GStreamer 0.10.3 or GStreamer 0.8.11
 - libmusicbrainz 2.1.1 or better
 - libnautilus-burn 2.12
 - GTK+ 2.8 or better

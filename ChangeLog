@@ -1,3 +1,14 @@
+2006-03-05  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Version 0.10.7
+
+	* NEWS: Updated with 0.10.7 release notes
+
+	* src/Banshee.Dap/MassStorage/Makefile.am: Allow building but do 
+	not install this DAP
+
+	* src/Banshee.Dap/Makefile.am: Added MassStorage to SUBDIRS
+
 2006-03-05  Jeff Tickle  <jeff@jefftickle.com>
 
 	* src/ToggleState.cs: Added support for matching a state to a
