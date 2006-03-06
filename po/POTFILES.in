@@ -19,8 +19,11 @@ src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
 src/Banshee.Base/Dap/DapPropertiesDialog.cs
+src/Banshee.Base/FileImportSource.cs
+src/Banshee.Base/FolderImportSource.cs
 src/Banshee.Base/GstTranscoder.cs
 src/Banshee.Base/HalCore.cs
+src/Banshee.Base/HomeDirectoryImportSource.cs
 src/Banshee.Base/ImportManager.cs
 src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
@@ -37,6 +40,7 @@ src/Banshee.Base/Utilities.cs
 src/Banshee.Dap/Ipod/DatabaseRebuilder.cs
 src/Banshee.Dap/Ipod/IpodDap.cs
 src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
+src/Banshee.Dap/MassStorage/MassStorageDap.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
 src/Banshee.MediaEngine/Helix/HelixPlayer.cs
 src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs

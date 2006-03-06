@@ -1,3 +1,7 @@
+2006-03-05  Aaron Bockover  <aaron@abock.org>
+
+	* POTFILES.in: Added missing files
+
 2006-03-05  Christopher Orr  <chris@orr.me.uk>
 
 	* en_GB.po: Added British English translation.
