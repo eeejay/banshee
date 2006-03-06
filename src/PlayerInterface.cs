@@ -314,12 +314,24 @@ namespace Banshee
             LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
             LabelStatusBar.Show();
             
-            ActionToggleButton shuffle_button = new ActionToggleButton(
+            // Old Shuffle Button
+/*            ActionToggleButton shuffle_button = new ActionToggleButton(
                 Globals.ActionManager["ShuffleAction"], IconSize.Menu);
             shuffle_button.IconSize = IconSize.Menu;
             shuffle_button.Relief = ReliefStyle.None;
-            shuffle_button.ShowAll();
+            shuffle_button.ShowAll();*/
 
+            // Repeat/Shuffle buttons
+            
+            shuffle_toggle_button = new MultiStateToggleButton();
+            shuffle_toggle_button.AddState(typeof(ShuffleDisabledToggleState),
+                    Globals.ActionManager["ShuffleAction"] as ToggleAction);
+            shuffle_toggle_button.AddState(typeof(ShuffleEnabledToggleState),
+                    Globals.ActionManager["ShuffleAction"] as ToggleAction);
+            shuffle_toggle_button.Relief = ReliefStyle.None;
+            shuffle_toggle_button.ShowLabel = false;
+            shuffle_toggle_button.ShowAll();
+            
             repeat_toggle_button = new MultiStateToggleButton();
             repeat_toggle_button.AddState(typeof(RepeatNoneToggleState),
                 Globals.ActionManager["RepeatNoneAction"] as ToggleAction);
@@ -338,7 +350,7 @@ namespace Banshee
             song_properties_button.LabelVisible = false;
             song_properties_button.ShowAll();
             
-            (gxml["BottomToolbar"] as Box).PackStart(shuffle_button, false, false, 0);
+            (gxml["BottomToolbar"] as Box).PackStart(shuffle_toggle_button, false, false, 0);
             (gxml["BottomToolbar"] as Box).PackStart(repeat_toggle_button, false, false, 0);
             (gxml["BottomToolbar"] as Box).PackStart(LabelStatusBar, true, true, 0);
             (gxml["BottomToolbar"] as Box).PackStart(song_properties_button, false, false, 0);
@@ -440,17 +452,6 @@ namespace Banshee
             gxml["SearchLabel"].Sensitive = false;
             searchEntry.Sensitive = false;
                 
-            // Repeat/Shuffle buttons
-            
-            /* shuffle_toggle_button = new MultiStateToggleButton();
-            shuffle_toggle_button.AddState(typeof(ShuffleDisabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, false);
-            shuffle_toggle_button.AddState(typeof(ShuffleEnabledToggleState), gxml["ItemShuffle"] as CheckMenuItem, true);
-            shuffle_toggle_button.Relief = ReliefStyle.None;
-            shuffle_toggle_button.ShowLabel = false;
-            shuffle_toggle_button.Changed += delegate(object o, ToggleStateChangedArgs args) {
-                //HandleShuffleToggleButton();
-            };
-            shuffle_toggle_button.ShowAll();*/
                 
             toolTips = new Tooltips();
             
@@ -464,7 +465,7 @@ namespace Banshee
             SetTip(sync_dap_button, Catalog.GetString("Synchronize music library to device"));
             SetTip(volumeButton, Catalog.GetString("Adjust volume"));
             SetTip(repeat_toggle_button, Catalog.GetString("Change repeat playback mode"));
-            SetTip(shuffle_button, Catalog.GetString("Toggle shuffle playback mode"));
+            SetTip(shuffle_toggle_button, Catalog.GetString("Toggle shuffle playback mode"));
             SetTip(song_properties_button, Catalog.GetString("Edit and view metadata of selected songs"));
             
             playlistMenuMap = new Hashtable();

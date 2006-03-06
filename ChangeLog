@@ -1,3 +1,19 @@
+2006-03-05  Jeff Tickle  <jeff@jefftickle.com>
+
+	* src/ToggleState.cs: Added support for matching a state to a
+	ToggleAction.Active instead of just a ToggleAction through the use of
+	ToggleState.MatchValue.  If ToggleState.MatchActive is false, this is
+	ignored.
+	
+	* src/PlayerInterface.cs: Changed the "Shuffle" button from a ToggleButton
+	to a MultiStateToggleButton
+
+	* src/Banshee.Widgets/MultiStateToggleButton.cs: Added support for
+	the ToggleAction.Active matching in ToggleState.
+	
+	* src/Banshee.Widgets/ToggleStates.cs: The Shuffle ToggleStates 
+	now make use of the new features noted above.
+
 2006-03-05  Aaron Bockover  <aaron@abock.org>
 
 	* src/AboutBox.cs: Added Christopher Orr (British English)

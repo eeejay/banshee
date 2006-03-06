@@ -38,6 +38,8 @@ namespace Banshee.Widgets
         private string label;
         private ToggleAction toggle_action;
         private bool check_active;
+        private bool match_active;
+        private bool match_value;
         
         protected ToggleState()
         {
@@ -80,6 +82,26 @@ namespace Banshee.Widgets
             
             protected set {
                 label = value;
+            }
+        }
+
+        public bool MatchActive {
+            get {
+                return match_active;
+            }
+
+            set {
+                match_active = value;
+            }
+        }
+
+        public bool MatchValue {
+            get {
+                return match_value;
+            }
+
+            set {
+                match_value = value;
             }
         }
     }

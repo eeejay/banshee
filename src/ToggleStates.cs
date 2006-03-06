@@ -66,6 +66,8 @@ namespace Banshee
         {
             Icon = Gdk.Pixbuf.LoadFromResource("media-playlist-shuffle.png");
             Label = Catalog.GetString("Shuffle");
+            MatchActive = true;
+            MatchValue = true;
         }
     }
     
@@ -75,6 +77,8 @@ namespace Banshee
         {
             Icon = Gdk.Pixbuf.LoadFromResource("media-playlist-continuous.png");
             Label = Catalog.GetString("Continuous");
+            MatchActive = true;
+            MatchValue = false;
         }
     }
 }

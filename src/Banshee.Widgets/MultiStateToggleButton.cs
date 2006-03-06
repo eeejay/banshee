@@ -104,7 +104,12 @@ namespace Banshee.Widgets
         {
             Cycle();
             if(this[ActiveStateIndex].ToggleAction != null) {
-                this[ActiveStateIndex].ToggleAction.Active = true;
+                if(this[ActiveStateIndex].MatchActive) {
+                    this[ActiveStateIndex].ToggleAction.Active =
+                        this[ActiveStateIndex].MatchValue;
+                } else {
+                    this[ActiveStateIndex].ToggleAction.Active = true;
+                }
             }
             EmitChanged();
         }
@@ -113,7 +118,9 @@ namespace Banshee.Widgets
         {
             foreach(ToggleState state_instance in states) {
                 if(state_instance.ToggleAction.GetHashCode().Equals(o.GetHashCode())) {
-                    ActiveState = state_instance.GetType();
+                    if(!state_instance.MatchActive || state_instance.MatchValue == (o as ToggleAction).Active) {
+                        ActiveState = state_instance.GetType();
+                    }
                 }
             }
         }
