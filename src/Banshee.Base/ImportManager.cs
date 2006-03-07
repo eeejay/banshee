@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  ImportManager.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -188,17 +187,19 @@ namespace Banshee.Base
             CheckForCanceled();
             scan_ref_count++;
 
-			bool is_regular_file = false;
-			bool is_directory = false;
-			try {
-				Stat buf = new Stat();
-				is_directory = is_regular_file = Syscall.stat(source, out buf) == 0;
-				is_regular_file &= (buf.st_mode & FilePermissions.S_IFREG) == FilePermissions.S_IFREG;
-				is_directory &= (buf.st_mode & FilePermissions.S_IFDIR) == FilePermissions.S_IFDIR;
-			} catch(System.IO.IOException) {
-				scan_ref_count--;
-				return;
-			}
+            bool is_regular_file = false;
+            bool is_directory = false;
+            try {
+                Stat buf = new Stat();
+                is_directory = is_regular_file = Syscall.stat(source, out buf) == 0;
+                is_regular_file &= (buf.st_mode & FilePermissions.S_IFREG) == FilePermissions.S_IFREG;
+                is_directory &= (buf.st_mode & FilePermissions.S_IFDIR) == FilePermissions.S_IFDIR;
+                // FIXME: workaround for http://bugzilla.ximian.com/show_bug.cgi?id=76966
+                is_directory &= ! ((buf.st_mode & FilePermissions.S_IFSOCK) == FilePermissions.S_IFSOCK);
+            } catch(System.IO.IOException) {
+                scan_ref_count--;
+                return;
+            }
 
             if(is_regular_file && !Path.GetFileName(source).StartsWith(".")) {
                 Enqueue(source);

@@ -1,5 +1,10 @@
 2006-03-07  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/ImportManager.cs: Work around socket/directory bug
+	in Mono (Ximian Bugzilla #76966) (Sebastian Dröge)
+
+2006-03-07  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/banshee.glade: Added SourceViewContainer wrapper VBox
