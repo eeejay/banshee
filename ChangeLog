@@ -1,5 +1,12 @@
 2006-03-07  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Plugins/Daap/DaapProxyWebServer.cs: reworked how reading
+	was done so we do not depend on a stream length; only send the
+	Content-Length header if we actually have a length (BGO #329812) Thanks
+	to Sebastian Dröge for helping out on this one
+
+2006-03-07  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Plugins/Daap/Daap.dll.config: Updated to new map made
 	in Mono.Zeroconf/Native.cs
 

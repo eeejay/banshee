@@ -286,6 +286,7 @@ namespace Banshee.Plugins.Daap
             Stream stream = database.StreamSong(song, out length);
             WriteResponseStream(client, stream, length, song.FileName);
             stream.Close();
+            client.Close();
         }
 
         private void WriteResponse(Socket client, HttpStatusCode code, string body) 
@@ -302,34 +303,49 @@ namespace Banshee.Plugins.Daap
             string headers = String.Empty;
             headers += String.Format("HTTP/1.1 {0} {1}\r\n", (int)code, code.ToString());
             headers += String.Format("Content-Length: {0}\r\n", body.Length);
-            headers += String.Format("Content-Type: text/html\r\n");
+            headers += "Content-Type: text/html\r\n";
+            headers += "Connection: close\r\n";
             headers += "\r\n";
             
             using(BinaryWriter writer = new BinaryWriter(new NetworkStream(client, false))) {
                 writer.Write(Encoding.UTF8.GetBytes(headers));
                 writer.Write(body);
             }
+            
+            client.Close();
         }
 
         private void WriteResponseStream(Socket client, Stream response, long length, string filename)
         {
             using(BinaryWriter writer = new BinaryWriter(new NetworkStream(client, false))) {
                 string headers = "HTTP/1.1 200 OK\r\n";
-                headers += String.Format("Content-Length: {0}\r\n", length);
+
+                if(length > 0) {
+                    headers += String.Format("Content-Length: {0}\r\n", length);
+                }
+                
                 if(filename != null) {
                     headers += String.Format("Content-Disposition: attachment; filename=\"{0}\"\r\n",
                         filename.Replace("\"", "\\\""));
                 }
+                
+                headers += "Connection: close\r\n";
                 headers += "\r\n";
                 
                 writer.Write(Encoding.UTF8.GetBytes(headers));
 
                 using(BinaryReader reader = new BinaryReader(response)) {
-                    long count = 0;
-                    while(count < length) {
-                        byte [] buffer = reader.ReadBytes(Math.Min(ChunkLength, (int)length - (int)count));
+                    while(true) {
+                        byte [] buffer = reader.ReadBytes(ChunkLength);
+                        if(buffer == null) {
+                            break;
+                        }
+                        
                         writer.Write(buffer);
-                        count += buffer.Length;
+                        
+                        if(buffer.Length < ChunkLength) {
+                            break;
+                        }
                     }
                 }
             }
