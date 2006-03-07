@@ -93,7 +93,7 @@ required_assemblies="Mono.Data.SqliteClient Mono.Posix System.Runtime.Remoting S
 
 for asm in $required_assemblies; do
 	AC_MSG_CHECKING([for $asm.dll])
-	if test ! -e `$PKG_CONFIG --variable=libdir mono`/mono/1.0/$asm.dll; then
+	if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/1.0/$asm.dll; then
 		AC_MSG_ERROR([missing required Mono DLL: $asm.dll])
 	else
 		AC_MSG_RESULT([found])

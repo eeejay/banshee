@@ -1,3 +1,8 @@
+2006-03-07  Christopher Aillon  <caillon@redhat.com>
+
+	* configure.ac: Look for required DLLs in ${prefix}/lib/mono
+	instead of ${libdir}/mono
+
 2006-03-07  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/ImportManager.cs: Work around socket/directory bug
