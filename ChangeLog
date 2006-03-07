@@ -1,3 +1,12 @@
+2006-03-07  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Daap/Daap.dll.config: Updated to new map made
+	in Mono.Zeroconf/Native.cs
+
+	* src/Banshee.Plugins/Daap/daap-sharp/Mono.Zerocon/*: Updated sources
+	from daap-sharp/Mono.Zeroconf; (run an A query in DNSServiceQueryRecord 
+	to resolve addresses instead of using gethostbyname)
+
 2006-03-07  Christopher Aillon  <caillon@redhat.com>
 
 	* configure.ac: Look for required DLLs in ${prefix}/lib/mono
