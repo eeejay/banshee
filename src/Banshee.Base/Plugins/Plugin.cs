@@ -82,6 +82,11 @@ namespace Banshee.Plugins
                 dispose_requested = false;
                 PluginInitialize();
                 initialized = true;
+                if(!Globals.UIManager.IsInitialized) {
+                    Globals.UIManager.Initialized += OnUIManagerInitialized;
+                } else {
+                    InterfaceInitialize();
+                }
             } catch(Exception e) {
                 LogCore.Instance.PushWarning(String.Format("Could not initialize plugin `{0}'", Name),
                     e.Message, false);
@@ -105,10 +110,23 @@ namespace Banshee.Plugins
         protected virtual void PluginDispose()
         {
         }
+        
+        protected virtual void InterfaceInitialize()
+        {
+        }
 
         public virtual Gtk.Widget GetConfigurationWidget()
         {
             return null;
+        }
+        
+        private void OnUIManagerInitialized(object o, EventArgs args)
+        {
+            Globals.UIManager.Initialized -= OnUIManagerInitialized;
+                
+            if(initialized) {
+                InterfaceInitialize();
+            }
         }
         
         protected bool DisposeRequested {

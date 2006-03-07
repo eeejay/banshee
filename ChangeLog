@@ -1,3 +1,27 @@
+2006-03-07  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.glade: Added SourceViewContainer wrapper VBox
+
+	* src/PlayerInterface.cs: Set up and initialize the new UIManager
+
+	* src/Banshee.Base/Globals.cs: Instantiate and hold a reference to
+	a new UIManager
+
+	* src/Banshee.Base/Gui/UIManager.cs: Simple new UIManager that acts
+	as a proxy to main interface widgets and can notify when the main
+	interface has been initialized and is ready to use
+
+	* src/Banshee.Base/Makefile.am: Added Gui/UIManager.cs
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Added a new virtual method,
+	InterfaceInitialize that will be called when Globals.UIManager has
+	been set up and initialized by the main interface; plugins that wish
+	to manipulate the main UI should override this method and place
+	all UI calls in here; removal/disposal of widgets should be done only
+	after a saftey check to Globals.UIManager.IsInitialized
+
 2006-03-05  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-playback-0.10.c: Store the default audio 

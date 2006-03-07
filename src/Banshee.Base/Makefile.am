@@ -14,7 +14,8 @@ bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
 
 GUI_SOURCES = \
 	$(srcdir)/Gui/GladeDialog.cs \
-	$(srcdir)/Gui/ImportDialog.cs
+	$(srcdir)/Gui/ImportDialog.cs \
+	$(srcdir)/Gui/UIManager.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \

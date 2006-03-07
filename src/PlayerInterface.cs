@@ -192,6 +192,9 @@ namespace Banshee
             WindowPlayer.AddAccelGroup(Globals.ActionManager.UI.AccelGroup);
             
             LoadSettings();
+            
+            Globals.UIManager.SourceViewContainer = gxml["SourceViewContainer"] as Box;
+            Globals.UIManager.Initialize();
         }
    
         private bool InitialLoadTimeout()
@@ -451,7 +454,6 @@ namespace Banshee
                 
             gxml["SearchLabel"].Sensitive = false;
             searchEntry.Sensitive = false;
-                
                 
             toolTips = new Tooltips();
             

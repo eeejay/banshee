@@ -43,6 +43,7 @@ namespace Banshee.Base
         private static AudioCdCore audio_cd_core;
         private static Random random;
         private static DBusRemote dbus_remote;
+        private static Banshee.Gui.UIManager ui_manager;
         
         public static void Initialize()
         {
@@ -55,6 +56,7 @@ namespace Banshee.Base
             gconf_client = new GConf.Client();
             network_detect = NetworkDetect.Instance;
             action_manager = new ActionManager();
+            ui_manager = new Banshee.Gui.UIManager();
             library = new Library();
             random = new Random();
             
@@ -139,6 +141,10 @@ namespace Banshee.Base
             set {
                 dbus_remote = value;
             }
+        }
+        
+        public static Banshee.Gui.UIManager UIManager {
+            get { return ui_manager; }
         }
     }
     
