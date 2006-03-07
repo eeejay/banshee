@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  GstPlayerEngine.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -91,6 +90,9 @@ namespace Banshee.MediaEngine.Gstreamer
         [DllImport("libbanshee")]
         private static extern ulong gst_playback_get_duration(HandleRef engine);
         
+        [DllImport("libbanshee")]
+        private static extern void gst_playback_playbin_set_property(HandleRef engine, IntPtr key, IntPtr value);
+        
         private HandleRef handle;
         private TrackInfo track;
         private bool playing;
@@ -173,6 +175,13 @@ namespace Banshee.MediaEngine.Gstreamer
         {
             playing = false;
             gst_playback_pause(handle);
+        }
+        
+        public void PlaybinSetProperty(string key, IntPtr value)
+        {
+            IntPtr key_ptr = GLib.Marshaller.StringToPtrGStrdup(key);
+            gst_playback_playbin_set_property(handle, key_ptr, value);
+            GLib.Marshaller.Free(key_ptr);
         }
         
         public bool Loaded {

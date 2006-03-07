@@ -28,6 +28,7 @@
  
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <glib.h>
 #include <glib/gstdio.h>
 
@@ -48,6 +49,7 @@ typedef void (* GstPlaybackIterateCallback) (GstPlayback *engine);
 
 struct GstPlayback {
     GstElement *playbin;
+    GstElement *audiosink;
     guint iterate_timeout_id;
     GstPlaybackEosCallback eos_cb;
     GstPlaybackErrorCallback error_cb;
@@ -101,17 +103,14 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
-    GstElement* audiosink;
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
     engine->playbin = gst_element_factory_make("playbin", "playbin");
-    
     g_return_val_if_fail(engine->playbin != NULL, FALSE);
-    
-    audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
-    
-    g_return_val_if_fail(audiosink != NULL, FALSE);
-    g_object_set(G_OBJECT(engine->playbin), "audio-sink", audiosink, NULL);
+
+    engine->audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
+    g_return_val_if_fail(engine->audiosink != NULL, FALSE);
+    g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiosink, NULL);
 
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
         gst_playback_bus_callback, engine);
@@ -311,4 +310,13 @@ gst_playback_get_duration(GstPlayback *engine)
     return 0;
 }
 
+void
+gst_playback_playbin_set_property(GstPlayback *engine, const gchar *key, gpointer value)
+{
+    if(value == NULL && strcmp(key, "audio-sink") == 0) {
+        value = engine->audiosink;
+    }
+    
+    g_object_set(G_OBJECT(engine->playbin), key, value, NULL);
+}
 

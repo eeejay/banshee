@@ -1,5 +1,16 @@
 2006-03-05  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-playback-0.10.c: Store the default audio 
+	sink (gconfaudiosink) in the GstPlayback struct; added a new function
+	gst_playback_playbin_set_property to allow setting properties on the
+	underlying playbin element; allow resetting of the audio-sink property
+	to the default if value is NULL
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Added 
+	binding for gst_playback_playbin_set_property
+
+2006-03-05  Aaron Bockover  <aaron@abock.org>
+
 	DAAP Port Binding Patch by Sebastian Dröge
 
 	* src/Banshee.Plugins/Daap/DaapCore.cs: Try to start DAAP server on
