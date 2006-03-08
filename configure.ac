@@ -50,7 +50,7 @@ AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
-AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the GStreamer 0.10 backends (DEVELOPMENTAL)]), enable_gst_10="yes", enable_gst_10="no")
+AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the GStreamer 0.10 backends]), enable_gst_10="yes", enable_gst_10="no")
 AM_CONDITIONAL(ENABLE_GST_10, test "x$enable_gst_10" = "xyes")
 
 AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
@@ -274,6 +274,7 @@ AM_GST_ELEMENT_CHECK(gnomevfssink, , AC_MSG_ERROR([The 'gnomevfssink' GStreamer 
 AM_GST_ELEMENT_CHECK(gnomevfssrc, , AC_MSG_ERROR([The 'gnomevfssrc' GStreamer plugin was not found.]))
 AM_GST_ELEMENT_CHECK(audioconvert, , AC_MSG_ERROR([The 'audioconvert' GStreamer plugin was not found.]))
 AM_GST_ELEMENT_CHECK(playbin, , AC_MSG_ERROR([The 'playbin' GStreamer plugin was not found.]))
+AM_GST_ELEMENT_CHECK(gconfaudiosink, , AC_MSG_ERROR([The 'gconfaudiosink' GStreamer plugin was not found.]))
 
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.8

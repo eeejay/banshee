@@ -1,3 +1,9 @@
+2006-03-08  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Added a GStreamer element check for gconfaudiosink and
+	removed the DEVELOPMENTAL verbage from the --with-gstreamer-0-10 
+	help description
+
 2006-03-07  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Plugins/Daap/DaapProxyWebServer.cs: reworked how reading
