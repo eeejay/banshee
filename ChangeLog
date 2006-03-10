@@ -1,3 +1,14 @@
+2006-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Implemented adding and
+	deleting tracks, bytes used.  Use new HAL keys for where to find/write
+	music, if they exist.
+
+	* src/Banshee.Dap/MassStorage/MassStorageTrackInfo.cs: New file, simple
+	subclass of FileTrackInfo.
+
+	* src/Banshee.Dap/MassStorage/Makefile.am: add MassStorageTrackInfo.cs.
+
 2006-03-09  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/PlayerEngine.cs: Replacement for IPlayerEngine; base

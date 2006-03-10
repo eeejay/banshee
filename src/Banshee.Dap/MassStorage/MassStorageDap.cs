@@ -39,6 +39,7 @@ namespace Banshee.Dap.MassStorage
     // by looking at the hal device's accepted formats
     [DapProperties(DapType = DapType.Generic)]
     [SupportedCodec(CodecType.Mp3)]
+    [SupportedCodec(CodecType.Ogg)]
     public class MassStorageDap : DapDevice
     {
         private static Gnome.Vfs.VolumeMonitor monitor;
@@ -58,29 +59,25 @@ namespace Banshee.Dap.MassStorage
         {
             volume_device = halDevice;
 
-        try {
-            player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
-            usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
-        } catch (Exception e) {
-                return InitializeResult.Invalid;
-        }
+            try {
+                player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
+                usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
+            } catch (Exception e) {
+                    return InitializeResult.Invalid;
+            }
 
-        if (player_device ["portable_audio_player.access_method"] != "storage" ||
-            !usb_device.PropertyExists("usb.vendor_id") ||
-            !usb_device.PropertyExists("usb.product_id") ||
-            !volume_device.PropertyExists("block.device") ||
-            !CheckDeviceMatches (usb_device)) {
-            Console.WriteLine ("failed in first check: {0} {1} {2} {3} {4}", 
-                player_device ["portable_audio_player.access_method"] != "storage",
-                !usb_device.PropertyExists("usb.vendor_id"),
-                !usb_device.PropertyExists("usb.product_id"),
-                !volume_device.PropertyExists("block.device"),
-                !CheckDeviceMatches (usb_device));
+            if (!player_device.PropertyExists ("portable_audio_player.access_method") ||
+                player_device ["portable_audio_player.access_method"] != "storage" ||
+                !usb_device.PropertyExists("usb.vendor_id") ||
+                !usb_device.PropertyExists("usb.product_id") ||
+                !volume_device.PropertyExists("block.device")) {
                 return InitializeResult.Invalid;
             }
 
-            if(!volume_device.GetPropertyBool("volume.is_mounted"))
+            if(!volume_device.PropertyExists ("volume.is_mounted") ||
+                    !volume_device.GetPropertyBool("volume.is_mounted"))
                 return InitializeResult.WaitForPropertyChange;
+	    
 
             string block_device = volume_device ["block_device"];
             foreach (Gnome.Vfs.Volume vol in monitor.MountedVolumes) {
@@ -92,8 +89,10 @@ namespace Banshee.Dap.MassStorage
 
             if (volume == null)
                 return InitializeResult.Invalid;
-            
-            base.Initialize(usb_device);
+
+            is_read_only = volume.IsReadOnly;
+
+            base.Initialize (usb_device);
  
             InstallProperty("Vendor", usb_device["usb.vendor"]);
 
@@ -104,11 +103,6 @@ namespace Banshee.Dap.MassStorage
             return InitializeResult.Valid;
         }
 
-        public virtual bool CheckDeviceMatches (Hal.Device device)
-        {
-            return true;
-        }
-        
         public override void Dispose()
         {
             // FIXME anything else to do here?
@@ -120,20 +114,20 @@ namespace Banshee.Dap.MassStorage
         {
             ClearTracks (false);
 
-            string music_dir = System.IO.Path.Combine (MountPoint, MusicPath);
-
             ImportManager importer = new ImportManager ();
             importer.ImportRequested += HandleImportRequested;
-            importer.QueueSource (music_dir);
+
+            foreach (string music_dir in AudioFolders)
+                importer.QueueSource (System.IO.Path.Combine (MountPoint, music_dir));
         }
 
         private void HandleImportRequested (object o, ImportEventArgs args)
         {
             try {
-                TrackInfo ti = new FileTrackInfo (new Uri (args.FileName));
-                args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
+                TrackInfo track = new MassStorageTrackInfo (new Uri (args.FileName));
+                args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
 
-            AddTrack (ti);
+                AddTrack (track);
             } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
                 //Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
@@ -144,36 +138,69 @@ namespace Banshee.Dap.MassStorage
             }
         }
 
-        // FIXME not implemented
         public override void Synchronize()
         {
-            UpdateSaveProgress (
-                String.Format (Catalog.GetString ("Synchronizing {0}"), Name),
-                Catalog.GetString("Pre-processing tracks"),
-                0.0);
+            Console.WriteLine ("Error: Synchronize called on MassStorage DAP");
         }
 
         public override void Eject ()
         {
-            volume.Eject (EjectCallback);
+            volume.Unmount (UnmountCallback);
+        }
 
-            base.Eject ();
+        private void UnmountCallback (bool succeeded, string error, string detailed_error)
+        {
+            if (succeeded)
+                volume.Eject (EjectCallback);
+            else
+                Console.WriteLine ("Failed to unmount.  {1} {2}", error, detailed_error);
         }
 
         private void EjectCallback (bool succeeded, string error, string detailed_error)
         {
-            Console.WriteLine ("bool succeeded = {0}, string error = {1}, string detailed_error = {2}", succeeded, error, detailed_error);
+            if (succeeded)
+                base.Eject ();
+            else
+                Console.WriteLine ("Failed to eject.  {1} {2}", error, detailed_error);
         }
         
-        // FIXME handle this
         protected override TrackInfo OnTrackAdded(TrackInfo track)
         {
-            return track;
+            if (track is MassStorageTrackInfo || IsReadOnly)
+                return track;
+
+            string new_path = GetTrackPath (track);
+            Directory.CreateDirectory (Path.GetDirectoryName (new_path));
+            File.Copy (track.Uri.LocalPath, new_path);
+
+            return new MassStorageTrackInfo (new Uri (new_path));
         }
         
-        // FIXME handle this
         protected override void OnTrackRemoved(TrackInfo track)
         {
+            if (IsReadOnly)
+                return;
+
+            // FIXME shouldn't need to check for this
+            // Make sure it's on the drive
+            if (track.Uri.LocalPath.IndexOf (MountPoint) == -1)
+                return;
+            
+            try {
+                File.Delete(track.Uri.LocalPath);
+                //Console.WriteLine ("Deleted {0}", track.Uri.LocalPath);
+            } catch(Exception) {
+                Console.WriteLine("Could not delete file: " + track.Uri.LocalPath);
+            }
+
+            // trim empty parent directories
+            try {
+                string old_dir = Path.GetDirectoryName(track.Uri.LocalPath);
+                while(old_dir != null && old_dir != String.Empty) {
+                    Directory.Delete(old_dir);
+                    old_dir = Path.GetDirectoryName(old_dir);
+                }
+            } catch(Exception) {}
         }
 
         public override Gdk.Pixbuf GetIcon(int size)
@@ -181,6 +208,30 @@ namespace Banshee.Dap.MassStorage
             string prefix = "multimedia-player";
             Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(prefix + ((IconId == null) ? "" : "-" + IconId), size);
             return icon == null ? base.GetIcon(size) : icon;
+        }
+
+        private string GetTrackPath (TrackInfo track)
+        {
+            string file_path = "";
+            if (player_device.PropertyExists ("portable_audio_player.filepath_format")) {
+                file_path = player_device.GetPropertyString ("portable_audio_player.filepath_format");
+                file_path = file_path.Replace ("%Artist", track.Artist);
+                file_path = file_path.Replace ("%Album", track.Album);
+
+                if (file_path.IndexOf ("%Track") == -1) {
+                    file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
+                } else {
+                    file_path = file_path.Replace ("%Track", track.TrackNumberTitle);
+                }
+            } else {
+                file_path = System.IO.Path.Combine (track.Artist, track.Album);
+                file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
+            }
+
+            file_path += Path.GetExtension (track.Uri.LocalPath);
+
+            //Console.WriteLine ("for track {0} outpath is {1}", track.Uri.LocalPath, System.IO.Path.Combine (MountPoint, file_path));
+            return System.IO.Path.Combine (MountPoint, file_path);
         }
 
         public virtual string IconId {
@@ -203,7 +254,7 @@ namespace Banshee.Dap.MassStorage
         
         public override string GenericName {
             get {
-                return Catalog.GetString ("USB Audio Player");
+                return Catalog.GetString ("Audio Device");
             }
         }
         
@@ -213,16 +264,26 @@ namespace Banshee.Dap.MassStorage
             }
         }
         
-        public override ulong StorageUsed {
+        public ulong StorageFree {
             get {
-                // FIXME this is wrong, it returns the same things as volume.size (eg capacity)
-                return (ulong) volume_device.GetPropertyInt ("volume.num_blocks") * (ulong) volume_device.GetPropertyInt ("volume.block_size");
+                Mono.Unix.Native.Statvfs info;
+                Mono.Unix.Native.Syscall.statvfs (MountPoint, out info);
+
+                return (ulong) (info.f_bavail * info.f_bsize);
             }
         }
         
+        public override ulong StorageUsed {
+            get {
+                return StorageCapacity - StorageFree;
+            }
+        }
+
+        
+        private bool is_read_only;
         public override bool IsReadOnly {
             get {
-                return volume.IsReadOnly;
+                return is_read_only;
             }
         }
         
@@ -231,17 +292,24 @@ namespace Banshee.Dap.MassStorage
                 return true;
             }
         }
+        
+        public override bool IsSynchronizable {
+            get { return false; }
+        }
 
-        public virtual string MountPoint {
+        public string MountPoint {
             get {
                 return volume_device ["volume.mount_point"];
             }
         }
 
         // The path relative to the mount point where music is stored
-        public virtual string MusicPath {
+        public string [] AudioFolders {
             get {
-                return "";
+                if (! player_device.PropertyExists ("portable_audio_player.audio_folders"))
+                    return new string [] {""};
+
+                return player_device.GetPropertyStringList ("portable_audio_player.audio_folders");
             }
         }
     }

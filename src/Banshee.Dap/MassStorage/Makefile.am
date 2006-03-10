@@ -6,7 +6,8 @@ CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb Makefile.in 
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/MassStorageDap.cs
+	$(srcdir)/MassStorageDap.cs				\
+	$(srcdir)/MassStorageTrackInfo.cs
 
 #bansheedapdir = $(pkglibdir)/Banshee.Dap
 #bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
