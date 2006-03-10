@@ -167,7 +167,7 @@ namespace Banshee
             if(ti == null)
                 return;
                 
-            PlayerCore.UserInterface.PlayFile(ti);
+            PlayerEngineCore.OpenPlay(ti);
             GetIter(out playingIter, path);
         }
         
@@ -178,7 +178,7 @@ namespace Banshee
                 return;
                 
             if(ti.CanPlay) {
-                PlayerCore.UserInterface.PlayFile(ti);
+                PlayerEngineCore.OpenPlay(ti);
                 playingIter = iter;
             } else {
                 playingIter = iter;

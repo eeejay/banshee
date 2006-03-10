@@ -354,7 +354,7 @@ namespace Banshee
             TrackInfo ti = tree_model.GetValue(iter, 0) as TrackInfo;
             CellRendererPixbuf renderer = (CellRendererPixbuf)cell;
             
-            if(PlayerEngineCore.ActivePlayer.Track == null) {
+            if(PlayerEngineCore.CurrentTrack == null) {
                 model.PlayingIter = TreeIter.Zero;
                 if(ti != null) {
                     renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
@@ -366,7 +366,7 @@ namespace Banshee
             }
         
             if(ti != null) {
-                if(PlayerEngineCore.ActivePlayer.Track.Equals(ti)) {
+                if(PlayerEngineCore.CurrentTrack != null && PlayerEngineCore.CurrentTrack.Equals(ti)) {
                     renderer.Pixbuf = nowPlayingPixbuf;
                     model.PlayingIter = iter;
                 } else {

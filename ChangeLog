@@ -1,3 +1,46 @@
+2006-03-09  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Base/PlayerEngine.cs: Replacement for IPlayerEngine; base
+	class that offers common functionality between all engines; new 
+	event/message system that is more verbose than old system... allows for
+	metadata extraction from streams and buffering
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Proxy and wrapper for PlayerEngine
+	that handles all loading of PlayerEngine types and switching out of 
+	engines at runtime
+
+	* src/Banshee.Base/PlayerEngineLoader.cs: Removed, deprecated, etc...
+	PlayerEngineCore now loads and instantiates engines from assemblies
+
+	* src/PlayerInterface.cs: User interface is completely passive regarding
+	interaction with PlayerEngineCore; UI updates only after getting events
+	and messages from PlayerEngineCore; plugins now have the exact same
+	functionality regarding playback that the UI has traditionally had
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Reworked to 
+	implement new PlayerEngine base class; implementation is now much 
+	simpler (for 0.10 and 0.8 engines)
+
+	* src/Banshee.Base/UnknownTrackInfo.cs: A placeholder TrackInfo class
+	that is used to create a container for loading plain URIs; eventually
+	metadata will be filled in if it's found in the stream itself
+
+	* src/Banshee.Base/Gui/OpenLocationDialog.cs: Glade Dialog implementation
+	for open URI functionality
+
+	* src/Banshee.Base/Makefile.am: Added UnknownTrackInfo.cs,
+	Gui/OpenLocationDialog.cs and MediaEngine/PlayerEngine.cs
+
+	* src/Banshee.Base/ActionManager.cs: Added OpenLocationAction
+
+	* src/NotificationAreaIcon.cs:
+	* src/PlaylistModel.cs:
+	* src/PlaylistView.cs:
+	* src/RemotePlayer.cs:
+	* src/Preferences.cs:	
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs:
+	* src/TrackProperties.cs: Updated to reflect changes in PlayerEngineCore
+
 2006-03-08  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Added a GStreamer element check for gconfaudiosink and

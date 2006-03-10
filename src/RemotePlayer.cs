@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  RemotePlayer.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -29,7 +28,9 @@
  
 using System;
 using DBus;
+
 using Banshee.Base;
+using Banshee.MediaEngine;
 
 namespace Banshee
 {   
@@ -95,7 +96,7 @@ namespace Banshee
                 PlayerUI.PlayPause();
             }
             
-            if(!PlayerEngineCore.ActivePlayer.Playing) {
+            if(PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
                 PlayerUI.PlayPause();
             }
         }
@@ -103,7 +104,7 @@ namespace Banshee
         [Method]
         public virtual void Pause()
         {
-            if(HaveTrack && PlayerEngineCore.ActivePlayer.Playing) {
+            if(HaveTrack && PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
                 PlayerUI.PlayPause();
             }
         }
@@ -142,78 +143,77 @@ namespace Banshee
         
         private bool HaveTrack {
             get {
-                return PlayerUI != null && PlayerUI.ActiveTrackInfo != null;
+                return PlayerUI != null && PlayerEngineCore.CurrentTrack != null;
             }
         }
         
         [Method]
         public virtual string GetPlayingArtist()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Artist : String.Empty;
+            return HaveTrack ? PlayerEngineCore.CurrentTrack.Artist : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingAlbum()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Album : String.Empty;
+            return HaveTrack ? PlayerEngineCore.CurrentTrack.Album : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingTitle()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Title : String.Empty;
+            return HaveTrack ? PlayerEngineCore.CurrentTrack.Title : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingGenre()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Genre : String.Empty;
+            return HaveTrack ? PlayerEngineCore.CurrentTrack.Genre : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingUri()
         {
-            return HaveTrack ? PlayerUI.ActiveTrackInfo.Uri.AbsoluteUri : String.Empty;
+            return HaveTrack ? PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri : String.Empty;
         }
 
         [Method]
         public virtual string GetPlayingCoverUri()
         {
-            string cover = HaveTrack ? PlayerUI.ActiveTrackInfo.CoverArtFileName : String.Empty;
+            string cover = HaveTrack ? PlayerEngineCore.CurrentTrack.CoverArtFileName : String.Empty;
             return cover == null ? String.Empty : cover;
         }
         
         [Method]
         public virtual int GetPlayingDuration()
         {
-            return HaveTrack ? (int)PlayerEngineCore.ActivePlayer.Length : -1;
+            return HaveTrack ? (int)PlayerEngineCore.Length : -1;
         }
         
         [Method]
         public virtual int GetPlayingPosition()
         {
-            return HaveTrack ? (int)PlayerEngineCore.ActivePlayer.Position : -1;
+            return HaveTrack ? (int)PlayerEngineCore.Position : -1;
         }
         
         [Method]
         public virtual int GetPlayingStatus()
         {
-            return PlayerEngineCore.ActivePlayer.Playing ? 1 : (PlayerEngineCore.ActivePlayer.Loaded ? 0 : -1);
+            return PlayerEngineCore.CurrentState == PlayerEngineState.Playing ? 1 :
+                (PlayerEngineCore.CurrentState != PlayerEngineState.Idle ? 0 : -1);
         }
         
         [Method]
         public virtual void SetVolume(int volume)
         {
-            if(PlayerUI != null) {
-                PlayerUI.Volume = volume;
-            }
+            PlayerEngineCore.Volume = (ushort)volume;
         }
 
         [Method]
         public virtual void IncreaseVolume()
         {
             if(PlayerUI != null) {
-                PlayerUI.Volume += PlayerUI.VolumeDelta;
+                PlayerEngineCore.Volume += (ushort)PlayerUI.VolumeDelta;
             }
         }
         
@@ -221,26 +221,26 @@ namespace Banshee
         public virtual void DecreaseVolume()
         {
             if(PlayerUI != null) {
-                PlayerUI.Volume -= PlayerUI.VolumeDelta;
+                PlayerEngineCore.Volume -= (ushort)PlayerUI.VolumeDelta;
             }
         }
         
         [Method]
         public virtual void SetPlayingPosition(int position)
         {
-            PlayerEngineCore.ActivePlayer.Position = (uint)position;
+            PlayerEngineCore.Position = (uint)position;
         }
         
         [Method]
         public virtual void SkipForward()
         {
-            PlayerEngineCore.ActivePlayer.Position += PlayerUI.SkipDelta;
+            PlayerEngineCore.Position += PlayerUI.SkipDelta;
         }
         
         [Method]
         public virtual void SkipBackward()
         {
-            PlayerEngineCore.ActivePlayer.Position -= PlayerUI.SkipDelta;
+            PlayerEngineCore.Position -= PlayerUI.SkipDelta;
         }
     }
 }

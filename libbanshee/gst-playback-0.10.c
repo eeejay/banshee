@@ -261,10 +261,10 @@ gst_playback_set_volume(GstPlayback *engine, gint volume)
 gint
 gst_playback_get_volume(GstPlayback *engine)
 {
-    gint volume = -1;
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), -1);
+    gdouble volume = 0.0;
+    g_return_val_if_fail(IS_GST_PLAYBACK(engine), 0);
     g_object_get(engine->playbin, "volume", &volume, NULL);
-    return volume;
+    return (gint)(volume * 100.0);
 }
 
 void

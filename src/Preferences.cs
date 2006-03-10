@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Preferences.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -59,8 +58,6 @@ namespace Banshee
         private string burnKeyParent;
         private BurnDrive selectedDrive;
 
-        private IPlayerEngine SelectedEngine;
-
         private Glade.XML glade;
         
         private Label driveLoadingLabel;
@@ -68,6 +65,8 @@ namespace Banshee
         private ComboBox writeSpeedCombo;
         private HBox driveContainer;
         private HBox speedContainer;
+        
+        private PlayerEngine SelectedEngine;
         
         private FileChooserButton libraryLocationChooser;
         
@@ -496,8 +495,7 @@ namespace Banshee
         
         private void LoadPlayerEngines()
         {
-            ListStore store = new ListStore(typeof(string), typeof(string), 
-                typeof(IPlayerEngine));
+            ListStore store = new ListStore(typeof(string), typeof(string), typeof(PlayerEngine));
             
             ComboBox enginesCombo = new ComboBox();
             enginesCombo.Changed += OnEngineChanged;
@@ -506,21 +504,21 @@ namespace Banshee
             enginesCombo.PackStart(rendererName, true);
             enginesCombo.SetAttributes(rendererName, "text", 0);
             
-            (glade["EngineComboContainer"] as Box).PackStart(
-                enginesCombo, true, true, 0);
+            (glade["EngineComboContainer"] as Box).PackStart(enginesCombo, true, true, 0);
             glade["EngineComboContainer"].ShowAll();
             
             TreeIter activeIter = TreeIter.Zero;
             
-            foreach(IPlayerEngine engine in PlayerEngineLoader.Engines) {
-                TreeIter iter = store.AppendValues(engine.EngineName, 
-                    engine.ConfigName, engine);
-                if(PlayerEngineLoader.SelectedEngine.Equals(engine))
+            foreach(PlayerEngine engine in PlayerEngineCore.Engines) {
+                TreeIter iter = store.AppendValues(engine.Name, engine.Id, engine);
+                if(PlayerEngineCore.ActiveEngine.Equals(engine)) {
                     activeIter = iter;
+                }
             }
             
-            if(!activeIter.Equals(TreeIter.Zero))
-                enginesCombo.SetActiveIter(activeIter);    
+            if(!activeIter.Equals(TreeIter.Zero)) {
+                enginesCombo.SetActiveIter(activeIter); 
+            }
         }
         
         private void OnEngineChanged(object o, EventArgs args)
@@ -530,20 +528,18 @@ namespace Banshee
             TextView view = glade["EngineDescription"] as TextView;
             TreeIter iter;
             
-            if(!box.GetActiveIter(out iter))
+            if(!box.GetActiveIter(out iter)) {
                 return;
-                
-            IPlayerEngine engine = store.GetValue(iter, 2) as IPlayerEngine;
-            view.Buffer.Text = engine.EngineDetails;
+            }
+            
+            PlayerEngine engine = store.GetValue(iter, 2) as PlayerEngine;
             SelectedEngine = engine;
         }
         
         private void SaveEngineSettings()
         {
-            if(SelectedEngine.ConfigName != PlayerEngineCore.ActivePlayer.ConfigName) {
-                Globals.Configuration.Set(GConfKeys.PlayerEngine, SelectedEngine.ConfigName);
-                PlayerEngineCore.PreferredPlayer = SelectedEngine;
-            }
+            PlayerEngineCore.DefaultEngine = SelectedEngine;
+            PlayerEngineCore.ActiveEngine = SelectedEngine;
         }
     }
 }

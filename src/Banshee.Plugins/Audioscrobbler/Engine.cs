@@ -138,13 +138,11 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		bool EngineTick ()
 		{
-			IPlayerEngine player = PlayerEngineCore.ActivePlayer;
-
 			/* check the currently playing track (if there is one) */
-			if (player.Playing
-			    && player.Length != 0) {
+			if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing
+			    && PlayerEngineCore.Length != 0) {
 
-				TrackInfo track = player.Track;
+				TrackInfo track = PlayerEngineCore.CurrentTrack;
 
 				/* did the user switch tracks? */
 				if (track != current_track) {
@@ -155,8 +153,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 				}
 
 				/* did the user seek? */
-				if (player.Position < position
-					|| player.Position > position + TICK_INTERVAL * 2) {
+				if (PlayerEngineCore.Position < position
+					|| PlayerEngineCore.Position > position + TICK_INTERVAL * 2) {
 					sought = true;
 				}
 
@@ -164,13 +162,13 @@ namespace Banshee.Plugins.Audioscrobbler {
 				   when it is 50% or 240 seconds complete,
 				   whichever comes first. */
 				if (!queued && !sought
-				    && (player.Position > player.Length / 2
-					|| player.Position > 240)) {
-					queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (player.Position));
+				    && (PlayerEngineCore.Position > PlayerEngineCore.Length / 2
+					|| PlayerEngineCore.Position > 240)) {
+					queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (PlayerEngineCore.Position));
 					queued = true;
 				}
 
-				position = player.Position;
+				position = PlayerEngineCore.Position;
 			}
 			else {
 				current_track = null;

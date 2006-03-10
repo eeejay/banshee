@@ -187,14 +187,14 @@ namespace Banshee
 
         public void Update()
         {
-            if(PlayerEngineCore.ActivePlayer == null || !PlayerEngineCore.ActivePlayer.Loaded) {
+            if(PlayerEngineCore.CurrentState == Banshee.MediaEngine.PlayerEngineState.Idle) {
                 popup.Duration = 0;
                 popup.Position = 0;
                 return;
             }
             
-            popup.Duration = (uint)PlayerEngineCore.ActivePlayer.Track.Duration.TotalSeconds;
-            popup.Position = PlayerEngineCore.ActivePlayer.Position;
+            popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+            popup.Position = PlayerEngineCore.Position;
         }
 
         public TrackInfo Track {

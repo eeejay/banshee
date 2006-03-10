@@ -65,7 +65,6 @@ namespace Banshee
         private VolumeButton volumeButton;
         private PlaylistView playlistView;
         private SourceView sourceView;
-        private TrackInfo activeTrackInfo;
         private NotificationAreaIconContainer trayIcon;
         private ImageAnimation spinner;
         private TrackInfoHeader trackInfoHeader;
@@ -146,13 +145,8 @@ namespace Banshee
             banshee_dbus_object = new RemotePlayer(Window, this);
             Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
             
-            PlayerEngineCore.ActivePlayer.Iterate += OnPlayerTick;
-            PlayerEngineCore.ActivePlayer.EndOfStream += OnPlayerEos;    
-            
-            if(PlayerEngineCore.ActivePlayer != PlayerEngineCore.AudioCdPlayer) {
-                PlayerEngineCore.AudioCdPlayer.Iterate += OnPlayerTick;
-                PlayerEngineCore.AudioCdPlayer.EndOfStream += OnPlayerEos;    
-            }
+            PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
+            PlayerEngineCore.StateChanged += OnPlayerEngineStateChanged;
             
             if(Globals.AudioCdCore != null) {
                 Globals.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
@@ -505,10 +499,7 @@ namespace Banshee
                 volumeButton.Volume = 80;
             }
 
-            PlayerEngineCore.ActivePlayer.Volume = (ushort)volumeButton.Volume;
-            if(PlayerEngineCore.AudioCdPlayer != PlayerEngineCore.ActivePlayer) {
-                PlayerEngineCore.AudioCdPlayer.Volume = (ushort)volumeButton.Volume;
-            }
+            PlayerEngineCore.Volume = (ushort)volumeButton.Volume;
             
             try {
                 int state = (int)Globals.Configuration.Get(GConfKeys.PlaylistRepeat);
@@ -666,7 +657,7 @@ namespace Banshee
         {
             ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
-            PlayerEngineCore.ActivePlayer.Dispose();
+            PlayerEngineCore.Dispose();
             Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
             Globals.DBusRemote.UnregisterObject(banshee_dbus_object);
             PlayerCore.Dispose();
@@ -678,23 +669,12 @@ namespace Banshee
         {
             LabelInfo.Markup = "<span size=\"small\">" + GLib.Markup.EscapeText(text) + "</span>";
         }
-          
-        public void TogglePlaying()
-        {
-            if(PlayerEngineCore.ActivePlayer.Playing) {
-                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
-                    "media-playback-start");
-                PlayerEngineCore.ActivePlayer.Pause();
-            } else {
-                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), 
-                    "media-playback-pause");
-                PlayerEngineCore.ActivePlayer.Play();
-            }
-        }
         
-        public void UpdateMetaDisplay(TrackInfo ti)
+        public void UpdateMetaDisplay()
         {
-            if(ti == null) {
+            TrackInfo track = PlayerEngineCore.CurrentTrack;
+            
+            if(track == null) {
                 WindowPlayer.Title = Catalog.GetString("Banshee Music Player");
                 trackInfoHeader.Visible = false;
                 if(trayIcon != null) {
@@ -703,66 +683,23 @@ namespace Banshee
                 return;
             }
         
-            trackInfoHeader.Artist = ti.DisplayArtist;
-            trackInfoHeader.Title = ti.DisplayTitle;
-            trackInfoHeader.Album = ti.DisplayAlbum;
+            trackInfoHeader.Artist = track.DisplayArtist;
+            trackInfoHeader.Title = track.DisplayTitle;
+            trackInfoHeader.Album = track.DisplayAlbum;
             
             trackInfoHeader.Visible = true;
             
-            WindowPlayer.Title = ti.DisplayTitle + " (" + ti.DisplayArtist + ")";
+            WindowPlayer.Title = track.DisplayTitle + " (" + track.DisplayArtist + ")";
             
             try {
-                trackInfoHeader.Cover.FileName = ti.CoverArtFileName;
-                cover_art_view.FileName = ti.CoverArtFileName;
-                trackInfoHeader.Cover.Label = String.Format("{0} - {1}", ti.Artist, ti.Album);
+                trackInfoHeader.Cover.FileName = track.CoverArtFileName;
+                cover_art_view.FileName = track.CoverArtFileName;
+                trackInfoHeader.Cover.Label = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayAlbum);
             } catch(Exception) {
             }
             
             if(trayIcon != null) {
-                trayIcon.Track = ti;
-            }
-        }
-        
-        public void PlayFile(TrackInfo ti)
-        {
-            PlayerEngineCore.ActivePlayer.Close();
-            
-            if(ti.Uri == null) {
-                return;
-            }
-            
-            if(ti.Uri.Scheme == "cdda") {
-                PlayerEngineCore.LoadCdPlayer();
-            } else {
-                if(ti.Uri != null) {
-                    string ext = ti.Uri.AbsoluteUri.Substring(ti.Uri.AbsoluteUri.LastIndexOf('.') + 1);
-                    PlayerEngineCore.LoadEngineByExtension(ext);
-                } else {
-                    PlayerEngineCore.UnloadCdPlayer();
-                }
-            }
-            
-            activeTrackInfo = ti;
-            PlayerEngineCore.ActivePlayer.Open(ti, ti.Uri);
-
-            incrementedCurrentSongPlayCount = false;
-            ScaleTime.Adjustment.Lower = 0;
-            ScaleTime.Adjustment.Upper = ti.Duration.TotalSeconds;
-
-            UpdateMetaDisplay(ti);
-            
-            TogglePlaying();
-
-            playlistView.QueueDraw();
-            
-            if(!ti.CanPlay) {
-                LogCore.Instance.PushWarning(
-                    Catalog.GetString("Cannot Play Song"), 
-                    String.Format(Catalog.GetString("{0} cannot be played by Banshee. " +
-                        "The most common reasons for this are:\n\n" +
-                        "  <big>\u2022</big> Song is protected (DRM)\n" +
-                        "  <big>\u2022</big> Song is on a DAP that does not support playback\n"),
-                        ti.Title));
+                trayIcon.Track = track;
             }
         }
         
@@ -810,16 +747,16 @@ namespace Banshee
                     break;
                 case Gdk.Key.Left:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
+                        PlayerEngineCore.Position -= SkipDelta;
                         handled = true;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.ActivePlayer.Position = 0;
+                        PlayerEngineCore.Position = 0;
                         handled = true;
                     }
                     break;
                 case Gdk.Key.Right:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.ActivePlayer.Position += SkipDelta;
+                        PlayerEngineCore.Position += SkipDelta;
                         handled = true;
                     } 
                     break;
@@ -858,18 +795,18 @@ namespace Banshee
             switch(args.Event.Direction) {
                 case Gdk.ScrollDirection.Up:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        Volume += VolumeDelta;
+                        PlayerEngineCore.Volume += (ushort)VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.ActivePlayer.Position += SkipDelta;
+                        PlayerEngineCore.Position += SkipDelta;
                     } else {
                         Next();
                     }
                     break;
                 case Gdk.ScrollDirection.Down:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        Volume -= VolumeDelta;
+                        PlayerEngineCore.Volume -= (ushort)VolumeDelta;
                     } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
+                        PlayerEngineCore.Position -= SkipDelta;
                     } else {
                         Previous();
                     }
@@ -879,24 +816,20 @@ namespace Banshee
             }
         }
    
-        public int Volume {
-            get {
-                return volumeButton.Volume;
-            }
-            
-            set {
-                if(value != volumeButton.Volume) {
-                    volumeButton.Volume = Math.Max(0, Math.Min(100, value));
-                    OnVolumeScaleChanged(volumeButton.Volume);
-                }
+        // ---- Playback Event Handlers ----
+        
+        public void TogglePlaying()
+        {
+            if(PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
+                PlayerEngineCore.Pause();
+            } else {
+                PlayerEngineCore.Play();
             }
         }
-   
-        // ---- Playback Event Handlers ----
         
         public void PlayPause()
         {
-            if(PlayerEngineCore.ActivePlayer.Loaded) {
+            if(PlayerEngineCore.CurrentState != PlayerEngineState.Idle) {
                 TogglePlaying();
             } else {
                 if(!playlistView.PlaySelected()) {
@@ -920,7 +853,7 @@ namespace Banshee
          
         private void OnVolumeScaleChanged(int volume)
         {
-            PlayerEngineCore.ActivePlayer.Volume = (ushort)volume;
+            PlayerEngineCore.Volume = (ushort)volume;
             Globals.Configuration.Set(GConfKeys.Volume, volume);
         }
    
@@ -928,7 +861,7 @@ namespace Banshee
         
         private void SetPositionLabel(long position)
         {
-            if(activeTrackInfo == null) {
+            if(PlayerEngineCore.CurrentTrack == null) {
                 return;
             }
             
@@ -936,54 +869,112 @@ namespace Banshee
                 // Translators: position in song. eg, "0:37 of 3:48"
                 String.Format(Catalog.GetString("{0} of {1}"),
                           String.Format("{0}:{1:00}", position / 60, position % 60),
-                          String.Format("{0}:{1:00}", activeTrackInfo.Duration.Minutes, 
-                          activeTrackInfo.Duration.Seconds))
+                          String.Format("{0}:{1:00}", PlayerEngineCore.CurrentTrack.Duration.Minutes, 
+                          PlayerEngineCore.CurrentTrack.Duration.Seconds))
             );    
         }
         
-        private void OnPlayerTick(object o, PlayerEngineIterateArgs args)
+        private void OnPlayerEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
-            if(activeTrackInfo == null) {
+            switch(args.State) {
+                case PlayerEngineState.Loaded:
+                    incrementedCurrentSongPlayCount = false;
+                    ScaleTime.Adjustment.Lower = 0;
+                    ScaleTime.Adjustment.Upper = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+                    
+                    UpdateMetaDisplay();
+                    playlistView.QueueDraw();
+                    
+                    if(!PlayerEngineCore.CurrentTrack.CanPlay) {
+                        LogCore.Instance.PushWarning(
+                            Catalog.GetString("Cannot Play Song"), 
+                            String.Format(Catalog.GetString("{0} cannot be played by Banshee. " +
+                                "The most common reasons for this are:\n\n" +
+                                "  <big>\u2022</big> Song is protected (DRM)\n" +
+                                "  <big>\u2022</big> Song is on a DAP that does not support playback\n"),
+                                PlayerEngineCore.CurrentTrack.Title));
+                    }
+                    
+                    break;
+                case PlayerEngineState.Idle:
+                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
+                    ScaleTime.Adjustment.Lower = 0;
+                    ScaleTime.Adjustment.Upper = 0;
+                    ScaleTime.Value = 0;
+                    SetInfoLabel(Catalog.GetString("Idle"));
+                    trackInfoHeader.SetIdle();
+                    
+                    UpdateMetaDisplay();
+                    
+                    if(trayIcon != null) {
+                        trayIcon.Track = null;
+                    }
+                    break;
+                case PlayerEngineState.Paused:
+                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
+                        "media-playback-start");
+                    break;
+                case PlayerEngineState.Playing:
+                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), 
+                        "media-playback-pause");
+                    break;
+            }
+        }
+        
+        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
+        {
+            switch(args.Event) {
+                case PlayerEngineEvent.Iterate:
+                    OnPlayerEngineTick();
+                    break;
+                case PlayerEngineEvent.EndOfStream:
+                    playlistModel.Continue();
+                    playlistView.UpdateView();
+                    break;
+                case PlayerEngineEvent.Volume:
+                    volumeButton.Volume = PlayerEngineCore.Volume;
+                    break;
+            }
+        }
+        
+        private void OnPlayerEngineTick()
+        {
+            if(PlayerEngineCore.CurrentTrack == null) {
                 return;
             }
              
-            if(PlayerEngineCore.ActivePlayer.Length > 0 
-                && activeTrackInfo.Duration.TotalSeconds <= 0.0) {
-                activeTrackInfo.Duration = new TimeSpan(PlayerEngineCore.ActivePlayer.Length * TimeSpan.TicksPerSecond);
-                activeTrackInfo.Save();
-                playlistView.ThreadedQueueDraw();
-                ScaleTime.Adjustment.Upper = activeTrackInfo.Duration.TotalSeconds;
+            if(PlayerEngineCore.Length > 0 && PlayerEngineCore.CurrentTrack.Duration.TotalSeconds <= 0.0) {
+                PlayerEngineCore.CurrentTrack.Duration = new TimeSpan(PlayerEngineCore.Length * TimeSpan.TicksPerSecond);
+                PlayerEngineCore.CurrentTrack.Save();
+                playlistView.QueueDraw();
+                ScaleTime.Adjustment.Upper = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
             }
                 
-            if(PlayerEngineCore.ActivePlayer.Length > 0 && 
-                PlayerEngineCore.ActivePlayer.Position > PlayerEngineCore.ActivePlayer.Length / 2
+            if(PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > PlayerEngineCore.Length / 2
                 && !incrementedCurrentSongPlayCount) {
-                activeTrackInfo.IncrementPlayCount();
+                PlayerEngineCore.CurrentTrack.IncrementPlayCount();
                 incrementedCurrentSongPlayCount = true;
-                playlistView.ThreadedQueueDraw();
+                playlistView.QueueDraw();
             }
                 
             if(updateEnginePosition) {
-                if(setPositionTimeoutId > 0)
-                        GLib.Source.Remove(setPositionTimeoutId);
-                setPositionTimeoutId = GLib.Timeout.Add(100,
-                        new GLib.TimeoutHandler(SetPositionTimeoutCallback));
+                if(setPositionTimeoutId > 0) {
+                    GLib.Source.Remove(setPositionTimeoutId);
+                }
+                
+                setPositionTimeoutId = GLib.Timeout.Add(100, new GLib.TimeoutHandler(SetPositionTimeoutCallback));
             
-                Application.Invoke(delegate {
-                    SetPositionLabel(args.Position);
-                    if(PlayerEngineCore.ActivePlayer.Playing) {
-                        trayIcon.Update();
-                    }
-                });
+                SetPositionLabel(PlayerEngineCore.Position);
+                if(PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
+                    trayIcon.Update();
+                }
             }
         }
         
         private bool SetPositionTimeoutCallback()
         {
             setPositionTimeoutId = 0;
-            Application.Invoke(delegate {
-                ScaleTime.Value = PlayerEngineCore.ActivePlayer.Position;
-            });
+            ScaleTime.Value = PlayerEngineCore.Position;
             
             return false;
         }
@@ -1005,18 +996,8 @@ namespace Banshee
         private void OnScaleTimeButtonReleaseEvent(object o, 
             ButtonReleaseEventArgs args)
         {
-            PlayerEngineCore.ActivePlayer.Position = (uint)ScaleTime.Value;
+            PlayerEngineCore.Position = (uint)ScaleTime.Value;
             updateEnginePosition = true;
-        }
-        
-        private void OnPlayerEos(object o, EventArgs args)
-        {
-            Application.Invoke(delegate {
-                StopPlaying();
-                playlistModel.Continue();
-                playlistView.UpdateView();
-            
-            });
         }
         
         // ---- Playlist Event Handlers ----
@@ -1361,8 +1342,8 @@ namespace Banshee
 
         private void OnPlaylistStopped(object o, EventArgs args)
         {
-            PlayerEngineCore.ActivePlayer.Close();
-            UpdateMetaDisplay(null);
+            PlayerEngineCore.Close();
+            UpdateMetaDisplay();
         }
 
         private void OnPlaylistUpdated(object o, EventArgs args)
@@ -1899,11 +1880,11 @@ namespace Banshee
             if(source.CanEject) {
                 try {
                     if(source.GetType() == typeof(DapSource)) {
-                        if(activeTrackInfo != null && activeTrackInfo is DapTrackInfo) {
-                            StopPlaying();
+                        if(PlayerEngineCore.CurrentTrack != null && PlayerEngineCore.CurrentTrack is DapTrackInfo) {
+                            PlayerEngineCore.Close();
                         }
                     }
-                        
+                    
                     source.Eject();
                     
                     if(source == SourceManager.ActiveSource) {
@@ -1917,30 +1898,7 @@ namespace Banshee
                 }
             }
         }
-        
-        private void StopPlaying()
-        {
-            PlayerEngineCore.ActivePlayer.Close();
-            Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
-            ScaleTime.Adjustment.Lower = 0;
-            ScaleTime.Adjustment.Upper = 0;
-            ScaleTime.Value = 0;
-            SetInfoLabel(Catalog.GetString("Idle"));
-            trackInfoHeader.SetIdle();
-            activeTrackInfo = null;
-            
-            if(trayIcon != null) {
-                trayIcon.Track = null;
-            }
-        }
-
-        public TrackInfo ActiveTrackInfo
-        {
-            get {
-                return activeTrackInfo;
-            }
-        }
-        
+       
         private void OnImportManagerImportRequested(object o, ImportEventArgs args)
         {
             try {
@@ -2096,6 +2054,25 @@ namespace Banshee
         private void OnImportMusicAction(object o, EventArgs args)
         {
             PromptForImport(false);
+        }
+        
+        private void OnOpenLocationAction(object o, EventArgs args)
+        {
+            Banshee.Gui.OpenLocationDialog dialog = new Banshee.Gui.OpenLocationDialog();
+            ResponseType response = dialog.Run();
+            string address = dialog.Address;
+            dialog.Destroy();
+            
+            if(response != ResponseType.Ok) {
+                return;
+            }
+            
+            try {
+                PlayerEngineCore.Open(new Uri(address));
+                PlayerEngineCore.Play();
+            } catch(Exception) {
+                Console.WriteLine("BAOSJFDL");
+            }   
         }
         
         private void OnImportSourceAction(object o, EventArgs args)
@@ -2307,10 +2284,10 @@ namespace Banshee
         
         private void OnPreviousAction(object o, EventArgs args)
         {
-            if(PlayerEngineCore.ActivePlayer.Position < 3) {
+            if(PlayerEngineCore.Position < 3) {
                 Previous();
             } else {
-                PlayerEngineCore.ActivePlayer.Position = 0;
+                PlayerEngineCore.Position = 0;
             }
         }
         
@@ -2321,12 +2298,12 @@ namespace Banshee
         
         private void OnSeekForwardAction(object o, EventArgs args)
         {
-            PlayerEngineCore.ActivePlayer.Position += SkipDelta;
+            PlayerEngineCore.Position += SkipDelta;
         }
         
         private void OnSeekBackwardAction(object o, EventArgs args)
         {
-            PlayerEngineCore.ActivePlayer.Position -= SkipDelta;
+            PlayerEngineCore.Position -= SkipDelta;
         }
         
         private void SetRepeatMode(RepeatMode mode)

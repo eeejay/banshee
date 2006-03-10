@@ -15,6 +15,7 @@ bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
 GUI_SOURCES = \
 	$(srcdir)/Gui/GladeDialog.cs \
 	$(srcdir)/Gui/ImportDialog.cs \
+	$(srcdir)/Gui/OpenLocationDialog.cs \
 	$(srcdir)/Gui/UIManager.cs
 
 AUDIOCD_SOURCES = \
@@ -48,6 +49,9 @@ PLUGINS_SOURCES = \
 	$(srcdir)/Plugins/PluginCore.cs \
 	$(srcdir)/Plugins/PluginDialog.cs
 
+MEDIAENGINE_SOURCES = \
+	$(srcdir)/MediaEngine/PlayerEngine.cs
+
 ASSEMBLY_SOURCES = \
     $(AUDIOCD_SOURCES) \
     $(DAP_SOURCES) \
@@ -55,6 +59,7 @@ ASSEMBLY_SOURCES = \
     $(NETWORKMANAGER_SOURCES) \
     $(PLUGINS_SOURCES) \
 	$(GUI_SOURCES) \
+	$(MEDIAENGINE_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
@@ -67,7 +72,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Globals.cs \
 	$(srcdir)/GConfKeys.cs \
 	$(srcdir)/IPlayerEngine.cs \
-	$(srcdir)/PlayerEngineLoader.cs \
 	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/BansheeTodo.cs \
 	$(srcdir)/IconThemeUtils.cs \
@@ -94,7 +98,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ImportSources.cs \
 	$(srcdir)/FolderImportSource.cs \
 	$(srcdir)/FileImportSource.cs \
-	$(srcdir)/HomeDirectoryImportSource.cs
+	$(srcdir)/HomeDirectoryImportSource.cs \
+	$(srcdir)/UnknownTrackInfo.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

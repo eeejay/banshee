@@ -393,8 +393,8 @@ namespace Banshee
                 track.Track.Save();
             }
                 
-            if(track.Track == PlayerCore.UserInterface.ActiveTrackInfo) {
-                PlayerCore.UserInterface.UpdateMetaDisplay(track.Track);
+            if(track.Track == PlayerEngineCore.CurrentTrack) {
+                PlayerCore.UserInterface.UpdateMetaDisplay();
             }
         }
     }
