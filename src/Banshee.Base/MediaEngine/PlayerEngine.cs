@@ -135,6 +135,10 @@ namespace Banshee.MediaEngine
             OnStateChanged(PlayerEngineState.Paused);
         }
         
+        public virtual void SetProperty(string key, object value)
+        {
+        }
+        
         protected void OnStateChanged(PlayerEngineState state)
         {
             OnStateChanged(state, 0.0, null);

@@ -102,10 +102,11 @@ namespace Banshee.MediaEngine.Gstreamer
             OnStateChanged(PlayerEngineState.Paused);
         }
         
-        public void SetProperty(string key, IntPtr value)
+        public override void SetProperty(string key, object value)
         {
+            IntPtr val_ptr = (IntPtr)value;
             IntPtr key_ptr = GLib.Marshaller.StringToPtrGStrdup(key);
-            gst_playback_playbin_set_property(handle, key_ptr, value);
+            gst_playback_playbin_set_property(handle, key_ptr, val_ptr);
             GLib.Marshaller.Free(key_ptr);
         }
         

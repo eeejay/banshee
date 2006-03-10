@@ -595,6 +595,10 @@ namespace Banshee.Dap
             }
         }
         
+        public virtual bool CanSynchronize { 
+            get { return true; }
+        }
+        
         public virtual string Owner {
             get {
                 return Catalog.GetString("Unknown");

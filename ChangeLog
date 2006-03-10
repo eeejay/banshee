@@ -1,3 +1,24 @@
+2006-03-10  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdb: Updated MonoDevelop project
+
+	* src/Banshee.Base/PlayerEngineCore.cs: first pass at dynamic 
+	engine switching
+
+	* src/Banshee.Base/Dap/Dap.cs: Added CanSynchronize 
+
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Added SetProperty method
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Renamed IsSynchronizable
+	to CanSynchronize; commented out some 'broke the build' stuff until
+	gabaug can discuss
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Added 
+	SetProperty method to set GObject properties on the underlying playbin
+
+	* src/Banshee.MediaEngine/Helix/HelixPlayer.cs: Port of Helix backend
+	from IPlayerEngine to PlayerEngine
+
 2006-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Implemented adding and

@@ -141,16 +141,19 @@ namespace Banshee.Base
         
         public static void Open(TrackInfo track)
         {
+            CheckPending();   
             active_engine.Open(track);
         }
         
         public static void Open(Uri uri)
         {
+            CheckPending();
             active_engine.Open(uri);
         }
         
         public static void OpenPlay(TrackInfo track)
         {
+            CheckPending();
             active_engine.Open(track);
             active_engine.Play();
         }
@@ -159,11 +162,6 @@ namespace Banshee.Base
         {
             active_engine.Close();
             active_engine.Reset();
-            
-            if(pending_engine != null) {
-                active_engine = pending_engine;
-                pending_engine = null;
-            }
         }
         
         public static void Play()
@@ -174,6 +172,18 @@ namespace Banshee.Base
         public static void Pause()
         {
             active_engine.Pause();
+        }
+
+        private static void CheckPending()
+        {
+            if(pending_engine != null && pending_engine != active_engine) {
+                if(active_engine.CurrentState == PlayerEngineState.Idle) {
+                    active_engine.Close();
+                }
+                
+                active_engine = pending_engine;
+                pending_engine = null;
+            } 
         }
     
         public static TrackInfo CurrentTrack {
