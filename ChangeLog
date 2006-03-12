@@ -1,3 +1,7 @@
+2006-03-11  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/Daap/daap-sharp: Updated from Mono svn (again)
+
 2006-03-10  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp: Updated from Mono svn
