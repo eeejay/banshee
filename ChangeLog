@@ -1,3 +1,25 @@
+2006-03-13  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/banshee.in: Removed HELIX_LIBS; handled by helix-dbus-server
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: Added process
+	activation support to automatically run helix-dbus-server if not
+	found over dbus already
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Do not die if a PlayerEngine
+	could not be instantiated; report an error and continue
+
+	Patches by Sebastian Dröge:
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Ports the audioscrobbler
+	plugin to the new PlayerEngine API. Seeking is now recognized correctly
+	and pausing in a big track doesn't submit it twice anymore.
+
+	* src/Banshee.Base/Sources/LibrarySource.cs: fix double import 
+	bug for the first track imported in an empty library
+
 2006-03-12  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Removed Helix/RealPlayer detection; detect 

@@ -74,13 +74,6 @@
     <File name="./src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.MediaEngine/Vlc/Vlc.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HelixPlayer.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxCallbacks.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxDefines.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxEvents.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxPlayer.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxPlayerTest.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Helix/HxUnmanaged.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/Globals.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/FileNamePattern.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/GConfKeys.cs" subtype="Code" buildaction="Nothing" />
@@ -224,6 +217,9 @@
     <File name="./src/Banshee.Base/MediaEngine/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Dap/MassStorage/MassStorageDap.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Dap/MassStorage/MassStorageTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.MediaEngine/Helix" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

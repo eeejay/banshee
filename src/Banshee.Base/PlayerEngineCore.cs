@@ -75,15 +75,19 @@ namespace Banshee.Base
                             continue;
                         }
 
-                        PlayerEngine engine = (PlayerEngine)Activator.CreateInstance(type);
-                        engine.StateChanged += OnEngineStateChanged;
-                        engine.EventChanged += OnEngineEventChanged;
+                        try {
+                            PlayerEngine engine = (PlayerEngine)Activator.CreateInstance(type);
+                            engine.StateChanged += OnEngineStateChanged;
+                            engine.EventChanged += OnEngineEventChanged;
 
-                        if(engine.Id == preferred_id) {
-                            default_engine = engine;
+                            if(engine.Id == preferred_id) {
+                                default_engine = engine;
+                            }
+
+                            engines.Add(engine);
+                        } catch(Exception e) {
+                            LogCore.Instance.PushError("Could not load a PlayerEngine", e.ToString());
                         }
-
-                        engines.Add(engine);
                     }
                 }
             }

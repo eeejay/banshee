@@ -7,12 +7,11 @@ MONO_EXE="@expanded_libdir@/@PACKAGE@/$exec_asm"
 
 export DYLD_LIBRARY_PATH=@expanded_libdir@${DYLD_LIBRARY_PATH+:$DYLD_LIBRARY_PATH}
 export LD_LIBRARY_PATH=@expanded_libdir@${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
-export HELIX_LIBS="@HELIX_LIBRARY_PATH@"
 
 if [ "x$1" = "x--debug" ]; then
 	MONO_OPTIONS="--debug"
 	echo "** Running Banshee in Debug Mode **"
 fi
 
-MONO_EXTERNAL_ENCODINGS=UTF8:Latin1 exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
+exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
 

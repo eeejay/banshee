@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections;
+using System.Diagnostics;
 
 using DBus;
 
@@ -43,16 +44,34 @@ namespace Helix
         public event MessageHandler Message;
         
         private static RemotePlayer instance;
+        private static bool tried_activating = false;
 
         public static RemotePlayer Connect()
         {
             if(instance == null) {
-                Service service = Service.Get(Bus.GetSessionBus(), ServiceName);     
-                service.SignalCalled += OnSignalCalled;   
-                instance = (RemotePlayer)service.GetObject(typeof(RemotePlayer), ObjectPath);
+                try {
+                    Service service = Service.Get(Bus.GetSessionBus(), ServiceName);     
+                    service.SignalCalled += OnSignalCalled;   
+                    instance = (RemotePlayer)service.GetObject(typeof(RemotePlayer), ObjectPath);
+                } catch(Exception e) {
+                    if(tried_activating) {
+                        throw e;
+                    } else {
+                        tried_activating = true;
+                        ActivateServer();
+                    }
+                }
             }
             
             return instance;
+        }
+        
+        private static void ActivateServer()
+        {
+            Console.WriteLine("Starting helix-dbus-server...");
+            Process.Start("helix-dbus-server");
+            System.Threading.Thread.Sleep(1000);
+            Connect();
         }
         
         public void Dispose()

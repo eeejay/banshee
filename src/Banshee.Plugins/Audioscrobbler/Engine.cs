@@ -72,10 +72,9 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		Queue queue;
 
+		bool song_started; /* if we were watching the current song from the beginning */
 		bool queued; /* if current_track has been queued */
 		bool sought; /* if the user has sought in the current playing song */
-		uint position; /* position in the playing song, on previous tick */
-		TrackInfo current_track;
 
 		WebRequest current_web_req;
 		IAsyncResult current_async_result;
@@ -83,21 +82,25 @@ namespace Banshee.Plugins.Audioscrobbler {
 		
 		public Engine ()
 		{
+			timeout_id = 0;
 			state = State.IDLE;
 			queue = new Queue ();
 		}
 
 		public void Start ()
 		{
+			song_started = false;
+			PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
 			if (timeout_id == 0) {
-				timeout_id = Timeout.Add (TICK_INTERVAL, EngineTick);
+				timeout_id = Timeout.Add (TICK_INTERVAL, StateTransitionHandler);
 			}
-
 			queue.Load ();
 		}
 
 		public void Stop ()
 		{
+			PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
+
 			if (timeout_id != 0) {
 				GLib.Source.Remove (timeout_id);
 				timeout_id = 0;
@@ -136,45 +139,44 @@ namespace Banshee.Plugins.Audioscrobbler {
 			return CryptoConvert.ToHex (hash).ToLower ();
 		}
 
-		bool EngineTick ()
+		void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
 		{
-			/* check the currently playing track (if there is one) */
-			if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing
-			    && PlayerEngineCore.Length != 0) {
-
-				TrackInfo track = PlayerEngineCore.CurrentTrack;
-
-				/* did the user switch tracks? */
-				if (track != current_track) {
-					current_track = track;
-					queued = false;
-					sought = false;
-					position = 0;
-				}
-
-				/* did the user seek? */
-				if (PlayerEngineCore.Position < position
-					|| PlayerEngineCore.Position > position + TICK_INTERVAL * 2) {
+			switch (args.Event) {
+				/* Queue if we're watching this song from the beginning,
+				 * it isn't queued yet and the user didn't seek until now,
+				 * we're actually playing, song position and length are greater than 0
+				 * and we already played half of the song or 240 seconds */
+				case PlayerEngineEvent.Iterate:
+					if (song_started && !queued && !sought && PlayerEngineCore.CurrentState == PlayerEngineState.Playing &&
+						PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > 0 &&
+						(PlayerEngineCore.Position > PlayerEngineCore.Length / 2 || PlayerEngineCore.Position > 240)) {
+							TrackInfo track = PlayerEngineCore.CurrentTrack;
+							if (track == null) {
+								queued = sought = false;
+							} else {
+								queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (PlayerEngineCore.Position));
+								queued = true;
+							}
+					}
+					break;
+				/* Start of Stream: new song started */
+				case PlayerEngineEvent.StartOfStream:
+					queued = sought = false;
+					song_started = true;
+					break;
+				/* End of Stream: song finished */
+				case PlayerEngineEvent.EndOfStream:
+					song_started = queued = sought = false;
+					break;
+				/* Did the user seek? */
+				case PlayerEngineEvent.Seek:
 					sought = true;
-				}
-
-				/* Each song should be posted to the server
-				   when it is 50% or 240 seconds complete,
-				   whichever comes first. */
-				if (!queued && !sought
-				    && (PlayerEngineCore.Position > PlayerEngineCore.Length / 2
-					|| PlayerEngineCore.Position > 240)) {
-					queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (PlayerEngineCore.Position));
-					queued = true;
-				}
-
-				position = PlayerEngineCore.Position;
+					break;
 			}
-			else {
-				current_track = null;
-				queued = false;
-			}
+		}
 
+		bool StateTransitionHandler()
+		{
 			/* if we're not connected, don't bother doing anything
 			 * involving the network. */
 			if (!Globals.Network.Connected)
@@ -229,9 +231,9 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 			next_interval = DateTime.MinValue;
 
-            if(post_url == null) {
-                return;
-            }
+           		if(post_url == null) {
+				return;
+			}
 
 			StringBuilder sb = new StringBuilder ();
 
@@ -249,8 +251,7 @@ namespace Banshee.Plugins.Audioscrobbler {
 			ts.StringBuilder = sb;
 
 			state = State.WAITING_FOR_REQ_STREAM;
-			current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream,
-																		  ts);
+			current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
 			if (current_async_result == null) {
 				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
 				state = State.IDLE;

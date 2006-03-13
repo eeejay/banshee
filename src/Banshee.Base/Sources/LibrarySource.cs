@@ -38,6 +38,7 @@ namespace Banshee.Sources
     public class LibrarySource : Source
     {
         private static LibrarySource instance;
+        private bool updating = false;
         public static LibrarySource Instance {
             get {
                 if(instance == null) {
@@ -47,15 +48,28 @@ namespace Banshee.Sources
                 return instance;
             }
         }
+
+        private bool DelayedUpdateHandler()
+        {
+            OnUpdated();
+            updating = false;
+            return false;
+        }
         
         private LibrarySource() : base(Catalog.GetString("Music Library"), 0)
         {
             Globals.Library.TrackRemoved += delegate(object o, LibraryTrackRemovedArgs args) {
-                OnUpdated();
+                if (!updating) {
+                    updating = true;
+                    GLib.Timeout.Add(500, DelayedUpdateHandler);
+                }
             };
               
             Globals.Library.TrackAdded += delegate(object o, LibraryTrackAddedArgs args) {
-                OnUpdated();
+                if (!updating) {
+                    updating = true;
+                    GLib.Timeout.Add(500, DelayedUpdateHandler);
+                }
             };  
         }
         
