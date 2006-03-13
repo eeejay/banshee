@@ -93,6 +93,8 @@ namespace Banshee.Base
             }
             
             active_engine = default_engine;
+            
+            LogCore.Instance.PushDebug(Catalog.GetString("Default player engine"), active_engine.Name);
         }
         
         public static void Initialize()

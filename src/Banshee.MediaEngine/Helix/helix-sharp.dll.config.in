@@ -1,4 +1,0 @@
-<configuration>
-	<dllmap dll="hxclient" target="@expanded_libdir@/@PACKAGE@/Banshee.MediaEngine/Helix/libhxclient.so.1.0" />
-</configuration>
-

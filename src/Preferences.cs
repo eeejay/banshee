@@ -111,9 +111,7 @@ namespace Banshee
             speedContainer.PackStart(writeSpeedCombo, false, false, 0);
             speedContainer.ShowAll();
             LoadBurnerDrives();
-        
-            TextView view = glade["EngineDescription"] as TextView;
-            view.SetSizeRequest(view.Allocation.Width, -1);
+
             WindowPreferences.Show();
             
             rippingProfile = new PipelineProfileSelector();
@@ -525,7 +523,6 @@ namespace Banshee
         {
             ComboBox box = o as ComboBox;
             ListStore store = box.Model as ListStore;
-            TextView view = glade["EngineDescription"] as TextView;
             TreeIter iter;
             
             if(!box.GetActiveIter(out iter)) {

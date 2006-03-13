@@ -31,8 +31,6 @@ dnl configure options
 AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
-AC_ARG_WITH(helix-libs, AC_HELP_STRING([--with-helix-libs], [Specify Helix/RealPlayer Library/Codecs Path]), helix_libs="$withval", helix_libs="no")
-
 AC_ARG_ENABLE(ipod, AC_HELP_STRING([--enable-ipod], [Enable iPod DAP support]), , enable_ipod="yes")
 enable_ipodsharp="${enable_ipod}"
 
@@ -54,6 +52,10 @@ AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the G
 AM_CONDITIONAL(ENABLE_GST_10, test "x$enable_gst_10" = "xyes")
 
 AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
+
+if test "x$enable_helix" = "xyes"; then
+	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2)
+fi
 
 if test "x$enable_xing" = "xyes"; then
 	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
@@ -331,35 +333,6 @@ dnl GConf
 AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
 
-dnl HELIX_LIBS stuff
-
-if test "x$enable_helix" = "xyes"; then
-	POSSIBLE_HELIX_LIBS="/usr/lib/RealPlayer10 /usr/lib/RealPlayer /usr/lib/realplayer /usr/local/realplayer /usr/local/RealPlayer10 /usr/local/RealPlayer /opt/realplayer /usr/lib/realplay-10.0.5 /usr/lib/realplay-10.0.4 /usr/lib/realplay-10.0.3 /usr/lib/realplay-10.0.2 /usr/lib/realplay-10.0.1 /usr/lib/realplay-10.0.0 /usr/lib/realplay-10.0 /usr/lib/helix /usr/local/Helix /usr/local/HelixPlayer /usr/lib/helix/player /usr/local/helix/player /usr/local/lib/helix/player"
-	COMMON_HELIX_SIGNATURE="common/clntcore.so"
-
-	if test ! -e $helix_libs/$COMMON_HELIX_SIGNATURE; then
-		helix_libs="no";
-		for possible in $POSSIBLE_HELIX_LIBS; do
-			if test -e $possible/$COMMON_HELIX_SIGNATURE ; then
-				helix_libs="$possible";
-				break;
-			fi
-		done
-	fi
-
-	if test "x$helix_libs" = "xyes"; then
-		AC_MSG_ERROR([		
-You have enabled the Helix Player Engine, but configure could not 
-find a RealPlayer or Helix Player installation. 
-		
-Please configure with --with-helix-libs=/path/to/install or to 
-disable the Helix engine, configure with --disable-helix])
-	else
-		HELIX_LIBRARY_PATH="$helix_libs";
-		AC_SUBST(HELIX_LIBRARY_PATH)
-	fi
-fi
-
 dnl Find the real @libdir@
 
 expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
@@ -409,7 +382,7 @@ src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
 src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config
 src/Banshee.MediaEngine/Helix/Makefile
-src/Banshee.MediaEngine/Helix/helix-sharp.dll.config
+src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.dll.config
 src/Banshee.MediaEngine/Vlc/Makefile
 src/Banshee.MediaEngine/Vlc/vlc-player.dll.config
 src/Banshee.Widgets/Makefile
@@ -463,7 +436,7 @@ banshee-$VERSION
 
     Engines:
       GStreamer:       yes, ${gst_version}
-      Helix:           ${enable_helix}
+      Helix Remote:    ${enable_helix}
       VLC:             ${enable_vlc}
 
     Digital Audio Players (DAP):

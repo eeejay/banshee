@@ -1,3 +1,30 @@
+2006-03-12  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Removed Helix/RealPlayer detection; detect 
+	helix-dbus-server if --enable-helix 
+
+	* data/banshee.glade: Removed the engine description text box
+
+	* src/Preferences.cs: Removed engine description
+
+	* PlayerEngineCore.cs: Added a log entry to show selected engine
+
+	* src/Banshee.MediaEngine/Helix/: Removed C# bindings to Helix/hxclientkit;
+	helix support has been moved out of process to helix-dbus-server
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: DBus client object 
+	to the new helix-dbus-server program
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: PlayerEngine
+	implementation of HelixRemotePlayer; Helix support is out of process
+
+	* src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs: New VLC implementation
+	of PlayerEngine; no more IPlayerEngines!
+
+	* src/Banshee.Base/IPlayerEngine.cs: Removed
+
+	* src/Banshee.Base/Makefile.am: Removed IPlayerEngine.cs
+
 2006-03-11  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp: Updated from Mono svn (again)

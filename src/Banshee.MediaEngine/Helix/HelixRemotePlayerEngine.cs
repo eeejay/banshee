@@ -1,7 +1,7 @@
 /***************************************************************************
- *  VlcPlayerEngine.cs
+ *  HelixRemotePlayerEngine.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2006 Novell, Inc
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -25,25 +25,26 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Mono.Unix;
+
+using Helix;
 
 using Banshee.Base;
 using Banshee.MediaEngine;
 
-namespace Banshee.MediaEngine.Vlc
+namespace Banshee.MediaEngine.Helix
 {    
-    public class VlcPlayerEngine : PlayerEngine
+    public class HelixRemotePlayerEngine : PlayerEngine
     {
-        private VLC player;     
-        private uint timerId = 0;
+        private RemotePlayer player;
+        private uint timeout_id;
         
-        public VlcPlayerEngine()
+        public HelixRemotePlayerEngine()
         {
-            player = new VLC();
+            player = RemotePlayer.Connect();
+            player.Stop();
+            player.Message += OnRemotePlayerMessage;
         }
         
         public override void Dispose()
@@ -54,23 +55,20 @@ namespace Banshee.MediaEngine.Vlc
                 
         protected override void OpenUri(Uri uri)
         {
-            player.Open(uri.AbsoluteUri);
-
-            timerId = GLib.Timeout.Add(500, delegate {
-                if(!player.IsPlaying && CurrentState != PlayerEngineState.Paused) {
-                    OnEventChanged(PlayerEngineEvent.EndOfStream);
-                    return false;
+            player.OpenUri(uri.AbsoluteUri);
+            
+            timeout_id = GLib.Timeout.Add(500, delegate {
+                if(CurrentState == PlayerEngineState.Playing) {
+                    OnEventChanged(PlayerEngineEvent.Iterate);
                 }
-                
-                OnEventChanged(PlayerEngineEvent.Iterate);
                 return true;
             });
         }
         
         public override void Close()
         {
-            if(timerId > 0) {
-                GLib.Source.Remove(timerId);
+            if(timeout_id > 0) {
+                GLib.Source.Remove(timeout_id);
             }
             
             player.Stop();
@@ -80,41 +78,73 @@ namespace Banshee.MediaEngine.Vlc
         public override void Play()
         {
             player.Play();
-            OnStateChanged(PlayerEngineState.Playing);
         }
         
         public override void Pause()
         {
             player.Pause();
-            OnStateChanged(PlayerEngineState.Paused);
+        }
+        
+        public void OnRemotePlayerMessage(object o, MessageArgs args)
+        {
+            Message message = args.Message;
+            
+            switch(message.Type) {
+                case MessageType.ContentConcluded:
+                    Close();
+                    OnEventChanged(PlayerEngineEvent.EndOfStream);
+                    break;
+                case MessageType.ContentState:
+                    switch((ContentState)message["NewState"]) {
+                        case ContentState.Paused:
+                            OnStateChanged(PlayerEngineState.Paused);
+                            break;
+                        case ContentState.Playing:
+                            OnStateChanged(PlayerEngineState.Playing);
+                            break;
+                        case ContentState.Loading:
+                        case ContentState.Contacting:
+                            OnStateChanged(PlayerEngineState.Buffering);
+                            break;
+                        default:
+                            OnStateChanged(PlayerEngineState.Idle);
+                            break;
+                    }
+                    break;
+            }
         }
          
         public override ushort Volume {
-            get { return (ushort)player.Volume; }
+            get { return (ushort)player.GetVolume(); }
             set {
-                player.Volume = (int)value;
+                player.SetVolume((uint)value);
                 OnEventChanged(PlayerEngineEvent.Volume);
             }
         }
     
         public override uint Position {
-            get { return (uint)player.Time; }
+            get { return (uint)player.GetPosition() / 1000; }
             set {
-                player.Time = (int)value;
-                OnEventChanged(PlayerEngineEvent.Seek);
+                if(player.StartSeeking()) {
+                    if(player.SetPosition(value * 1000)) {
+                        OnEventChanged(PlayerEngineEvent.Seek);
+                    }
+                    
+                    player.StopSeeking();
+                }
             }
         }
         
         public override uint Length { 
-            get { return (uint)player.Length; }
+            get { return (uint)player.GetLength() / 1000; }
         }        
         
         public override string Id {
-            get { return "vlc"; }
+            get { return "helix-remote"; }
         }
         
         public override string Name {
-            get { return "VLC"; }
+            get { return "Helix Remote"; }
         }
         
         private static string [] source_capabilities = { "file", "http" };

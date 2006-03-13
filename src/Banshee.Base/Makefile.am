@@ -71,7 +71,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FileNamePattern.cs \
 	$(srcdir)/Globals.cs \
 	$(srcdir)/GConfKeys.cs \
-	$(srcdir)/IPlayerEngine.cs \
 	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/BansheeTodo.cs \
 	$(srcdir)/IconThemeUtils.cs \
