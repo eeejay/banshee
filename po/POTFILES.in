@@ -42,7 +42,6 @@ src/Banshee.Dap/Ipod/IpodDap.cs
 src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
 src/Banshee.Dap/MassStorage/MassStorageDap.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
-src/Banshee.MediaEngine/Helix/HelixPlayer.cs
 src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
@@ -59,6 +58,8 @@ src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs
 src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
 src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs
 src/Banshee.Plugins/MMKeys/mmkeys.schemas.in
+src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs
+src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/BurnCore.cs
@@ -67,7 +68,6 @@ src/Dialogs.cs
 src/ExceptionDialog.cs
 src/LogCoreViewer.cs
 src/Main.cs
-src/NotificationAreaIcon.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
 src/PlaylistView.cs
