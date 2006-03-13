@@ -20,7 +20,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ActiveUserEvent.cs \
 	$(srcdir)/ActiveUserEventsManager.cs \
 	$(srcdir)/HigMessageDialog.cs \
-	$(srcdir)/NotificationAreaIcon.cs \
 	$(srcdir)/HighlightMessageArea.cs \
 	$(srcdir)/PropertyTable.cs \
 	$(srcdir)/RadialProgress.cs \

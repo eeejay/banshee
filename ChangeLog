@@ -1,5 +1,35 @@
 2006-03-13  Aaron Bockover  <aaron@abock.org>
 
+	New NotificationAreaIcon plugin by Sebastian Dröge:
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Added NotificationAreaIcon stuff for new plugin
+
+	* data/UIManagerLayout.xml: Removed the tray icon menu
+
+	* data/banshee.schemas.in: Removed tray icon schema entries
+
+	* src/Makefile.am: Removed NotificationAreaIcon.cs
+
+	* src/NotificationAreaIcon.cs: Removed
+
+	* src/Banshee.Base/ActionManager.cs: 
+	* src/PlayerInterface.cs: Removed tray-specific code 
+
+	* src/Banshee.Base/Globals.cs: Added property to get handle to main window
+
+	* src/Banshee.Plugins/Makefile.am: Added NotificationAreaIcon to SUBDIRS
+
+	* src/Banshee.Widgets/Makefile.am: Removed NotificationAreaIcon.cs
+	
+	* src/Banshee.Widgets/NotificationAreaIcon.cs: Removed
+
+	* src/Banshee.Plugins/NotificationAreaIcon/: Moved all the old tray
+	icon code into new NotificationAreaIcon plugin
+	
+2006-03-13  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/banshee.in: Removed HELIX_LIBS; handled by helix-dbus-server

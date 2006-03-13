@@ -31,7 +31,6 @@
     <File name="./src/IPlaybackModel.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Main.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/NautilusBurnUtil.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/NotificationAreaIcon.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlayerInterface.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistColumns.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistModel.cs" subtype="Code" buildaction="Nothing" />
@@ -91,7 +90,6 @@
     <File name="./data/banshee.desktop.in.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/banshee.schemas.in" subtype="Code" buildaction="Nothing" />
     <File name="./data/org.gnome.Banshee.service.in" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.Widgets/NotificationAreaIcon.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/BansheeTodo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/IconThemeUtils.cs" subtype="Code" buildaction="Nothing" />
@@ -220,6 +218,9 @@
     <File name="./src/Banshee.MediaEngine/Helix" subtype="Directory" buildaction="Compile" />
     <File name="./src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/NotificationAreaIcon/NotificationArea.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconMenu.xml" subtype="Code" buildaction="Nothing" />
+    <File name="./src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

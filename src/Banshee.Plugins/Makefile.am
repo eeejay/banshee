@@ -3,7 +3,8 @@ SUBDIRS = \
 	Daap \
 	FileSystemMonitor \
 	MetadataSearch \
-	MMKeys
+	MMKeys \
+	NotificationAreaIcon
 
 DISTCLEANFILES = \
 	Makefile.in

@@ -80,17 +80,4 @@
         <separator />
         <menuitem name="Properties" action="PropertiesAction" />
     </popup>
-    <popup name="TrayMenu" action="TrayMenuAction">
-        <menuitem name="PlayPause" action="PlayPauseAction" />
-        <menuitem name="Previous" action="PreviousAction" />
-        <menuitem name="Next" action="NextAction" />
-        <!--<separator />
-        <menuitem name="RepeatNone" action="RepeatNoneAction" />
-        <menuitem name="RepeatAll" action="RepeatAllAction" />
-        <menuitem name="RepeatSingle" action="RepeatSingleAction" />-->
-        <separator />
-        <menuitem name="Shuffle" action="ShuffleAction" />
-        <separator />
-        <menuitem name="Quit" action="QuitAction" />
-    </popup>
 </ui>

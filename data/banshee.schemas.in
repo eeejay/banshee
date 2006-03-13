@@ -35,17 +35,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/ShowNotificationAreaIcon</key>
-      <applyto>/apps/Banshee/ShowNotificationAreaIcon</applyto>
-      <owner>banshee</owner>
-      <type>bool</type>
-      <default>true</default>
-      <locale name="C">
-        <short>Show Notification Area Icon</short>
-        <long>Only display the notification area (tray) icon if true</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/Banshee/CopyOnImport</key>
       <applyto>/apps/Banshee/CopyOnImport</applyto>
       <owner>banshee</owner>

@@ -407,6 +407,8 @@ src/Banshee.Plugins/MMKeys/Makefile
 src/Banshee.Plugins/MMKeys/MMKeys.dll.config
 src/Banshee.Plugins/Daap/Makefile
 src/Banshee.Plugins/Daap/Daap.dll.config
+src/Banshee.Plugins/NotificationAreaIcon/Makefile
+src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIcon.dll.config
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

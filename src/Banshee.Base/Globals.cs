@@ -150,6 +150,21 @@ namespace Banshee.Base
     
     public static class InterfaceElements
     {
+
+        private static Gtk.Window main_window;
+        
+        public static Gtk.Window MainWindow {
+            get {
+                return main_window;
+            }
+            
+            set {
+                if(main_window == null) {
+                    main_window = value;
+                }
+            }
+        }
+	
         private static Gtk.TreeView playlist_view;
         
         public static Gtk.TreeView PlaylistView {

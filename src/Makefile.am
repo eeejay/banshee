@@ -38,7 +38,6 @@ banshee_sources = \
 	PlaylistView.cs \
 	Dialogs.cs \
 	TrackProperties.cs \
-	NotificationAreaIcon.cs \
 	SourceView.cs \
 	Preferences.cs \
 	QueryBuilder.cs \

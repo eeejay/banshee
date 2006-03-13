@@ -65,7 +65,6 @@ namespace Banshee
         private VolumeButton volumeButton;
         private PlaylistView playlistView;
         private SourceView sourceView;
-        private NotificationAreaIconContainer trayIcon;
         private ImageAnimation spinner;
         private TrackInfoHeader trackInfoHeader;
         private CoverArtView cover_art_view;
@@ -136,10 +135,10 @@ namespace Banshee
         {
             gxml = new Glade.XML(null, "banshee.glade", "WindowPlayer", null);
             gxml.Autoconnect(this);
-            
+            InterfaceElements.MainWindow = WindowPlayer;
+
             ResizeMoveWindow();
             BuildWindow();   
-            InstallTrayIcon();
             
             Globals.DBusRemote = new DBusRemote();
             banshee_dbus_object = new RemotePlayer(Window, this);
@@ -472,25 +471,6 @@ namespace Banshee
             toolTips.SetTip(widget, tip, tip);
         }
           
-        private void InstallTrayIcon()
-        {
-            try {
-                if(!(bool)Globals.Configuration.Get(GConfKeys.ShowNotificationAreaIcon)) {
-                    return;
-                }
-            } catch(Exception) { }
-                
-            try {
-                trayIcon = new NotificationAreaIconContainer();
-                trayIcon.ClickEvent += OnTrayClick;
-                trayIcon.MouseScrollEvent += OnTrayScroll;
-            } catch(Exception e) {
-                trayIcon = null;
-                LogCore.Instance.PushWarning(Catalog.GetString("Notification Area Icon could not be installed"),
-                    e.Message, false);
-            }
-        }
-    
         private void LoadSettings()
         {    
             try {
@@ -677,9 +657,6 @@ namespace Banshee
             if(track == null) {
                 WindowPlayer.Title = Catalog.GetString("Banshee Music Player");
                 trackInfoHeader.Visible = false;
-                if(trayIcon != null) {
-                    trayIcon.Track = null;
-                }
                 return;
             }
         
@@ -698,9 +675,6 @@ namespace Banshee
             } catch(Exception) {
             }
             
-            if(trayIcon != null) {
-                trayIcon.Track = track;
-            }
         }
         
         // ---- Window Event Handlers ----
@@ -782,40 +756,6 @@ namespace Banshee
             }
         }       
               
-        // ---- Tray Event Handlers ----
-      
-        private void OnTrayClick(object o, EventArgs args)
-        {
-            WindowPlayer.Visible = !WindowPlayer.Visible;
-            ResizeMoveWindow();
-        }
-          
-        private void OnTrayScroll(object o, ScrollEventArgs args)
-        {
-            switch(args.Event.Direction) {
-                case Gdk.ScrollDirection.Up:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        PlayerEngineCore.Volume += (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position += SkipDelta;
-                    } else {
-                        Next();
-                    }
-                    break;
-                case Gdk.ScrollDirection.Down:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {            
-                        PlayerEngineCore.Volume -= (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position -= SkipDelta;
-                    } else {
-                        Previous();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-   
         // ---- Playback Event Handlers ----
         
         public void TogglePlaying()
@@ -906,9 +846,6 @@ namespace Banshee
                     
                     UpdateMetaDisplay();
                     
-                    if(trayIcon != null) {
-                        trayIcon.Track = null;
-                    }
                     break;
                 case PlayerEngineState.Paused:
                     Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
@@ -965,9 +902,6 @@ namespace Banshee
                 setPositionTimeoutId = GLib.Timeout.Add(100, new GLib.TimeoutHandler(SetPositionTimeoutCallback));
             
                 SetPositionLabel(PlayerEngineCore.Position);
-                if(PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
-                    trayIcon.Update();
-                }
             }
         }
         

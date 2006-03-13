@@ -138,9 +138,6 @@ namespace Banshee.Base
                 new ActionEntry("SourceMenuAction", null, 
                     Catalog.GetString("Source"), null, null, null),
                     
-                new ActionEntry("TrayMenuAction", null, 
-                    "Tray", null, null, null),
-                    
                 new ActionEntry("SongViewPopupAction", null, 
                     "Song Menu", null, null, null)
             });
