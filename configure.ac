@@ -5,7 +5,7 @@ AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
-VERSION=0.10.7
+VERSION=0.10.8
 ASM_VERSION="$VERSION.*"
 
 AM_INIT_AUTOMAKE(banshee, $VERSION)
@@ -449,11 +449,6 @@ banshee-$VERSION
     GStreamer Plugins: ${GST_PLUGINS_DIR}
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
-
-if test "x${enable_helix}" = "xyes"; then
-	echo "    Helix/RealPlayer:  ${helix_libs}
-	";
-fi;
 
 if test "x${enable_vlc}" = "xyes"; then
 	if test ! -e ./src/Banshee.MediaEngine/Vlc/libvlc.so; then

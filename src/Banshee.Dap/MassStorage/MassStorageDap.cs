@@ -219,13 +219,13 @@ namespace Banshee.Dap.MassStorage
                 file_path = file_path.Replace ("%Album", track.Album);
 
                 if (file_path.IndexOf ("%Track") == -1) {
-                    file_path = System.IO.Path.Combine (file_path, /*track.TrackNumberTitle*/ Convert.ToString(track.TrackNumber));
+                    file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
                 } else {
-                    file_path = file_path.Replace ("%Track", /*track.TrackNumberTitle*/ Convert.ToString(track.TrackNumber));
+                    file_path = file_path.Replace ("%Track", track.TrackNumberTitle);
                 }
             } else {
                 file_path = System.IO.Path.Combine (track.Artist, track.Album);
-                file_path = System.IO.Path.Combine (file_path, /*track.TrackNumberTitle*/ Convert.ToString(track.TrackNumber));
+                file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
             }
 
             file_path += Path.GetExtension (track.Uri.LocalPath);

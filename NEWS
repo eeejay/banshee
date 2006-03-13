@@ -1,53 +1,49 @@
-Banshee 0.10.7 is out!
-
-This release features the completion of the GStreamer 0.10 port. Ripping
-and Transcoding now work with GStreamer 0.10. Also featured is a new 
-importing dialog that allows initial importing from Audio CDs, and Genre
-support in the UI. DAAP support can now also use either Avahi or Bonjour
-(mDNSResponder) for Zeroconf mDNS support.
-
+Banshee 0.10.8 is out! 
 
 NEW FEATURES
 ------------
 
- * Full GStreamer 0.10 support
+ * New player engine system; fully abstracted from the user interface; 
  
- * New importing system and UI; plugins can provide custom import sources
+ * Open Location dialog to play an arbitrary file/stream
  
- * Bonjour/mDNSResponder support in addition to Avahi for Zeroconf support
+ * Notification Area Icon moved into a plugin (Sebastian Dröge)
  
- * Genre playlist column and entry in track editor
+ * Bonjour/mDNSResponder resolver enhanced to use A DNS queries instead of
+   gethostbyname
  
- * Shuffle button now has the same behavior as the repeat button
+ * Helix backend rewritten as a separate program that uses DBus [1]
  
- * New translations: British English (Christopher Orr), Finnish (Ilkka Tuohela),
-   and Italian (Alessandro Gervaso)
+ * Improved DAAP support: works properly with mt-daap and Rhythmbox
+ 
+NOTES
+-----
+
+[1] Helix support now requires a separate module, helix-dbus-server. In
+order to allow for 64 bit Banshee packages, Helix had to be moved out of
+process (no 64 bit Helix port). helix-dbus-server provides access to the 
+Helix player over DBus.
 
 
 BUG FIXES
 ---------
 
- * 324924: Systemtray does not appear
- * 326915: Automatic syncronization with an iPod hangs
- * 328183: Multiple manual syncronizations of an iPod cause it to corrupt its database
- * 329645: Cover art flashing
- * 329966: CDs Fail to Show Up in Library List
- * 330003: Banshee crash loading NotificationAreaIcon
- * 330284: crash at startup with daap plugin when there is a daap share on the network
- * 330524: [PATCH] Doesn't adjust volume when scrolling over the volume widget
- * 330903: [PATCH] Banshee crashes when requesting album cover for an album without one
- * 332350: [PATCH] make banshee use gconf audio sink with gstreamer 0.10
- * 326876: daap shares not being removed 
+ * 329812: Not able to browse Rhythmbox DAAP share
+ * 330230: Banshee fails to import album/directory into database.
+ * 333793: Incorrect check for mono DLLs
 
 
 THE IMPORTANT LINKS
 -------------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.10.6
+http://banshee-project.org/Releases/0.10.8
 
-Banshee 0.10.6 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.10.6.tar.gz
+Banshee 0.10.8 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.10.8.tar.gz
+
+helix-dbus-server Tarball:
+http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.2.tar.gz
 
 ipod-sharp 0.5.15 Tarball:
 http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.15.tar.gz
@@ -67,8 +63,6 @@ CONTRIBUTORS FOR THIS RELEASE
 
 Gabriel Burt
 James Willcox
-Jeff Tickle
-Oscar Forero
 Ruben Vermeersch
 Sebastian Dröge
 

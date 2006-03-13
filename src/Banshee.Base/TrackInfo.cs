@@ -293,6 +293,12 @@ namespace Banshee.Base
             }
         }
         
+        public string TrackNumberTitle {
+            get {
+                return String.Format ("{0:00} - {1}", track_number, title);
+            }
+        }
+        
         public uint TrackCount { 
             get { 
                 return track_count;

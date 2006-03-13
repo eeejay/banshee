@@ -1075,9 +1075,14 @@ namespace Banshee
             
             if(source is DapSource) {
                 DapSource dapSource = source as DapSource;
-                Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
-                Globals.ActionManager.SetActionLabel("SyncDapAction", String.Format("{0} {1}",
-                    Catalog.GetString("Synchronize"), dapSource.Device.GenericName));
+                if (dapSource.Device.CanSynchronize) {
+                    Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
+                    Globals.ActionManager.SetActionLabel("SyncDapAction", String.Format("{0} {1}",
+                        Catalog.GetString("Synchronize"), dapSource.Device.GenericName));
+                } else {
+                    Globals.ActionManager["SyncDapAction"].Visible = false;
+                }
+
                 Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Device");
             } else {
                 Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Playlist");            

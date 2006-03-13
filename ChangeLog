@@ -1,5 +1,20 @@
 2006-03-13  Aaron Bockover  <aaron@abock.org>
 
+	Version 0.10.8 Released
+
+	* NEWS: Updated with 0.10.8 Release Notes
+
+	* configure.ac: Bumped to 0.10.8
+
+	* src/PlayerInterface.cs: Sensitize the Sync button based on
+	DapDevice.CanSynchronize
+
+	* src/Banshee.Base/TrackInfo.cs: Added TrackNumberTitle property
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: use TrackNumberTitle
+
+2006-03-13  Aaron Bockover  <aaron@abock.org>
+
 	New NotificationAreaIcon plugin by Sebastian Dröge:
 
 	* banshee.mdp: Updated MonoDevelop project
