@@ -807,11 +807,10 @@ namespace Banshee
             
             SetInfoLabel(
                 // Translators: position in song. eg, "0:37 of 3:48"
-                String.Format(Catalog.GetString("{0} of {1}"),
-                          String.Format("{0}:{1:00}", position / 60, position % 60),
-                          String.Format("{0}:{1:00}", PlayerEngineCore.CurrentTrack.Duration.Minutes, 
-                          PlayerEngineCore.CurrentTrack.Duration.Seconds))
-            );    
+                String.Format(Catalog.GetString("{0} of {1}"), 
+                    DateTimeUtil.FormatDuration(position),
+                    DateTimeUtil.FormatDuration((long)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds))
+                );
         }
         
         private void OnPlayerEngineStateChanged(object o, PlayerEngineStateArgs args)

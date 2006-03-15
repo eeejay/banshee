@@ -453,8 +453,7 @@ namespace Banshee
             
             SetRendererAttributes((CellRendererText)cell, 
                 Track.Duration.TotalSeconds < 0.0 ? Catalog.GetString("N/A") : 
-                String.Format("{0}:{1}", Track.Duration.Minutes, 
-                (Track.Duration.Seconds).ToString("00")), iter);
+                DateTimeUtil.FormatDuration((long)Track.Duration.TotalSeconds), iter);
         }
         
         protected void TrackCellPlayCount(TreeViewColumn tree_column,

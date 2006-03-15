@@ -1,5 +1,13 @@
 2006-03-15  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlayerInterface.cs:
+	* src/PlaylistView.cs:
+	* src/Banshee.Base/TrackInfoPopup.cs:
+	* src/Banshee.Base/Utilities.cs: Show track durations longer than one
+	hour properly (BGO #333472, Ruben Vermeersch)
+
+2006-03-15  Aaron Bockover  <aaron@abock.org>
+
 	* src/MusicBrainz/Client.cs: Added proxy server support (Michael Hutchinson)
 
 2006-03-15  Aaron Bockover  <aaron@abock.org>

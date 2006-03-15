@@ -30,6 +30,8 @@
 using System;
 using Gtk;
 
+using Banshee.Base;
+
 namespace Banshee.Widgets
 {
     public class TrackInfoPopup : Gtk.Window
@@ -93,8 +95,8 @@ namespace Banshee.Widgets
         private void UpdatePosition()
         {
             linear_progress.Fraction = (double)position / (double)duration;
-            position_label.Markup = String.Format("<small>{0:00}:{1:00} of {2:00}:{3:00}</small>",
-                position / 60, position % 60, duration / 60, duration % 60); 
+            position_label.Markup = String.Format("<small>{0} of {1}</small>",
+                    DateTimeUtil.FormatDuration(position), DateTimeUtil.FormatDuration(duration)); 
         }
         
         public uint Duration {
