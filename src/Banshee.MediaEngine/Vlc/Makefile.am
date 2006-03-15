@@ -4,7 +4,7 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 ASSEMBLY_SOURCES = $(srcdir)/Vlc.cs $(srcdir)/VlcPlayerEngine.cs
 
-DISTCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.exe *.dll *.mdb *.pidb
 
 EXTRA_DIST = $(ASSEMBLY).config.in $(ASSEMBLY_SOURCES)

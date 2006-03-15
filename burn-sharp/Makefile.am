@@ -22,6 +22,6 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 EXTRA_DIST = $(ASSEMBLY_SOURCES) burn-sharp.sources $(ASSEMBLY).config.in
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = Makefile.in *.mdb *.dll *.exe
-
+DISTCLEANFILES = *.mdb *.dll *.exe
+MAINTAINERCLEANFILES = Makefile.in
 

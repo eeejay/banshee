@@ -127,6 +127,7 @@ namespace Banshee.Widgets
         private CoverArtPopup popup;
         private bool loaded;
         private bool in_popup;
+        private bool in_eventbox;
         
         public CoverArtThumbnail(int size) : base()
         {
@@ -165,13 +166,18 @@ namespace Banshee.Widgets
         
         private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
         {
-            if(loaded) {
-                popup.Show();
-            }
+            in_eventbox = true;
+            GLib.Timeout.Add(500, delegate {
+                if(in_eventbox && loaded) {
+                    popup.Show();
+                }
+                return false;
+            });
         }
         
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
         {
+            in_eventbox = false;
             GLib.Timeout.Add (100, delegate {
                 if (!in_popup) {
                     popup.Hide();

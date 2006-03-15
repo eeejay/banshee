@@ -6,7 +6,7 @@ SUBDIRS = \
 	MMKeys \
 	NotificationAreaIcon
 
-DISTCLEANFILES = \
+MAINTAINERCLEANFILES = \
 	Makefile.in
 
 uninstall-hook:

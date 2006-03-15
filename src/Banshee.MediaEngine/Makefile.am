@@ -8,7 +8,7 @@ if ENABLE_VLC
 SUBDIRS += Vlc
 endif
 
-DISTCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 
 uninstall-hook:
 	rm -rf $(pkglibdir)/Banshee.MediaEngine

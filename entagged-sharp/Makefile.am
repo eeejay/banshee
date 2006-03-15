@@ -122,7 +122,8 @@ EXTRA_DIST = \
 	$(ASSEMBLY_SOURCES)
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = *.mdb *.dll *.exe
+MAINTAINERCLEANFILES = Makefile.in
 
 test:
 	$(MCS) -out:entagged-test.exe -r:entagged-sharp.dll EntaggedTest.cs

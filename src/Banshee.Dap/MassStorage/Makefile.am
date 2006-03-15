@@ -3,7 +3,8 @@ ASSEMBLY_NAME = Banshee.Dap.MassStorage
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in 
+DISTCLEANFILES = *.mdb
+MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/MassStorageDap.cs				\

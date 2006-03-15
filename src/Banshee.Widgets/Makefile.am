@@ -35,5 +35,5 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe *.pidb
-
+DISTCLEANFILES = *.mdb *.dll *.exe *.pidb
+MAINTAINERCLEANFILES = Makefile.in

@@ -6,7 +6,7 @@ EXTRA_DIST = \
 	$(ASSEMBLY_SOURCES) \
 	$(ASSEMBLY).config.in
 
-DISTCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
 
 if ENABLE_HELIX

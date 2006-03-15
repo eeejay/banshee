@@ -41,9 +41,11 @@ EXTRA_DIST = \
 	MonodocNodeConfig.cs
 	
 DISTCLEANFILES = \
-	Makefile.in \
 	banshee-docs.zip \
 	banshee-docs.tree
+
+MAINTAINERCLEANFILES = \
+	Makefile.in
 
 CLEANFILES = \
 	MonodocNodeConfig.exe

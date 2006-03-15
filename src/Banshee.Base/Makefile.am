@@ -105,5 +105,6 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in 
+DISTCLEANFILES = *.mdb
+MAINTAINERCLEANFILES = Makefile.in
 

@@ -2,13 +2,13 @@
 <gconfschemafile>
   <schemalist>
     <schema>
-      <key>/schemas/apps/Banshee/TrayIcon/Enabled</key>
-      <applyto>/apps/Banshee/TrayIcon/Enabled</applyto>
+      <key>/schemas/apps/Banshee/NotificationAreaIcon/Enabled</key>
+      <applyto>/apps/Banshee/NotificationAreaIcon/Enabled</applyto>
       <owner>banshee</owner>
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Enable the Tray Icon plugin</short>
+        <short>Enable the Notification Area Icon plugin</short>
         <long></long>
       </locale>
     </schema>

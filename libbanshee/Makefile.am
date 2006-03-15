@@ -44,7 +44,7 @@ libbanshee_la_SOURCES = \
 libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS)
 
 CLEANFILES = gst-player-test gst-encode-test
-DISTCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = $(GST_0_8_CFILES) $(GST_0_10_CFILES) 
 
 if ENABLE_TESTS

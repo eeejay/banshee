@@ -40,5 +40,6 @@ EXTRA_DIST = \
 	SimpleLookupTest.cs 
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in
+DISTCLEANFILES = *.mdb
+MAINTAINERCLEANFILES = Makefile.in
 

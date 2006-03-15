@@ -25,9 +25,6 @@ CLEANFILES = \
 	intltool-merge
 
 DISTCLEANFILES =        \
-	intltool-extract.in \
-	intltool-merge.in   \
-	intltool-update.in  \
 	banshee.pc    \
 	*.bak         \
 	*~            \
@@ -46,5 +43,8 @@ MAINTAINERCLEANFILES = \
 	configure \
 	config.sub \
 	config.guess \
+	intltool-extract.in \
+	intltool-merge.in   \
+	intltool-update.in  \
 	mkinstalldirs
 

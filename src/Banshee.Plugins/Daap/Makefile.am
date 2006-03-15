@@ -43,5 +43,5 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files) $(srcdir)/daap-sharp/content-codes
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in $(schema_DATA)
-
+DISTCLEANFILES = *.mdb $(schema_DATA)
+MAINTAINERCLEANFILES = Makefile.in

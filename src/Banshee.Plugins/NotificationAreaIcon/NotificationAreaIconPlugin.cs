@@ -70,6 +70,7 @@ namespace Banshee.Plugins.NotificationAreaIcon {
 
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
+        private bool cursor_over_trayicon = false;
 
         private static readonly uint SkipDelta = 10;
         private static readonly int VolumeDelta = 10;
@@ -201,15 +202,21 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         }
         
         private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) {
-            if(!can_show_popup) {
-                return;
+            cursor_over_trayicon = true;
+            if(can_show_popup) {
+                // only show the popup when the cursor is still over the
+                // tray icon after 500ms
+                GLib.Timeout.Add(500, delegate {
+                    if ((cursor_over_trayicon) && (can_show_popup)) {
+                        ShowPopup();
+                    }
+                    return false;
+                });
             }
-            
-            can_show_popup = true;
-            ShowPopup();
         }
         
         private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) {
+            cursor_over_trayicon = false;
             HidePopup();
         }
 
@@ -223,10 +230,16 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                     FillPopup();
                     break;
                 case PlayerEngineEvent.EndOfStream:
-                    popup.Duration = 0;
-                    popup.Position = 0;
-                    can_show_popup = false;
-                    popup.Hide();
+                    // only hide the popup when we don't play again after 250ms
+                    GLib.Timeout.Add(250, delegate {
+                        if (PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
+                            popup.Duration = 0;
+                            popup.Position = 0;
+                            can_show_popup = false;
+                            popup.Hide();
+                         }
+                         return false;
+                    });
                     break;
             }
         }
@@ -237,6 +250,7 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             popup.Album = PlayerEngineCore.CurrentTrack.Album;
             popup.TrackTitle = PlayerEngineCore.CurrentTrack.Title;
             popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
+            popup.QueueDraw();
             if (!popup.Visible) {
                 PositionPopup();
             }

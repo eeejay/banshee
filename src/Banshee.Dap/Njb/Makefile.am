@@ -4,7 +4,8 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 EXTRA_DIST = $(ASSEMBLY_SOURCES) njb-sharp.dll.config.in
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb Makefile.in 
+DISTCLEANFILES = *.mdb
+MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/NjbDap.cs \

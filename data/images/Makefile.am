@@ -16,7 +16,7 @@ uninstall-hook:
 	rm -f $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
 	rm -f $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
 
-DISTCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 
 EXTRA_DIST = \
 	advanced-icon-32.png \

@@ -2,8 +2,8 @@ MCS_FLAGS = -debug
 ASSEMBLY_NAME = NotificationAreaIcon
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
-trayicondir = $(pkglibdir)/Banshee.Plugins
-trayicon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
+notificationareaicondir = $(pkglibdir)/Banshee.Plugins
+notificationareaicon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 MENU_RESOURCE=NotificationAreaIconMenu.xml
 

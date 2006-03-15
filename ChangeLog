@@ -1,3 +1,23 @@
+2006-03-15  Aaron Bockover  <aaron@abock.org>
+
+	Patches by Sebastian Dröge:
+
+	* *Makefile.am: Don't remove Makefile.in and other files generated 
+	by autogen.sh on distclean. Move these files to MAINTAINERCLEANFILES. 
+	This makes banshee buildable after a distclean.
+	
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs: 
+	Show the TrackInfoPopup only after 500ms when the mouse cursor is still 
+	over the Notification Area Icon and let it disappear on EndOfStream when 
+	we don't play anything else after 250 ms.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/Makefile.am:
+	* src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in: 
+	Rename the missed instances of tray icon to notification area icon.
+
+	* src/Banshee.Widgets/CoverArtThumbnail.cs: Delay showing the popup 
+	for 500ms
+
 2006-03-14  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/xing: Nuked, gone, good-bye, sorry

@@ -15,5 +15,6 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 EXTRA_DIST = $(ASSEMBLY_SOURCES) hal-sharp.sources $(ASSEMBLY).config.in
 
 CLEANFILES = $(ASSEMBLY)
-DISTCLEANFILES = *.mdb Makefile.in *.dll *.exe
+DISTCLEANFILES = *.mdb *.dll *.exe
+MAINTAINERCLEANFILES = Makefile.in
 

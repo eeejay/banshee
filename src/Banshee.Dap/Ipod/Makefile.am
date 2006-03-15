@@ -3,7 +3,8 @@ ASSEMBLY_NAME = Banshee.Dap.Ipod
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 EXTRA_DIST = $(ASSEMBLY_SOURCES) ipod-sharp.dll.config.in
 CLEANFILES = $(ASSEMBLY) *.dll *.exe 
-DISTCLEANFILES = *.mdb Makefile.in 
+DISTCLEANFILES = *.mdb
+MAINTAINERCLEANFILES = Makefile.in
 
 ASSEMBLY_SOURCES = \
 	$(srcdir)/IpodDap.cs \
