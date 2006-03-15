@@ -40,9 +40,6 @@ enable_njbsharp="${enable_njb}"
 AC_ARG_ENABLE(vlc, AC_HELP_STRING([--enable-vlc], [Enable VLC Media Engine]), , enable_vlc="no")
 AM_CONDITIONAL(ENABLE_VLC, test "x$enable_vlc" = "xyes")
 
-AC_ARG_ENABLE(xing, AC_HELP_STRING([--enable-xing], [Enable Real's Xing MP3 Encoder]), , enable_xing="no")
-AM_CONDITIONAL(ENABLE_XING, test "x$enable_xing" = "xyes")
-
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
 
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
@@ -55,10 +52,6 @@ AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP sup
 
 if test "x$enable_helix" = "xyes"; then
 	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2)
-fi
-
-if test "x$enable_xing" = "xyes"; then
-	AC_DEFINE(ENABLE_XING, 1, [Define if the Xing Mp3 encoder should be compiled and linked into libbanshee])
 fi
 
 dnl pkg-config, install programs
@@ -219,10 +212,6 @@ if test "x$enable_gst_10" = "xyes"; then
 		gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
 		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
 
-	if test "x$enable_xing" = "xyes"; then
-		AC_MSG_ERROR([The Xing GStreamer plugin has not been ported to GStreamer 0.10 and cannot be enabled if you enable GStreamer 0.10])
-	fi
-	
 	gst_pkg_name="gstreamer-0.10"
 else
 	GSTREAMER_REQUIRED_VERSION=0.8.11
@@ -369,7 +358,6 @@ entagged-sharp/Makefile
 hal-sharp/Makefile
 hal-sharp/hal-sharp.dll.config
 libbanshee/Makefile
-libbanshee/xing/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 src/banshee
@@ -445,7 +433,6 @@ banshee-$VERSION
       iPod:            ${enable_ipodsharp}
       NJB:             ${enable_njbsharp}
 
-    Xing MP3 Encoder:  ${enable_xing}
     GStreamer Plugins: ${GST_PLUGINS_DIR}
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "

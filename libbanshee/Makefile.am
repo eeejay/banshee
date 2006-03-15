@@ -1,5 +1,3 @@
-SUBDIRS = xing
-
 INCLUDES = \
 	-I$(top_srcdir) \
 	-Wall \
