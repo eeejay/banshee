@@ -4,7 +4,7 @@
 # with musicbrainz-sharp development. Simply run ./sync-tree.sh and update
 # your project repository as directed by this script when complete
 
-ROOT=abock.org/svn/trunk
+ROOT=abock.org/trunk
 MODULE=musicbrainz-sharp
 SRCDIR=src
 

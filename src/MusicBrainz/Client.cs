@@ -1,4 +1,4 @@
-
+/* -*- Mode: csharp; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: t -*- */
 /***************************************************************************
  *  Client.cs
  *
@@ -36,6 +36,7 @@ namespace MusicBrainz
     public class Client : IDisposable
     {
         private HandleRef handle;
+        private string currentServer = "http://www.musicbrainz.org";
         
         private static readonly int MAX_STRING_LEN = 8192;
         //private static readonly int CDINDEX_ID_LEN = 28;
@@ -45,8 +46,24 @@ namespace MusicBrainz
         {
             handle = new HandleRef(this, mb_New());
             UseUtf8 = true;
+            
+            AutoSetProxy();
         }
-        
+
+        public bool AutoSetProxy()
+        {
+            try {
+                Uri proxyAddress = System.Net.GlobalProxySelection.Select.GetProxy(new System.Uri(currentServer));
+                if(proxyAddress != null) {
+                    Console.WriteLine("Setting MusicBrainz proxy to {0}:{1}", proxyAddress.Host, proxyAddress.Port);
+                    return this.SetProxy (proxyAddress.Host, (short)proxyAddress.Port);
+                }
+            } catch {
+            }
+            
+            return false;
+        }
+
         public void Dispose()
         {
             mb_Delete(handle);
@@ -54,7 +71,12 @@ namespace MusicBrainz
         
         public bool SetServer(string serverAddr, short serverPort)
         {
-            return mb_SetServer(handle, ToUtf8(serverAddr), serverPort) != 0;
+            if(mb_SetServer(handle, ToUtf8(serverAddr), serverPort) != 0) {
+                currentServer = serverAddr + serverPort.ToString ();
+                return true;
+            }
+            
+            return false;
         }
         
         public bool SetProxy(string serverAddr, short serverPort)
@@ -124,21 +146,15 @@ namespace MusicBrainz
         
         public string GetIDFromUrl(string url)
         {
-            if(url == null) {
-                return null;
-            }
-            
             byte [] buffer = new byte[64];
             mb_GetIDFromURL(handle, ToUtf8(url), buffer, buffer.Length);
-            string id = FromUtf8(buffer);
-            int offset = id.IndexOf('#') + 1;
-            return (offset >= 0) ? id.Substring(offset) : id;
+            return FromUtf8(buffer);
         }
         
         public string GetID(string id)
         {
-            return id == null ? null : (System.Text.RegularExpressions.Regex.IsMatch(id, @"^[A-Za-z0-9\-]+$") ?
-                id : GetIDFromUrl(id));
+            return System.Text.RegularExpressions.Regex.IsMatch(id, @"^[A-Za-z0-9\-]+$") ?
+                id : GetIDFromUrl(id);
         }
         
         public ClientVersion Version

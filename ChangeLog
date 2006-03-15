@@ -1,5 +1,9 @@
 2006-03-15  Aaron Bockover  <aaron@abock.org>
 
+	* src/MusicBrainz/Client.cs: Added proxy server support (Michael Hutchinson)
+
+2006-03-15  Aaron Bockover  <aaron@abock.org>
+
 	Patches by Sebastian Dröge:
 
 	* *Makefile.am: Don't remove Makefile.in and other files generated 
