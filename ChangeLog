@@ -1,5 +1,10 @@
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
+	* data/banshee.glade: Set the open button to default; make the
+	dialog not visible by default
+
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/Gui/OpenLocationDialog.cs: Focus the text box when
 	showing the dialog, open the URI when entry is activated (enter pressed)
 
