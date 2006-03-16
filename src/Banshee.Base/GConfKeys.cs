@@ -64,5 +64,6 @@ namespace Banshee.Base
         public const string EnableSpecialKeys = BasePath + "EnableSpecialKeys";
         public const string ShowCoverArt = BasePath + "ShowCoverArt";
         public const string ShowInitialImportDialog = BasePath + "ShowInitialImportDialog";
+        public const string OpenLocationHistory = BasePath + "OpenLocationHistory";
     }
 }

@@ -1,5 +1,15 @@
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
+	* data/banshee.glade: Removed combo box from Open Location dialog
+
+	* src/Banshee.Base/GConfKeys.cs: Added OpenLocationHistory key
+
+	* src/Banshee.Base/Gui/OpenLocationDialog.cs: Implemented history support
+	and added a browse button that launches a FileChooserDialog (that supports
+	remote locations); 
+
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* configure.ac: Remove AM_GST_ELEMENT_CHECK calls and check for

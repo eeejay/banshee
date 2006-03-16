@@ -27,18 +27,37 @@
  */
 
 using System;
+using System.Collections;
+using Mono.Unix;
 using Gtk;
 using Glade;
+
+using Banshee.Base;
 
 namespace Banshee.Gui
 {
     public class OpenLocationDialog : GladeDialog
     {
-        [Widget] private ComboBoxEntry AddressEntry; 
+        [Widget] private HBox location_box;
+        private ComboBoxEntry address_entry;
+        private Button browse_button;
+        
+        private ArrayList history = new ArrayList();
     
         public OpenLocationDialog() : base("OpenLocationDialog")
         {
+            address_entry = ComboBoxEntry.NewText();
+            address_entry.Show();
+            
+            browse_button = new Button(Catalog.GetString("Browse..."));
+            browse_button.Clicked += OnBrowseClicked;
+            browse_button.Show();
+            
+            location_box.PackStart(address_entry, true, true, 0);
+            location_box.PackStart(browse_button, false, false, 0);
+            
             Dialog.Response += OnResponse;
+            LoadHistory();
         }
         
         private void OnResponse(object o, ResponseArgs args)
@@ -46,10 +65,58 @@ namespace Banshee.Gui
             if(args.ResponseId != ResponseType.Ok) {
                 return;
             }
+            
+            ArrayList filtered_history = new ArrayList();
+            
+            history.Insert(0, Address);
+            foreach(string uri in history) {
+                if(!filtered_history.Contains(uri)) {
+                    filtered_history.Add(uri);
+                }
+            }
+            
+            string [] trimmed_history = new string[Math.Min(15, filtered_history.Count)];
+            for(int i = 0; i < trimmed_history.Length; i++) {
+                trimmed_history[i] = filtered_history[i] as string;
+            }
+            
+            Globals.Configuration.Set(GConfKeys.OpenLocationHistory, trimmed_history);
+        }
+        
+        private void OnBrowseClicked(object o, EventArgs args)
+        {
+            FileChooserDialog chooser = new FileChooserDialog(
+                Catalog.GetString("Open Location"),
+                null,
+                FileChooserAction.Open
+            );
+            
+            chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton(Stock.Open, ResponseType.Ok);
+            chooser.DefaultResponse = ResponseType.Ok;
+            chooser.LocalOnly = false;
+            
+            if(chooser.Run() == (int)ResponseType.Ok) {
+                address_entry.Entry.Text = chooser.Uri;
+            }
+            
+            chooser.Destroy();
+        }
+        
+        private void LoadHistory()
+        {
+            try {
+                foreach(string uri in (string [])Globals.Configuration.Get(GConfKeys.OpenLocationHistory)) {
+                    history.Add(uri);
+                    address_entry.AppendText(uri);
+                }
+            } catch {
+            }
         }
         
         public string Address {
-            get { return AddressEntry.Entry.Text; }
+            get { return address_entry.Entry.Text; }
         }
     }
 }
