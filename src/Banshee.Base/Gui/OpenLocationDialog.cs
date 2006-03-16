@@ -48,6 +48,7 @@ namespace Banshee.Gui
         {
             address_entry = ComboBoxEntry.NewText();
             address_entry.Show();
+            address_entry.Entry.Activated += OnEntryActivated;
             
             browse_button = new Button(Catalog.GetString("Browse..."));
             browse_button.Clicked += OnBrowseClicked;
@@ -58,6 +59,13 @@ namespace Banshee.Gui
             
             Dialog.Response += OnResponse;
             LoadHistory();
+            
+            address_entry.Entry.HasFocus = true;
+        }
+        
+        private void OnEntryActivated(object o, EventArgs args)
+        {
+            Dialog.Respond(ResponseType.Ok);
         }
         
         private void OnResponse(object o, ResponseArgs args)

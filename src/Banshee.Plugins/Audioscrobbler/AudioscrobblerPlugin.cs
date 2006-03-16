@@ -127,7 +127,7 @@ namespace Banshee.Plugins.Audioscrobbler
             
             actions.Add(new ToggleActionEntry [] { 
                 new ToggleActionEntry("AudioscrobblerEnableAction", null,
-                    Catalog.GetString("Enable song reporting"), "<control>L",
+                    Catalog.GetString("Enable song reporting"), "<control>U",
                     Catalog.GetString("Enable song reporting"), OnToggleEnabled, Enabled)
             });
             
