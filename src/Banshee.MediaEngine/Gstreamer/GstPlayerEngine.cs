@@ -40,6 +40,7 @@ namespace Banshee.MediaEngine.Gstreamer
     internal delegate void GstPlaybackErrorCallback(IntPtr engine, IntPtr error, IntPtr debug);
     internal delegate void GstPlaybackStateChangedCallback(IntPtr engine, int old_state, int new_state, int pending_state);
     internal delegate void GstPlaybackIterateCallback(IntPtr engine);
+    internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
 
     public class GstreamerPlayerEngine : PlayerEngine
     {
@@ -49,6 +50,9 @@ namespace Banshee.MediaEngine.Gstreamer
         private GstPlaybackErrorCallback error_callback;
         private GstPlaybackStateChangedCallback state_changed_callback;
         private GstPlaybackIterateCallback iterate_callback;
+        private GstPlaybackBufferingCallback buffering_callback;
+        
+        private bool buffering_finished;
         
         public GstreamerPlayerEngine()
         {
@@ -64,11 +68,13 @@ namespace Banshee.MediaEngine.Gstreamer
             error_callback = new GstPlaybackErrorCallback(OnError);
             state_changed_callback = new GstPlaybackStateChangedCallback(OnStateChanged);
             iterate_callback = new GstPlaybackIterateCallback(OnIterate);
+            buffering_callback = new GstPlaybackBufferingCallback(OnBuffering);
             
             gst_playback_set_eos_callback(handle, eos_callback);
             gst_playback_set_iterate_callback(handle, iterate_callback);
             gst_playback_set_error_callback(handle, error_callback);
             gst_playback_set_state_changed_callback(handle, state_changed_callback);
+            gst_playback_set_buffering_callback(handle, buffering_callback);
         }
         
         public override void Dispose()
@@ -141,6 +147,16 @@ namespace Banshee.MediaEngine.Gstreamer
         {
         }
         
+        private void OnBuffering(IntPtr engine, int progress)
+        {
+            if(buffering_finished && progress >= 100) {
+                return;
+            }
+            
+            buffering_finished = progress >= 100;
+            OnEventChanged(PlayerEngineEvent.Buffering, Catalog.GetString("Buffering"), (double)progress / 100.0);
+        }
+        
         public override ushort Volume {
             get { return (ushort)gst_playback_get_volume(handle); }
             set { 
@@ -155,6 +171,10 @@ namespace Banshee.MediaEngine.Gstreamer
                 gst_playback_set_position(handle, (ulong)value * 1000);
                 OnEventChanged(PlayerEngineEvent.Seek);
             }
+        }
+        
+        public override bool CanSeek {
+            get { return gst_playback_can_seek(handle); }
         }
         
         public override uint Length {
@@ -194,6 +214,9 @@ namespace Banshee.MediaEngine.Gstreamer
         private static extern void gst_playback_set_iterate_callback(HandleRef engine, GstPlaybackIterateCallback cb);
         
         [DllImport("libbanshee")]
+        private static extern void gst_playback_set_buffering_callback(HandleRef engine, GstPlaybackBufferingCallback cb);
+        
+        [DllImport("libbanshee")]
         private static extern void gst_playback_open(HandleRef engine, IntPtr uri);
         
         [DllImport("libbanshee")]
@@ -210,6 +233,9 @@ namespace Banshee.MediaEngine.Gstreamer
         
         [DllImport("libbanshee")]
         private static extern int gst_playback_get_volume(HandleRef engine);
+        
+        [DllImport("libbanshee")]
+        private static extern bool gst_playback_can_seek(HandleRef engine);
         
         [DllImport("libbanshee")]
         private static extern void gst_playback_set_position(HandleRef engine, ulong time_ms);

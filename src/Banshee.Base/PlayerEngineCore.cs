@@ -218,6 +218,10 @@ namespace Banshee.Base
             set { active_engine.Position = value; }
         }
         
+        public static bool CanSeek {
+            get { return active_engine.CanSeek; }
+        }
+        
         public static uint Length {
             get { return active_engine.Length; }
         }

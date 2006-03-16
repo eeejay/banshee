@@ -54,8 +54,6 @@ namespace Banshee
         private Glade.XML gxml;
 
         [Widget] private Gtk.Window WindowPlayer;
-        [Widget] private Gtk.HScale ScaleTime;
-        [Widget] private Gtk.Label LabelInfo;
         [Widget] private HPaned SourceSplitter;
         [Widget] private Button HeaderCycleButton;
 
@@ -81,6 +79,9 @@ namespace Banshee
         private ActionButton previous_button;
         private ActionButton burn_button;
         private ActionButton rip_button;
+        
+        private SeekSlider seek_slider;
+        private StreamPositionLabel stream_position_label;
         
         private ActionButton sync_dap_button;
         [Widget] private ProgressBar dapDiskUsageBar;
@@ -256,6 +257,17 @@ namespace Banshee
             // Main Menu
             (gxml["MainMenuContainer"] as Container).Add(Globals.ActionManager.GetWidget("/MainMenu"));
       
+            // Seek Slider/Position Label
+            seek_slider = new SeekSlider();
+            seek_slider.SetSizeRequest(125, -1);
+            seek_slider.SeekRequested += OnSeekRequested;
+            
+            stream_position_label = new StreamPositionLabel(seek_slider);
+            
+            (gxml["SeekContainer"] as Box).PackStart(seek_slider, false, false, 0);
+            (gxml["SeekContainer"] as Box).PackStart(stream_position_label, false, false, 0);
+            gxml["SeekContainer"].ShowAll();
+      
             // Playback Buttons
             HBox playback_box = gxml["LeftToolbarContainer"] as HBox;
             
@@ -414,9 +426,6 @@ namespace Banshee
             
             (gxml["LeftContainer"] as VBox).PackStart(new ActiveUserEventsManager(), false, false, 0);
 
-            // Misc
-            SetInfoLabel(Catalog.GetString("Idle"));
-
             // Window Events
             WindowPlayer.KeyPressEvent += OnKeyPressEvent;
             WindowPlayer.ConfigureEvent += OnWindowPlayerConfigureEvent;
@@ -455,7 +464,7 @@ namespace Banshee
             SetTip(previous_button, Catalog.GetString("Play previous song"));
             SetTip(playpause_button, Catalog.GetString("Play/pause current song"));
             SetTip(next_button, Catalog.GetString("Play next song"));
-            SetTip(gxml["ScaleTime"], Catalog.GetString("Current position in song"));
+            SetTip(seek_slider, Catalog.GetString("Current position in song"));
             SetTip(dapDiskUsageBar, Catalog.GetString("Device disk usage"));
             SetTip(sync_dap_button, Catalog.GetString("Synchronize music library to device"));
             SetTip(volumeButton, Catalog.GetString("Adjust volume"));
@@ -644,12 +653,7 @@ namespace Banshee
             Globals.Dispose();
             Application.Quit();
         }
-      
-        private void SetInfoLabel(string text)
-        {
-            LabelInfo.Markup = "<span size=\"small\">" + GLib.Markup.EscapeText(text) + "</span>";
-        }
-        
+
         public void UpdateMetaDisplay()
         {
             TrackInfo track = PlayerEngineCore.CurrentTrack;
@@ -796,31 +800,20 @@ namespace Banshee
             PlayerEngineCore.Volume = (ushort)volume;
             Globals.Configuration.Set(GConfKeys.Volume, volume);
         }
+        
+        private void OnSeekRequested(object o, EventArgs args)
+        {
+            PlayerEngineCore.Position = (uint)seek_slider.Value;
+        }
    
         // ---- Player Event Handlers ----
-        
-        private void SetPositionLabel(long position)
-        {
-            if(PlayerEngineCore.CurrentTrack == null) {
-                return;
-            }
-            
-            SetInfoLabel(
-                // Translators: position in song. eg, "0:37 of 3:48"
-                String.Format(Catalog.GetString("{0} of {1}"), 
-                    DateTimeUtil.FormatDuration(position),
-                    DateTimeUtil.FormatDuration((long)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds))
-                );
-        }
         
         private void OnPlayerEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
             switch(args.State) {
                 case PlayerEngineState.Loaded:
                     incrementedCurrentSongPlayCount = false;
-                    ScaleTime.Adjustment.Lower = 0;
-                    ScaleTime.Adjustment.Upper = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
-                    
+                    seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
                     UpdateMetaDisplay();
                     playlistView.QueueDraw();
                     
@@ -837,22 +830,17 @@ namespace Banshee
                     break;
                 case PlayerEngineState.Idle:
                     Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
-                    ScaleTime.Adjustment.Lower = 0;
-                    ScaleTime.Adjustment.Upper = 0;
-                    ScaleTime.Value = 0;
-                    SetInfoLabel(Catalog.GetString("Idle"));
+                    seek_slider.SetIdle();
                     trackInfoHeader.SetIdle();
                     
                     UpdateMetaDisplay();
                     
                     break;
                 case PlayerEngineState.Paused:
-                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), 
-                        "media-playback-start");
+                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
                     break;
                 case PlayerEngineState.Playing:
-                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), 
-                        "media-playback-pause");
+                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), "media-playback-pause");
                     break;
             }
         }
@@ -867,70 +855,47 @@ namespace Banshee
                     playlistModel.Continue();
                     playlistView.UpdateView();
                     break;
+                case PlayerEngineEvent.StartOfStream:
+                    //seek_slider.CanSeek = PlayerEngineCore.CanSeek;
+                    seek_slider.CanSeek = true;
+                    break;
                 case PlayerEngineEvent.Volume:
                     volumeButton.Volume = PlayerEngineCore.Volume;
                     break;
+                case PlayerEngineEvent.Buffering:
+                    if(args.BufferingPercent >= 1.0) {
+                        stream_position_label.IsBuffering = false;
+                        break;
+                    }
+                    
+                    stream_position_label.IsBuffering = true;
+                    stream_position_label.BufferingProgress = args.BufferingPercent;
+                    break;
             }
         }
-        
+
         private void OnPlayerEngineTick()
         {
+            seek_slider.CanSeek = PlayerEngineCore.CanSeek;
+            seek_slider.SeekValue = PlayerEngineCore.Position;
+            
             if(PlayerEngineCore.CurrentTrack == null) {
                 return;
             }
-             
+            
             if(PlayerEngineCore.Length > 0 && PlayerEngineCore.CurrentTrack.Duration.TotalSeconds <= 0.0) {
                 PlayerEngineCore.CurrentTrack.Duration = new TimeSpan(PlayerEngineCore.Length * TimeSpan.TicksPerSecond);
                 PlayerEngineCore.CurrentTrack.Save();
                 playlistView.QueueDraw();
-                ScaleTime.Adjustment.Upper = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+                seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
             }
-                
+            
             if(PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > PlayerEngineCore.Length / 2
                 && !incrementedCurrentSongPlayCount) {
                 PlayerEngineCore.CurrentTrack.IncrementPlayCount();
                 incrementedCurrentSongPlayCount = true;
                 playlistView.QueueDraw();
             }
-                
-            if(updateEnginePosition) {
-                if(setPositionTimeoutId > 0) {
-                    GLib.Source.Remove(setPositionTimeoutId);
-                }
-                
-                setPositionTimeoutId = GLib.Timeout.Add(100, new GLib.TimeoutHandler(SetPositionTimeoutCallback));
-            
-                SetPositionLabel(PlayerEngineCore.Position);
-            }
-        }
-        
-        private bool SetPositionTimeoutCallback()
-        {
-            setPositionTimeoutId = 0;
-            ScaleTime.Value = PlayerEngineCore.Position;
-            
-            return false;
-        }
-        
-        [GLib.ConnectBeforeAttribute]
-        private void OnScaleTimeMoveSlider(object o, EventArgs args)
-        {
-            SetPositionLabel((long)ScaleTime.Value);
-        }
-        
-        [GLib.ConnectBeforeAttribute]
-        private void OnScaleTimeButtonPressEvent(object o, 
-            ButtonPressEventArgs args)
-        {
-            updateEnginePosition = false;
-        }
-        
-        [GLib.ConnectBeforeAttribute]
-        private void OnScaleTimeButtonReleaseEvent(object o, 
-            ButtonReleaseEventArgs args)
-        {
-            PlayerEngineCore.Position = (uint)ScaleTime.Value;
-            updateEnginePosition = true;
         }
         
         // ---- Playlist Event Handlers ----

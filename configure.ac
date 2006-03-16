@@ -213,6 +213,9 @@ if test "x$enable_gst_10" = "xyes"; then
 		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
 
 	gst_pkg_name="gstreamer-0.10"
+	gst_inspect="gst-inspect-0.10"
+	gst_version="0.10"
+	gst_required_plugins="decodebin playbin cdparanoia gnomevfssink gnomevfssrc audioconvert gconfaudiosink"
 else
 	GSTREAMER_REQUIRED_VERSION=0.8.11
 	GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.11
@@ -220,6 +223,7 @@ else
 	AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
 
 	gst_pkg_name="gstreamer"
+	gst_inspect="gst-inspect"
 
 	PKG_CHECK_MODULES(GST,
 		gstreamer >= $GSTREAMER_REQUIRED_VERSION
@@ -239,33 +243,35 @@ else
 			enable_gst=yes, enable_gst=no)
 
 		gst_pkg_name="gstreamer-0.8"
+		gst_inspect="gst-inspect-0.8"
 
 		if test "x$enable_gst" = "xno" ; then
 			AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
 		fi
 	fi
 
-	AM_GST_ELEMENT_CHECK(spider, , AC_MSG_ERROR([The 'spider' GStreamer plugin was not found.]))
+	gst_version="0.8"
+	gst_required_plugins="spider cdparanoia gnomevfssink gnomevfssrc audioconvert playbin gconfaudiosink"
 fi
 
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
 
-GST_PLUGINS_DIR="`$PKG_CONFIG --variable=libdir $gst_pkg_name`/$gst_pkg_name"
-if test ! -d "$GST_PLUGINS_DIR"; then
-    AC_MSG_ERROR([GStreamer plugins directory could not be found])
-fi
-
-AC_SUBST(GST_PLUGINS_DIR)
-
 dnl gstreamer plugins
 
-AM_GST_ELEMENT_CHECK(cdparanoia, , AC_MSG_ERROR([The 'cdparanoia' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(gnomevfssink, , AC_MSG_ERROR([The 'gnomevfssink' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(gnomevfssrc, , AC_MSG_ERROR([The 'gnomevfssrc' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(audioconvert, , AC_MSG_ERROR([The 'audioconvert' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(playbin, , AC_MSG_ERROR([The 'playbin' GStreamer plugin was not found.]))
-AM_GST_ELEMENT_CHECK(gconfaudiosink, , AC_MSG_ERROR([The 'gconfaudiosink' GStreamer plugin was not found.]))
+gst_toolsdir=`$PKG_CONFIG --variable=toolsdir $gst_pkg_name`
+gst_inspect="$gst_toolsdir/$gst_inspect"
+
+for element in $gst_required_plugins; do
+	AC_MSG_CHECKING([for GStreamer $gst_version $element plugin])
+	if $gst_inspect $element > /dev/null 2>/dev/null; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		AC_MSG_ERROR([Cannot find required GStreamer-$gsv_version plugin '$element'.])
+	fi
+done;
+
 
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.8
@@ -433,7 +439,6 @@ banshee-$VERSION
       iPod:            ${enable_ipodsharp}
       NJB:             ${enable_njbsharp}
 
-    GStreamer Plugins: ${GST_PLUGINS_DIR}
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
 

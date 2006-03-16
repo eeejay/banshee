@@ -1,3 +1,45 @@
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Remove AM_GST_ELEMENT_CHECK calls and check for
+	elements against the proper gst-inspect manually; AM_GST_ELEMENT_CHECK
+	is not versioned and as a result, 0.10 checks were actually made against
+	the 0.8 version of gst-inspect
+
+	* data/banshee.glade: Removed the positon label and seek slider
+
+	* libbanshee/gst-playback-0.10.c: Added buffering support and stream
+	seekability detection
+
+	* src/PlayerInterface.cs: Use new SeekSlider and StreamPositionLabel
+	widgets; updated old stuff to use new stuff; handle the Buffering event
+	and display the buffering progress in StreamPositionLabel
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Added CanSeek proxy property
+
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Buffering should be
+	an event, not a state; reworked signatures to account for this
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Wrap the new
+	buffering and stream seek detection in the engine implementation
+
+	* src/Banshee.Widgets/LinearProgress.cs: Use the shared ColorBlend in
+	DrawingUtilities
+
+	* src/Banshee.Widgets/Makefile.am: Added SeekSlider.cs, 
+	StreamPositionLabel.cs, and DrawingUtilities.cs:
+
+	* src/Banshee.Widgets/SeekSlider.cs: Custom Gtk.Scale that is well
+	adapted to seeking in streams
+
+	* src/Banshee.Widgets/StreamPositionLabel.cs: Custom Label that draws
+	a buffering progress bar under the position label when buffering, and
+	updates automatically based off SeekSlider events
+
+	* src/Banshee.Widgets/DrawingUtilities.cs: Added static class that 
+	contains the ColorBlend method; shared between a few widgets
+
 2006-03-15  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlayerInterface.cs:

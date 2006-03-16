@@ -25,7 +25,10 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/RadialProgress.cs \
 	$(srcdir)/LinearProgress.cs \
 	$(srcdir)/MessagePane.cs \
-	$(srcdir)/LinkLabel.cs
+	$(srcdir)/LinkLabel.cs \
+	$(srcdir)/DrawingUtilities.cs \
+	$(srcdir)/SeekSlider.cs \
+	$(srcdir)/StreamPositionLabel.cs
 
 all: $(ASSEMBLY)
 

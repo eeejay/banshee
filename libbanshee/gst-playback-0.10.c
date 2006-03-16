@@ -46,6 +46,7 @@ typedef void (* GstPlaybackStateChangedCallback) (
     GstPlayback *engine, GstState old_state, 
     GstState new_state, GstState pending_state);
 typedef void (* GstPlaybackIterateCallback) (GstPlayback *engine);
+typedef void (* GstPlaybackBufferingCallback) (GstPlayback *engine, gint buffering_progress);
 
 struct GstPlayback {
     GstElement *playbin;
@@ -55,6 +56,7 @@ struct GstPlayback {
     GstPlaybackErrorCallback error_cb;
     GstPlaybackStateChangedCallback state_changed_cb;
     GstPlaybackIterateCallback iterate_cb;
+    GstPlaybackBufferingCallback buffering_cb;
 };
 
 // private methods
@@ -92,6 +94,20 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
                 engine->state_changed_cb(engine, old, new, pending);
             }
             break;
+        }
+        case GST_MESSAGE_BUFFERING: {
+            const GstStructure *buffering_struct;
+            gint buffering_progress = 0;
+            
+            buffering_struct = gst_message_get_structure(message);
+            if(!gst_structure_get_int(buffering_struct, "buffer-percent", &buffering_progress)) {
+                g_warning("Could not get completion percentage from BUFFERING message");
+                break;
+            }
+
+            if(engine->buffering_cb != NULL) {
+                engine->buffering_cb(engine, buffering_progress);
+            }
         }
         default:
             break;
@@ -171,6 +187,7 @@ gst_playback_new()
     engine->error_cb = NULL;
     engine->state_changed_cb = NULL;
     engine->iterate_cb = NULL;
+    engine->buffering_cb = NULL;
     
     engine->iterate_timeout_id = 0;
     
@@ -216,6 +233,14 @@ gst_playback_set_iterate_callback(GstPlayback *engine,
 {
     SET_CALLBACK(iterate_cb);
 }
+
+void
+gst_playback_set_buffering_callback(GstPlayback *engine, 
+    GstPlaybackBufferingCallback cb)
+{
+    SET_CALLBACK(buffering_cb);
+}
+
 
 void
 gst_playback_open(GstPlayback *engine, const gchar *uri)
@@ -308,6 +333,30 @@ gst_playback_get_duration(GstPlayback *engine)
     }
     
     return 0;
+}
+
+gboolean
+gst_playback_can_seek(GstPlayback *engine)
+{
+    GstQuery *query;
+    gboolean can_seek = TRUE;
+    
+    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
+    g_return_val_if_fail(engine->playbin != NULL, FALSE);
+    
+    query = gst_query_new_seeking(GST_FORMAT_TIME);
+    if(!gst_element_query(engine->playbin, query)) {
+        // This will probably fail, 100% of the time, because it's apparently 
+        // very unimplemented in GStreamer... when it's fixed
+        // we will return FALSE here, and show the warning
+        // g_warning("Could not query pipeline for seek ability");
+        return gst_playback_get_duration(engine) > 0;
+    }
+    
+    gst_query_parse_seeking(query, NULL, &can_seek, NULL, NULL);
+    gst_query_unref(query);
+    
+    return can_seek;
 }
 
 void

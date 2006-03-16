@@ -37,22 +37,20 @@ namespace Banshee.MediaEngine
     public sealed class PlayerEngineStateArgs : EventArgs
     {
         public PlayerEngineState State;
-        public double BufferPercent;
-        public string BufferMessage;
     }
     
     public sealed class PlayerEngineEventArgs : EventArgs
     {
         public PlayerEngineEvent Event;
         public string Message;
+        public double BufferingPercent;
     }
     
     public enum PlayerEngineState {
         Idle,
         Loaded,
         Playing,
-        Paused,
-        Buffering
+        Paused
     }
     
     public enum PlayerEngineEvent {
@@ -62,7 +60,8 @@ namespace Banshee.MediaEngine
         Metadata,
         StartOfStream,
         EndOfStream,
-        Volume
+        Volume,
+        Buffering
     }
 
     public abstract class PlayerEngine
@@ -121,6 +120,7 @@ namespace Banshee.MediaEngine
                 OnEventChanged(PlayerEngineEvent.StartOfStream);
                 OnStateChanged(PlayerEngineState.Loaded);
             } catch(Exception e) {
+                Console.WriteLine(e);
                 OnEventChanged(PlayerEngineEvent.Error, e.Message);
             }
         }
@@ -139,27 +139,22 @@ namespace Banshee.MediaEngine
         {
         }
         
-        protected void OnStateChanged(PlayerEngineState state)
-        {
-            OnStateChanged(state, 0.0, null);
-        }
-        
-        protected virtual void OnStateChanged(PlayerEngineState state, double bufferPercent, string bufferMessage)
+        protected virtual void OnStateChanged(PlayerEngineState state)
         {
             if(current_state == state) {
                 return;
             }
         
             if(ThreadAssist.InMainThread) {
-                RaiseStateChanged(state, bufferPercent, bufferMessage);
+                RaiseStateChanged(state);
             } else {
                 ThreadAssist.ProxyToMain(delegate {
-                    RaiseStateChanged(state, bufferPercent, bufferMessage);
+                    RaiseStateChanged(state);
                 });
             }
         }
         
-        private void RaiseStateChanged(PlayerEngineState state, double bufferPercent, string bufferMessage)
+        private void RaiseStateChanged(PlayerEngineState state)
         {
             last_state = current_state;
             current_state = state;
@@ -168,35 +163,39 @@ namespace Banshee.MediaEngine
             if(handler != null) {
                 PlayerEngineStateArgs args = new PlayerEngineStateArgs();
                 args.State = state;
-                args.BufferPercent = bufferPercent;
-                args.BufferMessage = bufferMessage;
                 handler(this, args);
             }
         }
         
         protected void OnEventChanged(PlayerEngineEvent evnt)
         {
-            OnEventChanged(evnt, null);
+            OnEventChanged(evnt, null, 0.0);
         }
         
-        protected virtual void OnEventChanged(PlayerEngineEvent evnt, string message)
+        protected void OnEventChanged(PlayerEngineEvent evnt, string message)
+        {
+            OnEventChanged(evnt, message, 0.0);
+        }
+        
+        protected virtual void OnEventChanged(PlayerEngineEvent evnt, string message, double bufferingPercent)
         {
             if(ThreadAssist.InMainThread) {
-                RaiseEventChanged(evnt, message);
+                RaiseEventChanged(evnt, message, bufferingPercent);
             } else {
                 ThreadAssist.ProxyToMain(delegate {
-                    RaiseEventChanged(evnt, message);
+                    RaiseEventChanged(evnt, message, bufferingPercent);
                 });
             }
         }
         
-        private void RaiseEventChanged(PlayerEngineEvent evnt, string message)
+        private void RaiseEventChanged(PlayerEngineEvent evnt, string message, double bufferingPercent)
         {
             PlayerEngineEventHandler handler = EventChanged;
             if(handler != null) {
                 PlayerEngineEventArgs args = new PlayerEngineEventArgs();
                 args.Event = evnt;
                 args.Message = message;
+                args.BufferingPercent = bufferingPercent;
                 handler(this, args);
             }
         }
@@ -220,6 +219,10 @@ namespace Banshee.MediaEngine
         public abstract ushort Volume {
             get;
             set;
+        }
+        
+        public virtual bool CanSeek {
+            get { return true; }
         }
         
         public abstract uint Position {
