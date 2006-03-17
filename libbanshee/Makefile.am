@@ -34,6 +34,8 @@ libbanshee_la_SOURCES = \
 	gst-misc.h \
 	gst-transcode.h \
 	gst-cd-rip.h \
+	gst-tagger.c \
+	gst-tagger.h \
 	hal-context.c \
 	hal-context.h \
 	inotify-glue.c \

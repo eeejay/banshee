@@ -50,7 +50,7 @@ namespace Banshee.Base
             ParsePath(uri.LocalPath);
             track_id = 0;
    
-            AudioFile af = new AudioFile(uri.LocalPath, Gstreamer.DetectMimeType(uri));
+            AudioFile af = new AudioFile(uri.LocalPath, Banshee.Gstreamer.Utilities.DetectMimeType(uri));
 
             mimetype = af.MimeType;
 

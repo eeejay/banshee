@@ -30,9 +30,9 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Banshee.Base
+namespace Banshee.Gstreamer
 {
-    public static class Gstreamer
+    public static class Utilities
     {
         [DllImport("libbanshee")]
         private static extern bool gstreamer_test_encoder(IntPtr encoder_pipeline);

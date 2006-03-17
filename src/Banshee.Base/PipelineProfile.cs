@@ -162,7 +162,7 @@ namespace Banshee.Base
         
         private void TestPipeline(string pipeline)
         {
-            if(!Gstreamer.TestEncoder(pipeline)) {
+            if(!Banshee.Gstreamer.Utilities.TestEncoder(pipeline)) {
                throw new PipelineProfileException(String.Format(
                    Catalog.GetString("Pipeline profile '{0}' will be " +
                    "unavailable: GStreamer pipeline '{1}' could " +

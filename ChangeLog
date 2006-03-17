@@ -1,5 +1,41 @@
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* libbanshee/Makefile.am: Added gst-tagger.[ch]
+
+	* libbanshee/gst-playback-0.10.c: Support parsing tags from incoming
+	audio stream and send off to consuming API
+
+	* libbanshee/gst-tagger.c:
+	* libbanshee/gst-tagger.h: Common API for handling tag reading/writing
+	from GStreamer audio streams
+
+	* src/PlayerInterface.cs: Update the metadata header when the
+	PlayerEngineEvent.TrackInfoUpdated event is raised
+
+	* src/TrackProperties.cs:
+	* src/Banshee.Base/Globals.cs:
+	* src/Banshee.Base/GstMisc.cs:
+	* src/Banshee.Base/LibraryTrackInfo.cs:
+	* src/Banshee.Base/PipelineProfile.cs: Updated to reflect namespace
+	change for some GStreamer Utility methods
+
+	* src/Banshee.Base/GstTagger.cs: Parse GStreamer tags into StreamTag 
+	instances
+
+	* src/Banshee.Base/StreamTagger.cs: Common data structure for representing
+	a single metadata tag; method for merging these into TrackInfo objects;
+	added class with constant tag names (1:1 GStreamer correlation)
+
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Update playing TrackInfo
+	with tags that are read from the audio stream
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Added bindings
+	for the stream tag reading support
+
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-playback-0.10.c: Parse device node from cdda:// URI
 	and set it on the cdda source element in notify::source, non-default
 	CD-ROM drives should work for playback under the 0.10 backend now; 

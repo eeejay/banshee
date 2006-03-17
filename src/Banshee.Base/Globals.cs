@@ -60,7 +60,7 @@ namespace Banshee.Base
             library = new Library();
             random = new Random();
             
-            Gstreamer.Initialize();
+            Banshee.Gstreamer.Utilities.Initialize();
             PlayerEngineCore.Initialize();
             
             try {

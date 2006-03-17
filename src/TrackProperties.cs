@@ -249,7 +249,7 @@ namespace Banshee
             if(!(track.Track is AudioCdTrackInfo) && track.Uri.Scheme == System.Uri.UriSchemeFile) {
                 try {
                     Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
-                        Gstreamer.DetectMimeType(track.Uri));
+                        Banshee.Gstreamer.Utilities.DetectMimeType(track.Uri));
                     BitRate.Text = (af.Bitrate / 1024).ToString() + " " + Catalog.GetString("KB/Second");
                     SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
                     Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");

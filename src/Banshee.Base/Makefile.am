@@ -98,7 +98,9 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FolderImportSource.cs \
 	$(srcdir)/FileImportSource.cs \
 	$(srcdir)/HomeDirectoryImportSource.cs \
-	$(srcdir)/UnknownTrackInfo.cs
+	$(srcdir)/UnknownTrackInfo.cs \
+	$(srcdir)/StreamTagger.cs \
+	$(srcdir)/GstTagger.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
 	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)

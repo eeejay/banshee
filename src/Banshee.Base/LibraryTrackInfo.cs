@@ -431,7 +431,7 @@ namespace Banshee.Base
             ParseUri(filename);
             track_id = 0;
    
-            AudioFile af = new AudioFile(filename, Gstreamer.DetectMimeType(PathUtil.PathToFileUri(filename)));
+            AudioFile af = new AudioFile(filename, Banshee.Gstreamer.Utilities.DetectMimeType(PathUtil.PathToFileUri(filename)));
 
             mimetype = af.MimeType;
 

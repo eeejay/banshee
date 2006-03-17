@@ -875,6 +875,10 @@ namespace Banshee
                     LogCore.Instance.PushError(Catalog.GetString("Playback Error"), args.Message);
                     UpdateMetaDisplay();
                     break;
+                case PlayerEngineEvent.TrackInfoUpdated:
+                    UpdateMetaDisplay();
+                    playlistView.QueueDraw();
+                    break;
             }
         }
 

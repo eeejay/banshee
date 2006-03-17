@@ -34,6 +34,8 @@
 
 #include <gst/gst.h>
 
+#include "gst-tagger.h"
+
 #define IS_GST_PLAYBACK(e) (e != NULL)
 #define SET_CALLBACK(cb_name) { if(engine != NULL) { engine->cb_name = cb; } }
 
@@ -59,6 +61,7 @@ struct GstPlayback {
     GstPlaybackStateChangedCallback state_changed_cb;
     GstPlaybackIterateCallback iterate_cb;
     GstPlaybackBufferingCallback buffering_cb;
+    GstTaggerTagFoundCallback tag_found_cb;
 };
 
 // private methods
@@ -110,6 +113,25 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             if(engine->buffering_cb != NULL) {
                 engine->buffering_cb(engine, buffering_progress);
             }
+        }
+        case GST_MESSAGE_TAG: {
+            GstTagList *tags;
+            GstTaggerInvoke invoke;
+            
+            if(GST_MESSAGE_TYPE(message) != GST_MESSAGE_TAG) {
+                break;
+            }
+            
+            invoke.callback = engine->tag_found_cb;
+            invoke.user_data = engine;
+            
+            gst_message_parse_tag(message, &tags);
+            
+            if(GST_IS_TAG_LIST(tags)) {
+                gst_tag_list_foreach(tags, (GstTagForeachFunc)gst_tagger_process_tag, &invoke);
+                gst_tag_list_free(tags);
+            }
+            break;
         }
         default:
             break;
@@ -243,6 +265,7 @@ gst_playback_new()
     engine->state_changed_cb = NULL;
     engine->iterate_cb = NULL;
     engine->buffering_cb = NULL;
+    engine->tag_found_cb = NULL;
     
     engine->iterate_timeout_id = 0;
     engine->cdda_device = NULL;
@@ -299,6 +322,13 @@ gst_playback_set_buffering_callback(GstPlayback *engine,
     GstPlaybackBufferingCallback cb)
 {
     SET_CALLBACK(buffering_cb);
+}
+
+void
+gst_playback_set_tag_found_callback(GstPlayback *engine, 
+    GstTaggerTagFoundCallback cb)
+{
+    SET_CALLBACK(tag_found_cb);
 }
 
 void

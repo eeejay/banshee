@@ -61,7 +61,8 @@ namespace Banshee.MediaEngine
         StartOfStream,
         EndOfStream,
         Volume,
-        Buffering
+        Buffering,
+        TrackInfoUpdated
     }
 
     public abstract class PlayerEngine
@@ -198,6 +199,28 @@ namespace Banshee.MediaEngine
                 args.BufferingPercent = bufferingPercent;
                 handler(this, args);
             }
+        }
+        
+        private uint track_info_updated_timeout = 0;
+        
+        protected void OnTagFound(StreamTag tag)
+        {
+            if(tag.Equals(StreamTag.Zero) || current_track == null) {
+                return;
+            }
+            
+            StreamTagger.TrackInfoMerge(current_track, tag);
+            
+            if(track_info_updated_timeout <= 0) {
+                track_info_updated_timeout = GLib.Timeout.Add(500, OnTrackInfoUpdated);
+            }
+        }
+        
+        private bool OnTrackInfoUpdated()
+        {
+            OnEventChanged(PlayerEngineEvent.TrackInfoUpdated);
+            track_info_updated_timeout = 0;
+            return false;
         }
         
         public TrackInfo CurrentTrack {

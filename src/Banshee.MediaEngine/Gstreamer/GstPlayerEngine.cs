@@ -32,6 +32,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.MediaEngine;
+using Banshee.Gstreamer;
 
 namespace Banshee.MediaEngine.Gstreamer
 {
@@ -51,6 +52,7 @@ namespace Banshee.MediaEngine.Gstreamer
         private GstPlaybackStateChangedCallback state_changed_callback;
         private GstPlaybackIterateCallback iterate_callback;
         private GstPlaybackBufferingCallback buffering_callback;
+        private GstTaggerTagFoundCallback tag_found_callback;
         
         private bool buffering_finished;
         
@@ -69,12 +71,14 @@ namespace Banshee.MediaEngine.Gstreamer
             state_changed_callback = new GstPlaybackStateChangedCallback(OnStateChanged);
             iterate_callback = new GstPlaybackIterateCallback(OnIterate);
             buffering_callback = new GstPlaybackBufferingCallback(OnBuffering);
+            tag_found_callback = new GstTaggerTagFoundCallback(OnTagFound);
             
             gst_playback_set_eos_callback(handle, eos_callback);
             gst_playback_set_iterate_callback(handle, iterate_callback);
             gst_playback_set_error_callback(handle, error_callback);
             gst_playback_set_state_changed_callback(handle, state_changed_callback);
             gst_playback_set_buffering_callback(handle, buffering_callback);
+            gst_playback_set_tag_found_callback(handle, tag_found_callback);
         }
         
         public override void Dispose()
@@ -157,6 +161,11 @@ namespace Banshee.MediaEngine.Gstreamer
             OnEventChanged(PlayerEngineEvent.Buffering, Catalog.GetString("Buffering"), (double)progress / 100.0);
         }
         
+        private void OnTagFound(string tagName, ref GLib.Value value, IntPtr userData)
+        {
+            OnTagFound(GstTagger.ProcessNativeTagResult(tagName, ref value));
+        }
+        
         public override ushort Volume {
             get { return (ushort)gst_playback_get_volume(handle); }
             set { 
@@ -215,6 +224,9 @@ namespace Banshee.MediaEngine.Gstreamer
         
         [DllImport("libbanshee")]
         private static extern void gst_playback_set_buffering_callback(HandleRef engine, GstPlaybackBufferingCallback cb);
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_playback_set_tag_found_callback(HandleRef engine, GstTaggerTagFoundCallback cb);
         
         [DllImport("libbanshee")]
         private static extern void gst_playback_open(HandleRef engine, IntPtr uri);
