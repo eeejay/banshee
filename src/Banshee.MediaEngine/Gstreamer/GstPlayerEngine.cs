@@ -111,15 +111,18 @@ namespace Banshee.MediaEngine.Gstreamer
             gst_playback_pause(handle);
             OnStateChanged(PlayerEngineState.Paused);
         }
-        
-        public override void SetProperty(string key, object value)
+
+        public override IntPtr [] GetBaseElements()
         {
-            IntPtr val_ptr = (IntPtr)value;
-            IntPtr key_ptr = GLib.Marshaller.StringToPtrGStrdup(key);
-            gst_playback_playbin_set_property(handle, key_ptr, val_ptr);
-            GLib.Marshaller.Free(key_ptr);
+            IntPtr [] elements = new IntPtr[3];
+            
+            if(gst_playback_get_pipeline_elements(handle, out elements[0], out elements[1], out elements[2])) {
+                return elements;
+            }
+            
+            return null;
         }
-        
+
         private void OnEos(IntPtr engine)
         {
             Close();
@@ -259,7 +262,8 @@ namespace Banshee.MediaEngine.Gstreamer
         private static extern ulong gst_playback_get_duration(HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_playbin_set_property(HandleRef engine, IntPtr key, IntPtr value);
+        private static extern bool gst_playback_get_pipeline_elements(HandleRef engine, out IntPtr playbin,
+            out IntPtr audiobin, out IntPtr audiotee);    
     }
     
     

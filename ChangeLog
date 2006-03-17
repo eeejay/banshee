@@ -1,5 +1,20 @@
 2006-03-17  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-playback-0.10.c: Create a custom audio sink that contains
+	a tee element; plugins can request and connect to new source pads from
+	the tee to stream audio to elements in their control without breaking
+	the normal flow of data to the sound card
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Implement 
+	PlayerEngine.GetBaseElements and return an IntPtr array containing the
+	playbin, audiotee, and audiobin elements plugins can use to extend the
+	pipeline
+
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Removed SetProperty; 
+	added GetBaseElements that returns an IntPtr array
+
+2006-03-17  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/AudioCd/AudioCdDisk.cs (Eject): Stop playback if 
 	the playing stream is a track on the disk that is about to be ejected
 

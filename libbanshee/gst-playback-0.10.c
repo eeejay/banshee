@@ -52,7 +52,8 @@ typedef void (* GstPlaybackBufferingCallback) (GstPlayback *engine, gint bufferi
 
 struct GstPlayback {
     GstElement *playbin;
-    GstElement *audiosink;
+    GstElement *audiotee;
+    GstElement *audiobin;
     
     guint iterate_timeout_id;
     gchar *cdda_device;
@@ -202,14 +203,46 @@ gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
+    GstElement *audiosink;
+    GstElement *audiosinkqueue;
+    GstPad *teepad;
+    
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
+    // create necessary elements
     engine->playbin = gst_element_factory_make("playbin", "playbin");
     g_return_val_if_fail(engine->playbin != NULL, FALSE);
 
-    engine->audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
-    g_return_val_if_fail(engine->audiosink != NULL, FALSE);
-    g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiosink, NULL);
+    audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
+    g_return_val_if_fail(audiosink != NULL, FALSE);
+    
+    engine->audiobin = gst_bin_new("audiobin");
+    g_return_val_if_fail(engine->audiobin != NULL, FALSE);
+    
+    engine->audiotee = gst_element_factory_make("tee", "audiotee");
+    g_return_val_if_fail(engine->audiotee != NULL, FALSE);
+    
+    audiosinkqueue = gst_element_factory_make("queue", "audiosinkqueue");
+    g_return_val_if_fail(audiosinkqueue != NULL, FALSE);
+    
+    // add elements to custom audio sink
+    gst_bin_add(GST_BIN(engine->audiobin), engine->audiotee);
+    gst_bin_add(GST_BIN(engine->audiobin), audiosinkqueue);
+    gst_bin_add(GST_BIN(engine->audiobin), audiosink);
+    
+    // ghost pad the audio bin
+    teepad = gst_element_get_pad(engine->audiotee, "sink");
+    gst_element_add_pad(engine->audiobin, gst_ghost_pad_new("sink", teepad));
+    gst_object_unref(teepad);
+
+    // link the tee/queue pads for the default
+    gst_pad_link(gst_element_get_request_pad(engine->audiotee, "src0"), 
+        gst_element_get_pad(audiosinkqueue, "sink"));
+
+    // link the queue with the real audio sink
+    gst_element_link(audiosinkqueue, audiosink);
+    
+    g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiobin, NULL);
 
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
         gst_playback_bus_callback, engine);
@@ -496,13 +529,15 @@ gst_playback_can_seek(GstPlayback *engine)
     return can_seek;
 }
 
-void
-gst_playback_playbin_set_property(GstPlayback *engine, const gchar *key, gpointer value)
+gboolean
+gst_playback_get_pipeline_elements(GstPlayback *engine, GstElement **playbin, GstElement **audiobin, 
+    GstElement **audiotee)
 {
-    if(value == NULL && strcmp(key, "audio-sink") == 0) {
-        value = engine->audiosink;
-    }
+    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
-    g_object_set(G_OBJECT(engine->playbin), key, value, NULL);
+    *playbin = engine->playbin;
+    *audiobin = engine->audiobin;
+    *audiotee = engine->audiotee;
+    
+    return TRUE;
 }
-
