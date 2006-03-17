@@ -1,5 +1,13 @@
 2006-03-17  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs (Eject): Stop playback if 
+	the playing stream is a track on the disk that is about to be ejected
+
+	* libbanshee/gst-playback-0.10.c (gst_playback_open): Reset the pipeline
+	to READY state if not already there
+
+2006-03-17  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-playback-0.10.c: Perform a manual seek on an audio CD
 	if the current playing stream is from the same CD; this eliminates the
 	need to set uri on playbin, so the pipeline does not need to re-link

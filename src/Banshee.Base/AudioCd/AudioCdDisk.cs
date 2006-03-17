@@ -249,6 +249,11 @@ namespace Banshee.Base
         public bool Eject(bool open)
         {
             try {
+                AudioCdTrackInfo track = PlayerEngineCore.CurrentTrack as AudioCdTrackInfo;
+                if(track != null && track.Device == DeviceNode) {
+                    PlayerEngineCore.Close();
+                }
+            
                 Hal.Device device = new Hal.Device(HalCore.Context, udi);
                 if(device.GetPropertyBool("volume.is_mounted")) {
                     if(!Utilities.UnmountVolume(device_node)) {

@@ -343,6 +343,8 @@ gst_playback_set_tag_found_callback(GstPlayback *engine,
 void
 gst_playback_open(GstPlayback *engine, const gchar *uri)
 {
+    GstState state;
+    
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     
     if(uri != NULL && g_str_has_prefix(uri, "cdda://")) {
@@ -375,6 +377,11 @@ gst_playback_open(GstPlayback *engine, const gchar *uri)
     } else if(engine->cdda_device != NULL) {
         g_free(engine->cdda_device);
         engine->cdda_device = NULL;
+    }
+    
+    gst_element_get_state(engine->playbin, &state, NULL, 0);
+    if(state >= GST_STATE_PAUSED) {
+        gst_element_set_state(engine->playbin, GST_STATE_READY);
     }
     
     g_object_set(G_OBJECT(engine->playbin), "uri", uri, NULL);
