@@ -1,3 +1,10 @@
+2006-03-17  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-playback-0.10.c: Perform a manual seek on an audio CD
+	if the current playing stream is from the same CD; this eliminates the
+	need to set uri on playbin, so the pipeline does not need to re-link
+	and the CDDA device does not need to be closed and opened again
+
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Do an explicit -x test for gst-inspect before running

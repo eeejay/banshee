@@ -53,6 +53,7 @@ typedef void (* GstPlaybackBufferingCallback) (GstPlayback *engine, gint bufferi
 struct GstPlayback {
     GstElement *playbin;
     GstElement *audiosink;
+    
     guint iterate_timeout_id;
     gchar *cdda_device;
     
@@ -168,23 +169,30 @@ gst_playback_on_notify_source_cb(GstElement *playbin, gpointer unknown, GstPlayb
 static gboolean
 gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
 {
+    static GstFormat format = 0;
     GstElement *source_element = NULL;
+    GstState state;
+    
+    gst_element_get_state(playbin, &state, NULL, 0);
+    if(state < GST_STATE_PAUSED) {
+        return FALSE;
+    }
 
     g_object_get(playbin, "source", &source_element, NULL);
     if(source_element == NULL) {
         return FALSE;
     }
     
-    if(g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "paranoia-mode") &&
-        g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "track")) {
-        /* FIXME: These methods for setting the CDDA track should work ... */
+    if(strcmp(G_OBJECT_TYPE_NAME(source_element), "GstCdParanoiaSrc") == 0) {
+        if(format == 0) {
+            format = gst_format_get_by_nick("track");
+        }
         
-        /* g_object_set(source_element, "track", track, NULL); */
-        /*if(gst_element_seek(playbin, 1.0, gst_format_get_by_nick("track"), GST_SEEK_FLAG_FLUSH,
-            GST_SEEK_TYPE_SET, track, GST_SEEK_TYPE_NONE, -1)) {
+        if(gst_element_seek(playbin, 1.0, format, GST_SEEK_FLAG_FLUSH,
+            GST_SEEK_TYPE_SET, track - 1, GST_SEEK_TYPE_NONE, -1)) {
             g_object_unref(source_element);
             return TRUE;
-        }*/
+        }
     }
     
     g_object_unref(source_element);
@@ -283,6 +291,7 @@ gst_playback_free(GstPlayback *engine)
     
     if(engine->cdda_device != NULL) {
         g_free(engine->cdda_device);
+        engine->cdda_device = NULL;
     }
     
     g_free(engine);
@@ -376,7 +385,7 @@ gst_playback_stop(GstPlayback *engine)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     gst_playback_stop_iterate_timeout(engine);
-    gst_element_set_state(engine->playbin, GST_STATE_READY);
+    gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
 }
 
 void
@@ -398,8 +407,7 @@ gst_playback_play(GstPlayback *engine)
 void
 gst_playback_set_volume(GstPlayback *engine, gint volume)
 {
-	gdouble act_volume;
-
+    gdouble act_volume;
     g_return_if_fail(IS_GST_PLAYBACK(engine));
 	act_volume = CLAMP(volume, 0, 100) / 100.0;
 	g_object_set(G_OBJECT(engine->playbin), "volume", act_volume, NULL);
