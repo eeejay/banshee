@@ -871,6 +871,10 @@ namespace Banshee
                     stream_position_label.IsBuffering = true;
                     stream_position_label.BufferingProgress = args.BufferingPercent;
                     break;
+                case PlayerEngineEvent.Error:
+                    LogCore.Instance.PushError(Catalog.GetString("Playback Error"), args.Message);
+                    UpdateMetaDisplay();
+                    break;
             }
         }
 

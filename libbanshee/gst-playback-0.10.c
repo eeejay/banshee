@@ -52,6 +52,8 @@ struct GstPlayback {
     GstElement *playbin;
     GstElement *audiosink;
     guint iterate_timeout_id;
+    gchar *cdda_device;
+    
     GstPlaybackEosCallback eos_cb;
     GstPlaybackErrorCallback error_cb;
     GstPlaybackStateChangedCallback state_changed_cb;
@@ -116,6 +118,57 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
     return TRUE;
 }
 
+static void
+gst_playback_on_notify_source_cb(GstElement *playbin, gpointer unknown, GstPlayback *engine)
+{
+    GstElement *source_element = NULL;
+    
+    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    
+    if(engine->cdda_device == NULL) {
+        return;
+    }
+    
+    g_object_get(playbin, "source", &source_element, NULL);
+    if(source_element == NULL) {
+        return;
+    }
+    
+    if(g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "paranoia-mode") &&
+        g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "device")) {
+        g_object_set(source_element, "paranoia-mode", 0, NULL);
+        g_object_set(source_element, "device", engine->cdda_device, NULL);
+    }
+    
+    g_object_unref(source_element);
+}
+
+static gboolean
+gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
+{
+    GstElement *source_element = NULL;
+
+    g_object_get(playbin, "source", &source_element, NULL);
+    if(source_element == NULL) {
+        return FALSE;
+    }
+    
+    if(g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "paranoia-mode") &&
+        g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "track")) {
+        /* FIXME: These methods for setting the CDDA track should work ... */
+        
+        /* g_object_set(source_element, "track", track, NULL); */
+        /*if(gst_element_seek(playbin, 1.0, gst_format_get_by_nick("track"), GST_SEEK_FLAG_FLUSH,
+            GST_SEEK_TYPE_SET, track, GST_SEEK_TYPE_NONE, -1)) {
+            g_object_unref(source_element);
+            return TRUE;
+        }*/
+    }
+    
+    g_object_unref(source_element);
+    return FALSE;
+}
+
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
@@ -130,6 +183,8 @@ gst_playback_construct(GstPlayback *engine)
 
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
         gst_playback_bus_callback, engine);
+        
+    g_signal_connect(engine->playbin, "notify::source", G_CALLBACK(gst_playback_on_notify_source_cb), engine);
         
     return TRUE;
 }
@@ -190,6 +245,7 @@ gst_playback_new()
     engine->buffering_cb = NULL;
     
     engine->iterate_timeout_id = 0;
+    engine->cdda_device = NULL;
     
     return engine;
 }
@@ -201,6 +257,10 @@ gst_playback_free(GstPlayback *engine)
     
     gst_element_set_state(engine->playbin, GST_STATE_NULL);
     gst_object_unref(GST_OBJECT(engine->playbin));
+    
+    if(engine->cdda_device != NULL) {
+        g_free(engine->cdda_device);
+    }
     
     g_free(engine);
     engine = NULL;
@@ -241,11 +301,43 @@ gst_playback_set_buffering_callback(GstPlayback *engine,
     SET_CALLBACK(buffering_cb);
 }
 
-
 void
 gst_playback_open(GstPlayback *engine, const gchar *uri)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
+    
+    if(uri != NULL && g_str_has_prefix(uri, "cdda://")) {
+        const gchar *p = g_utf8_strchr(uri, -1, '#');
+        const gchar *new_cdda_device;
+        
+        if(p != NULL) {
+            new_cdda_device = p + 1;
+            
+            if(engine->cdda_device == NULL) {
+                engine->cdda_device = g_strdup(new_cdda_device);
+            } else if(strcmp(new_cdda_device, engine->cdda_device) == 0) {
+                guint track_num;
+                gchar *track_str = g_strndup(uri + 7, strlen(uri) - strlen(new_cdda_device) - 9);
+                track_num = atoi(track_str);
+                g_free(track_str);
+                
+                if(gst_playback_cdda_source_set_track(engine->playbin, track_num)) {
+                    return;
+                }
+            } else {
+                if(engine->cdda_device != NULL) {
+                    g_free(engine->cdda_device);
+                    engine->cdda_device = NULL;
+                }
+            
+                engine->cdda_device = g_strdup(new_cdda_device);
+            }
+        }
+    } else if(engine->cdda_device != NULL) {
+        g_free(engine->cdda_device);
+        engine->cdda_device = NULL;
+    }
+    
     g_object_set(G_OBJECT(engine->playbin), "uri", uri, NULL);
 }
 

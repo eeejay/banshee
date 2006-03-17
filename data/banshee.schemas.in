@@ -61,7 +61,7 @@
       <applyto>/apps/Banshee/PlayerEngine</applyto>
       <owner>banshee</owner>
       <type>string</type>
-      <default>helix</default>
+      <default>helix-remote</default>
       <locale name="C">
         <short>Player Engine Name</short>
         <long>Name of media playback engine.</long>

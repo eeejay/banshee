@@ -1,5 +1,17 @@
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-playback-0.10.c: Parse device node from cdda:// URI
+	and set it on the cdda source element in notify::source, non-default
+	CD-ROM drives should work for playback under the 0.10 backend now; 
+	Manually seek on the cdda source element if changing tracks and the
+	device does not change
+
+	* src/PlayerInterface.cs: Display error messages sent from PlayerEngine
+
+	* data/banshee.schemas.in: Set default engine to helix-remote
+
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
 	* data/banshee.glade: Set the open button to default; make the
 	dialog not visible by default
 
