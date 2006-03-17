@@ -262,13 +262,21 @@ dnl gstreamer plugins
 gst_toolsdir=`$PKG_CONFIG --variable=toolsdir $gst_pkg_name`
 gst_inspect="$gst_toolsdir/$gst_inspect"
 
+AC_MSG_CHECKING([for gst-inspect])
+if ! test -x $gst_inspect; then
+	AC_MSG_RESULT([no])
+	AC_MSG_ERROR([Cannot find required gst-inspect tool.])
+else
+	AC_MSG_RESULT([yes])
+fi
+
 for element in $gst_required_plugins; do
 	AC_MSG_CHECKING([for GStreamer $gst_version $element plugin])
 	if $gst_inspect $element > /dev/null 2>/dev/null; then
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
-		AC_MSG_ERROR([Cannot find required GStreamer-$gsv_version plugin '$element'.])
+		AC_MSG_ERROR([Cannot find required GStreamer-$gst_version plugin '$element'.])
 	fi
 done;
 

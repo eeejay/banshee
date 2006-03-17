@@ -1,5 +1,10 @@
 2006-03-16  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Do an explicit -x test for gst-inspect before running
+	an element check
+
+2006-03-16  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* libbanshee/Makefile.am: Added gst-tagger.[ch]
