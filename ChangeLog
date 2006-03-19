@@ -1,5 +1,10 @@
 2006-03-19  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Gui/SeekDialog.cs: Implement the glade SeekDialog; 
+	forgot to commit last time
+
+2006-03-19  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/PlayerInterface.cs: Handle SeekToAction and show the new seek dialog
