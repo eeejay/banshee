@@ -403,6 +403,7 @@ namespace Banshee
             playlistView = new PlaylistView(playlistModel);
             InterfaceElements.PlaylistView = playlistView;
             ((Gtk.ScrolledWindow)gxml["LibraryContainer"]).Add(playlistView);
+            InterfaceElements.PlaylistContainer = gxml["LibraryContainer"] as Container;
             playlistView.Show();
             playlistModel.Updated += OnPlaylistUpdated;
             playlistModel.Stopped += OnPlaylistStopped;
@@ -982,6 +983,8 @@ namespace Banshee
                 alignment.Remove(alignment.Child);
             }
             
+            InterfaceElements.DetachPlaylistContainer();
+            
             alignment.Add(playlist_container);
             alignment.ShowAll();
             
@@ -1001,7 +1004,10 @@ namespace Banshee
                 return;
             } 
             
-            alignment.Remove(alignment.Child);
+            if(alignment.Child != null) {
+                alignment.Remove(alignment.Child);
+            }
+            
             alignment.Add(SourceManager.ActiveSource.ViewWidget);
             alignment.ShowAll();
             

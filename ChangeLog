@@ -1,5 +1,15 @@
 2006-03-19  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlayerInterface.cs (ShowPlaylistView): Detach the playlist container
+	before re-embedding it in the main view, in case the previous source
+	has embedded it
+
+	* src/Banshee.Base/Globals.cs: Added PlaylistContainer and 
+	DetatchPlaylistContainer utilities for sources to use to help 
+	embedding the PlaylistView in a custom view
+
+2006-03-19  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/Gui/SeekDialog.cs: Implement the glade SeekDialog; 
 	forgot to commit last time
 

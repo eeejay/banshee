@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Globals.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -150,28 +149,29 @@ namespace Banshee.Base
     
     public static class InterfaceElements
     {
-
         private static Gtk.Window main_window;
-        
         public static Gtk.Window MainWindow {
-            get {
-                return main_window;
-            }
-            
+            get { return main_window; }
             set {
                 if(main_window == null) {
                     main_window = value;
                 }
             }
         }
+
+        private static Gtk.Container playlist_container;
+        public static Gtk.Container PlaylistContainer {
+            get { return playlist_container; }
+            set {
+                if(playlist_container == null) {
+                    playlist_container = value;
+                }
+            }
+        }
 	
         private static Gtk.TreeView playlist_view;
-        
         public static Gtk.TreeView PlaylistView {
-            get {
-                return playlist_view;
-            }
-            
+            get { return playlist_view; }
             set {
                 if(playlist_view == null) {
                     playlist_view = value;
@@ -180,16 +180,19 @@ namespace Banshee.Base
         }
         
         private static Banshee.Widgets.SearchEntry search_entry;
-        
         public static Banshee.Widgets.SearchEntry SearchEntry {
-            get {
-                return search_entry;
-            }
-            
+            get { return search_entry; }
             set {
                 if(search_entry == null) {
                     search_entry = value;
                 }
+            }
+        }
+        
+        public static void DetachPlaylistContainer()
+        {
+            if(PlaylistContainer.Parent != null) {
+                (PlaylistContainer.Parent as Gtk.Container).Remove(PlaylistContainer);
             }
         }
     }
