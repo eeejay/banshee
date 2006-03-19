@@ -246,9 +246,9 @@ namespace Banshee.Plugins.NotificationAreaIcon {
 
         private void FillPopup() {
             can_show_popup = true;
-            popup.Artist = PlayerEngineCore.CurrentTrack.Artist;
-            popup.Album = PlayerEngineCore.CurrentTrack.Album;
-            popup.TrackTitle = PlayerEngineCore.CurrentTrack.Title;
+            popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtist;
+            popup.Album = PlayerEngineCore.CurrentTrack.DisplayAlbum;
+            popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTitle;
             popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
             popup.QueueDraw();
             if (!popup.Visible) {

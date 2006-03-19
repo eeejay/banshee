@@ -1,3 +1,9 @@
+2006-03-18  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Use DisplayArtist, DisplayAlbum, and DisplayTitle for setting the 
+	display data in TrackInfoHeader
+
 2006-03-17  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-playback-0.10.c: Create a custom audio sink that contains
