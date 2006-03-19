@@ -42,6 +42,7 @@ namespace Banshee.Base
         private ActionGroup song_actions = new ActionGroup("Song");
         private ActionGroup audio_cd_actions = new ActionGroup("AudioCD");
         private ActionGroup playback_actions = new ActionGroup("Playback");
+        private ActionGroup playback_seek_actions = new ActionGroup("PlaybackSeek");
         private ActionGroup source_eject_actions = new ActionGroup("SourceEject");
         private ActionGroup dap_actions = new ActionGroup("Dap");
         
@@ -208,28 +209,16 @@ namespace Banshee.Base
             
             playback_actions.Add(new ActionEntry [] {
                 new ActionEntry("PlayPauseAction", "media-playback-start",
-                    Catalog.GetString("Play"), null,
+                    Catalog.GetString("Play"), "space",
                     Catalog.GetString("Play or pause the current song"), null),
                     
                 new ActionEntry("NextAction", "media-skip-forward",
-                    Catalog.GetString("Next"), null,
-                    Catalog.GetString("Play or pause the current song"), null),
+                    Catalog.GetString("Next"), "N",
+                    Catalog.GetString("Play the next song"), null),
                     
                 new ActionEntry("PreviousAction", "media-skip-backward",
-                    Catalog.GetString("Previous"), null,
-                    Catalog.GetString("Play or pause the current song"), null),
-                    
-                new ActionEntry("SeekBackwardAction", "media-seek-backward",
-                    Catalog.GetString("Seek Backward"), null,
-                    Catalog.GetString("Seek backward in current song"), null),
-                    
-                new ActionEntry("SeekForwardAction", "media-seek-forward",
-                    Catalog.GetString("Seek Forward"), null,
-                    Catalog.GetString("Seek forward in current song"), null),
-                    
-                new ActionEntry("SeekToAction", null,
-                    Catalog.GetString("Seek To..."), "<control>T",
-                    Catalog.GetString("Seek to a specific location in current song"), null)
+                    Catalog.GetString("Previous"), "B",
+                    Catalog.GetString("Play the previous song"), null),
             });
             
             playback_actions.Add(new RadioActionEntry [] {
@@ -253,6 +242,28 @@ namespace Banshee.Base
             });
 
             ui.InsertActionGroup(playback_actions, 0);
+            
+            /* Playback Seeking Actions */
+            
+            playback_seek_actions.Add(new ActionEntry [] {
+                new ActionEntry("SeekBackwardAction", "media-seek-backward",
+                    Catalog.GetString("Seek Backward"), "<control>Left",
+                    Catalog.GetString("Seek backward in current song"), null),
+                    
+                new ActionEntry("SeekForwardAction", "media-seek-forward",
+                    Catalog.GetString("Seek Forward"), "<control>Right",
+                    Catalog.GetString("Seek forward in current song"), null),
+                    
+                new ActionEntry("SeekToAction", null,
+                    Catalog.GetString("Seek To..."), "T",
+                    Catalog.GetString("Seek to a specific location in current song"), null),
+                    
+                new ActionEntry("RestartSongAction", null,
+                    Catalog.GetString("Restart Song"), "R",
+                    Catalog.GetString("Restart the current song"), null)
+            });
+            
+            ui.InsertActionGroup(playback_seek_actions, 0);
             
             /* DAP Actions */
             
@@ -333,51 +344,39 @@ namespace Banshee.Base
         }
         
         public UIManager UI {
-            get {
-                return ui;
-            }
+            get { return ui; }
         }
         
         public ActionGroup GlobalActions {
-            get {
-                return global_actions;
-            }
+            get { return global_actions; }
         }
         
         public ActionGroup PlaylistActions {
-            get {
-                return playlist_actions;
-            }
+            get { return playlist_actions; }
         }
         
         public ActionGroup SongActions { 
-            get {
-                return song_actions;
-            }
+            get { return song_actions; }
         }
         
         public ActionGroup AudioCdActions { 
-            get {
-                return audio_cd_actions;
-            }
+            get { return audio_cd_actions; }
         }
         
         public ActionGroup PlaybackActions {
-            get {
-                return playback_actions;
-            }
+            get { return playback_actions; }
+        }
+        
+        public ActionGroup PlaybackSeekActions {
+            get { return playback_seek_actions; }
         }
         
         public ActionGroup SourceEjectActions {
-            get {
-                return source_eject_actions;
-            }
+            get { return source_eject_actions; }
         }
         
         public ActionGroup DapActions {
-            get {
-                return dap_actions;
-            }
+            get { return dap_actions; }
         }
     }
 }

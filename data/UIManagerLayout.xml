@@ -40,6 +40,7 @@
             <menuitem name="SeekBackward" action="SeekBackwardAction" />
             <menuitem name="SeekForward" action="SeekForwardAction" />
             <menuitem name="SeekTo" action="SeekToAction" />
+            <menuitem name="RestartSong" action="RestartSongAction" />
             <separator />
             <menuitem name="RepeatNone" action="RepeatNoneAction" />
             <menuitem name="RepeatAll" action="RepeatAllAction" />

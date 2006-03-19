@@ -1,5 +1,17 @@
 2006-03-19  Aaron Bockover  <aaron@abock.org>
 
+	* data/UIManagerLayout.xml: Added RefreshSong 
+
+	* src/PlayerInterface.cs: When an entry in the main window is focused,
+	disable the accel group from the main window, when not focused, re-enable
+	it; handle skipping and song restarting in the ActionManager; playback
+	seek group is now sensitive based on the engine state
+
+	* src/Banshee.Base/ActionManager.cs: Added key bindings to more playback
+	actions, added RestartSongAction
+
+2006-03-19  Aaron Bockover  <aaron@abock.org>
+
 	* src/PlayerInterface.cs (ShowPlaylistView): Detach the playlist container
 	before re-embedding it in the main view, in case the previous source
 	has embedded it

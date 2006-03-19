@@ -184,6 +184,7 @@ namespace Banshee
             }
             
             WindowPlayer.AddAccelGroup(Globals.ActionManager.UI.AccelGroup);
+            Globals.ActionManager.PlaybackSeekActions.Sensitive = false;
             
             LoadSettings();
             
@@ -708,10 +709,24 @@ namespace Banshee
             Globals.Configuration.Set(GConfKeys.WindowHeight, height);
         }
         
+        private bool accel_group_active = true;
+        
         [GLib.ConnectBefore]
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
             bool handled = false;
+            
+            if(WindowPlayer.Focus is Entry && Gtk.Global.CurrentEvent is Gdk.EventKey) {
+                if(accel_group_active) {
+                    WindowPlayer.RemoveAccelGroup(Globals.ActionManager.UI.AccelGroup);
+                    accel_group_active = false;
+                 }
+            } else {
+                if(!accel_group_active) {
+                    WindowPlayer.AddAccelGroup(Globals.ActionManager.UI.AccelGroup);
+                    accel_group_active = true;
+                }
+            }
             
             switch(args.Event.Key) {
                 case Gdk.Key.J:
@@ -721,27 +736,6 @@ namespace Banshee
                 case Gdk.Key.F3:
                     if(!searchEntry.HasFocus && !sourceView.EditingRow) {
                         searchEntry.Focus();
-                        handled = true;
-                    }
-                    break;
-                case Gdk.Key.Left:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.Position -= SkipDelta;
-                        handled = true;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position = 0;
-                        handled = true;
-                    }
-                    break;
-                case Gdk.Key.Right:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.Position += SkipDelta;
-                        handled = true;
-                    } 
-                    break;
-                case Gdk.Key.space:
-                    if(!searchEntry.HasFocus && !sourceView.EditingRow) {
-                        PlayPause();
                         handled = true;
                     }
                     break;
@@ -844,6 +838,8 @@ namespace Banshee
                     Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), "media-playback-pause");
                     break;
             }
+            
+            Globals.ActionManager.PlaybackSeekActions.Sensitive = args.State != PlayerEngineState.Idle;
         }
         
         private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
@@ -1988,7 +1984,6 @@ namespace Banshee
                 PlayerEngineCore.Open(new Uri(address));
                 PlayerEngineCore.Play();
             } catch(Exception) {
-                Console.WriteLine("BAOSJFDL");
             }   
         }
         
@@ -2230,6 +2225,11 @@ namespace Banshee
             dialog.Dialog.Response += delegate {
                 dialog.Destroy();
             };
+        }
+        
+        private void OnRestartSongAction(object o, EventArgs args)
+        {
+            PlayerEngineCore.Position = 0;
         }
         
         private void SetRepeatMode(RepeatMode mode)
