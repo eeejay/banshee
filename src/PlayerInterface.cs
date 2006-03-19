@@ -2217,6 +2217,15 @@ namespace Banshee
             PlayerEngineCore.Position -= SkipDelta;
         }
         
+        private void OnSeekToAction(object o, EventArgs args)
+        {
+            Banshee.Gui.SeekDialog dialog = new Banshee.Gui.SeekDialog();
+            dialog.Dialog.Show();
+            dialog.Dialog.Response += delegate {
+                dialog.Destroy();
+            };
+        }
+        
         private void SetRepeatMode(RepeatMode mode)
         {
             playlistModel.Repeat = mode;

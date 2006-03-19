@@ -39,6 +39,7 @@ namespace Banshee.Widgets
         private bool is_buffering;
         private SeekSlider seekRange;
         private Label label;
+        private string format_string = "<small>{0}</small>";
         
         public StreamPositionLabel(SeekSlider seekRange) : base(0.0f, 0.0f, 1.0f, 1.0f)
         {
@@ -90,7 +91,7 @@ namespace Banshee.Widgets
         
         private void UpdateLabel(string text)
         {
-            label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(text));
+            label.Markup = String.Format(format_string, GLib.Markup.EscapeText(text));
         }
         
         private static string FormatDuration(long time)
@@ -120,6 +121,13 @@ namespace Banshee.Widgets
                 is_buffering = value;
                 UpdateLabel();
                 QueueDraw();
+            }
+        }
+        
+        public string FormatString {
+            set { 
+                format_string = value;
+                UpdateLabel();
             }
         }
     }

@@ -1,5 +1,5 @@
 /***************************************************************************
- *  ImportDialog.cs
+ *  OpenLocationDialog.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>

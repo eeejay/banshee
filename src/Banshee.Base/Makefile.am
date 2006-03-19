@@ -16,7 +16,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/GladeDialog.cs \
 	$(srcdir)/Gui/ImportDialog.cs \
 	$(srcdir)/Gui/OpenLocationDialog.cs \
-	$(srcdir)/Gui/UIManager.cs
+	$(srcdir)/Gui/UIManager.cs \
+	$(srcdir)/Gui/SeekDialog.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \

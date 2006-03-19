@@ -225,7 +225,11 @@ namespace Banshee.Base
                     
                 new ActionEntry("SeekForwardAction", "media-seek-forward",
                     Catalog.GetString("Seek Forward"), null,
-                    Catalog.GetString("Seek forward in current song"), null)
+                    Catalog.GetString("Seek forward in current song"), null),
+                    
+                new ActionEntry("SeekToAction", null,
+                    Catalog.GetString("Seek To..."), "<control>T",
+                    Catalog.GetString("Seek to a specific location in current song"), null)
             });
             
             playback_actions.Add(new RadioActionEntry [] {

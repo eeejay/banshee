@@ -1,3 +1,21 @@
+2006-03-19  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/PlayerInterface.cs: Handle SeekToAction and show the new seek dialog
+
+	* src/Banshee.Base/ActionManager.cs: Implement an action for SeekToAction
+
+	* src/Banshee.Base/Makefile.am: Added Gui/SeekDialog.cs
+
+	* src/Banshee.Base/Gui/OpenLocationDialog.cs: Fixed typo in header
+
+	* src/Banshee.Widgets/StreamPositionLabel.cs: Added FormatString parameter
+
+	* data/UIManagerLayout.xml: Added SeekToAction to playback menu
+
+	* data/banshee.glade: Added SeekDialog
+
 2006-03-18  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:

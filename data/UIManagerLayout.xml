@@ -39,6 +39,7 @@
             <separator />
             <menuitem name="SeekBackward" action="SeekBackwardAction" />
             <menuitem name="SeekForward" action="SeekForwardAction" />
+            <menuitem name="SeekTo" action="SeekToAction" />
             <separator />
             <menuitem name="RepeatNone" action="RepeatNoneAction" />
             <menuitem name="RepeatAll" action="RepeatAllAction" />
