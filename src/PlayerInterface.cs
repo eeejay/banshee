@@ -86,8 +86,6 @@ namespace Banshee
         private ActionButton sync_dap_button;
         [Widget] private ProgressBar dapDiskUsageBar;
         
-        private HighlightMessageArea audiocd_statusbar;
-        
         private bool incrementedCurrentSongPlayCount;
     
         public Gtk.Window Window {
@@ -147,12 +145,7 @@ namespace Banshee
             
             PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
             PlayerEngineCore.StateChanged += OnPlayerEngineStateChanged;
-            
-            if(Globals.AudioCdCore != null) {
-                Globals.AudioCdCore.DiskRemoved += OnAudioCdCoreDiskRemoved;
-                Globals.AudioCdCore.Updated += OnAudioCdCoreUpdated;
-            }
-            
+
             DapCore.DapAdded += OnDapCoreDeviceAdded;
             LogCore.Instance.Updated += OnLogCoreUpdated;
             ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
@@ -313,13 +306,6 @@ namespace Banshee
             volumeButton.VolumeChanged += OnVolumeScaleChanged;
             
             // Footer 
-            audiocd_statusbar = new HighlightMessageArea();
-            audiocd_statusbar.BorderWidth = 5;
-            audiocd_statusbar.LeftPadding = 15;
-            audiocd_statusbar.ButtonClicked += OnAudioCdStatusBarButtonClicked;
-            
-            (gxml["MainContainer"] as Box).PackStart(audiocd_statusbar, false, false, 0);
-            
             LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
             LabelStatusBar.Show();
             
@@ -938,6 +924,8 @@ namespace Banshee
             ThreadAssist.ProxyToMain(HandleSourceChanged);
         }
         
+        private uint source_update_draw_timeout = 0;
+        
         private void OnSourceManagerSourceUpdated(SourceEventArgs args)
         {
             if(args.Source == SourceManager.ActiveSource) {
@@ -945,6 +933,12 @@ namespace Banshee
                 
                 if(playlistModel.Count() == 0 && args.Source.Count > 0) {
                     playlistModel.ReloadSource();
+                } else if(source_update_draw_timeout == 0) {
+                    source_update_draw_timeout = GLib.Timeout.Add(500, delegate {
+                        playlistView.QueueDraw();
+                        source_update_draw_timeout = 0;
+                        return false;
+                    });
                 }
                 
                 gxml["SearchLabel"].Sensitive = args.Source.SearchEnabled;
@@ -1005,7 +999,7 @@ namespace Banshee
             }
             
             alignment.Add(SourceManager.ActiveSource.ViewWidget);
-            alignment.ShowAll();
+            alignment.Show();
             
             gxml["PlaylistHeaderBox"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
         }
@@ -1013,6 +1007,10 @@ namespace Banshee
         private void OnSourceTrackAdded(object o, TrackEventArgs args)
         {
             if(SourceManager.ActiveSource == o) {
+                if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(args.Track)) {
+                    return;
+                }
+                
                 playlistModel.AddTrack(args.Track);
             }
         }
@@ -1062,68 +1060,7 @@ namespace Banshee
                 Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Playlist");            
             }
         }
-        
-        private void OnAudioCdStatusBarButtonClicked(object o, EventArgs args)
-        {
-            AudioCdSource source = SourceManager.ActiveSource as AudioCdSource;
-            if(source == null) {
-                return;
-            }
-            
-            source.Disk.QueryMetadata();
-        }
-        
-        private void UpdateAudioCdStatus(AudioCdDisk disk)
-        {
-            string status = null;
-            Gdk.Pixbuf icon = null;
-            
-            switch(disk.Status) {
-                case AudioCdLookupStatus.ReadingDisk:
-                    status = Catalog.GetString("Reading table of contents from CD...");
-                    icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
-                    audiocd_statusbar.ShowCloseButton = false;
-                    break;
-                case AudioCdLookupStatus.SearchingMetadata:
-                    status = Catalog.GetString("Searching for CD metadata...");
-                    icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
-                    audiocd_statusbar.ShowCloseButton = false;
-                    break;
-                case AudioCdLookupStatus.SearchingCoverArt:
-                    status = Catalog.GetString("Searching for CD cover art...");
-                    icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
-                    audiocd_statusbar.ShowCloseButton = false;
-                    break;
-                case AudioCdLookupStatus.ErrorNoConnection:
-                    status = Catalog.GetString("Cannot search for CD metadata: " + 
-                        "there is no available Internet connection");
-                    icon = IconThemeUtils.LoadIcon(22, "network-wired", Stock.Network);
-                    audiocd_statusbar.ShowCloseButton = true;
-                    break;
-                case AudioCdLookupStatus.ErrorLookup:
-                    status = Catalog.GetString("Could not fetch metadata for CD.");
-                    icon = IconThemeUtils.LoadIcon(22, Stock.DialogError);
-                    audiocd_statusbar.ShowCloseButton = true;
-                    break;
-                case AudioCdLookupStatus.Success:
-                default:
-                    status = null;
-                    icon = null;
-                    break;
-            }
-            
-            if(disk.Status == AudioCdLookupStatus.ErrorLookup) {
-                audiocd_statusbar.ButtonLabel = Stock.Refresh;
-                audiocd_statusbar.ButtonUseStock = true;
-            } else {
-                audiocd_statusbar.ButtonLabel = null;
-            }
-            
-            audiocd_statusbar.Visible = status != null;
-            audiocd_statusbar.Message = String.Format("<big>{0}</big>", GLib.Markup.EscapeText(status));
-            audiocd_statusbar.Pixbuf = icon;
-        }
-        
+     
         // Called when SourceManager emits an ActiveSourceChanged event.
         private void HandleSourceChanged(object o, EventArgs args)
         {
@@ -1133,14 +1070,10 @@ namespace Banshee
             }
 
             searchEntry.CancelSearch();
-            audiocd_statusbar.Visible = false;
             
             if(source is DapSource) {
                 DapSource dap_source = source as DapSource;
                 UpdateDapDiskUsageBar(dap_source);
-            } else if(source is AudioCdSource) {
-                AudioCdSource cdSource = source as AudioCdSource;
-                UpdateAudioCdStatus(cdSource.Disk);
             }
             
             UpdateViewName(source);   // Bold label below track info
@@ -1202,43 +1135,6 @@ namespace Banshee
         {
             args.Dap.PropertiesChanged += OnDapPropertiesChanged;
             args.Dap.SaveFinished += OnDapSaveFinished;
-        }
-        
-        private void OnAudioCdCoreDiskRemoved(object o, AudioCdCoreDiskRemovedArgs args)
-        {
-            Source source = SourceManager.ActiveSource;
-            if(source == null) {
-                return;
-            }
-
-            if(source is AudioCdSource) {
-                AudioCdSource cdSource = source as AudioCdSource;
-                if(cdSource.Disk.Udi == args.Udi) {
-                    SourceManager.SetActiveSource(LibrarySource.Instance);
-                }
-            }
-        }
-
-        private void OnAudioCdCoreUpdated(object o, EventArgs args)
-        {
-            Source source = SourceManager.ActiveSource;
-            if(source == null) {
-                return;
-            }
-            
-            playlistView.QueueDraw();
-       
-            if(source is AudioCdSource && playlistModel.FirstTrack != null 
-                && playlistModel.FirstTrack.GetType() == typeof(AudioCdTrackInfo)) {
-                AudioCdSource cdSource = source as AudioCdSource;
-                AudioCdTrackInfo track = playlistModel.FirstTrack as AudioCdTrackInfo;
-               
-                if(cdSource.Disk.DeviceNode == track.Device) { 
-                    (gxml["ViewNameLabel"] as Label).Markup = "<b>" + 
-                        GLib.Markup.EscapeText(cdSource.Disk.Title) + "</b>";
-                    UpdateAudioCdStatus(cdSource.Disk);
-                }
-            }
         }
         
         private void OnDapSaveFinished(object o, EventArgs args)
@@ -1775,7 +1671,7 @@ namespace Banshee
                 playlistView.Selection.SelectPath(path);
         }
      
-        private void OnAudioCdRipperTrackRipped(object o, HaveTrackInfoArgs args)
+        /*private void OnAudioCdRipperTrackRipped(object o, HaveTrackInfoArgs args)
         {
             if(SourceManager.ActiveSource is LibrarySource) {
                 ThreadAssist.ProxyToMain(delegate {
@@ -1786,7 +1682,7 @@ namespace Banshee
                     playlistModel.AddTrack(args.TrackInfo);
                 });
             }
-        }
+        }*/
         
         private void EjectSource(Source source)
         {
@@ -1817,15 +1713,6 @@ namespace Banshee
             try {
                 TrackInfo ti = new LibraryTrackInfo(args.FileName);
                 args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
-                if(SourceManager.ActiveSource is LibrarySource) {
-                    ThreadAssist.ProxyToMain(delegate {
-                        if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(ti)) {
-                            return;
-                        }
-                        
-                        playlistModel.AddTrack(ti);
-                    });
-                }
             } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
                 Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
@@ -1996,29 +1883,8 @@ namespace Banshee
         
         private void OnImportCDAction(object o, EventArgs args)
         {
-            ArrayList list = new ArrayList();
-            
-            foreach(object [] node in playlistModel) {
-                if(node[0] is AudioCdTrackInfo && ((AudioCdTrackInfo)node[0]).CanRip) {
-                    list.Add(node[0] as AudioCdTrackInfo);
-                }
-            }
-            
-            if(list.Count > 0) {
-                AudioCdRipper ripper = new AudioCdRipper();
-                ripper.HaveTrackInfo += OnAudioCdRipperTrackRipped;
-                foreach(AudioCdTrackInfo track in list) {
-                    ripper.QueueTrack(track);
-                }
-                ripper.Start();
-            } else {
-                HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, DialogFlags.Modal, 
-                    MessageType.Info, ButtonsType.Ok, 
-                    Catalog.GetString("Invalid Selection"),
-                    Catalog.GetString("You must select at least one track to import.")
-                );
-                dialog.Run();
-                dialog.Destroy();
+            if(SourceManager.ActiveSource is AudioCdSource) {
+                ((IImportSource)SourceManager.ActiveSource).Import();
             }
         }
         

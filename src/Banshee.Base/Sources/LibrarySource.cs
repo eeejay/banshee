@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  LibrarySource.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -59,17 +58,13 @@ namespace Banshee.Sources
         private LibrarySource() : base(Catalog.GetString("Music Library"), 0)
         {
             Globals.Library.TrackRemoved += delegate(object o, LibraryTrackRemovedArgs args) {
-                if (!updating) {
-                    updating = true;
-                    GLib.Timeout.Add(500, DelayedUpdateHandler);
-                }
+                OnTrackRemoved(args.Track);
+                OnUpdated();
             };
               
             Globals.Library.TrackAdded += delegate(object o, LibraryTrackAddedArgs args) {
-                if (!updating) {
-                    updating = true;
-                    GLib.Timeout.Add(500, DelayedUpdateHandler);
-                }
+                OnTrackAdded(args.Track);
+                OnUpdated();
             };  
         }
         
@@ -84,21 +79,15 @@ namespace Banshee.Sources
         }
         
         public override IEnumerable Tracks {
-            get {
-                return Globals.Library.Tracks.Values;
-            }
+            get { return Globals.Library.Tracks.Values; }
         }
         
         public override int Count {
-            get {
-                return Globals.Library.Tracks.Count;    
-            }
+            get { return Globals.Library.Tracks.Count; }
         }  
         
         public override Gdk.Pixbuf Icon {
-            get {
-                return IconThemeUtils.LoadIcon(22, "user-home", "source-library");
-            }
+            get { return IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library"); } 
         }
     }
 }

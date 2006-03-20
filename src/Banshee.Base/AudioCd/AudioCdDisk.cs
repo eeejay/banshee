@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  AudioCdDisk.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -214,23 +213,12 @@ namespace Banshee.Base
         
         private void HandleUpdated()
         {
-            Gtk.Application.Invoke(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 EventHandler handler = Updated;
                 if(handler != null) {
                     handler(this, new EventArgs());
                 }
             });
-        }
-        
-        public AudioCdLookupStatus Status {
-            get {
-                return status;
-            }
-            
-            private set {
-                status = value;
-                HandleUpdated();
-            }
         }
         
         [DllImport("libc")]
@@ -273,46 +261,41 @@ namespace Banshee.Base
             }
         }
         
-        public string Udi { 
-            get { 
-                return udi;
+        public AudioCdLookupStatus Status {
+            get { return status; }
+            
+            private set {
+                status = value;
+                HandleUpdated();
             }
+        }
+        
+        public string Udi { 
+            get { return udi; }
         }
         
         public string DeviceNode { 
-            get { 
-                return device_node;
-            }
+            get { return device_node; }
         }
         
         public string DriveName { 
-            get { 
-                return drive_name;
-            }
+            get { return drive_name; }
         }
         
         public string Title { 
-            get { 
-                return album_title;
-            }
+            get { return album_title; }
         }
         
         public int TrackCount { 
-            get { 
-                return tracks.Length; 
-            }
+            get { return tracks.Length; }
         }
         
         public bool Valid { 
-            get { 
-                return true;
-            }
+            get { return true; }
         }
         
-        public AudioCdTrackInfo [] Tracks { 
-            get { 
-                return tracks; 
-            }
+        public IEnumerable Tracks { 
+            get { return tracks; }
         }
     }
 }
