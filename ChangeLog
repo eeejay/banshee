@@ -1,5 +1,11 @@
 2006-03-20  Aaron Bockover  <aaron@abock.org>
 
+	* libbanshee/gst-cd-rip-0.10.c: If vorbisenc is chosen as the encoder
+	for ripping and an oggmux is not in the pipeline profile, attempt to
+	insert an oggmux element (BGO #335211)
+
+2006-03-20  Aaron Bockover  <aaron@abock.org>
+
 	* NEWS: Updated with 0.10.9 release notes
 
 	* configure.ac: Bumped to 0.10.9

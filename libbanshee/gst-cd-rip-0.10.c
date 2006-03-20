@@ -193,7 +193,15 @@ gst_cd_ripper_build_encoder(const gchar *encoder_pipeline)
     gchar *pipeline;
     GError *error = NULL;
     
-    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
+    // FIXME: ugly
+    if(strstr(encoder_pipeline, "vorbisenc") != NULL 
+        && strstr(encoder_pipeline, "oggmux") == NULL) {
+        g_warning("vorbisenc added without oggmux, attempting to insert oggmux element in pipeline");
+        pipeline = g_strdup_printf("audioconvert ! %s ! oggmux", encoder_pipeline);
+    } else {
+        pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
+    }
+    
     encoder = gst_parse_bin_from_description(pipeline, TRUE, &error);
     g_free(pipeline);
     
