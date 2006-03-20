@@ -402,7 +402,7 @@ namespace Banshee.Base
             }
         }
 
-        public bool CanPlay {
+        public virtual bool CanPlay {
             get { 
                 return can_play; 
             }

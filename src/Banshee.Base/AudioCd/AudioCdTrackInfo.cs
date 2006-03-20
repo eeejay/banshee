@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  AudioCdTrackInfo.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -39,14 +38,15 @@ namespace Banshee.Base
     public class AudioCdTrackInfo : TrackInfo
     {
         private int track_index;
-        private string device;
         private bool do_rip;
+        private bool is_ripped;
+        private AudioCdDisk disk;
         
-        public AudioCdTrackInfo(string device)
+        public AudioCdTrackInfo(AudioCdDisk disk)
         {
             PreviousTrack = Gtk.TreeIter.Zero;
             CanSaveToDatabase = false;
-            this.device = device;
+            this.disk = disk;
             do_rip = true;
         }
         
@@ -63,31 +63,35 @@ namespace Banshee.Base
         }
         
         public int TrackIndex { 
-            get { 
-                return track_index;
-            } 
+            get { return track_index; } 
             
             set { 
                 track_index = value;
                 TrackNumber = (uint)value;
-                uri = new Uri("cdda://" + track_index + "#" + device); 
+                uri = new Uri("cdda://" + track_index + "#" + disk.DeviceNode); 
             } 
         }
         
         public string Device { 
-            get { 
-                return device; 
-            } 
+            get { return disk.DeviceNode; } 
+        }
+        
+        public AudioCdDisk Disk {
+            get { return disk; }
         }
         
         public bool CanRip {
-            get {
-                return do_rip;
-            }
-            
-            set {
-                do_rip = value;
-            }
+            get { return do_rip; }
+            set { do_rip = value; }
+        }
+        
+        public bool IsRipped {
+            get { return is_ripped; }
+            set { is_ripped = value; }
+        }
+        
+        public override bool CanPlay {
+            get { return !disk.IsRipping || (disk.IsRipping && IsRipped); }
         }
     }
 }

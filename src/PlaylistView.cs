@@ -38,6 +38,7 @@ using Pango;
 
 using Banshee.Base;
 using Banshee.Dap;
+using Banshee.Sources;
 
 namespace Banshee
 {
@@ -336,16 +337,16 @@ namespace Banshee
             
             renderer.Foreground = null;
             
+            renderer.Sensitive = true;
+            
             TrackInfo ti = model.IterTrackInfo(iter);
             if(ti == null) {
                 return;
             }
-            
-            if(ti.GetType() != typeof(DapTrackInfo)) 
-                return;
-                
-            if((ti as DapTrackInfo).NeedSync)
-                renderer.Foreground = "blue";
+          
+            if(ti is AudioCdTrackInfo) {
+                renderer.Sensitive = ti.CanPlay; 
+            }
         }
         
         protected void TrackCellInd(TreeViewColumn tree_column,
@@ -356,7 +357,7 @@ namespace Banshee
             
             if(PlayerEngineCore.CurrentTrack == null) {
                 model.PlayingIter = TreeIter.Zero;
-                if(ti != null) {
+                if(ti != null && !(ti is AudioCdTrackInfo)) {
                     renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
                 } else {
                     renderer.Pixbuf = null;
@@ -369,6 +370,8 @@ namespace Banshee
                 if(PlayerEngineCore.CurrentTrack != null && PlayerEngineCore.CurrentTrack.Equals(ti)) {
                     renderer.Pixbuf = nowPlayingPixbuf;
                     model.PlayingIter = iter;
+                } else if(ti is AudioCdTrackInfo) {
+                    renderer.Pixbuf = null;
                 } else {
                     renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
                 }
@@ -382,10 +385,14 @@ namespace Banshee
         {
             CellRendererToggle toggle = (CellRendererToggle)cell;
             AudioCdTrackInfo ti = model.IterTrackInfo(iter) as AudioCdTrackInfo;
-            if (ti != null)
-                toggle.Active = ti.CanRip;
-            else
+ 
+            if(ti != null) {
+                toggle.Sensitive = ti.CanPlay && !ti.IsRipped;
+                toggle.Activatable = toggle.Sensitive;
+                toggle.Active = ti.CanRip && !ti.IsRipped;
+            } else {
                 toggle.Active = false;
+            }
         }
         
         protected void TrackCellTrack(TreeViewColumn tree_column,

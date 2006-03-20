@@ -223,8 +223,13 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args) {
             switch (args.Event) {
                 case PlayerEngineEvent.Iterate:
-                    popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
-                    popup.Position = PlayerEngineCore.Position;
+                    if(PlayerEngineCore.CurrentTrack != null) {
+                        popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+                        popup.Position = PlayerEngineCore.Position;
+                    } else {
+                        popup.Duration = 0;
+                        popup.Position = 0;
+                    }
                     break;
                 case PlayerEngineEvent.StartOfStream:
                     FillPopup();

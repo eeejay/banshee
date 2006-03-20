@@ -1,8 +1,8 @@
 /***************************************************************************
  *  Library.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -202,10 +202,10 @@ namespace Banshee.Base
             }
         }
 
-        private void Remove(Uri trackUri)
+        /*private void Remove(Uri trackUri)
         {
             Remove(TracksFnKeyed[MakeFilenameKey(trackUri)] as LibraryTrackInfo);
-        }
+        }*/
         
         public void Remove(LibraryTrackInfo track)
         {

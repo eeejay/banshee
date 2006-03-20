@@ -79,7 +79,7 @@ namespace Banshee.Base
             //mb_disc.Client.Debug = true;
             
             foreach(SimpleTrack mb_track in mb_disc) {
-                AudioCdTrackInfo track = new AudioCdTrackInfo(device_node);
+                AudioCdTrackInfo track = new AudioCdTrackInfo(this);
                 track.Duration = new TimeSpan(mb_track.Length * TimeSpan.TicksPerSecond);
                 track.TrackIndex = mb_track.Index;
                 track.Artist = Catalog.GetString("Unknown Artist");
@@ -296,6 +296,12 @@ namespace Banshee.Base
         
         public IEnumerable Tracks { 
             get { return tracks; }
+        }
+        
+        private bool is_ripping = false;
+        public bool IsRipping {
+            get { return is_ripping; }
+            set { is_ripping = value; }
         }
     }
 }

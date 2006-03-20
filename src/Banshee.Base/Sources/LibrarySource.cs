@@ -37,7 +37,6 @@ namespace Banshee.Sources
     public class LibrarySource : Source
     {
         private static LibrarySource instance;
-        private bool updating = false;
         public static LibrarySource Instance {
             get {
                 if(instance == null) {
@@ -46,13 +45,6 @@ namespace Banshee.Sources
                 
                 return instance;
             }
-        }
-
-        private bool DelayedUpdateHandler()
-        {
-            OnUpdated();
-            updating = false;
-            return false;
         }
         
         private LibrarySource() : base(Catalog.GetString("Music Library"), 0)

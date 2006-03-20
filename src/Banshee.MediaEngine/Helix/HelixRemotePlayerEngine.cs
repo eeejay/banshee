@@ -104,7 +104,7 @@ namespace Banshee.MediaEngine.Helix
                             break;
                         case ContentState.Loading:
                         case ContentState.Contacting:
-                            OnStateChanged(PlayerEngineState.Buffering);
+                            OnEventChanged(PlayerEngineEvent.Buffering);
                             break;
                         default:
                             OnStateChanged(PlayerEngineState.Idle);

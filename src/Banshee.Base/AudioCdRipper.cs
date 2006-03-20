@@ -150,6 +150,9 @@ namespace Banshee.Base
         
         private void OnTrackFinished(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
         {
+            track.IsRipped = true;
+            track.Uri = outputUri;
+            
             AudioCdRipperTrackFinishedHandler handler = TrackFinished;
             if(handler != null) {
                 AudioCdRipperTrackFinishedArgs args = new AudioCdRipperTrackFinishedArgs();
@@ -272,6 +275,7 @@ namespace Banshee.Base
         private PipelineProfile profile;
         
         public event HaveTrackInfoHandler HaveTrackInfo;
+        public event EventHandler Finished;
         
         private ActiveUserEvent user_event;
         
@@ -378,13 +382,23 @@ namespace Banshee.Base
                 
             ripper.Dispose();
             user_event.Dispose();
+            OnFinished();
         }
         
         private void OnRipperError(object o, EventArgs args)
         {
             ripper.Dispose();
             user_event.Dispose();
+            OnFinished();
             LogCore.Instance.PushError(Catalog.GetString("Cannot Import CD"), ripper.ErrorMessage); 
+        }
+        
+        private void OnFinished()
+        {
+            EventHandler handler = Finished;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
         
         private bool OnTimeout()
@@ -419,6 +433,7 @@ namespace Banshee.Base
             }
             
             user_event.Dispose();
+            OnFinished();
         }
         
         public int QueueSize {

@@ -140,6 +140,13 @@ namespace Banshee.Sources
         
         private void ImportDisk()
         {
+            if(disk.IsRipping) {
+                Console.WriteLine("CD is already ripping");
+                return;
+            }
+            
+            disk.IsRipping = true;
+        
             ArrayList list = new ArrayList();
             
             foreach(AudioCdTrackInfo track in disk.Tracks) {
@@ -150,10 +157,17 @@ namespace Banshee.Sources
             
             if(list.Count > 0) {
                 AudioCdRipper ripper = new AudioCdRipper();
-               // ripper.HaveTrackInfo += OnAudioCdRipperTrackRipped;
+                ripper.Finished += OnRipperFinished;
+                ripper.HaveTrackInfo += OnRipperHaveTrackInfo;
                 foreach(AudioCdTrackInfo track in list) {
                     ripper.QueueTrack(track);
                 }
+                
+                AudioCdTrackInfo playing_track = PlayerEngineCore.CurrentTrack as AudioCdTrackInfo;
+                if(playing_track != null && playing_track.Disk == disk) {
+                    PlayerEngineCore.Close();
+                }
+                
                 ripper.Start();
             } else {
                 HigMessageDialog dialog = new HigMessageDialog(InterfaceElements.MainWindow, DialogFlags.Modal, 
@@ -163,7 +177,19 @@ namespace Banshee.Sources
                 );
                 dialog.Run();
                 dialog.Destroy();
+                disk.IsRipping = false;
             }
+        }
+        
+        private void OnRipperHaveTrackInfo(object o, HaveTrackInfoArgs args)
+        {
+            OnUpdated();
+        }
+        
+        private void OnRipperFinished(object o, EventArgs args)
+        {
+            disk.IsRipping = false;
+            OnUpdated();
         }
         
         private void OnDiskUpdated(object o, EventArgs args)

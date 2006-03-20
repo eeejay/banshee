@@ -159,6 +159,10 @@ namespace Banshee.Base
         
         public static void OpenPlay(TrackInfo track)
         {
+            if(!track.CanPlay) {
+                return;
+            }
+        
             CheckPending();
             active_engine.Open(track);
             active_engine.Play();
@@ -166,8 +170,8 @@ namespace Banshee.Base
         
         public static void Close()
         {
-            active_engine.Close();
             active_engine.Reset();
+            active_engine.Close();
         }
         
         public static void Play()

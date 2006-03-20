@@ -1,3 +1,39 @@
+2006-03-20  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlaylistView.cs: Sensitize/desensitize audio cd rows based on
+	their rip state
+
+	* src/Banshee.Base/AudioCdRipper.cs: Update newly ripped track with
+	its ripped URI so it can be played while the rest of the disk is
+	ripping
+
+	* src/Banshee.Base/Library.cs: Removed unused function
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Do not attempt to play track
+	if it is explicitly marked as being unable to play; reversed order of
+	Reset/Close in Close wrapper
+
+	* src/Banshee.Base/TrackInfo.cs: Mark CanPlay as virtual
+
+	* src/Banshee.Base/TrackInfoHeader.cs (SetIdle): Hide the box
+
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: Added an IsRipping property
+
+	* src/Banshee.Base/AudioCd/AudioCdTrackInfo.cs: Added Disk, IsRipped, and
+	CanPlay properties
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: If current playing track
+	in the engine is from the CD, shut down the engine; set disk.IsRipping
+	accordingly 
+
+	* src/Banshee.Base/Sources/LibrarySource.cs: Removed old cruft 
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Updated
+	to reflect minor changes in the Buffering API in PlayerEngine
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Guard against a potential nullref 
+
 2006-03-19  Aaron Bockover  <aaron@abock.org>
 
 	* entagged-sharp/EncodingInfo.cs: Handle invalid integer durations

@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  TrackInfoHeader.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -133,9 +132,7 @@ namespace Banshee.Widgets
         }
         
         public CoverArtThumbnail Cover {
-            get {
-                return cover;
-            }
+            get { return cover; }
         }
         
         public Gdk.Pixbuf DefaultCover {
@@ -150,13 +147,12 @@ namespace Banshee.Widgets
         }
         
         public VBox VBox {
-            get {
-                return box;
-            }
+            get { return box; }
         }
         
         public void SetIdle()
         {
+            box.Hide();
         }
     }
 }
