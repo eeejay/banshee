@@ -19,6 +19,7 @@ src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
 src/Banshee.Base/Dap/DapPropertiesDialog.cs
+src/Banshee.Base/Gui/OpenLocationDialog.cs
 src/Banshee.Base/FileImportSource.cs
 src/Banshee.Base/FolderImportSource.cs
 src/Banshee.Base/GstTranscoder.cs
@@ -30,6 +31,7 @@ src/Banshee.Base/NetworkDetect.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
 src/Banshee.Base/Plugins/PluginDialog.cs
+src/Banshee.Base/Sources/AudioCdSource.cs
 src/Banshee.Base/Sources/DapSource.cs
 src/Banshee.Base/Sources/LibrarySource.cs
 src/Banshee.Base/Sources/LocalQueueSource.cs
@@ -62,6 +64,7 @@ src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs
 src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/SearchEntry.cs
+src/Banshee.Widgets/StreamPositionLabel.cs
 src/BurnCore.cs
 src/BurnTransaction.cs
 src/Dialogs.cs
