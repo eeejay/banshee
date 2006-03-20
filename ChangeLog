@@ -1,5 +1,28 @@
 2006-03-20  Aaron Bockover  <aaron@abock.org>
 
+	* NEWS: Updated with 0.10.9 release notes
+
+	* configure.ac: Bumped to 0.10.9
+
+	* libbanshee/gst-misc-0.10.c: disabled typefinding with gstreamer 0.10
+	as it's a little buggy; will fall back on gnome vfs for now
+
+	* src/PlayerInterface.cs: Do not switch sources if a source eject fails
+
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs: Do not allow ejecting if
+	we are ripping the CD
+	
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Propagate the return of
+	the disk eject
+
+2006-03-20  Sebastian Dröge  <slomo@ubuntu.com>
+
+	* src/MusicBrainz/Client.cs: Reverted a small part of Michael
+	Hutchinson's proxy patch in GetIDFromUrl() to fix a bug in parsing
+	of Urls which resulted in returning of a invalid result type.
+
+2006-03-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/PlaylistView.cs: Sensitize/desensitize audio cd rows based on
 	their rip state
 

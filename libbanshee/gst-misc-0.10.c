@@ -78,7 +78,7 @@ gst_typefind_type_found_callback(GstElement *typefind, guint probability,
 static gboolean
 gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 {
-    gchar **out = (gchar **)data;
+    gchar **out = data;
 
     switch(GST_MESSAGE_TYPE(message)) {
         case GST_MESSAGE_ERROR:
@@ -95,7 +95,7 @@ gst_typefind_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 gchar *
 gstreamer_detect_mimetype(const gchar *uri)
 {
-    GstElement *pipeline;
+    /*GstElement *pipeline;
     GstElement *source;
     GstElement *typefind;
     GstElement *fakesink;
@@ -130,9 +130,11 @@ gstreamer_detect_mimetype(const gchar *uri)
     gst_element_set_state(pipeline, GST_STATE_NULL);
     gst_object_unref(pipeline);
         
-    if(mimetype == -1) {
+    if(mimetype == (gchar *)-1) {
         mimetype = NULL;
     }
+
+    return mimetype;*/
     
-    return mimetype;
+    return NULL;
 }

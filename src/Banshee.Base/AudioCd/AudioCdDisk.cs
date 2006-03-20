@@ -237,6 +237,12 @@ namespace Banshee.Base
         public bool Eject(bool open)
         {
             try {
+                if(IsRipping) {
+                    LogCore.Instance.PushWarning(Catalog.GetString("Cannot Eject CD"),
+                        Catalog.GetString("The CD cannot be ejected while it is importing. Stop the import first."));
+                    return false;
+                }
+                
                 AudioCdTrackInfo track = PlayerEngineCore.CurrentTrack as AudioCdTrackInfo;
                 if(track != null && track.Device == DeviceNode) {
                     PlayerEngineCore.Close();

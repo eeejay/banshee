@@ -119,7 +119,10 @@ namespace Banshee.Sources
         
         public override bool Eject()
         {
-            disk.Eject();
+            if(!disk.Eject()) {
+                return false;
+            }
+            
             SourceManager.RemoveSource(this);
             return true;
         }

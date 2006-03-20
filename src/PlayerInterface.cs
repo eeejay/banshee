@@ -1694,7 +1694,9 @@ namespace Banshee
                         }
                     }
                     
-                    source.Eject();
+                    if(!source.Eject()) {
+                        return;
+                    }
                     
                     if(source == SourceManager.ActiveSource) {
                         SourceManager.SetActiveSource(LibrarySource.Instance);
@@ -1713,13 +1715,24 @@ namespace Banshee
             try {
                 TrackInfo ti = new LibraryTrackInfo(args.FileName);
                 args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
-            } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
-                Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
-                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             } catch(Exception e) {
-                Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"), 
-                    args.FileName, e.GetType(), e.Message);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
+                
+                switch(Path.GetExtension(args.FileName)) {
+                    case ".m3u":
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".png":
+                    case ".bmp":
+                    case ".gif":
+                        return;
+                }
+                
+                if(e is ApplicationException) {
+                    return;
+                }
+            
+                Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1})"), args.FileName, e.GetType());
             }
         }
         
