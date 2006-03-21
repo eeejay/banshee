@@ -81,10 +81,10 @@ namespace Banshee.Base
                             engine.EventChanged += OnEngineEventChanged;
 
                             if(engine.Id == preferred_id) {
-                                default_engine = engine;
+                                DefaultEngine = engine;
+                            } else {
+                                engines.Add(engine);
                             }
-
-                            engines.Add(engine);
                         } catch(Exception e) {
                             LogCore.Instance.PushError("Could not load a PlayerEngine", e.ToString());
                         }
@@ -147,14 +147,16 @@ namespace Banshee.Base
         
         public static void Open(TrackInfo track)
         {
-            CheckPending();   
-            active_engine.Open(track);
+            if(!track.CanPlay) {
+                return;
+            }
+               
+            OpenCheck(track);
         }
         
         public static void Open(Uri uri)
         {
-            CheckPending();
-            active_engine.Open(uri);
+            OpenCheck(uri);
         }
         
         public static void OpenPlay(TrackInfo track)
@@ -163,9 +165,55 @@ namespace Banshee.Base
                 return;
             }
         
+            try {
+                OpenCheck(track);
+                active_engine.Play();
+            } catch(Exception e) {
+                LogCore.Instance.PushError(Catalog.GetString("Problem with Player Engine"), e.Message);
+                Close();
+                ActiveEngine = default_engine;
+            }
+        }
+        
+        private static void OpenCheck(object o)
+        {
+            Uri uri = null;
+            TrackInfo track = null;
+        
+            if(o is Uri) {
+                uri = o as Uri;
+            } else if(o is TrackInfo) {
+                track = o as TrackInfo;
+                uri = track.Uri;
+            } else {
+                return;
+            }
+            
+            FindSupportingEngine(uri);
             CheckPending();
-            active_engine.Open(track);
-            active_engine.Play();
+            
+            if(track != null) {
+                active_engine.Open(track);
+            } else if(uri != null) {
+                active_engine.Open(uri);
+            }
+        }
+        
+        private static void FindSupportingEngine(Uri uri)
+        {
+            foreach(PlayerEngine engine in engines) {
+                foreach(string scheme in engine.SourceCapabilities) {
+                    bool supported = scheme == uri.Scheme;
+                    if(supported && active_engine != engine) {
+                        Close();
+                        pending_engine = engine;
+                        Console.WriteLine("Switching engine to: " + engine.GetType());
+                        return;
+                    } else if(supported) {
+                        return;
+                    }
+                }
+            }
         }
         
         public static void Close()
@@ -188,7 +236,7 @@ namespace Banshee.Base
         {
             if(pending_engine != null && pending_engine != active_engine) {
                 if(active_engine.CurrentState == PlayerEngineState.Idle) {
-                    active_engine.Close();
+                    Close();
                 }
                 
                 active_engine = pending_engine;
@@ -227,7 +275,16 @@ namespace Banshee.Base
         }
         
         public static uint Length {
-            get { return active_engine.Length; }
+            get { 
+                uint length = active_engine.Length;
+                if(length > 0) {
+                    return length;
+                } else if(active_engine.CurrentTrack == null) {
+                    return 0;
+                }
+                
+                return (uint)active_engine.CurrentTrack.Duration.TotalSeconds;
+            }
         }
     
         public static PlayerEngine ActiveEngine {
@@ -238,6 +295,12 @@ namespace Banshee.Base
         public static PlayerEngine DefaultEngine {
             get { return default_engine; }
             set { 
+                if(engines.Contains(value)) {
+                    engines.Remove(value);
+                }
+                
+                engines.Insert(0, value);
+            
                 default_engine = value;
                 Globals.Configuration.Set(GConfKeys.PlayerEngine, value.Id);
             }

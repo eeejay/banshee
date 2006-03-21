@@ -1,3 +1,20 @@
+2006-03-21  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Prefer the stream length over the metadata
+	length in all situations, provided the stream length is non-zero
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Fixed automatic engine switching
+	based on source type, handle any exceptions thrown by active engine
+	and reset the engine
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs:
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: make SourceCapabilities
+	IEnumerable
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Removed
+	http as a supported source capability as HTTP under Helix is broken
+
 2006-03-20  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-cd-rip-0.10.c: If vorbisenc is chosen as the encoder

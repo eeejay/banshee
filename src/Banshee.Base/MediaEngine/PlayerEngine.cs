@@ -27,6 +27,7 @@
  */
  
 using System;
+using System.Collections;
 using Banshee.Base;
 
 namespace Banshee.MediaEngine
@@ -258,7 +259,7 @@ namespace Banshee.MediaEngine
             get;
         }
         
-        public abstract string [] SourceCapabilities {
+        public abstract IEnumerable SourceCapabilities {
             get;
         }
         

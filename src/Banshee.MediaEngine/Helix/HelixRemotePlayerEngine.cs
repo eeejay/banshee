@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.Collections;
 
 using Helix;
 
@@ -147,8 +148,8 @@ namespace Banshee.MediaEngine.Helix
             get { return "Helix Remote"; }
         }
         
-        private static string [] source_capabilities = { "file", "http" };
-        public override string [] SourceCapabilities {
+        private static string [] source_capabilities = { "file" };
+        public override IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
     }

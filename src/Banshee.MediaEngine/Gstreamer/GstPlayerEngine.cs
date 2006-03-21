@@ -27,6 +27,7 @@
  */
  
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using Mono.Unix;
 
@@ -202,7 +203,7 @@ namespace Banshee.MediaEngine.Gstreamer
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };
-        public override string [] SourceCapabilities {
+        public override IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
         
@@ -374,7 +375,7 @@ namespace Banshee.MediaEngine.Gstreamer
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };
-        public override string [] SourceCapabilities {
+        public override IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
         

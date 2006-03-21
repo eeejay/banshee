@@ -867,22 +867,24 @@ namespace Banshee
 
         private void OnPlayerEngineTick()
         {
+            uint stream_length = PlayerEngineCore.Length;
+            uint stream_position = PlayerEngineCore.Position;
+            
             seek_slider.CanSeek = PlayerEngineCore.CanSeek;
-            seek_slider.SeekValue = PlayerEngineCore.Position;
+            seek_slider.Duration = stream_length;
+            seek_slider.SeekValue = stream_position;
             
             if(PlayerEngineCore.CurrentTrack == null) {
                 return;
             }
-            
-            if(PlayerEngineCore.Length > 0 && PlayerEngineCore.CurrentTrack.Duration.TotalSeconds <= 0.0) {
-                PlayerEngineCore.CurrentTrack.Duration = new TimeSpan(PlayerEngineCore.Length * TimeSpan.TicksPerSecond);
+           
+            if(stream_length > 0 && PlayerEngineCore.CurrentTrack.Duration.TotalSeconds != (double)stream_length) {
+                PlayerEngineCore.CurrentTrack.Duration = new TimeSpan(stream_length * TimeSpan.TicksPerSecond);
                 PlayerEngineCore.CurrentTrack.Save();
                 playlistView.QueueDraw();
-                seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
             }
             
-            if(PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > PlayerEngineCore.Length / 2
-                && !incrementedCurrentSongPlayCount) {
+            if(stream_length > 0 && stream_position > stream_length / 2 && !incrementedCurrentSongPlayCount) {
                 PlayerEngineCore.CurrentTrack.IncrementPlayCount();
                 incrementedCurrentSongPlayCount = true;
                 playlistView.QueueDraw();
