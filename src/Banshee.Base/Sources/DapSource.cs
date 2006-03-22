@@ -103,6 +103,7 @@ namespace Banshee.Sources
                     syncing_label.Markup = "<big><b>" + GLib.Markup.EscapeText(
                         Catalog.GetString("Synchronizing your Device, Please Wait...")) + "</b></big>";
                     syncing_box.PackStart(syncing_label, false, false, 0);
+                    syncing_container.ShowAll ();
                 }
                 
                 dap_syncing_image.Pixbuf = device.GetIcon(128);
