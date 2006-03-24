@@ -1,6 +1,8 @@
 ASSEMBLY_SOURCES = \
 	$(srcdir)/HelixRemotePlayer.cs \
 	$(srcdir)/HelixRemotePlayerEngine.cs
+
+if ENABLE_HELIX
 	
 EXTRA_DIST = \
 	$(ASSEMBLY_SOURCES) \
@@ -8,8 +10,6 @@ EXTRA_DIST = \
 
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
-
-if ENABLE_HELIX
 
 MCS_FLAGS = -debug
 ASSEMBLY_NAME = HelixRemotePlayerEngine
