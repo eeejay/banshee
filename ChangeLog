@@ -1,3 +1,8 @@
+2006-03-27  Fredrik Hedberg  <fredrik@avafan.com>
+
+	* src/Banshee.Base/Globals.cs: 
+	* src/PlayerInterface.cs: Expose MainContainer via InterfaceElements.
+
 2006-03-24  Christian Schaller  <christian@fluendo.com>
 
 	* src/Banshee.MediaEngine/Helix/Makefile.am: small fix to enable

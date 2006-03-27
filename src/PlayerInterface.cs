@@ -385,6 +385,8 @@ namespace Banshee
                 sourceViewDestEntries, 
                 DragAction.Copy | DragAction.Move);
 
+            InterfaceElements.MainContainer = gxml["MainContainer"] as VBox;
+
             // Playlist View
             playlistModel = new PlaylistModel();
             playlistView = new PlaylistView(playlistModel);

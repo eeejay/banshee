@@ -168,6 +168,16 @@ namespace Banshee.Base
                 }
             }
         }
+
+        private static Gtk.Box main_container;
+        public static Gtk.Box MainContainer {
+            get { return main_container; }
+            set {
+                if(main_container == null) {
+                    main_container = value;
+                }
+            }
+        }
 	
         private static Gtk.TreeView playlist_view;
         public static Gtk.TreeView PlaylistView {
