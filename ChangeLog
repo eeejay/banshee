@@ -1,3 +1,7 @@
+2006-03-30  Hendrik Richter  <hendrikr@gnome.org>
+
+	* configure.ac: Added German translation.
+
 2006-03-28  Fredrik Hedberg  <fredrik@avafan.com>
 
 	* data/UIManagerLayout.xml: Added a placeholder for ViewMenu additions.
