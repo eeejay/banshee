@@ -3,6 +3,7 @@
  *
  *  Copyright (C) 2006 Novell, Inc
  *  Written by Aaron Bockover <aaron@abock.org>
+ *             Timo Hoenig <thoenig@suse.de>, <thoenig@nouse.net>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -34,6 +35,32 @@ using DBus;
 
 namespace Helix
 {
+    public static class DBusServiceLauncher
+    {
+        [Interface("org.freedesktop.DBus")]
+        internal abstract class DBusProxy
+        {
+            [Method] public abstract uint StartServiceByName(string name, uint flag);
+        }
+
+        public static bool Launch(string serviceName)
+        {
+            Connection connection = Bus.GetSessionBus();
+            Service service = Service.Get(connection, "org.freedesktop.DBus");
+            DBusProxy proxy = (DBusProxy)service.GetObject(typeof(DBusProxy), "/org/freedesktop/DBus");
+
+            System.GC.SuppressFinalize(proxy);
+
+            uint ret = proxy.StartServiceByName(serviceName, /* flags, ignored by D-BUS */ 0);
+            switch(ret) {
+                 case 1: return true;
+                 case 2: return false;
+                 default: 
+                     throw new ApplicationException(String.Format("Could not activate service: {0}", ret));
+            }
+        }
+    }
+
     [Interface(RemotePlayer.Interface)]
     public abstract class RemotePlayer : IDisposable
     {
@@ -44,43 +71,24 @@ namespace Helix
         public event MessageHandler Message;
         
         private static RemotePlayer instance;
-        private static int activation_attempts = 0;
-
-        // in case the DBus activation fails for some reason,
-        // manually start the server and try up to 15 times
-        // at half-second intervals to connect; defer throwing
-        // the exception upstream until 15 connect failures (7.5 seconds)
         
         public static RemotePlayer Connect()
         {
             if(instance == null) {
-                try {
-                    Service service = Service.Get(Bus.GetSessionBus(), ServiceName);     
-                    service.SignalCalled += OnSignalCalled;   
-                    instance = (RemotePlayer)service.GetObject(typeof(RemotePlayer), ObjectPath);
-                } catch(Exception e) {
-                    if(activation_attempts >= 15) {
-                        throw e;
-                    } else {
-                        ActivateServer();
-                    }
+                if(DBusServiceLauncher.Launch(ServiceName)) {
+                    Console.WriteLine("Started org.gnome.HelixDbusPlayer");
+                } else {
+                    Console.WriteLine("org.gnome.HelixDbusPlayer was already started");
                 }
+
+                Service service = Service.Get(Bus.GetSessionBus(), ServiceName);     
+                service.SignalCalled += OnSignalCalled;   
+                instance = (RemotePlayer)service.GetObject(typeof(RemotePlayer), ObjectPath);
             }
             
             return instance;
         }
-        
-        private static void ActivateServer()
-        {
-            if(activation_attempts++ == 0) {
-                Console.WriteLine("Starting helix-dbus-server...");
-                Process.Start("helix-dbus-server");
-            }
-            
-            System.Threading.Thread.Sleep(500);
-            Connect();
-        }
-        
+
         public void Dispose()
         {
             Dispose(true);
@@ -161,13 +169,13 @@ namespace Helix
     }
     
     public enum ContentState {
-		NotLoaded = 0,
-		Contacting,
-		Loading,
-		Stopped,
-		Playing,
-		Paused
-	};
+        NotLoaded = 0,
+        Contacting,
+        Loading,
+        Stopped,
+        Playing,
+        Paused
+    };
     
     public enum MessageType {
         None = 0,
