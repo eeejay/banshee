@@ -44,8 +44,13 @@ namespace Helix
         public event MessageHandler Message;
         
         private static RemotePlayer instance;
-        private static bool tried_activating = false;
+        private static int activation_attempts = 0;
 
+        // in case the DBus activation fails for some reason,
+        // manually start the server and try up to 15 times
+        // at half-second intervals to connect; defer throwing
+        // the exception upstream until 15 connect failures (7.5 seconds)
+        
         public static RemotePlayer Connect()
         {
             if(instance == null) {
@@ -54,10 +59,9 @@ namespace Helix
                     service.SignalCalled += OnSignalCalled;   
                     instance = (RemotePlayer)service.GetObject(typeof(RemotePlayer), ObjectPath);
                 } catch(Exception e) {
-                    if(tried_activating) {
+                    if(activation_attempts >= 15) {
                         throw e;
                     } else {
-                        tried_activating = true;
                         ActivateServer();
                     }
                 }
@@ -68,9 +72,12 @@ namespace Helix
         
         private static void ActivateServer()
         {
-            Console.WriteLine("Starting helix-dbus-server...");
-            Process.Start("helix-dbus-server");
-            System.Threading.Thread.Sleep(1000);
+            if(activation_attempts++ == 0) {
+                Console.WriteLine("Starting helix-dbus-server...");
+                Process.Start("helix-dbus-server");
+            }
+            
+            System.Threading.Thread.Sleep(500);
             Connect();
         }
         
@@ -150,6 +157,7 @@ namespace Helix
         [Method] public abstract void SetVolume(uint volume);
         [Method] public abstract string GetGroupTitle(uint groupIndex);
         [Method] public abstract void Shutdown();
+        [Method] public abstract void Ping();
     }
     
     public enum ContentState {

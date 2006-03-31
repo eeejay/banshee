@@ -1,3 +1,28 @@
+2006-03-30  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-misc-0.10.c: Fix from Sebastian Dröge for gstreamer
+	typefinding; re-enabled
+
+	* libbanshee/gst-playback-0.10.c: Reset pipeline on an error so we can
+	try again later
+
+	* src/Banshee.Base/PlayerEngineCore.cs: 
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Support explicit switching
+	based on supported decoders
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Explicitly 
+	declare WMA support, as it's impossible for Helix to ever do this
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: if DBus activation
+	fails, manually run helix-dbus-server and try up to 15 times at 
+	half-second intervals to connect to it before giving up (Option B fix 
+	for BNC #161682)
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Ping the
+	server every five seconds; if Banshee does not shut down properly, 
+	the server will shutdown if not pinged within 10 seconds; Added
+	explicit decoder support for AAC and MP3
+
 2006-03-30  Hendrik Richter  <hendrikr@gnome.org>
 
 	* configure.ac: Added German translation.
