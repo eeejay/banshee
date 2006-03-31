@@ -76,9 +76,9 @@ namespace Helix
         {
             if(instance == null) {
                 if(DBusServiceLauncher.Launch(ServiceName)) {
-                    Console.WriteLine("Started org.gnome.HelixDbusPlayer");
+                    Console.WriteLine("Started {0}", ServiceName);
                 } else {
-                    Console.WriteLine("org.gnome.HelixDbusPlayer was already started");
+                    Console.WriteLine("{0} was already started", ServiceName);
                 }
 
                 Service service = Service.Get(Bus.GetSessionBus(), ServiceName);     

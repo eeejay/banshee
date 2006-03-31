@@ -1,5 +1,11 @@
 2006-03-31  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.c: Properly activate
+	the org.gnome.HelixDbusPlayer service using DBus activation through
+	org.freedesktop.DBus.StartServiceByName() (Thanks Timo, fixes #161682)
+
+2006-03-31  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/gst-cd-rip-0.10.c: Add a proper ID3 muxer in to the pipeline
 	if it didn't already exist and one can be found, similar to the 
 	oggmux injection
