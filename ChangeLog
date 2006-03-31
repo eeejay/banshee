@@ -1,3 +1,9 @@
+2006-03-31  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-cd-rip-0.10.c: Add a proper ID3 muxer in to the pipeline
+	if it didn't already exist and one can be found, similar to the 
+	oggmux injection
+
 2006-03-30  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-misc-0.10.c: Fix from Sebastian Dröge for gstreamer
