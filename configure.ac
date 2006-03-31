@@ -348,6 +348,11 @@ expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esa
 		   eval echo $datadir )`
 AC_SUBST(expanded_datadir)
 
+expanded_bindir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
+		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
+		   eval echo $bindir )`
+AC_SUBST(expanded_bindir)
+
 dnl Defines for C Exec Wrapper (${prefix}/bin/banshee)
 
 AC_DEFINE_UNQUOTED([PREFIX], ["${prefix}"], [install prefix])

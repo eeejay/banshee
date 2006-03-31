@@ -1,5 +1,12 @@
 2006-03-31  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Added expanded_bindir
+
+	* data/org.gnome.Banshee.service.in: Prefix Exec path with 
+	@expanded_bindir@ to make DBus activation work
+
+2006-03-31  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.c: Properly activate
 	the org.gnome.HelixDbusPlayer service using DBus activation through
 	org.freedesktop.DBus.StartServiceByName() (Thanks Timo, fixes #161682)
