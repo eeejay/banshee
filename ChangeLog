@@ -1,3 +1,8 @@
+2006-04-01  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Claim explicit
+	support for ASF and FLAC
+
 2006-03-31  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Added expanded_bindir
