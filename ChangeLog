@@ -1,3 +1,9 @@
+2006-04-03  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Remove tooltip from slider (BNC #158403)
+
+	* src/Banshee.Base/GstMisc.cs: check for NULL from the string marshaller
+
 2006-04-01  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Claim explicit
