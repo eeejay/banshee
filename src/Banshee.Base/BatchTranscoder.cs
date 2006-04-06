@@ -46,7 +46,7 @@ namespace Banshee.Base
 
     public class BatchTranscoder
     {
-        private class QueueItem
+        public class QueueItem
         {
             private object source;
             private Uri destination;
@@ -65,6 +65,8 @@ namespace Banshee.Base
                 get { return destination; }
             }
         }
+    
+        private ArrayList error_list = new ArrayList();
     
         private Queue batch_queue = new Queue();
         private QueueItem current = null;
@@ -90,11 +92,6 @@ namespace Banshee.Base
             transcoder.Finished += OnTranscoderFinished;
             
             this.profile = profile;
-            user_event = new ActiveUserEvent(Catalog.GetString("File Transcoder"));
-            user_event.Header = Catalog.GetString("Transcoding Files");
-            user_event.CancelRequested += OnCancelRequested;
-            user_event.Icon = IconThemeUtils.LoadIcon("encode-action-24", 22);
-            user_event.Message = Catalog.GetString("Initializing Transcoder...");
         }
         
         public void AddTrack(TrackInfo track, Uri outputUri)
@@ -109,8 +106,17 @@ namespace Banshee.Base
         
         public void Start()
         {
+            if(user_event == null) {
+                user_event = new ActiveUserEvent(Catalog.GetString("File Transcoder"));
+                user_event.Header = Catalog.GetString("Transcoding Files");
+                user_event.CancelRequested += OnCancelRequested;
+                user_event.Icon = IconThemeUtils.LoadIcon("encode-action-24", 22);
+                user_event.Message = Catalog.GetString("Initializing Transcoder...");
+            }
+            
             total_count = batch_queue.Count;
             finished_count = 0;
+            error_list.Clear();
             TranscodeNext();
         }
         
@@ -140,7 +146,11 @@ namespace Banshee.Base
                 return;
             }
             
-            transcoder.BeginTranscode(input_uri, output_uri, profile);
+            if(Path.GetExtension(input_uri.LocalPath) != "." + profile.Extension) {
+                transcoder.BeginTranscode(input_uri, output_uri, profile);
+            } else {
+                OnTranscoderFinished(this, new EventArgs());
+            }   
         }
         
         private void PostTranscode()
@@ -183,7 +193,7 @@ namespace Banshee.Base
         
         private void OnTranscoderError(object o, EventArgs args)
         {
-            Console.WriteLine("Cannot transcode file: " + transcoder.ErrorMessage);
+            error_list.Add(current);
             PostTranscode();
         }
         
@@ -204,6 +214,8 @@ namespace Banshee.Base
                 transcoder.Cancel();
             }
             
+            error_list.Clear();
+            
             batch_queue.Clear();
             current = null;
             
@@ -213,6 +225,14 @@ namespace Banshee.Base
             if(Canceled != null) {
                 Canceled(this, new EventArgs());
             }
+        }
+        
+        public IEnumerable ErrorList {
+            get { return error_list; }
+        }
+        
+        public int ErrorCount {
+            get { return error_list.Count; }
         }
     }
 }

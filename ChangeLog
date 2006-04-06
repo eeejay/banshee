@@ -1,3 +1,73 @@
+2006-04-06  Aaron Bockover  <aaron@abock.org>
+
+	* src/:
+	* libbanshee/:
+	* data/banshee.glade: merged fixes from BANSHEE_0_10_9_SL branch
+
+2006-04-05  Aaron Bockover  <aaron@abock.org>
+
+	* data/banshee.glade: Fixed packing in ErrorListDialog
+
+2006-04-05  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-playback-0.10.c: do not try to unref playbin if it was
+	never reffed
+
+	* src/PlaylistView.cs: do not show the same file as playing multiple times
+
+	* src/Banshee.Base/Utilities.cs: Updated (C) header
+
+2006-04-05  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-misc-0.10.c: disable gstreamer typefinding (again) (sigh)
+
+2006-04-05  Aaron Bockover  <aaron@abock.org>
+
+	* data/banshee.glade: make horizontal scrolling automatic
+
+	* src/BurnCore.cs: do not try to burn files that don't exist and 
+	do not allow burning if not enough disk space
+
+	* src/Banshee.Base/BatchTranscoder.cs: Move the instantiation of 
+	ActiveUserEvent to Start()
+
+	* src/Banshee.Base/Utilities.cs: Added GetDirectoryAvailableSpace to
+	PathUtil
+
+2006-04-04  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.glade: Added ErrorListDialog
+
+	* libbanshee/gst-transcode-0.10.c: strdup the output URI and and free
+	when necessary
+
+	* src/BurnCore.cs: show an ErrorListDialog for files that cannot be
+	transcoded, giving an option to cancel or continue; various fixes for
+	MP3 and data disk burning
+
+	* src/PlayerInterface.cs: fix to respect the disk type for burning
+
+	* src/Preferences.cs: use only a single gconf key for disk type
+
+	* src/Banshee.Base/BatchTranscoder.cs: do not try to transcode a file
+	if the file type is the requested transcode type
+
+	* src/Banshee.Base/GstTranscoder.cs: Free the input/output URIs
+
+	* src/Banshee.Base/Makefile.am: Added ErrorListDialog.cs
+
+	* src/Banshee.Base/Gui/ErrorListDialog.cs: ErrorListDialog glade 
+	implementation; shows a HIG error dialog with a list view
+
+2006-04-04  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Daap/Daap.dll.config.in: map to libnss_mdns-0.2.so
+
+	* src/Banshee.Plugins/Daap/daap-sharp/Server.cs: handle exception when
+	trying to shutdown the service locator
+
 2006-04-03  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlayerInterface.cs: Remove tooltip from slider (BNC #158403)
