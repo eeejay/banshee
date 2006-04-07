@@ -1,3 +1,8 @@
+2006-04-07  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationArea.cs: Do not
+	crash when the panel crashes
+
 2006-04-06  Aaron Bockover  <aaron@abock.org>
 
 	* src/:
