@@ -45,14 +45,22 @@ AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
-AC_ARG_WITH(gstreamer-0-10, AC_HELP_STRING([--with-gstreamer-0-10], [Build the GStreamer 0.10 backends]), enable_gst_10="yes", enable_gst_10="no")
-AM_CONDITIONAL(ENABLE_GST_10, test "x$enable_gst_10" = "xyes")
-
 AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
 
 if test "x$enable_helix" = "xyes"; then
 	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2)
 fi
+
+GST_VERSION=0.10
+
+AC_ARG_ENABLE(gstreamer, AC_HELP_STRING([--enable-gstreamer], [Enable GStreamer 0.8 or 0.10]), 
+	[case "${enableval}" in
+		yes)  GST_VERSION=0.10 ;;
+		0.8)  GST_VERSION=0.8  ;;
+		0.10) GST_VERSION=0.10 ;;
+		*) AC_MSG_ERROR([Bad value ${enableval} for --enable-gstreamer])
+	esac],
+	[GST_VERSION=0.10])
 
 dnl pkg-config, install programs
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -202,7 +210,7 @@ else
 fi
 
 dnl gstreamer devel deps
-if test "x$enable_gst_10" = "xyes"; then
+if test "x$GST_VERSION" = "x0.10"; then	
 	GSTREAMER_REQUIRED_VERSION=0.10.3
 	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
 	PKG_CHECK_MODULES(GST,
@@ -256,6 +264,8 @@ fi
 
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
+
+AM_CONDITIONAL(ENABLE_GST_10, test "x$GST_VERSION" = "x0.10")
 
 dnl gstreamer plugins
 
@@ -424,16 +434,15 @@ docs/Makefile
 po/Makefile.in
 ])
 
-gst_version="0.8";
-if test "x${enable_gst_10}" = "xyes"; then
-	gst_version="0.10";
-fi;
-
 if test "x${enable_daap}" = "xyes"; then
 	zeroconf_lib=", Avahi"
 	if test "x${enable_mdnsd}" = "xyes"; then
 		zeroconf_lib=", mDNSResponder"
 	fi
+fi
+
+if test "x${GST_VERSION}" = "x0.8"; then
+	GST_DEPRECATED="(DEPRECATED/UNSUPPORTED)"
 fi
 
 echo "
@@ -445,7 +454,7 @@ banshee-$VERSION
     Mono Runtime:      ${MONO}
 
     Engines:
-      GStreamer:       yes, ${gst_version}
+      GStreamer:       yes, ${GST_VERSION} $GST_DEPRECATED
       Helix Remote:    ${enable_helix}
       VLC:             ${enable_vlc}
 
