@@ -1,5 +1,11 @@
 2006-04-09  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Dap/MassStorage/Makefile.am: Enable installation of the
+	USB Generic Mass Storage DAP support; do not expect it to work without
+	the proper HAL FDI updates
+
+2006-04-09  Aaron Bockover  <aaron@abock.org>
+
 	* configure.ac: Removed --with-gstreamer-0-10 in favor of 
 	--enable-gstreamer=[0.10|0.8], the default check is now for 0.10
 

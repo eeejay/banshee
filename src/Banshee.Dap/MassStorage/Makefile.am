@@ -10,10 +10,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/MassStorageDap.cs				\
 	$(srcdir)/MassStorageTrackInfo.cs
 
-#bansheedapdir = $(pkglibdir)/Banshee.Dap
-#bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
-
-noinst_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
+bansheedapdir = $(pkglibdir)/Banshee.Dap
+bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll -r:Mono.Posix -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
