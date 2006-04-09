@@ -76,7 +76,7 @@ namespace Entagged.Audioformats.Mpc.Util {
 			info.SamplingRate = mpcH.SamplingRate;
 			info.EncodingType = mpcH.EncodingType;
 			info.ExtraEncodingInfos = mpcH.EncoderInfo;
-			info.Bitrate = ComputeBitrate( info.Duration.Seconds, raf.Length );
+			info.Bitrate = ComputeBitrate( (int)info.Duration.TotalSeconds, raf.Length );
 
 			return info;
 		}
