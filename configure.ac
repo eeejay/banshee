@@ -363,11 +363,12 @@ AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Libra
 
 dnl Intl
 
-ALL_LINGUAS="bg ca cs da de en_CA en_GB es fi fr it ja lt nb nl pt_BR sv th zh_CN"
+ALL_LINGUAS="`cat "$srcdir/po/LINGUAS" | grep -v '^#'`"
 GETTEXT_PACKAGE=banshee
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
 AM_GLIB_GNU_GETTEXT
+AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
 
 dnl generated files
 AC_OUTPUT([
