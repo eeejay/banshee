@@ -171,7 +171,7 @@ namespace Banshee.Base
         private HandleRef handle;
         private GstTranscoderProgressCallback ProgressCallback;
         private SafeUri input_uri;
-        private Uri output_uri;
+        private SafeUri output_uri;
         private PipelineProfile profile;
         private bool is_transcoding;
         private bool canceled;
