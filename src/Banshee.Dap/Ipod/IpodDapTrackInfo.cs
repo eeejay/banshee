@@ -75,7 +75,7 @@ namespace Banshee.Dap.Ipod
         private void LoadFromIpodSong()
         {
             try {
-                uri = song.Uri;
+                uri = new SafeUri(song.Uri.LocalPath);
             } catch(Exception) { 
                 uri = null;
             }

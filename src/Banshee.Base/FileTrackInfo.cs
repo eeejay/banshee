@@ -38,14 +38,14 @@ namespace Banshee.Base
 {
     public class FileTrackInfo : TrackInfo
     {
-        public FileTrackInfo(Uri uri)
+        public FileTrackInfo(SafeUri uri)
         {
             LoadFromUri(uri);
             PreviousTrack = Gtk.TreeIter.Zero;
             this.uri = uri;
         }
 		
-        private void LoadFromUri(Uri uri)
+        private void LoadFromUri(SafeUri uri)
         {
             ParsePath(uri.LocalPath);
             track_id = 0;
@@ -74,9 +74,12 @@ namespace Banshee.Base
             track_number = 0;
             Match match;
 
-            string fileName = PathUtil.FileUriToPath(PathUtil.PathToFileUri(path));
-            fileName = Path.GetFileNameWithoutExtension(fileName);
-        
+            SafeUri uri = new SafeUri(path);
+            string fileName = path;
+            if(uri.IsLocalPath) {
+                fileName = uri.AbsolutePath;
+            }
+            
             match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
             if(match.Success) {
                 track_number = Convert.ToUInt32(match.Groups[1].ToString());

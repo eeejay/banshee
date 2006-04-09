@@ -32,7 +32,7 @@ namespace Banshee.Base
 {
     public class UnknownTrackInfo : TrackInfo
     {
-        public UnknownTrackInfo(Uri uri) 
+        public UnknownTrackInfo(SafeUri uri) 
         {
             this.uri = uri;
         }

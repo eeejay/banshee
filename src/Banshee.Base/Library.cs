@@ -202,9 +202,9 @@ namespace Banshee.Base
             }
         }
 
-        /*private void Remove(Uri trackUri)
+        /*private void Remove(SafeUri trackSafeUri)
         {
-            Remove(TracksFnKeyed[MakeFilenameKey(trackUri)] as LibraryTrackInfo);
+            Remove(TracksFnKeyed[MakeFilenameKey(trackSafeUri)] as LibraryTrackInfo);
         }*/
         
         public void Remove(LibraryTrackInfo track)
@@ -240,8 +240,8 @@ namespace Banshee.Base
             foreach(object o in tracks) {
                 LibraryTrackInfo track = null;
                 
-                if(o is Uri) {
-                    track = TracksFnKeyed[MakeFilenameKey(o as Uri)] as LibraryTrackInfo;
+                if(o is SafeUri) {
+                    track = TracksFnKeyed[MakeFilenameKey(o as SafeUri)] as LibraryTrackInfo;
                 } else if(o is LibraryTrackInfo) {
                     track = o as LibraryTrackInfo;
                 } 
@@ -281,9 +281,9 @@ namespace Banshee.Base
             remove_queue.Add(track);
         }
         
-        public void QueueRemove(Uri trackUri)
+        public void QueueRemove(SafeUri trackSafeUri)
         {
-            remove_queue.Add(trackUri);
+            remove_queue.Add(trackSafeUri);
         }
         
         public void CommitRemoveQueue()
@@ -297,7 +297,7 @@ namespace Banshee.Base
             return Tracks[id] as LibraryTrackInfo;
         }
         
-        public static string MakeFilenameKey(Uri uri)
+        public static string MakeFilenameKey(SafeUri uri)
         {
             return PathUtil.MakeFileNameKey(uri);
         }

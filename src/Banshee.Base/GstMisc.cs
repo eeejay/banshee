@@ -29,6 +29,7 @@
  
 using System;
 using System.Runtime.InteropServices;
+using Banshee.Base;
 
 namespace Banshee.Gstreamer
 {
@@ -67,7 +68,7 @@ namespace Banshee.Gstreamer
         [System.Runtime.InteropServices.DllImport("libbanshee")]
         private static extern IntPtr gstreamer_detect_mimetype(IntPtr uri);
         
-        public static string DetectMimeType(Uri uri)
+        public static string DetectMimeType(SafeUri uri)
         {
             string mime = null;
             IntPtr file_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);

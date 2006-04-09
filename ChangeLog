@@ -1,5 +1,16 @@
 2006-04-09  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Base/SafeUri.cs: Replacement URI class for System.Uri that
+	uses GLib's g_filename_to_uri and g_filename_from_uri functions; should
+	fixes lots of various URI issues
+
+	* src/*: Anything that referenced a System.Uri has been uprooted to
+	use a Banshee.Base.SafeUri
+
+2006-04-09  Aaron Bockover  <aaron@abock.org>
+
 	* entagged-sharp/Mpc/Util/MpcInfoReader.cs:
 	* src/TrackProperties.cs: Fix 0 KB/Sec bitrate bug (#324353)
 

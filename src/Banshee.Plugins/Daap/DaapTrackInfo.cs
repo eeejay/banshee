@@ -62,7 +62,7 @@ namespace Banshee.Plugins.Daap
         
         private void LoadFromDaapSong()
         {
-            uri = new Uri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, 
+            uri = new SafeUri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, 
                 database.GetHashCode(), song.Id));
             
             album = song.Album == String.Empty ? null : song.Album;

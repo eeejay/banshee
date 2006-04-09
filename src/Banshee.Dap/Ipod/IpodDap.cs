@@ -164,7 +164,7 @@ namespace Banshee.Dap.Ipod
                 if(track.Song == null) {
                     CommitTrackToDevice(track);
                 } else {
-                    track.Song.Uri = track.Uri;
+                    track.Song.Uri = new Uri(track.Uri.AbsoluteUri);
                 }
             }
             
@@ -193,7 +193,7 @@ namespace Banshee.Dap.Ipod
         {
             Song song = device.SongDatabase.CreateSong();
             
-            song.Uri = track.Uri;
+            song.Uri = new Uri(track.Uri.AbsoluteUri);
         
             if(track.Album != null) {
                 song.Album = track.Album;

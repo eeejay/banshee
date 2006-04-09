@@ -147,7 +147,7 @@ namespace Banshee
                         profile.Extension;
                 }
                 
-                transcoder.AddTrack(ti, new Uri(outputFile));
+                transcoder.AddTrack(ti, new SafeUri(outputFile));
                 transcode_count++;
             }
             
@@ -207,8 +207,8 @@ namespace Banshee
                     if(item.Source is TrackInfo) {
                         TrackInfo track = item.Source as TrackInfo;
                         errors.Add(String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle));
-                    } else if(item.Source is Uri) {
-                        errors.Add(Path.GetFileName((item.Source as Uri).LocalPath));
+                    } else if(item.Source is SafeUri) {
+                        errors.Add(Path.GetFileName((item.Source as SafeUri).LocalPath));
                     }
                 }
             }
@@ -238,7 +238,7 @@ namespace Banshee
                     }
                 }
             } else {
-                foreach(Uri uri in burnQueue) {
+                foreach(SafeUri uri in burnQueue) {
                     try {
                         new Gnome.Vfs.FileInfo(uri.AbsoluteUri);
                         imager.AddUri(uri);
@@ -385,7 +385,7 @@ namespace Banshee
                 
                 string burnKeyParent = GConfKeys.CDBurnerRoot + selectedBurnerId + "/";
                 
-                foreach(Uri uri in burnQueue) {
+                foreach(SafeUri uri in burnQueue) {
                     tracks.Add(new BurnRecorderTrack(uri.LocalPath, 
                         diskType == BurnCore.DiskType.Audio ?
                             BurnRecorderTrackType.Audio :
@@ -540,7 +540,7 @@ namespace Banshee
             image_label = imageLabel;
         }
         
-        public void AddUri(System.Uri uri)
+        public void AddUri(SafeUri uri)
         {
             uris.Add(uri);        
         }
@@ -561,7 +561,7 @@ namespace Banshee
             Gnome.Vfs.Result result = Gnome.Vfs.Result.Ok;
             uri_index = 0;
             
-            foreach(Uri uri in uris) {
+            foreach(SafeUri uri in uris) {
                 Gnome.Vfs.Uri source = new Gnome.Vfs.Uri(uri.AbsoluteUri);
                 Gnome.Vfs.Uri target = dest.Clone();
                 target = target.AppendFileName(source.ExtractShortName());

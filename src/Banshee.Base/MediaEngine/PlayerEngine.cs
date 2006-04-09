@@ -72,11 +72,11 @@ namespace Banshee.MediaEngine
         public event PlayerEngineEventHandler EventChanged;
         
         private TrackInfo current_track;
-        private Uri current_uri;
+        private SafeUri current_uri;
         private PlayerEngineState current_state = PlayerEngineState.Idle;
         private PlayerEngineState last_state = PlayerEngineState.Idle;
         
-        protected abstract void OpenUri(Uri uri);
+        protected abstract void OpenUri(SafeUri uri);
         
         public void Reset()
         {
@@ -103,7 +103,7 @@ namespace Banshee.MediaEngine
             HandleOpen(track.Uri);
         }
         
-        public void Open(Uri uri)
+        public void Open(SafeUri uri)
         {
             current_uri = uri;
             current_track = new UnknownTrackInfo(uri);
@@ -111,7 +111,7 @@ namespace Banshee.MediaEngine
             HandleOpen(uri);
         }
 
-        private void HandleOpen(Uri uri)
+        private void HandleOpen(SafeUri uri)
         {
             if(current_state != PlayerEngineState.Idle) {
                 Close();
@@ -229,7 +229,7 @@ namespace Banshee.MediaEngine
             get { return current_track; }
         }
         
-        public Uri CurrentUri {
+        public SafeUri CurrentUri {
             get { return current_uri; }
         }
         

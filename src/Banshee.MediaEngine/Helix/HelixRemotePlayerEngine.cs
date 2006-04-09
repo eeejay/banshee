@@ -66,7 +66,7 @@ namespace Banshee.MediaEngine.Helix
             GLib.Source.Remove(ping_id);
         }
                 
-        protected override void OpenUri(Uri uri)
+        protected override void OpenUri(SafeUri uri)
         {
             if(!player.OpenUri(uri.AbsoluteUri)) {
                 throw new ApplicationException("Cannot open URI");

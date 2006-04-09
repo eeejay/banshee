@@ -36,7 +36,7 @@ namespace Banshee.Dap.MassStorage
 {
     public sealed class MassStorageTrackInfo : FileTrackInfo
     {
-        public MassStorageTrackInfo(Uri uri) : base (uri)
+        public MassStorageTrackInfo(SafeUri uri) : base (uri)
         {
             CanSaveToDatabase = false;
         }

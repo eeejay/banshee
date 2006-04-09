@@ -52,7 +52,7 @@ namespace Banshee.Base
     {
         public AudioCdTrackInfo Track;
         public int TrackNumber;
-        public Uri Uri;
+        public SafeUri Uri;
     }
 
     public class AudioCdTrackRipper : IDisposable
@@ -68,7 +68,7 @@ namespace Banshee.Base
         private GstCdRipperFinishedCallback finished_callback;
         private GstCdRipperErrorCallback error_callback;
         private string error_message;
-        private Uri output_uri;
+        private SafeUri output_uri;
         private int track_number;
 #endif
 
@@ -104,7 +104,7 @@ namespace Banshee.Base
             gst_cd_ripper_free(handle);
         }
         
-        public void RipTrack(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
+        public void RipTrack(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
 #if GSTREAMER_0_10
             error_message = null;
@@ -117,7 +117,7 @@ namespace Banshee.Base
         }
   
 #if GSTREAMER_0_10
-        private void RipTrack_010(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
+        private void RipTrack_010(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
             current_track = track;
             track_number = trackNumber;
@@ -130,7 +130,7 @@ namespace Banshee.Base
             track = null;
         }
 #else        
-        private void RipTrack_08(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
+        private void RipTrack_08(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
             current_track = track;
             
@@ -148,7 +148,7 @@ namespace Banshee.Base
         }
 #endif   
         
-        private void OnTrackFinished(AudioCdTrackInfo track, int trackNumber, Uri outputUri)
+        private void OnTrackFinished(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
             track.IsRipped = true;
             track.Uri = outputUri;
@@ -342,7 +342,7 @@ namespace Banshee.Base
             status = String.Format("{0} - {1}", track.Artist, track.Title);
             user_event.Message = status;
 
-            Uri uri = PathUtil.PathToFileUri(FileNamePattern.BuildFull(track, profile.Extension));
+            SafeUri uri = new SafeUri(FileNamePattern.BuildFull(track, profile.Extension));
 
             ripper.RipTrack(track, track.TrackIndex, uri);
         }

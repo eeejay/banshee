@@ -45,7 +45,7 @@ namespace Banshee.Plugins.FileSystemMonitor
     
         internal InotifyWatch(string watchFolder) : base(watchFolder) 
         {
-            RecurseDirectory(PathUtil.FileUriStringToPath(WatchFolder));
+            RecurseDirectory(WatchFolder);
             Inotify.Verbose = false;
             Inotify.Start();
         }

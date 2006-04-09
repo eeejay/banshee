@@ -124,7 +124,7 @@ namespace Banshee.Dap.MassStorage
         private void HandleImportRequested (object o, ImportEventArgs args)
         {
             try {
-                TrackInfo track = new MassStorageTrackInfo (new Uri (args.FileName));
+                TrackInfo track = new MassStorageTrackInfo (new SafeUri (args.FileName));
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
 
                 AddTrack (track);
@@ -173,7 +173,7 @@ namespace Banshee.Dap.MassStorage
             Directory.CreateDirectory (Path.GetDirectoryName (new_path));
             File.Copy (track.Uri.LocalPath, new_path);
 
-            return new MassStorageTrackInfo (new Uri (new_path));
+            return new MassStorageTrackInfo (new SafeUri (new_path));
         }
         
         protected override void OnTrackRemoved(TrackInfo track)

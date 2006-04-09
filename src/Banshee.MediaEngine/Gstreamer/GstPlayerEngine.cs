@@ -94,7 +94,7 @@ namespace Banshee.MediaEngine.Gstreamer
             base.Close();
         }
         
-        protected override void OpenUri(Uri uri)
+        protected override void OpenUri(SafeUri uri)
         {
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
             gst_playback_open(handle, uri_ptr);
@@ -313,7 +313,7 @@ namespace Banshee.MediaEngine.Gstreamer
             gpe_free(handle);
         }
             
-        protected override void OpenUri(Uri uri)
+        protected override void OpenUri(SafeUri uri)
         {
             gpe_open(handle, uri.AbsoluteUri);
         }

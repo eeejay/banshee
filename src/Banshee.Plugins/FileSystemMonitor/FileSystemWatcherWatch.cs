@@ -43,7 +43,7 @@ namespace Banshee.Plugins.FileSystemMonitor
         internal FileSystemWatcherWatch(string watchFolder) : base(watchFolder)
         {
             watch_map = new Hashtable();
-            RecurseDirectory(PathUtil.FileUriStringToPath(WatchFolder));
+            RecurseDirectory(WatchFolder);
         }
                 
         internal override bool IsWatching(string path)

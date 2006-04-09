@@ -98,7 +98,7 @@ namespace Banshee.Base
             gst_transcoder_free(handle);
         }
         
-        public override void BeginTranscode(Uri inputUri, Uri outputUri, PipelineProfile profile)
+        public override void BeginTranscode(SafeUri inputUri, SafeUri outputUri, PipelineProfile profile)
         {
             if(IsTranscoding) {
                 throw new ApplicationException("Transcoder is busy");
@@ -170,7 +170,7 @@ namespace Banshee.Base
         
         private HandleRef handle;
         private GstTranscoderProgressCallback ProgressCallback;
-        private Uri input_uri;
+        private SafeUri input_uri;
         private Uri output_uri;
         private PipelineProfile profile;
         private bool is_transcoding;
@@ -194,7 +194,7 @@ namespace Banshee.Base
             gst_transcoder_free(handle);
         }
         
-        public override void BeginTranscode(Uri inputUri, Uri outputUri, PipelineProfile profile)
+        public override void BeginTranscode(SafeUri inputUri, SafeUri outputUri, PipelineProfile profile)
         {
             if(IsTranscoding) {
                 throw new ApplicationException("Transcoder is busy");

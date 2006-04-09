@@ -54,13 +54,19 @@ namespace Banshee.Sources
         {
             foreach(string file in Globals.ArgumentQueue.Files) {
                 try {
-                    Uri uri = file.StartsWith("file://") ? new Uri(file) : PathUtil.PathToFileUri(file);
-                    if(!System.IO.File.Exists(uri.LocalPath)) {
-                        uri = PathUtil.PathToFileUri(System.Environment.CurrentDirectory + 
+                    SafeUri uri;
+                    try {
+                        uri = new SafeUri(file);
+                    } catch(ApplicationException) {
+                        uri = new SafeUri(System.Environment.CurrentDirectory + 
                             System.IO.Path.DirectorySeparatorChar + file);
                     }
                     
-                    tracks.Add(new FileTrackInfo(uri));
+                    if(System.IO.File.Exists(uri.LocalPath)) {
+                        tracks.Add(new FileTrackInfo(uri));   
+                    } else {
+                        throw new ApplicationException(uri.LocalPath);
+                    }
                 } catch(Exception e) {
                     Console.WriteLine("Could not load: {0}", e.Message);
                 }

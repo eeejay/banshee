@@ -40,8 +40,8 @@ namespace Banshee.Base
     public class FileCompleteArgs : EventArgs
     {
         public TrackInfo Track;
-        public Uri InputUri;
-        public Uri EncodedFileUri;
+        public SafeUri InputUri;
+        public SafeUri EncodedFileUri;
     }
 
     public class BatchTranscoder
@@ -49,9 +49,9 @@ namespace Banshee.Base
         public class QueueItem
         {
             private object source;
-            private Uri destination;
+            private SafeUri destination;
             
-            public QueueItem(object source, Uri destination)
+            public QueueItem(object source, SafeUri destination)
             {
                 this.source = source;
                 this.destination = destination;
@@ -61,7 +61,7 @@ namespace Banshee.Base
                 get { return source; }
             }
             
-            public Uri Destination {
+            public SafeUri Destination {
                 get { return destination; }
             }
         }
@@ -94,12 +94,12 @@ namespace Banshee.Base
             this.profile = profile;
         }
         
-        public void AddTrack(TrackInfo track, Uri outputUri)
+        public void AddTrack(TrackInfo track, SafeUri outputUri)
         {
             batch_queue.Enqueue(new QueueItem(track, outputUri));
         }
         
-        public void AddTrack(Uri inputUri, Uri outputUri)
+        public void AddTrack(SafeUri inputUri, SafeUri outputUri)
         {
             batch_queue.Enqueue(new QueueItem(inputUri, outputUri));
         }
@@ -128,15 +128,15 @@ namespace Banshee.Base
                 return;
             }
             
-            Uri output_uri = current.Destination;
-            Uri input_uri = null;
+            SafeUri output_uri = current.Destination;
+            SafeUri input_uri = null;
             
             if(current.Source is TrackInfo) {
                 TrackInfo track = current.Source as TrackInfo;
                 user_event.Message = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle);
                 input_uri = track.Uri;
-            } else if(current.Source is Uri) {
-                input_uri = current.Source as Uri;
+            } else if(current.Source is SafeUri) {
+                input_uri = current.Source as SafeUri;
                 user_event.Message = Path.GetFileName(input_uri.LocalPath);
             } else {
                 return;
@@ -181,8 +181,8 @@ namespace Banshee.Base
                 if(current.Source is TrackInfo) {
                     cargs.Track = current.Source as TrackInfo;
                     cargs.InputUri = cargs.Track.Uri;
-                } else if(current.Source is Uri) {
-                    cargs.InputUri = (current.Source as Uri);
+                } else if(current.Source is SafeUri) {
+                    cargs.InputUri = (current.Source as SafeUri);
                 }
                 
                 handler(this, cargs);

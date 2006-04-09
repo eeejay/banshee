@@ -44,7 +44,7 @@ namespace Banshee
         public string Album;
         public string Title;
         public string Genre;
-        public Uri Uri;
+        public SafeUri Uri;
     
         public uint TrackNumber;
         public uint TrackCount;

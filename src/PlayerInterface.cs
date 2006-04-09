@@ -1884,7 +1884,7 @@ namespace Banshee
             }
             
             try {
-                PlayerEngineCore.Open(new Uri(address));
+                PlayerEngineCore.Open(new SafeUri(address));
                 PlayerEngineCore.Play();
             } catch(Exception) {
             }   

@@ -334,42 +334,7 @@ namespace Banshee.Base
     
     public static class PathUtil
     {
-        private static char[] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#', '%' };
-       
-        public static Uri PathToFileUri(string path)
-        {
-            path = Path.GetFullPath(path);
-            
-            StringBuilder builder = new StringBuilder();
-            builder.Append(Uri.UriSchemeFile);
-            builder.Append(Uri.SchemeDelimiter);
-            
-            int i;
-            while((i = path.IndexOfAny(CharsToQuote)) != -1) {
-                if(i > 0) {
-                    builder.Append(path.Substring(0, i));
-                }
-                
-                builder.Append(Uri.HexEscape(path[i]));
-                path = path.Substring(i + 1);
-            }
-            
-            builder.Append(path);
-            
-            return new Uri(builder.ToString(), true);
-        }
-        
-        public static string FileUriStringToPath(string uri)
-        {
-            return FileUriToPath(new Uri(uri));
-        }
-        
-        public static string FileUriToPath(Uri uri)
-        {
-            return uri.LocalPath;
-        }
-        
-        public static string MakeFileNameKey(Uri uri)
+        public static string MakeFileNameKey(SafeUri uri)
         {
             string path = uri.LocalPath;
             return Path.GetDirectoryName(path) + 

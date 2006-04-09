@@ -52,7 +52,7 @@ namespace Banshee.MediaEngine.Vlc
             player.Dispose();
         }
                 
-        protected override void OpenUri(Uri uri)
+        protected override void OpenUri(SafeUri uri)
         {
             player.Open(uri.AbsoluteUri);
 

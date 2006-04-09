@@ -68,7 +68,7 @@ namespace Banshee.Base
             set { 
                 track_index = value;
                 TrackNumber = (uint)value;
-                uri = new Uri("cdda://" + track_index + "#" + disk.DeviceNode); 
+                uri = new SafeUri("cdda://" + track_index + "#" + disk.DeviceNode); 
             } 
         }
         

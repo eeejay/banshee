@@ -1,10 +1,9 @@
-
 /***************************************************************************
  *  UriList.cs
  *
- *  Copyright (C) 2002, 2005 Novell
- *  Written by Miguel de Icaza (miguel@ximian.com)
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2002, 2005, 2006 Novell, Inc.
+ *  Written by Miguel de Icaza <miguel@ximian.com>
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -41,12 +40,12 @@ namespace Banshee.Base
         {    
             // FIXME this is so lame do real chacking at some point
             foreach(string str in uris) {
-                Uri uri;
+                SafeUri uri;
 
                 if(File.Exists(str) || Directory.Exists(str)) {
                     uri = PathToFileUri(str);
                 } else {
-                    uri = new Uri(str);
+                    uri = new SafeUri(str);
                 }
                 
                 Add(uri);
@@ -73,7 +72,7 @@ namespace Banshee.Base
                     continue;
                 }
                 
-                Uri uri;
+                SafeUri uri;
                 string s = item;
 
                 if(item.EndsWith("\r")) {
@@ -81,7 +80,7 @@ namespace Banshee.Base
                 }
 
                 try {
-                    uri = new Uri(s);
+                    uri = new SafeUri(s);
                 } catch {
                     continue;
                 }
@@ -90,37 +89,16 @@ namespace Banshee.Base
             }
         }
 
-        static char [] CharsToQuote = { ';', '?', ':', '@', '&', '=', '$', ',', '#' };
-
-        public static Uri PathToFileUri (string path)
+        public static SafeUri PathToFileUri(string path)
         {
-            path = Path.GetFullPath(path);
-
-            StringBuilder builder = new StringBuilder();
-            builder.Append(Uri.UriSchemeFile);
-            builder.Append(Uri.SchemeDelimiter);
-
-            int i;
-            
-            while((i = path.IndexOfAny(CharsToQuote)) != -1) {
-                if(i > 0) {
-                    builder.Append(path.Substring(0, i));
-                }
-                
-                builder.Append(Uri.HexEscape(path[i]));
-                path = path.Substring(i + 1);
-            }
-            
-            builder.Append(path);
-
-            return new Uri(builder.ToString(), true);
+            return new SafeUri(Path.GetFullPath(path));
         }
         
         public override string ToString() 
         {
             StringBuilder list = new StringBuilder();
 
-            foreach(Uri uri in this) {
+            foreach(SafeUri uri in this) {
                 if(uri == null) {
                     break;
                 }
@@ -135,7 +113,7 @@ namespace Banshee.Base
             get {
                 int count = 0;
                 
-                foreach(Uri uri in this) {
+                foreach(SafeUri uri in this) {
                     if(uri.IsFile) {
                         count++;
                     }
@@ -144,7 +122,7 @@ namespace Banshee.Base
                 string [] paths = new string[count];
                 count = 0;
                 
-                foreach(Uri uri in this) {
+                foreach(SafeUri uri in this) {
                     if(uri.IsFile) {
                         paths[count++] = uri.LocalPath;
                     }

@@ -40,7 +40,7 @@ namespace Banshee.Base
 {
     public class LibraryTrackInfo : TrackInfo
     {
-        public static int GetId(Uri lookup)
+        public static int GetId(SafeUri lookup)
         {
             string query = String.Format(@"
                 SELECT TrackID
@@ -63,7 +63,7 @@ namespace Banshee.Base
             CanSaveToDatabase = true;
         }
     
-        private void CheckIfExists(Uri uri)
+        private void CheckIfExists(SafeUri uri)
         {
               bool exists = false;
               try {
@@ -81,7 +81,7 @@ namespace Banshee.Base
 
         private void CheckIfExists(string filename)
         {
-            CheckIfExists(PathUtil.PathToFileUri (filename));
+            CheckIfExists(new SafeUri(filename));
         }
 
         private string MoveToPlace(string old_filename, bool initial_import)
@@ -156,7 +156,7 @@ namespace Banshee.Base
             return null;
         }
 
-        public LibraryTrackInfo(Uri uri, string artist, string album, 
+        public LibraryTrackInfo(SafeUri uri, string artist, string album, 
            string title, string genre, uint track_number, uint track_count,
            int year, TimeSpan duration, string asin, RemoteLookupStatus remote_lookup_status)
         {
@@ -186,7 +186,7 @@ namespace Banshee.Base
             PreviousTrack = Gtk.TreeIter.Zero;
         }
         
-        public LibraryTrackInfo(Uri uri, AudioCdTrackInfo track) : this(
+        public LibraryTrackInfo(SafeUri uri, AudioCdTrackInfo track) : this(
             uri, track.Artist, track.Album, track.Title, track.Genre,
             track.TrackNumber, track.TrackCount, track.Year, track.Duration, 
             track.Asin, track.RemoteLookupStatus)
@@ -195,13 +195,12 @@ namespace Banshee.Base
     
         public LibraryTrackInfo(string filename) : this()
         {
-            Uri old_uri = PathUtil.PathToFileUri (filename);
-
-            CheckIfExists(old_uri);
-            if(!LoadFromDatabase(old_uri)) {
+            uri = new SafeUri(filename);
+            CheckIfExists(uri);
+            if(!LoadFromDatabase(uri)) {
                 LoadFromFile(filename);
                 string new_filename = MoveToPlace(filename, true);
-                uri = PathUtil.PathToFileUri (new_filename != null ? new_filename : filename);
+                uri = new SafeUri(new_filename != null ? new_filename : filename);
                 CheckIfExists(uri);
                 SaveToDatabase(true);
             }
@@ -226,7 +225,12 @@ namespace Banshee.Base
             track_number = 0;
             Match match;
 
-            string fileName = PathUtil.FileUriToPath(PathUtil.PathToFileUri(path));
+            SafeUri uri = new SafeUri(path);
+            string fileName = path;
+            if(uri.IsLocalPath) {
+                fileName = uri.AbsolutePath;
+            }
+            
             fileName = Path.GetFileNameWithoutExtension(fileName);
         
             match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
@@ -381,7 +385,7 @@ namespace Banshee.Base
         {
             track_id = Convert.ToInt32(reader["TrackID"]);
 
-            uri = new Uri(reader["Uri"] as string);
+            uri = new SafeUri(reader["Uri"] as string, true);
             mimetype = reader["MimeType"] as string;
             
             album = reader["AlbumTitle"] as string;
@@ -431,7 +435,7 @@ namespace Banshee.Base
             ParseUri(filename);
             track_id = 0;
    
-            AudioFile af = new AudioFile(filename, Banshee.Gstreamer.Utilities.DetectMimeType(PathUtil.PathToFileUri(filename)));
+            AudioFile af = new AudioFile(filename, Banshee.Gstreamer.Utilities.DetectMimeType(uri));
 
             mimetype = af.MimeType;
 
@@ -450,9 +454,9 @@ namespace Banshee.Base
         public override void Save()
         {
             try {
-                string new_filename = MoveToPlace (uri.LocalPath, false);
+                string new_filename = MoveToPlace (uri.AbsolutePath, false);
                 if (new_filename != null) {
-                    this.uri = PathUtil.PathToFileUri (new_filename);
+                    this.uri = new SafeUri(new_filename);
                 }
             } catch {}
             

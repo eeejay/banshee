@@ -154,7 +154,7 @@ namespace Banshee.Base
             OpenCheck(track);
         }
         
-        public static void Open(Uri uri)
+        public static void Open(SafeUri uri)
         {
             OpenCheck(uri);
         }
@@ -177,11 +177,11 @@ namespace Banshee.Base
         
         private static void OpenCheck(object o)
         {
-            Uri uri = null;
+            SafeUri uri = null;
             TrackInfo track = null;
         
-            if(o is Uri) {
-                uri = o as Uri;
+            if(o is SafeUri) {
+                uri = o as SafeUri;
             } else if(o is TrackInfo) {
                 track = o as TrackInfo;
                 uri = track.Uri;
@@ -199,7 +199,7 @@ namespace Banshee.Base
             }
         }
         
-        private static void FindSupportingEngine(Uri uri)
+        private static void FindSupportingEngine(SafeUri uri)
         {
             foreach(PlayerEngine engine in engines) {
                 foreach(string extension in engine.ExplicitDecoderCapabilities) {
@@ -261,7 +261,7 @@ namespace Banshee.Base
             get { return active_engine.CurrentTrack; }
         }
         
-        public static Uri CurrentUri {
+        public static SafeUri CurrentSafeUri {
             get { return active_engine.CurrentUri; }
         }
         

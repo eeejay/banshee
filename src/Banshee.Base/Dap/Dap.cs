@@ -383,7 +383,7 @@ namespace Banshee.Dap
                         continue;
                     }
 
-                    Uri old_uri = track.Uri;
+                    SafeUri old_uri = track.Uri;
                     track.Uri = ConvertSongFileName(track.Uri, profile.Extension);
                     
                     if(encoder == null) {
@@ -396,7 +396,7 @@ namespace Banshee.Dap
                     encoder.AddTrack(old_uri, track.Uri);
                 } else {
                     if(System.IO.File.Exists(cached_filename)) {
-                        track.Uri = PathUtil.PathToFileUri(cached_filename);
+                        track.Uri = new SafeUri(cached_filename);
                     } else {
                         remove_queue.Enqueue(track);
                     }
@@ -480,7 +480,7 @@ namespace Banshee.Dap
             return false;
         }
         
-        private string GetCachedSongFileName(Uri uri)
+        private string GetCachedSongFileName(SafeUri uri)
         {
             string filename = uri.LocalPath;
         
@@ -511,7 +511,7 @@ namespace Banshee.Dap
             return null;
         }
         
-        private Uri ConvertSongFileName(Uri uri, string newext)
+        private SafeUri ConvertSongFileName(SafeUri uri, string newext)
         {
             string filename = uri.LocalPath;
             
@@ -519,7 +519,7 @@ namespace Banshee.Dap
             string dir = Path.GetDirectoryName(path);
             string file = Path.GetFileNameWithoutExtension(filename);
             
-            return PathUtil.PathToFileUri(dir + Path.DirectorySeparatorChar 
+            return new SafeUri(dir + Path.DirectorySeparatorChar 
                 + ".banshee-dap-" + file + "." + newext);
         }
          

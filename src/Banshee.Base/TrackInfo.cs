@@ -49,7 +49,7 @@ namespace Banshee.Base
     
     public abstract class TrackInfo
     {
-        protected Uri uri;
+        protected SafeUri uri;
         protected string mimetype;
         protected string artist;
         protected string album;
@@ -124,7 +124,7 @@ namespace Banshee.Base
             }
         }
 
-        public Uri Uri { 
+        public SafeUri Uri { 
             get { 
                 return uri;
             }
@@ -167,7 +167,7 @@ namespace Banshee.Base
                     return path;
                 }
                
-                string basepath = Path.GetDirectoryName(Uri.LocalPath) + Path.DirectorySeparatorChar;
+                string basepath = Path.GetDirectoryName(Uri.AbsolutePath) + Path.DirectorySeparatorChar;
                
                 path = basepath + Asin + ".01._SCLZZZZZZZ_.jpg";
                 if(File.Exists(path)) { 
