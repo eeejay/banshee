@@ -1,3 +1,10 @@
+2006-04-10  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Call model.RemoveTrack instead of model.Remove 
+	
+	* src/PlaylistModel.cs (RemoveTrack): If the removed iter is the playing
+	iter, set the playing iter to zero (BGO #324768)
+
 2006-04-09  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Dap/MassStorage/Makefile.am: Enable installation of the
