@@ -1,21 +1,25 @@
-# translation of Banshee to Spanish
+# translation of es.po to Spanish
+# translation of banshee.HEAD.po to español
+# Spanish translation of es
+# translation of es.po to
 # Copyright © 2002-2003 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Banshee package.
+# This file is distributed under the same license as the rhythmbox package.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
+# Maria Majadas <maria.majadas@hispalinux.es>, 2005.
 # maria <maria.majadas@hispalinux.es>, 2005, 2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-11 12:59+0200\n"
-"PO-Revision-Date: 2006-04-11 13:04+0200\n"
+"POT-Creation-Date: 2006-04-08 00:37+0200\n"
+"PO-Revision-Date: 2006-04-12 14:34+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
-"Language-Team:  <traductores@es.gnome.org>\n"
+"Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.9.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #. Footer
@@ -91,7 +95,7 @@ msgstr "<small>Fonoteca</small>"
 
 #: ../data/banshee.glade.h:16
 msgid "Albu_m"
-msgstr "_Álbum"
+msgstr "Á_lbum"
 
 #: ../data/banshee.glade.h:17 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:92
 msgid "Audio CD"
@@ -115,8 +119,7 @@ msgstr "Elija una fuente para importar:"
 
 #: ../data/banshee.glade.h:23
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr ""
-"Copiar archivos a la carpeta de música de Banshee al importar a la fonoteca"
+msgstr "Copiar archivos a la carpeta de música de Banshee al importar a la fonoteca"
 
 #: ../data/banshee.glade.h:24
 msgid "Data CD"
@@ -284,8 +287,7 @@ msgstr "_Título"
 
 #: ../data/banshee.schemas.in.h:1
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr ""
-"Copia y renombra música al directorio de la fonoteca de Banshee al importar"
+msgstr "Copia y renombra música al directorio de la fonoteca de Banshee al importar"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy music on import"
@@ -302,7 +304,7 @@ msgid ""
 msgstr ""
 "El soporte de teclas especiales (Teclas multimedia) para Reproducir/Pausa/"
 "Siguiente/Anterior activado; funcionando con el conjunto de mapas a través "
-"de capplet de Combinaciones de telcas de Gnome"
+"de capplet de Combinaciones de teclas de Gnome"
 
 #: ../data/banshee.schemas.in.h:5
 msgid "File Name Pattern"
@@ -332,10 +334,9 @@ msgid "Move music on info save"
 msgstr "Mueve la música al guardar la información"
 
 #: ../data/banshee.schemas.in.h:10
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
-"Mueve la música dentro del directorio de la fonoteca de banshee cuando se "
+"Mueve la música dentro del directorio de la fonoteca de Banshee cuando se "
 "guarda la información de una canción"
 
 #: ../data/banshee.schemas.in.h:11
@@ -374,8 +375,7 @@ msgstr "Ancho de la vista de la fuente"
 
 #: ../data/banshee.schemas.in.h:19
 msgid "True if main window is to be maximized, false if it is not."
-msgstr ""
-"Verdadero si la ventana principal se va a maximizar, falso si no lo está."
+msgstr "Verdadero si la ventana principal se va a maximizar, falso si no lo está."
 
 #: ../data/banshee.schemas.in.h:20
 msgid ""
@@ -536,8 +536,7 @@ msgstr ""
 "volver al sumidero alsa"
 
 #: ../libbanshee/gst-playback-0.8.c:102
-msgid ""
-"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
+msgid "Could not load an output sink from GStreamer/GConf, falling back on alsasink"
 msgstr ""
 "No se pudo cargar un sumidero de salida desde GStreamer/GConf, volviendo al "
 "sumidero alsa"
@@ -902,8 +901,7 @@ msgstr "Repetir todo"
 
 #: ../src/Banshee.Base/ActionManager.cs:231
 msgid "Play all songs before repeating playlist"
-msgstr ""
-"Reproducir todas las canciones antes de repetir la lista de reproducción"
+msgstr "Reproducir todas las canciones antes de repetir la lista de reproducción"
 
 #: ../src/Banshee.Base/ActionManager.cs:234 ../src/ToggleStates.cs:50
 msgid "Repeat Single"
@@ -1264,10 +1262,9 @@ msgid "Searching for CD cover art..."
 msgstr "Buscando arte de portada del CD..."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:91
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr ""
-"No pueden buscar los metadatos del CD metadata: no hay disponible ninguna "
+"No pueden buscar los metadatos del CD: no hay disponible ninguna "
 "conexión a Internet"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:97
@@ -1310,7 +1307,7 @@ msgid "Cannot Rename Playlist"
 msgstr "No se puede renombrar la lista de reproducción"
 
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:118
-msgid "A playlist with this name already exists. Please choose another name."
+msgid "A playlist with this name already exists. Please choose another name"
 msgstr ""
 "Ya existe una lista de reproducción con ese nombre. Por favor elija otro "
 "nombre."
@@ -1402,11 +1399,11 @@ msgstr ""
 "dese cuenta de que cualquier lista de reproducción que tenga en su iPod se "
 "perderá.\n"
 "\n"
-"¿Está seguro que quiere recontruir la base de datos de su iPod?"
+"¿Está seguro que quiere reconstruir la base de datos de su iPod?"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild Database"
-msgstr "Recontruir base de datos"
+msgstr "Reconstruir base de datos"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
 msgid "Rebuilding iPod Database..."
@@ -1506,8 +1503,7 @@ msgid "Configure..."
 msgstr "Configurar..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
-msgid ""
-"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
 msgstr ""
 "Permitir al motor enviar los datos de canciones a last.fm en el complemento "
 "de Audioscrobbler"
@@ -1546,7 +1542,7 @@ msgstr "Entrar en una compartición de música"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
 msgid "Authentication Required"
-msgstr "Autentificación requerida"
+msgstr "Autenticación requerida"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
 msgid "Username:"
@@ -1562,8 +1558,7 @@ msgstr "Iniciar sesión"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
-msgstr ""
-"Permitir a otros examinar y escuchar su música desde otros clientes DAAP"
+msgstr "Permitir a otros examinar y escuchar su música desde otros clientes DAAP"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
 msgid "Enable DAAP Server support"
@@ -1617,7 +1612,7 @@ msgstr ""
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
 msgid "Rescan Library"
-msgstr "Reinspeccionando fonoteca"
+msgstr "Reinspeccionar fonoteca"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
 msgid "Warning"
@@ -1681,7 +1676,7 @@ msgstr "Icono del área de notificación"
 msgid "Shows the Notification Area Icon"
 msgstr "Muestra el icono del área de notificación"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
+#: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaiconschemas.in.h:1
 msgid "Enable the Notification Area Icon plugin"
 msgstr "Activar el complemento del icono del área de notificación"
 
@@ -1711,7 +1706,7 @@ msgstr "Espacio de disco insuficiente"
 #: ../src/BurnCore.cs:83
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr ""
+msgstr "Crear este CD requiere al menos {0} MiB de espacio libre en el disco."
 
 #: ../src/BurnCore.cs:119
 msgid "Could Not Write CD"
@@ -1719,7 +1714,9 @@ msgstr "No se pudo grabar el CD"
 
 #: ../src/BurnCore.cs:120
 msgid "No suitable encoder could be found to convert selected songs."
-msgstr "No se pudo encontrar ningún apropiado para convertir las canciones seleccionadas."
+msgstr ""
+"No se pudo encontrar ningún codificador apropiado para convertir "
+"las canciones seleccionadas."
 
 #: ../src/BurnCore.cs:138 ../src/BurnCore.cs:236 ../src/BurnCore.cs:246
 #, csharp-format
@@ -1732,23 +1729,23 @@ msgstr "Problema al crear el CD"
 
 #: ../src/BurnCore.cs:159
 msgid "None of the songs selected for this CD could be found."
-msgstr ""
+msgstr "No se pudo encontrar ninguna de las canciones seleccionadas para este CD."
 
 #: ../src/BurnCore.cs:199
 msgid ""
 "None of the songs selected for this CD could be converted to the format "
 "required for an audio CD."
-msgstr ""
+msgstr "Ninguna de las canciones seleccionadas para este CD se pueden convertir al formato requerido para un audio CD."
 
 #: ../src/BurnCore.cs:270
 msgid ""
 "Some songs could either not be found or could not be converted to the format "
 "required for an audio CD."
-msgstr ""
+msgstr "Algunas canciones o no se pudieron encontrar o no se pudieron convertir  al formato requerido para un CD de audio."
 
 #: ../src/BurnCore.cs:272
 msgid "Continue Anyway"
-msgstr ""
+msgstr "Continuar de todos modos"
 
 #: ../src/BurnCore.cs:293
 msgid "Error Creating CD Image"
@@ -1825,20 +1822,20 @@ msgstr "Introduzca un CD virgen para el proceso de grabación."
 
 #: ../src/BurnCore.cs:551
 msgid "Creating Image"
-msgstr ""
+msgstr "Crear imagen"
 
 #: ../src/BurnCore.cs:552
 msgid "Transferring songs"
-msgstr "Transferiendo canciones"
+msgstr "Transfiriendo canciones"
 
 #: ../src/BurnCore.cs:570
 #, csharp-format
 msgid "Transferring song {0}"
-msgstr "Transferiendo canción {0}"
+msgstr "Transfiriendo canción {0}"
 
 #: ../src/BurnCore.cs:582
 msgid "Could not transfer files to create disk image."
-msgstr ""
+msgstr "No se pudieron transferir los archivos para crear la imagen de disco."
 
 #: ../src/BurnCore.cs:609
 msgid "Could not transfer file to disk layout."
@@ -2000,7 +1997,7 @@ msgstr "Pausar"
 
 #: ../src/PlayerInterface.cs:859
 msgid "Playback Error"
-msgstr "Error de repoducción"
+msgstr "Error de reproducción"
 
 #: ../src/PlayerInterface.cs:1045
 msgid "Import"
@@ -2050,7 +2047,7 @@ msgstr "No se puede importar: {0} ({1})"
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
-"<i><b>and</b></i> your drive? This action will permanently delete the file."
+"<i><b>and</b></i> your drive? This action will permanently delete the file"
 msgid_plural ""
 "Are you sure you want to remove the selected <b>({0})</b> songs from your "
 "library <i><b>and</b></i> your drive? This action will permanently delete "
@@ -2270,3 +2267,4 @@ msgstr "Nombre del ensamblaje"
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "Versión"
+
