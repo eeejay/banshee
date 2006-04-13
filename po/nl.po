@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-11 14:15+0200\n"
-"PO-Revision-Date: 2006-03-27 23:53+0200\n"
+"PO-Revision-Date: 2006-04-13 12:00+0200\n"
 "Last-Translator: Pepijn van de Geer <pvandegeer@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "<b>Geavanceerde eigenschappen</b>"
 
 #: ../data/banshee.glade.h:3
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Lokatie Banshee muziekmap</b>"
+msgstr "<b>Locatie Banshee muziekmap</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>CD Burning</b>"
@@ -68,7 +68,7 @@ msgstr "<big><b>Eigenschappen aanpassen</b></big>"
 
 #: ../data/banshee.glade.h:10
 msgid "<big><b>Import Music to Library</b></big>"
-msgstr "<big><b>Muziek importeren in bibliotheek<b/><big>"
+msgstr "<big><b>Muziek importeren in bibliotheek</b></big>"
 
 #: ../data/banshee.glade.h:11
 msgid "<small><i><Unknown></i></small>"
@@ -612,7 +612,7 @@ msgstr "Verkrijgen apparaatlijst van HAL mislukt"
 
 #: ../src/AboutBox.cs:134
 msgid "Music Management and Playback for Gnome."
-msgstr "Muziekbeheer en afspelen onder Gnome"
+msgstr "Muziek beheren en afspelen onder Gnome"
 
 #: ../src/AboutBox.cs:136
 msgid ""
@@ -1899,15 +1899,15 @@ msgstr "Alles"
 
 #: ../src/PlayerInterface.cs:428 ../src/PlayerInterface.cs:1281
 msgid "Song Name"
-msgstr "Naam nummer"
+msgstr "Nummertitel"
 
 #: ../src/PlayerInterface.cs:429 ../src/PlayerInterface.cs:1279
 msgid "Artist Name"
-msgstr "Naam artiest"
+msgstr "Artiestnaam"
 
 #: ../src/PlayerInterface.cs:430 ../src/PlayerInterface.cs:1283
 msgid "Album Title"
-msgstr "Titel album"
+msgstr "Albumtitel"
 
 #: ../src/PlayerInterface.cs:431 ../src/PlayerInterface.cs:1285
 #: ../src/PlaylistView.cs:97
@@ -2025,7 +2025,7 @@ msgstr "Uitwerpen mislukt"
 #: ../src/PlayerInterface.cs:1738
 #, csharp-format
 msgid "Cannot Import: {0} ({1})"
-msgstr "Kan {0} niet importeren: {1}"
+msgstr "Importeren mislukt: {0} ({1})"
 
 #: ../src/PlayerInterface.cs:1780
 #, csharp-format
