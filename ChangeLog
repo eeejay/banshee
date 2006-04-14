@@ -1,5 +1,10 @@
 2006-04-14  Aaron Bockover  <aaron@abock.org>
 
+	* rc/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Hide to the tray on CTRL+W (Ruben Vermeersch, BGO #338259)
+
+2006-04-14  Aaron Bockover  <aaron@abock.org>
+
 	* src/PlayerInterface.cs: Correctly update the statusbar when searching by
 	calling ClearModel on playlist view (Ruben Vermeersch, BGO #336006)
 

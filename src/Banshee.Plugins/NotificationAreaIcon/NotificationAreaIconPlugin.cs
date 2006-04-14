@@ -101,6 +101,10 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
         }
 
+        protected override void InterfaceInitialize() {
+            InterfaceElements.MainWindow.KeyPressEvent += OnKeyPressEvent;
+        }
+
         private void Init() {
             notif_area = new NotificationArea(Catalog.GetString("Banshee"));
             notif_area.DestroyEvent += OnDestroyEvent;
@@ -119,6 +123,20 @@ namespace Banshee.Plugins.NotificationAreaIcon {
 
         private void OnDestroyEvent(object o, DestroyEventArgs args) {
             Init();
+        }
+
+        [GLib.ConnectBefore]
+        private void OnKeyPressEvent(object o, KeyPressEventArgs args)
+        {
+            bool handled = false;
+            
+	    if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+		    handled = true;
+                    InterfaceElements.MainWindow.Visible = !InterfaceElements.MainWindow.Visible;
+                    ResizeMoveWindow();
+	    }
+            
+            args.RetVal = handled;
         }
 
         private void OnNotificationAreaIconClick(object o, ButtonPressEventArgs args) {
