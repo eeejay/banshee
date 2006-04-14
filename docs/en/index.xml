@@ -5,8 +5,8 @@
     <Assembly Name="Banshee.Widgets" Version="0.0.0.0" />
     <Assembly Name="MusicBrainz" Version="0.0.0.0" />
   </Assemblies>
-  <Remarks>To be added.</Remarks>
-  <Copyright>To be added.</Copyright>
+  <Remarks>Monodoc-generated API documentation for APIs available in the Banshee Music Player (http://banshee-project.org)</Remarks>
+  <Copyright>Copyright &copy; 2005-2006 Novell, Inc.</Copyright>
   <Types>
     <Namespace Name="Hal">
       <Type Name="DBusError" />
@@ -257,5 +257,5 @@
       <Type Name="GstTaggerTagFoundCallback" />
     </Namespace>
   </Types>
-  <Title>Untitled</Title>
+  <Title>Banshee API Documentation</Title>
 </Overview>
