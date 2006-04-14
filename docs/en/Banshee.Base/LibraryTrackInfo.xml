@@ -19,20 +19,6 @@
       </Docs>
     </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Uri uri, Banshee.Base.AudioCdTrackInfo track);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="uri" Type="System.Uri" />
-        <Parameter Name="track" Type="Banshee.Base.AudioCdTrackInfo" />
-      </Parameters>
-      <Docs>
-        <param name="uri">To be added.</param>
-        <param name="track">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public LibraryTrackInfo (string filename);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
@@ -56,27 +42,11 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="GetId">
-      <MemberSignature Language="C#" Value="public static int GetId (Uri lookup);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="lookup" Type="System.Uri" />
-      </Parameters>
-      <Docs>
-        <param name="lookup">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Uri uri, string artist, string album, string title, string genre, uint track_number, uint track_count, int year, TimeSpan duration, string asin, Banshee.Base.RemoteLookupStatus remote_lookup_status);" />
+      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Banshee.Base.SafeUri uri, string artist, string album, string title, string genre, uint track_number, uint track_count, int year, TimeSpan duration, string asin, Banshee.Base.RemoteLookupStatus remote_lookup_status);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="uri" Type="System.Uri" />
+        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
         <Parameter Name="artist" Type="System.String" />
         <Parameter Name="album" Type="System.String" />
         <Parameter Name="title" Type="System.String" />
@@ -101,6 +71,36 @@
         <param name="asin">To be added.</param>
         <param name="remote_lookup_status">To be added.</param>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public LibraryTrackInfo (Banshee.Base.SafeUri uri, Banshee.Base.AudioCdTrackInfo track);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
+        <Parameter Name="track" Type="Banshee.Base.AudioCdTrackInfo" />
+      </Parameters>
+      <Docs>
+        <param name="uri">To be added.</param>
+        <param name="track">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetId">
+      <MemberSignature Language="C#" Value="public static int GetId (Banshee.Base.SafeUri lookup);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="lookup" Type="Banshee.Base.SafeUri" />
+      </Parameters>
+      <Docs>
+        <param name="lookup">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

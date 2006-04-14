@@ -30,15 +30,13 @@
       <Type Name="PropertyType" />
     </Namespace>
     <Namespace Name="Banshee.MediaEngine">
-      <Type Name="IPlayerEngine" />
-      <Type Name="PlayerEngineErrorArgs" />
-      <Type Name="PlayerEngineVolumeChangedArgs" />
-      <Type Name="PlayerEngineIterateArgs" />
-      <Type Name="PlayerEngineSlot" />
-      <Type Name="PlayerEngineLoader" />
-      <Type Name="PlayerEngineErrorHandler" />
-      <Type Name="PlayerEngineVolumeChangedHandler" />
-      <Type Name="PlayerEngineIterateHandler" />
+      <Type Name="PlayerEngineStateArgs" />
+      <Type Name="PlayerEngineEventArgs" />
+      <Type Name="PlayerEngine" />
+      <Type Name="PlayerEngineStateHandler" />
+      <Type Name="PlayerEngineEventHandler" />
+      <Type Name="PlayerEngineState" />
+      <Type Name="PlayerEngineEvent" />
     </Namespace>
     <Namespace Name="Banshee.Base">
       <Type Name="HalCore" />
@@ -79,7 +77,6 @@
       <Type Name="LogEntryType" />
       <Type Name="SpecialKey" />
       <Type Name="IconThemeUtils" />
-      <Type Name="Gstreamer" />
       <Type Name="ImportEventArgs" />
       <Type Name="ImportManager" />
       <Type Name="UriList" />
@@ -87,13 +84,6 @@
       <Type Name="PipelineProfileException" />
       <Type Name="PipelineProfile" />
       <Type Name="PipelineProfileSelector" />
-      <Type Name="FileEncoderProgressArgs" />
-      <Type Name="FileEncoder" />
-      <Type Name="GstFileEncoder" />
-      <Type Name="FileEncodeCompleteArgs" />
-      <Type Name="FileEncodeAction" />
-      <Type Name="FileEncoderProgressHandler" />
-      <Type Name="FileEncodeCompleteHandler" />
       <Type Name="ActionManager" />
       <Type Name="NetworkStateChangedArgs" />
       <Type Name="NetworkDetect" />
@@ -114,12 +104,33 @@
       <Type Name="LibraryTrackRemovedHandler" />
       <Type Name="InterfaceElements" />
       <Type Name="BansheeDatabase" />
+      <Type Name="IImportSource" />
+      <Type Name="TranscoderProgressArgs" />
+      <Type Name="Transcoder" />
+      <Type Name="GstTranscoder" />
+      <Type Name="FileCompleteArgs" />
+      <Type Name="BatchTranscoder" />
+      <Type Name="BatchTranscoder+QueueItem" />
+      <Type Name="AudioCdRipperProgressArgs" />
+      <Type Name="AudioCdRipperTrackFinishedArgs" />
+      <Type Name="AudioCdTrackRipper" />
+      <Type Name="AudioCdRipper" />
+      <Type Name="ImportSources" />
+      <Type Name="FolderImportSource" />
+      <Type Name="FileImportSource" />
+      <Type Name="HomeDirectoryImportSource" />
+      <Type Name="UnknownTrackInfo" />
+      <Type Name="StreamTag" />
+      <Type Name="StreamTagger" />
+      <Type Name="CommonTags" />
+      <Type Name="SafeUri" />
+      <Type Name="TranscoderProgressHandler" />
+      <Type Name="FileCompleteHandler" />
+      <Type Name="AudioCdRipperProgressHandler" />
+      <Type Name="AudioCdRipperTrackFinishedHandler" />
     </Namespace>
     <Namespace Name="Banshee.Dap">
       <Type Name="DapProperties" />
-      <Type Name="BrokenDeviceException" />
-      <Type Name="CannotHandleDeviceException" />
-      <Type Name="WaitForPropertyChangeException" />
       <Type Name="DapTrackListUpdatedArgs" />
       <Type Name="DapDevice" />
       <Type Name="DapDevice+PropertyTable" />
@@ -132,8 +143,8 @@
       <Type Name="CodecType" />
       <Type Name="SupportedCodec" />
       <Type Name="DapDevice+Property" />
-      <Type Name="WaitForTimeoutException" />
       <Type Name="DapPropertiesDialog" />
+      <Type Name="InitializeResult" />
     </Namespace>
     <Namespace Name="Banshee.Widgets">
       <Type Name="CoverArtThumbnail" />
@@ -161,6 +172,11 @@
       <Type Name="PropertyTable" />
       <Type Name="RadialProgress" />
       <Type Name="LinearProgress" />
+      <Type Name="MessagePane" />
+      <Type Name="LinkLabel" />
+      <Type Name="DrawingUtilities" />
+      <Type Name="SeekSlider" />
+      <Type Name="StreamPositionLabel" />
     </Namespace>
     <Namespace Name="NetworkManager">
       <Type Name="Manager" />
@@ -205,7 +221,6 @@
       <Type Name="SimpleArtist" />
       <Type Name="SimpleAlbum" />
       <Type Name="SimpleTrack" />
-      <Type Name="SimpleQuery" />
       <Type Name="Utilities" />
     </Namespace>
     <Namespace Name="Banshee.Sources">
@@ -227,6 +242,19 @@
     </Namespace>
     <Namespace Name="Banshee.Database">
       <Type Name="QueuedSqliteDatabase" />
+    </Namespace>
+    <Namespace Name="Banshee.Gui">
+      <Type Name="GladeDialog" />
+      <Type Name="ImportDialog" />
+      <Type Name="OpenLocationDialog" />
+      <Type Name="UIManager" />
+      <Type Name="SeekDialog" />
+      <Type Name="ErrorListDialog" />
+    </Namespace>
+    <Namespace Name="Banshee.Gstreamer">
+      <Type Name="Utilities" />
+      <Type Name="GstTagger" />
+      <Type Name="GstTaggerTagFoundCallback" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

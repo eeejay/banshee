@@ -24,6 +24,21 @@ doc_DATA = \
 update-docs: $(ASSEMBLIES)
 	$(DOC_UPDATER) $(ASSEMBLIES_BUILD) -path:en
 
+update-cvs:
+	cd en/; \
+	for i in `find . | grep \.remove$$`; do \
+		name=`echo $$i | sed -e 's/.remove//g'`; \
+		cvs remove $$name && rm $$i; \
+	done; \
+	for i in `find .`; do \
+		if [ -d $$i ]; then \
+			if [ ! "x`basename $$i`" = "xCVS" ]; then \
+				cvs add $$i/*.xml; \
+			fi \
+		fi \
+	done; \
+	cd ..;
+
 banshee-docs.zip banshee-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 

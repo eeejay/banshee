@@ -138,10 +138,10 @@
       </Docs>
     </Member>
     <Member MemberName="Tracks">
-      <MemberSignature Language="C#" Value="public Banshee.Base.AudioCdTrackInfo[] Tracks { get; };" />
+      <MemberSignature Language="C#" Value="public System.Collections.IEnumerable Tracks { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>Banshee.Base.AudioCdTrackInfo[]</ReturnType>
+        <ReturnType>System.Collections.IEnumerable</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -166,6 +166,18 @@
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>Banshee.Base.AudioCdLookupStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsRipping">
+      <MemberSignature Language="C#" Value="public bool IsRipping { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

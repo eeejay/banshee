@@ -96,22 +96,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="MakeFilenameKey">
-      <MemberSignature Language="C#" Value="public static string MakeFilenameKey (Uri uri);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="uri" Type="System.Uri" />
-      </Parameters>
-      <Docs>
-        <param name="uri">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="Location">
       <MemberSignature Language="C#" Value="public string Location { get; };" />
       <MemberType>Property</MemberType>
@@ -248,18 +232,47 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
+    <Member MemberName="GetGenreList">
+      <MemberSignature Language="C#" Value="public System.Collections.IEnumerable GetGenreList ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerable</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
     <Member MemberName="QueueRemove">
-      <MemberSignature Language="C#" Value="public void QueueRemove (Uri trackUri);" />
+      <MemberSignature Language="C#" Value="public void QueueRemove (Banshee.Base.SafeUri trackSafeUri);" />
       <MemberType>Method</MemberType>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="trackUri" Type="System.Uri" />
+        <Parameter Name="trackSafeUri" Type="Banshee.Base.SafeUri" />
       </Parameters>
       <Docs>
-        <param name="trackUri">To be added.</param>
+        <param name="trackSafeUri">To be added.</param>
         <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MakeFilenameKey">
+      <MemberSignature Language="C#" Value="public static string MakeFilenameKey (Banshee.Base.SafeUri uri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
+      </Parameters>
+      <Docs>
+        <param name="uri">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

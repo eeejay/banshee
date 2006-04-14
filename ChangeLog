@@ -1,3 +1,10 @@
+2006-04-14  Aaron Bockover  <aaron@abock.org>
+
+	* docs/Makefile.am: added update-cvs section with a script to manage 
+	XML removes/adds from/to CVS
+	
+	* docs/*: Updated monodoc documentation (finally)
+
 2006-04-14  Sebastian Dröge  <slomo@ubuntu.com>
 
 	* src/MusicBrainz/Client.cs (GetID): Check for null/handle any exception

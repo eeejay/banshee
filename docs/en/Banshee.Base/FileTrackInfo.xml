@@ -10,10 +10,10 @@
   <Interfaces />
   <Members>
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public FileTrackInfo (Uri uri);" />
+      <MemberSignature Language="C#" Value="public FileTrackInfo (Banshee.Base.SafeUri uri);" />
       <MemberType>Constructor</MemberType>
       <Parameters>
-        <Parameter Name="uri" Type="System.Uri" />
+        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
       </Parameters>
       <Docs>
         <param name="uri">To be added.</param>

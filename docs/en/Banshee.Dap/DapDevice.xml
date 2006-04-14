@@ -87,18 +87,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="InvokePropertiesChanged">
-      <MemberSignature Language="C#" Value="protected void InvokePropertiesChanged ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="InstallProperty">
       <MemberSignature Language="C#" Value="protected void InstallProperty (string name, string value);" />
       <MemberType>Method</MemberType>
@@ -408,18 +396,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Initialize">
-      <MemberSignature Language="C#" Value="protected void Initialize ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="OnTrackAdded">
       <MemberSignature Language="C#" Value="protected virtual Banshee.Base.TrackInfo OnTrackAdded (Banshee.Base.TrackInfo track);" />
       <MemberType>Method</MemberType>
@@ -667,6 +643,81 @@
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Reactivate">
+      <MemberSignature Language="C#" Value="public event EventHandler Reactivate;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue>
+        <ReturnType>System.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Initialize">
+      <MemberSignature Language="C#" Value="public virtual Banshee.Dap.InitializeResult Initialize (Hal.Device halDevice);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Dap.InitializeResult</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="halDevice" Type="Hal.Device" />
+      </Parameters>
+      <Docs>
+        <param name="halDevice">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnPropertiesChanged">
+      <MemberSignature Language="C#" Value="protected void OnPropertiesChanged ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnReactivate">
+      <MemberSignature Language="C#" Value="protected void OnReactivate ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CanSynchronize">
+      <MemberSignature Language="C#" Value="public virtual bool CanSynchronize { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ViewWidget">
+      <MemberSignature Language="C#" Value="public virtual Gtk.Widget ViewWidget { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>Gtk.Widget</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

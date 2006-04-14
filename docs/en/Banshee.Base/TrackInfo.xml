@@ -19,10 +19,10 @@
       </Docs>
     </Member>
     <Member MemberName="uri">
-      <MemberSignature Language="C#" Value="protected Uri uri;" />
+      <MemberSignature Language="C#" Value="protected Banshee.Base.SafeUri uri;" />
       <MemberType>Field</MemberType>
       <ReturnValue>
-        <ReturnType>System.Uri</ReturnType>
+        <ReturnType>Banshee.Base.SafeUri</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -377,10 +377,10 @@
       </Docs>
     </Member>
     <Member MemberName="Uri">
-      <MemberSignature Language="C#" Value="public Uri Uri { set; get; };" />
+      <MemberSignature Language="C#" Value="public Banshee.Base.SafeUri Uri { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
-        <ReturnType>System.Uri</ReturnType>
+        <ReturnType>Banshee.Base.SafeUri</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>
@@ -712,7 +712,7 @@
       </Docs>
     </Member>
     <Member MemberName="CanPlay">
-      <MemberSignature Language="C#" Value="public bool CanPlay { protected set; get; };" />
+      <MemberSignature Language="C#" Value="public virtual bool CanPlay { protected set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
@@ -739,6 +739,18 @@
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>Banshee.Base.RemoteLookupStatus</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackNumberTitle">
+      <MemberSignature Language="C#" Value="public string TrackNumberTitle { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>To be added.</summary>

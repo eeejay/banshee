@@ -45,22 +45,6 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="PathToFileUri">
-      <MemberSignature Language="C#" Value="public static Uri PathToFileUri (string path);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Uri</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="path" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="LocalPaths">
       <MemberSignature Language="C#" Value="public string[] LocalPaths { get; };" />
       <MemberType>Property</MemberType>
@@ -70,6 +54,22 @@
       <Docs>
         <summary>To be added.</summary>
         <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PathToFileUri">
+      <MemberSignature Language="C#" Value="public static Banshee.Base.SafeUri PathToFileUri (string path);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.SafeUri</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="path" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="path">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>

@@ -9,18 +9,6 @@
   </Base>
   <Interfaces />
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AudioCdTrackInfo (string device);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="device" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="device">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
     <Member MemberName="TrackIndex">
       <MemberSignature Language="C#" Value="public int TrackIndex { set; get; };" />
       <MemberType>Property</MemberType>
@@ -47,6 +35,42 @@
     </Member>
     <Member MemberName="CanRip">
       <MemberSignature Language="C#" Value="public bool CanRip { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public AudioCdTrackInfo (Banshee.Base.AudioCdDisk disk);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="disk" Type="Banshee.Base.AudioCdDisk" />
+      </Parameters>
+      <Docs>
+        <param name="disk">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Disk">
+      <MemberSignature Language="C#" Value="public Banshee.Base.AudioCdDisk Disk { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue>
+        <ReturnType>Banshee.Base.AudioCdDisk</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsRipped">
+      <MemberSignature Language="C#" Value="public bool IsRipped { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue>
         <ReturnType>System.Boolean</ReturnType>
