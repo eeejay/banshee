@@ -1,5 +1,9 @@
 2006-04-14  Aaron Bockover  <aaron@abock.org>
 
+	* docs/Makefile.am: Added update-html and upload-html rules
+
+2006-04-14  Aaron Bockover  <aaron@abock.org>
+
 	* docs/Makefile.am: added update-cvs section with a script to manage 
 	XML removes/adds from/to CVS
 	

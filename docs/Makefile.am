@@ -39,6 +39,17 @@ update-cvs:
 	done; \
 	cd ..;
 
+update-html:
+	if [ -d banshee ]; then \
+		rm -rf banshee; \
+	fi; \
+	mkdir banshee; \
+	monodocs2html --source en --dest banshee; 
+
+upload-html:
+	scp -r banshee banshee@banshee-project.org:/home/banshee/public_html/files/documentation/;
+	rm -rf banshee
+
 banshee-docs.zip banshee-docs.tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
