@@ -1,3 +1,13 @@
+2006-04-14  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Correctly update the statusbar when searching by
+	calling ClearModel on playlist view (Ruben Vermeersch, BGO #336006)
+
+	* src/PlaylistView.cs: Show zeros as empty strings instead of ugly 
+	zeros (Thijs Vermeir, BGO #337962)
+
+	* docs/en/Banshee.Base/ActionManager.xml: Updated
+
 2006-04-10  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlayerInterface.cs: Call model.RemoveTrack instead of model.Remove 

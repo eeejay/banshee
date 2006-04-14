@@ -1316,7 +1316,7 @@ namespace Banshee
                 return;
             }
             
-            playlistModel.Clear();
+            playlistModel.ClearModel();
             
             if(!searchEntry.IsQueryAvailable) {
                 playlistModel.ReloadSource();

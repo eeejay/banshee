@@ -239,7 +239,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>ActionManager provides access to all actions and main menu items in Banshee. Plugins can use this class to merge menu items and activate core actions.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Type>

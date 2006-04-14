@@ -408,9 +408,9 @@ namespace Banshee
             TrackInfo ti = model.IterTrackInfo(iter);
             if(ti == null) {
                 return;
-            }
-            
-            SetRendererAttributes((CellRendererText)cell, Convert.ToString(ti.TrackNumber), iter);
+            }            
+            SetRendererAttributes((CellRendererText)cell,
+			    ti.TrackNumber > 0 ? Convert.ToString(ti.TrackNumber) : String.Empty, iter);
         }    
         
         protected void TrackCellArtist(TreeViewColumn tree_column,
@@ -479,7 +479,7 @@ namespace Banshee
             }
             
             uint plays = ti.PlayCount;
-            SetRendererAttributes((CellRendererText)cell, plays > 0 ? Convert.ToString(plays) : "", iter);
+            SetRendererAttributes((CellRendererText)cell, plays > 0 ? Convert.ToString(plays) : String.Empty, iter);
         }
         
         protected void TrackCellRating(TreeViewColumn tree_column,
