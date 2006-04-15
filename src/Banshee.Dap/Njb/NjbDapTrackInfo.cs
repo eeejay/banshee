@@ -74,7 +74,7 @@ namespace Banshee.Dap.Njb
         
         private void LoadFromNjbSong(DapDevice dap)
         {
-            uri = new Uri(String.Format("dap://{0}/{1}", dap.Uid, song.Id));
+            uri = new SafeUri(String.Format("dap://{0}/{1}", dap.Uid, song.Id));
             album = song.Album == String.Empty ? null : song.Album;
             artist = song.Artist == String.Empty ? null : song.Artist;
             title = song.Title == String.Empty ? null : song.Title;

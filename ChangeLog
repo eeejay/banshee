@@ -1,5 +1,14 @@
 2006-04-14  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Make description of --enable-gstreamer more informative
+
+	* src/DragDrop.cs: Check data length before trying to convert to string
+	and catch any exceptions in the conversion (BGO #333946)
+
+	* src/Banshee.Dap/Njb/NjbDapTrackInfo.cs: Use SafeUri 
+
+2006-04-14  Aaron Bockover  <aaron@abock.org>
+
 	* docs/en/index.html: Added title/remarks and copyright information
 
 2006-04-14  Aaron Bockover  <aaron@abock.org>

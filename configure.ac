@@ -53,7 +53,7 @@ fi
 
 GST_VERSION=0.10
 
-AC_ARG_ENABLE(gstreamer, AC_HELP_STRING([--enable-gstreamer], [Enable GStreamer 0.8 or 0.10]), 
+AC_ARG_ENABLE(gstreamer, AC_HELP_STRING([--enable-gstreamer=0.10|0.8], [Enable GStreamer 0.8 or 0.10]), 
 	[case "${enableval}" in
 		yes)  GST_VERSION=0.10 ;;
 		0.8)  GST_VERSION=0.8  ;;
