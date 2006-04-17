@@ -34,8 +34,10 @@ using Entagged.Audioformats.Mp4.Util;
 namespace Entagged.Audioformats.Mp4
 {
     [SupportedMimeType ("audio/x-m4a")]
+    [SupportedMimeType ("audio/mp4")]
+	[SupportedMimeType ("audio/m4a")]
     [SupportedMimeType ("entagged/m4a")]
-    [SupportedMimeType ("entagged/m4p")]    
+    [SupportedMimeType ("entagged/m4p")]
     public class Mp4FileReader : AudioFileReader
     {
         private Mp4TagReader tr = new Mp4TagReader();
