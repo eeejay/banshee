@@ -1,0 +1,84 @@
+/***************************************************************************
+ *  SystemIO.cs
+ *
+ *  Copyright (C) 2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+
+using System;
+using System.IO;
+using System.Collections;
+
+using Banshee.Base;
+
+namespace Banshee.IO.SystemIO
+{
+    public class IOConfig : IIOConfig
+    {
+        public string Name           { get { return "systemio";        } }
+        public Type FileBackend      { get { return typeof(File);      } }
+        public Type DirectoryBackend { get { return typeof(Directory); } }
+    }
+
+    public class File : IFile
+    {
+        public bool Exists(string path)
+        {
+            return System.IO.File.Exists(path);
+        }
+    }
+
+    public class Directory : IDirectory
+    {
+        public void Create(string directory)
+        {
+            System.IO.Directory.CreateDirectory(directory);
+        }
+        
+        public void Delete(string directory)
+        {
+            Delete(directory, false);
+        }
+        
+        public void Delete(string directory, bool recursive)
+        {
+            System.IO.Directory.Delete(directory, recursive);
+        }
+        
+        public bool Exists(string directory)
+        {
+            return System.IO.Directory.Exists(directory);
+        }
+        
+        public IEnumerable GetFiles(string directory)
+        {
+            return System.IO.Directory.GetFiles(directory);
+        }
+        
+        public IEnumerable GetDirectories(string directory)
+        {
+            return System.IO.Directory.GetDirectories(directory);
+        }
+    }
+}

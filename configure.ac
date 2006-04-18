@@ -84,6 +84,7 @@ MONODIR=`$PKG_CONFIG --variable=exec_prefix mono`
 MONOBIN="$MONODIR/bin"
 MONO="$MONOBIN/mono"
 MCS="$MONOBIN/mcs"
+GMCS="$MONOBIN/gmcs"
 
 AC_MSG_CHECKING([for mono.pc])
 if test -z `$PKG_CONFIG --variable=prefix mono`; then
@@ -112,7 +113,12 @@ if test ! -x "$MCS"; then
 	AC_MSG_ERROR([No $CS compiler found])
 fi
 
+if test ! -x "$GMCS"; then
+	AC_MSG_ERROR([No $CS 2.0 (gmcs) compiler found])
+fi
+
 AC_SUBST(MCS)
+AC_SUBST(GMCS)
 AC_SUBST(MONO)
 
 if test "x$with_docs" = "xyes"; then

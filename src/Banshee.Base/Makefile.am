@@ -12,6 +12,12 @@ bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 bansheebase_sources_in = ConfigureDefines.cs.in
 bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
 
+IO_SOURCES = \
+	$(srcdir)/IO/IOProxy.cs \
+	$(srcdir)/IO/Interfaces.cs \
+	$(srcdir)/IO/SystemIO.cs \
+	$(srcdir)/IO/Unix.cs
+
 GUI_SOURCES = \
 	$(srcdir)/Gui/GladeDialog.cs \
 	$(srcdir)/Gui/ImportDialog.cs \
@@ -62,6 +68,7 @@ ASSEMBLY_SOURCES = \
     $(PLUGINS_SOURCES) \
 	$(GUI_SOURCES) \
 	$(MEDIAENGINE_SOURCES) \
+	$(IO_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \

@@ -2,6 +2,17 @@
 <gconfschemafile>
   <schemalist>
     <schema>
+      <key>/schemas/apps/Banshee/IOBackend</key>
+      <applyto>/apps/Banshee/IOBackend</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default>unix</default>
+      <locale name="C">
+        <short>Set the IO backend in Banshee</short>
+        <long>Can be either "systemio" (.NET System.IO), "unix" (Native Unix), or "gnomevfs" (GNOME VFS); takes effect on Banshee start (restart necessary)</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/ShowInitialImportDialog</key>
       <applyto>/apps/Banshee/ShowInitialImportDialog</applyto>
       <owner>banshee</owner>

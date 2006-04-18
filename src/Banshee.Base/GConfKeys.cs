@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  GConfKeys.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -65,5 +64,6 @@ namespace Banshee.Base
         public const string ShowCoverArt = BasePath + "ShowCoverArt";
         public const string ShowInitialImportDialog = BasePath + "ShowInitialImportDialog";
         public const string OpenLocationHistory = BasePath + "OpenLocationHistory";
+        public const string IOBackend = BasePath + "IOBackend";
     }
 }

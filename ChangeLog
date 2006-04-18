@@ -1,5 +1,35 @@
 2006-04-17  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* configure.ac: Check for gmcs, will probably start using it soon
+
+	* data/banshee.schemas.in: Added schema for IOBackend
+
+	* src/Banshee.Base/GConfKeys.cs: Added IOBackend
+
+	* src/Banshee.Base/ImportManager.cs: Use Banshee.IO.IOProxy for reading
+	files/directories
+
+	* src/Banshee.Base/Makefile.am: Added Banshee.IO files
+
+	* src/Banshee.Base/IO/IOProxy.cs: Loads IO types and instantiates proper
+	backend based on IOBackend gconf key; provides File and Directory
+	properties
+
+	* src/Banshee.Base/IO/Interfaces.cs: Provides IIOConfig, IFile, and 
+	IDirectory interfaces for writing new IO backends
+
+	* src/Banshee.Base/IO/SystemIO.cs: IO backend implementations based
+	on the .NET System.IO namespace (exists for Win32 porting... one day, 
+	but of course works fine on Linux too)
+
+	* src/Banshee.Base/IO/Unix.cs: IO backend implementations based on
+	Mono.Unix (preferred backend for Unix/Linux as it's faster and 
+	potentially more accurate than System.IO)
+
+2006-04-17  Aaron Bockover  <aaron@abock.org>
+
 	* configure.ac: Require njb-sharp 0.3.0+
 
 	* src/Banshee.Base/Dap/Dap.cs: Added virtual Activate method (see below);

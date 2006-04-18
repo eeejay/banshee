@@ -27,14 +27,15 @@
  */
  
 using System;
-using System.Collections;
 using System.IO;
+using System.Collections;
 using System.Threading;
 using Mono.Unix;
-using Mono.Unix.Native;
+
 using Gtk;
 
 using Banshee.Widgets;
+using Banshee.IO;
 
 namespace Banshee.Base
 {
@@ -62,7 +63,9 @@ namespace Banshee.Base
                 return instance;
             }
         }
-            
+        
+        private static Gdk.Pixbuf user_event_icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
+        
         private Queue path_queue;
         private ActiveUserEvent user_event;
         private int total_count;
@@ -81,7 +84,7 @@ namespace Banshee.Base
         {
             if(user_event == null) {
                 user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
-                user_event.Icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
+                user_event.Icon = user_event_icon;
                 lock(user_event) {
                     user_event.Message = Catalog.GetString("Scanning for songs");
                     total_count = 0;
@@ -186,32 +189,28 @@ namespace Banshee.Base
         {
             CheckForCanceled();
             scan_ref_count++;
-
+            
             bool is_regular_file = false;
             bool is_directory = false;
+            
             try {
-                Stat buf = new Stat();
-                is_directory = is_regular_file = Syscall.stat(source, out buf) == 0;
-                is_regular_file &= (buf.st_mode & FilePermissions.S_IFREG) == FilePermissions.S_IFREG;
-                is_directory &= (buf.st_mode & FilePermissions.S_IFDIR) == FilePermissions.S_IFDIR;
-                // FIXME: workaround for http://bugzilla.ximian.com/show_bug.cgi?id=76966
-                is_directory &= ! ((buf.st_mode & FilePermissions.S_IFSOCK) == FilePermissions.S_IFSOCK);
-            } catch(System.IO.IOException) {
+                is_regular_file = IOProxy.File.Exists(source);
+                is_directory = !is_regular_file && IOProxy.Directory.Exists(source);
+            } catch {
                 scan_ref_count--;
                 return;
             }
-
+            
             if(is_regular_file && !Path.GetFileName(source).StartsWith(".")) {
                 Enqueue(source);
-            } else if(is_directory && 
-                !Path.GetFileName(Path.GetDirectoryName(source)).StartsWith(".")) {
+            } else if(is_directory && !Path.GetFileName(System.IO.Path.GetDirectoryName(source)).StartsWith(".")) {
 
                 try {
-                    foreach(string file in Directory.GetFiles(source)) {
+                    foreach(string file in IOProxy.Directory.GetFiles(source)) {
                         ScanForFiles(file);
                     }
 
-                    foreach(string directory in Directory.GetDirectories(source)) {
+                    foreach(string directory in IOProxy.Directory.GetDirectories(source)) {
                         ScanForFiles(directory);
                     }
                 } catch(System.UnauthorizedAccessException) {
