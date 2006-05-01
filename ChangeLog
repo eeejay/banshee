@@ -1,3 +1,8 @@
+2006-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Dap/DapCore.cs: Fix small bugs that caused iPods to
+	sometimes show up as mass storage devices (BGO #340313).
+
 2006-05-01  Aaron Bockover  <aaron@abock.org>
 
 	Fix a locking bug that caused crashes (BGO #340306)
