@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-11 18:04+0200\n"
-"PO-Revision-Date: 2006-04-12 00:36+0100\n"
+"POT-Creation-Date: 2006-05-01 18:09+0200\n"
+"PO-Revision-Date: 2006-05-01 23:37+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -146,7 +146,7 @@ msgstr "Skivanvändning:"
 
 #: ../data/banshee.glade.h:29
 msgid "Disk at once"
-msgstr "Skiva på en gång (DAO)"
+msgstr "Hela skivan åt gången (DAO)"
 
 #: ../data/banshee.glade.h:30
 msgid "Do not show this dialog again"
@@ -159,7 +159,7 @@ msgstr "Redigerar låt"
 
 #: ../data/banshee.glade.h:32
 msgid "Eject when finished"
-msgstr "Mata ut vid färdig"
+msgstr "Mata ut när färdig"
 
 #: ../data/banshee.glade.h:33
 msgid "Encoding Profile:"
@@ -252,7 +252,7 @@ msgid "Track _Number"
 msgstr "Spår_nummer"
 
 #: ../data/banshee.glade.h:55
-#: ../src/Banshee.Base/Dap/Dap.cs:604
+#: ../src/Banshee.Base/Dap/Dap.cs:620
 #: ../src/TrackProperties.cs:236
 #: ../src/TrackProperties.cs:260
 #: ../src/TrackProperties.cs:261
@@ -269,7 +269,7 @@ msgstr "VBR:"
 
 #: ../data/banshee.glade.h:57
 msgid "Write Speed:"
-msgstr "Skrivningshastighet:"
+msgstr "Skrivhastighet:"
 
 #: ../data/banshee.glade.h:58
 msgid "Your music library is empty. You may import new music into your library now, or choose to do so later."
@@ -292,167 +292,175 @@ msgid "_Title"
 msgstr "_Titel"
 
 #: ../data/banshee.schemas.in.h:1
+msgid "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or \"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+msgstr "Kan vara antingen \"systemio\" (.NET System.IO), \"unix\" (Native Unix) eller \"gnomevfs\" (GNOME VFS); blir aktiv vid uppstart av Banshee (omstart krävs)"
+
+#: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
 msgstr "Kopiera och byt namn på musik till Banshees musikbibliotek vid importering"
 
-#: ../data/banshee.schemas.in.h:2
+#: ../data/banshee.schemas.in.h:3
 msgid "Copy music on import"
 msgstr "Kopiera musik vid importering"
 
-#: ../data/banshee.schemas.in.h:3
+#: ../data/banshee.schemas.in.h:4
 msgid "Enable Special Keys"
 msgstr "Aktivera specialtangenter"
 
-#: ../data/banshee.schemas.in.h:4
-msgid "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; works with mappings set through Gnome Shortcuts capplet"
-msgstr "Aktiverade specialtangenter (Multimediatangenter) stöd för Spela/Pause/Nästa/Föregående; fungerar med bindningar inställda genom panelprogrammet för Gnome-genvägar"
-
 #: ../data/banshee.schemas.in.h:5
+msgid "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; works with mappings set through Gnome Shortcuts capplet"
+msgstr "Aktiverade stöd för specialtangenter (Multimediatangenter) Spela/Paus/Nästa/Föregående; fungerar med bindningar inställda genom panelprogrammet för Gnome-genvägar"
+
+#: ../data/banshee.schemas.in.h:6
 msgid "File Name Pattern"
 msgstr "Filnamnsmönster"
 
-#: ../data/banshee.schemas.in.h:7
+#: ../data/banshee.schemas.in.h:8
 #, no-c-format
 msgid "Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
 msgstr "Format för att skapa filnamn/kataloger för rippade spår, importerad musik, etc. Formatet är relativt till Banshees musikkatalog... ange inte en absolut sökväg! Symboler: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (Ingen nolla som prefix), %track_count_nz% (Ingen nolla som prefix)."
 
-#: ../data/banshee.schemas.in.h:8
-msgid "Height of the main interface window."
-msgstr "Höjd på huvudgränssnittsfönstret."
-
 #: ../data/banshee.schemas.in.h:9
-msgid "Move music on info save"
-msgstr "Flytta musik vid sparande av information"
+msgid "Height of the main interface window."
+msgstr "Höjd på gränssnittets huvudfönster."
 
 #: ../data/banshee.schemas.in.h:10
+msgid "Move music on info save"
+msgstr "Flytta musik när information sparas"
+
+#: ../data/banshee.schemas.in.h:11
 msgid "Move music within banshee music library directory when saving track info"
 msgstr "Flytta musik inom Banshees musikbibliotekkatalog när spårinformation sparas"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:12
 msgid "Name of media playback engine."
 msgstr "Namn på mediauppspelningsmotor."
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:13
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Pixelposition för huvuduppspelarfönstret på X-axeln"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:14
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Pixelposition för huvuduppspelarfönstret på Y-axeln"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:15
 msgid "Player Engine Name"
 msgstr "Namn på uppspelningsmotor"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:16
+msgid "Set the IO backend in Banshee"
+msgstr "Ställer in in-/ut-bakände i Banshee"
+
+#: ../data/banshee.schemas.in.h:17
 msgid "Show advanced track properties"
 msgstr "Visa avancerade spåregenskaper"
 
-#: ../data/banshee.schemas.in.h:16
-msgid "Show the Initial Import Dialog"
-msgstr "Visa den initiala importeringsdialogen"
-
-#: ../data/banshee.schemas.in.h:17
-msgid "Show the Initial Import Dialog when the Banshee library is empty"
-msgstr "Visa den initiala importeringsdialog när Banshees bibliotek är tomt"
-
 #: ../data/banshee.schemas.in.h:18
+msgid "Show the Initial Import Dialog"
+msgstr "Visa den inledande importeringsdialogen"
+
+#: ../data/banshee.schemas.in.h:19
+msgid "Show the Initial Import Dialog when the Banshee library is empty"
+msgstr "Visa den inledande importeringsdialog när Banshees bibliotek är tomt"
+
+#: ../data/banshee.schemas.in.h:20
 msgid "Source View Width"
 msgstr "Bredd på källvy"
 
-#: ../data/banshee.schemas.in.h:19
+#: ../data/banshee.schemas.in.h:21
 msgid "True if main window is to be maximized, false if it is not."
-msgstr "Sant om huvudfönstret ska maximeras, falskt om det inte är."
+msgstr "Sant om huvudfönstret ska maximeras, annars falskt"
 
-#: ../data/banshee.schemas.in.h:20
+#: ../data/banshee.schemas.in.h:22
 msgid "True if the advanced expander should be expanded in the track properties dialog, false if it should be closed"
 msgstr "Sant om den avancerade expanderaren ska expanderas i spåregenskapsdialogen, falskt om den ska stängas"
 
-#: ../data/banshee.schemas.in.h:21
+#: ../data/banshee.schemas.in.h:23
 msgid "Visibility of Album Column."
 msgstr "Synlighet för Album-kolumn."
 
-#: ../data/banshee.schemas.in.h:22
+#: ../data/banshee.schemas.in.h:24
 msgid "Visibility of Artist Column."
 msgstr "Synlighet för Artist-kolumn."
 
-#: ../data/banshee.schemas.in.h:23
+#: ../data/banshee.schemas.in.h:25
 msgid "Visibility of Time Column."
 msgstr "Synlighet för Tid-kolumn."
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:26
 msgid "Visibility of Title Column."
 msgstr "Synlighet för Titel-kolumn."
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:27
 msgid "Visibility of Track Column."
 msgstr "Synlighet för Spår-kolumn."
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:28
 msgid "Volume Output Level"
 msgstr "Volymnivå"
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:29
 msgid "Volume of playback relative to mixer output (except on Helix, which sets volume directly on PCM"
 msgstr "Uppspelningsvolym relativ till mixerutgång (förutom på Helix, som ställer in volymen direkt på PCM"
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:30
 msgid "Width of Album Column."
 msgstr "Bredd på Album-kolumn."
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:31
 msgid "Width of Artist Column."
 msgstr "Bredd på Artist-kolumn."
 
-#: ../data/banshee.schemas.in.h:30
+#: ../data/banshee.schemas.in.h:32
 msgid "Width of Last Played Column."
 msgstr "Bredd på Senast spelad-kolumn."
 
-#: ../data/banshee.schemas.in.h:31
+#: ../data/banshee.schemas.in.h:33
 msgid "Width of Plays Column."
 msgstr "Bredd på Spelar-kolumn."
 
-#: ../data/banshee.schemas.in.h:32
+#: ../data/banshee.schemas.in.h:34
 msgid "Width of Rating Column."
 msgstr "Bredd på Betyg-kolumn."
 
-#: ../data/banshee.schemas.in.h:33
+#: ../data/banshee.schemas.in.h:35
 msgid "Width of Source View Column."
 msgstr "Bredd på Källvy-kolumn."
 
-#: ../data/banshee.schemas.in.h:34
+#: ../data/banshee.schemas.in.h:36
 msgid "Width of Time Column."
 msgstr "Bredd på Tid-kolumn."
 
-#: ../data/banshee.schemas.in.h:35
+#: ../data/banshee.schemas.in.h:37
 msgid "Width of Title Column."
 msgstr "Bredd på Titel-kolumn."
 
-#: ../data/banshee.schemas.in.h:36
+#: ../data/banshee.schemas.in.h:38
 msgid "Width of Track Column."
 msgstr "Bredd på Spår-kolumn."
 
-#: ../data/banshee.schemas.in.h:37
+#: ../data/banshee.schemas.in.h:39
 msgid "Width of the main interface window."
-msgstr "Bredd på huvudgränssnittsfönstret."
+msgstr "Bredd på gränssnittets huvudfönster."
 
-#: ../data/banshee.schemas.in.h:38
+#: ../data/banshee.schemas.in.h:40
 msgid "Window Height"
 msgstr "Fönsterhöjd"
 
-#: ../data/banshee.schemas.in.h:39
+#: ../data/banshee.schemas.in.h:41
 msgid "Window Maximized"
 msgstr "Fönster maximerat"
 
-#: ../data/banshee.schemas.in.h:40
+#: ../data/banshee.schemas.in.h:42
 msgid "Window Position X"
 msgstr "Fönsterposition X"
 
-#: ../data/banshee.schemas.in.h:41
+#: ../data/banshee.schemas.in.h:43
 msgid "Window Position Y"
 msgstr "Fönsterposition Y"
 
-#: ../data/banshee.schemas.in.h:42
+#: ../data/banshee.schemas.in.h:44
 msgid "Window Width"
 msgstr "Fönsterbredd"
 
@@ -489,7 +497,7 @@ msgstr "Kunde inte länka rörelement"
 #: ../libbanshee/gst-cd-rip-0.10.c:378
 #: ../libbanshee/gst-cd-rip-0.8.c:226
 #: ../src/AboutBox.cs:132
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:105
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -512,7 +520,7 @@ msgstr "Kunde inte få tag i spårposition"
 
 #: ../libbanshee/gst-playback-0.8.c:91
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Kunde inte hitta eller skapa GStreamer-insticksmodulen \"playbin"
+msgstr "Kunde inte hitta eller skapa GStreamer-insticksmodulen \"playbin\""
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid "Could not load an output sink from GStreamer/GConf and could not fall back on alsasink"
@@ -535,23 +543,23 @@ msgstr "Kunde inte ta status på kodad fil"
 #: ../libbanshee/gst-transcode-0.10.c:249
 #: ../libbanshee/gst-transcode-0.8.c:90
 msgid "Could not create 'gnomevfssrc' plugin"
-msgstr "Kunde inte skapa \"gnomevfssrc\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"gnomevfssrc\""
 
 #: ../libbanshee/gst-transcode-0.10.c:255
 msgid "Could not create 'decodebin' plugin"
-msgstr "Kunde inte skapa \"decodebin\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"decodebin\""
 
 #: ../libbanshee/gst-transcode-0.10.c:261
 msgid "Could not create 'gnomevfssink' plugin"
-msgstr "Kunde inte skapa \"gnomevfssink\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"gnomevfssink\""
 
 #: ../libbanshee/gst-transcode-0.10.c:267
 msgid "Could not create 'sinkben' plugin"
-msgstr "Kunde inte skapa \"sinkben\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"sinkben\""
 
 #: ../libbanshee/gst-transcode-0.10.c:273
 msgid "Could not create 'audioconvert' plugin"
-msgstr "Kunde inte skapa \"audioconvert\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"audioconvert\""
 
 #: ../libbanshee/gst-transcode-0.10.c:279
 msgid "Could not create encoding pipeline"
@@ -568,7 +576,7 @@ msgstr "Kunde inte konstruera rör"
 
 #: ../libbanshee/gst-transcode-0.8.c:96
 msgid "Could not create 'spider' plugin"
-msgstr "Kunde inte skapa \"spider\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"spider\""
 
 #: ../libbanshee/gst-transcode-0.8.c:103
 #, c-format
@@ -577,7 +585,7 @@ msgstr "Kunde inte skapa kodningsrör: %s"
 
 #: ../libbanshee/gst-transcode-0.8.c:109
 msgid "Could not create 'filesink' plugin"
-msgstr "Kunde inte skapa \"filesink\"-insticksmodul"
+msgstr "Kunde inte skapa insticksmodulen \"filesink\""
 
 #: ../libbanshee/hal-context.c:61
 msgid "Could not create new HAL context"
@@ -586,7 +594,7 @@ msgstr "Kunde inte skapa nytt HAL-sammanhang"
 #: ../libbanshee/hal-context.c:69
 #, c-format
 msgid "Could not integrate HAL with mainloop: %s"
-msgstr "Kunde inte integrera HAL med huvudloop: %s"
+msgstr "Kunde inte integrera HAL med huvudslinga: %s"
 
 #: ../libbanshee/hal-context.c:89
 #: ../libbanshee/hal-context.c:92
@@ -801,7 +809,7 @@ msgstr "Ta bort låt(ar)"
 
 #: ../src/Banshee.Base/ActionManager.cs:177
 msgid "Remove selected song(s) from library"
-msgstr "Ta bort markerade låt(ar) från bibliotek"
+msgstr "Ta bort markerad(e) låt(ar) från bibliotek"
 
 #: ../src/Banshee.Base/ActionManager.cs:180
 msgid "Delete Song(s) From Drive"
@@ -886,7 +894,7 @@ msgstr "Upprepa alla"
 
 #: ../src/Banshee.Base/ActionManager.cs:231
 msgid "Play all songs before repeating playlist"
-msgstr "Spela upp alla låtar innan upprepning av spellista"
+msgstr "Spela upp alla låtar innan spellistan upprepas"
 
 #: ../src/Banshee.Base/ActionManager.cs:234
 #: ../src/ToggleStates.cs:50
@@ -895,7 +903,7 @@ msgstr "Upprepa enstaka"
 
 #: ../src/Banshee.Base/ActionManager.cs:235
 msgid "Repeat the current playing song"
-msgstr "Repetera den för närvarande uppspelade låten"
+msgstr "Repetera nuvarande låt"
 
 #: ../src/Banshee.Base/ActionManager.cs:240
 #: ../src/ToggleStates.cs:68
@@ -936,7 +944,7 @@ msgstr "Starta om låt"
 
 #: ../src/Banshee.Base/ActionManager.cs:263
 msgid "Restart the current song"
-msgstr "Starta om den aktuella låten"
+msgstr "Starta om nuvarande låt"
 
 #: ../src/Banshee.Base/ActionManager.cs:272
 #: ../src/PlayerInterface.cs:1056
@@ -989,7 +997,7 @@ msgstr "Kunde inte mata ut cd"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr "Cd-skivan kan inte matas ut under tiden den importeras. Stoppa importeringen först."
+msgstr "Cd-skivan kan inte matas ut medan den importeras. Stoppa importeringen först."
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:85
 msgid "Could not create CD Ripper"
@@ -1014,7 +1022,7 @@ msgid "Cannot Import CD"
 msgstr "Kan inte importera cd"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:341
-#: ../src/Banshee.Base/ImportManager.cs:115
+#: ../src/Banshee.Base/ImportManager.cs:118
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importerar {0} av {1}"
@@ -1035,17 +1043,17 @@ msgstr "Initierar omkodare..."
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan inte initiera DapCore på grund av att HalCore inte är initierad"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:325
-#: ../src/Banshee.Base/Dap/Dap.cs:326
+#: ../src/Banshee.Base/Dap/Dap.cs:329
+#: ../src/Banshee.Base/Dap/Dap.cs:330
 msgid "Synchronizing Device"
 msgstr "Synkroniserar enhet"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:327
+#: ../src/Banshee.Base/Dap/Dap.cs:331
 msgid "Waiting for transcoder..."
 msgstr "Väntar på omkodare..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:411
-#: ../src/Banshee.Base/Dap/Dap.cs:432
+#: ../src/Banshee.Base/Dap/Dap.cs:423
+#: ../src/Banshee.Base/Dap/Dap.cs:444
 msgid "Processing..."
 msgstr "Behandlar..."
 
@@ -1114,11 +1122,11 @@ msgstr "D-Bus kanske inte fungerar eller är korrekt konfigurerad"
 msgid "Home Directory"
 msgstr "Hemkatalog"
 
-#: ../src/Banshee.Base/ImportManager.cs:83
+#: ../src/Banshee.Base/ImportManager.cs:86
 msgid "Importing Songs"
 msgstr "Importerar låtar"
 
-#: ../src/Banshee.Base/ImportManager.cs:86
+#: ../src/Banshee.Base/ImportManager.cs:89
 msgid "Scanning for songs"
 msgstr "Söker efter låtar"
 
@@ -1252,17 +1260,17 @@ msgstr "Ogiltig markering"
 msgid "You must select at least one track to import."
 msgstr "Du måste välja åtminstone ett spår att importera."
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:104
+#: ../src/Banshee.Base/Sources/DapSource.cs:105
 msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserar din enhet, var god vänta..."
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:165
+#: ../src/Banshee.Base/Sources/DapSource.cs:172
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
 #, csharp-format
 msgid "{0} of {1}"
 msgstr "{0} av {1}"
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:175
+#: ../src/Banshee.Base/Sources/DapSource.cs:182
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} återstår)"
@@ -1367,7 +1375,7 @@ msgid ""
 "\n"
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
-"Bygga om din iPod-databas kan ta lite tid. Notera även att de spellistor du har på din iPod kommer att förloras.\n"
+"Att bygga om din iPod-databas kan ta lite tid. Notera även att de spellistor du har på din iPod kommer att förloras.\n"
 "\n"
 "Är du säker på att du vill bygga om din iPod-databas?"
 
@@ -1572,7 +1580,7 @@ msgstr "Varning"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
 msgid "This option can usually correct minor mistakes in metadata, however on rare occasions metadata may be incorrectly updated from MusicBrainz."
-msgstr "Detta alternativ kan vanligtvis rätta till mindre misstag i metadata, dock vid sällsynta tillfällen kan metadata bli felaktigt uppdaterad från MusicBrainz."
+msgstr "Detta alternativ kan vanligtvis rätta till mindre misstag i metadata, vid sällsynta tillfällen kan dock metadata bli felaktigt uppdaterad från MusicBrainz."
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:57
 msgid "Automatically search for missing and supplementary metadata and cover art for songs in your library."
@@ -1596,7 +1604,7 @@ msgstr "Genvägar för multimediatangentbord"
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
 msgid "Configuration of multimedia keyboard shortcuts is done through the Gnome Keyboard Shortcuts configuration applet."
-msgstr "Konfiguration av genvägar för multimediatangentbord görs genom panelprogrammet Gnome Keyboard Shortcuts."
+msgstr "Konfiguration av genvägar för multimediatangentbord görs genom panelprogrammet Tangentbordsgenvägar."
 
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
@@ -1640,7 +1648,7 @@ msgstr "Otillräckligt diskutrymme"
 #: ../src/BurnCore.cs:83
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr "Skapa denna cd kräver åtminstone {0} MiB ledigt diskutrymme."
+msgstr "Skapandet av denna cd kräver åtminstone {0} MiB ledigt diskutrymme."
 
 #: ../src/BurnCore.cs:119
 msgid "Could Not Write CD"
@@ -1674,7 +1682,7 @@ msgstr "Inga av låtarna markerade för denna cd kunde konverteras till formatet
 
 #: ../src/BurnCore.cs:270
 msgid "Some songs could either not be found or could not be converted to the format required for an audio CD."
-msgstr "Vissa låtar kunde varken hittas eller kunde inte konverteras till formatet som krävs för en ljud-cd."
+msgstr "Vissa låtar kunde antingen inte hittas eller inte konverteras till formatet som krävs för en ljud-cd."
 
 #: ../src/BurnCore.cs:272
 msgid "Continue Anyway"
@@ -1923,7 +1931,7 @@ msgid ""
 "  <big>•</big> Song is protected (DRM)\n"
 "  <big>•</big> Song is on a DAP that does not support playback\n"
 msgstr ""
-"{0} kan inte spelas upp av Banshee. De mest vanliga anledningarna för detta är:\n"
+"{0} kan inte spelas upp av Banshee. De vanligaste anledningarna för detta är:\n"
 "\n"
 "  <big>•</big> Låten är skyddad (DRM)\n"
 "  <big>•</big> Låten är på en DAP som inte har stöd för uppspelning\n"
