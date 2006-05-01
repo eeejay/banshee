@@ -461,6 +461,8 @@ namespace Banshee.Base
             } catch {}
             
             SaveToDatabase(true);
+
+            OnChanged();
         }
         
         public override void IncrementPlayCount()

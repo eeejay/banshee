@@ -53,6 +53,10 @@ namespace Banshee.Sources
         
         private ArrayList tracks = new ArrayList();
         private int id;
+
+        public int Id {
+            get { return id; }
+        }
     
         public PlaylistSource() : this(0)
         {
@@ -147,12 +151,22 @@ namespace Banshee.Sources
                 OnUpdated();
             }
         }
+
+        public void ClearTracks()
+        {
+            tracks.Clear();
+        }
         
         public override void RemoveTrack(TrackInfo track)
         {
             lock(TracksMutex) {
                 tracks.Remove(track);
             }
+        }
+
+        public bool ContainsTrack(TrackInfo track)
+        {
+            return tracks.Contains(track);
         }
         
         public void Delete()

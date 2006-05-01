@@ -1,5 +1,16 @@
 2006-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Base/LibraryTrackInfo.cs: Call TrackInfo's OnChanged when
+	saving changes to a Track.
+
+	* src/Banshee.Base/TrackInfo.cs: Add event and protected virtual method
+	OnChanged for when a track is changed.
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Add Id property, and
+	public ClearTracks and ContainsTrack methods.
+
+2006-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Base/Dap/DapCore.cs: Fix small bugs that caused iPods to
 	sometimes show up as mass storage devices (BGO #340313).
 

@@ -86,6 +86,8 @@ namespace Banshee.Base
         private int uid;
         
         private static int next_id = 1;
+
+        public event EventHandler Changed;
         
         protected TrackInfo()
         {
@@ -106,6 +108,14 @@ namespace Banshee.Base
 
         protected virtual void WriteUpdate()
         {
+        }
+
+        protected virtual void OnChanged()
+        {
+            EventHandler handler = Changed;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
 
         public int TrackId { 
