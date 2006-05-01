@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-22 20:25-0300\n"
-"PO-Revision-Date: 2006-04-27 19:11-0300\n"
+"POT-Creation-Date: 2006-04-30 18:45-0300\n"
+"PO-Revision-Date: 2005-11-10 10:59-0300\n"
 "Last-Translator: Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
 "Language-Team: Portuguese/Brazil <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -135,25 +135,22 @@ msgid "Disk Format:"
 msgstr "Formato do Disco:"
 
 #: ../data/banshee.glade.h:28
-#, fuzzy
 msgid "Disk Usage:"
-msgstr "Uso do Disco do iPod"
+msgstr "Uso do Disco:"
 
 #: ../data/banshee.glade.h:29
-#, fuzzy
 msgid "Disk at once"
-msgstr "Disk At Once"
+msgstr "Disk at once"
 
 #: ../data/banshee.glade.h:30
 msgid "Do not show this dialog again"
-msgstr ""
+msgstr "Não mostrar este diálogo novamente"
 
 #: ../data/banshee.glade.h:31 ../src/TrackProperties.cs:240
 msgid "Editing Song"
-msgstr ""
+msgstr "Editando Música"
 
 #: ../data/banshee.glade.h:32
-#, fuzzy
 msgid "Eject when finished"
 msgstr "Ejetar quando terminar"
 
@@ -162,9 +159,8 @@ msgid "Encoding Profile:"
 msgstr "Perfil de Codificação:"
 
 #: ../data/banshee.glade.h:34
-#, fuzzy
 msgid "Encoding:"
-msgstr "Perfil de Codificação:"
+msgstr "Codificando:"
 
 #: ../data/banshee.glade.h:35
 msgid "Enter the address of the file you would like to open:"
@@ -232,9 +228,8 @@ msgid "Seek to Position"
 msgstr "Posição: "
 
 #: ../data/banshee.glade.h:51
-#, fuzzy
 msgid "Simulate write"
-msgstr "Simular Gravação"
+msgstr "Simular gravação"
 
 #: ../data/banshee.glade.h:52
 msgid "Track Duration:"
@@ -248,7 +243,7 @@ msgstr "_Número de Faixas"
 msgid "Track _Number"
 msgstr "_Número da Faixa"
 
-#: ../data/banshee.glade.h:55 ../src/Banshee.Base/Dap/Dap.cs:620
+#: ../data/banshee.glade.h:55 ../src/Banshee.Base/Dap/Dap.cs:621
 #: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
 #: ../src/TrackProperties.cs:261 ../src/TrackProperties.cs:262
 #: ../src/TrackProperties.cs:263 ../src/TrackProperties.cs:264
@@ -289,36 +284,30 @@ msgid "_Title"
 msgstr "_Título"
 
 #: ../data/banshee.schemas.in.h:1
-msgid ""
-"Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
-"\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
-msgstr ""
-
-#: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
 msgstr ""
 "Copiar e renomeiar música para o diretório da biblioteca do banshee ao "
 "importar"
 
-#: ../data/banshee.schemas.in.h:3
+#: ../data/banshee.schemas.in.h:2
 msgid "Copy music on import"
 msgstr "Copiar música na importação"
 
-#: ../data/banshee.schemas.in.h:4
+#: ../data/banshee.schemas.in.h:3
 msgid "Enable Special Keys"
-msgstr ""
+msgstr "Habilitar Teclas Especiais"
 
-#: ../data/banshee.schemas.in.h:5
+#: ../data/banshee.schemas.in.h:4
 msgid ""
 "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
 "works with mappings set through Gnome Shortcuts capplet"
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:6
+#: ../data/banshee.schemas.in.h:5
 msgid "File Name Pattern"
 msgstr "Máscara de nome de arquivo"
 
-#: ../data/banshee.schemas.in.h:8
+#: ../data/banshee.schemas.in.h:7
 #, no-c-format
 msgid ""
 "Format for creating filenames/directories for ripped tracks, imported music, "
@@ -333,98 +322,93 @@ msgstr ""
 "track_number%, %track_count%, %track_number_nz% (Sem prefixo zero), %"
 "track_count_nz% (Sem prefixo zero)."
 
-#: ../data/banshee.schemas.in.h:9
+#: ../data/banshee.schemas.in.h:8
 msgid "Height of the main interface window."
 msgstr "Altura da janela da interface principal."
 
-#: ../data/banshee.schemas.in.h:10
+#: ../data/banshee.schemas.in.h:9
 msgid "Move music on info save"
 msgstr "Mover música ao salvar informação"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:10
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Move música dentro do diretório de biblioteca de música do banshee quando "
 "salvando informação da faixa"
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:11
 msgid "Name of media playback engine."
 msgstr "Nome do motor de reprodução de mídia"
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:12
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Posição do pixel da Janela Principal do Reprodutor no eixo X"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:13
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Posição do pixel da Janela Principal do Reprodutor no eixo Y"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:14
 msgid "Player Engine Name"
 msgstr "Nome do Motor do Reprodutor"
 
+#: ../data/banshee.schemas.in.h:15
+msgid "Show advanced track properties"
+msgstr "Mostrar propriedades avançadas da faixa"
+
 #: ../data/banshee.schemas.in.h:16
-msgid "Set the IO backend in Banshee"
-msgstr ""
+msgid "Show the Initial Import Dialog"
+msgstr "Mostrar o Diálogo Inicial de Importação"
 
 #: ../data/banshee.schemas.in.h:17
-#, fuzzy
-msgid "Show advanced track properties"
-msgstr "Editando Propriedades da Faixa"
-
-#: ../data/banshee.schemas.in.h:18
-msgid "Show the Initial Import Dialog"
-msgstr ""
-
-#: ../data/banshee.schemas.in.h:19
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:20
+#: ../data/banshee.schemas.in.h:18
 msgid "Source View Width"
 msgstr "Largura da Visão de Fonte"
 
-#: ../data/banshee.schemas.in.h:21
+#: ../data/banshee.schemas.in.h:19
 msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:22
+#: ../data/banshee.schemas.in.h:20
 msgid ""
 "True if the advanced expander should be expanded in the track properties "
 "dialog, false if it should be closed"
 msgstr ""
 
-#: ../data/banshee.schemas.in.h:23
+#: ../data/banshee.schemas.in.h:21
 #, fuzzy
 msgid "Visibility of Album Column."
 msgstr "Largura da Coluna do Álbum."
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:22
 #, fuzzy
 msgid "Visibility of Artist Column."
 msgstr "Largura da Coluna do Artista."
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:23
 #, fuzzy
 msgid "Visibility of Time Column."
 msgstr "Largura da Coluna de Tempo."
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:24
 #, fuzzy
 msgid "Visibility of Title Column."
 msgstr "Largura da Coluna de Título."
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:25
 #, fuzzy
 msgid "Visibility of Track Column."
 msgstr "Largura da Coluna de Faixa."
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:26
 msgid "Volume Output Level"
 msgstr "Nível do Volume de Saída"
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:27
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
@@ -432,65 +416,64 @@ msgstr ""
 "Volume de reprodução relativo à saída do mixer (exceto no Helix, que ajusta "
 "o volume diretamente no PCM)"
 
-#: ../data/banshee.schemas.in.h:30
+#: ../data/banshee.schemas.in.h:28
 msgid "Width of Album Column."
 msgstr "Largura da Coluna do Álbum."
 
-#: ../data/banshee.schemas.in.h:31
+#: ../data/banshee.schemas.in.h:29
 msgid "Width of Artist Column."
 msgstr "Largura da Coluna do Artista."
 
-#: ../data/banshee.schemas.in.h:32
+#: ../data/banshee.schemas.in.h:30
 msgid "Width of Last Played Column."
 msgstr "Largura da Coluna da Última Executada."
 
-#: ../data/banshee.schemas.in.h:33
+#: ../data/banshee.schemas.in.h:31
 msgid "Width of Plays Column."
 msgstr "Largura da Coluna de Reprodução."
 
-#: ../data/banshee.schemas.in.h:34
+#: ../data/banshee.schemas.in.h:32
 msgid "Width of Rating Column."
 msgstr "Largura da Coluna de Classificação."
 
-#: ../data/banshee.schemas.in.h:35
+#: ../data/banshee.schemas.in.h:33
 #, fuzzy
 msgid "Width of Source View Column."
 msgstr "Largura da Coluna de Visão de Fonte."
 
-#: ../data/banshee.schemas.in.h:36
+#: ../data/banshee.schemas.in.h:34
 msgid "Width of Time Column."
 msgstr "Largura da Coluna de Tempo."
 
-#: ../data/banshee.schemas.in.h:37
+#: ../data/banshee.schemas.in.h:35
 msgid "Width of Title Column."
 msgstr "Largura da Coluna de Título."
 
-#: ../data/banshee.schemas.in.h:38
+#: ../data/banshee.schemas.in.h:36
 msgid "Width of Track Column."
 msgstr "Largura da Coluna de Faixa."
 
-#: ../data/banshee.schemas.in.h:39
+#: ../data/banshee.schemas.in.h:37
 msgid "Width of the main interface window."
 msgstr "Largura da janela principal da interface."
 
-#: ../data/banshee.schemas.in.h:40
+#: ../data/banshee.schemas.in.h:38
 msgid "Window Height"
 msgstr "Altura da Janela"
 
-#: ../data/banshee.schemas.in.h:41
-#, fuzzy
+#: ../data/banshee.schemas.in.h:39
 msgid "Window Maximized"
-msgstr "Largura da Janela"
+msgstr "Janela Maximizada"
 
-#: ../data/banshee.schemas.in.h:42
+#: ../data/banshee.schemas.in.h:40
 msgid "Window Position X"
 msgstr "Posição X da Janela"
 
-#: ../data/banshee.schemas.in.h:43
+#: ../data/banshee.schemas.in.h:41
 msgid "Window Position Y"
 msgstr "Posição Y da Janela"
 
-#: ../data/banshee.schemas.in.h:44
+#: ../data/banshee.schemas.in.h:42
 msgid "Window Width"
 msgstr "Largura da Janela"
 
@@ -507,14 +490,12 @@ msgid "Could not create encoder pipeline"
 msgstr "Impossível criar ligação para o codificador"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:264
-#, fuzzy
 msgid "Could not create queue plugin"
-msgstr "Impossível criar elemento 'spider'"
+msgstr "Impossível criar plugin queue"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:272 ../libbanshee/gst-cd-rip-0.8.c:112
-#, fuzzy
 msgid "Could not create GNOME VFS output plugin"
-msgstr "Impossível criar GNOME VFS File Sink"
+msgstr "Impossível criar plugin de saída GNOME VFS"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:287 ../libbanshee/gst-cd-rip-0.8.c:127
 msgid "Could not link pipeline elements"
@@ -522,7 +503,7 @@ msgstr "Impossível criar elemento de ligação"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:378 ../libbanshee/gst-cd-rip-0.8.c:226
 #: ../src/AboutBox.cs:132
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:105
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -543,9 +524,8 @@ msgid "Could not get track position"
 msgstr "Impossível pegar a posição da faixa"
 
 #: ../libbanshee/gst-playback-0.8.c:91
-#, fuzzy
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Impossivel iniciar biblioteca GStreamer"
+msgstr "Impossivel localizar ou criar o elemento 'playbin' do GStreamer"
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid ""
@@ -569,14 +549,12 @@ msgid "Could not stat encoded file"
 msgstr "Impossível iniciar arquivo codificado"
 
 #: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
-#, fuzzy
 msgid "Could not create 'gnomevfssrc' plugin"
-msgstr "Impossível criar elemento 'gnomevfssrc'"
+msgstr "Impossível criar plugin 'gnomevfssrc'"
 
 #: ../libbanshee/gst-transcode-0.10.c:255
-#, fuzzy
 msgid "Could not create 'decodebin' plugin"
-msgstr "Impossível criar elemento 'filesink'"
+msgstr "Impossível criar plugin 'decodebin'"
 
 #: ../libbanshee/gst-transcode-0.10.c:261
 #, fuzzy
@@ -648,18 +626,16 @@ msgid "Music Management and Playback for Gnome."
 msgstr "Gerenciador e Reprodutor de Músicas para o Gnome."
 
 #: ../src/AboutBox.cs:136
-#, fuzzy
 msgid ""
 "Copyright © 2005-2006 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 msgstr ""
-"Copyright 2005 Novell, Inc.\n"
-"Copyright 2005 Aaron Bockover"
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
 
 #: ../src/AboutBox.cs:141
-#, fuzzy
 msgid "Banshee Wiki"
-msgstr "Banshee"
+msgstr "Wiki do Banshee"
 
 #: ../src/Banshee.Base/ActionManager.cs:61
 msgid "_Music"
@@ -675,18 +651,16 @@ msgid "New Playlist"
 msgstr "Nova Lista de Reprodução"
 
 #: ../src/Banshee.Base/ActionManager.cs:65
-#, fuzzy
 msgid "Create a new empty playlist"
-msgstr "Criar uma nova lista de reprodução"
+msgstr "Criar uma nova lista de reprodução vazia"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
-#, fuzzy
 msgid "Import _Folder..."
-msgstr "Importar Pasta..."
+msgstr "Importar _Pasta..."
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
-msgstr ""
+msgstr "Importar o conteúdo todo de uma pasta"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
@@ -710,22 +684,19 @@ msgstr "Abrir Localização..."
 
 #: ../src/Banshee.Base/ActionManager.cs:81
 msgid "Open a remote location for playback"
-msgstr ""
+msgstr "Abrir um local remoto para reprodução"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
-#, fuzzy
 msgid "Import Source"
-msgstr "Importar Música"
+msgstr "Importar Fonte"
 
 #: ../src/Banshee.Base/ActionManager.cs:85
-#, fuzzy
 msgid "Import source to library"
-msgstr "Importar Pasta para Biblioteca"
+msgstr "Importar fonte para biblioteca"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
-#, fuzzy
 msgid "Source Properties..."
-msgstr "Propriedades"
+msgstr "Propriedades da Fonte..."
 
 #: ../src/Banshee.Base/ActionManager.cs:89
 msgid "View source properties"
@@ -773,7 +744,7 @@ msgstr "Plugins..."
 
 #: ../src/Banshee.Base/ActionManager.cs:112
 msgid "Configure Banshee plugins"
-msgstr ""
+msgstr "Configurar plugins do Banshee"
 
 #: ../src/Banshee.Base/ActionManager.cs:117
 msgid "_View"
@@ -785,16 +756,15 @@ msgstr "Colunas..."
 
 #: ../src/Banshee.Base/ActionManager.cs:121
 msgid "Select which columns to display in the song list"
-msgstr ""
+msgstr "Selecione as colunas visíveis da lista de músicas"
 
 #: ../src/Banshee.Base/ActionManager.cs:124
-#, fuzzy
 msgid "Logged Events Viewer..."
-msgstr "Eventos Registrados..."
+msgstr "Visualizador de Eventos Registrados..."
 
 #: ../src/Banshee.Base/ActionManager.cs:125
 msgid "View a detailed log of events"
-msgstr ""
+msgstr "Ver um registro detalhado dos eventos"
 
 #: ../src/Banshee.Base/ActionManager.cs:128
 msgid "_Help"
@@ -821,9 +791,8 @@ msgid "Fullscreen"
 msgstr "Tela Cheia"
 
 #: ../src/Banshee.Base/ActionManager.cs:149
-#, fuzzy
 msgid "Toggle Fullscreen Mode"
-msgstr "Alternar para o Modo de Tela Cheia"
+msgstr "Alternar o Modo de Tela Cheia"
 
 #: ../src/Banshee.Base/ActionManager.cs:152
 msgid "Show Cover Art"
@@ -831,25 +800,23 @@ msgstr "Mostrar Capa"
 
 #: ../src/Banshee.Base/ActionManager.cs:153
 msgid "Toggle display of album cover art"
-msgstr ""
+msgstr "Alternar a exibição de capa de álbum"
 
 #: ../src/Banshee.Base/ActionManager.cs:162
 msgid "Delete Playlist"
 msgstr "Apagar Lista de Reprodução"
 
 #: ../src/Banshee.Base/ActionManager.cs:163
-#, fuzzy
 msgid "Delete the active playlist"
-msgstr "Apagar Lista de Reprodução"
+msgstr "Apagar a lista de reprodução ativa"
 
 #: ../src/Banshee.Base/ActionManager.cs:172
 msgid "Write CD"
 msgstr "Gravar CD"
 
 #: ../src/Banshee.Base/ActionManager.cs:173
-#, fuzzy
 msgid "Write selection to audio CD"
-msgstr "Gravar Seleção em CD"
+msgstr "Gravar seleção para um CD de áudio"
 
 #: ../src/Banshee.Base/ActionManager.cs:176
 msgid "Remove Song(s)"
@@ -865,25 +832,24 @@ msgstr "Excluir Música(s) do Drive"
 
 #: ../src/Banshee.Base/ActionManager.cs:181
 msgid "Permanently delete selected song(s) from storage medium"
-msgstr ""
+msgstr "Apagar permanentemente as músicas selecionadas da mídia de armazenamento"
 
 #: ../src/Banshee.Base/ActionManager.cs:184
 msgid "Edit Song Metadata"
-msgstr ""
+msgstr "Editar Metadados da Música"
 
 #: ../src/Banshee.Base/ActionManager.cs:185
-#, fuzzy
 msgid "Edit metadata on selected songs"
-msgstr "Adicionar Músicas Selecionadas"
+msgstr "Editar metadados das músicas selecionadas"
 
 #: ../src/Banshee.Base/ActionManager.cs:188
-#, fuzzy
 msgid "Add to Playlist"
 msgstr "Adicionar à Lista de Reprodução"
 
 #: ../src/Banshee.Base/ActionManager.cs:189
 msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr ""
+msgstr "Adicionar as músicas selecionadas à ou criar uma nova lista de "
+"reprodução a partir da seleção"
 
 #: ../src/Banshee.Base/ActionManager.cs:192 ../src/PlaylistView.cs:105
 msgid "Rating"
@@ -1082,7 +1048,7 @@ msgid "Cannot Import CD"
 msgstr "Importar Automaticamente"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:341
-#: ../src/Banshee.Base/ImportManager.cs:118
+#: ../src/Banshee.Base/ImportManager.cs:115
 #, fuzzy, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Removendo {0} - {1}"
@@ -1115,7 +1081,7 @@ msgstr "Sincronizar Dispositivo"
 msgid "Waiting for transcoder..."
 msgstr "Iniciando Codificador..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:423 ../src/Banshee.Base/Dap/Dap.cs:444
+#: ../src/Banshee.Base/Dap/Dap.cs:424 ../src/Banshee.Base/Dap/Dap.cs:445
 #, fuzzy
 msgid "Processing..."
 msgstr "Processando"
@@ -1189,11 +1155,11 @@ msgstr ""
 msgid "Home Directory"
 msgstr "Diretório Pessoal"
 
-#: ../src/Banshee.Base/ImportManager.cs:86
+#: ../src/Banshee.Base/ImportManager.cs:83
 msgid "Importing Songs"
 msgstr "Importando Músicas"
 
-#: ../src/Banshee.Base/ImportManager.cs:89
+#: ../src/Banshee.Base/ImportManager.cs:86
 msgid "Scanning for songs"
 msgstr ""
 
@@ -1479,9 +1445,8 @@ msgid "Scanning"
 msgstr ""
 
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:257
-#, fuzzy
 msgid "Audio Device"
-msgstr "CD de Áudio"
+msgstr "Dispositivo de Áudio"
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:65
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
@@ -1489,9 +1454,8 @@ msgid "Could not initialize GStreamer library"
 msgstr "Impossivel iniciar biblioteca GStreamer"
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:143
-#, fuzzy
 msgid "Unknown Error"
-msgstr "Desconhecido"
+msgstr "Erro Desconhecido"
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:165
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
@@ -1672,9 +1636,8 @@ msgid "Rescan Library"
 msgstr "Biblioteca"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
-#, fuzzy
 msgid "Warning"
-msgstr "Trabalhando"
+msgstr "Aviso"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
 msgid ""
