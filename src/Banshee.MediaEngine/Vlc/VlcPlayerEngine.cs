@@ -118,8 +118,12 @@ namespace Banshee.MediaEngine.Vlc
         }
         
         private static string [] source_capabilities = { "file", "http" };
-        public override string [] SourceCapabilities {
+        public override System.Collections.IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
+
+		public override System.Collections.IEnumerable ExplicitDecoderCapabilities {
+			get { return null; }
+		}
     }
 }
