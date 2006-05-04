@@ -1,5 +1,14 @@
 2006-05-04  Aaron Bockover  <aaron@abock.org>
 
+	* configure.ac: Set version to 0.11.0-cvs to set apart from the
+	0.10.x series
+
+	* banshee.pc.in: Added pluginapi variable to define the second 
+	API revision for the 0.11.x series (new API has been introduced since
+	0.10.x and some plugins may not be backwards compatible)
+
+2006-05-04  Aaron Bockover  <aaron@abock.org>
+
 	* src/AboutBox.cs: Added missing comma / fix broken build
 
 2006-05-04  Jakub Friedl  <jfriedl@suse.cz>

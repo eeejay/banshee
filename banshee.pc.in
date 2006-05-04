@@ -3,6 +3,7 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 systemplugindir=@expanded_libdir@/banshee/Banshee.Plugins
 userplugindir=~/.gnome2/banshee/plugins
+pluginapi=2
 
 Name: Banshee
 Description: Mono/GStreamer based media playback and organization platform
