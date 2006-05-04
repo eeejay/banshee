@@ -1,3 +1,7 @@
+2006-05-04  Aaron Bockover  <aaron@abock.org>
+
+	* src/AboutBox.cs: Added missing comma / fix broken build
+
 2006-05-04  Jakub Friedl  <jfriedl@suse.cz>
 
 	* src/AboutBox.cs: Added Jakub Friedl to Translator Credits (Czech)

@@ -80,7 +80,7 @@ namespace Banshee
             new Translator("Theppitak Karoonboonyanan", "Thai"),
             new Translator("Alessandro Gervaso", "Italian"),
             new Translator("Ilkka Tuohela", "Finnish"),
-            new Translator("Christopher Orr", "British English")
+            new Translator("Christopher Orr", "British English"),
             new Translator("Jakub Friedl", "Czech")
         };
     
