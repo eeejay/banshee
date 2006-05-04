@@ -73,14 +73,15 @@ namespace Banshee
             new Translator("Vincent van Adrighem", "Dutch"),
             new Translator("\u00D8ivind Hoel", "Norwegian Bokm\u00E5l"),
             new Translator("Marco Carvalho", "Brazilian Portuguese"),
-			new Translator("Christian Rose", "Swedish"),
-			new Translator("Lasse Bang Mikkelsen", "Danish"),
-			new Translator("Stephane Raimbault", "French"),
-			new Translator("Lukas Novotny", "Czech"),
-			new Translator("Theppitak Karoonboonyanan", "Thai"),
-			new Translator("Alessandro Gervaso", "Italian"),
-			new Translator("Ilkka Tuohela", "Finnish"),
+            new Translator("Christian Rose", "Swedish"),
+            new Translator("Lasse Bang Mikkelsen", "Danish"),
+            new Translator("Stephane Raimbault", "French"),
+            new Translator("Lukas Novotny", "Czech"),
+            new Translator("Theppitak Karoonboonyanan", "Thai"),
+            new Translator("Alessandro Gervaso", "Italian"),
+            new Translator("Ilkka Tuohela", "Finnish"),
             new Translator("Christopher Orr", "British English")
+            new Translator("Jakub Friedl", "Czech")
         };
     
         private class Translator : IComparable
