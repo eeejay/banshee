@@ -64,14 +64,14 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Show this message to the user.</summary>
+        <value>A boolean value, which determines whether this message will be shown to the user or just logged.</value>
+        <remarks>Messages with this field set to true will be shown in an error box. Obviously, this shouldn't be used too often, as we don't want to annoy our users.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>A log message, created by <see cref="T:Banshee.Base.LogCore" />.</summary>
+    <remarks>All LogEntries are created by calling the appropriate static method on the LogCore instance.</remarks>
   </Docs>
 </Type>

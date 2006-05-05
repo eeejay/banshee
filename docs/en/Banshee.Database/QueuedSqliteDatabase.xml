@@ -20,9 +20,9 @@
         <Parameter Name="dbpath" Type="System.String" />
       </Parameters>
       <Docs>
-        <param name="dbpath">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <param name="dbpath">The Sqlite connection string, identical to the string expected by <see cref="T:Mono.Data.SqliteClient.SqliteConnection" />.</param>
+        <summary>Creates a QueuedSqliteDatabase and connects to it.</summary>
+        <remarks>The QueuedSqliteDatabase is immediately ready for querying. The connection will be made in the background and results will be returned as soon as the connection is made.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Dispose">
@@ -103,7 +103,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Thread-safe wrapper around an SqliteDatabase.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Type>

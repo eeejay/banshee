@@ -40,7 +40,7 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
+        <summary>Whether or not logged messages are printed to stdout.</summary>
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
@@ -206,10 +206,10 @@
         <Parameter Name="entry" Type="Banshee.Base.LogEntry" />
       </Parameters>
       <Docs>
-        <param name="entry">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
+        <param name="entry">The entry that should be added to the message log. Will be shown to the user if needed.</param>
+        <summary>Add a <see cref="T:Banshee.Base.LogEntry" /> to the message log.</summary>
+        <returns>The <see cref="T:Banshee.Base.LogEntry" /> given as the parameter.</returns>
+        <remarks>When using one of the static methods on <see cref="T:Banshee.Base.LogCore" /> (PushError, PushWarning, PushInformation or PushDebug), Push will be invoked automatically on the newly created <see cref="T:Banshee.Base.LogEntry" />.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -220,7 +220,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
+        <summary>An enumeration of all pushed log messages.</summary>
         <returns>To be added.</returns>
         <remarks>To be added.</remarks>
       </Docs>
@@ -232,14 +232,23 @@
         <ReturnType>Banshee.Base.LogCore</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>The LogCore instance.</summary>
+        <value>The only possible LogCore instance.</value>
+        <remarks>LogCore is modelled as a singleton: There can only be one instance of the LogCore class. To obtain this behavior, LogCore has a protected (thus inaccessible) constructor. Retrieving the LogCore instance can be done using this property. For examples on how to use the LogCore, see the general LogCore information: <see cref="T:Banshee.Base.LogCore" />.</remarks>
       </Docs>
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>LogCore provides internal logging functions, used for error messages and debugging purposes.</summary>
+    <remarks>LogCore is modelled as a singleton. To retreive the LogCore, use the Instance field.
+<example>
+        <code lang="C#">
+// Simple invokation, adds an information message to 
+// the log and shows it to the user.
+LogCore.Instance.PushInformation("Important information", 
+					"Showing lot's of information boxes can be annoying", 
+					true);
+</code>
+      </example></remarks>
   </Docs>
 </Type>

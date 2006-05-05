@@ -60,7 +60,7 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
+    <summary>Importance of the <see cref="T:Banshee.Base.LogEntry" />.</summary>
     <remarks>To be added.</remarks>
   </Docs>
 </Type>

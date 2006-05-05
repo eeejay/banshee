@@ -14,8 +14,8 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
+        <summary>Protected constructor.</summary>
+        <remarks>The engine implementation should provide its own default public constructor. If it cannot recover in a working state from any error in initialization, it should throw or propagate any exception for <see cref="T:Banshee.Base.PlayerEngineCore" /> to handle.</remarks>
       </Docs>
     </Member>
     <Member MemberName="StateChanged">
@@ -246,9 +246,9 @@
         <ReturnType>Banshee.Base.TrackInfo</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>The track that the engine is currently playing or has loaded.</summary>
+        <value>A TrackInfo object representing the currently loaded track.</value>
+        <remarks>An interface can use this property to display to the user metadata about the current playing or loaded track.</remarks>
       </Docs>
     </Member>
     <Member MemberName="CurrentUri">
@@ -270,9 +270,9 @@
         <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Gets the current state of the engine.</summary>
+        <value>A PlayerEngineState type depicting the current state of the engine.</value>
+        <remarks>An interface element, such as a play/pause button, should check this property to reflect the engine state in a UI.</remarks>
       </Docs>
     </Member>
     <Member MemberName="LastState">
@@ -306,9 +306,9 @@
         <ReturnType>System.Boolean</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
+        <summary>Whether or not the playing stream is seekable.</summary>
+        <value>If seeking is possible in the stream, return value will be true; false if the stream does not support seeking.</value>
+        <remarks>An interface element, such as a range slider, should check this value to determine its sensitivity.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -385,7 +385,11 @@
     </Member>
   </Members>
   <Docs>
-    <summary>To be added.</summary>
-    <remarks>To be added.</remarks>
+    <summary>Abstract class implemented by media engine playback plugins.</summary>
+    <remarks>
+      <para>PlayerEngine is an abstract class that engine backends can implement. It provides access to common features of a player backend, such as playback control and stream information. </para>
+      <para>Because Banshee supports multiple engines that can be switched between dynamically, in most situations you want to access common features of PlayerEngine through the global static class, <see cref="T:Banshee.Base.PlayerEngineCore" />.</para>
+      <para>PlayerEngineCore handles the runtime loading, initialization, and dynamic engine switching of implemented and available engines.</para>
+    </remarks>
   </Docs>
 </Type>
