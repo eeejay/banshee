@@ -305,6 +305,16 @@ namespace Banshee
             volumeButton.Show();
             volumeButton.VolumeChanged += OnVolumeScaleChanged;
             
+            Gtk.HBox additional_action_buttons_box = new HBox ();
+            additional_action_buttons_box.Spacing = 6;
+            additional_action_buttons_box.Show ();
+            
+            (gxml["RightToolbarContainer"] as Box).PackStart(
+            	additional_action_buttons_box, false, false, 0);
+            (gxml["RightToolbarContainer"] as Box).ReorderChild (additional_action_buttons_box, 0);
+            
+            InterfaceElements.ActionButtonBox = additional_action_buttons_box;
+            
             // Footer 
             LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
             LabelStatusBar.Show();
@@ -2053,8 +2063,7 @@ namespace Banshee
         private void OnSelectAllAction(object o, EventArgs args)
         {
             // Don't steal "Ctrl+A" from the search entry
-            if (WindowPlayer.Focus is Entry &&
-                Gtk.Global.CurrentEvent is Gdk.EventKey) {
+            if (Gtk.Global.CurrentEvent is Gdk.EventKey) {
                 Gtk.Bindings.ActivateEvent(WindowPlayer.Focus, (Gdk.EventKey)Gtk.Global.CurrentEvent);
                 return;
             }

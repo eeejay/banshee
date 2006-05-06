@@ -199,6 +199,16 @@ namespace Banshee.Base
             }
         }
         
+        private static Gtk.Box action_button_box;
+        public static Gtk.Box ActionButtonBox {
+            get { return action_button_box; }
+            set {
+                if(action_button_box == null) {
+                    action_button_box = value;
+                }
+            }
+        }        
+        
         public static void DetachPlaylistContainer()
         {
             if(PlaylistContainer.Parent != null) {

@@ -1,3 +1,12 @@
+2006-05-06  Aaron Bockover  <aaron@abock.org>
+
+	Patches from Mike Urbanski
+
+	* src/PlayerInterface.cs: Added an additional action button box for
+	toolbar source items; do not steal CTRL+A from search entry (revised)
+
+	* src/Banshee.Base/Globals.cs: expose ActionButtonBox
+
 2006-05-05  Aaron Bockover  <aaron@abock.org>
 
 	* docs/en/*: Updated docs (including contributions from rubenv)
