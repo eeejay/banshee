@@ -43,8 +43,6 @@ namespace Banshee
         public TreeViewColumn Column;
         public int Order;
     
-        private PlaylistView view;
-        private TreeCellDataFunc datafunc;
         private string keyName;
         private bool preference;    // User preference
         private bool hidden;        // Source preference
@@ -55,9 +53,7 @@ namespace Banshee
         {
             this.Name = name;
             this.keyName = keyName;
-            this.datafunc = datafunc;
             this.Order = Order;
-            this.view = view;
             
             Column = new TreeViewColumn();
             Column.Title = name;

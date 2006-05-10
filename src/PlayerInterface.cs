@@ -95,10 +95,7 @@ namespace Banshee
         }
         
         private long plLoaderMax, plLoaderCount;
-        private bool startupLoadReady = false;
-        private bool tickFromEngine = false;
         private uint setPositionTimeoutId;
-        private bool updateEnginePosition = true;
         private int clickX, clickY;
 
         private int dapDiskUsageTextViewState;
@@ -118,10 +115,10 @@ namespace Banshee
                 Dnd.TargetUriList
             };
 
-        private static TargetEntry [] sourceViewSourceEntries = 
+        /*private static TargetEntry [] sourceViewSourceEntries = 
             new TargetEntry [] {
                 Dnd.TargetSource
-            };
+            };*/
             
         private static TargetEntry [] sourceViewDestEntries = 
             new TargetEntry [] {

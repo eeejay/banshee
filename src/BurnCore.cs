@@ -528,7 +528,6 @@ namespace Banshee
         private int uri_index = 0;
         
         private string error_message;
-        private string image_label;
         private bool cancel;
         
         public EventHandler Canceled;
@@ -537,7 +536,6 @@ namespace Banshee
         
         public NautilusImageCreator(string imageLabel)
         {
-            image_label = imageLabel;
         }
         
         public void AddUri(SafeUri uri)

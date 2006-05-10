@@ -1,3 +1,17 @@
+2006-05-09  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Switch to gmcs
+
+	* src/BurnCore.cs:
+	* src/PlaylistColumns.cs:
+	* src/PlayerInferface.cs: Removed unused private variables; clean up
+
+	* src/QueryBuilder.cs:
+	* src/QueryBuilderModel.cs: Removed; never has been used in core and is
+	now in use in the Smart Playlist plugins
+
+	* src/Makefile.am: Removed QueryBuilder.cs and QueryBuilderModel.cs
+
 2006-05-08  Aaron Bockover  <aaron@abock.org>
 
 	* docs/Makefile.am: Prefix doc_DATA with $(DESTDIR) so distcheck works

@@ -41,8 +41,6 @@ banshee_sources = \
 	TrackProperties.cs \
 	SourceView.cs \
 	Preferences.cs \
-	QueryBuilder.cs \
-	QueryBuilderModel.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \
