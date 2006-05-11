@@ -14,7 +14,8 @@ GST_0_10_CFILES = \
 	gst-playback-0.10.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c \
-	gst-cd-rip-0.10.c
+	gst-cd-rip-0.10.c \
+	gst-mbtrm.c
 
 GST_0_8_CFILES = \
 	gst-playback-0.8.c \
@@ -36,6 +37,7 @@ libbanshee_la_SOURCES = \
 	gst-cd-rip.h \
 	gst-tagger.c \
 	gst-tagger.h \
+	gst-mbtrm.h \
 	hal-context.c \
 	hal-context.h \
 	inotify-glue.c \

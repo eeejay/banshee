@@ -1,3 +1,17 @@
+2006-05-10  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-mbtrm.c:
+	* libbanshee/gst-mbtrm.h: New GStreamer plugin to calculate the TRM ID
+	of a PCM audio stream; currently a static plugin in libbanshee
+
+	* libbanshee/gst-misc-0.10.c: Load the static mbtrm plugin
+
+	* libbanshee/gst-cd-rip-0.10.c: Use mbtrm in the pipeline; currently
+	the have-trm-id signal is used only to print the TRM ID; will be used
+	in the future to actually fetch metadata if necessary
+
+	* libbanshee/Makefile.am: Added gst-mbtrm.[ch]
+
 2006-05-09  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Switch to gmcs

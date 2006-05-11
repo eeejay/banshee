@@ -91,6 +91,12 @@ gst_cd_ripper_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
     return TRUE;
 }
 
+static void
+gst_cd_ripper_have_trm_id_cb(GstElement *element, const gchar *trm_id, gpointer user_data)
+{
+    g_printf("MusicBrainz TRM ID: %s\n", trm_id);
+}
+
 static gboolean
 gst_cd_ripper_iterate_timeout(GstCdRipper *ripper)
 {
@@ -233,6 +239,7 @@ static gboolean
 gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
 {
     GstElement *queue;
+    GstElement *mbtrm;
     
     g_return_val_if_fail(ripper != NULL, FALSE);
         
@@ -252,6 +259,18 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
     g_object_set(G_OBJECT(ripper->cdparanoia), "paranoia-mode", ripper->paranoia_mode, NULL);
     
     ripper->track_format = gst_format_get_by_nick("track");
+    
+    mbtrm = gst_element_factory_make("mbtrm", "mbtrm");
+    if(mbtrm == NULL) {
+        gst_cd_ripper_raise_error(ripper, _("Could not create mbtrm plugin"), NULL);
+        return FALSE;
+    }
+    
+    //g_object_set(G_OBJECT(mbtrm), "proxy-address", "http://google.com", NULL);
+    //g_object_set(G_OBJECT(mbtrm), "proxy-port", 8080, NULL);
+    
+    g_signal_connect(G_OBJECT(mbtrm), "have-trm-id",
+        G_CALLBACK(gst_cd_ripper_have_trm_id_cb), ripper);
     
     ripper->encoder = gst_cd_ripper_build_encoder(ripper->encoder_pipeline);
     if(ripper->encoder == NULL) {
@@ -278,12 +297,13 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
     
     gst_bin_add_many(GST_BIN(ripper->pipeline),
         ripper->cdparanoia,
+        mbtrm,
         queue,
         ripper->encoder,
         ripper->filesink,
         NULL);
         
-    if(!gst_element_link_many(ripper->cdparanoia, queue, ripper->encoder, ripper->filesink, NULL)) {
+    if(!gst_element_link_many(ripper->cdparanoia, mbtrm, queue, ripper->encoder, ripper->filesink, NULL)) {
         gst_cd_ripper_raise_error(ripper, _("Could not link pipeline elements"), NULL);
         return FALSE;
     }
