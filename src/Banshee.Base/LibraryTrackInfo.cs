@@ -423,19 +423,26 @@ namespace Banshee.Base
             }
         }
 
-		static string Choose (string priority, string fallback)
+		/*static string Choose (string priority, string fallback)
 		{
 			if (priority == null || priority.Length == 0)
 				return fallback;
 			return priority;
-		}
+		}*/
 		
         private void LoadFromFile(string filename)
         {
             ParseUri(filename);
             track_id = 0;
-   
-            AudioFile af = new AudioFile(filename, Banshee.Gstreamer.Utilities.DetectMimeType(uri));
+            
+            using(Banshee.Gstreamer.GstTagger tagger = new Banshee.Gstreamer.GstTagger()) {
+                if(!tagger.ProcessTrack(this)) {
+                    // maybe fall back on entagged?
+                    throw new ApplicationException("Not an audio file");
+                }
+            }
+            
+            /*AudioFile af = new AudioFile(filename, Banshee.Gstreamer.Utilities.DetectMimeType(uri));
 
             mimetype = af.MimeType;
 
@@ -446,7 +453,7 @@ namespace Banshee.Base
             track_number = af.TrackNumber == 0 ? track_number : (uint)af.TrackNumber;
             track_count = 0;
             duration = af.Duration;
-            year = af.Year;
+            year = af.Year;*/
             
             this.date_added = DateTime.Now;
         }

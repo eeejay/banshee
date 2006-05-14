@@ -45,27 +45,43 @@ namespace Banshee.Base
         
     public static class StreamTagger
     {
+        private static string Choose(string priority, string fallback)
+        {
+            return priority == null || priority.Length == 0 ? fallback : priority;
+        }
+    
         public static void TrackInfoMerge(TrackInfo track, StreamTag tag)
         {
             try {
                 switch(tag.Name) {
                     case CommonTags.Artist:
-                        track.Artist = (string)tag.Value;
+                        track.Artist = Choose((string)tag.Value, track.Artist);
                         break;
                     case CommonTags.Title:
-                        track.Title = (string)tag.Value;
+                        track.Title = Choose((string)tag.Value, track.Title);
                         break;
                     case CommonTags.Album:
-                        track.Album = (string)tag.Value;
+                        track.Album = Choose((string)tag.Value, track.Album);
                         break;
                     case CommonTags.Genre:
-                        track.Genre = (string)tag.Value;
+                        track.Genre = Choose((string)tag.Value, track.Genre);
                         break;
                     case CommonTags.TrackNumber:
-                        track.TrackNumber = (uint)tag.Value;
+                        uint track_number = (uint)tag.Value;
+                        track.TrackNumber = track_number == 0 ? track.TrackNumber : track_number;
                         break;
                     case CommonTags.TrackCount:
                         track.TrackCount = (uint)tag.Value;
+                        break;
+                    case CommonTags.Duration:
+                        track.Duration = new TimeSpan((uint)tag.Value * TimeSpan.TicksPerMillisecond);
+                        break;
+                    /* No year tag in GST it seems 
+                    case CommonTags.Year:
+                        track.Year = (uint)tag.Value;
+                        break;*/
+                    case CommonTags.StreamType:
+                        track.MimeType = (string)tag.Value;
                         break;
                 }
             } catch {
@@ -109,5 +125,6 @@ namespace Banshee.Base
         public const string TrackPeak         = "replaygain-track-peak";
         public const string AlbumGain         = "replaygain-album-gain";
         public const string AlbumPeak         = "replaygain-album-peak";
+        public const string StreamType        = "stream-type";
     }
 }

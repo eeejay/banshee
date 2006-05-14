@@ -31,7 +31,11 @@
  
 #include <gst/gst.h>
 
+typedef struct GstTagger GstTagger;
+
 typedef void (* GstTaggerTagFoundCallback) (const gchar *tag, const GValue *value, gpointer user_data);
+typedef void (* GstTaggerErrorCallback) (gpointer object, const gchar *error, const gchar *debug);
+typedef void (* GstTaggerFinishedCallback) (gpointer object);
 
 typedef struct {
     GstTaggerTagFoundCallback callback;

@@ -208,7 +208,7 @@ namespace Banshee.Base
                 return mimetype;
             } 
             
-            protected set {
+            set {
                 mimetype = value;
             }
         }

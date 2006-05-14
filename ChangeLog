@@ -1,3 +1,21 @@
+2006-05-13  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* libbanshee/gst-tagger.c: 
+	* libbanshee/gst-tagger.h: Merged full GStreamer tag parser 
+
+	* src/Banshee.Base/GstTagger.cs: Added bindings to the new GstTagger API
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: Use GstTagger instead of Entagged
+	to parse metadata from files
+
+	* src/Banshee.Base/StreamTagger.cs: Updated TrackInfoMerge to merge
+	all applicable tags from a StreamTag into a TrackInfo; added StreamType
+	to CommonTags
+
+	* src/Banshee.Base/TrackInfo.cs (set_MimeType): made public
+
 2006-05-10  Aaron Bockover  <aaron@abock.org>
 
 	* libbanshee/gst-mbtrm.c:
