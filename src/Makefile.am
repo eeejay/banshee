@@ -9,16 +9,19 @@ SUBDIRS = \
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
 TARGET = banshee.exe
+BANSHEE_IMPORT_ASSEMBLY = banshee-import.exe
 
 bansheedir = $(pkglibdir)
-banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config 
-bin_SCRIPTS = banshee
+banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config $(BANSHEE_IMPORT_ASSEMBLY) $(BANSHEE_IMPORT_ASSEMBLY).mdb
+bin_SCRIPTS = banshee banshee-import
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
+	$(banshee_import_sources) \
 	AssemblyInfo.cs.in \
 	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
 	banshee.in  \
+	banshee-import.in \
 	BansheeDbusClient.cs \
 	BansheeDbusClient.Makefile
 
@@ -132,13 +135,18 @@ SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 banshee_build_sources = $(addprefix $(srcdir)/, $(banshee_sources))
 banshee_build_sources += $(banshee_generated_sources)
 
-all: AmazonSearchService.cs $(TARGET)
+all: AmazonSearchService.cs $(TARGET) $(BANSHEE_IMPORT_ASSEMBLY)
 
 $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) \
 	-target:exe -out:"$@" \
 	$(SYSTEM_REFERENCES_BUILD) \
 	$(banshee_build_sources)
+
+banshee_import_sources = BansheeImport.cs
+
+$(BANSHEE_IMPORT_ASSEMBLY): $(banshee_import_sources)
+	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll $(banshee_import_sources)
 
 AmazonSearchService.cs: AmazonSearchService.wsdl
 	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs

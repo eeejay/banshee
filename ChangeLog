@@ -1,3 +1,20 @@
+2006-05-18  Aaron Bockover  <aaron@abock.org>
+
+	* src/BansheeImport.cs: a new standalone program that can import music
+	from the command line and create an initial database
+
+	* src/banshee-import.in: wrapper script for banshee-import.exe
+
+	* src/Makefile.am: build banshee-import.exe and install
+
+	* configure.ac: generate src/banshee-import
+
+2006-05-16  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Reset vertical scroll adjustment of the 
+	playlist view to the upper bound minus the page size if the value is
+	greater than that when changing sources (BNC #174406)
+
 2006-05-13  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Updated MonoDevelop project

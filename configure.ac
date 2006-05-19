@@ -392,6 +392,7 @@ libbanshee/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 src/banshee
+src/banshee-import
 src/Makefile
 src/AssemblyInfo.cs
 src/banshee.exe.config

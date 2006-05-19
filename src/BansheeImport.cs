@@ -33,7 +33,6 @@ using System.Collections;
 using Mono.Unix;
 
 using Banshee.Base;
-using Banshee.IO;
 using Entagged;
 using Sql;
 
@@ -83,10 +82,13 @@ public static class BansheeImport
     {
         bool is_regular_file = false;
         bool is_directory = false;
+
+        /* FIXME: for quick compat for pzb, not using Banshee.IO;
+                  need to change this to Banshee.IO in the future */
       
         try {
-            is_regular_file = IOProxy.File.Exists(source);
-            is_directory = !is_regular_file && IOProxy.Directory.Exists(source);
+            is_regular_file = File.Exists(source);
+            is_directory = !is_regular_file && Directory.Exists(source);
         } catch {
             return;
         }
@@ -95,11 +97,11 @@ public static class BansheeImport
             ImportFile(source);
         } else if(is_directory && !Path.GetFileName(System.IO.Path.GetDirectoryName(source)).StartsWith(".")) {
             try {
-                foreach(string file in IOProxy.Directory.GetFiles(source)) {
+                foreach(string file in Directory.GetFiles(source)) {
                     ProcessInput(file);
                 }
 
-                foreach(string directory in IOProxy.Directory.GetDirectories(source)) {
+                foreach(string directory in Directory.GetDirectories(source)) {
                     ProcessInput(directory);
                 }
             } catch(System.UnauthorizedAccessException) {
