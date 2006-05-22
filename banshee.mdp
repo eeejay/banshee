@@ -235,6 +235,8 @@
     <File name="./src/Banshee.Base/IO/Unix.cs" subtype="Code" buildaction="Compile" />
     <File name="./libbanshee/gst-mbtrm.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-mbtrm.h" subtype="Code" buildaction="Nothing" />
+    <File name="./src/BansheeImport.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Catalog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

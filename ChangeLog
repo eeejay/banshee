@@ -1,5 +1,19 @@
 2006-05-22  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Added new files to MonoDevelop project
+
+	* src/Banshee.Base/Catalog.cs: Added new Catalog class under Mono.Gettext
+	namespace (for now) to hopefully (in time) replace Mono.Unix.Catalog; 
+	this new version supports gettext domains (necessary for plugins) and
+	binds gettext domains to assemblies; current draw-back is that calling
+	System.Reflection.Assembly.GetCallingAssembly does a stack walk and is
+	therefore slow (Mono.Gettext.Catalog.GetString is about twice as slow
+	as Mono.Unix.Catalog.GetString right now)
+
+	* src/Banshee.Base/Makefile.am: Added Catalog.cs
+
+2006-05-22  Aaron Bockover  <aaron@abock.org>
+
 	Child Source patch from Lukas Lipka <lukas@pmad.net>
 
 	* src/Makefile.am: Fixed small build bug regarding CLEANFILES (Aaron)
