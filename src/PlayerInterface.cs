@@ -411,6 +411,7 @@ namespace Banshee
             playlistView.DragDataGet += OnPlaylistViewDragDataGet;
             playlistView.DragDrop += OnPlaylistViewDragDrop;
             playlistView.Selection.Changed += OnPlaylistViewSelectionChanged;
+            playlistView.Vadjustment.Changed += OnPlaylistViewVadjustmentChanged;
                 
             playlistView.EnableModelDragSource(
                 Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
@@ -927,6 +928,15 @@ namespace Banshee
             Globals.ActionManager["RemoveSongsAction"].Sensitive = !(source is AudioCdSource);
             Globals.ActionManager["DeleteSongsFromDriveAction"].Sensitive = 
                 !(source is AudioCdSource || source is DapSource);
+        }
+        
+        private void OnPlaylistViewVadjustmentChanged(object o, EventArgs args)
+        {
+            double max_offset = playlistView.Vadjustment.Upper - playlistView.Vadjustment.PageSize;
+            
+            if(playlistView.Vadjustment.Value > max_offset) {
+                playlistView.Vadjustment.Value = max_offset;
+            }
         }
         
         private void OnSourceManagerActiveSourceChanged(SourceEventArgs args)
