@@ -56,7 +56,6 @@ namespace Banshee.Base
         public BansheeDatabase Db;
         public Hashtable Tracks = new Hashtable();
         public Hashtable TracksFnKeyed = new Hashtable();
-        public Hashtable Playlists = new Hashtable();
         
         public event EventHandler Reloaded;
         public event EventHandler Updated;

@@ -58,6 +58,10 @@ namespace Banshee.Sources
                 OnTrackAdded(args.Track);
                 OnUpdated();
             };  
+
+            foreach(ChildSource playlist in PlaylistUtil.LoadSources()) {
+                AddChildSource(playlist);
+            }
         }
         
         public override void RemoveTrack(TrackInfo track)

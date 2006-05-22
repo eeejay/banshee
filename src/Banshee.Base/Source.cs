@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Source.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -54,15 +53,20 @@ namespace Banshee.Sources
         private int order;
         private string name;
 
+        private ArrayList child_sources;
+
         public event EventHandler Updated;
         public event TrackEventHandler TrackAdded;
         public event TrackEventHandler TrackRemoved;
         public event EventHandler ViewChanged;
+        public event SourceEventHandler ChildSourceAdded;
+        public event SourceEventHandler ChildSourceRemoved;
         
         protected Source(string name, int order)
         {
             this.name = name;
             this.order = order;
+            this.child_sources = new ArrayList ();
         }
         
         public void Dispose()
@@ -173,28 +177,48 @@ namespace Banshee.Sources
             }
         }
         
-        public virtual int Count {
-            get {
-                return -1;
+        public virtual void AddChildSource(ChildSource source)
+        {
+            source.SetParentSource(source);
+            child_sources.Add(source);
+        
+            SourceEventHandler handler = ChildSourceAdded;
+            if(handler != null) {
+                SourceEventArgs evargs = new SourceEventArgs();
+                evargs.Source = source;
+                handler(evargs);
             }
+        }
+
+        public virtual void RemoveChildSource(ChildSource source)
+        {
+            child_sources.Remove(source);
+
+            SourceEventHandler handler = ChildSourceRemoved;
+            if(handler != null) {
+                SourceEventArgs evargs = new SourceEventArgs();
+                evargs.Source = source;
+                handler(evargs);
+            }
+        }
+    
+        public ICollection Children {
+            get { return child_sources; }
+        }
+
+        public virtual int Count {
+            get { return -1; }
         }
                 
         public string Name {
-            get {
-                return name;
-            }
-            
-            protected set {
-                name = value;
-            }
+            get { return name; }
+            protected set { name = value; }
         }
         
         private static readonly ArrayList empty_track_list = new ArrayList();
         
         public virtual IEnumerable Tracks {
-            get {
-                return empty_track_list;
-            }
+            get { return empty_track_list; }
         }
         
         private object tracks_mutex = null;
@@ -209,68 +233,46 @@ namespace Banshee.Sources
         }
         
         public virtual Gdk.Pixbuf Icon {
-            get {
-                return null;
-            }
+            get { return null; }
         }
         
         public virtual Gtk.Widget ViewWidget {
-            get {
-                return null;
-            }
+            get { return null; }
         }
         
         public virtual bool ShowPlaylistHeader {
-            get {
-                return true;
-            }
+            get { return true; }
         }
         
         public virtual bool HandlesSearch {
-            get {
-                return false;
-            }
+            get { return false; }
         }
         
         public virtual bool SearchEnabled {
-            get {
-                return true;
-            }
+            get { return true; }
         }
         
         public int Order {
-            get {
-                return order;
-            }
+            get { return order; }
         }
         
         public bool CanEject {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "Eject");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "Eject"); }
         }
         
         private bool can_rename = true;
         public bool CanRename {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "UpdateName") && can_rename;
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "UpdateName") && can_rename; }
             
-            protected set {
-                can_rename = value;
-            }
+            protected set { can_rename = value; }
         }
         
         public bool HasProperties {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "ShowPropertiesDialog");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "ShowPropertiesDialog"); }
         }
         
         public bool CanRemoveTracks {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "RemoveTrack");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "RemoveTrack"); }
         }
     }
 }

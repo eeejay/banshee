@@ -1,8 +1,8 @@
 /***************************************************************************
  *  SourceManager.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -174,19 +174,12 @@ namespace Banshee.Sources
         }
         
         public static Source DefaultSource {
-            get {
-                return default_source;
-            }
-            
-            set {
-                default_source = value;
-            }
+            get { return default_source; }
+            set { default_source = value; }
         }
         
         public static Source ActiveSource {
-            get {
-                return active_source;
-            }
+            get { return active_source; }
         }
         
         public static void SetActiveSource(Source source)
@@ -196,8 +189,9 @@ namespace Banshee.Sources
         
         public static void SetActiveSource(Source source, bool notify)
         {
-            if (active_source != null)
-                active_source.Deactivate ();
+            if(active_source != null) {
+                active_source.Deactivate();
+            }
             
             active_source = source;
             source.Activate();
@@ -216,22 +210,8 @@ namespace Banshee.Sources
             });
         }
         
-        public static int ActiveSourceIndex {
-            get {
-                for(int i = 0; i < sources.Count; i++) {
-                    if((sources[i] as Source) == active_source) {
-                        return i;
-                    }
-                }
-                
-                return -1;
-            }
-        }
-        
         public static ICollection Sources {
-            get {
-                return sources;
-            }
+            get { return sources; }
         }
     }
 }

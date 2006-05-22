@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  SourceView.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -67,37 +66,37 @@ namespace Banshee
         private TreeIter newPlaylistIter = TreeIter.Zero;
         private bool newPlaylistVisible = false;
         
-        private ListStore store;
+        private TreeStore store;
         private int currentTimeout = -1;
-
+    
         public SourceView()
         {
+            // Hidden expander column
             TreeViewColumn col = new TreeViewColumn();
+            col.Visible = false;
+            AppendColumn(col);
+            ExpanderColumn = col;
+        
+            col = new TreeViewColumn();
             SourceRowRenderer renderer = new SourceRowRenderer();
             col.Title = Catalog.GetString("Source");
             col.PackStart(renderer, true);
             col.SetCellDataFunc(renderer, new TreeCellDataFunc(SourceCellDataFunc));
             AppendColumn(col);
             
-            store = new ListStore(typeof(Source));
+            store = new TreeStore(typeof(Source));
             Model = store;
             HeadersVisible = false;
             
             CursorChanged += OnCursorChanged;
             RefreshList();
-            
+
             SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
-                if(FindSource(args.Source).Equals(TreeIter.Zero)) {
-                    TreeIter iter = store.Insert(args.Position);
-                    store.SetValue(iter, 0, args.Source);
-                }
+                AddSource(args.Source, args.Position);
             };
             
             SourceManager.SourceRemoved += delegate(SourceEventArgs args) {
-                TreeIter iter = FindSource(args.Source);
-                if(!iter.Equals(TreeIter.Zero)) {
-                    store.Remove(ref iter);
-                }
+                RemoveSource(args.Source);
             };
             
             SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
@@ -109,8 +108,10 @@ namespace Banshee
             };
         }
 
-        private TreeIter FindSource(Source source) {
-            for(int i = 0, n = store.IterNChildren(); i < n; i++) {
+        // FIXME: This is lame and could use some recusrion instead (Lukas)
+        private TreeIter FindSource(Source source)
+        {
+            for(int i = 0, m = store.IterNChildren(); i < m; i++) {
                 TreeIter iter = TreeIter.Zero;
                 if(!store.IterNthChild(out iter, i)) {
                     continue;
@@ -119,9 +120,95 @@ namespace Banshee
                 if((store.GetValue(iter, 0) as Source) == source) {
                     return iter;
                 }
+        
+                for(int j = 0, n = store.IterNChildren(iter); j < n; j++) {
+                    TreeIter citer = TreeIter.Zero;
+                    if(!store.IterNthChild(out citer, iter, j)) {
+                        continue;
+                    }
+    
+                    if((store.GetValue(citer, 0) as Source) == source) {
+                        return citer;
+                    }
+                }
             }
 
             return TreeIter.Zero;
+        }
+        
+        private void AddSource(Source source)
+        {
+            AddSource(source, -1);
+        }
+
+        private void AddSource(Source source, int position)
+        {
+            if(FindSource(source).Equals(TreeIter.Zero)) {
+                TreeIter iter = store.InsertNode(position);
+                store.SetValue(iter, 0, source);
+
+                foreach (ChildSource s in source.Children) {
+                    TreeIter i = store.AppendNode(iter);
+                    store.SetValue(i, 0, s);
+                }
+        
+                source.ChildSourceAdded += delegate(SourceEventArgs e) {
+                    TreeIter i = store.AppendNode(iter);
+                    store.SetValue(i, 0, e.Source);
+                    Expand(iter);
+                    UpdateView ();
+                };
+
+                source.ChildSourceRemoved += delegate(SourceEventArgs e) {
+                    RemoveSource(e.Source);
+                };
+
+                Expand(iter);
+            }
+
+            UpdateView();
+        }
+
+        private void RemoveSource(Source source)
+        {
+            TreeIter iter = FindSource(source);
+            if(!iter.Equals(TreeIter.Zero)) {
+                store.Remove(ref iter);
+            }
+
+            UpdateView();
+        }
+    
+        private void Expand(TreeIter iter)
+        {
+            TreePath path = store.GetPath (iter);
+            ExpandRow (path, true);
+        }
+    
+        private void RefreshList()
+        {
+            store.Clear();
+            foreach(Source source in SourceManager.Sources) {
+                AddSource (source);
+            }
+        } 
+
+        private bool UpdateView()
+        {
+            for(int i = 0, m = store.IterNChildren(); i < m; i++) {
+                TreeIter iter = TreeIter.Zero;
+                if(!store.IterNthChild(out iter, i)) {
+                    continue;
+                }
+                
+                if(store.IterNChildren(iter) > 0) {
+                    ExpanderColumn = Columns[1];
+                    return true;
+                }
+            }
+        
+            ExpanderColumn = Columns[0];
+            return false;
         }
                     
         protected void SourceCellDataFunc(TreeViewColumn tree_column,
@@ -149,14 +236,6 @@ namespace Banshee
             Source source = store.GetValue(iter, 0) as Source;
             source.Rename(text);
         }
-        
-        private void RefreshList()
-        {
-            store.Clear();
-            foreach(Source source in SourceManager.Sources) {
-                store.AppendValues(source);
-            }
-        } 
         
         private void OnCursorChanged(object o, EventArgs args)
         {                
@@ -192,58 +271,74 @@ namespace Banshee
         {
             base.OnDragMotion(context, x, y, time);
             SetDragDestRow(null, TreeViewDropPosition.IntoOrAfter);
-            Gdk.Drag.Status(context, 0, time);
+            Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
 
-            // TODO: Support other drag sources
-            if(!(SourceManager.ActiveSource is LibrarySource)) {
-                return true;
+            // FIXME: We need to handle this nicer
+            if(!(SourceManager.ActiveSource is LibrarySource ||
+                SourceManager.ActiveSource is PlaylistSource)) {
+                return false;
             }
-            
+        
             if(!newPlaylistVisible) {
-                newPlaylistIter = store.AppendValues(newPlaylistSource);
+                TreeIter library = FindSource(LibrarySource.Instance);
+                newPlaylistIter = store.AppendNode(library);
+                store.SetValue(newPlaylistIter, 0, newPlaylistSource);
                 newPlaylistVisible = true;
-            }
 
+                UpdateView ();
+                Expand(library);
+            }
+        
             TreePath path;
             TreeViewDropPosition pos;
-            if(!GetDestRowAtPos(x, y, out path, out pos)) {
-                path = store.GetPath(newPlaylistIter);
-            }
+            if(GetDestRowAtPos(x, y, out path, out pos)) {
+                Source source = GetSource(path);
+                SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
+                
+                // TODO: Support other drag destinations
+                if((source is PlaylistSource) || (source is DapSource)) {
+                    return true;
+                }
 
-            Source source = GetSource(path);
-            if(source == null) {
+                Gdk.Drag.Status(context, 0, time);
                 return true;
             }
             
-            // TODO: Support other drag destinations
-            if(!(source is PlaylistSource) && !(source is DapSource)) {
-                return true;
-            }
-            
-            SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
-            Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
             return true;
         }
         
+        private Source final_drag_source = null;
+        private uint final_drag_start_time = 0;
+    
         protected override void OnDragLeave(Gdk.DragContext context, uint time)
         {
+            TreePath path;
+            TreeViewDropPosition pos;
+            GetDragDestRow (out path, out pos);
+
+            if(path == null) {
+                path = store.GetPath(newPlaylistIter);
+            }
+            
+            final_drag_source = GetSource (path);
+            final_drag_start_time = context.StartTime;
+        
             if(newPlaylistVisible) {
                 store.Remove(ref newPlaylistIter);
                 newPlaylistVisible = false;
+                UpdateView();
             }
         }
 
         protected override void OnDragDataReceived(Gdk.DragContext context, int x, int y,
             Gtk.SelectionData selectionData, uint info, uint time)
-        {
-            TreePath destPath;
-            TreeViewDropPosition pos;
-            
+        {       
             string rawData = Dnd.SelectionDataToString(selectionData);        
             string [] rawDataArray = Dnd.SplitSelectionData(rawData);
+            
             if(rawData.Length <= 0) {
                 Gtk.Drag.Finish(context, false, false, time);
-                return;        
+                return;
             }
             
             ArrayList tracks = new ArrayList();
@@ -255,21 +350,24 @@ namespace Banshee
                     continue;
                 }
             }
-            
-            if(GetDestRowAtPos(x, y, out destPath, out pos)) {
-                Source source = GetSource(destPath);
-                if(source is PlaylistSource || source is DapSource) {
-                    source.AddTrack(tracks);
-                    source.Commit();
+
+            if(final_drag_start_time == context.StartTime) {
+                if(final_drag_source == newPlaylistSource) {
+                    PlaylistSource playlist = new PlaylistSource();
+                    playlist.AddTrack(tracks);
+                    playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
+                    playlist.Commit();
+                    LibrarySource.Instance.AddChildSource(playlist);
+                    UpdateView();
+                } else {
+                    Source source = final_drag_source;
+                    if(source is PlaylistSource || source is DapSource) {
+                        source.AddTrack(tracks);
+                        source.Commit();
+                    }
                 }
-            } else {
-                PlaylistSource playlist = new PlaylistSource();
-                playlist.AddTrack(tracks);
-                playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
-                playlist.Commit();
-                SourceManager.AddSource(playlist);
             }
-            
+        
             Gtk.Drag.Finish(context, true, false, time);
         }
         
@@ -285,20 +383,18 @@ namespace Banshee
             if(store.GetIter(out iter, path)) {
                 return store.GetValue(iter, 0) as Source;
             }
-            
+        
             return null;
         }
         
         public void ResetHighlight()
         {
-            TreeIter iter = TreeIter.Zero;
+            TreeIter iter = FindSource (SourceManager.ActiveSource);
             
-            if(!store.IterNthChild(out iter, SourceManager.ActiveSourceIndex)) {
-                return;
+            if(!iter.Equals(TreeIter.Zero)){
+                Selection.SelectIter(iter);
             }
-             
-            Selection.SelectIter(iter);
-        }
+         }
         
         public Source HighlightedSource {
             get {

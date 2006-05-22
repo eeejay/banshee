@@ -25,7 +25,7 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	BansheeDbusClient.cs \
 	BansheeDbusClient.Makefile
 
-CLEANFILES = banshee banshee.exe *.mdb *.dll
+CLEANFILES = banshee banshee.exe banshee-import.exe banshee-import *.mdb *.dll
 DISTCLEANFILES = entagged-sharp.dll $(banshee_generated_sources)
 MAINTAINERCLEANFILES = Makefile.in
 

@@ -307,7 +307,7 @@ namespace Banshee
             additional_action_buttons_box.Show ();
             
             (gxml["RightToolbarContainer"] as Box).PackStart(
-            	additional_action_buttons_box, false, false, 0);
+                additional_action_buttons_box, false, false, 0);
             (gxml["RightToolbarContainer"] as Box).ReorderChild (additional_action_buttons_box, 0);
             
             InterfaceElements.ActionButtonBox = additional_action_buttons_box;
@@ -601,7 +601,6 @@ namespace Banshee
             LoadSourceView();
             
             SourceManager.AddSource(LibrarySource.Instance, true);
-            PlaylistUtil.LoadSources();
 
             if(LocalQueueSource.Instance.Count > 0) {
                 SourceManager.AddSource(LocalQueueSource.Instance);
@@ -1454,7 +1453,7 @@ namespace Banshee
             playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
             playlist.Commit();
             
-            SourceManager.AddSource(playlist);
+            LibrarySource.Instance.AddChildSource(playlist);
         }
         
         private void OnItemAddToPlaylistActivated(object o, EventArgs args)
@@ -1873,7 +1872,7 @@ namespace Banshee
         {
             PlaylistSource playlist = new PlaylistSource();
             playlist.Rename(PlaylistUtil.UniqueName);
-            SourceManager.AddSource(playlist);
+            LibrarySource.Instance.AddChildSource(playlist);
         }
         
         private void OnImportFolderAction(object o, EventArgs args)

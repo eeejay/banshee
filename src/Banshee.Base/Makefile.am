@@ -41,6 +41,7 @@ DAP_SOURCES = \
 SOURCES_SOURCES = \
 	$(srcdir)/SourceManager.cs \
 	$(srcdir)/Source.cs \
+	$(srcdir)/ChildSource.cs \
 	$(srcdir)/Sources/LibrarySource.cs \
 	$(srcdir)/Sources/PlaylistSource.cs \
 	$(srcdir)/Sources/AudioCdSource.cs \

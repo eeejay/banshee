@@ -35,9 +35,10 @@ using Banshee.Base;
 
 namespace Banshee.Sources
 {
-    public class PlaylistSource : Source
+    public class PlaylistSource : ChildSource
     {
         private static ArrayList playlists = new ArrayList();
+    
         public static IEnumerable Playlists {
             get {
                 return playlists;
@@ -58,11 +59,15 @@ namespace Banshee.Sources
         public int Id {
             get { return id; }
         }
-    
+
         public PlaylistSource() : this(0)
         {
         }
-    
+
+        public PlaylistSource(string name) : base(name, 500)
+        {
+        }
+
         public PlaylistSource(int id) : base(Catalog.GetString("New Playlist"), 500)
         {
             this.id = id;
@@ -333,9 +338,7 @@ namespace Banshee.Sources
         }
         
         public override IEnumerable Tracks {
-            get {
-                return tracks;
-            }
+            get { return tracks; }
         }
         
         public override object TracksMutex {
@@ -343,28 +346,29 @@ namespace Banshee.Sources
         }
         
         public override int Count {
-            get {
-                return tracks.Count;
-            }
+            get { return tracks.Count; }
         }  
         
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist");
         public override Gdk.Pixbuf Icon {
-            get {
-                return IconThemeUtils.LoadIcon(22, "source-playlist");
-            }
+            get { return icon; }
         }
     }
     
     public static class PlaylistUtil
     {
-        public static void LoadSources()
+        public static ICollection LoadSources()
         {
+            ArrayList sources = new ArrayList ();
             IDataReader reader = Globals.Library.Db.Query("SELECT PlaylistID FROM Playlists");
+            
             while(reader.Read()) {
                 PlaylistSource playlist = new PlaylistSource(Convert.ToInt32(reader[0]));
-                SourceManager.AddSource(playlist);
+                sources.Add(playlist);
             }
+            
             reader.Dispose();
+            return sources;
         }
     
         internal static int GetPlaylistID(string name)
