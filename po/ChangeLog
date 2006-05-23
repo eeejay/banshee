@@ -1,13 +1,16 @@
+2006-05-23  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
 2006-05-15  Vincent van Adrighem  <adrighem@gnome.org>
 
 	* nl.po: Translation updated by Pepijn van de Geer.
 
 2006-05-12  Christophe Fergeau  <teuf@gnome.org>
 
-        * fr.po: revert previous commit of an up-to-date proof-read
-        translation since I was told such translations don't
-	belong in CVS
-        yet.
+	* fr.po: revert previous commit of an up-to-date proof-read
+	translation since I was told such translations don't
+	belong in CVS yet.
 
 2006-05-11  Christophe Fergeau  <teuf@gnome.org>
 
