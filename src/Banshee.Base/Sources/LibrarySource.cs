@@ -59,9 +59,32 @@ namespace Banshee.Sources
                 OnUpdated();
             };  
 
-            foreach(ChildSource playlist in PlaylistUtil.LoadSources()) {
+            PlaylistSortCriteria criteria;
+            PlaylistSortOrder order;
+            
+            try {
+                criteria = (PlaylistSortCriteria)Globals.Configuration.Get(
+                    GConfKeys.BasePath + "PlaylistSortCriteria");
+                order = (PlaylistSortOrder)Globals.Configuration.Get(
+                    GConfKeys.BasePath + "PlaylistSortOrder");
+            } catch {
+                criteria = PlaylistSortCriteria.Default;
+                order = PlaylistSortOrder.Ascending;
+            }
+
+            LoadPlaylists(criteria, order);
+        }
+        
+        private void LoadPlaylists(PlaylistSortCriteria criteria, PlaylistSortOrder order)
+        {
+            ClearChildSources();
+            
+            foreach(ChildSource playlist in PlaylistUtil.LoadSources(criteria, order)) {
                 AddChildSource(playlist);
             }
+            
+            Globals.Configuration.Set(GConfKeys.BasePath + "PlaylistSortCriteria", (int)criteria);
+            Globals.Configuration.Set(GConfKeys.BasePath + "PlaylistSortOrder", (int)order);
         }
         
         public override void RemoveTrack(TrackInfo track)
@@ -72,6 +95,60 @@ namespace Banshee.Sources
         public override void Commit()
         {
             Globals.Library.CommitRemoveQueue();
+        }
+
+        private Gtk.ActionGroup action_group = null;
+        public override string ActionPath {
+            get {
+                if(action_group != null) {
+                    return "/LibraryMenu";
+                }
+                
+                action_group = new Gtk.ActionGroup("Library");
+                action_group.Add(new Gtk.ActionEntry [] {
+                    new Gtk.ActionEntry("SortPlaylistAction", null, 
+                        Catalog.GetString("Sort Playlists"), null, null, null),
+                        
+                    new Gtk.ActionEntry("SortPlaylistCreateAction", null, 
+                        Catalog.GetString("Creation Order"), null, null, 
+                        delegate { LoadPlaylists(PlaylistSortCriteria.Default, PlaylistSortOrder.Ascending); }),
+                        
+                    new Gtk.ActionEntry("SortPlaylistNameAscAction", null, 
+                        Catalog.GetString("Name Ascending"), null, null, 
+                        delegate { LoadPlaylists(PlaylistSortCriteria.Name, PlaylistSortOrder.Ascending); }),
+                        
+                    new Gtk.ActionEntry("SortPlaylistNameDescAction", null, 
+                        Catalog.GetString("Name Descending"), null, null, 
+                        delegate { LoadPlaylists(PlaylistSortCriteria.Name, PlaylistSortOrder.Descending); }),
+                        
+                    new Gtk.ActionEntry("SortPlaylistSizeAscAction", null, 
+                        Catalog.GetString("Size Ascending"), null, null, 
+                        delegate { LoadPlaylists(PlaylistSortCriteria.Size, PlaylistSortOrder.Ascending); }),
+                        
+                    new Gtk.ActionEntry("SortPlaylistSizeDescAction", null, 
+                        Catalog.GetString("Size Descending"), null, null, 
+                        delegate { LoadPlaylists(PlaylistSortCriteria.Size, PlaylistSortOrder.Descending); })
+                });
+                
+                Globals.ActionManager.UI.AddUiFromString(@"
+                    <ui>
+                        <popup name='LibraryMenu' action='LibraryMenuActions'>
+                            <menu name='SortPlaylist' action='SortPlaylistAction'>
+                                <menuitem name='SortPlaylistCreate' action='SortPlaylistCreateAction' />
+                                <separator />
+                                <menuitem name='SortPlaylistNameAsc' action='SortPlaylistNameAscAction' />
+                                <menuitem name='SortPlaylistNameDesc' action='SortPlaylistNameDescAction' />
+                                <menuitem name='SortPlaylistSizeAsc' action='SortPlaylistSizeAscAction' />
+                                <menuitem name='SortPlaylistSizeDesc' action='SortPlaylistSizeDescAction' />
+                            </menu>
+                        </popup>
+                    </ui>
+                ");
+                
+                Globals.ActionManager.UI.InsertActionGroup(action_group, 0);
+                
+                return "/LibraryMenu";
+            }
         }
         
         public override IEnumerable Tracks {

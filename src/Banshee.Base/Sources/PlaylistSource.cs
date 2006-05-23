@@ -355,12 +355,46 @@ namespace Banshee.Sources
         }
     }
     
+    public enum PlaylistSortCriteria {
+        Default,
+        Name,
+        Size
+    }
+    
+    public enum PlaylistSortOrder {
+        Ascending,
+        Descending
+    }
+    
     public static class PlaylistUtil
     {
-        public static ICollection LoadSources()
+        public static ICollection LoadSources(PlaylistSortCriteria criteria, PlaylistSortOrder order)
         {
-            ArrayList sources = new ArrayList ();
-            IDataReader reader = Globals.Library.Db.Query("SELECT PlaylistID FROM Playlists");
+            string sort_query = String.Empty;
+            
+            switch(criteria) {
+                case PlaylistSortCriteria.Name:
+                    sort_query += " ORDER BY Name ";
+                    break;
+                case PlaylistSortCriteria.Size:
+                    sort_query += @" ORDER BY (
+                        SELECT COUNT(*) 
+                        FROM PlaylistEntries
+                        WHERE Playlists.PlaylistID = PlaylistEntries.PlaylistID
+                    ) ";
+                    break;
+                default:
+                    break;
+            }
+            
+            if(sort_query != String.Empty) {
+                sort_query += order == PlaylistSortOrder.Ascending ? "ASC" : "DESC";
+            }
+            
+            ArrayList sources = new ArrayList();
+            IDataReader reader = Globals.Library.Db.Query(@"
+                SELECT PlaylistID 
+                FROM Playlists" + sort_query);
             
             while(reader.Read()) {
                 PlaylistSource playlist = new PlaylistSource(Convert.ToInt32(reader[0]));

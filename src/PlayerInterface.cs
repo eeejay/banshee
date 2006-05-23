@@ -1242,9 +1242,6 @@ namespace Banshee
             dialog.ShowAll();
         }
      
-        private uint popupTime;
-        private Menu source_menu = null;
-        
         [GLib.ConnectBefore]
         private void OnSourceViewButtonPressEvent(object o, ButtonPressEventArgs args)
         {
@@ -1260,21 +1257,15 @@ namespace Banshee
             
             sourceView.HighlightPath(path);
             Source source = sourceView.GetSource(path);
-            
-            if(source is LibrarySource) {
-                args.RetVal = true;
-                return;
-            }
 
             SensitizeActions(source);
-            
-            if(source_menu == null) {
-                source_menu = Globals.ActionManager.GetWidget("/SourceMenu") as Menu;
-                source_menu.SelectionDone += delegate(object o, EventArgs args) {
-                    SensitizeActions(SourceManager.ActiveSource);
-                    sourceView.ResetHighlight();
-                };
-            }
+
+            string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
+            Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
+            source_menu.SelectionDone += delegate {
+                SensitizeActions(SourceManager.ActiveSource);
+                sourceView.ResetHighlight();
+            };
             
             source_menu.Popup(null, null, null, 0, args.Event.Time);
             source_menu.Show();

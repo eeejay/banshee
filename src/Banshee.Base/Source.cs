@@ -201,6 +201,17 @@ namespace Banshee.Sources
                 handler(evargs);
             }
         }
+        
+        public virtual void ClearChildSources()
+        {
+            while(child_sources.Count > 0) {
+                RemoveChildSource(child_sources[0] as ChildSource);
+            }
+        }
+        
+        public virtual string ActionPath {
+            get { return null; }
+        }
     
         public ICollection Children {
             get { return child_sources; }

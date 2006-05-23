@@ -1,3 +1,17 @@
+2006-05-23  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: When right clicking on a source, use the
+	custom source menu if it provides one, otherwise use the default
+
+	* src/Banshee.Base/Source.cs: new property, ActionPath that allows
+	sources to provide a path to a UI merged into Globals.ActionManager
+
+	* src/Banshee.Base/Sources/LibrarySource.cs: Implement ActionPath and
+	provide a UI for setting the sort order on playlists in the view
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Allow specifying a 
+	PlaylistSortCriteria and a PlaylistSortOrder when loading the playlists
+
 2006-05-22  Aaron Bockover  <aaron@abock.org>
 
 	* banshee.mdp: Added new files to MonoDevelop project
