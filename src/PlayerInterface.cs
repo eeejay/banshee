@@ -2134,6 +2134,9 @@ namespace Banshee
         private void OnRestartSongAction(object o, EventArgs args)
         {
             PlayerEngineCore.Position = 0;
+            if(PlayerEngineCore.CurrentState == PlayerEngineState.Paused) {
+                PlayerEngineCore.Play();
+            }
         }
         
         private void SetRepeatMode(RepeatMode mode)

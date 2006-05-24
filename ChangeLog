@@ -1,3 +1,8 @@
+2006-05-24  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs (OnRestartSongAction): If pipeline is paused, 
+	play the song from the beginning
+
 2006-05-23  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlayerInterface.cs: When right clicking on a source, use the
