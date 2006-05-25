@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-23 12:11+0200\n"
-"PO-Revision-Date: 2006-05-23 12:12+0200\n"
+"POT-Creation-Date: 2006-05-25 11:10+0200\n"
+"PO-Revision-Date: 2006-05-25 11:13+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -644,10 +644,10 @@ msgstr "H_udba"
 
 #: ../src/Banshee.Base/ActionManager.cs:64
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:71
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:412
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:441
-#: ../src/PlayerInterface.cs:1498
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:446
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:468
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:475
+#: ../src/PlayerInterface.cs:1489
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
@@ -1297,6 +1297,30 @@ msgstr "({0} zbývá)"
 msgid "Music Library"
 msgstr "Hudební knihovna"
 
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:110
+msgid "Sort Playlists"
+msgstr "Setřídit seznamy skladeb"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:113
+msgid "Creation Order"
+msgstr "Pořadí vytvoření"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:117
+msgid "Name Ascending"
+msgstr "Jméno vzestupně"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:121
+msgid "Name Descending"
+msgstr "Jméno sestupně"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:125
+msgid "Size Ascending"
+msgstr "Velikost vzestupně"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:129
+msgid "Size Descending"
+msgstr "Velikost sestupně"
+
 #: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
 msgid "Local Queue"
 msgstr "Lokální fronta"
@@ -1410,7 +1434,7 @@ msgstr "Přestavět iPod databázi..."
 #. args.FileName, e.GetType(), e.Message);
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:133
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:137
-#: ../src/PlayerInterface.cs:1740
+#: ../src/PlayerInterface.cs:1731
 msgid "Scanning"
 msgstr "Vyhledávám"
 
@@ -1902,19 +1926,19 @@ msgstr "Načítám..."
 msgid "All"
 msgstr "Všechno"
 
-#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1297
+#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1288
 msgid "Song Name"
 msgstr "Název písně"
 
-#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1295
+#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1286
 msgid "Artist Name"
 msgstr "Jméno autora"
 
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1299
+#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1290
 msgid "Album Title"
 msgstr "Jméno albumu"
 
-#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1301
+#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1292
 #: ../src/PlaylistView.cs:105
 msgid "Genre"
 msgstr "Žánr"
@@ -1992,11 +2016,11 @@ msgstr "Chyba přehrávání"
 msgid "Import"
 msgstr "Importovat"
 
-#: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2041
+#: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2032
 msgid "Rename Device"
 msgstr "Přejmenovat zařízení"
 
-#: ../src/PlayerInterface.cs:1079 ../src/PlayerInterface.cs:2035
+#: ../src/PlayerInterface.cs:1079 ../src/PlayerInterface.cs:2026
 msgid "Rename Playlist"
 msgstr "Přejmenovat seznam skladeb"
 
@@ -2021,20 +2045,20 @@ msgstr[2] "{0} položek"
 msgid "{0} Total Play Time"
 msgstr "celkový čas pro přehrání {0}"
 
-#: ../src/PlayerInterface.cs:1517
+#: ../src/PlayerInterface.cs:1508
 msgid "Clear"
 msgstr "Žádná"
 
-#: ../src/PlayerInterface.cs:1728
+#: ../src/PlayerInterface.cs:1719
 msgid "Could Not Eject"
 msgstr "Nelze vysunout"
 
-#: ../src/PlayerInterface.cs:1756
+#: ../src/PlayerInterface.cs:1747
 #, csharp-format
 msgid "Cannot Import: {0} ({1})"
 msgstr "Nemohu importovat: {0}·({1})"
 
-#: ../src/PlayerInterface.cs:1798
+#: ../src/PlayerInterface.cs:1789
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -2053,7 +2077,7 @@ msgstr[2] ""
 "Opravdu·chcete·smazat·vybraných <b>({0})</b>·skladeb·z·vaší knihovny "
 "<i><b>a</b></i> disku? Tato operace smaže soubory natrvalo."
 
-#: ../src/PlayerInterface.cs:1807
+#: ../src/PlayerInterface.cs:1798
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2063,17 +2087,17 @@ msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
 
-#: ../src/PlayerInterface.cs:1816
+#: ../src/PlayerInterface.cs:1807
 msgid "Remove Selected Songs from Library"
 msgstr "Smazání vybrané písničky z seznamu skladeb"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:1969
+#: ../src/PlayerInterface.cs:1960
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synchronizovat {0}"
 
-#: ../src/PlayerInterface.cs:1970
+#: ../src/PlayerInterface.cs:1961
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2090,7 +2114,7 @@ msgstr ""
 "Banshee do {0}\n"
 "<big>•</big> <i>Uložit manuální změny</i>: uložit pouze vaše ruční změny"
 
-#: ../src/PlayerInterface.cs:1976
+#: ../src/PlayerInterface.cs:1967
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2098,19 +2122,19 @@ msgstr ""
 "<b>Varování:</b> akce změní nebo smažou stávající obsah iPodu a mohou "
 "způsobit nekompatibilitu s iTunes!"
 
-#: ../src/PlayerInterface.cs:1978
+#: ../src/PlayerInterface.cs:1969
 msgid "Synchronize Library"
 msgstr "Synchronizovat knihovnu"
 
-#: ../src/PlayerInterface.cs:1980
+#: ../src/PlayerInterface.cs:1971
 msgid "Save Manual Changes"
 msgstr "Uložit manuální změny"
 
-#: ../src/PlayerInterface.cs:2036
+#: ../src/PlayerInterface.cs:2027
 msgid "Enter new playlist name"
 msgstr "Vložte nový název seznamu skladeb"
 
-#: ../src/PlayerInterface.cs:2042
+#: ../src/PlayerInterface.cs:2033
 msgid "Enter new name for your device"
 msgstr "Zadejte nové jméno vašeho zařízení"
 
