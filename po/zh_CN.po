@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-26 20:06+0800\n"
-"PO-Revision-Date: 2006-02-02 13:43+0800\n"
+"POT-Creation-Date: 2006-05-27 10:09+0200\n"
+"PO-Revision-Date: 2006-05-27 19:18+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -63,9 +63,8 @@ msgid "<big><b>Editing Song</b></big>"
 msgstr "<big><b>编辑歌曲</b></big>"
 
 #: ../data/banshee.glade.h:10
-#, fuzzy
 msgid "<big><b>Import Music to Library</b></big>"
-msgstr "<big><b>编辑歌曲</b></big>"
+msgstr "<big><b>将音乐导入到库中</b></big>"
 
 #: ../data/banshee.glade.h:11
 msgid "<small><i><Unknown></i></small>"
@@ -109,7 +108,7 @@ msgstr "声道数："
 
 #: ../data/banshee.glade.h:22
 msgid "Choose an import source:"
-msgstr ""
+msgstr "选择导入源："
 
 #: ../data/banshee.glade.h:23
 msgid "Copy files to Banshee Music Folder when importing to Library"
@@ -120,9 +119,8 @@ msgid "Data CD"
 msgstr "数据 CD"
 
 #: ../data/banshee.glade.h:25
-#, fuzzy
 msgid "Default Engine"
-msgstr "GStreamer 引擎"
+msgstr "默认引擎"
 
 #: ../data/banshee.glade.h:26
 msgid "Disk Drive:"
@@ -142,7 +140,7 @@ msgstr "整盘一次"
 
 #: ../data/banshee.glade.h:30
 msgid "Do not show this dialog again"
-msgstr ""
+msgstr "不再显示此对话框"
 
 #: ../data/banshee.glade.h:31 ../src/TrackProperties.cs:240
 msgid "Editing Song"
@@ -162,7 +160,7 @@ msgstr "编码："
 
 #: ../data/banshee.glade.h:35
 msgid "Enter the address of the file you would like to open:"
-msgstr ""
+msgstr "输入您想要打开的文件的地址："
 
 #: ../data/banshee.glade.h:36 ../src/Dialogs.cs:88
 msgid "Error"
@@ -173,14 +171,12 @@ msgid "File Name:"
 msgstr "文件名："
 
 #: ../data/banshee.glade.h:38
-#, fuzzy
 msgid "Import Music Source"
-msgstr "导入音乐"
+msgstr "导入音乐源"
 
 #: ../data/banshee.glade.h:39
-#, fuzzy
 msgid "Import Music to Library"
-msgstr "将文件导入库"
+msgstr "将音乐导入到库中"
 
 #: ../data/banshee.glade.h:40
 msgid "Imported On:"
@@ -204,7 +200,7 @@ msgstr "播放次数："
 
 #: ../data/banshee.glade.h:45 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
-msgstr ""
+msgstr "打开位置"
 
 #: ../data/banshee.glade.h:46
 msgid "Overburn"
@@ -223,9 +219,8 @@ msgid "Sample Rate:"
 msgstr "采样率："
 
 #: ../data/banshee.glade.h:50
-#, fuzzy
 msgid "Seek to Position"
-msgstr "窗口位置 X"
+msgstr "搜索到位置"
 
 #: ../data/banshee.glade.h:51
 msgid "Simulate write"
@@ -260,14 +255,11 @@ msgid "Write Speed:"
 msgstr "写入速度："
 
 #: ../data/banshee.glade.h:58
-#, fuzzy
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
 msgstr ""
-"您的音乐库目前为空。您可以现在就将新音乐导入到您的库中，也可以稍后再导入。\n"
-"\n"
-"自动导入或导入较大文件夹可能要花很长时间，所以请保持耐心。"
+"您的音乐库目前为空。您可以现在就将新音乐导入到您的库中，也可以稍后再导入。"
 
 #: ../data/banshee.glade.h:59
 msgid "_Artist"
@@ -275,7 +267,7 @@ msgstr "艺人(_A)"
 
 #: ../data/banshee.glade.h:60
 msgid "_Genre"
-msgstr ""
+msgstr "流派(_G)"
 
 #: ../data/banshee.glade.h:61
 msgid "_Search:"
@@ -290,6 +282,8 @@ msgid ""
 "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
 "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 msgstr ""
+"可以是“systemio”(.NET System.IO)，“unix”(Unix 自带)或“gnomevfs”(GNOME VFS)；"
+"您需要重新启动 Banshee 才能让此设置生效"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
@@ -360,7 +354,7 @@ msgstr "播放器引擎名称"
 
 #: ../data/banshee.schemas.in.h:16
 msgid "Set the IO backend in Banshee"
-msgstr ""
+msgstr "设定 Banshee 中的 IO 后端"
 
 #: ../data/banshee.schemas.in.h:17
 msgid "Show advanced track properties"
@@ -368,11 +362,11 @@ msgstr "显示高级音轨属性"
 
 #: ../data/banshee.schemas.in.h:18
 msgid "Show the Initial Import Dialog"
-msgstr ""
+msgstr "显示初始导入对话框"
 
 #: ../data/banshee.schemas.in.h:19
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
-msgstr ""
+msgstr "当 Banshee 库为空时显示初始导入对话框"
 
 #: ../data/banshee.schemas.in.h:20
 msgid "Source View Width"
@@ -391,29 +385,24 @@ msgstr ""
 "为关闭"
 
 #: ../data/banshee.schemas.in.h:23
-#, fuzzy
 msgid "Visibility of Album Column."
-msgstr "专辑列的宽度。"
+msgstr "专辑列吃否可见。"
 
 #: ../data/banshee.schemas.in.h:24
-#, fuzzy
 msgid "Visibility of Artist Column."
-msgstr "艺人列的宽度。"
+msgstr "艺人列是否可见。"
 
 #: ../data/banshee.schemas.in.h:25
-#, fuzzy
 msgid "Visibility of Time Column."
-msgstr "时间列的宽度。"
+msgstr "时间列是否可见。"
 
 #: ../data/banshee.schemas.in.h:26
-#, fuzzy
 msgid "Visibility of Title Column."
-msgstr "标题列的宽度。"
+msgstr "标题列是否可见。"
 
 #: ../data/banshee.schemas.in.h:27
-#, fuzzy
 msgid "Visibility of Track Column."
-msgstr "音轨列的宽度。"
+msgstr "音轨编号列是否可见。"
 
 #: ../data/banshee.schemas.in.h:28
 msgid "Volume Output Level"
@@ -459,7 +448,7 @@ msgstr "标题列的宽度。"
 
 #: ../data/banshee.schemas.in.h:38
 msgid "Width of Track Column."
-msgstr "音轨列的宽度。"
+msgstr "音轨编号列的宽度。"
 
 #: ../data/banshee.schemas.in.h:39
 msgid "Width of the main interface window."
@@ -494,18 +483,16 @@ msgid "Could not initialize cdparanoia"
 msgstr "无法初始化 cdparanoia"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:265
-#, fuzzy
 msgid "Could not create mbtrm plugin"
-msgstr "无法创建“spider”插件"
+msgstr "无法创建 mbtrm 插件"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:277 ../libbanshee/gst-cd-rip-0.8.c:106
 msgid "Could not create encoder pipeline"
 msgstr "无法创建编码器流水线"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:283
-#, fuzzy
 msgid "Could not create queue plugin"
-msgstr "无法创建“spider”插件"
+msgstr "无法创建队列插件"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
 msgid "Could not create GNOME VFS output plugin"
@@ -567,39 +554,32 @@ msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "无法创建“gnomevfssrc”插件"
 
 #: ../libbanshee/gst-transcode-0.10.c:255
-#, fuzzy
 msgid "Could not create 'decodebin' plugin"
-msgstr "无法创建“filesink”插件"
+msgstr "无法创建“decodebin”插件"
 
 #: ../libbanshee/gst-transcode-0.10.c:261
-#, fuzzy
 msgid "Could not create 'gnomevfssink' plugin"
-msgstr "无法创建“gnomevfssrc”插件"
+msgstr "无法创建“gnomevfssink”插件"
 
 #: ../libbanshee/gst-transcode-0.10.c:267
-#, fuzzy
 msgid "Could not create 'sinkben' plugin"
-msgstr "无法创建“filesink”插件"
+msgstr "无法创建“sinkben”插件"
 
 #: ../libbanshee/gst-transcode-0.10.c:273
-#, fuzzy
 msgid "Could not create 'audioconvert' plugin"
-msgstr "无法创建“spider”插件"
+msgstr "无法创建“audioconvert”插件"
 
 #: ../libbanshee/gst-transcode-0.10.c:279
-#, fuzzy
 msgid "Could not create encoding pipeline"
-msgstr "无法创建编码流水线：%s"
+msgstr "无法创建编码流水线"
 
 #: ../libbanshee/gst-transcode-0.10.c:285
-#, fuzzy
 msgid "Could not get sink pad from encoder"
-msgstr "无法创建编码器"
+msgstr "无法从编码器中获得 sink pad"
 
 #: ../libbanshee/gst-transcode-0.10.c:368
-#, fuzzy
 msgid "Could not construct pipeline"
-msgstr "无法创建流水线"
+msgstr "无法构建流水线"
 
 #: ../libbanshee/gst-transcode-0.8.c:96
 msgid "Could not create 'spider' plugin"
@@ -681,32 +661,28 @@ msgid "Import files inside a folder"
 msgstr "导入文件夹内的文件"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
-#, fuzzy
 msgid "Import Music..."
-msgstr "导入音乐"
+msgstr "导入音乐..."
 
 #: ../src/Banshee.Base/ActionManager.cs:77
 msgid "Import music from a variety of sources"
-msgstr ""
+msgstr "从各种源中导入音乐"
 
 #: ../src/Banshee.Base/ActionManager.cs:80
-#, fuzzy
 msgid "Open Location..."
-msgstr "版本信息..."
+msgstr "打开位置..."
 
 #: ../src/Banshee.Base/ActionManager.cs:81
 msgid "Open a remote location for playback"
-msgstr ""
+msgstr "打开远程位置进行播放"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
-#, fuzzy
 msgid "Import Source"
-msgstr "导入音乐"
+msgstr "导入源"
 
 #: ../src/Banshee.Base/ActionManager.cs:85
-#, fuzzy
 msgid "Import source to library"
-msgstr "将文件夹导入库"
+msgstr "将源导入到库中"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
 msgid "Source Properties..."
@@ -894,7 +870,6 @@ msgid "Next"
 msgstr "下一首"
 
 #: ../src/Banshee.Base/ActionManager.cs:217
-#, fuzzy
 msgid "Play the next song"
 msgstr "播放下一首歌"
 
@@ -903,7 +878,6 @@ msgid "Previous"
 msgstr "上一首"
 
 #: ../src/Banshee.Base/ActionManager.cs:221
-#, fuzzy
 msgid "Play the previous song"
 msgstr "播放上一首歌"
 
@@ -957,20 +931,17 @@ msgstr "在当前歌曲内快进"
 
 #: ../src/Banshee.Base/ActionManager.cs:258
 msgid "Seek To..."
-msgstr ""
+msgstr "搜索到..."
 
 #: ../src/Banshee.Base/ActionManager.cs:259
-#, fuzzy
 msgid "Seek to a specific location in current song"
-msgstr "在当前歌曲内快进"
+msgstr "在当前歌曲内搜索到指定位置"
 
 #: ../src/Banshee.Base/ActionManager.cs:262
-#, fuzzy
 msgid "Restart Song"
 msgstr "单曲重复"
 
 #: ../src/Banshee.Base/ActionManager.cs:263
-#, fuzzy
 msgid "Restart the current song"
 msgstr "重复播放当前歌曲"
 
@@ -1019,13 +990,12 @@ msgid "Track {0}"
 msgstr "音轨 {0}"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
-#, fuzzy
 msgid "Cannot Eject CD"
-msgstr "无法弹出"
+msgstr "无法弹出 CD"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr ""
+msgstr "导入时无法弹出 CD。请先停止导入。"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:85
 msgid "Could not create CD Ripper"
@@ -1048,9 +1018,8 @@ msgstr "初始化设备"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:329
 #: ../src/Banshee.Base/AudioCdRipper.cs:393
-#, fuzzy
 msgid "Cannot Import CD"
-msgstr "无法导入"
+msgstr "无法导入 CD"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:341
 #: ../src/Banshee.Base/ImportManager.cs:118
@@ -1059,17 +1028,14 @@ msgid "Importing {0} of {1}"
 msgstr "导入共{1}个中的第{0}个"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:110
-#, fuzzy
 msgid "File Transcoder"
 msgstr "文件编码器"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:111
-#, fuzzy
 msgid "Transcoding Files"
 msgstr "编码文件"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:114
-#, fuzzy
 msgid "Initializing Transcoder..."
 msgstr "正在初始化编码器..."
 
@@ -1116,29 +1082,26 @@ msgstr "高级细节"
 
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
 msgid "Browse..."
-msgstr ""
+msgstr "浏览..."
 
 #: ../src/Banshee.Base/FileImportSource.cs:55
 msgid "Import Files to Library"
 msgstr "将文件导入库"
 
 #: ../src/Banshee.Base/FileImportSource.cs:82
-#, fuzzy
 msgid "Local Files"
-msgstr "本地队列"
+msgstr "本地文件"
 
 #: ../src/Banshee.Base/FolderImportSource.cs:55
 msgid "Import Folder to Library"
 msgstr "将文件夹导入库"
 
 #: ../src/Banshee.Base/FolderImportSource.cs:80
-#, fuzzy
 msgid "Local Folder"
-msgstr "导入文件夹"
+msgstr "本地文件夹"
 
 #: ../src/Banshee.Base/GstTranscoder.cs:82
 #: ../src/Banshee.Base/GstTranscoder.cs:185
-#, fuzzy
 msgid "Could not create transcoder"
 msgstr "无法创建编码器"
 
@@ -1156,7 +1119,7 @@ msgstr "D-Bus 可能无法工作或配置不正确"
 
 #: ../src/Banshee.Base/HomeDirectoryImportSource.cs:58
 msgid "Home Directory"
-msgstr ""
+msgstr "主目录"
 
 #: ../src/Banshee.Base/ImportManager.cs:86
 msgid "Importing Songs"
@@ -1234,11 +1197,11 @@ msgstr "未找到与 iPod 兼容的编码器"
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:101
 msgid "Default player engine"
-msgstr ""
+msgstr "默认播放器引擎"
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:172
 msgid "Problem with Player Engine"
-msgstr ""
+msgstr "播放器引擎出错"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
 msgid "Banshee Plugins"
@@ -1322,29 +1285,28 @@ msgid "Music Library"
 msgstr "音乐库"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:110
-#, fuzzy
 msgid "Sort Playlists"
-msgstr "新建播放列表"
+msgstr "排序播放列表"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:113
 msgid "Creation Order"
-msgstr ""
+msgstr "创建顺序"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:117
 msgid "Name Ascending"
-msgstr ""
+msgstr "名称升序"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:121
 msgid "Name Descending"
-msgstr ""
+msgstr "名称降序"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:125
 msgid "Size Ascending"
-msgstr ""
+msgstr "大小升序"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:129
 msgid "Size Descending"
-msgstr ""
+msgstr "大小降序"
 
 #: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
 msgid "Local Queue"
@@ -1383,25 +1345,23 @@ msgstr "{0} MB"
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
 msgid "Rebuilding Database"
-msgstr ""
+msgstr "重建数据库"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
-#, fuzzy
 msgid "Scanning iPod..."
-msgstr "扫描"
+msgstr "正在扫描 iPod..."
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
-#, fuzzy
 msgid "Processing Songs..."
-msgstr "正在处理..."
+msgstr "正在处理歌曲..."
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
 msgid "Saving new database..."
-msgstr ""
+msgstr "正在保存新数据库..."
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
 msgid "Error rebuilding iPod database"
-msgstr ""
+msgstr "重建 iPod 数据库出错"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
@@ -1422,19 +1382,19 @@ msgstr "同步 iPod 失败"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
 msgid "Unable to read your iPod"
-msgstr ""
+msgstr "无法读取您的 iPod"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
 msgid "What is the reason for this?"
-msgstr ""
+msgstr "原因未知？"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
 msgid "Rebuild iPod Database..."
-msgstr ""
+msgstr "重建 iPod 数据库..."
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
 msgid "Confirm Rebuild iPod Database"
-msgstr ""
+msgstr "确认重建 iPod 数据库"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
 msgid ""
@@ -1442,15 +1402,16 @@ msgid ""
 "playlists you have on your iPod will be lost.\n"
 "\n"
 "Are you sure you want to rebuild your iPod database?"
-msgstr ""
+msgstr "重建数据库可能需要花一点时间。另外，请注意您在 iPod 上保存的所有播放列表都将丢失。\n\n"
+"您确定想要重建您的 iPod 数据库吗？"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild Database"
-msgstr ""
+msgstr "重建数据库"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
 msgid "Rebuilding iPod Database..."
-msgstr ""
+msgstr "正在重建 iPod 数据库..."
 
 #. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
@@ -1462,28 +1423,24 @@ msgid "Scanning"
 msgstr "扫描"
 
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:257
-#, fuzzy
 msgid "Audio Device"
-msgstr "音乐 CD"
+msgstr "音频设备"
 
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:143
 msgid "Cannot read device"
-msgstr ""
+msgstr "无法读取设备"
 
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:249
-#, fuzzy
 msgid "Removing Songs"
 msgstr "删除歌曲"
 
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:337
-#, fuzzy
 msgid "Device Error"
-msgstr "设备名称"
+msgstr "设备错误"
 
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:338
-#, fuzzy
 msgid "Could not set the owner of the device."
-msgstr "无法开始编码文件"
+msgstr "无法设定设备的所有者。"
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:65
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
@@ -1497,7 +1454,7 @@ msgstr "未知错误"
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:165
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
 msgid "Buffering"
-msgstr ""
+msgstr "正缓存"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
@@ -1635,7 +1592,7 @@ msgstr "DAAP 服务器共享的名称"
 
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
 msgid "Cannot login to DAAP share"
-msgstr ""
+msgstr "无法登录到 DAAP 共享"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
 msgid "Metadata and Cover Art Searching"
@@ -1654,9 +1611,8 @@ msgid "Download album cover artwork and overwrite any existing track data"
 msgstr "下载专辑封面并覆盖已有的音轨数据"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
-#, fuzzy
 msgid "Rescan Library"
-msgstr "音乐库"
+msgstr "重新扫描库"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
 msgid "Warning"
@@ -1693,33 +1649,29 @@ msgstr "获取封面和补充元数据的方法"
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:48
 msgid "Multimedia Keyboard Shortcuts"
-msgstr ""
+msgstr "多媒体键盘快捷键"
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
 msgid ""
 "Configuration of multimedia keyboard shortcuts is done through the Gnome "
 "Keyboard Shortcuts configuration applet."
-msgstr ""
+msgstr "对多媒体键盘快捷键的配置需要通过 GNOME 的快捷键配置小程序完成。"
 
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
-#, fuzzy
 msgid "Enable the MultimediaKeys plugin"
-msgstr "启用元数据搜索插件"
+msgstr "启用多媒体按键插件"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:49
-#, fuzzy
 msgid "Notification Area Icon"
-msgstr "显示通知区域图标"
+msgstr "通知区域图标"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:53
-#, fuzzy
 msgid "Shows the Notification Area Icon"
 msgstr "显示通知区域图标"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
-#, fuzzy
 msgid "Enable the Notification Area Icon plugin"
-msgstr "显示通知区域图标"
+msgstr "启用通知区域图标插件"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
 msgid "Cancel Operation"
@@ -1742,56 +1694,53 @@ msgstr "待机"
 
 #: ../src/BurnCore.cs:82
 msgid "Insufficient Disk Space"
-msgstr ""
+msgstr "磁盘空间不足"
 
 #: ../src/BurnCore.cs:83
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr ""
+msgstr "创建此 CD 需要至少 {0} MB 剩余磁盘空间。"
 
 #: ../src/BurnCore.cs:119
 msgid "Could Not Write CD"
 msgstr "无法写入 CD"
 
 #: ../src/BurnCore.cs:120
-#, fuzzy
 msgid "No suitable encoder could be found to convert selected songs."
-msgstr "无法找到将选中歌曲转换为 CD 音频格式所需的波形编码器。"
+msgstr "未找到可转换选中歌曲的编码器。"
 
 #: ../src/BurnCore.cs:138 ../src/BurnCore.cs:236 ../src/BurnCore.cs:246
 #, csharp-format
 msgid "File does not exist: {0}"
-msgstr ""
+msgstr "文件不存在：{0}"
 
 #: ../src/BurnCore.cs:158 ../src/BurnCore.cs:198 ../src/BurnCore.cs:269
-#, fuzzy
 msgid "Problem creating CD"
-msgstr "写入 CD 出错"
+msgstr "创建 CD 出错"
 
 #: ../src/BurnCore.cs:159
 msgid "None of the songs selected for this CD could be found."
-msgstr ""
+msgstr "为此 CD 选择的歌曲一首也找不到。"
 
 #: ../src/BurnCore.cs:199
 msgid ""
 "None of the songs selected for this CD could be converted to the format "
 "required for an audio CD."
-msgstr ""
+msgstr "为此 CD 所选择的歌曲没有一首可以转换为音频 CD 所需格式的。"
 
 #: ../src/BurnCore.cs:270
 msgid ""
 "Some songs could either not be found or could not be converted to the format "
 "required for an audio CD."
-msgstr ""
+msgstr "某些歌曲不是找不到，就是无法转换为音频 CD 所需的格式。"
 
 #: ../src/BurnCore.cs:272
 msgid "Continue Anyway"
-msgstr ""
+msgstr "仍然继续"
 
 #: ../src/BurnCore.cs:293
-#, fuzzy
 msgid "Error Creating CD Image"
-msgstr "写入 CD 出错"
+msgstr "创建 CD 映像出错"
 
 #: ../src/BurnCore.cs:312
 msgid "Writing CD"
@@ -1861,30 +1810,28 @@ msgstr "请插入空的 CD，以便开始刻录。"
 
 #: ../src/BurnCore.cs:549
 msgid "Creating Image"
-msgstr ""
+msgstr "创建映像"
 
 #: ../src/BurnCore.cs:550
-#, fuzzy
 msgid "Transferring songs"
-msgstr "扫描歌曲"
+msgstr "传送歌曲"
 
 #: ../src/BurnCore.cs:568
 #, csharp-format
 msgid "Transferring song {0}"
-msgstr ""
+msgstr "传送歌曲 {0}"
 
 #: ../src/BurnCore.cs:580
 msgid "Could not transfer files to create disk image."
-msgstr ""
+msgstr "无法传送创建磁盘映像所需的文件。"
 
 #: ../src/BurnCore.cs:607
-#, fuzzy
 msgid "Could not transfer file to disk layout."
-msgstr "无法创建“filesink”插件"
+msgstr "无法将文件传送到磁盘布局。"
 
 #: ../src/BurnCore.cs:610
 msgid "File is already in disk layout."
-msgstr ""
+msgstr "文件已经位于磁盘布局中。"
 
 #: ../src/Dialogs.cs:81
 msgid "An Error Occurred"
@@ -1967,7 +1914,7 @@ msgstr "专辑标题"
 #: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1292
 #: ../src/PlaylistView.cs:105
 msgid "Genre"
-msgstr ""
+msgstr "流派"
 
 #: ../src/PlayerInterface.cs:460
 msgid "Write selection to CD"
@@ -2035,14 +1982,12 @@ msgid "Pause"
 msgstr "暂停"
 
 #: ../src/PlayerInterface.cs:866
-#, fuzzy
 msgid "Playback Error"
-msgstr "回放(_P)"
+msgstr "回放错误"
 
 #: ../src/PlayerInterface.cs:1061
-#, fuzzy
 msgid "Import"
-msgstr "导入 CD"
+msgstr "导入"
 
 #: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2032
 msgid "Rename Device"
@@ -2078,9 +2023,9 @@ msgid "Could Not Eject"
 msgstr "无法弹出"
 
 #: ../src/PlayerInterface.cs:1747
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Cannot Import: {0} ({1})"
-msgstr "无法导入：{0} ({1}，{2})"
+msgstr "无法导入：{0} ({1})"
 
 #: ../src/PlayerInterface.cs:1789
 #, csharp-format
@@ -2250,9 +2195,8 @@ msgid "Set all Titles to this value"
 msgstr "将全部标题设定为此值"
 
 #: ../src/TrackProperties.cs:190
-#, fuzzy
 msgid "Set all Genres to this value"
-msgstr "将全部标题设定为此值"
+msgstr "将全部流派设定为此值"
 
 #: ../src/TrackProperties.cs:234
 msgid "Never Played"
@@ -2297,104 +2241,3 @@ msgstr "组合名称"
 msgid "Version"
 msgstr "版本"
 
-#~ msgid "Only display the notification area (tray) icon if true"
-#~ msgstr "如果为 true 的话，将只显示通知区域(托盘)图标"
-
-#~ msgid "<big><b>New iPod Detected <small><sup>TM</sup></small></b></big>"
-#~ msgstr "<big><b>检测到了新 iPod<small><sup>TM</sup></small></b></big>"
-
-#~ msgid "<small>Serial Number</small>"
-#~ msgstr "<small>序列号</small>"
-
-#~ msgid "<span size=\"small\">Idle</span>"
-#~ msgstr "<span size=\"small\">待机</span>"
-
-#~ msgid ""
-#~ "Banshee has detected that you are plugging in an iPod for the first time. "
-#~ "Please take a moment to give your iPod a name."
-#~ msgstr ""
-#~ "Banshee 检测到您第一次插入了一台 iPod。请花一点时间给您的 iPod 起个名字。"
-
-#~ msgid "Description:"
-#~ msgstr "描述："
-
-#~ msgid "Engine:"
-#~ msgstr "引擎："
-
-#~ msgid "New iPod Detected"
-#~ msgstr "检测到了新 iPod"
-
-#~ msgid "Your Name:"
-#~ msgstr "您的姓名："
-
-#~ msgid "iPod Name:"
-#~ msgstr "iPod 名称："
-
-#~ msgid "Error Burning CD"
-#~ msgstr "刻录 CD 出错"
-
-#~ msgid "Current position in song"
-#~ msgstr "歌曲的当前位置"
-
-#~ msgid "Notification Area Icon could not be installed"
-#~ msgstr "通知区域图标无法安装"
-
-#~ msgid "Automatic Import"
-#~ msgstr "自动导入"
-
-#~ msgid "Your Library is Empty - Consider Importing Music"
-#~ msgstr "您的库为空 - 请考虑导入音乐"
-
-#~ msgid "This Playlist is Empty - Consider Adding Music"
-#~ msgstr "此播放列表为空 - 请考虑添加音乐"
-
-#~ msgid "Could not encode file: {0}"
-#~ msgstr "无法编码文件：{0}"
-
-#~ msgid "CD playback is not supported for this instance"
-#~ msgstr "本次不支持 CD 回放"
-
-#~ msgid "Could not process connected DAP"
-#~ msgstr "无法处理连接的数码随身听"
-
-#~ msgid "GStreamer 0.10 Engine"
-#~ msgstr "GStreamer 0.10 引擎"
-
-#~ msgid ""
-#~ "GStreamer is a multimedia framework for playing and manipulating media. "
-#~ "Any GStreamer plugin that is available will work through this engine."
-#~ msgstr ""
-#~ "GStreamer 是播放并操纵媒体的多媒体框架。通过此引擎可使用任何可用的 "
-#~ "GStreamer 插件。"
-
-#~ msgid "Helix Framework Engine (hxclientkit)"
-#~ msgstr "Helix 框架引擎(hxclientkit)"
-
-#~ msgid ""
-#~ "The Helix Engine provides multimedia control through the Helix Multimedia "
-#~ "Framework, sponsored by RealNetworks. The engine can play any file that "
-#~ "RealPlayer can. Install RealPlayer for best results."
-#~ msgstr ""
-#~ "Helix 引擎通过由 RealNetworks 赞助的 Helix 多媒体框架提供了多媒体控件。此"
-#~ "引擎可以播放 RealPlayer 支持的任何文件。安装 RealPlayer 可获得最好效果。"
-
-#~ msgid "VLC"
-#~ msgstr "VLC"
-
-#~ msgid ""
-#~ "VLC is a highly portable multimedia player for various audio and video "
-#~ "formats (MP3, AAC, OGG, FLAC, WMA, etc.) See http://videolan.org/vlc/"
-#~ msgstr ""
-#~ "VLC 是各种影音格式(MP3、AAC、OGG、FLAC、WMA 等)的便携多媒体播放器。请参见 "
-#~ "http://videolan.org/vlc/"
-
-#~ msgid ""
-#~ "Automatically keep your Banshee library directory in sync with your music "
-#~ "folder. This plugin responds to changes made in the file system to "
-#~ "reflect them in your library."
-#~ msgstr ""
-#~ "将您的 Banshee 库目录自动与您的音乐文件夹同步。此插件可响应文件系统的更"
-#~ "改，并将这些更改在曲库中体现出来。"
-
-#~ msgid "Enable the FileSystemMonitor plugin"
-#~ msgstr "启用文件系统监视插件"
