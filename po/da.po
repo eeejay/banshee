@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-30 21:59+0100\n"
-"PO-Revision-Date: 2006-05-30 21:59+0100\n"
+"POT-Creation-Date: 2006-05-31 22:10+0100\n"
+"PO-Revision-Date: 2006-05-31 22:10+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "<b>Avancerede egenskaber</b>"
 
 #: ../data/banshee.glade.h:3
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Placering af Banshee musikkatalog</b>"
+msgstr "<b>Placering af Banshee musikmappe</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>CD Burning</b>"
@@ -122,7 +122,7 @@ msgstr "Vælg en importkilde:"
 
 #: ../data/banshee.glade.h:23
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Kopiér filer til Banshee musikkatalog ved import til bibliotek"
+msgstr "Kopiér filer til Banshee musikmappe ved import til bibliotek"
 
 #: ../data/banshee.glade.h:24
 msgid "Data CD"
@@ -246,7 +246,7 @@ msgstr "_Antal spor"
 
 #: ../data/banshee.glade.h:54
 msgid "Track _Number"
-msgstr "Spornummer"
+msgstr "Spor_nummer"
 
 #: ../data/banshee.glade.h:55 ../src/Banshee.Base/Dap/Dap.cs:620
 #: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
@@ -299,7 +299,7 @@ msgstr ""
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr "Omdøb og kopiér musik til Banshee musikkatalog ved import"
+msgstr "Omdøb og kopiér musik til Banshee musikmappe ved import"
 
 #: ../data/banshee.schemas.in.h:3
 msgid "Copy music on import"
@@ -330,11 +330,11 @@ msgid ""
 "track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
 "prefixed zero)."
 msgstr ""
-"Format til oprettelse af filnavne/kataloger på udtrykne spor, importeret "
-"musik osv. Formatet er relativt til Banshees musikkatalog. Brug ikke en "
-"absolut sti! Symboler: %artist%, %album%, %title%, %track_number%, %"
-"track_count%, %track_number_nz% (Intet præfikset nul), %track_count_nz% "
-"(Intet præfikset nul)."
+"Format til oprettelse af filnavne/mapper på udtrykne spor, importeret musik "
+"osv. Formatet er relativt til Banshees musikmappe. Brug ikke en absolut sti! "
+"Symboler: %artist%, %album%, %title%, %track_number%, %track_count%, %"
+"track_number_nz% (Intet præfikset nul), %track_count_nz% (Intet præfikset "
+"nul)."
 
 #: ../data/banshee.schemas.in.h:9
 msgid "Height of the main interface window."
@@ -347,7 +347,7 @@ msgstr "Flyt musik når information gemmes"
 #: ../data/banshee.schemas.in.h:11
 msgid ""
 "Move music within banshee music library directory when saving track info"
-msgstr "Flyt musik i Banshee musikkatalog når sanginformation gemmes"
+msgstr "Flyt musik i Banshee musikmappe når sanginformation gemmes"
 
 #: ../data/banshee.schemas.in.h:12
 msgid "Name of media playback engine."
@@ -499,7 +499,7 @@ msgstr "Kunne ikke initialisere cdparanoia"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:265
 msgid "Could not create mbtrm plugin"
-msgstr "Kunne ikke oprette mbtrm indstik"
+msgstr "Kunne ikke oprette \"mbtrm\"-plugin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:277 ../libbanshee/gst-cd-rip-0.8.c:106
 msgid "Could not create encoder pipeline"
@@ -507,11 +507,11 @@ msgstr "Kunne ikke oprette kodningskanal"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:283
 msgid "Could not create queue plugin"
-msgstr "Kunne ikke oprette kø indstik"
+msgstr "Kunne ikke oprette kø-plugin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
 msgid "Could not create GNOME VFS output plugin"
-msgstr "Kunne ikke oprette GNOME VFS uddata-indstik"
+msgstr "Kunne ikke oprette GNOME VFS uddata-plugin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:307 ../libbanshee/gst-cd-rip-0.8.c:127
 msgid "Could not link pipeline elements"
@@ -541,7 +541,7 @@ msgstr "Kunne ikke hente sporposition"
 
 #: ../libbanshee/gst-playback-0.8.c:91
 msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Kunne ikke finde eller oprette 'playbin' GStreamer-indstik"
+msgstr "Kunne ikke finde eller oprette \"playbin\" GStreamer-plugin"
 
 #: ../libbanshee/gst-playback-0.8.c:99
 msgid ""
@@ -570,23 +570,23 @@ msgstr "Kunne ikke udføre stat() på kodet fil"
 
 #: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
 msgid "Could not create 'gnomevfssrc' plugin"
-msgstr "Kunne ikke oprette 'gnomevfssrc' indstik"
+msgstr "Kunne ikke oprette \"gnomevfssrc\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.10.c:255
 msgid "Could not create 'decodebin' plugin"
-msgstr "Kunne ikke oprette 'decodebin' indstik"
+msgstr "Kunne ikke oprette \"decodebin\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.10.c:261
 msgid "Could not create 'gnomevfssink' plugin"
-msgstr "Kunne ikke oprette 'gnomevfssink' indstik"
+msgstr "Kunne ikke oprette \"gnomevfssink\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.10.c:267
 msgid "Could not create 'sinkben' plugin"
-msgstr "Kunne ikke oprette 'sinkben' indstik"
+msgstr "Kunne ikke oprette \"sinkben\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.10.c:273
 msgid "Could not create 'audioconvert' plugin"
-msgstr "Kunne ikke oprette 'audioconvert' indstik"
+msgstr "Kunne ikke oprette \"audioconvert\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.10.c:279
 msgid "Could not create encoding pipeline"
@@ -598,11 +598,11 @@ msgstr "Kunne ikke hente elementfyld fra koder"
 
 #: ../libbanshee/gst-transcode-0.10.c:368
 msgid "Could not construct pipeline"
-msgstr "Kunne ikke konstruere kanal"
+msgstr "Kunne ikke oprette kanal"
 
 #: ../libbanshee/gst-transcode-0.8.c:96
 msgid "Could not create 'spider' plugin"
-msgstr "Kunne ikke oprette 'spider' indstik"
+msgstr "Kunne ikke oprette \"spider\"-plugin"
 
 #: ../libbanshee/gst-transcode-0.8.c:103
 #, c-format
@@ -611,7 +611,7 @@ msgstr "Kunne ikke oprette kodningskanal: %s"
 
 #: ../libbanshee/gst-transcode-0.8.c:109
 msgid "Could not create 'filesink' plugin"
-msgstr "Kunne ikke oprette 'filesink' indstik"
+msgstr "Kunne ikke oprette \"filesink\"-plugin"
 
 #: ../libbanshee/hal-context.c:61
 msgid "Could not create new HAL context"
@@ -685,7 +685,7 @@ msgstr "Importér musik..."
 
 #: ../src/Banshee.Base/ActionManager.cs:77
 msgid "Import music from a variety of sources"
-msgstr "Importér musik fra en række kilder"
+msgstr "Importér musik fra flere forskellige kilder"
 
 #: ../src/Banshee.Base/ActionManager.cs:80
 msgid "Open Location..."
@@ -845,7 +845,7 @@ msgstr "Slet valgte sange permanent fra lagringsmedie"
 
 #: ../src/Banshee.Base/ActionManager.cs:184
 msgid "Edit Song Metadata"
-msgstr "Redigér sang metadata"
+msgstr "Redigér sang-metadata"
 
 #: ../src/Banshee.Base/ActionManager.cs:185
 msgid "Edit metadata on selected songs"
@@ -1011,12 +1011,12 @@ msgstr "Spor {0}"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
 msgid "Cannot Eject CD"
-msgstr "Kan ikke skubbe cd ud"
+msgstr "Kan ikke skubbe cd'en ud"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
 msgstr ""
-"Cd'en kan ikke skubbes ud når den importerer. Stands importeringen først."
+"Cd'en kan ikke skubbes ud når den importeres. Stands importeringen først."
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:85
 msgid "Could not create CD Ripper"
@@ -1028,7 +1028,7 @@ msgid ""
 "The device node '{0}' differs from the device node already set for "
 "previously queued tracks ({1})"
 msgstr ""
-"Enhedspunktet '{0}' er forskellig fra det allerede satte enhedspunkt for "
+"Enhedspunktet \"{0}\" er forskellig fra det allerede satte enhedspunkt for "
 "tidligere tilføjede spor ({1})"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:308
@@ -1142,7 +1142,7 @@ msgstr "D-BUS virker muligvis ikke eller er ikke konfigureret korrekt"
 
 #: ../src/Banshee.Base/HomeDirectoryImportSource.cs:58
 msgid "Home Directory"
-msgstr "Hjemmekatalog"
+msgstr "Hjemmemappe"
 
 #: ../src/Banshee.Base/ImportManager.cs:86
 msgid "Importing Songs"
@@ -1170,7 +1170,7 @@ msgstr "Kanalprofil er tom."
 
 #: ../src/Banshee.Base/PipelineProfile.cs:111
 msgid "Pipeline profile does not have the correct number of components (7)"
-msgstr "Kanalprofil har ikke et korrekt antal komponenter (7)"
+msgstr "Kanalprofil har ikke det korrekte antal komponenter (7)"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:121
 msgid "Pipeline profile does not have a lookup key"
@@ -1183,12 +1183,12 @@ msgstr "Kanalprofil har ikke et navn"
 #: ../src/Banshee.Base/PipelineProfile.cs:130
 #, csharp-format
 msgid "Pipeline profile '{0}' does not have a file extension"
-msgstr "Kanalprofil '{0}' har ikke en filendelse"
+msgstr "Kanalprofil \"{0}\" har ikke en filendelse"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:136
 #, csharp-format
 msgid "Pipeline profile '{0}' does not have a GStreamer element"
-msgstr "Kanalprofil '{0}' har ikke et GStreamer-element"
+msgstr "Kanalprofil \"{0}\" har ikke et GStreamer-element"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:167
 #, csharp-format
@@ -1196,8 +1196,8 @@ msgid ""
 "Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
 "not be run"
 msgstr ""
-"Kanalprofil '{0}' vil være utilgængelig: GStreamer-kanal '{1}' kunne ikke "
-"køres"
+"Kanalprofil \"{0}\" vil ikke være tilgængelig: GStreamer-kanal \"{1}\" kunne "
+"ikke køres"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:195
 msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
@@ -1267,7 +1267,7 @@ msgstr "Læser indholdstabellen fra cd'en..."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:81
 msgid "Searching for CD metadata..."
-msgstr "Søger efter cd metadata..."
+msgstr "Søger efter cd-metadata..."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:86
 msgid "Searching for CD cover art..."
@@ -1277,12 +1277,12 @@ msgstr "Søger efter cd omslag..."
 msgid ""
 "Cannot search for CD metadata: there is no available Internet connection"
 msgstr ""
-"Kan ikke søge efter cd metadata: der er ingen tilgængelig Internet-"
+"Kan ikke søge efter cd-metadata: der er ingen tilgængelig Internet-"
 "forbindelse"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:97
 msgid "Could not fetch metadata for CD."
-msgstr "Kunne ikke hente cd metadata."
+msgstr "Kunne ikke hente cd-metadata."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:178
 msgid "Invalid Selection"
@@ -1721,7 +1721,7 @@ msgstr "Afbryd handling"
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
 #, csharp-format
 msgid "Are you sure you want to cancel the '{0}' operation?"
-msgstr "Er du sikker på at du vil afbryde handlingen '{0}'?"
+msgstr "Er du sikker på at du vil afbryde handlingen \"{0}\"?"
 
 #: ../src/Banshee.Widgets/SearchEntry.cs:203
 #: ../src/Banshee.Widgets/SearchEntry.cs:314
