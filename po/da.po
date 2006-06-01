@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-31 22:10+0100\n"
-"PO-Revision-Date: 2006-05-31 22:10+0100\n"
+"POT-Creation-Date: 2006-06-02 00:10+0100\n"
+"PO-Revision-Date: 2006-06-02 00:10+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "<b>Avancerede egenskaber</b>"
 
 #: ../data/banshee.glade.h:3
 msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Placering af Banshee musikmappe</b>"
+msgstr "<b>Placering af Banshee-musikmappe</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>CD Burning</b>"
@@ -122,7 +122,7 @@ msgstr "Vælg en importkilde:"
 
 #: ../data/banshee.glade.h:23
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Kopiér filer til Banshee musikmappe ved import til bibliotek"
+msgstr "Kopiér filer til Banshee-musikmappe ved import til bibliotek"
 
 #: ../data/banshee.glade.h:24
 msgid "Data CD"
@@ -269,7 +269,7 @@ msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
 msgstr ""
-"Dit musikbibliotek er tomt. Du kan importere nyt musik til dit bibliotek nu "
+"Dit musikbibliotek er tomt. Du kan importere ny musik til dit bibliotek nu "
 "eller vente til senere."
 
 #: ../data/banshee.glade.h:59
@@ -293,13 +293,13 @@ msgid ""
 "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
 "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 msgstr ""
-"Kan være enten \"systemio\" (.NET System.IO), \"unix\" (medfødt Unix) eller "
-"\"gnomevfs\" (GNOME VFS); træder i kraft ved start af Banshee (genstart "
+"Kan være enten \"systemio\" (.NET System.IO), \"unix\" (Unix) eller "
+"\"gnomevfs\" (Gnome VFS); træder i kraft ved start af Banshee (genstart "
 "nødvendig)"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr "Omdøb og kopiér musik til Banshee musikmappe ved import"
+msgstr "Omdøb og kopiér musik til Banshee-musikmappe ved import"
 
 #: ../data/banshee.schemas.in.h:3
 msgid "Copy music on import"
@@ -307,15 +307,15 @@ msgstr "Kopiér musik ved import"
 
 #: ../data/banshee.schemas.in.h:4
 msgid "Enable Special Keys"
-msgstr "Aktivér specielle taster"
+msgstr "Aktivér specialtaster"
 
 #: ../data/banshee.schemas.in.h:5
 msgid ""
 "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
 "works with mappings set through Gnome Shortcuts capplet"
 msgstr ""
-"Aktivér specielle taster (multimedietaster) til afspil/pause/næste/forrige; "
-"kortlægges gennem GNOME Tastaturgenveje"
+"Aktivér specialtaster (multimedietaster) til afspil/pause/næste/forrige; "
+"kortlægges gennem Gnome-tastaturgenveje"
 
 #: ../data/banshee.schemas.in.h:6
 msgid "File Name Pattern"
@@ -331,7 +331,7 @@ msgid ""
 "prefixed zero)."
 msgstr ""
 "Format til oprettelse af filnavne/mapper på udtrykne spor, importeret musik "
-"osv. Formatet er relativt til Banshees musikmappe. Brug ikke en absolut sti! "
+"osv. Formatet er relativt til Banshee-musikmappen. Brug ikke en absolut sti! "
 "Symboler: %artist%, %album%, %title%, %track_number%, %track_count%, %"
 "track_number_nz% (Intet præfikset nul), %track_count_nz% (Intet præfikset "
 "nul)."
@@ -347,7 +347,7 @@ msgstr "Flyt musik når information gemmes"
 #: ../data/banshee.schemas.in.h:11
 msgid ""
 "Move music within banshee music library directory when saving track info"
-msgstr "Flyt musik i Banshee musikmappe når sanginformation gemmes"
+msgstr "Flyt musik til Banshee-musikmappe når sanginformation gemmes"
 
 #: ../data/banshee.schemas.in.h:12
 msgid "Name of media playback engine."
@@ -379,7 +379,7 @@ msgstr "Vis det indledende importvindue"
 
 #: ../data/banshee.schemas.in.h:19
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
-msgstr "Vis det indledende importvindue, når Banshee biblioteket er tomt"
+msgstr "Vis det indledende importvindue, når Banshee-biblioteket er tomt"
 
 #: ../data/banshee.schemas.in.h:20
 msgid "Source View Width"
@@ -511,7 +511,7 @@ msgstr "Kunne ikke oprette kø-plugin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
 msgid "Could not create GNOME VFS output plugin"
-msgstr "Kunne ikke oprette GNOME VFS uddata-plugin"
+msgstr "Kunne ikke oprette Gnome VFS uddata-plugin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:307 ../libbanshee/gst-cd-rip-0.8.c:127
 msgid "Could not link pipeline elements"
@@ -1548,7 +1548,7 @@ msgstr "Besøg gruppeside"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
 msgid "Visit the Banshee last.fm group page"
-msgstr "Besøg Banshee Last.fm gruppesiden"
+msgstr "Besøg Banshee Last.fm-gruppesiden"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
 msgid "Configure..."
@@ -1695,8 +1695,8 @@ msgid ""
 "Configuration of multimedia keyboard shortcuts is done through the Gnome "
 "Keyboard Shortcuts configuration applet."
 msgstr ""
-"Konfiguration af multimedietastatur genveje gøres igennem GNOME "
-"Tastaturgenveje"
+"Konfiguration af multimedietastatur genveje gøres igennem Gnome-"
+"tastaturgenveje"
 
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
@@ -2128,7 +2128,7 @@ msgstr ""
 "Du har lavet ændringer til din {0}. Vælg venligst en metode til opdatering "
 "af indholdet på din {0}.\n"
 "\n"
-"<big>•</big> <i>Synkronisér bibliotek</i>: synkronisér Banshee bibliotek til "
+"<big>•</big> <i>Synkronisér bibliotek</i>: synkronisér Banshee-bibliotek til "
 "{0}\n"
 "<big>•</big> <i>Gem manuelle ændringer</i>: gem kun manuelle ændringer lavet "
 "af dig\n"
