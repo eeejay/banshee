@@ -1,0 +1,2611 @@
+# Serbian translation of banshee
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2006.
+#
+# This file is distributed under the same license as the banshee package.
+#
+# Maintainer: Goran Rakić <gox@devbase.net>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-06-02 20:21+0200\n"
+"PO-Revision-Date: 2006-05-17 23:39+0200\n"
+"Last-Translator: Goran Rakić <gox@devbase.net>\n"
+"Language-Team: Serbian (sr) <gnom@prevod.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. Footer
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:18
+#: ../src/PlayerInterface.cs:316 ../src/PlayerInterface.cs:658
+#: ../src/PlayerInterface.cs:1197
+msgid "Banshee Music Player"
+msgstr "Zloslutnička muzička kutija"
+
+#: ../data/banshee.desktop.in.in.h:2
+msgid "Music Player"
+msgstr "Muzička kutija"
+
+#: ../data/banshee.glade.h:1
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Napredne opcije</b>"
+
+#: ../data/banshee.glade.h:2
+msgid "<b>Advanced Properties</b>"
+msgstr "<b>Ostale osobine</b>"
+
+#: ../data/banshee.glade.h:3
+msgid "<b>Banshee Music Folder Location</b>"
+msgstr "<b>Lokacija fascikle za Audioteku</b>"
+
+#: ../data/banshee.glade.h:4
+msgid "<b>CD Burning</b>"
+msgstr "<b>Izrada CDa</b>"
+
+#: ../data/banshee.glade.h:5
+msgid "<b>CD Ripping</b>"
+msgstr "<b>Izvlačenje sa CDa</b>"
+
+#: ../data/banshee.glade.h:6
+msgid "<b>Loading...</b>"
+msgstr "<b>Učitavanje...</b>"
+
+#: ../data/banshee.glade.h:7
+msgid "<b>Playback Engines</b>"
+msgstr "<b>Izlazni sistem</b>"
+
+#: ../data/banshee.glade.h:8
+msgid "<b>iPod Transcoding</b>"
+msgstr "<b>iPod prevod formata</b>"
+
+#: ../data/banshee.glade.h:9
+msgid "<big><b>Editing Song</b></big>"
+msgstr "<big><b>Izmena podataka pesme</b></big>"
+
+#: ../data/banshee.glade.h:10
+msgid "<big><b>Import Music to Library</b></big>"
+msgstr "<big><b>Uvezite muziku u Audioteku</b></big>"
+
+#: ../data/banshee.glade.h:11
+msgid "<small><i><Unknown></i></small>"
+msgstr "<small><i><Nepoznato></i></small>"
+
+#: ../data/banshee.glade.h:12
+msgid "<small>Advanced</small>"
+msgstr "<small>Napredno</small>"
+
+#: ../data/banshee.glade.h:13
+msgid "<small>Burning</small>"
+msgstr "<small>Izrada CDa</small>"
+
+#: ../data/banshee.glade.h:14
+msgid "<small>Encoding</small>"
+msgstr "<small>Format izlaza</small>"
+
+#: ../data/banshee.glade.h:15
+msgid "<small>Library</small>"
+msgstr "<small>Audioteka</small>"
+
+#: ../data/banshee.glade.h:16
+msgid "Albu_m"
+msgstr "Albu_m"
+
+#: ../data/banshee.glade.h:17 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:92
+msgid "Audio CD"
+msgstr "Audio CD"
+
+#: ../data/banshee.glade.h:19
+msgid "Bit Rate:"
+msgstr "Kvalitet:"
+
+#: ../data/banshee.glade.h:20
+msgid "Burnproof"
+msgstr "Sigurno snimanje"
+
+#: ../data/banshee.glade.h:21
+msgid "Channels:"
+msgstr "Broj kanala:"
+
+#: ../data/banshee.glade.h:22
+msgid "Choose an import source:"
+msgstr "Odaberite izvor uvoza:"
+
+#: ../data/banshee.glade.h:23
+msgid "Copy files to Banshee Music Folder when importing to Library"
+msgstr "Kopiraj datoteke u Audioteku Zloslutnice"
+
+#: ../data/banshee.glade.h:24
+msgid "Data CD"
+msgstr "CD sa podacima"
+
+#: ../data/banshee.glade.h:25
+msgid "Default Engine"
+msgstr "Predefinisani sistem izlaza"
+
+#: ../data/banshee.glade.h:26
+msgid "Disk Drive:"
+msgstr "Disk:"
+
+#: ../data/banshee.glade.h:27
+msgid "Disk Format:"
+msgstr "Format:"
+
+#: ../data/banshee.glade.h:28
+msgid "Disk Usage:"
+msgstr "Korišćenje:"
+
+#: ../data/banshee.glade.h:29
+msgid "Disk at once"
+msgstr "Disk-iz-jednog"
+
+#: ../data/banshee.glade.h:30
+msgid "Do not show this dialog again"
+msgstr "Ubuduće ne prikazuj ovaj prozorčić"
+
+#: ../data/banshee.glade.h:31 ../src/TrackProperties.cs:240
+msgid "Editing Song"
+msgstr "Izmena podataka pesme"
+
+#: ../data/banshee.glade.h:32
+msgid "Eject when finished"
+msgstr "Izbaci po završetku"
+
+#: ../data/banshee.glade.h:33
+msgid "Encoding Profile:"
+msgstr "Profil formata kodiranja:"
+
+#: ../data/banshee.glade.h:34
+msgid "Encoding:"
+msgstr "Format kodiranja:"
+
+#: ../data/banshee.glade.h:35
+msgid "Enter the address of the file you would like to open:"
+msgstr "Unesite adresu datoteke koju želite otvoriti:"
+
+#: ../data/banshee.glade.h:36 ../src/Dialogs.cs:88
+msgid "Error"
+msgstr "Greška"
+
+#: ../data/banshee.glade.h:37
+msgid "File Name:"
+msgstr "Ime datoteke:"
+
+#: ../data/banshee.glade.h:38
+msgid "Import Music Source"
+msgstr "Uvezi muziku"
+
+#: ../data/banshee.glade.h:39
+msgid "Import Music to Library"
+msgstr "Uzezi muziku u Audioteku"
+
+#: ../data/banshee.glade.h:40
+msgid "Imported On:"
+msgstr "Uvezeno:"
+
+#: ../data/banshee.glade.h:41
+msgid "Last Played On:"
+msgstr "Poslednje izvođenje:"
+
+#: ../data/banshee.glade.h:42
+msgid "MP3 CD"
+msgstr "MP3 CD"
+
+#: ../data/banshee.glade.h:43
+msgid "Mime Type:"
+msgstr "Tip datoteke:"
+
+#: ../data/banshee.glade.h:44
+msgid "Number of Plays:"
+msgstr "Broj izvođenja:"
+
+#: ../data/banshee.glade.h:45 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
+msgid "Open Location"
+msgstr "Otvori lokaciju"
+
+#: ../data/banshee.glade.h:46
+msgid "Overburn"
+msgstr "Presnimi preko limita"
+
+#: ../data/banshee.glade.h:47
+msgid "Preferences"
+msgstr "Podešavanja"
+
+#: ../data/banshee.glade.h:48
+msgid "Reset"
+msgstr "Poništi"
+
+#: ../data/banshee.glade.h:49
+msgid "Sample Rate:"
+msgstr "Brzina bita:"
+
+#: ../data/banshee.glade.h:50
+msgid "Seek to Position"
+msgstr "Skoči na poziciju"
+
+#: ../data/banshee.glade.h:51
+msgid "Simulate write"
+msgstr "Simuliraj upis"
+
+#: ../data/banshee.glade.h:52
+msgid "Track Duration:"
+msgstr "Trajanje numere:"
+
+#: ../data/banshee.glade.h:53
+msgid "Track _Count"
+msgstr "Broj n_umera"
+
+#: ../data/banshee.glade.h:54
+msgid "Track _Number"
+msgstr "Broj _numere"
+
+#: ../data/banshee.glade.h:55 ../src/Banshee.Base/Dap/Dap.cs:620
+#: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
+#: ../src/TrackProperties.cs:261 ../src/TrackProperties.cs:262
+#: ../src/TrackProperties.cs:263 ../src/TrackProperties.cs:264
+#: ../src/TrackProperties.cs:265
+msgid "Unknown"
+msgstr "Nepoznato"
+
+#: ../data/banshee.glade.h:56
+msgid "VBR:"
+msgstr "VBR:"
+
+#: ../data/banshee.glade.h:57
+msgid "Write Speed:"
+msgstr "Brzina upisa:"
+
+#: ../data/banshee.glade.h:58
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later."
+msgstr ""
+"Vaša Audioteka je prazna. Možete uvesti novu muziku u nju sada, ili to "
+"uraditi kasnije."
+
+#: ../data/banshee.glade.h:59
+msgid "_Artist"
+msgstr "Izvođ_ač"
+
+#: ../data/banshee.glade.h:60
+msgid "_Genre"
+msgstr "_Žanr"
+
+#: ../data/banshee.glade.h:61
+msgid "_Search:"
+msgstr "T_raži:"
+
+#: ../data/banshee.glade.h:62
+msgid "_Title"
+msgstr "Nas_lov"
+
+#: ../data/banshee.schemas.in.h:1
+msgid ""
+"Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
+"\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+msgstr ""
+"Može biti \"systemio\" (.NET System.IO), \"unix\" (Standardni Uniks), ili "
+"\"gnomevfs\" (Gnomov VFS); važi po pokretanju Zloslutnice (neophodno ponovno "
+"pokretanje)"
+
+#: ../data/banshee.schemas.in.h:2
+msgid "Copy and rename music to banshee music library directory when importing"
+msgstr "Umnoži i preimenuj muziku u Audioteku Zloslutnice pri uvozu"
+
+#: ../data/banshee.schemas.in.h:3
+msgid "Copy music on import"
+msgstr "Umnoži muziku pri uvozu"
+
+#: ../data/banshee.schemas.in.h:4
+msgid "Enable Special Keys"
+msgstr "Omogući specijalne tastere"
+
+#: ../data/banshee.schemas.in.h:5
+msgid ""
+"Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
+"works with mappings set through Gnome Shortcuts capplet"
+msgstr ""
+"Podrška da specijalni tasteri (Multimedijalne tastere) aktiviraju Pusti/"
+"Zaustavi/Sledeća/Prethodna; radi uz pomoć postavki u Gnomovim prečicama na "
+"tastaturi"
+
+#: ../data/banshee.schemas.in.h:6
+msgid "File Name Pattern"
+msgstr "Obrazac imena datoteke"
+
+#: ../data/banshee.schemas.in.h:8
+#, no-c-format
+msgid ""
+"Format for creating filenames/directories for ripped tracks, imported music, "
+"etc. Format is relative to the Banshee music directory... do not form an "
+"absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero)."
+msgstr ""
+"Obrazac za kreiranje datoteka/direktorijuma za pesme izvučene sa CDa, uvezenu "
+"muziku, itd. Format je relativan u odnosu na direktorijum audioteke "
+"Zloslutnice... nemojte unositi apsolutnu putanju! Oznake: %artist%, %album%, %"
+"title%, %track_number%, %track_count%, %track_number_nz% (Bez vodeće nule), %"
+"track_count_nz% (Bez vodeće nule)."
+
+#: ../data/banshee.schemas.in.h:9
+msgid "Height of the main interface window."
+msgstr "Visina glavnog prozora"
+
+#: ../data/banshee.schemas.in.h:10
+msgid "Move music on info save"
+msgstr "Premesti muziku po snimanju informacija"
+
+#: ../data/banshee.schemas.in.h:11
+msgid ""
+"Move music within banshee music library directory when saving track info"
+msgstr ""
+"Premesti muziku unutar audioteke Zloslutnice po snimanju informacija o numeri"
+
+#: ../data/banshee.schemas.in.h:12
+msgid "Name of media playback engine."
+msgstr "Ime sistema za reprodukciju."
+
+#: ../data/banshee.schemas.in.h:13
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "Pozicija glavnog prozora na X osi u pikselima"
+
+#: ../data/banshee.schemas.in.h:14
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "Pozicija glavnog prozora na Y osi u piskelima"
+
+#: ../data/banshee.schemas.in.h:15
+msgid "Player Engine Name"
+msgstr "Ime sistema reprodukcije"
+
+#: ../data/banshee.schemas.in.h:16
+msgid "Set the IO backend in Banshee"
+msgstr "Postavlja ulazno izlazni sistem Zloslutnice"
+
+#: ../data/banshee.schemas.in.h:17
+msgid "Show advanced track properties"
+msgstr "Prikaži dodatne informacije o numeri"
+
+#: ../data/banshee.schemas.in.h:18
+msgid "Show the Initial Import Dialog"
+msgstr "Prikaži uvodni prozorčić za uvoz"
+
+#: ../data/banshee.schemas.in.h:19
+msgid "Show the Initial Import Dialog when the Banshee library is empty"
+msgstr "Prikaži uvodni prozorčić za uvoz kada je audioteka Zloslutnice prazna"
+
+#: ../data/banshee.schemas.in.h:20
+msgid "Source View Width"
+msgstr "Širina Pregleda izvora"
+
+#: ../data/banshee.schemas.in.h:21
+msgid "True if main window is to be maximized, false if it is not."
+msgstr "Tačno ukoliko glavni prozor treba biti uvećan, inače netačno."
+
+#: ../data/banshee.schemas.in.h:22
+msgid ""
+"True if the advanced expander should be expanded in the track properties "
+"dialog, false if it should be closed"
+msgstr ""
+"Tačno ukoliko panel sa dodatnim informacijama o numeri treba biti raširen, "
+"netačno ako treba ostati skriven"
+
+#: ../data/banshee.schemas.in.h:23
+msgid "Visibility of Album Column."
+msgstr "Vidljivost kolone Album."
+
+#: ../data/banshee.schemas.in.h:24
+msgid "Visibility of Artist Column."
+msgstr "Vidljivost kolone Izvođač."
+
+#: ../data/banshee.schemas.in.h:25
+msgid "Visibility of Time Column."
+msgstr "Vidljivost kolone Vreme."
+
+#: ../data/banshee.schemas.in.h:26
+msgid "Visibility of Title Column."
+msgstr "Vidljivost kolone Naslov."
+
+#: ../data/banshee.schemas.in.h:27
+msgid "Visibility of Track Column."
+msgstr "Vidljivost kolone sa brojem numere."
+
+#: ../data/banshee.schemas.in.h:28
+msgid "Volume Output Level"
+msgstr "Jačina izlaznog zvuka"
+
+#: ../data/banshee.schemas.in.h:29
+msgid ""
+"Volume of playback relative to mixer output (except on Helix, which sets "
+"volume directly on PCM"
+msgstr ""
+"Jačina zvuka reprodukcije relativno u odnosu na izlaz miksete. (osim kada se "
+"koristi Heliks, koji postavlja jačinu zvuka direktno na PCM"
+
+#: ../data/banshee.schemas.in.h:30
+msgid "Width of Album Column."
+msgstr "Širina kolone Album."
+
+#: ../data/banshee.schemas.in.h:31
+msgid "Width of Artist Column."
+msgstr "Širina kolone Izvođač."
+
+#: ../data/banshee.schemas.in.h:32
+msgid "Width of Last Played Column."
+msgstr "Širina kolone sa vremenom poslednjeg izvođenja."
+
+#: ../data/banshee.schemas.in.h:33
+msgid "Width of Plays Column."
+msgstr "Širina kolone sa brojem izvođenja."
+
+#: ../data/banshee.schemas.in.h:34
+msgid "Width of Rating Column."
+msgstr "Širina kolone Ocena."
+
+#: ../data/banshee.schemas.in.h:35
+msgid "Width of Source View Column."
+msgstr "Širina kolone sa pregledom izvora."
+
+#: ../data/banshee.schemas.in.h:36
+msgid "Width of Time Column."
+msgstr "Širina kolone Vreme."
+
+#: ../data/banshee.schemas.in.h:37
+msgid "Width of Title Column."
+msgstr "Širina kolone Naslov."
+
+#: ../data/banshee.schemas.in.h:38
+msgid "Width of Track Column."
+msgstr "Širina kolone sa brojem numere."
+
+#: ../data/banshee.schemas.in.h:39
+msgid "Width of the main interface window."
+msgstr "Širina glavnog prozora"
+
+#: ../data/banshee.schemas.in.h:40
+msgid "Window Height"
+msgstr "Širina prozora"
+
+#: ../data/banshee.schemas.in.h:41
+msgid "Window Maximized"
+msgstr "Uvećan prozor"
+
+#: ../data/banshee.schemas.in.h:42
+msgid "Window Position X"
+msgstr "X pozicija prozora"
+
+#: ../data/banshee.schemas.in.h:43
+msgid "Window Position Y"
+msgstr "Y pozicija prozora"
+
+#: ../data/banshee.schemas.in.h:44
+msgid "Window Width"
+msgstr "Širina prozora"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:248 ../libbanshee/gst-cd-rip-0.8.c:84
+msgid "Could not create pipeline"
+msgstr "Ne mogu da kreiram cev"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:254 ../libbanshee/gst-cd-rip-0.8.c:93
+msgid "Could not initialize cdparanoia"
+msgstr "Ne mogu da inicijalizujem cdparanoia sistem"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:265
+msgid "Could not create mbtrm plugin"
+msgstr "Ne mogu da napravim mbtrm dodatak"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:277 ../libbanshee/gst-cd-rip-0.8.c:106
+msgid "Could not create encoder pipeline"
+msgstr "Ne mogu da napravim cev ka programu za kodiranje"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:283
+msgid "Could not create queue plugin"
+msgstr "Ne mogu da napravim dodatak za čekaonicu"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
+msgid "Could not create GNOME VFS output plugin"
+msgstr "Ne mogu da napravim dodatak za Gnomov VFS izlaz"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:307 ../libbanshee/gst-cd-rip-0.8.c:127
+msgid "Could not link pipeline elements"
+msgstr "Ne mogu da povežem elemente cevovoda"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:398 ../libbanshee/gst-cd-rip-0.8.c:226
+#: ../src/AboutBox.cs:133
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
+msgid "Banshee"
+msgstr "Zloslutnica"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:424 ../libbanshee/gst-cd-rip-0.8.c:240
+msgid "Encoding element does not support tagging!"
+msgstr "Element za dekodiranje ne podržava dodavanje naznaka!"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:250
+msgid "Could not send seek event to cdparanoia"
+msgstr "Ne mogu da poašanjem dogaljaj pretrage sistemu cdparanoia"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:256
+msgid "Could not get track start position"
+msgstr "Ne mogu da saznam poziciju početka numere"
+
+#: ../libbanshee/gst-cd-rip-0.8.c:270
+msgid "Could not get track position"
+msgstr "Ne mogu da saznam poziciju numere"
+
+#: ../libbanshee/gst-playback-0.8.c:91
+msgid "Could not find or create the 'playbin' GStreamer plugin"
+msgstr "Ne mogu da napravim Gstrimerov 'playbin' dodatak"
+
+#: ../libbanshee/gst-playback-0.8.c:99
+msgid ""
+"Could not load an output sink from GStreamer/GConf and could not fall back "
+"on alsasink"
+msgstr ""
+"Ne mogu da učitavam izlaznu cev kroz Gstrimer/Gkonf i ne mogu da se vanredno "
+"prebacim na alsasink"
+
+#: ../libbanshee/gst-playback-0.8.c:102
+msgid ""
+"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
+msgstr ""
+"Ne mogu da učitam izlaznu cev kroz Gstrimer/Gkonf, vanredno se prebacujem na "
+"alsasink"
+
+#: ../libbanshee/gst-transcode-0.10.c:160
+#: ../libbanshee/gst-transcode-0.8.c:242
+msgid "No decoder could be found for source format."
+msgstr "Ne mogu da pronađem dekoder za ulazni format."
+
+#: ../libbanshee/gst-transcode-0.10.c:165
+#: ../libbanshee/gst-transcode-0.8.c:247
+msgid "Could not stat encoded file"
+msgstr "Ne mogu da pristupim kodiranoj datoteci"
+
+#: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
+msgid "Could not create 'gnomevfssrc' plugin"
+msgstr "Ne mogu da napravim 'gnomevfssrc' dodatak"
+
+#: ../libbanshee/gst-transcode-0.10.c:255
+msgid "Could not create 'decodebin' plugin"
+msgstr "Ne mogu da napravim 'decodebin' dodatak"
+
+#: ../libbanshee/gst-transcode-0.10.c:261
+msgid "Could not create 'gnomevfssink' plugin"
+msgstr "Ne mogu da napravim 'gnomevfssink' dodatak"
+
+#: ../libbanshee/gst-transcode-0.10.c:267
+msgid "Could not create 'sinkben' plugin"
+msgstr "Ne mogu da napravim 'sinkben' dodatak"
+
+#: ../libbanshee/gst-transcode-0.10.c:273
+msgid "Could not create 'audioconvert' plugin"
+msgstr "Ne mogu da napravim 'audioconvert' dodatak"
+
+#: ../libbanshee/gst-transcode-0.10.c:279
+msgid "Could not create encoding pipeline"
+msgstr "Ne mogu da napravim cevovod za kodiranje"
+
+#: ../libbanshee/gst-transcode-0.10.c:285
+msgid "Could not get sink pad from encoder"
+msgstr "Ne mogu da prihvatim priključak na izlaznu cev od programa za kodiranje"
+
+#: ../libbanshee/gst-transcode-0.10.c:368
+msgid "Could not construct pipeline"
+msgstr "Ne mogu da napravim cevovod"
+
+#: ../libbanshee/gst-transcode-0.8.c:96
+msgid "Could not create 'spider' plugin"
+msgstr "Ne mogu da napravim 'spider' dodatak"
+
+#: ../libbanshee/gst-transcode-0.8.c:103
+#, c-format
+msgid "Could not create encoding pipeline: %s"
+msgstr "Ne mogu da napravim cevovod za kodiranje: %s"
+
+#: ../libbanshee/gst-transcode-0.8.c:109
+msgid "Could not create 'filesink' plugin"
+msgstr "Ne mogu da napravim 'filesink' dodatak"
+
+#: ../libbanshee/hal-context.c:61
+msgid "Could not create new HAL context"
+msgstr "Ne mogu da napravim novi HAL kontekst"
+
+#: ../libbanshee/hal-context.c:69
+#, c-format
+msgid "Could not integrate HAL with mainloop: %s"
+msgstr "Ne mogu da povežem HAL sa glavnom petljom: %s"
+
+#: ../libbanshee/hal-context.c:89 ../libbanshee/hal-context.c:92
+msgid "Could not initialize HAL context"
+msgstr "Ne mogu da pokrenem HAL kontekst"
+
+#: ../libbanshee/hal-context.c:101
+msgid "Could not get device list from HAL"
+msgstr "Ne mogu da pribavim listu uređaja od HALa"
+
+#: ../src/AboutBox.cs:135
+msgid "Music Management and Playback for Gnome."
+msgstr "Gnomov organizator muzike i sistem reprodukcije."
+
+#: ../src/AboutBox.cs:137
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/AboutBox.cs:142
+msgid "Banshee Wiki"
+msgstr "Viki Zloslutnice (eng.)"
+
+#: ../src/Banshee.Base/ActionManager.cs:61
+msgid "_Music"
+msgstr "_Muzika"
+
+#: ../src/Banshee.Base/ActionManager.cs:64
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:71
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:446
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:468
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:475
+#: ../src/PlayerInterface.cs:1489
+msgid "New Playlist"
+msgstr "Nova lista"
+
+#: ../src/Banshee.Base/ActionManager.cs:65
+msgid "Create a new empty playlist"
+msgstr "Napravi novu praznu listu"
+
+#: ../src/Banshee.Base/ActionManager.cs:68
+msgid "Import _Folder..."
+msgstr "Uvezi _fasciklu..."
+
+#: ../src/Banshee.Base/ActionManager.cs:69
+msgid "Import the contents of an entire folder"
+msgstr "Uvezi sadržaj celog fasckile"
+
+#: ../src/Banshee.Base/ActionManager.cs:72
+msgid "Import Files..."
+msgstr "Uvezi datoteke..."
+
+#: ../src/Banshee.Base/ActionManager.cs:73
+msgid "Import files inside a folder"
+msgstr "Uvezi datoteke iz fasckile"
+
+#: ../src/Banshee.Base/ActionManager.cs:76
+msgid "Import Music..."
+msgstr "Uvezi muziku..."
+
+#: ../src/Banshee.Base/ActionManager.cs:77
+msgid "Import music from a variety of sources"
+msgstr "Uvezi muziku iz raznih izvora"
+
+#: ../src/Banshee.Base/ActionManager.cs:80
+msgid "Open Location..."
+msgstr "Otvori lokaciju..."
+
+#: ../src/Banshee.Base/ActionManager.cs:81
+msgid "Open a remote location for playback"
+msgstr "Otvori udaljenu lokaciju"
+
+#: ../src/Banshee.Base/ActionManager.cs:84
+msgid "Import Source"
+msgstr "Uvezi izvor"
+
+#: ../src/Banshee.Base/ActionManager.cs:85
+msgid "Import source to library"
+msgstr "Uvezi izvor u audioteku"
+
+#: ../src/Banshee.Base/ActionManager.cs:88
+msgid "Source Properties..."
+msgstr "Osobine izvora..."
+
+#: ../src/Banshee.Base/ActionManager.cs:89
+msgid "View source properties"
+msgstr "Pogledaj osobine izvora"
+
+#: ../src/Banshee.Base/ActionManager.cs:92
+msgid "_Quit"
+msgstr "_Izađi"
+
+#: ../src/Banshee.Base/ActionManager.cs:93
+msgid "Quit Banshee"
+msgstr "Izađi iz Zloslutnice"
+
+#: ../src/Banshee.Base/ActionManager.cs:96
+msgid "_Edit"
+msgstr "Izm_eni"
+
+#: ../src/Banshee.Base/ActionManager.cs:99
+msgid "Rename Source"
+msgstr "Preimenuj izvor"
+
+#: ../src/Banshee.Base/ActionManager.cs:100
+msgid "Rename the active source"
+msgstr "Preimenuj aktivan izvor"
+
+#: ../src/Banshee.Base/ActionManager.cs:103
+msgid "Select All"
+msgstr "Odaberi sve"
+
+#: ../src/Banshee.Base/ActionManager.cs:104
+msgid "Select all songs in song list"
+msgstr "Odaberi sve pesme u listi"
+
+#: ../src/Banshee.Base/ActionManager.cs:107
+msgid "Select None"
+msgstr "Poništi odabir"
+
+#: ../src/Banshee.Base/ActionManager.cs:108
+msgid "Unselect all songs in song list"
+msgstr "Poništi odabir pesama u listi"
+
+#: ../src/Banshee.Base/ActionManager.cs:111
+msgid "Plugins..."
+msgstr "Dodaci..."
+
+#: ../src/Banshee.Base/ActionManager.cs:112
+msgid "Configure Banshee plugins"
+msgstr "Podesi dodatke Zloslutnice"
+
+#: ../src/Banshee.Base/ActionManager.cs:117
+msgid "_View"
+msgstr "P_regled"
+
+#: ../src/Banshee.Base/ActionManager.cs:120
+msgid "Columns..."
+msgstr "Kolone..."
+
+#: ../src/Banshee.Base/ActionManager.cs:121
+msgid "Select which columns to display in the song list"
+msgstr "Odaberi koje kolone se prikazuju u listi pesama"
+
+#: ../src/Banshee.Base/ActionManager.cs:124
+msgid "Logged Events Viewer..."
+msgstr "Pregled dnevnika događaja..."
+
+#: ../src/Banshee.Base/ActionManager.cs:125
+msgid "View a detailed log of events"
+msgstr "Pregledaj detaljan dnevnik događaja"
+
+#: ../src/Banshee.Base/ActionManager.cs:128
+msgid "_Help"
+msgstr "_Pomoć"
+
+#: ../src/Banshee.Base/ActionManager.cs:131
+msgid "Version Information..."
+msgstr "Informacija o verziji..."
+
+#: ../src/Banshee.Base/ActionManager.cs:132
+msgid "View detailed version and configuration information"
+msgstr "Pregledaj detaljne informaciji o verziji i konfiguraciji"
+
+#: ../src/Banshee.Base/ActionManager.cs:137
+msgid "_Playback"
+msgstr "Izvo_đenje"
+
+#: ../src/Banshee.Base/ActionManager.cs:140 ../src/SourceView.cs:82
+msgid "Source"
+msgstr "Izvor"
+
+#: ../src/Banshee.Base/ActionManager.cs:148
+msgid "Fullscreen"
+msgstr "Ceo ekran"
+
+#: ../src/Banshee.Base/ActionManager.cs:149
+msgid "Toggle Fullscreen Mode"
+msgstr "Promeni status režima preko celog ekrana"
+
+#: ../src/Banshee.Base/ActionManager.cs:152
+msgid "Show Cover Art"
+msgstr "Prikaži omot albuma"
+
+#: ../src/Banshee.Base/ActionManager.cs:153
+msgid "Toggle display of album cover art"
+msgstr "Promeni status prikazivanja omota albuma"
+
+#: ../src/Banshee.Base/ActionManager.cs:162
+msgid "Delete Playlist"
+msgstr "Obriši listu"
+
+#: ../src/Banshee.Base/ActionManager.cs:163
+msgid "Delete the active playlist"
+msgstr "Obriši aktivnu listu pesama"
+
+#: ../src/Banshee.Base/ActionManager.cs:172
+msgid "Write CD"
+msgstr "Izradi CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:173
+msgid "Write selection to audio CD"
+msgstr "Snimi odabrano na audio CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:176
+msgid "Remove Song(s)"
+msgstr "Ukloni pesmu(e)"
+
+#: ../src/Banshee.Base/ActionManager.cs:177
+msgid "Remove selected song(s) from library"
+msgstr "Ukloni odabranu pesmu(e) iz Audioteke"
+
+#: ../src/Banshee.Base/ActionManager.cs:180
+msgid "Delete Song(s) From Drive"
+msgstr "Obriši pesmu(e) sa diska"
+
+#: ../src/Banshee.Base/ActionManager.cs:181
+msgid "Permanently delete selected song(s) from storage medium"
+msgstr "Nepovratno ukloni odabranu pesmu(e) sa lokacije skladištenja"
+
+#: ../src/Banshee.Base/ActionManager.cs:184
+msgid "Edit Song Metadata"
+msgstr "Izmeni podatke o pesmi"
+
+#: ../src/Banshee.Base/ActionManager.cs:185
+msgid "Edit metadata on selected songs"
+msgstr "Izmeni podatke izabranih pesama"
+
+#: ../src/Banshee.Base/ActionManager.cs:188
+msgid "Add to Playlist"
+msgstr "Dodaj u listu"
+
+#: ../src/Banshee.Base/ActionManager.cs:189
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr "Dodaj odabrane pesme u listu ili napravi novu listu iz odabira"
+
+#: ../src/Banshee.Base/ActionManager.cs:192 ../src/PlaylistView.cs:113
+msgid "Rating"
+msgstr "Ocena"
+
+#: ../src/Banshee.Base/ActionManager.cs:193
+msgid "Set rating for selected songs"
+msgstr "Postavi ocenu za odabrane pesme"
+
+#: ../src/Banshee.Base/ActionManager.cs:202
+msgid "Import CD"
+msgstr "Uvezi CD"
+
+#: ../src/Banshee.Base/ActionManager.cs:203
+msgid "Import audio CD to library"
+msgstr "Uvezi audio CD u Audioteku"
+
+#: ../src/Banshee.Base/ActionManager.cs:212 ../src/PlayerInterface.cs:821
+#: ../src/PlayerInterface.cs:829
+msgid "Play"
+msgstr "Pusti"
+
+#: ../src/Banshee.Base/ActionManager.cs:213
+msgid "Play or pause the current song"
+msgstr "Pusti ili zaustavi trenutnu pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:216
+msgid "Next"
+msgstr "Naredna"
+
+#: ../src/Banshee.Base/ActionManager.cs:217
+msgid "Play the next song"
+msgstr "Pusti narednu pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:220
+msgid "Previous"
+msgstr "Prethodna"
+
+#: ../src/Banshee.Base/ActionManager.cs:221
+msgid "Play the previous song"
+msgstr "Pusti prethodnu pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:226 ../src/ToggleStates.cs:41
+msgid "Repeat None"
+msgstr "Bez ponavljanja"
+
+#: ../src/Banshee.Base/ActionManager.cs:227
+msgid "Do not repeat playlist"
+msgstr "Ne ponavljaj listu pesama"
+
+#: ../src/Banshee.Base/ActionManager.cs:230 ../src/ToggleStates.cs:59
+msgid "Repeat All"
+msgstr "Ponavljaj listu"
+
+#: ../src/Banshee.Base/ActionManager.cs:231
+msgid "Play all songs before repeating playlist"
+msgstr "Pusti sve pesme pre ponavljanja liste"
+
+#: ../src/Banshee.Base/ActionManager.cs:234 ../src/ToggleStates.cs:50
+msgid "Repeat Single"
+msgstr "Ponavljaj pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:235
+msgid "Repeat the current playing song"
+msgstr "Ponavljaj trenutnu pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:240 ../src/ToggleStates.cs:68
+msgid "Shuffle"
+msgstr "Ispretumbano"
+
+#: ../src/Banshee.Base/ActionManager.cs:241
+msgid "Toggle between shuffle or continuous playback modes"
+msgstr "Prebaci se između ispretumbanog i izvođenja po redosledu"
+
+#: ../src/Banshee.Base/ActionManager.cs:250
+msgid "Seek Backward"
+msgstr "Skoči unazad"
+
+#: ../src/Banshee.Base/ActionManager.cs:251
+msgid "Seek backward in current song"
+msgstr "Skoči unazad u trenutnoj pesmi"
+
+#: ../src/Banshee.Base/ActionManager.cs:254
+msgid "Seek Forward"
+msgstr "Skoči unapred"
+
+#: ../src/Banshee.Base/ActionManager.cs:255
+msgid "Seek forward in current song"
+msgstr "Skoči unapred u trenutnoj pesmi"
+
+#: ../src/Banshee.Base/ActionManager.cs:258
+msgid "Seek To..."
+msgstr "Skoči na..."
+
+#: ../src/Banshee.Base/ActionManager.cs:259
+msgid "Seek to a specific location in current song"
+msgstr "Skoči na određenu lokaciju u trenutnoj pesmi"
+
+#: ../src/Banshee.Base/ActionManager.cs:262
+msgid "Restart Song"
+msgstr "Ponovo pokreni pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:263
+msgid "Restart the current song"
+msgstr "Ponovo pokreni trenutnu pesmu"
+
+#: ../src/Banshee.Base/ActionManager.cs:272 ../src/PlayerInterface.cs:1072
+msgid "Synchronize"
+msgstr "Sinhronizuj"
+
+#: ../src/Banshee.Base/ActionManager.cs:273
+msgid "Save changes to device or synchronize music library"
+msgstr "Snimi promene na uređaj ili sinhronizuj Audioteku"
+
+#: ../src/Banshee.Base/ActionManager.cs:282
+msgid "Eject"
+msgstr "Izbaci"
+
+#: ../src/Banshee.Base/ActionManager.cs:283
+msgid "Eject the active source"
+msgstr "Izbaci aktivan izvor"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:80
+msgid "HAL is not initialized"
+msgstr "HAL nije inicijalizovan"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
+msgid "Audio CD Core Initialized"
+msgstr "Audio CD jezgro inicijalizovano"
+
+#. work around mcs #76642
+#: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
+msgid "Could not Read Audio CD"
+msgstr "Ne mogu da pročitam Audio CD"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:85
+#: ../src/Banshee.Base/TrackInfo.cs:384
+msgid "Unknown Artist"
+msgstr "Nepoznat izvođač"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
+#: ../src/Banshee.Base/TrackInfo.cs:392
+msgid "Unknown Album"
+msgstr "Nepoznat album"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
+#, csharp-format
+msgid "Track {0}"
+msgstr "Numera {0}"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
+msgid "Cannot Eject CD"
+msgstr "Ne mogu da izbacim CD"
+
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
+msgid "The CD cannot be ejected while it is importing. Stop the import first."
+msgstr "CD ne može biti izbačen dok traje uvoz. Najpre zaustavite uvoz."
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:85
+msgid "Could not create CD Ripper"
+msgstr "Ne mogu da napravim program za izvlačenje sa CD-a"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:295
+#, csharp-format
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
+msgstr ""
+"Pristupna tačka uređaja '{0}' se razlikuje od one koja je postavljena ranije "
+"za numere na čekanju ({1})"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:308
+msgid "Importing Audio CD"
+msgstr "Uvozim Audio CD"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:309
+msgid "Initializing Drive"
+msgstr "Inicijalizujem disk"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:329
+#: ../src/Banshee.Base/AudioCdRipper.cs:393
+msgid "Cannot Import CD"
+msgstr "Ne mogu da uvezem CD"
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:341
+#: ../src/Banshee.Base/ImportManager.cs:118
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Uvozim {0} od {1}"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:110
+msgid "File Transcoder"
+msgstr "Prevodilac formata datoteka"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:111
+msgid "Transcoding Files"
+msgstr "Prevodim format datoteke"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:114
+msgid "Initializing Transcoder..."
+msgstr "Inicijalizujem prevodioca formata..."
+
+#: ../src/Banshee.Base/Dap/DapCore.cs:119
+msgid "Cannot initialize DapCore because HalCore is not initialized"
+msgstr "Ne mogu da inicijalizujem DapCore jer HalCore nije inicijalizovan"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:329 ../src/Banshee.Base/Dap/Dap.cs:330
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:237 ../src/Banshee.Dap/Njb/NjbDap.cs:249
+msgid "Synchronizing Device"
+msgstr "Sinhronizujem uređaj"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:331
+msgid "Waiting for transcoder..."
+msgstr "Čekam na prevodioca formata..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:423 ../src/Banshee.Base/Dap/Dap.cs:444
+msgid "Processing..."
+msgstr "Obrađujem..."
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#, csharp-format
+msgid "{0} Properties"
+msgstr "Osobine {0}"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device Name"
+msgstr "Ime uređaja"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner Name"
+msgstr "Ime vlasnika"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
+msgid "Volume Usage"
+msgstr "Upotreba prostora"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
+msgid "Advanced Details"
+msgstr "Dodatni detalji"
+
+#: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
+msgid "Browse..."
+msgstr "Pretraži..."
+
+#: ../src/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Uvezi datoteke u Audioteku"
+
+#: ../src/Banshee.Base/FileImportSource.cs:82
+msgid "Local Files"
+msgstr "Lokalne datoteke"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Uvezi fasciklu u Audioteku"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:80
+msgid "Local Folder"
+msgstr "Lokalna fascikla"
+
+#: ../src/Banshee.Base/GstTranscoder.cs:82
+#: ../src/Banshee.Base/GstTranscoder.cs:185
+msgid "Could not create transcoder"
+msgstr "Ne mogu da formiram prevodioca formata"
+
+#: ../src/Banshee.Base/HalCore.cs:97
+msgid "HAL could not be initialized"
+msgstr "HAL ne može biti inicijalizovan"
+
+#: ../src/Banshee.Base/HalCore.cs:104
+msgid "HAL context could not be created"
+msgstr "HAL kontekst ne može biti napravljen"
+
+#: ../src/Banshee.Base/HalCore.cs:105
+msgid "D-Bus may not be working or configured properly"
+msgstr "Izgleda da D-Bas ne radi ili nije ispravno podešen"
+
+#: ../src/Banshee.Base/HomeDirectoryImportSource.cs:58
+msgid "Home Directory"
+msgstr "Lična fascikla"
+
+#: ../src/Banshee.Base/ImportManager.cs:86
+msgid "Importing Songs"
+msgstr "Uvozim pesme"
+
+#: ../src/Banshee.Base/ImportManager.cs:89
+msgid "Scanning for songs"
+msgstr "Tražim pesme"
+
+#: ../src/Banshee.Base/Library.cs:125
+msgid "Could not load track from library"
+msgstr "Ne mogu da učitam numeru iz audioteke"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:76
+msgid "Cannot connect to NetworkManager"
+msgstr "Ne mogu da se povežem na Upravljača mreže"
+
+#: ../src/Banshee.Base/NetworkDetect.cs:77
+msgid "An available, working network connection will be assumed"
+msgstr "Pretpostavljam da postoji dostupna, ispravna veza ka mreži"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:105
+msgid "Pipeline profile is empty."
+msgstr "Profil cevovoda je prazan"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:111
+msgid "Pipeline profile does not have the correct number of components (7)"
+msgstr "Profil cevovoda nema ispravan broj komponenti (7)"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:121
+msgid "Pipeline profile does not have a lookup key"
+msgstr "Profil cevovoda ne sadrži ključ za brzu pretragu"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:125
+msgid "Pipeline profile does not have a display name"
+msgstr "Profil cevovoda ne sadrži ime ekrana za prikaz"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:130
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a file extension"
+msgstr "Profil cevovoda '{0}' ne sadrži ekstenziju datoteke"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:136
+#, csharp-format
+msgid "Pipeline profile '{0}' does not have a GStreamer element"
+msgstr "Profil cevovoda '{0}' ne sadrži Gstrimer element"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:167
+#, csharp-format
+msgid ""
+"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
+"not be run"
+msgstr ""
+"Profil cevovoda '{0}' neće biti dostupan: Gstrimer cevovod '{1}'  ne može "
+"biti pokrenut"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:195
+msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
+msgstr ""
+"Ne mogu da koristim interni broj bitova. Koristim BuildPipeline(bitrate) kao "
+"alternativu."
+
+#: ../src/Banshee.Base/PipelineProfile.cs:215
+msgid ""
+"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
+"PipelineProfile(profile))"
+msgstr ""
+"Ne mogu da podesim interni broj bitova. Primoran sam da umnožim profil i "
+"postavim broj bitova na kopiji (new PipelineProfile(profile))"
+
+#. Translators: used to specify the bitrate for ripping
+#: ../src/Banshee.Base/PipelineProfile.cs:362
+msgid "at"
+msgstr "na"
+
+#: ../src/Banshee.Base/PipelineProfile.cs:404
+msgid "No iPod-compatible encoders available"
+msgstr "Ne postoji iPod kompatibilan konvertor formata"
+
+#: ../src/Banshee.Base/PlayerEngineCore.cs:101
+msgid "Default player engine"
+msgstr "Predefinisani sistem reprodukcije"
+
+#: ../src/Banshee.Base/PlayerEngineCore.cs:172
+msgid "Problem with Player Engine"
+msgstr "Problem sa sitemom reprodukcije"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Dodaci Zloslutnice"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "Ime dodatka"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
+msgid "Enabled"
+msgstr "Omogućen"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "Pregled"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "Opis"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "Autor(i)"
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "Ovaj dodatak ne može biti pokrenut."
+
+#: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "Podešavanja"
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:76
+msgid "Reading table of contents from CD..."
+msgstr "Čitam sadržaj sa CDa..."
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:81
+msgid "Searching for CD metadata..."
+msgstr "Tražim informacije o CDu..."
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:86
+msgid "Searching for CD cover art..."
+msgstr "Tražim omot CDa"
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:91
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr ""
+"Ne mogu da pronađem informacije o CDu: ne postoji aktivna veza ka Internetu"
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:97
+msgid "Could not fetch metadata for CD."
+msgstr "Ne mogu da pribavim informacije o CDu."
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:178
+msgid "Invalid Selection"
+msgstr "Neispravan odabir"
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:179
+msgid "You must select at least one track to import."
+msgstr "Morate odabrati makar jednu numeru za uvoz."
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:105
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Sinhronizujem uređaj, Molim sačekaj..."
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:172
+#: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} od {1}"
+
+#: ../src/Banshee.Base/Sources/DapSource.cs:182
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "(Preostalo {0})"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:50
+msgid "Music Library"
+msgstr "Audioteka"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:110
+#, fuzzy
+msgid "Sort Playlists"
+msgstr "Nova lista"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:113
+#, fuzzy
+msgid "Creation Order"
+msgstr "Izgrađujem sliku diska"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:117
+msgid "Name Ascending"
+msgstr ""
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:121
+msgid "Name Descending"
+msgstr ""
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:125
+msgid "Size Ascending"
+msgstr ""
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:129
+msgid "Size Descending"
+msgstr ""
+
+#: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "Lokalna čekaonica"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:150
+msgid "Cannot Rename Playlist"
+msgstr "Ne mogu da preimenujem listu"
+
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:151
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr "Lista sa novim imenom već postoji. Odaberi neko drugo ime."
+
+#: ../src/Banshee.Base/TrackInfo.cs:400
+msgid "Unknown Title"
+msgstr "Nepoznat naslov"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:103
+msgid "by"
+msgstr "izvodi"
+
+#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+msgid "from"
+msgstr "sa albuma"
+
+#: ../src/Banshee.Base/Utilities.cs:73
+#, csharp-format
+msgid "{0:0.00} GB"
+msgstr "{0:0.00} GB"
+
+#: ../src/Banshee.Base/Utilities.cs:74
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0} MB"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
+msgid "Rebuilding Database"
+msgstr "Ponovo izgrađujem bazu"
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
+msgid "Scanning iPod..."
+msgstr "Pretražujem iPod..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
+msgid "Processing Songs..."
+msgstr "Obrađujem pesme..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
+msgid "Saving new database..."
+msgstr "Snimam novu bazu..."
+
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
+msgid "Error rebuilding iPod database"
+msgstr "Greška pri izgradnji iPod baze"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
+msgid "Synchronizing iPod"
+msgstr "Sinhronizujem iPod"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:160
+msgid "Pre-processing tracks"
+msgstr "Pripremam numere za obradu"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:175
+msgid "Flushing to Disk (may take time)"
+msgstr "Smeštam na disk (može potrajati)"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:185
+msgid "Failed to synchronize iPod"
+msgstr "Neuspešno sinhronizovanje iPoda"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr "Ne mogu da pročitam tvoj iPod"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
+msgid "What is the reason for this?"
+msgstr "Koji je razlog za ovo?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
+msgid "Rebuild iPod Database..."
+msgstr "Gradim novu bazu iPoda..."
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
+msgid "Confirm Rebuild iPod Database"
+msgstr "Potvrdi novu izgradnju iPod baze"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"Izgradnja nove iPod baze može potrajati. Takođe pazi da će sve liste pesama "
+"na iPodu biti obrisane.\n"
+"\n"
+"Da li i dalje želiš da izgradiš novu bazu na iPodu?"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
+msgid "Rebuild Database"
+msgstr "Gradim novu bazu"
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
+msgid "Rebuilding iPod Database..."
+msgstr "Gradim novu bazu iPoda..."
+
+#. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
+#. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
+#. args.FileName, e.GetType(), e.Message);
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:133
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:137
+#: ../src/PlayerInterface.cs:1731
+msgid "Scanning"
+msgstr "Pretražujem"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:257
+msgid "Audio Device"
+msgstr "Audio uređaj"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:143
+msgid "Cannot read device"
+msgstr ""
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:249
+#, fuzzy
+msgid "Removing Songs"
+msgstr "Ukloni pesmu(e)"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:337
+#, fuzzy
+msgid "Device Error"
+msgstr "Ime uređaja"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:338
+#, fuzzy
+msgid "Could not set the owner of the device."
+msgstr "Ne mogu da pristupim kodiranoj datoteci"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:65
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
+msgid "Could not initialize GStreamer library"
+msgstr "Ne mogu da inicijalizujem biblioteku Gstrimera"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:143
+msgid "Unknown Error"
+msgstr "Nepoznata greška"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:165
+#: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
+msgid "Buffering"
+msgstr "Smeštam u spremište"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:145
+msgid "Audioscrobbler Reporting"
+msgstr "Audioscrobbler izveštavanje"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:73
+msgid "Create an account"
+msgstr "Napravi nalog"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:77
+msgid "Join the Banshee group"
+msgstr "Priključi se grupi Zloslutnice"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:130
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:131
+msgid "Enable song reporting"
+msgstr "Omogući izveštavanje o pesama"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
+msgid "Last.fm Username"
+msgstr "Korisničko ime za Last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:102
+msgid "Last.fm Password"
+msgstr "Lozinka za Last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:59
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr ""
+"Stranica tvog profila na Last.fm se automatski ažurira kada god slušaš "
+"muziku. Preko nje drugi mogu videti šta trenutno slušaš i pogledati šta je "
+"puštano ranije."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:112
+msgid "Audioscrobbler"
+msgstr "Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:125
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Podesi dodatak za Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:116
+msgid "Visit user profile page"
+msgstr "Poseti stranicu profila"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Poseti stranicu tvog profila na Audioscrobbler-u"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:120
+msgid "Visit group page"
+msgstr "Poseti stranicu grupe"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:121
+msgid "Visit the Banshee last.fm group page"
+msgstr "Poseti stranicu grupe Zloslutnice na last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
+msgid "Configure..."
+msgstr "Podesi..."
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
+msgid ""
+"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr ""
+"Omogući sistemu da objavi informacije o pesmi na last.fm kroz dodatak za "
+"Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
+msgid "Enable the Audioscrobbler plugin"
+msgstr "Omogući dodatak za Audioscrobbler"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
+msgid "Your last.fm password"
+msgstr "Tvoja lozinka za last.fm"
+
+#: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:4
+msgid "Your last.fm username"
+msgstr "Tvoje korisničko ime za last.fm"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:50
+msgid "Music Sharing"
+msgstr "Deljenje muzike"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
+msgid "Share my music library with others"
+msgstr "Podeli moju audioteku sa drugima"
+
+#: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
+msgid "Share name:"
+msgstr "Ime za razmenu:"
+
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
+msgid "Banshee Music Share"
+msgstr "Razmena muzike Zloslutnice"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
+msgid "Login to Music Share"
+msgstr "Prijavi se na mesto za razmenu"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
+msgid "Authentication Required"
+msgstr "Neophodna prijava"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
+msgid "Username:"
+msgstr "Korisničko ime:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+msgid "Password:"
+msgstr "Lozinka:"
+
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "Prijava"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
+msgid "Allow others to browse and listen to your music from other DAAP clients"
+msgstr ""
+"Dozvoli drugima da pregledaju i slušaju tvoju muziku sa drugih DAAP klijenata"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
+msgid "Enable DAAP Server support"
+msgstr "Omogući podršku za DAAP server"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
+msgid "Enable the DAAP Music Sharing plugin"
+msgstr "Omogući dodatak za deljenje muzike kroz DAAP"
+
+#: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
+msgid "Name of DAAP server share"
+msgstr "Ime DAAP razmene na serveru"
+
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+msgid "Cannot login to DAAP share"
+msgstr "Ne mogu da se prijavim na DAAP mesto razmene"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
+msgid "Metadata and Cover Art Searching"
+msgstr "Traženje informacija o pesmama i omota"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:70
+msgid "Only download album cover artwork"
+msgstr "Samo preuzmi omot albuma"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:72
+msgid "Download album cover artwork and fill in missing track data"
+msgstr "Preuzmi omot albuma i popuni nedostajuće podatke o numeri"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:74
+msgid "Download album cover artwork and overwrite any existing track data"
+msgstr "Preuzmi omot albuma i prepiši nove preko postojećih podataka numere"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
+msgid "Rescan Library"
+msgstr "Osveži Audioteku"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
+msgid "Warning"
+msgstr "Upozorenje"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:98
+msgid ""
+"This option can usually correct minor mistakes in metadata, however on rare "
+"occasions metadata may be incorrectly updated from MusicBrainz."
+msgstr ""
+"Ova opcija obično ispravno popravlja manje greške u informacijama o pesmi, "
+"ipak dešava se da pogrešno ažurira podatke iz MusicBrainz baze."
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:57
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
+msgstr ""
+"Automatski traži nedostajuće podatke o pesmi i omote albuma za pesme u "
+"tvojoj Audioteci."
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
+msgid ""
+"0 - Download only cover art 1 - Download cover art, fill in missing metadata "
+"2 - Download cover art, overwrite metadata"
+msgstr ""
+"0 - Samo preuzmi omot albuma 1 - Preuzmi omot albuma, popuni nedostajuće "
+"informacije 2 - Preuzmi omot albuma, prepiši preko postojećih informacija "
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
+msgid "Enable the MetadataSearch plugin"
+msgstr "Omogući dodatak za traženje informacija"
+
+#: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
+msgid "Method of fetching cover art and supplementary metadata"
+msgstr "Metod pribavljanja slike omota i dodatnih informacija"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:48
+msgid "Multimedia Keyboard Shortcuts"
+msgstr "Multimedijalne tipke na tastaturi"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:52
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+"Podešavanje multimedijalnih tipki na tastaturi se obavlja kroz Gnomov "
+"programčić za konfigurisanje Prečica na tastaturi."
+
+#: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
+msgid "Enable the MultimediaKeys plugin"
+msgstr "Omogući dodatak za multimedijalne tipke"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:49
+msgid "Notification Area Icon"
+msgstr "Ikona u obaveštajnoj zoni"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:53
+msgid "Shows the Notification Area Icon"
+msgstr "Prikazuje ikonu u obaveštajnoj zoni"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
+msgid "Enable the Notification Area Icon plugin"
+msgstr "Omogući dodatak za ikonu u obaveštajnoj zoni"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
+msgid "Cancel Operation"
+msgstr "Prekini operaciju"
+
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
+#, csharp-format
+msgid "Are you sure you want to cancel the '{0}' operation?"
+msgstr "Da li ste sigurni da želite da prekinete operaciju '{0}'?"
+
+#: ../src/Banshee.Widgets/SearchEntry.cs:203
+#: ../src/Banshee.Widgets/SearchEntry.cs:314
+#, csharp-format
+msgid "Searching: {0}"
+msgstr "Pretražujem: {0}"
+
+#: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
+msgid "Idle"
+msgstr "Lenčarim"
+
+#: ../src/BurnCore.cs:90
+msgid "Insufficient Disk Space"
+msgstr "Nema dovoljno prostoran a disku"
+
+#: ../src/BurnCore.cs:91
+#, csharp-format
+msgid "Creating this CD requires at least {0} MiB of free disk space."
+msgstr ""
+"Za sastavljanje ovog CDa, neophodno je makar {0} MB slobodnog prostora na "
+"disku."
+
+#: ../src/BurnCore.cs:127
+msgid "Could Not Write CD"
+msgstr "Ne mogu da snimim CD"
+
+#: ../src/BurnCore.cs:128
+msgid "No suitable encoder could be found to convert selected songs."
+msgstr ""
+"Nije pronađen pogodan program za kodiranje da bi konvertovao odabrane pesme"
+
+#: ../src/BurnCore.cs:146 ../src/BurnCore.cs:287 ../src/BurnCore.cs:297
+#, csharp-format
+msgid "File does not exist: {0}"
+msgstr "Datoteka ne postoji: {0}"
+
+#: ../src/BurnCore.cs:166 ../src/BurnCore.cs:183 ../src/BurnCore.cs:249
+#: ../src/BurnCore.cs:320
+msgid "Problem creating CD"
+msgstr "Problem pri izradi CDa"
+
+#: ../src/BurnCore.cs:167
+msgid "None of the songs selected for this CD could be found."
+msgstr "Ni jedna pesma odabrana za ovaj CD ne može biti pronađena."
+
+#: ../src/BurnCore.cs:184 ../src/BurnCore.cs:410
+msgid "No CD writers were found on your system."
+msgstr "Nisu pronađeni uređaji za snimanje CDa."
+
+#: ../src/BurnCore.cs:190 ../src/BurnCore.cs:518 ../src/BurnCore.cs:521
+msgid "Insert Blank CD"
+msgstr "Ubaci prazan CD"
+
+#: ../src/BurnCore.cs:191 ../src/BurnCore.cs:519
+msgid "Please insert a blank CD disk for the write process."
+msgstr "Molim te ubaci prazan CD radi snimanja."
+
+#: ../src/BurnCore.cs:201
+#, csharp-format
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr "Ubačeni medij nije dovoljno veliki za odabranu muziku."
+
+#: ../src/BurnCore.cs:203
+#, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "Potreban je još {0} minut na mediju."
+msgstr[1] "Potrebno je još {0} minuta na mediju."
+msgstr[2] "Potrebno je još {0} minuta na mediju."
+msgstr[3] "Potreban je još samo {0} minut na mediju."
+
+#: ../src/BurnCore.cs:207
+msgid "Not Enough Space on Disc"
+msgstr "Nema dovoljno prostora na disku"
+
+#: ../src/BurnCore.cs:250
+msgid ""
+"None of the songs selected for this CD could be converted to the format "
+"required for an audio CD."
+msgstr ""
+"Ni jedna pesma odabrana za ovaj CD ne može biti pretvorena u format "
+"neophodan za audio CD."
+
+#: ../src/BurnCore.cs:321
+msgid ""
+"Some songs could either not be found or could not be converted to the format "
+"required for an audio CD."
+msgstr ""
+"Neke pesme nisu pronađene ili ih nije bilo moguće pretvoriti u format "
+"neophodan za audio CD."
+
+#: ../src/BurnCore.cs:323
+msgid "Continue Anyway"
+msgstr "Ipak nastavi"
+
+#: ../src/BurnCore.cs:344
+msgid "Error Creating CD Image"
+msgstr "Greška prilikom izrade slike CDa"
+
+#: ../src/BurnCore.cs:362
+msgid "Writing CD"
+msgstr "Snimam CD"
+
+#: ../src/BurnCore.cs:363
+msgid "Writing Audio CD"
+msgstr "Snimam audio CD"
+
+#: ../src/BurnCore.cs:450 ../src/BurnCore.cs:465
+msgid "Error Writing CD"
+msgstr "Greška prilikom izrade CDa"
+
+#: ../src/BurnCore.cs:454
+msgid "An unknown error occurred when attempting to write the CD"
+msgstr "Dogodila se nepoznata greška prilikom izrade CDa"
+
+#: ../src/BurnCore.cs:460
+msgid "CD Writing Complete"
+msgstr "Izrada CDa je završena"
+
+#: ../src/BurnCore.cs:461
+msgid "The selected audio was successfully written to the CD."
+msgstr "Odabrane pesme su uspešno snimljene na CD."
+
+#: ../src/BurnCore.cs:488
+msgid "Preparing to write..."
+msgstr "Pripremam se za snimanje..."
+
+#: ../src/BurnCore.cs:492
+msgid "Writing disk..."
+msgstr "Snimam disk..."
+
+#: ../src/BurnCore.cs:496
+msgid "Fixating disk..."
+msgstr "Fiksiram disk..."
+
+#: ../src/BurnCore.cs:514
+msgid "Waiting for Media"
+msgstr "Čekam na medij"
+
+#: ../src/BurnCore.cs:578
+msgid "Creating Image"
+msgstr "Izgrađujem sliku diska"
+
+#: ../src/BurnCore.cs:579
+msgid "Transferring songs"
+msgstr "Prebacujem pesme"
+
+#: ../src/BurnCore.cs:597
+#, csharp-format
+msgid "Transferring song {0}"
+msgstr "Prebacujem pesmu {0}"
+
+#: ../src/BurnCore.cs:609
+msgid "Could not transfer files to create disk image."
+msgstr "Ne mogu da prebacim datoteke radi izgradnje slike diska."
+
+#: ../src/BurnCore.cs:636
+msgid "Could not transfer file to disk layout."
+msgstr "Ne mogu da prebacim datoteku na skicu diska."
+
+#: ../src/BurnCore.cs:639
+msgid "File is already in disk layout."
+msgstr "Datoteka je već na skici diska."
+
+#: ../src/Dialogs.cs:81
+msgid "An Error Occurred"
+msgstr "Dogodila se greška"
+
+#: ../src/ExceptionDialog.cs:24
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Zloslutnica je doživela fatalnu grešku"
+
+#: ../src/ExceptionDialog.cs:52
+msgid ""
+"This may be due to a programming error. Please help us make Banshee better "
+"by reporting this error. Thank you in advance!"
+msgstr ""
+"Razlog za ovo može biti greška u kodu. Molim te prijavi grešku i pomozi nam "
+"da napravimo Zloslutnicu boljom. Hvala ti unapred! "
+
+#: ../src/ExceptionDialog.cs:99
+msgid "An unhandled exception was thrown: "
+msgstr "Dogodio se neobrađen izuzetak: "
+
+#: ../src/LogCoreViewer.cs:52
+msgid "Log Viewer"
+msgstr "Pregled dnevnika"
+
+#: ../src/LogCoreViewer.cs:88
+msgid "Time Stamp"
+msgstr "Vreme"
+
+#: ../src/LogCoreViewer.cs:107
+msgid "Message"
+msgstr "Poruka"
+
+#: ../src/LogCoreViewer.cs:119
+msgid "Show:"
+msgstr "Prikaži:"
+
+#: ../src/LogCoreViewer.cs:136
+msgid "All Log Entries"
+msgstr "Svi zapisi u dnevniku"
+
+#: ../src/LogCoreViewer.cs:137
+msgid "Only Error Messages"
+msgstr "Samo poruke o greškama"
+
+#: ../src/LogCoreViewer.cs:138
+msgid "Only Warning Messages"
+msgstr "Samo poruke upozorenja"
+
+#: ../src/LogCoreViewer.cs:139
+msgid "Only Information Messages"
+msgstr "Samo informativne poruke"
+
+#: ../src/LogCoreViewer.cs:140
+msgid "Only Debug Messages"
+msgstr "Samo poruke za lov na greške"
+
+#: ../src/LogCoreViewer.cs:155
+msgid "Entry Details:"
+msgstr "Detalji unosa:"
+
+#: ../src/PlayerInterface.cs:370
+msgid "Loading..."
+msgstr "Učitavam..."
+
+#: ../src/PlayerInterface.cs:434
+msgid "All"
+msgstr "Sve"
+
+#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1288
+msgid "Song Name"
+msgstr "Ime pesme"
+
+#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1286
+msgid "Artist Name"
+msgstr "Ime izvođača"
+
+#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1290
+msgid "Album Title"
+msgstr "Naziv albuma"
+
+#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1292
+#: ../src/PlaylistView.cs:105
+msgid "Genre"
+msgstr "Žanr"
+
+#: ../src/PlayerInterface.cs:460
+msgid "Write selection to CD"
+msgstr "Snimi odabrano na CD"
+
+#: ../src/PlayerInterface.cs:461
+msgid "Import CD into library"
+msgstr "Uvezi CD u Audioteku"
+
+#: ../src/PlayerInterface.cs:462
+msgid "Play previous song"
+msgstr "Pusti prethodnu pesmu"
+
+#: ../src/PlayerInterface.cs:463
+msgid "Play/pause current song"
+msgstr "Pusti/zaustavi trenutnu pesmu"
+
+#: ../src/PlayerInterface.cs:464
+msgid "Play next song"
+msgstr "Pusti narednu pesmu"
+
+#: ../src/PlayerInterface.cs:465
+msgid "Device disk usage"
+msgstr "Zauzeće diska na uređaju"
+
+#: ../src/PlayerInterface.cs:466
+msgid "Synchronize music library to device"
+msgstr "Sinhronizuj Audioteku sa uređajem"
+
+#: ../src/PlayerInterface.cs:467
+msgid "Adjust volume"
+msgstr "Prilagodi jačinu tona"
+
+#: ../src/PlayerInterface.cs:468
+msgid "Change repeat playback mode"
+msgstr "Izmeni režim ponavljanja"
+
+#: ../src/PlayerInterface.cs:469
+msgid "Toggle shuffle playback mode"
+msgstr "Promeni aktivnost ispretumbanog režima"
+
+#: ../src/PlayerInterface.cs:470
+msgid "Edit and view metadata of selected songs"
+msgstr "Izmeni i pregledaj podatke o odabranim pesmama"
+
+#: ../src/PlayerInterface.cs:811
+msgid "Cannot Play Song"
+msgstr "Ne mogu reprodukovati pesmu"
+
+#: ../src/PlayerInterface.cs:812
+#, csharp-format
+msgid ""
+"{0} cannot be played by Banshee. The most common reasons for this are:\n"
+"\n"
+"  <big>•</big> Song is protected (DRM)\n"
+"  <big>•</big> Song is on a DAP that does not support playback\n"
+msgstr ""
+"{0} ne može biti izvođena u Zloslutnici. Uobičajni razlozi za ovo su:\n"
+"\n"
+"  <big>•</big> Pesma je zaštićena (DRM)\n"
+"  <big>•</big> Pesma je na uređaju koji ne podržava reprodukciju\n"
+
+#: ../src/PlayerInterface.cs:832
+msgid "Pause"
+msgstr "Zaustavi"
+
+#: ../src/PlayerInterface.cs:866
+msgid "Playback Error"
+msgstr "Greška reprodukcije"
+
+#: ../src/PlayerInterface.cs:1061
+msgid "Import"
+msgstr "Uvezi"
+
+#: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2032
+msgid "Rename Device"
+msgstr "Preimenuj uređaj"
+
+#: ../src/PlayerInterface.cs:1079 ../src/PlayerInterface.cs:2026
+msgid "Rename Playlist"
+msgstr "Preimenuj listu"
+
+#: ../src/PlayerInterface.cs:1184
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} dan"
+msgstr[1] "{0} dana"
+msgstr[2] "{0} dana"
+msgstr[3] "{0} dan"
+
+#: ../src/PlayerInterface.cs:1201
+#, csharp-format
+msgid "{0} Item"
+msgid_plural "{0} Items"
+msgstr[0] "{0} stavka"
+msgstr[1] "{0} stavke"
+msgstr[2] "{0} stavki"
+msgstr[3] "{0} stavka"
+
+#: ../src/PlayerInterface.cs:1203
+#, csharp-format
+msgid "{0} Total Play Time"
+msgstr "Ukupnog trajanja {0}"
+
+#: ../src/PlayerInterface.cs:1508
+msgid "Clear"
+msgstr "Očisti"
+
+#: ../src/PlayerInterface.cs:1719
+msgid "Could Not Eject"
+msgstr "Ne mogu da izbacim"
+
+#: ../src/PlayerInterface.cs:1747
+#, csharp-format
+msgid "Cannot Import: {0} ({1})"
+msgstr "Nije moguće uvesti: {0} ({1})"
+
+#: ../src/PlayerInterface.cs:1789
+#, csharp-format
+msgid ""
+"Are you sure you want to remove the selected song from your library "
+"<i><b>and</b></i> your drive? This action will permanently delete the file."
+msgid_plural ""
+"Are you sure you want to remove the selected <b>({0})</b> songs from your "
+"library <i><b>and</b></i> your drive? This action will permanently delete "
+"the files."
+msgstr[0] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranu pesmu iz tvoje "
+"audioteke <i><b>i</b></i> tvog diska? Ova akcija će za stalno obrisati ove "
+"datoteke."
+msgstr[1] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabrane pesame iz tvoje "
+"audioteke <i><b>i</b></i> tvog diska? Ova akcija će za stalno obrisati ove "
+"datoteke."
+msgstr[2] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranih pesama iz tvoje "
+"audioteke <i><b>i</b></i> tvog diska? Ova akcija će za stalno obrisati ove "
+"datoteke."
+msgstr[3] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranu pesmu iz tvoje "
+"audioteke <i><b>i</b></i> tvog diska? Ova akcija će za stalno obrisati ovu "
+"datoteku."
+
+#: ../src/PlayerInterface.cs:1798
+#, csharp-format
+msgid "Are you sure you want to remove the selected song from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected <b>({0})</b> songs from your "
+"library?"
+msgstr[0] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranu pesmu iz tvoje "
+"audioteke?"
+msgstr[1] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabrane pesame iz tvoje "
+"audioteke?"
+msgstr[2] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranih pesama iz tvoje "
+"audioteke?"
+msgstr[3] ""
+"Da li sigurno želiš da ukloniš <b>({0})</b> odabranu pesmu iz tvoje "
+"audioteke?"
+
+#: ../src/PlayerInterface.cs:1807
+msgid "Remove Selected Songs from Library"
+msgstr "Ukloni odabrane pesme iz Audioteke"
+
+#. Translators: {0} is the name of the DAP device (i.e. 'iPod')
+#: ../src/PlayerInterface.cs:1960
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "Sinhronizuj {0}"
+
+#: ../src/PlayerInterface.cs:1961
+#, csharp-format
+msgid ""
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
+"\n"
+"<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
+msgstr ""
+"{0} je promenjen. Odaberi način ažuriranja sadržaja tvog {0}.\n"
+"\n"
+"<big>•</big> <i>Sinhronizuj Audioteku</i>: Sinhronizuje Audioteku "
+"Zloslutnice sa {0}\n"
+"<big>•</big> <i>Snimi ručne izmene</i>: snimi samo načinjene izmene"
+
+#: ../src/PlayerInterface.cs:1967
+msgid ""
+"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+"cause incompatability with iTunes!"
+msgstr ""
+"<b>Upozorenje::</b> Akcije će izmeniti ili obrisati postojeći sadržaj iPoda i "
+"mogu prouzrokovati neslaganje sa programom iTunes!"
+
+#: ../src/PlayerInterface.cs:1969
+msgid "Synchronize Library"
+msgstr "Sinhronizuj Audioteku"
+
+#: ../src/PlayerInterface.cs:1971
+msgid "Save Manual Changes"
+msgstr "Snimi ručne izmene"
+
+#: ../src/PlayerInterface.cs:2027
+msgid "Enter new playlist name"
+msgstr "Unesi novo ime liste"
+
+#: ../src/PlayerInterface.cs:2033
+msgid "Enter new name for your device"
+msgstr "Unesi novo ime uređaja"
+
+#: ../src/PlaylistColumns.cs:80
+msgid "Invalid column width"
+msgstr "Neispravna širina kolone"
+
+#: ../src/PlaylistColumns.cs:139
+msgid "Choose Columns"
+msgstr "Odaberi kolone"
+
+#: ../src/PlaylistColumns.cs:155
+msgid "Visible Playlist Columns"
+msgstr "Vidljive kolone u listi"
+
+#: ../src/PlaylistView.cs:93
+msgid "Track"
+msgstr "Numera"
+
+#: ../src/PlaylistView.cs:96
+msgid "Artist"
+msgstr "Izvođač"
+
+#: ../src/PlaylistView.cs:99
+msgid "Title"
+msgstr "Naslov"
+
+#: ../src/PlaylistView.cs:102
+msgid "Album"
+msgstr "Album"
+
+#: ../src/PlaylistView.cs:108
+msgid "Time"
+msgstr "Vreme"
+
+#: ../src/PlaylistView.cs:119
+msgid "Plays"
+msgstr "Izvođenja"
+
+#: ../src/PlaylistView.cs:126
+msgid "Last Played"
+msgstr "Poslednje izvođenje"
+
+#: ../src/PlaylistView.cs:479
+msgid "N/A"
+msgstr "Nepoznato"
+
+#: ../src/Preferences.cs:98
+msgid "Select Library Location"
+msgstr "Odaberite lokaciju Audioteke"
+
+#: ../src/Preferences.cs:262
+msgid "Unavailable"
+msgstr "Nedostupno"
+
+#: ../src/Preferences.cs:268
+msgid "Loading Drive List..."
+msgstr "Učitavam listu uređaja..."
+
+#: ../src/Preferences.cs:291
+msgid "No CD Burners Detected"
+msgstr "Nije pronađen CD snimač"
+
+#: ../src/Preferences.cs:389
+msgid "Fastest Possible"
+msgstr "Najbrže moguće"
+
+#. Translators: this represents a CD write speed, eg "32x"
+#: ../src/Preferences.cs:393
+#, csharp-format
+msgid "{0}x"
+msgstr "{0}x"
+
+#: ../src/ToggleStates.cs:79
+msgid "Continuous"
+msgstr "Neprestano"
+
+#: ../src/TrackProperties.cs:184
+msgid "Set all Track Numbers to this value"
+msgstr "Promeni brojeve numera svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:185
+msgid "Automatically Set All Track Numbers"
+msgstr "Automatski promeni brojeve numera svih pesama"
+
+#: ../src/TrackProperties.cs:186
+msgid "Set all Track Counts to this value"
+msgstr "Promeni brojeve numera svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:187
+msgid "Set all Artists to this value"
+msgstr "Promeni sve izvođača svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:188
+msgid "Set all Albums to this value"
+msgstr "Promeni ime albuma svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:189
+msgid "Set all Titles to this value"
+msgstr "Promeni naslov svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:190
+msgid "Set all Genres to this value"
+msgstr "Promeni žanr svih pesama na ovu vrednost"
+
+#: ../src/TrackProperties.cs:234
+msgid "Never Played"
+msgstr "Nije reprodukovana"
+
+#: ../src/TrackProperties.cs:239
+#, csharp-format
+msgid "Editing Song {0} of {1}"
+msgstr "Uređivanje pesme br. {0} od {1}"
+
+#: ../src/TrackProperties.cs:246 ../src/TrackProperties.cs:247
+#, csharp-format
+msgid "File: {0}"
+msgstr "Datoteka: {0}"
+
+#: ../src/TrackProperties.cs:253
+msgid "KB/Second"
+msgstr "KB/Sekundi"
+
+#: ../src/TrackProperties.cs:254
+#, csharp-format
+msgid "{0} KHz"
+msgstr "{0} KHz"
+
+#: ../src/TrackProperties.cs:255
+msgid "Yes"
+msgstr "Da"
+
+#: ../src/TrackProperties.cs:255
+msgid "No"
+msgstr "Ne"
+
+#: ../src/VersionInformationDialog.cs:62
+msgid "Assembly Version Information"
+msgstr "Informacija o verzijama komponenti"
+
+#: ../src/VersionInformationDialog.cs:68
+msgid "Assembly Name"
+msgstr "Naziv komponente"
+
+#: ../src/VersionInformationDialog.cs:70
+msgid "Version"
+msgstr "Verzija"
+
+#~ msgid "Object must be Translator"
+#~ msgstr "Objekat mora biti tipa Prevodilac"
+
+#~ msgid "Ripping CD and Encoding with Pipeline"
+#~ msgstr "Izvlačim pesme sa CDa i kodiram postavljenim cevovodom"
+
+#~ msgid " ({0}x)"
+#~ msgstr " ({0}x)"
+
+#~ msgid "Transcoder is busy"
+#~ msgstr "Prevodilac formata je zauzet"
+
+#~ msgid "Could not create Library directory: {0}"
+#~ msgstr "Ne mogu da napravim direktorijum za Audioteku: {0}"
+
+#~ msgid "Copied old library to new location"
+#~ msgstr "Stara audioteka je umnožena na novu lokaciju"
+
+#~ msgid "Could not remove old library"
+#~ msgstr "Ne mogu da uklonim staru audioteke"
+
+#~ msgid "Network Connection Established"
+#~ msgstr "Uspostavljena je konekcija ka mreži"
+
+#~ msgid "Active Device Unknown"
+#~ msgstr "Aktivni uređaj je nepoznat"
+
+#~ msgid "Network Connection Unavailable"
+#~ msgstr "Nije dostpuna konekcija ka mreži"
+
+#~ msgid "Disconnected"
+#~ msgstr "Van mreže"
+
+#~ msgid "Could not verify encoder profile"
+#~ msgstr "Ne mogu da proverim profil programa za kodiranje"
+
+#~ msgid "Directory {0} does not exist"
+#~ msgstr "Direktorijum {0} ne postoji"
+
+#~ msgid "Could not load a PlayerEngine"
+#~ msgstr "Ne mogu da učitam sistem reprodukcije"
+
+#~ msgid ""
+#~ "Cannot load any PlayerEngine:\n"
+#~ "\n"
+#~ "{0}\n"
+#~ msgstr ""
+#~ "Ne mogu da učitam nijedan sistem reprodukcije:\n"
+#~ "\n"
+#~ "{0}\n"
+
+#~ msgid "Switching engine to: "
+#~ msgstr "Prebacujem sistem na: "
+
+#~ msgid "CD is already ripping"
+#~ msgstr "Muzika se već izvlači sa CDa"
+
+#~ msgid "Could not load: {0}"
+#~ msgstr "Ne mogu da učitam: {0}"
+
+#~ msgid "pumount returned error"
+#~ msgstr "pumount je doživeo grešku"
+
+#~ msgid "Error setting process name: "
+#~ msgstr "Greška prilikom imenovanja procesa: "
+
+#~ msgid "timer stopped:"
+#~ msgstr "štoperica zaustavljena: "
+
+#~ msgid "iPod"
+#~ msgstr "iPod"
+
+#~ msgid "Error: Synchronize called on MassStorage DAP"
+#~ msgstr "Greška: Sinhronizacija pozvana nad MassStorage uređajem"
+
+#~ msgid "Failed to unmount.  {1} {2}"
+#~ msgstr "Neuspelo demontiranje.  {1} {2}"
+
+#~ msgid "Failed to eject.  {1} {2}"
+#~ msgstr "Neuspelo izbacivanje.  {1} {2}"
+
+#~ msgid "Could not delete file: {0}"
+#~ msgstr "Ne mogu da obrišem datoteku: {0}"
+
+#~ msgid "GST-DEBUG: {0}: {1}"
+#~ msgstr "GST-DEBUG: {0}: {1}"
+
+#~ msgid "GStreamer 0.8"
+#~ msgstr "Gstrimer 0.8"
+
+#~ msgid "VLC"
+#~ msgstr "VLC"
+
+#~ msgid "Audioscrobbler starting protocol engine"
+#~ msgstr "Audioscrobbler pokreće podsistem protokola"
+
+#~ msgid "Audioscrobbler stopping protocol engine"
+#~ msgstr "Audioscrobbler zaustavlja podsistem protokola"
+
+#~ msgid "Starting DAAP Server"
+#~ msgstr "Pokrećem DAAP server"
+
+#~ msgid "Stopping DAAP Server"
+#~ msgstr "Zaustavljam DAAP server"
+
+#~ msgid "Building initial DAAP database from local library..."
+#~ msgstr "Gradim početnu DAAP bazu od lokalne audioteke..."
+
+#~ msgid "Connecting to DAAP share: {0}"
+#~ msgstr "Povezujem se na DAAP mesto razmene: {0}"
+
+#~ msgid "Enable the FileSystemMonitor plugin"
+#~ msgstr "Omogući dodatak za nadgledanje sistema datoteka"
+
+#~ msgid "File System Monitor"
+#~ msgstr "Nadgledanje sistema datoteka"
+
+#~ msgid ""
+#~ "Automatically keep your Banshee library directory in sync with your music "
+#~ "folder. This plugin responds to changes made in the file system to "
+#~ "reflect them in your library."
+#~ msgstr ""
+#~ "Automatski održava sinhronizaciju Zloslutničine audioteke i tvoje "
+#~ "fascikle sa muzikom. Ovaj dodatak reaguje na promene u sistemu datoteka i "
+#~ "odražava ih trenutno na Audioteku."
+
+#~ msgid "Metadata Searcher"
+#~ msgstr "Traženje informacija o pesmama"
+
+#~ msgid "Scanning library for tracks to update"
+#~ msgstr "Pretražujem numere za ažuriranje u audioteci"
+
+#~ msgid "Done scanning library"
+#~ msgstr "Gotovo sa pretragom audioteke"
+
+#~ msgid "Processing track queue for pending queries"
+#~ msgstr "Obrađujem postavljene upite za pesme na čekanju"
+
+#~ msgid "Done processing track queue"
+#~ msgstr "Gotovo sa obradom pesama na čekanju"
+
+#~ msgid "Setting ASIN from previous lookup ({0} / {1})"
+#~ msgstr "Preuzimam ASIN od prethodne pretrage ({0} / {1})"
+
+#~ msgid "Querying MusicBrainz for {0} / {1}... "
+#~ msgstr "Pretražujem MusicBrainz radi informacija {0} / {1}"
+
+#~ msgid "OK"
+#~ msgstr "Gotovo"
+
+#~ msgid "FAILED ({0})"
+#~ msgstr "Greška ({0})"
+
+#~ msgid "Performing Task"
+#~ msgstr "Izvršavam zadatak"
+
+#~ msgid "Banshee Songs"
+#~ msgstr "Pesme iz Zloslutnice"
+
+#~ msgid "No files to transfer"
+#~ msgstr "Nema datoteka za prebacivanje"
+
+#~ msgid ".NET Version: "
+#~ msgstr ".NET verzija"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Assembly Version Information:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Informacija o verzijama komponenti\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Platform Information: "
+#~ msgstr ""
+#~ "\n"
+#~ "Informacija o platformi: "
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "Disribution Information:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Informacija o distribuciji:\n"
+#~ "\n"
+
+#~ msgid "Files to enqueue, must be last argument specified"
+#~ msgstr "Datoteke za preslušavanje, mora biti poslednja navedena opcija"
+
+#~ msgid "Show window"
+#~ msgstr "Prikaži prozor"
+
+#~ msgid "Hide window"
+#~ msgstr "Sakrij prozor"
+
+#~ msgid "Toggle playing of current song"
+#~ msgstr "Pusti/Zaustavi trenutnu pesmu"
+
+#~ msgid "Play current song"
+#~ msgstr "Pusti trenutnu pesmu"
+
+#~ msgid "Pause current song"
+#~ msgstr "Zaustavi trenutnu pesmu"
+
+#~ msgid "Get artist name for current playing song"
+#~ msgstr "Prikaži izvođača trenutne pesme"
+
+#~ msgid "Get album name for current playing song"
+#~ msgstr "Prikaži album za trenutnu pesmu"
+
+#~ msgid "Get track title for current playing song"
+#~ msgstr "Prikaži naziv trenutne pesme"
+
+#~ msgid "Get track genre for current playing song"
+#~ msgstr "Prikaži žanr trenutne pesme"
+
+#~ msgid "Get duration of current playing song in seconds"
+#~ msgstr "Prikaži dužinu trajanja trenutne pesme u sekundama"
+
+#~ msgid "Get position of current playing song in seconds"
+#~ msgstr "Prikaži poziciju reprodukcije trenutne pesme u sekundama"
+
+#~ msgid "Get URI of current playing song"
+#~ msgstr "Prikaži URI trenutne pesme"
+
+#~ msgid "Get URI of the album cover of current playing song"
+#~ msgstr "Prikaži URI omota albuma sa kog je trenutna pesma"
+
+#~ msgid "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"
+#~ msgstr ""
+#~ "Prikaži stanje muzičke kutije (-1: Nije učitana, 0: Zaustavljena, 1: "
+#~ "Izvođenje u toku)"
+
+#~ msgid "Do not display field name for --query-* results"
+#~ msgstr "Ne prikazuj ime polja za rezultate --query-* komandi"
+
+#~ msgid "List available command line arguments"
+#~ msgstr "Prikaži dostupne argumente komandne linije"
+
+#~ msgid "Start Banshee and/or select source mapped to <device>"
+#~ msgstr "Pokreni Zloslutnicu i/ili odaberi izvor mapiran na <uređaj>"
+
+#~ msgid "Show Banshee Version"
+#~ msgstr "Prikaži verziju Zloslutnice"
+
+#~ msgid "Duration"
+#~ msgstr "Trajanje"
+
+#~ msgid "Position"
+#~ msgstr "Pozicija"
+
+#~ msgid "Uri"
+#~ msgstr "Uri"
+
+#~ msgid "CoverUri"
+#~ msgstr "Uri omota"
+
+#~ msgid "Status"
+#~ msgstr "Stanje"
+
+#~ msgid "Invalid position `{0}'. Integer value expected."
+#~ msgstr "Neispravna pozicija `{0}'. Očekivana je celobrojna vrednost."
+
+#~ msgid "Banshee {0}"
+#~ msgstr "Zloslutnica {0}"
+
+#~ msgid ""
+#~ "Usage: banshee [ options ... ]\n"
+#~ "       where options include:\n"
+#~ msgstr ""
+#~ "Korišćenje: banshee [ opcije ... ]\n"
+#~ "       gde opcije uključuju:\n"
+
+#~ msgid "dynamic"
+#~ msgstr "dinamička"
