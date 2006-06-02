@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 00:10+0100\n"
-"PO-Revision-Date: 2006-06-02 00:10+0100\n"
+"POT-Creation-Date: 2006-06-02 22:33+0100\n"
+"PO-Revision-Date: 2006-06-02 22:33+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1374,11 +1374,11 @@ msgstr "{0} MB"
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
 msgid "Rebuilding Database"
-msgstr "Genopbygger database"
+msgstr "Gendanner database"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
 msgid "Scanning iPod..."
-msgstr "Skanner iPod..."
+msgstr "Gennemsøger iPod..."
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
 msgid "Processing Songs..."
@@ -1390,7 +1390,7 @@ msgstr "Gemmer ny database..."
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
 msgid "Error rebuilding iPod database"
-msgstr "Fejl ved genopbygning af iPod database"
+msgstr "Fejl ved gendannelse af iPod database"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
@@ -1419,11 +1419,11 @@ msgstr "Hvad er årsagen til dette?"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
 msgid "Rebuild iPod Database..."
-msgstr "Genopbyg iPod database..."
+msgstr "Gendan iPod database..."
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
 msgid "Confirm Rebuild iPod Database"
-msgstr "Bekræft genopbygning af iPod database"
+msgstr "Bekræft gendannelse af iPod database"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
 msgid ""
@@ -1432,10 +1432,10 @@ msgid ""
 "\n"
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
-"Genopbygning af din iPod database kan tage noget tid. Vær også opmærksom på "
+"Gendannelse af din iPod database kan tage noget tid. Vær også opmærksom på "
 "at spillelister på din iPod vil gå tabt.\n"
 "\n"
-"Er du sikker på du vil genopbygge din iPod database?"
+"Er du sikker på du vil gendanne din iPod database?"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild Database"
@@ -1443,7 +1443,7 @@ msgstr "Geopbyg database"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
 msgid "Rebuilding iPod Database..."
-msgstr "Genopbygger iPod database..."
+msgstr "Gendanner iPod database..."
 
 #. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
@@ -1648,7 +1648,7 @@ msgstr "Hent albumomslag og overskriv eksisterende data"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
 msgid "Rescan Library"
-msgstr "Genskan bibliotek"
+msgstr "Gennemsøg bibliotek"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
 msgid "Warning"
@@ -1762,7 +1762,7 @@ msgstr "Problemer ved skrivning af cd"
 
 #: ../src/BurnCore.cs:167
 msgid "None of the songs selected for this CD could be found."
-msgstr "Ingen af de valgte sange til denne cd kunne findes."
+msgstr "Ingen af de valgte sange for denne cd kunne findes."
 
 #: ../src/BurnCore.cs:184 ../src/BurnCore.cs:410
 msgid "No CD writers were found on your system."
@@ -1797,7 +1797,7 @@ msgid ""
 "None of the songs selected for this CD could be converted to the format "
 "required for an audio CD."
 msgstr ""
-"Ingen af de valgte sange til denne cd kunne konverteres til det format som "
+"Ingen af de valgte sange for denne cd kunne konverteres til det format som "
 "kræves af en lyd-cd."
 
 #: ../src/BurnCore.cs:321
