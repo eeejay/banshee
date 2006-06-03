@@ -38,8 +38,6 @@ namespace Banshee.Base
 
     public class GstTranscoder : Transcoder
     {
-#if GSTREAMER_0_10
-
         [DllImport("libbanshee")]
         private static extern IntPtr gst_transcoder_new();
 
@@ -151,111 +149,5 @@ namespace Banshee.Base
         public override string ErrorMessage {
             get { return error_message; }
         }
-#else
-        [DllImport("libbanshee")]
-        private static extern IntPtr gst_transcoder_new();
-        
-        [DllImport("libbanshee")]
-        private static extern void gst_transcoder_free(HandleRef transcoder);
-        
-        [DllImport("libbanshee")]
-        private static extern bool gst_transcoder_transcode(HandleRef encoder, IntPtr input_uri, 
-            IntPtr output_uri, string encode_pipeline, GstTranscoderProgressCallback progress_cb);
-    
-        [DllImport("libbanshee")]
-        private static extern IntPtr gst_transcoder_get_error(HandleRef transcoder);
-        
-        [DllImport("libbanshee")]
-        private static extern void gst_transcoder_cancel(HandleRef transcoder);
-        
-        private HandleRef handle;
-        private GstTranscoderProgressCallback ProgressCallback;
-        private SafeUri input_uri;
-        private SafeUri output_uri;
-        private PipelineProfile profile;
-        private bool is_transcoding;
-        private bool canceled;
-        private string error;
-        
-        public GstTranscoder()
-        {
-            IntPtr ptr = gst_transcoder_new();
-            
-            if(ptr == IntPtr.Zero) {
-                throw new NullReferenceException(Catalog.GetString("Could not create transcoder"));
-            }
-            
-            ProgressCallback = new GstTranscoderProgressCallback(OnTranscoderProgress);
-            handle = new HandleRef(this, ptr);
-        }
-        
-        public override void Dispose()
-        {
-            gst_transcoder_free(handle);
-        }
-        
-        public override void BeginTranscode(SafeUri inputUri, SafeUri outputUri, PipelineProfile profile)
-        {
-            if(IsTranscoding) {
-                throw new ApplicationException("Transcoder is busy");
-            }
-        
-            input_uri = inputUri;
-            output_uri = outputUri;
-            this.profile = profile;
-            
-            ThreadAssist.Spawn(ThreadedTranscode);
-        }
-        
-        private void ThreadedTranscode()
-        {
-            IntPtr input_uri = GLib.Marshaller.StringToPtrGStrdup(this.input_uri.AbsoluteUri);
-            IntPtr output_uri = GLib.Marshaller.StringToPtrGStrdup(this.output_uri.AbsoluteUri);
-
-            is_transcoding = true;
-            canceled = false;
-            error = null;
-
-            bool have_error = !gst_transcoder_transcode(handle, input_uri, output_uri,
-                profile.Pipeline, ProgressCallback);
-            
-            GLib.Marshaller.Free(input_uri);
-            GLib.Marshaller.Free(output_uri);
-            
-            is_transcoding = false;            
-            this.input_uri = null;
-            this.output_uri = null;
-            profile = null;
-
-            if(have_error) {
-                IntPtr errPtr = gst_transcoder_get_error(handle);
-                error = Marshal.PtrToStringAnsi(errPtr);
-                OnError();
-            }
-            
-            if(!canceled) {
-                OnFinished();
-            }
-        }
-        
-        public override void Cancel()
-        {
-            canceled = true;
-            gst_transcoder_cancel(handle);
-        }
-        
-        private void OnTranscoderProgress(IntPtr transcoder, double progress)
-        {
-            OnProgress(progress);
-        }
-        
-        public override bool IsTranscoding {
-            get { return is_transcoding; }
-        }
-        
-        public override string ErrorMessage {
-            get { return error; }
-        }
-#endif
     }
 }

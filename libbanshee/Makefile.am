@@ -17,17 +17,7 @@ GST_0_10_CFILES = \
 	gst-cd-rip-0.10.c \
 	gst-mbtrm.c
 
-GST_0_8_CFILES = \
-	gst-playback-0.8.c \
-	gst-misc-0.8.c \
-	gst-transcode-0.8.c \
-	gst-cd-rip-0.8.c
-
-if ENABLE_GST_10
 GST_CFILES = $(GST_0_10_CFILES)
-else
-GST_CFILES = $(GST_0_8_CFILES)
-endif
 
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES = \

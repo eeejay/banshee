@@ -38,9 +38,6 @@ enable_ipodsharp="${enable_ipod}"
 AC_ARG_ENABLE(njb, AC_HELP_STRING([--enable-njb], [Enable NJB DAP support]), , enable_njb="yes")
 enable_njbsharp="${enable_njb}"
 
-AC_ARG_ENABLE(vlc, AC_HELP_STRING([--enable-vlc], [Enable VLC Media Engine]), , enable_vlc="no")
-AM_CONDITIONAL(ENABLE_VLC, test "x$enable_vlc" = "xyes")
-
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
 
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
@@ -51,17 +48,6 @@ AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP sup
 if test "x$enable_helix" = "xyes"; then
 	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2)
 fi
-
-GST_VERSION=0.10
-
-AC_ARG_ENABLE(gstreamer, AC_HELP_STRING([--enable-gstreamer=0.10|0.8], [Enable GStreamer 0.8 or 0.10]), 
-	[case "${enableval}" in
-		yes)  GST_VERSION=0.10 ;;
-		0.8)  GST_VERSION=0.8  ;;
-		0.10) GST_VERSION=0.10 ;;
-		*) AC_MSG_ERROR([Bad value ${enableval} for --enable-gstreamer])
-	esac],
-	[GST_VERSION=0.10])
 
 dnl pkg-config, install programs
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -211,65 +197,23 @@ else
 fi
 
 dnl gstreamer devel deps
-if test "x$GST_VERSION" = "x0.10"; then	
-	GSTREAMER_REQUIRED_VERSION=0.10.3
-	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
-	PKG_CHECK_MODULES(GST,
-		gstreamer-0.10 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
-
-	gst_pkg_name="gstreamer-0.10"
-	gst_inspect="gst-inspect-0.10"
-	gst_version="0.10"
-	gst_required_plugins="decodebin playbin cdparanoia gnomevfssink gnomevfssrc audioconvert gconfaudiosink"
-else
-	GSTREAMER_REQUIRED_VERSION=0.8.11
-	GSTREAMER_PLUGINS_REQUIRED_VERSION=0.8.11
-	AC_SUBST(GSTREAMER_REQUIRED_VERSION)
-	AC_SUBST(GSTREAMER_PLUGINS_REQUIRED_VERSION)
-
-	gst_pkg_name="gstreamer"
-	gst_inspect="gst-inspect"
-
-	PKG_CHECK_MODULES(GST,
-		gstreamer >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-gconf >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-interfaces >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-play >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-		gstreamer-plugins >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
-		enable_gst=yes, enable_gst=no)
-
-	if test "x$enable_gst" = "xno" ; then
-		PKG_CHECK_MODULES(GST,
-			gstreamer-0.8 >= $GSTREAMER_REQUIRED_VERSION
-			gstreamer-gconf-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-			gstreamer-interfaces-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-			gstreamer-play-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION
-			gstreamer-plugins-0.8 >= $GSTREAMER_PLUGINS_REQUIRED_VERSION,
-			enable_gst=yes, enable_gst=no)
-
-		gst_pkg_name="gstreamer-0.8"
-		gst_inspect="gst-inspect-0.8"
-
-		if test "x$enable_gst" = "xno" ; then
-			AC_MSG_ERROR([Install gstreamer, gstreamer-plugins gstreamer-gconf, gstreamer-interfaces, and gstreamer-play])
-		fi
-	fi
-
-	gst_version="0.8"
-	gst_required_plugins="spider cdparanoia gnomevfssink gnomevfssrc audioconvert playbin gconfaudiosink"
-fi
+GSTREAMER_REQUIRED_VERSION=0.10.3
+AC_SUBST(GSTREAMER_REQUIRED_VERSION)
+PKG_CHECK_MODULES(GST,
+	gstreamer-0.10 >= $GSTREAMER_REQUIRED_VERSION
+	gstreamer-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
+	gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
+	gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
+	gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
 
 AC_SUBST(GST_CFLAGS)
 AC_SUBST(GST_LIBS)
 
-AM_CONDITIONAL(ENABLE_GST_10, test "x$GST_VERSION" = "x0.10")
-
 dnl gstreamer plugins
-
+gst_pkg_name="gstreamer-0.10"
+gst_inspect="gst-inspect-0.10"
+gst_version="0.10"
+gst_required_plugins="decodebin playbin cdparanoia gnomevfssink gnomevfssrc audioconvert gconfaudiosink"
 gst_toolsdir=`$PKG_CONFIG --variable=toolsdir $gst_pkg_name`
 gst_inspect="$gst_toolsdir/$gst_inspect"
 
@@ -403,8 +347,6 @@ src/Banshee.MediaEngine/Gstreamer/Makefile
 src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config
 src/Banshee.MediaEngine/Helix/Makefile
 src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.dll.config
-src/Banshee.MediaEngine/Vlc/Makefile
-src/Banshee.MediaEngine/Vlc/vlc-player.dll.config
 src/Banshee.Widgets/Makefile
 src/Banshee.Widgets/Banshee.Widgets.dll.config
 src/Banshee.Base/Makefile
@@ -441,10 +383,6 @@ if test "x${enable_daap}" = "xyes"; then
 	fi
 fi
 
-if test "x${GST_VERSION}" = "x0.8"; then
-	GST_DEPRECATED="(DEPRECATED/UNSUPPORTED)"
-fi
-
 echo "
 banshee-$VERSION
 
@@ -454,9 +392,8 @@ banshee-$VERSION
     Mono Runtime:      ${MONO}
 
     Engines:
-      GStreamer:       yes, ${GST_VERSION} $GST_DEPRECATED
+      GStreamer:       yes, ${GST_VERSION} 
       Helix Remote:    ${enable_helix}
-      VLC:             ${enable_vlc}
 
     Digital Audio Players (DAP):
       iPod:            ${enable_ipodsharp}
@@ -464,21 +401,4 @@ banshee-$VERSION
 
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
-
-if test "x${enable_vlc}" = "xyes"; then
-	if test ! -e ./src/Banshee.MediaEngine/Vlc/libvlc.so; then
-		echo ""
-		echo "    *****************************************************"
-		echo "    NOTICE: You have enabled the VLC engine, but have not"
-		echo "    provided a libvlc.so in ./src/Banshee.MediaEngine/Vlc/"
-		echo ""
-		echo "    You must build your own libvlc.so library and copy it"
-		echo "    to ./src/Banshee.MediaEngine/Vlc/libvlc.so before running"
-		echo "    'make install' or copy libvlc.so after the install to"
-		echo "    ${expanded_libdir}/banshee/src/Banshee.MediaEngine/Vlc/libvlc.so"
-		echo ""
-		echo "    libvlc.so is not included in Banshee."
-		echo ""
-	fi;
-fi;
 

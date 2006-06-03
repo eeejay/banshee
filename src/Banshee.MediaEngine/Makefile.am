@@ -4,10 +4,6 @@ if ENABLE_HELIX
 SUBDIRS += Helix
 endif
 
-if ENABLE_VLC
-SUBDIRS += Vlc
-endif
-
 MAINTAINERCLEANFILES = Makefile.in
 
 uninstall-hook:

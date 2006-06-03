@@ -1,3 +1,19 @@
+2006-06-03  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/: Removed all GStreamer 0.8 backend library code
+
+	* configure.ac: Removed GStreamer 0.8 checks and VLC checks; only 
+	GStreamer 0.10 and Helix (helix-dbus-server) are supported engines now
+
+	* src/Banshee.Base/GstTranscoder.cs:
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Removed 
+	GStreamer 0.8 support
+
+	* src/Banshee.MediaEngine/Gstreamer/Makefile.am: Removed conditional 
+	define for GStreamer 0.10
+
+	* src/Banshee.MediaEngine/Vlc/: Removed VLC support
+
 2006-05-29  Aaron Bockover  <aaron@abock.org>
 
 	* src/BurnCore.cs: Calculate the total duration of the selection and 
