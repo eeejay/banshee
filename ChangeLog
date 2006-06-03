@@ -1,5 +1,11 @@
 2006-06-03  Aaron Bockover  <aaron@abock.org>
 
+	* src/SourceView.cs: Allow drag drops if source AcceptsInput
+
+	* src/Banshee.Base/Source.cs: Added AcceptsInput property
+
+2006-06-03  Aaron Bockover  <aaron@abock.org>
+
 	* libbanshee/: Removed all GStreamer 0.8 backend library code
 
 	* configure.ac: Removed GStreamer 0.8 checks and VLC checks; only 

@@ -263,6 +263,10 @@ namespace Banshee.Sources
             get { return true; }
         }
         
+        public virtual bool AcceptsInput {
+            get { return false; }
+        }
+        
         public int Order {
             get { return order; }
         }

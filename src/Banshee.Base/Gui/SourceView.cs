@@ -296,7 +296,7 @@ namespace Banshee
                 SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
                 
                 // TODO: Support other drag destinations
-                if((source is PlaylistSource) || (source is DapSource)) {
+                if((source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
                     return true;
                 }
 
@@ -361,7 +361,7 @@ namespace Banshee
                     UpdateView();
                 } else {
                     Source source = final_drag_source;
-                    if(source is PlaylistSource || source is DapSource) {
+                    if(source is PlaylistSource || source is DapSource || source.AcceptsInput) {
                         source.AddTrack(tracks);
                         source.Commit();
                     }
