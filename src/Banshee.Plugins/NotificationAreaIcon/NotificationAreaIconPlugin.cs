@@ -125,6 +125,14 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             Init();
         }
 
+        private void ShowHideMainWindow()
+        {
+            if (InterfaceElements.MainWindow.IsActive)
+                InterfaceElements.MainWindow.Visible = false;
+            else
+                InterfaceElements.MainWindow.Present();
+        }
+
         [GLib.ConnectBefore]
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
@@ -132,7 +140,7 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             
 	    if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
 		    handled = true;
-                    InterfaceElements.MainWindow.Visible = !InterfaceElements.MainWindow.Visible;
+                    ShowHideMainWindow();
                     ResizeMoveWindow();
 	    }
             
@@ -142,7 +150,7 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         private void OnNotificationAreaIconClick(object o, ButtonPressEventArgs args) {
             switch(args.Event.Button) {
                 case 1:
-                    InterfaceElements.MainWindow.Visible = !InterfaceElements.MainWindow.Visible;
+                    ShowHideMainWindow();
                     ResizeMoveWindow();
                     break;
                 case 3:

@@ -213,19 +213,24 @@ namespace Banshee.Dap.MassStorage
         private string GetTrackPath (TrackInfo track)
         {
             string file_path = "";
+            
+            string escaped_artist = FileNamePattern.Escape(track.Artist);
+            string escaped_album = FileNamePattern.Escape(track.Album);
+            string escaped_track = FileNamePattern.Escape(track.TrackNumberTitle);
+            
             if (player_device.PropertyExists ("portable_audio_player.filepath_format")) {
                 file_path = player_device.GetPropertyString ("portable_audio_player.filepath_format");
-                file_path = file_path.Replace ("%Artist", track.Artist);
-                file_path = file_path.Replace ("%Album", track.Album);
+                file_path = file_path.Replace ("%Artist", escaped_artist);
+                file_path = file_path.Replace ("%Album", escaped_album);
 
                 if (file_path.IndexOf ("%Track") == -1) {
-                    file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
+                    file_path = System.IO.Path.Combine (file_path, escaped_track);
                 } else {
-                    file_path = file_path.Replace ("%Track", track.TrackNumberTitle);
+                    file_path = file_path.Replace ("%Track", escaped_track);
                 }
             } else {
-                file_path = System.IO.Path.Combine (track.Artist, track.Album);
-                file_path = System.IO.Path.Combine (file_path, track.TrackNumberTitle);
+                file_path = System.IO.Path.Combine (escaped_artist, escaped_album);
+                file_path = System.IO.Path.Combine (file_path, escaped_track);
             }
 
             file_path += Path.GetExtension (track.Uri.LocalPath);
@@ -242,7 +247,8 @@ namespace Banshee.Dap.MassStorage
  
         public override string Name {
             get {
-                if (volume_device.PropertyExists("volume.label"))
+                if (volume_device.PropertyExists("volume.label") && 
+                    (volume_device["volume.label"].Length > 0))
                     return volume_device["volume.label"];
 
                 if (player_device.PropertyExists("info.product"))

@@ -182,7 +182,7 @@ namespace Banshee.Base
         
         public LogEntry PushInformation(string shortMessage, string details)
         {
-            return PushWarning(shortMessage, details, true);
+            return PushInformation(shortMessage, details, true);
         }
         
         public LogEntry PushInformation(string shortMessage, string details, bool showUser)

@@ -65,6 +65,7 @@ namespace Banshee.Base
         }
         
         private static Gdk.Pixbuf user_event_icon = IconThemeUtils.LoadIcon(22, "system-search", Stock.Find);
+        private static readonly object user_event_mutex = new object();
         
         private Queue path_queue;
         private ActiveUserEvent user_event;
@@ -82,10 +83,10 @@ namespace Banshee.Base
         
         private void CreateUserEvent()
         {
-            if(user_event == null) {
-                user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
-                user_event.Icon = user_event_icon;
-                lock(user_event) {
+            lock(user_event_mutex) {
+                if(user_event == null) {
+                    user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
+                    user_event.Icon = user_event_icon;
                     user_event.Message = Catalog.GetString("Scanning for songs");
                     total_count = 0;
                     processed_count = 0;
@@ -95,8 +96,8 @@ namespace Banshee.Base
         
         private void DestroyUserEvent()
         {
-            if(user_event != null) {
-                lock(user_event) {
+            lock(user_event_mutex) {
+                if(user_event != null) {
                     user_event.Dispose();
                     user_event = null;
                     total_count = 0;
@@ -126,8 +127,10 @@ namespace Banshee.Base
         
         private void CheckForCanceled()
         {
-            if(user_event != null && user_event.IsCancelRequested) {
-                throw new ImportCanceledException();  
+            lock(user_event_mutex) {
+                if(user_event != null && user_event.IsCancelRequested) {
+                    throw new ImportCanceledException();  
+                }
             }
         }
         

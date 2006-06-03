@@ -89,7 +89,8 @@ namespace Banshee
             trackInfoQueueLocked = true;
                 
             foreach(TrackInfo ti in trackInfoQueue)
-                AddTrack(ti);
+                AddTrack(ti, false);
+            RaiseUpdated(this, new EventArgs());
 
             trackInfoQueue.Clear();
             trackInfoQueueLocked = false;
@@ -134,8 +135,9 @@ namespace Banshee
             
             lock(SourceManager.ActiveSource.TracksMutex) {
                 foreach(TrackInfo track in SourceManager.ActiveSource.Tracks) {
-                    AddTrack(track);
+                    AddTrack(track, false);
                 }
+                RaiseUpdated(this, new EventArgs());
             }
         }
 

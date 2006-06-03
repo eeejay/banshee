@@ -1,5 +1,30 @@
 2006-06-03  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlayerInterface.cs: start playing a source when it is double
+	clicked in the source view (Przemysław Grzegorczyk, BGO #326634); 
+	delay updating status bar to only once every 1/5 second (Ruben
+	Vermeersch, BGO #336001)
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: escape file names 
+	of added tracks properly; do not use volume label from storage 
+	device if it is empty (James Stembridge, BGO #337807, #337808)
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Use Present() instead of Visible when showing/hiding the main window 
+	by clicking the tray icon (Przemysław Grzegorczyk, BGO #328949)
+
+	* src/Banshee.Base/LogCore.cs: LogCore.PushInformation actually
+	called LogCore.PushWarning (Bertrand Lorentz, BGO #335706)
+
+	* src/PlaylistModel.cs: Delay raising the updated event to increase
+	speed a little (Ruben Vermeersch, BGO #336010)
+
+	* src/Banshee.Base/ImportManager.cs: Use a static mutex to do handle 
+	user event locking to prevent a potential race condition (based on 
+	patch by Ed Catmur, BGO #331974)
+	
+2006-06-03  Aaron Bockover  <aaron@abock.org>
+
 	* src/SourceView.cs: Allow drag drops if source AcceptsInput
 
 	* src/Banshee.Base/Source.cs: Added AcceptsInput property

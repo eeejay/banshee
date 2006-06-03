@@ -1174,7 +1174,20 @@ namespace Banshee
             UpdateMetaDisplay();
         }
 
+        private uint status_bar_update_timeout = 0;
+        
         private void OnPlaylistUpdated(object o, EventArgs args)
+        {
+            if(status_bar_update_timeout == 0) {
+                status_bar_update_timeout = GLib.Timeout.Add(200, delegate {
+                    UpdateStatusBar();
+                    status_bar_update_timeout = 0;
+                    return false;
+                });
+            }
+        }
+
+        private void UpdateStatusBar()
         {
             long count = playlistModel.Count();
             TimeSpan span = playlistModel.TotalDuration;       
@@ -1244,33 +1257,42 @@ namespace Banshee
      
         [GLib.ConnectBefore]
         private void OnSourceViewButtonPressEvent(object o, ButtonPressEventArgs args)
-        {
-            if(args.Event.Button != 3) {
-                return;
-            }
-                
+        {       
             TreePath path;
             if(!sourceView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path)) {
                 args.RetVal = true; 
                 return;
             }
-            
-            sourceView.HighlightPath(path);
+
             Source source = sourceView.GetSource(path);
 
-            SensitizeActions(source);
+            if(args.Event.Button == 1 && args.Event.Type == EventType.TwoButtonPress) {
+                if(SourceManager.ActiveSource != source) {
+                    SourceManager.SetActiveSource(source);
+                }
+ 
+                playlistModel.PlayingIter = TreeIter.Zero;
+                playlistModel.Advance();
+                playlistView.UpdateView();
 
-            string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
-            Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
-            source_menu.SelectionDone += delegate {
-                SensitizeActions(SourceManager.ActiveSource);
-                sourceView.ResetHighlight();
-            };
+                args.RetVal = false;
+            } else if(args.Event.Button == 3) {
+                sourceView.HighlightPath(path);
+
+                SensitizeActions(source);
+
+                string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
+                Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
+                source_menu.SelectionDone += delegate {
+                    SensitizeActions(SourceManager.ActiveSource);
+                    sourceView.ResetHighlight();
+                };
             
-            source_menu.Popup(null, null, null, 0, args.Event.Time);
-            source_menu.Show();
+                source_menu.Popup(null, null, null, 0, args.Event.Time);
+                source_menu.Show();
             
-            args.RetVal = true;
+                args.RetVal = true;
+            }
         }
       
         private bool DoesTrackMatchSearch(TrackInfo ti)
