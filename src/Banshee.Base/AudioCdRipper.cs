@@ -142,13 +142,6 @@ namespace Banshee.Base
         public string ErrorMessage {
             get {
                 return error_message;
-
-                IntPtr errPtr = gst_cd_ripper_get_error(handle);
-                if(errPtr == IntPtr.Zero) {
-                    return null;
-                }
-                
-                return GLib.Marshaller.Utf8PtrToString(errPtr);
             }
         }
         
