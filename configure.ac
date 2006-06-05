@@ -29,9 +29,6 @@ GNOME_COMPILE_WARNINGS
 AM_PATH_GLIB_2_0
 
 dnl configure options
-AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
-AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
-
 AC_ARG_ENABLE(ipod, AC_HELP_STRING([--enable-ipod], [Enable iPod DAP support]), , enable_ipod="yes")
 enable_ipodsharp="${enable_ipod}"
 
@@ -44,10 +41,6 @@ AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to
 AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
 AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
-
-if test "x$enable_helix" = "xyes"; then
-	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2)
-fi
 
 dnl pkg-config, install programs
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
@@ -62,6 +55,17 @@ fi
 
 AC_SUBST(INSTALL)
 AC_SUBST(PKG_CONFIG)
+
+dnl Helix
+
+AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
+
+if test "x$enable_helix" = "xyes"; then
+	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.2, enable_helix="yes", enable_helix="no")
+fi
+
+AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
+
 
 MONO_REQUIRED_VERSION=1.1.10
 PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)

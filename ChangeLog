@@ -1,3 +1,15 @@
+2006-06-05  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac: Fixed Helix detection; no longer require --disable-helix
+	to be passed; will be enabled/disabled automatically
+
+2006-06-05  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Base/Makefile.am: Removed ENABLE_GST_10 define 
+
+	* src/Banshee.Base/AudioCdRipper.cs: Removed GStreamer 0.8 code and
+	dependency on GSTREAMER_0_10; overlooked from previous commit 
+
 2006-06-03  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlayerInterface.cs: start playing a source when it is double
