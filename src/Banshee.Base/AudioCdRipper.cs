@@ -64,13 +64,11 @@ namespace Banshee.Base
         private HandleRef handle;
         private GstCdRipperProgressCallback progress_callback;
 
-#if GSTREAMER_0_10
         private GstCdRipperFinishedCallback finished_callback;
         private GstCdRipperErrorCallback error_callback;
         private string error_message;
         private SafeUri output_uri;
         private int track_number;
-#endif
 
         private AudioCdTrackInfo current_track;
         
@@ -90,13 +88,11 @@ namespace Banshee.Base
             progress_callback = new GstCdRipperProgressCallback(OnProgress);
             gst_cd_ripper_set_progress_callback(handle, progress_callback);
 
-#if GSTREAMER_0_10
             finished_callback = new GstCdRipperFinishedCallback(OnFinished);
             gst_cd_ripper_set_finished_callback(handle, finished_callback);
             
             error_callback = new GstCdRipperErrorCallback(OnError);
             gst_cd_ripper_set_error_callback(handle, error_callback);
-#endif
         }
         
         public void Dispose()
@@ -106,17 +102,10 @@ namespace Banshee.Base
         
         public void RipTrack(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
-#if GSTREAMER_0_10
             error_message = null;
             RipTrack_010(track, trackNumber, outputUri);
-#else
-            ThreadAssist.Spawn(delegate {
-                RipTrack_08(track, trackNumber, outputUri);
-            });
-#endif
         }
   
-#if GSTREAMER_0_10
         private void RipTrack_010(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
             current_track = track;
@@ -129,25 +118,7 @@ namespace Banshee.Base
                 
             track = null;
         }
-#else        
-        private void RipTrack_08(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
-        {
-            current_track = track;
-            
-            bool result = gst_cd_ripper_rip_track(handle, outputUri.AbsoluteUri, trackNumber, 
-                track.Artist, track.Album, track.Title, track.Genre, 
-                (int)track.TrackNumber, (int)track.TrackCount, IntPtr.Zero);
-                
-            if(result) {
-                ThreadAssist.ProxyToMain(delegate {
-                    OnTrackFinished(track, trackNumber, outputUri);
-                });
-            }
-            
-            track = null;
-        }
-#endif   
-        
+       
         private void OnTrackFinished(AudioCdTrackInfo track, int trackNumber, SafeUri outputUri)
         {
             track.IsRipped = true;
@@ -170,16 +141,14 @@ namespace Banshee.Base
         
         public string ErrorMessage {
             get {
-#if GSTREAMER_0_10
                 return error_message;
-#else
+
                 IntPtr errPtr = gst_cd_ripper_get_error(handle);
                 if(errPtr == IntPtr.Zero) {
                     return null;
                 }
                 
                 return GLib.Marshaller.Utf8PtrToString(errPtr);
-#endif
             }
         }
         
@@ -196,8 +165,7 @@ namespace Banshee.Base
             
             handler(this, args); 
         }
-        
-#if GSTREAMER_0_10        
+ 
         private void OnFinished(IntPtr ripper)
         {
             OnTrackFinished(current_track, track_number, output_uri);
@@ -218,7 +186,6 @@ namespace Banshee.Base
                 Error(this, new EventArgs());
             }
         }
-#endif
 
         [DllImport("libbanshee")]
         private static extern IntPtr gst_cd_ripper_new(string device,
@@ -240,7 +207,6 @@ namespace Banshee.Base
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_cancel(HandleRef ripper);
                     
-#if GSTREAMER_0_10 
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_error_callback(
             HandleRef ripper, GstCdRipperErrorCallback cb);
@@ -248,10 +214,6 @@ namespace Banshee.Base
         [DllImport("libbanshee")]
         private static extern void gst_cd_ripper_set_finished_callback(
             HandleRef ripper, GstCdRipperFinishedCallback cb);
-#else
-        [DllImport("libbanshee")]
-        private static extern IntPtr gst_cd_ripper_get_error(HandleRef ripper);
-#endif
     }
 
     public class AudioCdRipper
