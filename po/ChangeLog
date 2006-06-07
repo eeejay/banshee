@@ -1,3 +1,7 @@
+2006-06-05  Aaron Bockover  <aaron@abock.org>
+
+	* POTFILES.in: Added new files, removed obsolete files
+
 2006-06-05  Arangel Angov <ufo@linux.net.mk>
 
 	* mk.po: Added mk (Macedonian) translation by Jovan Naumovski.

@@ -3,10 +3,8 @@ data/banshee.glade
 data/banshee.schemas.in
 [encoding: UTF-8]
 libbanshee/gst-cd-rip-0.10.c
-libbanshee/gst-cd-rip-0.8.c
-libbanshee/gst-playback-0.8.c
 libbanshee/gst-transcode-0.10.c
-libbanshee/gst-transcode-0.8.c
+libbanshee/gst-cd-trm.c
 libbanshee/hal-context.c
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
@@ -45,7 +43,6 @@ src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
 src/Banshee.Dap/MassStorage/MassStorageDap.cs
 src/Banshee.Dap/Njb/NjbDap.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
-src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
 src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
