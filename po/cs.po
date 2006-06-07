@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-07 16:17+0200\n"
-"PO-Revision-Date: 2006-06-07 16:19+0200\n"
+"POT-Creation-Date: 2006-06-07 16:26+0200\n"
+"PO-Revision-Date: 2006-06-07 16:33+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1411,9 +1411,8 @@ msgid "Device Error"
 msgstr "Chyba zařízení"
 
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:338
-#, fuzzy
 msgid "Could not set the owner of the device."
-msgstr "Selhal stat pro kódovaný soubor"
+msgstr "Nelze nastavit vlastníka zařízení."
 
 #: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:64
 msgid "Could not initialize GStreamer library"
