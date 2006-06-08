@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-07 16:26+0200\n"
-"PO-Revision-Date: 2006-06-07 16:33+0200\n"
+"POT-Creation-Date: 2006-06-08 14:32+0200\n"
+"PO-Revision-Date: 2006-06-08 14:39+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,7 @@ msgstr "Vyberte zdroj hudby pro import:"
 
 #: ../data/banshee.glade.h:23
 msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Kopírovat soubory při importu z Banshee Music adresáře do knihovny"
+msgstr "Při importu do knihovny kopírovat soubory do hudební složky Banshee"
 
 #: ../data/banshee.glade.h:24
 msgid "Data CD"
