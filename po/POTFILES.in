@@ -4,7 +4,6 @@ data/banshee.schemas.in
 [encoding: UTF-8]
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
-libbanshee/gst-cd-trm.c
 libbanshee/hal-context.c
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
