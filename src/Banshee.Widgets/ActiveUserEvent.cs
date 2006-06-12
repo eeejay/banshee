@@ -49,6 +49,7 @@ namespace Banshee.Widgets
         private string header;
         
         private uint timeout_id = 0;
+        private uint slow_timeout_id = 0;
         private bool disposed = false;
         
         public event EventHandler Disposed;
@@ -56,8 +57,10 @@ namespace Banshee.Widgets
         
         private bool cancel_requested;
         private bool can_cancel;
-     
-        public ActiveUserEvent(string name) 
+
+        public ActiveUserEvent(string name) : this (name, false) {}
+
+        public ActiveUserEvent(string name, bool delay_show)
         {
             tips = new Tooltips();
             
@@ -117,7 +120,10 @@ namespace Banshee.Widgets
             
             table.ShowAll();
             
-            ActiveUserEventsManager.Instance.Register(this);
+            if (delay_show)
+                slow_timeout_id = GLib.Timeout.Add(1000, OnCheckForDisplay);
+            else
+                ActiveUserEventsManager.Instance.Register(this);
         }
         
         public void Cancel()
@@ -138,10 +144,27 @@ namespace Banshee.Widgets
                 GLib.Source.Remove(timeout_id);
                 timeout_id = 0;
             }
+
+            if(slow_timeout_id > 0) {
+                GLib.Source.Remove(slow_timeout_id);
+                slow_timeout_id = 0;
+            }
             
             if(Disposed != null) {
                 Disposed(this, new EventArgs());
             }
+        }
+
+        private bool OnCheckForDisplay()
+        {
+            if (disposed)
+                return false;
+
+            // If the event has not made enough progress, show this event
+            if (Progress < 0.33)
+                ActiveUserEventsManager.Instance.Register(this);
+
+            return false;
         }
         
         private bool OnTimeout()

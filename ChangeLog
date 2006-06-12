@@ -1,3 +1,36 @@
+2006-06-12  James Stembridge  <jstembridge@gmail.com>
+
+	* src/Banshee.Base/Dap/DapCore.cs: Include all volumes when performing
+	initial scan for DAP devices, not just those that are children of
+	devices tagged by hal with portable_audio_player
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Check for duplicates
+	when adding a song to the device; if the volume for a new device isn't 
+	yet available from VFS, wait for it; don't initialize Gnome VFS if it's 
+	already been initialized; accept devices with a file .is_audio_player
+	in the root
+
+2006-06-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Makefile.am: add QueuedOperationManager.cs.
+
+	* src/Banshee.Base/QueuedOperationManager.cs: New file, allows for generic
+	asynchronous events like copying files to a USB DAP, etc.
+
+	* src/Banshee.Base/Dap/Dap.cs: Make the tracks ArrayList protected and
+	allow sub-classes to override AddTrack.
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Fix the bug where the DAP
+	couldn't be plugged in when Banshee started, handle copying files to the
+	device asynchronously using a QueuedOperationManager that pops up a
+	ActiveUserEvent if the transfer is slow.  Escape artist/album/title when
+	creating the destination filename.  Catch exceptions in the copy.
+
+	* src/Banshee.Widets/ActiveUserEvent.cs: Add an option for having the user
+	event not register itself (and therefore not show itself) until at least a
+	second has passed, at which time if the operation is less than 33% done,
+	it is registered and shown (and otherwise it is not).
+
 2006-06-05  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac: Fixed Helix detection; no longer require --disable-helix

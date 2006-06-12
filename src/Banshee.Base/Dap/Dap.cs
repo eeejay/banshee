@@ -123,11 +123,12 @@ namespace Banshee.Dap
         
         private uint uid;
         private PropertyTable properties = new PropertyTable();
-        private ArrayList tracks = new ArrayList(); 
         private ActiveUserEvent save_report_event;
         private bool is_syncing = false;
         private bool can_cancel_save = true;
         private DapProperties type_properties;
+
+        protected ArrayList tracks = new ArrayList(); 
         
         public event DapTrackListUpdatedHandler TrackAdded;
         public event DapTrackListUpdatedHandler TrackRemoved;
@@ -188,20 +189,14 @@ namespace Banshee.Dap
             OnPropertiesChanged();
         }
         
-        public void AddTrack(TrackInfo track)
+        public virtual void AddTrack(TrackInfo track)
         {
-            TrackInfo dap_track = OnTrackAdded(track);
-            
-            if(dap_track == null) {
+            if (track == null)
                 return;
-            }
             
-            tracks.Add(dap_track);
+            tracks.Add(track);
             
-            DapTrackListUpdatedHandler handler = TrackAdded;
-            if(handler != null) {
-                handler(this, new DapTrackListUpdatedArgs(dap_track));
-            }
+            OnTrackAdded(track);
         }
         
         public void RemoveTrack(TrackInfo track)
@@ -237,9 +232,12 @@ namespace Banshee.Dap
             }
         }
         
-        protected virtual TrackInfo OnTrackAdded(TrackInfo track)
+        protected virtual void OnTrackAdded (TrackInfo track)
         {
-            return track;
+            DapTrackListUpdatedHandler handler = TrackAdded;
+            if(handler != null) {
+                handler(this, new DapTrackListUpdatedArgs(track));
+            }
         }
         
         protected virtual void OnTrackRemoved(TrackInfo track)
@@ -538,7 +536,7 @@ namespace Banshee.Dap
             return new SafeUri(dir + Path.DirectorySeparatorChar 
                 + ".banshee-dap-" + file + "." + newext);
         }
-         
+
         public virtual Gdk.Pixbuf GetIcon(int size)
         {
             Gdk.Pixbuf pixbuf = IconThemeUtils.LoadIcon("multimedia-player", size);

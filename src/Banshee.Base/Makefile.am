@@ -97,6 +97,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/LibraryTrackInfo.cs \
 	$(srcdir)/FileTrackInfo.cs \
 	$(srcdir)/DBusRemote.cs \
+    $(srcdir)/QueuedOperationManager.cs \
 	$(srcdir)/QueuedSqliteDatabase.cs \
 	$(srcdir)/AudioCdRipper.cs \
 	$(srcdir)/IImportSource.cs \

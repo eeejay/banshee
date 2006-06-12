@@ -149,23 +149,16 @@ namespace Banshee.Dap
         
         private static void BuildDeviceTable()
         {
+            // All volume devices, should cover all storage based players
             foreach(Device device in Device.FindByStringMatch(HalCore.Context, 
+                "info.category", "volume")) {
+                AddDevice(device);
+            }
+
+            // None storage based players
+            foreach(Device device in Device.FindByStringMatch(HalCore.Context,
                 "info.category", "portable_audio_player")) {
-                // Find the actual storage device that is mountable;
-                // this should probably just be possible by accessing
-                // portable_audio_player.storage_device, but for me
-                // as of HAL 0.5.6, this property just points to its own UDI
-                if(device["portable_audio_player.access_method"] == "storage" &&
-                    !device.GetPropertyBool("block.is_volume")) {
-                    foreach(Device storage_device in Hal.Device.FindByStringMatch(device.Context, 
-                        "info.parent", device.Udi)) {
-                        if(AddDevice(storage_device) && device_waiting_table[storage_device.Udi] == null) {
-                            break;
-                        }
-                    }
-                } else {
-                    AddDevice(device);
-                }
+                AddDevice(device);
             }
         }
         

@@ -44,8 +44,12 @@ namespace Banshee.Dap.MassStorage
     {
         private static Gnome.Vfs.VolumeMonitor monitor;
 
+        private bool mounted = false, ui_initialized = false;
+
         static MassStorageDap () {
-            Gnome.Vfs.Vfs.Initialize ();
+            if (!Gnome.Vfs.Vfs.Initialized)
+                Gnome.Vfs.Vfs.Initialize();
+
             monitor = Gnome.Vfs.VolumeMonitor.Get ();
         }
 
@@ -63,7 +67,7 @@ namespace Banshee.Dap.MassStorage
                 player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
                 usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
             } catch (Exception e) {
-                    return InitializeResult.Invalid;
+                return InitializeResult.Invalid;
             }
 
             if (!player_device.PropertyExists ("portable_audio_player.access_method") ||
@@ -74,33 +78,60 @@ namespace Banshee.Dap.MassStorage
                 return InitializeResult.Invalid;
             }
 
-            if(!volume_device.PropertyExists ("volume.is_mounted") ||
-                    !volume_device.GetPropertyBool("volume.is_mounted"))
-                return InitializeResult.WaitForPropertyChange;
-	    
+            if (!volume_device.PropertyExists("block.device"))
+                return InitializeResult.Invalid;
+            
+            if (!volume_device.PropertyExists ("volume.is_mounted") ||
+                !volume_device.GetPropertyBool("volume.is_mounted"))
+                 return InitializeResult.WaitForPropertyChange;
 
-            string block_device = volume_device ["block_device"];
-            foreach (Gnome.Vfs.Volume vol in monitor.MountedVolumes) {
-                if (vol.DevicePath == block_device) {
-                    this.volume = vol;
-                    break;
-                }
+            // Detect player via HAL property or presence of .is_audo_player file in root
+            if (player_device["portable_audio_player.access_method"] != "storage" &&
+                !File.Exists(Path.Combine(MountPoint, ".is_audio_player"))) {                
+                 return InitializeResult.Invalid;
             }
 
-            if (volume == null)
-                return InitializeResult.Invalid;
-
-            is_read_only = volume.IsReadOnly;
+            volume = monitor.GetVolumeForPath(MountPoint);
+            if (volume == null) {
+                // Gnome VFS doesn't know volume is mounted yet
+                monitor.VolumeMounted += OnVolumeMounted;
+                is_read_only = true;
+            } else {
+                mounted = true;
+                is_read_only = volume.IsReadOnly;
+            }
 
             base.Initialize (usb_device);
  
             InstallProperty("Vendor", usb_device["usb.vendor"]);
 
-            ReloadDatabase();
-            
+            if(!Globals.UIManager.IsInitialized) {
+                Globals.UIManager.Initialized += OnUIManagerInitialized;
+            } else {
+                ui_initialized = true;
+            }
+
+            if (ui_initialized && mounted)
+                ReloadDatabase ();
+
             // FIXME probably should be able to cancel at some point when you can actually sync
             CanCancelSave = false;
             return InitializeResult.Valid;
+        }
+
+        public void OnVolumeMounted(object o, Gnome.Vfs.VolumeMountedArgs args)
+        {
+            if(args.Volume.DevicePath == volume_device["block.device"]) {
+                monitor.VolumeMounted -= OnVolumeMounted;
+            
+                volume = args.Volume;
+                is_read_only = volume.IsReadOnly;
+
+                mounted = true;
+
+                if (ui_initialized)
+                    ReloadDatabase ();
+            }
         }
 
         public override void Dispose()
@@ -108,6 +139,13 @@ namespace Banshee.Dap.MassStorage
             // FIXME anything else to do here?
             volume = null;
             base.Dispose();
+        }
+
+        private void OnUIManagerInitialized(object o, EventArgs args)
+        {
+            ui_initialized = true;
+            if (mounted)
+                ReloadDatabase ();
         }
  
         private void ReloadDatabase()
@@ -145,7 +183,8 @@ namespace Banshee.Dap.MassStorage
 
         public override void Eject ()
         {
-            volume.Unmount (UnmountCallback);
+            if(volume != null)
+                volume.Unmount (UnmountCallback);
         }
 
         private void UnmountCallback (bool succeeded, string error, string detailed_error)
@@ -163,19 +202,52 @@ namespace Banshee.Dap.MassStorage
             else
                 Console.WriteLine ("Failed to eject.  {1} {2}", error, detailed_error);
         }
-        
-        protected override TrackInfo OnTrackAdded(TrackInfo track)
+
+        public override void AddTrack(TrackInfo track)
         {
-            if (track is MassStorageTrackInfo || IsReadOnly)
-                return track;
+            if (track == null || IsReadOnly)
+                return;
 
-            string new_path = GetTrackPath (track);
-            Directory.CreateDirectory (Path.GetDirectoryName (new_path));
-            File.Copy (track.Uri.LocalPath, new_path);
-
-            return new MassStorageTrackInfo (new SafeUri (new_path));
+            if (track is MassStorageTrackInfo) {
+                // If we're "adding" it when it's already on the device, then
+                // we don't need to copy it
+                tracks.Add(track);
+                OnTrackAdded(track);
+            } else {
+                // Otherwise queue it up to be transferred over to the device
+                Copier.Enqueue (track);
+            }
         }
         
+        private void HandleCopyRequested (object o, QueuedOperationArgs args)
+        {
+            TrackInfo track = args.Object as TrackInfo;
+
+            if (track == null)
+                return;
+            
+            try {
+                string new_path = GetTrackPath (track);
+
+                // If it already is on the device but it's out of date, remove it
+                if (File.Exists (new_path) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_path))
+                    RemoveTrack(new MassStorageTrackInfo(new SafeUri(new_path)));
+
+                if (!File.Exists (new_path)) {
+                        Directory.CreateDirectory (Path.GetDirectoryName (new_path));
+                        File.Copy (track.Uri.LocalPath, new_path);
+                }
+
+                TrackInfo new_track = new MassStorageTrackInfo (new SafeUri (new_path));
+                tracks.Add(new_track);
+                OnTrackAdded(new_track);
+
+                args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
+            } catch (Exception e) {
+                args.ReturnMessage = String.Format("Skipping Song", track.Artist, track.Title);
+            }
+        }
+
         protected override void OnTrackRemoved(TrackInfo track)
         {
             if (IsReadOnly)
@@ -213,30 +285,46 @@ namespace Banshee.Dap.MassStorage
         private string GetTrackPath (TrackInfo track)
         {
             string file_path = "";
-            
-            string escaped_artist = FileNamePattern.Escape(track.Artist);
-            string escaped_album = FileNamePattern.Escape(track.Album);
-            string escaped_track = FileNamePattern.Escape(track.TrackNumberTitle);
-            
+
+            string artist = FileNamePattern.Escape (track.Artist);
+            string album = FileNamePattern.Escape (track.Album);
+            string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
+
+            // TODO the following needs to be updated to the most recent version of the HAL spec
             if (player_device.PropertyExists ("portable_audio_player.filepath_format")) {
                 file_path = player_device.GetPropertyString ("portable_audio_player.filepath_format");
-                file_path = file_path.Replace ("%Artist", escaped_artist);
-                file_path = file_path.Replace ("%Album", escaped_album);
+                file_path = file_path.Replace ("%Artist", artist);
+                file_path = file_path.Replace ("%Album", album);
 
                 if (file_path.IndexOf ("%Track") == -1) {
-                    file_path = System.IO.Path.Combine (file_path, escaped_track);
+                    file_path = System.IO.Path.Combine (file_path, number_title);
                 } else {
-                    file_path = file_path.Replace ("%Track", escaped_track);
+                    file_path = file_path.Replace ("%Track", number_title);
                 }
             } else {
-                file_path = System.IO.Path.Combine (escaped_artist, escaped_album);
-                file_path = System.IO.Path.Combine (file_path, escaped_track);
+                file_path = System.IO.Path.Combine (artist, album);
+                file_path = System.IO.Path.Combine (file_path, number_title);
             }
 
             file_path += Path.GetExtension (track.Uri.LocalPath);
 
             //Console.WriteLine ("for track {0} outpath is {1}", track.Uri.LocalPath, System.IO.Path.Combine (MountPoint, file_path));
             return System.IO.Path.Combine (MountPoint, file_path);
+        }
+
+        private QueuedOperationManager copier;
+        public QueuedOperationManager Copier {
+            get {
+                if (copier == null) {
+                    copier = new QueuedOperationManager ();
+                    copier.ActionMessage = Catalog.GetString ("Copying Songs");
+                    copier.ProgressMessage = Catalog.GetString ("Copying {0} of {1}");
+                    copier.OperationRequested += HandleCopyRequested;
+                }
+
+                return copier;
+            }
+            set { copier = value; }
         }
 
         public virtual string IconId {
@@ -247,8 +335,8 @@ namespace Banshee.Dap.MassStorage
  
         public override string Name {
             get {
-                if (volume_device.PropertyExists("volume.label") && 
-                    (volume_device["volume.label"].Length > 0))
+                if (volume_device.PropertyExists("volume.label") &&
+                    volume_device["volume.label"].Length > 0)
                     return volume_device["volume.label"];
 
                 if (player_device.PropertyExists("info.product"))
