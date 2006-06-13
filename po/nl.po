@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-14 13:43+0200\n"
-"PO-Revision-Date: 2006-05-14 13:50+0200\n"
+"POT-Creation-Date: 2006-06-09 02:04+0200\n"
+"PO-Revision-Date: 2006-06-10 17:09+0200\n"
 "Last-Translator: Pepijn van de Geer <pvandegeer@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #. Footer
 #: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:18
 #: ../src/PlayerInterface.cs:316 ../src/PlayerInterface.cs:658
-#: ../src/PlayerInterface.cs:1188
+#: ../src/PlayerInterface.cs:1210
 msgid "Banshee Music Player"
 msgstr "Banshee muziekspeler"
 
@@ -489,11 +489,11 @@ msgstr "Vensterpositie y"
 msgid "Window Width"
 msgstr "Vensterbreedte"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:248 ../libbanshee/gst-cd-rip-0.8.c:84
+#: ../libbanshee/gst-cd-rip-0.10.c:248
 msgid "Could not create pipeline"
 msgstr "Aanmaken pipeline mislukt"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:254 ../libbanshee/gst-cd-rip-0.8.c:93
+#: ../libbanshee/gst-cd-rip-0.10.c:254
 msgid "Could not initialize cdparanoia"
 msgstr "Initialisatie cdparanoia faalde"
 
@@ -501,7 +501,7 @@ msgstr "Initialisatie cdparanoia faalde"
 msgid "Could not create mbtrm plugin"
 msgstr "Aanmaken mbtrm-plugin mislukt"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:277 ../libbanshee/gst-cd-rip-0.8.c:106
+#: ../libbanshee/gst-cd-rip-0.10.c:277
 msgid "Could not create encoder pipeline"
 msgstr "Aanmaken encoder-pipeline mislukt"
 
@@ -509,65 +509,32 @@ msgstr "Aanmaken encoder-pipeline mislukt"
 msgid "Could not create queue plugin"
 msgstr "Aanmaken queue-plugin mislukt"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
+#: ../libbanshee/gst-cd-rip-0.10.c:291
 msgid "Could not create GNOME VFS output plugin"
 msgstr "Aanmaken van GNOME VFS uitvoer-plugin mislukt"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:307 ../libbanshee/gst-cd-rip-0.8.c:127
+#: ../libbanshee/gst-cd-rip-0.10.c:307
 msgid "Could not link pipeline elements"
 msgstr "Verbinden pipelinie-elementen mislukt"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:398 ../libbanshee/gst-cd-rip-0.8.c:226
-#: ../src/AboutBox.cs:133
+#: ../libbanshee/gst-cd-rip-0.10.c:398 ../src/AboutBox.cs:133
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:424 ../libbanshee/gst-cd-rip-0.8.c:240
+#: ../libbanshee/gst-cd-rip-0.10.c:424
 msgid "Encoding element does not support tagging!"
 msgstr "Coderingselement ondersteunt geen tags!"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:250
-msgid "Could not send seek event to cdparanoia"
-msgstr "Verzenden zoekactie naar cdparanoia mislukt"
-
-#: ../libbanshee/gst-cd-rip-0.8.c:256
-msgid "Could not get track start position"
-msgstr "Opzoeken startpositie track mislukt"
-
-#: ../libbanshee/gst-cd-rip-0.8.c:270
-msgid "Could not get track position"
-msgstr "Opzoeken trackpositie mislukt"
-
-#: ../libbanshee/gst-playback-0.8.c:91
-msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Kon de 'playbin' Gstreamer-plugin niet vinden of maken"
-
-#: ../libbanshee/gst-playback-0.8.c:99
-msgid ""
-"Could not load an output sink from GStreamer/GConf and could not fall back "
-"on alsasink"
-msgstr ""
-"Kon geen uitvoer-sink laden van Gstreamer/GConf en kon niet terugvallen op "
-"alsasink"
-
-#: ../libbanshee/gst-playback-0.8.c:102
-msgid ""
-"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
-msgstr ""
-"Kon geen uitvoer-sink laden van Gstreamer/GConf, val nu terug op alsasink"
-
 #: ../libbanshee/gst-transcode-0.10.c:160
-#: ../libbanshee/gst-transcode-0.8.c:242
 msgid "No decoder could be found for source format."
 msgstr "Geen decoder voor bronformaat gevonden"
 
 #: ../libbanshee/gst-transcode-0.10.c:165
-#: ../libbanshee/gst-transcode-0.8.c:247
 msgid "Could not stat encoded file"
 msgstr "Bepalen status van gecodeerd bestand mislukt"
 
-#: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
+#: ../libbanshee/gst-transcode-0.10.c:249
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Aanmaken 'gnomevfssrc'-plugin mislukt"
 
@@ -598,19 +565,6 @@ msgstr "Kon geen sik pad krijgen van encoder"
 #: ../libbanshee/gst-transcode-0.10.c:368
 msgid "Could not construct pipeline"
 msgstr "Aanmaken pipeline mislukt"
-
-#: ../libbanshee/gst-transcode-0.8.c:96
-msgid "Could not create 'spider' plugin"
-msgstr "Aanmaken 'spider'-plugin mislukt"
-
-#: ../libbanshee/gst-transcode-0.8.c:103
-#, c-format
-msgid "Could not create encoding pipeline: %s"
-msgstr "Aanmaken encoding-pipeline mislukt: %s"
-
-#: ../libbanshee/gst-transcode-0.8.c:109
-msgid "Could not create 'filesink' plugin"
-msgstr "Aanmaken 'filesink'-plugin mislukt"
 
 #: ../libbanshee/hal-context.c:61
 msgid "Could not create new HAL context"
@@ -650,11 +604,11 @@ msgid "_Music"
 msgstr "_Muziek"
 
 #: ../src/Banshee.Base/ActionManager.cs:64
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:329
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:351
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:358
-#: ../src/PlayerInterface.cs:1489
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:71
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:446
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:468
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:475
+#: ../src/PlayerInterface.cs:1511
 msgid "New Playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -790,7 +744,7 @@ msgstr "Gedetaileerde verie- en configuratie-informatie tonen"
 msgid "_Playback"
 msgstr "_Bediening"
 
-#: ../src/Banshee.Base/ActionManager.cs:140 ../src/SourceView.cs:77
+#: ../src/Banshee.Base/ActionManager.cs:140 ../src/SourceView.cs:82
 msgid "Source"
 msgstr "Bron"
 
@@ -860,7 +814,7 @@ msgstr ""
 "Geselecteerde nummer aan de afspeellijst toevoegen of een nieuwe "
 "afspeellijst maken"
 
-#: ../src/Banshee.Base/ActionManager.cs:192 ../src/PlaylistView.cs:105
+#: ../src/Banshee.Base/ActionManager.cs:192 ../src/PlaylistView.cs:113
 msgid "Rating"
 msgstr "Score"
 
@@ -965,7 +919,7 @@ msgstr "Nummer herstarten"
 msgid "Restart the current song"
 msgstr "Het huidige nummer opnieuw starten"
 
-#: ../src/Banshee.Base/ActionManager.cs:272 ../src/PlayerInterface.cs:1063
+#: ../src/Banshee.Base/ActionManager.cs:272 ../src/PlayerInterface.cs:1072
 msgid "Synchronize"
 msgstr "Synchroniseren"
 
@@ -1020,11 +974,11 @@ msgstr ""
 "De cd kan niet worden uitgeworpen tijdens het imoprteren. Onderbreek eerst "
 "het importeren"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:85
+#: ../src/Banshee.Base/AudioCdRipper.cs:83
 msgid "Could not create CD Ripper"
 msgstr "Aanmaken cd-ripper gefaald"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:295
+#: ../src/Banshee.Base/AudioCdRipper.cs:250
 #, csharp-format
 msgid ""
 "The device node '{0}' differs from the device node already set for "
@@ -1033,21 +987,21 @@ msgstr ""
 "Het apparaat '{0}' verschilt van het reeds ingestelde apparaat voor de "
 "eerder in wachtrij geplaatste tracks ({1})"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:308
+#: ../src/Banshee.Base/AudioCdRipper.cs:263
 msgid "Importing Audio CD"
 msgstr "Audio-cd importeren"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:309
+#: ../src/Banshee.Base/AudioCdRipper.cs:264
 msgid "Initializing Drive"
 msgstr "Cdrom-station initialiseren"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:329
-#: ../src/Banshee.Base/AudioCdRipper.cs:393
+#: ../src/Banshee.Base/AudioCdRipper.cs:284
+#: ../src/Banshee.Base/AudioCdRipper.cs:348
 msgid "Cannot Import CD"
 msgstr "Kan cd niet importeren"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:341
-#: ../src/Banshee.Base/ImportManager.cs:118
+#: ../src/Banshee.Base/AudioCdRipper.cs:296
+#: ../src/Banshee.Base/ImportManager.cs:119
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importeren van {0} van {1}"
@@ -1069,6 +1023,7 @@ msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kon DapCore niet initialiseren omdat HalCore niet geïnitialiseerd is"
 
 #: ../src/Banshee.Base/Dap/Dap.cs:329 ../src/Banshee.Base/Dap/Dap.cs:330
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:237 ../src/Banshee.Dap/Njb/NjbDap.cs:249
 msgid "Synchronizing Device"
 msgstr "Apparaat synchroniseren"
 
@@ -1124,8 +1079,7 @@ msgstr "Map importeren in bibliotheek"
 msgid "Local Folder"
 msgstr "Lokale map"
 
-#: ../src/Banshee.Base/GstTranscoder.cs:82
-#: ../src/Banshee.Base/GstTranscoder.cs:185
+#: ../src/Banshee.Base/GstTranscoder.cs:80
 msgid "Could not create transcoder"
 msgstr "Aanmaken transcoder mislukt"
 
@@ -1145,15 +1099,15 @@ msgstr "D-Bus werkt mogelijk niet of is verkeerd geconfigureerd"
 msgid "Home Directory"
 msgstr "Persoonlijke map"
 
-#: ../src/Banshee.Base/ImportManager.cs:86
+#: ../src/Banshee.Base/ImportManager.cs:88
 msgid "Importing Songs"
 msgstr "Nummers importeren"
 
-#: ../src/Banshee.Base/ImportManager.cs:89
+#: ../src/Banshee.Base/ImportManager.cs:90
 msgid "Scanning for songs"
 msgstr "Bezig met zoeken naar nummers"
 
-#: ../src/Banshee.Base/Library.cs:126
+#: ../src/Banshee.Base/Library.cs:125
 msgid "Could not load track from library"
 msgstr "Laden van track uit bibliotheek mislukt"
 
@@ -1313,15 +1267,39 @@ msgstr "({0} resterend)"
 msgid "Music Library"
 msgstr "Muziekbibliotheek"
 
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:110
+msgid "Sort Playlists"
+msgstr "Afspeellijsten sorteren"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:113
+msgid "Creation Order"
+msgstr "Volgorde van aanmaken"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:117
+msgid "Name Ascending"
+msgstr "Naam oplopend"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:121
+msgid "Name Descending"
+msgstr "Naam aflopend"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:125
+msgid "Size Ascending"
+msgstr "Grootte oplopend"
+
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:129
+msgid "Size Descending"
+msgstr "Grootte aflopend"
+
 #: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
 msgid "Local Queue"
 msgstr "Lokale wachtrij"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:123
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:150
 msgid "Cannot Rename Playlist"
 msgstr "Kan afspeellijst niet hernoemen"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:124
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:151
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 "Er bestaat al een afspeellijst met deze naam. Kies a.u.b. een andere naam."
@@ -1427,24 +1405,39 @@ msgstr "Opnieuw aanmaken iPod database..."
 #. args.FileName, e.GetType(), e.Message);
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:133
 #: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:137
-#: ../src/PlayerInterface.cs:1731
+#: ../src/PlayerInterface.cs:1753
 msgid "Scanning"
 msgstr "Bezig met zoeken"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:257
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:263
 msgid "Audio Device"
 msgstr "Audio-apparaat"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:65
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:143
+msgid "Cannot read device"
+msgstr "Lezen van het apparaat mislukt"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:249
+msgid "Removing Songs"
+msgstr "Nummers aan het verwijderen"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:337
+msgid "Device Error"
+msgstr "Apparaatfout"
+
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:338
+msgid "Could not set the owner of the device."
+msgstr "Instellen van de eigenaar van het apparaat mislukt"
+
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:64
 msgid "Could not initialize GStreamer library"
 msgstr "Initialisatie GStreamer-bibliotheek mislukt"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:143
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:142
 msgid "Unknown Error"
 msgstr "Onbekend fout"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:165
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:164
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
 msgid "Buffering"
 msgstr "Bezig met vullen buffer"
@@ -1592,20 +1585,6 @@ msgstr "Naam van de DAAP gedeelde muziekmap"
 msgid "Cannot login to DAAP share"
 msgstr "Aanmelden op DAAP gedeelde muziek mislukt"
 
-#: ../src/Banshee.Plugins/FileSystemMonitor/filesystemmonitor.schemas.in.h:1
-msgid "Enable the FileSystemMonitor plugin"
-msgstr "FileSystemMonitor-plugin inschakelen"
-
-#: ../src/Banshee.Plugins/FileSystemMonitor/Watcher.cs:49
-msgid ""
-"Automatically keep your Banshee library directory in sync with your music "
-"folder. This plugin responds to changes made in the file system to reflect "
-"them in your library."
-msgstr ""
-"De Banshee bibliotheekmap automatisch synchroniseren met je muziekmap. Deze "
-"plugin reageert op veranderingen in het bestandsysteem om ze te "
-"weerspiegelen in de bibliotheek."
-
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
 msgid "Metadata and Cover Art Searching"
 msgstr "Metadata en albumhoes zoeken"
@@ -1710,39 +1689,69 @@ msgstr "Bezig met zoeken: {0}"
 msgid "Idle"
 msgstr "Klaar"
 
-#: ../src/BurnCore.cs:82
+#: ../src/BurnCore.cs:90
 msgid "Insufficient Disk Space"
 msgstr "Onvoldoende schrijfruimte"
 
-#: ../src/BurnCore.cs:83
+#: ../src/BurnCore.cs:91
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
 msgstr "Het maken van deze cd vereist minstens {0} MB vrije schijfruimte."
 
-#: ../src/BurnCore.cs:119
+#: ../src/BurnCore.cs:127
 msgid "Could Not Write CD"
 msgstr "CD branden mislukt"
 
-#: ../src/BurnCore.cs:120
+#: ../src/BurnCore.cs:128
 msgid "No suitable encoder could be found to convert selected songs."
 msgstr ""
 "Er is geen geschikte encoder gevonden om de geselecteerde nummers om te "
 "zetten."
 
-#: ../src/BurnCore.cs:138 ../src/BurnCore.cs:236 ../src/BurnCore.cs:246
+#: ../src/BurnCore.cs:146 ../src/BurnCore.cs:287 ../src/BurnCore.cs:297
 #, csharp-format
 msgid "File does not exist: {0}"
 msgstr "Bestand bestaat niet: {0}"
 
-#: ../src/BurnCore.cs:158 ../src/BurnCore.cs:198 ../src/BurnCore.cs:269
+#: ../src/BurnCore.cs:166 ../src/BurnCore.cs:183 ../src/BurnCore.cs:249
+#: ../src/BurnCore.cs:320
 msgid "Problem creating CD"
 msgstr "Probleem bij het maken van de cd"
 
-#: ../src/BurnCore.cs:159
+#: ../src/BurnCore.cs:167
 msgid "None of the songs selected for this CD could be found."
 msgstr "Geen enkel geselecteerd nummer voor deze cd kon worden gevonden."
 
-#: ../src/BurnCore.cs:199
+#: ../src/BurnCore.cs:184 ../src/BurnCore.cs:410
+msgid "No CD writers were found on your system."
+msgstr "Er zijn geen cd-branders gevonden op uw systeem."
+
+#: ../src/BurnCore.cs:190 ../src/BurnCore.cs:518 ../src/BurnCore.cs:521
+msgid "Insert Blank CD"
+msgstr "Plaats een lege cd"
+
+#: ../src/BurnCore.cs:191 ../src/BurnCore.cs:519
+msgid "Please insert a blank CD disk for the write process."
+msgstr "Plaats een lege cd om te beschrijven."
+
+#: ../src/BurnCore.cs:201
+#, csharp-format
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr ""
+"Het ingevoerde medium is niet groot genoeg voor de geselecteerde muziek."
+
+#: ../src/BurnCore.cs:203
+#, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "Er is {0} minuut meer nodig op het medium."
+msgstr[1] "Er zijn {0} minuten meer nodig op het medium."
+
+#: ../src/BurnCore.cs:207
+msgid "Not Enough Space on Disc"
+msgstr "Onvoldoende schijfruimte"
+
+#: ../src/BurnCore.cs:250
 msgid ""
 "None of the songs selected for this CD could be converted to the format "
 "required for an audio CD."
@@ -1750,7 +1759,7 @@ msgstr ""
 "Geen enkel geselecteerd nummer voor deze cd kon worden geconverteerd naar "
 "het formaat dat nodig is voor een audio-cd."
 
-#: ../src/BurnCore.cs:270
+#: ../src/BurnCore.cs:321
 msgid ""
 "Some songs could either not be found or could not be converted to the format "
 "required for an audio CD."
@@ -1758,104 +1767,76 @@ msgstr ""
 "Sommige nummers konden of niet worden gevonden of konden niet worden "
 "geconverteerd naar het formaat dat nodig is voor een audio-cd."
 
-#: ../src/BurnCore.cs:272
+#: ../src/BurnCore.cs:323
 msgid "Continue Anyway"
 msgstr "Alsnog doorgaan"
 
-#: ../src/BurnCore.cs:293
+#: ../src/BurnCore.cs:344
 msgid "Error Creating CD Image"
 msgstr "Fout bij het maken van het cd-bestand"
 
-#: ../src/BurnCore.cs:312
+#: ../src/BurnCore.cs:362
 msgid "Writing CD"
 msgstr "Cd aan het branden"
 
-#: ../src/BurnCore.cs:313
+#: ../src/BurnCore.cs:363
 msgid "Writing Audio CD"
 msgstr "Audio-cd aan het branden"
 
-#: ../src/BurnCore.cs:344
-msgid "The inserted media is not large enough to hold your selected music."
-msgstr ""
-"Het ingevoerde medium is niet groot genoeg voor de geselecteerde muziek."
-
-#: ../src/BurnCore.cs:346
-#, csharp-format
-msgid "{0} more minute is needed on the media."
-msgid_plural "{0} more minutes are needed on the media."
-msgstr[0] "Er is {0} minuut meer nodig op het medium."
-msgstr[1] "Er zijn {0} minuten meer nodig op het medium."
-
-#: ../src/BurnCore.cs:350
-msgid "Not Enough Space on Disc"
-msgstr "Onvoldoende schijfruimte"
-
-#: ../src/BurnCore.cs:381
-msgid "No CD writers were found on your system."
-msgstr "Er zijn geen cd-branders gevonden op uw systeem."
-
-#: ../src/BurnCore.cs:421 ../src/BurnCore.cs:436
+#: ../src/BurnCore.cs:450 ../src/BurnCore.cs:465
 msgid "Error Writing CD"
 msgstr "Fout tijdens het branden"
 
-#: ../src/BurnCore.cs:425
+#: ../src/BurnCore.cs:454
 msgid "An unknown error occurred when attempting to write the CD"
 msgstr "Een onbekende fout trad op bij het beschrijven van de cd"
 
-#: ../src/BurnCore.cs:431
+#: ../src/BurnCore.cs:460
 msgid "CD Writing Complete"
 msgstr "Branden van de cd voltooid"
 
-#: ../src/BurnCore.cs:432
+#: ../src/BurnCore.cs:461
 msgid "The selected audio was successfully written to the CD."
 msgstr "De geselecteerde muziek is met succes op de cd geschreven"
 
-#: ../src/BurnCore.cs:459
+#: ../src/BurnCore.cs:488
 msgid "Preparing to write..."
 msgstr "Schrijfbewerking voorbereiden..."
 
-#: ../src/BurnCore.cs:463
+#: ../src/BurnCore.cs:492
 msgid "Writing disk..."
 msgstr "Schijf beschrijven..."
 
-#: ../src/BurnCore.cs:467
+#: ../src/BurnCore.cs:496
 msgid "Fixating disk..."
 msgstr "Fixeren schijf..."
 
-#: ../src/BurnCore.cs:485
+#: ../src/BurnCore.cs:514
 msgid "Waiting for Media"
 msgstr "Wachten op medium"
 
-#: ../src/BurnCore.cs:489 ../src/BurnCore.cs:492
-msgid "Insert Blank CD"
-msgstr "Plaats een lege cd"
-
-#: ../src/BurnCore.cs:490
-msgid "Please insert a blank CD disk for the write process."
-msgstr "Plaats een lege cd om te beschrijven."
-
-#: ../src/BurnCore.cs:549
+#: ../src/BurnCore.cs:578
 msgid "Creating Image"
 msgstr "Bezig met aanmaken cd-bestand"
 
-#: ../src/BurnCore.cs:550
+#: ../src/BurnCore.cs:579
 msgid "Transferring songs"
 msgstr "Nummers aan het overzetten"
 
-#: ../src/BurnCore.cs:568
+#: ../src/BurnCore.cs:597
 #, csharp-format
 msgid "Transferring song {0}"
 msgstr "Nummer {0} aan het overzetten"
 
-#: ../src/BurnCore.cs:580
+#: ../src/BurnCore.cs:609
 msgid "Could not transfer files to create disk image."
 msgstr "Overbrengen bestanden voor het maken van een cd-bestand mislukt."
 
-#: ../src/BurnCore.cs:607
+#: ../src/BurnCore.cs:636
 msgid "Could not transfer file to disk layout."
 msgstr "Overbrengen bestand naar schijfindeling mislukt."
 
-#: ../src/BurnCore.cs:610
+#: ../src/BurnCore.cs:639
 msgid "File is already in disk layout."
 msgstr "Bestand bestaat al in schijfindeling."
 
@@ -1923,68 +1904,68 @@ msgstr "Gedetaileerde gegevens:"
 msgid "Loading..."
 msgstr "Bezig met laden..."
 
-#: ../src/PlayerInterface.cs:433
+#: ../src/PlayerInterface.cs:434
 msgid "All"
 msgstr "Alles"
 
-#: ../src/PlayerInterface.cs:435 ../src/PlayerInterface.cs:1288
+#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1310
 msgid "Song Name"
 msgstr "Nummertitel"
 
-#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1286
+#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1308
 msgid "Artist Name"
 msgstr "Artiestnaam"
 
-#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1290
+#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1312
 msgid "Album Title"
 msgstr "Albumtitel"
 
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1292
-#: ../src/PlaylistView.cs:97
+#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1314
+#: ../src/PlaylistView.cs:105
 msgid "Genre"
 msgstr "Genre"
 
-#: ../src/PlayerInterface.cs:459
+#: ../src/PlayerInterface.cs:460
 msgid "Write selection to CD"
 msgstr "Selectie op cd branden"
 
-#: ../src/PlayerInterface.cs:460
+#: ../src/PlayerInterface.cs:461
 msgid "Import CD into library"
 msgstr "Cd importeren in bibliotheek"
 
-#: ../src/PlayerInterface.cs:461
+#: ../src/PlayerInterface.cs:462
 msgid "Play previous song"
 msgstr "Vorig nummer afspelen"
 
-#: ../src/PlayerInterface.cs:462
+#: ../src/PlayerInterface.cs:463
 msgid "Play/pause current song"
 msgstr "Huidig nummer afspelen/pauzeren"
 
-#: ../src/PlayerInterface.cs:463
+#: ../src/PlayerInterface.cs:464
 msgid "Play next song"
 msgstr "Volgend nummer afspelen"
 
-#: ../src/PlayerInterface.cs:464
+#: ../src/PlayerInterface.cs:465
 msgid "Device disk usage"
 msgstr "Schrijfgebruik apparaat"
 
-#: ../src/PlayerInterface.cs:465
+#: ../src/PlayerInterface.cs:466
 msgid "Synchronize music library to device"
 msgstr "Muziekbibliotheek synchroniseren met apparaat"
 
-#: ../src/PlayerInterface.cs:466
+#: ../src/PlayerInterface.cs:467
 msgid "Adjust volume"
 msgstr "Volume aanpassen"
 
-#: ../src/PlayerInterface.cs:467
+#: ../src/PlayerInterface.cs:468
 msgid "Change repeat playback mode"
 msgstr "Herhalingsmodus wijzigen"
 
-#: ../src/PlayerInterface.cs:468
+#: ../src/PlayerInterface.cs:469
 msgid "Toggle shuffle playback mode"
 msgstr "Shuffle-modus aan/uit zetten"
 
-#: ../src/PlayerInterface.cs:469
+#: ../src/PlayerInterface.cs:470
 msgid "Edit and view metadata of selected songs"
 msgstr "Metadata van de geselecteerde nummers bewerken en bekijken"
 
@@ -2014,51 +1995,51 @@ msgstr "Pauze"
 msgid "Playback Error"
 msgstr "Afspeelfout"
 
-#: ../src/PlayerInterface.cs:1052
+#: ../src/PlayerInterface.cs:1061
 msgid "Import"
 msgstr "Importeren"
 
-#: ../src/PlayerInterface.cs:1068 ../src/PlayerInterface.cs:2032
+#: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2054
 msgid "Rename Device"
 msgstr "Apparaat hernoemen"
 
-#: ../src/PlayerInterface.cs:1070 ../src/PlayerInterface.cs:2026
+#: ../src/PlayerInterface.cs:1079 ../src/PlayerInterface.cs:2048
 msgid "Rename Playlist"
 msgstr "Afspeellijst hernoemen"
 
-#: ../src/PlayerInterface.cs:1175
+#: ../src/PlayerInterface.cs:1197
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dagen"
 
-#: ../src/PlayerInterface.cs:1192
+#: ../src/PlayerInterface.cs:1214
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} item"
 msgstr[1] "{0} items"
 
-#: ../src/PlayerInterface.cs:1194
+#: ../src/PlayerInterface.cs:1216
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} totale speeltijd"
 
-#: ../src/PlayerInterface.cs:1508
+#: ../src/PlayerInterface.cs:1530
 msgid "Clear"
 msgstr "Wissen"
 
-#: ../src/PlayerInterface.cs:1719
+#: ../src/PlayerInterface.cs:1741
 msgid "Could Not Eject"
 msgstr "Uitwerpen mislukt"
 
-#: ../src/PlayerInterface.cs:1747
+#: ../src/PlayerInterface.cs:1769
 #, csharp-format
 msgid "Cannot Import: {0} ({1})"
 msgstr "Importeren mislukt: {0} ({1})"
 
-#: ../src/PlayerInterface.cs:1789
+#: ../src/PlayerInterface.cs:1811
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -2076,7 +2057,7 @@ msgstr[1] ""
 "de bibliotheek <i><b>en</b></i> van de schijf? Deze opdracht verwijderd de "
 "bestanden permanent."
 
-#: ../src/PlayerInterface.cs:1798
+#: ../src/PlayerInterface.cs:1820
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2089,17 +2070,17 @@ msgstr[1] ""
 "Weet u zeker dat u de geselecteerde nummers <b>({0})</b> wilt verwijderen "
 "uit de bibliotheek?"
 
-#: ../src/PlayerInterface.cs:1807
+#: ../src/PlayerInterface.cs:1829
 msgid "Remove Selected Songs from Library"
 msgstr "Geselecteerde nummers uit bibliotheek verwijderen"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:1960
+#: ../src/PlayerInterface.cs:1982
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "{0} synchroniseren"
 
-#: ../src/PlayerInterface.cs:1961
+#: ../src/PlayerInterface.cs:1983
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2117,7 +2098,7 @@ msgstr ""
 "<big>•</big> <i>Handmatige veranderingen opslaan</i>: enkel handmatige "
 "veranderingen opslaan"
 
-#: ../src/PlayerInterface.cs:1967
+#: ../src/PlayerInterface.cs:1989
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2125,19 +2106,19 @@ msgstr ""
 "<b>Opgelet:</b> Deze handelingen zullen de inhoud van uw iPod aanpassen of "
 "verwijderen en kan incompatibiliteit veroorzaken met iTunes!"
 
-#: ../src/PlayerInterface.cs:1969
+#: ../src/PlayerInterface.cs:1991
 msgid "Synchronize Library"
 msgstr "Bibliotheek synchroniseren"
 
-#: ../src/PlayerInterface.cs:1971
+#: ../src/PlayerInterface.cs:1993
 msgid "Save Manual Changes"
 msgstr "Manuele veranderingen opslaan"
 
-#: ../src/PlayerInterface.cs:2027
+#: ../src/PlayerInterface.cs:2049
 msgid "Enter new playlist name"
 msgstr "Voer naam in voor nieuwe afspeellijst"
 
-#: ../src/PlayerInterface.cs:2033
+#: ../src/PlayerInterface.cs:2055
 msgid "Enter new name for your device"
 msgstr "Voer nieuwe naam in voor uw apparaat"
 
@@ -2153,35 +2134,35 @@ msgstr "Kies kolommen"
 msgid "Visible Playlist Columns"
 msgstr "Zichtbare afspeellijstkolommen"
 
-#: ../src/PlaylistView.cs:85
+#: ../src/PlaylistView.cs:93
 msgid "Track"
 msgstr "Track"
 
-#: ../src/PlaylistView.cs:88
+#: ../src/PlaylistView.cs:96
 msgid "Artist"
 msgstr "Artiest"
 
-#: ../src/PlaylistView.cs:91
+#: ../src/PlaylistView.cs:99
 msgid "Title"
 msgstr "Titel"
 
-#: ../src/PlaylistView.cs:94
+#: ../src/PlaylistView.cs:102
 msgid "Album"
 msgstr "Album"
 
-#: ../src/PlaylistView.cs:100
+#: ../src/PlaylistView.cs:108
 msgid "Time"
 msgstr "Tijd"
 
-#: ../src/PlaylistView.cs:111
+#: ../src/PlaylistView.cs:119
 msgid "Plays"
 msgstr "Afgespeeld"
 
-#: ../src/PlaylistView.cs:118
+#: ../src/PlaylistView.cs:126
 msgid "Last Played"
 msgstr "Laatst afgespeeld"
 
-#: ../src/PlaylistView.cs:469
+#: ../src/PlaylistView.cs:479
 msgid "N/A"
 msgstr "N/A"
 
@@ -2285,6 +2266,52 @@ msgstr "Assembly-naam"
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "Versie"
+
+#~ msgid "Could not send seek event to cdparanoia"
+#~ msgstr "Verzenden zoekactie naar cdparanoia mislukt"
+
+#~ msgid "Could not get track start position"
+#~ msgstr "Opzoeken startpositie track mislukt"
+
+#~ msgid "Could not get track position"
+#~ msgstr "Opzoeken trackpositie mislukt"
+
+#~ msgid "Could not find or create the 'playbin' GStreamer plugin"
+#~ msgstr "Kon de 'playbin' Gstreamer-plugin niet vinden of maken"
+
+#~ msgid ""
+#~ "Could not load an output sink from GStreamer/GConf and could not fall "
+#~ "back on alsasink"
+#~ msgstr ""
+#~ "Kon geen uitvoer-sink laden van Gstreamer/GConf en kon niet terugvallen "
+#~ "op alsasink"
+
+#~ msgid ""
+#~ "Could not load an output sink from GStreamer/GConf, falling back on "
+#~ "alsasink"
+#~ msgstr ""
+#~ "Kon geen uitvoer-sink laden van Gstreamer/GConf, val nu terug op alsasink"
+
+#~ msgid "Could not create 'spider' plugin"
+#~ msgstr "Aanmaken 'spider'-plugin mislukt"
+
+#~ msgid "Could not create encoding pipeline: %s"
+#~ msgstr "Aanmaken encoding-pipeline mislukt: %s"
+
+#~ msgid "Could not create 'filesink' plugin"
+#~ msgstr "Aanmaken 'filesink'-plugin mislukt"
+
+#~ msgid "Enable the FileSystemMonitor plugin"
+#~ msgstr "FileSystemMonitor-plugin inschakelen"
+
+#~ msgid ""
+#~ "Automatically keep your Banshee library directory in sync with your music "
+#~ "folder. This plugin responds to changes made in the file system to "
+#~ "reflect them in your library."
+#~ msgstr ""
+#~ "De Banshee bibliotheekmap automatisch synchroniseren met je muziekmap. "
+#~ "Deze plugin reageert op veranderingen in het bestandsysteem om ze te "
+#~ "weerspiegelen in de bibliotheek."
 
 #~ msgid "About"
 #~ msgstr "Info over"
@@ -2511,4 +2538,3 @@ msgstr "Versie"
 
 #~ msgid "Ripping {0} of {1} : {2} - {3}"
 #~ msgstr "Bezig met rippen {0} van {1} : {2} - {3}"
-
