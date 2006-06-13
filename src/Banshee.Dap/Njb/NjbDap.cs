@@ -210,13 +210,12 @@ namespace Banshee.Dap.Njb
             ReleaseDevice();
         }
         
-        protected override TrackInfo OnTrackAdded(TrackInfo track)
+        public override void AddTrack(TrackInfo track)
         {
             if(track is NjbDapTrackInfo || !TrackExistsInList(track, Tracks)) {
-                return track;
+                tracks.Add(track);
+                OnTrackAdded(track);
             }
-            
-            return null;
         }
         
         protected override void OnTrackRemoved(TrackInfo track)

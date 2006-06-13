@@ -97,19 +97,24 @@ namespace Banshee.Dap.Ipod
             return InitializeResult.Valid;
         }
         
-        protected override TrackInfo OnTrackAdded(TrackInfo track)
+        public override void AddTrack(TrackInfo track)
         {
-            if(track is IpodDapTrackInfo) {
-                return track;
-            }
+            if (track == null || IsReadOnly)
+                return;
 
-            if(!TrackExistsInList(track, device.SongDatabase.Songs)) {
-                return new IpodDapTrackInfo(track, device.SongDatabase);
+            TrackInfo new_track = null;
+
+            if(track is IpodDapTrackInfo)
+                new_track = track;
+            else if(!TrackExistsInList(track, device.SongDatabase.Songs))
+                new_track = new IpodDapTrackInfo(track, device.SongDatabase);
+
+            if (new_track != null) {
+                tracks.Add(new_track);
+                OnTrackAdded(new_track);
             }
-            
-            return null;
         }
-        
+
         protected override void OnTrackRemoved(TrackInfo track)
         {
             if(!(track is IpodDapTrackInfo)) {

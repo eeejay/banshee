@@ -1,3 +1,9 @@
+2006-06-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs:
+	* src/Banshee.Dap/Njb/NjbDap.cs: Updated to work with changes to Dap.cs,
+	specifically overriding AddTrack and calling OnTrackAdded.
+
 2006-06-12  James Stembridge  <jstembridge@gmail.com>
 
 	* src/Banshee.Base/Dap/DapCore.cs: Include all volumes when performing
