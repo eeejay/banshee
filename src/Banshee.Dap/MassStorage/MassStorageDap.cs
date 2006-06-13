@@ -70,14 +70,6 @@ namespace Banshee.Dap.MassStorage
                 return InitializeResult.Invalid;
             }
 
-            if (!player_device.PropertyExists ("portable_audio_player.access_method") ||
-                player_device ["portable_audio_player.access_method"] != "storage" ||
-                !usb_device.PropertyExists("usb.vendor_id") ||
-                !usb_device.PropertyExists("usb.product_id") ||
-                !volume_device.PropertyExists("block.device")) {
-                return InitializeResult.Invalid;
-            }
-
             if (!volume_device.PropertyExists("block.device"))
                 return InitializeResult.Invalid;
             

@@ -1,5 +1,10 @@
 2006-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Remove unneeded checks
+	that broke .is_audio_player functionality (James Stembridge, BGO #344795)
+
+2006-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: If usb.vendor doesn't
 	exist fall back to info.vendor, and translate "Vendor" (James Stembridge,
 	BGO #344803).  Use different HAL property to get a better device name.
