@@ -2036,34 +2036,9 @@ namespace Banshee
         private void OnRenameSourceAction(object o, EventArgs args)
         {
             Source source = sourceView.HighlightedSource;
-            
-            if(source == null || !source.CanRename) {
-                 return;
+            if(source != null && source.CanRename) {
+                sourceView.BeginRenameSource(source);
             }
-            
-            InputDialog input;
-            
-            if(source is PlaylistSource) {
-                input = new InputDialog(
-                    Catalog.GetString("Rename Playlist"),
-                    Catalog.GetString("Enter new playlist name"),
-                    Gdk.Pixbuf.LoadFromResource("playlist-icon-large.png"), source.Name);
-            } else if(source is DapSource) {
-                DapSource dap_source = source as DapSource;
-                input = new InputDialog(
-                    Catalog.GetString("Rename Device"),
-                    Catalog.GetString("Enter new name for your device"),
-                    dap_source.Device.GetIcon(48), source.Name);
-            } else {
-                return;
-            }
-                
-            string newName = input.Execute();
-            if(newName != null) {
-                source.Rename(newName);
-            }
-            
-            sourceView.QueueDraw();
         }
 
         private void OnDeletePlaylistAction(object o, EventArgs args)
@@ -2076,7 +2051,6 @@ namespace Banshee
                 
             PlaylistSource playlist = source as PlaylistSource;
             playlist.Delete();
-            // TODO: sourceView.SelectLibrary();
         }
         
         private void OnSelectAllAction(object o, EventArgs args)

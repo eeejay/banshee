@@ -1,3 +1,12 @@
+2006-06-12  Aaron Bockover  <aaron@abock.org>
+
+	* src/SourceView.cs: Added BeginRenameSource to make a source's row
+	become editable and focused; made UpdateRow internal as it's only used
+	by the row renderer
+
+	* src/PlayerInterface.cs: Use SourceView.BeginRenameSource for renaming
+	instead of a dialog when the source rename action is invoked
+
 2006-06-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Dap/Ipod/IpodDap.cs:

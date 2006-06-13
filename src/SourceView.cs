@@ -67,6 +67,7 @@ namespace Banshee
         private bool newPlaylistVisible = false;
         
         private TreeStore store;
+        private TreeViewColumn focus_column;
         private int currentTimeout = -1;
     
         public SourceView()
@@ -77,12 +78,12 @@ namespace Banshee
             AppendColumn(col);
             ExpanderColumn = col;
         
-            col = new TreeViewColumn();
+            focus_column = new TreeViewColumn();
             SourceRowRenderer renderer = new SourceRowRenderer();
-            col.Title = Catalog.GetString("Source");
-            col.PackStart(renderer, true);
-            col.SetCellDataFunc(renderer, new TreeCellDataFunc(SourceCellDataFunc));
-            AppendColumn(col);
+            focus_column.Title = Catalog.GetString("Source");
+            focus_column.PackStart(renderer, true);
+            focus_column.SetCellDataFunc(renderer, new TreeCellDataFunc(SourceCellDataFunc));
+            AppendColumn(focus_column);
             
             store = new TreeStore(typeof(Source));
             Model = store;
@@ -225,7 +226,7 @@ namespace Banshee
             renderer.Editable = renderer.source.CanRename;
         }
         
-        public void UpdateRow(TreePath path, string text)
+        internal void UpdateRow(TreePath path, string text)
         {
             TreeIter iter;
             
@@ -235,6 +236,16 @@ namespace Banshee
             
             Source source = store.GetValue(iter, 0) as Source;
             source.Rename(text);
+        }
+        
+        public void BeginRenameSource(Source source)
+        {
+            TreeIter iter = FindSource(source);
+            if(iter.Equals(TreeIter.Zero)) {
+                return;
+            }
+            
+            SetCursor(store.GetPath(iter), focus_column, true);
         }
         
         private void OnCursorChanged(object o, EventArgs args)
