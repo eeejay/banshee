@@ -147,41 +147,45 @@ namespace Banshee
             }
         }
         
+        private string TrackStringResult(string s)
+        {
+            return HaveTrack ? (s == null ? String.Empty : s) : String.Empty;
+        }
+        
         [Method]
         public virtual string GetPlayingArtist()
         {
-            return HaveTrack ? PlayerEngineCore.CurrentTrack.Artist : String.Empty;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.Artist);
         }
         
         [Method]
         public virtual string GetPlayingAlbum()
         {
-            return HaveTrack ? PlayerEngineCore.CurrentTrack.Album : String.Empty;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.Album);
         }
         
         [Method]
         public virtual string GetPlayingTitle()
         {
-            return HaveTrack ? PlayerEngineCore.CurrentTrack.Title : String.Empty;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.Title);
         }
         
         [Method]
         public virtual string GetPlayingGenre()
         {
-            return HaveTrack ? PlayerEngineCore.CurrentTrack.Genre : String.Empty;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.Genre);
         }
         
         [Method]
         public virtual string GetPlayingUri()
         {
-            return HaveTrack ? PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri : String.Empty;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri);
         }
 
         [Method]
         public virtual string GetPlayingCoverUri()
         {
-            string cover = HaveTrack ? PlayerEngineCore.CurrentTrack.CoverArtFileName : String.Empty;
-            return cover == null ? String.Empty : cover;
+            return TrackStringResult(PlayerEngineCore.CurrentTrack.CoverArtFileName);
         }
         
         [Method]
