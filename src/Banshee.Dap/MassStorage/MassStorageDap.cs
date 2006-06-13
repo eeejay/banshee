@@ -103,7 +103,10 @@ namespace Banshee.Dap.MassStorage
 
             base.Initialize (usb_device);
  
-            InstallProperty("Vendor", usb_device["usb.vendor"]);
+            if (usb_device.PropertyExists("usb.vendor"))
+                InstallProperty(Catalog.GetString("Vendor"), usb_device["usb.vendor"]);
+            else if (player_device.PropertyExists("info.vendor"))
+                InstallProperty(Catalog.GetString("Vendor"), player_device["info.vendor"]);
 
             if(!Globals.UIManager.IsInitialized) {
                 Globals.UIManager.Initialized += OnUIManagerInitialized;
@@ -335,12 +338,13 @@ namespace Banshee.Dap.MassStorage
  
         public override string Name {
             get {
+                if (player_device.PropertyExists("info.product"))
+                    return player_device["info.product"];
+
                 if (volume_device.PropertyExists("volume.label") &&
                     volume_device["volume.label"].Length > 0)
                     return volume_device["volume.label"];
 
-                if (player_device.PropertyExists("info.product"))
-                    return player_device["info.product"];
 
                 return GenericName;
             }

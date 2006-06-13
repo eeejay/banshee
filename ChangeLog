@@ -1,3 +1,9 @@
+2006-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: If usb.vendor doesn't
+	exist fall back to info.vendor, and translate "Vendor" (James Stembridge,
+	BGO #344803).  Use different HAL property to get a better device name.
+
 2006-06-13  Aaron Bockover  <aaron@abock.org>
 
 	* src/RemotePlayer.cs: Ensure a null string is not returned (BGO #344774)
