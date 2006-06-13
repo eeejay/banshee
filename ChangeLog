@@ -1,5 +1,10 @@
 2006-06-12  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/SourceManager.cs: Proxy Updated events of child
+	sources through SourceManager.Updated (Denis Washington, BGO #343120)
+
+2006-06-12  Aaron Bockover  <aaron@abock.org>
+
 	* src/SourceView.cs: Added BeginRenameSource to make a source's row
 	become editable and focused; made UpdateRow internal as it's only used
 	by the row renderer

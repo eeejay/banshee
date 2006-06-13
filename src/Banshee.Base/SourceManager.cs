@@ -76,7 +76,9 @@ namespace Banshee.Sources
             source.ViewChanged += OnSourceViewChanged;
             source.TrackAdded += OnSourceTrackAdded;
             source.TrackRemoved += OnSourceTrackRemoved;
-
+            source.ChildSourceAdded += OnChildSourceAdded;
+            source.ChildSourceRemoved += OnChildSourceRemoved;
+            
             ThreadAssist.ProxyToMain(delegate {
                 SourceAddedHandler handler = SourceAdded;
                 if(handler != null) {
@@ -86,6 +88,10 @@ namespace Banshee.Sources
                     handler(args);
                 }
             });
+            
+            foreach(Source child_source in source.Children) {
+                AddSource(child_source, false);
+            }
         }
         
         public static void AddSource(Source source)
@@ -154,6 +160,16 @@ namespace Banshee.Sources
             if(handler != null) {
                 handler(o, args);
             }
+        }
+
+        private static void OnChildSourceAdded(SourceEventArgs args)
+        {
+            args.Source.Updated += OnSourceUpdated;
+        }
+        
+        private static void OnChildSourceRemoved(SourceEventArgs args)
+        {
+            args.Source.Updated -= OnSourceUpdated;
         }
         
         private static int FindSourceInsertPosition(Source source)
