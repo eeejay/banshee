@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: banshee 0.10.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-22 20:40+0200\n"
-"PO-Revision-Date: 2006-04-22 16:00+0200\n"
-"Last-Translator: Daniel Schindler <daniel@vcard24.de>\n"
+"PO-Revision-Date: 2006-06-15 15:57+0200\n"
+"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -645,7 +645,7 @@ msgstr "Eine neue leere Wiedergabeliste erstellen"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
 msgid "Import _Folder..."
-msgstr "_Verzeichnis importieren..."
+msgstr "_Verzeichnis importieren …"
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Import the contents of an entire folder"
@@ -653,7 +653,7 @@ msgstr "Importiere den gesamten Inhalt eines Ordners"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import Files..."
-msgstr "Dateien importieren..."
+msgstr "Dateien importieren …"
 
 #: ../src/Banshee.Base/ActionManager.cs:73
 msgid "Import files inside a folder"
@@ -661,7 +661,7 @@ msgstr "Dateien innerhalb eines Verzeichnisses importieren"
 
 #: ../src/Banshee.Base/ActionManager.cs:76
 msgid "Import Music..."
-msgstr "Musik Importieren..."
+msgstr "Musik Importieren …"
 
 #: ../src/Banshee.Base/ActionManager.cs:77
 msgid "Import music from a variety of sources"
@@ -669,7 +669,7 @@ msgstr ""
 
 #: ../src/Banshee.Base/ActionManager.cs:80
 msgid "Open Location..."
-msgstr "Ort öffnen..."
+msgstr "Ort öffnen …"
 
 #: ../src/Banshee.Base/ActionManager.cs:81
 msgid "Open a remote location for playback"
@@ -685,7 +685,7 @@ msgstr "Importiere Quelle in die Bibliothek"
 
 #: ../src/Banshee.Base/ActionManager.cs:88
 msgid "Source Properties..."
-msgstr "Eigenschaften der Quelle..."
+msgstr "Eigenschaften der Quelle …"
 
 #: ../src/Banshee.Base/ActionManager.cs:89
 msgid "View source properties"
@@ -729,7 +729,7 @@ msgstr "Alle Stücke in Wiedergabeliste deselektieren"
 
 #: ../src/Banshee.Base/ActionManager.cs:111
 msgid "Plugins..."
-msgstr "Plugins..."
+msgstr "Plugins …"
 
 #: ../src/Banshee.Base/ActionManager.cs:112
 msgid "Configure Banshee plugins"
@@ -741,7 +741,7 @@ msgstr "_Ansicht"
 
 #: ../src/Banshee.Base/ActionManager.cs:120
 msgid "Columns..."
-msgstr "Spalten..."
+msgstr "Spalten …"
 
 #: ../src/Banshee.Base/ActionManager.cs:121
 msgid "Select which columns to display in the song list"
@@ -749,7 +749,7 @@ msgstr "Wählen der anzuzeigenden Stücke in Stückliste"
 
 #: ../src/Banshee.Base/ActionManager.cs:124
 msgid "Logged Events Viewer..."
-msgstr "Betrachter für aufgezeichnete Ereignisse..."
+msgstr "Betrachter für aufgezeichnete Ereignisse …"
 
 #: ../src/Banshee.Base/ActionManager.cs:125
 msgid "View a detailed log of events"
@@ -761,7 +761,7 @@ msgstr "_Hilfe"
 
 #: ../src/Banshee.Base/ActionManager.cs:131
 msgid "Version Information..."
-msgstr "Versionsinformation..."
+msgstr "Versionsinformation …"
 
 #: ../src/Banshee.Base/ActionManager.cs:132
 msgid "View detailed version and configuration information"
@@ -933,7 +933,7 @@ msgstr "Im aktuellen Stück nach vorne springen"
 
 #: ../src/Banshee.Base/ActionManager.cs:258
 msgid "Seek To..."
-msgstr "Springe zu..."
+msgstr "Springe zu …"
 
 #: ../src/Banshee.Base/ActionManager.cs:259
 msgid "Seek to a specific location in current song"
@@ -1041,7 +1041,7 @@ msgstr "Transkodiere Dateien"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:114
 msgid "Initializing Transcoder..."
-msgstr "Initialisiere Transkoder..."
+msgstr "Initialisiere Transkoder …"
 
 #: ../src/Banshee.Base/Dap/DapCore.cs:119
 msgid "Cannot initialize DapCore because HalCore is not initialized"
@@ -1053,11 +1053,11 @@ msgstr "Sychronisiere Gerät"
 
 #: ../src/Banshee.Base/Dap/Dap.cs:331
 msgid "Waiting for transcoder..."
-msgstr "Warte auf Transkoder..."
+msgstr "Warte auf Transkoder …"
 
 #: ../src/Banshee.Base/Dap/Dap.cs:423 ../src/Banshee.Base/Dap/Dap.cs:444
 msgid "Processing..."
-msgstr "Verarbeite..."
+msgstr "Verarbeite …"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1085,7 +1085,7 @@ msgstr "Erweiterte Details"
 
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
 msgid "Browse..."
-msgstr "Durchsuchen..."
+msgstr "Durchsuchen …"
 
 #: ../src/Banshee.Base/FileImportSource.cs:55
 msgid "Import Files to Library"
@@ -1241,15 +1241,15 @@ msgstr "Konfiguration"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:76
 msgid "Reading table of contents from CD..."
-msgstr "Das Inhaltsverzeichnis der CD wird gelesen..."
+msgstr "Das Inhaltsverzeichnis der CD wird gelesen …"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:81
 msgid "Searching for CD metadata..."
-msgstr "Suchen nach Metadaten der CD..."
+msgstr "Suchen nach Metadaten der CD …"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:86
 msgid "Searching for CD cover art..."
-msgstr "Suche nach CD-Cover..."
+msgstr "Suche nach CD-Cover …"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:91
 msgid ""
@@ -1270,7 +1270,7 @@ msgstr "Sie müssen mindestens einen Titel zum importieren auswählen."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:105
 msgid "Synchronizing your Device, Please Wait..."
-msgstr "Synchronisiere Ihr Gerät, bitte warten..."
+msgstr "Synchronisiere Ihr Gerät, bitte warten …"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
@@ -1330,15 +1330,15 @@ msgstr "Baue Datenbank neu auf"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:57
 msgid "Scanning iPod..."
-msgstr "Scanne iPod..."
+msgstr "Scanne iPod …"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:91
 msgid "Processing Songs..."
-msgstr "Verarbeite Stücke..."
+msgstr "Verarbeite Stücke …"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:138
 msgid "Saving new database..."
-msgstr "Neue Datenbank wird gespeichert..."
+msgstr "Neue Datenbank wird gespeichert …"
 
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:145
 msgid "Error rebuilding iPod database"
@@ -1371,7 +1371,7 @@ msgstr "Was ist der Grund hierfür?"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
 msgid "Rebuild iPod Database..."
-msgstr "Baue iPod Datenbank neu auf..."
+msgstr "Baue iPod Datenbank neu auf …"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
 msgid "Confirm Rebuild iPod Database"
@@ -1391,7 +1391,7 @@ msgstr "Datenbank neu aufbauen"
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
 msgid "Rebuilding iPod Database..."
-msgstr "iPod Datenbank wird neu aufgebaut..."
+msgstr "iPod Datenbank wird neu aufgebaut …"
 
 #. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
@@ -1481,7 +1481,7 @@ msgstr "Besuchen Sie die Banshee last.fm Gruppenseite"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
 msgid "Configure..."
-msgstr "Konfigurieren..."
+msgstr "Konfigurieren …"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
 msgid ""
@@ -1764,15 +1764,15 @@ msgstr ""
 
 #: ../src/BurnCore.cs:459
 msgid "Preparing to write..."
-msgstr "Bereite Schreiben vor..."
+msgstr "Bereite Schreiben vor …"
 
 #: ../src/BurnCore.cs:463
 msgid "Writing disk..."
-msgstr "Schreibe Disk..."
+msgstr "Schreibe Disk …"
 
 #: ../src/BurnCore.cs:467
 msgid "Fixating disk..."
-msgstr "Fixiere Disk..."
+msgstr "Fixiere Disk …"
 
 #: ../src/BurnCore.cs:485
 msgid "Waiting for Media"
@@ -1871,7 +1871,7 @@ msgstr "Eintrag Details:"
 
 #: ../src/PlayerInterface.cs:363
 msgid "Loading..."
-msgstr "Lade..."
+msgstr "Lade …"
 
 #: ../src/PlayerInterface.cs:426
 msgid "All"
@@ -2127,7 +2127,7 @@ msgstr "Nicht Verfügbar"
 
 #: ../src/Preferences.cs:268
 msgid "Loading Drive List..."
-msgstr "Lade Laufwerksliste..."
+msgstr "Lade Laufwerksliste …"
 
 #: ../src/Preferences.cs:291
 msgid "No CD Burners Detected"
@@ -2223,3 +2223,6 @@ msgstr "Version"
 
 #~ msgid "Current position in song"
 #~ msgstr "Aktuelle Position im Stück"
+
+
+
