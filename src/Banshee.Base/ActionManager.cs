@@ -80,6 +80,10 @@ namespace Banshee.Base
                     Catalog.GetString("Open Location..."), "<control>L",
                     Catalog.GetString("Open a remote location for playback"), null),
                     
+                new ActionEntry("WriteCDAction", null,
+                    Catalog.GetString("Write CD"), null,
+                    Catalog.GetString("Write selection to audio CD"), null),
+                    
                 new ActionEntry("ImportSourceAction", null,
                     Catalog.GetString("Import Source"), null,
                     Catalog.GetString("Import source to library"), null),
@@ -168,10 +172,6 @@ namespace Banshee.Base
             /* Song Selected Actions */
             
             song_actions.Add(new ActionEntry [] {
-                new ActionEntry("WriteCDAction", null,
-                    Catalog.GetString("Write CD"), null,
-                    Catalog.GetString("Write selection to audio CD"), null),
-                    
                 new ActionEntry("RemoveSongsAction", Stock.Remove,
                     Catalog.GetString("Remove Song(s)"), "Delete",
                     Catalog.GetString("Remove selected song(s) from library"), null),

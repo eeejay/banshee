@@ -87,22 +87,22 @@ namespace Banshee.Burner
                     string message = null;
                     
                     if(header == null || header == String.Empty) {
-                        header = Catalog.GetString("Error Writing CD");
+                        header = Catalog.GetString("Error writing disc");
                     }
                     
-                    if(message == null || message ==String.Empty) {
-                        message = Catalog.GetString("An unknown error occurred when attempting to write the CD");
+                    if(message == null || message == String.Empty) {
+                        message = Catalog.GetString("An unknown error occurred when attempting to write the disc.");
                     }
                     
                     LogCore.Instance.PushError(header, message);
                 } else if(result != RecorderResult.Canceled) {
                     LogCore.Instance.PushInformation(
-                        Catalog.GetString("CD Writing Complete"),
-                        Catalog.GetString("The selected audio was successfully written to the CD.")
+                        Catalog.GetString("Disc writing complete"),
+                        Catalog.GetString("The selected audio was successfully written to the disc.")
                     );
                 }
             } catch(Exception e) {
-                LogCore.Instance.PushError(Catalog.GetString("Error Writing CD"), e.Message);    
+                LogCore.Instance.PushError(Catalog.GetString("Error writing disc"), e.Message);    
             } finally {
                 foreach(string file in System.IO.Directory.GetFiles(Paths.TempDir)) {
                     try {
@@ -132,15 +132,15 @@ namespace Banshee.Burner
 
             switch(currentAction) {
                 case RecorderAction.PreparingWrite:
-                    user_event.Message = Catalog.GetString("Preparing to write...");
+                    user_event.Message = Catalog.GetString("Preparing to record");
                     user_event.CanCancel = true;
                     break;
                 case RecorderAction.Writing:
-                    user_event.Message = Catalog.GetString("Writing disk...");
+                    user_event.Message = Catalog.GetString("Recording contents");
                     user_event.CanCancel = true;
                     break;
                 case RecorderAction.Fixating:
-                    user_event.Message = Catalog.GetString("Fixating disk...");
+                    user_event.Message = Catalog.GetString("Fixating disc");
                     user_event.Progress = 0.0;
                     user_event.CanCancel = false;
                     break;
@@ -162,10 +162,10 @@ namespace Banshee.Burner
             
             ThreadAssist.ProxyToMain(delegate {
                 HigMessageDialog dialog = new HigMessageDialog(null, DialogFlags.Modal, MessageType.Info,
-                    ButtonsType.OkCancel, Catalog.GetString("Insert Blank CD"),
-                    Catalog.GetString("Please insert a blank CD disk for the write process."));
+                    ButtonsType.OkCancel, Catalog.GetString("Insert blank disc"),
+                    Catalog.GetString("Please insert a blank disc for the write process."));
                 
-                dialog.Title = Catalog.GetString("Insert Blank CD");
+                dialog.Title = Catalog.GetString("Insert blank disc");
                 IconThemeUtils.SetWindowIcon(dialog);
                 dialog.DefaultResponse = ResponseType.Ok;
                 dialog.Response += OnMediaRequestResponse;

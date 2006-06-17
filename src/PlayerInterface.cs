@@ -910,15 +910,13 @@ namespace Banshee
         {
             int count = playlistView.Selection.CountSelectedRows();
             bool have_selection = count > 0;
-            
-            if(!have_selection) {
-                Globals.ActionManager.SongActions.Sensitive = false;
-                return;
-            }
-            
             Source source = SourceManager.ActiveSource;
 
-            if(source == null) {
+            if(!have_selection) {
+                Globals.ActionManager.SongActions.Sensitive = false;
+                Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
+                return;
+            } else if(source == null) {
                 return;
             }
             
@@ -1049,6 +1047,8 @@ namespace Banshee
         private void SensitizeActions(Source source)
         {
             Globals.ActionManager["WriteCDAction"].Visible = !(source is AudioCdSource);
+            Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
+            
             Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;
             Globals.ActionManager["RenameSourceAction"].Sensitive = source.CanRename;
             Globals.ActionManager.PlaylistActions.Sensitive = source is PlaylistSource;
@@ -1230,6 +1230,9 @@ namespace Banshee
             switch(args.Entry.Type) {
                 case LogEntryType.Warning:
                     mtype = MessageType.Warning;
+                    break;
+                case LogEntryType.Information:
+                    mtype = MessageType.Info;
                     break;
                 case LogEntryType.Error:
                 default:
@@ -1937,31 +1940,20 @@ namespace Banshee
         
         private void OnWriteCDAction(object o, EventArgs args) 
         {
-            if(playlistView.Selection.CountSelectedRows() <= 0) {
+            if(SourceManager.ActiveSource is Banshee.Burner.BurnerSource) {
+                (SourceManager.ActiveSource as Banshee.Burner.BurnerSource).Burn();
+                return;
+            } else if(playlistView.Selection.CountSelectedRows() <= 0) {
                 return;
             }
             
-            string drive_id = null;
-            try {
-                drive_id = (string)Globals.Configuration.Get(GConfKeys.CDBurnerId);
-            } catch {
-            }
-            
-            BurnCore.DiskType disk_type = BurnCore.DiskType.Audio;
-            
-            try {
-                string key = GConfKeys.CDBurnerRoot + drive_id + "/DiskFormat";
-                disk_type = (BurnCore.DiskType)Globals.Configuration.Get(key);
-            } catch {
-            }
-            
-            BurnCore burnCore = new BurnCore(disk_type);
-        
+            Banshee.Burner.BurnerSource source = Banshee.Burner.BurnerCore.CreateOrFindEmptySource();
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
-                burnCore.AddTrack(playlistModel.PathTrackInfo(path));
+                source.AddTrack(playlistModel.PathTrackInfo(path));
             }
-            
-            burnCore.Burn();
+         
+            SourceManager.SetActiveSource(source);
+            source.Burn();
         }
         
         private void OnSyncDapAction(object o, EventArgs args)

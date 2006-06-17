@@ -131,6 +131,24 @@ namespace Banshee.Burner
             return null;
         }
         
+        public static BurnerSource CreateOrFindEmptySource()
+        {
+            foreach(BurnerSource source in burners) {
+                if(source.Count == 0) {
+                    return source;
+                }
+            }
+            
+            return CreateSource();
+        }
+        
+        public static BurnerSource CreateSource()
+        {
+            BurnerSource source = CreateSource(null);
+            SourceManager.AddSource(source);
+            return source;
+        }
+        
         private static BurnerSource CreateSource(IRecorder recorder)
         {
             if(drive_factory.RecorderCount <= 0) {

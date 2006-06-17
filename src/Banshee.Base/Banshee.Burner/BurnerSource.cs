@@ -74,7 +74,7 @@ namespace Banshee.Burner
             configuration.Show();
             
             box = new VBox();
-            box.Spacing = 12;
+            box.Spacing = 8;
             
             box.PackStart(container, true, true, 0);
             box.PackStart(configuration, false, false, 0);
@@ -103,7 +103,7 @@ namespace Banshee.Burner
             return true;
         }
         
-        internal void Burn()
+        public void Burn()
         {
             burner_options = new BurnerOptionsDialog(this);
             burner_options.Dialog.Response += OnBurnerOptionsResponse;

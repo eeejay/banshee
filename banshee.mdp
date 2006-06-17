@@ -21,8 +21,6 @@
     <File name="./src/AboutBox.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/AmazonSearchService.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/AssemblyInfo.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/BurnCore.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/BurnTransaction.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Core.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/RemotePlayer.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Nothing" />
@@ -30,7 +28,6 @@
     <File name="./src/ExceptionDialog.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/IPlaybackModel.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Main.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/NautilusBurnUtil.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlayerInterface.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistColumns.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/PlaylistModel.cs" subtype="Code" buildaction="Nothing" />

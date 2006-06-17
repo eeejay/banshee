@@ -48,7 +48,7 @@ namespace Banshee.Burner
         private long size_usage = 0;
         private BurnerSource source;
         
-        internal BurnerConfigurationPane(BurnerSource source) : base(2, 4, false)
+        internal BurnerConfigurationPane(BurnerSource source) : base(2, 3, false)
         {
             this.source = source;
             
@@ -64,15 +64,7 @@ namespace Banshee.Burner
             
             AddWidget(usage_display, 0, 1, 0, 2);
             
-            SizeAllocated += delegate(object o, SizeAllocatedArgs args) {
-                // hack to hopefully force the cairo hinting to not suck
-                int height = args.Allocation.Height;
-                if(height % 2 == 0) {
-                    height++;
-                }
-                
-                usage_display.SetSizeRequest(height, height);
-            };
+            SizeAllocated += OnSizeAllocated;
             
             Label label = new Label(Catalog.GetString("Audio Disc:"));
             label.Xalign = 1.0f;
@@ -90,21 +82,9 @@ namespace Banshee.Burner
             data_usage_label.Xalign = 0.0f;
             AddWidget(data_usage_label, 2, 3, 1, 2);
             
-            Button burn_button = new Button();
-            burn_button.Clicked += delegate { source.Burn(); };
-            HBox burn_button_box = new HBox();
-            burn_button_box.Spacing = 6;
-            burn_button_box.PackStart(new Image(IconThemeUtils.LoadIcon(22, "media-cdrom")), false, false, 0);
-            burn_button_box.PackStart(new Label(Catalog.GetString("Write Disc")));
-            burn_button.Add(burn_button_box);
-            burn_button.ShowAll();
-            
-            AddWidget(burn_button, 3, 4, 0, 2);
-            
             UpdateUsageDisplay();
 
             ColumnSpacing = 12;
-            RowSpacing = 6;
             ShowAll();
         }
 
@@ -153,6 +133,21 @@ namespace Banshee.Burner
                 
             data_usage_label.Text = String.Format(Catalog.GetString("{0} of {1} MB"), 
                 size_usage / 1048675, capacity / 1048576);
+        }
+        
+        private void OnSizeAllocated(object o, SizeAllocatedArgs args)
+        {
+            SizeAllocated -= OnSizeAllocated;
+            
+            // hack to hopefully force the cairo hinting to not suck
+            int height = args.Allocation.Height;
+            if(height % 2 == 0) {
+                height++;
+            }
+                
+            height += 16;
+            
+            usage_display.SetSizeRequest(height, height);
         }
     }
 }

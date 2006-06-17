@@ -1,5 +1,40 @@
 2006-06-16  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.glade: Removed cd burning prefs page
+
+	* src/BurnCore.cs:
+	* src/BurnTransaction.cs:
+	* src/NautilusBurnUtil.cs: Removed legacy cd burning layer
+
+	* src/Makefile.am: Removed above files from build
+
+	* src/Preferences.cs: Removed cd burning prefs
+
+	* src/Banshee.Base/ActionManager.cs: Moved WriteCDAction out of 
+	selection group
+	
+	* src/PlayerInterface.cs: Make WriteCDAction always sensitive if
+	active source is BurnerSource; if BurnerSource is active, start the
+	burn for the source, otherwise create a new BurnerSource or use an
+	empty one and append selection to new source and start it burning; 
+	this allows for 'select and burn' behavior of legacy burning layer 
+	and also gives the opportunity for editing layout before burn as well
+
+	* src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs: Removed
+	Write CD button; using WriteCDAction instead for consistency
+
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: Added public
+	CreateSource and CreateSourceOrFindEmpty methods
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs: Fixed
+	many strings
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Burn method public
+
+2006-06-16  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Widgets/DiscUsageDisplay.cs: New cairo widget to show
 	disc usage (radial progress bar for the new CD Burning UI)
 

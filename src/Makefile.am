@@ -49,9 +49,6 @@ banshee_sources = \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
 	RemotePlayer.cs \
-	NautilusBurnUtil.cs \
-	BurnCore.cs \
-	BurnTransaction.cs \
 	RatingRenderer.cs \
 	ExceptionDialog.cs \
 	VersionInformationDialog.cs \
