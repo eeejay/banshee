@@ -50,6 +50,13 @@ namespace Banshee
         protected CellEdit(System.IntPtr ptr) : base(ptr)
         {
         }
+        
+        protected override bool OnFocusOutEvent(Gdk.EventFocus focus)
+        {
+            FinishEditing();
+            RemoveWidget();
+            return base.OnFocusOutEvent(focus);
+        }
     }
     
     public class EditedEventArgs : EventArgs

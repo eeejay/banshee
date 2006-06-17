@@ -28,7 +28,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/LinkLabel.cs \
 	$(srcdir)/DrawingUtilities.cs \
 	$(srcdir)/SeekSlider.cs \
-	$(srcdir)/StreamPositionLabel.cs
+	$(srcdir)/StreamPositionLabel.cs \
+	$(srcdir)/DiscUsageDisplay.cs
 
 all: $(ASSEMBLY)
 

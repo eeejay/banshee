@@ -74,6 +74,12 @@ namespace Banshee.Base
                 LogCore.Instance.PushWarning("DAP support will be disabled for this instance", e.Message, false);
             }
             
+            try {
+                Banshee.Burner.BurnerCore.Initialize();
+            } catch(ApplicationException e) {
+                LogCore.Instance.PushWarning("CD Burning support will be disabled for this instance", e.Message, false);
+            }
+            
             Banshee.Plugins.PluginCore.Initialize();
         }
         

@@ -1,3 +1,41 @@
+2006-06-16  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Widgets/DiscUsageDisplay.cs: New cairo widget to show
+	disc usage (radial progress bar for the new CD Burning UI)
+
+	* src/Banshee.Widgets/Makefile.am: Added DiscUsageDisplay to build
+
+	* data/UIManagerLayout.xml: Added 'New CD' action
+
+	* data/banshee.glade: Added BurnerOptionsDialog
+
+	* src/SourceView.cs: When in edit/rename mode on a source row, cancel
+	the edit when focus is lost
+
+	* src/Banshee.Base/Globals.cs: Initialize new BurnerCore
+
+	* src/Banshee.Base/Makefile.am: Added build rules for all the hot
+	new Banshee.Burner/Banshee.Cdrom* love
+
+	* src/Banshee.Base/Banshee.Burner/*: New CD burning UI (source based)
+	to allow for creation of CDs from multiple sources; will deprecate the
+	old CD burning method (single-source, selection based)
+
+	* src/Banshee.Base/Banshee.Cdrom/*: Interfaces and simple types for 
+	CD-ROM drive and recorder hardware and events
+
+	* src/Banshee.Base/Banshee.Cdrom.Gui/*: Widgets for Banshee.Cdrom; 
+	includes DriveComboBox and RecorderSpeedComboBox
+
+	* src/Banshee.Base/Banshee.Cdrom.Iso/*: Interfaces for creating 
+	ISO-9660 CD images
+
+	* src/Banshee.Base/Banshee.Cdrom.Iso.Mkisofs/*: mkisofs process/exec
+	implementation of Banshee.Cdrom.Iso
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/*: libnautilus-burn
+	implementation of Banshee.Cdrom
+
 2006-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Remove unneeded checks

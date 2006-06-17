@@ -269,7 +269,7 @@ namespace Banshee
             }
             
             ThreadAssist.ProxyToMain(delegate {
-                new Burner(diskType, burnQueue);
+                new CDBurner(diskType, burnQueue);
             });
         }
         
@@ -345,7 +345,7 @@ namespace Banshee
         }
     }
     
-    public class Burner
+    public class CDBurner
     {
         private Queue burnQueue;
         private BurnCore.DiskType diskType;
@@ -354,7 +354,7 @@ namespace Banshee
         private BurnRecorderActions currentAction;
         private ActiveUserEvent user_event;
         
-        public Burner(BurnCore.DiskType diskType, Queue burnQueue)
+        public CDBurner(BurnCore.DiskType diskType, Queue burnQueue)
         {
             this.diskType = diskType;
             this.burnQueue = burnQueue;

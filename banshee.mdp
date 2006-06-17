@@ -71,8 +71,6 @@
     <File name="./src/Banshee.Base/Paths.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/TrackInfo.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Vlc/Vlc.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/Banshee.MediaEngine/Vlc/VlcPlayerEngine.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/Globals.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/FileNamePattern.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Banshee.Base/GConfKeys.cs" subtype="Code" buildaction="Nothing" />
@@ -100,16 +98,12 @@
     <File name="./src/Banshee.Base/ImportManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./libbanshee" subtype="Directory" buildaction="Compile" />
     <File name="./libbanshee/gst-cd-rip.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-cd-rip-0.8.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-cd-rip-0.10.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-misc.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-misc-0.8.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-misc-0.10.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-playback.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-playback-0.8.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-playback-0.10.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-transcode.h" subtype="Code" buildaction="Nothing" />
-    <File name="./libbanshee/gst-transcode-0.8.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/gst-transcode-0.10.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/hal-context.c" subtype="Code" buildaction="Nothing" />
     <File name="./libbanshee/hal-context.h" subtype="Code" buildaction="Nothing" />
@@ -237,6 +231,36 @@
     <File name="./libbanshee/gst-mbtrm.h" subtype="Code" buildaction="Nothing" />
     <File name="./src/BansheeImport.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Catalog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Widgets/DiscUsageDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerUtilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/DriveMediaType.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/IDrive.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/IDriveFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/IRecorder.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/RecorderAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/RecorderResult.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom/RecorderTrack.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusRecorder.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Gui" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Gui/DriveComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso/IImageCreator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso.Mkisofs" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso.Mkisofs/MkisofsImageCreator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso.Mkisofs/MkisofsProcess.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Cdrom.Iso/ImageStatus.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerOptionsDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerSession.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />
