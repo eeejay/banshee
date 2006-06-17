@@ -1,3 +1,7 @@
+2006-06-16  Aaron Bockover  <aaron@abock.org>
+
+	* POTFILES.in: Added new files, removed old
+
 2006-06-15  Hendrik Richter  <hendrikr@gnome.org>
 
 	* de.po: Updated German translation.

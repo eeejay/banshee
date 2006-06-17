@@ -12,6 +12,13 @@ src/Banshee.Base/ActionManager.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
 src/Banshee.Base/AudioCdRipper.cs
+src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs
+src/Banshee.Base/Banshee.Burner/BurnerCore.cs
+src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs
+src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs
+src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs
+src/Banshee.Base/Banshee.Burner/BurnerSource.cs
+src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs
 src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
@@ -58,10 +65,9 @@ src/Banshee.Plugins/MMKeys/mmkeys.schemas.in
 src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs
 src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in
 src/Banshee.Widgets/ActiveUserEvent.cs
+src/Banshee.Widgets/DiscUsageDisplay.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/Banshee.Widgets/StreamPositionLabel.cs
-src/BurnCore.cs
-src/BurnTransaction.cs
 src/Dialogs.cs
 src/ExceptionDialog.cs
 src/LogCoreViewer.cs
