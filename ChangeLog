@@ -1,5 +1,13 @@
 2006-06-16  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs: Updated
+	some strings
+
+	* src/Banshee.Widgets/DiscUsageDisplay.cs: Overlay 'Insert Disc' text
+	when Capacity <= 0 and reduce disc opacity; removed orange slice
+
+2006-06-16  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* data/banshee.glade: Removed cd burning prefs page

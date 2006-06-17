@@ -49,6 +49,8 @@ namespace Banshee.Widgets
         private Color fill_color_c;
         private Color stroke_color;
         private Color inner_stroke_color;
+        private Color text_color;
+        private Color text_bg_color;
         
         private static readonly double a1 = 3 * Math.PI / 2;        
         private double x, y, radius, a2, base_line_width;
@@ -82,6 +84,8 @@ namespace Banshee.Widgets
             fill_color_c = GdkColorToCairoColor(Style.Background(StateType.Normal));
             stroke_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.6);
             inner_stroke_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.4);
+            text_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.8);
+            text_bg_color = GdkColorToCairoColor(Style.Background(StateType.Normal), 0.6);
         }
         
         protected override void OnSizeAllocated(Gdk.Rectangle rect)
@@ -133,27 +137,29 @@ namespace Banshee.Widgets
             cr.Pattern = bg_gradient;
             cr.Fill();
              
-            cr.LineTo(x, y);
+            /*cr.LineTo(x, y);
             cr.Arc(x, y, radius, a1 + 2 * Math.PI * 0.92, a1);
             cr.LineTo(x, y);
             cr.Pattern = bound_gradient;
             cr.Fill();
-            cr.Stroke();
+            cr.Stroke();*/
             
-            if(Fraction < 1.0) {
-                cr.LineTo(x, y);
-                cr.Arc(x, y, radius, a1, a2);
-                cr.LineTo(x, y);
-            } else {
-                cr.Arc(x, y, radius, 0, 2 * Math.PI);
+            if(Capacity > 0) {
+                if(Fraction < 1.0) {
+                    cr.LineTo(x, y);
+                    cr.Arc(x, y, radius, a1, a2);
+                    cr.LineTo(x, y);
+                } else {
+                    cr.Arc(x, y, radius, 0, 2 * Math.PI);
+                }
+                
+                cr.Pattern = fg_gradient;
+                cr.FillPreserve();
+                          
+                cr.Color = stroke_color;
+                cr.Stroke();
             }
             
-            cr.Pattern = fg_gradient;
-            cr.FillPreserve();
-            
-            cr.Color = stroke_color;
-            cr.Stroke();
-
             cr.Arc(x, y, radius / 2.75, 0, 2 * Math.PI);
             cr.Color = fill_color_c;
             cr.FillPreserve();
@@ -176,6 +182,43 @@ namespace Banshee.Widgets
             
             cr.Arc(x, y, radius, 0, 2 * Math.PI);
             cr.Stroke();
+            
+            if(Capacity <= 0) {
+                // this sucks balls
+                cr.Rectangle(0, 0, Allocation.Width, Allocation.Height);
+                cr.Color = text_bg_color;
+                cr.FillPreserve();
+            
+                cr.SelectFontFace("Sans", FontSlant.Normal, FontWeight.Bold);
+                cr.Color = text_color;
+                cr.SetFontSize(Allocation.Width * 0.2);
+                DrawText(cr, Mono.Unix.Catalog.GetString("Insert\nDisc"), 3);
+            }
+        }
+        
+        private void DrawText(Cairo.Context cr, string text, double lineSpacing)
+        {
+            string [] lines = text.Split('\n');
+            double [] cuml_heights = new double[lines.Length];
+            double y_start = 0.0;
+            
+            for(int i = 0; i < lines.Length; i++) {
+                TextExtents extents = cr.TextExtents(lines[i]);
+                double height = extents.Height + (i > 0 ? lineSpacing : 0);
+                cuml_heights[i] = i > 0 ? cuml_heights[i - 1] + height : height;
+            }
+            
+            y_start = (Allocation.Height / 2) - (cuml_heights[cuml_heights.Length - 1] / 2);
+            
+            for(int i = 0; i < lines.Length; i++) {
+                TextExtents extents = cr.TextExtents(lines[i]);
+            
+                double x = (Allocation.Width / 2) - (extents.Width / 2);
+                double y = y_start + cuml_heights[i];
+        
+                cr.MoveTo(x, y);
+                cr.ShowText(lines[i]);
+            }   
         }
 
         private void CalculateA2()

@@ -127,12 +127,15 @@ namespace Banshee.Burner
             usage_display.Usage = (long)time_usage.TotalSeconds;
             usage_display.Capacity = (long)time_capacity.TotalSeconds;
             
-            audio_usage_label.Text = String.Format(Catalog.GetString("{0}:{1:00} of {2} minutes"),
-                (time_usage.Hours * 60) + time_usage.Minutes, time_usage.Seconds, 
-                (int)time_capacity.TotalMinutes);
-                
-            data_usage_label.Text = String.Format(Catalog.GetString("{0} of {1} MB"), 
-                size_usage / 1048675, capacity / 1048576);
+            audio_usage_label.Text = String.Format(Catalog.GetString("{0}:{1:00} of {2}"),
+                (time_usage.Hours * 60) + time_usage.Minutes, time_usage.Seconds,
+                time_capacity.TotalMinutes <= 0 ? Catalog.GetString("Unknown Minutes") :
+                    String.Format(Catalog.GetString("{0} Minutes"), 
+                    (int)time_capacity.TotalMinutes));
+                    
+            data_usage_label.Text = String.Format(Catalog.GetString("{0} of {1}"), 
+                size_usage / 1048675, capacity <= 0 ? Catalog.GetString("Unknown MB") :
+                String.Format(Catalog.GetString("{0} MB"), capacity / 1048576));
         }
         
         private void OnSizeAllocated(object o, SizeAllocatedArgs args)
