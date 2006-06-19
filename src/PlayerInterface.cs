@@ -244,7 +244,8 @@ namespace Banshee
         private void BuildWindow()
         {
             IconThemeUtils.SetWindowIcon(WindowPlayer);
-
+            WindowPlayer.Title = Branding.ApplicationLongName;
+            
             // Main Menu
             (gxml["MainMenuContainer"] as Container).Add(Globals.ActionManager.GetWidget("/MainMenu"));
       
@@ -313,7 +314,7 @@ namespace Banshee
             InterfaceElements.ActionButtonBox = additional_action_buttons_box;
             
             // Footer 
-            LabelStatusBar = new Label(Catalog.GetString("Banshee Music Player"));
+            LabelStatusBar = new Label(Branding.ApplicationLongName);
             LabelStatusBar.Show();
             
             // Old Shuffle Button
@@ -655,7 +656,7 @@ namespace Banshee
             TrackInfo track = PlayerEngineCore.CurrentTrack;
             
             if(track == null) {
-                WindowPlayer.Title = Catalog.GetString("Banshee Music Player");
+                WindowPlayer.Title = Branding.ApplicationLongName;
                 trackInfoHeader.Visible = false;
                 return;
             }
@@ -1207,7 +1208,7 @@ namespace Banshee
             
             ThreadAssist.ProxyToMain(delegate {
                 if(count == 0 && SourceManager.ActiveSource == null) {
-                    LabelStatusBar.Text = Catalog.GetString("Banshee Music Player");
+                    LabelStatusBar.Text = Branding.ApplicationLongName;
                 } else if(count == 0) {
                     LabelStatusBar.Text = String.Empty;
                 } else {

@@ -1,5 +1,18 @@
 2006-06-19  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Branding.cs: added Branding support that was 
+	implemented on the stable branch
+
+	* src/AboutBox.cs:
+	* src/PlayerInterface.cs:
+	* src/Banshee.Base/IconThemeUtils.cs: use Banshee.Base.Branding
+
+	* src/Banshee.Base/Globals.cs: Initialize Branding class
+
+	* src/Banshee.Base/Makefile.am: added Branding.cs
+
+2006-06-19  Aaron Bockover  <aaron@abock.org>
+
 	* src/PlayerInterface.cs: Use NamingUtil to create a nice name for
 	burner source when creating from track selection
 

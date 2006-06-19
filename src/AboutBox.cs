@@ -53,7 +53,8 @@ namespace Banshee
             "Fredrik Hedberg",
             "Oscar Forero",
             "Gabriel Burt",
-            "Sebastian Dr\u00f6ge"
+            "Sebastian Dr\u00f6ge",
+            "Patrick van Staveren"
         };
         
         private static string [] artists = {
@@ -129,10 +130,10 @@ namespace Banshee
             
             IconThemeUtils.SetWindowIcon(this);
             
-            Logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
-            Name = Catalog.GetString("Banshee"); 
+            Logo = Branding.AboutBoxLogo;
+            Name = Branding.ApplicationName; 
             Version = ConfigureDefines.VERSION;
-            Comments = Catalog.GetString("Music Management and Playback for Gnome.");
+            Comments = Catalog.GetString("Music Management and Playback for GNOME.");
             Copyright = Catalog.GetString(
                 "Copyright \u00a9 2005-2006 Novell, Inc.\n" + 
                 "Copyright \u00a9 2005 Aaron Bockover"
