@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-02 22:33+0100\n"
-"PO-Revision-Date: 2006-06-02 22:33+0100\n"
+"POT-Creation-Date: 2006-06-19 18:39+0100\n"
+"PO-Revision-Date: 2006-06-19 18:39+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -26,9 +26,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. Footer
-#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:18
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:16
 #: ../src/PlayerInterface.cs:316 ../src/PlayerInterface.cs:658
-#: ../src/PlayerInterface.cs:1197
+#: ../src/PlayerInterface.cs:1210
 msgid "Banshee Music Player"
 msgstr "Banshee musikafspiller"
 
@@ -37,32 +37,32 @@ msgid "Music Player"
 msgstr "Musikafspiller"
 
 #: ../data/banshee.glade.h:1
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Avancerede indstillinger</b>"
-
-#: ../data/banshee.glade.h:2
 msgid "<b>Advanced Properties</b>"
 msgstr "<b>Avancerede egenskaber</b>"
 
-#: ../data/banshee.glade.h:3
+#: ../data/banshee.glade.h:2
 msgid "<b>Banshee Music Folder Location</b>"
 msgstr "<b>Placering af Banshee-musikmappe</b>"
 
-#: ../data/banshee.glade.h:4
-msgid "<b>CD Burning</b>"
-msgstr "<b>Cd-brænding</b>"
-
-#: ../data/banshee.glade.h:5
+#: ../data/banshee.glade.h:3
 msgid "<b>CD Ripping</b>"
 msgstr "<b>Cd-lydudtrækning</b>"
 
-#: ../data/banshee.glade.h:6
+#: ../data/banshee.glade.h:4
 msgid "<b>Loading...</b>"
 msgstr "<b>Indlæser...</b>"
 
-#: ../data/banshee.glade.h:7
+#: ../data/banshee.glade.h:5
 msgid "<b>Playback Engines</b>"
 msgstr "<b>Afspilningsmotorer</b>"
+
+#: ../data/banshee.glade.h:6
+msgid "<b>Session Information</b>"
+msgstr "<b>Sessionsinformation</b>"
+
+#: ../data/banshee.glade.h:7
+msgid "<b>Write Options</b>"
+msgstr "<b>Indstillinger for skrivning</b>"
 
 #: ../data/banshee.glade.h:8
 msgid "<b>iPod Transcoding</b>"
@@ -85,170 +85,142 @@ msgid "<small>Advanced</small>"
 msgstr "<small>Avanceret</small>"
 
 #: ../data/banshee.glade.h:13
-msgid "<small>Burning</small>"
-msgstr "<small>Brænding</small>"
-
-#: ../data/banshee.glade.h:14
 msgid "<small>Encoding</small>"
 msgstr "<small>Kodning</small>"
 
-#: ../data/banshee.glade.h:15
+#: ../data/banshee.glade.h:14
 msgid "<small>Library</small>"
 msgstr "<small>Bibliotek</small>"
 
-#: ../data/banshee.glade.h:16
+#: ../data/banshee.glade.h:15
 msgid "Albu_m"
 msgstr "Albu_m"
 
-#: ../data/banshee.glade.h:17 ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:92
-msgid "Audio CD"
-msgstr "Lyd-cd"
-
-#: ../data/banshee.glade.h:19
+#: ../data/banshee.glade.h:17
 msgid "Bit Rate:"
 msgstr "Bitrate:"
 
-#: ../data/banshee.glade.h:20
-msgid "Burnproof"
-msgstr "Burnproof"
-
-#: ../data/banshee.glade.h:21
+#: ../data/banshee.glade.h:18
 msgid "Channels:"
 msgstr "Kanaler:"
 
-#: ../data/banshee.glade.h:22
+#: ../data/banshee.glade.h:19
 msgid "Choose an import source:"
 msgstr "Vælg en importkilde:"
 
-#: ../data/banshee.glade.h:23
+#: ../data/banshee.glade.h:20
 msgid "Copy files to Banshee Music Folder when importing to Library"
 msgstr "Kopiér filer til Banshee-musikmappe ved import til bibliotek"
 
-#: ../data/banshee.glade.h:24
-msgid "Data CD"
-msgstr "Data-cd"
-
-#: ../data/banshee.glade.h:25
+#: ../data/banshee.glade.h:21
 msgid "Default Engine"
 msgstr "Standardmotor"
 
-#: ../data/banshee.glade.h:26
-msgid "Disk Drive:"
-msgstr "Diskdrev:"
+#: ../data/banshee.glade.h:22
+msgid "Disc Options"
+msgstr "Indstillinger for disk"
 
-#: ../data/banshee.glade.h:27
-msgid "Disk Format:"
+#: ../data/banshee.glade.h:23
+msgid "Disc format:"
 msgstr "Diskformat:"
 
-#: ../data/banshee.glade.h:28
+#: ../data/banshee.glade.h:24
+msgid "Disc name:"
+msgstr "Disknavn:"
+
+#: ../data/banshee.glade.h:25
 msgid "Disk Usage:"
 msgstr "Diskforbrug:"
 
-#: ../data/banshee.glade.h:29
-msgid "Disk at once"
-msgstr "Disk at once"
-
-#: ../data/banshee.glade.h:30
+#: ../data/banshee.glade.h:26
 msgid "Do not show this dialog again"
 msgstr "Vis ikke dette vindue igen"
 
-#: ../data/banshee.glade.h:31 ../src/TrackProperties.cs:240
+#: ../data/banshee.glade.h:27 ../src/TrackProperties.cs:240
 msgid "Editing Song"
 msgstr "Redigerer sang"
 
-#: ../data/banshee.glade.h:32
-msgid "Eject when finished"
-msgstr "Skub ud efter fuldførelse"
+#: ../data/banshee.glade.h:28
+msgid "Eject disc after writing"
+msgstr "Skub disk ud efter skrivning"
 
-#: ../data/banshee.glade.h:33
+#: ../data/banshee.glade.h:29
 msgid "Encoding Profile:"
 msgstr "Kodningsprofil:"
 
-#: ../data/banshee.glade.h:34
+#: ../data/banshee.glade.h:30
 msgid "Encoding:"
 msgstr "Kodning:"
 
-#: ../data/banshee.glade.h:35
+#: ../data/banshee.glade.h:31
 msgid "Enter the address of the file you would like to open:"
 msgstr "Indtast adressen på den fil du ønsker at åbne:"
 
-#: ../data/banshee.glade.h:36 ../src/Dialogs.cs:88
+#: ../data/banshee.glade.h:32 ../src/Dialogs.cs:88
 msgid "Error"
 msgstr "Fejl"
 
-#: ../data/banshee.glade.h:37
+#: ../data/banshee.glade.h:33
 msgid "File Name:"
 msgstr "Filnavn:"
 
-#: ../data/banshee.glade.h:38
+#: ../data/banshee.glade.h:34
 msgid "Import Music Source"
 msgstr "Importér musikkilde"
 
-#: ../data/banshee.glade.h:39
+#: ../data/banshee.glade.h:35
 msgid "Import Music to Library"
 msgstr "Importér musik til bibliotek"
 
-#: ../data/banshee.glade.h:40
+#: ../data/banshee.glade.h:36
 msgid "Imported On:"
 msgstr "Importeret:"
 
-#: ../data/banshee.glade.h:41
+#: ../data/banshee.glade.h:37
 msgid "Last Played On:"
 msgstr "Sidst afspillet:"
 
-#: ../data/banshee.glade.h:42
-msgid "MP3 CD"
-msgstr "MP3 cd"
-
-#: ../data/banshee.glade.h:43
+#: ../data/banshee.glade.h:38
 msgid "Mime Type:"
 msgstr "MIME-type:"
 
-#: ../data/banshee.glade.h:44
+#: ../data/banshee.glade.h:39
 msgid "Number of Plays:"
 msgstr "Antal afspilninger:"
 
-#: ../data/banshee.glade.h:45 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
+#: ../data/banshee.glade.h:40 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Åbn placering"
 
-#: ../data/banshee.glade.h:46
-msgid "Overburn"
-msgstr "Overbrænding"
-
-#: ../data/banshee.glade.h:47
+#: ../data/banshee.glade.h:41
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: ../data/banshee.glade.h:48
+#: ../data/banshee.glade.h:42
 msgid "Reset"
 msgstr "Nulstil"
 
-#: ../data/banshee.glade.h:49
+#: ../data/banshee.glade.h:43
 msgid "Sample Rate:"
 msgstr "Signalrate:"
 
-#: ../data/banshee.glade.h:50
+#: ../data/banshee.glade.h:44
 msgid "Seek to Position"
 msgstr "Spol til position"
 
-#: ../data/banshee.glade.h:51
-msgid "Simulate write"
-msgstr "Simulér skrivning"
-
-#: ../data/banshee.glade.h:52
+#: ../data/banshee.glade.h:45
 msgid "Track Duration:"
 msgstr "Varighed:"
 
-#: ../data/banshee.glade.h:53
+#: ../data/banshee.glade.h:46
 msgid "Track _Count"
 msgstr "_Antal spor"
 
-#: ../data/banshee.glade.h:54
+#: ../data/banshee.glade.h:47
 msgid "Track _Number"
 msgstr "Spor_nummer"
 
-#: ../data/banshee.glade.h:55 ../src/Banshee.Base/Dap/Dap.cs:620
+#: ../data/banshee.glade.h:48 ../src/Banshee.Base/Dap/Dap.cs:618
 #: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
 #: ../src/TrackProperties.cs:261 ../src/TrackProperties.cs:262
 #: ../src/TrackProperties.cs:263 ../src/TrackProperties.cs:264
@@ -256,15 +228,19 @@ msgstr "Spor_nummer"
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: ../data/banshee.glade.h:56
+#: ../data/banshee.glade.h:49
 msgid "VBR:"
 msgstr "VBR:"
 
-#: ../data/banshee.glade.h:57
-msgid "Write Speed:"
+#: ../data/banshee.glade.h:50
+msgid "Write disc to:"
+msgstr "Skriv disk til:"
+
+#: ../data/banshee.glade.h:51
+msgid "Write speed:"
 msgstr "Skrivehastighed:"
 
-#: ../data/banshee.glade.h:58
+#: ../data/banshee.glade.h:52
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
@@ -272,21 +248,25 @@ msgstr ""
 "Dit musikbibliotek er tomt. Du kan importere ny musik til dit bibliotek nu "
 "eller vente til senere."
 
-#: ../data/banshee.glade.h:59
+#: ../data/banshee.glade.h:53
 msgid "_Artist"
 msgstr "_Kunstner"
 
-#: ../data/banshee.glade.h:60
+#: ../data/banshee.glade.h:54
 msgid "_Genre"
 msgstr "_Genre"
 
-#: ../data/banshee.glade.h:61
+#: ../data/banshee.glade.h:55
 msgid "_Search:"
 msgstr "_Søg:"
 
-#: ../data/banshee.glade.h:62
+#: ../data/banshee.glade.h:56
 msgid "_Title"
 msgstr "_Titel"
+
+#: ../data/banshee.glade.h:57
+msgid "_Write"
+msgstr "_Skriv"
 
 #: ../data/banshee.schemas.in.h:1
 msgid ""
@@ -489,11 +469,11 @@ msgstr "Vinduesplacering Y"
 msgid "Window Width"
 msgstr "Vinduesbredde"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:248 ../libbanshee/gst-cd-rip-0.8.c:84
+#: ../libbanshee/gst-cd-rip-0.10.c:248
 msgid "Could not create pipeline"
 msgstr "Kunne ikke oprette kanal"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:254 ../libbanshee/gst-cd-rip-0.8.c:93
+#: ../libbanshee/gst-cd-rip-0.10.c:254
 msgid "Could not initialize cdparanoia"
 msgstr "Kunne ikke initialisere cdparanoia"
 
@@ -501,7 +481,7 @@ msgstr "Kunne ikke initialisere cdparanoia"
 msgid "Could not create mbtrm plugin"
 msgstr "Kunne ikke oprette \"mbtrm\"-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:277 ../libbanshee/gst-cd-rip-0.8.c:106
+#: ../libbanshee/gst-cd-rip-0.10.c:277
 msgid "Could not create encoder pipeline"
 msgstr "Kunne ikke oprette kodningskanal"
 
@@ -509,66 +489,32 @@ msgstr "Kunne ikke oprette kodningskanal"
 msgid "Could not create queue plugin"
 msgstr "Kunne ikke oprette kø-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:291 ../libbanshee/gst-cd-rip-0.8.c:112
+#: ../libbanshee/gst-cd-rip-0.10.c:291
 msgid "Could not create GNOME VFS output plugin"
 msgstr "Kunne ikke oprette Gnome VFS uddata-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:307 ../libbanshee/gst-cd-rip-0.8.c:127
+#: ../libbanshee/gst-cd-rip-0.10.c:307
 msgid "Could not link pipeline elements"
 msgstr "Kunne ikke sammensætte kanalelementer"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:398 ../libbanshee/gst-cd-rip-0.8.c:226
-#: ../src/AboutBox.cs:133
+#: ../libbanshee/gst-cd-rip-0.10.c:398 ../src/AboutBox.cs:133
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:424 ../libbanshee/gst-cd-rip-0.8.c:240
+#: ../libbanshee/gst-cd-rip-0.10.c:424
 msgid "Encoding element does not support tagging!"
 msgstr "Kodning af elementer understøtter ikke mærkning!"
 
-#: ../libbanshee/gst-cd-rip-0.8.c:250
-msgid "Could not send seek event to cdparanoia"
-msgstr "Kunne ikke sende søgehændelse til cdparanoia"
-
-#: ../libbanshee/gst-cd-rip-0.8.c:256
-msgid "Could not get track start position"
-msgstr "Kunne ikke hente startposition på spor"
-
-#: ../libbanshee/gst-cd-rip-0.8.c:270
-msgid "Could not get track position"
-msgstr "Kunne ikke hente sporposition"
-
-#: ../libbanshee/gst-playback-0.8.c:91
-msgid "Could not find or create the 'playbin' GStreamer plugin"
-msgstr "Kunne ikke finde eller oprette \"playbin\" GStreamer-plugin"
-
-#: ../libbanshee/gst-playback-0.8.c:99
-msgid ""
-"Could not load an output sink from GStreamer/GConf and could not fall back "
-"on alsasink"
-msgstr ""
-"Kunne ikke indlæse et udgangselement fra GStreamer/GConf og kunne ikke falde "
-"tilbage på alsasink"
-
-#: ../libbanshee/gst-playback-0.8.c:102
-msgid ""
-"Could not load an output sink from GStreamer/GConf, falling back on alsasink"
-msgstr ""
-"Kunne ikke indlæse et udgangselement fra GStreamer/GConf, falder tilbage på "
-"alsasink"
-
 #: ../libbanshee/gst-transcode-0.10.c:160
-#: ../libbanshee/gst-transcode-0.8.c:242
 msgid "No decoder could be found for source format."
 msgstr "Ingen afkoder kunne findes til kildeformatet."
 
 #: ../libbanshee/gst-transcode-0.10.c:165
-#: ../libbanshee/gst-transcode-0.8.c:247
 msgid "Could not stat encoded file"
 msgstr "Kunne ikke udføre stat() på kodet fil"
 
-#: ../libbanshee/gst-transcode-0.10.c:249 ../libbanshee/gst-transcode-0.8.c:90
+#: ../libbanshee/gst-transcode-0.10.c:249
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Kunne ikke oprette \"gnomevfssrc\"-plugin"
 
@@ -599,19 +545,6 @@ msgstr "Kunne ikke hente elementfyld fra koder"
 #: ../libbanshee/gst-transcode-0.10.c:368
 msgid "Could not construct pipeline"
 msgstr "Kunne ikke oprette kanal"
-
-#: ../libbanshee/gst-transcode-0.8.c:96
-msgid "Could not create 'spider' plugin"
-msgstr "Kunne ikke oprette \"spider\"-plugin"
-
-#: ../libbanshee/gst-transcode-0.8.c:103
-#, c-format
-msgid "Could not create encoding pipeline: %s"
-msgstr "Kunne ikke oprette kodningskanal: %s"
-
-#: ../libbanshee/gst-transcode-0.8.c:109
-msgid "Could not create 'filesink' plugin"
-msgstr "Kunne ikke oprette \"filesink\"-plugin"
 
 #: ../libbanshee/hal-context.c:61
 msgid "Could not create new HAL context"
@@ -655,7 +588,7 @@ msgstr "_Musik"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:446
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:468
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:475
-#: ../src/PlayerInterface.cs:1489
+#: ../src/PlayerInterface.cs:1514
 msgid "New Playlist"
 msgstr "Ny spilleliste"
 
@@ -696,136 +629,136 @@ msgid "Open a remote location for playback"
 msgstr "Åbn en fjernplacering til afspilning"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
-msgid "Import Source"
-msgstr "Importér kilde"
-
-#: ../src/Banshee.Base/ActionManager.cs:85
-msgid "Import source to library"
-msgstr "Importér kilde til bibliotek"
-
-#: ../src/Banshee.Base/ActionManager.cs:88
-msgid "Source Properties..."
-msgstr "Kildeegenskaber..."
-
-#: ../src/Banshee.Base/ActionManager.cs:89
-msgid "View source properties"
-msgstr "Vis kildeegenskaber"
-
-#: ../src/Banshee.Base/ActionManager.cs:92
-msgid "_Quit"
-msgstr "_Afslut"
-
-#: ../src/Banshee.Base/ActionManager.cs:93
-msgid "Quit Banshee"
-msgstr "Afslut Banshee"
-
-#: ../src/Banshee.Base/ActionManager.cs:96
-msgid "_Edit"
-msgstr "_Redigér"
-
-#: ../src/Banshee.Base/ActionManager.cs:99
-msgid "Rename Source"
-msgstr "Omdøb kilde"
-
-#: ../src/Banshee.Base/ActionManager.cs:100
-msgid "Rename the active source"
-msgstr "Omdøb den aktive kilde"
-
-#: ../src/Banshee.Base/ActionManager.cs:103
-msgid "Select All"
-msgstr "Vælg alle"
-
-#: ../src/Banshee.Base/ActionManager.cs:104
-msgid "Select all songs in song list"
-msgstr "Vælg alle sange i sanglisten"
-
-#: ../src/Banshee.Base/ActionManager.cs:107
-msgid "Select None"
-msgstr "Vælg ingen"
-
-#: ../src/Banshee.Base/ActionManager.cs:108
-msgid "Unselect all songs in song list"
-msgstr "Fravælg alle sange i sanglisten"
-
-#: ../src/Banshee.Base/ActionManager.cs:111
-msgid "Plugins..."
-msgstr "Udvidelsesmoduler..."
-
-#: ../src/Banshee.Base/ActionManager.cs:112
-msgid "Configure Banshee plugins"
-msgstr "Konfigurér Banshee-udvidelsesmoduler"
-
-#: ../src/Banshee.Base/ActionManager.cs:117
-msgid "_View"
-msgstr "_Visning"
-
-#: ../src/Banshee.Base/ActionManager.cs:120
-msgid "Columns..."
-msgstr "Kolonner..."
-
-#: ../src/Banshee.Base/ActionManager.cs:121
-msgid "Select which columns to display in the song list"
-msgstr "Vælg hvilke kolonner som vises i sanglisten"
-
-#: ../src/Banshee.Base/ActionManager.cs:124
-msgid "Logged Events Viewer..."
-msgstr "Fremviser af loggede hændelser..."
-
-#: ../src/Banshee.Base/ActionManager.cs:125
-msgid "View a detailed log of events"
-msgstr "Vis en detaljeret hændelseslog"
-
-#: ../src/Banshee.Base/ActionManager.cs:128
-msgid "_Help"
-msgstr "_Hjælp"
-
-#: ../src/Banshee.Base/ActionManager.cs:131
-msgid "Version Information..."
-msgstr "Versioner..."
-
-#: ../src/Banshee.Base/ActionManager.cs:132
-msgid "View detailed version and configuration information"
-msgstr "Vis detaljeret versions- og konfigurationsinformation"
-
-#: ../src/Banshee.Base/ActionManager.cs:137
-msgid "_Playback"
-msgstr "_Afspilning"
-
-#: ../src/Banshee.Base/ActionManager.cs:140 ../src/SourceView.cs:82
-msgid "Source"
-msgstr "Kilde"
-
-#: ../src/Banshee.Base/ActionManager.cs:148
-msgid "Fullscreen"
-msgstr "Fuldskærm"
-
-#: ../src/Banshee.Base/ActionManager.cs:149
-msgid "Toggle Fullscreen Mode"
-msgstr "Fuldskærmstilstand (til/fra)"
-
-#: ../src/Banshee.Base/ActionManager.cs:152
-msgid "Show Cover Art"
-msgstr "Vis omslag"
-
-#: ../src/Banshee.Base/ActionManager.cs:153
-msgid "Toggle display of album cover art"
-msgstr "Slå visning af omslag til/fra"
-
-#: ../src/Banshee.Base/ActionManager.cs:162
-msgid "Delete Playlist"
-msgstr "Slet spilleliste"
-
-#: ../src/Banshee.Base/ActionManager.cs:163
-msgid "Delete the active playlist"
-msgstr "Slet den aktive spilleliste"
-
-#: ../src/Banshee.Base/ActionManager.cs:172
 msgid "Write CD"
 msgstr "Skriv cd"
 
-#: ../src/Banshee.Base/ActionManager.cs:173
+#: ../src/Banshee.Base/ActionManager.cs:85
 msgid "Write selection to audio CD"
 msgstr "Skriv valg til lyd-cd"
+
+#: ../src/Banshee.Base/ActionManager.cs:88
+msgid "Import Source"
+msgstr "Importér kilde"
+
+#: ../src/Banshee.Base/ActionManager.cs:89
+msgid "Import source to library"
+msgstr "Importér kilde til bibliotek"
+
+#: ../src/Banshee.Base/ActionManager.cs:92
+msgid "Source Properties..."
+msgstr "Kildeegenskaber..."
+
+#: ../src/Banshee.Base/ActionManager.cs:93
+msgid "View source properties"
+msgstr "Vis kildeegenskaber"
+
+#: ../src/Banshee.Base/ActionManager.cs:96
+msgid "_Quit"
+msgstr "_Afslut"
+
+#: ../src/Banshee.Base/ActionManager.cs:97
+msgid "Quit Banshee"
+msgstr "Afslut Banshee"
+
+#: ../src/Banshee.Base/ActionManager.cs:100
+msgid "_Edit"
+msgstr "_Redigér"
+
+#: ../src/Banshee.Base/ActionManager.cs:103
+msgid "Rename Source"
+msgstr "Omdøb kilde"
+
+#: ../src/Banshee.Base/ActionManager.cs:104
+msgid "Rename the active source"
+msgstr "Omdøb den aktive kilde"
+
+#: ../src/Banshee.Base/ActionManager.cs:107
+msgid "Select All"
+msgstr "Vælg alle"
+
+#: ../src/Banshee.Base/ActionManager.cs:108
+msgid "Select all songs in song list"
+msgstr "Vælg alle sange i sanglisten"
+
+#: ../src/Banshee.Base/ActionManager.cs:111
+msgid "Select None"
+msgstr "Vælg ingen"
+
+#: ../src/Banshee.Base/ActionManager.cs:112
+msgid "Unselect all songs in song list"
+msgstr "Fravælg alle sange i sanglisten"
+
+#: ../src/Banshee.Base/ActionManager.cs:115
+msgid "Plugins..."
+msgstr "Udvidelsesmoduler..."
+
+#: ../src/Banshee.Base/ActionManager.cs:116
+msgid "Configure Banshee plugins"
+msgstr "Konfigurér Banshee-udvidelsesmoduler"
+
+#: ../src/Banshee.Base/ActionManager.cs:121
+msgid "_View"
+msgstr "_Visning"
+
+#: ../src/Banshee.Base/ActionManager.cs:124
+msgid "Columns..."
+msgstr "Kolonner..."
+
+#: ../src/Banshee.Base/ActionManager.cs:125
+msgid "Select which columns to display in the song list"
+msgstr "Vælg hvilke kolonner som vises i sanglisten"
+
+#: ../src/Banshee.Base/ActionManager.cs:128
+msgid "Logged Events Viewer..."
+msgstr "Fremviser af loggede hændelser..."
+
+#: ../src/Banshee.Base/ActionManager.cs:129
+msgid "View a detailed log of events"
+msgstr "Vis en detaljeret hændelseslog"
+
+#: ../src/Banshee.Base/ActionManager.cs:132
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: ../src/Banshee.Base/ActionManager.cs:135
+msgid "Version Information..."
+msgstr "Versioner..."
+
+#: ../src/Banshee.Base/ActionManager.cs:136
+msgid "View detailed version and configuration information"
+msgstr "Vis detaljeret versions- og konfigurationsinformation"
+
+#: ../src/Banshee.Base/ActionManager.cs:141
+msgid "_Playback"
+msgstr "_Afspilning"
+
+#: ../src/Banshee.Base/ActionManager.cs:144 ../src/SourceView.cs:90
+msgid "Source"
+msgstr "Kilde"
+
+#: ../src/Banshee.Base/ActionManager.cs:152
+msgid "Fullscreen"
+msgstr "Fuldskærm"
+
+#: ../src/Banshee.Base/ActionManager.cs:153
+msgid "Toggle Fullscreen Mode"
+msgstr "Fuldskærmstilstand (til/fra)"
+
+#: ../src/Banshee.Base/ActionManager.cs:156
+msgid "Show Cover Art"
+msgstr "Vis omslag"
+
+#: ../src/Banshee.Base/ActionManager.cs:157
+msgid "Toggle display of album cover art"
+msgstr "Slå visning af omslag til/fra"
+
+#: ../src/Banshee.Base/ActionManager.cs:166
+msgid "Delete Playlist"
+msgstr "Slet spilleliste"
+
+#: ../src/Banshee.Base/ActionManager.cs:167
+msgid "Delete the active playlist"
+msgstr "Slet den aktive spilleliste"
 
 #: ../src/Banshee.Base/ActionManager.cs:176
 msgid "Remove Song(s)"
@@ -1009,6 +942,10 @@ msgstr "Ukendt album"
 msgid "Track {0}"
 msgstr "Spor {0}"
 
+#: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:92
+msgid "Audio CD"
+msgstr "Lyd-cd"
+
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
 msgid "Cannot Eject CD"
 msgstr "Kan ikke skubbe cd'en ud"
@@ -1018,11 +955,11 @@ msgid "The CD cannot be ejected while it is importing. Stop the import first."
 msgstr ""
 "Cd'en kan ikke skubbes ud når den importeres. Stands importeringen først."
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:85
+#: ../src/Banshee.Base/AudioCdRipper.cs:83
 msgid "Could not create CD Ripper"
 msgstr "Kunne ikke oprette cd-lydudtrækker"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:295
+#: ../src/Banshee.Base/AudioCdRipper.cs:250
 #, csharp-format
 msgid ""
 "The device node '{0}' differs from the device node already set for "
@@ -1031,24 +968,232 @@ msgstr ""
 "Enhedspunktet \"{0}\" er forskellig fra det allerede satte enhedspunkt for "
 "tidligere tilføjede spor ({1})"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:308
+#: ../src/Banshee.Base/AudioCdRipper.cs:263
 msgid "Importing Audio CD"
 msgstr "Importerer lyd-cd"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:309
+#: ../src/Banshee.Base/AudioCdRipper.cs:264
 msgid "Initializing Drive"
 msgstr "Initialiserer drev"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:329
-#: ../src/Banshee.Base/AudioCdRipper.cs:393
+#: ../src/Banshee.Base/AudioCdRipper.cs:284
+#: ../src/Banshee.Base/AudioCdRipper.cs:348
 msgid "Cannot Import CD"
 msgstr "Kan ikke importere cd"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:341
-#: ../src/Banshee.Base/ImportManager.cs:118
+#: ../src/Banshee.Base/AudioCdRipper.cs:296
+#: ../src/Banshee.Base/ImportManager.cs:119
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importerer {0} af {1}"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
+msgid "Audio Disc:"
+msgstr "Lyddisk:"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:73
+msgid "Data Disc:"
+msgstr "Datadisk:"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:130
+#, csharp-format
+msgid "{0}:{1:00} of {2}"
+msgstr "{0}:{1:00} af {2}"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:132
+msgid "Unknown Minutes"
+msgstr "Ukendt antal minutter"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:133
+#, csharp-format
+msgid "{0} Minutes"
+msgstr "{0} minutter"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
+#: ../src/Banshee.Base/Sources/DapSource.cs:172
+#: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} af {1}"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:137
+msgid "Unknown MB"
+msgstr "Ukendt antal MB"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:138
+#: ../src/Banshee.Base/Utilities.cs:74
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0} MB"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:113
+msgid "New Audio CD"
+msgstr "Ny lyd-cd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:114
+msgid "Create a new audio CD"
+msgstr "Opret en ny lyd-cd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:156
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
+msgid "Problem creating CD"
+msgstr "Problemer ved skrivning af cd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:157
+msgid "No CD recording hardware was found."
+msgstr "Ingen cd-brændingshardware blev fundet."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
+msgid "Audio"
+msgstr "Lyd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
+msgid "MP3"
+msgstr "MP3"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:64
+msgid "Data"
+msgstr "Data"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
+msgid "Some songs could not be found."
+msgstr "Nogle sange kunne ikke findes."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+msgid "No CD writers were found on your system."
+msgstr "Ingen cd-brændere blev fundet."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:114
+msgid "Insert Blank CD"
+msgstr "Indsæt tom cd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
+msgid "Please insert a blank CD disk for the write process."
+msgstr "Indsæt venligst en tom cd til skrivningen."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:135
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:155
+#, csharp-format
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr "Det indsatte medium er ikke stort nok til det valgte musik."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:137
+#, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "{0} yderligere minut er nødvendig på mediet."
+msgstr[1] "{0} yderligere minutter er nødvendig på mediet."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:141
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:161
+msgid "Not Enough Space on Disc"
+msgstr "Ikke nok plads på disk"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:157
+#, csharp-format
+msgid "{0} more megabyte is needed on the media."
+msgid_plural "{0} more megabytes are needed on the media."
+msgstr[0] "{0} yderligere megabyte er nødvendig på mediet."
+msgstr[1] "{0} yderligere megabytes er nødvendig på mediet."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:174
+msgid "Insufficient Disk Space"
+msgstr "Utilstrækkelig diskplads"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
+#, csharp-format
+msgid "Creating this CD requires at least {0} MiB of free disk space."
+msgstr "Oprettelse af denne cd kræver mindst {0} MiB fri diskplads."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:194
+msgid "Continue Anyway"
+msgstr "Fortsæt alligevel"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:254
+msgid "Could Not Write CD"
+msgstr "Kunne ikke skrive cd"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:255
+msgid "No suitable encoder could be found to convert selected songs."
+msgstr "Ingen velegnet koder kunne findes til konvertering af valgte sange."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:53
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:54
+msgid "Writing Disc"
+msgstr "Skriver disk"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:90
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:105
+msgid "Error writing disc"
+msgstr "Fejl ved skrivning af disk"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:94
+msgid "An unknown error occurred when attempting to write the disc."
+msgstr "Der opstod en ukendt fejl i forsøget på at skrive disken."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:100
+msgid "Disc writing complete"
+msgstr "Diskskrivning fuldført"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:101
+msgid "The selected audio was successfully written to the disc."
+msgstr "Det valgte lyd blev skrevet til disken."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:135
+msgid "Preparing to record"
+msgstr "Klargører brænding"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:139
+msgid "Recording contents"
+msgstr "Brænder indhold"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:143
+msgid "Fixating disc"
+msgstr "Fikserer disk"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:161
+msgid "Waiting for Media"
+msgstr "Venter på medie"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:165
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:168
+msgid "Insert blank disc"
+msgstr "Indsæt tom disk"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:166
+msgid "Please insert a blank disc for the write process."
+msgstr "Indsæt venligst en tom disk til skrivningen."
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
+msgid "New CD"
+msgstr "Ny cd"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
+msgid "Unkown"
+msgstr "Ukendt"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:69
+msgid "Maximum"
+msgstr "Maksimal"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:70
+msgid "High"
+msgstr "Høj"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:71
+msgid "Medium"
+msgstr "Middel"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:72
+msgid "Low"
+msgstr "Lav"
+
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:77
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:90
+#, csharp-format
+msgid "{0}x"
+msgstr "{0}x"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:110
 msgid "File Transcoder"
@@ -1066,16 +1211,16 @@ msgstr "Initialiserer omkoder..."
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialiseret"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:329 ../src/Banshee.Base/Dap/Dap.cs:330
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:237 ../src/Banshee.Dap/Njb/NjbDap.cs:249
+#: ../src/Banshee.Base/Dap/Dap.cs:327 ../src/Banshee.Base/Dap/Dap.cs:328
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:236 ../src/Banshee.Dap/Njb/NjbDap.cs:248
 msgid "Synchronizing Device"
 msgstr "Synkroniserer enhed"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:331
+#: ../src/Banshee.Base/Dap/Dap.cs:329
 msgid "Waiting for transcoder..."
 msgstr "Venter på omkoder..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:423 ../src/Banshee.Base/Dap/Dap.cs:444
+#: ../src/Banshee.Base/Dap/Dap.cs:421 ../src/Banshee.Base/Dap/Dap.cs:442
 msgid "Processing..."
 msgstr "Behandler..."
 
@@ -1123,8 +1268,7 @@ msgstr "Importér mappe til bibliotek"
 msgid "Local Folder"
 msgstr "Lokal mappe"
 
-#: ../src/Banshee.Base/GstTranscoder.cs:82
-#: ../src/Banshee.Base/GstTranscoder.cs:185
+#: ../src/Banshee.Base/GstTranscoder.cs:80
 msgid "Could not create transcoder"
 msgstr "Kunne ikke oprette omkoder"
 
@@ -1144,11 +1288,11 @@ msgstr "D-BUS virker muligvis ikke eller er ikke konfigureret korrekt"
 msgid "Home Directory"
 msgstr "Hjemmemappe"
 
-#: ../src/Banshee.Base/ImportManager.cs:86
+#: ../src/Banshee.Base/ImportManager.cs:88
 msgid "Importing Songs"
 msgstr "Importerer sange"
 
-#: ../src/Banshee.Base/ImportManager.cs:89
+#: ../src/Banshee.Base/ImportManager.cs:90
 msgid "Scanning for songs"
 msgstr "Leder efter sange"
 
@@ -1296,12 +1440,6 @@ msgstr "Du skal vælge mindst ét spor at importere."
 msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserer din enhed, vent venligst..."
 
-#: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
-#, csharp-format
-msgid "{0} of {1}"
-msgstr "{0} af {1}"
-
 #: ../src/Banshee.Base/Sources/DapSource.cs:182
 #, csharp-format
 msgid "({0} Remaining)"
@@ -1366,11 +1504,6 @@ msgstr "fra"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} GB"
 
-#: ../src/Banshee.Base/Utilities.cs:74
-#, csharp-format
-msgid "{0} MB"
-msgstr "{0} MB"
-
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
 msgid "Rebuilding Database"
@@ -1392,20 +1525,20 @@ msgstr "Gemmer ny database..."
 msgid "Error rebuilding iPod database"
 msgstr "Fejl ved gendannelse af iPod database"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:159
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:164
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:183
 msgid "Synchronizing iPod"
 msgstr "Synkroniserer iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:160
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:165
 msgid "Pre-processing tracks"
 msgstr "Forbehandler sange"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:175
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:180
 msgid "Flushing to Disk (may take time)"
 msgstr "Opdaterer til disk (kan tage noget tid)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:185
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:190
 msgid "Failed to synchronize iPod"
 msgstr "Kunne ikke synkronisere iPod"
 
@@ -1445,16 +1578,30 @@ msgstr "Geopbyg database"
 msgid "Rebuilding iPod Database..."
 msgstr "Gendanner iPod database..."
 
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:99
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:101
+msgid "Vendor"
+msgstr "Leverandør"
+
 #. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
 #. args.FileName, e.GetType(), e.Message);
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:133
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:137
-#: ../src/PlayerInterface.cs:1731
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:166
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:170
+#: ../src/PlayerInterface.cs:1756
 msgid "Scanning"
 msgstr "Leder"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:257
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:315
+msgid "Copying Songs"
+msgstr "Kopierer sange"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:316
+#, csharp-format
+msgid "Copying {0} of {1}"
+msgstr "Kopierer {0} af {1}"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:347
 msgid "Audio Device"
 msgstr "Lydenhed"
 
@@ -1462,28 +1609,27 @@ msgstr "Lydenhed"
 msgid "Cannot read device"
 msgstr "Kan ikke læse enhed"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:249
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:248
 msgid "Removing Songs"
 msgstr "Fjerner sange"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:337
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:336
 msgid "Device Error"
 msgstr "Enhedsfejl"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:338
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:337
 msgid "Could not set the owner of the device."
 msgstr "Kunne ikke sætte ejeren på enheden."
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:65
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:296
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:64
 msgid "Could not initialize GStreamer library"
 msgstr "Kunne ikke initialisere GStreamer-bibliotek"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:143
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:142
 msgid "Unknown Error"
 msgstr "Ukendt fejl"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:165
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:164
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
 msgid "Buffering"
 msgstr "Mellemlagrer"
@@ -1714,14 +1860,22 @@ msgstr "Viser statusikon i statusfelt"
 msgid "Enable the Notification Area Icon plugin"
 msgstr "Aktivér statusikon-udvidelsesmodulet"
 
-#: ../src/Banshee.Widgets/ActiveUserEvent.cs:76
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:79
 msgid "Cancel Operation"
 msgstr "Afbryd handling"
 
-#: ../src/Banshee.Widgets/ActiveUserEvent.cs:78
+#: ../src/Banshee.Widgets/ActiveUserEvent.cs:81
 #, csharp-format
 msgid "Are you sure you want to cancel the '{0}' operation?"
 msgstr "Er du sikker på at du vil afbryde handlingen \"{0}\"?"
+
+#: ../src/Banshee.Widgets/DiscUsageDisplay.cs:195
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"Indsæt\n"
+"disk"
 
 #: ../src/Banshee.Widgets/SearchEntry.cs:203
 #: ../src/Banshee.Widgets/SearchEntry.cs:314
@@ -1732,154 +1886,6 @@ msgstr "Søger: {0}"
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
 msgid "Idle"
 msgstr "Klar"
-
-#: ../src/BurnCore.cs:90
-msgid "Insufficient Disk Space"
-msgstr "Utilstrækkelig diskplads"
-
-#: ../src/BurnCore.cs:91
-#, csharp-format
-msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr "Oprettelse af denne cd kræver mindst {0} MiB fri diskplads."
-
-#: ../src/BurnCore.cs:127
-msgid "Could Not Write CD"
-msgstr "Kunne ikke skrive cd"
-
-#: ../src/BurnCore.cs:128
-msgid "No suitable encoder could be found to convert selected songs."
-msgstr "Ingen velegnet koder kunne findes til konvertering af valgte sange."
-
-#: ../src/BurnCore.cs:146 ../src/BurnCore.cs:287 ../src/BurnCore.cs:297
-#, csharp-format
-msgid "File does not exist: {0}"
-msgstr "Fil eksisterer ikke: {0}"
-
-#: ../src/BurnCore.cs:166 ../src/BurnCore.cs:183 ../src/BurnCore.cs:249
-#: ../src/BurnCore.cs:320
-msgid "Problem creating CD"
-msgstr "Problemer ved skrivning af cd"
-
-#: ../src/BurnCore.cs:167
-msgid "None of the songs selected for this CD could be found."
-msgstr "Ingen af de valgte sange for denne cd kunne findes."
-
-#: ../src/BurnCore.cs:184 ../src/BurnCore.cs:410
-msgid "No CD writers were found on your system."
-msgstr "Ingen cd-brændere blev fundet."
-
-#: ../src/BurnCore.cs:190 ../src/BurnCore.cs:518 ../src/BurnCore.cs:521
-msgid "Insert Blank CD"
-msgstr "Indsæt tom cd"
-
-#: ../src/BurnCore.cs:191 ../src/BurnCore.cs:519
-msgid "Please insert a blank CD disk for the write process."
-msgstr "Indsæt venligst en tom cd til skrivningen."
-
-#: ../src/BurnCore.cs:201
-#, csharp-format
-msgid "The inserted media is not large enough to hold your selected music."
-msgstr "Det indsatte medium er ikke stort nok til det valgte musik."
-
-#: ../src/BurnCore.cs:203
-#, csharp-format
-msgid "{0} more minute is needed on the media."
-msgid_plural "{0} more minutes are needed on the media."
-msgstr[0] "{0} yderligere minut er nødvendig på mediet."
-msgstr[1] "{0} yderligere minutter er nødvendig på mediet."
-
-#: ../src/BurnCore.cs:207
-msgid "Not Enough Space on Disc"
-msgstr "Ikke nok plads på disk"
-
-#: ../src/BurnCore.cs:250
-msgid ""
-"None of the songs selected for this CD could be converted to the format "
-"required for an audio CD."
-msgstr ""
-"Ingen af de valgte sange for denne cd kunne konverteres til det format som "
-"kræves af en lyd-cd."
-
-#: ../src/BurnCore.cs:321
-msgid ""
-"Some songs could either not be found or could not be converted to the format "
-"required for an audio CD."
-msgstr ""
-"Nogle sange kunne enten ikke findes eller konverteres til det format som "
-"kræves af en lyd-cd."
-
-#: ../src/BurnCore.cs:323
-msgid "Continue Anyway"
-msgstr "Fortsæt alligevel"
-
-#: ../src/BurnCore.cs:344
-msgid "Error Creating CD Image"
-msgstr "Fejl ved oprettelse af cd-aftryk"
-
-#: ../src/BurnCore.cs:362
-msgid "Writing CD"
-msgstr "Skriver cd"
-
-#: ../src/BurnCore.cs:363
-msgid "Writing Audio CD"
-msgstr "Skriver lyd-cd"
-
-#: ../src/BurnCore.cs:450 ../src/BurnCore.cs:465
-msgid "Error Writing CD"
-msgstr "Fejl ved skrivning af cd"
-
-#: ../src/BurnCore.cs:454
-msgid "An unknown error occurred when attempting to write the CD"
-msgstr "Der opstod en ukendt fejl i forsøget på at skrive cd'en"
-
-#: ../src/BurnCore.cs:460
-msgid "CD Writing Complete"
-msgstr "Cd-skrivning fuldført"
-
-#: ../src/BurnCore.cs:461
-msgid "The selected audio was successfully written to the CD."
-msgstr "Det valgte lyd blev skrevet til cd'en."
-
-#: ../src/BurnCore.cs:488
-msgid "Preparing to write..."
-msgstr "Klargører skrivning..."
-
-#: ../src/BurnCore.cs:492
-msgid "Writing disk..."
-msgstr "Skriver disk..."
-
-#: ../src/BurnCore.cs:496
-msgid "Fixating disk..."
-msgstr "Fikserer disk..."
-
-#: ../src/BurnCore.cs:514
-msgid "Waiting for Media"
-msgstr "Venter på medie"
-
-#: ../src/BurnCore.cs:578
-msgid "Creating Image"
-msgstr "Opretter aftryk"
-
-#: ../src/BurnCore.cs:579
-msgid "Transferring songs"
-msgstr "Overfører sange"
-
-#: ../src/BurnCore.cs:597
-#, csharp-format
-msgid "Transferring song {0}"
-msgstr "Overfører sang {0}"
-
-#: ../src/BurnCore.cs:609
-msgid "Could not transfer files to create disk image."
-msgstr "Kunne ikke overføre filer til oprettelse af diskaftryk."
-
-#: ../src/BurnCore.cs:636
-msgid "Could not transfer file to disk layout."
-msgstr "Kunne ikke overføre fil til disklayout."
-
-#: ../src/BurnCore.cs:639
-msgid "File is already in disk layout."
-msgstr "Fil er allerede i disklayout."
 
 #: ../src/Dialogs.cs:81
 msgid "An Error Occurred"
@@ -1949,19 +1955,19 @@ msgstr "Indlæser..."
 msgid "All"
 msgstr "Alle"
 
-#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1288
+#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1313
 msgid "Song Name"
 msgstr "Sang"
 
-#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1286
+#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1311
 msgid "Artist Name"
 msgstr "Kunstner"
 
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1290
+#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1315
 msgid "Album Title"
 msgstr "Album"
 
-#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1292
+#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1317
 #: ../src/PlaylistView.cs:105
 msgid "Genre"
 msgstr "Genre"
@@ -2039,47 +2045,47 @@ msgstr "Afspilningsfejl"
 msgid "Import"
 msgstr "Importér"
 
-#: ../src/PlayerInterface.cs:1077 ../src/PlayerInterface.cs:2032
+#: ../src/PlayerInterface.cs:1077
 msgid "Rename Device"
 msgstr "Omdøb enhed"
 
-#: ../src/PlayerInterface.cs:1079 ../src/PlayerInterface.cs:2026
+#: ../src/PlayerInterface.cs:1079
 msgid "Rename Playlist"
 msgstr "Omdøb spilleliste"
 
-#: ../src/PlayerInterface.cs:1184
+#: ../src/PlayerInterface.cs:1197
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dage"
 
-#: ../src/PlayerInterface.cs:1201
+#: ../src/PlayerInterface.cs:1214
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} element"
 msgstr[1] "{0} elementer"
 
-#: ../src/PlayerInterface.cs:1203
+#: ../src/PlayerInterface.cs:1216
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} samlet spilletid"
 
-#: ../src/PlayerInterface.cs:1508
+#: ../src/PlayerInterface.cs:1533
 msgid "Clear"
 msgstr "Ryd"
 
-#: ../src/PlayerInterface.cs:1719
+#: ../src/PlayerInterface.cs:1744
 msgid "Could Not Eject"
 msgstr "Kunne ikke skubbe ud"
 
-#: ../src/PlayerInterface.cs:1747
+#: ../src/PlayerInterface.cs:1772
 #, csharp-format
 msgid "Cannot Import: {0} ({1})"
 msgstr "Kan ikke importere: {0} ({1})"
 
-#: ../src/PlayerInterface.cs:1789
+#: ../src/PlayerInterface.cs:1814
 #, csharp-format
 msgid ""
 "Are you sure you want to remove the selected song from your library "
@@ -2095,7 +2101,7 @@ msgstr[1] ""
 "Er du sikker på du vil fjerne de valgte <b>({0})</b> sange fra dit bibliotek "
 "<i><b>og</b></i> dit drev? Denne handling vil slette filerne permanent."
 
-#: ../src/PlayerInterface.cs:1798
+#: ../src/PlayerInterface.cs:1823
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2105,17 +2111,17 @@ msgstr[0] "Er du sikker på du vil fjerne den valgte sang fra dit bibliotek?"
 msgstr[1] ""
 "Er du sikker på du vil fjerne de valgte <b>({0})</b> sange fra dit bibliotek?"
 
-#: ../src/PlayerInterface.cs:1807
+#: ../src/PlayerInterface.cs:1832
 msgid "Remove Selected Songs from Library"
 msgstr "Fjern valgte sange fra bibliotek"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:1960
+#: ../src/PlayerInterface.cs:1974
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisér {0}"
 
-#: ../src/PlayerInterface.cs:1961
+#: ../src/PlayerInterface.cs:1975
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2136,7 +2142,7 @@ msgstr ""
 "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende iPod indhold "
 "og kan medføre inkompatiblitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:1967
+#: ../src/PlayerInterface.cs:1981
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2144,21 +2150,13 @@ msgstr ""
 "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende indhold på "
 "iPod'en og kan resultere i inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:1969
+#: ../src/PlayerInterface.cs:1983
 msgid "Synchronize Library"
 msgstr "Synkronisér bibliotek"
 
-#: ../src/PlayerInterface.cs:1971
+#: ../src/PlayerInterface.cs:1985
 msgid "Save Manual Changes"
 msgstr "Gem manuelle ændringer"
-
-#: ../src/PlayerInterface.cs:2027
-msgid "Enter new playlist name"
-msgstr "Indtast nyt spillelistenavn"
-
-#: ../src/PlayerInterface.cs:2033
-msgid "Enter new name for your device"
-msgstr "Indtast nyt navn til din enhed"
 
 #: ../src/PlaylistColumns.cs:80
 msgid "Invalid column width"
@@ -2204,31 +2202,9 @@ msgstr "Sidst afspillet"
 msgid "N/A"
 msgstr "I/T"
 
-#: ../src/Preferences.cs:98
+#: ../src/Preferences.cs:83
 msgid "Select Library Location"
 msgstr "Vælg placering af bibliotek"
-
-#: ../src/Preferences.cs:262
-msgid "Unavailable"
-msgstr "Utilgængelig"
-
-#: ../src/Preferences.cs:268
-msgid "Loading Drive List..."
-msgstr "Indlæser drevliste..."
-
-#: ../src/Preferences.cs:291
-msgid "No CD Burners Detected"
-msgstr "Ingen cd-brændere fundet"
-
-#: ../src/Preferences.cs:389
-msgid "Fastest Possible"
-msgstr "Hurtigst mulig"
-
-#. Translators: this represents a CD write speed, eg "32x"
-#: ../src/Preferences.cs:393
-#, csharp-format
-msgid "{0}x"
-msgstr "{0}x"
 
 #: ../src/ToggleStates.cs:79
 msgid "Continuous"
@@ -2304,3 +2280,127 @@ msgstr "Samling"
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "Version"
+
+#~ msgid "<b>CD Burning</b>"
+#~ msgstr "<b>Cd-brænding</b>"
+
+#~ msgid "<small>Burning</small>"
+#~ msgstr "<small>Brænding</small>"
+
+#~ msgid "Burnproof"
+#~ msgstr "Burnproof"
+
+#~ msgid "Disk Drive:"
+#~ msgstr "Diskdrev:"
+
+#~ msgid "Disk at once"
+#~ msgstr "Disk at once"
+
+#~ msgid "Eject when finished"
+#~ msgstr "Skub ud efter fuldførelse"
+
+#~ msgid "Overburn"
+#~ msgstr "Overbrænding"
+
+#~ msgid "Simulate write"
+#~ msgstr "Simulér skrivning"
+
+#~ msgid "Could not send seek event to cdparanoia"
+#~ msgstr "Kunne ikke sende søgehændelse til cdparanoia"
+
+#~ msgid "Could not get track start position"
+#~ msgstr "Kunne ikke hente startposition på spor"
+
+#~ msgid "Could not get track position"
+#~ msgstr "Kunne ikke hente sporposition"
+
+#~ msgid "Could not find or create the 'playbin' GStreamer plugin"
+#~ msgstr "Kunne ikke finde eller oprette \"playbin\" GStreamer-plugin"
+
+#~ msgid ""
+#~ "Could not load an output sink from GStreamer/GConf and could not fall "
+#~ "back on alsasink"
+#~ msgstr ""
+#~ "Kunne ikke indlæse et udgangselement fra GStreamer/GConf og kunne ikke "
+#~ "falde tilbage på alsasink"
+
+#~ msgid ""
+#~ "Could not load an output sink from GStreamer/GConf, falling back on "
+#~ "alsasink"
+#~ msgstr ""
+#~ "Kunne ikke indlæse et udgangselement fra GStreamer/GConf, falder tilbage "
+#~ "på alsasink"
+
+#~ msgid "Could not create 'spider' plugin"
+#~ msgstr "Kunne ikke oprette \"spider\"-plugin"
+
+#~ msgid "Could not create encoding pipeline: %s"
+#~ msgstr "Kunne ikke oprette kodningskanal: %s"
+
+#~ msgid "Could not create 'filesink' plugin"
+#~ msgstr "Kunne ikke oprette \"filesink\"-plugin"
+
+#~ msgid "File does not exist: {0}"
+#~ msgstr "Fil eksisterer ikke: {0}"
+
+#~ msgid "None of the songs selected for this CD could be found."
+#~ msgstr "Ingen af de valgte sange for denne cd kunne findes."
+
+#~ msgid ""
+#~ "None of the songs selected for this CD could be converted to the format "
+#~ "required for an audio CD."
+#~ msgstr ""
+#~ "Ingen af de valgte sange for denne cd kunne konverteres til det format "
+#~ "som kræves af en lyd-cd."
+
+#~ msgid ""
+#~ "Some songs could either not be found or could not be converted to the "
+#~ "format required for an audio CD."
+#~ msgstr ""
+#~ "Nogle sange kunne enten ikke findes eller konverteres til det format som "
+#~ "kræves af en lyd-cd."
+
+#~ msgid "Error Creating CD Image"
+#~ msgstr "Fejl ved oprettelse af cd-aftryk"
+
+#~ msgid "Writing Audio CD"
+#~ msgstr "Skriver lyd-cd"
+
+#~ msgid "Writing disk..."
+#~ msgstr "Skriver disk..."
+
+#~ msgid "Creating Image"
+#~ msgstr "Opretter aftryk"
+
+#~ msgid "Transferring songs"
+#~ msgstr "Overfører sange"
+
+#~ msgid "Transferring song {0}"
+#~ msgstr "Overfører sang {0}"
+
+#~ msgid "Could not transfer files to create disk image."
+#~ msgstr "Kunne ikke overføre filer til oprettelse af diskaftryk."
+
+#~ msgid "Could not transfer file to disk layout."
+#~ msgstr "Kunne ikke overføre fil til disklayout."
+
+#~ msgid "File is already in disk layout."
+#~ msgstr "Fil er allerede i disklayout."
+
+#~ msgid "Enter new playlist name"
+#~ msgstr "Indtast nyt spillelistenavn"
+
+#~ msgid "Enter new name for your device"
+#~ msgstr "Indtast nyt navn til din enhed"
+
+#~ msgid "Unavailable"
+#~ msgstr "Utilgængelig"
+
+#~ msgid "Loading Drive List..."
+#~ msgstr "Indlæser drevliste..."
+
+#~ msgid "No CD Burners Detected"
+#~ msgstr "Ingen cd-brændere fundet"
+
+#~ msgid "Fastest Possible"
+#~ msgstr "Hurtigst mulig"
