@@ -54,7 +54,6 @@ namespace Banshee.Burner
         public BurnerSource(IRecorder recorder) : base(String.Empty, 600)
         {
             session.Recorder = recorder;
-            Rename(recorder.Name);
             Initialize();
         }
     

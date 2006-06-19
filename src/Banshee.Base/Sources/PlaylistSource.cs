@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -429,92 +430,14 @@ namespace Banshee.Sources
             return GetPlaylistID(name) > 0;
         }
         
-        internal static string PostfixDuplicate(string prefix)
-        {
-            string name = prefix;
-            for(int i = 1; true; i++) {
-                if(!PlaylistExists(name)) {
-                    return name;
-                }
-                
-                name = prefix + " " + i;
-            }
-        }
-        
         public static string UniqueName {
-            get {
-                return PostfixDuplicate(Catalog.GetString("New Playlist"));
-            }
+            get { return NamingUtil.PostfixDuplicate(Catalog.GetString("New Playlist"), PlaylistExists); }
         }
         
         public static string GoodUniqueName(IEnumerable tracks)
         {
-            ArrayList names = new ArrayList();
-            Hashtable groups = new Hashtable();
-            
-            int track_count = 0;
-            
-            foreach(TrackInfo ti in tracks) {
-                bool haveArtist = ti.Artist != null && !ti.Artist.Equals(String.Empty);
-                bool haveAlbum = ti.Album != null && !ti.Album.Equals(String.Empty);
-            
-                if(haveArtist && haveAlbum) {
-                    names.Add(ti.Artist + " - " + ti.Album);
-                } else if(haveArtist) {
-                    names.Add(ti.Artist);
-                } else if(haveAlbum) {
-                    names.Add(ti.Album);
-                } else {
-                    names.Add(Catalog.GetString("New Playlist"));
-                }
-                
-                track_count++;
-            }
-            
-            if(track_count == 0) {
-                names.Add(Catalog.GetString("New Playlist"));
-            }
-                
-            names.Sort();
-            groups[names[0]] = 1;
-            
-            for(int i = 1; i < names.Count; i++) {
-                bool match = false;
-                foreach(string key in groups.Keys) {
-                    if(names[i].Equals(key)) {
-                        groups[key] = ((int)groups[key]) + 1;
-                        match = true;
-                        break;
-                    }
-                }
-            
-                if(match) {
-                    continue;
-                }
-                
-                groups[names[i]] = 1;
-            }
-            
-            string bestMatch = String.Empty;
-            int maxValue = 0;
-            
-            foreach(int count in groups.Values) {
-                if(count > maxValue) {
-                    maxValue = count;
-                    foreach(string key in groups.Keys) {
-                        if((int)groups[key] == maxValue) {
-                            bestMatch = key;
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            if(bestMatch.Equals(String.Empty)) {
-                return UniqueName;
-            }
-                
-            return PostfixDuplicate(bestMatch);
+            return NamingUtil.PostfixDuplicate(NamingUtil.GenerateTrackCollectionName(
+                tracks, Catalog.GetString("New Playlist")), PlaylistExists);
         }
     }
 }

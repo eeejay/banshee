@@ -29,6 +29,8 @@
 using System;
 using System.Threading;
 using System.Runtime.InteropServices;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -365,6 +367,94 @@ namespace Banshee.Base
             Stream stream = asm.GetManifestResourceStream(name);
             StreamReader reader = new StreamReader(stream);
             return reader.ReadToEnd();    
+        }
+    }
+    
+    public static class NamingUtil
+    {
+        public delegate bool PostfixDuplicateIncrementHandler(string check);
+    
+        public static string GenerateTrackCollectionName(IEnumerable tracks, string fallback)
+        {
+            Dictionary<string, int> weight_map = new Dictionary<string, int>();
+            
+            if(tracks == null) {
+                return fallback;
+            }
+            
+            foreach(TrackInfo track in tracks) {
+                string artist = null;
+                string album = null;
+                
+                if(track.Artist != null) {
+                    artist = track.Artist.Trim();
+                    if(artist == String.Empty) {
+                        artist = null;
+                    }
+                }
+                
+                if(track.Album != null) {
+                    album = track.Album.Trim();
+                    if(album == String.Empty) {
+                        album = null;
+                    }
+                }
+                
+                if(artist != null && album != null) {
+                    IncrementCandidate(weight_map, "\0" + artist + " - " + album);
+                    IncrementCandidate(weight_map, artist);
+                    IncrementCandidate(weight_map, album);
+                } else if(artist != null) {
+                    IncrementCandidate(weight_map, artist);
+                } else if(album != null) {
+                    IncrementCandidate(weight_map, album);
+                }
+            }
+            
+            int max_hit_count = 0;
+            string max_candidate = fallback;
+            
+            List<string> sorted_keys = new List<string>(weight_map.Keys);
+            sorted_keys.Sort();
+            
+            foreach(string candidate in sorted_keys) {
+                int current_hit_count = weight_map[candidate];
+                if(current_hit_count > max_hit_count) {
+                    max_hit_count = current_hit_count;
+                    max_candidate = candidate;
+                }
+            }
+            
+            if(max_candidate[0] == '\0') {
+                return max_candidate.Substring(1);
+            }
+            
+            return max_candidate;
+        }
+        
+        private static void IncrementCandidate(Dictionary<string, int> map, string hit)
+        {
+            if(map.ContainsKey(hit)) {
+                map[hit]++;
+            } else {
+                map.Add(hit, 1);
+            }
+        }
+        
+        public static string PostfixDuplicate(string prefix, PostfixDuplicateIncrementHandler duplicateHandler)
+        {
+            if(duplicateHandler == null) {
+                throw new ArgumentNullException("A PostfixDuplicateIncrementHandler delegate must be given");
+            }
+            
+            string name = prefix;
+            for(int i = 1; true; i++) {
+                if(!duplicateHandler(name)) {
+                    return name;
+                }
+                
+                name = prefix + " " + i;
+            }
         }
     }
 }

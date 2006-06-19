@@ -1,3 +1,19 @@
+2006-06-19  Aaron Bockover  <aaron@abock.org>
+
+	* src/PlayerInterface.cs: Use NamingUtil to create a nice name for
+	burner source when creating from track selection
+
+	* src/Banshee.Base/Utilities.cs: Added new NamingUtil static class 
+	with GenerateTrackCollectionName and PostfixDuplicate methods; 
+	GenerateTrackCollectionName is an updated/simplified/fixed version of
+	PlaylistUtil.GoodUniqueName (BGO #325181)
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Do not name source
+	after the drive name (which is often a bunch of gibberish)
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Use new NamingUtil 
+	methods in place of old PlaylistUtil.{GoodUniqueName,PostfixDuplicate}
+
 2006-06-16  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs: Updated

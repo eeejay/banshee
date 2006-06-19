@@ -1951,6 +1951,9 @@ namespace Banshee
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 source.AddTrack(playlistModel.PathTrackInfo(path));
             }
+            
+            source.Rename(NamingUtil.GenerateTrackCollectionName(source.Tracks, 
+                Catalog.GetString("New CD")));
          
             SourceManager.SetActiveSource(source);
             source.Burn();
