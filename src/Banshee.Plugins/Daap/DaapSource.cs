@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DaapSource.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@aaronbock.net>
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -102,10 +101,10 @@ namespace Banshee.Plugins.Daap
         
         protected override void OnDispose()
         {
-            Eject();
+            Unmap();
         }
         
-        public override bool Eject()
+        public override bool Unmap()
         {
             if(client != null) {
                 client.Logout();
@@ -124,6 +123,14 @@ namespace Banshee.Plugins.Daap
             return true;
         }
         
+        public override string UnmapIcon {
+            get { return Gtk.Stock.Disconnect; }
+        }
+
+        public override string UnmapLabel {
+            get { return Catalog.GetString("Disconnect"); }
+        }
+
         private void OnClientUpdated(object o, EventArgs args)
         {
             if(database == null && client.Databases.Length > 0) {

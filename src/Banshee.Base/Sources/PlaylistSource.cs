@@ -61,6 +61,14 @@ namespace Banshee.Sources
             get { return id; }
         }
 
+        public override string UnmapLabel {
+            get { return Catalog.GetString("Delete Playlist"); }
+        }
+
+        public override string GenericName {
+            get { return Catalog.GetString("Playlist"); }
+        }
+
         public PlaylistSource() : this(0)
         {
         }
@@ -210,7 +218,7 @@ namespace Banshee.Sources
             return tracks.Contains(track);
         }
         
-        public void Delete()
+        public override bool Unmap()
         {
             Globals.Library.Db.Execute(String.Format(
                 @"DELETE FROM PlaylistEntries
@@ -230,6 +238,8 @@ namespace Banshee.Sources
             
             SourceManager.RemoveSource(this);
             playlists.Remove(this);
+
+            return true;
         }
         
         public override void Commit()
@@ -317,7 +327,7 @@ namespace Banshee.Sources
                     RemoveTrack(args.Track);
                     
                     if(Count == 0) {
-                        Delete();
+                        Unmap();
                     } else {
                         Commit();
                     }
@@ -342,7 +352,7 @@ namespace Banshee.Sources
             
             if(removed_count > 0) {
                 if(Count == 0) {
-                    Delete();
+                    Unmap();
                 } else {
                     Commit();
                 }

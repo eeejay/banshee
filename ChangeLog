@@ -1,5 +1,31 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs:
+	* src/Banshee.Plugins/Daap/DaapSource.cs: Implement new virtual method
+	and properties for unmapping
+
+2006-06-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/UIManagerLayout.xml: Rename the DeletePlaylist action to 
+	UnmapSource.
+
+	* src/PlayerInterface.cs: Use CanUnmap property of Sources to set
+	visiblity of Unmap option in context menu.  Set the label of the rename
+	and delete items with on the source's SourceType property.  Make the
+	OnRename and OnUnmap handlers source-independent.
+
+	* src/Banshee.Base/ActionManager.cs: Add the UnmapSourceAction to the
+	list of global actions instead of to the PlaylistActions group.
+
+	* src/Banshee.Base/Source.cs: Add virtual Unmap method and SourceType,
+	and CanUnmap, UnmapLabel, and UnmapIcon properties.
+
+	* src/Banshee.Base/Sources/DapSource.cs: 
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Implement new virtual
+	method/properties.
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/DragDrop.cs: Added ObjectToSelectionData and SelectionDataToObjects
 
 	* src/PlayerInterface.cs: Let SourceView handle its own drag source/dests

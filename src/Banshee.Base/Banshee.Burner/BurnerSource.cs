@@ -136,6 +136,13 @@ namespace Banshee.Burner
             container.Add(InterfaceElements.PlaylistContainer);
         }
         
+        public override bool Unmap()
+        {
+            Dispose();
+            SourceManager.RemoveSource(this);
+            return true;
+        }
+        
         public override void AddTrack(TrackInfo track)
         {
             lock(TracksMutex) {
@@ -205,6 +212,10 @@ namespace Banshee.Burner
         
         public override bool SearchEnabled {
             get { return false; }
+        }
+        
+        public override string GenericName {
+            get { return Catalog.GetString("CD Session"); }
         }
         
         internal BurnerSession Session {

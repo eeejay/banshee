@@ -43,7 +43,6 @@ namespace Banshee.Base
         private ActionGroup audio_cd_actions = new ActionGroup("AudioCD");
         private ActionGroup playback_actions = new ActionGroup("Playback");
         private ActionGroup playback_seek_actions = new ActionGroup("PlaybackSeek");
-        private ActionGroup source_eject_actions = new ActionGroup("SourceEject");
         private ActionGroup dap_actions = new ActionGroup("Dap");
         
         public ActionManager()
@@ -100,8 +99,12 @@ namespace Banshee.Base
                     Catalog.GetString("_Edit"), null, null, null),
                     
                 new ActionEntry("RenameSourceAction", "gtk-edit", 
-                    Catalog.GetString("Rename Source"), "F2",
-                    Catalog.GetString("Rename the active source"), null),
+                    "Rename", "F2",
+                    "Rename", null),
+
+                new ActionEntry("UnmapSourceAction", Stock.Delete,
+                    "Unmap", "<shift>Delete",
+                    null, null),
                     
                 new ActionEntry("SelectAllAction", null,
                     Catalog.GetString("Select All"), "<control>A",
@@ -158,16 +161,6 @@ namespace Banshee.Base
             });
 
             ui.InsertActionGroup(global_actions, 0);
-
-            /* Playlist Selected Actions */
-
-            playlist_actions.Add(new ActionEntry [] {
-                new ActionEntry("DeletePlaylistAction", Stock.Delete,
-                    Catalog.GetString("Delete Playlist"), "<shift>Delete",
-                    Catalog.GetString("Delete the active playlist"), null)
-            });
-            
-            ui.InsertActionGroup(playlist_actions, 0);
 
             /* Song Selected Actions */
             
@@ -274,16 +267,6 @@ namespace Banshee.Base
             });
             
             ui.InsertActionGroup(dap_actions, 0);
-            
-            /* Source Eject Actions */
-            
-            source_eject_actions.Add(new ActionEntry [] {
-                new ActionEntry("EjectSelectedSourceAction", "media-eject",
-                    Catalog.GetString("Eject"), null,
-                    Catalog.GetString("Eject the active source"), null)
-            });
-            
-            ui.InsertActionGroup(source_eject_actions, 0);
         }
         
         public Action FindActionByName(string actionName)
@@ -369,10 +352,6 @@ namespace Banshee.Base
         
         public ActionGroup PlaybackSeekActions {
             get { return playback_seek_actions; }
-        }
-        
-        public ActionGroup SourceEjectActions {
-            get { return source_eject_actions; }
         }
         
         public ActionGroup DapActions {

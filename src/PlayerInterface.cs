@@ -143,7 +143,6 @@ namespace Banshee
             // Bind available methods to actions defined in ActionManager
             Globals.ActionManager.DapActions.Visible = false;
             Globals.ActionManager.AudioCdActions.Visible = false;
-            Globals.ActionManager.SourceEjectActions.Visible = false;
             Globals.ActionManager.SongActions.Sensitive = false;
             Globals.ActionManager.PlaylistActions.Sensitive = false;
             
@@ -1032,9 +1031,8 @@ namespace Banshee
             Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
             
             Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;
-            Globals.ActionManager["RenameSourceAction"].Sensitive = source.CanRename;
-            Globals.ActionManager.PlaylistActions.Sensitive = source is PlaylistSource;
-            Globals.ActionManager.SourceEjectActions.Visible = source.CanEject;
+            Globals.ActionManager["RenameSourceAction"].Visible = source.CanRename;
+            Globals.ActionManager["UnmapSourceAction"].Visible = source.CanUnmap;
             Globals.ActionManager.DapActions.Visible = source is DapSource;
             Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
             
@@ -1055,11 +1053,14 @@ namespace Banshee
                 } else {
                     Globals.ActionManager["SyncDapAction"].Visible = false;
                 }
-
-                Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Device");
-            } else {
-                Globals.ActionManager["RenameSourceAction"].Label = Catalog.GetString("Rename Playlist");            
             }
+
+            Globals.ActionManager["RenameSourceAction"].Label = String.Format (
+                    Catalog.GetString("Rename {0}"), source.GenericName
+            );
+
+            Globals.ActionManager["UnmapSourceAction"].Label = source.UnmapLabel;
+            Globals.ActionManager["UnmapSourceAction"].StockId = source.UnmapIcon;
         }
      
         // Called when SourceManager emits an ActiveSourceChanged event.
@@ -1703,7 +1704,7 @@ namespace Banshee
             }
         }*/
         
-        private void EjectSource(Source source)
+        /*private void EjectSource(Source source)
         {
             if(source.CanEject) {
                 try {
@@ -1713,7 +1714,7 @@ namespace Banshee
                         }
                     }
                     
-                    if(!source.Eject()) {
+                    if(!source.Unmap()) {
                         return;
                     }
                     
@@ -1727,7 +1728,7 @@ namespace Banshee
                         e.Message);
                 }
             }
-        }
+        }*/
        
         private void OnImportManagerImportRequested(object o, ImportEventArgs args)
         {
@@ -1983,11 +1984,6 @@ namespace Banshee
             md.Destroy();
         }
         
-        private void OnEjectSelectedSourceAction(object o, EventArgs args)
-        {
-            EjectSource(sourceView.HighlightedSource);
-        }
-
         private void OnSelectedSourcePropertiesAction(object o, EventArgs args)
         {
             sourceView.HighlightedSource.ShowPropertiesDialog();
@@ -2018,16 +2014,14 @@ namespace Banshee
             }
         }
 
-        private void OnDeletePlaylistAction(object o, EventArgs args)
+        private void OnUnmapSourceAction(object o, EventArgs args)
         {
             Source source = sourceView.HighlightedSource;
             
-            if(source == null || !(source is PlaylistSource)) {
+            if(source == null || !source.CanUnmap)
                 return;
-            }
                 
-            PlaylistSource playlist = source as PlaylistSource;
-            playlist.Delete();
+            source.Unmap();
         }
         
         private void OnSelectAllAction(object o, EventArgs args)

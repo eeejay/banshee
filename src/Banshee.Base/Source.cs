@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using Mono.Unix;
 
 using Banshee.Base;
 
@@ -101,8 +102,8 @@ namespace Banshee.Sources
         {
             return false;
         }
-        
-        public virtual bool Eject()
+
+        public virtual bool Unmap()
         {
             return false;
         }
@@ -213,6 +214,12 @@ namespace Banshee.Sources
         {
         }
         
+        // Translators: Source being the generic word for playlist, device, library, etc
+        private static string generic_name = Catalog.GetString("Source");
+        public virtual string GenericName {
+            get { return generic_name; }
+        }
+
         public virtual string ActionPath {
             get { return null; }
         }
@@ -250,6 +257,18 @@ namespace Banshee.Sources
         public virtual Gdk.Pixbuf Icon {
             get { return null; }
         }
+
+        public virtual string UnmapIcon {
+            get { return Gtk.Stock.Delete; }
+        }
+
+        public virtual string UnmapLabel {
+            get { return String.Format(Catalog.GetString("Delete {0}"), GenericName); }
+        }
+
+        public bool CanUnmap {
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "Unmap"); }
+        }
         
         public virtual Gtk.Widget ViewWidget {
             get { return null; }
@@ -278,11 +297,7 @@ namespace Banshee.Sources
         public int Order {
             get { return order; }
         }
-        
-        public bool CanEject {
-            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "Eject"); }
-        }
-        
+ 
         private bool can_rename = true;
         public bool CanRename {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "UpdateName") && can_rename; }

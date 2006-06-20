@@ -134,35 +134,27 @@ namespace Banshee.Sources
             device.Activate();
             base.Activate();
         }
-
-        public override int Count {
-            get {
-                return device.TrackCount;
-            }
-        }        
         
-        public Banshee.Dap.DapDevice Device {
-            get {
-                return device;
-            }
-        }
-        
-        public override IEnumerable Tracks {
-            get {
-                return device.Tracks;
-            }
-        }
-        
-        public override bool Eject()
+        public override bool Unmap()
         {
             device.Eject();
             return true;
         }
 
+        public override int Count {
+            get { return device.TrackCount; }
+        }        
+        
+        public Banshee.Dap.DapDevice Device {
+            get { return device; }
+        }
+        
+        public override IEnumerable Tracks {
+            get { return device.Tracks; }
+        }
+        
         public double DiskUsageFraction {
-            get {
-                return (double)device.StorageUsed / (double)device.StorageCapacity;
-            }
+            get { return (double)device.StorageUsed / (double)device.StorageCapacity; }
         }
 
         public string DiskUsageString {
@@ -185,9 +177,7 @@ namespace Banshee.Sources
         }
         
         public bool IsSyncing {
-            get {
-                return device.IsSyncing;
-            }
+            get { return device.IsSyncing; }
         }
 
         public override void ShowPropertiesDialog()
@@ -210,27 +200,31 @@ namespace Banshee.Sources
         }
         
         public override Gdk.Pixbuf Icon {
-            get {
-                return device.GetIcon(22);
-            }
+            get { return device.GetIcon(22); }
         }
-        
+
+        public override string UnmapIcon {
+            get { return "media-eject"; }
+        }
+
+        public override string UnmapLabel {
+            get { return String.Format(Catalog.GetString("Eject {0}"), GenericName); }
+        }
+
         public override Gtk.Widget ViewWidget {
-            get {
-                return IsSyncing ? syncing_container : Device.ViewWidget;
-            }
+            get { return IsSyncing ? syncing_container : Device.ViewWidget; }
         }
         
         public override bool ShowPlaylistHeader {
-            get {
-                return !IsSyncing;
-            }
+            get { return !IsSyncing; }
         }
         
         public override bool SearchEnabled {
-            get {
-                return !IsSyncing && Device.ViewWidget == null;
-            }
+            get { return !IsSyncing && Device.ViewWidget == null; }
+        }
+
+        public override string GenericName {
+            get { return Device != null ? Device.GenericName : Catalog.GetString("Device"); }
         }
     }
 }

@@ -44,6 +44,18 @@ namespace Banshee.Sources
         private Alignment container;
         
         private HighlightMessageArea audiocd_statusbar;
+
+        public override string UnmapLabel {
+            get { return Catalog.GetString("Eject CD"); }
+        }
+
+        public override string UnmapIcon {
+            get { return "media-eject"; }
+        }
+
+        public override string GenericName {
+            get { return Catalog.GetString("Audio CD"); }
+        }
         
         public AudioCdSource(AudioCdDisk disk) : base(disk.Title, 200)
         {
@@ -117,7 +129,7 @@ namespace Banshee.Sources
             audiocd_statusbar.Pixbuf = icon;
         }
         
-        public override bool Eject()
+        public override bool Unmap()
         {
             if(!disk.Eject()) {
                 return false;
