@@ -51,10 +51,9 @@ namespace Banshee.Burner
         private BurnerSession session = new BurnerSession();
         private BurnerOptionsDialog burner_options = null;
     
-        public BurnerSource(IRecorder recorder) : base(String.Empty, 600)
+        public BurnerSource(IRecorder recorder) : this()
         {
             session.Recorder = recorder;
-            Initialize();
         }
     
         public BurnerSource() : base(String.Empty, 600)
