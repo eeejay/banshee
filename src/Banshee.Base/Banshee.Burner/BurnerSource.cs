@@ -60,6 +60,13 @@ namespace Banshee.Burner
     
         public BurnerSource() : base(Catalog.GetString("New CD"), 600)
         {
+            foreach(IDrive drive in BurnerCore.DriveFactory) {
+                if(drive is IRecorder && drive.HaveMedia) {
+                    session.Recorder = drive as IRecorder;
+                    break;
+                }
+            }
+            
             Initialize();
         }
         

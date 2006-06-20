@@ -1,3 +1,9 @@
+2006-06-20  Aaron bockover  <aaron@abock.org>
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: In default 
+	constructor, bind the source session to the first available 
+	recorder with blank media if possible (BGO #345475)
+
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: Add null check
