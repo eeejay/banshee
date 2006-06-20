@@ -83,7 +83,7 @@ namespace Banshee.Burner
             box.ShowAll();
         }
         
-        internal void Uninitialize()
+        protected override void OnDispose()
         {
             if(burner_options != null) {
                 burner_options.Dialog.Respond(ResponseType.Close);

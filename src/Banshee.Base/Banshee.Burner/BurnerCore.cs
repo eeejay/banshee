@@ -97,9 +97,8 @@ namespace Banshee.Burner
             
             drive_factory.MediaRemoved += delegate(object o, MediaArgs args) {
                 BurnerSource source = FindSourceForDrive(args.Drive, false);
-                if(source.Count <= 0) {
-                    source.Uninitialize();
-                    SourceManager.RemoveSource(source);
+                if(source != null && source.Count <= 0) {
+                    source.Unmap();
                 }
             };
             

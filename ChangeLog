@@ -1,5 +1,13 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: Add null check
+	on return from FindSourceForDrive; call source.Unmap on match (BGO #345474)
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Implement OnDispose
+	in place of Uninitialize
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs:
 	* src/Banshee.Plugins/Daap/DaapSource.cs: Implement new virtual method
 	and properties for unmapping
