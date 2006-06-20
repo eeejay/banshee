@@ -1,4 +1,23 @@
-2006-09-19  Aaron Bockover  <aaron@abock.org>
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
+	* src/DragDrop.cs: Added ObjectToSelectionData and SelectionDataToObjects
+
+	* src/PlayerInterface.cs: Let SourceView handle its own drag source/dests
+
+	* src/SourceView.cs: Added internal DnD support; sources can be dropped
+	on to other sources
+
+	* src/Banshee.Base/Source.cs: Added SourceDrop virtual method and
+	IsDragSource property to control source DnD
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Implement SourceDrop;
+	playlists can be dropped on to the CD burning source
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Implement IsDragSource and
+	SourceDrop; playlists can be dragged to other sources (including other
+	playlists)
+
+2006-06-19  Aaron Bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: call default 
 	constructor from IRecorder constructor

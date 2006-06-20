@@ -193,6 +193,17 @@ namespace Banshee.Sources
                 remove_queue.Enqueue(track);
             }
         }
+        
+        public override void SourceDrop(Source source)
+        {
+            if(source == this || !(source is PlaylistSource)) {
+                return;
+            }
+            
+            foreach(TrackInfo track in source.Tracks) {
+                AddTrack(track);
+            }
+        }
 
         public bool ContainsTrack(TrackInfo track)
         {
@@ -349,6 +360,10 @@ namespace Banshee.Sources
         public override int Count {
             get { return tracks.Count; }
         }  
+        
+        public override bool IsDragSource {
+            get { return true; }
+        }
         
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist");
         public override Gdk.Pixbuf Icon {

@@ -76,6 +76,15 @@ namespace Banshee
         private TreeStore store;
         private TreeViewColumn focus_column;
         private int currentTimeout = -1;
+        
+        private static TargetEntry [] dnd_source_entries = new TargetEntry [] {
+            Dnd.TargetSource
+        };
+            
+        private static TargetEntry [] dnd_dest_entries = new TargetEntry [] {
+            Dnd.TargetLibraryTrackIds,
+            Dnd.TargetSource
+        };
     
         public SourceView()
         {
@@ -95,6 +104,11 @@ namespace Banshee
             store = new TreeStore(typeof(Source));
             Model = store;
             HeadersVisible = false;
+            
+            EnableModelDragSource(Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
+                dnd_source_entries, DragAction.Copy | DragAction.Move);
+        
+            EnableModelDragDest(dnd_dest_entries, DragAction.Copy | DragAction.Move);
             
             CursorChanged += OnCursorChanged;
             RefreshList();
@@ -284,26 +298,53 @@ namespace Banshee
 
             return false;
         }
+
+        protected override void OnDragBegin(Gdk.DragContext context)
+        {
+            if(HighlightedSource.IsDragSource) {
+                base.OnDragBegin(context);
+            }
+        }
+        
+        protected override void OnDragDataGet(Gdk.DragContext context, SelectionData selectionData,
+            uint info, uint time)
+        {
+            switch((Dnd.TargetType)info) {
+                case Dnd.TargetType.Source:
+                    byte [] data = Dnd.ObjectToSelectionData(HighlightedSource);
+                    selectionData.Set(context.Targets[0], 8, data, data.Length);
+                    break;
+                default:
+                    return;
+            }
+            
+            base.OnDragDataGet(context, selectionData, info, time);
+        }
         
         protected override bool OnDragMotion(Gdk.DragContext context, int x, int y, uint time)
         {
+            if(Gtk.Drag.GetSourceWidget(context) == this && !HighlightedSource.IsDragSource) {
+                return false;
+            }
+        
             base.OnDragMotion(context, x, y, time);
             SetDragDestRow(null, TreeViewDropPosition.IntoOrAfter);
             Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
 
             // FIXME: We need to handle this nicer
-            if(!(SourceManager.ActiveSource is LibrarySource ||
+            if(Gtk.Drag.GetSourceWidget(context) != this && 
+                !(SourceManager.ActiveSource is LibrarySource ||
                 SourceManager.ActiveSource is PlaylistSource)) {
                 return false;
             }
         
-            if(!newPlaylistVisible) {
+            if(!newPlaylistVisible && Gtk.Drag.GetSourceWidget(context) != this) {
                 TreeIter library = FindSource(LibrarySource.Instance);
                 newPlaylistIter = store.AppendNode(library);
                 store.SetValue(newPlaylistIter, 0, newPlaylistSource);
                 newPlaylistVisible = true;
 
-                UpdateView ();
+                UpdateView();
                 Expand(library);
             }
         
@@ -351,7 +392,25 @@ namespace Banshee
         protected override void OnDragDataReceived(Gdk.DragContext context, int x, int y,
             Gtk.SelectionData selectionData, uint info, uint time)
         {       
-            string rawData = Dnd.SelectionDataToString(selectionData);        
+            if(Gtk.Drag.GetSourceWidget(context) == this) {
+                object [] objects = Dnd.SelectionDataToObjects(selectionData);
+                if(objects.Length <= 0 || !(objects[0] is Source)) { 
+                    return;
+                }
+                
+                Source source = objects[0] as Source;
+                
+                if(source.IsDragSource && final_drag_source.AcceptsSourceDrop) {
+                    final_drag_source.SourceDrop(source);
+                    Gtk.Drag.Finish(context, true, false, time);
+                } else {
+                    Gtk.Drag.Finish(context, false, false, time);
+                }
+                
+                return;
+            }
+            
+            string rawData = Dnd.SelectionDataToString(selectionData);
             string [] rawDataArray = Dnd.SplitSelectionData(rawData);
             
             if(rawData.Length <= 0) {

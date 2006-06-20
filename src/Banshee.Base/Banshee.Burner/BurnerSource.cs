@@ -51,14 +51,15 @@ namespace Banshee.Burner
         private BurnerSession session = new BurnerSession();
         private BurnerOptionsDialog burner_options = null;
     
+        private bool has_default_name = true;
+    
         public BurnerSource(IRecorder recorder) : this()
         {
             session.Recorder = recorder;
         }
     
-        public BurnerSource() : base(String.Empty, 600)
+        public BurnerSource() : base(Catalog.GetString("New CD"), 600)
         {
-            Rename(Catalog.GetString("New CD"));
             Initialize();
         }
         
@@ -97,6 +98,7 @@ namespace Banshee.Burner
             
             Name = newName;
             session.DiscName = newName;
+            has_default_name = false;
             
             return true;
         }
@@ -157,6 +159,21 @@ namespace Banshee.Burner
             lock(TracksMutex) {
                 tracks.Remove(track);
                 tracks.Insert(position, track);
+            }
+        }
+        
+        public override void SourceDrop(Source source)
+        {
+            if(!(source is PlaylistSource)) {
+                return;
+            }
+            
+            if(source.Count > 0 && tracks.Count == 0 && has_default_name) {
+                Rename(source.Name);
+            }
+                
+            foreach(TrackInfo track in source.Tracks) {
+                AddTrack(track);
             }
         }
             

@@ -209,6 +209,10 @@ namespace Banshee.Sources
             }
         }
         
+        public virtual void SourceDrop(Source source)
+        {
+        }
+        
         public virtual string ActionPath {
             get { return null; }
         }
@@ -267,6 +271,10 @@ namespace Banshee.Sources
             get { return false; }
         }
         
+        public virtual bool IsDragSource {
+            get { return false; }
+        }
+        
         public int Order {
             get { return order; }
         }
@@ -278,7 +286,6 @@ namespace Banshee.Sources
         private bool can_rename = true;
         public bool CanRename {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "UpdateName") && can_rename; }
-            
             protected set { can_rename = value; }
         }
         
@@ -288,6 +295,10 @@ namespace Banshee.Sources
         
         public bool CanRemoveTracks {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "RemoveTrack"); }
+        }
+        
+        public bool AcceptsSourceDrop {
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SourceDrop"); }
         }
     }
 }

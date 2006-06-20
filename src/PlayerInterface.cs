@@ -115,16 +115,6 @@ namespace Banshee
                 Dnd.TargetUriList
             };
 
-        /*private static TargetEntry [] sourceViewSourceEntries = 
-            new TargetEntry [] {
-                Dnd.TargetSource
-            };*/
-            
-        private static TargetEntry [] sourceViewDestEntries = 
-            new TargetEntry [] {
-                Dnd.TargetLibraryTrackIds,
-            };
-
         private RemotePlayer banshee_dbus_object;
 
         public PlayerUI() 
@@ -383,15 +373,6 @@ namespace Banshee
             SourceManager.SourceViewChanged += OnSourceManagerSourceViewChanged;
             SourceManager.SourceTrackAdded += OnSourceTrackAdded;
             SourceManager.SourceTrackRemoved += OnSourceTrackRemoved;
-            
-            /*sourceView.EnableModelDragSource(
-                Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
-                sourceViewSourceEntries, 
-                DragAction.Copy | DragAction.Move);*/
-        
-            sourceView.EnableModelDragDest(
-                sourceViewDestEntries, 
-                DragAction.Copy | DragAction.Move);
 
             InterfaceElements.MainContainer = gxml["MainContainer"] as VBox;
 
