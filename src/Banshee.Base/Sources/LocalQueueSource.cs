@@ -1,9 +1,8 @@
-
 /***************************************************************************
- *  LibrarySource.cs
+ *  LocalQueueSource.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -52,7 +51,14 @@ namespace Banshee.Sources
         
         private LocalQueueSource() : base(Catalog.GetString("Local Queue"), 100)
         {
-            foreach(string file in Globals.ArgumentQueue.Files) {
+            Enqueue(Globals.ArgumentQueue.Files, false);
+        }
+        
+        public void Enqueue(string [] files, bool playFirst)
+        {
+            bool played_first = false;
+        
+            foreach(string file in files) {
                 try {
                     SafeUri uri;
                     try {
@@ -63,7 +69,14 @@ namespace Banshee.Sources
                     }
                     
                     if(System.IO.File.Exists(uri.LocalPath)) {
-                        tracks.Add(new FileTrackInfo(uri));   
+                        TrackInfo track = new FileTrackInfo(uri);
+                        tracks.Add(track);
+                        OnTrackAdded(track);
+                        
+                        if(playFirst && !played_first) {
+                            played_first = true;
+                            PlayerEngineCore.OpenPlay(track);
+                        }  
                     } else {
                         throw new ApplicationException(uri.LocalPath);
                     }
@@ -71,6 +84,12 @@ namespace Banshee.Sources
                     Console.WriteLine("Could not load: {0}", e.Message);
                 }
             }
+            
+            if(!SourceManager.ContainsSource(this) && tracks.Count > 0) {
+                SourceManager.AddSource(this);
+            }
+            
+            OnUpdated();
         }
         
         public override int Count {
@@ -92,3 +111,4 @@ namespace Banshee.Sources
         }
     }
 }
+

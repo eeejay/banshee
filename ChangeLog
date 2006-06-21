@@ -1,5 +1,19 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	* src/Main.cs: Added call to NotifyStartupComplete call for when
+	commands are sent to remote instance; enqueue files over DBus
+
+	* src/PlayerInterface.cs: Do not add LocalQueueSource to SourceManager
+
+	* src/RemotePlayer.cs: Added EnqueueFiles remote method
+
+	* src/Banshee.Base/SourceManager.cs: Added ContainsSource method
+
+	* src/Banshee.Base/Sources/LocalQueueSource.cs: Support enqueuing 
+	files after instantiation; play first file on enqueue
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/Core.cs: Removed

@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Main.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -132,6 +131,11 @@ namespace Banshee
             }
             
             bool present = true;
+            
+            string [] files = Globals.ArgumentQueue.Files;
+            if(files.Length > 0) {
+                remote_player.EnqueueFiles(files);
+            }
         
             foreach(string arg in Globals.ArgumentQueue.Arguments) {
                 bool dequeue = true;
@@ -241,6 +245,7 @@ namespace Banshee
             
             // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
             System.GC.SuppressFinalize(remote_player);
+            Gdk.Global.NotifyStartupComplete();
             System.Environment.Exit(0);
         }
         
