@@ -394,7 +394,7 @@ namespace Banshee
             }
                 
             if(track.Track == PlayerEngineCore.CurrentTrack) {
-                PlayerCore.UserInterface.UpdateMetaDisplay();
+                PlayerUI.Instance.UpdateMetaDisplay();
             }
         }
     }

@@ -48,6 +48,10 @@ namespace Banshee.Base
         public ActionManager()
         {
             PopulateActionGroups();
+        }
+        
+        public void LoadInterface()
+        {
             ui.AddUiFromResource("UIManagerLayout.xml");
         }
         

@@ -66,7 +66,8 @@ EXTRA_DIST = \
 	cd-action-burn-24.png \
 	cd-action-burn-32.png \
 	cd-action-burn-48.png \
-	encode-action-24.png 
+	encode-action-24.png \
+	splash.png
 
 generate-resource-list:
 	for i in $(EXTRA_DIST); do \

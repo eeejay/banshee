@@ -46,7 +46,6 @@ namespace Banshee.Base
             }
             
             default_branding = new BansheeBranding();
-            default_branding.Initialize();
             
             try {
                 Assembly entry_assembly = Assembly.GetEntryAssembly();
@@ -122,32 +121,5 @@ namespace Banshee.Base
         string ApplicationName { get; }
         string ApplicationIconName { get; }
         Gdk.Pixbuf AboutBoxLogo { get; }
-    }
-    
-    public class BansheeBranding : ICustomBranding
-    {
-        private Gdk.Pixbuf about_box_logo;
-    
-        public bool Initialize()
-        {
-            about_box_logo = new Gdk.Pixbuf(Assembly.GetEntryAssembly(), "banshee-logo.png");
-            return true;
-        }
-        
-        public string ApplicationLongName {
-            get { return Catalog.GetString("Banshee Music Player"); }
-        }
-        
-        public string ApplicationName {
-            get { return Catalog.GetString("Banshee"); }
-        }
-        
-        public string ApplicationIconName {
-            get { return "music-player-banshee"; }
-        }
-        
-        public Gdk.Pixbuf AboutBoxLogo {
-            get { return about_box_logo; }
-        }
     }
 }

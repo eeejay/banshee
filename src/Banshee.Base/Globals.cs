@@ -43,6 +43,7 @@ namespace Banshee.Base
         private static Random random;
         private static DBusRemote dbus_remote;
         private static Banshee.Gui.UIManager ui_manager;
+        private static ComponentInitializer startup = new ComponentInitializer();
         
         public static void Initialize()
         {
@@ -53,40 +54,35 @@ namespace Banshee.Base
             Mono.Unix.Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
         
             ui_manager = new Banshee.Gui.UIManager();
+            random = new Random();
             
             if(!Branding.Initialize()) {
                 System.Environment.Exit(1);
                 return;
             }
             
-            gconf_client = new GConf.Client();
-            network_detect = NetworkDetect.Instance;
-            action_manager = new ActionManager();
-            library = new Library();
-            random = new Random();
+            startup.Register("Connecting to GConf", delegate { gconf_client = new GConf.Client(); });
+            startup.Register("Detecting network settings", delegate { network_detect = NetworkDetect.Instance; });
+            startup.Register("Creating action manager", delegate { action_manager = new ActionManager(); });
+            startup.Register("Loading music library", delegate { library = new Library(); });
             
-            Banshee.Gstreamer.Utilities.Initialize();
-            PlayerEngineCore.Initialize();
+            startup.Register("Initializing GStreamer", Banshee.Gstreamer.Utilities.Initialize);
+            startup.Register("Initializing player engine", PlayerEngineCore.Initialize);
             
-            try {
-                audio_cd_core = new AudioCdCore();
-            } catch(ApplicationException e) {
-                LogCore.Instance.PushWarning("Audio CD support will be disabled for this instance", e.Message, false);
-            }
+            startup.Register("Initializing Audio CD support", true, 
+                "Audio CD support will be disabled for this instance", delegate { audio_cd_core = new AudioCdCore(); });
+                
+            startup.Register("Initializing Digital Audio Player support", true, 
+                "DAP support will be disabled for this instance", Banshee.Dap.DapCore.Initialize);
             
-            try {
-                Banshee.Dap.DapCore.Initialize();
-            } catch(ApplicationException e) {
-                LogCore.Instance.PushWarning("DAP support will be disabled for this instance", e.Message, false);
-            }
+            startup.Register("Initializing CD Burning support", true, 
+                "CD Burning support will be disabled for this instance", Banshee.Burner.BurnerCore.Initialize);
+                
+            startup.Register("Initializing plugins", Banshee.Plugins.PluginCore.Initialize);
             
-            try {
-                Banshee.Burner.BurnerCore.Initialize();
-            } catch(ApplicationException e) {
-                LogCore.Instance.PushWarning("CD Burning support will be disabled for this instance", e.Message, false);
-            }
+            startup.Run();
             
-            Banshee.Plugins.PluginCore.Initialize();
+            action_manager.LoadInterface();
         }
         
         public static void Dispose()
@@ -98,60 +94,42 @@ namespace Banshee.Base
             HalCore.Dispose();
         }
         
+        public static ComponentInitializer StartupInitializer {
+            get { return startup; }
+        }
+        
         public static GConf.Client Configuration {
-            get {
-                return gconf_client;
-            }
+            get { return gconf_client; }
         }
 
         public static NetworkDetect Network {
-            get {
-                return network_detect;
-            }
+            get { return network_detect; }
         }
         
         public static ActionManager ActionManager {
-            get {
-                return action_manager;
-            }
+            get { return action_manager; }
         }
         
         public static Library Library {
-            get {
-                return library;
-            }
+            get { return library; }
         }
         
         public static ArgumentQueue ArgumentQueue {
-            set {
-                argument_queue = value;
-            }
-            
-            get {
-                return argument_queue;
-            }
+            set { argument_queue = value; }
+            get { return argument_queue; }
         }
         
         public static AudioCdCore AudioCdCore {
-            get {
-                return audio_cd_core;
-            }
+            get { return audio_cd_core; }
         }
         
         public static Random Random {
-            get {
-                return random;
-            }
+            get { return random; }
         }
         
         public static DBusRemote DBusRemote {
-            get {
-                return dbus_remote;
-            }
-            
-            set {
-                dbus_remote = value;
-            }
+            get { return dbus_remote; }
+            set { dbus_remote = value; }
         }
         
         public static Banshee.Gui.UIManager UIManager {

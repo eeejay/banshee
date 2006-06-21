@@ -117,8 +117,15 @@ namespace Banshee
 
         private RemotePlayer banshee_dbus_object;
 
+        private static PlayerUI instance;
+        public static PlayerUI Instance {
+            get { return instance; }
+        }
+
         public PlayerUI() 
         {
+            instance = this;
+            
             gxml = new Glade.XML(null, "banshee.glade", "WindowPlayer", null);
             gxml.Autoconnect(this);
             InterfaceElements.MainWindow = WindowPlayer;
@@ -626,7 +633,6 @@ namespace Banshee
             PlayerEngineCore.Dispose();
             Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
             Globals.DBusRemote.UnregisterObject(banshee_dbus_object);
-            PlayerCore.Dispose();
             Globals.Dispose();
             Application.Quit();
         }

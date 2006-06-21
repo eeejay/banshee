@@ -1,5 +1,40 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Core.cs: Removed
+
+	* src/Main.cs: Initialize stock icons before instantiating UI
+
+	* src/Makefile.am: Removed Core.cs
+
+	* src/PlayerInterface.cs:
+	* src/TrackProperties.cs: Do not reference PlayerCore
+
+	* src/Banshee.Base/ActionManager.cs: Delay loading UI until after
+	globals startup initialization
+
+	* src/Banshee.Base/Branding.cs: Moved BansheeBranding to new file; only
+	initialize the default branding once
+
+	* src/Banshee.Base/Globals.cs: Run all initialization processes through
+	the new ComponentInitializer
+
+	* src/Banshee.Base/ComponentInitializer.cs: Object to keep track of
+	component initialization; used for reporting progress of startup
+
+	* src/Banshee.Base/BansheeBranding.cs: Added splash screen support
+
+	* src/Banshee.Base/Gui/SplashScreen.cs: Default splash screen that shows
+	load progress, and can be re-used for custom brandings
+
+	* data/images/splash.{png,svg}: New upstream/default branded splash 
+	screen graphic
+
+	* data/images/Makefile.am: Added splash.png
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Make default
 	source name 'New Audio CD' not 'New CD' (BGO #345489)
 

@@ -57,7 +57,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/OpenLocationDialog.cs \
 	$(srcdir)/Gui/UIManager.cs \
 	$(srcdir)/Gui/SeekDialog.cs \
-	$(srcdir)/Gui/ErrorListDialog.cs
+	$(srcdir)/Gui/ErrorListDialog.cs \
+	$(srcdir)/Gui/SplashScreen.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -153,10 +154,12 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/GstTagger.cs \
 	$(srcdir)/SafeUri.cs \
 	$(srcdir)/Catalog.cs \
-	$(srcdir)/Branding.cs
+	$(srcdir)/Branding.cs \
+	$(srcdir)/BansheeBranding.cs \
+	$(srcdir)/ComponentInitializer.cs
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml
-	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -resource:$(srcdir)/../../data/images/splash.png,splash.png -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
