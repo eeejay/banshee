@@ -1,3 +1,8 @@
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Make default
+	source name 'New Audio CD' not 'New CD' (BGO #345489)
+
 2006-06-20  Aaron bockover  <aaron@abock.org>
 
 	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: In default 
