@@ -82,6 +82,7 @@ namespace Banshee
                 new ArgumentLayout("query-genre",    "Get track genre for current playing song"),
                 new ArgumentLayout("query-duration", "Get duration of current playing song in seconds"),
                 new ArgumentLayout("query-position", "Get position of current playing song in seconds"),
+                new ArgumentLayout("query-rating",   "Get track rating for current playing song"),
                 new ArgumentLayout("query-uri",      "Get URI of current playing song"),
                 new ArgumentLayout("query-cover-uri","Get URI of the album cover of current playing song"),
                 new ArgumentLayout("query-status",   "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
@@ -190,6 +191,10 @@ namespace Banshee
                     break;
                 case "query-position":
                     PrintQueryResult("Position", remote_player.GetPlayingPosition());
+                    present = false;
+                    break;
+                case "query-rating":
+                    PrintQueryResult("Rating", remote_player.GetPlayingRating());
                     present = false;
                     break;
                 case "query-uri":

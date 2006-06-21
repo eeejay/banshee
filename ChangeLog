@@ -1,3 +1,11 @@
+2006-06-21  Aaron Bockover  <aaron@abock.org>
+
+	Rating patch by P. van de Geer (BGO #336042)
+
+	* src/Main.cs: Added --query-rating argument
+
+	* src/RemotePlayer.cs: Added GetPlayingRating remote method
+
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
 	Committed Patrick van Staveren's MTP support

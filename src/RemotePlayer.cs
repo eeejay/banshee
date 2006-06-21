@@ -208,6 +208,12 @@ namespace Banshee
         }
         
         [Method]
+        public virtual int GetPlayingRating()
+        {
+            return HaveTrack ? (int)PlayerEngineCore.CurrentTrack.Rating : -1;
+        }
+        
+        [Method]
         public virtual int GetPlayingStatus()
         {
             return PlayerEngineCore.CurrentState == PlayerEngineState.Playing ? 1 :
