@@ -36,6 +36,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions; 
 using System.Diagnostics;
+using System.Globalization;
 using Mono.Unix;
  
 namespace Banshee.Base
@@ -331,6 +332,24 @@ namespace Banshee.Base
         public static string UcFirst(string str)
         {
             return Convert.ToString(str[0]).ToUpper() + str.Substring(1);
+        }
+        
+        /// <summary>
+        /// Works the same as String.IndexOf() except it ignores the differences
+        /// in case and nonspacing combining characters (such as diacritics).
+        /// </summary>
+        /// <remarks>
+        /// It also ignores the differences between Japanese hiragana and
+        /// katakana characters and the differences in character width (for
+        /// example, Japanese katakana characters can be written as full-width
+        /// or half-width). But I don't know Japanese so this might be an
+        /// overkill.
+        /// </remarks>
+        public static int RelaxedIndexOf(string haystack, string needle)
+        {
+            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(haystack, needle,
+                CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace |
+                CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth);
         }
     }
     

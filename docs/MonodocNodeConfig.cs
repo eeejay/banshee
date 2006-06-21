@@ -33,7 +33,7 @@ public static class MonodocNodeConfig
 {
     private static XmlDocument document;
 
-    public static void Main(string [] args)
+    public static int Main(string [] args)
     {
         bool insert_mode = false;
         string xml_file = null;
@@ -44,7 +44,7 @@ public static class MonodocNodeConfig
             case "--insert":
                 if(args.Length != 4) {
                     PrintUsage();
-                    return;
+                    return 0;
                 }
                 
                 insert_mode = true;
@@ -55,7 +55,7 @@ public static class MonodocNodeConfig
             case "--remove":
                 if(args.Length != 3) {
                     PrintUsage();
-                    return;
+                    return 0;
                 }
                 
                 insert_mode = false;
@@ -64,7 +64,7 @@ public static class MonodocNodeConfig
                 break;
             default:
                 PrintUsage();
-                return;
+                return 0;
         }
         
         document = new XmlDocument();
@@ -79,7 +79,10 @@ public static class MonodocNodeConfig
         try {
             document.Save(xml_file);
         } catch {
+			Console.WriteLine("Couldn\'t insert node!");
+			return 1;
         }
+		return 0;
     }
 
     private static void PrintUsage()

@@ -68,7 +68,7 @@ namespace Banshee.Base
             "ogg |Ogg Vorbis|ogg |vorbisenc|bitrate|true |none",
             "flac|Flac      |flac|flacenc  |none   |false|quality=6",
             "wave|Wave / PCM|wav |wavenc   |none   |false|none",
-            "faac|Faac MP4  |mp4 |faac     |bitrate|false|none"
+            "faac|Faac MP4  |mp4 |faac     |bitrate|true |outputformat=1"
         };
         
         private static PipelineProfile [] loadedProfiles = null;

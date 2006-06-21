@@ -416,7 +416,7 @@ gst_playback_open(GstPlayback *engine, const gchar *uri)
                 engine->cdda_device = g_strdup(new_cdda_device);
             } else if(strcmp(new_cdda_device, engine->cdda_device) == 0) {
                 guint track_num;
-                gchar *track_str = g_strndup(uri + 7, strlen(uri) - strlen(new_cdda_device) - 9);
+                gchar *track_str = g_strndup(uri + 7, strlen(uri) - strlen(new_cdda_device) - 8);
                 track_num = atoi(track_str);
                 g_free(track_str);
                 

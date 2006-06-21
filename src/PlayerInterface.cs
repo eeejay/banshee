@@ -27,17 +27,21 @@
  */
 
 using System;
-using System.Threading;
+using System.IO;
 using System.Data;
-using System.Collections;
+using System.Threading;
 using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 using Mono.Unix;
 using Gtk;
 using Gdk;
 using Glade;
-using System.IO;
 
 using Sql;
+
 using Banshee.Widgets;
 using Banshee.Base;
 using Banshee.MediaEngine;
@@ -934,7 +938,8 @@ namespace Banshee
             if(args.Source == SourceManager.ActiveSource) {
                 UpdateViewName(args.Source);
                 
-                if(playlistModel.Count() == 0 && args.Source.Count > 0) {
+                if(playlistModel.Count() == 0 && args.Source.Count > 0
+                   && !searchEntry.IsQueryAvailable) {
                     playlistModel.ReloadSource();
                 } else if(source_update_draw_timeout == 0) {
                     source_update_draw_timeout = GLib.Timeout.Add(500, delegate {
@@ -1292,42 +1297,73 @@ namespace Banshee
                 return false;
             }
             
-            string query = searchEntry.Query.ToLower();
+            string query = searchEntry.Query;
             string field = searchEntry.Field;
-            string match = null;
+            string [] matches;
             
             if(field == Catalog.GetString("Artist Name")) {
-                match = ti.Artist;
+                matches = new string [] { ti.Artist };
             } else if(field == Catalog.GetString("Song Name")) {
-                match = ti.Title;
+                matches = new string [] { ti.Title };
             } else if(field == Catalog.GetString("Album Title")) {
-                match = ti.Album;
+                matches = new string [] { ti.Album };
             } else if(field == Catalog.GetString("Genre")) {
-                match = ti.Genre;
+                matches = new string [] { ti.Genre };
             } else {
-                string [] matches = {
+                matches = new string [] {
                     ti.Artist,
                     ti.Album,
                     ti.Title,
                     ti.Genre
                 };
-
-                foreach(string m in matches) {
-                    if(m == null || m == String.Empty) {
+            }
+            
+            List<string> words_include = new List<string>();
+            List<string> words_exclude = new List<string>();
+            
+            Array.ForEach<string>(Regex.Split(query, @"\s+"), delegate(string word) {
+                bool exclude = word.StartsWith("-");
+                if(exclude && word.Length > 1) {
+                    words_exclude.Add(word.Substring(1));
+                } else if(!exclude) {
+                    words_include.Add(word);
+                }
+            });
+            
+            foreach(string word in words_exclude) {
+                foreach(string match in matches) {
+                    if(match == null || match == String.Empty) {
                         continue;
                     }
-
-                    string ml = m.ToLower();
-                    if(ml.IndexOf(query) >= 0 || ml.IndexOf("the " + query) >= 0) {
-                        return true;
+                
+                    if(StringUtil.RelaxedIndexOf(match, word) >= 0) {
+                        return false;
+                    }
+                }
+            }
+            
+            bool found;
+            
+            foreach(string word in words_include) {
+                found = false;
+                
+                foreach(string match in matches) {
+                    if(match == null || match == string.Empty) {
+                        continue;
+                    }
+                
+                    if(StringUtil.RelaxedIndexOf(match, word) >= 0) {
+                        found = true;
+                        break;
                     }
                 }
                 
-                return false;
+                if(!found) {
+                    return false;
+                }
             }
-                    
-            match = match.ToLower();
-            return match.IndexOf(query) >= 0 || match.IndexOf("the " + query) >= 0;
+            
+            return true;
         }
         
         private void OnSimpleSearch(object o, EventArgs args)

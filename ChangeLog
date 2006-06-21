@@ -1,5 +1,27 @@
 2006-06-21  Aaron Bockover  <aaron@abock.org>
 
+	* docs/MonodocNodeConfig.cs: return proper error codes to allow make
+	to report failures (Ruben Vermeersch, BGO #338491)
+
+	* src/Banshee.Base/PipelineProfile.cs: Set outputformat=1 for faac
+	profile (John Eckhart, BGO #341547)
+
+	* libbanshee/gst-playback-0.10.c: Properly parse track_str from 
+	CDDA URI (substring length off-by-one, Koike Kazuhiko, BGO #341704)
+
+	* src/Banshee.Base/FileNamePattern.cs: Escape file names containing
+	a colon (:) (James Stembridge, BGO #333813)
+
+	* src/PlayerInterface.cs (DoesTrackMatchSearch): Allow for fuzzy
+	searching (OR/NOT support) and relaxed culture-based string 
+	comparison ('pele' will match 'Pelé'); patch by Marin Krkac, based
+	on original fuzzy search patch by Travis Bradshaw (BGO #333893, #327671)
+
+	* src/Banshee.Base/Utilities.cs (StringUtil): Added RelaxedIndexOf
+	method for relaxed culture-based string matching (Marin Krkac)
+
+2006-06-21  Aaron Bockover  <aaron@abock.org>
+
 	Rating patch by P. van de Geer (BGO #336042)
 
 	* src/Main.cs: Added --query-rating argument
