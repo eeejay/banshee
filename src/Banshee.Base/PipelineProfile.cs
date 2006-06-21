@@ -353,6 +353,8 @@ namespace Banshee.Base
             96,
             48
         };
+        
+        public event EventHandler Changed;
        
         public PipelineProfileSelector(string extFilter)
         {
@@ -401,7 +403,7 @@ namespace Banshee.Base
             } else {
                 Label label = new Label();
                 label.Markup = "<i><small>" + 
-                    Catalog.GetString("No iPod-compatible encoders available") +
+                    Catalog.GetString("No MP3-compatible encoders available") +
                     "</small></i>";
                 PackStart(label, false, false, 0);
                 label.Show();
@@ -420,11 +422,20 @@ namespace Banshee.Base
         private void OnProfileChanged(object o, EventArgs args)
         {
             SetBitrateVisibility();
+            OnChanged();
         }
         
         private void OnBitrateChanged(object o, EventArgs args)
         {
+            OnChanged();
+        }
         
+        private void OnChanged()
+        {
+            EventHandler handler = Changed;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
         
         private void SetBitrateVisibility()

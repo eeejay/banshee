@@ -1,5 +1,26 @@
 2006-06-21  Aaron Bockover  <aaron@abock.org>
 
+	New preferences dialog (BGO #345516)
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/banshee.glade: Removed legacy preferences window and added
+	a simplified new preferences dialog
+
+	* src/Preferences.cs: Removed legacy preferences window
+
+	* src/PlayerInterface.cs: Invoke the new preferences dialog
+
+	* src/Banshee.Base/Makefile.am: Added Gui/PreferencesDialog.cs
+
+	* src/Banshee.Base/PipelineProfile.cs: Added a Changed event needed
+	for instant-apply in the new preferences dialog
+
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: New instant-apply and
+	much simplified preferences dialog implementation
+
+2006-06-21  Aaron Bockover  <aaron@abock.org>
+
 	* src/PlaylistView.cs: Use theme icons for playback indication
 
 2006-06-21  Aaron Bockover  <aaron@abock.org>

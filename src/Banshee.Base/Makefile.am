@@ -58,7 +58,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/UIManager.cs \
 	$(srcdir)/Gui/SeekDialog.cs \
 	$(srcdir)/Gui/ErrorListDialog.cs \
-	$(srcdir)/Gui/SplashScreen.cs
+	$(srcdir)/Gui/SplashScreen.cs \
+	$(srcdir)/Gui/PreferencesDialog.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \

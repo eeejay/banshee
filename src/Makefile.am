@@ -42,7 +42,6 @@ banshee_sources = \
 	Dialogs.cs \
 	TrackProperties.cs \
 	SourceView.cs \
-	Preferences.cs \
 	DragDrop.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \

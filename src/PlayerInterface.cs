@@ -2096,7 +2096,9 @@ namespace Banshee
         
         private void OnPreferencesAction(object o, EventArgs args)
         {
-            new PreferencesWindow();
+            Banshee.Gui.Dialogs.PreferencesDialog dialog = new Banshee.Gui.Dialogs.PreferencesDialog();
+            dialog.Run();
+            dialog.Destroy();
         }
         
         // -- Playback Menu ---
