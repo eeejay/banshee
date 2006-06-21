@@ -137,8 +137,8 @@ namespace Banshee
 
             // FIXME: would be nice to have these as PlaylistColumns too...
             TreeViewColumn playIndColumn = new TreeViewColumn();
-            Gtk.Image playIndImg = new Gtk.Image(
-                Gdk.Pixbuf.LoadFromResource("blue-speaker.png"));
+            Gtk.Image playIndImg = new Gtk.Image(IconThemeUtils.LoadIcon(16, "audio-volume-high", 
+                "blue-speaker"));
             playIndImg.Show();
             playIndColumn.Expand = false;
             playIndColumn.Resizable = false;
@@ -146,7 +146,8 @@ namespace Banshee
             playIndColumn.Reorderable = false;
             playIndColumn.Widget = playIndImg;
             
-            nowPlayingPixbuf = Gdk.Pixbuf.LoadFromResource("now-playing-arrow.png");
+            nowPlayingPixbuf = IconThemeUtils.LoadIcon(16, "media-playback-start", 
+                Stock.MediaPlay, "now-playing-arrow");
             songDrmedPixbuf = Gdk.Pixbuf.LoadFromResource("song-drm.png");
             ripColumnPixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-16.png");
             

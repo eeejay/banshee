@@ -1,5 +1,9 @@
 2006-06-21  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlaylistView.cs: Use theme icons for playback indication
+
+2006-06-21  Aaron Bockover  <aaron@abock.org>
+
 	* docs/MonodocNodeConfig.cs: return proper error codes to allow make
 	to report failures (Ruben Vermeersch, BGO #338491)
 
