@@ -1,5 +1,16 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	Committed Patrick van Staveren's MTP support
+
+	* configure.ac: Added checks for libgphoto2-sharp and require --enable-mtp
+	to be explicitly passed to build experimental/unstable MTP support
+
+	* src/Banshee.Dap/Makefile.am: Added Mtp to SUBDIRS
+
+	* src/Banshee.Dap/Mtp/*: Experimental/unstable MTP DAP support
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/BansheeBranding.cs: Removed rogue Console.WriteLine
 
 2006-06-20  Aaron Bockover  <aaron@abock.org>

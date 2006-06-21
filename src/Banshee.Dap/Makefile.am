@@ -1,5 +1,4 @@
-SUBDIRS = Ipod MassStorage Njb
-
+SUBDIRS = Ipod MassStorage Mtp Njb
 
 MAINTAINERCLEANFILES = Makefile.in
 

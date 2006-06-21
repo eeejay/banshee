@@ -35,6 +35,9 @@ enable_ipodsharp="${enable_ipod}"
 AC_ARG_ENABLE(njb, AC_HELP_STRING([--enable-njb], [Enable NJB DAP support]), , enable_njb="yes")
 enable_njbsharp="${enable_njb}"
 
+AC_ARG_ENABLE(mtp, AC_HELP_STRING([--enable-mtp], [Enable MTP DAP support]), , enable_mtp="no")
+enable_mtp_dap="${enable_mtp}"
+
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
 
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
@@ -162,6 +165,20 @@ if test "x$enable_njbsharp" = "xyes"; then
 	AC_SUBST(NJBSHARP_LIBS)
 fi
 AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
+
+LIBGPHOTO2SHARP_REQUIRED=0.0.1
+PKG_CHECK_MODULES(LIBGPHOTO2SHARP,
+	libgphoto2-sharp >= $LIBGPHOTO2SHARP_REQUIRED,
+	enable_mtp_dap="$enable_mtp_dap", enable_mtp_dap=no)
+if test "x$enable_mtp" != "xno" -a "x$enable_mtp_dap" = "xno"; then
+    AC_MSG_ERROR(libgphoto2-sharp package not found or not up to date.  Please install libgphoto2 from their subversion, or disable MTP support by not passing --enable-mtp)
+fi
+if test "x$enable_mtp_dap" = "xyes"; then
+	LIBGPHOTO2SHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries libgphoto2-sharp`"
+	AC_SUBST(LIBGPHOTO2SHARP_ASSEMBLIES)
+	AC_SUBST(LIBGPHOTO2SHARP_LIBS)
+fi
+AM_CONDITIONAL(ENABLE_MTP, test "x$enable_mtp_dap" = "xyes")
 
 dnl dbus
 PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
@@ -360,6 +377,7 @@ src/Banshee.Dap/Makefile
 src/Banshee.Dap/Ipod/Makefile
 src/Banshee.Dap/Ipod/ipod-sharp.dll.config
 src/Banshee.Dap/MassStorage/Makefile
+src/Banshee.Dap/Mtp/Makefile
 src/Banshee.Dap/Njb/Makefile
 src/Banshee.Dap/Njb/njb-sharp.dll.config
 src/Banshee.Plugins/Makefile
@@ -402,6 +420,7 @@ banshee-$VERSION
     Digital Audio Players (DAP):
       iPod:            ${enable_ipodsharp}
       NJB:             ${enable_njbsharp}
+      MTP:             ${enable_mtp_dap}
 
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
