@@ -38,8 +38,6 @@ namespace Banshee.Base
         
         public bool Initialize()
         {
-            Console.WriteLine("initializing branding");
-            
             about_box_logo = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), 
                 "banshee-logo.png");
             

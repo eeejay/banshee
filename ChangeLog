@@ -1,5 +1,9 @@
 2006-06-20  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/BansheeBranding.cs: Removed rogue Console.WriteLine
+
+2006-06-20  Aaron Bockover  <aaron@abock.org>
+
 	* src/Main.cs: Added call to NotifyStartupComplete call for when
 	commands are sent to remote instance; enqueue files over DBus
 
