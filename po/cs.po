@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-21 13:55+0200\n"
-"PO-Revision-Date: 2006-06-21 14:02+0200\n"
+"POT-Creation-Date: 2006-06-23 18:55+0200\n"
+"PO-Revision-Date: 2006-06-23 18:57+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: KBabel 1.10.2\n"
 
-#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:16
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:12
 msgid "Banshee Music Player"
 msgstr "Hudební přehrávač Banshee"
 
@@ -34,20 +34,20 @@ msgid "<b>Advanced Properties</b>"
 msgstr "<b>Pokročilé vlastnosti</b>"
 
 #: ../data/banshee.glade.h:2
-msgid "<b>Banshee Music Folder Location</b>"
-msgstr "<b>Výchozí složky s hudbou pro Banshee</b>"
+msgid "<b>CD Importing</b>"
+msgstr "<b>Import CD</b>"
 
 #: ../data/banshee.glade.h:3
-msgid "<b>CD Ripping</b>"
-msgstr "<b>Ripování CD</b>"
+msgid "<b>Digital Audio Player</b>"
+msgstr "<b>Digitální audiopřehrávač</b>"
 
 #: ../data/banshee.glade.h:4
 msgid "<b>Loading...</b>"
 msgstr "<b>Načítání...</b>"
 
 #: ../data/banshee.glade.h:5
-msgid "<b>Playback Engines</b>"
-msgstr "<b>Přehrávání</b>"
+msgid "<b>Music Folder</b>"
+msgstr "<b>Hudební složka</b>"
 
 #: ../data/banshee.glade.h:6
 msgid "<b>Session Information</b>"
@@ -58,162 +58,146 @@ msgid "<b>Write Options</b>"
 msgstr "<b>Volby zápisu</b>"
 
 #: ../data/banshee.glade.h:8
-msgid "<b>iPod Transcoding</b>"
-msgstr "<b>Převod pro iPod</b>"
-
-#: ../data/banshee.glade.h:9
 msgid "<big><b>Editing Song</b></big>"
 msgstr "<big><b>Úprava skladby</b></big>"
 
-#: ../data/banshee.glade.h:10
+#: ../data/banshee.glade.h:9
 msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Import hudby do knihovny</b></big>"
 
-#: ../data/banshee.glade.h:11
+#: ../data/banshee.glade.h:10
 msgid "<small><i><Unknown></i></small>"
 msgstr "<small><i><Neznámý></i></small>"
 
-#: ../data/banshee.glade.h:12
-msgid "<small>Advanced</small>"
-msgstr "<small>Pokročilé</small>"
-
-#: ../data/banshee.glade.h:13
-msgid "<small>Encoding</small>"
-msgstr "<small>Kódování</small>"
-
-#: ../data/banshee.glade.h:14
-msgid "<small>Library</small>"
-msgstr "<small>Knihovna</small>"
-
-#: ../data/banshee.glade.h:15
+#: ../data/banshee.glade.h:11
 msgid "Albu_m"
 msgstr "Albu_m"
 
-#: ../data/banshee.glade.h:17
+#: ../data/banshee.glade.h:13
 msgid "Bit Rate:"
 msgstr "Datový tok:"
 
-#: ../data/banshee.glade.h:18
+#: ../data/banshee.glade.h:14
 msgid "Channels:"
 msgstr "Kanály:"
 
-#: ../data/banshee.glade.h:19
+#: ../data/banshee.glade.h:15
 msgid "Choose an import source:"
 msgstr "Vyberte zdroj hudby pro import:"
 
-#: ../data/banshee.glade.h:20
-msgid "Copy files to Banshee Music Folder when importing to Library"
-msgstr "Při importu do knihovny kopírovat soubory do hudební složky Banshee"
+#: ../data/banshee.glade.h:16
+msgid "Conversion Format:"
+msgstr "Konverzní formát:"
 
-#: ../data/banshee.glade.h:21
-msgid "Default Engine"
-msgstr "Implicitní nástroj"
+#: ../data/banshee.glade.h:17
+msgid "Copy files to music folder when importing"
+msgstr "Při importu kopírovat soubory do hudební složky"
 
-#: ../data/banshee.glade.h:22
+#: ../data/banshee.glade.h:18
 msgid "Disc Options"
 msgstr "Volby disku"
 
-#: ../data/banshee.glade.h:23
+#: ../data/banshee.glade.h:19
 msgid "Disc format:"
 msgstr "Formát disku:"
 
-#: ../data/banshee.glade.h:24
+#: ../data/banshee.glade.h:20
 msgid "Disc name:"
 msgstr "Jméno disku:"
 
-#: ../data/banshee.glade.h:25
+#: ../data/banshee.glade.h:21
 msgid "Disk Usage:"
 msgstr "Využití disku:"
 
-#: ../data/banshee.glade.h:26
+#: ../data/banshee.glade.h:22
 msgid "Do not show this dialog again"
 msgstr "Toto dialogové okno příště nezobrazovat"
 
-#: ../data/banshee.glade.h:27 ../src/TrackProperties.cs:240
+#: ../data/banshee.glade.h:23 ../src/TrackProperties.cs:240
 msgid "Editing Song"
 msgstr "Úprava skladby"
 
-#: ../data/banshee.glade.h:28
+#: ../data/banshee.glade.h:24
 msgid "Eject disc after writing"
 msgstr "Vysunout disk po ukončení zápisu"
 
-#: ../data/banshee.glade.h:29
-msgid "Encoding Profile:"
-msgstr "Kódování:"
-
-#: ../data/banshee.glade.h:30
+#: ../data/banshee.glade.h:25
 msgid "Encoding:"
 msgstr "Kódování:"
 
-#: ../data/banshee.glade.h:31
+#: ../data/banshee.glade.h:26
 msgid "Enter the address of the file you would like to open:"
 msgstr "Vložte adresy souboru pro otevření:"
 
-#: ../data/banshee.glade.h:32 ../src/Dialogs.cs:88
+#: ../data/banshee.glade.h:27 ../src/Dialogs.cs:88
 msgid "Error"
 msgstr "Chyba"
 
-#: ../data/banshee.glade.h:33
+#: ../data/banshee.glade.h:28
 msgid "File Name:"
 msgstr "Jméno souboru:"
 
-#: ../data/banshee.glade.h:34
+#: ../data/banshee.glade.h:29
 msgid "Import Music Source"
 msgstr "Importovat hudbu"
 
-#: ../data/banshee.glade.h:35
+#: ../data/banshee.glade.h:30
 msgid "Import Music to Library"
 msgstr "Import hudby do knihovny"
 
-#: ../data/banshee.glade.h:36
+#: ../data/banshee.glade.h:31
 msgid "Imported On:"
 msgstr "Importováno:"
 
-#: ../data/banshee.glade.h:37
+#: ../data/banshee.glade.h:32
 msgid "Last Played On:"
 msgstr "Naposledy přehráno:"
 
-#: ../data/banshee.glade.h:38
+#: ../data/banshee.glade.h:33
 msgid "Mime Type:"
 msgstr "MIME typ:"
 
-#: ../data/banshee.glade.h:39
+#: ../data/banshee.glade.h:34
 msgid "Number of Plays:"
 msgstr "Počet přehrání:"
 
-#: ../data/banshee.glade.h:40 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
+#: ../data/banshee.glade.h:35 ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Otevření umístění"
 
-#: ../data/banshee.glade.h:41
+#: ../data/banshee.glade.h:36
+msgid "Output Format:"
+msgstr "Výstupní formát:"
+
+#: ../data/banshee.glade.h:37
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../data/banshee.glade.h:42
+#: ../data/banshee.glade.h:38
 msgid "Reset"
 msgstr "Obnovit výchozí"
 
-#: ../data/banshee.glade.h:43
+#: ../data/banshee.glade.h:39
 msgid "Sample Rate:"
 msgstr "Vzorkovací frekvence:"
 
-#: ../data/banshee.glade.h:44
+#: ../data/banshee.glade.h:40
 msgid "Seek to Position"
 msgstr "Přejít na pozici"
 
-#: ../data/banshee.glade.h:45
+#: ../data/banshee.glade.h:41
 msgid "Track Duration:"
 msgstr "Délka skladby:"
 
-#: ../data/banshee.glade.h:46
+#: ../data/banshee.glade.h:42
 msgid "Track _Count"
 msgstr "_Počítadlo skladby"
 
-#: ../data/banshee.glade.h:47
+#: ../data/banshee.glade.h:43
 msgid "Track _Number"
 msgstr "Čí_slo skladby"
 
-#: ../data/banshee.glade.h:48 ../src/Banshee.Base/Dap/Dap.cs:618
+#: ../data/banshee.glade.h:44 ../src/Banshee.Base/Dap/Dap.cs:618
 #: ../src/TrackProperties.cs:236 ../src/TrackProperties.cs:260
 #: ../src/TrackProperties.cs:261 ../src/TrackProperties.cs:262
 #: ../src/TrackProperties.cs:263 ../src/TrackProperties.cs:264
@@ -221,19 +205,19 @@ msgstr "Čí_slo skladby"
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../data/banshee.glade.h:49
+#: ../data/banshee.glade.h:45
 msgid "VBR:"
 msgstr "VBR:"
 
-#: ../data/banshee.glade.h:50
+#: ../data/banshee.glade.h:46
 msgid "Write disc to:"
 msgstr "Zapsat disk na:"
 
-#: ../data/banshee.glade.h:51
+#: ../data/banshee.glade.h:47
 msgid "Write speed:"
 msgstr "Rychlost zápisu:"
 
-#: ../data/banshee.glade.h:52
+#: ../data/banshee.glade.h:48
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
@@ -241,23 +225,23 @@ msgstr ""
 "Vaše knihovna s hudbou je prázdná. Můžete novou hudbu importovat do knihovny "
 "nyní, a nebo později."
 
-#: ../data/banshee.glade.h:53
+#: ../data/banshee.glade.h:49
 msgid "_Artist"
 msgstr "_Umělec"
 
-#: ../data/banshee.glade.h:54
+#: ../data/banshee.glade.h:50
 msgid "_Genre"
 msgstr "Žán_r"
 
-#: ../data/banshee.glade.h:55
+#: ../data/banshee.glade.h:51
 msgid "_Search:"
 msgstr "_Vyhledat:"
 
-#: ../data/banshee.glade.h:56
+#: ../data/banshee.glade.h:52
 msgid "_Title"
 msgstr "_Titul"
 
-#: ../data/banshee.glade.h:57
+#: ../data/banshee.glade.h:53
 msgid "_Write"
 msgstr "_Zápis"
 
@@ -1326,13 +1310,13 @@ msgstr ""
 "při kopírování (nový PipelineProfile(profile))"
 
 #. Translators: used to specify the bitrate for ripping
-#: ../src/Banshee.Base/PipelineProfile.cs:362
+#: ../src/Banshee.Base/PipelineProfile.cs:364
 msgid "at"
 msgstr "při"
 
-#: ../src/Banshee.Base/PipelineProfile.cs:404
-msgid "No iPod-compatible encoders available"
-msgstr "Nejsou dostupné kompatibilní iPod kodéry"
+#: ../src/Banshee.Base/PipelineProfile.cs:406
+msgid "No MP3-compatible encoders available"
+msgstr "Není dostupný žádný MP3 enkodér"
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:101
 msgid "Default player engine"
@@ -2185,10 +2169,6 @@ msgstr "Naposledy přehráno"
 #: ../src/PlaylistView.cs:480
 msgid "N/A"
 msgstr "N/A"
-
-#: ../src/Preferences.cs:83
-msgid "Select Library Location"
-msgstr "Výběr výchozího umístění adresáře pro knihovnu"
 
 #: ../src/ToggleStates.cs:79
 msgid "Continuous"
