@@ -75,7 +75,6 @@ src/Main.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
 src/PlaylistView.cs
-src/Preferences.cs
 src/SourceView.cs
 src/StockIcons.cs
 src/ToggleStates.cs
