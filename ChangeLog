@@ -1,3 +1,7 @@
+2006-06-26  Ruben Vermeersch  <ruben@Lambda1.be>
+
+	* banshee.mdp: Updated MonoDevelop project
+
 2006-06-21  Aaron Bockover  <aaron@abock.org>
 
 	New preferences dialog (BGO #345516)
