@@ -1,3 +1,20 @@
+2006-06-22  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Ignore services with 'Jono'
+	in them (Jono has bad taste, apparently)
+
+2006-06-22  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Install
+	ActionManager actions in overloaded InterfaceInitialize method, not
+	in PluginInitialize; this is now required since the 
+	Banshee.Base.ActionManager's interface definition is loaded 
+	after PluginInitialize
+
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: assign recorder with
+	newly added media to all burner sources if source does not already
+	have a set recorder (BGO #345475)
+
 2006-06-26  Ruben Vermeersch  <ruben@Lambda1.be>
 
 	* banshee.mdp: Updated MonoDevelop project
