@@ -565,8 +565,11 @@ namespace Banshee
 
         public void SelectPlaying()
         {
-            Selection.UnselectAll ();
-            Selection.SelectPath (model.PlayingPath);
+            Selection.UnselectAll();
+            
+            if(model.PlayingPath != null) {
+                Selection.SelectPath(model.PlayingPath);
+            }
         }
         
         public bool PlaySelected()

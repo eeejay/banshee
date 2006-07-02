@@ -2280,6 +2280,8 @@ namespace Banshee
                     searchEntry.Query = track.Genre;
                     break;
             }
+            
+            playlistView.HasFocus = true;
         }
         
         // --- Help Menu ---

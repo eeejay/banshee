@@ -1,5 +1,15 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	* src/PlaylistView.cs (SelectPlaying): Check PlayingPath for null before
+	calling SelectPath on it
+
+	* src/PlayerInterface.cs (SearchBySelectedTrack): Focus the playlist view 
+
+	* src/Banshee.Base/QueuedSqliteDatabase.cs: Updated by rubenv in a 
+	previous commit to add a WakeUp method and not hang on Dispose 
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	Revised patch from Dominik Meister (BGO #333904)
 
 	* data/UIManagerLayout.xml: 
