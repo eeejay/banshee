@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-29 14:36+0200\n"
-"PO-Revision-Date: 2006-06-29 14:45+0200\n"
+"PO-Revision-Date: 2006-07-02 16:59+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -118,7 +118,7 @@ msgstr "Avaa kelkka kirjoituksen päätyttyä"
 
 #: ../data/banshee.glade.h:25
 msgid "Encoding:"
-msgstr "Koodataan:"
+msgstr "Koodaus:"
 
 #: ../data/banshee.glade.h:26
 msgid "Enter the address of the file you would like to open:"
@@ -174,7 +174,7 @@ msgstr "Nollaa"
 
 #: ../data/banshee.glade.h:39
 msgid "Sample Rate:"
-msgstr "Samplenopeus:"
+msgstr "Näytenopeus:"
 
 #: ../data/banshee.glade.h:40
 msgid "Seek to Position"
@@ -267,7 +267,7 @@ msgid ""
 "Enabled Special Keys (Multimedia Keys) support for Play/Pause/Next/Previous; "
 "works with mappings set through Gnome Shortcuts capplet"
 msgstr ""
-"Ota käyttöön multimedianäppäinten tuki toiminnoille Soita, Keskeytä, "
+"Ota käyttöön multimedianäppäinten tuki toiminnoille Soita, Pysäytä, "
 "Seuraava ja Edellinen: näppäimet asetetaan gnomen pikanäppäimien asetuksista."
 
 #: ../data/banshee.schemas.in.h:6
@@ -774,7 +774,7 @@ msgstr "Soita"
 
 #: ../src/Banshee.Base/ActionManager.cs:210
 msgid "Play or pause the current song"
-msgstr "Soita tai keskeytä tämänhetkinen kappale"
+msgstr "Soita tai pysäytä tämänhetkinen kappale"
 
 #: ../src/Banshee.Base/ActionManager.cs:213
 msgid "Next"
@@ -870,12 +870,12 @@ msgstr "HAL ei ole alustettu"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
 msgid "Audio CD Core Initialized"
-msgstr "Ääni-CD:n ydin alustettu"
+msgstr "CD-levyn ydin alustettu"
 
 #. work around mcs #76642
 #: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
 msgid "Could not Read Audio CD"
-msgstr "Ääni-CDtä ei voi alustaa"
+msgstr "CD-levyä ei voi lukea"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:85
 #: ../src/Banshee.Base/TrackInfo.cs:384
@@ -895,7 +895,7 @@ msgstr "Kappale {0}"
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:92
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:57
 msgid "Audio CD"
-msgstr "Ääni-CD"
+msgstr "CD-levy"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
 msgid "Cannot Eject CD"
@@ -920,7 +920,7 @@ msgstr ""
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:263
 msgid "Importing Audio CD"
-msgstr "Tuodaan ääni-CD:tä"
+msgstr "Tuodaan CD-levyä"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:264
 msgid "Initializing Drive"
@@ -979,11 +979,11 @@ msgstr "{0} Mt"
 #: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:112
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:61
 msgid "New Audio CD"
-msgstr "Uusi Ääni-CD"
+msgstr "Uusi CD-levy"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:113
 msgid "Create a new audio CD"
-msgstr "Luo uusi ääni-CD"
+msgstr "Luo uusi CD-levy"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:155
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
@@ -997,7 +997,7 @@ msgstr "CD-kirjoitukseen pystyviä laitteita ei löytynyt."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
 msgid "Audio"
-msgstr "Ääni-CD"
+msgstr "CD-levy"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
 msgid "MP3"
@@ -1463,11 +1463,11 @@ msgstr "Tuntematon kappale"
 
 #: ../src/Banshee.Base/TrackInfoHeader.cs:103
 msgid "by"
-msgstr "esittää"
+msgstr " "
 
 #: ../src/Banshee.Base/TrackInfoHeader.cs:104
 msgid "from"
-msgstr "levyltä"
+msgstr "/"
 
 #: ../src/Banshee.Base/Utilities.cs:76
 #, csharp-format
@@ -1961,7 +1961,7 @@ msgstr "Soita edellinen kappale"
 
 #: ../src/PlayerInterface.cs:455
 msgid "Play/pause current song"
-msgstr "Soita/keskeytä nykyinen kappale"
+msgstr "Soita/pysäytä soiva kappale"
 
 #: ../src/PlayerInterface.cs:456
 msgid "Play next song"
@@ -2010,7 +2010,7 @@ msgstr ""
 
 #: ../src/PlayerInterface.cs:822
 msgid "Pause"
-msgstr "Keskeytä"
+msgstr "Pysäytä"
 
 #: ../src/PlayerInterface.cs:856
 msgid "Playback Error"
@@ -2327,7 +2327,7 @@ msgstr "Versio"
 #~ msgstr "Nimeä valittu lähde uudestaan"
 
 #~ msgid "Delete the active playlist"
-#~ msgstr "Poista nykyinen soittolista"
+#~ msgstr "Poista aktiivinen soittolista"
 
 #~ msgid "Eject the active source"
 #~ msgstr "Poista valittu lähde asemasta"
@@ -2368,7 +2368,7 @@ msgstr "Versio"
 #~ msgstr "Virhe luotaessa CD-levykuvaa"
 
 #~ msgid "Writing Audio CD"
-#~ msgstr "Kirjoitetaan Ääni-CD:tä"
+#~ msgstr "Kirjoitetaan CD-levyä"
 
 #~ msgid "Writing disk..."
 #~ msgstr "Kirjoitetaan levylle..."
