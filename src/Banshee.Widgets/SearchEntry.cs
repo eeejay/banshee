@@ -382,6 +382,19 @@ namespace Banshee.Widgets
             get {
                 return menuMap[activeItem] as string;
             }
+            set {
+                foreach(MenuItem iterItem in popupMenu.Children) {
+                    if(!(iterItem is CheckMenuItem)) {
+                        continue;
+                    }
+
+                    CheckMenuItem checkItem = iterItem as CheckMenuItem;
+
+                    if(menuMap[checkItem] as string == value) {
+                        checkItem.Toggle();
+                    }
+                }
+            }
         }
         
         public void Focus()

@@ -2231,6 +2231,56 @@ namespace Banshee
             playlistView.ScrollToPlaying();
             playlistView.SelectPlaying();
         }
+
+        private enum SearchTrackCriteria 
+        {
+            Artist,
+            Album,
+            Genre
+        }
+
+        private void OnSearchForSameAlbumAction(object o, EventArgs args)
+        {
+            SearchBySelectedTrack(SearchTrackCriteria.Album);
+        }
+
+        private void OnSearchForSameArtistAction(object o, EventArgs args)
+        {
+            SearchBySelectedTrack(SearchTrackCriteria.Artist);
+        }
+
+        private void OnSearchForSameGenreAction(object o, EventArgs args)
+        {
+            SearchBySelectedTrack(SearchTrackCriteria.Genre);
+        }
+
+        private void SearchBySelectedTrack(SearchTrackCriteria criteria)
+        {
+            if(playlistView.Selection.CountSelectedRows() <= 0) {
+                return;
+            }
+            
+            TrackInfo track = playlistView.SelectedTrackInfo;
+
+            if(track == null) {
+                return;
+            }
+
+            switch(criteria) {
+                case SearchTrackCriteria.Album:
+                    searchEntry.Field = Catalog.GetString("Album Title");
+                    searchEntry.Query = track.Album;
+                    break;
+                case SearchTrackCriteria.Artist:
+                    searchEntry.Field = Catalog.GetString("Artist Name");
+                    searchEntry.Query = track.Artist;
+                    break;
+                case SearchTrackCriteria.Genre:
+                    searchEntry.Field = Catalog.GetString("Genre");
+                    searchEntry.Query = track.Genre;
+                    break;
+            }
+        }
         
         // --- Help Menu ---
         

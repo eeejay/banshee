@@ -1,5 +1,17 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	Revised patch from Dominik Meister (BGO #333904)
+
+	* data/UIManagerLayout.xml: 
+	* src/Banshee.Base/ActionManager.cs: Added search by criteria entries
+	
+	* src/PlayerInterface.cs: Implement search by criteria from selection
+
+	* src/Banshee.Widgets/SearchEntry.cs: Allow setting the search filter
+	restrition
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/ImportManager.cs: Catch any exception on the 
 	'starts with' test for path file names when importing in case
 	there is poor encoding (BGO #68088, Marin Krkač)

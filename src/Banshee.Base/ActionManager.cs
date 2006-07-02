@@ -184,6 +184,22 @@ namespace Banshee.Base
                 new ActionEntry("PropertiesAction", Stock.Properties,
                     Catalog.GetString("Edit Song Metadata"), null,
                     Catalog.GetString("Edit metadata on selected songs"), null),
+
+                new ActionEntry("SearchMenuAction", Stock.Find,
+                    Catalog.GetString("Search for songs"), null,
+                    Catalog.GetString("Search for songs matching certain criteria"), null),
+
+                new ActionEntry("SearchForSameAlbumAction", null,
+                    Catalog.GetString("By matching album"), null,
+                    Catalog.GetString("Search all songs of this album"), null),
+
+                new ActionEntry("SearchForSameArtistAction", null,
+                    Catalog.GetString("By matching artist"), null,
+                    Catalog.GetString("Search all songs of this artist"), null),
+
+                new ActionEntry("SearchForSameGenreAction", null,
+                    Catalog.GetString("By matching genre"), null,
+                    Catalog.GetString("Search all songs of this genre"), null),
                     
                 new ActionEntry("AddToPlaylistAction", null,
                     Catalog.GetString("Add to Playlist"), null,
@@ -191,7 +207,7 @@ namespace Banshee.Base
                     
                 new ActionEntry("RatingAction", null,
                     Catalog.GetString("Rating"), null,
-                    Catalog.GetString("Set rating for selected songs"), null),
+                    Catalog.GetString("Set rating for selected songs"), null)
             });
             
             ui.InsertActionGroup(song_actions, 0);

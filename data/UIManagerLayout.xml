@@ -78,6 +78,12 @@
         <menuitem name="RemoveSongs" action="RemoveSongsAction" />
         <menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
         <separator />
+        <menu name="SearchMenu" action="SearchMenuAction">
+            <menuitem name="SearchForSameArtist" action="SearchForSameArtistAction" />
+            <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction" />
+            <menuitem name="SearchForSameGenre" action="SearchForSameGenreAction" />
+        </menu>
+        <separator />
         <menuitem name="SelectAll" action="SelectAllAction" />
         <menuitem name="SelectNone" action="SelectNoneAction" />
         <separator />
