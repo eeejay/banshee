@@ -204,8 +204,14 @@ namespace Banshee.Base
                 return;
             }
             
-            if(is_regular_file && !Path.GetFileName(source).StartsWith(".")) {
-                Enqueue(source);
+            if(is_regular_file) {
+                try {
+                    if(!Path.GetFileName(source).StartsWith(".")) {
+                        Enqueue(source);
+                    }
+                } catch(System.ArgumentException) {
+                    // If there are illegal characters in path
+                }
             } else if(is_directory && !Path.GetFileName(System.IO.Path.GetDirectoryName(source)).StartsWith(".")) {
 
                 try {

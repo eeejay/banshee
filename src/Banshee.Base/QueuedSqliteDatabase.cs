@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  QueuedSqliteDatabase.cs
  *
@@ -29,14 +28,14 @@
  
 using System;
 using System.Threading;
-using System.Collections;
+using System.Collections.Generic;
 using Mono.Data.SqliteClient;
 
 namespace Banshee.Database
 {
     public class QueuedSqliteDatabase : IDisposable
     {
-        private ArrayList command_queue = new ArrayList();
+        private Queue<QueuedSqliteCommand> command_queue = new Queue<QueuedSqliteCommand>();
         private SqliteConnection connection;
         private Thread queue_thread;
         private bool dispose_requested = false;
@@ -65,8 +64,11 @@ namespace Banshee.Database
 
         private void QueueCommand(QueuedSqliteCommand command)
         {
-            lock(command_queue.SyncRoot) {
-                command_queue.Add(command);
+            lock(command_queue) {
+                command_queue.Enqueue(command);
+                Monitor.Enter(command_queue);
+                Monitor.Pulse(command_queue);
+                Monitor.Exit(command_queue);
             }
         }
         
@@ -125,13 +127,11 @@ namespace Banshee.Database
                         in_dispose_transaction = true;
                     }
                     
-                    QueuedSqliteCommand command = command_queue[0] as QueuedSqliteCommand;
-                    command.Execute();
-                    
-                    // TODO: optimize (RemoveAt?)
-                    lock(command_queue.SyncRoot) {
-                        command_queue.Remove(command);
+                    QueuedSqliteCommand command;
+                    lock(command_queue) {
+                        command = command_queue.Dequeue();
                     }
+                    command.Execute();
                 }
 
                 if(dispose_requested) {
@@ -143,7 +143,9 @@ namespace Banshee.Database
                     return;
                 }
                 
-                Thread.Sleep(10);
+                Monitor.Enter(command_queue);
+                Monitor.Wait(command_queue);
+                Monitor.Exit(command_queue);
             }
         }
     }

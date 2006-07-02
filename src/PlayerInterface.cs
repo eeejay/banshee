@@ -1376,6 +1376,10 @@ namespace Banshee
             
             if(!searchEntry.IsQueryAvailable) {
                 playlistModel.ReloadSource();
+                while(Application.EventsPending()) {
+                    Application.RunIteration();
+                }
+                playlistView.UpdateView();
                 return;
             }
             

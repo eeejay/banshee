@@ -1,5 +1,22 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/ImportManager.cs: Catch any exception on the 
+	'starts with' test for path file names when importing in case
+	there is poor encoding (BGO #68088, Marin Krkač)
+
+	* src/PlaylistView.cs: More natural sorting of playlists 
+	by artist (BGO #342835, Denis Washington)
+
+	* src/PlayerInterface.cs (OnSimpleSearch): Pump the main event loop 
+	before updating the view to allow for the scroll to playing 
+	request to work properly for now (BGO #328886, Marin Krkač)
+
+	* src/Banshee.Base/QueuedSqliteDatabase.cs: Use a generic 
+	Queue for the queue; eliminate busy waiting to reduce 
+	CPU usage (BGO #346381, Ruben Vermeersch)
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	Patch from Dominik Meister to add Jump To Playing support (BGO #339847)
 
 	* data/UIManagerLayout.xml: Added JumpToPlayingAction to show in the
