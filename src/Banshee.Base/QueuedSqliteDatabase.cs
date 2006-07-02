@@ -54,6 +54,7 @@ namespace Banshee.Database
         public void Dispose()
         {
             dispose_requested = true;
+            WakeUp();
             while(processing_queue);
         }
         
@@ -66,10 +67,8 @@ namespace Banshee.Database
         {
             lock(command_queue) {
                 command_queue.Enqueue(command);
-                Monitor.Enter(command_queue);
-                Monitor.Pulse(command_queue);
-                Monitor.Exit(command_queue);
             }
+            WakeUp();
         }
         
         public SqliteDataReader Query(object query)
@@ -107,6 +106,13 @@ namespace Banshee.Database
                     FROM sqlite_master
                     WHERE Type='table' AND Name='{0}'", 
                     table))) > 0;
+        }
+
+        private void WakeUp()
+        {
+            Monitor.Enter(command_queue);
+            Monitor.Pulse(command_queue);
+            Monitor.Exit(command_queue);
         }
         
         private void ProcessQueue()
