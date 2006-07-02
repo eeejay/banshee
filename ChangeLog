@@ -1,5 +1,18 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	Patch from Dominik Meister to add Jump To Playing support (BGO #339847)
+
+	* data/UIManagerLayout.xml: Added JumpToPlayingAction to show in the
+	track view context menu
+
+	* src/PlayerInterface.cs: Implemented JumpToPlayingAction
+
+	* src/Banshee.Base/ActionManager.cs: Added JumpToPlayingAction definition
+
+	* src/PlaylistView.cs: Implemented SelectPlaying method
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/Makefile.am: Added PluginFactory.cs and IPlugin.cs
 
 2006-07-02  Aaron Bockover  <aaron@abock.org>

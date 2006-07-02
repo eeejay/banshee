@@ -81,6 +81,8 @@
         <menuitem name="SelectAll" action="SelectAllAction" />
         <menuitem name="SelectNone" action="SelectNoneAction" />
         <separator />
+        <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
+        <separator />
         <menuitem name="Properties" action="PropertiesAction" />
     </popup>
 </ui>

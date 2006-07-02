@@ -117,6 +117,10 @@ namespace Banshee.Base
                 new ActionEntry("SelectNoneAction", null,
                     Catalog.GetString("Select None"), "<control><shift>A",
                     Catalog.GetString("Unselect all songs in song list"), null),
+
+                new ActionEntry("JumpToPlayingAction", null,
+                    Catalog.GetString("Jump to playing song"), "<control>J",
+                    null, null),
                 
                 new ActionEntry("PluginsAction", null,
                     Catalog.GetString("Plugins..."), null,

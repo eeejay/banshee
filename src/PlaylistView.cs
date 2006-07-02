@@ -557,6 +557,12 @@ namespace Banshee
                 ScrollToCell(model.PlayingPath, null, true, 0.5f, 0.0f);
             }
         }
+
+        public void SelectPlaying()
+        {
+            Selection.UnselectAll ();
+            Selection.SelectPath (model.PlayingPath);
+        }
         
         public bool PlaySelected()
         {

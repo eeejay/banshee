@@ -2221,6 +2221,12 @@ namespace Banshee
             
             log_viewer.Show();
         }
+
+        private void OnJumpToPlayingAction(object o, EventArgs args)
+        {
+            playlistView.ScrollToPlaying();
+            playlistView.SelectPlaying();
+        }
         
         // --- Help Menu ---
         
