@@ -1,10 +1,9 @@
-
 /***************************************************************************
  *  AudioscrobblerPlugin.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Chris Toshok (toshok@ximian.com)
- *             Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Chris Toshok <toshok@ximian.com>
+ *             Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -82,28 +81,12 @@ namespace Banshee.Plugins.Audioscrobbler
             gconf = Globals.Configuration;
             gconf.AddNotify(ConfigurationBase, GConfNotifier);
 
-            InstallInterfaceActions();
-
             if(Enabled) {
                 StartEngine();
             }
         }
         
-        protected override void PluginDispose()
-        {
-            StopEngine();
-            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
-            Globals.ActionManager.UI.RemoveActionGroup(actions);
-            gconf.RemoveNotify(ConfigurationBase, GConfNotifier);
-            actions = null;
-        }
-        
-        public override Gtk.Widget GetConfigurationWidget()
-        {            
-            return new AudioscrobblerConfigPage(this, true);
-        }
-
-        private void InstallInterfaceActions()
+        protected override void InterfaceInitialize()
         {
             actions = new ActionGroup("Audioscrobbler");
             
@@ -138,6 +121,20 @@ namespace Banshee.Plugins.Audioscrobbler
                 && Username != String.Empty;
         }
         
+        protected override void PluginDispose()
+        {
+            StopEngine();
+            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+            Globals.ActionManager.UI.RemoveActionGroup(actions);
+            gconf.RemoveNotify(ConfigurationBase, GConfNotifier);
+            actions = null;
+        }
+        
+        public override Gtk.Widget GetConfigurationWidget()
+        {            
+            return new AudioscrobblerConfigPage(this, true);
+        }
+
         private void OnConfigurePlugin(object o, EventArgs args)
         {
             AudioscrobblerConfigPage page = new AudioscrobblerConfigPage(this, false);

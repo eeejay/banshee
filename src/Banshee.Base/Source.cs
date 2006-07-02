@@ -214,6 +214,23 @@ namespace Banshee.Sources
         {
         }
         
+        public virtual TrackInfo GetTrackAt(int index)
+        {
+            // this is an awful hack to make older sources
+            // compatible with new playback model (did not 
+            // want to change existing API)
+            
+            int current_index = 0;
+            
+            foreach(TrackInfo track in Tracks) {
+                if(current_index++ == index) {
+                    return track;
+                }
+            }
+            
+            return null;
+        }
+        
         // Translators: Source being the generic word for playlist, device, library, etc
         private static string generic_name = Catalog.GetString("Source");
         public virtual string GenericName {

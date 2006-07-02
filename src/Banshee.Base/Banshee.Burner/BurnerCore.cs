@@ -86,12 +86,16 @@ namespace Banshee.Burner
                     }
                     
                     source = CreateSource(args.Drive as IRecorder);
-                } else {
-                    source.Session.Recorder = args.Drive as IRecorder;
                 }
                 
                 if(source != null) {
                     SourceManager.SetActiveSource(source);
+                }
+                
+                foreach(BurnerSource iter_source in burners) {
+                    if(iter_source.Session.Recorder == null) {
+                        iter_source.Session.Recorder = args.Drive as IRecorder;
+                    }
                 }
             };
             

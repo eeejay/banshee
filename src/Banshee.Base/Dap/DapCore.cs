@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DapCore.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -30,11 +29,13 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Mono.Unix;
 using Hal;
 
 using Banshee.Base;
+using Banshee.Plugins;
 
 namespace Banshee.Dap
 {
@@ -42,19 +43,23 @@ namespace Banshee.Dap
     
     public class DapEventArgs : EventArgs
     {
-        public DapDevice Dap;
+        private DapDevice dap;
         
         public DapEventArgs(DapDevice dap)
         {
-            Dap = dap;
+            this.dap = dap;
+        }
+        
+        public DapDevice Dap {
+            get { return dap; }
         }
     }
 
     public static class DapCore 
     {
-        private static Hashtable device_table = new Hashtable();
-        private static Hashtable device_waiting_table = new Hashtable();
-        private static ArrayList supported_dap_types = new ArrayList();
+        private static Dictionary<string,DapDevice> device_table = new Dictionary<string,DapDevice>();
+        private static Dictionary<string,Type> device_waiting_table = new Dictionary<string,Type>();
+        private static List<Type> supported_dap_types = new List<Type>();
     
         public static event DapEventHandler DapAdded;
         public static event DapEventHandler DapRemoved;
@@ -65,49 +70,25 @@ namespace Banshee.Dap
                 return;
             }
             
-            DirectoryInfo di = null;
-            FileInfo [] files = null;
-            string dap_dir = ConfigureDefines.InstallDir + "Banshee.Dap" + Path.DirectorySeparatorChar;
+            PluginFactory<DapDevice> plugin_factory = new PluginFactory<DapDevice>(PluginFactoryType.Type);
+            plugin_factory.AddScanDirectory(ConfigureDefines.InstallDir + "Banshee.Dap");
+            plugin_factory.LoadPlugins();
             
-            try {
-                di = new DirectoryInfo(dap_dir);
-                files = di.GetFiles();
-                
-                if(files == null || files.Length == 0) {
-                    return;
-                }
-            } catch(Exception) {
-                return;
-            }
-
-            foreach(FileInfo file in files) {
-                Assembly asm;
+            foreach(Type type in plugin_factory.PluginTypes) {
                 try {
-                    asm = Assembly.LoadFrom(file.FullName);
-                } catch(Exception) {
-                    continue;
-                }
-                
-                foreach(Type type in asm.GetTypes()) {
-                    if(!type.IsSubclassOf(typeof(DapDevice)) || type.IsAbstract) {
-                        continue;
+                    Attribute [] dap_attrs = Attribute.GetCustomAttributes(type, typeof(DapProperties));
+                    DapProperties dap_props = null;
+                    if(dap_attrs != null && dap_attrs.Length >= 1) {
+                        dap_props = dap_attrs[0] as DapProperties;
                     }
-                    
-                    try {
-                        Attribute [] dap_attrs = Attribute.GetCustomAttributes(type, typeof(DapProperties));
-                        DapProperties dap_props = null;
-                        if(dap_attrs != null && dap_attrs.Length >= 1) {
-                            dap_props = dap_attrs[0] as DapProperties;
-                        }
                         
-                        if(dap_props != null && dap_props.DapType == DapType.NonGeneric) {
-                            supported_dap_types.Insert(0, type);
-                        } else {
-                            supported_dap_types.Add(type);
-                        }
-                    } catch(Exception) {
-                        continue;
+                    if(dap_props != null && dap_props.DapType == DapType.NonGeneric) {
+                        supported_dap_types.Insert(0, type);
+                    } else {
+                        supported_dap_types.Add(type);
                     }
+                } catch {
+                    continue;
                 }
             }
         }
@@ -134,7 +115,7 @@ namespace Banshee.Dap
             };
             
             HalCore.DevicePropertyModified += delegate(object o, DevicePropertyModifiedArgs args) {
-                if(device_waiting_table[args.Device.Udi] != null) {
+                if(device_waiting_table.ContainsKey(args.Device.Udi)) {
                     AddDevice(args.Device, device_waiting_table[args.Device.Udi] as Type);
                 }
             };
@@ -180,11 +161,17 @@ namespace Banshee.Dap
                 switch(dap.Initialize(device)) {
                     case InitializeResult.Valid:
                         AddDevice(device, dap);
-                        device_waiting_table.Remove(device.Udi);
+                        if(device_waiting_table.ContainsKey(device.Udi)) {
+                            device_waiting_table.Remove(device.Udi);
+                        }
                         return true;
                     case InitializeResult.WaitForPropertyChange:
                         device.WatchProperties = true;
-                        device_waiting_table[device.Udi] = type;
+                        if(!device_waiting_table.ContainsKey(device.Udi)) {
+                            device_waiting_table.Add(device.Udi, type);
+                        } else {
+                            device_waiting_table[device.Udi] = type;
+                        }
                         return true;
                 }
             } catch(Exception e) {
@@ -202,7 +189,12 @@ namespace Banshee.Dap
             
             dap.HalDevice = device;
             dap.Ejected += OnDapEjected;
-            device_table[device.Udi] = dap;
+            
+            if(!device_table.ContainsKey(device.Udi)) {
+                device_table.Add(device.Udi, dap);
+            } else {
+                device_table[device.Udi] = dap;
+            }
             
             if(DapAdded != null) {
                 DapAdded(dap, new DapEventArgs(dap));
@@ -213,10 +205,16 @@ namespace Banshee.Dap
         
         private static void RemoveDevice(Device device)
         {
-            DapDevice dap = device_table[device.Udi] as DapDevice;
+            if(!device_table.ContainsKey(device.Udi)) {
+                return;
+            }
             
+            DapDevice dap = device_table[device.Udi];
             device_table.Remove(device.Udi);
-            device_waiting_table.Remove(device.Udi);
+            
+            if(device_waiting_table.ContainsKey(device.Udi)) {
+                device_waiting_table.Remove(device.Udi);
+            }
             
             if(dap == null) {
                 return;
@@ -239,14 +237,8 @@ namespace Banshee.Dap
             RemoveDevice(dap.HalDevice);
         }
         
-        public static DapDevice [] Devices {
-            get {
-                ArrayList devices = new ArrayList();
-                foreach(DapDevice dap in device_table.Values) {
-                    devices.Add(dap);
-                }
-                return devices.ToArray(typeof(DapDevice)) as DapDevice [];
-            }
+        public static IEnumerable<DapDevice> Devices {
+            get { return device_table.Values; }
         }
     }
 }

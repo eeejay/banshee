@@ -1,5 +1,5 @@
 /***************************************************************************
- *  PluginCore.cs
+ *  IPlugin.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -27,56 +27,10 @@
  */
  
 using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using Mono.Unix;
-using Hal;
-
-using Banshee.Base;
 
 namespace Banshee.Plugins
 {
-    public static class PluginCore 
+    public interface IPlugin : IDisposable
     {
-        private static PluginFactory<Plugin> factory = new PluginFactory<Plugin>();
-    
-        public static void Initialize()
-        {
-            factory.AddScanDirectory(Paths.UserPluginDirectory);
-            factory.AddScanDirectory(Paths.SystemPluginDirectory);
-            factory.LoadPlugins();
-            
-            InitializePlugins();
-        }
-        
-        private static void InitializePlugins()
-        {
-            foreach(Plugin plugin in factory) {
-                try {
-                    if((bool)Globals.Configuration.Get(plugin.ConfigurationBase + "/Enabled")) {
-                        plugin.Initialize();
-                    }
-                } catch(GConf.NoSuchKeyException) {
-                }
-            }
-        }
-        
-        public static void Dispose()
-        {
-            factory.Dispose();
-        }
-        
-        public static void ShowPluginDialog()
-        {
-            PluginDialog dialog = new PluginDialog();
-            dialog.Run();
-            dialog.Destroy();
-        }
-        
-        public static PluginFactory<Plugin> Factory {
-            get { return factory; }
-        }
     }
 }

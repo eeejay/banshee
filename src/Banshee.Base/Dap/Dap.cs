@@ -34,10 +34,11 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
+using Banshee.Plugins;
 
 namespace Banshee.Dap
 {    
-    public abstract class DapDevice : IEnumerable, IDisposable
+    public abstract class DapDevice : IPlugin, IEnumerable
     {
         public class Property
         {

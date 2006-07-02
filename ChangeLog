@@ -1,9 +1,8 @@
-2006-06-22  Aaron Bockover  <aaron@abock.org>
+2006-07-02  Aaron Bockover  <aaron@abock.org>
 
-	* src/Banshee.Plugins/Daap/DaapCore.cs: Ignore services with 'Jono'
-	in them (Jono has bad taste, apparently)
-
-2006-06-22  Aaron Bockover  <aaron@abock.org>
+	* src/Banshee.Base/ComponentInitializer.cs: Use an Initializing 
+	concept vs an Initialized concept, so when tasks block, the UI doesn't
+	look like it's 'off by one'
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Install
 	ActionManager actions in overloaded InterfaceInitialize method, not
@@ -14,6 +13,36 @@
 	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: assign recorder with
 	newly added media to all burner sources if source does not already
 	have a set recorder (BGO #345475)
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Generic class to allow
+	loading of types (and instantiations) from directories/assemblies;
+	reduces all the plugin loading redundancy for the three types of
+	plugins used in Banshee
+
+	* src/Banshee.Base/Plugins/IPlugin.cs: Base IPlugin interface to allow
+	classes to work with PluginFactory
+
+	* src/Banshee.Base/Plugins/Plugin.cs: Implement new IPlugin interface
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Use new PluginFactory for
+	the update 'generic' Plugin type
+
+	* src/Banshee.Base/Plugins/PluginDialog.cs: Fix to work with new 
+	generics/PluginFactory support
+
+	* src/Banshee.Base/Dap/Dap.cs: DapDevice now implements IPlugin
+
+	* src/Banshee.Base/Dap/DapCore.cs: DapCore now uses a PluginFactory
+	and all collections were updated to use generics
+
+	* data/UIManagerLayout.xml: Added a separator in the Music menu
+
+	* banshee.mds: Updated MonoDevelop solution
+
+2006-06-22  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Ignore services with 'Jono'
+	in them (Jono has bad taste, apparently)
 
 2006-06-26  Ruben Vermeersch  <ruben@Lambda1.be>
 

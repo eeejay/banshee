@@ -112,6 +112,8 @@ namespace Banshee.Base
             
             while(components.Count > 0) {
                 Component component = components.Dequeue();
+                OnInitializing(component, current++);
+                
                 if(component.CatchExceptions) {
                     try {
                         component.Initialize();
@@ -121,15 +123,13 @@ namespace Banshee.Base
                 } else {
                     component.Initialize();
                 }
-                
-                OnInitialized(component, current++);
             }
             
             component_run_count = 0;
             OnRunFinished();
         }
         
-        protected virtual void OnInitialized(Component component, int current)
+        protected virtual void OnInitializing(Component component, int current)
         {
             ComponentInitializingHandler handler = ComponentInitializing;
             if(handler != null) {

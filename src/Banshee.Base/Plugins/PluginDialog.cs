@@ -144,7 +144,7 @@ namespace Banshee.Plugins
         {
             plugin_store = new ListStore(typeof(string), typeof(bool), typeof(Plugin), typeof(Gdk.Color));
             
-            foreach(Plugin plugin in PluginCore.Plugins) {
+            foreach(Plugin plugin in PluginCore.Factory) {
                 plugin_store.AppendValues(plugin.DisplayName, plugin.Initialized, plugin, 
                     plugin.Broken ? disabled_color : normal_color);
             }

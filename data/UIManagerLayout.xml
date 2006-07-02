@@ -5,6 +5,7 @@
             <menuitem name="NewCD" action="NewCDAction" />
             <!--<menuitem name="ImportFolder" action="ImportFolderAction" />
             <menuitem name="ImportFiles" action="ImportFilesAction" />-->
+            <separator />
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
             <placeholder name="MusicMenuAdditions" />

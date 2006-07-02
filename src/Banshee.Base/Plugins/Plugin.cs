@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Plugin.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -30,7 +29,7 @@
 using System;
 using System.Collections.Specialized;
 using Banshee.Base;
- 
+
 namespace Banshee.Plugins
 {
     public class InvalidPluginException : ApplicationException
@@ -40,7 +39,7 @@ namespace Banshee.Plugins
         }
     }
 
-    public abstract class Plugin
+    public abstract class Plugin : IPlugin
     {
         private bool initialized;
         private bool broken;
@@ -95,7 +94,7 @@ namespace Banshee.Plugins
             }
         }
         
-        internal void Dispose()
+        public void Dispose()
         {
             if(initialized && !broken) {
                 dispose_requested = true;
