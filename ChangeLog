@@ -1,5 +1,9 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	* src/Banshee.Base/Makefile.am: Added PluginFactory.cs and IPlugin.cs
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	* src/Banshee.Base/ComponentInitializer.cs: Use an Initializing 
 	concept vs an Initialized concept, so when tasks block, the UI doesn't
 	look like it's 'off by one'

@@ -91,7 +91,9 @@ NETWORKMANAGER_SOURCES = \
 PLUGINS_SOURCES = \
 	$(srcdir)/Plugins/Plugin.cs \
 	$(srcdir)/Plugins/PluginCore.cs \
-	$(srcdir)/Plugins/PluginDialog.cs
+	$(srcdir)/Plugins/PluginDialog.cs \
+	$(srcdir)/Plugins/IPlugin.cs \
+	$(srcdir)/Plugins/PluginFactory.cs
 
 MEDIAENGINE_SOURCES = \
 	$(srcdir)/MediaEngine/PlayerEngine.cs
