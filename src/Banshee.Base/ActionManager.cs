@@ -1,8 +1,8 @@
 /***************************************************************************
  *  ActionManager.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -155,7 +155,10 @@ namespace Banshee.Base
                     Catalog.GetString("Source"), null, null, null),
                     
                 new ActionEntry("SongViewPopupAction", null, 
-                    "Song Menu", null, null, null)
+                    Catalog.GetString("Song Menu"), null, null, null),
+                    
+                new ActionEntry("DebugMenuAction", null,
+                    Catalog.GetString("Debug"), null, null, null)
             });
             
             global_actions.Add(new ToggleActionEntry [] {
@@ -291,6 +294,8 @@ namespace Banshee.Base
             });
             
             ui.InsertActionGroup(dap_actions, 0);
+            
+            this["DebugMenuAction"].Visible = Globals.ArgumentQueue.Contains("debug");
         }
         
         public Action FindActionByName(string actionName)

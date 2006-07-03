@@ -1,5 +1,13 @@
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
+	* src/data/UIManagerLayout.xml: Added DebugMenu menu; moved the 
+	version information and logged events items into it (BGO #346425)
+
+	* src/Banshee.Base/ActionManager.cs: Added DebugMenuAction implementation;
+	do not show unless --debug is passed
+
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
 	* src/Main.cs: Enable the exception dialog
 
 	* src/PlayerInterface.cs: Do not show main interface if --hide was passed

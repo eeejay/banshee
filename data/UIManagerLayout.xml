@@ -54,11 +54,13 @@
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
             <menuitem name="Columns" action="ColumnsAction" />
-            <menuitem name="LoggedEvents" action="LoggedEventsAction" />
         </menu>
         <menu name="HelpMenu" action="HelpMenuAction">
-            <menuitem name="VersionInformation" action="VersionInformationAction" />
             <menuitem name="About" action="AboutAction" />
+        </menu>
+        <menu name="DebugMenu" action="DebugMenuAction">
+            <menuitem name="VersionInformation" action="VersionInformationAction" />
+            <menuitem name="LoggedEvents" action="LoggedEventsAction" />
         </menu>
     </menubar>
     <popup name="SourceMenu" action="SourceMenuAction">
