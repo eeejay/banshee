@@ -39,7 +39,6 @@ namespace Banshee
     {    
         public static void Main(string [] args)
         {
-#if EXCEPTION_DIALOG        
             try {
                 Startup(args);
             } catch(Exception e) {
@@ -50,9 +49,6 @@ namespace Banshee
                 dlg.Destroy();
                 System.Environment.Exit(1);
             }
-#else
-            Startup(args);
-#endif
         }
         
         [System.Runtime.InteropServices.DllImport("libdbus-glib-1")]

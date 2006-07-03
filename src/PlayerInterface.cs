@@ -149,8 +149,10 @@ namespace Banshee
             ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
             
             InitialLoadTimeout();
-            WindowPlayer.Show();
-
+            if(!Globals.ArgumentQueue.Contains("hide")) {
+                WindowPlayer.Show();
+            }
+            
             // Bind available methods to actions defined in ActionManager
             Globals.ActionManager.DapActions.Visible = false;
             Globals.ActionManager.AudioCdActions.Visible = false;

@@ -41,6 +41,10 @@ namespace Banshee.Base
             about_box_logo = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), 
                 "banshee-logo.png");
             
+            if(Globals.ArgumentQueue.Contains("hide")) {
+                return true;
+            }
+            
             Globals.StartupInitializer.RunFinished += delegate {
                 GLib.Timeout.Add(500, HideSplashScreen);
             };

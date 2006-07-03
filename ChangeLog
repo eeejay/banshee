@@ -1,3 +1,12 @@
+2006-07-02  Aaron Bockover  <aaron@abock.org>
+
+	* src/Main.cs: Enable the exception dialog
+
+	* src/PlayerInterface.cs: Do not show main interface if --hide was passed
+
+	* src/Banshee.Base/BansheeBranding.cs: Do not show the splash screen
+	if --hide was passed (BGO #346424)
+
 2006-07-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/ChildSource.cs: Fix whitespace.
