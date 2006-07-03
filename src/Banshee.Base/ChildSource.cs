@@ -55,6 +55,6 @@ namespace Banshee.Sources
 
         public Source Parent {
             get { return parent; }
-       }
+        }
     }
 }

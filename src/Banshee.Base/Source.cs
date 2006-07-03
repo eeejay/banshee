@@ -48,6 +48,18 @@ namespace Banshee.Sources
         public TrackInfo Track;
         public IEnumerable Tracks;
     }
+
+    public enum SortCriteria
+    {
+        Name,
+        Size
+    }
+    
+    public enum SortOrder
+    {
+        Ascending,
+        Descending
+    }
     
     public abstract class Source
     {
@@ -175,6 +187,43 @@ namespace Banshee.Sources
             EventHandler handler = ViewChanged;
             if(handler != null) {
                 handler(this, new EventArgs());
+            }
+        }
+
+        private class NameComparer : IComparer
+        {
+            public int Compare (object a, object b)
+            {
+                return (a as Source).Name.CompareTo ((b as Source).Name);
+            }
+        }
+
+        private class SizeComparer : IComparer
+        {
+            public int Compare (object a, object b)
+            {
+                return (a as Source).Count.CompareTo ((b as Source).Count);
+            }
+        }
+
+        public virtual void SortChildren (SortCriteria criteria, SortOrder order)
+        {
+            ArrayList copy = new ArrayList (child_sources);
+
+            ClearChildSources ();
+
+            if(criteria == SortCriteria.Name) {
+                copy.Sort (new NameComparer());
+            } else if (criteria == SortCriteria.Size) {
+                copy.Sort (new SizeComparer());
+            }
+
+            if(order == SortOrder.Descending) {
+                copy.Reverse ();
+            }
+
+            foreach(ChildSource child in copy) {
+                AddChildSource (child);
             }
         }
         

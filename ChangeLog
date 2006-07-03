@@ -1,3 +1,17 @@
+2006-07-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/ChildSource.cs: Fix whitespace.
+
+	* src/Banshee.Base/Source.cs: Add NameComparer and SizeComparer IComparers
+	and add virtual SortChildren function to sort with them, allowing ordering
+	of non-PlaylistSource children of the Library. (BGO #344829)
+
+	* src/Banshee.Base/Sources/LibrarySource.cs: Use SortChildren method from
+	Source.  Remove option to sort by creation order.
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Remove sorting functionality
+	from LoadSources function, as sorting is done with SortChildren now.
+
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
 	* src/PlaylistView.cs (SelectPlaying): Check PlayingPath for null before
