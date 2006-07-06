@@ -1,3 +1,18 @@
+2006-07-06  Aaron Bockover  <aaron@abock.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Base/Globals.cs: Initialize/destroy power management support
+
+	* src/Banshee.Base/Makefile.am: Added PowerManagement.cs
+
+	* src/Banshee.Base/PowerManagement.cs: Basic power management support
+	that currently uses the DBus interface to GNOME Power Manager (2.15.x
+	is currently required); If playing, Inhibit will be called, when not 
+	playing, UnInhibit will be called (BGO #344946)
+
+	* src/Banshee.Base/TrackInfoPopup.cs: Increased cover art size
+
 2006-07-02  Aaron Bockover  <aaron@abock.org>
 
 	* src/data/UIManagerLayout.xml: Added DebugMenu menu; moved the 

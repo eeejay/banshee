@@ -80,6 +80,8 @@ namespace Banshee.Base
                 
             startup.Register("Initializing plugins", Banshee.Plugins.PluginCore.Initialize);
             
+            startup.Register("Initializing power management", PowerManagement.Initialize);
+            
             startup.Run();
             
             action_manager.LoadInterface();
@@ -92,6 +94,7 @@ namespace Banshee.Base
             library.Db.Dispose();
             Banshee.Dap.DapCore.Dispose();
             HalCore.Dispose();
+            PowerManagement.Dispose();
         }
         
         public static ComponentInitializer StartupInitializer {

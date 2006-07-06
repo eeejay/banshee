@@ -51,7 +51,7 @@ namespace Banshee.Widgets
             HBox box = new HBox();
             box.Spacing = 10;
             
-            header = new TrackInfoHeader(false, 52);
+            header = new TrackInfoHeader(false, 60);
             
             HBox position_box = new HBox();
             position_box.Spacing = 10;
