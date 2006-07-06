@@ -1612,7 +1612,7 @@ msgstr "Bật khả năng hỗ trợ máy phục vụ DAAP"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
 msgid "Enable the DAAP Music Sharing plugin"
-msgstr "Bật chạy bổ sung chia sẽ âm nhạc DAAP"
+msgstr "Bật chạy bổ sung chia sẻ âm nhạc DAAP"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
 msgid "Name of DAAP server share"
