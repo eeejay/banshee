@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  IpodDap.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -73,7 +72,7 @@ namespace Banshee.Dap.Ipod
             InstallProperty("Model Number", device.ModelNumber);
             InstallProperty("Serial Number", device.SerialNumber);
             InstallProperty("Firmware Version", device.FirmwareVersion);
-            InstallProperty("Database Version", device.SongDatabase.Version.ToString());
+            InstallProperty("Database Version", device.TrackDatabase.Version.ToString());
           
             ReloadDatabase(false);
             
@@ -85,10 +84,10 @@ namespace Banshee.Dap.Ipod
         {
             try {
                 device = new IPod.Device(hal_device["block.device"]);
-                device.LoadSongDatabase();
+                device.LoadTrackDatabase();
                 database_supported = true;
             } catch(DatabaseReadException) {
-                device.LoadSongDatabase(true);
+                device.LoadTrackDatabase(true);
                 database_supported = false;
             } catch(Exception e) {
                 return InitializeResult.Invalid;
@@ -106,8 +105,10 @@ namespace Banshee.Dap.Ipod
 
             if(track is IpodDapTrackInfo)
                 new_track = track;
-            else if(!TrackExistsInList(track, device.SongDatabase.Songs))
-                new_track = new IpodDapTrackInfo(track, device.SongDatabase);
+            else
+                new_track = new IpodDapTrackInfo(track, device.TrackDatabase);
+            // FIXME: only add a new track if we don't have it already
+
 
             if (new_track != null) {
                 tracks.Add(new_track);
@@ -123,7 +124,7 @@ namespace Banshee.Dap.Ipod
             
             try {
                 IpodDapTrackInfo ipod_track = (IpodDapTrackInfo)track;
-                device.SongDatabase.RemoveSong(ipod_track.Song);
+                device.TrackDatabase.RemoveTrack(ipod_track.Track);
             } catch(Exception) {
             }
         }
@@ -135,13 +136,13 @@ namespace Banshee.Dap.Ipod
             ClearTracks(false);
             
             if(refresh) {
-                device.SongDatabase.Reload();
+                device.TrackDatabase.Reload();
             }
             
             if(database_supported) {
-                foreach(Song song in device.SongDatabase.Songs) {
-                    IpodDapTrackInfo track = new IpodDapTrackInfo(song);
-                    AddTrack(track);            
+                foreach(Track track in device.TrackDatabase.Tracks) {
+                    IpodDapTrackInfo ti = new IpodDapTrackInfo(track);
+                    AddTrack(ti);            
                 }
             } else {
                 BuildDatabaseUnsupportedWidget();
@@ -154,8 +155,13 @@ namespace Banshee.Dap.Ipod
         
         public override void Eject()
         {
-            device.Eject();
-            base.Eject();
+            try {
+                device.Eject();
+                base.Eject();
+            } catch(Exception e) {
+                LogCore.Instance.PushError(Catalog.GetString("Could not eject iPod"),
+                    e.Message);
+            }
         }
         
         public override void Synchronize()
@@ -166,25 +172,25 @@ namespace Banshee.Dap.Ipod
                 0.0);
             
             foreach(IpodDapTrackInfo track in Tracks) {
-                if(track.Song == null) {
+                if(track.Track == null) {
                     CommitTrackToDevice(track);
                 } else {
-                    track.Song.Uri = new Uri(track.Uri.AbsoluteUri);
+                    track.Track.Uri = new Uri(track.Uri.AbsoluteUri);
                 }
             }
             
-            device.SongDatabase.SaveProgressChanged += delegate(object o, SaveProgressArgs args)
+            device.TrackDatabase.SaveProgressChanged += delegate(object o, TrackSaveProgressArgs args)
             {
-                double progress = args.CurrentSong == null ? 0.0 : args.TotalProgress;
-                string message = args.CurrentSong == null 
+                double progress = args.CurrentTrack == null ? 0.0 : args.TotalProgress;
+                string message = args.CurrentTrack == null 
                     ? Catalog.GetString("Flushing to Disk (may take time)")
-                    : args.CurrentSong.Artist + " - " + args.CurrentSong.Title;
+                    : args.CurrentTrack.Artist + " - " + args.CurrentTrack.Title;
                     
                 UpdateSaveProgress(Catalog.GetString("Synchronizing iPod"), message, progress);
             };
 
             try {
-                device.SongDatabase.Save();
+                device.TrackDatabase.Save();
             } catch(Exception e) {
                 Console.Error.WriteLine (e);
                 LogCore.Instance.PushError(Catalog.GetString("Failed to synchronize iPod"), e.Message);
@@ -194,57 +200,80 @@ namespace Banshee.Dap.Ipod
             }
         }
         
-        private void CommitTrackToDevice(IpodDapTrackInfo track)
+        private void CommitTrackToDevice(IpodDapTrackInfo ti)
         {
-            Song song = device.SongDatabase.CreateSong();
+            Track track = device.TrackDatabase.CreateTrack();
             
-            song.Uri = new Uri(track.Uri.AbsoluteUri);
+            track.Uri = new Uri(ti.Uri.AbsoluteUri);
         
-            if(track.Album != null) {
-                song.Album = track.Album;
+            if(ti.Album != null) {
+                track.Album = ti.Album;
             }
             
-            if(track.Artist != null) {
-                song.Artist = track.Artist;
+            if(ti.Artist != null) {
+                track.Artist = ti.Artist;
             }
             
-            if(track.Title != null) {
-                song.Title = track.Title;
+            if(ti.Title != null) {
+                track.Title = ti.Title;
             }
             
-            if(track.Genre != null) {
-                song.Genre = track.Genre;
+            if(ti.Genre != null) {
+                track.Genre = ti.Genre;
             }
             
-            song.Duration = track.Duration;
-            song.TrackNumber = (int)track.TrackNumber;
-            song.TotalTracks = (int)track.TrackCount;
-            song.Year = (int)track.Year;
-            song.LastPlayed = track.LastPlayed;
+            track.Duration = ti.Duration;
+            track.TrackNumber = (int)ti.TrackNumber;
+            track.TotalTracks = (int)ti.TrackCount;
+            track.Year = (int)ti.Year;
+            track.LastPlayed = ti.LastPlayed;
             
-            switch(track.Rating) {
-                case 1: song.Rating = SongRating.Zero; break;
-                case 2: song.Rating = SongRating.Two; break;
-                case 3: song.Rating = SongRating.Three; break;
-                case 4: song.Rating = SongRating.Four; break;
-                case 5: song.Rating = SongRating.Five; break;
-                default: song.Rating = SongRating.Zero; break;
+            switch(ti.Rating) {
+                case 1: track.Rating = TrackRating.Zero; break;
+                case 2: track.Rating = TrackRating.Two; break;
+                case 3: track.Rating = TrackRating.Three; break;
+                case 4: track.Rating = TrackRating.Four; break;
+                case 5: track.Rating = TrackRating.Five; break;
+                default: track.Rating = TrackRating.Zero; break;
             }
             
-            if(song.Artist == null) {
-                song.Artist = String.Empty;
+            if(track.Artist == null) {
+                track.Artist = String.Empty;
             }
             
-            if(song.Album == null) {
-                song.Album = String.Empty;
+            if(track.Album == null) {
+                track.Album = String.Empty;
             }
             
-            if(song.Title == null) {
-                song.Title = String.Empty;
+            if(track.Title == null) {
+                track.Title = String.Empty;
             }
             
-            if(song.Genre == null) {
-                song.Genre = String.Empty;
+            if(track.Genre == null) {
+                track.Genre = String.Empty;
+            }
+
+            if (ti.CoverArtFileName != null && File.Exists (ti.CoverArtFileName)) {
+                try {
+                    Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (ti.CoverArtFileName);
+
+                    if (pixbuf != null) {
+                        SetCoverArt (track, ArtworkType.CoverSmall, pixbuf);
+                        SetCoverArt (track, ArtworkType.CoverLarge, pixbuf);
+                        pixbuf.Dispose ();
+                    }
+                } catch (Exception e) {
+                    Console.Error.WriteLine ("Failed to set cover art: " + e);
+                }
+            }
+        }
+
+        private void SetCoverArt (Track track, ArtworkType type, Gdk.Pixbuf pixbuf)
+        {
+            ArtworkFormat format = device.LookupFormat (type);
+
+            if (format != null && !track.HasCoverArt (format)) {
+                track.SetCoverArt (format, ArtworkHelpers.ToBytes (format, pixbuf));
             }
         }
         

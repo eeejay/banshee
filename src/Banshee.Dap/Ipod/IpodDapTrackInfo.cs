@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  IpodDapTrackInfo.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -37,21 +36,21 @@ namespace Banshee.Dap.Ipod
 {
     public sealed class IpodDapTrackInfo : DapTrackInfo
     {
-        private Song song;
+        private Track song;
         
-        public IpodDapTrackInfo(Song song)
+        public IpodDapTrackInfo(Track song)
         {
             this.song = song;
-            LoadFromIpodSong();
+            LoadFromIpodTrack();
             CanSaveToDatabase = false;
         }
         
-        public IpodDapTrackInfo(TrackInfo track, SongDatabase database)
+        public IpodDapTrackInfo(TrackInfo track, TrackDatabase database)
         {
             if(track is IpodDapTrackInfo) {
                 IpodDapTrackInfo ipod_track = (IpodDapTrackInfo)track;
-                this.song = ipod_track.Song;
-                LoadFromIpodSong();
+                this.song = ipod_track.Track;
+                LoadFromIpodTrack();
             } else {
                 uri = track.Uri;
                 album = track.Album;
@@ -67,12 +66,13 @@ namespace Banshee.Dap.Ipod
                 track_count = track.TrackCount;
                 track_number = track.TrackNumber;
                 year = track.Year;
+                cover_art_file = track.CoverArtFileName;
             }
             
             CanSaveToDatabase = false;
         }
         
-        private void LoadFromIpodSong()
+        private void LoadFromIpodTrack()
         {
             try {
                 uri = new SafeUri(song.Uri.LocalPath);
@@ -85,17 +85,17 @@ namespace Banshee.Dap.Ipod
             title = song.Title == String.Empty ? null : song.Title;
             genre = song.Genre == String.Empty ? null : song.Genre;
             
-            track_id = song.Id;
+            track_id = (int) song.Id;
             duration = song.Duration;
             play_count = (uint)song.PlayCount;
 
             switch(song.Rating) {
-                case SongRating.One:   rating = 1; break;
-                case SongRating.Two:   rating = 2; break;
-                case SongRating.Three: rating = 3; break;
-                case SongRating.Four:  rating = 4; break;
-                case SongRating.Five:  rating = 5; break;
-                case SongRating.Zero: 
+                case TrackRating.One:   rating = 1; break;
+                case TrackRating.Two:   rating = 2; break;
+                case TrackRating.Three: rating = 3; break;
+                case TrackRating.Four:  rating = 4; break;
+                case TrackRating.Five:  rating = 5; break;
+                case TrackRating.Zero: 
                 default: 
                     rating = 0; 
                     break;
@@ -125,7 +125,7 @@ namespace Banshee.Dap.Ipod
             Save();
         }
         
-        public IPod.Song Song
+        public IPod.Track Track
         {
             get {
                 return song;

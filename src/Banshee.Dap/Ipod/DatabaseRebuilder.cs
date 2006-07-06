@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  DatabaseRebuilder.cs
  *
@@ -74,7 +73,7 @@ namespace Banshee.Dap.Ipod
                 ScanMusicDirectory(directory);
             }
             
-            ProcessSongQueue();
+            ProcessTrackQueue();
         }
         
         private void ScanMusicDirectory(DirectoryInfo directory)
@@ -84,18 +83,18 @@ namespace Banshee.Dap.Ipod
             }
         }
         
-        private void ProcessSongQueue()
+        private void ProcessTrackQueue()
         {
             discovery_count = song_queue.Count;
             
-            user_event.Message = Catalog.GetString("Processing Songs...");
+            user_event.Message = Catalog.GetString("Processing Tracks...");
             
             while(song_queue.Count > 0) {
                 user_event.Progress = (double)(discovery_count - song_queue.Count) 
                     / (double)discovery_count;
                 
                 try {
-                    ProcessSong(song_queue.Dequeue() as FileInfo);
+                    ProcessTrack(song_queue.Dequeue() as FileInfo);
                 } catch {
                 }
                 
@@ -114,10 +113,10 @@ namespace Banshee.Dap.Ipod
             OnFinished();
         }
         
-        private void ProcessSong(FileInfo file)
+        private void ProcessTrack(FileInfo file)
         {
             AudioFile af = new AudioFile(file.FullName);
-            Song song = dap.Device.SongDatabase.CreateSong();
+            Track song = dap.Device.TrackDatabase.CreateTrack();
 
             song.FileName = file.FullName;
             song.Album = af.Album;
@@ -139,7 +138,7 @@ namespace Banshee.Dap.Ipod
             user_event.Progress = 0.0;
             
             try {
-                dap.Device.SongDatabase.Save();
+                dap.Device.TrackDatabase.Save();
             } catch(Exception e) {
                 LogCore.Instance.PushError(
                     Catalog.GetString("Error rebuilding iPod database"),

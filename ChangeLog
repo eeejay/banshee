@@ -1,5 +1,18 @@
 2006-07-06  Aaron Bockover  <aaron@abock.org>
 
+	Patch from James Willcox
+
+	* configure.ac: Require ipod-sharp 0.6.0
+
+	* src/Banshee.Base/TrackInfo.cs: Make cover_art_file protected
+
+	* src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:
+	* src/Banshee.Dap/Ipod/IpodDap.cs:
+	* src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs: Updated to work with
+	new ipod-sharp 0.6.0/SVN Track API and added cover art syncing support
+
+2006-07-06  Aaron Bockover  <aaron@abock.org>
+
 	* banshee.mdp: Updated MonoDevelop project
 
 	* src/Banshee.Base/Globals.cs: Initialize/destroy power management support
