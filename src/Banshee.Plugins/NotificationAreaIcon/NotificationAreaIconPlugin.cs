@@ -218,10 +218,14 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             int x, y;
             Gtk.Requisition event_box_req = event_box.SizeRequest();
             Gtk.Requisition popup_req = popup.SizeRequest();
+            
             PositionWidget(popup, out x, out y, 5);
+            
             x = x - (popup_req.Width / 2) + (event_box_req.Width / 2);     
             if(x + popup_req.Width >= event_box.Screen.Width) { 
                 x = event_box.Screen.Width - popup_req.Width - 5;
+            } else if(x < 5) {
+                x = 5;
             }
             
             popup.Move(x, y);

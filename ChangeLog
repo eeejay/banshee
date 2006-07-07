@@ -1,3 +1,9 @@
+2006-07-07  Aaron Bockover  <aaron@abock.org>
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Ensure track info popup is not clipped on left side of 
+	screen (BGO #346876, Edward Duffy)
+
 2006-07-06  Aaron Bockover  <aaron@abock.org>
 
 	Patch from James Willcox
