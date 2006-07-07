@@ -45,6 +45,8 @@ namespace Banshee.Burner
         private RecorderAction currentAction;
         private BurnerSession session;
         
+        private readonly string BURN_INHIBIT_REASON = Catalog.GetString("Writing a disc");
+        
         public BurnerSessionRecorder(BurnerSession session)
         {
             this.recorder = session.Recorder;
@@ -80,6 +82,8 @@ namespace Banshee.Burner
                 recorder.ActionChanged += OnActionChanged;
                 recorder.InsertMediaRequest += OnInsertMediaRequest;
                 
+                PowerManagement.Inhibit(BURN_INHIBIT_REASON);
+
                 RecorderResult result = recorder.WriteTracks(session.WriteSpeed, session.EjectWhenFinished);
                 
                 if(result == RecorderResult.Error) {
@@ -116,6 +120,8 @@ namespace Banshee.Burner
                 recorder.ProgressChanged -= OnProgressChanged;
                 recorder.ActionChanged -= OnActionChanged;
                 recorder.InsertMediaRequest -= OnInsertMediaRequest;
+
+                PowerManagement.UnInhibit(BURN_INHIBIT_REASON);
             }
         }
         

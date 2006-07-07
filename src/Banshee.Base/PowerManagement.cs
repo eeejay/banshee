@@ -27,6 +27,9 @@
  */
  
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Mono.Unix;
 using DBus;
 
 using Banshee.MediaEngine;
@@ -110,7 +113,9 @@ namespace Banshee.Base
             [Method] public abstract void GetLowPowerMode();
         }
         
-        private static uint gpm_inhibit_cookie = 0;
+        private static readonly string INHIBIT_PLAY_REASON = Catalog.GetString("Playing Music");
+        
+        private static Dictionary<string, uint> gpm_inhibit_cookie_map = null;
         private static GnomePowerManager gpm = null;
         
         public static void Initialize()
@@ -132,13 +137,15 @@ namespace Banshee.Base
                 return;
             }
             
+            gpm_inhibit_cookie_map = new Dictionary<string, uint>();
             PlayerEngineCore.StateChanged += OnPlayerEngineCoreStateChanged;
         }
         
         public static void Dispose()
         {
             if(gpm != null) {
-                UnInhibit();
+                UnInhibitAll();
+                gpm_inhibit_cookie_map = null;
                 gpm.Dispose();
             }
         }
@@ -146,9 +153,9 @@ namespace Banshee.Base
         private static void OnPlayerEngineCoreStateChanged(object o, PlayerEngineStateArgs args)
         {
             if(args.State == PlayerEngineState.Playing) {
-                Inhibit();
+                Inhibit(INHIBIT_PLAY_REASON);
             } else {
-                UnInhibit();
+                UnInhibit(INHIBIT_PLAY_REASON);
             }
         }
         
@@ -157,34 +164,56 @@ namespace Banshee.Base
             LogCore.Instance.PushWarning("Power Management Call Failed", message, false);
         }
         
-        public static void Inhibit()
+        public static void Inhibit(string reason)
         {
-            if(gpm_inhibit_cookie != 0) {
+            if(gpm == null || gpm_inhibit_cookie_map.ContainsKey(reason)) {
                 return;
             }
             
             try {
-                gpm_inhibit_cookie = gpm.Inhibit("Banshee", "Playing Music");
+                uint cookie = gpm.Inhibit("Banshee", reason);
+                gpm_inhibit_cookie_map[reason] = cookie;
             } catch(Exception e) {
                 LogError("Inhibit: " + e.Message);
-                gpm_inhibit_cookie = 0;
             }
         }
         
-        public static void UnInhibit()
+        public static void UnInhibit(string reason)
         {
-            if(gpm == null || gpm_inhibit_cookie == 0) {
+            UnInhibit(reason, true);
+        }
+
+        private static void UnInhibit(string reason, bool removeCookie)
+        {
+            if(gpm == null || !gpm_inhibit_cookie_map.ContainsKey(reason)) {
                 return;
             }
             
             try {
-                gpm.UnInhibit(gpm_inhibit_cookie);
+                uint cookie = gpm_inhibit_cookie_map[reason];
+                gpm.UnInhibit(cookie);
             } catch(Exception e) {
                 LogError("UnInhibit: " + e.Message);
             }
             
-            gpm_inhibit_cookie = 0;
+            if (removeCookie) {
+                gpm_inhibit_cookie_map.Remove(reason);
+            }
         }
+
+        public static void UnInhibitAll()
+        {
+            if(gpm == null || gpm_inhibit_cookie_map == null) {
+                return;
+            }
+
+            foreach(string reason in gpm_inhibit_cookie_map.Keys) {
+                UnInhibit(reason, false);
+        }
+
+            gpm_inhibit_cookie_map.Clear();
+        }
+
     }
 }
  
