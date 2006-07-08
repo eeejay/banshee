@@ -226,7 +226,7 @@ namespace Banshee.Burner
                 case "audio":
                     foreach(PipelineProfile cp in PipelineProfile.Profiles) {
                        if(cp.Extension == "wav") {
-                           profile = new PipelineProfile(cp);
+                           profile = new PipelineProfile("wave|CD PCM|wav|cdwavenc|none|false|none");
                            break;
                        }
                     }

@@ -162,6 +162,10 @@ namespace Banshee.Base
         
         private void TestPipeline(string pipeline)
         {
+            if(pipeline == "cdwavenc") {
+                pipeline = "wavenc";
+            }
+            
             if(!Banshee.Gstreamer.Utilities.TestEncoder(pipeline)) {
                throw new PipelineProfileException(String.Format(
                    Catalog.GetString("Pipeline profile '{0}' will be " +
@@ -190,6 +194,10 @@ namespace Banshee.Base
         public string Pipeline
         {
             get {
+                if(element == "cdwavenc") {
+                    return element;
+                }
+            
                 if(!useInternalBitrate)
                     throw new PipelineProfileException(Catalog.GetString(
                         "Cannot use internal bitrate. Use " + 

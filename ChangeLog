@@ -1,3 +1,14 @@
+2006-07-08  Aaron Bockover  <aaron@abock.org>
+
+	* libbanshee/gst-transcode-0.10.c: Expand virtual element 'cdwavenc'
+	into a better pipeline to produce proper WAV PCM (proper endianness,
+	width, depth, signed, rate, and channel attributes)
+
+	* src/Banshee.Base/PipelineProfile.cs: Added support for virtual 'cdwavenc'
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs: Use new virtual
+	'cdwavenc' profile for writing audio CDs
+
 2006-07-06  Aaron Bockover  <aaron@abock.org>
 
 	Patch by Christopher Orr <chris@orr.me.uk> (BGO #346815)
