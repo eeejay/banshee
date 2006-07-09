@@ -61,7 +61,7 @@ namespace Banshee.Cdrom.Gui
             list.Clear();
 
             if(recorder == null) {
-                list.AppendValues(Catalog.GetString("Unkown"), "", 0);
+                list.AppendValues(Catalog.GetString("Unknown"), "", 0);
                 return;
             }
                         
