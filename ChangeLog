@@ -1,3 +1,12 @@
+2006-07-11  Ruben Vermeersch  <ruben@Lambda1.be>
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Create user plugin dir if it
+	doesn't exist. (BGO #346612) Makes life of plugin writers a bit easier as
+	they can safely assume the user plugin dir exists.
+
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: Remove the unnecessairy
+	test to check if the user plugin dir exists.
+
 2006-07-10  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:

@@ -94,8 +94,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		public Queue ()
 		{
-			EnsurePluginDirectoryExists();
-
 			xml_path = System.IO.Path.Combine (Paths.UserPluginDirectory, "AudioscrobblerQueue.xml");
 			queue = new ArrayList ();
 
@@ -208,12 +206,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 
 		public int Count {
 			get { return queue.Count; }
-		}
-
-		private void EnsurePluginDirectoryExists ()
-		{
-			if (!Directory.Exists (Paths.UserPluginDirectory))
-				Directory.CreateDirectory (Paths.UserPluginDirectory);
 		}
 	}
 

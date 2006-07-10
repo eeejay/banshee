@@ -84,8 +84,14 @@ namespace Banshee.Plugins
         
         public void LoadPluginsFromDirectory(DirectoryInfo directory)
         {
-            foreach(FileInfo file in directory.GetFiles("*.dll")) {
-                LoadPluginsFromFile(file);
+            try {
+                foreach(FileInfo file in directory.GetFiles("*.dll")) {
+                    LoadPluginsFromFile(file);
+                }
+            } catch (DirectoryNotFoundException) {
+                try {
+                    directory.Create();
+                } catch (IOException) { }
             }
         }
         
