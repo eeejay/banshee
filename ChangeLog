@@ -1,3 +1,11 @@
+2006-07-12  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs:
+	* src/Banshee.Dap/Mtp/MtpDap.cs: removed a bunch of unnecessary debug
+	statements, cleaned up device detection so that it only happens when
+	necessary.  Also removed SetOwner method so that Banshee doesn't allow
+	in UI.
+
 2006-07-12  Ruben Vermeersch  <ruben@Lambda1.be>
 
 	Patch by Bertrand Lorentz <bertrand.lorentz@gmail.com> (BGO #336761)

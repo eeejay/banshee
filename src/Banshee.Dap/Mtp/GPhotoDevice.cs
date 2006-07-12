@@ -112,7 +112,6 @@ public class GPhotoDevice
         
         files = new ArrayList ();
         GetFileList ();
-        Console.WriteLine("initialized");
     }
 
 /*  public short UsbVendorID {

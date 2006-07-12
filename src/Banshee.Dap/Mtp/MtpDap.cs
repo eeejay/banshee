@@ -53,30 +53,17 @@ namespace Banshee.Dap.Mtp
         private int sync_total;
         private int sync_finished;
         private Queue remove_queue = new Queue();
-        //private bool firstDatabaseLoad = true;
         private ActiveUserEvent userEvent;
         private int GPhotoDeviceID;
         private Hal.Device hal_device;
         
         static MtpDap() {
-            Console.WriteLine("MtpDap made");
         }
 
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
-            Console.WriteLine("MtpDap: initialize...");
-            if(/*       !halDevice.PropertyExists("usb.bus_number") ||
-                    !halDevice.PropertyExists("usb.linux.device_number") ||*/
-                    !halDevice.PropertyExists("usb.vendor_id") ||
+            if(!halDevice.PropertyExists("usb.vendor_id") ||
                     !halDevice.PropertyExists("usb.product_id")) {
-                return InitializeResult.Invalid;
-            }
-
-            try {
-                dev = new GPhotoDevice ();
-                dev.Detect ();
-            } catch (Exception e) {
-                Console.WriteLine("Failed to run libgphoto2 DetectCameras.  Exception: {0}", e.ToString());
                 return InitializeResult.Invalid;
             }
 
@@ -84,15 +71,20 @@ namespace Banshee.Dap.Mtp
             short hal_vendor_id  = (short) halDevice.GetPropertyInt("usb.vendor_id");
             
             device_id = DeviceId.GetDeviceId(hal_vendor_id, hal_product_id);
-            Console.WriteLine("Device: vendor={0}, prod={1}", hal_vendor_id, hal_product_id);
 
-            if(device_id == null) {
-                Console.WriteLine("Device id is null.  This can mean one of two things:\n" + 
-                    "(1) Your device is not supported by this MTP driver.\n" +
-                    "(2) You improperly installed libgphoto2_port by enabling disk support, which conflicts with this driver.\n" +
-                    "Contact the MTP developers for help.");
+            if(device_id == null)
+                return InitializeResult.Invalid;
+
+            try {
+                if (dev == null)
+                    dev = new GPhotoDevice ();
+                dev.Detect ();
+            } catch (Exception e) {
+                Console.WriteLine("Failed to run libgphoto2 DetectCameras.\nException: {0}", e.ToString());
                 return InitializeResult.Invalid;
             }
+
+            LogCore.Instance.PushDebug(String.Format("MTP: device found: vendor={0}, prod={1}", hal_vendor_id, hal_product_id), "");
             
             int found = 0;
             GPhotoDeviceID = -1;
@@ -106,8 +98,12 @@ namespace Banshee.Dap.Mtp
                 GPhotoDeviceID = i;
             }
             
-            if(found > 1)
-                Console.WriteLine("Found more than one matching device.  File a bug!  Do you have more than one MTP DAP plugged in?                    Multiple MTP DAPs are not supported.");
+            if (found > 1)
+                LogCore.Instance.PushWarning ("MTP: Found more than one matching device.  Something is seriously wrong.", "");
+            if (found == 0 || GPhotoDeviceID == -1) {
+                LogCore.Instance.PushDebug ("MTP: device was found in database, but libgphoto2 failed to detect it.", "");
+                return InitializeResult.Invalid;
+            }
             
             InstallProperty("Model", device_id.Name);
             InstallProperty("Vendor", halDevice["usb.vendor"]);
@@ -125,14 +121,13 @@ namespace Banshee.Dap.Mtp
         {
             userEvent = new ActiveUserEvent("MTP Initialization");
             userEvent.CanCancel = false;
-            userEvent.Header = Catalog.GetString(device_id.Name + ": Initializing");
+            userEvent.Header = Catalog.GetString(device_id.Name + ": Found");
             userEvent.Message = Catalog.GetString("Reading library information");
             try{
-                Console.WriteLine("libgphoto2/MTP: Selecting device {0}", GPhotoDeviceID);
                 dev.SelectCamera(GPhotoDeviceID);
                 dev.InitializeCamera();
             } catch (Exception e){
-                Console.WriteLine("failed with exception: {0}", e);
+                Console.WriteLine("MTP: initialization failed with exception: {0}", e);
                 userEvent.Dispose();
                 Dispose();
             }
@@ -141,10 +136,10 @@ namespace Banshee.Dap.Mtp
             base.Initialize(hal_device);
             ReloadDatabase();
 
-            userEvent.Message = Catalog.GetString("Ready for use");;
-            userEvent.Header = Catalog.GetString(device_id.Name + ": Ready");
+            userEvent.Message = Catalog.GetString("Done");
+            userEvent.Header = Catalog.GetString(device_id.Name + ": Ready for use");
             userEvent.Progress = 1;
-            GLib.Timeout.Add(3000, delegate {
+            GLib.Timeout.Add(4000, delegate {
                 userEvent.Dispose();
                 userEvent = null;
                 return false;
@@ -153,26 +148,19 @@ namespace Banshee.Dap.Mtp
 
         public override void Dispose()
         {
-            Console.WriteLine("MTP: Dispose()");
             dev.Dispose();
             base.Dispose();
         }
 
         private void ReloadDatabase()
         {
-            //if(firstDatabaseLoad){
-                //Console.WriteLine("ReloadDatabase...must be first time!");
-                //firstDatabaseLoad = false;
-                ClearTracks(false);
-                
-                foreach (GPhotoDeviceFile file in dev.FileList)
-                {
-                    MtpDapTrackInfo track = new MtpDapTrackInfo(file);
-                    AddTrack(track);
-                }
-            //}else{
-                //Console.WriteLine("ReloadDatabase called again...doing nothing");
-            //}
+            ClearTracks(false);
+            
+            foreach (GPhotoDeviceFile file in dev.FileList)
+            {
+                MtpDapTrackInfo track = new MtpDapTrackInfo(file);
+                AddTrack(track);
+            }
         }
 
         protected override void OnTrackRemoved(TrackInfo track)
@@ -180,7 +168,7 @@ namespace Banshee.Dap.Mtp
             if (IsReadOnly || !(track is MtpDapTrackInfo))
                 return;
 
-            Console.WriteLine("mtp: will remove {0}", track.Title);
+            Console.WriteLine("MTP: will remove {0}", track.Title);
             remove_queue.Enqueue(track);
         }
 
@@ -195,11 +183,9 @@ namespace Banshee.Dap.Mtp
         public override void Synchronize()
         {
         try {
-            Console.WriteLine("Made it to Mtp.Synchronize()");
             int remove_total = remove_queue.Count;
             
             while(remove_queue.Count > 0) {
-                Console.WriteLine("Removing...queue count at {0}", remove_queue.Count);
                 MtpDapTrackInfo track = remove_queue.Dequeue() as MtpDapTrackInfo;
                 UpdateSaveProgress(Catalog.GetString("Synchronizing Device"), Catalog.GetString(String.Format("Removing: {0} - {1}", track.Artist, track.Title)),
                     (double)(remove_total - remove_queue.Count) / (double)remove_total);
@@ -216,8 +202,6 @@ namespace Banshee.Dap.Mtp
                 
                 sync_total++;
             }
-            
-            
             
             foreach(TrackInfo track in Tracks) {
                 if(track == null ||  track is MtpDapTrackInfo || track.Uri == null) {
@@ -239,7 +223,6 @@ namespace Banshee.Dap.Mtp
                     UpdateSaveProgress(Catalog.GetString("Synchronizing Device"),
                         Catalog.GetString(String.Format("Adding: {0} - {1}", track.Artist, track.Title)),
                         (double) sync_finished / (double) sync_total);
-                    Console.WriteLine("MtpDap: about to add file...");
 
                     /*  this appears to be the most logical path for my Zen Micro
                         LMK if your device traditionally uses something different and it'll be changed :)
@@ -262,8 +245,6 @@ namespace Banshee.Dap.Mtp
                     newfile.Year = track.Year;
 
                     dev.PutFile(newfile);
-
-                    Console.WriteLine("MtpDap: file add finished.");
 
                     sync_finished++;
                 } catch (Exception e){
@@ -293,16 +274,20 @@ namespace Banshee.Dap.Mtp
             }
         }
 
-        public override void SetOwner (string owner) {
-            //FIXME: SetOwner not implemented in libgphoto2-ptp
-            Console.WriteLine("fixme: SetOwner to {0}", owner);
-        }
+        /* FIXME: SetOwner not implemented in libgphoto2-ptp
 
+        public override void SetOwner (string owner) {
+            
+            Console.WriteLine("fixme: SetOwner to {0}", owner);
+        }*/
+
+        /* FIXME: Owner not implemented in libgphoto2-ptp
+        
         public override string Owner {
             get {
-                return "Unknown";  //FIXME: Owner not implemented in libgphoto2-ptp
+                return "Unknown";  
             }
-        }
+        }*/
 
         public override string GenericName {
             get {
