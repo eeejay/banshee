@@ -288,6 +288,28 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Year/Width</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Year/Width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>45</default>
+      <locale name="C">
+        <short>Width of Year Column.</short>
+        <long>Width of Year Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/PlaylistColumns/Year/Visible</key>
+      <applyto>/apps/Banshee/PlaylistColumns/Year/Visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Visibility of Year Column.</short>
+        <long>Visibility of Year Column.</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/Banshee/Volume</key>
       <applyto>/apps/Banshee/Volume</applyto>
       <owner>banshee</owner>

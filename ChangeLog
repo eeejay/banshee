@@ -1,3 +1,12 @@
+2006-07-12  Ruben Vermeersch  <ruben@Lambda1.be>
+
+	Patch by Bertrand Lorentz <bertrand.lorentz@gmail.com> (BGO #336761)
+
+	* data/banshee.schemas.in: 
+	* src/PlayerInterface.cs:
+	* src/PlaylistView.cs: Add support for showing a year column and searching
+	track by year. The year column visibility defaults to false.
+
 2006-07-11  Ruben Vermeersch  <ruben@Lambda1.be>
 
 	* src/Banshee.Base/Plugins/PluginFactory.cs: Create user plugin dir if it
