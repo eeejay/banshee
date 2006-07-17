@@ -59,7 +59,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/SeekDialog.cs \
 	$(srcdir)/Gui/ErrorListDialog.cs \
 	$(srcdir)/Gui/SplashScreen.cs \
-	$(srcdir)/Gui/PreferencesDialog.cs
+	$(srcdir)/Gui/PreferencesDialog.cs \
+	$(srcdir)/Gui/ArtistAlbumTileView.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -96,7 +97,8 @@ PLUGINS_SOURCES = \
 	$(srcdir)/Plugins/PluginFactory.cs
 
 MEDIAENGINE_SOURCES = \
-	$(srcdir)/MediaEngine/PlayerEngine.cs
+	$(srcdir)/MediaEngine/PlayerEngine.cs \
+	$(srcdir)/MediaEngine/IEqualizer.cs
 
 ASSEMBLY_SOURCES = \
     $(AUDIOCD_SOURCES) \

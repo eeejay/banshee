@@ -1,5 +1,10 @@
 2006-07-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Makefile.am: Added MediaEngine/IEqualizer.cs (left
+	out from IEqualizer.cs commit)
+
+2006-07-17  Aaron Bockover  <abock@gnome.org>
+
 	* HACKING: Updated
 
 2006-07-17  Aaron Bockover  <abock@gnome.org>
