@@ -1,3 +1,8 @@
+2006-07-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/MediaEngine/IEqualizer.cs: Added an equalizer interface
+	that media engines can implement
+
 2006-07-12  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/GPhotoDevice.cs:
