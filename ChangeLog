@@ -1,5 +1,9 @@
 2006-07-17  Aaron Bockover  <abock@gnome.org>
 
+	* HACKING: Updated
+
+2006-07-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/MediaEngine/IEqualizer.cs: Added an equalizer interface
 	that media engines can implement
 

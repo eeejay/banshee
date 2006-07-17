@@ -12,7 +12,7 @@ guidelines. If code is in violation, you will be asked to reformat it.
 
       lower_case_with_under_scores
 
-  2. Property, event, and method and methods should be written like:
+  2. Property, event, and method names should be written like:
 
       UpperCaseStartingLetter
 
