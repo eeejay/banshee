@@ -1,3 +1,11 @@
+2006-07-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: If the Library is not
+	loaded, delay loading a playlist's tracks. (BGO #346702)
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Fixed wrong indexes
+	used in WriteLine, caught and patched by Przemysław Grzegorczyk (BGO #347440)
+
 2006-07-18  Aaron Bockover  <abock@gnome.org>
 
 	* hal-sharp/HalDevice.cs: Added null checks for Hal.Context to prevent

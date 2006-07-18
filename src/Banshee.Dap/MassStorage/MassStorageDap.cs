@@ -187,7 +187,7 @@ namespace Banshee.Dap.MassStorage
             if (succeeded)
                 volume.Eject (EjectCallback);
             else
-                Console.WriteLine ("Failed to unmount.  {1} {2}", error, detailed_error);
+                Console.WriteLine ("Failed to unmount.  {0} {1}", error, detailed_error);
         }
 
         private void EjectCallback (bool succeeded, string error, string detailed_error)
@@ -195,7 +195,7 @@ namespace Banshee.Dap.MassStorage
             if (succeeded)
                 base.Eject ();
             else
-                Console.WriteLine ("Failed to eject.  {1} {2}", error, detailed_error);
+                Console.WriteLine ("Failed to eject.  {0} {1}", error, detailed_error);
         }
 
         public override void AddTrack(TrackInfo track)

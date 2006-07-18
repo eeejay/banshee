@@ -86,11 +86,20 @@ namespace Banshee.Sources
             } else if(id == 0) {
                 CreateNewPlaylist();
             } else {
-                LoadFromDatabase();
+                if(Globals.Library.IsLoaded) {
+                    LoadFromDatabase();
+                } else {
+                    Globals.Library.Reloaded += OnLibraryReloaded;
+                }
             }
             
             Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
             playlists.Add(this);
+        }
+
+        private void OnLibraryReloaded (object o, EventArgs args)
+        {
+            LoadFromDatabase();
         }
         
         private void CreateNewPlaylist()
