@@ -45,6 +45,10 @@ namespace Hal
         
         public Device(Context ctx, string udi)
         {
+            if(ctx == null) {
+                throw new ApplicationException("Cannot create HAL device; context is null");
+            }
+
             this.ctx = ctx;
             this.udi = udi;
         }
@@ -258,7 +262,7 @@ namespace Hal
         
         public static bool DeviceExists(Context ctx, string udi)
         {
-            return Unmanaged.libhal_device_exists(ctx.Raw, udi, IntPtr.Zero);
+            return ctx == null ? false : Unmanaged.libhal_device_exists(ctx.Raw, udi, IntPtr.Zero);
         }
         
         public static string [] FindUdis(Context ctx, FindBy findMethod, string key, string query)
@@ -266,7 +270,11 @@ namespace Hal
             IntPtr ptr;
             string [] deviceUdis;
             int device_count;
-            
+
+            if(ctx == null) {
+                return new string[0];
+            }
+
             switch(findMethod) {
                 case FindBy.StringMatch:
                     ptr = Unmanaged.libhal_manager_find_device_string_match(
@@ -291,6 +299,10 @@ namespace Hal
         
         public static Device [] UdisToDevices(Context ctx, string [] udis)
         {
+            if(ctx == null) {
+                return new Device[0];
+            }
+        
             Device [] devices = new Device[udis.Length];
             
             for(int i = 0; i < udis.Length; i++) {

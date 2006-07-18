@@ -1,5 +1,11 @@
 2006-07-18  Aaron Bockover  <abock@gnome.org>
 
+	* hal-sharp/HalDevice.cs: Added null checks for Hal.Context to prevent
+	crashes in places; happened in new NautilusDriveFactory when dbus was
+	down
+
+2006-07-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Makefile.am: Removed a file that I haven't committed
 	yet
 
