@@ -1,3 +1,7 @@
+2006-07-18  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/MtpDeviceId.cs: sync'd device list with libgphoto
+
 2006-07-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Makefile.am: Added MediaEngine/IEqualizer.cs (left
