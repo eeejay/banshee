@@ -29,7 +29,9 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DrawingUtilities.cs \
 	$(srcdir)/SeekSlider.cs \
 	$(srcdir)/StreamPositionLabel.cs \
-	$(srcdir)/DiscUsageDisplay.cs
+	$(srcdir)/DiscUsageDisplay.cs \
+	$(srcdir)/Tile.cs \
+	$(srcdir)/TileView.cs
 
 all: $(ASSEMBLY)
 

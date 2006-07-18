@@ -1,3 +1,17 @@
+2006-07-18  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Widgets/Makefile.am: Add Tile.cs and TileView.cs
+
+	* src/Banshee.Widgets/TileView.cs: Scrollable widget that nicely 
+	arranges child widgets into a table that should rarely horizontally
+	scroll, much like the application browser in SLED 10
+
+	* src/Banshee.Widgets/Tile.cs: Added a base Tile widget class; the
+	tile concept can be seen in Beagle, and in SLED 10's main menu, 
+	application browser, and control panel
+
 2006-07-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Sources/PlaylistSource.cs: If the Library is not
