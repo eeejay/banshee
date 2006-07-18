@@ -1,3 +1,8 @@
+2006-07-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Makefile.am: Removed a file that I haven't committed
+	yet
+
 2006-07-18  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/MtpDeviceId.cs: sync'd device list with libgphoto
