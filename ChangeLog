@@ -1,3 +1,13 @@
+2006-07-19  Aaron Bockover  <abock@gnome.org>
+
+	Patch from Ed Catmur (BGO #346501)
+
+	* configure.ac: Check for libnautilus-burn 2.15.x and set compat 
+	defines for 2.12.x, 2.14.x, and 2.15.x
+
+	* burn-sharp/glue.c: Stay compatible with older (<=2.14.x) API and
+	work with new 2.15.x API
+
 2006-07-18  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.mdp: Updated MonoDevelop project
