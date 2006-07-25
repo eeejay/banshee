@@ -72,7 +72,7 @@ namespace Banshee.Gui.Dialogs
         private void LoadPreferences()
         {                   
             string location = (string)ReadPreference(GConfKeys.LibraryLocation, Paths.DefaultLibraryPath);
-            if(Directory.Exists(location)) {
+            if(!Directory.Exists(location)) {
                 location = Paths.DefaultLibraryPath;
             }
             

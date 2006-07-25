@@ -1,3 +1,8 @@
+2006-07-25  Ruben Vermeersch  <ruben@Lambda1.be>
+
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Fix music folder preference
+	(BGO #348600)
+
 2006-07-19  Aaron Bockover  <abock@gnome.org>
 
 	Patch from Ed Catmur (BGO #346501)
