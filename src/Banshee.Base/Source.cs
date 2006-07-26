@@ -229,7 +229,7 @@ namespace Banshee.Sources
         
         public virtual void AddChildSource(ChildSource source)
         {
-            source.SetParentSource(source);
+            source.SetParentSource(this);
             child_sources.Add(source);
         
             SourceEventHandler handler = ChildSourceAdded;
