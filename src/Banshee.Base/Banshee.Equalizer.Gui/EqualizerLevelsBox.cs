@@ -1,5 +1,5 @@
 /***************************************************************************
- *  GladeDialog.cs
+ *  EqualizerLevelsBox.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -29,21 +29,42 @@
 using System;
 using Gtk;
 
-namespace Banshee.Gui
+using Banshee.Widgets;
+
+namespace Banshee.Equalizer.Gui
 {
-    public abstract class GladeDialog : GladeWindow
+    public class EqualizerLevelsBox : VBox
     {
-        public GladeDialog(string name) : base(name)
+        public EqualizerLevelsBox(params string [] levels)
         {
-        }
-    
-        public virtual ResponseType Run()
-        {
-            return (ResponseType)Dialog.Run();
+            for(int i = 0; i < levels.Length && i < 3; i++) {
+                Label label = CreateLabel(levels[i]);
+                switch(i) {
+                    case 0: 
+                        label.Yalign = 0.05f;
+                         break;
+                    case 1:
+                        label.Yalign = 0.5f;
+                        break;
+                    case 2:
+                    default:
+                        label.Yalign = 0.95f;
+                        break;
+                }
+                
+                PackStart(label, true, true, 0);
+            }
         }
         
-        public Dialog Dialog {
-            get { return (Dialog)Window; }
+        private Label CreateLabel(string value)
+        {
+            Label label = new Label();
+            label.Xalign = 1.0f;
+            label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(value));
+            label.ModifyFg(StateType.Normal, DrawingUtilities.ColorBlend(
+                Style.Foreground(StateType.Normal), Style.Background(StateType.Normal), 0.5));
+            label.Show();
+            return label;
         }
     }
 }

@@ -1,5 +1,5 @@
 /***************************************************************************
- *  GladeDialog.cs
+ *  GladeWindow.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -28,22 +28,50 @@
 
 using System;
 using Gtk;
+using Glade;
 
 namespace Banshee.Gui
 {
-    public abstract class GladeDialog : GladeWindow
+    public abstract class GladeWindow 
     {
-        public GladeDialog(string name) : base(name)
+        private string window_name;
+        private Glade.XML glade;
+        private Window window;
+        
+        protected GladeWindow()
         {
         }
-    
-        public virtual ResponseType Run()
+
+        public GladeWindow(string name)
         {
-            return (ResponseType)Dialog.Run();
+            window_name = name;        
+            glade = new Glade.XML(System.Reflection.Assembly.GetEntryAssembly(), 
+                "banshee.glade", name, "banshee");
+            glade.Autoconnect(this);
         }
         
-        public Dialog Dialog {
-            get { return (Dialog)Window; }
+        public virtual void Destroy()
+        {
+            Window.Destroy();
+        }
+
+        protected Glade.XML Glade {
+            get { return glade; }
+        }
+
+        public string Name {
+            get { return window_name; }
+        }
+        
+        public Window Window {
+            get {
+                if(window == null) {
+                    window = (Window)glade.GetWidget(window_name);
+                    Banshee.Base.IconThemeUtils.SetWindowIcon(window);
+                }
+                
+                return window;
+            }
         }
     }
 }

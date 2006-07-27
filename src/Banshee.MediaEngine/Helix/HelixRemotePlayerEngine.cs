@@ -3,6 +3,7 @@
  *
  *  Copyright (C) 2006 Novell, Inc
  *  Written by Aaron Bockover <aaron@abock.org>
+ *             Equalizer support by Ivan N. Zlatev <contact i-nZ.net>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -28,6 +29,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using Helix;
 
@@ -36,7 +38,7 @@ using Banshee.MediaEngine;
 
 namespace Banshee.MediaEngine.Helix
 {    
-    public class HelixRemotePlayerEngine : PlayerEngine
+    public class HelixRemotePlayerEngine : PlayerEngine, IEqualizer
     {
         private RemotePlayer player;
         private uint timeout_id;
@@ -191,6 +193,52 @@ namespace Banshee.MediaEngine.Helix
         private static string [] decoder_capabilities = { "m4a", "mp3", "ram", "ra", "rm", "aac", "mp4" };
         public override IEnumerable ExplicitDecoderCapabilities {
             get { return decoder_capabilities; }
+        }
+
+        // IEqualizer implementation
+        //
+        // Helix range (out): -144..144
+        // Plugin range (in): -100 .. 100
+        // Helix = Plugin * 1.44 = Plugin * 144/100
+        //
+        
+        private static uint [] eq_frequencies = new uint [] { 31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000 };
+        private static Dictionary<uint, int> frequency_map = new Dictionary<uint, int>();
+        
+        public void SetEqualizerGain(uint frequency, int value)
+        {
+            if(value < -100 || value > 100) {
+                throw new ArgumentOutOfRangeException("value must be in range -100..100");
+            }
+            
+            if(player.GetIsEqualizerEnabled() == false) {
+                player.SetEqualizerEnabled(true);
+            }
+
+            if(frequency_map.Count == 0) {
+                for(int i = 0; i < EqualizerFrequencies.Length; i++) {
+                    frequency_map.Add(EqualizerFrequencies[i], i);
+                }
+            }
+
+            int frequency_id = -1;
+            
+            try {
+                frequency_id = frequency_map[frequency];
+            } catch {
+                throw new ArgumentException("Invalid frequency");
+            }
+            
+            player.SetEqualizerGain(frequency_id, value * 144 / 100);
+        }
+
+        public uint [] EqualizerFrequencies {
+            get { return eq_frequencies; }
+        }
+
+        public int AmplifierLevel {
+            get { return 0; }
+            set { }
         }
     }
 }

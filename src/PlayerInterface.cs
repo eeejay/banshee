@@ -2202,18 +2202,21 @@ namespace Banshee
             Globals.Configuration.Set(GConfKeys.ShowCoverArt, action.Active);
         }
         
-        private bool is_fullscreen = false;
         private void OnFullScreenAction(object o, EventArgs args)
         {
-            if(is_fullscreen) {
+            if(!(o as ToggleAction).Active) {
                 WindowPlayer.Unfullscreen();
-                is_fullscreen = false;
             } else {
                 WindowPlayer.Fullscreen();
-                is_fullscreen = true;
             } 
         }
         
+        private void OnShowEqualizerAction(object o, EventArgs args)
+        {
+            Banshee.Equalizer.Gui.EqualizerEditor eqwin = new Banshee.Equalizer.Gui.EqualizerEditor();
+            eqwin.Window.Show();
+        }
+
         private void OnColumnsAction(object o, EventArgs args)
         {
             playlistView.ColumnChooser();

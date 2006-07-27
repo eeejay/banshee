@@ -134,6 +134,10 @@ namespace Banshee.Base
                 new ActionEntry("ColumnsAction", null,
                     Catalog.GetString("Columns..."), null,
                     Catalog.GetString("Select which columns to display in the song list"), null),
+                
+                new ActionEntry("ShowEqualizerAction", null,
+                    Catalog.GetString("Equalizer"), null,
+                    Catalog.GetString("Display the equalizer."), null),
                     
                 new ActionEntry("LoggedEventsAction", null,
                     Catalog.GetString("Logged Events Viewer..."), null,
@@ -145,6 +149,27 @@ namespace Banshee.Base
                 new ActionEntry("VersionInformationAction", null,
                     Catalog.GetString("Version Information..."), null,
                     Catalog.GetString("View detailed version and configuration information"), null),
+                    
+                new ActionEntry("WebMenuAction", null,
+                    Catalog.GetString("Web Resources"), null, null, null),
+                    
+                new ActionEntry("WikiGuideAction", Stock.Help,
+                    Catalog.GetString("Banshee User Guide (Wiki)"), null,
+                    Catalog.GetString("Learn about how to use Banshee"), delegate {
+                        Gnome.Url.Show("http://banshee-project.org/Guide");
+                    }),
+                    
+                new ActionEntry("WikiAction", null,
+                    Catalog.GetString("Banshee Home Page"), null,
+                    Catalog.GetString("Visit the Banshee Home Page"), delegate {
+                        Gnome.Url.Show("http://banshee-project.org/");
+                    }),
+                    
+                new ActionEntry("WikiDeveloperAction", null,
+                    Catalog.GetString("Get Involved"), null,
+                    Catalog.GetString("Become a contributor to Banshee"), delegate {
+                        Gnome.Url.Show("http://banshee-project.org/Developers");
+                    }),
                     
                 new ActionEntry("AboutAction", "gtk-about", null),
                     
@@ -161,14 +186,14 @@ namespace Banshee.Base
                     Catalog.GetString("Debug"), null, null, null)
             });
             
-            global_actions.Add(new ToggleActionEntry [] {
+            global_actions.Add(new ToggleActionEntry [] {               
                 new ToggleActionEntry("FullScreenAction", null,
                     Catalog.GetString("Fullscreen"), "F11",
                     Catalog.GetString("Toggle Fullscreen Mode"), null, false),
                 
                 new ToggleActionEntry("ShowCoverArtAction", null,
                     Catalog.GetString("Show Cover Art"), null,
-                    Catalog.GetString("Toggle display of album cover art"), null, false)
+                    Catalog.GetString("Toggle display of album cover art"), null, false),              
             });
 
             ui.InsertActionGroup(global_actions, 0);

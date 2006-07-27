@@ -1,8 +1,7 @@
-
 /***************************************************************************
  *  Queue.cs
  *
- *  Copyright (C) 2005 Novell
+ *  Copyright (C) 2005-2006 Novell, Inc.
  *  Written by Chris Toshok (toshok@ximian.com)
  ****************************************************************************/
 
@@ -163,7 +162,8 @@ namespace Banshee.Plugins.Audioscrobbler {
 
                     queue.Add (new QueuedTrack (artist, album, title, duration, start_time));
 				}
-			} catch (System.Exception e) { }
+			} catch { 
+			}
 		}
 
 		public string GetTransmitInfo (out int num_tracks)

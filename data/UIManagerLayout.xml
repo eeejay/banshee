@@ -43,6 +43,7 @@
             <menuitem name="SeekTo" action="SeekToAction" />
             <menuitem name="RestartSong" action="RestartSongAction" />
             <separator />
+            <placeholder name="PlaybackMenuAdditions" />
             <menuitem name="RepeatNone" action="RepeatNoneAction" />
             <menuitem name="RepeatAll" action="RepeatAllAction" />
             <menuitem name="RepeatSingle" action="RepeatSingleAction" />
@@ -50,12 +51,20 @@
             <menuitem name="Shuffle" action="ShuffleAction" />
         </menu>
         <menu name="ViewMenu" action="ViewMenuAction">
+            <menuitem name="ShowEqualizer" action="ShowEqualizerAction" />
             <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
             <menuitem name="Columns" action="ColumnsAction" />
         </menu>
         <menu name="HelpMenu" action="HelpMenuAction">
+            <menu name="WebMenu" action="WebMenuAction">
+                <menuitem name="WikiGuide" action="WikiGuideAction" />
+                <separator />
+                <menuitem name="Wiki" action="WikiAction" />
+                <menuitem name="WikiDeveloper" action="WikiDeveloperAction" />
+            </menu>
+            <separator />
             <menuitem name="About" action="AboutAction" />
         </menu>
         <menu name="DebugMenu" action="DebugMenuAction">

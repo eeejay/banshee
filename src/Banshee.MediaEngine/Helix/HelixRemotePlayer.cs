@@ -167,6 +167,9 @@ namespace Helix
         [Method] public abstract void Shutdown();
         [Method] public abstract void Ping();
         [Method] public abstract bool GetIsLive();
+        [Method] public abstract bool GetIsEqualizerEnabled();
+        [Method] public abstract void SetEqualizerEnabled(bool enabled);
+        [Method] public abstract void SetEqualizerGain(int frequencyId, int value);
     }
     
     public enum ContentState {

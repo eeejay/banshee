@@ -1,3 +1,56 @@
+2006-07-27  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Base/ActionManager.cs:
+	* data/UIManagerLayout.xml: Added equalizer and help/wiki actions
+
+	* src/PlayerInterface.cs: Minor full screen action clean up and
+	added action for showing eq editor
+
+	* src/Banshee.Base/Gui/GladeWindow.cs: Base wrapper for Glade windows
+
+	* src/Banshee.Base/Gui/GladeDialog.cs: Now derives from GladeWindow
+
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: Fix minor warning
+
+	* src/Banshee.Base/Makefile.am: Added new equalizer files
+
+	Equalizer support based in part on Ivan N. Zlatev's patch:
+
+	* data/banshee.glade: Added equalizer editor shell window
+
+	* src/Banshee.Base/Banshee.Equalizer/EqualizerManager.cs: Manager 
+	with a default instance that supports loading/saving EqualizerSettings
+	into XML
+
+	* src/Banshee.Base/Banshee.Equalizer/EqualizerSetting.cs: Type representing
+	and equalizer preset/configuration
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerBandScale.cs: A scale
+	widget supporting band/frequency and clipped EQ values, shows a 
+	frequency label as well
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs: VBox
+	that shows dB levels
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs: 
+	A GtkComboBoxEntry that is EqualizerManager-aware
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerView.cs: A full EQ
+	view widget that combines the BandScale and LevelsBox widgets and 
+	supports loading/setting presets from an EqualizerSetting
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerWindow.cs: Default
+	editor window combining glade shell window, EqualizerView and preset
+	support
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Added supported
+	EQ bands/frequencies by the Helix engine; call into new EQ D-Bus methods
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: Added D-Bus
+	methods for new EQ support
+
 2006-07-26  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Use new intltool 0.3.5 locale handling (BGO #339140, 
