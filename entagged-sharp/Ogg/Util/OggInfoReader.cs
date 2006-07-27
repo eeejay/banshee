@@ -98,14 +98,14 @@ namespace Entagged.Audioformats.Ogg.Util {
 		        && vorbisCodecHeader.MaxBitrate == vorbisCodecHeader.NominalBitrate
 		        && vorbisCodecHeader.MinBitrate == vorbisCodecHeader.NominalBitrate) {
 			    //CBR
-			    info.Bitrate = vorbisCodecHeader.NominalBitrate;
+			    info.Bitrate = vorbisCodecHeader.NominalBitrate / 1000;
 			    info.Vbr = false;
 			}
 			else if(vorbisCodecHeader.NominalBitrate != 0
 			        && vorbisCodecHeader.MaxBitrate == 0
 			        && vorbisCodecHeader.MinBitrate == 0) {
 			    //Average vbr
-			    info.Bitrate = vorbisCodecHeader.NominalBitrate;
+			    info.Bitrate = vorbisCodecHeader.NominalBitrate / 1000;
 			    info.Vbr = true;
 			}
 			else {

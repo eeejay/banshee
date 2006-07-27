@@ -212,17 +212,22 @@ namespace Banshee.Base
                 } catch(System.ArgumentException) {
                     // If there are illegal characters in path
                 }
-            } else if(is_directory && !Path.GetFileName(System.IO.Path.GetDirectoryName(source)).StartsWith(".")) {
-
+            } else if(is_directory) {
                 try {
-                    foreach(string file in IOProxy.Directory.GetFiles(source)) {
-                        ScanForFiles(file);
-                    }
+                    if(!Path.GetFileName(System.IO.Path.GetDirectoryName(source)).StartsWith(".")) {
+                        try {
+                            foreach(string file in IOProxy.Directory.GetFiles(source)) {
+                                ScanForFiles(file);
+                            }
 
-                    foreach(string directory in IOProxy.Directory.GetDirectories(source)) {
-                        ScanForFiles(directory);
+                            foreach(string directory in IOProxy.Directory.GetDirectories(source)) {
+                                ScanForFiles(directory);
+                            }
+                        } catch {
+                        }
                     }
-                } catch(System.UnauthorizedAccessException) {
+                } catch(System.ArgumentException) {
+                    // If there are illegal characters in path
                 }
             }
 

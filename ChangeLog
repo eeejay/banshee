@@ -1,3 +1,23 @@
+2006-07-26  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Use new intltool 0.3.5 locale handling (BGO #339140, 
+	Przemysław Grzegorczyk)
+
+	* src/PlayerInterface.cs: Suspend search until query is entered to
+	speed up performance (BGO #348274, Dominik Meister)
+
+	* src/Banshee.Base/ImportManager.cs:  Catch more exceptions that can be
+	thrown during import.  Based on patch from Julien Sobrier (BGO #348732,
+	Gabriel Burt)
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Added more informative debug output
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs: Only update on a delay to
+	help unclog the main loop (BGO #347064, James Willcox)
+
+	* entagged-sharp/Ogg/Util/OggInfoReader.cs: Nominal bitrate in kbps (BGO
+	#342933, Koike Kazuhiko)
+
 2006-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Source.cs: Fix small bug where we set the parent of a

@@ -91,6 +91,8 @@ namespace Banshee
         [Widget] private ProgressBar dapDiskUsageBar;
         
         private bool incrementedCurrentSongPlayCount;
+
+        private bool suspendSearch;
     
         public Gtk.Window Window {
             get {
@@ -1377,6 +1379,10 @@ namespace Banshee
             if(SourceManager.ActiveSource.HandlesSearch) {
                 return;
             }
+
+            if (suspendSearch) {
+                return;
+            }
             
             playlistModel.ClearModel();
             
@@ -2272,6 +2278,9 @@ namespace Banshee
                 return;
             }
 
+            // suspend the search functionality (for performance reasons)
+            suspendSearch = true;
+
             switch(criteria) {
                 case SearchTrackCriteria.Album:
                     searchEntry.Field = Catalog.GetString("Album Title");
@@ -2286,6 +2295,8 @@ namespace Banshee
                     searchEntry.Query = track.Genre;
                     break;
             }
+
+            suspendSearch = false;
             
             playlistView.HasFocus = true;
         }

@@ -263,7 +263,7 @@ namespace Banshee.Dap.Ipod
                         pixbuf.Dispose ();
                     }
                 } catch (Exception e) {
-                    Console.Error.WriteLine ("Failed to set cover art: " + e);
+                    Console.Error.WriteLine ("Failed to set cover art from {0}: {1}", ti.CoverArtFileName, e);
                 }
             }
         }

@@ -47,6 +47,11 @@ namespace Banshee.Widgets
         private string name;
         private string message;
         private string header;
+
+        private bool message_update_needed = false;
+        private bool header_update_needed = false;
+        private bool progress_update_needed = false;
+        private GLib.TimeoutHandler timeout_delegate;
         
         private uint timeout_id = 0;
         private uint slow_timeout_id = 0;
@@ -124,6 +129,13 @@ namespace Banshee.Widgets
                 slow_timeout_id = GLib.Timeout.Add(1000, OnCheckForDisplay);
             else
                 ActiveUserEventsManager.Instance.Register(this);
+
+            header_update_needed = true;
+            message_update_needed = true;
+            progress_update_needed = true;
+
+            timeout_delegate = new GLib.TimeoutHandler (OnUpdateStatus);
+            timeout_id = GLib.Timeout.Add (100, timeout_delegate);
         }
         
         public void Cancel()
@@ -167,21 +179,25 @@ namespace Banshee.Widgets
             return false;
         }
         
-        private bool OnTimeout()
+        private bool OnUpdateStatus()
         {
-            progress_bar.Pulse();
-            return true;
-        }
-        
-        private void UpdateLabel()
-        {
-            Gtk.Application.Invoke(delegate {
+            if (disposed)
+                return false;
+            
+            if (!header_update_needed && !message_update_needed && !progress_update_needed)
+                return true;
+
+            if (header_update_needed) {
                 header_label.Visible = header != null;
                 
-                if(header != null) {
+                if (header != null) {
                     header_label.Markup = String.Format("<small><b>{0}</b></small>", GLib.Markup.EscapeText(header));
                 }
-                
+
+                header_update_needed = false;
+            }
+
+            if (message_update_needed) {
                 if(message == null && name != null) {
                     message = name;
                 } else if(message == null && name == null) {
@@ -189,50 +205,63 @@ namespace Banshee.Widgets
                 }
                 
                 message_label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(message));
-                
+            
                 string tip = name + ": " + message;
                 tips.SetTip(message_label, tip, tip);
                 tips.SetTip(icon, tip, tip);
-            });
+
+                message_update_needed = false;
+            }
+
+            if (progress_update_needed) {
+                if (progress > 0.0) {
+                    progress_bar.Fraction = progress;
+                    progress_bar.Text = String.Format("{0}%", (int)(progress * 100.0));
+                    progress_update_needed = false;
+                } else {
+                    progress_bar.Pulse();
+                    // NOTE: progress_update_needed is intentionally not reset here
+                }
+            }
+
+            return true;
         }
 
         public string Name {
+            get {
+                return name;
+            }
             set {
                 name = value;
-                UpdateLabel();
+                message_update_needed = true;
             }
         }
         
         public string Message {
+            get {
+                return message;
+            }
             set {
                 message = value;
-                UpdateLabel();
+                message_update_needed = true;
             }
         }
         
         public string Header {
+            get {
+                return header;
+            }
             set {
                 header = value;
-                UpdateLabel();
+                header_update_needed = true;
             }
         }
         
         public double Progress {
             set {
-                if(value <= 0.0 && !disposed && timeout_id == 0) {
-                    timeout_id = GLib.Timeout.Add(100, OnTimeout);
-                } else if(timeout_id > 0) {
-                    GLib.Source.Remove(timeout_id);
-                    timeout_id = 0;
-                }
-            
-                Gtk.Application.Invoke(delegate {
-                    progress_bar.Fraction = value;
-                    progress = value;
-                    progress_bar.Text = String.Format("{0}%", (int)(value * 100.0));
-                });
+                progress = value;
+                progress_update_needed = true;
             }
-            
             get {
                 return progress;
             }
