@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 using Gdk;
@@ -36,6 +37,7 @@ using Pango;
 using Banshee.Base;
 using Banshee.Dap;
 using Banshee.Sources;
+using Banshee.Gui.DragDrop;
 
 namespace Banshee
 {
@@ -78,12 +80,12 @@ namespace Banshee
         private int currentTimeout = -1;
         
         private static TargetEntry [] dnd_source_entries = new TargetEntry [] {
-            Dnd.TargetSource
+            Banshee.Gui.DragDrop.DragDropTarget.Source
         };
             
         private static TargetEntry [] dnd_dest_entries = new TargetEntry [] {
-            Dnd.TargetLibraryTrackIds,
-            Dnd.TargetSource
+            Banshee.Gui.DragDrop.DragDropTarget.TrackInfoObjects,
+            Banshee.Gui.DragDrop.DragDropTarget.Source
         };
     
         public SourceView()
@@ -309,10 +311,9 @@ namespace Banshee
         protected override void OnDragDataGet(Gdk.DragContext context, SelectionData selectionData,
             uint info, uint time)
         {
-            switch((Dnd.TargetType)info) {
-                case Dnd.TargetType.Source:
-                    byte [] data = Dnd.ObjectToSelectionData(HighlightedSource);
-                    selectionData.Set(context.Targets[0], 8, data, data.Length);
+            switch((DragDropTargetType)info) {
+                case DragDropTargetType.Source:
+                    new DragDropList<Source>(HighlightedSource, selectionData, context.Targets[0]);
                     break;
                 default:
                     return;
@@ -334,7 +335,8 @@ namespace Banshee
             // FIXME: We need to handle this nicer
             if(Gtk.Drag.GetSourceWidget(context) != this && 
                 !(SourceManager.ActiveSource is LibrarySource ||
-                SourceManager.ActiveSource is PlaylistSource)) {
+                SourceManager.ActiveSource is PlaylistSource ||
+                SourceManager.ActiveSource is IImportable)) {
                 return false;
             }
         
@@ -354,8 +356,9 @@ namespace Banshee
                 Source source = GetSource(path);
                 SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
                 
-                // TODO: Support other drag destinations
-                if((source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
+                if(source is LibrarySource && SourceManager.ActiveSource is IImportable) {
+                    return true;
+                } else if((source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
                     return true;
                 }
 
@@ -393,12 +396,12 @@ namespace Banshee
             Gtk.SelectionData selectionData, uint info, uint time)
         {       
             if(Gtk.Drag.GetSourceWidget(context) == this) {
-                object [] objects = Dnd.SelectionDataToObjects(selectionData);
-                if(objects.Length <= 0 || !(objects[0] is Source)) { 
+                DragDropList<Source> sources = selectionData;
+                if(sources.Count <= 0) { 
                     return;
                 }
                 
-                Source source = objects[0] as Source;
+                Source source = sources[0];
                 
                 if(source.IsDragSource && final_drag_source.AcceptsSourceDrop) {
                     final_drag_source.SourceDrop(source);
@@ -410,28 +413,12 @@ namespace Banshee
                 return;
             }
             
-            string rawData = Dnd.SelectionDataToString(selectionData);
-            string [] rawDataArray = Dnd.SplitSelectionData(rawData);
-            
-            if(rawData.Length <= 0) {
-                Gtk.Drag.Finish(context, false, false, time);
-                return;
-            }
-            
-            ArrayList tracks = new ArrayList();
-            foreach(string trackId in rawDataArray) {
-                try {
-                    int tid = Convert.ToInt32(trackId);
-                    tracks.Add(Globals.Library.Tracks[tid]);
-                } catch(Exception) {
-                    continue;
-                }
-            }
+            DragDropList<TrackInfo> dnd_transfer = selectionData;
 
             if(final_drag_start_time == context.StartTime) {
                 if(final_drag_source == newPlaylistSource) {
                     PlaylistSource playlist = new PlaylistSource();
-                    playlist.AddTrack(tracks);
+                    playlist.AddTrack(dnd_transfer);
                     playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
                     playlist.Commit();
                     LibrarySource.Instance.AddChildSource(playlist);
@@ -439,7 +426,7 @@ namespace Banshee
                 } else {
                     Source source = final_drag_source;
                     if(source is PlaylistSource || source is DapSource || source.AcceptsInput) {
-                        source.AddTrack(tracks);
+                        source.AddTrack(dnd_transfer);
                         source.Commit();
                     }
                 }

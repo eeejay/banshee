@@ -56,6 +56,11 @@ BANSHEE_EQUALIZER_GUI_SOURCES = \
 	$(srcdir)/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs \
 	$(srcdir)/Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs
 
+BANSHEE_GUI_DRAGDROP_SOURCES = \
+	$(srcdir)/Banshee.Gui.DragDrop/DragDropList.cs \
+	$(srcdir)/Banshee.Gui.DragDrop/DragDropTarget.cs \
+	$(srcdir)/Banshee.Gui.DragDrop/DragDropUtilities.cs 
+
 IO_SOURCES = \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
@@ -89,6 +94,7 @@ SOURCES_SOURCES = \
 	$(srcdir)/SourceManager.cs \
 	$(srcdir)/Source.cs \
 	$(srcdir)/ChildSource.cs \
+	$(srcdir)/Sources/IImportable.cs \
 	$(srcdir)/Sources/LibrarySource.cs \
 	$(srcdir)/Sources/PlaylistSource.cs \
 	$(srcdir)/Sources/AudioCdSource.cs \
@@ -128,6 +134,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_BURNER_SOURCES) \
 	$(BANSHEE_EQUALIZER_SOURCES) \
 	$(BANSHEE_EQUALIZER_GUI_SOURCES) \
+	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \

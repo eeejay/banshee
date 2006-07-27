@@ -24,7 +24,6 @@
     <File name="./src/AssemblyInfo.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/RemotePlayer.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Dialogs.cs" subtype="Code" buildaction="Nothing" />
-    <File name="./src/DragDrop.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/ExceptionDialog.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/IPlaybackModel.cs" subtype="Code" buildaction="Nothing" />
     <File name="./src/Main.cs" subtype="Code" buildaction="Nothing" />
@@ -284,6 +283,11 @@
     <File name="./src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerBandScale.cs" subtype="Code" buildaction="Compile" />
     <File name="./src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Sources/IImportable.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Gui.DragDrop" subtype="Directory" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="./src/Banshee.Base/Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="./hal-sharp/hal-sharp.dll" />

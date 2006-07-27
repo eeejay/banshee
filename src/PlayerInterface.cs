@@ -47,6 +47,7 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Dap;
 using Banshee.Sources;
+using Banshee.Gui.DragDrop;
 
 namespace Banshee
 {
@@ -110,15 +111,15 @@ namespace Banshee
 
         private static TargetEntry [] playlistViewSourceEntries = 
             new TargetEntry [] {
-                Dnd.TargetPlaylistRows,
-                Dnd.TargetLibraryTrackIds,
-                Dnd.TargetUriList
+                Banshee.Gui.DragDrop.DragDropTarget.PlaylistRows,
+                Banshee.Gui.DragDrop.DragDropTarget.TrackInfoObjects,
+                Banshee.Gui.DragDrop.DragDropTarget.UriList
             };
             
         private static TargetEntry [] playlistViewDestEntries = 
             new TargetEntry [] {
-                Dnd.TargetPlaylistRows,
-                Dnd.TargetUriList
+                Banshee.Gui.DragDrop.DragDropTarget.PlaylistRows,
+                Banshee.Gui.DragDrop.DragDropTarget.UriList
             };
 
         private RemotePlayer banshee_dbus_object;
@@ -1413,43 +1414,41 @@ namespace Banshee
         // PlaylistView DnD
         
         [GLib.ConnectBefore]
-        private void OnPlaylistViewButtonPressEvent(object o, 
-            ButtonPressEventArgs args)
+        private void OnPlaylistViewButtonPressEvent(object o, ButtonPressEventArgs args)
         {
-            if (args.Event.Window != playlistView.BinWindow)
+            if(args.Event.Window != playlistView.BinWindow) {
                 return;
-
-            if(args.Event.Button == 3) {
-                //GLib.Timeout.Add(10, 
-                //    new GLib.TimeoutHandler(PlaylistMenuPopupTimeout));
+            } else if(args.Event.Button == 3) {
                 PlaylistMenuPopupTimeout(args.Event.Time);
             }
             
             TreePath path;
-            playlistView.GetPathAtPos((int)args.Event.X, 
-                (int)args.Event.Y, out path);
+            playlistView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path);
         
-            if(path == null)
+            if(path == null) {
                 return;
+            }
             
             clickX = (int)args.Event.X;
             clickY = (int)args.Event.Y;
         
             switch(args.Event.Type) {
                 case EventType.TwoButtonPress:
-                    if(args.Event.Button != 1
-                        || (args.Event.State &  (ModifierType.ControlMask 
-                        | ModifierType.ShiftMask)) != 0)
+                    if(args.Event.Button != 1 || (args.Event.State & 
+                        (ModifierType.ControlMask | ModifierType.ShiftMask)) != 0) {
                         return;
+                    }
+                    
                     playlistView.Selection.UnselectAll();
                     playlistView.Selection.SelectPath(path);
                     playlistView.PlayPath(path);
                     return;
                 case EventType.ButtonPress:
-                    if(playlistView.Selection.PathIsSelected(path) &&
-                   (args.Event.State & (ModifierType.ControlMask |
-                            ModifierType.ShiftMask)) == 0)
+                    if(playlistView.Selection.PathIsSelected(path) && (args.Event.State & 
+                        (ModifierType.ControlMask | ModifierType.ShiftMask)) == 0) {
                         args.RetVal = true;
+                    }
+                    
                     return;
                 default:
                     args.RetVal = false;
@@ -1458,41 +1457,41 @@ namespace Banshee
         }
 
         [GLib.ConnectBefore]
-        private void OnPlaylistViewMotionNotifyEvent(object o, 
-            MotionNotifyEventArgs args)
+        private void OnPlaylistViewMotionNotifyEvent(object o, MotionNotifyEventArgs args)
         {
-            if((args.Event.State & ModifierType.Button1Mask) == 0)
+            if((args.Event.State & ModifierType.Button1Mask) == 0) {
                 return;
-            if(args.Event.Window != playlistView.BinWindow)
+            } else if(args.Event.Window != playlistView.BinWindow) {
                 return;
+            }
                     
             args.RetVal = true;
-            if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
-                            (int)args.Event.X, (int)args.Event.Y))
+            
+            if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY, (int)args.Event.X, (int)args.Event.Y)) {
                 return;
+            }
+            
             TreePath path;
-            if (!playlistView.GetPathAtPos((int)args.Event.X, 
-                               (int)args.Event.Y, out path))
+            if(!playlistView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path)) {
                 return;
+            }
 
-           if(SourceManager.ActiveSource is AudioCdSource)
-              return;
+            if(SourceManager.ActiveSource is AudioCdSource) {
+                return;
+            }
               
-            Gtk.Drag.Begin(playlistView, new TargetList (playlistViewSourceEntries),
-                       Gdk.DragAction.Move | Gdk.DragAction.Copy, 1, args.Event);
+            Gtk.Drag.Begin(playlistView, new TargetList(playlistViewSourceEntries), 
+                Gdk.DragAction.Move | Gdk.DragAction.Copy, 1, args.Event);
         }
 
-        private void OnPlaylistViewButtonReleaseEvent(object o, 
-            ButtonReleaseEventArgs args)
+        private void OnPlaylistViewButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
         {
-            if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY,
-                            (int)args.Event.X, (int)args.Event.Y) &&
-               ((args.Event.State & (ModifierType.ControlMask 
-                         | ModifierType.ShiftMask)) == 0) &&
-               playlistView.Selection.CountSelectedRows() > 1) {
+            if(!Gtk.Drag.CheckThreshold(playlistView, clickX, clickY, (int)args.Event.X, (int)args.Event.Y) &&
+                ((args.Event.State & (ModifierType.ControlMask | ModifierType.ShiftMask)) == 0) &&
+                playlistView.Selection.CountSelectedRows() > 1) {
+                
                 TreePath path;
-                playlistView.GetPathAtPos((int)args.Event.X, 
-                              (int)args.Event.Y, out path);
+                playlistView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path);
                 playlistView.Selection.UnselectAll();
                 playlistView.Selection.SelectPath(path);
             }
@@ -1624,8 +1623,7 @@ namespace Banshee
             TreeViewDropPosition pos;
             bool haveDropPosition;
             
-            string rawSelectionData = 
-                Dnd.SelectionDataToString(args.SelectionData);            
+            string rawSelectionData = DragDropUtilities.SelectionDataToString(args.SelectionData);            
             
             haveDropPosition = playlistView.GetDestRowAtPos(args.X, 
                 args.Y, out destPath, out pos);
@@ -1637,7 +1635,7 @@ namespace Banshee
             }
 
             switch(args.Info) {
-                case (uint)Dnd.TargetType.UriList:
+                case (uint)DragDropTargetType.UriList:
                     // AddFile needs to accept a Path for inserting
                     // If in Library view, we just append to Library
                     // If in Playlist view, we append Library *AND* PlayList
@@ -1648,11 +1646,11 @@ namespace Banshee
                     }
                         
                     break;
-                case (uint)Dnd.TargetType.PlaylistRows:
+                case (uint)DragDropTargetType.PlaylistRows:
                     if(!haveDropPosition)
                         break;
                     
-                    string [] paths = Dnd.SplitSelectionData(rawSelectionData);
+                    string [] paths = DragDropUtilities.SplitSelectionData(rawSelectionData);
                     if(paths.Length <= 0) 
                         break;
                         
@@ -1700,37 +1698,49 @@ namespace Banshee
         
         private void OnPlaylistViewDragDataGet(object o, DragDataGetArgs args)
         {
-            byte [] selData;
+            byte [] selection_data;
             
             switch(args.Info) {
-                case (uint)Dnd.TargetType.PlaylistRows:                
-                    selData = Dnd.TreeViewSelectionPathsToBytes(playlistView);
-                    if(selData == null)
+                case (uint)DragDropTargetType.PlaylistRows:                
+                    selection_data = DragDropUtilities.TreeViewSelectionPathsToBytes(playlistView);
+                    if(selection_data == null) {
                         return;
+                    }
                     
-                    args.SelectionData.Set(
-                        Gdk.Atom.Intern(Dnd.TargetPlaylistRows.Target, 
-                        false), 8, selData);
+                    args.SelectionData.Set(Gdk.Atom.Intern(DragDropTarget.PlaylistRows.Target, 
+                        false), 8, selection_data);
+                    break;
+                case (uint)DragDropTargetType.TrackInfoObjects:
+                    if(playlistView.Selection.CountSelectedRows() <= 0) {
+                        return;
+                    };
+                   
+                    DragDropList<TrackInfo> track_dnd = new DragDropList<TrackInfo>();
+                    foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                        track_dnd.Add(playlistModel.PathTrackInfo(path));
+                    }
+                    
+                    track_dnd.AssignToSelection(args.SelectionData, 
+                        Gdk.Atom.Intern(DragDropTarget.TrackInfoObjects.Target, false));
                         
                     break;
-                case (uint)Dnd.TargetType.LibraryTrackIds:
-                    selData = Dnd.PlaylistSelectionTrackIdsToBytes(playlistView);
-                    if(selData == null)
+                case (uint)DragDropTargetType.UriList:
+                    if(playlistView.Selection.CountSelectedRows() <= 0) {
                         return;
+                    }
+                
+                    string selection_data_str = null;
+                    foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
+                        selection_data_str += playlistModel.PathTrackInfo(path).Uri + "\r\n";
+                    }
+                
+                    selection_data = System.Text.Encoding.ASCII.GetBytes(selection_data_str);
+                    if(selection_data == null) {
+                        return;
+                    }
                     
-                    args.SelectionData.Set(
-                        Gdk.Atom.Intern(Dnd.TargetLibraryTrackIds.Target,
-                        false), 8, selData);
-                        
-                    break;
-                case (uint)Dnd.TargetType.UriList:
-                    selData = Dnd.PlaylistViewSelectionUrisToBytes(playlistView);
-                    if(selData == null)
-                        return;
-            
-                    args.SelectionData.Set(args.Context.Targets[0],
-                        8, selData, selData.Length);
-                        
+                    args.SelectionData.Set(args.Context.Targets[0], 8, selection_data, 
+                        selection_data.Length);
                     break;
             }
         }

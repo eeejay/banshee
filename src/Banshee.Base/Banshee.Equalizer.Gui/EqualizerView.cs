@@ -60,7 +60,7 @@ namespace Banshee.Equalizer.Gui
             amplifier_scale.Show();
             PackStart(amplifier_scale, false, false, 0);
             
-            EqualizerLevelsBox eq_levels = new EqualizerLevelsBox("-20 dB", "0 dB", "+20 dB");
+            EqualizerLevelsBox eq_levels = new EqualizerLevelsBox("+20 dB", "0 dB", "-20 dB");
             eq_levels.Show();
             PackStart(eq_levels, false, false, 0);
             
@@ -238,7 +238,6 @@ namespace Banshee.Equalizer.Gui
         }
     }
 
-    
     public sealed class AmplifierChangedEventArgs : EventArgs
     {
         private int value;
@@ -252,5 +251,4 @@ namespace Banshee.Equalizer.Gui
             get { return this.value; }
         }
     }
-    
 }

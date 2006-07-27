@@ -2,6 +2,38 @@
 
 	* banshee.mdp: Updated MonoDevelop project
 
+	* src/Makefile.am:
+	* src/DragDrop.cs: Removed legacy DnD code
+
+	* src/Banshee.Base/Makefile.am: Added new Banshee.Gui.DragDrop files
+	and Sources/IImportable.cs
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerView.cs: Minor fix
+
+	* src/Banshee.Base/Banshee.Gui.DragDrop/DragDropList.cs: New DnD 
+	transportation collection object to allow sending managed objects
+	efficiently over Gtk.SelectionData and with very minimal code overhead
+
+	* src/Banshee.Base/Banshee.Gui.DragDrop/DragDropTarget.cs: Global
+	DnD target definitions and types
+
+	* src/Banshee.Base/Banshee.Gui.DragDrop/DragDropUtilities.cs: Utility
+	methods for raw DnD (byte[]/string/Gtk.SelectionData transforms)
+
+	* src/PlayerInterface.cs:
+	* src/SourceView.cs: Updated to use new Banshee.Gui.DragDrop types,
+	utilities, and most importantly, DragDropList for efficient DnD
+
+	* src/Banshee.Base/Sources/IImportable.cs: Empty interface for now; 
+	can be implemented on sources when the source has import to library
+	support
+
+	* src/Banshee.Base/Sources/DapSource.cs: Implement IImportable
+
+2006-07-27  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
 	* src/Banshee.Base/ActionManager.cs:
 	* data/UIManagerLayout.xml: Added equalizer and help/wiki actions
 

@@ -37,7 +37,7 @@ using Banshee.Dap;
 
 namespace Banshee.Sources
 {
-    public class DapSource : Source
+    public class DapSource : Source, IImportable
     {
         private Banshee.Dap.DapDevice device;
         private EventBox syncing_container;
