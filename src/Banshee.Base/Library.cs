@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using Mono.Unix;
@@ -54,8 +55,8 @@ namespace Banshee.Base
     public class Library
     {
         public BansheeDatabase Db;
-        public Hashtable Tracks = new Hashtable();
-        public Hashtable TracksFnKeyed = new Hashtable();
+        public Dictionary<int, TrackInfo> Tracks = new Dictionary<int, TrackInfo>();
+        public Dictionary<string, TrackInfo> TracksFnKeyed = new Dictionary<string, TrackInfo>();
         
         public event EventHandler Reloaded;
         public event EventHandler Updated;
@@ -163,11 +164,11 @@ namespace Banshee.Base
         
         public void SetTrack(int id, LibraryTrackInfo track)
         {
-            lock(Tracks.SyncRoot) {
+            lock(((IDictionary)Tracks).SyncRoot) {
                 Tracks[id] = track;
             }
                 
-            lock(TracksFnKeyed.SyncRoot) {
+            lock(((IDictionary)TracksFnKeyed).SyncRoot) {
                 TracksFnKeyed[MakeFilenameKey(track.Uri)] = track;
             }
             
@@ -192,11 +193,11 @@ namespace Banshee.Base
         
         private void CollectionRemove(LibraryTrackInfo track)
         {
-            lock(Tracks.SyncRoot) {
+            lock(((IDictionary)Tracks).SyncRoot) {
                 Tracks.Remove(track.TrackId);
             }
             
-            lock(TracksFnKeyed.SyncRoot) {
+            lock(((IDictionary)TracksFnKeyed).SyncRoot) {
                 TracksFnKeyed.Remove(MakeFilenameKey(track.Uri));
             }
         }

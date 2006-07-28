@@ -27,6 +27,7 @@
  */
  
 using System;
+using System.Collections.Generic;
 using System.Collections;
 using Mono.Unix;
 using DAAP;
@@ -158,22 +159,17 @@ namespace Banshee.Plugins.Daap
             OnTrackRemoved(new DaapTrackInfo(song, database, false));
         }
         
-        public override IEnumerable Tracks {
-            get {
-                return database_proxy;
-            }
+        public override IEnumerable<TrackInfo> Tracks {
+            get { return database_proxy; }
         }
         
         public override int Count {
-            get {
-                return database == null ? -1 : database.SongCount;
-            }
+            get { return database == null ? -1 : database.SongCount; }
         }
         
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network); 
         public override Gdk.Pixbuf Icon {
-            get {
-                return IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network);
-            }
+            get { return icon; }
         }
     }
 }

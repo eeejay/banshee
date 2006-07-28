@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -303,9 +304,9 @@ namespace Banshee.Sources
             protected set { name = value; }
         }
         
-        private static readonly ArrayList empty_track_list = new ArrayList();
+        private static readonly List<TrackInfo> empty_track_list = new List<TrackInfo>();
         
-        public virtual IEnumerable Tracks {
+        public virtual IEnumerable<TrackInfo> Tracks {
             get { return empty_track_list; }
         }
         

@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -38,7 +39,7 @@ using Banshee.Plugins;
 
 namespace Banshee.Dap
 {    
-    public abstract class DapDevice : IPlugin, IEnumerable
+    public abstract class DapDevice : IPlugin, IEnumerable<TrackInfo>, IEnumerable
     {
         public class Property
         {
@@ -129,7 +130,7 @@ namespace Banshee.Dap
         private bool can_cancel_save = true;
         private DapProperties type_properties;
 
-        protected ArrayList tracks = new ArrayList(); 
+        protected List<TrackInfo> tracks = new List<TrackInfo>(); 
         
         public event DapTrackListUpdatedHandler TrackAdded;
         public event DapTrackListUpdatedHandler TrackRemoved;
@@ -164,7 +165,12 @@ namespace Banshee.Dap
             }
         }
         
-        public IEnumerator GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return tracks.GetEnumerator();
+        }
+        
+        public IEnumerator<TrackInfo> GetEnumerator()
         {
             return tracks.GetEnumerator();
         }
@@ -275,7 +281,7 @@ namespace Banshee.Dap
                 a.TrackNumber == b.TrackNumber;
         }
         
-        protected bool TrackExistsInList(TrackInfo track, ICollection list)
+        protected bool TrackExistsInList(TrackInfo track, ICollection<TrackInfo> list)
         {
             try {
                 foreach(TrackInfo track_b in list) {
@@ -289,7 +295,7 @@ namespace Banshee.Dap
             return false;
         }
 
-        public void Save(ICollection library)
+        public void Save(ICollection<TrackInfo> library)
         {
             Queue remove_queue = new Queue();
             
@@ -557,57 +563,39 @@ namespace Banshee.Dap
         }
         
         public PropertyTable Properties {
-            get {
-                return properties;
-            }
+            get { return properties; }
         }
         
         public TrackInfo this [int index] {
-            get {
-                return tracks[index] as TrackInfo;
-            }
+            get { return tracks[index]; }
         }
         
         public int TrackCount { 
-            get {
-                return tracks.Count;
-            }
+            get { return tracks.Count; }
         }
         
-        public IList Tracks {
-            get {
-                return tracks;
-            }
+        public IList<TrackInfo> Tracks {
+            get { return tracks; }
         }
         
         public bool IsSyncing {
-            get {
-                return is_syncing;
-            }
+            get { return is_syncing; }
         }
         
         public virtual string GenericName {
-            get {
-                return "DAP";
-            }
+            get { return "DAP"; }
         }
         
         public string HalUdi {
-            get {
-                return HalDevice.Udi;
-            }
+            get { return HalDevice.Udi; }
         }
         
         public bool CanSetName {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetName");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetName"); }
         }
         
         public bool CanSetOwner {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetOwner");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SetOwner"); }
         }
         
         public virtual bool CanSynchronize { 
@@ -615,15 +603,11 @@ namespace Banshee.Dap
         }
         
         public virtual string Owner {
-            get {
-                return Catalog.GetString("Unknown");
-            }
+            get { return Catalog.GetString("Unknown"); }
         }
         
         public virtual Gtk.Widget ViewWidget {
-            get {
-                return null;
-            }
+            get { return null; }
         }
         
         public abstract void Synchronize();

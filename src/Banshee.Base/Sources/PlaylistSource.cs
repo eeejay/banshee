@@ -38,23 +38,19 @@ namespace Banshee.Sources
 {
     public class PlaylistSource : ChildSource
     {
-        private static ArrayList playlists = new ArrayList();
+        private static List<PlaylistSource> playlists = new List<PlaylistSource>();
     
-        public static IEnumerable Playlists {
-            get {
-                return playlists;
-            }
+        public static IEnumerable<PlaylistSource> Playlists {
+            get { return playlists; }
         }
         
         public static int PlaylistCount {
-            get {
-                return playlists.Count;
-            }
+            get { return playlists.Count; }
         }
         
-        private ArrayList tracks = new ArrayList();
-        private Queue remove_queue = new Queue();
-        private Queue append_queue = new Queue();
+        private List<TrackInfo> tracks = new List<TrackInfo>();
+        private Queue<TrackInfo> remove_queue = new Queue<TrackInfo>();
+        private Queue<TrackInfo> append_queue = new Queue<TrackInfo>();
         private int id;
 
         public int Id {
@@ -256,7 +252,7 @@ namespace Banshee.Sources
             if(remove_queue.Count > 0) {
                 lock(TracksMutex) {
                     while(remove_queue.Count > 0) {
-                        TrackInfo track = remove_queue.Dequeue() as TrackInfo;
+                        TrackInfo track = remove_queue.Dequeue();
                         Globals.Library.Db.Execute(String.Format(
                             @"DELETE FROM PlaylistEntries
                                 WHERE PlaylistID = '{0}'
@@ -270,7 +266,7 @@ namespace Banshee.Sources
             if(append_queue.Count > 0) {
                 lock(TracksMutex) {
                     while(append_queue.Count > 0) {
-                        TrackInfo track = append_queue.Dequeue() as TrackInfo;
+                        TrackInfo track = append_queue.Dequeue();
                         Globals.Library.Db.Execute(String.Format(
                             @"INSERT INTO PlaylistEntries 
                                 VALUES (NULL, '{0}', '{1}', (
@@ -292,7 +288,7 @@ namespace Banshee.Sources
                 int sql_position = 1;
             
                 if(position > 0) {
-                    TrackInfo sibling = tracks[position] as TrackInfo;
+                    TrackInfo sibling = tracks[position];
                     if(sibling == track || sibling == null) {
                         return;
                     }
@@ -368,12 +364,12 @@ namespace Banshee.Sources
             }
         }
         
-        public override IEnumerable Tracks {
+        public override IEnumerable<TrackInfo> Tracks {
             get { return tracks; }
         }
         
         public override object TracksMutex {
-            get { return tracks.SyncRoot; }
+            get { return ((IList)tracks).SyncRoot; }
         }
         
         public override int Count {

@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -149,20 +150,21 @@ namespace Banshee.Sources
             }
         }
         
-        public override IEnumerable Tracks {
+        public override IEnumerable<TrackInfo> Tracks {
             get { return Globals.Library.Tracks.Values; }
         }
         
         public override object TracksMutex {
-            get { return Globals.Library.Tracks.SyncRoot; }
+            get { return ((IDictionary)Globals.Library.Tracks).SyncRoot; }
         }
         
         public override int Count {
             get { return Globals.Library.Tracks.Count; }
         }  
         
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library");
         public override Gdk.Pixbuf Icon {
-            get { return IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library"); } 
+            get { return icon; } 
         }
     }
 }

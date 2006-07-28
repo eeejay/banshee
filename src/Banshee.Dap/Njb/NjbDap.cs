@@ -315,11 +315,12 @@ namespace Banshee.Dap.Njb
             }
         }
 
-        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
-             LogCore.Instance.PushError("Operation Not Supported", "Copying tracks from NJB DAP's has not been implemented.");
+        public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist) 
+        {
+            throw new ApplicationException("Copying tracks from NJB devices is currently not possible.");
         }
         
-        public void Import(IList<TrackInfo> tracks)
+        public void Import(IEnumerable<TrackInfo> tracks)
         {
             Import(tracks, null);
         }

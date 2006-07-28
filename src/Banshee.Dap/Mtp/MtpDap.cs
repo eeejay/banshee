@@ -258,11 +258,12 @@ namespace Banshee.Dap.Mtp
         }   
         }
 
-        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
-             LogCore.Instance.PushError("Operation Not Supported", "Copying tracks from MTP DAP's has not been implemented yet.");
+        public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist) 
+        {
+            throw new ApplicationException("Copying tracks from MTP devices is currently not possible.");
         }
         
-        public void Import(IList<TrackInfo> tracks)
+        public void Import(IEnumerable<TrackInfo> tracks)
         {
             Import(tracks, null);
         }

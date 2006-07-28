@@ -29,11 +29,14 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DAAP;
+
+using Banshee.Base;
 
 namespace Banshee.Plugins.Daap
 {
-    internal class DatabaseProxy : IEnumerable
+    internal class DatabaseProxy : IEnumerable<TrackInfo>, IEnumerable
     {
         private DAAP.Database database;
         
@@ -41,7 +44,12 @@ namespace Banshee.Plugins.Daap
         {
         }
         
-        public IEnumerator GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        
+        public IEnumerator<TrackInfo> GetEnumerator()
         {
             return new DatabaseProxyEnumerator(database);
         }
@@ -56,7 +64,7 @@ namespace Banshee.Plugins.Daap
             }
         }
         
-        private class DatabaseProxyEnumerator : IEnumerator
+        private class DatabaseProxyEnumerator : IEnumerator<TrackInfo>, IEnumerator, IDisposable
         {
             private DAAP.Database database;
             private int index = -1;
@@ -64,6 +72,10 @@ namespace Banshee.Plugins.Daap
             public DatabaseProxyEnumerator(DAAP.Database database)
             {
                 this.database = database;
+            }
+            
+            public void Dispose()
+            {
             }
 
             public bool MoveNext()
@@ -81,7 +93,11 @@ namespace Banshee.Plugins.Daap
                 index = -1;
             }
             
-            public object Current {
+            object IEnumerator.Current {
+                get { return Current; }
+            }
+            
+            public TrackInfo Current {
                 get {
                     if(database != null) {
                         DAAP.Song song = database.SongAt(index);

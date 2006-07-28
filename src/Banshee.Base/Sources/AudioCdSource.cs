@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
@@ -229,7 +230,7 @@ namespace Banshee.Sources
             get { return disk; }
         }
         
-        public override IEnumerable Tracks {
+        public override IEnumerable<TrackInfo> Tracks {
             get { return disk.Tracks; }
         }
         

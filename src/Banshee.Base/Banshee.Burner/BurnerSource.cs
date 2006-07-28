@@ -191,7 +191,7 @@ namespace Banshee.Burner
             }
         }
             
-        public override IEnumerable Tracks {
+        public override IEnumerable<TrackInfo> Tracks {
             get { return tracks; }
         }
         

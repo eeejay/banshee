@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -36,7 +37,7 @@ namespace Banshee.Sources
 {
     public class LocalQueueSource : Source
     {
-        private ArrayList tracks = new ArrayList();
+        private List<TrackInfo> tracks = new List<TrackInfo>();
         
         private static LocalQueueSource instance;
         public static LocalQueueSource Instance {
@@ -93,21 +94,16 @@ namespace Banshee.Sources
         }
         
         public override int Count {
-            get {
-                return tracks.Count;
-            }
+            get { return tracks.Count; }
         }
         
-        public override IEnumerable Tracks {
-            get {
-                return tracks;
-            }
+        public override IEnumerable<TrackInfo> Tracks {
+            get { return tracks; }
         }
 
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "system-file-manager", "source-localqueue");
         public override Gdk.Pixbuf Icon {
-            get {
-                return IconThemeUtils.LoadIcon(22, "system-file-manager", "source-localqueue");
-            }
+            get { return icon; }
         }
     }
 }

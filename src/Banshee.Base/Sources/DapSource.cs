@@ -39,7 +39,7 @@ using Banshee.Dap;
 
 namespace Banshee.Sources
 {
-    public class DapSource : Source, IImportable
+    public class DapSource : Source, IImportable, IImportSource
     {
         private Banshee.Dap.DapDevice device;
         private EventBox syncing_container;
@@ -143,9 +143,14 @@ namespace Banshee.Sources
             return true;
         }
         
+        public void Import()
+        {
+            Import(Tracks);
+        }
+        
         private QueuedOperationManager import_manager;
         
-        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist)
+        public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist)
         {
             if(device is IImportable) {
                 (device as IImportable).Import(tracks, playlist);
@@ -178,7 +183,7 @@ namespace Banshee.Sources
             }
         }
         
-        public void Import(IList<TrackInfo> tracks)
+        public void Import(IEnumerable<TrackInfo> tracks)
         {
             Import(tracks, null);
         }
@@ -254,10 +259,14 @@ namespace Banshee.Sources
                     }
                 }
                 
-                LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
-                if(playlist != null) {
-                    playlist.AddTrack(library_track);
-                    playlist.Commit();
+                try {
+                    LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
+                    if(playlist != null) {
+                        playlist.AddTrack(library_track);
+                        playlist.Commit();
+                    }
+                } catch {
+                    // song already in library
                 }
             } catch(Exception e) {
                 try {
@@ -285,7 +294,7 @@ namespace Banshee.Sources
             get { return device; }
         }
         
-        public override IEnumerable Tracks {
+        public override IEnumerable<TrackInfo> Tracks {
             get { return device.Tracks; }
         }
         

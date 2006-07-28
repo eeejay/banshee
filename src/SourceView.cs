@@ -412,41 +412,56 @@ namespace Banshee
                 return;
             }
             
-            DragDropList<TrackInfo> dnd_transfer = selectionData;
-
             if(final_drag_start_time == context.StartTime) {
-                if(final_drag_source is LibrarySource && SourceManager.ActiveSource is IImportable) {
-                    IImportable import_source = SourceManager.ActiveSource as IImportable;
-                    import_source.Import(dnd_transfer);
-                } else if(final_drag_source is PlaylistSource && SourceManager.ActiveSource is IImportable) {
-                    IImportable import_source = SourceManager.ActiveSource as IImportable;
-                    PlaylistSource playlist = null;
-                    
-                    if(final_drag_source == newPlaylistSource) {
-                        playlist = new PlaylistSource();
-                        LibrarySource.Instance.AddChildSource(playlist);
-                    } else {
-                        playlist = final_drag_source as PlaylistSource;
+                PlaylistSource playlist_remove_on_failure = null;
+                try {
+                    DragDropList<TrackInfo> dnd_transfer = selectionData;
+                    TrackDropOperation(final_drag_source, dnd_transfer, out playlist_remove_on_failure);
+                } catch(Exception e) {
+                    if(playlist_remove_on_failure != null) {
+                        playlist_remove_on_failure.Unmap();
+                        playlist_remove_on_failure = null;
                     }
                     
-                    import_source.Import(dnd_transfer, playlist);
-                } else if(final_drag_source == newPlaylistSource) {
-                    PlaylistSource playlist = new PlaylistSource();
-                    playlist.AddTrack(dnd_transfer);
-                    playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
-                    playlist.Commit();
-                    LibrarySource.Instance.AddChildSource(playlist);
-                    UpdateView();
-                } else {
-                    Source source = final_drag_source;
-                    if(source is PlaylistSource || source is DapSource || source.AcceptsInput) {
-                        source.AddTrack(dnd_transfer);
-                        source.Commit();
-                    }
+                    LogCore.Instance.PushError(Catalog.GetString("Could not import tracks"), e.Message);
                 }
             }
         
             Gtk.Drag.Finish(context, true, false, time);
+        }
+        
+        private void TrackDropOperation(Source source, IList<TrackInfo> tracks, 
+            out PlaylistSource newPlaylist)
+        {
+            newPlaylist = null;
+            
+            if(source is LibrarySource && SourceManager.ActiveSource is IImportable) {
+                IImportable import_source = SourceManager.ActiveSource as IImportable;
+                import_source.Import(tracks);
+            } else if(source is PlaylistSource && SourceManager.ActiveSource is IImportable) {
+                IImportable import_source = SourceManager.ActiveSource as IImportable;
+                PlaylistSource playlist = null;
+                    
+                if(source == newPlaylistSource) {
+                    playlist = new PlaylistSource();
+                    LibrarySource.Instance.AddChildSource(playlist);
+                    newPlaylist = playlist;
+                } else {
+                    playlist = source as PlaylistSource;
+                }
+                    
+                import_source.Import(tracks, playlist);
+            } else if(source == newPlaylistSource) {
+                PlaylistSource playlist = new PlaylistSource();
+                playlist.AddTrack(tracks);
+                playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
+                playlist.Commit();
+                LibrarySource.Instance.AddChildSource(playlist);
+                UpdateView();
+            } else if(source is PlaylistSource || source is DapSource || source.AcceptsInput) {
+                source.AddTrack(tracks);
+                source.Commit();
+            }
         }
         
         public void HighlightPath(TreePath path)

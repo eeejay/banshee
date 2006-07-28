@@ -1,3 +1,35 @@
+2006-07-28  Aaron Bockover  <abock@gnome.org>
+
+	This commit breaks major API regarding Banshee.Sources.Source; expect
+	related plugins and other code to break
+
+	* src/Banshee.Base/Library.cs:
+	* src/Banshee.Base/Source.cs: 
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs:
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs:
+	* src/Banshee.Base/Dap/Dap.cs:
+	* src/Banshee.Base/Sources/AudioCdSource.cs:
+	* src/Banshee.Base/Sources/LibrarySource.cs:
+	* src/Banshee.Base/Sources/LocalQueueSource.cs:
+	* src/Banshee.Base/Sources/PlaylistSource.cs:
+	* src/Banshee.Plugins/Daap/DaapSource.cs:
+	* src/Banshee.Plugins/Daap/DatabaseProxy.cs: Use generics on public API;
+	goal was to have Banshee.Source.Source.Tracks be IEnumerable<TrackInfo>,
+	thus everything else below had to become generic; clean up along the way
+
+	* src/Banshee.Base/Sources/IImportable.cs: Import takes 
+	IEnumerable<TrackInfo> instead of IList<TrackInfo> to make implementing
+	both IImportable and IImportSource as easy and efficient as possible
+
+	* src/Banshee.Base/Sources/DapSource.cs: Implement aforementioned
+	generics changes and implement IImportSource
+
+	* src/SourceView.cs: Handle exceptions when invoking an import
+
+	* src/Banshee.Dap/Njb/NjbDap.cs:
+	* src/Banshee.Dap/Mtp/MtpDap.cs: Throw an exception in IImportable.Import
+	as these DAPs do not yet support importing
+
 2006-07-28  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Base/Dap/DapMisc.cs: added wav and flac types

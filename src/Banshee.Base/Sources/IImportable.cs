@@ -35,7 +35,7 @@ namespace Banshee.Sources
 {
     public interface IImportable
     {
-        void Import(IList<TrackInfo> tracks);
-        void Import(IList<TrackInfo> tracks, PlaylistSource playlist);
+        void Import(IEnumerable<TrackInfo> tracks);
+        void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist);
     }
 }

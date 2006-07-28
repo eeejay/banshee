@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Mono.Unix;
@@ -56,7 +57,7 @@ namespace Banshee.Base
         
         private string album_title;
         
-        private AudioCdTrackInfo [] tracks;
+        private List<TrackInfo> tracks = new List<TrackInfo>();
         
         public event EventHandler Updated;
 
@@ -74,7 +75,7 @@ namespace Banshee.Base
               
         private void LoadDiskInfo()
         {
-            ArrayList track_list = new ArrayList();
+            tracks.Clear();
             SimpleDisc mb_disc = new SimpleDisc(device_node);
             //mb_disc.Client.Debug = true;
             
@@ -86,11 +87,10 @@ namespace Banshee.Base
                 track.Album = Catalog.GetString("Unknown Album");
                 track.Title = String.Format(Catalog.GetString("Track {0}"), mb_track.Index);
                 
-                track_list.Add(track);
+                tracks.Add(track);
             }
             
             album_title = Catalog.GetString("Audio CD");
-            tracks = track_list.ToArray(typeof(AudioCdTrackInfo)) as AudioCdTrackInfo [];
             
             QueryMetadata(mb_disc);
         }
@@ -138,14 +138,14 @@ namespace Banshee.Base
             
             try {
                 mb_disc.QueryCDMetadata();
-            } catch(Exception e) {
+            } catch {
                 Status = AudioCdLookupStatus.ErrorLookup;
                 mb_querying = false;
                 return;
             }
             
-            int min = tracks.Length < mb_disc.Tracks.Length 
-                ? tracks.Length : mb_disc.Tracks.Length;
+            int min = tracks.Count < mb_disc.Tracks.Length 
+                ? tracks.Count : mb_disc.Tracks.Length;
             
             if(mb_disc.AlbumName != null) {
                 album_title = mb_disc.AlbumName;
@@ -153,7 +153,7 @@ namespace Banshee.Base
             
             for(int i = 0; i < min; i++) {
                 tracks[i].Duration = new TimeSpan(mb_disc[i].Length * TimeSpan.TicksPerSecond);
-                tracks[i].TrackIndex = mb_disc[i].Index;
+                (tracks[i] as AudioCdTrackInfo).TrackIndex = mb_disc[i].Index;
                 
                 if(mb_disc[i].Artist != null) {
                     tracks[i].Artist = mb_disc[i].Artist;
@@ -293,14 +293,14 @@ namespace Banshee.Base
         }
         
         public int TrackCount { 
-            get { return tracks.Length; }
+            get { return tracks.Count; }
         }
         
         public bool Valid { 
             get { return true; }
         }
         
-        public IEnumerable Tracks { 
+        public IEnumerable<TrackInfo> Tracks { 
             get { return tracks; }
         }
         
