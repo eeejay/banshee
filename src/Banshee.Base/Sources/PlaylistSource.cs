@@ -259,6 +259,7 @@ namespace Banshee.Sources
                                 AND TrackID = '{1}'",
                                 id, track.TrackId
                         ));
+                        OnTrackRemoved(track);
                     }
                 }
             }
@@ -277,6 +278,7 @@ namespace Banshee.Sources
                                     WHERE PlaylistID = '{0}')
                                 )", id, track.TrackId
                         ));
+                        OnTrackAdded(track);
                     }
                 }
             }

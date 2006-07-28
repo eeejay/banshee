@@ -1,3 +1,11 @@
+2006-07-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Fire TrackAdded/Removed
+	events when appropriate.  Fixes BGO #347014.
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Conform to the HAL spec
+	when exporting files.
+
 2006-07-28  Aaron Bockover  <abock@gnome.org>
 
 	This commit breaks major API regarding Banshee.Sources.Source; expect

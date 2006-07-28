@@ -279,32 +279,56 @@ namespace Banshee.Dap.MassStorage
 
         private string GetTrackPath (TrackInfo track)
         {
-            string file_path = "";
+            string file_path = MountPoint;
+
+            // According to the HAL spec, the first folder listed in the audio_folders property
+            // is the folder to write files to.
+            if (AudioFolders != null && AudioFolders.Length > 0) {
+                file_path = System.IO.Path.Combine (file_path, AudioFolders[0]);
+            }
 
             string artist = FileNamePattern.Escape (track.Artist);
             string album = FileNamePattern.Escape (track.Album);
             string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
 
-            // TODO the following needs to be updated to the most recent version of the HAL spec
-            if (player_device.PropertyExists ("portable_audio_player.filepath_format")) {
-                file_path = player_device.GetPropertyString ("portable_audio_player.filepath_format");
-                file_path = file_path.Replace ("%Artist", artist);
-                file_path = file_path.Replace ("%Album", album);
+            // If the folder_depth property exists, we have to put the files in a hiearchy of
+            // the exact given depth (not including the mount point/audio_folder).
+            if (player_device.PropertyExists ("portable_audio_player.folder_depth")) {
+                int depth = player_device.GetPropertyInt ("portable_audio_player.folder_depth");
 
-                if (file_path.IndexOf ("%Track") == -1) {
+                if (depth == 0) {
+                    // Artist - Album - 01 - Title
+                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1} - {2}", artist, album, number_title));
+                } else if (depth == 1) {
+                    // Artist - Album/01 - Title
+                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", artist, album));
+                    file_path = System.IO.Path.Combine (file_path, number_title);
+                } else if (depth == 2) {
+                    // Artist/Album/01 - Title
+                    file_path = System.IO.Path.Combine (file_path, artist);
+                    file_path = System.IO.Path.Combine (file_path, album);
                     file_path = System.IO.Path.Combine (file_path, number_title);
                 } else {
-                    file_path = file_path.Replace ("%Track", number_title);
+                    // If the *required* depth is more than 2..go nuts!
+                    for (int i = 0; i < depth - 2; i++) {
+                        file_path = System.IO.Path.Combine (file_path, artist.Substring (0, Math.Min (i, artist.Length)));
+                    }
+
+                    // Finally add on the Artist/Album/01 - Track
+                    file_path = System.IO.Path.Combine (file_path, artist);
+                    file_path = System.IO.Path.Combine (file_path, album);
+                    file_path = System.IO.Path.Combine (file_path, number_title);
                 }
             } else {
-                file_path = System.IO.Path.Combine (artist, album);
+                file_path = System.IO.Path.Combine (file_path, artist);
+                file_path = System.IO.Path.Combine (file_path, album);
                 file_path = System.IO.Path.Combine (file_path, number_title);
             }
+                    
 
             file_path += Path.GetExtension (track.Uri.LocalPath);
 
-            //Console.WriteLine ("for track {0} outpath is {1}", track.Uri.LocalPath, System.IO.Path.Combine (MountPoint, file_path));
-            return System.IO.Path.Combine (MountPoint, file_path);
+            return file_path;
         }
 
         private QueuedOperationManager copier;
