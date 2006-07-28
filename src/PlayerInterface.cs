@@ -1885,12 +1885,13 @@ namespace Banshee
                 md.AddButton("gtk-cancel", ResponseType.No, true);
                 md.AddButton(button_label, ResponseType.Yes, false);
                 
-                if(md.Run() != (int)ResponseType.Yes) {
+                try {
+                    if(md.Run() != (int)ResponseType.Yes) {
+                        return;
+                    }
+                } finally {
                     md.Destroy();
-                    return;
                 }
-        
-                md.Destroy();
             } else {
                 deleteFromFileSystem = false;
             }

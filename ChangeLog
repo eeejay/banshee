@@ -1,5 +1,14 @@
 2006-07-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: Minor fix
+
+	* src/SourceView.cs: Allow dropping IImportSource source on LibrarySource
+
+	* src/Banshee.Base/Sources/DapSource.cs: Added CancelMessage and
+	an action name to make the HIG stop dialog not suck
+
+2006-07-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlayerInterface.cs: Make the remove and delete songs dialog
 	conform to the HIG
 

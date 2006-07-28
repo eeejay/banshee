@@ -303,7 +303,7 @@ namespace Banshee
 
         protected override void OnDragBegin(Gdk.DragContext context)
         {
-            if(HighlightedSource.IsDragSource) {
+            if(HighlightedSource.IsDragSource || HighlightedSource is IImportSource) {
                 base.OnDragBegin(context);
             }
         }
@@ -324,7 +324,8 @@ namespace Banshee
         
         protected override bool OnDragMotion(Gdk.DragContext context, int x, int y, uint time)
         {
-            if(Gtk.Drag.GetSourceWidget(context) == this && !HighlightedSource.IsDragSource) {
+            if(Gtk.Drag.GetSourceWidget(context) == this 
+                && !HighlightedSource.IsDragSource && !(HighlightedSource is IImportSource)) {
                 return false;
             }
         
@@ -356,7 +357,8 @@ namespace Banshee
                 Source source = GetSource(path);
                 SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
                 
-                if((source is LibrarySource && SourceManager.ActiveSource is IImportable) ||
+                if((source is LibrarySource && (SourceManager.ActiveSource is IImportable 
+                    || SourceManager.ActiveSource is IImportSource)) ||
                     (source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
                     return true;
                 }
@@ -402,7 +404,10 @@ namespace Banshee
                 
                 Source source = sources[0];
                 
-                if(source.IsDragSource && final_drag_source.AcceptsSourceDrop) {
+                if(source is IImportSource && final_drag_source is LibrarySource) {
+                    (source as IImportSource).Import();
+                    Gtk.Drag.Finish(context, true, false, time);
+                } else if(source.IsDragSource && final_drag_source.AcceptsSourceDrop) {
                     final_drag_source.SourceDrop(source);
                     Gtk.Drag.Finish(context, true, false, time);
                 } else {

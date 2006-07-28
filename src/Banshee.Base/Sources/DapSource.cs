@@ -165,6 +165,9 @@ namespace Banshee.Sources
             if(import_manager == null) {
                 import_manager = new QueuedOperationManager();
                 import_manager.HandleActveUserEvent = false;
+                import_manager.ActionMessage = Catalog.GetString("Importing");
+                import_manager.UserEvent.CancelMessage = String.Format(Catalog.GetString(
+                    "You are currently importing from {0}. Would you like to stop it?"), Name);
                 import_manager.UserEvent.Icon = Icon;
                 import_manager.UserEvent.Header = String.Format(Catalog.GetString("Copying from {0}"), Name);
                 import_manager.UserEvent.Message = Catalog.GetString("Scanning...");
