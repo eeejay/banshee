@@ -43,6 +43,8 @@ namespace Banshee.Dap
         public const string Mp4 = "mp4";
         public const string Wma = "wma";
         public const string Ogg = "ogg";
+        public const string Wav = "wav";
+        public const string Flac = "flac";
         
         public static string [] GetExtensions(string codec)
         {
@@ -55,6 +57,10 @@ namespace Banshee.Dap
                     return new string [] { "wma", "asf" };
                 case Ogg:
                     return new string [] { "ogg" };
+                case Wav:
+                    return new string [] { "wav" };
+                case Flac:
+                    return new string [] { "flac" };
              }
              
              return null;

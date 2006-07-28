@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Hal;
@@ -36,6 +37,7 @@ using LibGPhoto2;
 using Banshee.Dap;
 using Banshee.Base;
 using Banshee.Widgets;
+using Banshee.Sources;
 using Mono;
 using Mono.Unix;
 using Gtk;
@@ -44,9 +46,10 @@ namespace Banshee.Dap.Mtp
 {
     [DapProperties(DapType = DapType.NonGeneric)]
     [SupportedCodec(CodecType.Mp3)]
+    [SupportedCodec(CodecType.Wav)]
     [SupportedCodec(CodecType.Wma)]
 
-    public sealed class MtpDap : DapDevice
+    public sealed class MtpDap : DapDevice, IImportable
     {
         private static GPhotoDevice dev;
         private DeviceId device_id;
@@ -228,11 +231,6 @@ namespace Banshee.Dap.Mtp
                         LMK if your device traditionally uses something different and it'll be changed :)
                     */
                     
-                    /*  FIXME: MtpDap shouldn't be aware of the store_x prefix.
-                        per gphoto devels, it may be removed in the future
-                        MtpDap never needs to know about it.
-                    */
-                    
                     GPhotoDeviceFile newfile = new GPhotoDeviceFile(track.Uri, dev);
                     
                     newfile.Duration = track.Duration.TotalMilliseconds;
@@ -258,6 +256,15 @@ namespace Banshee.Dap.Mtp
             FinishSave();
             ReloadDatabase();
         }   
+        }
+
+        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
+             LogCore.Instance.PushError("Operation Not Supported", "Copying tracks from MTP DAP's has not been implemented yet.");
+        }
+        
+        public void Import(IList<TrackInfo> tracks)
+        {
+            Import(tracks, null);
         }
 
         public override Gdk.Pixbuf GetIcon(int size)

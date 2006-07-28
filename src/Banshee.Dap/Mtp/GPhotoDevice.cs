@@ -173,7 +173,10 @@ public class GPhotoDevice
                 metadata = "<Name>No Metadata Available</Name>";
             }
             //      fs.GetFile(dir, filelist.GetName(i), CameraFileType.Normal, context),
-            if(filelist.GetName(i).IndexOf(".mp3") > 0){
+            if(filelist.GetName(i).IndexOf(".mp3") > 0 ||
+                    filelist.GetName(i).IndexOf(".wma") > 0 ||
+                    filelist.GetName(i).IndexOf(".asx") > 0 ||
+                    filelist.GetName(i).IndexOf(".wav") > 0){
                 files.Add(
                     new GPhotoDeviceFile(
                         dir, filelist.GetName(i), metadata, this

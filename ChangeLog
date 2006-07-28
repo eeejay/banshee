@@ -1,3 +1,16 @@
+2006-07-28  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Base/Dap/DapMisc.cs: added wav and flac types
+
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: also allow wma/asx/wav extensions
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: allow wav files (voice recordings),
+	implement IImportable & dummy Import functions w/ error message. Also
+	remove an old comment.
+
+	* src/Banshee.Dap/Njb/NjbDap.cs: add IImportable & dummy Import
+	functions w/ error message.
+
 2006-07-27  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.mdp: Updated MonoDevelop project

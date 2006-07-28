@@ -29,18 +29,20 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using Hal;
 using NJB=Njb;
 using Banshee.Dap;
 using Banshee.Base;
+using Banshee.Sources;
 
 namespace Banshee.Dap.Njb
 {
     [DapProperties(DapType = DapType.NonGeneric)]
     [SupportedCodec(CodecType.Mp3)]
     [SupportedCodec(CodecType.Wma)]
-    public sealed class NjbDap : DapDevice
+    public sealed class NjbDap : DapDevice, IImportable
     {
         private static NJB.Discoverer discoverer;
         private NJB.Device device;
@@ -312,7 +314,16 @@ namespace Banshee.Dap.Njb
                 FinishSave();
             }
         }
+
+        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
+             LogCore.Instance.PushError("Operation Not Supported", "Copying tracks from NJB DAP's has not been implemented.");
+        }
         
+        public void Import(IList<TrackInfo> tracks)
+        {
+            Import(tracks, null);
+        }
+
         public override Gdk.Pixbuf GetIcon(int size)
         {
             string prefix = "multimedia-player-";
