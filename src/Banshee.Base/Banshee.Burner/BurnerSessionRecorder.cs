@@ -54,6 +54,7 @@ namespace Banshee.Burner
             
             user_event = new ActiveUserEvent(Catalog.GetString("Writing Disc"));
             user_event.Header = Catalog.GetString("Writing Disc");
+            user_event.CancelMessage = Catalog.GetString("Stopping the disc writing process will render it useless. Would you like to stop writing the disc?");
             user_event.Icon = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), "cd-action-burn-24.png");
             user_event.CancelRequested += OnUserEventCancelRequested;
         }

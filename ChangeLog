@@ -1,3 +1,21 @@
+2006-07-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs: New fully-HIG-compliant 
+	cancel/stop dialog; support having custom stop messages
+
+	* src/Banshee.Base/AudioCdRipper.cs: 
+	* src/Banshee.Base/BatchTranscoder.cs:
+	* src/Banshee.Base/ImportManager.cs:
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:
+	* src/Banshee.Base/Dap/Dap.cs: Added better operation names and custom
+	stop-operation messages so the stop dialog is more HIG compliant and
+	easier to understand
+
+	* src/Banshee.Base/ActionManager.cs: Set Gtk.Window.DefaultIconName
+
+	* src/Banshee.Widgets/HigMessageDialog.cs: Set SkipTaskbarHint as 
+	suggested by the HIG, make the message label support markup
+
 2006-07-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Sources/PlaylistSource.cs: Fire TrackAdded/Removed

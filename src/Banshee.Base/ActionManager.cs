@@ -53,6 +53,7 @@ namespace Banshee.Base
         public void LoadInterface()
         {
             ui.AddUiFromResource("UIManagerLayout.xml");
+            Gtk.Window.DefaultIconName = "music-player-banshee";
         }
         
         private void PopulateActionGroups()

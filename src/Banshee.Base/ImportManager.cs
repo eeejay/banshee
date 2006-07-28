@@ -86,6 +86,7 @@ namespace Banshee.Base
             lock(user_event_mutex) {
                 if(user_event == null) {
                     user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
+                    user_event.CancelMessage = Catalog.GetString("The import process is currently running. Would you like to stop it?");
                     user_event.Icon = user_event_icon;
                     user_event.Message = Catalog.GetString("Scanning for songs");
                     total_count = 0;

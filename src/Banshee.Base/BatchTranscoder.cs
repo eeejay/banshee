@@ -107,8 +107,10 @@ namespace Banshee.Base
         public void Start()
         {
             if(user_event == null) {
-                user_event = new ActiveUserEvent(Catalog.GetString("File Transcoder"));
-                user_event.Header = Catalog.GetString("Transcoding Files");
+                user_event = new ActiveUserEvent(Catalog.GetString("Converting Files"));
+                user_event.Header = Catalog.GetString("Converting Files");
+                user_event.CancelMessage = Catalog.GetString(
+                    "Files are currently being converted to another audio format. Would you like to stop this?");
                 user_event.CancelRequested += OnCancelRequested;
                 user_event.Icon = IconThemeUtils.LoadIcon("encode-action-24", 22);
                 user_event.Message = Catalog.GetString("Initializing Transcoder...");

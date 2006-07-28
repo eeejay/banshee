@@ -236,13 +236,19 @@ namespace Banshee.Base
         
         public AudioCdRipper()
         {
-            user_event = new ActiveUserEvent("Importing CD");
+            user_event = new ActiveUserEvent(Catalog.GetString("Importing CD"));
             user_event.Icon = IconThemeUtils.LoadIcon("cd-action-rip-24", 22);
             user_event.CancelRequested += OnCancelRequested;
         }
 
         public void QueueTrack(AudioCdTrackInfo track)
         {
+            if(user_event.CancelMessage == null) {
+                user_event.CancelMessage = String.Format(Catalog.GetString(
+                    "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
+                ), GLib.Markup.EscapeText(track.Album));
+            }
+            
             if(device == null) {
                 device = track.Device;
             } else if(device != track.Device) {

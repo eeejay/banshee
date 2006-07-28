@@ -45,6 +45,7 @@ namespace Banshee.Widgets
             BorderWidth = 5;
             Resizable = false;
             Title = "";
+            SkipTaskbarHint = true;
 
             VBox.Spacing = 12;
             ActionArea.Layout = Gtk.ButtonBoxStyle.End;
@@ -95,7 +96,8 @@ namespace Banshee.Widgets
             label.Show ();
             label_vbox.PackStart (label, false, false, 0);
 
-            label = new Gtk.Label (msg);
+            label = new Gtk.Label ();
+            label.Markup = msg;
             label.UseMarkup = true;
             label.Justify = Gtk.Justification.Left;
             label.LineWrap = true;

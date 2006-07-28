@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  ActiveUserEvent.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -47,6 +46,7 @@ namespace Banshee.Widgets
         private string name;
         private string message;
         private string header;
+        private string cancel_message;
 
         private bool message_update_needed = false;
         private bool header_update_needed = false;
@@ -63,28 +63,35 @@ namespace Banshee.Widgets
         private bool cancel_requested;
         private bool can_cancel;
 
-        public ActiveUserEvent(string name) : this (name, false) {}
+        public ActiveUserEvent(string name) : this(name, false) 
+        {
+        }
 
-        public ActiveUserEvent(string name, bool delay_show)
+        public ActiveUserEvent(string name, bool delayShow)
         {
             tips = new Tooltips();
             
             table = new Table(3, 2, false);
+            
             header_label = new EllipsizeLabel();
             message_label = new EllipsizeLabel();
             progress_bar = new ProgressBar();
             icon = new Image();
+            
             cancel_button = new Button();
             cancel_button.Add(new Image("gtk-cancel", IconSize.Menu));
-            cancel_button.Clicked += delegate(object o, EventArgs args) 
-            {
+            cancel_button.Clicked += delegate {
                 HigMessageDialog md = new HigMessageDialog(null, 
-                    DialogFlags.Modal, MessageType.Question,
-                    ButtonsType.YesNo,
-                    Catalog.GetString("Cancel Operation"),
-                    String.Format(Catalog.GetString(
-                        "Are you sure you want to cancel the '{0}' operation?"), name));
+                    DialogFlags.Modal, MessageType.Question, ButtonsType.None,
+                    String.Format(Catalog.GetString("Stop {0}"), name),
+                    cancel_message == null 
+                        ? String.Format(Catalog.GetString(
+                            "The '{0}' operation is still performing work. Would you like to stop it?"), name)
+                        : cancel_message);
                         
+                md.AddButton(String.Format(Catalog.GetString("Continue {0}"), name), ResponseType.No, false);
+                md.AddButton("gtk-stop", ResponseType.Yes, true);
+                
                 if(md.Run() == (int)ResponseType.Yes) {
                     Cancel();
                 }
@@ -125,17 +132,18 @@ namespace Banshee.Widgets
             
             table.ShowAll();
             
-            if (delay_show)
+            if(delayShow) {
                 slow_timeout_id = GLib.Timeout.Add(1000, OnCheckForDisplay);
-            else
+            } else {
                 ActiveUserEventsManager.Instance.Register(this);
-
+            }
+            
             header_update_needed = true;
             message_update_needed = true;
             progress_update_needed = true;
 
-            timeout_delegate = new GLib.TimeoutHandler (OnUpdateStatus);
-            timeout_id = GLib.Timeout.Add (100, timeout_delegate);
+            timeout_delegate = new GLib.TimeoutHandler(OnUpdateStatus);
+            timeout_id = GLib.Timeout.Add(100, timeout_delegate);
         }
         
         public void Cancel()
@@ -169,25 +177,27 @@ namespace Banshee.Widgets
 
         private bool OnCheckForDisplay()
         {
-            if (disposed)
+            if(disposed) {
                 return false;
-
+            }
+            
             // If the event has not made enough progress, show this event
-            if (Progress < 0.33)
+            if(Progress < 0.33) {
                 ActiveUserEventsManager.Instance.Register(this);
-
+            }
+            
             return false;
         }
         
         private bool OnUpdateStatus()
         {
-            if (disposed)
+            if(disposed) {
                 return false;
-            
-            if (!header_update_needed && !message_update_needed && !progress_update_needed)
+            } else if(!header_update_needed && !message_update_needed && !progress_update_needed) {
                 return true;
-
-            if (header_update_needed) {
+            }
+            
+            if(header_update_needed) {
                 header_label.Visible = header != null;
                 
                 if (header != null) {
@@ -197,7 +207,7 @@ namespace Banshee.Widgets
                 header_update_needed = false;
             }
 
-            if (message_update_needed) {
+            if(message_update_needed) {
                 if(message == null && name != null) {
                     message = name;
                 } else if(message == null && name == null) {
@@ -213,12 +223,13 @@ namespace Banshee.Widgets
                 message_update_needed = false;
             }
 
-            if (progress_update_needed) {
+            if(progress_update_needed) {
                 if (progress > 0.0) {
                     progress_bar.Fraction = progress;
                     progress_bar.Text = String.Format("{0}%", (int)(progress * 100.0));
                     progress_update_needed = false;
                 } else {
+                    progress_bar.Text = " ";
                     progress_bar.Pulse();
                     // NOTE: progress_update_needed is intentionally not reset here
                 }
@@ -228,19 +239,15 @@ namespace Banshee.Widgets
         }
 
         public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
-                message_update_needed = true;
+            get { return name; }
+            set { 
+                name = value; 
+                message_update_needed = true; 
             }
         }
         
         public string Message {
-            get {
-                return message;
-            }
+            get { return message; }
             set {
                 message = value;
                 message_update_needed = true;
@@ -248,30 +255,28 @@ namespace Banshee.Widgets
         }
         
         public string Header {
-            get {
-                return header;
-            }
+            get { return header; }
             set {
                 header = value;
                 header_update_needed = true;
             }
         }
         
+        public string CancelMessage {
+            get { return cancel_message; }
+            set { cancel_message = value; }
+        }
+        
         public double Progress {
+            get { return progress; }
             set {
                 progress = value;
                 progress_update_needed = true;
             }
-            get {
-                return progress;
-            }
         }
         
         public bool CanCancel {
-            get {
-                return can_cancel;
-            }
-            
+            get { return can_cancel; }
             set {
                 can_cancel = value;
                 Gtk.Application.Invoke(delegate {
@@ -281,9 +286,7 @@ namespace Banshee.Widgets
         }
         
         public bool IsCancelRequested {
-            get {
-                return cancel_requested;
-            }
+            get { return cancel_requested; }
         }
         
         public Gdk.Pixbuf Icon {
@@ -295,9 +298,7 @@ namespace Banshee.Widgets
         }
         
         public Widget Widget {
-            get {
-                return table;
-            }
+            get { return table; }
         }
     }
 }

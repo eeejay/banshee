@@ -331,8 +331,11 @@ namespace Banshee.Dap
                 handler(this, new EventArgs());
             }
             
-            save_report_event = new ActiveUserEvent(Catalog.GetString("Synchronizing Device"));
-            save_report_event.Header = Catalog.GetString("Synchronizing Device");
+            string aue_name = Name == null || Name == String.Empty ? Catalog.GetString("Device") : Name; 
+            string aue_title = String.Format(Catalog.GetString("Synchronizing {0}"), aue_name); 
+                
+            save_report_event = new ActiveUserEvent(aue_title);
+            save_report_event.Header = aue_title;
             save_report_event.Message = Catalog.GetString("Waiting for transcoder...");
             save_report_event.Icon = GetIcon(22);
             save_report_event.CanCancel = can_cancel_save;
@@ -341,15 +344,11 @@ namespace Banshee.Dap
         }
         
         protected bool ShouldCancelSave {
-            get {
-                return save_report_event.IsCancelRequested;
-            }
+            get { return save_report_event.IsCancelRequested; }
         }
         
         protected bool CanCancelSave {
-            set {
-                can_cancel_save = value;
-            }
+            set { can_cancel_save = value; }
         }
         
         protected void UpdateSaveProgress(string header, string message, double progress)
