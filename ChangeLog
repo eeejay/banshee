@@ -1,5 +1,10 @@
 2006-07-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: Make the remove and delete songs dialog
+	conform to the HIG
+
+2006-07-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Widgets/ActiveUserEvent.cs: New fully-HIG-compliant 
 	cancel/stop dialog; support having custom stop messages
 

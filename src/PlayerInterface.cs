@@ -1856,31 +1856,35 @@ namespace Banshee
             }
             
             if(SourceManager.ActiveSource is LibrarySource) {
-                string msg = String.Empty;
+                string header = null;
+                string message = null;
+                string button_label = null;
                 
                 if(deleteFromFileSystem) {
-                    msg = String.Format(
-                    Catalog.GetPluralString(
-                        "Are you sure you want to remove the selected song from your library <i><b>and</b></i> " +
-                        "your drive? This action will permanently delete the file.",
-                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library " + 
-                        "<i><b>and</b></i> your drive? This action will permanently delete the files.",
+                    header = String.Format(Catalog.GetPluralString(
+                        "Are you sure you want to permanently delete this song?",
+                        "Are you sure you want to permanently delete the selected {0} songs?",
                         selCount),
                     selCount);
+                    message = Catalog.GetString("If you delete the selection, it will be permanently lost.");
+                    button_label = "gtk-delete";
                 } else {
-                    msg = String.Format(
-                    Catalog.GetPluralString(
+                    header = Catalog.GetString("Remove selection from library");
+                    message = String.Format(Catalog.GetPluralString(
                         "Are you sure you want to remove the selected song from your library?",
-                        "Are you sure you want to remove the selected <b>({0})</b> songs from your library?",
+                        "Are you sure you want to remove the selected {0} songs from your library?",
                         selCount),
                     selCount);
+                    button_label = "gtk-remove";
                 }
                     
                 HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
                     DialogFlags.DestroyWithParent, MessageType.Warning,
-                    ButtonsType.YesNo,
-                    Catalog.GetString("Remove Selected Songs from Library"),
-                    msg);
+                    ButtonsType.None,
+                    header, message);
+                md.AddButton("gtk-cancel", ResponseType.No, true);
+                md.AddButton(button_label, ResponseType.Yes, false);
+                
                 if(md.Run() != (int)ResponseType.Yes) {
                     md.Destroy();
                     return;
