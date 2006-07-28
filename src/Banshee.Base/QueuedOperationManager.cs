@@ -44,11 +44,12 @@ namespace Banshee.Base
     {
         public object Object;
         public string ReturnMessage;
+        public bool Abort;
     }
 
     public class QueuedOperationManager
     {
-        private class OperationCanceledException : ApplicationException
+        public class OperationCanceledException : ApplicationException
         {
         }
         
@@ -66,6 +67,7 @@ namespace Banshee.Base
         }
 
         public event QueuedOperationHandler OperationRequested;
+        public event EventHandler Finished;
         
         public QueuedOperationManager()
         {
@@ -94,12 +96,16 @@ namespace Banshee.Base
                     processed_count = 0;
                 }
             }
+            
+            EventHandler handler = Finished;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
         
         private void UpdateCount(string message)
         {
             CreateUserEvent();
-            processed_count++;
 
             double new_progress = (double)processed_count / (double)total_count;
             double old_progress = user_event.Progress;
@@ -150,11 +156,12 @@ namespace Banshee.Base
         
         private void ProcessQueue()
         {
-            lock (object_queue.SyncRoot) {
-                if(processing_queue)
+            lock(object_queue.SyncRoot) {
+                if(processing_queue) {
                     return;
-                else
+                } else {
                     processing_queue = true;
+                }
             }
 
             CreateUserEvent();
@@ -169,9 +176,20 @@ namespace Banshee.Base
                     QueuedOperationArgs args = new QueuedOperationArgs();
                     args.Object = obj;
                     handler(this, args);
-                    UpdateCount(args.ReturnMessage);
-                } else {
+                    processed_count++;
+                    
+                    if(handle_user_event) {
+                        UpdateCount(args.ReturnMessage);
+                    }
+                    
+                    if(args.Abort) {
+                        break;
+                    }
+                } else if(handle_user_event) {
+                    processed_count++;
                     UpdateCount(null);
+                } else {
+                    processed_count++;
                 }
             }
 
@@ -186,10 +204,25 @@ namespace Banshee.Base
             get { return action_message; }
             set { action_message = value; }
         }
+        
         private string progress_message;
         public string ProgressMessage {
             get { return progress_message; }
             set { progress_message = value; }
+        }
+        
+        private bool handle_user_event = true;
+        public bool HandleActveUserEvent {
+            get { return handle_user_event; }
+            set { handle_user_event = value; }
+        }
+        
+        public int TotalCount {
+            get { return total_count; }
+        }
+        
+        public int ProcessedCount { 
+            get { return processed_count; }
         }
     }
 }

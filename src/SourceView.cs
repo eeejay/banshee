@@ -356,9 +356,8 @@ namespace Banshee
                 Source source = GetSource(path);
                 SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
                 
-                if(source is LibrarySource && SourceManager.ActiveSource is IImportable) {
-                    return true;
-                } else if((source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
+                if((source is LibrarySource && SourceManager.ActiveSource is IImportable) ||
+                    (source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
                     return true;
                 }
 
@@ -416,7 +415,22 @@ namespace Banshee
             DragDropList<TrackInfo> dnd_transfer = selectionData;
 
             if(final_drag_start_time == context.StartTime) {
-                if(final_drag_source == newPlaylistSource) {
+                if(final_drag_source is LibrarySource && SourceManager.ActiveSource is IImportable) {
+                    IImportable import_source = SourceManager.ActiveSource as IImportable;
+                    import_source.Import(dnd_transfer);
+                } else if(final_drag_source is PlaylistSource && SourceManager.ActiveSource is IImportable) {
+                    IImportable import_source = SourceManager.ActiveSource as IImportable;
+                    PlaylistSource playlist = null;
+                    
+                    if(final_drag_source == newPlaylistSource) {
+                        playlist = new PlaylistSource();
+                        LibrarySource.Instance.AddChildSource(playlist);
+                    } else {
+                        playlist = final_drag_source as PlaylistSource;
+                    }
+                    
+                    import_source.Import(dnd_transfer, playlist);
+                } else if(final_drag_source == newPlaylistSource) {
                     PlaylistSource playlist = new PlaylistSource();
                     playlist.AddTrack(dnd_transfer);
                     playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));

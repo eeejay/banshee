@@ -27,11 +27,15 @@
  */
  
 using System;
+using System.Collections.Generic;
+
+using Banshee.Base;
 
 namespace Banshee.Sources
 {
     public interface IImportable
     {
-    
+        void Import(IList<TrackInfo> tracks);
+        void Import(IList<TrackInfo> tracks, PlaylistSource playlist);
     }
 }

@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  FileNamePattern.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -78,7 +77,13 @@ namespace Banshee.Base
 
         public static string BuildFull(TrackInfo track, string ext)
         {
-            string songpath = CreateFromTrackInfo(track) + "." + ext;
+            if(ext == null || ext.Length < 1) {
+                ext = String.Empty;
+            } else if(ext[0] != '.') {
+                ext = String.Format(".{0}", ext);
+            }
+            
+            string songpath = CreateFromTrackInfo(track) + ext;
             string dir = Path.GetFullPath(Globals.Library.Location + 
                 Path.DirectorySeparatorChar + 
                 Path.GetDirectoryName(songpath));

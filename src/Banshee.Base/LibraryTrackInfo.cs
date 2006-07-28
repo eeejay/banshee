@@ -186,7 +186,7 @@ namespace Banshee.Base
             PreviousTrack = Gtk.TreeIter.Zero;
         }
         
-        public LibraryTrackInfo(SafeUri uri, AudioCdTrackInfo track) : this(
+        public LibraryTrackInfo(SafeUri uri, TrackInfo track) : this(
             uri, track.Artist, track.Album, track.Title, track.Genre,
             track.TrackNumber, track.TrackCount, track.Year, track.Duration, 
             track.Asin, track.RemoteLookupStatus)

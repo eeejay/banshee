@@ -2,6 +2,26 @@
 
 	* banshee.mdp: Updated MonoDevelop project
 
+	* src/SourceView.cs: support dropping on IImportable sources
+
+	* src/Banshee.Base/FileNamePattern.cs: Fix minor bug regarding extensions
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: Allow constructor previously
+	reserved for AudioCdTrackInfo to import any TrackInfo 
+
+	* src/Banshee.Base/QueuedOperationManager.cs: Fixes, added necessary
+	support for more advanced operations management
+
+	* src/Banshee.Base/Sources/IImportable.cs: Added two Import methods
+
+	* src/Banshee.Base/Sources/DapSource.cs: Implemented IImportable 
+	methods; effectively allows super-awesome importing of songs from
+	an iPod (or mass storage DAP) to the Banshee library
+
+2006-07-27  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
 	* src/Makefile.am:
 	* src/DragDrop.cs: Removed legacy DnD code
 
