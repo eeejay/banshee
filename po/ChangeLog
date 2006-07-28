@@ -1,3 +1,7 @@
+2006-07-28  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
 2006-07-26  Aaron Bockover  <abock@gnome.org>
 
 	* LINGUAS: Use new intltool 0.3.5 format
