@@ -258,8 +258,8 @@ namespace Banshee.Dap.Mtp
         }   
         }
 
-        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
-            
+	public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist)
+	{
             ArrayList temp_files = new ArrayList();
             
             if(playlist != null && playlist.Count == 0) {

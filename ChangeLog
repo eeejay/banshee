@@ -1,3 +1,8 @@
+2006-07-29  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: quick fix with changing API from
+	abock's earlier commit (IList->IEnumerable)
+
 2006-07-28  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: added GetFile method
