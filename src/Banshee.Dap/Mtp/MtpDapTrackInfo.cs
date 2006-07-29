@@ -27,6 +27,7 @@
  */
 
 using System; 
+using System.IO;
 using Banshee.Base;
 using Banshee.Dap;
 using LibGPhoto2;
@@ -35,10 +36,10 @@ namespace Banshee.Dap.Mtp
 {
     public sealed class MtpDapTrackInfo : DapTrackInfo
     {
-        GPhotoDeviceFile GpDeviceFile;
+        GPhotoDeviceFile device_file;
         public MtpDapTrackInfo(GPhotoDeviceFile DevFile) : base()
         {
-            GpDeviceFile = DevFile;
+            device_file = DevFile;
             //uri = new SafeUri(String.Format("dap://{0}/{1}", DevFile.Directory, DevFile.Filename));
                         // uri commented out on upgrade to banshee cvs on 2006-04-20 from a 2 month old snapshot - apparently safeuri is causing crashes in transcode in my system.  urgh.
             //uri = new SafeUri(String.Format("dap://{0}/{1}/{2}", dap.Uid, DevFile.Directory, DevFile.Filename));
@@ -56,10 +57,24 @@ namespace Banshee.Dap.Mtp
 
         public GPhotoDeviceFile DeviceFile {
             get {
-                return GpDeviceFile;
+                return device_file;
             }
         }
-            
+        
+        public void MakeFileUri () {
+            try {
+                byte[] data = device_file.CameraFile.GetDataAndSize();
+                string temp_file_string = Path.GetTempFileName();
+                File.Delete(temp_file_string);
+                FileStream temp_file = File.Open(temp_file_string + device_file.Extension, FileMode.Create);
+                temp_file.Write(data, 0, data.Length);
+                temp_file.Close();
+                uri = new SafeUri("file://" + temp_file.Name);
+            } catch (Exception e) {
+                LogCore.Instance.PushDebug (String.Format("MTP DAP: Failed to copy track {0} locally for importing.  Exception: {1}", title, e.ToString()), "");
+            }
+        }
+        
         public override void Save() {
             Console.WriteLine("track saving doesn't work.");
             /*GpDeviceFile.AlbumName = album;

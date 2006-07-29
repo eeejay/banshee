@@ -1,3 +1,19 @@
+2006-07-28  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: added GetFile method
+
+	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs: split out public & private
+	CameraFile, add Extension variable, removed old comments, CameraFile
+	get method now auto-retrieves the file if not gotten yet.
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: added fully-functional import method
+
+	* src/Banshee.Dap/Mtp/MtpDapTrackInfo.cs: renamed device file to proper
+	name, added MakeFileUri method that retrieves a camera file to a temp file
+	with a proper extension
+
+	Warning: the Import method blocks the UI. Move to a background thread.
+
 2006-07-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs: Minor fix

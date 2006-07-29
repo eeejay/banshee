@@ -277,6 +277,12 @@ public class GPhotoDevice
         file = null;
     }
     
+    public CameraFile GetFile (GPhotoDeviceFile file)
+    {
+        file.CameraFile = fs.GetFile (file.Directory, file.Filename, CameraFileType.Normal, context);
+        return file.CameraFile;
+    }
+    
     ~GPhotoDevice() {
         Dispose();
     }

@@ -59,6 +59,7 @@ namespace Banshee.Dap.Mtp
         private ActiveUserEvent userEvent;
         private int GPhotoDeviceID;
         private Hal.Device hal_device;
+        private QueuedOperationManager import_manager;
         
         static MtpDap() {
         }
@@ -171,7 +172,6 @@ namespace Banshee.Dap.Mtp
             if (IsReadOnly || !(track is MtpDapTrackInfo))
                 return;
 
-            Console.WriteLine("MTP: will remove {0}", track.Title);
             remove_queue.Enqueue(track);
         }
 
@@ -258,12 +258,142 @@ namespace Banshee.Dap.Mtp
         }   
         }
 
-        public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist) 
-        {
-            throw new ApplicationException("Copying tracks from MTP devices is currently not possible.");
+        public void Import(IList<TrackInfo> tracks, PlaylistSource playlist) {
+            
+            ArrayList temp_files = new ArrayList();
+            
+            if(playlist != null && playlist.Count == 0) {
+                playlist.Rename(PlaylistUtil.GoodUniqueName(tracks));
+                playlist.Commit();
+            }
+        
+            if(import_manager == null) {
+                import_manager = new QueuedOperationManager();
+                import_manager.HandleActveUserEvent = false;
+                //import_manager.UserEvent.Icon = GetIcon;
+                import_manager.UserEvent.Header = String.Format(Catalog.GetString("Copying from {0}"), Name);
+                import_manager.UserEvent.Message = Catalog.GetString("Scanning...");
+                import_manager.OperationRequested += OnImportOperationRequested;
+                import_manager.Finished += delegate {
+                    foreach(string cur in temp_files)
+                        File.Delete(cur);
+                    import_manager = null;
+                };
+            }
+            
+            foreach(TrackInfo track in tracks) {
+                (track as MtpDapTrackInfo).MakeFileUri();
+                if(!track.Uri.IsLocalPath) {
+                    tracks.Remove(track);
+                } else {
+                    temp_files.Add(track.Uri.LocalPath);
+                }
+            }
+            
+            foreach(TrackInfo track in tracks) {
+                if(playlist == null) {
+                    import_manager.Enqueue(track);
+                } else {
+                    import_manager.Enqueue(new KeyValuePair<TrackInfo, PlaylistSource>(track, playlist));
+                }
+            }
         }
         
-        public void Import(IEnumerable<TrackInfo> tracks)
+        private void OnImportOperationRequested(object o, QueuedOperationArgs args)
+        {
+            TrackInfo track = null;
+            PlaylistSource playlist = null;
+            
+            if(args.Object is TrackInfo) {
+                track = args.Object as TrackInfo;
+            } else if(args.Object is KeyValuePair<TrackInfo, PlaylistSource>) {
+                KeyValuePair<TrackInfo, PlaylistSource> container = 
+                    (KeyValuePair<TrackInfo, PlaylistSource>)args.Object;
+                track = container.Key;
+                playlist = container.Value;
+            }
+            
+            import_manager.UserEvent.Progress = import_manager.ProcessedCount / (double)import_manager.TotalCount;
+            import_manager.UserEvent.Message = String.Format("{0} - {1}", track.Artist, track.Title);
+            
+            string from = track.Uri.LocalPath;
+            string to = FileNamePattern.BuildFull(track, Path.GetExtension(from));
+            
+            try {
+                if(File.Exists(to)) {
+                    FileInfo from_info = new FileInfo(from);
+                    FileInfo to_info = new FileInfo(to);
+                    
+                    // probably already the same file
+                    if(from_info.Length == to_info.Length) {
+                        try {
+                            new LibraryTrackInfo(new SafeUri(to, false), track);
+                        } catch {
+                            // was already in the library
+                        }
+                        
+                        return;
+                    }
+                }
+            
+                using(FileStream from_stream = new FileStream(from, FileMode.Open, FileAccess.Read)) {
+                    long total_bytes = from_stream.Length;
+                    long bytes_read = 0;
+                    
+                    using(FileStream to_stream = new FileStream(to, FileMode.Create, FileAccess.ReadWrite)) {
+                        byte [] buffer = new byte[8192];
+                        int chunk_bytes_read = 0;
+                        
+                        DateTime last_message_pump = DateTime.MinValue;
+                        TimeSpan message_pump_delay = TimeSpan.FromMilliseconds(500);
+                        
+                        while((chunk_bytes_read = from_stream.Read(buffer, 0, buffer.Length)) > 0) {
+                            to_stream.Write(buffer, 0, chunk_bytes_read);
+                            bytes_read += chunk_bytes_read;
+                            
+                            if(DateTime.Now - last_message_pump < message_pump_delay) {
+                                continue;
+                            }
+                            
+                            double tracks_processed = (double)import_manager.ProcessedCount;
+                            double tracks_total = (double)import_manager.TotalCount;
+                            
+                            import_manager.UserEvent.Progress = (tracks_processed / tracks_total) +
+                                ((bytes_read / (double)total_bytes) / tracks_total);
+                                
+                            if(import_manager.UserEvent.IsCancelRequested) {
+                                throw new QueuedOperationManager.OperationCanceledException();
+                            }
+                            
+                            last_message_pump = DateTime.Now;
+                        }
+                    }
+                }
+                
+                LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
+                if(playlist != null) {
+                    playlist.AddTrack(library_track);
+                    playlist.Commit();
+                }
+            } catch(Exception e) {
+                try {
+                    File.Delete(to);
+                } catch {
+                }
+                
+                if(e is QueuedOperationManager.OperationCanceledException) {
+                    return;
+                }
+                
+                args.Abort = true;
+                
+                LogCore.Instance.PushError(String.Format(Catalog.GetString("Cannot import track from {0}"), 
+                    Name), e.Message);
+                Console.Error.WriteLine(e);
+            } 
+        }
+        
+        public void Import(IList<TrackInfo> tracks)
         {
             Import(tracks, null);
         }

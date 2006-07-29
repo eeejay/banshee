@@ -39,12 +39,11 @@ public class GPhotoDeviceFile
 {
     public GPhotoDevice Dev;
     
-    public CameraFile CameraFile;
+    private CameraFile camera_file;
     private string directory;
     private string filename;
     
-    private string extension;
-    
+    public string Extension;
     public string Artist;
     public double Duration;
     public uint Track;
@@ -54,14 +53,12 @@ public class GPhotoDeviceFile
     public string Name;
     public uint UseCount;
     
-    /* new constructor for adding tracks in Synchronize()
-    / allows for full internal checking for bad characters, and a self constructed path*/
     public GPhotoDeviceFile (SafeUri uri, GPhotoDevice device)
     {
         Dev = device;
-        CameraFile = new CameraFile();
-        CameraFile.Open(uri.LocalPath);
-        extension = Path.GetExtension(uri.LocalPath);
+        camera_file = new CameraFile();
+        camera_file.Open(uri.LocalPath);
+        Extension = Path.GetExtension(uri.LocalPath);
         filename = null;
         directory = null;
     }
@@ -71,25 +68,25 @@ public class GPhotoDeviceFile
         Dev = device;
         directory = dir;
         filename = file;
-        CameraFile = null;
+        camera_file = null;
         Metadata = meta;
+        Extension = Path.GetExtension(file);
     }
 
-    // old constructor for sending tracks from Sync
-/*  public GPhotoDeviceFile (string dir, string file, SafeUri uri, GPhotoDevice device) 
-    {
-        // FIXME: could this be where we're crashing with cvs?
-        Dev = device;
-        directory = dir;
-        filename = file;
-        CameraFile = new CameraFile();
-        CameraFile.Open(uri.LocalPath);
-        CameraFile.SetName(Filename);
-    }*/
+    public CameraFile CameraFile {
+        get {
+            if(camera_file == null)
+                Dev.GetFile(this);
+            return camera_file;
+        }
+        set {
+            camera_file = value;
+        }
+    }
 
     public void GenerateProperPath() {
         directory = Dev.Store + "Music/" + GetValidName(Artist) + "/" + GetValidName(AlbumName);
-        filename = GetValidName(String.Format("{0}. {1}{2}", Track, Name, extension));
+        filename = GetValidName(String.Format("{0}. {1}{2}", Track, Name, Extension));
         CameraFile.SetName(filename);
         Console.WriteLine("proper path: dir={0} file={1}", directory, filename);
     }        
