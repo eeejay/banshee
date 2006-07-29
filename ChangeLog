@@ -1,5 +1,10 @@
 2006-07-29  Patrick van Staveren  <trick@vanstaveren.us>
 
+	* src/Banshee.Dap/Mtp/MtpDap.cs: fix other import method to use
+	IList.  Also update error handling code to work with IEnumerable.
+
+2006-07-29  Patrick van Staveren  <trick@vanstaveren.us>
+
 	* src/Banshee.Dap/Mtp/MtpDap.cs: quick fix with changing API from
 	abock's earlier commit (IList->IEnumerable)
 

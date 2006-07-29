@@ -283,16 +283,19 @@ namespace Banshee.Dap.Mtp
             
             foreach(TrackInfo track in tracks) {
                 (track as MtpDapTrackInfo).MakeFileUri();
-                if(!track.Uri.IsLocalPath) {
+                /*if(!track.Uri.IsLocalPath) {
                     tracks.Remove(track);
                 } else {
                     temp_files.Add(track.Uri.LocalPath);
-                }
+                }*/
             }
             
             foreach(TrackInfo track in tracks) {
                 if(playlist == null) {
-                    import_manager.Enqueue(track);
+                    if(track.Uri.IsLocalPath){
+                        import_manager.Enqueue(track);
+                        temp_files.Add(track.Uri.LocalPath);
+                    }
                 } else {
                     import_manager.Enqueue(new KeyValuePair<TrackInfo, PlaylistSource>(track, playlist));
                 }
@@ -393,7 +396,7 @@ namespace Banshee.Dap.Mtp
             } 
         }
         
-        public void Import(IList<TrackInfo> tracks)
+        public void Import(IEnumerable<TrackInfo> tracks)
         {
             Import(tracks, null);
         }
