@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  MetadataSearchPlugin.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -26,19 +25,22 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
+ 
+// TODO: Add Remove(Type), Remove(IJob) to scheduler
 
 using System;
 using System.Data;
 using System.Collections;
-using System.Threading;
 using Mono.Unix;
 
 using MusicBrainz;
 using Banshee.Base;
+using Banshee.Kernel;
 
 namespace Banshee.Plugins.MetadataSearch 
 {
-    internal enum FetchMethod {
+    internal enum FetchMethod 
+    {
         CoversOnly,
         FillBlank,
         Overwrite
@@ -61,48 +63,49 @@ namespace Banshee.Plugins.MetadataSearch
         }
 
         public override string [] Authors {
-            get {
-                return new string [] {
-                    "Aaron Bockover"
-                };
-            }
-        }
-
-        public bool IsScanning {
-            get { return is_scanning; }
+            get { return new string [] { "Aaron Bockover" }; }
         }
 
         public event EventHandler ScanStarted;
         public event EventHandler ScanEnded;
         
-        private bool processing_queue;
-        private Queue scan_queue;
+        private int generation;
+        private int scan_ref_count;
+        
+        private object mb_client_mutex = new object();
         private Client mb_client;
-        private Thread processing_thread;
-        private bool is_scanning;
         
         protected override void PluginInitialize()
         {
-            RegisterConfigurationKey("FetchMethod");
+            System.Threading.Interlocked.Increment(ref generation);
+            System.Threading.Interlocked.Exchange(ref scan_ref_count, 0);
             
-            scan_queue = new Queue();
-            processing_queue = false;
+            mb_client = new Client();
+            
+            RegisterConfigurationKey("FetchMethod");
             
             if(Globals.Library.IsLoaded) {
                 ScanLibrary();
+            } else {
+                Globals.Library.Reloaded += OnLibraryReloaded;
             }
             
-            Globals.Library.Reloaded += OnLibraryReloaded;
             Globals.Library.TrackAdded += OnLibraryTrackAdded;
         }
         
         protected override void PluginDispose()
         {
+            System.Threading.Interlocked.Exchange(ref scan_ref_count, 0);
+            
+            lock(mb_client_mutex) {
+                if(mb_client != null) {
+                    mb_client.Dispose();
+                    mb_client = null;
+                }
+            }
+            
             Globals.Library.Reloaded -= OnLibraryReloaded;
             Globals.Library.TrackAdded -= OnLibraryTrackAdded;
-            while(processing_queue);
-            scan_queue.Clear();
-            scan_queue = null;
         }
         
         public override Gtk.Widget GetConfigurationWidget()
@@ -111,7 +114,27 @@ namespace Banshee.Plugins.MetadataSearch
         }
         
         // ----------------------------------------------------
+
+        protected virtual void OnScanStarted()
+        {
+            System.Threading.Interlocked.Increment(ref scan_ref_count);
         
+            EventHandler handler = ScanStarted;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+        
+        protected virtual void OnScanEnded()
+        {
+            System.Threading.Interlocked.Decrement(ref scan_ref_count);
+        
+            EventHandler handler = ScanEnded;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+
         private void OnLibraryReloaded(object o, EventArgs args)
         {
             ScanLibrary();
@@ -119,16 +142,7 @@ namespace Banshee.Plugins.MetadataSearch
 
         private void OnLibraryTrackAdded(object o, LibraryTrackAddedArgs args)
         {
-            if(DisposeRequested) {
-                return;
-            }
-            
-            scan_queue.Enqueue(args.Track);
-            if(!processing_queue) {
-                processing_thread = new Thread(new ThreadStart(ProcessQueue));
-                processing_thread.IsBackground = true;
-                processing_thread.Start();
-            }
+            Scheduler.Schedule(new ProcessTrackJob(this, args.Track));
         }
 
         internal void RescanLibrary()
@@ -139,157 +153,7 @@ namespace Banshee.Plugins.MetadataSearch
                 
         private void ScanLibrary()
         {
-            lock (this) {
-                if (is_scanning)
-                    return;
-
-                is_scanning = true;
-                if (ScanStarted != null)
-                    ScanStarted(this, new EventArgs ());
-                
-                ThreadAssist.Spawn(ScanLibraryThread);
-            }
-        }
-        
-        private void ScanLibraryThread()
-        {
-            Console.WriteLine("Scanning library for tracks to update");
-            
-            IDataReader reader = Globals.Library.Db.Query(
-                @"SELECT TrackID 
-                    FROM Tracks 
-                    WHERE RemoteLookupStatus IS NULL
-                        OR RemoteLookupStatus = 0"
-            );
-            
-            while(reader.Read() && !DisposeRequested) {
-                scan_queue.Enqueue(Convert.ToInt32(reader["TrackID"]));
-            }
-            
-            reader.Dispose();
-            
-            Console.WriteLine("Done scanning library");
-            
-            if(!DisposeRequested) {
-                ProcessQueue();
-            }
-
-            is_scanning = false;
-            if (ScanEnded != null)
-                ScanEnded(this, new EventArgs());
-        }
-        
-        private void ProcessQueue()
-        {
-            if(processing_queue) {
-                return;
-            }
-            
-            Console.WriteLine("Processing track queue for pending queries");
-            
-            processing_queue = true;
-            mb_client = new Client();
-            
-            while(scan_queue.Count > 0 && !DisposeRequested) {
-                object o = scan_queue.Dequeue();
-                if(o is int) {
-                    ProcessTrack(Globals.Library.GetTrack((int)o));
-                } else if(o is LibraryTrackInfo) {
-                    ProcessTrack(o as LibraryTrackInfo);
-                }
-            }
-            
-            Console.WriteLine("Done processing track queue");
-            
-            mb_client.Dispose();
-            processing_queue = false;
-        }
-        
-        private void ProcessTrack(LibraryTrackInfo track)
-        {   
-            if(track == null) {
-                return;
-            }
-            
-            try {
-                FetchMethod fetch = FetchMethod;
-                
-                if(fetch == FetchMethod.CoversOnly) {
-                    string asin = Globals.Library.Db.QuerySingle(String.Format(
-                        @"SELECT ASIN 
-                            FROM Tracks
-                            WHERE Artist = '{0}'
-                                AND AlbumTitle = '{1}'",
-                                Sql.Statement.EscapeQuotes(track.Artist),
-                                Sql.Statement.EscapeQuotes(track.Album))
-                    ) as string;
-
-                    if(asin == NotFoundAsin) {
-                        track.Asin = NotFoundAsin;
-                        track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                        track.Save();
-                        return;
-                    } else if(asin != null && asin != String.Empty) {
-                        Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
-                        track.Asin = asin;
-                        track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                        AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory);
-                        track.Save();
-                        return;
-                    }
-                }
-                
-                Console.Write("Querying MusicBrainz for {0} / {1}... ", track.Artist, track.Title);
-                
-                SimpleTrack mb_track = SimpleQuery.FileLookup(mb_client, 
-                    track.Artist, track.Album, track.Title,
-                    (int)track.TrackNumber, 
-                    (int)track.Duration.TotalMilliseconds);
-             
-                if(mb_track == null) {
-                    return;
-                }
-                
-                if(fetch != FetchMethod.CoversOnly) {
-                    if(mb_track.Artist != null && (fetch == FetchMethod.Overwrite 
-                        || (track.Artist == null || track.Artist == String.Empty))) {
-                        track.Artist = mb_track.Artist;
-                    }
-                    
-                    if(mb_track.Album != null && (fetch == FetchMethod.Overwrite 
-                        || (track.Album == null || track.Album == String.Empty))) {
-                        track.Album = mb_track.Album;
-                    }
-                    
-                    if(mb_track.Title != null && (fetch == FetchMethod.Overwrite 
-                        || (track.Title == null || track.Title == String.Empty))) {
-                        track.Title = mb_track.Title;
-                    }
-                    
-                    if(mb_track.TrackNumber > 0 && (fetch == FetchMethod.Overwrite || track.TrackNumber == 0)) {
-                        track.TrackNumber = (uint)mb_track.TrackNumber;
-                    }
-                    
-                    if(mb_track.TrackCount > 0 && (fetch == FetchMethod.Overwrite || track.TrackCount == 0)) {
-                        track.TrackCount = (uint)mb_track.TrackCount;
-                    }
-                }
-                
-                if(mb_track.Asin != null && mb_track.Asin != String.Empty) {
-                    track.Asin = mb_track.Asin;
-                    AmazonCoverFetcher.Fetch(mb_track.Asin, Paths.CoverArtDirectory);
-                } else {
-                    track.Asin = NotFoundAsin;
-                }
-                
-                track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                Console.WriteLine("OK");
-            } catch(Exception e) {
-                track.RemoteLookupStatus = RemoteLookupStatus.Failure;
-                Console.WriteLine("FAILED ({0})", e.Message);
-            }
-            
-            track.Save();
+            Scheduler.Schedule(new ScanLibraryJob(this));
         }
         
         internal FetchMethod FetchMethod {
@@ -303,6 +167,172 @@ namespace Banshee.Plugins.MetadataSearch
             
             set {
                 Globals.Configuration.Set(ConfigurationKeys["FetchMethod"], (int)value);
+            }
+        }
+
+        internal bool IsScanning {
+            get { return scan_ref_count > 0; }
+        }
+
+        private class ScanLibraryJob : IJob
+        {
+            private MetadataSearchPlugin plugin;
+            private int generation;
+            
+            public ScanLibraryJob(MetadataSearchPlugin plugin)
+            {
+                this.plugin = plugin;
+                this.generation = plugin.generation;
+            }
+        
+            public void Run()
+            {
+                if(generation != plugin.generation) {
+                    return;
+                }
+                
+                plugin.OnScanStarted();
+                //Console.WriteLine("Scanning library for tracks to update");
+                
+                IDataReader reader = Globals.Library.Db.Query(
+                    @"SELECT TrackID 
+                        FROM Tracks 
+                        WHERE RemoteLookupStatus IS NULL
+                            OR RemoteLookupStatus = 0"
+                );
+                
+                while(reader.Read()) {
+                    Scheduler.Schedule(new ProcessTrackJob(plugin, Convert.ToInt32(reader["TrackID"])));
+                }
+                
+                reader.Dispose();
+                
+                //Console.WriteLine("Done scanning library");
+                plugin.OnScanEnded();
+            }
+        }
+        
+        private class ProcessTrackJob : IJob
+        {
+            private LibraryTrackInfo track;
+            private int track_id;
+            private MetadataSearchPlugin plugin;
+            private int generation;
+            
+            public ProcessTrackJob(MetadataSearchPlugin plugin, LibraryTrackInfo track)
+            {
+                this.plugin = plugin;
+                this.track = track;
+                this.generation = plugin.generation;
+            }
+            
+            public ProcessTrackJob(MetadataSearchPlugin plugin, int trackId)
+            {
+                this.plugin = plugin;
+                this.track_id = trackId;
+                this.generation = plugin.generation;
+            }
+        
+            public void Run()
+            {
+                if(plugin.generation != generation) {
+                    return;
+                }
+                
+                lock(plugin.mb_client_mutex) {
+                    ProcessTrack(track != null ? track : Globals.Library.GetTrack(track_id));
+                }
+            }
+
+            private void ProcessTrack(LibraryTrackInfo track)
+            {   
+                if(track == null) {
+                    return;
+                }
+                
+                try {
+                    FetchMethod fetch = plugin.FetchMethod;
+                    
+                    if(fetch == FetchMethod.CoversOnly) {
+                        string asin = Globals.Library.Db.QuerySingle(String.Format(
+                            @"SELECT ASIN 
+                                FROM Tracks
+                                WHERE Artist = '{0}'
+                                    AND AlbumTitle = '{1}'",
+                                    Sql.Statement.EscapeQuotes(track.Artist),
+                                    Sql.Statement.EscapeQuotes(track.Album))
+                        ) as string;
+
+                        if(asin == NotFoundAsin) {
+                            track.Asin = NotFoundAsin;
+                            track.RemoteLookupStatus = RemoteLookupStatus.Success;
+                            track.Save();
+                            return;
+                        } else if(asin != null && asin != String.Empty) {
+                            //Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
+                            track.Asin = asin;
+                            track.RemoteLookupStatus = RemoteLookupStatus.Success;
+                            AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory);
+                            track.Save();
+                            return;
+                        }
+                    }
+                    
+                    //Console.Write("Querying MusicBrainz for {0} / {1}... ", track.Artist, track.Title);
+                    
+                    if(plugin.mb_client == null) {
+                        return;
+                    }
+                    
+                    SimpleTrack mb_track = SimpleQuery.FileLookup(plugin.mb_client, 
+                        track.Artist, track.Album, track.Title,
+                        (int)track.TrackNumber, 
+                        (int)track.Duration.TotalMilliseconds);
+                 
+                    if(mb_track == null) {
+                        return;
+                    }
+                    
+                    if(fetch != FetchMethod.CoversOnly) {
+                        if(mb_track.Artist != null && (fetch == FetchMethod.Overwrite 
+                            || (track.Artist == null || track.Artist == String.Empty))) {
+                            track.Artist = mb_track.Artist;
+                        }
+                        
+                        if(mb_track.Album != null && (fetch == FetchMethod.Overwrite 
+                            || (track.Album == null || track.Album == String.Empty))) {
+                            track.Album = mb_track.Album;
+                        }
+                        
+                        if(mb_track.Title != null && (fetch == FetchMethod.Overwrite 
+                            || (track.Title == null || track.Title == String.Empty))) {
+                            track.Title = mb_track.Title;
+                        }
+                        
+                        if(mb_track.TrackNumber > 0 && (fetch == FetchMethod.Overwrite || track.TrackNumber == 0)) {
+                            track.TrackNumber = (uint)mb_track.TrackNumber;
+                        }
+                        
+                        if(mb_track.TrackCount > 0 && (fetch == FetchMethod.Overwrite || track.TrackCount == 0)) {
+                            track.TrackCount = (uint)mb_track.TrackCount;
+                        }
+                    }
+                    
+                    if(mb_track.Asin != null && mb_track.Asin != String.Empty) {
+                        track.Asin = mb_track.Asin;
+                        AmazonCoverFetcher.Fetch(mb_track.Asin, Paths.CoverArtDirectory);
+                    } else {
+                        track.Asin = NotFoundAsin;
+                    }
+                    
+                    track.RemoteLookupStatus = RemoteLookupStatus.Success;
+                    //Console.WriteLine("OK");
+                } catch(Exception e) {
+                    track.RemoteLookupStatus = RemoteLookupStatus.Failure;
+                    //Console.WriteLine("FAILED ({0})", e.Message);
+                }
+                
+                track.Save();
             }
         }
     }

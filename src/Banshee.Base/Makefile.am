@@ -61,6 +61,13 @@ BANSHEE_GUI_DRAGDROP_SOURCES = \
 	$(srcdir)/Banshee.Gui.DragDrop/DragDropTarget.cs \
 	$(srcdir)/Banshee.Gui.DragDrop/DragDropUtilities.cs 
 
+BANSHEE_KERNEL_SOURCES = \
+	$(srcdir)/Banshee.Kernel/IntervalHeap.cs \
+	$(srcdir)/Banshee.Kernel/IJob.cs \
+	$(srcdir)/Banshee.Kernel/Job.cs \
+	$(srcdir)/Banshee.Kernel/JobPriority.cs \
+	$(srcdir)/Banshee.Kernel/Scheduler.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
@@ -135,6 +142,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_EQUALIZER_SOURCES) \
 	$(BANSHEE_EQUALIZER_GUI_SOURCES) \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
+	$(BANSHEE_KERNEL_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \

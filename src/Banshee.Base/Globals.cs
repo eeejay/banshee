@@ -89,6 +89,7 @@ namespace Banshee.Base
         
         public static void Dispose()
         {
+            Banshee.Kernel.Scheduler.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
             network_detect.Dispose();
             library.Db.Dispose();

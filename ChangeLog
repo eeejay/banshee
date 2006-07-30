@@ -1,3 +1,27 @@
+2006-07-29  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* src/Banshee.Base/Banshee.Kernel/Scheduler.cs: Schedules jobs to
+	be executed based on priority on a single thread of execution
+
+	* src/Banshee.Base/Banshee.Kernel/IntervalHeap.cs: A heap-based priority
+	queue collection for the scheduler
+
+	* src/Banshee.Base/Banshee.Kernel/IJob.cs: Job interface used for 
+	scheduling
+
+	* src/Banshee.Base/Banshee.Kernel/Job.cs: Job abstract class with
+	a Finished event
+
+	* src/Banshee.Base/Banshee.Kernel/JobPriority.cs: Job priority levels
+
+	* src/Banshee.Base/Makefile.am: Added new Banshee.Kernel sources
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Use
+	new Banshee.Kernel.Scheduler to handle fetching of track data on
+	the scheduler thread
+
 2006-07-29  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/MtpDap.cs: fix other import method to use
