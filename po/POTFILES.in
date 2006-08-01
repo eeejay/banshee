@@ -7,7 +7,6 @@ libbanshee/gst-transcode-0.10.c
 libbanshee/hal-context.c
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
-src/AboutBox.cs
 src/Banshee.Base/ActionManager.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
@@ -25,6 +24,7 @@ src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
 src/Banshee.Base/Dap/DapPropertiesDialog.cs
+src/Banshee.Base/Gui/AboutDialog.cs
 src/Banshee.Base/Gui/OpenLocationDialog.cs
 src/Banshee.Base/Gui/PreferencesDialog.cs
 src/Banshee.Base/FileImportSource.cs
@@ -73,7 +73,6 @@ src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/DiscUsageDisplay.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/Banshee.Widgets/StreamPositionLabel.cs
-src/Dialogs.cs
 src/ExceptionDialog.cs
 src/LogCoreViewer.cs
 src/Main.cs
