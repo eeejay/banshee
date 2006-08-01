@@ -1,3 +1,30 @@
+2006-08-01  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Updated MonoDevelop project
+
+	* data/Makefile.am: Build .po info extractor and generate translators.xml
+
+	* data/contributors.xml: XML file containing contributor information
+
+	* data/TranslatorExtract.cs: Program to extract translator information
+	from .po files, generates XML to embed as resource
+
+	* src/AboutBox.cs: Removed
+
+	* src/Makefile.am: Do not embed COPYING or build AboutBox.cs
+
+	* src/PlayerInterface.cs: Use new Banshee.Gui.Dialogs.AboutDialog
+
+	* src/Banshee.Base/Makefile.am: Added ProductInformation.cs and 
+	AboutDialog.cs; embed translators.xml, contributors.xml, and COPYING
+
+	* src/Banshee.Base/ProductInformation.cs: Static class that reads
+	translators.xml and contributor.xml resources to provide data for
+	display in about dialog
+
+	* src/Banshee.Base/Gui/AboutDialog.cs: New about dialog that uses
+	Banshee.Base.ProductInformation as a data source
+
 2006-07-29  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.mdp: Updated MonoDevelop project

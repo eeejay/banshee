@@ -34,12 +34,10 @@ banshee_generated_sources = $(banshee_sources_in:.in=) \
 	AmazonSearchService.cs
 
 banshee_sources = \
-	AboutBox.cs \
 	Main.cs \
 	StockIcons.cs \
 	PlayerInterface.cs \
 	PlaylistView.cs \
-	Dialogs.cs \
 	TrackProperties.cs \
 	SourceView.cs \
 	PlaylistModel.cs \
@@ -53,7 +51,6 @@ banshee_sources = \
 	ToggleStates.cs
 
 banshee_resources = \
-	COPYING \
 	data/banshee.glade \
 	data/images/advanced-icon-32.png \
 	data/images/banshee-logo.png \
