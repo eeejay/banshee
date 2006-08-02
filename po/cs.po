@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-31 11:02+0200\n"
-"PO-Revision-Date: 2006-07-31 11:02+0200\n"
+"POT-Creation-Date: 2006-08-02 10:59+0200\n"
+"PO-Revision-Date: 2006-08-02 11:01+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -146,7 +146,7 @@ msgstr "Vložte adresy souboru pro otevření:"
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: ../data/banshee.glade.h:31 ../src/Dialogs.cs:88
+#: ../data/banshee.glade.h:31
 msgid "Error"
 msgstr "Chyba"
 
@@ -319,8 +319,7 @@ msgid "Move music on info save"
 msgstr "Přesunout hudbu při uložení informací"
 
 #: ../data/banshee.schemas.in.h:11
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Přesunout hudbu v rámci adresáře hudební knihovny Banshee při ukládání "
 "informací o skladbě"
@@ -567,22 +566,6 @@ msgstr "Nelze inicializovat HAL kontext"
 #: ../libbanshee/hal-context.c:101
 msgid "Could not get device list from HAL"
 msgstr "Nelze získat seznam zařízení od HAL"
-
-#: ../src/AboutBox.cs:136
-msgid "Music Management and Playback for GNOME."
-msgstr "Správa a přehrávání hudby pro prostředí GNOME."
-
-#: ../src/AboutBox.cs:138
-msgid ""
-"Copyright © 2005-2006 Novell, Inc.\n"
-"Copyright © 2005 Aaron Bockover"
-msgstr ""
-"Copyright © 2005-2006 Novell, Inc.\n"
-"Copyright © 2005 Aaron Bockover"
-
-#: ../src/AboutBox.cs:143
-msgid "Banshee Wiki"
-msgstr "Banshee Wiki"
 
 #: ../src/Banshee.Base/ActionManager.cs:65
 msgid "_Music"
@@ -1027,8 +1010,7 @@ msgstr "Importuje se CD"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr ""
-"<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
+msgstr "<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:256
 #, csharp-format
@@ -1288,8 +1270,7 @@ msgstr "Převádí se soubory"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
+msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:116
 msgid "Initializing Transcoder..."
@@ -1340,6 +1321,30 @@ msgstr "Využití místa"
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
 msgid "Advanced Details"
 msgstr "Pokročilé detaily"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:46
+msgid "Primary Development"
+msgstr "Základní vývoj"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:53
+msgid "Contributors"
+msgstr "Přispěli"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:79
+msgid "Music Management and Playback for GNOME."
+msgstr "Správa a přehrávání hudby pro prostředí GNOME."
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:81
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:86
+msgid "Banshee Wiki"
+msgstr "Banshee Wiki"
 
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
 msgid "Browse..."
@@ -1440,13 +1445,11 @@ msgstr "Profil roury '{0}' nemá GStreamer element"
 msgid ""
 "Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
 "not be run"
-msgstr ""
-"Profil roury '{0}' nebude dostupný. GStreamer rouru '{1}' nelze spustit"
+msgstr "Profil roury '{0}' nebude dostupný. GStreamer rouru '{1}' nelze spustit"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:203
 msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
-msgstr ""
-"Nelze použít vnitřní datový tok. Místo toho použijte BuildPipeline(bitrate)."
+msgstr "Nelze použít vnitřní datový tok. Místo toho použijte BuildPipeline(bitrate)."
 
 #: ../src/Banshee.Base/PipelineProfile.cs:223
 msgid ""
@@ -1524,8 +1527,7 @@ msgid "Searching for CD cover art..."
 msgstr "Hledání přebalu k CD..."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:104
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Nelze vyhledat metadata k CD, není dostupné připojení k Internetu."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:110
@@ -1868,10 +1870,8 @@ msgid "Configure..."
 msgstr "Konfigurace..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
-msgid ""
-"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
-msgstr ""
-"Povolit enginu odeslat údaje o skladbách do Last.fm v modulu Audioscrobbler"
+msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr "Povolit enginu odeslat údaje o skladbách do Last.fm v modulu Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
 msgid "Enable the Audioscrobbler plugin"
@@ -1923,8 +1923,7 @@ msgstr "Přihlášení"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
-msgstr ""
-"Povolit ostatním procházet a poslouchat vaší hudbu z jiných DAAP klientů"
+msgstr "Povolit ostatním procházet a poslouchat vaší hudbu z jiných DAAP klientů"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
 msgid "Enable DAAP Server support"
@@ -2037,8 +2036,7 @@ msgstr "Zastavit {0}"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Operace '{0}' stále probíhá. Chcete ji zastavit?"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -2063,10 +2061,6 @@ msgstr "Vyhledávám: {0}"
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
 msgid "Idle"
 msgstr "Nečinný"
-
-#: ../src/Dialogs.cs:81
-msgid "An Error Occurred"
-msgstr "Stala se chyba"
 
 #: ../src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
@@ -2267,8 +2261,7 @@ msgstr "Nemohu importovat: {0}·({1})"
 #: ../src/PlayerInterface.cs:1865
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat tyto skladby?"
 msgstr[2] "Opravdu chcete navždy smazat tyto skladby?"
@@ -2284,8 +2277,7 @@ msgstr "Odstranit výběr z knihovny"
 #: ../src/PlayerInterface.cs:1874
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
@@ -2455,3 +2447,4 @@ msgstr "Název"
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "Verze"
+
