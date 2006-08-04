@@ -1,5 +1,10 @@
 2006-08-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/GladeWindow.cs: Fixed bug, was missing assembly
+	argument
+
+2006-08-04  Aaron Bockover  <abock@gnome.org>
+
 	* banshee.mdp: Removed old MonoDevelop project
 
 	* banshee.mds: New MonoDevelop solution that includes proper projects

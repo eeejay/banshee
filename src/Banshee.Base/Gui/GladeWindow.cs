@@ -42,7 +42,8 @@ namespace Banshee.Gui
         {
         }
 
-        public GladeWindow(string name) : this(name, new Glade.XML("banshee-dialogs.glade", name, "banshee"))
+        public GladeWindow(string name) : this(name, new Glade.XML(
+            System.Reflection.Assembly.GetExecutingAssembly(), "banshee-dialogs.glade", name, "banshee"))
         {
         }
 
