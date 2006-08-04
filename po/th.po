@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-31 11:01+0700\n"
-"PO-Revision-Date: 2006-07-31 11:55+0700\n"
+"POT-Creation-Date: 2006-08-04 12:29+0700\n"
+"PO-Revision-Date: 2006-08-04 12:38+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <l10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -142,7 +142,7 @@ msgstr "ป้อนที่อยู่ของแฟ้มที่คุณ
 msgid "Equalizer"
 msgstr "ที่ปรับคลื่นเสียง"
 
-#: ../data/banshee.glade.h:31 ../src/Dialogs.cs:88
+#: ../data/banshee.glade.h:31
 msgid "Error"
 msgstr "ผิดพลาด"
 
@@ -558,22 +558,6 @@ msgstr "ไม่สามารถตั้งต้น HAL context"
 #: ../libbanshee/hal-context.c:101
 msgid "Could not get device list from HAL"
 msgstr "ไม่สามารถอ่านรายการอุปกรณ์จาก HAL"
-
-#: ../src/AboutBox.cs:136
-msgid "Music Management and Playback for GNOME."
-msgstr "โปรแกรมเล่นและจัดการเพลงสำหรับ GNOME"
-
-#: ../src/AboutBox.cs:138
-msgid ""
-"Copyright © 2005-2006 Novell, Inc.\n"
-"Copyright © 2005 Aaron Bockover"
-msgstr ""
-"สงวนลิขสิทธิ์ © 2005-2006 Novell, Inc.\n"
-"สงวนลิขสิทธิ์ © 2005 Aaron Bockover"
-
-#: ../src/AboutBox.cs:143
-msgid "Banshee Wiki"
-msgstr "Banshee Wiki"
 
 #: ../src/Banshee.Base/ActionManager.cs:65
 msgid "_Music"
@@ -1273,8 +1257,7 @@ msgstr "กำลังแปลงแฟ้ม"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"แฟ้มกำลังอยู่ระหว่างการแปลงไปเป็นฟอร์แมตอื่น คุณต้องการหยุดการแปลงหรือไม่?"
+msgstr "แฟ้มกำลังอยู่ระหว่างการแปลงไปเป็นฟอร์แมตอื่น คุณต้องการหยุดการแปลงหรือไม่?"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:116
 msgid "Initializing Transcoder..."
@@ -1325,6 +1308,30 @@ msgstr "พื้นที่ใช้งาน"
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
 msgid "Advanced Details"
 msgstr "รายละเอียดเพิ่มเติม"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:46
+msgid "Primary Development"
+msgstr "งานพัฒนาหลัก"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:53
+msgid "Contributors"
+msgstr "ผู้ร่วมสมทบ"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:79
+msgid "Music Management and Playback for GNOME."
+msgstr "โปรแกรมเล่นและจัดการเพลงสำหรับ GNOME"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:81
+msgid ""
+"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"สงวนลิขสิทธิ์ © 2005-2006 Novell, Inc.\n"
+"สงวนลิขสิทธิ์ © 2005 Aaron Bockover"
+
+#: ../src/Banshee.Base/Gui/AboutDialog.cs:86
+msgid "Banshee Wiki"
+msgstr "Banshee Wiki"
 
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
 msgid "Browse..."
@@ -2017,8 +2024,7 @@ msgstr "หยุด {0}"
 #, csharp-format
 msgid ""
 "The '{0}' operation is still performing work. Would you like to stop it?"
-msgstr ""
-"ปฏิบัติการ '{0}' ยังคงทำงานอยู่ คุณต้องการหยุดหรือไม่?"
+msgstr "ปฏิบัติการ '{0}' ยังคงทำงานอยู่ คุณต้องการหยุดหรือไม่?"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:92
 #, csharp-format
@@ -2042,10 +2048,6 @@ msgstr "กำลังค้นหา: {0}"
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
 msgid "Idle"
 msgstr "ไม่ได้เล่น"
-
-#: ../src/Dialogs.cs:81
-msgid "An Error Occurred"
-msgstr "เกิดข้อผิดพลาด"
 
 #: ../src/ExceptionDialog.cs:24
 msgid "Banshee Encountered a Fatal Error"
@@ -2428,6 +2430,9 @@ msgstr "ชื่อส่วนประกอบ"
 #: ../src/VersionInformationDialog.cs:70
 msgid "Version"
 msgstr "รุ่น"
+
+#~ msgid "An Error Occurred"
+#~ msgstr "เกิดข้อผิดพลาด"
 
 #~ msgid "File Transcoder"
 #~ msgstr "ตัวแปลงรหัสแฟ้ม"
