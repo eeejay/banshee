@@ -9,10 +9,21 @@ export DYLD_LIBRARY_PATH=@expanded_libdir@${DYLD_LIBRARY_PATH+:$DYLD_LIBRARY_PAT
 export LD_LIBRARY_PATH=@expanded_libdir@${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
 export GST_PLUGIN_PATH=@expanded_libdir@/@PACKAGE@/gstreamer-0.10
 
-if [ "x$1" = "x--debug" ]; then
+case "x--uninstalled" in ("x$1" | "x$2")
+	if [ -x ./banshee.exe -a -e ./banshee.in ]; then
+		echo "** Running uninstalled Banshee **"
+		MONO_EXE="./banshee.exe"
+		export MONO_PATH=../hal-sharp:../entagged-sharp:../burn-sharp:${MONO_PATH+:$MONO_PATH}
+	else
+		echo "** Running installed Banshee, even though --uninstalled was passed **"
+		echo "** To run uninstalled, your PWD must be banshee/src **"
+	fi
+esac
+
+case "x--debug" in ("x$1" | "x$2")
 	MONO_OPTIONS="--debug"
 	echo "** Running Banshee in Debug Mode **"
-fi
+esac
 
 exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
 

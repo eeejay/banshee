@@ -1,3 +1,28 @@
+2006-08-04  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mdp: Removed old MonoDevelop project
+
+	* banshee.mds: New MonoDevelop solution that includes proper projects
+
+	* src/banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* src/Banshee.Widgets/Banshee.Widgets.mdp:
+	* src/MusicBrainz/MusicBrainz.mdp: New MonoDevelop projects; core Banshee
+	can now be built and run from MonoDevelop
+
+	* data/banshee.glade: Removed Banshee.Base dialogs
+
+	* data/banshee-dialogs.glade: Moved Banshee.Base dialogs here; resource
+	in Banshee.Base.dll; now more reusable
+
+	* src/banshee.in: Allow running uninstalled
+
+	* src/Banshee.Base/Makefile.am: Embed banshee-dialogs.glade
+
+	* src/Banshee.Base/Gui/GladeWindow.cs: New constructor
+
+	* src/PlayerInterface.cs: Connect to DeleteEvent manually
+
 2006-08-01  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.mdp: Updated MonoDevelop project

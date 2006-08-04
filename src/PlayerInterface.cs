@@ -424,6 +424,7 @@ namespace Banshee
             // Window Events
             WindowPlayer.KeyPressEvent += OnKeyPressEvent;
             WindowPlayer.ConfigureEvent += OnWindowPlayerConfigureEvent;
+            Window.DeleteEvent += OnWindowPlayerDeleteEvent;
             WindowPlayer.WindowStateEvent += OnWindowStateEvent;
             
             // Search Entry

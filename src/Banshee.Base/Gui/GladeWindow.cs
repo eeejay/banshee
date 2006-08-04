@@ -42,12 +42,15 @@ namespace Banshee.Gui
         {
         }
 
-        public GladeWindow(string name)
+        public GladeWindow(string name) : this(name, new Glade.XML("banshee-dialogs.glade", name, "banshee"))
+        {
+        }
+
+        public GladeWindow(string name, Glade.XML glade)
         {
             window_name = name;        
-            glade = new Glade.XML(System.Reflection.Assembly.GetEntryAssembly(), 
-                "banshee.glade", name, "banshee");
-            glade.Autoconnect(this);
+            this.glade = glade; 
+            this.glade.Autoconnect(this);
         }
         
         public virtual void Destroy()

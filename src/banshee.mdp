@@ -1,0 +1,99 @@
+<Project name="Banshee" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="banshee" />
+      <Build debugmode="True" target="Exe" />
+      <Execution executeScript="./banshee --uninstalled" runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="banshee" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./IPlaybackModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="./LogCoreViewer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlayerInterface.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlaylistColumns.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlaylistModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlaylistView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./RatingRenderer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./RemotePlayer.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SourceView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./StockIcons.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ToggleStates.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrackProperties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="../data/images/banshee-logo.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/banshee.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/advanced-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-decrease.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-high.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-increase.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-low.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-medium.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/audio-volume-muted.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/blue-speaker.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/busy-spinner.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/busy-spinner-36.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/cd-action-burn-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/cd-action-burn-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/cd-action-burn-48.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/cd-action-rip-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/cd-action-rip-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/circle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/encode-action-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/encoding-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/icon-album.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/icon-artist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/icon-title.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/library-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-eject.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-playback-pause.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-playback-start.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-playlist-continuous.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-playlist-shuffle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-repeat-all.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-repeat-none.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-repeat-single.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-skip-backward.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/media-skip-forward.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/music-player-banshee.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/music-player-banshee.svg" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/music-player-banshee-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/music-player-banshee-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/music-player-banshee-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/now-playing-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/playlist-icon-large.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/song-drm.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/splash.svg" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/sync-needed.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
+  </Contents>
+  <References>
+    <ProjectReference type="Project" localcopy="True" refto="Banshee.Base" />
+    <ProjectReference type="Project" localcopy="True" refto="Banshee.Widgets" />
+    <ProjectReference type="Project" localcopy="True" refto="MusicBrainz" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="dbus-sharp, Version=0.60.0.0, Culture=neutral, PublicKeyToken=9eef2692033670f5" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gnome-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gconf-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="entagged-sharp, Version=0.2.0.0, Culture=neutral" />
+  </References>
+</Project>
