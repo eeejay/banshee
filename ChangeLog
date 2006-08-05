@@ -1,5 +1,15 @@
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/*/Makefile.am:
+	* src/*/*/Makefile.am: Added $(top_srcdir)/src/AssemblyInfo.cs to build
+
+	* src/Banshee.Plugins/Daap/daap-sharp/AssemblyInfo.cs: Removed
+
+	* src/Banshee.Plugins/Daap/daap-sharp/sync-tree.sh: Remove AssemblyInfo.cs
+	when syncing
+
+2006-08-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/PlayerEngineCore.cs: Use a PluginFactory; media
 	engines are now flatly installed in Banshee.MediaEngine (no more
 	sub directories therein)

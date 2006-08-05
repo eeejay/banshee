@@ -5,7 +5,9 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 gstenginelibdir = $(pkglibdir)/Banshee.MediaEngine
 gstenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config 
 
-ASSEMBLY_SOURCES = $(srcdir)/GstPlayerEngine.cs
+ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
+	$(srcdir)/GstPlayerEngine.cs
 
 all: $(ASSEMBLY)
 

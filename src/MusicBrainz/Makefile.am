@@ -6,6 +6,7 @@ musicbrainzdir = $(pkglibdir)
 musicbrainz_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/Client.cs \
 	$(srcdir)/ClientVersion.cs \
 	$(srcdir)/Rdf.cs \

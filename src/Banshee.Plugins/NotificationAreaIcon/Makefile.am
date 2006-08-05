@@ -8,6 +8,7 @@ notificationareaicon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 MENU_RESOURCE=NotificationAreaIconMenu.xml
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/NotificationAreaIconPlugin.cs \
 	$(srcdir)/NotificationArea.cs
 

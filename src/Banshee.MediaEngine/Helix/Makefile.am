@@ -1,4 +1,5 @@
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/HelixRemotePlayer.cs \
 	$(srcdir)/HelixRemotePlayerEngine.cs
 

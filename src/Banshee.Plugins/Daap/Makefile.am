@@ -7,6 +7,7 @@ daapdir = $(pkglibdir)/Banshee.Plugins
 daap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/DaapPlugin.cs \
 	$(srcdir)/DaapCore.cs \
 	$(srcdir)/DaapSource.cs \

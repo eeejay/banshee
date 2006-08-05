@@ -6,6 +6,7 @@ fsmondir = $(pkglibdir)/Banshee.Plugins
 fsmon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/MetadataSearchPlugin.cs \
 	$(srcdir)/MetadataSearchConfigDialog.cs
 	

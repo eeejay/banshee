@@ -96,4 +96,5 @@ fi
 ## --- NON STANDARD -- ##
 
 rm Makefile.am
+rm AssemblyInfo.cs
 

@@ -6,6 +6,7 @@ banshee_widgetsdir = $(pkglibdir)
 banshee_widgets_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionButton.cs \
 	$(srcdir)/AltProgressBar.cs \
 	$(srcdir)/CoverArtThumbnail.cs \

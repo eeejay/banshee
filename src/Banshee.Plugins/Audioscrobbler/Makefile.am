@@ -8,6 +8,7 @@ audioscrobbler_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 MENU_RESOURCE=AudioscrobblerMenu.xml
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/AudioscrobblerPlugin.cs \
 	$(srcdir)/AudioscrobblerConfigDialog.cs \
 	$(srcdir)/Engine.cs \

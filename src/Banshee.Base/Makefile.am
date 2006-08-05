@@ -151,6 +151,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(BANSHEE_KERNEL_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
@@ -216,7 +217,7 @@ Banshee_Base_RESOURCES = \
 	data/images/circle.png \
 	COPYING
 
-Banshee_Base_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Base_RESOURCES), $(srcdir)/../../$(resource))
+Banshee_Base_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Base_RESOURCES), $(top_srcdir)/$(resource))
 
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 

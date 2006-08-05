@@ -8,6 +8,7 @@ DISTCLEANFILES = *.mdb
 MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/NjbDap.cs \
 	$(srcdir)/NjbDapTrackInfo.cs
 

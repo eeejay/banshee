@@ -7,7 +7,8 @@ DISTCLEANFILES = *.mdb
 MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/MassStorageDap.cs				\
+	$(top_srcdir)/src/AssemblyInfo.cs \
+	$(srcdir)/MassStorageDap.cs	\
 	$(srcdir)/MassStorageTrackInfo.cs
 
 bansheedapdir = $(pkglibdir)/Banshee.Dap

@@ -7,6 +7,7 @@ DISTCLEANFILES = *.mdb
 MAINTAINERCLEANFILES = Makefile.in
 
 ASSEMBLY_SOURCES = \
+	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/IpodDap.cs \
 	$(srcdir)/IpodDapTrackInfo.cs \
 	$(srcdir)/UnsupportedDatabaseView.cs \
