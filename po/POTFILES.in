@@ -1,6 +1,7 @@
 data/banshee.desktop.in.in
 data/banshee.glade
 data/banshee.schemas.in
+data/banshee-dialogs.glade
 [encoding: UTF-8]
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
@@ -25,8 +26,12 @@ src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
 src/Banshee.Base/Dap/DapPropertiesDialog.cs
 src/Banshee.Base/Gui/AboutDialog.cs
+src/Banshee.Base/Gui/ExceptionDialog.cs
+src/Banshee.Base/Gui/LogCoreDialog.cs
 src/Banshee.Base/Gui/OpenLocationDialog.cs
 src/Banshee.Base/Gui/PreferencesDialog.cs
+src/Banshee.Base/Gui/ToggleStates.cs
+src/Banshee.Base/Gui/VersionInformationDialog.cs
 src/Banshee.Base/FileImportSource.cs
 src/Banshee.Base/FolderImportSource.cs
 src/Banshee.Base/GstTranscoder.cs
@@ -37,6 +42,7 @@ src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
+src/Banshee.Base/PowerManagement.cs
 src/Banshee.Base/Plugins/PluginDialog.cs
 src/Banshee.Base/Source.cs
 src/Banshee.Base/Sources/AudioCdSource.cs
@@ -73,14 +79,11 @@ src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/DiscUsageDisplay.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/Banshee.Widgets/StreamPositionLabel.cs
-src/ExceptionDialog.cs
-src/LogCoreViewer.cs
 src/Main.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
 src/PlaylistView.cs
 src/SourceView.cs
 src/StockIcons.cs
-src/ToggleStates.cs
 src/TrackProperties.cs
-src/VersionInformationDialog.cs
+
