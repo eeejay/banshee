@@ -30,8 +30,7 @@ DISTCLEANFILES = entagged-sharp.dll $(banshee_generated_sources)
 MAINTAINERCLEANFILES = Makefile.in
 
 banshee_sources_in = AssemblyInfo.cs.in 
-banshee_generated_sources = $(banshee_sources_in:.in=) \
-	AmazonSearchService.cs
+banshee_generated_sources = $(banshee_sources_in:.in=)
 
 banshee_sources = \
 	Main.cs \
@@ -114,25 +113,20 @@ SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 banshee_build_sources = $(addprefix $(srcdir)/, $(banshee_sources))
 banshee_build_sources += $(banshee_generated_sources)
 
-all: AmazonSearchService.cs $(TARGET) $(BANSHEE_IMPORT_ASSEMBLY)
+all: $(TARGET) $(BANSHEE_IMPORT_ASSEMBLY)
 
 $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
-	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) \
-	-target:exe -out:"$@" \
-	$(SYSTEM_REFERENCES_BUILD) \
-	$(banshee_build_sources)
+	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) -out:$@ $(SYSTEM_REFERENCES_BUILD) $(banshee_build_sources)
 
 banshee_import_sources = BansheeImport.cs
 
 $(BANSHEE_IMPORT_ASSEMBLY): $(banshee_import_sources)
 	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll $(banshee_import_sources)
 
-AmazonSearchService.cs: AmazonSearchService.wsdl
-	MONO_XMLSERIALIZER_THS=no wsdl -namespace:Amazon $(srcdir)/AmazonSearchService.wsdl -o:AmazonSearchService.cs
-
 run:
-	sh ./banshee
+	sh ./banshee --uninstalled
 
 dbus-client-sample:
 	make -f BansheeDbusClient.Makefile
+
 

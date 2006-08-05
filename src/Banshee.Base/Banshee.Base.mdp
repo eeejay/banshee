@@ -2,7 +2,7 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="Banshee.Base" />
-      <Build debugmode="True" target="Library" />
+      <Build executeBeforeBuild="../../build/mdp-precompile" debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
@@ -121,7 +121,6 @@
     <File name="./Dap/DapPropertiesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./Dap/DapTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/AboutDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Gui/ArtistAlbumTileView.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/GladeDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/GladeWindow.cs" subtype="Code" buildaction="Compile" />
@@ -169,18 +168,18 @@
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Project" localcopy="True" refto="Banshee.Widgets" />
+    <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="dbus-sharp, Version=0.60.0.0, Culture=neutral, PublicKeyToken=9eef2692033670f5" />
-    <ProjectReference type="Project" localcopy="True" refto="MusicBrainz" />
+    <ProjectReference type="Project" localcopy="False" refto="MusicBrainz" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.SqliteClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../hal-sharp/hal-sharp.dll" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../entagged-sharp/entagged-sharp.dll" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../../burn-sharp/burn-sharp.dll" />
+    <ProjectReference type="Assembly" localcopy="False" refto="../../hal-sharp/hal-sharp.dll" />
+    <ProjectReference type="Assembly" localcopy="False" refto="../../entagged-sharp/entagged-sharp.dll" />
+    <ProjectReference type="Assembly" localcopy="False" refto="../../burn-sharp/burn-sharp.dll" />
     <ProjectReference type="Gac" localcopy="True" refto="gconf-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
 </Project>

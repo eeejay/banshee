@@ -1,4 +1,4 @@
-<Combine name="banshee" fileversion="2.0">
+<Combine name="banshee" fileversion="2.0" outputpath="./" MakePkgConfig="False">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee.Widgets" configuration="Debug" />

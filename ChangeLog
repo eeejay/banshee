@@ -1,5 +1,16 @@
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
+	* banshee.mds:
+	* src/banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp: Updated MonoDevelop projects
+
+	* src/Makefile.am: Do not build AmazonSearchService; has never been
+	used 
+
+	* src/AmazonSearchService.wsdl: Removed :-)
+
+2006-08-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/*/Makefile.am:
 	* src/*/*/Makefile.am: Added $(top_srcdir)/src/AssemblyInfo.cs to build
 
