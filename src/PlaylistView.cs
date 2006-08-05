@@ -115,7 +115,7 @@ namespace Banshee
             
             RatingColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Rating"), "Rating",
-                new TreeCellDataFunc(TrackCellRating), new RatingRenderer(),
+                new TreeCellDataFunc(TrackCellRating), new Banshee.Gui.RatingRenderer(),
                 7, (int)ColumnId.Rating);
             columns.Add(RatingColumn);
             
@@ -531,7 +531,7 @@ namespace Banshee
                 return;
             }
              
-            ((RatingRenderer)cell).Track = ti;
+            ((Banshee.Gui.RatingRenderer)cell).Track = ti;
         }
         
         protected void TrackCellLastPlayed(TreeViewColumn tree_column,

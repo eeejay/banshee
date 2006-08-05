@@ -1,9 +1,8 @@
-
 /***************************************************************************
- *  LogCoreViewer.cs
+ *  LogCoreDialog.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -33,9 +32,9 @@ using Mono.Unix;
 
 using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Gui.Dialogs
 {
-    public class LogCoreViewer : Dialog
+    public class LogCoreDialog : Dialog
     {
         private VBox details_box;
         private TextView details_view;
@@ -49,7 +48,7 @@ namespace Banshee
         private Gdk.Pixbuf debug_pixbuf;
         private Gdk.Pixbuf information_pixbuf;
         
-        public LogCoreViewer(LogCore log, Window parent) : base(Catalog.GetString("Log Viewer"), 
+        public LogCoreDialog(LogCore log, Window parent) : base(Catalog.GetString("Log Viewer"), 
             parent, DialogFlags.DestroyWithParent | DialogFlags.NoSeparator)
         {
             this.log = log;

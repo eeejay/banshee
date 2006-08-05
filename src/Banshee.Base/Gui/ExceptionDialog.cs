@@ -1,3 +1,31 @@
+/***************************************************************************
+ *  ExceptionDialog.cs
+ *
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
+ ****************************************************************************/
+
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a
+ *  copy of this software and associated documentation files (the "Software"),  
+ *  to deal in the Software without restriction, including without limitation  
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+ *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  Software is furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.
+ */
+ 
 using System;
 using System.Reflection;
 using System.Resources;
@@ -7,7 +35,7 @@ using System.IO;
 using Mono.Unix;
 using Gtk;
 
-namespace Banshee 
+namespace Banshee.Gui.Dialogs
 {
     public class ExceptionDialog : Dialog
     {
@@ -34,29 +62,34 @@ namespace Banshee
             VBox.PackStart(hbox, false, false, 0);
         
             Image image = new Image(Stock.DialogError, IconSize.Dialog);
-            image.Yalign = 0.05f;
+            image.Yalign = 0.0f;
             hbox.PackStart(image, true, true, 0);
 
             VBox label_vbox = new VBox(false, 0);
             label_vbox.Spacing = 12;
             hbox.PackStart(label_vbox, false, false, 0);
 
-            Label label = new Label("<b><big>" + Title + "</big></b>");
+            Label label = new Label(String.Format("<b><big>{0}</big></b>", GLib.Markup.EscapeText(Title)));
             label.UseMarkup = true;
             label.Justify = Justification.Left;
             label.LineWrap = true;
             label.SetAlignment(0.0f, 0.5f);
             label_vbox.PackStart(label, false, false, 0);
 
-            label = new Gtk.Label(Catalog.GetString(
-                "This may be due to a programming error. Please help us make Banshee better " + 
-                "by reporting this error. Thank you in advance!"));
+            label = new Label(e.Message);
                 
             label.UseMarkup = true;
             label.Justify = Gtk.Justification.Left;
             label.LineWrap = true;
             label.SetAlignment(0.0f, 0.5f);
             label_vbox.PackStart(label, false, false, 0);
+
+            Label details_label = new Label(String.Format("<b>{0}</b>", 
+                GLib.Markup.EscapeText(Catalog.GetString("Error Details"))));
+            details_label.UseMarkup = true;
+            Expander details_expander = new Expander("Details");
+            details_expander.LabelWidget = details_label;
+            label_vbox.PackStart(details_expander, true, true, 0);
 
             ScrolledWindow scroll = new ScrolledWindow();
             TextView view = new TextView();
@@ -70,9 +103,11 @@ namespace Banshee
 			view.Editable = false;
 			view.Buffer.Text = debugInfo;
 			
-			label_vbox.PackStart(scroll, true, true, 0);
+			details_expander.Add(scroll);
 			
             hbox.ShowAll();
+
+            Banshee.Base.IconThemeUtils.SetWindowIcon(this);
 
             AddButton(Stock.Close, ResponseType.Close, true);
         }
@@ -149,40 +184,34 @@ namespace Banshee
             
             return null;
         }
-	}
-	
-    public class LsbVersionInfo
-    {
-        private string [] filesToCheck = {
-            "*-release",
-            "slackware-version",
-            "debian_version"
-        };
         
-        private Hashtable harvest = new Hashtable(); 
-        
-        public LsbVersionInfo()
+        private class LsbVersionInfo
         {
-            foreach(string pattern in filesToCheck) {
-                foreach(string filename in Directory.GetFiles("/etc/", pattern)) {
-                    using(FileStream fs = File.OpenRead(filename)) {
-                        harvest[filename] = (new StreamReader(fs)).ReadToEnd();
+            private string [] filesToCheck = {
+                "*-release",
+                "slackware-version",
+                "debian_version"
+            };
+            
+            private Hashtable harvest = new Hashtable(); 
+            
+            public LsbVersionInfo()
+            {
+                foreach(string pattern in filesToCheck) {
+                    foreach(string filename in Directory.GetFiles("/etc/", pattern)) {
+                        using(FileStream fs = File.OpenRead(filename)) {
+                            harvest[filename] = (new StreamReader(fs)).ReadToEnd();
+                        }
                     }
                 }
             }
-        }
-        
-        public Hashtable Findings
-        {
-            get {
-                return harvest;
+            
+            public Hashtable Findings {
+                get { return harvest; }
             }
-        }
-        
-        public static Hashtable Harvest
-        {
-            get {
-                return (new LsbVersionInfo()).Findings;
+            
+            public static Hashtable Harvest {
+                get { return (new LsbVersionInfo()).Findings; }
             }
         }
     }

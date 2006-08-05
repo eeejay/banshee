@@ -66,7 +66,7 @@ namespace Banshee.MediaEngine
         TrackInfoUpdated
     }
 
-    public abstract class PlayerEngine
+    public abstract class PlayerEngine : Banshee.Plugins.IPlugin
     {
         public event PlayerEngineStateHandler StateChanged;
         public event PlayerEngineEventHandler EventChanged;

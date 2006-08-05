@@ -28,97 +28,80 @@
  
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using Mono.Unix;
 
 using Banshee.MediaEngine;
+using Banshee.Plugins;
 
 namespace Banshee.Base
 {
     public static class PlayerEngineCore
-    {
-        private const string RootEngineDir = ConfigureDefines.InstallDir + "Banshee.MediaEngine/";   
+    {   
+        private static PluginFactory<PlayerEngine> factory = new PluginFactory<PlayerEngine>();
         
-        private static ArrayList engines = new ArrayList();
+        private static List<PlayerEngine> engines = new List<PlayerEngine>();
         private static PlayerEngine active_engine;
         private static PlayerEngine default_engine;
         private static PlayerEngine pending_engine;
+
+        private static string preferred_engine_id = null;
 
         public static event PlayerEngineEventHandler EventChanged;
         public static event PlayerEngineStateHandler StateChanged;
 
         private static void InstantiateEngines()
         {
-            DirectoryInfo info = new DirectoryInfo(RootEngineDir);
-            
-            if(!info.Exists) {
-                throw new IOException("Directory " + RootEngineDir + " does not exist");
-            }
-            
-            string preferred_id = null;
             try {
-                preferred_id = (string)Globals.Configuration.Get(GConfKeys.PlayerEngine);
+                preferred_engine_id = (string)Globals.Configuration.Get(GConfKeys.PlayerEngine);
             } catch {
             }
             
-            foreach(DirectoryInfo sub_info in info.GetDirectories()) {
-                DirectoryInfo directory_info = new DirectoryInfo(sub_info.FullName + "/");
-                if(!directory_info.Exists) {
-                    continue;
-                }
-                
-                foreach(FileInfo file_info in directory_info.GetFiles("*.dll")) {
-                    Assembly assembly = Assembly.LoadFrom(file_info.FullName);
-                    foreach(Type type in assembly.GetTypes()) {
-                        if(!type.IsSubclassOf(typeof(PlayerEngine))) {
-                            continue;
-                        }
-
-                        try {
-                            PlayerEngine engine = (PlayerEngine)Activator.CreateInstance(type);
-                            engine.StateChanged += OnEngineStateChanged;
-                            engine.EventChanged += OnEngineEventChanged;
-
-                            if(engine.Id == preferred_id) {
-                                DefaultEngine = engine;
-                            } else {
-                                engines.Add(engine);
-                            }
-                        } catch(Exception e) {
-                            LogCore.Instance.PushError("Could not load a PlayerEngine", e.ToString());
-                        }
-                    }
-                }
-            }
+            factory.PluginLoaded += OnPluginLoaded;
+            factory.AddScanDirectory(Path.Combine(ConfigureDefines.InstallDir, "Banshee.MediaEngine"));
+            factory.LoadPlugins();
+            factory.PluginLoaded -= OnPluginLoaded;
             
             if(default_engine == null && engines.Count > 0) {
-                default_engine = engines[0] as PlayerEngine;
+                default_engine = engines[0];
             }
             
-            active_engine = default_engine;
-            
-            LogCore.Instance.PushDebug(Catalog.GetString("Default player engine"), active_engine.Name);
+            if(default_engine != null) {
+                active_engine = default_engine;
+                LogCore.Instance.PushDebug(Catalog.GetString("Default player engine"), active_engine.Name);
+            }
+        }
+        
+        private static void OnPluginLoaded(object o, PluginFactoryEventArgs<PlayerEngine> args)
+        {
+            PlayerEngine engine = args.Plugin;
+            engine.StateChanged += OnEngineStateChanged;
+            engine.EventChanged += OnEngineEventChanged;
+
+            if(engine.Id == preferred_engine_id) {
+                DefaultEngine = engine;
+            } else {
+                engines.Add(engine);
+            }
         }
         
         public static void Initialize()
         {
-            try {
-                InstantiateEngines();
-                if(default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
-                    throw new ApplicationException("No player engines found");
-                }
-            } catch(Exception e) {
-                Console.Error.WriteLine("Cannot load any PlayerEngine:\n\n{0}\n", e);
-                System.Environment.Exit(1);
-            }   
+            InstantiateEngines();
+            if(default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
+                throw new ApplicationException(Catalog.GetString(
+                    "No player engines were found. Please ensure Banshee has been cleanly installed."));
+            }
         }
 
         public static void Dispose()
         {
-            foreach(PlayerEngine engine in engines) {
+            /*foreach(PlayerEngine engine in engines) {
                 engine.Dispose();
-            }
+            }*/
+            
+            factory.Dispose();
         }
 
         private static void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
@@ -323,7 +306,7 @@ namespace Banshee.Base
             }
         }
         
-        public static IEnumerable Engines {
+        public static IEnumerable<PlayerEngine> Engines {
             get { return engines; }
         }
     }

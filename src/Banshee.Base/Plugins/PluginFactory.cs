@@ -41,6 +41,33 @@ namespace Banshee.Plugins
         Type,
         Instance
     }
+    
+    public delegate void GenericEventHandler<U, V>(U o, V args);
+    
+    public class PluginFactoryEventArgs<T> where T : IPlugin
+    {
+        private T plugin;
+        private Type type;
+        
+        public PluginFactoryEventArgs(T plugin)
+        {
+            this.plugin = plugin;
+            this.type = plugin.GetType();
+        }
+        
+        public PluginFactoryEventArgs(Type type)
+        {
+            this.type = type;
+        }
+        
+        public T Plugin {
+            get { return plugin; }
+        }
+        
+        public Type Type {
+            get { return type; }
+        }
+    }
 
     public class PluginFactory<T> : IDisposable, IEnumerable<T>, IEnumerable where T : IPlugin
     {
@@ -48,6 +75,11 @@ namespace Banshee.Plugins
         private List<Type> plugin_types = new List<Type>();
         private List<DirectoryInfo> scan_directories = new List<DirectoryInfo>();
         private PluginFactoryType factory_type;
+
+// gmcs gives a warning when it shouldn't: http://bugzilla.ximian.com/show_bug.cgi?id=79018
+#pragma warning disable 0067
+        public event GenericEventHandler<PluginFactory<T>, PluginFactoryEventArgs<T>> PluginLoaded;
+#pragma warning restore 0067
         
         public PluginFactory() : this(PluginFactoryType.Instance)
         {
@@ -88,10 +120,11 @@ namespace Banshee.Plugins
                 foreach(FileInfo file in directory.GetFiles("*.dll")) {
                     LoadPluginsFromFile(file);
                 }
-            } catch (DirectoryNotFoundException) {
+            } catch(DirectoryNotFoundException) {
                 try {
                     directory.Create();
-                } catch (IOException) { }
+                } catch(IOException) { 
+                }
             }
         }
         
@@ -120,16 +153,39 @@ namespace Banshee.Plugins
                     continue;
                 }
                 
-                if(factory_type == PluginFactoryType.Instance) {
-                    try {
-                        T plugin = (T)Activator.CreateInstance(type);
-                        plugin_instances.Add(plugin);
-                        plugin_types.Add(type);
-                    } catch {
-                    }
-                } else {
+                LoadPlugin(type);
+            }
+        }
+        
+        private void LoadPlugin(Type type)
+        {
+            if(factory_type == PluginFactoryType.Instance) {
+                try {
+                    T plugin = (T)Activator.CreateInstance(type);
+                    plugin_instances.Add(plugin);
                     plugin_types.Add(type);
+                    OnPluginLoaded(plugin);
+                } catch {
                 }
+            } else {
+                plugin_types.Add(type);
+                OnPluginLoaded(type);
+            }
+        }
+        
+        protected void OnPluginLoaded(T plugin)
+        {
+            GenericEventHandler<PluginFactory<T>, PluginFactoryEventArgs<T>> handler = PluginLoaded;
+            if(handler != null) {
+                handler(this, new PluginFactoryEventArgs<T>(plugin));
+            }
+        }
+        
+        protected void OnPluginLoaded(Type type)
+        {
+            GenericEventHandler<PluginFactory<T>, PluginFactoryEventArgs<T>> handler = PluginLoaded;
+            if(handler != null) {
+                handler(this, new PluginFactoryEventArgs<T>(type));
             }
         }
         

@@ -5,8 +5,8 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 bansheebasedir = $(pkglibdir)
 bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
-bansheebase_sources_in = ConfigureDefines.cs.in
-bansheebase_generated_sources = $(bansheebase_sources_in:.in=)
+Banshee_Base_SOURCES_IN = ConfigureDefines.cs.in
+Banshee_Base_GENERATED_SOURCES = $(Banshee_Base_SOURCES_IN:.in=)
 
 BANSHEE_CDROM_SOURCES = \
 	$(srcdir)/Banshee.Cdrom/IDriveFactory.cs \
@@ -84,7 +84,13 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/ErrorListDialog.cs \
 	$(srcdir)/Gui/SplashScreen.cs \
 	$(srcdir)/Gui/PreferencesDialog.cs \
-	$(srcdir)/Gui/AboutDialog.cs
+	$(srcdir)/Gui/AboutDialog.cs \
+	$(srcdir)/Gui/ExceptionDialog.cs \
+	$(srcdir)/Gui/CleanRoomStartup.cs \
+	$(srcdir)/Gui/LogCoreDialog.cs \
+	$(srcdir)/Gui/VersionInformationDialog.cs \
+	$(srcdir)/Gui/ToggleStates.cs \
+	$(srcdir)/Gui/RatingRenderer.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -144,6 +150,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_EQUALIZER_GUI_SOURCES) \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(BANSHEE_KERNEL_SOURCES) \
+	$(Banshee_Base_GENERATED_SOURCES) \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
@@ -194,8 +201,27 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/PowerManagement.cs \
 	$(srcdir)/ProductInformation.cs
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/../../data/UIManagerLayout.xml $(srcdir)/../../data/contributors.xml $(srcdir)/../../data/translators.xml
-	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -resource:$(srcdir)/../../data/banshee-dialogs.glade,banshee-dialogs.glade -resource:$(srcdir)/../../data/UIManagerLayout.xml,UIManagerLayout.xml -resource:$(srcdir)/../../data/images/splash.png,splash.png -resource:$(srcdir)/../../data/contributors.xml,contributors.xml -resource:$(srcdir)/../../data/translators.xml,translators.xml -resource:$(srcdir)/../../COPYING,COPYING -out:$@ $(ASSEMBLY_SOURCES) $(bansheebase_generated_sources)
+Banshee_Base_RESOURCES = \
+	data/UIManagerLayout.xml \
+	data/contributors.xml \
+	data/translators.xml \
+	data/banshee-dialogs.glade \
+	data/images/splash.png \
+	data/images/media-repeat-none.png \
+	data/images/media-repeat-single.png \
+	data/images/media-repeat-all.png \
+	data/images/media-playlist-shuffle.png \
+	data/images/media-playlist-continuous.png \
+	data/images/star.png \
+	data/images/circle.png \
+	COPYING
+
+Banshee_Base_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Base_RESOURCES), $(srcdir)/../../$(resource))
+
+Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
+
+$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

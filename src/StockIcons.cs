@@ -1,8 +1,7 @@
-
 /***************************************************************************
  *  StockIcons.cs
  *
- *  Copyright (C) 2005 Novell
+ *  Copyright (C) 2005-2006 Novell, Inc.
  *  Written by Aaron Bockover (aaron@aaronbock.net)
  ****************************************************************************/
 
@@ -44,11 +43,6 @@ namespace Banshee
             "media-skip-backward",
             "media-playback-start",
             "media-playback-pause",
-            "media-playlist-shuffle",
-            "media-playlist-continuous",
-            "media-repeat-none",
-            "media-repeat-all",
-            "media-repeat-single", 
             "media-eject",
             
             /* Volume Button Icons */

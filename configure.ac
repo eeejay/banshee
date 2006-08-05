@@ -365,7 +365,7 @@ src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
 src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
-src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config
+src/Banshee.MediaEngine/Gstreamer/GStreamerPlayerEngine.dll.config
 src/Banshee.MediaEngine/Helix/Makefile
 src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.dll.config
 src/Banshee.Widgets/Makefile

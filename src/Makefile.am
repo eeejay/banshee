@@ -43,12 +43,7 @@ banshee_sources = \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \
 	IPlaybackModel.cs \
-	RemotePlayer.cs \
-	RatingRenderer.cs \
-	ExceptionDialog.cs \
-	VersionInformationDialog.cs \
-	LogCoreViewer.cs \
-	ToggleStates.cs
+	RemotePlayer.cs 
 
 banshee_resources = \
 	data/banshee.glade \
@@ -57,7 +52,6 @@ banshee_resources = \
 	data/images/blue-speaker.png \
 	data/images/busy-spinner-36.png \
 	data/images/busy-spinner.png \
-	data/images/circle.png \
 	data/images/encoding-icon-32.png \
 	data/images/icon-album.png \
 	data/images/icon-artist.png \
@@ -68,11 +62,6 @@ banshee_resources = \
 	data/images/media-playback-pause.png \
 	data/images/media-playback-start.png \
 	data/images/media-skip-backward.png \
-	data/images/media-repeat-all.png \
-	data/images/media-repeat-none.png \
-	data/images/media-repeat-single.png \
-	data/images/media-playlist-shuffle.png \
-	data/images/media-playlist-continuous.png \
 	data/images/music-player-banshee-16.png \
 	data/images/music-player-banshee-22.png \
 	data/images/music-player-banshee-24.png \
@@ -85,7 +74,6 @@ banshee_resources = \
 	data/images/source-library.png \
 	data/images/source-playlist.png \
 	data/images/source-localqueue.png \
-	data/images/star.png \
 	data/images/sync-needed.png \
 	data/images/tray-icon.png \
 	data/images/audio-volume-decrease.png \

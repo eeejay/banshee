@@ -1,3 +1,51 @@
+2006-08-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Use a PluginFactory; media
+	engines are now flatly installed in Banshee.MediaEngine (no more
+	sub directories therein)
+
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Implement IPlugin
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Added PluginLoaded event
+
+	* src/ExceptionDialog.cs: 
+	* src/LogCoreViewer.cs:
+	* src/RatingRenderer.cs:
+	* src/ToggleStates.cs:
+	* src/VersionInformationDialog.cs: Moved to Banshee.Base/Gui
+
+	* src/Banshee.Base/Gui/ExceptionDialog.cs: Details are now collapsed
+	in an expander; minor clean up
+
+	* src/Banshee.Base/Gui/CleanRoomStartup.cs: Startup(string []) invocation
+	that can optionally, by default, trap exceptions and present them in
+	the Banshee.Gui.Dialogs.ExceptionDialog
+
+	* configure.ac: Output GStreamerPlayerEngine.dll.config.in
+
+	* src/Banshee.MediaEngine/Gstreamer/gst-player.dll.config.in: Renamed to
+	GStreamerPlayerEngine.dll.config.in
+
+	* src/Banshee.MediaEngine/Gstreamer/Makefile.am: Renamed assembly to
+	GStreamerPlayerEngine.dll, install to Banshee.MediaEngine
+
+	* src/Banshee.MediaEngine/Helix/Makefile.am: Install to Banshee.MediaEngine
+
+	* src/Main.cs: Use CleanRoomStartup
+
+	* src/Makefile.am: Removed files and resources moved to Banshee.Base
+
+	* src/Banshee.Base/Makefile.am: Added resource generator, added new files
+	and resources moved from banshee.exe
+
+	* src/StockIcons.cs: Removed some icons
+
+	* src/banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp: Updated MonoDevelop projects
+
+	* src/PlaylistView.cs:
+	* src/PlayerInterface.cs: Updated to reflect namespace changes
+
 2006-08-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Gui/GladeWindow.cs: Fixed bug, was missing assembly

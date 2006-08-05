@@ -332,20 +332,20 @@ namespace Banshee
             // Repeat/Shuffle buttons
             
             shuffle_toggle_button = new MultiStateToggleButton();
-            shuffle_toggle_button.AddState(typeof(ShuffleDisabledToggleState),
+            shuffle_toggle_button.AddState(typeof(Banshee.Gui.ShuffleDisabledToggleState),
                     Globals.ActionManager["ShuffleAction"] as ToggleAction);
-            shuffle_toggle_button.AddState(typeof(ShuffleEnabledToggleState),
+            shuffle_toggle_button.AddState(typeof(Banshee.Gui.ShuffleEnabledToggleState),
                     Globals.ActionManager["ShuffleAction"] as ToggleAction);
             shuffle_toggle_button.Relief = ReliefStyle.None;
             shuffle_toggle_button.ShowLabel = false;
             shuffle_toggle_button.ShowAll();
             
             repeat_toggle_button = new MultiStateToggleButton();
-            repeat_toggle_button.AddState(typeof(RepeatNoneToggleState),
+            repeat_toggle_button.AddState(typeof(Banshee.Gui.RepeatNoneToggleState),
                 Globals.ActionManager["RepeatNoneAction"] as ToggleAction);
-            repeat_toggle_button.AddState(typeof(RepeatAllToggleState),
+            repeat_toggle_button.AddState(typeof(Banshee.Gui.RepeatAllToggleState),
                 Globals.ActionManager["RepeatAllAction"] as ToggleAction);
-            repeat_toggle_button.AddState(typeof(RepeatSingleToggleState),
+            repeat_toggle_button.AddState(typeof(Banshee.Gui.RepeatSingleToggleState),
                 Globals.ActionManager["RepeatSingleAction"] as ToggleAction);
             repeat_toggle_button.Relief = ReliefStyle.None;
             repeat_toggle_button.ShowLabel = false;
@@ -1583,7 +1583,7 @@ namespace Banshee
                     box.Spacing = 3;
                     
                     for(int j = 0; j < i + 1; j++) {
-                        box.PackStart(new Gtk.Image(RatingRenderer.Star), false, false, 0);
+                        box.PackStart(new Gtk.Image(Banshee.Gui.RatingRenderer.Star), false, false, 0);
                     }
                     
                     item.Add(box);
@@ -2238,11 +2238,11 @@ namespace Banshee
             playlistView.ColumnChooser();
         }
         
-        private LogCoreViewer log_viewer = null;
+        private Banshee.Gui.Dialogs.LogCoreDialog log_viewer = null;
         private void OnLoggedEventsAction(object o, EventArgs args)
         {
             if(log_viewer == null) {
-                log_viewer = new LogCoreViewer(LogCore.Instance, WindowPlayer);
+                log_viewer = new Banshee.Gui.Dialogs.LogCoreDialog(LogCore.Instance, WindowPlayer);
                 
                 log_viewer.Response += delegate(object o, ResponseArgs args) {
                     log_viewer.Hide();
@@ -2324,7 +2324,7 @@ namespace Banshee
         
         private void OnVersionInformationAction(object o, EventArgs args)
         {
-            VersionInformationDialog dialog = new VersionInformationDialog();
+            Banshee.Gui.Dialogs.VersionInformationDialog dialog = new Banshee.Gui.Dialogs.VersionInformationDialog();
             dialog.Run();
             dialog.Destroy();
         }

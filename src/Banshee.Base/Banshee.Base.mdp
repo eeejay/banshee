@@ -153,6 +153,19 @@
     <File name="./IO/Unix.cs" subtype="Code" buildaction="Compile" />
     <File name="../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../data/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Gui/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Gui/LogCoreDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Gui/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Gui/ToggleStates.cs" subtype="Code" buildaction="Compile" />
+    <File name="../../data/images/media-playlist-continuous.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../data/images/media-playlist-shuffle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../data/images/media-repeat-all.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../data/images/media-repeat-none.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../data/images/media-repeat-single.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Gui/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
+    <File name="../../data/images/circle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

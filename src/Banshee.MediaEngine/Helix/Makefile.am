@@ -15,7 +15,7 @@ MCS_FLAGS = -debug
 ASSEMBLY_NAME = HelixRemotePlayerEngine
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
-helixenginedir = $(pkglibdir)/Banshee.MediaEngine/Helix
+helixenginedir = $(pkglibdir)/Banshee.MediaEngine
 helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 all: $(ASSEMBLY)

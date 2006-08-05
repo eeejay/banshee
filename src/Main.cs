@@ -39,16 +39,7 @@ namespace Banshee
     {    
         public static void Main(string [] args)
         {
-            try {
-                Startup(args);
-            } catch(Exception e) {
-                Console.Error.WriteLine(e);
-                Gtk.Application.Init();
-                ExceptionDialog dlg = new ExceptionDialog(e);
-                dlg.Run();
-                dlg.Destroy();
-                System.Environment.Exit(1);
-            }
+            Banshee.Gui.CleanRoomStartup.Startup(Startup, args);
         }
         
         [System.Runtime.InteropServices.DllImport("libdbus-glib-1")]
