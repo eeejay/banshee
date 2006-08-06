@@ -363,6 +363,8 @@ src/AssemblyInfo.cs
 src/banshee.exe.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
+src/Gnome.Keyring/Makefile
+src/Last.FM/Makefile
 src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
 src/Banshee.MediaEngine/Gstreamer/GStreamerPlayerEngine.dll.config

@@ -1,5 +1,18 @@
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Gnome.Keyring/*: synced sources of gonzalo's Gnome.Keyring library
+	from Mono SVN (gnome-keyring-sharp)
+
+	* src/Last.FM/*: Beginning of general Last.FM/Audioscrobbler library
+
+	* src/Last.FM/Account.cs: Class to get/set username/password for
+	Last.FM using Gnome.Keyring
+
+	* configure.ac:
+	* src/Makefile.am: Added Gnome.Keyring, Last.FM
+
+2006-08-05  Aaron Bockover  <abock@gnome.org>
+
 	* banshee.mds:
 	* src/banshee.mdp:
 	* src/Banshee.Base/Banshee.Base.mdp: Updated MonoDevelop projects

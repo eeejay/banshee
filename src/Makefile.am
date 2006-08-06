@@ -1,5 +1,7 @@
 SUBDIRS = \
 	MusicBrainz \
+	Gnome.Keyring \
+	Last.FM \
 	Banshee.Widgets \
 	Banshee.Base \
 	Banshee.MediaEngine \
