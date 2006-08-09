@@ -1,3 +1,28 @@
+2006-08-09  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mds: Added Last.FM.mdp
+
+	* src/Gnome.Keyring/*: synced sources
+
+	* src/Last.FM/Makefile.am: Added new Last.FM files
+
+	* src/Last.FM/Test.cs: Added test
+	
+	* src/Last.FM/Last.FM/Account.cs: Completed, moved to propery build layout
+
+	* src/Last.FM/Last.FM.Gui/AccountLoginForm.cs: Login form that is 
+	Last.FM.Account aware
+	
+	* src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs: Dialog box embedding
+	Last.FM.AccountLoginForm
+	
+	* src/Last.FM/Last.FM.Gui/Badge.cs: A linked image showing the last.fm
+	logo/badge
+	
+	* src/Last.FM/Last.FM.Gui/LinkLabel.cs: A hyperlink button
+
+	* src/Last.FM/*.png: Added last.fm badge images
+
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Gnome.Keyring/*: synced sources of gonzalo's Gnome.Keyring library

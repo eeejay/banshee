@@ -1,5 +1,5 @@
 //
-// Gnome.Keyring.ResultCode.cs
+// Gnome.Keyring.AccessRights.cs
 //
 // Authors:
 //	Gonzalo Paniagua Javier (gonzalo@ximian.com)
@@ -27,17 +27,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 namespace Gnome.Keyring {
-	public enum ResultCode {
-		Ok,
-		Denied,
-		NoKeyringDaemon,
-		AlreadyUnlocked,
-		NoSuchKeyring,
-		BadArguments,
-		IOError,
-		Cancelled,
-		AlreadyExists
+	[Flags]
+	public enum AccessRights {
+		Read = 1,
+		Write = 1 << 1,
+		Remove = 1 << 2
 	}
 }
 

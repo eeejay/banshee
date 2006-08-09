@@ -1,5 +1,5 @@
 //
-// Gnome.Keyring.ResultCode.cs
+// Gnome.Keyring.ItemACL.cs
 //
 // Authors:
 //	Gonzalo Paniagua Javier (gonzalo@ximian.com)
@@ -27,17 +27,37 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Gnome.Keyring {
-	public enum ResultCode {
-		Ok,
-		Denied,
-		NoKeyringDaemon,
-		AlreadyUnlocked,
-		NoSuchKeyring,
-		BadArguments,
-		IOError,
-		Cancelled,
-		AlreadyExists
+	public class ItemACL {
+		string display_name;
+		string path;
+		AccessRights access;
+
+		public ItemACL (string displayName, string path, AccessRights access)
+		{
+			this.display_name = displayName;
+			this.path = path;
+			this.access = (AccessRights) access;
+		}
+
+		public override string ToString ()
+		{
+			return String.Format ("Name: {0} Path: {1} Access: {2}", display_name, path, access);
+		}
+
+		public string DisplayName {
+			get { return display_name; }
+		}
+
+		public string FullPath {
+			get { return path; }
+		}
+
+		public AccessRights Access {
+			get { return access; }
+		}
 	}
 }
 

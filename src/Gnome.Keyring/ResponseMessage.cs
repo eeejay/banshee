@@ -32,6 +32,8 @@ using System.Collections;
 using System.IO;
 using System.Text;
 
+using Mono.Unix.Native;
+
 namespace Gnome.Keyring {
 	class ResponseMessage {
 		byte [] buffer;
@@ -79,6 +81,11 @@ namespace Gnome.Keyring {
 			return (b0 + (b1 << 8) + (b2 << 16) + (b3 << 24));
 		}
 
+		public DateTime GetDateTime ()
+		{
+			return NativeConvert.FromTimeT ((GetInt32 () << 32) + GetInt32 ());
+		}
+
 		public void ReadAttributes (Hashtable tbl)
 		{
 			int natts = GetInt32 ();
@@ -88,8 +95,10 @@ namespace Gnome.Keyring {
 				AttributeType type = (AttributeType) GetInt32 ();
 				if (AttributeType.String == type) {
 					val = GetString ();
-				} else {
+				} else if (type == AttributeType.UInt32) {
 					val = GetInt32 ();
+				} else {
+					throw new Exception ("This should not happen: "  + type);
 				}
 				tbl [name] = val;
 			}
