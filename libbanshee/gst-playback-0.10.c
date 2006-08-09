@@ -222,6 +222,7 @@ gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
+    GstElement *fakesink;
     GstElement *audiosink;
     GstElement *audiosinkqueue;
     GstPad *teepad;
@@ -262,6 +263,9 @@ gst_playback_construct(GstPlayback *engine)
     gst_element_link(audiosinkqueue, audiosink);
     
     g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiobin, NULL);
+    
+    fakesink = gst_element_factory_make("fakesink", "fakesink");
+    g_object_set(G_OBJECT(engine->playbin), "video-sink", fakesink, NULL);
 
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
         gst_playback_bus_callback, engine);

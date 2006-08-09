@@ -1,5 +1,14 @@
 2006-08-09  Aaron Bockover  <abock@gnome.org>
 
+	* banshee.mds:
+	* libbanshee/libbanshee.mdp: Added MD project for libbanshee
+
+	* libbanshee/gst-playback-0.10.c: Set video-sink on playbin to a fakesink
+	to keep video windows from popping up (and often crashing the app with
+	XLib errors)
+
+2006-08-09  Aaron Bockover  <abock@gnome.org>
+
 	* banshee.mds: Added Last.FM.mdp
 
 	* src/Gnome.Keyring/*: synced sources
