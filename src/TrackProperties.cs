@@ -201,6 +201,13 @@ namespace Banshee
                 Globals.Configuration.Set(GConfKeys.TrackPropertiesExpanded, AdvancedExpander.Expanded);
             };
                 
+            Gdk.Geometry limits = new Gdk.Geometry();
+            limits.MinWidth = WindowTrackInfo.SizeRequest().Width;
+            limits.MaxWidth = Gdk.Screen.Default.Width;
+            limits.MinHeight = -1;
+            limits.MaxHeight = -1;
+            WindowTrackInfo.SetGeometryHints(WindowTrackInfo, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
+
             WindowTrackInfo.Show();
         }
         
