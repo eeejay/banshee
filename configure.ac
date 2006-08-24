@@ -384,7 +384,7 @@ src/Banshee.Dap/Njb/Makefile
 src/Banshee.Dap/Njb/njb-sharp.dll.config
 src/Banshee.Plugins/Makefile
 src/Banshee.Plugins/Audioscrobbler/Makefile
-src/Banshee.Plugins/Audioscrobbler/Banshee.Plugins.Audioscrobbler.dll.config
+src/Banshee.Plugins/Audioscrobbler/Audioscrobbler.dll.config
 src/Banshee.Plugins/MetadataSearch/Makefile
 src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config
 src/Banshee.Plugins/MMKeys/Makefile
