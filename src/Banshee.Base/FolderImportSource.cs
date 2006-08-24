@@ -68,7 +68,7 @@ namespace Banshee.Base
             chooser.DefaultResponse = ResponseType.Ok;
             
             if(chooser.Run() == (int)ResponseType.Ok) { 
-                ImportManager.Instance.QueueSource(chooser.Uri);
+                Banshee.Library.Import.QueueSource(chooser.Uri);
             }
             
             Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);

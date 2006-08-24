@@ -31,7 +31,6 @@ using System.IO;
 using System.Collections;
 using Mono.Unix;
 using IPod;
-using Entagged;
 
 using Banshee.Base;
 using Banshee.Widgets;
@@ -115,20 +114,20 @@ namespace Banshee.Dap.Ipod
         
         private void ProcessTrack(FileInfo file)
         {
-            AudioFile af = new AudioFile(file.FullName);
+            TagLib.File af = TagLib.File.Create(file.FullName);
             Track song = dap.Device.TrackDatabase.CreateTrack();
 
             song.FileName = file.FullName;
-            song.Album = af.Album;
-            song.Artist = af.Artist;
-            song.Title = af.Title;
-            song.Genre = af.Genre;
-            song.TrackNumber = af.TrackNumber;
-            song.TotalTracks = af.TrackCount;
-            song.Duration = af.Duration;
-            song.Year = af.Year;
-            song.BitRate = af.Bitrate / 1024;
-            song.SampleRate = (ushort)af.SampleRate;
+            song.Album = af.Tag.Album;
+            song.Artist = af.Tag.Artists[0];
+            song.Title = af.Tag.Title;
+            song.Genre = af.Tag.Genres[0];
+            song.TrackNumber = (int)af.Tag.Track;
+            song.TotalTracks = (int)af.Tag.TrackCount;
+            song.Duration = af.AudioProperties.Duration;
+            song.Year = (int)af.Tag.Year;
+            song.BitRate = af.AudioProperties.Bitrate / 1024;
+            song.SampleRate = (ushort)af.AudioProperties.SampleRate;
         }
         
         private void SaveDatabase()

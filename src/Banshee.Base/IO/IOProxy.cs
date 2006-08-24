@@ -37,17 +37,26 @@ namespace Banshee.IO
     {
         private static IDirectory directory;
         private static IFile file;
+        private static IIOConfig config;
         
         static IOProxy()
         {
             Reload();
         }
         
-        private static void SetFromConfig(IIOConfig config)
+        private static void SetFromConfig(IIOConfig _config)
         {
+            config = _config;
             Console.WriteLine("Setting IO Backend to {0} ({1})", config.GetType(), config.Name);
+            
             file = (IFile)Activator.CreateInstance(config.FileBackend);
             directory = (IDirectory)Activator.CreateInstance(config.DirectoryBackend);
+            TagLib.File.SetFileAbstractionCreator(TagLibVfsCreator);
+        }
+        
+        private static TagLib.File.IFileAbstraction TagLibVfsCreator(string file)
+        {
+            return (IDemuxVfs)Activator.CreateInstance(config.DemuxVfsBackend, new object [] { file });
         }
         
         public static void Reload()
@@ -84,6 +93,11 @@ namespace Banshee.IO
         
         public static IFile File {
             get { return file; }
+        }
+        
+        public static string DetectMimeType(SafeUri uri)
+        {
+            return config.DetectMimeType(uri);
         }
     }
 }

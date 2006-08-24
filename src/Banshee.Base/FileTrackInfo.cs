@@ -32,7 +32,6 @@ using System.IO;
 using System.Data;
 using System.Collections;
 using System.Threading;
-using Entagged;
 
 namespace Banshee.Base
 {
@@ -50,19 +49,17 @@ namespace Banshee.Base
             ParsePath(uri.LocalPath);
             track_id = 0;
    
-            AudioFile af = new AudioFile(uri.LocalPath, Banshee.Gstreamer.Utilities.DetectMimeType(uri));
+            TagLib.File file = TagLib.File.Create(uri.LocalPath);
+   
+            artist = Choose(file.Tag.JoinedArtists, artist);
+            album = Choose(file.Tag.Album, album);
+            title = Choose(file.Tag.Title, title);
+            genre = Choose(file.Tag.FirstGenre, genre);
+            track_number = file.Tag.Track == 0 ? track_number : (uint)file.Tag.Track;
+            track_count = file.Tag.TrackCount == 0 ? track_count : (uint)file.Tag.TrackCount;
+            duration = file.AudioProperties.Duration;
+            year = (int)file.Tag.Year;
 
-            mimetype = af.MimeType;
-
-			artist = Choose (af.Artist, artist);
-            album = Choose  (af.Album, album);
-            title = Choose (af.Title, title);
-            genre = Choose (af.Genre, genre);
-            track_number = af.TrackNumber == 0 ? track_number : (uint)af.TrackNumber;
-            track_count = 0;
-            duration = af.Duration;
-            year = af.Year;
-            
             this.date_added = DateTime.Now;
         }
 

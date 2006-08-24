@@ -41,6 +41,12 @@ namespace Banshee.IO.Unix
         public string Name           { get { return "unix";            } }
         public Type FileBackend      { get { return typeof(File);      } }
         public Type DirectoryBackend { get { return typeof(Directory); } }
+        public Type DemuxVfsBackend  { get { return typeof(DemuxVfs);  } }
+        
+        public string DetectMimeType(SafeUri uri)
+        {
+            return Banshee.Gstreamer.Utilities.DetectMimeType(uri);
+        }
     }
 
     internal struct FileStat
@@ -120,6 +126,36 @@ namespace Banshee.IO.Unix
                     yield return entry.FullName;
                 }
             }
+        }
+    }
+    
+    public class DemuxVfs: IDemuxVfs
+    {   
+        private UnixFileInfo file_info;
+        
+        public DemuxVfs(string path)
+        {
+            file_info = new UnixFileInfo(path);
+        }
+        
+        public string Name { 
+            get { return file_info.FullName; }
+        }
+        
+        public System.IO.Stream ReadStream {
+            get { return file_info.OpenRead(); }
+        }
+        
+        public System.IO.Stream WriteStream {
+            get { return file_info.OpenWrite(); }
+        }
+   
+        public bool IsReadable {
+            get { return file_info.CanAccess(AccessModes.R_OK); }
+        }
+   
+        public bool IsWritable {
+            get { return file_info.CanAccess(AccessModes.W_OK); }
         }
     }
 }

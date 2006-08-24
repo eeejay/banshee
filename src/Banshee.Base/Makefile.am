@@ -68,6 +68,10 @@ BANSHEE_KERNEL_SOURCES = \
 	$(srcdir)/Banshee.Kernel/JobPriority.cs \
 	$(srcdir)/Banshee.Kernel/Scheduler.cs
 
+BANSHEE_LIBRARY_SOURCES = \
+	$(srcdir)/Banshee.Library/Import.cs \
+	$(srcdir)/Banshee.Library/DatabaseWriteException.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
@@ -113,7 +117,8 @@ SOURCES_SOURCES = \
 	$(srcdir)/Sources/PlaylistSource.cs \
 	$(srcdir)/Sources/AudioCdSource.cs \
 	$(srcdir)/Sources/DapSource.cs \
-	$(srcdir)/Sources/LocalQueueSource.cs
+	$(srcdir)/Sources/LocalQueueSource.cs \
+	$(srcdir)/Sources/ImportErrorsSource.cs
 
 NETWORKMANAGER_SOURCES = \
 	$(srcdir)/NetworkManager/Manager.cs \
@@ -150,6 +155,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_EQUALIZER_GUI_SOURCES) \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(BANSHEE_KERNEL_SOURCES) \
+	$(BANSHEE_LIBRARY_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionManager.cs \
@@ -222,7 +228,7 @@ Banshee_Base_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Base_RESOURCES), 
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

@@ -1,6 +1,8 @@
 /***************************************************************************
- *  Copyright 2005 Novell, Inc.
- *  Aaron Bockover <aaron@aaronbock.net>
+ *  DatabaseWriteException.cs
+ *
+ *  Copyright (C) 2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -24,32 +26,36 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-using System; 
-using System.IO;
-
-using Entagged.Audioformats.Util;
-using Entagged.Audioformats.Exceptions;
-using Entagged.Audioformats.Mp4.Util;
+using System;
  
-namespace Entagged.Audioformats.Mp4
+namespace Banshee.Library
 {
-    [SupportedMimeType ("audio/x-m4a")]
-    [SupportedMimeType ("audio/mp4")]
-	[SupportedMimeType ("audio/m4a")]
-    [SupportedMimeType ("entagged/m4a")]
-    [SupportedMimeType ("entagged/m4p")]
-    public class Mp4FileReader : AudioFileReader
+    public class DatabaseWriteException : ApplicationException
     {
-        private Mp4TagReader tr = new Mp4TagReader();
-        
-        protected override EncodingInfo GetEncodingInfo(Stream raf, string mime)  
+        private string query;
+        private Exception parent;
+    
+        public DatabaseWriteException(Exception parent) : base(parent.Message)
         {
-            return tr.ReadEncodingInfo(raf);
+            this.parent = parent;
         }
         
-        protected override Tag GetTag(Stream raf, string mime)  
+        public DatabaseWriteException(Exception parent, string query) : base(parent.Message)
         {
-            return tr.ReadTags(raf);
+            this.parent = parent;
+            this.query = query;
+        }
+        
+        public DatabaseWriteException(string msg) : base(msg)
+        {
+        }
+        
+        public Exception Parent {
+            get { return parent; }
+        }
+        
+        public string Query {
+            get { return query; }
         }
     }
 }

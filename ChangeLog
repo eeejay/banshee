@@ -1,3 +1,53 @@
+2006-08-24  Aaron Bockover  <abock@gnome.org>
+
+	* entagged-sharp: removed in favor of taglib-sharp
+
+	* taglib-sharp: added in favor of entagged-sharp (better mainstream
+	format support, supports writing)
+
+	* src/Banshee.Base/Banshee.Library/DatabaseWriteException.cs: Exception
+	for database-specific write problems
+
+	* src/Banshee.Base/Banshee.Library/Import.cs: Import layer to handle
+	saving imported tracks found through ImportManager to library
+
+	* src/Banshee.Base/Sources/ImportErrorsSource.cs: New source to show
+	errors when importing
+
+	* src/Banshee.Base/FileImportSource.cs:
+	* src/Banshee.Base/FolderImportSource.cs:
+	* src/Banshee.Base/HomeDirectoryImportSource.cs: Use new 
+	Banshee.Library.Import class for queueing imports
+
+	* src/Banshee.Base/LibraryTrackInfo.cs: Use StreamTagger with ProcessUri
+
+	* src/Banshee.Base/Makefile.am: Adde new sources
+
+	* src/Banshee.Base/Source.cs (RemoveChildSource): If source is active
+	source, set active source to default source
+
+	* src/Banshee.Base/StreamTagger.cs: Add a TagLib-based MergeTrackInfo
+
+	* src/Banshee.Base/IO/SystemIO.cs:
+	* src/Banshee.Base/IO/Unix.cs:
+	* src/Banshee.Base/IO/Interfaces.cs:
+	* src/Banshee.Base/IO/IOProxy.cs: Add support for TagLib VFS and mimetype
+	finding implementations
+
+	* src/Banshee.Base/FileTrackInfo.cs:
+	* src/TrackProperties.cs:
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs:
+	* src/Banshee.Dap/Ipod/DatabaseRebuilder.cs: Use TagLib
+	
+	* src/PlayerInterface.cs: Removed import handling code
+
+	* src/Banshee.Dap/Ipod/Makefile.am:
+	* src/Banshee.Base/Makefile.am: Link against taglib-sharp, 
+	not entagged-sharp
+	
+	* configure.ac: 
+	* Makefile.am: Added taglib-sharp
+	
 2006-08-10  Ruben Vermeersch  <ruben@Lambda1.be>
 
 	* data/banshee.glade:

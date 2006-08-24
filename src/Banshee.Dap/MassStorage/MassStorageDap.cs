@@ -161,9 +161,9 @@ namespace Banshee.Dap.MassStorage
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
 
                 AddTrack (track);
-            } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
-                //Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
-                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
+            /* TODO: TagLib exception? } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
+                //Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName); 
+                args.ReturnMessage = Catalog.GetString("Scanning") + "..."; */
             } catch(Exception e) {
                 //Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"), 
                     //args.FileName, e.GetType(), e.Message);

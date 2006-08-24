@@ -43,11 +43,66 @@ namespace Banshee.Base
         }
     }
         
+    public class UnsupportedMimeTypeException : ApplicationException
+    {
+        public UnsupportedMimeTypeException(string msg) : base(msg)
+        {
+        }
+    }
+    
     public static class StreamTagger
     {
+        private static string [] valid_mimetype_prefixes = new string [] {
+            "audio/", "application/", "taglib/"
+        };
+    
+        public static TagLib.File ProcessUri(SafeUri uri)
+        {
+            string mimetype = null;
+            bool process = true;
+            
+            try {
+                mimetype = Banshee.IO.IOProxy.DetectMimeType(uri);
+            } catch {
+            }
+
+            if(mimetype != null) {
+                process = false;
+                foreach(string prefix in valid_mimetype_prefixes) {
+                    if(mimetype.StartsWith(prefix)) {
+                        process = true;
+                        break;
+                    }
+                }
+                
+                if(!process) {
+                    throw new UnsupportedMimeTypeException(mimetype);
+                }
+            }
+
+            return TagLib.File.Create(uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+                mimetype, TagLib.AudioProperties.ReadStyle.Average);
+        }
+    
         private static string Choose(string priority, string fallback)
         {
             return priority == null || priority.Length == 0 ? fallback : priority;
+        }
+        
+        public static void TrackInfoMerge(TrackInfo track, TagLib.File file)
+        {
+            track.Artist = Choose(file.Tag.JoinedArtists, track.Artist);
+            track.Album = Choose(file.Tag.Album, track.Album);
+            track.Title = Choose(file.Tag.Title, track.Title);
+            track.Genre = Choose(file.Tag.FirstGenre, track.Genre);
+            track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (uint)file.Tag.Track;
+            track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (uint)file.Tag.TrackCount;
+            track.Year = (int)file.Tag.Year;
+            track.MimeType = file.MimeType;
+            
+            if(file.AudioProperties != null) {
+                track.Duration = file.AudioProperties.Duration;
+            }
         }
     
         public static void TrackInfoMerge(TrackInfo track, StreamTag tag)

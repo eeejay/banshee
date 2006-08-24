@@ -51,7 +51,7 @@ namespace Banshee.Base
     
         public void Import()
         {
-            ImportManager.Instance.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+            Banshee.Library.Import.QueueSource(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
         }
         
         public string Name {

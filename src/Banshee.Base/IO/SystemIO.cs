@@ -39,6 +39,12 @@ namespace Banshee.IO.SystemIO
         public string Name           { get { return "systemio";        } }
         public Type FileBackend      { get { return typeof(File);      } }
         public Type DirectoryBackend { get { return typeof(Directory); } }
+        public Type DemuxVfsBackend  { get { return typeof(DemuxVfs);  } }
+        
+        public string DetectMimeType(SafeUri uri)
+        {
+            return Banshee.Gstreamer.Utilities.DetectMimeType(uri);
+        }
     }
 
     public class File : IFile
@@ -79,6 +85,36 @@ namespace Banshee.IO.SystemIO
         public IEnumerable GetDirectories(string directory)
         {
             return System.IO.Directory.GetDirectories(directory);
+        }
+    }
+    
+    public class DemuxVfs: IDemuxVfs
+    {   
+        private FileInfo file_info;
+        
+        public DemuxVfs(string path)
+        {
+            file_info = new FileInfo(path);
+        }
+        
+        public string Name { 
+            get { return file_info.FullName; }
+        }
+        
+        public Stream ReadStream {
+            get { return file_info.OpenRead(); }
+        }
+        
+        public Stream WriteStream {
+            get { return file_info.OpenWrite(); }
+        }
+   
+        public bool IsReadable {
+            get { return true; }
+        }
+   
+        public bool IsWritable {
+            get { return (file_info.Attributes | FileAttributes.ReadOnly) == 0; }
         }
     }
 }

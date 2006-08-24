@@ -149,7 +149,6 @@ namespace Banshee
 
             DapCore.DapAdded += OnDapCoreDeviceAdded;
             LogCore.Instance.Updated += OnLogCoreUpdated;
-            ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
             
             InitialLoadTimeout();
             if(!Globals.ArgumentQueue.Contains("hide")) {
@@ -1643,7 +1642,7 @@ namespace Banshee
                     // If in SmartPlaylist View WE DO NOT ACCEPT DND
                 
                     if(rawSelectionData != null) {
-                        ImportManager.Instance.QueueSource(args.SelectionData);
+                        Banshee.Library.Import.QueueSource(args.SelectionData);
                     }
                         
                     break;
@@ -1797,33 +1796,7 @@ namespace Banshee
                 }
             }
         }*/
-       
-        private void OnImportManagerImportRequested(object o, ImportEventArgs args)
-        {
-            try {
-                TrackInfo ti = new LibraryTrackInfo(args.FileName);
-                args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
-            } catch(Exception e) {
-                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
-                
-                switch(Path.GetExtension(args.FileName)) {
-                    case ".m3u":
-                    case ".jpg":
-                    case ".jpeg":
-                    case ".png":
-                    case ".bmp":
-                    case ".gif":
-                        return;
-                }
-                
-                if(e is ApplicationException) {
-                    return;
-                }
-            
-                Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1})"), args.FileName, e.GetType());
-            }
-        }
-        
+
         private void DeleteSong(TrackInfo ti)
         {
             try {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Interfaces.cs
+ *  Import.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -25,40 +25,55 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
+ 
 using System;
-using System.Collections;
-
+using System.IO;
+using Mono.Unix;
 using Banshee.Base;
-
-namespace Banshee.IO
+ 
+namespace Banshee.Library
 {
-    public interface IIOConfig
+    public static class Import
     {
-        string Name { get; }
-        Type FileBackend { get; }
-        Type DirectoryBackend { get; }
-        Type DemuxVfsBackend { get; }
+        static Import()
+        {
+            ImportManager.Instance.ImportRequested += OnImportManagerImportRequested;
+        }
+    
+        public static void QueueSource(UriList uris)
+        {
+            ImportManager.Instance.QueueSource(uris);
+        }
         
-        string DetectMimeType(SafeUri uri);
-    }
+        public static void QueueSource(Gtk.SelectionData selection)
+        {
+            ImportManager.Instance.QueueSource(selection);
+        }
+        
+        public static void QueueSource(string source)
+        {
+            ImportManager.Instance.QueueSource(source);
+        }
+        
+        public static void QueueSource(string [] paths)
+        {
+            ImportManager.Instance.QueueSource(paths);
+        }
 
-    public interface IFile
-    {
-        bool Exists(string file);
-    }
-    
-    public interface IDirectory
-    {
-        void Create(string directory);
-        void Delete(string directory);
-        void Delete(string directory, bool recursive);
-        bool Exists(string directory);
-        IEnumerable GetFiles(string directory);
-        IEnumerable GetDirectories(string directory);
-    }
-    
-    public interface IDemuxVfs : TagLib.File.IFileAbstraction
-    {
+        private static void OnImportManagerImportRequested(object o, ImportEventArgs args)
+        {
+            try {
+                TrackInfo ti = new LibraryTrackInfo(args.FileName);
+                args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
+            } catch(Exception e) {
+                args.ReturnMessage = Catalog.GetString("Scanning") + "...";
+                
+                if(e is UnsupportedMimeTypeException) {
+                    return;
+                }
+                
+                Banshee.Sources.ImportErrorsSource.Instance.AddError(args.FileName, e.Message, e);
+            }
+        }
     }
 }

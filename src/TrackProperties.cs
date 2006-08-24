@@ -255,14 +255,15 @@ namespace Banshee
             
             if(!(track.Track is AudioCdTrackInfo) && track.Uri.Scheme == System.Uri.UriSchemeFile) {
                 try {
-                    Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
+                    /*Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
                         Banshee.Gstreamer.Utilities.DetectMimeType(track.Uri));
                     BitRate.Text = af.Bitrate.ToString() + " " + Catalog.GetString("KB/Second");
                     SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
                     Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
                     Channels.Text = af.Channels.ToString();
                     MimeType.Text = af.MimeType;
-                    ExtraInfo.Text = af.EncodingType;
+                    ExtraInfo.Text = af.EncodingType;*/
+                    throw new Exception("Balls");
                 } catch(Exception e) {
                     BitRate.Text = Catalog.GetString("Unknown");
                     SampleRate.Text = Catalog.GetString("Unknown");
