@@ -165,6 +165,10 @@
     <File name="./Gui/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
     <File name="../../data/images/circle.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../data/images/star.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.Library" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Library/Import.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Sources/ImportErrorsSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Library/DatabaseWriteException.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -178,8 +182,8 @@
     <ProjectReference type="Project" localcopy="False" refto="MusicBrainz" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.SqliteClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Assembly" localcopy="False" refto="../../hal-sharp/hal-sharp.dll" />
-    <ProjectReference type="Assembly" localcopy="False" refto="../../entagged-sharp/entagged-sharp.dll" />
     <ProjectReference type="Assembly" localcopy="False" refto="../../burn-sharp/burn-sharp.dll" />
     <ProjectReference type="Gac" localcopy="True" refto="gconf-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../taglib-sharp/taglib-sharp.dll" />
   </References>
 </Project>

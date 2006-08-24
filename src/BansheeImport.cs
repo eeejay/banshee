@@ -33,7 +33,6 @@ using System.Collections;
 using Mono.Unix;
 
 using Banshee.Base;
-using Entagged;
 using Sql;
 
 public static class BansheeImport
@@ -49,10 +48,10 @@ public static class BansheeImport
         foreach(string arg in args) {
             switch(arg) {
                 case "--version":
-                    PrintVersion();
+//                    PrintVersion();
                     return 1;
                 case "--help":
-                    PrintHelp();
+//                    PrintHelp();
                     return 1;
                 case "--verbose":
                     verbose = true;
@@ -70,21 +69,21 @@ public static class BansheeImport
         database = new BansheeDatabase(Path.Combine(Paths.ApplicationData, "banshee.db"));
         
         while(import_queue.Count > 0) {
-            ProcessInput(import_queue.Dequeue() as string);
+  //          ProcessInput(import_queue.Dequeue() as string);
         }
 
-        Debug("{0} / {1} files imported", import_success, import_total);
+    //    Debug("{0} / {1} files imported", import_success, import_total);
 
         return 1;
     }
 
-    private static void ProcessInput(string source)
+    /*private static void ProcessInput(string source)
     {
         bool is_regular_file = false;
         bool is_directory = false;
 
-        /* FIXME: for quick compat for pzb, not using Banshee.IO;
-                  need to change this to Banshee.IO in the future */
+        // FIXME: for quick compat for pzb, not using Banshee.IO;
+        //        need to change this to Banshee.IO in the future 
       
         try {
             is_regular_file = File.Exists(source);
@@ -177,5 +176,5 @@ public static class BansheeImport
         Console.WriteLine("  --help         show this help");
         Console.WriteLine("  --version      show version");
         Console.WriteLine("");
-    }
+    } */
 }

@@ -95,7 +95,6 @@ banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resou
 PKG_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
-	-r:$(top_builddir)/entagged-sharp/entagged-sharp.dll \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
@@ -123,7 +122,7 @@ $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 banshee_import_sources = BansheeImport.cs
 
 $(BANSHEE_IMPORT_ASSEMBLY): $(banshee_import_sources)
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/entagged-sharp/entagged-sharp.dll $(banshee_import_sources)
+	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll $(banshee_import_sources)
 
 run:
 	sh ./banshee --uninstalled

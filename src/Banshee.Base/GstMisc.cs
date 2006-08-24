@@ -89,14 +89,10 @@ namespace Banshee.Gstreamer
                 if(mime != null && mime != "application/octet-stream") {
                     return FilterMimeType(mime);
                 }
-            } catch(Exception) {
+            } catch {
             }
             
-            try {
-                return FilterMimeType("entagged/" + System.IO.Path.GetExtension(uri.LocalPath).Substring(1));
-            } catch(Exception) {
-                return null;
-            }
+            return null;
         }
         
         private static string FilterMimeType(string mime)
