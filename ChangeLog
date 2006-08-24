@@ -1,5 +1,18 @@
 2006-08-24  Aaron Bockover  <abock@gnome.org>
 
+	* banshee.mds: 
+	* src/Banshee.Base/Banshee.Base.mdp: Updated
+
+	* src/Banshee.Base/GstMisc.cs: Do not return a fake mime type, let
+	taglib-sharp handle that (taglib/asf, etc.)
+
+	* src/Makefile.am:
+	* src/Banshee.Dap/MassStorage/Makefile.am: Link against taglib-sharp
+
+	* src/BansheeImport.cs: Disabled parts until can port to taglib-sharp
+
+2006-08-24  Aaron Bockover  <abock@gnome.org>
+
 	* entagged-sharp: removed in favor of taglib-sharp
 
 	* taglib-sharp: added in favor of entagged-sharp (better mainstream
