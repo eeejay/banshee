@@ -93,16 +93,14 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button Previous;
         [Widget] private Button Next;
         [Widget] private Button TrackNumberIterator;
-        [Widget] private Button TrackNumberSync;
         [Widget] private Button TrackCountSync;
         [Widget] private Button ArtistSync;
         [Widget] private Button AlbumSync;
-        [Widget] private Button TitleSync;
         [Widget] private Button YearSync;
         [Widget] private Button GenreSync;
         [Widget] private SpinButton TrackCount;
         [Widget] private SpinButton TrackNumber;
-        [Widget] private SpinButton Year;
+        [Widget] private Entry Year;
         [Widget] private Entry Artist;
         [Widget] private Entry Album;
         [Widget] private Entry Title;
@@ -113,6 +111,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Label SampleRate;
         [Widget] private Label Channels;
         [Widget] private Label FileSize;
+        [Widget] private Button SyncAll;
         
         Tooltips tips = new Tooltips();
         
@@ -131,23 +130,25 @@ namespace Banshee.Gui.Dialogs
                 TrackSet.Add(new EditorTrack(track));
             }
 
+            TrackNumberIterator.ExposeEvent += OnTrackNumberIteratorExpose;
+
             CancelButton.Clicked += OnCancelButtonClicked;
             SaveButton.Clicked += OnSaveButtonClicked;
             Previous.Clicked += OnPreviousClicked;
             Next.Clicked += OnNextClicked;
             
             TrackNumberIterator.Clicked += OnTrackNumberIteratorClicked;
-            TrackNumberSync.Clicked += OnTrackNumberSyncClicked;
             TrackCountSync.Clicked += OnTrackCountSyncClicked;
             ArtistSync.Clicked += OnArtistSyncClicked;
             AlbumSync.Clicked += OnAlbumSyncClicked;
-            TitleSync.Clicked += OnTitleSyncClicked;
             GenreSync.Clicked += OnGenreSyncClicked;
             YearSync.Clicked += OnYearSyncClicked;
+            SyncAll.Clicked += OnSyncAllClicked;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
             Title.Changed += OnValueEdited;
+            Year.Changed += OnValueEdited;
             Genre.Entry.Changed += OnValueEdited;
             ListStore genre_model = new ListStore(typeof(string));
 
@@ -163,26 +164,46 @@ namespace Banshee.Gui.Dialogs
 
             Glade["MultiTrackButtons"].Visible = TrackSet.Count > 1;
             TrackNumberIterator.Visible = TrackSet.Count > 1;
-            TrackNumberSync.Visible = TrackSet.Count > 1;
             TrackCountSync.Visible = TrackSet.Count > 1;
             ArtistSync.Visible = TrackSet.Count > 1;
             AlbumSync.Visible = TrackSet.Count > 1;
-            TitleSync.Visible = TrackSet.Count > 1;
             GenreSync.Visible = TrackSet.Count > 1;
             YearSync.Visible = TrackSet.Count > 1;
+            Glade["SyncAllAlignment"].Visible = TrackSet.Count > 1;
 
-            tips.SetTip(TrackNumberSync, Catalog.GetString("Set all track numbers to this value"), "track numbers");
             tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically set all track numbers in increasing order"), "track iterator");
             tips.SetTip(TrackCountSync, Catalog.GetString("Set all track counts to this value"), "track counts");
             tips.SetTip(ArtistSync, Catalog.GetString("Set all artists to this value"), "artists");
             tips.SetTip(AlbumSync, Catalog.GetString("Set all albums to this value"), "albums");
-            tips.SetTip(TitleSync, Catalog.GetString("Set all titles to this value"), "titles");
             tips.SetTip(GenreSync, Catalog.GetString("Set all genres to this value"), "genres");
             tips.SetTip(YearSync, Catalog.GetString("Set all years to this value"), "years");
+            tips.SetTip(SyncAll, Catalog.GetString("Set all common fields in all selected tracks to the values currently set"), "all");
 
             LoadTrack(0);
                 
             WindowTrackInfo.Show();
+        }
+        
+        private void OnTrackNumberIteratorExpose(object o, ExposeEventArgs args)
+        {
+            Gdk.Rectangle alloc = TrackNumberIterator.Allocation;
+            Gdk.GC gc = TrackNumberIterator.Style.DarkGC(StateType.Normal);
+            Gdk.Drawable drawable = TrackNumberIterator.GdkWindow;
+            
+            int x_pad = (int)((double)alloc.Width * 0.15);
+            int y_pad = (int)((double)alloc.Height * 0.15);
+            
+            int left_x = alloc.X + x_pad;
+            int top_y = alloc.Y + y_pad;
+            int mid_x = alloc.X + ((alloc.Width / 2) - x_pad) + 2; 
+            int mid_y = alloc.Y + (alloc.Height / 2);
+            int bottom_y = (alloc.Y + alloc.Height) - y_pad;
+            
+            drawable.DrawLine(gc, left_x, top_y, mid_x, top_y);
+            drawable.DrawLine(gc, mid_x + 1, top_y + 1, mid_x + 1, mid_y - 15);
+            
+            drawable.DrawLine(gc, left_x, bottom_y, mid_x, bottom_y);
+            drawable.DrawLine(gc, mid_x + 1, bottom_y - 1, mid_x + 1, mid_y + 13);
         }
         
         private void LoadTrack(int index)
@@ -195,7 +216,7 @@ namespace Banshee.Gui.Dialogs
             
             TrackNumber.Value = track.TrackNumber;
             TrackCount.Value = track.TrackCount;
-            Year.Value = track.Year;
+            Year.Text = track.Year.ToString();
         
             (Glade["Artist"] as Entry).Text = track.Artist;
             (Glade["Album"] as Entry).Text = track.Album;
@@ -206,12 +227,12 @@ namespace Banshee.Gui.Dialogs
                 track.Track.Duration.Minutes, (track.Track.Duration.Seconds).ToString("00"));
             (Glade["PlayCountLabel"] as Label).Text = track.Track.PlayCount.ToString();
             (Glade["LastPlayedLabel"] as Label).Text = track.Track.LastPlayed == DateTime.MinValue ?
-                Catalog.GetString("Never Played") : track.Track.LastPlayed.ToString();
+                Catalog.GetString("Never played") : track.Track.LastPlayed.ToString();
             (Glade["ImportedLabel"] as Label).Text = track.Track.DateAdded == DateTime.MinValue ?
                 Catalog.GetString("Unknown") : track.Track.DateAdded.ToString();
                     
             WindowTrackInfo.Title = TrackSet.Count > 1 
-                ? String.Format(Catalog.GetString("Editing Song {0} of {1}"), index + 1, TrackSet.Count)
+                ? String.Format(Catalog.GetString("Editing song {0} of {1}"), index + 1, TrackSet.Count)
                 : String.Format(Catalog.GetString("Editing {0}"), track.Title);
        
             if(track.Uri.IsLocalPath) {
@@ -264,14 +285,7 @@ namespace Banshee.Gui.Dialogs
             UpdateCurrent();
             LoadTrack(++currentIndex);
         }
-        
-        private void OnTrackNumberSyncClicked(object o, EventArgs args)
-        {
-            foreach(EditorTrack track in TrackSet) {
-                track.TrackNumber = (uint)TrackNumber.Value;
-            }
-        }
-        
+
         private void OnTrackNumberIteratorClicked(object o, EventArgs args)
         {
             int i = 1;
@@ -302,7 +316,11 @@ namespace Banshee.Gui.Dialogs
         private void OnYearSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
-                track.Year = (int)Year.Value;
+                try {
+                    track.Year = Convert.ToInt32(Year.Text);
+                } catch {
+                    track.Year = 0;
+                }
             }
         }
         
@@ -320,11 +338,13 @@ namespace Banshee.Gui.Dialogs
             }
         }
         
-        private void OnTitleSyncClicked(object o, EventArgs args)
+        private void OnSyncAllClicked(object o, EventArgs args)
         {
-            foreach(EditorTrack track in TrackSet) {
-                track.Title = Title.Text;
-            }
+            OnTrackCountSyncClicked(o, args);
+            OnGenreSyncClicked(o, args);
+            OnAlbumSyncClicked(o, args);
+            OnArtistSyncClicked(o, args);
+            OnYearSyncClicked(o, args);
         }
         
         private void OnGenreSyncClicked(object o, EventArgs args)
@@ -348,6 +368,11 @@ namespace Banshee.Gui.Dialogs
             track.Album = Album.Text;
             track.Title = Title.Text;
             track.Genre = Genre.Entry.Text;
+            try {
+                track.Year = Convert.ToInt32(Year.Text);
+            } catch {
+                track.Year = 0;
+            }
             
             return track;
         }

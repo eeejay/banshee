@@ -1,3 +1,10 @@
+2006-08-25  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-dialogs.glade: Updated interface
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Allow syncing all common fields;
+	removed sync button on track number and title as it doesn't make sense
+
 2006-08-24  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee-dialogs.glade: Moved WindowTrackInfo from banshee.glade
