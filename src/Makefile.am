@@ -39,7 +39,6 @@ banshee_sources = \
 	StockIcons.cs \
 	PlayerInterface.cs \
 	PlaylistView.cs \
-	TrackProperties.cs \
 	SourceView.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \

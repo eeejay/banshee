@@ -2088,7 +2088,8 @@ namespace Banshee
         
         private void OnPropertiesAction(object o, EventArgs args)
         {
-            TrackProperties propEdit = new TrackProperties(playlistView.SelectedTrackInfoMultiple);
+            Banshee.Gui.Dialogs.TrackEditor propEdit = 
+                new Banshee.Gui.Dialogs.TrackEditor(playlistView.SelectedTrackInfoMultiple);
             propEdit.Saved += delegate(object o, EventArgs args) {
                 playlistView.QueueDraw();
             };

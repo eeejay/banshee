@@ -34,7 +34,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 
-namespace Banshee
+namespace Banshee.Gui.Dialogs
 {
     internal class EditorTrack
     {
@@ -48,6 +48,7 @@ namespace Banshee
     
         public uint TrackNumber;
         public uint TrackCount;
+        public int Year;
     
         public EditorTrack(TrackInfo track)
         {
@@ -63,6 +64,7 @@ namespace Banshee
             Genre = track.Genre;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
+            Year = track.Year;
             Uri = track.Uri;
         }
         
@@ -75,17 +77,15 @@ namespace Banshee
             track.TrackNumber = TrackNumber;
             track.TrackCount = TrackCount;
             track.Uri = Uri;
+            track.Year = Year;
         }
         
-        public TrackInfo Track
-        {
-            get {
-                return track;
-            }
+        public TrackInfo Track {
+            get { return track; }
         }
     }
 
-    public class TrackProperties
+    public class TrackEditor : GladeWindow
     {
         [Widget] private Window WindowTrackInfo;
         [Widget] private Button CancelButton;
@@ -98,35 +98,30 @@ namespace Banshee
         [Widget] private Button ArtistSync;
         [Widget] private Button AlbumSync;
         [Widget] private Button TitleSync;
-        [Widget] private Label TitleLabel;
+        [Widget] private Button YearSync;
         [Widget] private Button GenreSync;
-        [Widget] private Label GenreLabel;
         [Widget] private SpinButton TrackCount;
         [Widget] private SpinButton TrackNumber;
+        [Widget] private SpinButton Year;
         [Widget] private Entry Artist;
         [Widget] private Entry Album;
         [Widget] private Entry Title;
         [Widget] private ComboBoxEntry Genre;
-        [Widget] private Container EditorContainer;
-        [Widget] private Expander AdvancedExpander;
-        [Widget] private Label Uri;
+        [Widget] private Entry Uri;
+        [Widget] private Entry Location;
         [Widget] private Label BitRate;
         [Widget] private Label SampleRate;
-        [Widget] private Label Vbr;
         [Widget] private Label Channels;
-        [Widget] private Label MimeType;
-        [Widget] private Label ExtraInfo;
+        [Widget] private Label FileSize;
         
         Tooltips tips = new Tooltips();
-        
-        private Glade.XML glade;
         
         private ArrayList TrackSet = new ArrayList();
         private int currentIndex = 0;
 
         public event EventHandler Saved;
 
-        public TrackProperties(TrackInfo [] selection)
+        public TrackEditor(TrackInfo [] selection) : base("WindowTrackInfo")
         {
             if(selection == null) {
                 return;
@@ -135,14 +130,7 @@ namespace Banshee
             foreach(TrackInfo track in selection) {
                 TrackSet.Add(new EditorTrack(track));
             }
-            
-            glade = new Glade.XML(null, "banshee.glade", "WindowTrackInfo", null);
-            glade.Autoconnect(this);
-            IconThemeUtils.SetWindowIcon(WindowTrackInfo);
-            
-            (glade["BackImage"] as Image).SetFromStock("gtk-go-back", IconSize.Button);
-            (glade["ForwardImage"] as Image).SetFromStock("gtk-go-forward", IconSize.Button);
-                
+
             CancelButton.Clicked += OnCancelButtonClicked;
             SaveButton.Clicked += OnSaveButtonClicked;
             Previous.Clicked += OnPreviousClicked;
@@ -155,6 +143,7 @@ namespace Banshee
             AlbumSync.Clicked += OnAlbumSyncClicked;
             TitleSync.Clicked += OnTitleSyncClicked;
             GenreSync.Clicked += OnGenreSyncClicked;
+            YearSync.Clicked += OnYearSyncClicked;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
@@ -171,8 +160,8 @@ namespace Banshee
             
             Next.Visible = TrackSet.Count > 1;
             Previous.Visible = TrackSet.Count > 1;
-                
-            glade["MultiTrackHeader"].Visible = TrackSet.Count > 1;
+
+            Glade["MultiTrackButtons"].Visible = TrackSet.Count > 1;
             TrackNumberIterator.Visible = TrackSet.Count > 1;
             TrackNumberSync.Visible = TrackSet.Count > 1;
             TrackCountSync.Visible = TrackSet.Count > 1;
@@ -180,40 +169,20 @@ namespace Banshee
             AlbumSync.Visible = TrackSet.Count > 1;
             TitleSync.Visible = TrackSet.Count > 1;
             GenreSync.Visible = TrackSet.Count > 1;
-            
-            tips.SetTip(TrackNumberSync, Catalog.GetString("Set all Track Numbers to this value"), "track numbers");
-            tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically Set All Track Numbers"), "track iterator");
-            tips.SetTip(TrackCountSync, Catalog.GetString("Set all Track Counts to this value"), "track counts");
-            tips.SetTip(ArtistSync, Catalog.GetString("Set all Artists to this value"), "artists");
-            tips.SetTip(AlbumSync, Catalog.GetString("Set all Albums to this value"), "albums");
-            tips.SetTip(TitleSync, Catalog.GetString("Set all Titles to this value"), "titles");
-            tips.SetTip(GenreSync, Catalog.GetString("Set all Genres to this value"), "genres");
-                
-            LoadTrack(0);
-            
-            try {
-                AdvancedExpander.Expanded = (bool)Globals.Configuration.Get(GConfKeys.TrackPropertiesExpanded);
-            } catch(Exception) {
-                AdvancedExpander.Expanded = false;
-            }
-            
-            AdvancedExpander.Activated += delegate(object o, EventArgs args) {
-                Globals.Configuration.Set(GConfKeys.TrackPropertiesExpanded, AdvancedExpander.Expanded);
-            };
-                
-            Gdk.Geometry limits = new Gdk.Geometry();
-            limits.MinWidth = WindowTrackInfo.SizeRequest().Width;
-            limits.MaxWidth = Gdk.Screen.Default.Width;
-            limits.MinHeight = -1;
-            limits.MaxHeight = -1;
-            WindowTrackInfo.SetGeometryHints(WindowTrackInfo, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
+            YearSync.Visible = TrackSet.Count > 1;
 
+            tips.SetTip(TrackNumberSync, Catalog.GetString("Set all track numbers to this value"), "track numbers");
+            tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically set all track numbers in increasing order"), "track iterator");
+            tips.SetTip(TrackCountSync, Catalog.GetString("Set all track counts to this value"), "track counts");
+            tips.SetTip(ArtistSync, Catalog.GetString("Set all artists to this value"), "artists");
+            tips.SetTip(AlbumSync, Catalog.GetString("Set all albums to this value"), "albums");
+            tips.SetTip(TitleSync, Catalog.GetString("Set all titles to this value"), "titles");
+            tips.SetTip(GenreSync, Catalog.GetString("Set all genres to this value"), "genres");
+            tips.SetTip(YearSync, Catalog.GetString("Set all years to this value"), "years");
+
+            LoadTrack(0);
+                
             WindowTrackInfo.Show();
-        }
-        
-        private string PrepareStatistic(string stat)
-        {
-            return "<small><i>" + stat + "</i></small>";
         }
         
         private void LoadTrack(int index)
@@ -224,55 +193,61 @@ namespace Banshee
                 
             EditorTrack track = TrackSet[index] as EditorTrack;
             
-            AdvancedExpander.Visible = !(track.Track is AudioCdTrackInfo);
-        
             TrackNumber.Value = track.TrackNumber;
             TrackCount.Value = track.TrackCount;
+            Year.Value = track.Year;
         
-            (glade["Artist"] as Entry).Text = track.Artist;
-            (glade["Album"] as Entry).Text = track.Album;
-            (glade["Title"] as Entry).Text = track.Title;
-            (glade["Genre"] as ComboBoxEntry).Entry.Text = track.Genre;
+            (Glade["Artist"] as Entry).Text = track.Artist;
+            (Glade["Album"] as Entry).Text = track.Album;
+            (Glade["Title"] as Entry).Text = track.Title;
+            (Glade["Genre"] as ComboBoxEntry).Entry.Text = track.Genre;
             
-            (glade["DurationLabel"] as Label).Markup = PrepareStatistic(String.Format("{0}:{1}", 
-                track.Track.Duration.Minutes, (track.Track.Duration.Seconds).ToString("00")));
-            (glade["PlayCountLabel"] as Label).Markup = PrepareStatistic(track.Track.PlayCount.ToString());
-            (glade["LastPlayedLabel"] as Label).Markup = PrepareStatistic(track.Track.LastPlayed == DateTime.MinValue ?
-                Catalog.GetString("Never Played") : track.Track.LastPlayed.ToString());
-            (glade["ImportedLabel"] as Label).Markup = PrepareStatistic(track.Track.DateAdded == DateTime.MinValue ?
-                Catalog.GetString("Unknown") : track.Track.DateAdded.ToString());
+            (Glade["DurationLabel"] as Label).Text = String.Format("{0}:{1}", 
+                track.Track.Duration.Minutes, (track.Track.Duration.Seconds).ToString("00"));
+            (Glade["PlayCountLabel"] as Label).Text = track.Track.PlayCount.ToString();
+            (Glade["LastPlayedLabel"] as Label).Text = track.Track.LastPlayed == DateTime.MinValue ?
+                Catalog.GetString("Never Played") : track.Track.LastPlayed.ToString();
+            (Glade["ImportedLabel"] as Label).Text = track.Track.DateAdded == DateTime.MinValue ?
+                Catalog.GetString("Unknown") : track.Track.DateAdded.ToString();
                     
-            string title = TrackSet.Count > 1 
+            WindowTrackInfo.Title = TrackSet.Count > 1 
                 ? String.Format(Catalog.GetString("Editing Song {0} of {1}"), index + 1, TrackSet.Count)
-                : Catalog.GetString("Editing Song");
+                : String.Format(Catalog.GetString("Editing {0}"), track.Title);
        
-            WindowTrackInfo.Title = title;
-            TitleLabel.Markup = "<big><b>" + title + "</b></big>";
+            if(track.Uri.IsLocalPath) {
+                Uri.Text = System.IO.Path.GetFileName(track.Uri.LocalPath);
+                Location.Text = System.IO.Path.GetDirectoryName(track.Uri.LocalPath);
+            } else {
+                Uri.Text = track.Uri.ToString();
+                Location.Text = String.Empty;
+            }
             
-            Uri.Text = track.Uri.LocalPath;
-            tips.SetTip(glade["UriTitle"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
-            tips.SetTip(glade["Uri"], String.Format(Catalog.GetString("File: {0}"), Uri.Text), "uri");
-            
-            if(!(track.Track is AudioCdTrackInfo) && track.Uri.Scheme == System.Uri.UriSchemeFile) {
+            if(!(track.Track is AudioCdTrackInfo)) {
+                FileSize.Text = Catalog.GetString("Unknown");
+                
+                if(track.Uri.Scheme == System.Uri.UriSchemeFile) {
+                    try {
+                        System.IO.FileInfo info = new System.IO.FileInfo(track.Uri.LocalPath);
+                        FileSize.Text = String.Format("{0:0.0} MB", (double)info.Length / 1024.0 / 1024.0);
+                    } catch {
+                    }
+                }
+                
                 try {
-                    /*Entagged.AudioFile af = new Entagged.AudioFile(track.Uri.LocalPath, 
-                        Banshee.Gstreamer.Utilities.DetectMimeType(track.Uri));
-                    BitRate.Text = af.Bitrate.ToString() + " " + Catalog.GetString("KB/Second");
-                    SampleRate.Text = String.Format(Catalog.GetString("{0} KHz"), (double)af.SampleRate / 1000.0);
-                    Vbr.Text = af.IsVbr ? Catalog.GetString("Yes") : Catalog.GetString("No");
-                    Channels.Text = af.Channels.ToString();
-                    MimeType.Text = af.MimeType;
-                    ExtraInfo.Text = af.EncodingType;*/
-                    throw new Exception("Balls");
+                    TagLib.File file = StreamTagger.ProcessUri(track.Uri);
+                    if(file.AudioProperties != null) {
+                        BitRate.Text = String.Format("{0} kbps", file.AudioProperties.Bitrate);
+                        SampleRate.Text = String.Format("{0} Hz", file.AudioProperties.SampleRate);
+                        Channels.Text = String.Format("{0}", file.AudioProperties.Channels);
+                    } else {
+                        throw new Exception();
+                    }
                 } catch(Exception e) {
                     BitRate.Text = Catalog.GetString("Unknown");
                     SampleRate.Text = Catalog.GetString("Unknown");
-                    Vbr.Text = Catalog.GetString("Unknown");
                     Channels.Text = Catalog.GetString("Unknown");
-                    MimeType.Text = Catalog.GetString("Unknown");
-                    ExtraInfo.Text = Catalog.GetString("Unknown");
                 }
-            }
+            } 
             
             Previous.Sensitive = index > 0;
             Next.Sensitive = index < TrackSet.Count - 1;
@@ -315,8 +290,6 @@ namespace Banshee
             if(currentIndex < 0 || currentIndex >= TrackSet.Count) {
                 return;
             }
-            
-            //SaveTrack(UpdateCurrent(), false);
         }
         
         private void OnTrackCountSyncClicked(object o, EventArgs args)
@@ -326,6 +299,13 @@ namespace Banshee
             }
         }
 
+        private void OnYearSyncClicked(object o, EventArgs args)
+        {
+            foreach(EditorTrack track in TrackSet) {
+                track.Year = (int)Year.Value;
+            }
+        }
+        
         private void OnArtistSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
@@ -402,7 +382,7 @@ namespace Banshee
             }
                 
             if(track.Track == PlayerEngineCore.CurrentTrack) {
-                PlayerUI.Instance.UpdateMetaDisplay();
+              //  PlayerUI.Instance.UpdateMetaDisplay();
             }
         }
     }

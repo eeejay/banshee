@@ -94,7 +94,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/LogCoreDialog.cs \
 	$(srcdir)/Gui/VersionInformationDialog.cs \
 	$(srcdir)/Gui/ToggleStates.cs \
-	$(srcdir)/Gui/RatingRenderer.cs
+	$(srcdir)/Gui/RatingRenderer.cs \
+	$(srcdir)/Gui/TrackEditor.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \

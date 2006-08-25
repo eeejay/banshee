@@ -1,5 +1,21 @@
 2006-08-24  Aaron Bockover  <abock@gnome.org>
 
+	* data/banshee-dialogs.glade: Moved WindowTrackInfo from banshee.glade
+
+	* data/banshee.glade: Moved WindowTrackInfo to banshee-dialogs.glade
+
+	* banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* src/TrackProperties.cs:
+	* src/Makefile.am: Removed TrackProperties.cs, moved to Banshee.Base
+
+	* src/PlayerInterface.cs: Updated to call Banshee.Gui.TrackEditor
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Updated to reflect new GUI,
+	use TagLib for getting audio stream properties
+
+2006-08-24  Aaron Bockover  <abock@gnome.org>
+
 	* banshee.mds: 
 	* src/Banshee.Base/Banshee.Base.mdp: Updated
 
