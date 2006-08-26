@@ -1,5 +1,9 @@
 2006-08-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Reordered context menu
+
+2006-08-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.Cdrom/IDiscDuplicator.cs: interface for
 	duplicating a CD
 

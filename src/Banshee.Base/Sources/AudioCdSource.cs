@@ -242,8 +242,9 @@ namespace Banshee.Sources
                     <ui>
                         <popup name='AudioCDMenu' action='AudioCDMenuActions'>
                             <menuitem name='ImportSource' action='ImportSourceAction' />
-                            <menuitem name='UnmapSource' action='UnmapSourceAction' />
                             <menuitem name='DuplicateDisc' action='DuplicateDiscAction' />
+                            <separator />
+                            <menuitem name='UnmapSource' action='UnmapSourceAction' />
                         </popup>
                     </ui>
                 ");
