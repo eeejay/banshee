@@ -41,6 +41,7 @@ namespace Banshee.Gui.Dialogs
     {
         [Widget] private Button library_reset;
         [Widget] private CheckButton copy_on_import;
+        [Widget] private CheckButton write_metadata;
         
         private FileChooserButton library_location_chooser;
         private PipelineProfileSelector cd_importing_profile;
@@ -80,6 +81,7 @@ namespace Banshee.Gui.Dialogs
             SaveLibraryLocation(location);   
 
             copy_on_import.Active = (bool)ReadPreference(GConfKeys.CopyOnImport, false);
+            write_metadata.Active = (bool)ReadPreference(GConfKeys.WriteMetadata, false);
 
             cd_importing_profile.ProfileKey = (string)ReadPreference(GConfKeys.RippingProfile, "default");
             cd_importing_profile.Bitrate = (int)ReadPreference(GConfKeys.RippingBitrate, -1);
@@ -100,6 +102,10 @@ namespace Banshee.Gui.Dialogs
             
             copy_on_import.Toggled += delegate {
                 Globals.Configuration.Set(GConfKeys.CopyOnImport, copy_on_import.Active);
+            };
+            
+            write_metadata.Toggled += delegate {
+                Globals.Configuration.Set(GConfKeys.WriteMetadata, write_metadata.Active);
             };
             
             cd_importing_profile.Changed += delegate {

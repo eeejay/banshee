@@ -102,19 +102,33 @@ namespace Banshee.IO.SystemIO
         }
         
         public Stream ReadStream {
-            get { return file_info.OpenRead(); }
+            get { return file_info.Open(FileMode.Open, FileAccess.Read); }
         }
         
         public Stream WriteStream {
-            get { return file_info.OpenWrite(); }
+            get { return file_info.Open(FileMode.Open, FileAccess.ReadWrite); }
         }
    
         public bool IsReadable {
-            get { return true; }
+            get {
+                try {
+                    ReadStream.Close();
+                    return true;
+                } catch { 
+                    return false;
+                }
+            }
         }
-   
+
         public bool IsWritable {
-            get { return (file_info.Attributes | FileAttributes.ReadOnly) == 0; }
+            get {
+                try {
+                    WriteStream.Close();
+                    return true;
+                } catch { 
+                    return false;
+                }
+            }
         }
     }
 }

@@ -144,6 +144,34 @@ namespace Banshee.Base
         }
     }
     
+    public class SaveTrackMetadataJob : Banshee.Kernel.IJob
+    {
+        private TrackInfo track;
+        
+        public SaveTrackMetadataJob(TrackInfo track)
+        {
+            this.track = track;
+        }
+    
+        public void Run()
+        {
+            if(!(bool)Globals.Configuration.Get(GConfKeys.WriteMetadata)) {
+                Console.WriteLine("Skipping scheduled metadata write, preference disabled after scheduling");
+                return;
+            }
+        
+            TagLib.File file = StreamTagger.ProcessUri(track.Uri);
+            file.Tag.Artists = new string [] { track.Artist };
+            file.Tag.Album = track.Album;
+            file.Tag.Genres = new string [] { track.Genre };
+            file.Tag.Title = track.Title;
+            file.Tag.Track = track.TrackNumber;
+            file.Tag.TrackCount = track.TrackCount;
+            file.Tag.Year = (uint)track.Year;
+            file.Save();
+        }
+    }
+    
     public sealed class CommonTags 
     {
         public const string Title             = "title";

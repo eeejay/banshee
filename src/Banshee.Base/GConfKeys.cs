@@ -44,6 +44,7 @@ namespace Banshee.Base
         public const string PlaylistShuffle = BasePath + "PlaylistShuffle";
         public const string PlaylistRepeat = BasePath + "PlaylistRepeat";
         public const string CopyOnImport = BasePath + "CopyOnImport";
+        public const string WriteMetadata = BasePath + "WriteMetadata";
         public const string MoveOnInfoSave = BasePath + "MoveOnInfoSave";
         public const string AdditionAction = BasePath + "AdditionAction";
         public const string PlayerEngine = BasePath + "PlayerEngine";
@@ -55,12 +56,7 @@ namespace Banshee.Base
         public const string IpodBitrate = BasePath + "IpodBitrate";
         public const string LastFileSelectorUri = BasePath + "LastFileSelectorUri";
         public const string ColumnPath = BasePath + "PlaylistColumns/";
-        public const string ShowNotificationAreaIcon = BasePath + "ShowNotificationAreaIcon";
         public const string EnableFileSystemMonitoring = BasePath + "EnableFileSystemMonitoring";
-        public const string CDBurnerRoot = BasePath + "CDBurnerOptions/";
-        public const string CDBurnerId = BasePath + "CDBurnerId";
-        public const string TrackPropertiesExpanded = BasePath + "TrackPropertiesExpanded";
-        public const string EnableSpecialKeys = BasePath + "EnableSpecialKeys";
         public const string ShowCoverArt = BasePath + "ShowCoverArt";
         public const string ShowInitialImportDialog = BasePath + "ShowInitialImportDialog";
         public const string OpenLocationHistory = BasePath + "OpenLocationHistory";

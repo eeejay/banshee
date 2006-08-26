@@ -220,9 +220,14 @@ namespace Banshee.MediaEngine
         
         private bool OnTrackInfoUpdated()
         {
-            OnEventChanged(PlayerEngineEvent.TrackInfoUpdated);
+            TrackInfoUpdated();
             track_info_updated_timeout = 0;
             return false;
+        }
+        
+        public void TrackInfoUpdated()
+        {
+            OnEventChanged(PlayerEngineEvent.TrackInfoUpdated);
         }
         
         public TrackInfo CurrentTrack {

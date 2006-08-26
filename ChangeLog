@@ -1,3 +1,26 @@
+2006-08-26  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-dialogs.glade: Updated UI
+
+	* src/Banshee.Base/GConfKeys.cs: Added WriteMetadata key, removed
+	obsolete keys
+
+	* src/Banshee.Base/PlayerEngineCore.cs:
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Added TrackInfoUpdated
+	method
+
+	* src/Banshee.Base/StreamTagger.cs: Added SaveTrackMetadataJob for writing
+	metadata back to files inside scheduler
+
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Added Write Metadata checkbox
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Schedule SaveTrackMetadataJobs
+	for saving metadata back to files if user has enabled this
+
+	* src/Banshee.Base/IO/SystemIO.cs:
+	* src/Banshee.Base/IO/Unix.cs: Fixed WriteStream Open() call to allow
+	Read/Write
+
 2006-08-26  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp: updated to latest

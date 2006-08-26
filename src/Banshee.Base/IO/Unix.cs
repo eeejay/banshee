@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.IO;
 using System.Collections;
 
 using Mono.Unix;
@@ -142,12 +143,12 @@ namespace Banshee.IO.Unix
             get { return file_info.FullName; }
         }
         
-        public System.IO.Stream ReadStream {
-            get { return file_info.OpenRead(); }
+        public Stream ReadStream {
+            get { return file_info.Open(FileMode.Open, FileAccess.Read); }
         }
         
-        public System.IO.Stream WriteStream {
-            get { return file_info.OpenWrite(); }
+        public Stream WriteStream {
+            get { return file_info.Open(FileMode.Open, FileAccess.ReadWrite); }
         }
    
         public bool IsReadable {

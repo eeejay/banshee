@@ -227,6 +227,11 @@ namespace Banshee.Base
         {
             active_engine.Pause();
         }
+        
+        public static void TrackInfoUpdated()
+        {
+            active_engine.TrackInfoUpdated();
+        }
 
         private static void CheckPending()
         {
