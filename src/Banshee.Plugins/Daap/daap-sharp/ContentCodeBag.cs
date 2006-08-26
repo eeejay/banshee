@@ -57,17 +57,19 @@ namespace DAAP {
             get {
                 if (defaultBag == null) {
 
-                    
-                    using (BinaryReader reader = new BinaryReader (Assembly.GetExecutingAssembly ().GetManifestResourceStream ("content-codes"))) {
-                        MemoryStream buf = new MemoryStream ();
-                        byte[] bytes = null;
-                        
-                        do {
-                            bytes = reader.ReadBytes (ChunkLength);
-                            buf.Write (bytes, 0, bytes.Length);
-                        } while (bytes.Length == ChunkLength);
+                    // this is crappy
+                    foreach (string name in Assembly.GetExecutingAssembly().GetManifestResourceNames()) {
+                        using (BinaryReader reader = new BinaryReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(name))) {
+                            MemoryStream buf = new MemoryStream();
+                            byte[] bytes = null;
 
-                        defaultBag = ContentCodeBag.ParseCodes (buf.GetBuffer ());
+                            do {
+                                bytes = reader.ReadBytes(ChunkLength);
+                                buf.Write(bytes, 0, bytes.Length);
+                            } while (bytes.Length == ChunkLength);
+
+                            defaultBag = ContentCodeBag.ParseCodes(buf.GetBuffer());
+                        }
                     }
                 }
 
@@ -96,6 +98,10 @@ namespace DAAP {
 
         private static int GetIntFormat (string code) {
             return IPAddress.NetworkToHostOrder (BitConverter.ToInt32 (Encoding.ASCII.GetBytes (code), 0));
+        }
+
+        internal static string GetStringFormat (int code) {
+            return Encoding.ASCII.GetString (BitConverter.GetBytes (IPAddress.HostToNetworkOrder (code)));
         }
 
         private void AddCode (string num, string name, ContentType type) {
@@ -136,6 +142,10 @@ namespace DAAP {
             bag.AddCode ("mcna", "dmap.contentcodesname", ContentType.String);
             bag.AddCode ("mcty", "dmap.contentcodestype", ContentType.Short);
             bag.AddCode ("mstt", "dmap.status", ContentType.Long);
+
+            // some photo-specific codes
+            bag.AddCode ("ppro", "dpap.protocolversion", ContentType.Long);
+            bag.AddCode ("pret", "dpap.blah", ContentType.Container);
 
             ContentNode node = ContentParser.Parse (bag, buffer);
 

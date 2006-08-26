@@ -23,6 +23,8 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Threading;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Net;
 using System.Net.Sockets;
@@ -36,7 +38,7 @@ using Avahi;
 
 namespace DAAP {
 
-    internal delegate bool WebHandler (Socket client, string path, NameValueCollection query);
+    internal delegate bool WebHandler (Socket client, string user, string path, NameValueCollection query, int range);
 
     internal class WebServer {
 
@@ -46,7 +48,7 @@ namespace DAAP {
         private Socket server;
         private WebHandler handler;
         private bool running;
-        private ArrayList creds = new ArrayList ();
+        private List<NetworkCredential> creds = new List<NetworkCredential> ();
         private ArrayList clients = new ArrayList ();
         private string realm;
         private AuthenticationMethod authMethod = AuthenticationMethod.None;
@@ -60,8 +62,8 @@ namespace DAAP {
             get { return (ushort) (server.LocalEndPoint as IPEndPoint).Port; }
         }
 
-        public NetworkCredential[] Credentials {
-            get { return (NetworkCredential[]) creds.ToArray (typeof (NetworkCredential)); }
+        public IList<NetworkCredential> Credentials {
+            get { return new ReadOnlyCollection<NetworkCredential> (creds); }
         }
 
         public AuthenticationMethod AuthenticationMethod {
@@ -135,23 +137,45 @@ namespace DAAP {
             }
         }
 
-        public void WriteResponseFile (Socket client, string file) {
+        public void WriteResponseFile (Socket client, string file, long offset) {
             FileInfo info = new FileInfo (file);
 
-            WriteResponseStream (client, info.Open (FileMode.Open, FileAccess.Read), info.Length);
+            FileStream stream = info.Open(FileMode.Open, FileAccess.Read, FileShare.Read);
+            WriteResponseStream (client, stream, info.Length, offset);
         }
 
         public void WriteResponseStream (Socket client, Stream response, long len) {
+            WriteResponseStream (client, response, len, -1);
+        }
+
+        public void WriteResponseStream (Socket client, Stream response, long len, long offset) {
             using (BinaryWriter writer = new BinaryWriter (new NetworkStream (client, false))) {
-                
-                writer.Write (Encoding.UTF8.GetBytes ("HTTP/1.1 200 OK\r\n"));
+
+                if (offset > 0) {
+                    writer.Write (Encoding.UTF8.GetBytes ("HTTP/1.1 206 Partial Content\r\n"));
+                    writer.Write (Encoding.UTF8.GetBytes (String.Format ("Content-Range: bytes {0}-{1}/{2}\r\n",
+                                                                         offset, len, len + 1)));
+                    writer.Write (Encoding.UTF8.GetBytes ("Accept-Range: bytes\r\n"));
+                    len = len - offset;
+                } else {
+                    writer.Write (Encoding.UTF8.GetBytes ("HTTP/1.1 200 OK\r\n"));
+                }
+
                 writer.Write (Encoding.UTF8.GetBytes (String.Format ("Content-Length: {0}\r\n", len)));
                 writer.Write (Encoding.UTF8.GetBytes ("\r\n"));
 
                 using (BinaryReader reader = new BinaryReader (response)) {
+                    if (offset > 0) {
+                        reader.BaseStream.Seek (offset, SeekOrigin.Begin);
+                    }
+
                     long count = 0;
                     while (count < len) {
                         byte[] buf = reader.ReadBytes (Math.Min (ChunkLength, (int) len - (int) count));
+                        if (buf.Length == 0) {
+                            break;
+                        }
+                        
                         writer.Write (buf);
                         count += buf.Length;
                     }
@@ -203,11 +227,12 @@ namespace DAAP {
                 string line = null;
                 string user = null;
                 string password = null;
+                int range = -1;
                 
                 // read the rest of the request
                 do {
                     line = reader.ReadLine ();
-                    
+
                     if (line == "Connection: close") {
                         ret = false;
                     } else if (line != null && line.StartsWith ("Authorization: Basic")) {
@@ -221,6 +246,21 @@ namespace DAAP {
                         string[] splitUserPass = userpass.Split (new char[] {':'}, 2);
                         user = splitUserPass[0];
                         password = splitUserPass[1];
+                    } else if (line != null && line.StartsWith ("Range: ")) {
+                        // we currently expect 'Range: bytes=<offset>-'
+                        string[] splitLine = line.Split ('=');
+
+                        if (splitLine.Length != 2)
+                            continue;
+
+                        string rangestr = splitLine[1];
+                        if (!rangestr.EndsWith ("-"))
+                            continue;
+
+                        try {
+                            range = Int32.Parse (rangestr.Substring (0, rangestr.Length - 1));
+                        } catch (FormatException) {
+                        }
                     }
                 } while (line != String.Empty && line != null);
                 
@@ -256,7 +296,7 @@ namespace DAAP {
                             return true;
                         }
 
-                        return handler (client, uri.AbsolutePath, query);
+                        return handler (client, user, uri.AbsolutePath, query, range);
                     } catch (IOException e) {
                         ret = false;
                     } catch (Exception e) {
@@ -302,30 +342,49 @@ namespace DAAP {
 
     internal class RevisionManager {
 
-        private Hashtable revisions = new Hashtable ();
+        private Dictionary<int, List<Database>> revisions = new Dictionary<int, List<Database>> ();
         private int current = 1;
+        private int limit = 3;
 
         public int Current {
             get { return current; }
         }
+
+        public int HistoryLimit {
+            get { return limit; }
+            set { limit = value; }
+        }
         
-        public void AddRevision (Database[] databases) {
+        public void AddRevision (List<Database> databases) {
             revisions[++current] = databases;
+
+            if (revisions.Keys.Count > limit) {
+                // remove the oldest
+
+                int oldest = current;
+                foreach (int rev in revisions.Keys) {
+                    if (rev < oldest) {
+                        oldest = rev;
+                    }
+                }
+
+                RemoveRevision (oldest);
+            }
         }
 
         public void RemoveRevision (int rev) {
             revisions.Remove (rev);
         }
 
-        public Database[] GetRevision (int rev) {
+        public List<Database> GetRevision (int rev) {
             if (rev == 0)
-                return (Database[]) revisions[current];
+                return revisions[current];
             else
-                return (Database[]) revisions[rev];
+                return revisions[rev];
         }
 
         public Database GetDatabase (int rev, int id) {
-            Database[] dbs = GetRevision (rev);
+            List<Database> dbs = GetRevision (rev);
 
             if (dbs == null)
                 return null;
@@ -339,12 +398,45 @@ namespace DAAP {
         }
     }
 
+    public class TrackRequestedArgs : EventArgs {
+
+        private string user;
+        private IPAddress host;
+        private Database db;
+        private Track track;
+
+        public string UserName {
+            get { return user; }
+        }
+
+        public IPAddress Host {
+            get { return host; }
+        }
+
+        public Database Database {
+            get { return db; }
+        }
+
+        public Track Track {
+            get { return track; }
+        }
+        
+        public TrackRequestedArgs (string user, IPAddress host, Database db, Track track) {
+            this.user = user;
+            this.host = host;
+            this.db = db;
+            this.track = track;
+        }
+    }
+
+    public delegate void TrackRequestedHandler (object o, TrackRequestedArgs args);
+
     public class Server {
 
         internal const int DefaultTimeout = 1800;
         
         private static Regex dbItemsRegex = new Regex ("/databases/([0-9]*?)/items$");
-        private static Regex dbSongRegex = new Regex ("/databases/([0-9]*?)/items/([0-9]*).*");
+        private static Regex dbTrackRegex = new Regex ("/databases/([0-9]*?)/items/([0-9]*).*");
         private static Regex dbContainersRegex = new Regex ("/databases/([0-9]*?)/containers$");
         private static Regex dbContainerItemsRegex = new Regex ("/databases/([0-9]*?)/containers/([0-9]*?)/items$");
         
@@ -369,6 +461,7 @@ namespace DAAP {
         private RevisionManager revmgr = new RevisionManager ();
 
         public event EventHandler Collision;
+        public event TrackRequestedHandler TrackRequested;
 
         public string Name {
             get { return serverInfo.Name; }
@@ -413,7 +506,7 @@ namespace DAAP {
             }
         }
 
-        public NetworkCredential[] Credentials {
+        public IList<NetworkCredential> Credentials {
             get { return ws.Credentials; }
         }
 
@@ -426,10 +519,6 @@ namespace DAAP {
             ws = new WebServer (port, OnHandleRequest);
             serverInfo.Name = name;
             ws.Realm = name;
-            
-#if !ENABLE_MDNSD
-            client = new Avahi.Client ();
-#endif
         }
 
         public void Start () {
@@ -437,6 +526,7 @@ namespace DAAP {
             ws.Start ();
 
 #if !ENABLE_MDNSD
+            client = new Avahi.Client ();
             client.StateChanged += OnClientStateChanged;
 #endif
 
@@ -454,6 +544,13 @@ namespace DAAP {
             lock (revmgr) {
                 Monitor.PulseAll (revmgr);
             }
+
+#if !ENABLE_MDNSD
+            if (client != null) {
+                client.Dispose ();
+                client = null;
+            }
+#endif
         }
 
         public void AddDatabase (Database db) {
@@ -473,13 +570,13 @@ namespace DAAP {
         }
 
         public void Commit () {
-            ArrayList clones = new ArrayList ();
+            List<Database> clones = new List<Database> ();
             foreach (Database db in databases) {
-                clones.Add (db.Clone ());
+                clones.Add ((Database) db.Clone ());
             }
 
             lock (revmgr) {
-                revmgr.AddRevision ((Database[]) clones.ToArray (typeof (Database)));
+                revmgr.AddRevision (clones);
                 Monitor.PulseAll (revmgr);
             }
         }
@@ -515,7 +612,6 @@ namespace DAAP {
                     zc_service.Dispose ();
                 } catch {
                 }
-                
                 zc_service = null;
             }
         }
@@ -576,7 +672,7 @@ namespace DAAP {
         }
 #endif
 
-        internal bool OnHandleRequest (Socket client, string path, NameValueCollection query) {
+        internal bool OnHandleRequest (Socket client, string user, string path, NameValueCollection query, int range) {
 
             int session = 0;
             if (query["session-id"] != null) {
@@ -634,20 +730,20 @@ namespace DAAP {
                     Database olddb = revmgr.GetDatabase (clientRev - delta, dbid);
 
                     if (olddb != null) {
-                        foreach (Song song in olddb.Songs) {
-                            if (curdb.LookupSongById (song.Id) == null)
-                                deletedIds.Add (song.Id);
+                        foreach (Track track in olddb.Tracks) {
+                            if (curdb.LookupTrackById (track.Id) == null)
+                                deletedIds.Add (track.Id);
                         }
                     }
                 }
 
-                ContentNode node = curdb.ToSongsNode (query["meta"].Split (','),
+                ContentNode node = curdb.ToTracksNode (query["meta"].Split (','),
                                                       (int[]) deletedIds.ToArray (typeof (int)));
                 ws.WriteResponse (client, node);
-            } else if (dbSongRegex.IsMatch (path)) {
-                Match match = dbSongRegex.Match (path);
+            } else if (dbTrackRegex.IsMatch (path)) {
+                Match match = dbTrackRegex.Match (path);
                 int dbid = Int32.Parse (match.Groups[1].Value);
-                int songid = Int32.Parse (match.Groups[2].Value);
+                int trackid = Int32.Parse (match.Groups[2].Value);
 
                 Database db = revmgr.GetDatabase (clientRev, dbid);
                 if (db == null) {
@@ -655,21 +751,28 @@ namespace DAAP {
                     return true;
                 }
 
-                Song song = db.LookupSongById (songid);
-                if (song == null) {
-                    ws.WriteResponse (client, HttpStatusCode.BadRequest, "invalid song id");
+                Track track = db.LookupTrackById (trackid);
+                if (track == null) {
+                    ws.WriteResponse (client, HttpStatusCode.BadRequest, "invalid track id");
                     return true;
                 }
 
                 try {
-                    if (song.FileName != null) {
-                        ws.WriteResponseFile (client, song.FileName);
+                    try {
+                        if (TrackRequested != null)
+                            TrackRequested (this, new TrackRequestedArgs (user,
+                                                                        (client.RemoteEndPoint as IPEndPoint).Address,
+                                                                        db, track));
+                    } catch {}
+                    
+                    if (track.FileName != null) {
+                        ws.WriteResponseFile (client, track.FileName, range);
                     } else if (db.Client != null) {
-                        long songLength = 0;
-                        Stream songStream = db.StreamSong (song, out songLength);
+                        long trackLength = 0;
+                        Stream trackStream = db.StreamTrack (track, out trackLength);
                         
                         try {
-                            ws.WriteResponseStream (client, songStream, songLength);
+                            ws.WriteResponseStream (client, trackStream, trackLength);
                         } catch (IOException e) {
                         }
                     } else {
@@ -713,8 +816,8 @@ namespace DAAP {
                         Playlist oldpl = olddb.LookupPlaylistById (plid);
 
                         if (oldpl != null) {
-                            Song[] oldplSongs = oldpl.Songs;
-                            for (int i = 0; i < oldplSongs.Length; i++) {
+                            IList<Track> oldplTracks = oldpl.Tracks;
+                            for (int i = 0; i < oldplTracks.Count; i++) {
                                 int id = oldpl.GetContainerId (i);
                                 if (curpl.LookupIndexByContainerId (id) < 0) {
                                     deletedIds.Add (id);
@@ -724,7 +827,7 @@ namespace DAAP {
                     }
                 }
                     
-                ws.WriteResponse (client, curpl.ToSongsNode ((int[]) deletedIds.ToArray (typeof (int))));
+                ws.WriteResponse (client, curpl.ToTracksNode ((int[]) deletedIds.ToArray (typeof (int))));
             } else if (path == "/update") {
                 int retrev;
                 
@@ -762,7 +865,7 @@ namespace DAAP {
         private ContentNode GetDatabasesNode () {
             ArrayList databaseNodes = new ArrayList ();
 
-            Database[] dbs = revmgr.GetRevision (revmgr.Current);
+            List<Database> dbs = revmgr.GetRevision (revmgr.Current);
             if (dbs != null) {
                 foreach (Database db in revmgr.GetRevision (revmgr.Current)) {
                     databaseNodes.Add (db.ToDatabaseNode ());

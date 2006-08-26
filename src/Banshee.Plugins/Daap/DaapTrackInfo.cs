@@ -36,14 +36,14 @@ namespace Banshee.Plugins.Daap
 {
     public sealed class DaapTrackInfo : TrackInfo
     {
-        private DAAP.Song song;
+        private DAAP.Track song;
         private DAAP.Database database;
         
-        internal DaapTrackInfo(DAAP.Song song, DAAP.Database database) : this(song, database, true)
+        internal DaapTrackInfo(DAAP.Track song, DAAP.Database database) : this(song, database, true)
         {
         }
         
-        internal DaapTrackInfo(DAAP.Song song, DAAP.Database database, bool sync)
+        internal DaapTrackInfo(DAAP.Track song, DAAP.Database database, bool sync)
         {
             this.song = song;
             this.database = database;
@@ -54,13 +54,13 @@ namespace Banshee.Plugins.Daap
             }
             
             song.Updated += delegate(object o, EventArgs args) {
-                LoadFromDaapSong();
+                LoadFromDaapTrack();
             };
             
-            LoadFromDaapSong();
+            LoadFromDaapTrack();
         }
         
-        private void LoadFromDaapSong()
+        private void LoadFromDaapTrack()
         {
             uri = new SafeUri(String.Format("{0}{1}/{2}", DaapCore.ProxyServer.HttpBaseAddress, 
                 database.GetHashCode(), song.Id));
@@ -90,7 +90,7 @@ namespace Banshee.Plugins.Daap
                 return false;
             }
             
-            return (o as DaapTrackInfo).Song.Equals(song);
+            return (o as DaapTrackInfo).Track.Equals(song);
         }
         
         public override void IncrementPlayCount()
@@ -98,7 +98,7 @@ namespace Banshee.Plugins.Daap
             play_count++;
         }
 
-        public DAAP.Song Song {
+        public DAAP.Track Track {
             get {
                 return song;
             }

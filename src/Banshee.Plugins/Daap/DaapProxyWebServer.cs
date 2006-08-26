@@ -191,8 +191,8 @@ namespace Banshee.Plugins.Daap
                } else {
                    body += "<ul>";
                    foreach(DAAP.Database database in (ArrayList)databases.Clone()) {
-                       body += String.Format("<li><a href=\"/{0}\">{1} ({2} Songs)</a></li>",
-                           database.GetHashCode(), database.Name, database.SongCount);
+                       body += String.Format("<li><a href=\"/{0}\">{1} ({2} Tracks)</a></li>",
+                           database.GetHashCode(), database.Name, database.TrackCount);
                    }
                    body += "</ul>";
                }
@@ -209,13 +209,13 @@ namespace Banshee.Plugins.Daap
                         continue;
                     }
                     
-                    body = GetHtmlHeader("Songs in " + database.Name);
+                    body = GetHtmlHeader("Tracks in " + database.Name);
                     
-                    if(database.SongCount == 0) {
+                    if(database.TrackCount == 0) {
                         body += "<blockquote><p><em>No songs in this database.</em></p></blockquote>";
                     } else {
-                        body += "<p>Showing all " + database.SongCount + " songs:</p><ul>";
-                        foreach(DAAP.Song song in database.Songs) {
+                        body += "<p>Showing all " + database.TrackCount + " songs:</p><ul>";
+                        foreach(DAAP.Track song in database.Tracks) {
                             body += String.Format("<li><a href=\"/{0}/{1}\">{2} - {3}</a> ({4}:{5})</li>",
                                 database.GetHashCode(), song.Id, song.Artist, song.Title, 
                                 song.Duration.Minutes, song.Duration.Seconds.ToString("00"));
@@ -249,9 +249,9 @@ namespace Banshee.Plugins.Daap
                     }
                     
                     try {
-                        Song song = database.LookupSongById(song_id);
+                        Track song = database.LookupTrackById(song_id);
                         if(song != null) {
-                            StreamSong(client, database, song);
+                            StreamTrack(client, database, song);
                             return;
                         }
                     } catch {
@@ -280,10 +280,10 @@ namespace Banshee.Plugins.Daap
             WriteResponse(client, code, body + GetHtmlFooter());
         }
         
-        private void StreamSong(Socket client, DAAP.Database database, DAAP.Song song)
+        private void StreamTrack(Socket client, DAAP.Database database, DAAP.Track song)
         {
             long length;
-            Stream stream = database.StreamSong(song, out length);
+            Stream stream = database.StreamTrack(song, out length);
             WriteResponseStream(client, stream, length, song.FileName);
             stream.Close();
             client.Close();

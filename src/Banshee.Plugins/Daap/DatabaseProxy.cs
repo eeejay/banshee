@@ -80,7 +80,7 @@ namespace Banshee.Plugins.Daap
 
             public bool MoveNext()
             {
-                if(database != null && ++index < database.SongCount) {
+                if(database != null && ++index < database.TrackCount) {
                     return true;
                 }
                 
@@ -100,9 +100,9 @@ namespace Banshee.Plugins.Daap
             public TrackInfo Current {
                 get {
                     if(database != null) {
-                        DAAP.Song song = database.SongAt(index);
-                        if(song != null) {
-                            return new DaapTrackInfo(song, database);
+                        DAAP.Track track = database.TrackAt(index);
+                        if(track != null) {
+                            return new DaapTrackInfo(track, database);
                         }
                     }
                     

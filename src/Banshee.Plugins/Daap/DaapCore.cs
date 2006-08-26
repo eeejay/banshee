@@ -175,13 +175,13 @@ namespace Banshee.Plugins.Daap
             Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], false);
         }
         
-        private static DAAP.Song TrackInfoToSong(TrackInfo track)
+        private static DAAP.Track TrackInfoToTrack(TrackInfo track)
         {
             if(track == null || track.Uri == null || track.Uri.Scheme != Uri.UriSchemeFile) {
                 return null;
             }
             
-            DAAP.Song song = new DAAP.Song();
+            DAAP.Track song = new DAAP.Track();
             song.Album = track.Album;
             song.Artist = track.Artist;
             song.DateAdded = track.DateAdded;
@@ -201,9 +201,9 @@ namespace Banshee.Plugins.Daap
             
             lock(Globals.Library.Tracks.Values) {
                 foreach(TrackInfo track in Globals.Library.Tracks.Values) {
-                    DAAP.Song song = TrackInfoToSong(track);
+                    DAAP.Track song = TrackInfoToTrack(track);
                     if(song != null) {
-                        database.AddSong(song);
+                        database.AddTrack(song);
                     }
                 }
             }

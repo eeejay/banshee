@@ -115,8 +115,8 @@ namespace Banshee.Plugins.Daap
             }
             
             if(database != null) {
-                database.SongAdded -= OnDatabaseSongAdded;
-                database.SongRemoved -= OnDatabaseSongRemoved;
+                database.TrackAdded -= OnDatabaseTrackAdded;
+                database.TrackRemoved -= OnDatabaseTrackRemoved;
                 DaapCore.ProxyServer.UnregisterDatabase(database);
                 database = null;
             }
@@ -134,10 +134,10 @@ namespace Banshee.Plugins.Daap
 
         private void OnClientUpdated(object o, EventArgs args)
         {
-            if(database == null && client.Databases.Length > 0) {
+            if(database == null && client.Databases.Count > 0) {
                 database = client.Databases[0];
-                database.SongAdded += OnDatabaseSongAdded;
-                database.SongRemoved += OnDatabaseSongRemoved;
+                database.TrackAdded += OnDatabaseTrackAdded;
+                database.TrackRemoved += OnDatabaseTrackRemoved;
                 database_proxy.Database = database;
                 DaapCore.ProxyServer.RegisterDatabase(database);
             }
@@ -149,14 +149,14 @@ namespace Banshee.Plugins.Daap
             });
         }
         
-        private void OnDatabaseSongAdded(object o, Song song)
+        private void OnDatabaseTrackAdded(object o, TrackArgs args)
         {
-            OnTrackAdded(new DaapTrackInfo(song, database));
+            OnTrackAdded(new DaapTrackInfo(args.Track, database));
         }
         
-        private void OnDatabaseSongRemoved(object o, Song song)
+        private void OnDatabaseTrackRemoved(object o, TrackArgs args)
         {
-            OnTrackRemoved(new DaapTrackInfo(song, database, false));
+            OnTrackRemoved(new DaapTrackInfo(args.Track, database, false));
         }
         
         public override IEnumerable<TrackInfo> Tracks {
@@ -164,7 +164,7 @@ namespace Banshee.Plugins.Daap
         }
         
         public override int Count {
-            get { return database == null ? -1 : database.SongCount; }
+            get { return database == null ? -1 : database.TrackCount; }
         }
         
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network); 

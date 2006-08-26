@@ -203,8 +203,13 @@ namespace Banshee.Dap.Ipod
         private void CommitTrackToDevice(IpodDapTrackInfo ti)
         {
             Track track = device.TrackDatabase.CreateTrack();
-            
-            track.Uri = new Uri(ti.Uri.AbsoluteUri);
+
+            try {
+                track.Uri = new Uri(ti.Uri.AbsoluteUri);
+            } catch {
+                device.TrackDatabase.RemoveTrack (track);
+                return;
+            }
         
             if(ti.Album != null) {
                 track.Album = ti.Album;
