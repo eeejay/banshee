@@ -43,6 +43,7 @@ namespace Banshee.Burner
     {
         private static bool initialized = false;
         private static IDriveFactory drive_factory;
+        private static IDiscDuplicator disc_duplicator;
         private static List<BurnerSource> burners = new List<BurnerSource>();
     
         public static void Initialize()
@@ -66,6 +67,7 @@ namespace Banshee.Burner
             };
             
             drive_factory = new Banshee.Cdrom.Nautilus.NautilusDriveFactory();
+            disc_duplicator = new Banshee.Cdrom.Nautilus.NautilusDiscDuplicator();
             
             foreach(IRecorder drive in drive_factory) {
                 if(drive.HaveMedia && FindSourceForDrive(drive, false) == null) {
@@ -182,6 +184,10 @@ namespace Banshee.Burner
         
         public static IDriveFactory DriveFactory {
             get { return drive_factory; }
+        }
+        
+        public static IDiscDuplicator DiscDuplicator {
+            get { return disc_duplicator; }
         }
     }
 }

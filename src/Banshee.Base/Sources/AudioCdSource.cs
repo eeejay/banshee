@@ -216,8 +216,45 @@ namespace Banshee.Sources
                 OnUpdated();
             });
         }
+        
+        private Gtk.ActionGroup action_group = null;
+        public override string ActionPath {
+            get {
+                if(action_group != null) {
+                    return "/AudioCDMenu";
+                }
                 
-        private Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
+                action_group = new Gtk.ActionGroup("AudioCD");
+                action_group.Add(new Gtk.ActionEntry [] {
+                    new Gtk.ActionEntry("DuplicateDiscAction", null, 
+                        Catalog.GetString("Copy CD"), null, null, 
+                        delegate { 
+                            foreach(Banshee.Cdrom.IDrive drive in Banshee.Burner.BurnerCore.DriveFactory) {
+                                if(drive.Device == disk.DeviceNode) {
+                                    Banshee.Burner.BurnerCore.DiscDuplicator.Duplicate(drive);
+                                    return;
+                                }
+                            }
+                        })
+                });
+                
+                Globals.ActionManager.UI.AddUiFromString(@"
+                    <ui>
+                        <popup name='AudioCDMenu' action='AudioCDMenuActions'>
+                            <menuitem name='ImportSource' action='ImportSourceAction' />
+                            <menuitem name='UnmapSource' action='UnmapSourceAction' />
+                            <menuitem name='DuplicateDisc' action='DuplicateDiscAction' />
+                        </popup>
+                    </ui>
+                ");
+                
+                Globals.ActionManager.UI.InsertActionGroup(action_group, 0);
+                
+                return "/AudioCDMenu";
+            }
+        }
+                
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
         public override Gdk.Pixbuf Icon {
             get { return icon; }
         }

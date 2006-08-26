@@ -12,6 +12,7 @@ BANSHEE_CDROM_SOURCES = \
 	$(srcdir)/Banshee.Cdrom/IDriveFactory.cs \
 	$(srcdir)/Banshee.Cdrom/IDrive.cs \
 	$(srcdir)/Banshee.Cdrom/IRecorder.cs \
+	$(srcdir)/Banshee.Cdrom/IDiscDuplicator.cs \
 	$(srcdir)/Banshee.Cdrom/DriveMediaType.cs \
 	$(srcdir)/Banshee.Cdrom/RecorderAction.cs \
 	$(srcdir)/Banshee.Cdrom/RecorderTrack.cs \
@@ -24,7 +25,8 @@ BANSHEE_CDROM_GUI_SOURCES = \
 BANSHEE_CDROM_NAUTILUS_SOURCES = \
 	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs \
 	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDrive.cs \
-	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusRecorder.cs
+	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusRecorder.cs \
+	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs
 
 BANSHEE_CDROM_ISO_SOURCES = \
 	$(srcdir)/Banshee.Cdrom.Iso/IImageCreator.cs \

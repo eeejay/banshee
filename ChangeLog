@@ -1,5 +1,24 @@
 2006-08-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Banshee.Cdrom/IDiscDuplicator.cs: interface for
+	duplicating a CD
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:
+	Nautilus implementation of IDiscDuplicator; runs nautilus-cd-burner
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Updated
+
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: Provide an IDiscDuplicator
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Added custom context menu
+	with 'Copy CD' action
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Schedule metadata save with
+	highest priority
+
+2006-08-26  Aaron Bockover  <abock@gnome.org>
+
 	* data/banshee-dialogs.glade: Updated UI
 
 	* src/Banshee.Base/GConfKeys.cs: Added WriteMetadata key, removed

@@ -417,7 +417,8 @@ namespace Banshee.Gui.Dialogs
         
         private void SaveToFile(EditorTrack track)
         {
-            Banshee.Kernel.Scheduler.Schedule(new SaveTrackMetadataJob(track.Track));
+            Banshee.Kernel.Scheduler.Schedule(new SaveTrackMetadataJob(track.Track), 
+                Banshee.Kernel.JobPriority.Highest);
         }
     }
 }
