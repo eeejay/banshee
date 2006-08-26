@@ -6,6 +6,7 @@ SUBDIRS =          \
 	hal-sharp      \
 	src            \
 	docs           \
+	tests          \
 	po
 
 pkgconfigdir = $(libdir)/pkgconfig
