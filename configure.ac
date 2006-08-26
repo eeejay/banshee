@@ -339,6 +339,14 @@ AC_DEFINE_UNQUOTED([MONO], ["${MONO}"], [Mono Runtime])
 AC_DEFINE_UNQUOTED([MONO_PATH], ["${MONO_PATH}"], [MONO_PATH Env])
 AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Library Path])
 
+dnl Nunit
+PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no")
+AC_SUBST(MONO_NUNIT_LIBS)
+AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
+if test "x$do_tests" = "xno"; then
+	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
+fi
+
 dnl Intl
 
 GETTEXT_PACKAGE=banshee
@@ -384,7 +392,7 @@ src/Banshee.Dap/Njb/Makefile
 src/Banshee.Dap/Njb/njb-sharp.dll.config
 src/Banshee.Plugins/Makefile
 src/Banshee.Plugins/Audioscrobbler/Makefile
-src/Banshee.Plugins/Audioscrobbler/Audioscrobbler.dll.config
+src/Banshee.Plugins/Audioscrobbler/Banshee.Plugins.Audioscrobbler.dll.config
 src/Banshee.Plugins/MetadataSearch/Makefile
 src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config
 src/Banshee.Plugins/MMKeys/Makefile
@@ -397,6 +405,7 @@ data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile
 docs/Makefile
+tests/Makefile
 po/Makefile.in
 ])
 

@@ -1,5 +1,16 @@
 2006-08-26  Aaron Bockover  <abock@gnome.org>
 
+	* tests/*: Added NUnit test framework, started testing Banshee.Kernel
+
+	* configure.ac: Added tests/nunit checks
+
+	* src/Banshee.Plugins/Audioscrobbler/Makefile.am: Updated
+	
+	* src/Banshee.Plugins/Audioscrobbler/Banshee.Plugins.Audioscrobbler.dll.config.in: 
+	Renamed from Audioscrobbler.dll.config.in
+
+2006-08-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Sources/AudioCdSource.cs: Reordered context menu
 
 2006-08-26  Aaron Bockover  <abock@gnome.org>
