@@ -20,6 +20,8 @@ src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs
 src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs
 src/Banshee.Base/Banshee.Burner/BurnerSource.cs
 src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs
+src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs
+src/Banshee.Base/Banshee.Library/Import.cs
 src/Banshee.Base/ComponentInitializer.cs
 src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/Dap/DapCore.cs
@@ -31,6 +33,7 @@ src/Banshee.Base/Gui/LogCoreDialog.cs
 src/Banshee.Base/Gui/OpenLocationDialog.cs
 src/Banshee.Base/Gui/PreferencesDialog.cs
 src/Banshee.Base/Gui/ToggleStates.cs
+src/Banshee.Base/Gui/TrackEditor.cs
 src/Banshee.Base/Gui/VersionInformationDialog.cs
 src/Banshee.Base/FileImportSource.cs
 src/Banshee.Base/FolderImportSource.cs
@@ -47,6 +50,7 @@ src/Banshee.Base/Plugins/PluginDialog.cs
 src/Banshee.Base/Source.cs
 src/Banshee.Base/Sources/AudioCdSource.cs
 src/Banshee.Base/Sources/DapSource.cs
+src/Banshee.Base/Sources/ImportErrorsSource.cs
 src/Banshee.Base/Sources/LibrarySource.cs
 src/Banshee.Base/Sources/LocalQueueSource.cs
 src/Banshee.Base/Sources/PlaylistSource.cs
@@ -85,5 +89,4 @@ src/PlaylistColumns.cs
 src/PlaylistView.cs
 src/SourceView.cs
 src/StockIcons.cs
-src/TrackProperties.cs
 
