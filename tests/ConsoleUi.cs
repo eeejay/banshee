@@ -50,7 +50,9 @@ namespace NUnit.Console
 	/// </summary>
 	public class ConsoleUi
 	{
+#if !TARGET_JVM
 		[STAThread]
+#endif
 		public static int Main(string[] args)
 		{
 			ConsoleOptions options = new ConsoleOptions(args);
@@ -80,8 +82,7 @@ namespace NUnit.Console
 			try
 			{
 				ConsoleUi consoleUi = new ConsoleUi();
-				consoleUi.Execute( options );
-				return 0;
+				return consoleUi.Execute( options );
 			}
 			catch( FileNotFoundException ex )
 			{
@@ -141,9 +142,21 @@ namespace NUnit.Console
 			Assembly executingAssembly = Assembly.GetExecutingAssembly();
 			System.Version version = executingAssembly.GetName().Version;
 
+			object[] objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+			AssemblyProductAttribute productAttr = (AssemblyProductAttribute)objectAttrs[0];
+
+			objectAttrs = executingAssembly.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+			AssemblyCopyrightAttribute copyrightAttr = (AssemblyCopyrightAttribute)objectAttrs[0];
+
+			Console.WriteLine(String.Format("{0} version {1}", productAttr.Product, version.ToString(3)));
+			Console.WriteLine(copyrightAttr.Copyright);
+			Console.WriteLine();
+
 			string clrPlatform = Type.GetType("Mono.Runtime", false) == null ? ".NET" : "Mono";
+#if !TARGET_JVM			
 			Console.WriteLine( string.Format("OS Version: {0}    {1} Version: {2}",
 				Environment.OSVersion, clrPlatform, Environment.Version ) );
+#endif
 			Console.WriteLine();
 		}
 
@@ -194,7 +207,7 @@ namespace NUnit.Console
 
 			Directory.SetCurrentDirectory(new FileInfo((string)options.Parameters[0]).DirectoryName);
 		
-			EventListener collector = new EventCollector( options, outStream );
+			EventCollector collector = new EventCollector( options, outStream );
 
 			string savedDirectory = Environment.CurrentDirectory;
 
@@ -224,13 +237,16 @@ namespace NUnit.Console
 			Directory.SetCurrentDirectory( savedDirectory );
 			
 			Console.WriteLine();
+			Console.WriteLine();
+			collector.PrintSummary( result );
+			Console.WriteLine();
 
 			string xmlOutput = CreateXmlOutput( result );
 			
 			if (options.xmlConsole)
 				Console.WriteLine(xmlOutput);
 			else
-				CreateSummaryDocument(xmlOutput, transformReader);
+				CreateSummaryDocument(xmlOutput, transformReader, outStream);
 
 			// Write xml output here
 			string xmlResultFile = options.IsXml ? options.xml : "TestResult.xml";
@@ -239,6 +255,8 @@ namespace NUnit.Console
 			{
 				writer.Write(xmlOutput);
 			}
+			outStream.Flush();
+			errorStream.Flush();
 
 			if ( testDomain != null )
 				testDomain.Unload();
@@ -256,7 +274,8 @@ namespace NUnit.Console
 			return builder.ToString();
 		}
 
-		private void CreateSummaryDocument(string xmlOutput, XmlTextReader transformReader)
+		private void CreateSummaryDocument(string xmlOutput, XmlTextReader transformReader,
+						   ConsoleWriter outStream)
 		{
 			XPathDocument originalXPathDocument = new XPathDocument(new StringReader(xmlOutput));
 			XslTransform summaryXslTransform = new XslTransform();
@@ -265,7 +284,7 @@ namespace NUnit.Console
 			summaryXslTransform.Load(transformReader);
 			
 			// Using obsolete form for now, remove warning suppression from project after changing
-			summaryXslTransform.Transform(originalXPathDocument,null,Console.Out);
+			summaryXslTransform.Transform(originalXPathDocument,null,outStream);
 		}
 
 		#region Nested Class to Handle Events
@@ -396,6 +415,12 @@ namespace NUnit.Console
 					Trace.WriteLine( "Total time     : " + suiteResult.Time + " seconds" );
 					Trace.WriteLine( "############################################################################");
 				}
+			}
+
+			public void PrintSummary (TestResult suiteResult)
+			{
+				Console.WriteLine("Tests run: {0}, Failures: {1}, Not run: {2}, Time: {3} seconds",
+						  testRunCount, failureCount, testIgnoreCount, suiteResult.Time);
 			}
 
 			public void UnhandledException( Exception exception )

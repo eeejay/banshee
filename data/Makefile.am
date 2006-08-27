@@ -34,6 +34,9 @@ CLEANFILES = \
 EXTRA_DIST = \
 	UIManagerLayout.xml \
 	banshee.glade \
+	banshee-dialogs.glade \
+	contributors.xml \
+	TranslatorExtract.cs \
 	$(desktop_in_files) \
 	$(schema_in_files) \
 	$(dbusservice_in_files)

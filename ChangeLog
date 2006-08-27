@@ -1,3 +1,17 @@
+2006-08-27  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Export DISTCHECK_CONFIGURE_FLAGS
+
+	* data/Makefile.am:
+	* src/Makefile.am:
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Dap/Ipod/Makefile.am:
+	* src/Banshee.Dap/MassStorage/Makefile.am:
+	* taglib-sharp/Makefile.am:
+	* tests/Makefile.am: Updated to make distcheck work; it's been a while
+
+	* tests/ConsoleUi.cs: Updated
+
 2006-08-26  Aaron Bockover  <abock@gnome.org>
 
 	* tests/*: Added NUnit test framework, started testing Banshee.Kernel

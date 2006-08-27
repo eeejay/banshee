@@ -20,7 +20,6 @@ bin_SCRIPTS = banshee banshee-import
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	$(banshee_import_sources) \
 	AssemblyInfo.cs.in \
-	AmazonSearchService.wsdl \
 	banshee.exe.config.in \
 	banshee.in  \
 	banshee-import.in \
@@ -28,7 +27,7 @@ EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
 	BansheeDbusClient.Makefile
 
 CLEANFILES = banshee banshee.exe banshee-import.exe banshee-import *.mdb *.dll
-DISTCLEANFILES = entagged-sharp.dll $(banshee_generated_sources)
+DISTCLEANFILES = $(banshee_generated_sources)
 MAINTAINERCLEANFILES = Makefile.in
 
 banshee_sources_in = AssemblyInfo.cs.in 
@@ -118,10 +117,10 @@ all: $(TARGET) $(BANSHEE_IMPORT_ASSEMBLY)
 $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) -out:$@ $(SYSTEM_REFERENCES_BUILD) $(banshee_build_sources)
 
-banshee_import_sources = BansheeImport.cs
+banshee_import_sources = $(srcdir)/BansheeImport.cs
 
 $(BANSHEE_IMPORT_ASSEMBLY): $(banshee_import_sources)
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll $(banshee_import_sources)
+	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_srcdir)/taglib-sharp/taglib-sharp.dll $(srcdir)/BansheeImport.cs
 
 run:
 	sh ./banshee --uninstalled
