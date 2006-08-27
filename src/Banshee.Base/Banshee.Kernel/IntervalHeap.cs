@@ -32,22 +32,21 @@ using System.Collections.Generic;
 
 namespace Banshee.Kernel
 {
-    public class IntervalHeap<T> : ICollection, IEnumerable<T>, IEnumerable
+    public class IntervalHeap<T> : ICollection<T>, ICollection, IEnumerable<T>, IEnumerable
     {
+        private const int MIN_CAPACITY = 16;
+    
         private int count;
         private int generation;
         
-        private int capacity;
         private Interval [] heap;
-        
-        private object syncroot = new object();
         
         public IntervalHeap()
         {
             Clear();
         }
         
-        public T Pop()
+        public virtual T Pop()
         {
             if(count == 0) {
                 throw new InvalidOperationException();
@@ -56,32 +55,106 @@ namespace Banshee.Kernel
             T item = heap[0].Item;
             MoveDown(0, heap[--count]);
             generation++;
+            
             return item;
         }
         
-        public void Push(T item, int priority)
+        public virtual T Peek()
         {
-            if(count == capacity) {
-                capacity = capacity * 2 + 1;
-                Interval [] grown_heap = new Interval[capacity];
-                Array.Copy(heap, 0, grown_heap, 0, count);
-                heap = grown_heap;
+            if(count == 0) {
+                throw new InvalidOperationException();
+            }
+            
+            return heap[0].Item;
+        }
+
+        public virtual void Push(T item, int priority)
+        {
+            if(item == null) {
+                throw new ArgumentNullException("item");
+            }
+            
+            if(count == heap.Length) {
+                OptimalArrayResize(ref heap, 1);
             }
             
             MoveUp(++count - 1, new Interval(item, priority));
             generation++;
         }
         
-        public void Clear()
+        public virtual void Clear()
         {
-            capacity = 15;
             generation = 0;
-            heap = new Interval[capacity];
+            heap = new Interval[MIN_CAPACITY];
         }
         
-        public void CopyTo(Array array, int index)
+        void ICollection.CopyTo(Array array, int index)
         {
+            if(array == null) {
+                throw new ArgumentNullException("array");
+            }
+
+            if(index < 0) {
+                throw new ArgumentOutOfRangeException("index");
+            }
+
             Array.Copy(heap, 0, array, index, count);
+        }
+        
+        public virtual void CopyTo(T [] array, int index)
+        {
+            if(array == null) {
+                throw new ArgumentNullException("array");
+            }
+
+            if(index < 0) {
+                throw new ArgumentOutOfRangeException("index");
+            }
+
+            Array.Copy(heap, 0, array, index, count);
+        }
+
+        public virtual bool Contains(T item)
+        {
+            if(item == null) {
+                throw new ArgumentNullException("item");
+            }
+            
+            return FindItemHeapIndex(item) >= 0;
+        }
+        
+        public virtual void Add(T item)
+        {
+            if(item == null) {
+                throw new ArgumentNullException("item");
+            }
+            
+            Push(item, 0);
+        }
+        
+        public virtual bool Remove(T item)
+        {
+            if(item == null) {
+                throw new ArgumentNullException("item");
+            }
+            
+            int index = FindItemHeapIndex(item);
+            
+            if(index < 0) {
+                return false;
+            }
+        
+            MoveDown(index, heap[--count]);
+            generation++;
+            
+            return true;
+        }
+        
+        public virtual void TrimExcess()
+        {
+            if(count < heap.Length * 0.9) {
+                Array.Resize(ref heap, count);
+            }
         }
         
         IEnumerator IEnumerable.GetEnumerator()
@@ -89,9 +162,29 @@ namespace Banshee.Kernel
             return GetEnumerator();
         }
         
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
             return new IntervalHeapEnumerator(this);
+        }
+        
+        public IntervalHeap<T> Synchronized(IntervalHeap<T> heap)
+        {
+            if(heap == null) {
+                throw new ArgumentNullException("heap");
+            }
+            
+            return new SyncIntervalHeap(heap);
+        }
+        
+        private int FindItemHeapIndex(T item)
+        {
+            for(int i = 0; i < count; i++) {
+                if(item.Equals(heap[i].Item)) {
+                    return i;
+                }
+            }
+            
+            return -1;
         }
         
         private int GetLeftChildIndex(int index)
@@ -104,6 +197,19 @@ namespace Banshee.Kernel
             return (index - 1) / 2;
         }
         
+        // grow array to nearest minimum power of two
+        private static void OptimalArrayResize(ref Interval [] array, int grow)
+        { 
+            int new_capacity = array.Length == 0 ? 1 : array.Length;
+            int min_capacity = array.Length == 0 ? MIN_CAPACITY : array.Length + grow;
+
+            while(new_capacity < min_capacity) {
+                new_capacity <<= 1;
+            }
+
+            Array.Resize(ref array, new_capacity);
+        }
+
         private void MoveUp(int index, Interval node)
         {
             int parent_index = GetParentIndex(index);
@@ -134,16 +240,20 @@ namespace Banshee.Kernel
             
             MoveUp(index, node);
         }
-        
-        public int Count {
+
+        public virtual int Count {
             get { return count; }
         }
         
-        public object SyncRoot {
-            get { return syncroot; }
+        public bool IsReadOnly {
+            get { return false; }
         }
         
-        public bool IsSynchronized {
+        public virtual object SyncRoot {
+            get { return this; }
+        }
+        
+        public virtual bool IsSynchronized {
             get { return false; }
         }
         
@@ -164,6 +274,78 @@ namespace Banshee.Kernel
             
             public int Priority { 
                 get { return priority; }
+            }
+        }
+        
+        private class SyncIntervalHeap : IntervalHeap<T>
+        {
+            private IntervalHeap<T> heap;
+            
+            internal SyncIntervalHeap(IntervalHeap<T> heap)
+            {
+                this.heap = heap;
+            }
+            
+            public override int Count {
+                get { lock(heap) { return heap.Count; } }
+            }
+            
+            public override bool IsSynchronized {
+                get { return true; }
+            }
+            
+            public override object SyncRoot {
+                get { return heap.SyncRoot; }
+            }
+            
+            public override void Clear()
+            {
+                lock(heap) { heap.Clear(); }
+            }
+            
+            public override bool Contains(T item)
+            {
+                lock(heap) { return heap.Contains(item); }
+            }
+            
+            public override T Pop()
+            {
+                lock(heap) { return heap.Pop(); }
+            }
+            
+            public override T Peek()
+            {
+                lock(heap) { return heap.Peek(); }
+            }
+            
+            public override void Push(T item, int priority)
+            {
+                lock(heap) { heap.Push(item, priority); }
+            }
+            
+            public override void Add(T item)
+            {
+                lock(heap) { heap.Add(item); }
+            }
+            
+            public override bool Remove(T item)
+            {
+                lock(heap) { return heap.Remove(item); }
+            }
+            
+            public override void TrimExcess()
+            {
+                lock(heap) { heap.TrimExcess(); }
+            }
+            
+            public override void CopyTo(T [] array, int index)
+            {
+                lock(heap) { heap.CopyTo(array, index); }
+            }
+            
+            public override IEnumerator<T> GetEnumerator()
+            {
+                lock(heap) { return new IntervalHeapEnumerator(this); }
             }
         }
     
