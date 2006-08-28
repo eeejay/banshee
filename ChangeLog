@@ -1,5 +1,10 @@
 2006-08-27  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/TrackEditor.cs (SaveTrack): catch 
+	GConf.NoSuchKeyException
+
+2006-08-27  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.Kernel/IntervalHeap.cs: implemented
 	IList<T> (Add, Remove, Contains), optimized heap growing, added
 	Synchronzied(IntervalHeap<T>) to get a synchronizable IntervalHeap<T>

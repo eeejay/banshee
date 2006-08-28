@@ -405,8 +405,11 @@ namespace Banshee.Gui.Dialogs
             if(writeToDatabase) {
                 track.Track.Save();
                 
-                if((bool)Globals.Configuration.Get(GConfKeys.WriteMetadata)) {
-                    SaveToFile(track);
+                try {
+                    if((bool)Globals.Configuration.Get(GConfKeys.WriteMetadata)) {
+                        SaveToFile(track);
+                    }
+                } catch(GConf.NoSuchKeyException) {
                 }
             }
                 
