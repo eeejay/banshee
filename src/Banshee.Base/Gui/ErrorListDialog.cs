@@ -40,25 +40,79 @@ namespace Banshee.Gui
         [Widget] private Label message_label;
         [Widget] private TreeView list_view;
         [Widget] private Image icon_image;
+        [Widget] private Expander details_expander;
         
         private ListStore simple_model;
+        private AccelGroup accel_group;
         
         public ErrorListDialog() : base("ErrorListDialog")
         {
-            list_view.SetSizeRequest(-1, 100);
+            accel_group = new AccelGroup();
+		    Dialog.AddAccelGroup(accel_group);
+		    
+            list_view.SetSizeRequest(-1, 120);
+            details_expander.Activated += delegate {
+                ConfigureGeometry();
+            };
+            
+            Dialog.Realized += delegate {
+                ConfigureGeometry();
+            };
         }
         
+        private void ConfigureGeometry()
+        {
+            Gdk.Geometry limits = new Gdk.Geometry();
+            
+            limits.MinWidth = Dialog.SizeRequest().Width;
+            limits.MaxWidth = Gdk.Screen.Default.Width;
+            
+            if(details_expander.Expanded) {
+                limits.MinHeight = Dialog.SizeRequest().Height + list_view.SizeRequest().Height;
+                limits.MaxHeight = Gdk.Screen.Default.Height;
+            } else {
+                limits.MinHeight = -1;
+                limits.MaxHeight = -1;
+            }
+            
+            Dialog.SetGeometryHints(Dialog, limits, 
+                Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
+        }
+
         public void AddButton(string message, ResponseType response)
         {
-            Dialog.AddButton(message, response);
+            AddButton(message, response, false);
         }
         
         public void AddStockButton(string stock, ResponseType response)
         {
-            Button button = new Gtk.Button(stock);
-            button.UseStock = true;
+            AddStockButton(stock, response, false);
+        }
+
+        public void AddButton(string message, ResponseType response, bool isDefault)
+        {
+            AddButton(message, response, isDefault, false);
+        }
+
+        public void AddStockButton(string stock, ResponseType response, bool isDefault)
+        {
+            AddButton(stock, response, isDefault, true);
+        }
+        
+        public void AddButton(string message, ResponseType response, bool isDefault, bool isStock)
+        {
+            Button button = new Button(message);
+            button.CanDefault = true;
+            button.UseStock = isStock;
             button.Show();
+
             Dialog.AddActionWidget(button, response);
+
+            if(isDefault) {
+                Dialog.DefaultResponse = response;
+                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Escape, 
+                    0, AccelFlags.Visible);
+            }
         }
         
         public string Header {
@@ -96,6 +150,10 @@ namespace Banshee.Gui
         
         public string IconName {
             set { icon_image.SetFromIconName(value, IconSize.Dialog); }
+        }
+        
+        public string IconNameStock {
+            set { icon_image.SetFromStock(value, IconSize.Dialog); }
         }
         
         public TreeView ListView {

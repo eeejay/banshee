@@ -26,19 +26,26 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
-// TODO: Add Remove(Type), Remove(IJob) to scheduler
- 
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Banshee.Kernel
 {
+    public delegate void JobEventHandler(IJob job);
+
     public static class Scheduler
     {
         private static object this_mutex = new object();
         private static IntervalHeap<IJob> heap = new IntervalHeap<IJob>();
         private static Thread job_thread;
         private static bool disposed;
+        private static IJob current_running_job;
+        
+        public static event JobEventHandler JobStarted;
+        public static event JobEventHandler JobFinished;
+        public static event JobEventHandler JobScheduled;
+        public static event JobEventHandler JobUnscheduled;
         
         public static void Schedule(IJob job)
         {
@@ -48,15 +55,81 @@ namespace Banshee.Kernel
         public static void Schedule(IJob job, JobPriority priority)
         {
             lock(this_mutex) {
-                if(disposed) {
-                    Debug("Job not scheduled; disposing scheduler");
+                if(IsDisposed()) {
                     return;
                 }
                 
                 heap.Push(job, (int)priority);
                 Debug("Job scheduled ({0}, {1})", job, priority);
+                OnJobScheduled(job);
                 CheckRun();
             }
+        }
+
+        public static void Unschedule(IJob job)
+        {
+            lock(this_mutex) {
+                if(IsDisposed()) {
+                    return;
+                }
+                
+                if(heap.Remove(job)) {
+                    Debug("Job unscheduled ({0}), job", job);
+                    OnJobUnscheduled(job);
+                } else {
+                    Debug("Job not unscheduled; not located in heap");
+                }
+            }
+        }
+        
+        public static bool IsScheduled(IJob job)
+        {
+            lock(this_mutex) {
+                if(IsDisposed()) {
+                    return false;
+                }
+                
+                return heap.Contains(job);
+            }
+        }
+        
+        public static bool IsScheduled(Type type)
+        {
+            lock(this_mutex) {
+                if(IsDisposed()) {
+                    return false;
+                }
+                
+                foreach(IJob job in heap) {
+                    if(job.GetType() == type) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+        }
+        
+        public static bool IsInstanceCriticalJobScheduled {
+            get {
+                lock(this_mutex) {
+                    if(IsDisposed()) {
+                        return false;
+                    }
+                    
+                    foreach(IJob job in heap) {
+                        if(job is IInstanceCriticalJob) {
+                            return true;
+                        }
+                    }
+                    
+                    return false;
+                }
+            }
+        }
+        
+        public static IEnumerable<IJob> ScheduledJobs {
+            get { lock(this_mutex) { return heap; } }
         }
         
         public static void Dispose()
@@ -64,6 +137,16 @@ namespace Banshee.Kernel
             lock(this_mutex) {
                 disposed = true;
             }
+        }
+        
+        private static bool IsDisposed()
+        {
+            if(disposed) {
+                Debug("Job not unscheduled; disposing scheduler");
+                return true;
+            }
+            
+            return false;
         }
         
         private static void CheckRun()
@@ -82,7 +165,8 @@ namespace Banshee.Kernel
         private static void ProcessJobThread()
         {
             while(true) {
-                IJob job = null;
+                current_running_job = null;
+                
                 lock(this_mutex) {
                     if(disposed) {
                         Console.WriteLine("execution thread destroyed, dispose requested");
@@ -90,7 +174,7 @@ namespace Banshee.Kernel
                     }
                 
                     try {
-                        job = heap.Pop();
+                        current_running_job = heap.Pop();
                     } catch(InvalidOperationException) {
                         Debug("execution thread destroyed, no more jobs scheduled");
                         job_thread = null;
@@ -99,12 +183,50 @@ namespace Banshee.Kernel
                 }
                 
                 try {
-                    Debug("Job started ({0})", job);
-                    job.Run();
-                    Debug("Job ended ({0})", job);
+                    Debug("Job started ({0})", current_running_job);
+                    OnJobStarted(current_running_job);
+                    current_running_job.Run();
+                    Debug("Job ended ({0})", current_running_job);
+                    OnJobFinished(current_running_job);
                 } catch(Exception e) {
                     Debug("Job threw an unhandled exception: {0}", e);
                 }
+            }
+        }
+        
+        public static IJob CurrentJob {
+            get { return current_running_job; }
+        }
+        
+        private static void OnJobStarted(IJob job)
+        {
+            JobEventHandler handler = JobStarted;
+            if(handler != null) {
+                handler(job);
+            }
+        }
+        
+        private static void OnJobFinished(IJob job)
+        {
+            JobEventHandler handler = JobFinished;
+            if(handler != null) {
+                handler(job);
+            }
+        }
+        
+        private static void OnJobScheduled(IJob job)
+        {
+            JobEventHandler handler = JobScheduled;
+            if(handler != null) {
+                handler(job);
+            }
+        }
+        
+        private static void OnJobUnscheduled(IJob job)
+        {
+            JobEventHandler handler = JobUnscheduled;
+            if(handler != null) {
+                handler(job);
             }
         }
         

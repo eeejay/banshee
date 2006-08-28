@@ -66,6 +66,7 @@ BANSHEE_GUI_DRAGDROP_SOURCES = \
 BANSHEE_KERNEL_SOURCES = \
 	$(srcdir)/Banshee.Kernel/IntervalHeap.cs \
 	$(srcdir)/Banshee.Kernel/IJob.cs \
+	$(srcdir)/Banshee.Kernel/IInstanceCriticalJob.cs \
 	$(srcdir)/Banshee.Kernel/Job.cs \
 	$(srcdir)/Banshee.Kernel/JobPriority.cs \
 	$(srcdir)/Banshee.Kernel/Scheduler.cs
@@ -97,7 +98,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/VersionInformationDialog.cs \
 	$(srcdir)/Gui/ToggleStates.cs \
 	$(srcdir)/Gui/RatingRenderer.cs \
-	$(srcdir)/Gui/TrackEditor.cs
+	$(srcdir)/Gui/TrackEditor.cs \
+	$(srcdir)/Gui/ConfirmShutdownDialog.cs 
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \

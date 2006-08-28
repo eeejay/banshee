@@ -167,7 +167,7 @@ namespace Banshee.Kernel
             return new IntervalHeapEnumerator(this);
         }
         
-        public IntervalHeap<T> Synchronized(IntervalHeap<T> heap)
+        public static IntervalHeap<T> Synchronized(IntervalHeap<T> heap)
         {
             if(heap == null) {
                 throw new ArgumentNullException("heap");

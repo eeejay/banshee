@@ -1,3 +1,31 @@
+2006-08-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Gui/ConfirmShutdownDialog.cs: New dialog that is shown
+	on shutdown if there are IInstanceCriticalJobs in the scheduler
+
+	* src/Banshee.Base/Banshee.Kernel/IInstanceCriticalJob.cs: New
+
+	* src/Banshee.Base/Gui/ErrorListDialog.cs: Added expander
+
+	* src/Banshee.Base/Banshee.Kernel/Scheduler.cs: Scheduler is now 
+	eventful and queryable 
+
+	* src/Banshee.Base/Banshee.Kernel/IntervalHeap.cs: Minor API fix
+
+	* data/banshee-dialogs.glade: Added expander to ErrorListDialog
+
+	* src/PlayerInterface.cs: Connect to Globals.ShutdownRequested, perform
+	user interface shutdown sequence when event is raised
+
+	* src/Banshee.Base/Globals.cs: Added ShutdownRequested event support
+	and new Shutdown method that checks to see if the scheduler has any
+	instance critical jobs scheduled
+
+	* src/Banshee.Base/Makefile.am: Added new files
+
+	* src/Banshee.Base/StreamTagger.cs: Make the SaveTrackMetadataJob 
+	an IInstanceCriticalJob
+
 2006-08-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Gui/TrackEditor.cs (SaveTrack): catch 

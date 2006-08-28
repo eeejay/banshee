@@ -27,6 +27,7 @@
  */
  
 using System;
+using Mono.Unix;
 
 namespace Banshee.Base
 {
@@ -144,9 +145,13 @@ namespace Banshee.Base
         }
     }
     
-    public class SaveTrackMetadataJob : Banshee.Kernel.IJob
+    public class SaveTrackMetadataJob : Banshee.Kernel.IInstanceCriticalJob
     {
         private TrackInfo track;
+        
+        public string Name {
+            get { return String.Format(Catalog.GetString("Saving tags for {0}"), track.Title); }
+        }
         
         public SaveTrackMetadataJob(TrackInfo track)
         {

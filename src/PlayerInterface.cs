@@ -144,6 +144,8 @@ namespace Banshee
             banshee_dbus_object = new RemotePlayer(Window, this);
             Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
             
+            Globals.ShutdownRequested += OnShutdownRequested; 
+            
             PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
             PlayerEngineCore.StateChanged += OnPlayerEngineStateChanged;
 
@@ -635,15 +637,20 @@ namespace Banshee
         
         // ---- Misc. Utility Routines ----
       
-        public void Quit()
+        private bool OnShutdownRequested()
         {
             ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
             PlayerEngineCore.Dispose();
             Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
             Globals.DBusRemote.UnregisterObject(banshee_dbus_object);
-            Globals.Dispose();
             Application.Quit();
+            return true;
+        }
+      
+        private void Quit()
+        {
+            Globals.Shutdown();
         }
 
         public void UpdateMetaDisplay()

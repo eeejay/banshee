@@ -32,6 +32,8 @@ using GConf;
 
 namespace Banshee.Base
 {
+    public delegate bool ShutdownRequestHandler();
+
     public static class Globals
     {
         private static GConf.Client gconf_client;
@@ -44,6 +46,8 @@ namespace Banshee.Base
         private static DBusRemote dbus_remote;
         private static Banshee.Gui.UIManager ui_manager;
         private static ComponentInitializer startup = new ComponentInitializer();
+        
+        public static event ShutdownRequestHandler ShutdownRequested;
         
         public static void Initialize()
         {
@@ -87,7 +91,40 @@ namespace Banshee.Base
             action_manager.LoadInterface();
         }
         
-        public static void Dispose()
+        public static void Shutdown()
+        {
+            if(Banshee.Kernel.Scheduler.IsScheduled(typeof(Banshee.Kernel.IInstanceCriticalJob)) ||
+                Banshee.Kernel.Scheduler.CurrentJob is Banshee.Kernel.IInstanceCriticalJob) {
+                Banshee.Gui.Dialogs.ConfirmShutdownDialog dialog = new Banshee.Gui.Dialogs.ConfirmShutdownDialog();
+                try {
+                    if(dialog.Run() == Gtk.ResponseType.Cancel) {
+                        return;
+                    }
+                } finally {
+                    dialog.Destroy();
+                }
+            }
+            
+            if(OnShutdownRequested()) {
+                Dispose();
+            }
+        }
+        
+        private static bool OnShutdownRequested()
+        {
+            ShutdownRequestHandler handler = ShutdownRequested;
+            if(handler != null) {
+                foreach(Delegate d in handler.GetInvocationList()) {
+                    if(!(bool)d.DynamicInvoke(null)) {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        private static void Dispose()
         {
             Banshee.Kernel.Scheduler.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
