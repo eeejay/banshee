@@ -1,3 +1,7 @@
+2006-09-01  Aaron Bockover  <abock@gnome.org>
+
+	* taglib-sharp: Updated with latest fixes
+
 2006-08-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Gui/ConfirmShutdownDialog.cs: New dialog that is shown
