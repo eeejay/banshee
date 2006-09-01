@@ -502,7 +502,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkButton" id="EnterNextTrack">
+			<widget class="GtkButton" id="EnterNextTitle">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Enter Next</property>

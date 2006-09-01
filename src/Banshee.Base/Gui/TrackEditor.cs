@@ -98,6 +98,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button AlbumSync;
         [Widget] private Button YearSync;
         [Widget] private Button GenreSync;
+        [Widget] private Button EnterNextTitle;
         [Widget] private SpinButton TrackCount;
         [Widget] private SpinButton TrackNumber;
         [Widget] private Entry Year;
@@ -144,10 +145,12 @@ namespace Banshee.Gui.Dialogs
             GenreSync.Clicked += OnGenreSyncClicked;
             YearSync.Clicked += OnYearSyncClicked;
             SyncAll.Clicked += OnSyncAllClicked;
+            EnterNextTitle.Clicked += OnEnterNextTitleClicked;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
             Title.Changed += OnValueEdited;
+            Title.Activated += OnTitleActivated;
             Year.Changed += OnValueEdited;
             Genre.Entry.Changed += OnValueEdited;
             ListStore genre_model = new ListStore(typeof(string));
@@ -272,6 +275,7 @@ namespace Banshee.Gui.Dialogs
             
             Previous.Sensitive = index > 0;
             Next.Sensitive = index < TrackSet.Count - 1;
+            EnterNextTitle.Sensitive = Next.Sensitive;
         }
         
         private void OnPreviousClicked(object o, EventArgs args)
@@ -351,6 +355,20 @@ namespace Banshee.Gui.Dialogs
         {
             foreach(EditorTrack track in TrackSet) {
                 track.Genre = Genre.Entry.Text;
+            }
+        }
+        
+        private void OnEnterNextTitleClicked(object o, EventArgs args)
+        {
+            OnNextClicked(o, args);
+            Title.HasFocus = true;
+            Title.SelectRegion(0, Title.Text.Length);
+        }
+        
+        private void OnTitleActivated(object o, EventArgs args)
+        {
+            if(EnterNextTitle.Sensitive) {
+                OnEnterNextTitleClicked(o, args);
             }
         }
         

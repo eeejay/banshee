@@ -1,5 +1,11 @@
 2006-09-01  Aaron Bockover  <abock@gnome.org>
 
+	* data/banshee-dialogs.glade: Renamed a widget
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Implemented EnterNextTitle
+
+2006-09-01  Aaron Bockover  <abock@gnome.org>
+
 	* taglib-sharp: Updated with latest fixes
 
 2006-08-28  Aaron Bockover  <abock@gnome.org>
