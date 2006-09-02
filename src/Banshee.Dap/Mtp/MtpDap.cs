@@ -46,7 +46,7 @@ namespace Banshee.Dap.Mtp
 {
     [DapProperties(DapType = DapType.NonGeneric)]
     [SupportedCodec(CodecType.Mp3)]
-    [SupportedCodec(CodecType.Wav)]
+//    [SupportedCodec(CodecType.Wav)]
     [SupportedCodec(CodecType.Wma)]
 
     public sealed class MtpDap : DapDevice, IImportable

@@ -1,3 +1,9 @@
+2006-09-02  Patrick van Staveren  <trick@cvs.gnome.org>
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: Removed Wav as a valid filetype, as
+	for some reason some songs would not get transcoded on sync and send as
+	Wavs rather than mp3.
+
 2006-09-01  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee-dialogs.glade: Renamed a widget
