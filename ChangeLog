@@ -1,3 +1,10 @@
+2006-09-02  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.pc.in: Replaced entagged-sharp with taglib-sharp (plugins
+	will build again)
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Minor fixes
+
 2006-09-02  Patrick van Staveren  <trick@cvs.gnome.org>
 
 	* src/Banshee.Dap/Mtp/MtpDap.cs: Removed Wav as a valid filetype, as

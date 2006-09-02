@@ -58,10 +58,10 @@ namespace Banshee.Gui.Dialogs
         
         public void Revert()
         {
-            Artist = track.Artist;
-            Album = track.Album;
-            Title = track.Title;
-            Genre = track.Genre;
+            Artist = track.Artist == null ? String.Empty : track.Artist;
+            Album = track.Album == null ? String.Empty : track.Album;
+            Title = track.Title == null ? String.Empty : track.Title;
+            Genre = track.Genre == null ? String.Empty : track.Genre;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
             Year = track.Year;
@@ -172,6 +172,7 @@ namespace Banshee.Gui.Dialogs
             AlbumSync.Visible = TrackSet.Count > 1;
             GenreSync.Visible = TrackSet.Count > 1;
             YearSync.Visible = TrackSet.Count > 1;
+            EnterNextTitle.Visible = TrackSet.Count > 1;
             Glade["SyncAllAlignment"].Visible = TrackSet.Count > 1;
 
             tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically set all track numbers in increasing order"), "track iterator");
