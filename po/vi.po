@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: banshee Gnome HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-28 10:09+0200\n"
-"PO-Revision-Date: 2006-08-28 18:43+0930\n"
+"POT-Creation-Date: 2006-09-02 02:45+0200\n"
+"PO-Revision-Date: 2006-09-02 17:58+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -280,225 +280,234 @@ msgid "<b>Channels:</b>"
 msgstr "<b>Kênh:</b>"
 
 #: ../data/banshee-dialogs.glade.h:8
+msgid "<b>Details</b>"
+msgstr "<b>Chi tiết</b>"
+
+#: ../data/banshee-dialogs.glade.h:9
 msgid "<b>Digital Audio Player</b>"
 msgstr "<b>Bộ Phát Âm Thanh Số</b>"
 
-#: ../data/banshee-dialogs.glade.h:9
+#: ../data/banshee-dialogs.glade.h:10
 msgid "<b>Duration:</b>"
 msgstr "<b>Thời lượng:</b>"
 
-#: ../data/banshee-dialogs.glade.h:10
+#: ../data/banshee-dialogs.glade.h:11
 msgid "<b>File name:</b>"
 msgstr "<b>Tên tập tin:</b>"
 
-#: ../data/banshee-dialogs.glade.h:11
+#: ../data/banshee-dialogs.glade.h:12
 msgid "<b>File size:</b>"
 msgstr "<b>Cỡ tập tin:</b>"
 
-#: ../data/banshee-dialogs.glade.h:12
+#: ../data/banshee-dialogs.glade.h:13
 msgid "<b>Imported on:</b>"
 msgstr "<b>Nhập vào ngày:</b>"
 
-#: ../data/banshee-dialogs.glade.h:13
+#: ../data/banshee-dialogs.glade.h:14
 msgid "<b>Last played:</b>"
 msgstr "<b>Phát lần cuối:</b>"
 
-#: ../data/banshee-dialogs.glade.h:14
+#: ../data/banshee-dialogs.glade.h:15
 msgid "<b>Location:</b>"
 msgstr "<b>Địa chỉ:</b>"
 
-#: ../data/banshee-dialogs.glade.h:15
+#: ../data/banshee-dialogs.glade.h:16
 msgid "<b>Music Library</b>"
 msgstr "<b>Thư viện nhạc</b>"
 
-#: ../data/banshee-dialogs.glade.h:16
+#: ../data/banshee-dialogs.glade.h:17
 msgid "<b>Play count:</b>"
 msgstr "<b>Tổng phát:</b>"
 
-#: ../data/banshee-dialogs.glade.h:17
+#: ../data/banshee-dialogs.glade.h:18
 msgid "<b>Sample rate:</b>"
 msgstr "<b>Tỷ lệ lấy mẫu :</b>"
 
-#: ../data/banshee-dialogs.glade.h:18
+#: ../data/banshee-dialogs.glade.h:19
 msgid "<b>Session Information</b>"
 msgstr "<b>Thông tin phiên chạy</b>"
 
-#: ../data/banshee-dialogs.glade.h:19
+#: ../data/banshee-dialogs.glade.h:20
 msgid "<b>Track _count:</b>"
 msgstr "<b>Tổng _rãnh:</b>"
 
-#: ../data/banshee-dialogs.glade.h:20
+#: ../data/banshee-dialogs.glade.h:21
 msgid "<b>Track _number:</b>"
 msgstr "<b>Số rã_nh:</b>"
 
-#: ../data/banshee-dialogs.glade.h:21
+#: ../data/banshee-dialogs.glade.h:22
 msgid "<b>Write Options</b>"
 msgstr "<b>Tùy chọn ghi</b>"
 
-#: ../data/banshee-dialogs.glade.h:22
+#: ../data/banshee-dialogs.glade.h:23
 msgid "<b>_Artist:</b>"
 msgstr "<b>Nhạc _sĩ:</b>"
 
-#: ../data/banshee-dialogs.glade.h:23
+#: ../data/banshee-dialogs.glade.h:24
 msgid "<b>_Genre:</b>"
 msgstr "<b>_Loại:</b>"
 
-#: ../data/banshee-dialogs.glade.h:24
+#: ../data/banshee-dialogs.glade.h:25
 msgid "<b>_Title:</b>"
 msgstr "<b>_Tựa:</b>"
 
-#: ../data/banshee-dialogs.glade.h:25
+#: ../data/banshee-dialogs.glade.h:26
 msgid "<b>_Year:</b>"
 msgstr "<b>_Năm:</b>"
 
-#: ../data/banshee-dialogs.glade.h:26
+#: ../data/banshee-dialogs.glade.h:27
 msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Nhập nhạc vào thư viện</b></big>"
 
-#: ../data/banshee-dialogs.glade.h:27
+#: ../data/banshee-dialogs.glade.h:28
 msgid ""
 "<small><i>Enable this option to save tags and other metadata inside "
 "supported audio files</i></small>"
-msgstr "<small><i>Bật tùy chọn này để lưu các thẻ và siêu dữ liệu khác bên trong tập tin âm thanh đã hỗ trợ</i></small>"
+msgstr "<small><i>Bật tùy chọn này để lưu các thẻ và siêu dữ liệu khác bên trong tập "
+"tin âm thanh đã hỗ trợ</i></small>"
 
-#: ../data/banshee-dialogs.glade.h:28
+#: ../data/banshee-dialogs.glade.h:29
 msgid "Back"
 msgstr "Lùi"
 
-#: ../data/banshee-dialogs.glade.h:29
+#: ../data/banshee-dialogs.glade.h:30
 msgid "Choose an import source:"
 msgstr "Chọn nguồn nhập:"
 
-#: ../data/banshee-dialogs.glade.h:30
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Conversion Format:"
 msgstr "Dạng thức chuyển đổi:"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:32
 msgid "Copy all common fields"
 msgstr "Chép các trường chung"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Copy files to music folder when importing"
 msgstr "Sao chép tập tin vào thư mục âm nhạc khi nhập khẩu"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Create a new preset"
 msgstr "Tạo định sẵn mới"
 
-#: ../data/banshee-dialogs.glade.h:34
+#: ../data/banshee-dialogs.glade.h:35
 msgid "Delete the active preset"
 msgstr "Xoá bỏ định sẵn hoạt động"
 
-#: ../data/banshee-dialogs.glade.h:35
+#: ../data/banshee-dialogs.glade.h:36
 msgid "Details"
 msgstr "Chi tiết"
 
-#: ../data/banshee-dialogs.glade.h:36
+#: ../data/banshee-dialogs.glade.h:37
 msgid "Disc Options"
 msgstr "Tùy chọn đĩa"
 
-#: ../data/banshee-dialogs.glade.h:37
+#: ../data/banshee-dialogs.glade.h:38
 msgid "Disc format:"
 msgstr "Dạng thức đĩa:"
 
-#: ../data/banshee-dialogs.glade.h:38
+#: ../data/banshee-dialogs.glade.h:39
 msgid "Disc name:"
 msgstr "Tên đĩa:"
 
-#: ../data/banshee-dialogs.glade.h:39
+#: ../data/banshee-dialogs.glade.h:40
 msgid "Do not show this dialog again"
 msgstr "Đừng hiện hộp thoại này lần nữa"
 
-#: ../data/banshee-dialogs.glade.h:40
+#: ../data/banshee-dialogs.glade.h:41
 msgid "Eject disc after writing"
 msgstr "Đẩy đĩa ra sau khi ghi"
 
-#: ../data/banshee-dialogs.glade.h:41
+#: ../data/banshee-dialogs.glade.h:42
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
 msgid "Enabled"
 msgstr "Đã bật"
 
-#: ../data/banshee-dialogs.glade.h:42
+#: ../data/banshee-dialogs.glade.h:43
+msgid "Enter Next"
+msgstr "Vào kế"
+
+#: ../data/banshee-dialogs.glade.h:44
 msgid "Enter the address of the file you would like to open:"
 msgstr "Hãy nhập địa chỉ của tập tin bạn muốn mở :"
 
-#: ../data/banshee-dialogs.glade.h:43
+#: ../data/banshee-dialogs.glade.h:45
 #: ../src/Banshee.Base/ActionManager.cs:140
 msgid "Equalizer"
 msgstr "Bộ trộn tần số"
 
-#: ../data/banshee-dialogs.glade.h:44
+#: ../data/banshee-dialogs.glade.h:46
 msgid "Error"
 msgstr "Lỗi"
 
-#: ../data/banshee-dialogs.glade.h:45
+#: ../data/banshee-dialogs.glade.h:47
 msgid "Forward"
 msgstr "Tới"
 
-#: ../data/banshee-dialogs.glade.h:46
+#: ../data/banshee-dialogs.glade.h:48
 msgid "Import Music Source"
 msgstr "Nhập nguồn nhạc"
 
-#: ../data/banshee-dialogs.glade.h:47
+#: ../data/banshee-dialogs.glade.h:49
 msgid "Import Music to Library"
 msgstr "Nhập nhạc vào Thư viện"
 
-#: ../data/banshee-dialogs.glade.h:48
+#: ../data/banshee-dialogs.glade.h:50
 msgid "Metadata"
 msgstr "Siêu dữ liệu"
 
-#: ../data/banshee-dialogs.glade.h:49
+#: ../data/banshee-dialogs.glade.h:51
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Mở địa điểm"
 
-#: ../data/banshee-dialogs.glade.h:50
+#: ../data/banshee-dialogs.glade.h:52
 msgid "Output Format:"
 msgstr "Dạng thức xuất:"
 
-#: ../data/banshee-dialogs.glade.h:51
+#: ../data/banshee-dialogs.glade.h:53
 msgid "Preferences"
 msgstr "Tùy thích"
 
-#: ../data/banshee-dialogs.glade.h:52
+#: ../data/banshee-dialogs.glade.h:54
 msgid "Reset"
 msgstr "Đặt lại"
 
-#: ../data/banshee-dialogs.glade.h:53
+#: ../data/banshee-dialogs.glade.h:55
 msgid "Seek to Position"
 msgstr "Tìm nơi"
 
-#: ../data/banshee-dialogs.glade.h:54
+#: ../data/banshee-dialogs.glade.h:56
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Banshee.Base/Dap/Dap.cs:605
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:232
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:247
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:267
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:268
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:269
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:235
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:250
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:270
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:272
 msgid "Unknown"
 msgstr "Không rõ"
 
-#: ../data/banshee-dialogs.glade.h:55
+#: ../data/banshee-dialogs.glade.h:57
 msgid "Write disc to:"
 msgstr "Ghi đĩa vào :"
 
-#: ../data/banshee-dialogs.glade.h:56
+#: ../data/banshee-dialogs.glade.h:58
 msgid "Write metadata to files"
 msgstr "Ghi siêu dữ liệu vào tập tin"
 
-#: ../data/banshee-dialogs.glade.h:57
+#: ../data/banshee-dialogs.glade.h:59
 msgid "Write speed:"
 msgstr "Tốc độ ghi:"
 
-#: ../data/banshee-dialogs.glade.h:58
+#: ../data/banshee-dialogs.glade.h:60
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
 msgstr "Thư viện âm nhạc của bạn là rỗng. Lúc này bạn có thể nhập âm nhạc mới vào "
 "thư viện, hoặc chọn làm như thế sau này."
 
-#: ../data/banshee-dialogs.glade.h:59
+#: ../data/banshee-dialogs.glade.h:61
 msgid "_Write"
 msgstr "_Ghi"
 
@@ -607,7 +616,7 @@ msgstr "_Nhạc"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1553
+#: ../src/PlayerInterface.cs:1560
 msgid "New Playlist"
 msgstr "Danh mục nhạc mới"
 
@@ -893,8 +902,8 @@ msgid "Import audio CD to library"
 msgstr "Nhập đĩa CD âm thanh vào Thư viện"
 
 #: ../src/Banshee.Base/ActionManager.cs:258
-#: ../src/PlayerInterface.cs:817
-#: ../src/PlayerInterface.cs:825
+#: ../src/PlayerInterface.cs:824
+#: ../src/PlayerInterface.cs:832
 msgid "Play"
 msgstr "Phát"
 
@@ -987,7 +996,7 @@ msgid "Restart the current song"
 msgstr "Bắt đầu lại phát bài hát hiện có"
 
 #: ../src/Banshee.Base/ActionManager.cs:318
-#: ../src/PlayerInterface.cs:1068
+#: ../src/PlayerInterface.cs:1075
 msgid "Synchronize"
 msgstr "Đồng bộ"
 
@@ -1464,45 +1473,46 @@ msgstr "Chọn vị trí thư viện"
 msgid "Continuous"
 msgstr "Liên tục"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:174
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:177
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Đặt tự động mọi số hiệu rãnh theo thứ tự tăng dần"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:175
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
 msgid "Set all track counts to this value"
 msgstr "Đặt mọi số đếm rãnh thành giá trị này"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:176
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
 msgid "Set all artists to this value"
 msgstr "Đặt mọi nhạc sĩ thành giá trị này"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:177
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
 msgid "Set all albums to this value"
 msgstr "Đặt mọi tập nhạc thành giá trị này"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:181
 msgid "Set all genres to this value"
 msgstr "Đặt mọi thể loại thành giá trị này"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:182
 msgid "Set all years to this value"
 msgstr "Đặt mọi năm thành giá trị này"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:183
 msgid ""
 "Set all common fields in all selected tracks to the values currently set"
-msgstr "Đặt mọi trường chung trong mọi rãnh đã chọn thành những giá trị được chọn hiện thời"
+msgstr "Đặt mọi trường chung trong mọi rãnh đã chọn thành những giá trị được chọn "
+"hiện thời"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:230
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:233
 msgid "Never played"
 msgstr "Chưa phát"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:235
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:238
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Đang soạn thảo bài hát {0} trên {1}"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:236
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:239
 #, csharp-format
 msgid "Editing {0}"
 msgstr "Đang soạn thảo {0}"
@@ -2245,93 +2255,93 @@ msgstr "Đang tìm kiếm: {0}"
 msgid "Idle"
 msgstr "Nghỉ"
 
-#: ../src/PlayerInterface.cs:375
+#: ../src/PlayerInterface.cs:377
 msgid "Loading..."
 msgstr "Đang tải..."
 
-#: ../src/PlayerInterface.cs:431
+#: ../src/PlayerInterface.cs:433
 msgid "All"
 msgstr "Tất cả"
 
-#: ../src/PlayerInterface.cs:433
-#: ../src/PlayerInterface.cs:1312
+#: ../src/PlayerInterface.cs:435
+#: ../src/PlayerInterface.cs:1319
 msgid "Song Name"
 msgstr "Tên bài hát"
 
-#: ../src/PlayerInterface.cs:434
-#: ../src/PlayerInterface.cs:1310
-#: ../src/PlayerInterface.cs:2283
+#: ../src/PlayerInterface.cs:436
+#: ../src/PlayerInterface.cs:1317
+#: ../src/PlayerInterface.cs:2290
 msgid "Artist Name"
 msgstr "Tên nhạc sĩ"
 
-#: ../src/PlayerInterface.cs:435
-#: ../src/PlayerInterface.cs:1314
-#: ../src/PlayerInterface.cs:2279
+#: ../src/PlayerInterface.cs:437
+#: ../src/PlayerInterface.cs:1321
+#: ../src/PlayerInterface.cs:2286
 msgid "Album Title"
 msgstr "Tên tập"
 
-#: ../src/PlayerInterface.cs:436
-#: ../src/PlayerInterface.cs:1316
-#: ../src/PlayerInterface.cs:2287
+#: ../src/PlayerInterface.cs:438
+#: ../src/PlayerInterface.cs:1323
+#: ../src/PlayerInterface.cs:2294
 #: ../src/PlaylistView.cs:106
 msgid "Genre"
 msgstr "Thể loại"
 
-#: ../src/PlayerInterface.cs:437
-#: ../src/PlayerInterface.cs:1318
+#: ../src/PlayerInterface.cs:439
+#: ../src/PlayerInterface.cs:1325
 #: ../src/PlaylistView.cs:109
 msgid "Year"
 msgstr "Năm"
 
-#: ../src/PlayerInterface.cs:458
+#: ../src/PlayerInterface.cs:460
 msgid "Write selection to CD"
 msgstr "Ghi vùng chọn vào đĩa CD"
 
-#: ../src/PlayerInterface.cs:459
+#: ../src/PlayerInterface.cs:461
 msgid "Import CD into library"
 msgstr "Nhập đĩa CD vào Thư viện"
 
-#: ../src/PlayerInterface.cs:460
+#: ../src/PlayerInterface.cs:462
 msgid "Play previous song"
 msgstr "Phát bài trước đó"
 
-#: ../src/PlayerInterface.cs:461
+#: ../src/PlayerInterface.cs:463
 msgid "Play/pause current song"
 msgstr "Phát/tạm dừng bài hát hiện có"
 
-#: ../src/PlayerInterface.cs:462
+#: ../src/PlayerInterface.cs:464
 msgid "Play next song"
 msgstr "Phát bài kế tiếp"
 
-#: ../src/PlayerInterface.cs:463
+#: ../src/PlayerInterface.cs:465
 msgid "Device disk usage"
 msgstr "Cách dùng đĩa"
 
-#: ../src/PlayerInterface.cs:464
+#: ../src/PlayerInterface.cs:466
 msgid "Synchronize music library to device"
 msgstr "Đồng bộ hoá thư viện âm nhạc với thiết bị"
 
-#: ../src/PlayerInterface.cs:465
+#: ../src/PlayerInterface.cs:467
 msgid "Adjust volume"
 msgstr "Chỉnh âm lượng"
 
-#: ../src/PlayerInterface.cs:466
+#: ../src/PlayerInterface.cs:468
 msgid "Change repeat playback mode"
 msgstr "Thay đổi chế độ phát lặp lại"
 
-#: ../src/PlayerInterface.cs:467
+#: ../src/PlayerInterface.cs:469
 msgid "Toggle shuffle playback mode"
 msgstr "Bật tắt chế độ phát lại trộn bài"
 
-#: ../src/PlayerInterface.cs:468
+#: ../src/PlayerInterface.cs:470
 msgid "Edit and view metadata of selected songs"
 msgstr "Sửa đổi và xem siêu dữ liệu của các bài hát đã chọn"
 
-#: ../src/PlayerInterface.cs:807
+#: ../src/PlayerInterface.cs:814
 msgid "Cannot Play Song"
 msgstr "Không thể phát bài hát"
 
-#: ../src/PlayerInterface.cs:808
+#: ../src/PlayerInterface.cs:815
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2343,75 +2353,75 @@ msgstr "{0} không thể được phát bằng Banshee. Những lý do thường
 "  <big>•</big> Bài hát bị bảo vệ (DRM)\n"
 "  <big>•</big> Bài hát nằm trên DAP không hỗ trợ khả năng phát lại.\n"
 
-#: ../src/PlayerInterface.cs:828
+#: ../src/PlayerInterface.cs:835
 msgid "Pause"
 msgstr "Tạm dừng"
 
-#: ../src/PlayerInterface.cs:862
+#: ../src/PlayerInterface.cs:869
 msgid "Playback Error"
 msgstr "Lỗi phát lại"
 
-#: ../src/PlayerInterface.cs:1057
+#: ../src/PlayerInterface.cs:1064
 msgid "Import"
 msgstr "Nhập"
 
-#: ../src/PlayerInterface.cs:1075
+#: ../src/PlayerInterface.cs:1082
 #, csharp-format
 msgid "Rename {0}"
 msgstr "Thay tên {0}"
 
-#: ../src/PlayerInterface.cs:1196
+#: ../src/PlayerInterface.cs:1203
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} ngày"
 
-#: ../src/PlayerInterface.cs:1213
+#: ../src/PlayerInterface.cs:1220
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} mục"
 
-#: ../src/PlayerInterface.cs:1215
+#: ../src/PlayerInterface.cs:1222
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} Tổng thời gian phát"
 
-#: ../src/PlayerInterface.cs:1572
+#: ../src/PlayerInterface.cs:1579
 msgid "Clear"
 msgstr "Xóa"
 
-#: ../src/PlayerInterface.cs:1839
+#: ../src/PlayerInterface.cs:1846
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Bạn có chắc muốn xoá bỏ hoàn toàn {0} bài hát này không?"
 
-#: ../src/PlayerInterface.cs:1843
+#: ../src/PlayerInterface.cs:1850
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Nếu bạn xoá bỏ vùng chọn này, nó sẽ bị mất hoàn toàn."
 
-#: ../src/PlayerInterface.cs:1846
+#: ../src/PlayerInterface.cs:1853
 msgid "Remove selection from library"
 msgstr "Gỡ bỏ vùng chọn ra thư viện"
 
-#: ../src/PlayerInterface.cs:1848
+#: ../src/PlayerInterface.cs:1855
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Bạn có chắc muốn gỡ bỏ <b>({0})</b> bài hát đã chọn ra thư viện không?"
 
-#: ../src/PlayerInterface.cs:1985
+#: ../src/PlayerInterface.cs:1992
 msgid "New CD"
 msgstr "Đĩa CD mới"
 
 #.Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2006
+#: ../src/PlayerInterface.cs:2013
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Đồng bộ hóa {0}"
 
-#: ../src/PlayerInterface.cs:2007
+#: ../src/PlayerInterface.cs:2014
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2427,18 +2437,18 @@ msgstr "Bạn đã thay đổi {0} của mình. Hãy chọn phương pháp cập
 "<big>•</big> <i>Lưu các thay đổi tự làm</i>: lưu chỉ những thay đổi bạn đã "
 "tự làm."
 
-#: ../src/PlayerInterface.cs:2013
+#: ../src/PlayerInterface.cs:2020
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
 msgstr "<b>Cảnh báo :</b> các hành động này sẽ thay đổi hay xoá bỏ nội dung đã có "
 "trên iPod và có thể gây ra trường hợp không tương thích với trình iTunes !"
 
-#: ../src/PlayerInterface.cs:2015
+#: ../src/PlayerInterface.cs:2022
 msgid "Synchronize Library"
 msgstr "Đồng bộ hoá thư viện"
 
-#: ../src/PlayerInterface.cs:2017
+#: ../src/PlayerInterface.cs:2024
 msgid "Save Manual Changes"
 msgstr "Lưu các thay đổi tự làm"
 
