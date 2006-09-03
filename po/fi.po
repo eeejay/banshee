@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-02 14:12+0300\n"
-"PO-Revision-Date: 2006-09-02 14:12+0300\n"
+"POT-Creation-Date: 2006-09-03 12:14+0300\n"
+"PO-Revision-Date: 2006-09-03 12:13+0300\n"
 "Last-Translator: Joonas Niilola <juippis@roskakori.org>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -492,11 +492,11 @@ msgstr "Siirry kohtaan"
 #: ../data/banshee-dialogs.glade.h:56
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Banshee.Base/Dap/Dap.cs:605
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:235
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:250
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:270
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:236
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:251
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:271
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:272
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:273
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -1485,46 +1485,46 @@ msgstr "Valitse kirjaston sijainti"
 msgid "Continuous"
 msgstr "Jatkuva"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:177
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Aseta kaikki kappalenumerot automaattisesti kasvavaan järjestykseen"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
 msgid "Set all track counts to this value"
 msgstr "Aseta kaikki kappalelaskurit tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
 msgid "Set all artists to this value"
 msgstr "Aseta kaikki esittäjät tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:181
 msgid "Set all albums to this value"
 msgstr "Aseta kaikki levyn nimet tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:181
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:182
 msgid "Set all genres to this value"
 msgstr "Aseta kaikki tyylit tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:182
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:183
 msgid "Set all years to this value"
 msgstr "Aseta kaikki vuodet tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:183
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:184
 msgid ""
 "Set all common fields in all selected tracks to the values currently set"
 msgstr ""
 "Aseta kaikki yleiset kentät valittuihin tiedostoihin nykyisten arvojen mukaan"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:233
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:234
 msgid "Never played"
 msgstr "Ei koskaan soitettu"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:238
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:239
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Muokataan kappaletta {0}/{1}"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:239
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:240
 #, csharp-format
 msgid "Editing {0}"
 msgstr "Muokataan {0}"
@@ -2048,8 +2048,9 @@ msgid ""
 "charts of your listening history."
 msgstr ""
 "Profiilisivusi Last.fm-sivuilla päivitetään automaattisesti aina kun "
-"kuuntelet musiikkia. Näiltä sivuilta muut voivat nähdä mitä kuuntelet nyt ja "
-"sieltä voit nähdä kaavioita soitettamistasi kappaleista."
+"kuuntelet musiikkia. Last.fm-sivuiltasi kaikki voivat seurata mitä kuuntelet "
+"juuri nyt ja lisäksi ne näyttävät listoja aikaisemmin soittamistasi "
+"kappaleista."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:95
 msgid "Audioscrobbler"
