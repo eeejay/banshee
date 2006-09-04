@@ -1,5 +1,10 @@
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Widgets/DiscUsageDisplay.cs: Use a red gradient if the
+	disk is full (BGO #345515)
+
+2006-09-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/SourceView.cs: Show source text in italics if Source.HasEmphasis
 
 	* src/Banshee.Base/Source.cs: Added virtual HasEmphasis source, can be

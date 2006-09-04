@@ -39,8 +39,10 @@ namespace Banshee.Widgets
         private static Color bound_color_b = new Cairo.Color(1, 0xcc / (double)0xff, 0x00, 0.3);
         private static Color disc_color_a = new Cairo.Color(1, 1, 1);
         private static Color disc_color_b = new Cairo.Color(0.95, 0.95, 0.95);
+        private static Color red_color = new Cairo.Color(0xcc / (double)0xff, 0, 0, 0.5);
 
         private RadialGradient bg_gradient;
+        private RadialGradient fg_gradient_full;
         private RadialGradient fg_gradient;
         private RadialGradient bound_gradient;
         
@@ -102,6 +104,10 @@ namespace Banshee.Widgets
             fg_gradient = new RadialGradient(x, y, 0, x, y, radius * 2);
             fg_gradient.AddColorStop(0, fill_color_a);
             fg_gradient.AddColorStop(1, fill_color_b);
+                        
+            fg_gradient_full = new RadialGradient(x, y, 0, x, y, radius);
+            fg_gradient_full.AddColorStop(0, disc_color_b);
+            fg_gradient_full.AddColorStop(1, red_color);
             
             bound_gradient = new RadialGradient(x, y, 0, x, y, radius * 2);
             bound_gradient.AddColorStop(0, bound_color_a);
@@ -153,7 +159,7 @@ namespace Banshee.Widgets
                     cr.Arc(x, y, radius, 0, 2 * Math.PI);
                 }
                 
-                cr.Pattern = fg_gradient;
+                cr.Pattern = Fraction >= 1.0 ? fg_gradient_full : fg_gradient;
                 cr.FillPreserve();
                           
                 cr.Color = stroke_color;
