@@ -1,3 +1,15 @@
+2006-09-04  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs:
+	* src/Banshee.Plugins/Audioscrobbler/Queue.cs: Only run the state machine
+	when a track is ready for submit. Removes a useless idle loop and thus
+	reduces cpu usage.
+
+2006-09-04  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/PlaylistModel.cs: Only call QueueSync when it's needed (rather than
+	every 300ms).
+
 2006-09-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs: 

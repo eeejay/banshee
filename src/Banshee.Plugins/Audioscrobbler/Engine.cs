@@ -42,411 +42,426 @@ using Banshee.Base;
 using Banshee;
 
 namespace Banshee.Plugins.Audioscrobbler {
-	class Engine
-	{
-		enum State {
-			IDLE,
-			NEED_HANDSHAKE,
-			NEED_TRANSMIT,
-			WAITING_FOR_REQ_STREAM,
-			WAITING_FOR_HANDSHAKE_RESP,
-			WAITING_FOR_RESP
-		};
+    class Engine
+    {
+        enum State {
+            IDLE,
+            NEED_HANDSHAKE,
+            NEED_TRANSMIT,
+            WAITING_FOR_REQ_STREAM,
+            WAITING_FOR_HANDSHAKE_RESP,
+            WAITING_FOR_RESP
+        };
 
-		const int TICK_INTERVAL = 2000; /* 2 seconds */
-		const int FAILURE_LOG_MINUTES = 5; /* 5 minute delay on logging failure to upload information */
-		const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
-		const string CLIENT_ID = "bsh";
-		const string CLIENT_VERSION = "0.1";
-		const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
-		const string SCROBBLER_VERSION = "1.1";
+        const int TICK_INTERVAL = 2000; /* 2 seconds */
+        const int FAILURE_LOG_MINUTES = 5; /* 5 minute delay on logging failure to upload information */
+        const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
+        const string CLIENT_ID = "bsh";
+        const string CLIENT_VERSION = "0.1";
+        const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
+        const string SCROBBLER_VERSION = "1.1";
 
-		string username;
-		string md5_pass;
-		string post_url;
-		string security_token;
+        string username;
+        string md5_pass;
+        string post_url;
+        string security_token;
 
-		uint timeout_id;
-		DateTime next_interval;
-		DateTime last_upload_failed_logged;
+        uint timeout_id;
+        DateTime next_interval;
+        DateTime last_upload_failed_logged;
 
-		Queue queue;
+        Queue queue;
 
-		bool song_started; /* if we were watching the current song from the beginning */
-		bool queued; /* if current_track has been queued */
-		bool sought; /* if the user has sought in the current playing song */
+        bool song_started; /* if we were watching the current song from the beginning */
+        bool queued; /* if current_track has been queued */
+        bool sought; /* if the user has sought in the current playing song */
 
-		WebRequest current_web_req;
-		IAsyncResult current_async_result;
-		State state;
-		
-		public Engine ()
-		{
-			timeout_id = 0;
-			state = State.IDLE;
-			queue = new Queue ();
-		}
+        WebRequest current_web_req;
+        IAsyncResult current_async_result;
+        State state;
+        
+        public Engine ()
+        {
+            timeout_id = 0;
+            state = State.IDLE;
+            queue = new Queue ();
+        }
 
-		public void Start ()
-		{
-			song_started = false;
-			PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
-			if (timeout_id == 0) {
-				timeout_id = Timeout.Add (TICK_INTERVAL, StateTransitionHandler);
-			}
-			queue.Load ();
-		}
+        public void Start ()
+        {
+            song_started = false;
+            PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
+            queue.TrackAdded += delegate(object o, EventArgs args) {
+                StartTransitionHandler ();
+            };
+            queue.Load ();
+        }
 
-		public void Stop ()
-		{
-			PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
+        private void StartTransitionHandler ()
+        {
+            if (timeout_id == 0) {
+                timeout_id = Timeout.Add (TICK_INTERVAL, StateTransitionHandler);
+            }
+        }
 
-			if (timeout_id != 0) {
-				GLib.Source.Remove (timeout_id);
-				timeout_id = 0;
-			}
+        public void Stop ()
+        {
+            PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
 
-			if (current_web_req != null) {
-				current_web_req.Abort ();
-			}
+            StopTransitionHandler ();
 
-			queue.Save ();
-		}
+            if (current_web_req != null) {
+                current_web_req.Abort ();
+            }
 
-		public void SetUserPassword (string username, string pass)
-		{
-			if (username == "" || pass == "")
-				return;
+            queue.Save ();
+        }
 
-			this.username = username;
-			this.md5_pass = MD5Encode (pass);
+        private void StopTransitionHandler ()
+        {
+            if (timeout_id != 0) {
+                GLib.Source.Remove (timeout_id);
+                timeout_id = 0;
+            }
+        }
 
-			if (security_token != null) {
-				security_token = null;
-				state = State.NEED_HANDSHAKE;
-			}
-		}
+        public void SetUserPassword (string username, string pass)
+        {
+            if (username == "" || pass == "")
+                return;
 
-		string MD5Encode (string pass)
-		{
-			if(pass == null || pass == String.Empty)
-				return String.Empty;
-				
-			MD5 md5 = MD5.Create ();
+            this.username = username;
+            this.md5_pass = MD5Encode (pass);
 
-			byte[] hash = md5.ComputeHash (Encoding.ASCII.GetBytes (pass));
+            if (security_token != null) {
+                security_token = null;
+                state = State.NEED_HANDSHAKE;
+            }
+        }
 
-			return CryptoConvert.ToHex (hash).ToLower ();
-		}
+        string MD5Encode (string pass)
+        {
+            if(pass == null || pass == String.Empty)
+                return String.Empty;
+                
+            MD5 md5 = MD5.Create ();
 
-		void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
-		{
-			switch (args.Event) {
-				/* Queue if we're watching this song from the beginning,
-				 * it isn't queued yet and the user didn't seek until now,
-				 * we're actually playing, song position and length are greater than 0
-				 * and we already played half of the song or 240 seconds */
-				case PlayerEngineEvent.Iterate:
-					if (song_started && !queued && !sought && PlayerEngineCore.CurrentState == PlayerEngineState.Playing &&
-						PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > 0 &&
-						(PlayerEngineCore.Position > PlayerEngineCore.Length / 2 || PlayerEngineCore.Position > 240)) {
-							TrackInfo track = PlayerEngineCore.CurrentTrack;
-							if (track == null) {
-								queued = sought = false;
-							} else {
-								queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (PlayerEngineCore.Position));
-								queued = true;
-							}
-					}
-					break;
-				/* Start of Stream: new song started */
-				case PlayerEngineEvent.StartOfStream:
-					queued = sought = false;
-					song_started = true;
-					break;
-				/* End of Stream: song finished */
-				case PlayerEngineEvent.EndOfStream:
-					song_started = queued = sought = false;
-					break;
-				/* Did the user seek? */
-				case PlayerEngineEvent.Seek:
-					sought = true;
-					break;
-			}
-		}
+            byte[] hash = md5.ComputeHash (Encoding.ASCII.GetBytes (pass));
 
-		bool StateTransitionHandler()
-		{
-			/* if we're not connected, don't bother doing anything
-			 * involving the network. */
-			if (!Globals.Network.Connected)
-				return true;
+            return CryptoConvert.ToHex (hash).ToLower ();
+        }
 
-			/* and address changes in our engine state */
-			switch (state) {
-			case State.IDLE:
-				if (queue.Count > 0) {
-					if (username != null && md5_pass != null && security_token == null)
-						state = State.NEED_HANDSHAKE;
-					else 
-						state = State.NEED_TRANSMIT;
-				}
-				break;
-			case State.NEED_HANDSHAKE:
-				if (DateTime.Now > next_interval) {
-					Handshake ();
-				}
-				break;
-			case State.NEED_TRANSMIT:
-				if (DateTime.Now > next_interval) {
-					TransmitQueue ();
-				}
-				break;
-			case State.WAITING_FOR_RESP:
-			case State.WAITING_FOR_REQ_STREAM:
-			case State.WAITING_FOR_HANDSHAKE_RESP:
-				/* nothing here */
-				break;
-			}
+        void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
+        {
+            switch (args.Event) {
+                /* Queue if we're watching this song from the beginning,
+                 * it isn't queued yet and the user didn't seek until now,
+                 * we're actually playing, song position and length are greater than 0
+                 * and we already played half of the song or 240 seconds */
+                case PlayerEngineEvent.Iterate:
+                    if (song_started && !queued && !sought && PlayerEngineCore.CurrentState == PlayerEngineState.Playing &&
+                        PlayerEngineCore.Length > 0 && PlayerEngineCore.Position > 0 &&
+                        (PlayerEngineCore.Position > PlayerEngineCore.Length / 2 || PlayerEngineCore.Position > 240)) {
+                            TrackInfo track = PlayerEngineCore.CurrentTrack;
+                            if (track == null) {
+                                queued = sought = false;
+                            } else {
+                                queue.Add (track, DateTime.Now - TimeSpan.FromSeconds (PlayerEngineCore.Position));
+                                queued = true;
+                            }
+                    }
+                    break;
+                /* Start of Stream: new song started */
+                case PlayerEngineEvent.StartOfStream:
+                    queued = sought = false;
+                    song_started = true;
+                    break;
+                /* End of Stream: song finished */
+                case PlayerEngineEvent.EndOfStream:
+                    song_started = queued = sought = false;
+                    break;
+                /* Did the user seek? */
+                case PlayerEngineEvent.Seek:
+                    sought = true;
+                    break;
+            }
+        }
 
-			return true;
-		}
+        bool StateTransitionHandler()
+        {
+            Console.WriteLine("## Running State transition handler");
+            /* if we're not connected, don't bother doing anything
+             * involving the network. */
+            if (!Globals.Network.Connected)
+                return true;
 
-		//
-		// Async code for transmitting the current queue of tracks
-		//
-		class TransmitState {
-			public StringBuilder StringBuilder;
-			public int Count;
-		}
+            /* and address changes in our engine state */
+            switch (state) {
+            case State.IDLE:
+                if (queue.Count > 0) {
+                    if (username != null && md5_pass != null && security_token == null)
+                        state = State.NEED_HANDSHAKE;
+                    else 
+                        state = State.NEED_TRANSMIT;
+                } else {
+                    StopTransitionHandler ();
+                }
+                break;
+            case State.NEED_HANDSHAKE:
+                if (DateTime.Now > next_interval) {
+                    Handshake ();
+                }
+                break;
+            case State.NEED_TRANSMIT:
+                if (DateTime.Now > next_interval) {
+                    TransmitQueue ();
+                }
+                break;
+            case State.WAITING_FOR_RESP:
+            case State.WAITING_FOR_REQ_STREAM:
+            case State.WAITING_FOR_HANDSHAKE_RESP:
+                /* nothing here */
+                break;
+            }
 
-		void TransmitQueue ()
-		{
-			int num_tracks_transmitted;
+            return true;
+        }
 
-			/* save here in case we're interrupted before we complete
-			 * the request.  we save it again when we get an OK back
-			 * from the server */
-			queue.Save ();
+        //
+        // Async code for transmitting the current queue of tracks
+        //
+        class TransmitState {
+            public StringBuilder StringBuilder;
+            public int Count;
+        }
 
-			next_interval = DateTime.MinValue;
+        void TransmitQueue ()
+        {
+            int num_tracks_transmitted;
 
-           		if(post_url == null) {
-				return;
-			}
+            /* save here in case we're interrupted before we complete
+             * the request.  we save it again when we get an OK back
+             * from the server */
+            queue.Save ();
 
-			StringBuilder sb = new StringBuilder ();
+            next_interval = DateTime.MinValue;
 
-			sb.AppendFormat ("u={0}&s={1}", HttpUtility.UrlEncode (username), security_token);
+                   if(post_url == null) {
+                return;
+            }
 
-			sb.Append (queue.GetTransmitInfo (out num_tracks_transmitted));
+            StringBuilder sb = new StringBuilder ();
 
-			current_web_req = WebRequest.Create (post_url);
-			current_web_req.Method = "POST";
-			current_web_req.ContentType = "application/x-www-form-urlencoded";
-			current_web_req.ContentLength = sb.Length;
+            sb.AppendFormat ("u={0}&s={1}", HttpUtility.UrlEncode (username), security_token);
 
-			TransmitState ts = new TransmitState ();
-			ts.Count = num_tracks_transmitted;
-			ts.StringBuilder = sb;
+            sb.Append (queue.GetTransmitInfo (out num_tracks_transmitted));
 
-			state = State.WAITING_FOR_REQ_STREAM;
-			current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
-			if (current_async_result == null) {
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				state = State.IDLE;
-			}
-		}
+            current_web_req = WebRequest.Create (post_url);
+            current_web_req.Method = "POST";
+            current_web_req.ContentType = "application/x-www-form-urlencoded";
+            current_web_req.ContentLength = sb.Length;
 
-		void TransmitGetRequestStream (IAsyncResult ar)
-		{
-			Stream stream;
+            TransmitState ts = new TransmitState ();
+            ts.Count = num_tracks_transmitted;
+            ts.StringBuilder = sb;
 
-			try {
-				stream = current_web_req.EndGetRequestStream (ar);
-			}
-			catch (Exception e) {
-				Console.WriteLine ("Failed to get the request stream: {0}", e);
+            state = State.WAITING_FOR_REQ_STREAM;
+            current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
+            if (current_async_result == null) {
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                state = State.IDLE;
+            }
+        }
 
-				state = State.IDLE;
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				return;
-			}
+        void TransmitGetRequestStream (IAsyncResult ar)
+        {
+            Stream stream;
 
-			TransmitState ts = (TransmitState) ar.AsyncState;
-			StringBuilder sb = ts.StringBuilder;
+            try {
+                stream = current_web_req.EndGetRequestStream (ar);
+            }
+            catch (Exception e) {
+                Console.WriteLine ("Failed to get the request stream: {0}", e);
 
-			StreamWriter writer = new StreamWriter (stream);
-			writer.Write (sb.ToString ());
-			writer.Close ();
+                state = State.IDLE;
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                return;
+            }
 
-			state = State.WAITING_FOR_RESP;
-			current_async_result = current_web_req.BeginGetResponse (TransmitGetResponse, ts);
-			if (current_async_result == null) {
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				state = State.IDLE;
-			}
-		}
+            TransmitState ts = (TransmitState) ar.AsyncState;
+            StringBuilder sb = ts.StringBuilder;
 
-		void TransmitGetResponse (IAsyncResult ar)
-		{
-			WebResponse resp;
+            StreamWriter writer = new StreamWriter (stream);
+            writer.Write (sb.ToString ());
+            writer.Close ();
 
-			try {
-				resp = current_web_req.EndGetResponse (ar);
-			}
-			catch (Exception e) {
-				Console.WriteLine ("Failed to get the response: {0}", e);
+            state = State.WAITING_FOR_RESP;
+            current_async_result = current_web_req.BeginGetResponse (TransmitGetResponse, ts);
+            if (current_async_result == null) {
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                state = State.IDLE;
+            }
+        }
 
-				state = State.IDLE;
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				return;
-			}
+        void TransmitGetResponse (IAsyncResult ar)
+        {
+            WebResponse resp;
 
-			TransmitState ts = (TransmitState) ar.AsyncState;
+            try {
+                resp = current_web_req.EndGetResponse (ar);
+            }
+            catch (Exception e) {
+                Console.WriteLine ("Failed to get the response: {0}", e);
 
-			Stream s = resp.GetResponseStream ();
+                state = State.IDLE;
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                return;
+            }
 
-			StreamReader sr = new StreamReader (s, Encoding.UTF8);
+            TransmitState ts = (TransmitState) ar.AsyncState;
 
-			string line;
-			line = sr.ReadLine ();
-			
-			DateTime now = DateTime.Now;
-			if (line.StartsWith ("FAILED")) {
-				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-					LogCore.Instance.PushWarning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
-					last_upload_failed_logged = now;
-				}
-				/* retransmit the queue on the next interval */
-				state = State.NEED_TRANSMIT;
-			}
-			else if (line.StartsWith ("BADUSER")
-					 || line.StartsWith ("BADAUTH")) {
-				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-					LogCore.Instance.PushWarning ("Audioscrobbler upload failed", "invalid authentication", false);
-					last_upload_failed_logged = now;
-				}
-				/* attempt to re-handshake (and retransmit) on the next interval */
-				security_token = null;
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				state = State.IDLE;
-				return;
-			}
-			else if (line.StartsWith ("OK")) {
-				/* if we've previously logged failures, be nice and log the successful upload. */
-				if (last_upload_failed_logged != DateTime.MinValue) {
-					LogCore.Instance.PushInformation ("Audioscrobbler upload succeeded", "", false);
-					last_upload_failed_logged = DateTime.MinValue;
-				}
-				/* we succeeded, pop the elements off our queue */
-				queue.RemoveRange (0, ts.Count);
-				queue.Save ();
-				state = State.IDLE;
-			}
-			else {
-				if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-					LogCore.Instance.PushDebug ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
-					last_upload_failed_logged = now;
-				}
-				state = State.IDLE;
-			}
+            Stream s = resp.GetResponseStream ();
 
-			/* now get the next interval */
-			line = sr.ReadLine ();
-			if (line.StartsWith ("INTERVAL")) {
-				int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
-				next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
-			}
-			else {
-				Console.WriteLine ("expected INTERVAL..");
-			}
-		}
+            StreamReader sr = new StreamReader (s, Encoding.UTF8);
 
-		//
-		// Async code for handshaking
-		//
-		void Handshake ()
-		{
-			string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}",
-										SCROBBLER_URL,
-										SCROBBLER_VERSION,
-										CLIENT_ID, CLIENT_VERSION,
-										HttpUtility.UrlEncode (username));
+            string line;
+            line = sr.ReadLine ();
+            
+            DateTime now = DateTime.Now;
+            if (line.StartsWith ("FAILED")) {
+                if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+                    LogCore.Instance.PushWarning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
+                    last_upload_failed_logged = now;
+                }
+                /* retransmit the queue on the next interval */
+                state = State.NEED_TRANSMIT;
+            }
+            else if (line.StartsWith ("BADUSER")
+                     || line.StartsWith ("BADAUTH")) {
+                if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+                    LogCore.Instance.PushWarning ("Audioscrobbler upload failed", "invalid authentication", false);
+                    last_upload_failed_logged = now;
+                }
+                /* attempt to re-handshake (and retransmit) on the next interval */
+                security_token = null;
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                state = State.IDLE;
+                return;
+            }
+            else if (line.StartsWith ("OK")) {
+                /* if we've previously logged failures, be nice and log the successful upload. */
+                if (last_upload_failed_logged != DateTime.MinValue) {
+                    LogCore.Instance.PushInformation ("Audioscrobbler upload succeeded", "", false);
+                    last_upload_failed_logged = DateTime.MinValue;
+                }
+                /* we succeeded, pop the elements off our queue */
+                queue.RemoveRange (0, ts.Count);
+                queue.Save ();
+                state = State.IDLE;
+            }
+            else {
+                if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
+                    LogCore.Instance.PushDebug ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
+                    last_upload_failed_logged = now;
+                }
+                state = State.IDLE;
+            }
 
-			current_web_req = WebRequest.Create (uri);
+            /* now get the next interval */
+            line = sr.ReadLine ();
+            if (line.StartsWith ("INTERVAL")) {
+                int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
+                next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
+            }
+            else {
+                Console.WriteLine ("expected INTERVAL..");
+            }
+        }
 
-			state = State.WAITING_FOR_HANDSHAKE_RESP;
-			current_async_result = current_web_req.BeginGetResponse (HandshakeGetResponse, null);
-			if (current_async_result == null) {
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				state = State.IDLE;
-			}
-		}
+        //
+        // Async code for handshaking
+        //
+        void Handshake ()
+        {
+            string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}",
+                                        SCROBBLER_URL,
+                                        SCROBBLER_VERSION,
+                                        CLIENT_ID, CLIENT_VERSION,
+                                        HttpUtility.UrlEncode (username));
 
-		void HandshakeGetResponse (IAsyncResult ar)
-		{
-			bool success = false;
-			WebResponse resp;
+            current_web_req = WebRequest.Create (uri);
 
-			try {
-				resp = current_web_req.EndGetResponse (ar);
-			}
-			catch (Exception e) {
-				Console.WriteLine ("failed to handshake: {0}", e);
+            state = State.WAITING_FOR_HANDSHAKE_RESP;
+            current_async_result = current_web_req.BeginGetResponse (HandshakeGetResponse, null);
+            if (current_async_result == null) {
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                state = State.IDLE;
+            }
+        }
 
-				/* back off for a time before trying again */
-				state = State.IDLE;
-				next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
-				return;
-			}
+        void HandshakeGetResponse (IAsyncResult ar)
+        {
+            bool success = false;
+            WebResponse resp;
 
-			Stream s = resp.GetResponseStream ();
+            try {
+                resp = current_web_req.EndGetResponse (ar);
+            }
+            catch (Exception e) {
+                Console.WriteLine ("failed to handshake: {0}", e);
 
-			StreamReader sr = new StreamReader (s, Encoding.UTF8);
+                /* back off for a time before trying again */
+                state = State.IDLE;
+                next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
+                return;
+            }
 
-			string line;
+            Stream s = resp.GetResponseStream ();
 
-			line = sr.ReadLine ();
-			if (line.StartsWith ("FAILED")) {
-				LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", line.Substring ("FAILED".Length).Trim(), false);
-								   
-			}
-			else if (line.StartsWith ("BADUSER")) {
-				LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", "unrecognized user/password", false);
-			}
-			else if (line.StartsWith ("UPDATE")) {
-				LogCore.Instance.PushInformation ("Audioscrobbler plugin needs updating",
-											String.Format ("Fetch a newer version at {0}\nor update to a newer version of Banshee",
-														   line.Substring ("UPDATE".Length).Trim()), false);
-				success = true;
-			}
-			else if (line.StartsWith ("UPTODATE")) {
-				success = true;
-			}
-			
-			/* read the challenge string and post url, if
-			 * this was a successful handshake */
-			if (success == true) {
-				string challenge = sr.ReadLine ().Trim ();
-				post_url = sr.ReadLine ().Trim ();
+            StreamReader sr = new StreamReader (s, Encoding.UTF8);
 
-				security_token = MD5Encode (md5_pass + challenge);
-				//Console.WriteLine ("security token = {0}", security_token);
-			}
+            string line;
 
-			/* read the trailing interval */
-			line = sr.ReadLine ();
-			if (line.StartsWith ("INTERVAL")) {
-				int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
-				next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
-			}
-			else {
-				Console.WriteLine ("expected INTERVAL..");
-			}
+            line = sr.ReadLine ();
+            if (line.StartsWith ("FAILED")) {
+                LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", line.Substring ("FAILED".Length).Trim(), false);
+                                   
+            }
+            else if (line.StartsWith ("BADUSER")) {
+                LogCore.Instance.PushWarning ("Audioscrobbler sign-on failed", "unrecognized user/password", false);
+            }
+            else if (line.StartsWith ("UPDATE")) {
+                LogCore.Instance.PushInformation ("Audioscrobbler plugin needs updating",
+                                            String.Format ("Fetch a newer version at {0}\nor update to a newer version of Banshee",
+                                                           line.Substring ("UPDATE".Length).Trim()), false);
+                success = true;
+            }
+            else if (line.StartsWith ("UPTODATE")) {
+                success = true;
+            }
+            
+            /* read the challenge string and post url, if
+             * this was a successful handshake */
+            if (success == true) {
+                string challenge = sr.ReadLine ().Trim ();
+                post_url = sr.ReadLine ().Trim ();
 
-			/* XXX we shouldn't just try to handshake again for BADUSER */
-			state = success ? State.IDLE : State.NEED_HANDSHAKE;
-		}
-	}
+                security_token = MD5Encode (md5_pass + challenge);
+                //Console.WriteLine ("security token = {0}", security_token);
+            }
+
+            /* read the trailing interval */
+            line = sr.ReadLine ();
+            if (line.StartsWith ("INTERVAL")) {
+                int interval_seconds = Int32.Parse (line.Substring ("INTERVAL".Length));
+                next_interval = DateTime.Now + new TimeSpan (0, 0, interval_seconds);
+            }
+            else {
+                Console.WriteLine ("expected INTERVAL..");
+            }
+
+            /* XXX we shouldn't just try to handshake again for BADUSER */
+            state = success ? State.IDLE : State.NEED_HANDSHAKE;
+        }
+    }
 }

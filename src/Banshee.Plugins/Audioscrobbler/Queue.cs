@@ -42,171 +42,181 @@ using Banshee.Base;
 using Banshee;
 
 namespace Banshee.Plugins.Audioscrobbler {
-	internal class Queue {
+    internal class Queue {
 
-		class QueuedTrack {
-			public QueuedTrack (TrackInfo track, DateTime start_time)
-			{
-				this.artist = track.Artist;
-				this.album = track.Album;
-				this.title = track.Title;
-				this.duration = (int)track.Duration.TotalSeconds;
-				this.start_time = start_time.ToUniversalTime ();
-			}
+        class QueuedTrack {
+            public QueuedTrack (TrackInfo track, DateTime start_time)
+            {
+                this.artist = track.Artist;
+                this.album = track.Album;
+                this.title = track.Title;
+                this.duration = (int)track.Duration.TotalSeconds;
+                this.start_time = start_time.ToUniversalTime ();
+            }
 
-			public QueuedTrack (string artist, string album,
-								string title, int duration, DateTime start_time)
-			{
-				this.artist = artist;
-				this.album = album;
-				this.title = title;
-				this.duration = duration;
-				this.start_time = start_time;
-			}
+            public QueuedTrack (string artist, string album,
+                                string title, int duration, DateTime start_time)
+            {
+                this.artist = artist;
+                this.album = album;
+                this.title = title;
+                this.duration = duration;
+                this.start_time = start_time;
+            }
 
-			public DateTime StartTime {
-				get { return start_time; }
-			}
-			public string Artist {
-				get { return artist; }
-			}
-			public string Album {
-				get { return album; }
-			}
-			public string Title {
-				get { return title; }
-			}
-			public int Duration {
-				get { return duration; }
-			}
+            public DateTime StartTime {
+                get { return start_time; }
+            }
+            public string Artist {
+                get { return artist; }
+            }
+            public string Album {
+                get { return album; }
+            }
+            public string Title {
+                get { return title; }
+            }
+            public int Duration {
+                get { return duration; }
+            }
 
-			string artist;
-			string album;
-			string title;
-			int duration;
-			DateTime start_time;
-		}
+            string artist;
+            string album;
+            string title;
+            int duration;
+            DateTime start_time;
+        }
 
-		ArrayList queue;
-		string xml_path;
-		bool dirty;
+        ArrayList queue;
+        string xml_path;
+        bool dirty;
 
-		public Queue ()
-		{
-			xml_path = System.IO.Path.Combine (Paths.UserPluginDirectory, "AudioscrobblerQueue.xml");
-			queue = new ArrayList ();
+        public event EventHandler TrackAdded;
 
-			Load ();
-		}
+        public Queue ()
+        {
+            xml_path = System.IO.Path.Combine (Paths.UserPluginDirectory, "AudioscrobblerQueue.xml");
+            queue = new ArrayList ();
 
-		public void Save ()
-		{
-			if (!dirty)
-				return;
+            Load ();
+        }
 
-			XmlTextWriter writer = new XmlTextWriter (xml_path, Encoding.Default);
+        public void Save ()
+        {
+            if (!dirty)
+                return;
 
-			writer.Formatting = Formatting.Indented;
-			writer.Indentation = 4;
-			writer.IndentChar = ' ';
+            XmlTextWriter writer = new XmlTextWriter (xml_path, Encoding.Default);
 
-			writer.WriteStartDocument (true);
+            writer.Formatting = Formatting.Indented;
+            writer.Indentation = 4;
+            writer.IndentChar = ' ';
 
-			writer.WriteStartElement ("AudioscrobblerQueue");
-			foreach (QueuedTrack track in queue) {
-				writer.WriteStartElement ("QueuedTrack");	
-				writer.WriteElementString ("Artist", track.Artist);
-				writer.WriteElementString ("Album", track.Album);
-				writer.WriteElementString ("Title", track.Title);
-				writer.WriteElementString ("Duration", track.Duration.ToString());
-				writer.WriteElementString ("StartTime", DateTimeUtil.ToTimeT(track.StartTime).ToString());
-				writer.WriteEndElement (); // Track
-			}
-			writer.WriteEndElement (); // AudioscrobblerQueue
-			writer.WriteEndDocument ();
-			writer.Close ();
-		}
+            writer.WriteStartDocument (true);
 
-		public void Load ()
-		{
-			queue.Clear ();
+            writer.WriteStartElement ("AudioscrobblerQueue");
+            foreach (QueuedTrack track in queue) {
+                writer.WriteStartElement ("QueuedTrack");    
+                writer.WriteElementString ("Artist", track.Artist);
+                writer.WriteElementString ("Album", track.Album);
+                writer.WriteElementString ("Title", track.Title);
+                writer.WriteElementString ("Duration", track.Duration.ToString());
+                writer.WriteElementString ("StartTime", DateTimeUtil.ToTimeT(track.StartTime).ToString());
+                writer.WriteEndElement (); // Track
+            }
+            writer.WriteEndElement (); // AudioscrobblerQueue
+            writer.WriteEndDocument ();
+            writer.Close ();
+        }
 
-			try {
-				string query = "//AudioscrobblerQueue/QueuedTrack";
-				XmlDocument doc = new XmlDocument ();
+        public void Load ()
+        {
+            queue.Clear ();
 
-				doc.Load (xml_path);
-				XmlNodeList nodes = doc.SelectNodes (query);
+            try {
+                string query = "//AudioscrobblerQueue/QueuedTrack";
+                XmlDocument doc = new XmlDocument ();
 
-				foreach (XmlNode node in nodes) {
-					string artist = "";	
-					string album = "";
-					string title = "";
-					int duration = 0;
-					DateTime start_time = new DateTime (0);
+                doc.Load (xml_path);
+                XmlNodeList nodes = doc.SelectNodes (query);
 
-					foreach (XmlNode child in node.ChildNodes) {
-						if (child.Name == "Artist" && child.ChildNodes.Count != 0) {
-							artist = child.ChildNodes [0].Value;
-						} else if (child.Name == "Album" && child.ChildNodes.Count != 0) {
-							album = child.ChildNodes [0].Value;
-						} else if (child.Name == "Title" && child.ChildNodes.Count != 0) {
-							title = child.ChildNodes [0].Value;
-						} else if (child.Name == "Duration" && child.ChildNodes.Count != 0) {
-							duration = Convert.ToInt32 (child.ChildNodes [0].Value);
-						} else if (child.Name == "StartTime" && child.ChildNodes.Count != 0) {
-							long time = Convert.ToInt64 (child.ChildNodes [0].Value);
-							start_time = DateTimeUtil.FromTimeT (time);
-						}
-					}
+                foreach (XmlNode node in nodes) {
+                    string artist = "";    
+                    string album = "";
+                    string title = "";
+                    int duration = 0;
+                    DateTime start_time = new DateTime (0);
+
+                    foreach (XmlNode child in node.ChildNodes) {
+                        if (child.Name == "Artist" && child.ChildNodes.Count != 0) {
+                            artist = child.ChildNodes [0].Value;
+                        } else if (child.Name == "Album" && child.ChildNodes.Count != 0) {
+                            album = child.ChildNodes [0].Value;
+                        } else if (child.Name == "Title" && child.ChildNodes.Count != 0) {
+                            title = child.ChildNodes [0].Value;
+                        } else if (child.Name == "Duration" && child.ChildNodes.Count != 0) {
+                            duration = Convert.ToInt32 (child.ChildNodes [0].Value);
+                        } else if (child.Name == "StartTime" && child.ChildNodes.Count != 0) {
+                            long time = Convert.ToInt64 (child.ChildNodes [0].Value);
+                            start_time = DateTimeUtil.FromTimeT (time);
+                        }
+                    }
 
                     queue.Add (new QueuedTrack (artist, album, title, duration, start_time));
-				}
-			} catch { 
-			}
-		}
+                }
+            } catch { 
+            }
+        }
 
-		public string GetTransmitInfo (out int num_tracks)
-		{
-			StringBuilder sb = new StringBuilder ();
+        public string GetTransmitInfo (out int num_tracks)
+        {
+            StringBuilder sb = new StringBuilder ();
 
-			int i;
-			for (i = 0; i < queue.Count; i ++) {
-				/* we queue a maximum of 10 tracks per request */
-				if (i == 9) break;
+            int i;
+            for (i = 0; i < queue.Count; i ++) {
+                /* we queue a maximum of 10 tracks per request */
+                if (i == 9) break;
 
-				QueuedTrack track = (QueuedTrack)queue[i];
+                QueuedTrack track = (QueuedTrack)queue[i];
 
-				sb.AppendFormat (
-						 "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
-						 HttpUtility.UrlEncode (track.Artist),
-						 HttpUtility.UrlEncode (track.Title),
-						 HttpUtility.UrlEncode (track.Album),
-						 "" /* musicbrainz id */,
-						 track.Duration.ToString (),
-						 HttpUtility.UrlEncode (track.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
-						 i);
-			}
+                sb.AppendFormat (
+                         "&a[{6}]={0}&t[{6}]={1}&b[{6}]={2}&m[{6}]={3}&l[{6}]={4}&i[{6}]={5}",
+                         HttpUtility.UrlEncode (track.Artist),
+                         HttpUtility.UrlEncode (track.Title),
+                         HttpUtility.UrlEncode (track.Album),
+                         "" /* musicbrainz id */,
+                         track.Duration.ToString (),
+                         HttpUtility.UrlEncode (track.StartTime.ToString ("yyyy-MM-dd HH:mm:ss")),
+                         i);
+            }
 
-			num_tracks = i;
-			return sb.ToString();
-		}
+            num_tracks = i;
+            return sb.ToString();
+        }
 
-		public void Add (TrackInfo track, DateTime started_at)
-		{
-			queue.Add (new QueuedTrack (track, started_at));
-			dirty = true;
-		}
+        public void Add (TrackInfo track, DateTime started_at)
+        {
+            queue.Add (new QueuedTrack (track, started_at));
+            dirty = true;
+            RaiseTrackAdded (this, new EventArgs ());
+        }
 
-		public void RemoveRange (int first, int count)
-		{
-			queue.RemoveRange (first, count);
-			dirty = true;
-		}
+        public void RemoveRange (int first, int count)
+        {
+            queue.RemoveRange (first, count);
+            dirty = true;
+        }
 
-		public int Count {
-			get { return queue.Count; }
-		}
-	}
+        public int Count {
+            get { return queue.Count; }
+        }
+
+        private void RaiseTrackAdded (object o, EventArgs args)
+        {
+            EventHandler handler = TrackAdded;
+            if (handler != null)
+                handler(o, args);
+        }
+    }
 
 }

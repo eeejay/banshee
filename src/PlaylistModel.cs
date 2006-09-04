@@ -57,7 +57,9 @@ namespace Banshee
         
         public event EventHandler Updated;
         public event EventHandler Stopped;
-        
+
+        private uint timeout_id = 0;
+
         public static int NextUid
         {
             get {
@@ -68,23 +70,24 @@ namespace Banshee
         public PlaylistModel() : base(typeof(TrackInfo))
         {
             trackInfoQueue = new ArrayList();
-            GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
             SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
                 ReloadSource();
             };
         }
-    
+
         // --- Load Queue and Additions ---
         private bool OnIdle()
         {
+            timeout_id = 0;
             QueueSync();
-            return true;
+            return false;
         }
 
         private void QueueSync()
         {
-            if(trackInfoQueue.Count <= 0)
+            if(trackInfoQueue.Count <= 0) {
                 return;
+            }
             
             trackInfoQueueLocked = true;
                 
@@ -103,6 +106,9 @@ namespace Banshee
         {
             while(trackInfoQueueLocked);
             trackInfoQueue.Add(ti);
+            if (timeout_id == 0) {
+                timeout_id = GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
+            }
         }
 
         private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
