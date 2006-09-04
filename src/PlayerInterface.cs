@@ -1993,6 +1993,11 @@ namespace Banshee
             }
             
             Banshee.Burner.BurnerSource source = Banshee.Burner.BurnerCore.CreateOrFindEmptySource();
+            
+            if(source == null) {
+                return;
+            }
+            
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 source.AddTrack(playlistModel.PathTrackInfo(path));
             }

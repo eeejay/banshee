@@ -1,4 +1,9 @@
-2006-09-05  Aaron Bockover  <abock@gnome.org>
+2006-09-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/PlayerInterface.cs (OnWriteCDAction): return if there are no 
+	burners available (BGO #346044)
+
+2006-09-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Widgets/DiscUsageDisplay.cs: Use a red gradient if the
 	disk is full (BGO #345515)
