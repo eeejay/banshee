@@ -1,3 +1,9 @@
+2006-09-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/PlayerInterface.cs: 
+	* src/Banshee.Base/ActionManager.cs:
+	* data/UIManagerLayout.xml: Added 'stop when finished' 
+
 2006-09-02  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.pc.in: Replaced entagged-sharp with taglib-sharp (plugins

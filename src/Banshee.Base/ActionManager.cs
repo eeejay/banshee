@@ -284,7 +284,11 @@ namespace Banshee.Base
             playback_actions.Add(new ToggleActionEntry [] {
                 new ToggleActionEntry("ShuffleAction", "media-playlist-shuffle",
                     Catalog.GetString("Shuffle"), null,
-                    Catalog.GetString("Toggle between shuffle or continuous playback modes"), null, false)
+                    Catalog.GetString("Toggle between shuffle or continuous playback modes"), null, false),
+                    
+                new ToggleActionEntry("StopWhenFinishedAction", null,
+                    Catalog.GetString("Stop when finished"), "<Shift>space",
+                    Catalog.GetString("Stop playback after the current song finishes playing"), null, false)
             });
 
             ui.InsertActionGroup(playback_actions, 0);

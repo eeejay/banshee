@@ -846,8 +846,17 @@ namespace Banshee
                     OnPlayerEngineTick();
                     break;
                 case PlayerEngineEvent.EndOfStream:
-                    playlistModel.Continue();
+                    ToggleAction action = Globals.ActionManager["StopWhenFinishedAction"] as ToggleAction;
+                    
+                    if(!action.Active) {
+                        playlistModel.Continue();
+                    } else {
+                        OnPlaylistStopped(null, null);
+                    }
+                    
                     playlistView.UpdateView();
+                    action.Active = false;
+                    
                     break;
                 case PlayerEngineEvent.StartOfStream:
                     //seek_slider.CanSeek = PlayerEngineCore.CanSeek;
