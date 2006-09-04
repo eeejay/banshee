@@ -52,9 +52,11 @@ namespace Banshee.Burner
         private BurnerOptionsDialog burner_options = null;
     
         private bool has_default_name = true;
+        private bool has_emphasis = false;
     
         public BurnerSource(IRecorder recorder) : this()
         {
+            has_emphasis = true;
             session.Recorder = recorder;
         }
     
@@ -106,6 +108,7 @@ namespace Banshee.Burner
             Name = newName;
             session.DiscName = newName;
             has_default_name = false;
+            has_emphasis = false;
             
             return true;
         }
@@ -156,6 +159,7 @@ namespace Banshee.Burner
                 tracks.Add(track);
             }
             
+            has_emphasis = false;
             OnTrackAdded(track);
         }
         
@@ -219,6 +223,10 @@ namespace Banshee.Burner
         
         public override bool SearchEnabled {
             get { return false; }
+        }
+        
+        public override bool HasEmphasis {
+            get { return has_emphasis; }
         }
         
         public override string GenericName {

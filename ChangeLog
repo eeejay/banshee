@@ -1,3 +1,14 @@
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/SourceView.cs: Show source text in italics if Source.HasEmphasis
+
+	* src/Banshee.Base/Source.cs: Added virtual HasEmphasis source, can be
+	overridden and true to let the source view know it needs to emphasize
+	the source in some way
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSource.cs: Implement HasEmphasis
+	and set true when the source is auto-created (BGO #345490)
+
 2006-09-04  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Plugins/Audioscrobbler/Engine.cs:

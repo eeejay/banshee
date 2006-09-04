@@ -590,7 +590,7 @@ namespace Banshee
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy();
             fd.Weight = Selected ? Pango.Weight.Bold : Pango.Weight.Normal;
-            if(Italicized) {
+            if(Italicized || source.HasEmphasis) {
                 fd.Style = Pango.Style.Italic;
                 hideCounts = true;
             }
