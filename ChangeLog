@@ -1,5 +1,10 @@
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/ImageFileChooserDialog.cs: Added a FileChooserDialog
+	for browsing images; shows a preview too
+
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.SmartPlaylist/*: Smart playlist plugin moved
 	from banshee-official-plugins; now is always available and built into
 	core (currently still loaded as a plugin internally however)
