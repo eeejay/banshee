@@ -24,7 +24,6 @@ EXTRA_DIST = \
 	blue-speaker.png \
 	busy-spinner-36.png \
 	busy-spinner.png \
-	circle.png \
 	encoding-icon-32.png \
 	icon-album.png \
 	icon-artist.png \
@@ -52,7 +51,6 @@ EXTRA_DIST = \
 	source-library.png \
 	source-playlist.png \
 	source-localqueue.png \
-	star.png \
 	sync-needed.png \
 	tray-icon.png \
 	audio-volume-decrease.png \
@@ -67,7 +65,10 @@ EXTRA_DIST = \
 	cd-action-burn-32.png \
 	cd-action-burn-48.png \
 	encode-action-24.png \
-	splash.png
+	splash.png \
+	editor-cover-album.png \
+	rating-rated.png \
+	rating-unrated.png
 
 generate-resource-list:
 	for i in $(EXTRA_DIST); do \

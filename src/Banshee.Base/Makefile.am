@@ -75,6 +75,13 @@ BANSHEE_LIBRARY_SOURCES = \
 	$(srcdir)/Banshee.Library/Import.cs \
 	$(srcdir)/Banshee.Library/DatabaseWriteException.cs
 
+BANSHEE_SMARTPLAYLIST_SOURCES = \
+	$(srcdir)/Banshee.SmartPlaylist/Editor.cs \
+	$(srcdir)/Banshee.SmartPlaylist/QueryBuilder.cs \
+	$(srcdir)/Banshee.SmartPlaylist/QueryBuilderModel.cs \
+	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistCore.cs \
+	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistSource.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
@@ -99,7 +106,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/ToggleStates.cs \
 	$(srcdir)/Gui/RatingRenderer.cs \
 	$(srcdir)/Gui/TrackEditor.cs \
-	$(srcdir)/Gui/ConfirmShutdownDialog.cs 
+	$(srcdir)/Gui/ConfirmShutdownDialog.cs \
+	$(srcdir)/Gui/ImageFileChooserDialog.cs 
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -161,6 +169,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(BANSHEE_KERNEL_SOURCES) \
 	$(BANSHEE_LIBRARY_SOURCES) \
+	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionManager.cs \
@@ -223,8 +232,9 @@ Banshee_Base_RESOURCES = \
 	data/images/media-repeat-all.png \
 	data/images/media-playlist-shuffle.png \
 	data/images/media-playlist-continuous.png \
-	data/images/star.png \
-	data/images/circle.png \
+	data/images/rating-rated.png \
+	data/images/rating-unrated.png \
+	data/images/editor-cover-album.png \
 	COPYING
 
 Banshee_Base_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Base_RESOURCES), $(top_srcdir)/$(resource))

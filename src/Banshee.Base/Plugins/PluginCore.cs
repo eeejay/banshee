@@ -46,6 +46,7 @@ namespace Banshee.Plugins
         {
             factory.AddScanDirectory(Paths.UserPluginDirectory);
             factory.AddScanDirectory(Paths.SystemPluginDirectory);
+            factory.LoadPluginFromType(typeof(Banshee.SmartPlaylist.SmartPlaylistCore));
             factory.LoadPlugins();
             
             InitializePlugins();

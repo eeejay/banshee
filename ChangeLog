@@ -1,3 +1,34 @@
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/*: Smart playlist plugin moved
+	from banshee-official-plugins; now is always available and built into
+	core (currently still loaded as a plugin internally however)
+
+	* src/Banshee.Base/Makefile.am: Updated
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Load new internal 
+	Smart Playlists plugin
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Allow loading plugins
+	publicly directly from types (useful for internal 'static' plugins)
+
+	* src/Banshee.Widgets/RatingEntry.cs: New star rating input entry based
+	on Gabriel Burt's version from the smart playlists plugin in 
+	banshee-official-plugins 
+
+	* src/Banshee.Widgets/Makefile.am:
+	* src/Banshee.Widgets/Banshee.Widgets.mdp: Updated
+
+	* src/Banshee.Base/Gui/RatingRenderer.cs: Updated to use new graphics
+
+	* data/images/rating-rated.png:
+	* data/images/rating-unrated.png: Added new rating graphics
+
+	* data/images/star.png:
+	* data/images/circle.png: Removed
+
+	* data/images/Makefile.am: Updated
+
 2006-09-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs (OnWriteCDAction): return if there are no 

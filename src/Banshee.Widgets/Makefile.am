@@ -32,12 +32,21 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/StreamPositionLabel.cs \
 	$(srcdir)/DiscUsageDisplay.cs \
 	$(srcdir)/Tile.cs \
-	$(srcdir)/TileView.cs
+	$(srcdir)/TileView.cs \
+	$(srcdir)/RatingEntry.cs
+
+Banshee_Widgets_RESOURCES = \
+	data/images/rating-rated.png \
+	data/images/rating-unrated.png
+
+Banshee_Widgets_EXPANDED_RESOURCES = $(foreach resource,$(Banshee_Widgets_RESOURCES), $(top_srcdir)/$(resource))
+
+Banshee_Widgets_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Widgets_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 all: $(ASSEMBLY)
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo -target:library -unsafe -out:$@ $(ASSEMBLY_SOURCES)
+$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Widgets_EXPANDED_RESOURCES)
+	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo -target:library -unsafe -out:$@ $(Banshee_Widgets_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in
 

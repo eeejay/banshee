@@ -153,11 +153,11 @@ namespace Banshee.Plugins
                     continue;
                 }
                 
-                LoadPlugin(type);
+                LoadPluginFromType(type);
             }
         }
         
-        private void LoadPlugin(Type type)
+        public void LoadPluginFromType(Type type)
         {
             if(factory_type == PluginFactoryType.Instance) {
                 try {

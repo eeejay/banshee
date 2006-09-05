@@ -44,7 +44,7 @@ namespace Banshee.Gui
 		{
 			get {
 				if(star == null)
-					star = Gdk.Pixbuf.LoadFromResource("star.png");
+					star = Gdk.Pixbuf.LoadFromResource("rating-rated.png");
 					
 				return star;
 			}
@@ -54,7 +54,7 @@ namespace Banshee.Gui
 		{
 			get {
 				if(circle == null)
-					circle = Gdk.Pixbuf.LoadFromResource("circle.png");
+					circle = Gdk.Pixbuf.LoadFromResource("rating-unrated.png");
 					
 				return circle;
 			}
