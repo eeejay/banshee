@@ -234,6 +234,7 @@ Banshee_Base_RESOURCES = \
 	data/images/media-playlist-continuous.png \
 	data/images/rating-rated.png \
 	data/images/rating-unrated.png \
+	data/images/source-smart-playlist.png \
 	data/images/editor-cover-album.png \
 	COPYING
 
