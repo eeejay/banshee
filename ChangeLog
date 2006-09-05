@@ -1,3 +1,10 @@
+2006-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Remove unused
+	variables and capitalize minutes in the title of a default playlist.
+
+	* data/banshee-dialogs.glade: Make expander not expanded by default.
+
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Plugins/PluginCore.cs: Do not load the deprecated

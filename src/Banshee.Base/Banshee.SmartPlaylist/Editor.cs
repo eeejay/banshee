@@ -20,8 +20,6 @@ namespace Banshee.SmartPlaylist
         [Widget] private Gtk.Entry name_entry;
         [Widget] private Gtk.VBox builder_box;
         [Widget] private Gtk.Button ok_button;
-        [Widget] private Gtk.Expander advanced_expander;
-        [Widget] private Gtk.HBox adv_box;
         [Widget] private Gtk.TreeView adv_tree_view;
         [Widget] private Gtk.Button adv_use_button;
         [Widget] private Gtk.Button adv_add_button;
@@ -76,7 +74,7 @@ namespace Banshee.SmartPlaylist
                 3);
 
             list_model.AppendValues (
-                Catalog.GetString ("80 minutes of Favorites"),
+                Catalog.GetString ("80 Minutes of Favorites"),
                 " (Rating > 3) ",
                 "NumberOfPlays DESC",
                 "80",
