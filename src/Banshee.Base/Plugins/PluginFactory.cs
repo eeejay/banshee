@@ -97,6 +97,17 @@ namespace Banshee.Plugins
             }
         }
         
+        public void RemovePlugin(T plugin)
+        {
+            plugin_instances.Remove(plugin);
+            RemovePlugin(plugin.GetType());
+        }
+        
+        public void RemovePlugin(Type type)
+        {
+            plugin_types.Remove(type);
+        }
+        
         public void AddScanDirectory(DirectoryInfo directory)
         {
             scan_directories.Add(directory);

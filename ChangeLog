@@ -1,5 +1,15 @@
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Plugins/PluginCore.cs: Do not load the deprecated
+	smart playlist plugin
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Allow removing plugins
+	from the factory
+
+	* data/banshee-dialogs.glade: Added smart playlist editor 
+
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Gui/ImageFileChooserDialog.cs: Added a FileChooserDialog
 	for browsing images; shows a preview too
 

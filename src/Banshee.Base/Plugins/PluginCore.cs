@@ -54,13 +54,25 @@ namespace Banshee.Plugins
         
         private static void InitializePlugins()
         {
+            List<Plugin> to_remove = new List<Plugin>();
+            
             foreach(Plugin plugin in factory) {
                 try {
+                    if(plugin.GetType().ToString() == "Banshee.Plugins.SmartPlaylists.Plugin") {
+                        plugin.Dispose();
+                        to_remove.Add(plugin);
+                        continue;
+                    }
+                
                     if((bool)Globals.Configuration.Get(plugin.ConfigurationBase + "/Enabled")) {
                         plugin.Initialize();
                     }
                 } catch(GConf.NoSuchKeyException) {
                 }
+            }
+            
+            foreach(Plugin plugin in to_remove) {
+                factory.RemovePlugin(plugin);
             }
         }
         
