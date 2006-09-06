@@ -48,7 +48,7 @@ namespace Banshee.Gui
         public ErrorListDialog() : base("ErrorListDialog")
         {
             accel_group = new AccelGroup();
-		    Dialog.AddAccelGroup(accel_group);
+            Dialog.AddAccelGroup(accel_group);
 		    
             list_view.SetSizeRequest(-1, 120);
             details_expander.Activated += delegate {
@@ -110,7 +110,7 @@ namespace Banshee.Gui
 
             if(isDefault) {
                 Dialog.DefaultResponse = response;
-                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Escape, 
+                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return, 
                     0, AccelFlags.Visible);
             }
         }

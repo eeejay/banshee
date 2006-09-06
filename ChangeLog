@@ -1,5 +1,16 @@
 2006-09-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/ImportDialog.cs: If an audio CD is an available
+	source, make the first one the active default selection (instead of
+	the first source); added 'enter' key accelerator (BNC #202865)
+	
+	* src/Banshee.Base/ActionManager.cs: CTRL+I to activate 'import music'
+
+	* src/Banshee.Base/Gui/ErrorListDialog.cs: Make return the default
+	accelerator, not escape
+
+2006-09-06  Aaron Bockover  <abock@gnome.org>
+
 	* src/Makefile.am: Updated with some much needed cleaning
 
 	* src/banshee.mdp: Updated

@@ -77,7 +77,7 @@ namespace Banshee.Base
                     Catalog.GetString("Import files inside a folder"), null),
                     
                 new ActionEntry("ImportMusicAction", Stock.Open,
-                    Catalog.GetString("Import Music..."), null,
+                    Catalog.GetString("Import Music..."), "<control>I",
                     Catalog.GetString("Import music from a variety of sources"), null),
                     
                 new ActionEntry("OpenLocationAction", null, 

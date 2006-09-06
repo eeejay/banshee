@@ -39,13 +39,19 @@ namespace Banshee.Gui
     {
         private ComboBox source_combo_box;
         private ListStore source_model;
-    
+        private AccelGroup accel_group;
+        
         public ImportDialog() : this(false)
         {
         }
         
         public ImportDialog(bool doNotShowAgainVisible) : base("ImportDialog")
         {
+            accel_group = new AccelGroup();
+            
+            Dialog.AddAccelGroup(accel_group);
+            Dialog.DefaultResponse = ResponseType.Ok;
+		    
             DoNotShowAgainVisible = doNotShowAgainVisible;
             
             PopulateSourceList();
@@ -55,6 +61,9 @@ namespace Banshee.Gui
             SourceManager.SourceUpdated += OnSourceUpdated;
             
             Glade["MessageLabel"].Visible = Globals.Library.Tracks.Count == 0;
+            
+            (Glade["ImportButton"] as Button).AddAccelerator("activate", accel_group, 
+                (uint)Gdk.Key.Return, 0, AccelFlags.Visible);
         }
         
         private void PopulateSourceList()
@@ -83,14 +92,20 @@ namespace Banshee.Gui
             }
             
             // Find active sources that implement IImportSource
+            
+            TreeIter active_iter = TreeIter.Zero;
+            
             foreach(Source source in SourceManager.Sources) {
                 if(source is IImportSource) {
-                    AddSource((IImportSource)source);
+                    TreeIter new_iter = AddSource((IImportSource)source);
+                    if(active_iter.Equals(TreeIter.Zero) && source is AudioCdSource) {
+                        active_iter = new_iter;
+                        source_combo_box.SetActiveIter(active_iter);
+                    }
                 }
             }
             
-            TreeIter active_iter;
-            if(source_model.GetIterFirst(out active_iter)) {
+            if(active_iter.Equals(TreeIter.Zero) && source_model.GetIterFirst(out active_iter)) {
                 source_combo_box.SetActiveIter(active_iter);
             }
             
@@ -98,13 +113,13 @@ namespace Banshee.Gui
             source_combo_box.ShowAll();
         }
         
-        private void AddSource(IImportSource source)
+        private TreeIter AddSource(IImportSource source)
         {
             if(source == null) {
-                return;
+                return TreeIter.Zero;
             }
             
-            source_model.AppendValues(source.Icon, source.Name, source);
+            return source_model.AppendValues(source.Icon, source.Name, source);
         }
         
         private void OnSourceAdded(SourceAddedArgs args)
