@@ -43,7 +43,7 @@ namespace Banshee
         Single
     }
 
-    public class PlaylistModel : ListStore, IPlaybackModel
+    public class PlaylistModel : ListStore
     {
         private static int uid;
         private TimeSpan totalDuration = new TimeSpan(0);

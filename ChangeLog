@@ -1,5 +1,11 @@
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/IPlaybackModel.cs: Removed, has never been used for anything
+
+	* src/PlaylistModel.cs: Do not implement pointless IPlaybackModel
+
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac:
 	* Makefile.am: Added new tools/ build
 
