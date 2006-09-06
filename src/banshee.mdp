@@ -15,7 +15,6 @@
   </Configurations>
   <DeployTargets />
   <Contents>
-    <File name="./IPlaybackModel.cs" subtype="Code" buildaction="Compile" />
     <File name="./Main.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlayerInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlaylistColumns.cs" subtype="Code" buildaction="Compile" />

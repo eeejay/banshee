@@ -10,25 +10,21 @@ SUBDIRS = \
 
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
-TARGET = banshee.exe
+BANSHEE = banshee
+BANSHEE_ASSEMBLY = $(BANSHEE).exe
 
 bansheedir = $(pkglibdir)
-bin_SCRIPTS = banshee
-banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config 
+bin_SCRIPTS = $(ASSEMBLY_NAME)
+banshee_SCRIPTS = \
+	$(BANSHEE_ASSEMBLY) \
+	$(BANSHEE_ASSEMBLY).mdb \
+	$(BANSHEE_ASSEMBLY).config 
 
-EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
-	AssemblyInfo.cs.in \
-	banshee.exe.config.in \
-	banshee.in  
-
-CLEANFILES = banshee banshee.exe *.mdb *.dll
-DISTCLEANFILES = $(banshee_generated_sources)
-MAINTAINERCLEANFILES = Makefile.in
-
-banshee_sources_in = AssemblyInfo.cs.in 
-banshee_generated_sources = $(banshee_sources_in:.in=)
-
-banshee_sources = \
+BANSHEE_SOURCE_IN = AssemblyInfo.cs.in
+BANSHEE_GENERATED_SOURCE = $(BANSHEE_SOURCE_IN:.in=)
+	
+BANSHEE_SOURCE = \
+	$(BANSHEE_GENERATED_SOURCE) \
 	Main.cs \
 	StockIcons.cs \
 	PlayerInterface.cs \
@@ -38,7 +34,7 @@ banshee_sources = \
 	PlaylistColumns.cs \
 	RemotePlayer.cs 
 
-banshee_resources = \
+BANSHEE_RESOURCES = \
 	data/banshee.glade \
 	data/images/advanced-icon-32.png \
 	data/images/banshee-logo.png \
@@ -82,40 +78,41 @@ banshee_resources = \
 	data/images/cd-action-burn-48.png \
 	data/images/encode-action-24.png
 
-banshee_resources_build = $(foreach res,$(banshee_resources), $(addprefix -resource:,$(srcdir)/../$(res)),$(notdir $(res)))
+BANSHEE_EXPANDED_RESOURCES = $(foreach resource,$(BANSHEE_RESOURCES), $(top_srcdir)/$(resource))
 
-PKG_REFERENCES = \
+BANSHEE_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(BANSHEE_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
+
+BANSHEE_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_SOURCE))
+
+BANSHEE_REFERENCES = \
 	$(GTKSHARP_LIBS) \
 	$(DBUSSHARP_LIBS) \
+	-r:System.Xml \
+	-r:System.Web.Services \
+	-r:System.Data \
+	-r:Mono.Data.SqliteClient \
+	-r:Mono.Posix \
 	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
 	-r:$(top_builddir)/burn-sharp/burn-sharp.dll \
 	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
 	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
 	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
 
-SYSTEM_REFERENCES = \
-	System.dll \
-	System.Xml.dll \
-	System.Web.Services.dll \
-	System.Data.dll \
-	Mono.Data.SqliteClient.dll \
-	Mono.Posix 
+all: $(BANSHEE_ASSEMBLY)
 
-SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
+$(BANSHEE_ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
+	$(MCS) -out:$@ $(MCS_FLAGS) $(BANSHEE_REFERENCES) $(BANSHEE_EXPANDED_RESOURCES_BUILD) $(BANSHEE_SOURCE_BUILD)
 
-banshee_build_sources = $(addprefix $(srcdir)/, $(banshee_sources))
-banshee_build_sources += $(banshee_generated_sources)
-
-all: $(TARGET) 
-
-$(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
-	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) -out:$@ $(SYSTEM_REFERENCES_BUILD) $(banshee_build_sources)
-
-
-run:
+run: $(BANSHEE_ASSEMBLY)
 	sh ./banshee --uninstalled
 
-dbus-client-sample:
-	make -f BansheeDbusClient.Makefile
+EXTRA_DIST = \
+	$(BANSHEE_SOURCE) \
+	$(BANSHEE_SOURCE_IN) \
+	$(BANSHEE).in \
+	$(BANSHEE_ASSEMBLY).config.in
 
+CLEANFILES = $(BANSHEE) $(BANSHEE_ASSEMBLY) *.mdb *.dll *.pidb
+DISTCLEANFILES = $(BANSHEE_GENERATED_SOURCE)
+MAINTAINERCLEANFILES = Makefile.in
 

@@ -140,9 +140,12 @@ namespace Banshee
             ResizeMoveWindow();
             BuildWindow();   
             
-            Globals.DBusRemote = new DBusRemote();
-            banshee_dbus_object = new RemotePlayer(Window, this);
-            Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
+            try {
+                Globals.DBusRemote = new DBusRemote();
+                banshee_dbus_object = new RemotePlayer(Window, this);
+                Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
+            } catch {
+            }
             
             Globals.ShutdownRequested += OnShutdownRequested; 
             

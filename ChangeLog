@@ -1,3 +1,11 @@
+2006-09-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Makefile.am: Updated with some much needed cleaning
+
+	* src/banshee.mdp: Updated
+
+	* src/PlayerInterface.cs: Handle potential exception from DBusRemote
+
 2006-09-06  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Makefile.am: Unbreak the build (Patch by Michael Monreal, BGO
