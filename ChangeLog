@@ -1,3 +1,8 @@
+2006-09-06  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Makefile.am: Unbreak the build (Patch by Michael Monreal, BGO
+	#354589)
+
 2006-09-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/IPlaybackModel.cs: Removed, has never been used for anything

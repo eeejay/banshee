@@ -11,22 +11,17 @@ SUBDIRS = \
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
 TARGET = banshee.exe
-BANSHEE_IMPORT_ASSEMBLY = banshee-import.exe
 
 bansheedir = $(pkglibdir)
-banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config $(BANSHEE_IMPORT_ASSEMBLY) $(BANSHEE_IMPORT_ASSEMBLY).mdb
-bin_SCRIPTS = banshee banshee-import
+bin_SCRIPTS = banshee
+banshee_SCRIPTS = $(TARGET) $(TARGET).mdb $(TARGET).config 
 
 EXTRA_DIST = $(banshee_sources) $(banshee_sources_in) \
-	$(banshee_import_sources) \
 	AssemblyInfo.cs.in \
 	banshee.exe.config.in \
-	banshee.in  \
-	banshee-import.in \
-	BansheeDbusClient.cs \
-	BansheeDbusClient.Makefile
+	banshee.in  
 
-CLEANFILES = banshee banshee.exe banshee-import.exe banshee-import *.mdb *.dll
+CLEANFILES = banshee banshee.exe *.mdb *.dll
 DISTCLEANFILES = $(banshee_generated_sources)
 MAINTAINERCLEANFILES = Makefile.in
 
@@ -41,7 +36,6 @@ banshee_sources = \
 	SourceView.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs \
-	IPlaybackModel.cs \
 	RemotePlayer.cs 
 
 banshee_resources = \
@@ -112,15 +106,11 @@ SYSTEM_REFERENCES_BUILD = $(addprefix -r:, $(SYSTEM_REFERENCES))
 banshee_build_sources = $(addprefix $(srcdir)/, $(banshee_sources))
 banshee_build_sources += $(banshee_generated_sources)
 
-all: $(TARGET) $(BANSHEE_IMPORT_ASSEMBLY)
+all: $(TARGET) 
 
 $(TARGET): $(banshee_build_sources) $(top_builddir)/data/banshee.glade
 	$(MCS) $(MCS_FLAGS) $(PKG_REFERENCES) $(banshee_resources_build) -out:$@ $(SYSTEM_REFERENCES_BUILD) $(banshee_build_sources)
 
-banshee_import_sources = $(srcdir)/BansheeImport.cs
-
-$(BANSHEE_IMPORT_ASSEMBLY): $(banshee_import_sources)
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_srcdir)/taglib-sharp/taglib-sharp.dll $(srcdir)/BansheeImport.cs
 
 run:
 	sh ./banshee --uninstalled
