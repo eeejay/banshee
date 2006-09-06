@@ -7,6 +7,7 @@ SUBDIRS =          \
 	src            \
 	docs           \
 	tests          \
+	tools          \
 	po
 
 pkgconfigdir = $(libdir)/pkgconfig

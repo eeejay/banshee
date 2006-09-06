@@ -1,3 +1,17 @@
+2006-09-05  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac:
+	* Makefile.am: Added new tools/ build
+
+	* tools: New tools build, cleaning up /src as this stuff doesn't belong
+	there (yay for cleaning)
+
+	* src/banshee-import.in: 
+	* src/BansheeImport.cs:
+	* src/BansheeDbusClient.cs: Moved to /tools
+
+	* src/BansheeDbusClient.Makefile: Removed
+
 2006-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Remove unused

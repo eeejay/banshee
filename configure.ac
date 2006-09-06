@@ -368,7 +368,6 @@ libbanshee/Makefile
 burn-sharp/Makefile
 burn-sharp/burn-sharp.dll.config
 src/banshee
-src/banshee-import
 src/Makefile
 src/AssemblyInfo.cs
 src/banshee.exe.config
@@ -409,6 +408,8 @@ data/org.gnome.Banshee.service
 data/images/Makefile
 docs/Makefile
 tests/Makefile
+tools/Makefile
+tools/banshee-import
 po/Makefile.in
 ])
 
