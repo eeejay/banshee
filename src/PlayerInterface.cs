@@ -122,7 +122,7 @@ namespace Banshee
                 Banshee.Gui.DragDrop.DragDropTarget.UriList
             };
 
-        private RemotePlayer banshee_dbus_object;
+        private DBusPlayer banshee_dbus_object;
 
         private static PlayerUI instance;
         public static PlayerUI Instance {
@@ -141,8 +141,8 @@ namespace Banshee
             BuildWindow();   
             
             try {
-                Globals.DBusRemote = new DBusRemote();
-                banshee_dbus_object = new RemotePlayer(Window, this);
+                //Globals.DBusRemote = new DBusRemote();
+                banshee_dbus_object = DBusPlayer.FindInstance();
                 Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
             } catch {
             }
