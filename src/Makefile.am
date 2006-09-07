@@ -31,8 +31,7 @@ BANSHEE_SOURCE = \
 	PlaylistView.cs \
 	SourceView.cs \
 	PlaylistModel.cs \
-	PlaylistColumns.cs \
-	RemotePlayer.cs 
+	PlaylistColumns.cs
 
 BANSHEE_RESOURCES = \
 	data/banshee.glade \

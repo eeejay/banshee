@@ -1,5 +1,28 @@
 2006-09-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/DBusPlayer.cs: New version does not rely on knowing
+	anything about the PlayerInterface in banshee.exe; has new event
+	for UICommands so PlayerInterface can act accordingly; do not allow
+	operations to run until all components have booted; added Shutdown
+
+	* src/Banshee.Base/Globals.cs: All DBus registration and setup is
+	done as a component now, not in the PlayerInterface; DBusPlayer is
+	booted as the first component, but will not perform actions until
+	all components have booted - this allows for the best instance detection
+
+	* src/Banshee.Base/ComponentInitializer.cs: Added IsRunFinished
+
+	* src/RemotePlayer.cs: Moved to src/Banshee.Base/DBusPlayer.cs
+
+	* src/Main.cs: Adjust to DBusPlayer changes; implement command line
+	argument for new Shutdown DBus method
+
+	* src/banshee.mdp: 
+	* src/Makefile.am: 
+	* src/Banshee.Base/Makefile.am: Updated
+
+2006-09-06  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Gui/ImportDialog.cs: If an audio CD is an available
 	source, make the first one the active default selection (instead of
 	the first source); added 'enter' key accelerator (BNC #202865)

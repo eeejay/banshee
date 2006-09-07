@@ -78,6 +78,8 @@ namespace Banshee.Base
         public event ComponentInitializingHandler ComponentInitializing;
         public event EventHandler RunFinished;
         
+        private bool run_finished;
+        
         public ComponentInitializer()
         {
         }
@@ -109,6 +111,7 @@ namespace Banshee.Base
         public void Run()
         {
             int current = 1;
+            run_finished = false;
             
             while(components.Count > 0) {
                 Component component = components.Dequeue();
@@ -126,6 +129,7 @@ namespace Banshee.Base
             }
             
             component_run_count = 0;
+            run_finished = true;
             OnRunFinished();
         }
         
@@ -143,6 +147,10 @@ namespace Banshee.Base
             if(handler != null) {
                 handler(this, new EventArgs());
             }
+        }
+        
+        public bool IsRunFinished {
+            get { return run_finished; }
         }
     }
 }

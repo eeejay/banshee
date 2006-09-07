@@ -63,6 +63,7 @@ namespace Banshee
                 new ArgumentLayout("toggle-playing", "Toggle playing of current song"),
                 new ArgumentLayout("play",           "Play current song"),
                 new ArgumentLayout("pause",          "Pause current song"),
+                new ArgumentLayout("shutdown",       "Shutdown Banshee"),
                 new ArgumentLayout("query-artist",   "Get artist name for current playing song"),
                 new ArgumentLayout("query-album",    "Get album name for current playing song"),
                 new ArgumentLayout("query-title",    "Get track title for current playing song"),
@@ -81,7 +82,7 @@ namespace Banshee
             }, args, "enqueue");
             
             HandleShallowCommands();
-            RemotePlayer dbus_core = DetectInstanceAndDbus();
+            DBusPlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
             Globals.Initialize();
@@ -92,10 +93,10 @@ namespace Banshee
             Gtk.Application.Run();
         }
     
-        private static RemotePlayer DetectInstanceAndDbus()
+        private static DBusPlayer DetectInstanceAndDbus()
         {
             try {
-                return RemotePlayer.FindInstance();
+                return DBusPlayer.FindInstance();
             } catch {
                 /*Process current_process = Process.GetCurrentProcess();
                 foreach(Process process in Process.GetProcesses()) {
@@ -112,7 +113,7 @@ namespace Banshee
             }
         }
         
-        private static void HandleDbusCommands(RemotePlayer remote_player)
+        private static void HandleDbusCommands(DBusPlayer remote_player)
         {
             if(remote_player == null) {
                 return;
@@ -128,6 +129,10 @@ namespace Banshee
             foreach(string arg in Globals.ArgumentQueue.Arguments) {
                 bool dequeue = true;
                 switch(arg) {
+                case "shutdown":
+                    remote_player.Shutdown();
+                    present = false;
+                    break;
                 case "toggle-playing":
                     remote_player.TogglePlaying();
                     present = false;
@@ -250,7 +255,7 @@ namespace Banshee
             }
         }
         
-        private static void Present(RemotePlayer remote_player)
+        private static void Present(DBusPlayer remote_player)
         {
             remote_player.PresentWindow();
         }

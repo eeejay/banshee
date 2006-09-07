@@ -1,5 +1,5 @@
 /***************************************************************************
- *  RemotePlayer.cs
+ *  DBusPlayer.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -29,75 +29,107 @@
 using System;
 using DBus;
 
-using Banshee.Base;
+using Banshee.Sources;
 using Banshee.MediaEngine;
 
-namespace Banshee
+namespace Banshee.Base
 {   
     [Interface("org.gnome.Banshee.Core")]
-    public class RemotePlayer
+    public class DBusPlayer
     {
-        private Gtk.Window mainWindow;
-        private PlayerUI PlayerUI;
-        
-        public static RemotePlayer FindInstance()
+        public static DBusPlayer FindInstance()
         {
             Connection connection = Bus.GetSessionBus();
             Service service = Service.Get(connection, "org.gnome.Banshee");        
-            return service.GetObject(typeof(RemotePlayer), "/org/gnome/Banshee/Player") as RemotePlayer;
+            return service.GetObject(typeof(DBusPlayer), "/org/gnome/Banshee/Player") as DBusPlayer;
         }
         
-        public RemotePlayer(Gtk.Window mainWindow, PlayerUI ui)
+        public class UICommandArgs : EventArgs
         {
-            this.mainWindow = mainWindow;
-            this.PlayerUI = ui;
+            private UICommand command;
+            
+            public UICommandArgs(UICommand command)
+            {
+                this.command = command;
+            }
+            
+            public UICommand Command {
+                get { return command; }
+            }
+        }
+
+        public delegate void UICommandHandler(object o, UICommandArgs args);
+
+        public enum UICommand
+        {
+            PresentWindow,
+            ShowWindow,
+            HideWindow
+        }
+        
+        public event UICommandHandler UIAction;
+        
+        public DBusPlayer()
+        {
+        }
+        
+        private void OnUIAction(UICommand command)
+        {
+            if(!Available) {
+                return;
+            }
+        
+            UICommandHandler handler = UIAction;
+            if(handler != null) {
+                handler(this, new UICommandArgs(command));
+            }
+        }
+        
+        private bool Available {
+            get { return Globals.StartupInitializer.IsRunFinished; }
+        }
+        
+        private bool HaveTrack {
+            get { return Available && PlayerEngineCore.CurrentTrack != null; }
+        }
+        
+        [Method]
+        public virtual void Shutdown()
+        {
+            Globals.Shutdown();
         }
         
         [Method]
         public virtual void PresentWindow()
         {
-            if(mainWindow != null) {
-                mainWindow.Present();
-            }
+            OnUIAction(UICommand.PresentWindow);
         }
         
         [Method]
         public virtual void ShowWindow()
         {
-            if(mainWindow != null) {
-                mainWindow.Show();
-            }
+            OnUIAction(UICommand.ShowWindow);
         }
         
         [Method]
         public virtual void HideWindow()
         {
-            if(mainWindow != null) {
-                mainWindow.Hide();
-            }
+            OnUIAction(UICommand.HideWindow);
         }
         
         [Method]
         public virtual void TogglePlaying()
         {
-            if(PlayerUI != null) {
-                PlayerUI.PlayPause();
+            if(Available) {
+                Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
         [Method]
         public virtual void Play()
-        {
-            if(PlayerUI == null) {
-                return;
-            }
-            
-            if(PlayerUI != null && !HaveTrack) {
-                PlayerUI.PlayPause();
-            }
-            
-            if(PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
-                PlayerUI.PlayPause();
+        {    
+            if(HaveTrack && PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
+                Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
@@ -105,55 +137,79 @@ namespace Banshee
         public virtual void Pause()
         {
             if(HaveTrack && PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
-                PlayerUI.PlayPause();
+                Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
         [Method]
         public virtual void Next()
         {
-            if(PlayerUI != null) {
-                PlayerUI.Next();
+            if(Available) {
+                Globals.ActionManager["NextAction"].Activate();
             }
         }
         
         [Method]
         public virtual void Previous()
         {
-            if(PlayerUI != null) {
-                PlayerUI.Previous();
+            if(Available) {
+                Globals.ActionManager["PreviousAction"].Activate();
             }
         }
 
         [Method]
         public virtual void SelectAudioCd(string device)
         {
-            if(PlayerUI != null) {
-                PlayerUI.SelectAudioCd(device);
+            if(!Available) {
+                return;
             }
+        
+            foreach(Source source in SourceManager.Sources) {
+                AudioCdSource audiocd_source = source as AudioCdSource;
+                if(audiocd_source == null) {
+                    continue;
+                }
+                
+                if(audiocd_source.Disk.DeviceNode == device || audiocd_source.Disk.Udi == device) {
+                    SourceManager.SetActiveSource(audiocd_source);
+                    return;
+                }
+            }
+            
+            SourceManager.SetActiveSource(LibrarySource.Instance);
         }
         
         [Method]
         public virtual void SelectDap(string device)
         {
-            if(PlayerUI != null) {
-                PlayerUI.SelectDap(device);
+            if(!Available) {
+                return;
             }
+            
+            foreach(Source source in SourceManager.Sources) {
+                DapSource dap_source = source as DapSource;
+                if(dap_source == null) {
+                    continue;
+                }
+                
+                if(dap_source.Device.HalUdi == device) {
+                    SourceManager.SetActiveSource(dap_source);
+                    return;
+                }
+            }
+            
+            SourceManager.SetActiveSource(LibrarySource.Instance);
         }
         
         [Method]
         public virtual void EnqueueFiles(string [] files)
         {
-            Banshee.Sources.LocalQueueSource.Instance.Enqueue(files, true);
-            Banshee.Sources.SourceManager.SetActiveSource(Banshee.Sources.LocalQueueSource.Instance);
-        }
-        
-        private bool HaveTrack {
-            get {
-                return PlayerUI != null && PlayerEngineCore.CurrentTrack != null;
+            if(Available) {
+                Banshee.Sources.LocalQueueSource.Instance.Enqueue(files, true);
+                Banshee.Sources.SourceManager.SetActiveSource(Banshee.Sources.LocalQueueSource.Instance);
             }
         }
-        
+
         private string TrackStringResult(string s)
         {
             return HaveTrack ? (s == null ? String.Empty : s) : String.Empty;
@@ -216,6 +272,10 @@ namespace Banshee
         [Method]
         public virtual int GetPlayingStatus()
         {
+            if(!Available) {
+                return -1;
+            }
+            
             return PlayerEngineCore.CurrentState == PlayerEngineState.Playing ? 1 :
                 (PlayerEngineCore.CurrentState != PlayerEngineState.Idle ? 0 : -1);
         }
@@ -223,41 +283,49 @@ namespace Banshee
         [Method]
         public virtual void SetVolume(int volume)
         {
-            PlayerEngineCore.Volume = (ushort)volume;
+            if(Available) {
+                PlayerEngineCore.Volume = (ushort)volume;
+            }
         }
 
         [Method]
         public virtual void IncreaseVolume()
         {
-            if(PlayerUI != null) {
-                PlayerEngineCore.Volume += (ushort)PlayerUI.VolumeDelta;
+            if(Available) {
+                PlayerEngineCore.Volume += 10;
             }
         }
         
         [Method]
         public virtual void DecreaseVolume()
         {
-            if(PlayerUI != null) {
-                PlayerEngineCore.Volume -= (ushort)PlayerUI.VolumeDelta;
+            if(Available) {
+                PlayerEngineCore.Volume -= 10;
             }
         }
         
         [Method]
         public virtual void SetPlayingPosition(int position)
         {
-            PlayerEngineCore.Position = (uint)position;
+            if(Available) {
+                PlayerEngineCore.Position = (uint)position;
+            }
         }
         
         [Method]
         public virtual void SkipForward()
         {
-            PlayerEngineCore.Position += PlayerUI.SkipDelta;
+            if(Available) {
+                PlayerEngineCore.Position += 10;
+            }
         }
         
         [Method]
         public virtual void SkipBackward()
         {
-            PlayerEngineCore.Position -= PlayerUI.SkipDelta;
+            if(Available) {
+                PlayerEngineCore.Position -= 10;
+            }
         }
     }
 }

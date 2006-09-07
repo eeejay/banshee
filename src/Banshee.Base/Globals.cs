@@ -44,6 +44,7 @@ namespace Banshee.Base
         private static AudioCdCore audio_cd_core;
         private static Random random;
         private static DBusRemote dbus_remote;
+        private static DBusPlayer dbus_player;
         private static Banshee.Gui.UIManager ui_manager;
         private static ComponentInitializer startup = new ComponentInitializer();
         
@@ -64,6 +65,15 @@ namespace Banshee.Base
                 System.Environment.Exit(1);
                 return;
             }
+                        
+            startup.Register("Starting DBus server", delegate {
+                try {
+                    dbus_remote = new DBusRemote();
+                    dbus_player = new DBusPlayer();
+                    dbus_remote.RegisterObject(dbus_player, "Player");
+                } catch {
+                }
+            });
             
             startup.Register("Connecting to GConf", delegate { gconf_client = new GConf.Client(); });
             startup.Register("Detecting network settings", delegate { network_detect = NetworkDetect.Instance; });
@@ -83,7 +93,6 @@ namespace Banshee.Base
                 "CD Burning support will be disabled for this instance", Banshee.Burner.BurnerCore.Initialize);
                 
             startup.Register("Initializing plugins", Banshee.Plugins.PluginCore.Initialize);
-            
             startup.Register("Initializing power management", PowerManagement.Initialize);
             
             startup.Run();
@@ -126,6 +135,7 @@ namespace Banshee.Base
         
         private static void Dispose()
         {
+            dbus_remote.UnregisterObject(dbus_player);
             Banshee.Kernel.Scheduler.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
             network_detect.Dispose();
@@ -170,7 +180,10 @@ namespace Banshee.Base
         
         public static DBusRemote DBusRemote {
             get { return dbus_remote; }
-            set { dbus_remote = value; }
+        }
+        
+        public static DBusPlayer DBusPlayer {
+            get { return dbus_player; }
         }
         
         public static Banshee.Gui.UIManager UIManager {
