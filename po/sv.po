@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-05 02:09+0200\n"
-"PO-Revision-Date: 2006-09-05 08:47+0100\n"
+"POT-Creation-Date: 2006-09-09 10:09+0200\n"
+"PO-Revision-Date: 2006-09-09 11:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -239,214 +239,250 @@ msgid "<b>Albu_m:</b>"
 msgstr "<b>Albu_m:</b>"
 
 #: ../data/banshee-dialogs.glade.h:5
+msgid "<b>Album Cover:</b>"
+msgstr "<b>Albumomslag:</b>"
+
+#: ../data/banshee-dialogs.glade.h:6
 msgid "<b>Bitrate:</b>"
 msgstr "<b>Bithastighet:</b>"
 
-#: ../data/banshee-dialogs.glade.h:6
+#: ../data/banshee-dialogs.glade.h:7
 msgid "<b>CD Importing</b>"
 msgstr "<b>Cd-importering</b>"
 
-#: ../data/banshee-dialogs.glade.h:7
+#: ../data/banshee-dialogs.glade.h:8
 msgid "<b>Channels:</b>"
 msgstr "<b>Kanaler:</b>"
 
-#: ../data/banshee-dialogs.glade.h:8
+#: ../data/banshee-dialogs.glade.h:9
 msgid "<b>Details</b>"
 msgstr "<b>Detaljer</b>"
 
-#: ../data/banshee-dialogs.glade.h:9
+#: ../data/banshee-dialogs.glade.h:10
 msgid "<b>Digital Audio Player</b>"
 msgstr "<b>Uppspelare av digitalt ljud</b>"
 
-#: ../data/banshee-dialogs.glade.h:10
+#: ../data/banshee-dialogs.glade.h:11
 msgid "<b>Duration:</b>"
 msgstr "<b>Speltid:</b>"
 
-#: ../data/banshee-dialogs.glade.h:11
+#: ../data/banshee-dialogs.glade.h:12
 msgid "<b>File name:</b>"
 msgstr "<b>Filnamn:</b>"
 
-#: ../data/banshee-dialogs.glade.h:12
+#: ../data/banshee-dialogs.glade.h:13
 msgid "<b>File size:</b>"
 msgstr "<b>Filstorlek:</b>"
 
-#: ../data/banshee-dialogs.glade.h:13
+#: ../data/banshee-dialogs.glade.h:14
 msgid "<b>Imported on:</b>"
 msgstr "<b>Importerad den:</b>"
 
-#: ../data/banshee-dialogs.glade.h:14
+#: ../data/banshee-dialogs.glade.h:15
 msgid "<b>Last played:</b>"
 msgstr "<b>Senast spelad:</b>"
 
-#: ../data/banshee-dialogs.glade.h:15
+#: ../data/banshee-dialogs.glade.h:16
 msgid "<b>Location:</b>"
 msgstr "<b>Plats:</b>"
 
-#: ../data/banshee-dialogs.glade.h:16
+#: ../data/banshee-dialogs.glade.h:17
 msgid "<b>Music Library</b>"
 msgstr "<b>Musikbibliotek</b>"
 
-#: ../data/banshee-dialogs.glade.h:17
+#: ../data/banshee-dialogs.glade.h:18
 msgid "<b>Play count:</b>"
 msgstr "<b>Spelräknare:</b>"
 
-#: ../data/banshee-dialogs.glade.h:18
+#: ../data/banshee-dialogs.glade.h:19
 msgid "<b>Sample rate:</b>"
 msgstr "<b>Samplingshastighet:</b>"
 
-#: ../data/banshee-dialogs.glade.h:19
+#: ../data/banshee-dialogs.glade.h:20
 msgid "<b>Session Information</b>"
 msgstr "<b>Sessionsinformation</b>"
 
-#: ../data/banshee-dialogs.glade.h:20
+#: ../data/banshee-dialogs.glade.h:21
 msgid "<b>Track _count:</b>"
 msgstr "<b>Spåra_ntal:</b>"
 
-#: ../data/banshee-dialogs.glade.h:21
+#: ../data/banshee-dialogs.glade.h:22
 msgid "<b>Track _number:</b>"
 msgstr "<b>Spår_nummer:</b>"
 
-#: ../data/banshee-dialogs.glade.h:22
+#: ../data/banshee-dialogs.glade.h:23
 msgid "<b>Write Options</b>"
 msgstr "<b>Skrivalternativ</b>"
 
-#: ../data/banshee-dialogs.glade.h:23
+#: ../data/banshee-dialogs.glade.h:24
 msgid "<b>_Artist:</b>"
 msgstr "<b>_Artist:</b>"
 
-#: ../data/banshee-dialogs.glade.h:24
+#: ../data/banshee-dialogs.glade.h:25
 msgid "<b>_Genre:</b>"
 msgstr "<b>_Genre:</b>"
 
-#: ../data/banshee-dialogs.glade.h:25
+#: ../data/banshee-dialogs.glade.h:26
 msgid "<b>_Title:</b>"
 msgstr "<b>_Titel:</b>"
 
-#: ../data/banshee-dialogs.glade.h:26
+#: ../data/banshee-dialogs.glade.h:27
 msgid "<b>_Year:</b>"
 msgstr "<b>_År:</b>"
 
-#: ../data/banshee-dialogs.glade.h:27
+#: ../data/banshee-dialogs.glade.h:28
 msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Importera musik till bibliotek</b></big>"
 
-#: ../data/banshee-dialogs.glade.h:28
+#: ../data/banshee-dialogs.glade.h:29
 msgid "<small><i>Enable this option to save tags and other metadata inside supported audio files</i></small>"
 msgstr "<small><i>Aktivera detta alternativ för att spara taggar och annat metadata i ljudfiler som stöds</i></small>"
 
-#: ../data/banshee-dialogs.glade.h:29
+#: ../data/banshee-dialogs.glade.h:30
+msgid "Artwork"
+msgstr "Grafik"
+
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Back"
 msgstr "Tillbaka"
 
-#: ../data/banshee-dialogs.glade.h:30
+#: ../data/banshee-dialogs.glade.h:32
 msgid "Choose an import source:"
 msgstr "Välj en importkälla:"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Conversion Format:"
 msgstr "Konverteringsformat:"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Copy all common fields"
 msgstr "Kopiera alla vanliga fält"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:35
 msgid "Copy files to music folder when importing"
 msgstr "Kopiera filer till musikmapp vid importering"
 
-#: ../data/banshee-dialogs.glade.h:34
+#: ../data/banshee-dialogs.glade.h:36
+msgid "Copy to all"
+msgstr "Kopiera till alla"
+
+#: ../data/banshee-dialogs.glade.h:37
 msgid "Create a new preset"
 msgstr "Skapa en ny förinställning"
 
-#: ../data/banshee-dialogs.glade.h:35
+#: ../data/banshee-dialogs.glade.h:38
 msgid "Delete the active preset"
 msgstr "Ta bort den aktiva förinställningen"
 
-#: ../data/banshee-dialogs.glade.h:36
+#: ../data/banshee-dialogs.glade.h:39
 msgid "Details"
 msgstr "Detaljer"
 
-#: ../data/banshee-dialogs.glade.h:37
+#: ../data/banshee-dialogs.glade.h:40
 msgid "Disc Options"
 msgstr "Skivalternativ"
 
 # Disc eller disk?
-#: ../data/banshee-dialogs.glade.h:38
+#: ../data/banshee-dialogs.glade.h:41
 msgid "Disc format:"
 msgstr "Skivformat:"
 
-#: ../data/banshee-dialogs.glade.h:39
+#: ../data/banshee-dialogs.glade.h:42
 msgid "Disc name:"
 msgstr "Skivnamn:"
 
-#: ../data/banshee-dialogs.glade.h:40
+#: ../data/banshee-dialogs.glade.h:43
 msgid "Do not show this dialog again"
 msgstr "Visa inte denna dialogruta igen"
 
-#: ../data/banshee-dialogs.glade.h:41
+#: ../data/banshee-dialogs.glade.h:44
 msgid "Eject disc after writing"
 msgstr "Mata ut skiva efter skrivning"
 
-#: ../data/banshee-dialogs.glade.h:42
+#: ../data/banshee-dialogs.glade.h:45
+msgid "Embed directly in song"
+msgstr "Bädda in direkt i låt"
+
+#: ../data/banshee-dialogs.glade.h:46
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: ../data/banshee-dialogs.glade.h:43
+#: ../data/banshee-dialogs.glade.h:47
 msgid "Enter Next"
 msgstr "Gå till nästa"
 
-#: ../data/banshee-dialogs.glade.h:44
+#: ../data/banshee-dialogs.glade.h:48
 msgid "Enter the address of the file you would like to open:"
 msgstr "Ange adressen till filen du vill öppna:"
 
-#: ../data/banshee-dialogs.glade.h:45
+#: ../data/banshee-dialogs.glade.h:49
 #: ../src/Banshee.Base/ActionManager.cs:140
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: ../data/banshee-dialogs.glade.h:46
+#: ../data/banshee-dialogs.glade.h:50
 msgid "Error"
 msgstr "Fel"
 
-#: ../data/banshee-dialogs.glade.h:47
+#: ../data/banshee-dialogs.glade.h:51
 msgid "Forward"
 msgstr "Framåt"
 
-#: ../data/banshee-dialogs.glade.h:48
+#: ../data/banshee-dialogs.glade.h:52
 msgid "Import Music Source"
 msgstr "Importera musikkälla"
 
-#: ../data/banshee-dialogs.glade.h:49
+#: ../data/banshee-dialogs.glade.h:53
 msgid "Import Music to Library"
 msgstr "Importera musik till bibliotek"
 
-#: ../data/banshee-dialogs.glade.h:50
+#: ../data/banshee-dialogs.glade.h:54
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../data/banshee-dialogs.glade.h:51
+#: ../data/banshee-dialogs.glade.h:55
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Öppna plats"
 
-#: ../data/banshee-dialogs.glade.h:52
+#: ../data/banshee-dialogs.glade.h:56
+msgid "Open in editor"
+msgstr "Öppna i redigerare"
+
+#: ../data/banshee-dialogs.glade.h:57
 msgid "Output Format:"
 msgstr "Utdataformat:"
 
-#: ../data/banshee-dialogs.glade.h:53
+#: ../data/banshee-dialogs.glade.h:58
+msgid "Playlist _Name: "
+msgstr "Spelliste_namn: "
+
+#: ../data/banshee-dialogs.glade.h:59
+msgid "Predefined Smart Playlists"
+msgstr "Fördefinierade smarta spellistor"
+
+#: ../data/banshee-dialogs.glade.h:60
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: ../data/banshee-dialogs.glade.h:54
+#: ../data/banshee-dialogs.glade.h:61
 msgid "Reset"
 msgstr "Återställ"
 
-#: ../data/banshee-dialogs.glade.h:55
+#: ../data/banshee-dialogs.glade.h:62
+msgid "Save to song directory"
+msgstr "Spara till låtkatalog"
+
+#: ../data/banshee-dialogs.glade.h:63
 msgid "Seek to Position"
 msgstr "Spola till position"
 
-#: ../data/banshee-dialogs.glade.h:56
+#: ../data/banshee-dialogs.glade.h:64
+msgid "Select for use"
+msgstr "Markera för användning"
+
+#: ../data/banshee-dialogs.glade.h:65
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Banshee.Base/Dap/Dap.cs:605
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:236
@@ -457,23 +493,23 @@ msgstr "Spola till position"
 msgid "Unknown"
 msgstr "Okänd"
 
-#: ../data/banshee-dialogs.glade.h:57
+#: ../data/banshee-dialogs.glade.h:66
 msgid "Write disc to:"
 msgstr "Skriv skiva till:"
 
-#: ../data/banshee-dialogs.glade.h:58
+#: ../data/banshee-dialogs.glade.h:67
 msgid "Write metadata to files"
 msgstr "Skriv metadata till filer"
 
-#: ../data/banshee-dialogs.glade.h:59
+#: ../data/banshee-dialogs.glade.h:68
 msgid "Write speed:"
 msgstr "Skrivhastighet:"
 
-#: ../data/banshee-dialogs.glade.h:60
+#: ../data/banshee-dialogs.glade.h:69
 msgid "Your music library is empty. You may import new music into your library now, or choose to do so later."
 msgstr "Ditt musikbibliotek är tomt. Du kan importera ny musik till ditt bibliotek nu, eller välja att göra det senare."
 
-#: ../data/banshee-dialogs.glade.h:61
+#: ../data/banshee-dialogs.glade.h:70
 msgid "_Write"
 msgstr "_Skriv"
 
@@ -583,7 +619,7 @@ msgstr "_Musik"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1569
+#: ../src/PlayerInterface.cs:1572
 msgid "New Playlist"
 msgstr "Ny spellista"
 
@@ -868,8 +904,8 @@ msgid "Import audio CD to library"
 msgstr "Importera ljud-cd till bibliotek"
 
 #: ../src/Banshee.Base/ActionManager.cs:258
-#: ../src/PlayerInterface.cs:824
-#: ../src/PlayerInterface.cs:832
+#: ../src/PlayerInterface.cs:827
+#: ../src/PlayerInterface.cs:835
 msgid "Play"
 msgstr "Spela"
 
@@ -970,7 +1006,7 @@ msgid "Restart the current song"
 msgstr "Starta om nuvarande låt"
 
 #: ../src/Banshee.Base/ActionManager.cs:322
-#: ../src/PlayerInterface.cs:1084
+#: ../src/PlayerInterface.cs:1087
 msgid "Synchronize"
 msgstr "Synkronisera"
 
@@ -1290,7 +1326,7 @@ msgstr "Kunde inte köra nautilus-cd-burner"
 msgid "Scanning"
 msgstr "Söker av"
 
-#: ../src/Banshee.Base/ComponentInitializer.cs:92
+#: ../src/Banshee.Base/ComponentInitializer.cs:94
 msgid "Could not initialize component"
 msgstr "Kunde inte initiera komponent"
 
@@ -2195,93 +2231,93 @@ msgstr "Söker: {0}"
 msgid "Idle"
 msgstr "Inaktiv"
 
-#: ../src/PlayerInterface.cs:377
+#: ../src/PlayerInterface.cs:380
 msgid "Loading..."
 msgstr "Läser in..."
 
-#: ../src/PlayerInterface.cs:433
+#: ../src/PlayerInterface.cs:436
 msgid "All"
 msgstr "Alla"
 
-#: ../src/PlayerInterface.cs:435
-#: ../src/PlayerInterface.cs:1328
+#: ../src/PlayerInterface.cs:438
+#: ../src/PlayerInterface.cs:1331
 msgid "Song Name"
 msgstr "Låtnamn"
 
-#: ../src/PlayerInterface.cs:436
-#: ../src/PlayerInterface.cs:1326
-#: ../src/PlayerInterface.cs:2304
+#: ../src/PlayerInterface.cs:439
+#: ../src/PlayerInterface.cs:1329
+#: ../src/PlayerInterface.cs:2307
 msgid "Artist Name"
 msgstr "Artistnamn"
 
-#: ../src/PlayerInterface.cs:437
-#: ../src/PlayerInterface.cs:1330
-#: ../src/PlayerInterface.cs:2300
+#: ../src/PlayerInterface.cs:440
+#: ../src/PlayerInterface.cs:1333
+#: ../src/PlayerInterface.cs:2303
 msgid "Album Title"
 msgstr "Albumtitel"
 
-#: ../src/PlayerInterface.cs:438
-#: ../src/PlayerInterface.cs:1332
-#: ../src/PlayerInterface.cs:2308
+#: ../src/PlayerInterface.cs:441
+#: ../src/PlayerInterface.cs:1335
+#: ../src/PlayerInterface.cs:2311
 #: ../src/PlaylistView.cs:106
 msgid "Genre"
 msgstr "Genre"
 
-#: ../src/PlayerInterface.cs:439
-#: ../src/PlayerInterface.cs:1334
+#: ../src/PlayerInterface.cs:442
+#: ../src/PlayerInterface.cs:1337
 #: ../src/PlaylistView.cs:109
 msgid "Year"
 msgstr "År"
 
-#: ../src/PlayerInterface.cs:460
+#: ../src/PlayerInterface.cs:463
 msgid "Write selection to CD"
 msgstr "Skriv markering till cd"
 
-#: ../src/PlayerInterface.cs:461
+#: ../src/PlayerInterface.cs:464
 msgid "Import CD into library"
 msgstr "Importera cd till bibliotek"
 
-#: ../src/PlayerInterface.cs:462
+#: ../src/PlayerInterface.cs:465
 msgid "Play previous song"
 msgstr "Spela upp föregående låt"
 
-#: ../src/PlayerInterface.cs:463
+#: ../src/PlayerInterface.cs:466
 msgid "Play/pause current song"
 msgstr "Spela upp/Pausa aktuell låt"
 
-#: ../src/PlayerInterface.cs:464
+#: ../src/PlayerInterface.cs:467
 msgid "Play next song"
 msgstr "Spela upp nästa låt"
 
-#: ../src/PlayerInterface.cs:465
+#: ../src/PlayerInterface.cs:468
 msgid "Device disk usage"
 msgstr "Enhetsanvändning"
 
-#: ../src/PlayerInterface.cs:466
+#: ../src/PlayerInterface.cs:469
 msgid "Synchronize music library to device"
 msgstr "Synkronisera musikbibliotek till enhet"
 
-#: ../src/PlayerInterface.cs:467
+#: ../src/PlayerInterface.cs:470
 msgid "Adjust volume"
 msgstr "Justera volym"
 
-#: ../src/PlayerInterface.cs:468
+#: ../src/PlayerInterface.cs:471
 msgid "Change repeat playback mode"
 msgstr "Ändra upprepningsläge"
 
-#: ../src/PlayerInterface.cs:469
+#: ../src/PlayerInterface.cs:472
 msgid "Toggle shuffle playback mode"
 msgstr "Växla blandningsläge"
 
-#: ../src/PlayerInterface.cs:470
+#: ../src/PlayerInterface.cs:473
 msgid "Edit and view metadata of selected songs"
 msgstr "Redigera och visa metadata för markerade låtar"
 
-#: ../src/PlayerInterface.cs:814
+#: ../src/PlayerInterface.cs:817
 msgid "Cannot Play Song"
 msgstr "Kan inte spela upp låt"
 
-#: ../src/PlayerInterface.cs:815
+#: ../src/PlayerInterface.cs:818
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2294,79 +2330,79 @@ msgstr ""
 "  <big>•</big> Låten är skyddad (DRM)\n"
 "  <big>•</big> Låten är på en DAP som inte har stöd för uppspelning\n"
 
-#: ../src/PlayerInterface.cs:835
+#: ../src/PlayerInterface.cs:838
 msgid "Pause"
 msgstr "Paus"
 
-#: ../src/PlayerInterface.cs:878
+#: ../src/PlayerInterface.cs:881
 msgid "Playback Error"
 msgstr "Uppspelningsfel"
 
-#: ../src/PlayerInterface.cs:1073
+#: ../src/PlayerInterface.cs:1076
 msgid "Import"
 msgstr "Importera"
 
-#: ../src/PlayerInterface.cs:1091
+#: ../src/PlayerInterface.cs:1094
 #, csharp-format
 msgid "Rename {0}"
 msgstr "Byt namn på {0}"
 
-#: ../src/PlayerInterface.cs:1212
+#: ../src/PlayerInterface.cs:1215
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dagar"
 
-#: ../src/PlayerInterface.cs:1229
+#: ../src/PlayerInterface.cs:1232
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} objekt"
 msgstr[1] "{0} objekt"
 
-#: ../src/PlayerInterface.cs:1231
+#: ../src/PlayerInterface.cs:1234
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} Total speltid"
 
-#: ../src/PlayerInterface.cs:1588
+#: ../src/PlayerInterface.cs:1591
 msgid "Clear"
 msgstr "Töm"
 
-#: ../src/PlayerInterface.cs:1855
+#: ../src/PlayerInterface.cs:1858
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Är du säker på att du vill permanent ta bort denna låt?"
 msgstr[1] "Är du säker på att du vill permanent ta bort de markerade {0} låtarna?"
 
-#: ../src/PlayerInterface.cs:1859
+#: ../src/PlayerInterface.cs:1862
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Om du tar bort markeringen kommer de att permanent förloras."
 
-#: ../src/PlayerInterface.cs:1862
+#: ../src/PlayerInterface.cs:1865
 msgid "Remove selection from library"
 msgstr "Ta bort markering från bibliotek"
 
-#: ../src/PlayerInterface.cs:1864
+#: ../src/PlayerInterface.cs:1867
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Är du säker att du vill ta bort den markerade låten från ditt bibliotek?"
 msgstr[1] "Är du säker att du vill ta bort de <b>({0})</b> markerade låtarna från ditt bibliotek?"
 
-#: ../src/PlayerInterface.cs:2006
+#: ../src/PlayerInterface.cs:2009
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2027
+#: ../src/PlayerInterface.cs:2030
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisera {0}"
 
-#: ../src/PlayerInterface.cs:2028
+#: ../src/PlayerInterface.cs:2031
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
@@ -2379,15 +2415,15 @@ msgstr ""
 "<big>•</big> <i>Synkronisera bibliotek</i>: synkronisera Banshees bibliotek till {0}\n"
 "<big>•</big> <i>Spara manuella ändringar</i>: spara endast de manuella ändringarna du gjorde"
 
-#: ../src/PlayerInterface.cs:2034
+#: ../src/PlayerInterface.cs:2037
 msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"
 msgstr "<b>Varning:</b> Åtgärder kommer att ändra eller radera existerande iPod-innehåll och kan orsaka inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:2036
+#: ../src/PlayerInterface.cs:2039
 msgid "Synchronize Library"
 msgstr "Synkronisera bibliotek"
 
-#: ../src/PlayerInterface.cs:2038
+#: ../src/PlayerInterface.cs:2041
 msgid "Save Manual Changes"
 msgstr "Spara manuella ändringar"
 
@@ -2765,10 +2801,6 @@ msgstr "Kunde inte importera spår"
 #, fuzzy
 #~ msgid "Loading {0} - {1} ..."
 #~ msgstr "Läser in..."
-
-#, fuzzy
-#~ msgid "Playlist Save"
-#~ msgstr "Spellista"
 
 #, fuzzy
 #~ msgid "Flushing old entries"
