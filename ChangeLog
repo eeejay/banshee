@@ -1,3 +1,10 @@
+2006-09-09  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Widgets/ActionButton.cs: Added 'new' keyword on Action
+	property to allow for proper functionality under Gtk# 2.12, which provides
+	Gtk.Widget.Action (BGO #355100, patch by Michael Monreal) (basically
+	avoids two warnings when compiling Banshee.Widgets)
+
 2006-09-07  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/PlayerInterface.cs: Unbreak the build (related to abock's latest
