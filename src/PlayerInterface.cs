@@ -731,7 +731,7 @@ namespace Banshee
             bool focus_search = false;
             switch(args.Event.Key) {
                 case Gdk.Key.f:
-                    if (ModifierType.ControlMask == (args.Event.State & ModifierType.ControlMask))
+                    if(ModifierType.ControlMask == (args.Event.State & ModifierType.ControlMask))
                         focus_search = true;
                     break;
 
