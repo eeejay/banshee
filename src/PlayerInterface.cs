@@ -728,17 +728,26 @@ namespace Banshee
                 }
             }
             
+            bool focus_search = false;
             switch(args.Event.Key) {
+                case Gdk.Key.f:
+                    if (ModifierType.ControlMask == (args.Event.State & ModifierType.ControlMask))
+                        focus_search = true;
+                    break;
+
+                case Gdk.Key.slash:
                 case Gdk.Key.J:
                 case Gdk.Key.j:
                 case Gdk.Key.S:
                 case Gdk.Key.s:
                 case Gdk.Key.F3:
-                    if(!searchEntry.HasFocus && !sourceView.EditingRow) {
-                        searchEntry.Focus();
-                        handled = true;
-                    }
+                    focus_search = true;
                     break;
+            }
+
+            if(focus_search && !searchEntry.HasFocus && !sourceView.EditingRow) {
+                searchEntry.Focus();
+                handled = true;
             }
             
             args.RetVal = handled;

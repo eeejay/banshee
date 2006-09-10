@@ -1,3 +1,7 @@
+2006-09-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/PlayerInterface.cs: Make ctrl-f and / focus the search entry.
+
 2006-09-09  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Widgets/ActionButton.cs: Added 'new' keyword on Action
