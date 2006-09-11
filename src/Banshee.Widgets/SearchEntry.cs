@@ -365,6 +365,14 @@ namespace Banshee.Widgets
         
         public void CancelSearch()
         {
+            Widget [] children = popupMenu.Children;
+            if(children != null && children.Length > 0) {
+                CheckMenuItem first = children[0] as CheckMenuItem;
+                if(first != null) {
+                    first.Activate();
+                }
+            }
+            
             entry.Text = String.Empty;
         }
         
