@@ -124,7 +124,7 @@ namespace Banshee.Plugins
             box.ShowAll();
             disabled_box.Hide();
             
-            WindowPosition = WindowPosition.CenterAlways;
+            WindowPosition = WindowPosition.Center;
         }
         
         private void CreateInfoRow(Box parent, string name, Label valueLabel)
