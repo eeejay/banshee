@@ -1,5 +1,10 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Only act on ButtonPress (Arif Lukito, BGO #352940)
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* taglib-sharp/*: Updated
 
 2006-09-11  Aaron Bockover  <abock@gnome.org>

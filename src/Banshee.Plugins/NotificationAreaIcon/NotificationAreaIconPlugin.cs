@@ -147,7 +147,12 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             args.RetVal = handled;
         }
 
-        private void OnNotificationAreaIconClick(object o, ButtonPressEventArgs args) {
+        private void OnNotificationAreaIconClick(object o, ButtonPressEventArgs args) 
+        {
+            if(args.Event.Type != Gdk.EventType.ButtonPress) {
+                return;
+            }
+        
             switch(args.Event.Button) {
                 case 1:
                     ShowHideMainWindow();
