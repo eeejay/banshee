@@ -1,5 +1,9 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* taglib-sharp/*: Updated
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Plugins/PluginDialog.cs: don't CenterAlways (BGO #353797)
 
 2006-09-11  Aaron Bockover  <abock@gnome.org>
