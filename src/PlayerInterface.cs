@@ -47,6 +47,7 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Dap;
 using Banshee.Sources;
+using Banshee.Gui;
 using Banshee.Gui.DragDrop;
 
 namespace Banshee
@@ -122,30 +123,14 @@ namespace Banshee
                 Banshee.Gui.DragDrop.DragDropTarget.UriList
             };
 
-        private DBusPlayer banshee_dbus_object;
-
-        private static PlayerUI instance;
-        public static PlayerUI Instance {
-            get { return instance; }
-        }
-
         public PlayerUI() 
         {
-            instance = this;
-            
             gxml = new Glade.XML(null, "banshee.glade", "WindowPlayer", null);
             gxml.Autoconnect(this);
             InterfaceElements.MainWindow = WindowPlayer;
 
             ResizeMoveWindow();
             BuildWindow();   
-            
-            try {
-                //Globals.DBusRemote = new DBusRemote();
-                banshee_dbus_object = DBusPlayer.FindInstance();
-                Globals.DBusRemote.RegisterObject(banshee_dbus_object, "Player");
-            } catch {
-            }
             
             Globals.ShutdownRequested += OnShutdownRequested; 
             
@@ -154,6 +139,8 @@ namespace Banshee
 
             DapCore.DapAdded += OnDapCoreDeviceAdded;
             LogCore.Instance.Updated += OnLogCoreUpdated;
+            
+            Globals.DBusPlayer.UIAction += OnDBusPlayerUIAction;
             
             InitialLoadTimeout();
             if(!Globals.ArgumentQueue.Contains("hide")) {
@@ -193,8 +180,11 @@ namespace Banshee
    
         private bool InitialLoadTimeout()
         {
-            Globals.Library.Reloaded += OnLibraryReloaded;
-            Globals.Library.ReloadLibrary();
+            if(Globals.Library.IsLoaded) {
+                OnLibraryReloaded(Globals.Library, new EventArgs());
+            } else {
+                Globals.Library.Reloaded += OnLibraryReloaded;
+            }
             
             foreach(DapDevice device in DapCore.Devices) {
                  device.PropertiesChanged += OnDapPropertiesChanged;
@@ -239,6 +229,21 @@ namespace Banshee
                     WindowPlayer.Unmaximize();
                 }
             } catch(GConf.NoSuchKeyException) {
+            }
+        }
+        
+        private void OnDBusPlayerUIAction(object o, DBusPlayer.UICommandArgs args)
+        {
+            switch(args.Command) {
+                case DBusPlayer.UICommand.HideWindow:
+                    WindowPlayer.Hide();
+                    break;
+                case DBusPlayer.UICommand.ShowWindow:
+                    WindowPlayer.Show();
+                    break;
+                case DBusPlayer.UICommand.PresentWindow:
+                    WindowPlayer.Present();
+                    break;
             }
         }
         
@@ -554,40 +559,6 @@ namespace Banshee
             }
         }
 
-        public void SelectAudioCd(string device)
-        {
-            foreach(Source source in SourceManager.Sources) {
-                AudioCdSource audiocd_source = source as AudioCdSource;
-                if(audiocd_source == null) {
-                    continue;
-                }
-                
-                if(audiocd_source.Disk.DeviceNode == device || audiocd_source.Disk.Udi == device) {
-                    SourceManager.SetActiveSource(audiocd_source);
-                    return;
-                }
-            }
-            
-            SourceManager.SetActiveSource(LibrarySource.Instance);
-        }
-        
-        public void SelectDap(string device)
-        {
-            foreach(Source source in SourceManager.Sources) {
-                DapSource dap_source = source as DapSource;
-                if(dap_source == null) {
-                    continue;
-                }
-                
-                if(dap_source.Device.HalUdi == device) {
-                    SourceManager.SetActiveSource(dap_source);
-                    return;
-                }
-            }
-            
-            SourceManager.SetActiveSource(LibrarySource.Instance);
-        }
-        
         private void LoadSourceView()
         {        
             sourceView.Sensitive = true;
@@ -603,14 +574,12 @@ namespace Banshee
         {
             LoadSourceView();
             
-            SourceManager.AddSource(LibrarySource.Instance, true);
-
             if(LocalQueueSource.Instance.Count > 0) {
                 SourceManager.SetActiveSource(LocalQueueSource.Instance);
             } else if(Globals.ArgumentQueue.Contains("audio-cd")) {
-                SelectAudioCd(Globals.ArgumentQueue.Dequeue("audio-cd"));
+                Globals.DBusPlayer.SelectAudioCd(Globals.ArgumentQueue.Dequeue("audio-cd"));
             } else if(Globals.ArgumentQueue.Contains("dap")) {
-                SelectDap(Globals.ArgumentQueue.Dequeue("dap"));
+                Globals.DBusPlayer.SelectDap(Globals.ArgumentQueue.Dequeue("dap"));
             } else {
                 SourceManager.SetActiveSource(LibrarySource.Instance);
             }
@@ -646,7 +615,6 @@ namespace Banshee
             playlistView.Shutdown();
             PlayerEngineCore.Dispose();
             Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
-            Globals.DBusRemote.UnregisterObject(banshee_dbus_object);
             Application.Quit();
             return true;
         }
@@ -1610,7 +1578,7 @@ namespace Banshee
                     box.Spacing = 3;
                     
                     for(int j = 0; j < i + 1; j++) {
-                        box.PackStart(new Gtk.Image(Banshee.Gui.RatingRenderer.Star), false, false, 0);
+                        box.PackStart(new Gtk.Image(Banshee.Gui.CellRendererRating.RatedPixbuf), false, false, 0);
                     }
                     
                     item.Add(box);

@@ -1,5 +1,10 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: Adapted to changes in DBusPlayer, Library, and
+	CellRendererRating
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlaylistView.cs: Use new CellRendererRating
 
 	* src/Banshee.Base/Gui/RatingRenderer.cs: New version, supports being
