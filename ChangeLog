@@ -1,5 +1,10 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/TrackInfoHeader.cs: banshee-logo.png is now
+	in Banshee.Base.dll
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Makefile.am: ASSEMBLY_NAME was renamed to BANSHEE; bin wrapper
 	script installation should work again
 

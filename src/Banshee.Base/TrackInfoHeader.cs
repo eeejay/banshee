@@ -59,7 +59,7 @@ namespace Banshee.Widgets
         
             Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 128);
             if(default_pixbuf == null) {
-                default_pixbuf = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), "banshee-logo.png");   
+                default_pixbuf = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");   
             }
             
             cover = new CoverArtThumbnail(size);
