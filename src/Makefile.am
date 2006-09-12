@@ -15,7 +15,7 @@ BANSHEE = banshee
 BANSHEE_ASSEMBLY = $(BANSHEE).exe
 
 bansheedir = $(pkglibdir)
-bin_SCRIPTS = $(ASSEMBLY_NAME)
+bin_SCRIPTS = $(BANSHEE)
 banshee_SCRIPTS = \
 	$(BANSHEE_ASSEMBLY) \
 	$(BANSHEE_ASSEMBLY).mdb \

@@ -1,5 +1,10 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Makefile.am: ASSEMBLY_NAME was renamed to BANSHEE; bin wrapper
+	script installation should work again
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlayerInterface.cs: Adapted to changes in DBusPlayer, Library, and
 	CellRendererRating
 
