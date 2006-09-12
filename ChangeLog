@@ -1,5 +1,10 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Ignore stream tags
+	unless the track is an UnknownTrackInfo (stream)
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Gui/RatingRenderer.cs: Only show the circles in the
 	renderer when prelit and the cursor is inside the cell area
 
