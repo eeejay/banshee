@@ -212,43 +212,43 @@ namespace Banshee.Base
 
         private string TrackStringResult(string s)
         {
-            return HaveTrack ? (s == null ? String.Empty : s) : String.Empty;
+            return s == null ? String.Empty : s;
         }
         
         [Method]
         public virtual string GetPlayingArtist()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.Artist);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Artist) : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingAlbum()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.Album);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Album) : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingTitle()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.Title);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Title) : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingGenre()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.Genre);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Genre) : String.Empty;
         }
         
         [Method]
         public virtual string GetPlayingUri()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri) : String.Empty;
         }
 
         [Method]
         public virtual string GetPlayingCoverUri()
         {
-            return TrackStringResult(PlayerEngineCore.CurrentTrack.CoverArtFileName);
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.CoverArtFileName) : String.Empty;
         }
         
         [Method]

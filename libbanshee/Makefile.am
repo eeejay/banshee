@@ -30,9 +30,7 @@ libbanshee_la_SOURCES = \
 	gst-mbtrm.h \
 	hal-context.c \
 	hal-context.h \
-	inotify-glue.c \
-	inotify.h \
-	inotify-syscalls.h \
+	gtksharp-glue.c \
 	$(GST_CFILES)
 
 libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS)

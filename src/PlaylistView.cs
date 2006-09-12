@@ -72,6 +72,7 @@ namespace Banshee
         Pixbuf nowPlayingPixbuf;
         Pixbuf songDrmedPixbuf;
         Pixbuf ripColumnPixbuf;
+        Banshee.Gui.CellRendererRating rating_renderer;
 
         public TreeViewColumn RipColumn;
         public PlaylistColumn RatingColumn;
@@ -84,6 +85,10 @@ namespace Banshee
             {
                 return (a as PlaylistColumn).Order.CompareTo((b as PlaylistColumn).Order); 
             }
+        }
+        
+        protected PlaylistView(IntPtr raw) : base(raw)
+        {
         }
         
         public PlaylistView(PlaylistModel model)
@@ -113,9 +118,11 @@ namespace Banshee
                 new TreeCellDataFunc(TrackCellTime), new CellRendererText(),
                 6, (int)ColumnId.Time));
             
+            rating_renderer = new Banshee.Gui.CellRendererRating();
+            rating_renderer.RatingChanged += OnRatingChanged;
             RatingColumn = new PlaylistColumn(this, 
                 Catalog.GetString("Rating"), "Rating",
-                new TreeCellDataFunc(TrackCellRating), new Banshee.Gui.RatingRenderer(),
+                new TreeCellDataFunc(TrackCellRating), rating_renderer,
                 7, (int)ColumnId.Rating);
             columns.Add(RatingColumn);
             
@@ -157,8 +164,7 @@ namespace Banshee
             
             CellRendererPixbuf indRenderer = new CellRendererPixbuf();
             playIndColumn.PackStart(indRenderer, true);
-            playIndColumn.SetCellDataFunc(indRenderer, 
-                new TreeCellDataFunc(TrackCellInd));
+            playIndColumn.SetCellDataFunc(indRenderer, new TreeCellDataFunc(TrackCellInd));
             InsertColumn(playIndColumn, 0);
             
             RipColumn = new TreeViewColumn();
@@ -221,6 +227,18 @@ namespace Banshee
             } catch(Exception) {
             
             }   
+        }
+        
+        private void OnRatingChanged(object o, Banshee.Gui.CellRatingChangedArgs args)
+        {
+            TreeIter iter;
+            if(model.GetIter(out iter, args.Path)) {
+                try {
+                    TrackInfo track = (TrackInfo)model.GetValue(iter, 0);
+                    track.Rating = args.Rating;
+                } catch {
+                }
+            }
         }
 
         private bool CheckColumnDrop(TreeView tree, TreeViewColumn col,
@@ -531,7 +549,7 @@ namespace Banshee
                 return;
             }
              
-            ((Banshee.Gui.RatingRenderer)cell).Track = ti;
+            ((Banshee.Gui.CellRendererRating)cell).Rating = ti.Rating;
         }
         
         protected void TrackCellLastPlayed(TreeViewColumn tree_column,

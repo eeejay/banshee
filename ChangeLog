@@ -1,5 +1,23 @@
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlaylistView.cs: Use new CellRendererRating
+
+	* src/Banshee.Base/Gui/RatingRenderer.cs: New version, supports being
+	activatable so rating can be set just by clicking
+
+	* src/Banshee.Base/DBusPlayer.cs: Fixes
+
+	* libbanshee/Makefile.am: Remove inotify glue, added gtksharp-glue.c
+
+	* libbanshee/gtksharp-glue.c: Small amount of glue for overriding
+	GtkCellRenderer.activate virtual method; allows managed CellRenderers
+	to be (somewhat hackishly) activatable
+
+	* libbanshee/inotify-glue.c:
+	* libbanshee/inotify.h: Removed
+
+2006-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Globals.cs: Make PlaylistView a Gtk.Widget;
 	add null check out PlaylistContainer
 

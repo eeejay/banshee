@@ -1,5 +1,5 @@
 /***************************************************************************
- *  RatingRenderer.cs
+ *  CellRendererRating.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -26,131 +26,190 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
+using System;
+using System.Runtime.InteropServices;
+
 using Gtk;
 using Gdk;
 
-using Banshee.Base;
-
 namespace Banshee.Gui
 {
-	public class RatingRenderer : CellRenderer
-	{
-		static private Pixbuf star;
-		static private Pixbuf circle;
-		
-		public TrackInfo Track;
-		
-		public static Pixbuf Star
-		{
-			get {
-				if(star == null)
-					star = Gdk.Pixbuf.LoadFromResource("rating-rated.png");
-					
-				return star;
-			}
-		}
-		
-		public static Pixbuf Circle
-		{
-			get {
-				if(circle == null)
-					circle = Gdk.Pixbuf.LoadFromResource("rating-unrated.png");
-					
-				return circle;
-			}
-		}
-		
-		public RatingRenderer()
-		{
-			
-		}
+    public static class CellRendererActivatable
+    {
+        public delegate bool ActivateHandler(IntPtr raw, IntPtr evnt, IntPtr widget, IntPtr path, 
+            ref Gdk.Rectangle background_area, ref Gdk.Rectangle cell_area, int flags);
+        
+        [DllImport("libbanshee")]
+        private static extern void gtksharp_cell_renderer_activatable_configure(IntPtr renderer, 
+            ActivateHandler handler);
 
-		protected RatingRenderer(System.IntPtr ptr) : base(ptr)
-		{
-		
-		}
+        public static void Configure(CellRenderer renderer, ActivateHandler handler)
+        {
+            gtksharp_cell_renderer_activatable_configure(renderer.Handle, handler);
+        }
+    }
+    
+    public delegate void CellRatingChangedHandler(object o, CellRatingChangedArgs args);
 
-		private StateType RendererStateToWidgetState(CellRendererState flags)
-		{
-			StateType state = StateType.Normal;
-			
-			if((CellRendererState.Insensitive & flags).Equals(
-				CellRendererState.Insensitive)) {
-				state = StateType.Insensitive;
-			} else if((CellRendererState.Selected & flags).Equals( 
-				CellRendererState.Selected)) {
-				state = StateType.Selected;
-			}
-			
-			return state;
-		}
-		
-		protected override void Render(Gdk.Drawable drawable, 
-			Widget widget, Gdk.Rectangle background_area, 
-			Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, 
-			CellRendererState flags)
-		{
-			Gdk.Window window = drawable as Gdk.Window;
-			StateType state = RendererStateToWidgetState(flags);
-			
-			DrawRating(window, widget, cell_area, state, flags);
-		}
-		
-		public override void GetSize(Widget widget, ref Gdk.Rectangle cell_area, 
-			out int x_offset, out int y_offset, out int width, out int height)
-		{
-			height = Star.Height + 2;
-			width = (Star.Width * 5) + 4;
-			x_offset = 0;
-			y_offset = 0;
-		}
-	
-		private void DrawRating(Gdk.Window canvas, Gtk.Widget widget,
-			Gdk.Rectangle area, StateType state, CellRendererState flags)
-		{
-			
-			/*Point [] starPoints = {
-				new Point(area.X + 9, area.Y),
-				new Point(area.X + 5 , area.Y + 4),
-				new Point(area.X, area.Y + 4),
-				new Point(area.X + 5, area.Y + 8),
-				new Point(area.X + 1, area.Y + 13),
-				new Point(area.X + 9, area.Y + 10),
-				new Point(area.X + 17, area.Y + 15),
-				new Point(area.X + 16, area.Y + 10),
-				new Point(area.X + 9, area.Y),
-			};*/
-			
-			int rating = (int)Track.Rating;
-		//	int CursorX = (widget as PlaylistView).CursorX;
-			//int CursorY = (widget as PlaylistView).CursorY;
-			
-			/*if(CursorY >= area.Y && CursorY <= area.Y + area.Height &&
-				CursorX >= area.X && CursorX <= area.X + area.Width) {
-				int offset = CursorX - area.X;
-				rating = offset / (Star.Width + 1);
-			}*/
-			
-			if(Star != null) {
-			
-			for(int i = 0; i < rating; i++) {
-				canvas.DrawPixbuf(widget.Style.TextGC(state), Star, 0, 0,
-					area.X + (i * Star.Width) + 1, area.Y + 1, 
-					Star.Width, Star.Height,
-					RgbDither.None, 0, 0);
-			}
-			
-			} 
-			
-			/*if((flags & CellRendererState.Prelit) == CellRendererState.Prelit) {
-				for(int i = (int)Track.Rating; i < 5; i++) {
-					canvas.DrawPixbuf(widget.Style.TextGC(state), Circle, 0, 0,
-						area.X + (i * Star.Width) + (Star.Width / 2) - 1, 
-						area.Y + (area.Height - Circle.Height) / 2, 
-						Circle.Width, Circle.Height,
-						RgbDither.None, 0, 0);
-				}
-			}*/
-		}
-	}
+    public class CellRatingChangedArgs : EventArgs
+    {
+        private TreePath path;
+        private uint rating;
+
+        public CellRatingChangedArgs(TreePath path, uint rating)
+        {
+            this.path = path;
+            this.rating = rating;
+        }
+
+        public TreePath Path {
+            get { return path; }
+        }
+
+        public uint Rating {    
+            get { return rating; }
+        }
+    }
+    
+    public class CellRendererRating : CellRendererText
+    {
+        private static Pixbuf rated_pixbuf = Gdk.Pixbuf.LoadFromResource("rating-rated.png");
+        private static Pixbuf unrated_pixbuf = Gdk.Pixbuf.LoadFromResource("rating-unrated.png");
+                
+        public static Pixbuf RatedPixbuf {
+            get { return rated_pixbuf; }
+        }
+
+        public static Pixbuf UnratedPixbuf {
+            get { return unrated_pixbuf; }
+        }
+
+        public static uint MaxRating {
+            get { return 5; }
+        }
+
+        private uint rating;
+        private bool text_mode = false;
+
+        private CellRendererActivatable.ActivateHandler activate_handler;
+    
+        public event CellRatingChangedHandler RatingChanged;
+    
+        public CellRendererRating()
+        {
+            try {
+                activate_handler = new CellRendererActivatable.ActivateHandler(OnActivate);
+                CellRendererActivatable.Configure(this, activate_handler);
+            } catch {
+                activate_handler = null;
+            }
+        }
+        
+        private bool OnActivate(IntPtr raw, IntPtr evnt_ptr, IntPtr widget, IntPtr path_ptr, 
+            ref Gdk.Rectangle background_area, ref Gdk.Rectangle cell_area, int flags)
+        {
+            Gdk.EventButton evnt = Gdk.Event.GetEvent(evnt_ptr) as Gdk.EventButton;
+            if(evnt == null) {
+                return false;
+            }
+            
+            TreePath path = null;
+            
+            try {
+                TreeView view = new TreeView(widget);
+                view.GetPathAtPos((int)evnt.X, (int)evnt.Y, out path);
+            } catch {
+            }
+                        
+            int cell_offset = (int)evnt.X - cell_area.X;
+            int zero_offset = 4;
+            uint rating = 0;
+            
+            if(cell_offset >= zero_offset) {
+                rating = (uint)(Math.Min((cell_offset / RatedPixbuf.Width) + 1, MaxRating));
+            }
+
+            OnRatingChanged(path, rating);
+        
+            return true;
+        }
+
+        protected virtual void OnRatingChanged(TreePath path, uint rating)
+        {
+            CellRatingChangedHandler handler = RatingChanged;
+            if(handler != null) {
+                handler(this, new CellRatingChangedArgs(path, rating));
+            }
+        }
+
+        private StateType RendererStateToWidgetState(CellRendererState flags)
+        {
+            StateType state = StateType.Normal;
+            
+            if((CellRendererState.Insensitive & flags).Equals(CellRendererState.Insensitive)) {
+                state = StateType.Insensitive;
+            } else if((CellRendererState.Selected & flags).Equals(CellRendererState.Selected)) {
+                state = StateType.Selected;
+            }
+            
+            return state;
+        }
+        
+        protected override void Render(Gdk.Drawable drawable, Widget widget, Gdk.Rectangle background_area, 
+            Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, CellRendererState flags)
+        {
+            Gdk.Window window = drawable as Gdk.Window;
+            StateType state = RendererStateToWidgetState(flags);
+            
+            DrawRating(window, widget, cell_area, state, flags);
+        }
+        
+        public override void GetSize(Widget widget, ref Gdk.Rectangle cell_area, 
+            out int x_offset, out int y_offset, out int width, out int height)
+        {
+            height = RatedPixbuf.Height + 2;
+            width = (RatedPixbuf.Width * (int)MaxRating) + 4;
+            x_offset = 0;
+            y_offset = 0;
+        }
+
+        private void DrawRating(Gdk.Window canvas, Gtk.Widget widget,
+            Gdk.Rectangle area, StateType state, CellRendererState flags)
+        {
+            uint rating = !text_mode ? this.rating : 0; 
+            
+            if(text_mode) {
+                try {
+                    rating = Convert.ToUInt32(Text);
+                } catch {
+                }
+            }
+            
+            if(RatedPixbuf == null || UnratedPixbuf == null) {
+                return;
+            }
+            
+            for(int i = 0; i < MaxRating; i++) {
+                if(i < rating) {
+                    canvas.DrawPixbuf(widget.Style.TextGC(state), RatedPixbuf, 0, 0,
+                        area.X + (i * RatedPixbuf.Width) + 1, area.Y + 1, 
+                        RatedPixbuf.Width, RatedPixbuf.Height, RgbDither.None, 0, 0);
+                } else if((flags & CellRendererState.Prelit) > 0 && activate_handler != null) {
+                    canvas.DrawPixbuf(widget.Style.TextGC(state), UnratedPixbuf, 0, 0,
+                        area.X + (i * UnratedPixbuf.Width) + 1, area.Y + 1,
+                        UnratedPixbuf.Width, UnratedPixbuf.Height, RgbDither.None, 0, 0);
+                }
+            } 
+        }
+        
+        public uint Rating {
+            get { return rating; }
+            set { rating = value; }
+        }
+        
+        public bool TextMode {
+            get { return text_mode; }
+            set { text_mode = value; }
+        }
+    }
 }
