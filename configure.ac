@@ -403,6 +403,7 @@ src/Banshee.Plugins/Daap/Makefile
 src/Banshee.Plugins/Daap/Daap.dll.config
 src/Banshee.Plugins/NotificationAreaIcon/Makefile
 src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIcon.dll.config
+src/Banshee.Hyena/Makefile
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile

@@ -107,7 +107,7 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/RatingRenderer.cs \
 	$(srcdir)/Gui/TrackEditor.cs \
 	$(srcdir)/Gui/ConfirmShutdownDialog.cs \
-	$(srcdir)/Gui/ImageFileChooserDialog.cs 
+	$(srcdir)/Gui/ImageFileChooserDialog.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -228,6 +228,7 @@ Banshee_Base_RESOURCES = \
 	data/contributors.xml \
 	data/banshee-dialogs.glade \
 	data/images/splash.png \
+	data/images/banshee-logo.png \
 	data/images/media-repeat-none.png \
 	data/images/media-repeat-single.png \
 	data/images/media-repeat-all.png \

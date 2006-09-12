@@ -132,6 +132,8 @@ namespace Banshee.Base
             
             is_loaded = true;
             
+            Banshee.Sources.SourceManager.AddSource(Banshee.Sources.LibrarySource.Instance, true);
+            
             ThreadAssist.ProxyToMain(delegate {
                 EventHandler handler = Reloaded;
                 if(handler != null) {

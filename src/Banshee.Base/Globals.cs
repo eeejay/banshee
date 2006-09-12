@@ -78,7 +78,10 @@ namespace Banshee.Base
             startup.Register("Connecting to GConf", delegate { gconf_client = new GConf.Client(); });
             startup.Register("Detecting network settings", delegate { network_detect = NetworkDetect.Instance; });
             startup.Register("Creating action manager", delegate { action_manager = new ActionManager(); });
-            startup.Register("Loading music library", delegate { library = new Library(); });
+            startup.Register("Loading music library", delegate { 
+                library = new Library(); 
+                library.ReloadLibrary();
+            });
             
             startup.Register("Initializing GStreamer", Banshee.Gstreamer.Utilities.Initialize);
             startup.Register("Initializing player engine", PlayerEngineCore.Initialize);
@@ -223,8 +226,8 @@ namespace Banshee.Base
             }
         }
 	
-        private static Gtk.TreeView playlist_view;
-        public static Gtk.TreeView PlaylistView {
+        private static Gtk.Widget playlist_view;
+        public static Gtk.Widget PlaylistView {
             get { return playlist_view; }
             set {
                 if(playlist_view == null) {
@@ -255,7 +258,7 @@ namespace Banshee.Base
         
         public static void DetachPlaylistContainer()
         {
-            if(PlaylistContainer.Parent != null) {
+            if(PlaylistContainer != null && PlaylistContainer.Parent != null) {
                 (PlaylistContainer.Parent as Gtk.Container).Remove(PlaylistContainer);
             }
         }

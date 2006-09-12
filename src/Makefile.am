@@ -6,7 +6,8 @@ SUBDIRS = \
 	Banshee.Base \
 	Banshee.MediaEngine \
 	Banshee.Dap \
-	Banshee.Plugins
+	Banshee.Plugins \
+	Banshee.Hyena
 
 MCS_FLAGS = -debug -unsafe -nowarn:0169
 
@@ -36,7 +37,6 @@ BANSHEE_SOURCE = \
 BANSHEE_RESOURCES = \
 	data/banshee.glade \
 	data/images/advanced-icon-32.png \
-	data/images/banshee-logo.png \
 	data/images/blue-speaker.png \
 	data/images/busy-spinner-36.png \
 	data/images/busy-spinner.png \

@@ -38,8 +38,7 @@ namespace Banshee.Base
         
         public bool Initialize()
         {
-            about_box_logo = new Gdk.Pixbuf(System.Reflection.Assembly.GetEntryAssembly(), 
-                "banshee-logo.png");
+            about_box_logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
             
             if(Globals.ArgumentQueue.Contains("hide")) {
                 return true;
