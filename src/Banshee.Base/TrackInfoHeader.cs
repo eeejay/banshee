@@ -56,14 +56,9 @@ namespace Banshee.Widgets
         private void ConstructWidget(bool ellipsize, int size)
         {
             Spacing = 8;
-        
-            Gdk.Pixbuf default_pixbuf = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 128);
-            if(default_pixbuf == null) {
-                default_pixbuf = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");   
-            }
             
             cover = new CoverArtThumbnail(size);
-            cover.NoArtworkPixbuf = default_pixbuf;
+            cover.NoArtworkPixbuf = Banshee.Base.Branding.DefaultCoverArt;
             PackStart(cover, false, false, 0);
             cover.Show();
         

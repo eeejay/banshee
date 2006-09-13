@@ -34,11 +34,17 @@ namespace Banshee.Base
     public class BansheeBranding : ICustomBranding
     {
         private Gdk.Pixbuf about_box_logo;
+        private Gdk.Pixbuf default_cover_art;
         private Banshee.Gui.Dialogs.SplashScreen splash;
         
         public bool Initialize()
         {
             about_box_logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
+            default_cover_art = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 128);
+            
+            if(default_cover_art == null) {
+                default_cover_art = about_box_logo;   
+            }
             
             if(Globals.ArgumentQueue.Contains("hide")) {
                 return true;
@@ -84,6 +90,10 @@ namespace Banshee.Base
         
         public Gdk.Pixbuf AboutBoxLogo {
             get { return about_box_logo; }
+        }
+        
+        public Gdk.Pixbuf DefaultCoverArt {
+            get { return default_cover_art; }
         }
     }
 }

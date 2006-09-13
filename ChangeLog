@@ -1,5 +1,13 @@
 2006-09-13  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/BansheeBranding.cs: Implement DefaultCoverArt
+
+	* src/Banshee.Base/Branding.cs: Added DefaultCoverArt property
+
+	* src/Banshee.Base/TrackInfoHeader.cs: Use Branding.DefaultCoverArt
+
+2006-09-13  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/BansheeBranding.cs: Implement ApplicationLogo
 
 	* src/Banshee.Base/Branding.cs: Added ApplicationLogo property

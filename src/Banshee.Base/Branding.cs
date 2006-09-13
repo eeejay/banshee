@@ -119,6 +119,13 @@ namespace Banshee.Base
                 return logo == null ? default_branding.AboutBoxLogo : logo;
             }
         }
+        
+        public static Gdk.Pixbuf DefaultCoverArt {
+            get {
+                Gdk.Pixbuf cover = custom_branding.DefaultCoverArt;
+                return cover == null ? default_branding.DefaultCoverArt : cover;
+            }
+        }
     }
     
     public interface ICustomBranding
@@ -129,5 +136,6 @@ namespace Banshee.Base
         string ApplicationIconName { get; }
         Gdk.Pixbuf ApplicationLogo { get; }
         Gdk.Pixbuf AboutBoxLogo { get; }
+        Gdk.Pixbuf DefaultCoverArt { get; }
     }
 }
