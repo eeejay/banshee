@@ -106,6 +106,13 @@ namespace Banshee.Base
             }
         }
         
+        public static Gdk.Pixbuf ApplicationLogo {
+            get {
+                Gdk.Pixbuf logo = custom_branding.ApplicationLogo;
+                return logo == null ? default_branding.ApplicationLogo : logo;
+            }
+        }
+        
         public static Gdk.Pixbuf AboutBoxLogo {
             get { 
                 Gdk.Pixbuf logo = custom_branding.AboutBoxLogo;
@@ -120,6 +127,7 @@ namespace Banshee.Base
         string ApplicationLongName { get; }
         string ApplicationName { get; }
         string ApplicationIconName { get; }
+        Gdk.Pixbuf ApplicationLogo { get; }
         Gdk.Pixbuf AboutBoxLogo { get; }
     }
 }

@@ -1,3 +1,9 @@
+2006-09-13  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/BansheeBranding.cs: Implement ApplicationLogo
+
+	* src/Banshee.Base/Branding.cs: Added ApplicationLogo property
+
 2006-09-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Ignore stream tags

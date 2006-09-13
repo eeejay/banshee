@@ -78,6 +78,10 @@ namespace Banshee.Base
             get { return "music-player-banshee"; }
         }
         
+        public Gdk.Pixbuf ApplicationLogo {
+            get { return about_box_logo; }
+        }
+        
         public Gdk.Pixbuf AboutBoxLogo {
             get { return about_box_logo; }
         }
