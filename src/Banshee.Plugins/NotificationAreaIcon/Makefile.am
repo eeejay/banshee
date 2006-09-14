@@ -10,6 +10,7 @@ MENU_RESOURCE=NotificationAreaIconMenu.xml
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/NotificationAreaIconPlugin.cs \
+	$(srcdir)/NotificationAreaIconConfigPage.cs \
 	$(srcdir)/NotificationArea.cs
 
 PKG_REFERENCES = \

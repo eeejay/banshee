@@ -58,7 +58,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             get {
                 return new string[] {
                     "Sebastian Dr\u00f6ge",
-                    "Aaron Bockover"
+                    "Aaron Bockover",
+                    "Ruben Vermeersch"
                 };
             }
         }
@@ -71,6 +72,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
         private bool cursor_over_trayicon = false;
+        private bool show_notifications = false;
+        private TrackInfo current_track = null;
 
         private static readonly uint SkipDelta = 10;
         private static readonly int VolumeDelta = 10;
@@ -89,9 +92,15 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
                 FillPopup();
             }
+
+            Notifications.Widget = event_box;
+
+            // Forcefully load this value
+            show_notifications = ShowNotifications;
         }
 
         protected override void PluginDispose() {
+            Notifications.Widget = null;
             if (notif_area != null) {
                 notif_area.Destroy();
                 event_box = null;
@@ -99,6 +108,11 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             }
             PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+        }
+
+        public override Gtk.Widget GetConfigurationWidget()
+        {            
+            return new NotificationAreaIconConfigPage(this);
         }
 
         protected override void InterfaceInitialize() {
@@ -116,7 +130,7 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             event_box.ScrollEvent += OnMouseScroll;
             
             event_box.Add(new Gtk.Image(IconThemeUtils.LoadIcon(22, "music-player-banshee", "tray-icon")));
-            
+
             notif_area.Add(event_box);
             notif_area.ShowAll();
         }
@@ -133,16 +147,33 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                 InterfaceElements.MainWindow.Present();
         }
 
+        private void ShowNotification()
+        {
+            if (cursor_over_trayicon || !show_notifications)
+                return;
+
+            string message = String.Format("{0}\n   <i>by</i> {1}", 
+                    GLib.Markup.EscapeText(current_track.DisplayTitle),
+                    GLib.Markup.EscapeText(current_track.DisplayArtist));
+            Gdk.Pixbuf image = null;
+            if (current_track.CoverArtFileName != null) {
+                image = new Gdk.Pixbuf(current_track.CoverArtFileName);
+            } else {
+                image = Branding.DefaultCoverArt;
+            }
+            Notifications.Notify(Catalog.GetString("Now Playing"), message, image);    
+        }
+
         [GLib.ConnectBefore]
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)
         {
             bool handled = false;
             
-	    if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-		    handled = true;
+        if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+            handled = true;
                     ShowHideMainWindow();
                     ResizeMoveWindow();
-	    }
+        }
             
             args.RetVal = handled;
         }
@@ -261,6 +292,11 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                     if(PlayerEngineCore.CurrentTrack != null) {
                         popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
                         popup.Position = PlayerEngineCore.Position;
+
+                        if (current_track != PlayerEngineCore.CurrentTrack) {
+                            current_track = PlayerEngineCore.CurrentTrack;
+                            ShowNotification();
+                        }
                     } else {
                         popup.Duration = 0;
                         popup.Position = 0;
@@ -335,5 +371,20 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             }
         }
         
+        public bool ShowNotifications {
+            get { 
+                try {
+                    show_notifications = (bool)Globals.Configuration.Get(GConfKeys.BasePath
+                            +ConfigurationName+"/ShowNotifications");
+                } catch (GConf.NoSuchKeyException) { 
+                    show_notifications = false;
+                }
+                return show_notifications; 
+            }
+            set { 
+                Globals.Configuration.Set(GConfKeys.BasePath+ConfigurationName+"/ShowNotifications", value);
+                show_notifications = value;
+            }
+        }
     }
 }

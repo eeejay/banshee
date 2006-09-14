@@ -12,5 +12,16 @@
         <long></long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/NotificationAreaIcon/ShowNotifications</key>
+      <applyto>/apps/Banshee/NotificationAreaIcon/ShowNotifications</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Show notification bubbles when the song changes</short>
+        <long></long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

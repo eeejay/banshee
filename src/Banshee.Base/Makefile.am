@@ -218,6 +218,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Catalog.cs \
 	$(srcdir)/Branding.cs \
 	$(srcdir)/BansheeBranding.cs \
+	$(srcdir)/Notifications.cs \
 	$(srcdir)/ComponentInitializer.cs \
 	$(srcdir)/PowerManagement.cs \
 	$(srcdir)/ProductInformation.cs \

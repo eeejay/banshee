@@ -1,3 +1,26 @@
+2006-09-15  Ruben Vermeersch  <ruben@savanne.be>
+
+	Notification bubbles in the tray.
+
+	* src/Banshee.Base/Makefile.am: Add Notifications.cs.
+
+	* src/Banshee.Base/Notifications.cs: Simple wrapper around libnotify.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/Makefile.am: Added
+	NotificationAreaIconConfigPage.cs.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIcon.dll
+	.config.in: Add the dllmap for libgobject.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConf
+	igPage.cs: Configuration dialog for the notification messages.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlug
+	in.cs: Show notifications when song changes.
+
+	* src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationarea
+	icon.schemas.in: Add the key to store the "show bubbles" preference.
+
 2006-09-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/BansheeBranding.cs: Implement DefaultCoverArt
