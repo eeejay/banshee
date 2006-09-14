@@ -2518,7 +2518,7 @@ msgstr ""
 #: ../src/PlayerInterface.cs:1873
 #
 msgid "Remove selection from library"
-msgstr "Elimina la seleccio de la biblioteca"
+msgstr "Elimina la selecció de la biblioteca"
 
 #: ../src/PlayerInterface.cs:1875
 #, csharp-format
