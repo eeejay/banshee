@@ -75,6 +75,10 @@ namespace Banshee.Cdrom.Nautilus
         
         private bool CheckMedia(Device discDevice)
         {
+            if(discDevice == null || discDevice.Parent == null) {
+                return false;
+            }
+        
             if(discDevice.Parent.Udi == hal_drive_device.Udi &&
                 discDevice.GetPropertyBool("volume.is_disc") &&
                 discDevice.GetPropertyBool("volume.disc.is_blank")) {
