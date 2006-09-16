@@ -1,5 +1,10 @@
 2006-09-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/ActionManager.cs: Disabled equalizer for now - it's
+	not finished
+
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Globals.cs: Make startup strings translatable
 
 2006-09-16  Aaron Bockover  <abock@gnome.org>

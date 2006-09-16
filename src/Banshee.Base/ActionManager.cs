@@ -197,6 +197,8 @@ namespace Banshee.Base
                     Catalog.GetString("Toggle display of album cover art"), null, false),              
             });
 
+            global_actions.GetAction("ShowEqualizerAction").Visible = false;
+
             ui.InsertActionGroup(global_actions, 0);
 
             /* Song Selected Actions */
