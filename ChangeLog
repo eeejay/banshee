@@ -1,3 +1,8 @@
+2006-09-16  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Remove a debug line that's
+	no longer needed. This shouldn't have been committed :-).
+
 2006-09-15  Ruben Vermeersch  <ruben@savanne.be>
 
 	Notification bubbles in the tray.

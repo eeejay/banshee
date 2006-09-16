@@ -189,7 +189,6 @@ namespace Banshee.Plugins.Audioscrobbler {
 
         bool StateTransitionHandler()
         {
-            Console.WriteLine("## Running State transition handler");
             /* if we're not connected, don't bother doing anything
              * involving the network. */
             if (!Globals.Network.Connected)
