@@ -20,7 +20,6 @@
     <File name="./PlaylistColumns.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlaylistModel.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlaylistView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SourceView.cs" subtype="Code" buildaction="Compile" />
     <File name="./StockIcons.cs" subtype="Code" buildaction="Compile" />
     <File name="../data/images/banshee-logo.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../data/banshee.glade" subtype="Code" buildaction="EmbedAsResource" />

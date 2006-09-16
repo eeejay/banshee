@@ -71,6 +71,7 @@ namespace Banshee
                 new ArgumentLayout("query-duration", "Get duration of current playing song in seconds"),
                 new ArgumentLayout("query-position", "Get position of current playing song in seconds"),
                 new ArgumentLayout("query-rating",   "Get track rating for current playing song"),
+                new ArgumentLayout("set-rating",     "Set track rating for current playing song"),
                 new ArgumentLayout("query-uri",      "Get URI of current playing song"),
                 new ArgumentLayout("query-cover-uri","Get URI of the album cover of current playing song"),
                 new ArgumentLayout("query-status",   "Get player status (-1: Not loaded, 0: Paused, 1: Playing)"),
@@ -207,8 +208,17 @@ namespace Banshee
                     try {
                         position = Convert.ToInt32(string_position);
                         remote_player.SetPlayingPosition(position);
-                    } catch(Exception) {
-                        Console.WriteLine("Invalid position `{0}'. Integer value expected.", string_position);
+                    } catch {
+                        Console.Error.WriteLine("Invalid position `{0}'. Integer value expected.", string_position);
+                    }
+                    present = false;
+                    break;
+                case "set-rating":
+                    string rating = Globals.ArgumentQueue[arg];
+                    try {
+                        remote_player.SetPlayingRating(Convert.ToInt32(rating));
+                    } catch {
+                        Console.Error.WriteLine("Invalid rating `{0}'. Integer value expected.", rating);
                     }
                     present = false;
                     break;

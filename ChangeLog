@@ -1,3 +1,25 @@
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-dialogs.glade: Added rating; fixed mnemonics
+
+	* src/Banshee.Base/Gui/TrackEditor.cs: Disable the cover art page for now
+	as it's not going to be complete before the 0.11.0 release; implement
+	rating support; added basic cover art reading, but it is disabled
+
+	* src/Banshee.Widgets/RatingEntry.cs: Better x-pos to rating 'formula'
+	that does not depend on Allocation.Width
+
+	* src/Banshee.Base/Gui/RatingRenderer.cs: Reverted back to showing
+	the dots on prelight; prelight is only set when the cursor enters the
+	entire row - not on the cell or row+column, so it's buggy
+
+	* src/Banshee.Base/DBusPlayer.cs: Added SetPlayingRating, GetMaxRating
+
+	* src/Main.cs: Added set-rating command line option
+
+	* src/banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp: Updated
+
 2006-09-16  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Base/FileNamePattern.cs: Fix the Regex for file name

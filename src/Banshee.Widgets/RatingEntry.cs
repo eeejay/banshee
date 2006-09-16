@@ -79,7 +79,7 @@ namespace Banshee.Widgets
         
         private int RatingFromPosition(double x)
         {
-            return (int)(x / ((double)Allocation.Width / (double)MaxRating)) + 1;
+            return x < 5 ? 0 : (int)Math.Max(0, Math.Min(((x - 4) / (double)icon_rated.Width) + 1, MaxRating));
         }
         
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)

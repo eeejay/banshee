@@ -194,17 +194,24 @@ namespace Banshee.Gui
                         area.X + (i * RatedPixbuf.Width) + 1, area.Y + 1, 
                         RatedPixbuf.Width, RatedPixbuf.Height, RgbDither.None, 0, 0);
                 } else if((flags & CellRendererState.Prelit) > 0 && activate_handler != null) {
+                    /*
+                    This is nice in theory, but as prelight only happens on the row, not
+                    the cell renderer or column+row, it is buggy (left<->right hover does
+                    not work if cursor was already in the row) 
+                    
                     int px = 0, py = 0;
                     
                     if(widget != null) {
                         widget.GetPointer(out px, out py);
-                    }
+                    }*/
                     
-                    if(px != 0 && py != 0 && px >= area.X && px <= area.X + area.Width) {
-                        canvas.DrawPixbuf(widget.Style.TextGC(state), UnratedPixbuf, 0, 0,
-                            area.X + (i * UnratedPixbuf.Width) + 1, area.Y + 1,
-                            UnratedPixbuf.Width, UnratedPixbuf.Height, RgbDither.None, 0, 0);
-                    }
+                    //if(px != 0 && py != 0 && px >= area.X && px <= area.X + area.Width) {
+                    
+                    canvas.DrawPixbuf(widget.Style.TextGC(state), UnratedPixbuf, 0, 0,
+                        area.X + (i * UnratedPixbuf.Width) + 1, area.Y + 1,
+                        UnratedPixbuf.Width, UnratedPixbuf.Height, RgbDither.None, 0, 0);
+                        
+                    //}
                 }
             } 
         }

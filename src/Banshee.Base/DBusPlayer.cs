@@ -270,6 +270,27 @@ namespace Banshee.Base
         }
         
         [Method]
+        public virtual int GetMaxRating()
+        {
+            return 5;
+        }
+        
+        [Method]
+        public virtual int SetPlayingRating(int rating)
+        {
+            try {
+                if(HaveTrack) {
+                    PlayerEngineCore.CurrentTrack.Rating = (uint)Math.Max(0, Math.Min(rating, 5));
+                    PlayerEngineCore.TrackInfoUpdated();
+                    return (int)PlayerEngineCore.CurrentTrack.Rating;
+                }
+            } catch {
+            }
+            
+            return -1;
+        }
+        
+        [Method]
         public virtual int GetPlayingStatus()
         {
             if(!Available) {

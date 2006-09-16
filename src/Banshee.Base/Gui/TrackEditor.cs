@@ -33,6 +33,7 @@ using System.Collections;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Widgets;
 
 namespace Banshee.Gui.Dialogs
 {
@@ -45,10 +46,22 @@ namespace Banshee.Gui.Dialogs
         public string Title;
         public string Genre;
         public SafeUri Uri;
-    
+        
         public uint TrackNumber;
         public uint TrackCount;
         public int Year;
+        public uint Rating;
+        
+        // temp properties
+        public bool ProcessedStream = false;
+        public string CoverArtFilename;
+        public bool EmbedCoverArt;
+        public bool CopyCoverArt;
+        public Gdk.Pixbuf CoverArtThumbnail;
+        public int Channels;
+        public int Bitrate;
+        public int SampleRate;
+        public long FileSize;
     
         public EditorTrack(TrackInfo track)
         {
@@ -66,6 +79,7 @@ namespace Banshee.Gui.Dialogs
             TrackCount = track.TrackCount;
             Year = track.Year;
             Uri = track.Uri;
+            Rating = track.Rating;
         }
         
         public void Save()
@@ -78,6 +92,7 @@ namespace Banshee.Gui.Dialogs
             track.TrackCount = TrackCount;
             track.Uri = Uri;
             track.Year = Year;
+            track.Rating = Rating;
         }
         
         public TrackInfo Track {
@@ -87,7 +102,6 @@ namespace Banshee.Gui.Dialogs
 
     public class TrackEditor : GladeWindow
     {
-        [Widget] private Window WindowTrackInfo;
         [Widget] private Button CancelButton;
         [Widget] private Button SaveButton;
         [Widget] private Button Previous;
@@ -98,6 +112,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button AlbumSync;
         [Widget] private Button YearSync;
         [Widget] private Button GenreSync;
+        [Widget] private Button RatingSync;
         [Widget] private Button EnterNextTitle;
         [Widget] private SpinButton TrackCount;
         [Widget] private SpinButton TrackNumber;
@@ -113,15 +128,24 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Label Channels;
         [Widget] private Label FileSize;
         [Widget] private Button SyncAll;
+        [Widget] private Image CoverImage;
+        [Widget] private Button CoverButton;
+        [Widget] private Button ClearCoverArt;
+        [Widget] private Button SyncCoverArt;
+        [Widget] private CheckButton EmbedCoverArt;
+        [Widget] private CheckButton CopyCoverArt;
+        [Widget] private Box RatingContainer;
         
-        Tooltips tips = new Tooltips();
+        private Tooltips tips = new Tooltips();
+        private RatingEntry rating_entry = new RatingEntry();
         
         private ArrayList TrackSet = new ArrayList();
         private int currentIndex = 0;
+        private bool first_load = false;
 
         public event EventHandler Saved;
 
-        public TrackEditor(TrackInfo [] selection) : base("WindowTrackInfo")
+        public TrackEditor(TrackInfo [] selection) : base("TrackEditorWindow")
         {
             if(selection == null) {
                 return;
@@ -130,6 +154,10 @@ namespace Banshee.Gui.Dialogs
             foreach(TrackInfo track in selection) {
                 TrackSet.Add(new EditorTrack(track));
             }
+            
+            rating_entry.Show();
+            (Glade["RatingLabel"] as Label).MnemonicWidget = rating_entry;
+            RatingContainer.PackStart(rating_entry, false, false, 0);
 
             TrackNumberIterator.ExposeEvent += OnTrackNumberIteratorExpose;
 
@@ -145,7 +173,9 @@ namespace Banshee.Gui.Dialogs
             GenreSync.Clicked += OnGenreSyncClicked;
             YearSync.Clicked += OnYearSyncClicked;
             SyncAll.Clicked += OnSyncAllClicked;
+            RatingSync.Clicked += OnRatingSyncClicked;
             EnterNextTitle.Clicked += OnEnterNextTitleClicked;
+            CoverButton.Clicked += OnCoverButtonClicked;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
@@ -153,8 +183,9 @@ namespace Banshee.Gui.Dialogs
             Title.Activated += OnTitleActivated;
             Year.Changed += OnValueEdited;
             Genre.Entry.Changed += OnValueEdited;
+            rating_entry.Changed += OnValueEdited;
+            
             ListStore genre_model = new ListStore(typeof(string));
-
             Genre.Model = genre_model;
             Genre.TextColumn = 0;
             
@@ -172,20 +203,23 @@ namespace Banshee.Gui.Dialogs
             AlbumSync.Visible = TrackSet.Count > 1;
             GenreSync.Visible = TrackSet.Count > 1;
             YearSync.Visible = TrackSet.Count > 1;
+            RatingSync.Visible = TrackSet.Count > 1;
             EnterNextTitle.Visible = TrackSet.Count > 1;
             Glade["SyncAllAlignment"].Visible = TrackSet.Count > 1;
+            
+            (Glade["Notebook"] as Gtk.Notebook).RemovePage(1);
 
             tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically set all track numbers in increasing order"), "track iterator");
             tips.SetTip(TrackCountSync, Catalog.GetString("Set all track counts to this value"), "track counts");
             tips.SetTip(ArtistSync, Catalog.GetString("Set all artists to this value"), "artists");
             tips.SetTip(AlbumSync, Catalog.GetString("Set all albums to this value"), "albums");
-            tips.SetTip(GenreSync, Catalog.GetString("Set all genres to this value"), "genres");
+            tips.SetTip(GenreSync, Catalog.GetString("Set all genres to this value"), "genres"); 
             tips.SetTip(YearSync, Catalog.GetString("Set all years to this value"), "years");
             tips.SetTip(SyncAll, Catalog.GetString("Set all common fields in all selected tracks to the values currently set"), "all");
-
+            tips.SetTip(RatingSync, Catalog.GetString("Set all ratings to this value"), "ratings");
+            
             LoadTrack(0);
-                
-            WindowTrackInfo.Show();
+            Window.Show();
         }
         
         private void OnTrackNumberIteratorExpose(object o, ExposeEventArgs args)
@@ -216,11 +250,14 @@ namespace Banshee.Gui.Dialogs
                 return;
             }
                 
+            SetCoverImage(null);
+                
             EditorTrack track = TrackSet[index] as EditorTrack;
             
             TrackNumber.Value = track.TrackNumber;
             TrackCount.Value = track.TrackCount;
             Year.Text = track.Year.ToString();
+            rating_entry.Value = (int)track.Rating;
         
             (Glade["Artist"] as Entry).Text = track.Artist;
             (Glade["Album"] as Entry).Text = track.Album;
@@ -234,8 +271,17 @@ namespace Banshee.Gui.Dialogs
                 Catalog.GetString("Never played") : track.Track.LastPlayed.ToString();
             (Glade["ImportedLabel"] as Label).Text = track.Track.DateAdded == DateTime.MinValue ?
                 Catalog.GetString("Unknown") : track.Track.DateAdded.ToString();
-                    
-            WindowTrackInfo.Title = TrackSet.Count > 1 
+                
+            if(first_load) {
+                EmbedCoverArt.Active = true;
+                CopyCoverArt.Active = true;
+                first_load = false;
+            } else {
+                EmbedCoverArt.Active = track.EmbedCoverArt;
+                CopyCoverArt.Active = track.CopyCoverArt;
+            }
+            
+            Window.Title = TrackSet.Count > 1 
                 ? String.Format(Catalog.GetString("Editing song {0} of {1}"), index + 1, TrackSet.Count)
                 : String.Format(Catalog.GetString("Editing {0}"), track.Title);
        
@@ -247,36 +293,88 @@ namespace Banshee.Gui.Dialogs
                 Location.Text = String.Empty;
             }
             
-            if(!(track.Track is AudioCdTrackInfo)) {
-                FileSize.Text = Catalog.GetString("Unknown");
+            FileSize.Text = Catalog.GetString("Unknown");
+                
+            if(!(track.Track is AudioCdTrackInfo) && !track.ProcessedStream) {
+                track.ProcessedStream = true;
                 
                 if(track.Uri.Scheme == System.Uri.UriSchemeFile) {
                     try {
                         System.IO.FileInfo info = new System.IO.FileInfo(track.Uri.LocalPath);
-                        FileSize.Text = String.Format("{0:0.0} MB", (double)info.Length / 1024.0 / 1024.0);
+                        track.FileSize = info.Length;
                     } catch {
                     }
                 }
                 
                 try {
                     TagLib.File file = StreamTagger.ProcessUri(track.Uri);
+                
+                    /*try {
+                        TagLib.IPicture [] pictures = file.Tag.Pictures;
+                        
+                        if(pictures != null && pictures.Length > 0) {
+                            TagLib.IPicture cover_picture = null;
+                            foreach(TagLib.IPicture picture in pictures) {
+                                if(cover_picture == null) {
+                                    cover_picture = picture;
+                                }
+                                
+                                if(picture.Type == TagLib.PictureType.FrontCover) {
+                                    cover_picture = picture;
+                                    break;
+                                }
+                            }
+                            
+                            if(cover_picture != null) {
+                                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(cover_picture.Data.Data);
+                                track.CoverArtThumbnail = pixbuf.ScaleSimple(100, 100, Gdk.InterpType.Bilinear);
+                            }
+                        }
+                    } catch {
+                    }*/
+                
                     if(file.AudioProperties != null) {
-                        BitRate.Text = String.Format("{0} kbps", file.AudioProperties.Bitrate);
-                        SampleRate.Text = String.Format("{0} Hz", file.AudioProperties.SampleRate);
-                        Channels.Text = String.Format("{0}", file.AudioProperties.Channels);
+                        track.Bitrate = file.AudioProperties.Bitrate;
+                        track.SampleRate = file.AudioProperties.SampleRate;
+                        track.Channels = file.AudioProperties.Channels;
                     } else {
                         throw new Exception();
                     }
                 } catch(Exception e) {
-                    BitRate.Text = Catalog.GetString("Unknown");
-                    SampleRate.Text = Catalog.GetString("Unknown");
-                    Channels.Text = Catalog.GetString("Unknown");
+                    track.Bitrate = -1;
                 }
             } 
+            
+            if(track.ProcessedStream) {
+                FileSize.Text = String.Format("{0:0.0} MB", (double)track.FileSize / 1024.0 / 1024.0);
+                
+                if(track.Bitrate > 0) {
+                    BitRate.Text = String.Format("{0} kbps", track.Bitrate);
+                    SampleRate.Text = String.Format("{0} Hz", track.SampleRate);
+                    Channels.Text = String.Format("{0}", track.Channels);
+                } else {
+                    BitRate.Text = String.Format("{0} kbps", track.Bitrate);
+                    SampleRate.Text = String.Format("{0} Hz", track.SampleRate);
+                    Channels.Text = String.Format("{0}", track.Channels);
+                }
+                
+                SetCoverImage(track.CoverArtThumbnail);
+            }
             
             Previous.Sensitive = index > 0;
             Next.Sensitive = index < TrackSet.Count - 1;
             EnterNextTitle.Sensitive = Next.Sensitive;
+        }
+        
+        private static Gdk.Pixbuf no_cover_image = Gdk.Pixbuf.LoadFromResource("editor-cover-album.png");
+        
+        private void SetCoverImage(Gdk.Pixbuf pixbuf)
+        {
+            if(pixbuf == null) {
+                CoverImage.Pixbuf = no_cover_image;
+            } else {
+                CoverImage.Pixbuf = pixbuf;
+            }
         }
         
         private void OnPreviousClicked(object o, EventArgs args)
@@ -317,7 +415,14 @@ namespace Banshee.Gui.Dialogs
                 track.TrackCount = (uint)TrackCount.Value;
             }
         }
-
+        
+        private void OnRatingSyncClicked(object o, EventArgs args)
+        {
+            foreach(EditorTrack track in TrackSet) {
+                track.Rating = (uint)rating_entry.Value;
+            }
+        }
+        
         private void OnYearSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
@@ -350,6 +455,7 @@ namespace Banshee.Gui.Dialogs
             OnAlbumSyncClicked(o, args);
             OnArtistSyncClicked(o, args);
             OnYearSyncClicked(o, args);
+            OnRatingSyncClicked(o, args);
         }
         
         private void OnGenreSyncClicked(object o, EventArgs args)
@@ -373,6 +479,42 @@ namespace Banshee.Gui.Dialogs
             }
         }
         
+        private string last_path = null;
+        
+        private void OnCoverButtonClicked(object o, EventArgs args)
+        {
+            Banshee.Gui.Dialogs.ImageFileChooserDialog chooser = new Banshee.Gui.Dialogs.ImageFileChooserDialog();
+            chooser.LocalOnly = true;
+            
+            try {
+                string path = (TrackSet[currentIndex] as EditorTrack).CoverArtFilename;
+                path = System.IO.Path.GetDirectoryName(path);
+                
+                if(path != null && path != String.Empty) {
+                    chooser.SetCurrentFolder(path);
+                } else if(last_path != null && last_path != String.Empty) {
+                    path = System.IO.Path.GetDirectoryName(last_path);
+                    chooser.SetCurrentFolder(path);
+                }
+            } catch {
+            }
+            
+            if(chooser.Run() == (int)ResponseType.Ok) {
+                last_path = chooser.Filename;
+                
+                try {
+                    Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(chooser.Filename).ScaleSimple(100, 100, Gdk.InterpType.Bilinear);
+                    SetCoverImage(pixbuf);
+                    (TrackSet[currentIndex] as EditorTrack).CoverArtFilename = chooser.Filename;
+                    (TrackSet[currentIndex] as EditorTrack).CoverArtThumbnail = pixbuf;
+                } catch {
+                    SetCoverImage(null);
+                }
+            }
+            
+            chooser.Destroy();
+        }
+        
         private EditorTrack UpdateCurrent()
         {
             if(currentIndex < 0 || currentIndex >= TrackSet.Count) {
@@ -387,6 +529,10 @@ namespace Banshee.Gui.Dialogs
             track.Album = Album.Text;
             track.Title = Title.Text;
             track.Genre = Genre.Entry.Text;
+            track.CopyCoverArt = CopyCoverArt.Active;
+            track.EmbedCoverArt = EmbedCoverArt.Active;
+            track.Rating = (uint)rating_entry.Value;
+            
             try {
                 track.Year = Convert.ToInt32(Year.Text);
             } catch {
@@ -398,7 +544,7 @@ namespace Banshee.Gui.Dialogs
 
         private void OnCancelButtonClicked(object o, EventArgs args)
         {
-            WindowTrackInfo.Destroy();
+            Window.Destroy();
         }
         
         private void OnSaveButtonClicked(object o, EventArgs args)
@@ -414,7 +560,7 @@ namespace Banshee.Gui.Dialogs
                 handler(this, new EventArgs());
             }
             
-            WindowTrackInfo.Destroy();
+            Window.Destroy();
         }
         
         private void SaveTrack(EditorTrack track, bool writeToDatabase)
