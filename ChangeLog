@@ -1,5 +1,9 @@
 2006-09-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Banshee.Base.dll.config.in: Added libnotify map
+
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
 	* data/banshee-dialogs.glade: Added rating; fixed mnemonics
 
 	* src/Banshee.Base/Gui/TrackEditor.cs: Disable the cover art page for now

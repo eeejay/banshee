@@ -6,4 +6,5 @@
 	<dllmap dll="gdk-x11-2.0" target="libgdk-x11-2.0.so.0" />
 	<dllmap dll="libbanshee" target="@expanded_libdir@/@PACKAGE@/libbanshee.so" />
 	<dllmap dll="libX11" target="libX11.so.6" />
+	<dllmap dll="notify" target="libnotify.so.1" />
 </configuration>
