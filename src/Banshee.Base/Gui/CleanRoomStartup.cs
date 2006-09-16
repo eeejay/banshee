@@ -53,6 +53,9 @@ namespace Banshee.Gui
             try {
                 startup(args);
             } catch(Exception e) {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e);
+            
                 Gtk.Application.Init();
                 Banshee.Gui.Dialogs.ExceptionDialog dialog = new Banshee.Gui.Dialogs.ExceptionDialog(e);
                 dialog.Run();

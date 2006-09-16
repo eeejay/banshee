@@ -90,6 +90,7 @@ namespace Banshee.Gui
 
         private uint rating;
         private bool text_mode = false;
+        private Gdk.GC gc = null;
 
         private CellRendererActivatable.ActivateHandler activate_handler;
     
@@ -175,6 +176,11 @@ namespace Banshee.Gui
         private void DrawRating(Gdk.Window canvas, Gtk.Widget widget,
             Gdk.Rectangle area, StateType state, CellRendererState flags)
         {
+            if(canvas == null || RatedPixbuf == null || UnratedPixbuf == null || 
+                (widget == null && gc == null)) {
+                return;
+            }
+            
             uint rating = !text_mode ? this.rating : 0; 
             
             if(text_mode) {
@@ -184,13 +190,13 @@ namespace Banshee.Gui
                 }
             }
             
-            if(RatedPixbuf == null || UnratedPixbuf == null) {
-                return;
+            if(widget != null && gc == null) {
+                gc = widget.Style.TextGC(state);
             }
             
             for(int i = 0; i < MaxRating; i++) {
                 if(i < rating) {
-                    canvas.DrawPixbuf(widget.Style.TextGC(state), RatedPixbuf, 0, 0,
+                    canvas.DrawPixbuf(gc, RatedPixbuf, 0, 0,
                         area.X + (i * RatedPixbuf.Width) + 1, area.Y + 1, 
                         RatedPixbuf.Width, RatedPixbuf.Height, RgbDither.None, 0, 0);
                 } else if((flags & CellRendererState.Prelit) > 0 && activate_handler != null) {
@@ -207,7 +213,7 @@ namespace Banshee.Gui
                     
                     //if(px != 0 && py != 0 && px >= area.X && px <= area.X + area.Width) {
                     
-                    canvas.DrawPixbuf(widget.Style.TextGC(state), UnratedPixbuf, 0, 0,
+                    canvas.DrawPixbuf(gc, UnratedPixbuf, 0, 0,
                         area.X + (i * UnratedPixbuf.Width) + 1, area.Y + 1,
                         UnratedPixbuf.Width, UnratedPixbuf.Height, RgbDither.None, 0, 0);
                         

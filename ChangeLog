@@ -1,5 +1,12 @@
 2006-09-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/RatingRenderer.cs: Minor fix, do not rely on
+	widget if null; cache the GC
+
+	* src/Banshee.Base/Gui/CleanRoomStartup.cs: Dump the exception to stdout
+
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.Base.dll.config.in: Added libnotify map
 
 2006-09-16  Aaron Bockover  <abock@gnome.org>
