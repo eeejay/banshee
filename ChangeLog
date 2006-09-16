@@ -1,5 +1,10 @@
 2006-09-16  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Banshee.Base/FileNamePattern.cs: Fix the Regex for file name
+	escaping. For real this time. (BGO #333813)
+
+2006-09-16  Ruben Vermeersch  <ruben@savanne.be>
+
 	* src/Banshee.Plugins/Audioscrobbler/Engine.cs: Remove a debug line that's
 	no longer needed. This shouldn't have been committed :-).
 
