@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using GConf;
+using Mono.Unix;
 
 namespace Banshee.Base
 {
@@ -66,7 +67,7 @@ namespace Banshee.Base
                 return;
             }
                         
-            startup.Register("Starting DBus server", delegate {
+            startup.Register(Catalog.GetString("Starting background tasks"), delegate {
                 try {
                     dbus_remote = new DBusRemote();
                     dbus_player = new DBusPlayer();
@@ -75,28 +76,28 @@ namespace Banshee.Base
                 }
             });
             
-            startup.Register("Connecting to GConf", delegate { gconf_client = new GConf.Client(); });
-            startup.Register("Detecting network settings", delegate { network_detect = NetworkDetect.Instance; });
-            startup.Register("Creating action manager", delegate { action_manager = new ActionManager(); });
-            startup.Register("Loading music library", delegate { 
+            startup.Register(Catalog.GetString("Starting background tasks"), delegate { gconf_client = new GConf.Client(); });
+            startup.Register(Catalog.GetString("Detecting network settings"), delegate { network_detect = NetworkDetect.Instance; });
+            startup.Register(Catalog.GetString("Creating action manager"), delegate { action_manager = new ActionManager(); });
+            startup.Register(Catalog.GetString("Loading music library"), delegate { 
                 library = new Library(); 
                 library.ReloadLibrary();
             });
             
-            startup.Register("Initializing GStreamer", Banshee.Gstreamer.Utilities.Initialize);
-            startup.Register("Initializing player engine", PlayerEngineCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing player engine"), Banshee.Gstreamer.Utilities.Initialize);
+            startup.Register(Catalog.GetString("Initializing player engine"), PlayerEngineCore.Initialize);
             
-            startup.Register("Initializing Audio CD support", true, 
-                "Audio CD support will be disabled for this instance", delegate { audio_cd_core = new AudioCdCore(); });
+            startup.Register(Catalog.GetString("Initializing audio CD support"), true, 
+                Catalog.GetString("Audio CD support will be disabled for this instance"), delegate { audio_cd_core = new AudioCdCore(); });
                 
-            startup.Register("Initializing Digital Audio Player support", true, 
-                "DAP support will be disabled for this instance", Banshee.Dap.DapCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing digital audio player support"), true, 
+                Catalog.GetString("DAP support will be disabled for this instance"), Banshee.Dap.DapCore.Initialize);
             
-            startup.Register("Initializing CD Burning support", true, 
-                "CD Burning support will be disabled for this instance", Banshee.Burner.BurnerCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing CD writing support"), true, 
+                Catalog.GetString("CD burning support will be disabled for this instance"), Banshee.Burner.BurnerCore.Initialize);
                 
-            startup.Register("Initializing plugins", Banshee.Plugins.PluginCore.Initialize);
-            startup.Register("Initializing power management", PowerManagement.Initialize);
+            startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing background tasks"), PowerManagement.Initialize);
             
             startup.Run();
             
