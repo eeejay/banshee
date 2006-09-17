@@ -522,7 +522,7 @@ namespace Banshee.SmartPlaylist
         {
             TreeIter iter;
             opBox.GetActiveIter(out iter);
-            string opName = (string)opBox.Model.GetValue(iter, 0);
+            //string opName = (string)opBox.Model.GetValue(iter, 0);
             
             match.Op = opBox.Active;
             

@@ -1,3 +1,14 @@
+2006-09-17  Ruben Vermeersch  <ruben@savanne.be>
+
+	Very trivial compiler warning fixes.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs: Comment unused
+	variable.
+
+	* src/Banshee.Base/Gui/TrackEditor.cs:
+	* src/Banshee.Base/NetworkDetect.cs: Change two occurrences of catch
+	(Exception e) to catch (Exception) as e wasn't even used.
+
 2006-09-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Plugins/NotificationAreaIcon/NotificationArea.cs: Support

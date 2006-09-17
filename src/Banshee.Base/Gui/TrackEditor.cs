@@ -340,7 +340,7 @@ namespace Banshee.Gui.Dialogs
                     } else {
                         throw new Exception();
                     }
-                } catch(Exception e) {
+                } catch(Exception) {
                     track.Bitrate = -1;
                 }
             } 

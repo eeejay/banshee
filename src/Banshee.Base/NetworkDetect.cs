@@ -70,7 +70,7 @@ namespace Banshee.Base
         {
             try {
                 ConnectToNetworkManager();
-            } catch(Exception e) {
+            } catch(Exception) {
                 nm_manager = null;
                 LogCore.Instance.PushWarning(
                     Catalog.GetString("Cannot connect to NetworkManager"),
