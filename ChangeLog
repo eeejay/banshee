@@ -1,5 +1,13 @@
 2006-09-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationArea.cs: Support
+	transparency (pulled from stable branch, BGO #356350)
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	CTRL+Left click goes to previous, CTRL+Right next, middle play/pause
+
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/ActionManager.cs: Disabled equalizer for now - it's
 	not finished
 

@@ -1,13 +1,11 @@
 /***************************************************************************
  *  NotificationAreaIconPlugin.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc. (Aaron Bockover)
- *  Copyright (C) 2006 Sebastian Dröge <slomo@ubuntu.com>
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2006 Sebastian Dröge
  * 
  *  Written by Sebastian Dröge <slomo@ubuntu.com>
- *  
- *  Parts of the file copied from the old TrayIcon code,
- *  written by Aaron Bockover <aaron@aaronbock.net>
+ *             Aaron Bockover <aaron@abock.org>
  *  
  ****************************************************************************/
 
@@ -41,17 +39,15 @@ using Banshee.MediaEngine;
 using Banshee.Widgets;
 using Mono.Unix;
 
-namespace Banshee.Plugins.NotificationAreaIcon {
-
-    public class NotificationAreaIconPlugin : Banshee.Plugins.Plugin {
-
+namespace Banshee.Plugins.NotificationAreaIcon 
+{
+    public class NotificationAreaIconPlugin : Banshee.Plugins.Plugin 
+    {
         protected override string ConfigurationName { get { return "NotificationAreaIcon"; } }
         public override string DisplayName { get { return Catalog.GetString("Notification Area Icon"); } }
 
         public override string Description {
-            get {
-                return Catalog.GetString("Shows the Notification Area Icon");
-            }
+            get { return Catalog.GetString("Shows the Notification Area Icon"); }
         }
 
         public override string[] Authors {
@@ -78,7 +74,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         private static readonly uint SkipDelta = 10;
         private static readonly int VolumeDelta = 10;
         
-        protected override void PluginInitialize() {
+        protected override void PluginInitialize() 
+        {
             Init();
 
             ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("NotificationAreaIconMenu.xml");        
@@ -99,7 +96,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             show_notifications = ShowNotifications;
         }
 
-        protected override void PluginDispose() {
+        protected override void PluginDispose() 
+        {
             Notifications.Widget = null;
             if (notif_area != null) {
                 notif_area.Destroy();
@@ -115,11 +113,13 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             return new NotificationAreaIconConfigPage(this);
         }
 
-        protected override void InterfaceInitialize() {
+        protected override void InterfaceInitialize() 
+        {
             InterfaceElements.MainWindow.KeyPressEvent += OnKeyPressEvent;
         }
 
-        private void Init() {
+        private void Init() 
+        {
             notif_area = new NotificationArea(Catalog.GetString("Banshee"));
             notif_area.DestroyEvent += OnDestroyEvent;
 
@@ -135,32 +135,37 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             notif_area.ShowAll();
         }
 
-        private void OnDestroyEvent(object o, DestroyEventArgs args) {
+        private void OnDestroyEvent(object o, DestroyEventArgs args) 
+        {
             Init();
         }
 
         private void ShowHideMainWindow()
         {
-            if (InterfaceElements.MainWindow.IsActive)
+            if (InterfaceElements.MainWindow.IsActive) {
                 InterfaceElements.MainWindow.Visible = false;
-            else
+            } else {
                 InterfaceElements.MainWindow.Present();
+            }
         }
 
         private void ShowNotification()
         {
-            if (cursor_over_trayicon || !show_notifications)
+            if (cursor_over_trayicon || !show_notifications) {
                 return;
-
+            }
+            
             string message = String.Format("{0}\n   <i>by</i> {1}", 
                     GLib.Markup.EscapeText(current_track.DisplayTitle),
                     GLib.Markup.EscapeText(current_track.DisplayArtist));
             Gdk.Pixbuf image = null;
+            
             if (current_track.CoverArtFileName != null) {
                 image = new Gdk.Pixbuf(current_track.CoverArtFileName);
             } else {
                 image = Branding.DefaultCoverArt;
             }
+            
             Notifications.Notify(Catalog.GetString("Now Playing"), message, image);    
         }
 
@@ -169,11 +174,11 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         {
             bool handled = false;
             
-        if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-            handled = true;
-                    ShowHideMainWindow();
-                    ResizeMoveWindow();
-        }
+            if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+                handled = true;
+                ShowHideMainWindow();
+                ResizeMoveWindow();
+            }
             
             args.RetVal = handled;
         }
@@ -186,23 +191,35 @@ namespace Banshee.Plugins.NotificationAreaIcon {
         
             switch(args.Event.Button) {
                 case 1:
-                    ShowHideMainWindow();
-                    ResizeMoveWindow();
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+                        Globals.ActionManager["PreviousAction"].Activate();
+                    } else {
+                        ShowHideMainWindow();
+                        ResizeMoveWindow();
+                    }
+                    break;
+                case 2:
+                    Globals.ActionManager["PlayPauseAction"].Activate();
                     break;
                 case 3:
-                    menu.Popup(null, null,
-                            new MenuPositionFunc(PositionMenu),
+                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+                        Globals.ActionManager["NextAction"].Activate();
+                    } else {
+                        menu.Popup(null, null, new MenuPositionFunc(PositionMenu), 
                             args.Event.Button, args.Event.Time);
+                    }
                     break;
             }
         }
 
-        private void PositionMenu(Menu menu, out int x, out int y, out bool push_in) {
+        private void PositionMenu(Menu menu, out int x, out int y, out bool push_in) 
+        {
             PositionWidget(menu, out x, out y, 0);
             push_in = true;
         }
 
-        private void PositionWidget(Widget widget, out int x, out int y, int yPadding) {
+        private void PositionWidget(Widget widget, out int x, out int y, int yPadding) 
+        {
             int button_y, panel_width, panel_height;
             Gtk.Requisition requisition = widget.SizeRequest();
             
@@ -214,7 +231,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                 : button_y + panel_height + yPadding;
         }
 
-        private void OnMouseScroll(object o, ScrollEventArgs args) {
+        private void OnMouseScroll(object o, ScrollEventArgs args) 
+        {
             switch(args.Event.Direction) {
                 case Gdk.ScrollDirection.Up:
                     if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
@@ -238,19 +256,21 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                     }
                     break;
             }
-
         }
 
-        private void HidePopup() {
+        private void HidePopup() 
+        {
             popup.Hide();
         }
         
-        private void ShowPopup() {
+        private void ShowPopup() 
+        {
             PositionPopup();
             popup.Show();
         }
         
-        private void PositionPopup() {
+        private void PositionPopup() 
+        {
             int x, y;
             Gtk.Requisition event_box_req = event_box.SizeRequest();
             Gtk.Requisition popup_req = popup.SizeRequest();
@@ -267,7 +287,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             popup.Move(x, y);
         }
         
-        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) {
+        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) 
+        {
             cursor_over_trayicon = true;
             if(can_show_popup) {
                 // only show the popup when the cursor is still over the
@@ -281,12 +302,14 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             }
         }
         
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) {
+        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) 
+        {
             cursor_over_trayicon = false;
             HidePopup();
         }
 
-        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args) {
+        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args) 
+        {
             switch (args.Event) {
                 case PlayerEngineEvent.Iterate:
                     if(PlayerEngineCore.CurrentTrack != null) {
@@ -320,7 +343,8 @@ namespace Banshee.Plugins.NotificationAreaIcon {
             }
         }
 
-        private void FillPopup() {
+        private void FillPopup() 
+        {
             can_show_popup = true;
             popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtist;
             popup.Album = PlayerEngineCore.CurrentTrack.DisplayAlbum;
@@ -331,8 +355,6 @@ namespace Banshee.Plugins.NotificationAreaIcon {
                 PositionPopup();
             }
         }
-
-
 
         //FIXME: GO AWAY UGLY COPY!!!
         private void ResizeMoveWindow() {
