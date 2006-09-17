@@ -54,6 +54,8 @@ namespace Banshee.Burner
             
             initialized = true;
             
+            InstallActions();
+            
             SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
                 if(args.Source is BurnerSource) {
                     burners.Add(args.Source as BurnerSource);
@@ -69,9 +71,13 @@ namespace Banshee.Burner
             drive_factory = new Banshee.Cdrom.Nautilus.NautilusDriveFactory();
             disc_duplicator = new Banshee.Cdrom.Nautilus.NautilusDiscDuplicator();
             
-            foreach(IRecorder drive in drive_factory) {
+            foreach(IDrive drive in drive_factory) {
+            	if(!(drive is IRecorder)) {
+            		continue;
+           		}
+           		
                 if(drive.HaveMedia && FindSourceForDrive(drive, false) == null) {
-                    CreateSource(drive);
+                    CreateSource(drive as IRecorder);
                 }
             }
             
@@ -107,8 +113,6 @@ namespace Banshee.Burner
                     source.Unmap();
                 }
             };
-            
-            InstallActions();
         }
         
         private static void InstallActions()
@@ -156,7 +160,7 @@ namespace Banshee.Burner
         
         private static BurnerSource CreateSource(IRecorder recorder)
         {
-            if(drive_factory.RecorderCount <= 0) {
+            if(drive_factory == null || drive_factory.RecorderCount <= 0) {
                 LogCore.Instance.PushWarning(
                     Catalog.GetString("Problem creating CD"),
                     Catalog.GetString("No CD recording hardware was found."));

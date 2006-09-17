@@ -5,7 +5,8 @@ INCLUDES = \
 	-D_FORTIFY_SOURCE=2 \
 	$(HAL_CFLAGS) \
 	$(GST_CFLAGS) \
-	$(GTK_CFLAGS)
+	$(GTK_CFLAGS) \
+	$(LIBNAUTILUS_BURN_CFLAGS)
 
 bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
@@ -31,9 +32,10 @@ libbanshee_la_SOURCES = \
 	hal-context.c \
 	hal-context.h \
 	gtksharp-glue.c \
+	nautilus-burn.c \
 	$(GST_CFILES)
 
-libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS)
+libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS) $(LIBNAUTILUS_BURN_LIBS)
 
 CLEANFILES = gst-player-test gst-encode-test
 MAINTAINERCLEANFILES = Makefile.in

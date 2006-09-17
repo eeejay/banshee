@@ -1,3 +1,55 @@
+2006-09-17  Aaron Bockover  <abock@gnome.org>
+
+	* Makefile.am: Remove burn-sharp
+
+	* configure.ac: Remove burn-sharp, set LNB_CSFLAGS for 2.16
+
+	* libbanshee/libbanshee.mdp:
+	* libbanshee/Makefile.am: Added nautilus-burn.c
+
+	* libbanshee/nautilus-burn.c: Trimmed glue for libnautilus-burn; added
+	2.16 compatibility
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Added Banshee.Cdrom.Nautilus.Interop
+
+	* src/Banshee.Base/Banshee.Base.dll.config.in: Added map for
+	libnautilus-burn 
+
+	* src/Banshee.Base/Banshee.Cdrom/IDrive.cs:
+	* src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs: 
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs: MediaSize 
+	renamed to MediaCapacity
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs: Use
+	new BurnDrive constructor instead of iterating a drive list looking for
+	a match - we already know the device node - much better for 2.16
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusRecorder.cs: Use new
+	API in Banshee.Cdrom.Nautilus.Interop.BurnRecorder
+
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs: Added some null checks,
+	fixed InstallActions, iterate factory expecting IDrive, not IRecorder
+	and explicitly cast IDrive to IRecorder (fixes potential crashes)
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/*: New libnautilus-burn
+	wrapper based on old burn-sharp; only wrap pieces we need, lots of 
+	clean up and organization to make managing this wrapper by hand
+	easy; added compatibilty with 2.12, 2.14, 2.16; calls glue in libbanshee
+
+	* src/Banshee.Base/ComponentInitializer.cs: Dump component intialization
+	exceptions if asked to trap and handle
+
+	* src/Banshee.Base/Banshee.Equalizer.Gui/EqualizerWindow.cs: 
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:
+	* src/Banshee.Base/Gui/TrackEditor.cs: Fixed unused compiler warnings
+
+	* src/Banshee.Hyena/Makefile.am: Remove link requirement for burn-sharp.dll
+
+	* burn-sharp/*: Removed
+
 2006-09-17  Ruben Vermeersch  <ruben@savanne.be>
 
 	Very trivial compiler warning fixes.

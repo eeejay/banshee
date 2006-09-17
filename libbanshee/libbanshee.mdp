@@ -33,6 +33,7 @@
     <File name="./inotify.h" subtype="Code" buildaction="Nothing" />
     <File name="./inotify-glue.c" subtype="Code" buildaction="Nothing" />
     <File name="./inotify-syscalls.h" subtype="Code" buildaction="Nothing" />
+    <File name="./nautilus-burn.c" subtype="Code" buildaction="Compile" />
   </Contents>
   <References />
 </Project>

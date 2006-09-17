@@ -89,12 +89,13 @@ else
 	AC_MSG_RESULT([found])
 fi
 
-required_assemblies="Mono.Data.SqliteClient Mono.Posix System.Runtime.Remoting System.Web System.Web.Services"
+required_assemblies="Mono.Cairo Mono.Data.SqliteClient Mono.Posix System.Web System.Data System.Web.Services"
 
 for asm in $required_assemblies; do
 	AC_MSG_CHECKING([for $asm.dll])
-	if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/1.0/$asm.dll; then
-		AC_MSG_ERROR([missing required Mono DLL: $asm.dll])
+	if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/2.0/$asm.dll; then
+		AC_MSG_RESULT([not found])
+		AC_MSG_ERROR([missing required Mono 2.0 assembly: $asm.dll])
 	else
 		AC_MSG_RESULT([found])
 	fi
@@ -298,8 +299,10 @@ dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.15, lnb15=yes, lnb15=no)
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.13, lnb13=yes, lnb13=no)
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.12, lnb12=yes, lnb12=no)
+LNB_CSFLAGS=""
 if test "x$lnb15" = "xyes"; then
 	LNB_SOVERSION=4
+	LNB_CSFLAGS="-define:HAVE_LNB_216"
 	AC_DEFINE(HAVE_LIBNAUTILUS_BURN_4, 1, [Define if libnautilus-burn is version 2.15 (soversion 4) or later])
 elif test "x$lnb13" = "xyes"; then
 	LNB_SOVERSION=3
@@ -308,6 +311,7 @@ elif test "x$lnb12" = "xyes"; then
 else
 	AC_MSG_ERROR([You need libnautilus-burn 2.12 or better])
 fi
+AC_SUBST(LNB_CSFLAGS)
 AC_SUBST(LNB_SOVERSION)
 AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
 AC_SUBST(LIBNAUTILUS_BURN_LIBS)
@@ -365,8 +369,6 @@ hal-sharp/Makefile
 hal-sharp/hal-sharp.dll.config
 taglib-sharp/Makefile
 libbanshee/Makefile
-burn-sharp/Makefile
-burn-sharp/burn-sharp.dll.config
 src/banshee
 src/Makefile
 src/AssemblyInfo.cs

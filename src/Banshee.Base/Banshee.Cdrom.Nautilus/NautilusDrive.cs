@@ -28,11 +28,11 @@
 
 using System;
 
-using Nautilus;
 using Hal;
 
 using Banshee.Base;
 using Banshee.Cdrom;
+using Banshee.Cdrom.Nautilus.Interop;
 
 namespace Banshee.Cdrom.Nautilus
 {
@@ -130,8 +130,8 @@ namespace Banshee.Cdrom.Nautilus
             get { return 2; }
         }
         
-        public long MediaSize {
-            get { return HaveMedia ? drive.MediaSize : 0; }
+        public long MediaCapacity {
+            get { return HaveMedia ? drive.MediaCapacity : 0; }
         }
         
         internal BurnDrive Drive {

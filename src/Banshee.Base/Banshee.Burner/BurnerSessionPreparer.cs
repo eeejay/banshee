@@ -109,7 +109,7 @@ namespace Banshee.Burner
                 return false;
             }
             
-            if(session.Recorder.MediaSize <= 0) {
+            if(session.Recorder.MediaCapacity <= 0) {
                 LogCore.Instance.PushWarning(
                     Catalog.GetString("Insert Blank CD"),
                     Catalog.GetString("Please insert a blank CD disk for the write process."));
@@ -126,7 +126,7 @@ namespace Banshee.Burner
         
         private bool HaveRequiredAudioSpace() 
         {
-            long available = (long)(((session.Recorder.MediaSize / 1024 / 1024) - 1) * 48 / 7);
+            long available = (long)(((session.Recorder.MediaCapacity / 1024 / 1024) - 1) * 48 / 7);
             long remaining = (long)(available - total_duration.TotalSeconds);
 
             if(remaining < 0) {
@@ -147,7 +147,7 @@ namespace Banshee.Burner
         
         private bool HaveRequiredDataSpace()
         {
-            long remaining = session.Recorder.MediaSize - total_file_size;
+            long remaining = session.Recorder.MediaCapacity - total_file_size;
             
             if(remaining < 0) {
                 int mbytes = (int)(-remaining / 1024 / 1024);

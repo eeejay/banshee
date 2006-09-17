@@ -1,6 +1,0 @@
-.cvsignore
-Makefile
-Makefile.in
-burn-sharp.dll
-burn-sharp.dll.config
-burn-sharp.dll.mdb

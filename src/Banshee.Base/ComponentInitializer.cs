@@ -121,7 +121,7 @@ namespace Banshee.Base
                     try {
                         component.Initialize();
                     } catch(Exception e) {
-                    
+                    	Console.Error.WriteLine(e);
                     }
                 } else {
                     component.Initialize();

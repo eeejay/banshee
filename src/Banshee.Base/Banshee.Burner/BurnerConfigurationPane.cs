@@ -121,7 +121,7 @@ namespace Banshee.Burner
         
         private void UpdateUsageDisplay()
         {
-            long capacity = source.Session.Recorder == null ? 0 : source.Session.Recorder.MediaSize;
+            long capacity = source.Session.Recorder == null ? 0 : source.Session.Recorder.MediaCapacity;
             TimeSpan time_capacity = BurnerUtilities.DiscSizeToTime(capacity);
             
             usage_display.Usage = (long)time_usage.TotalSeconds;

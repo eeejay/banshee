@@ -1,4 +1,4 @@
-MCS_FLAGS = -debug 
+MCS_FLAGS = -debug -unsafe $(LNB_CSFLAGS)
 ASSEMBLY_NAME = Banshee.Base
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -26,7 +26,14 @@ BANSHEE_CDROM_NAUTILUS_SOURCES = \
 	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs \
 	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDrive.cs \
 	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusRecorder.cs \
-	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs
+	$(srcdir)/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs 
+
+BANSHEE_CDROM_NAUTILUS_INTEROP_SOURCES = \
+	$(srcdir)/Banshee.Cdrom.Nautilus.Interop/BurnDrive.cs \
+	$(srcdir)/Banshee.Cdrom.Nautilus.Interop/BurnRecorder.cs \
+	$(srcdir)/Banshee.Cdrom.Nautilus.Interop/BurnRecorderTrack.cs \
+	$(srcdir)/Banshee.Cdrom.Nautilus.Interop/BurnRecorderHandlers.cs \
+	$(srcdir)/Banshee.Cdrom.Nautilus.Interop/NautilusEnums.cs
 
 BANSHEE_CDROM_ISO_SOURCES = \
 	$(srcdir)/Banshee.Cdrom.Iso/IImageCreator.cs \
@@ -161,6 +168,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_CDROM_SOURCES) \
 	$(BANSHEE_CDROM_GUI_SOURCES) \
 	$(BANSHEE_CDROM_NAUTILUS_SOURCES) \
+	$(BANSHEE_CDROM_NAUTILUS_INTEROP_SOURCES) \
 	$(BANSHEE_CDROM_ISO_SOURCES) \
 	$(BANSHEE_CDROM_ISO_MKISOFS_SOURCES) \
 	$(BANSHEE_BURNER_SOURCES) \
@@ -247,7 +255,7 @@ Banshee_Base_EXPANDED_RESOURCES += $(top_builddir)/data/translators.xml
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_srcdir)/taglib-sharp/taglib-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/burn-sharp/burn-sharp.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_srcdir)/taglib-sharp/taglib-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

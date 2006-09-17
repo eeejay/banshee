@@ -30,11 +30,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using Nautilus;
 using Hal;
 
 using Banshee.Base;
 using Banshee.Cdrom;
+using Banshee.Cdrom.Nautilus.Interop;
 
 namespace Banshee.Cdrom.Nautilus
 {
@@ -97,18 +97,7 @@ namespace Banshee.Cdrom.Nautilus
         
         private BurnDrive FindDriveByDeviceNode(string deviceNode)
         {
-            GLib.List drive_list = BurnDrive.GetList(true, false);
-            if(drive_list == null || drive_list.Count == 0) {
-                return null;
-            }
-            
-            foreach(BurnDrive drive in drive_list) {
-                if(drive.Device == deviceNode) {
-                    return drive.Copy();
-                }
-            }
-            
-            return null;
+            return new BurnDrive(deviceNode);
         }
         
         protected virtual void OnDriveAdded(IDrive drive)

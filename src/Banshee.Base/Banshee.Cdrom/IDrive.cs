@@ -41,6 +41,6 @@ namespace Banshee.Cdrom
         int MaxReadSpeed { get; }
         int MaxWriteSpeed { get; }
         int MinWriteSpeed { get; }
-        long MediaSize { get; }
+        long MediaCapacity { get; }
     }
 }

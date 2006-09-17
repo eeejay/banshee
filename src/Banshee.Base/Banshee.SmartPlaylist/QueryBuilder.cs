@@ -423,7 +423,6 @@ namespace Banshee.SmartPlaylist
     {
         private VBox widgetBox;
         private ComboBox fieldBox, opBox;
-        private Widget valueBox;
         private QueryBuilderModel model;
         private QueryMatch match;
         private Button buttonAdd;
@@ -431,8 +430,6 @@ namespace Banshee.SmartPlaylist
         
         public event EventHandler AddRequest;
         public event EventHandler RemoveRequest;
-        
-        private bool canDelete;
         
         public QueryBuilderMatchRow(QueryBuilderModel model) : base()
         {
@@ -475,8 +472,6 @@ namespace Banshee.SmartPlaylist
             buttonAdd.Clicked += OnButtonAddClicked;
             imageAdd.Show();
             PackEnd(buttonAdd, false, false, 0);
-            
-            canDelete = true;
         }
         
         private void Select(int index)
@@ -552,7 +547,6 @@ namespace Banshee.SmartPlaylist
         public bool CanDelete
         {
             set {
-                canDelete = value;
                 buttonRemove.Sensitive = value;
             }
         }

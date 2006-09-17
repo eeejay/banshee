@@ -187,7 +187,7 @@ namespace Banshee.Burner
         private void OnMediaRequestResponse(object o, ResponseArgs args)
         {
             if(args.ResponseId == ResponseType.Ok) {
-                media_present = recorder.MediaSize > 0;
+                media_present = recorder.MediaCapacity > 0;
                 if(!media_present) {
                     return;
                 }

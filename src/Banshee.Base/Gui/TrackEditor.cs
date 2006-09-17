@@ -130,8 +130,8 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button SyncAll;
         [Widget] private Image CoverImage;
         [Widget] private Button CoverButton;
-        [Widget] private Button ClearCoverArt;
-        [Widget] private Button SyncCoverArt;
+        //[Widget] private Button ClearCoverArt;
+        //[Widget] private Button SyncCoverArt;
         [Widget] private CheckButton EmbedCoverArt;
         [Widget] private CheckButton CopyCoverArt;
         [Widget] private Box RatingContainer;

@@ -42,7 +42,7 @@ namespace Banshee.Equalizer.Gui
         private EqualizerView eq_view;
         private EqualizerPresetComboBox eq_preset_combo;
         
-        [Widget] private ComboBoxEntry preset_combobox;
+        //[Widget] private ComboBoxEntry preset_combobox;
         
         public EqualizerEditor() : base("EqualizerWindow")
         {

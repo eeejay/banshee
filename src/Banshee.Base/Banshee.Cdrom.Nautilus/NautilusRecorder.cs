@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-using Lnb=Nautilus;
+using Lnb=Banshee.Cdrom.Nautilus.Interop;
 using Hal;
 
 using Banshee.Base;
@@ -76,12 +76,11 @@ namespace Banshee.Cdrom.Nautilus
         {
             lock(burn_recorder_mutex) {
                 burn_recorder = new Lnb.BurnRecorder();
-                Lnb.BurnRecorderTrack [] nautilus_tracks = new Lnb.BurnRecorderTrack[tracks.Count];
                 
-                for(int i = 0; i < nautilus_tracks.Length; i++) {
+                foreach(RecorderTrack track in tracks) {
                     Lnb.BurnRecorderTrackType nautilus_type;
                     
-                    switch(tracks[i].Type) {
+                    switch(track.Type) {
                         case RecorderTrackType.Data:
                             nautilus_type = Lnb.BurnRecorderTrackType.Data;
                             break;
@@ -94,7 +93,7 @@ namespace Banshee.Cdrom.Nautilus
                             break;
                     }
                     
-                    nautilus_tracks[i] = new Lnb.BurnRecorderTrack(tracks[i].FileName, nautilus_type);
+                    burn_recorder.AddTrack(new Lnb.BurnRecorderTrack(track.FileName, nautilus_type));
                 }
                 
                 Lnb.BurnRecorderWriteFlags flags = Lnb.BurnRecorderWriteFlags.Debug;
@@ -114,8 +113,7 @@ namespace Banshee.Cdrom.Nautilus
                     burn_recorder.InsertMediaRequest += OnInsertMediaRequest;
                     burn_recorder.WarnDataLoss += OnWarnDataLoss;
                     
-                    switch((Lnb.BurnRecorderResult)burn_recorder.WriteTracks(Drive,
-                        nautilus_tracks, speed, flags)) {
+                    switch(burn_recorder.WriteTracks(Drive, speed, flags)) {
                         case Lnb.BurnRecorderResult.Cancel:
                             return RecorderResult.Canceled;
                         case Lnb.BurnRecorderResult.Finished:
@@ -135,7 +133,7 @@ namespace Banshee.Cdrom.Nautilus
             }
         }
         
-        protected virtual void OnActionChanged(object o, Lnb.ActionChangedArgs args)
+        internal virtual void OnActionChanged(object o, Lnb.ActionChangedArgs args)
         {
             ActionChangedHandler handler = ActionChanged;
             if(handler != null) {
@@ -171,7 +169,7 @@ namespace Banshee.Cdrom.Nautilus
             }
         }
         
-        protected virtual void OnProgressChanged(object o, Lnb.ProgressChangedArgs args)
+        internal virtual void OnProgressChanged(object o, Lnb.ProgressChangedArgs args)
         {
             ProgressChangedHandler handler = ProgressChanged;
             if(handler != null) {
@@ -179,7 +177,7 @@ namespace Banshee.Cdrom.Nautilus
             }
         }
         
-        protected virtual void OnInsertMediaRequest(object o, Lnb.InsertMediaRequestArgs args)
+        internal virtual void OnInsertMediaRequest(object o, Lnb.InsertMediaRequestArgs args)
         {
             InsertMediaRequestHandler handler = InsertMediaRequest;
             if(handler != null) {
@@ -187,7 +185,7 @@ namespace Banshee.Cdrom.Nautilus
             }
         }
         
-        protected virtual void OnWarnDataLoss(object o, Lnb.WarnDataLossArgs args)
+        internal virtual void OnWarnDataLoss(object o, Lnb.WarnDataLossArgs args)
         {
             EventHandler handler = WarnDataLoss;
             if(handler != null) {
