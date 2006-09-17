@@ -2,20 +2,20 @@ using System;
 
 namespace Banshee.Cdrom.Nautilus.Interop
 {
-	// For NautilusBurnRecorder
+    // For NautilusBurnRecorder
 
     internal enum BurnRecorderResult {
-    	#if HAVE_LNB_216
-        	Error = -1,
-        	Cancel = -2,
-        	Finished = -3,
-        	Retry = -4
-   		#else 
+        #if HAVE_LNB_216
+            Error = -1,
+            Cancel = -2,
+            Finished = -3,
+            Retry = -4
+           #else 
             Error,
             Cancel,
             Finished,
             Retry
-    	#endif
+        #endif
     }
     
     internal enum BurnRecorderResponse {
@@ -69,8 +69,8 @@ namespace Banshee.Cdrom.Nautilus.Interop
         Dvd
     }
 
-	// For NautilusBurnDrive
-	
+    // For NautilusBurnDrive
+    
     internal enum BurnMediaType {
         Busy,
         Error,

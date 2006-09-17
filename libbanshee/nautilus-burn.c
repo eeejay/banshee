@@ -32,9 +32,9 @@ char *
 nautilus_burn_glue_drive_get_id(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return g_strdup(nautilus_burn_drive_get_device(drive));
+    return g_strdup(nautilus_burn_drive_get_device(drive));
 #else
-	return g_strdup(drive->cdrecord_id);
+    return g_strdup(drive->cdrecord_id);
 #endif 
 }
 
@@ -42,9 +42,9 @@ NautilusBurnDriveType
 nautilus_burn_glue_drive_get_type(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return nautilus_burn_drive_get_drive_type(drive);
+    return nautilus_burn_drive_get_drive_type(drive);
 #else
-	return drive->type;
+    return drive->type;
 #endif
 }
 
@@ -52,9 +52,9 @@ char *
 nautilus_burn_glue_drive_get_display_name(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return nautilus_burn_drive_get_name_for_display (drive);
+    return nautilus_burn_drive_get_name_for_display (drive);
 #else
-	return g_strdup(drive->display_name);
+    return g_strdup(drive->display_name);
 #endif
 }
 
@@ -62,9 +62,9 @@ int
 nautilus_burn_glue_drive_get_max_read_speed(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return  NAUTILUS_BURN_DRIVE_CD_SPEED(nautilus_burn_drive_get_max_speed_read(drive));
+    return  NAUTILUS_BURN_DRIVE_CD_SPEED(nautilus_burn_drive_get_max_speed_read(drive));
 #else 
-	return drive->max_speed_read;
+    return drive->max_speed_read;
 #endif
 }
 
@@ -72,9 +72,9 @@ int
 nautilus_burn_glue_drive_get_max_write_speed(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return  NAUTILUS_BURN_DRIVE_CD_SPEED(nautilus_burn_drive_get_max_speed_write(drive));
+    return  NAUTILUS_BURN_DRIVE_CD_SPEED(nautilus_burn_drive_get_max_speed_write(drive));
 #else 
-	return drive->max_speed_write;
+    return drive->max_speed_write;
 #endif
 }
 
@@ -83,9 +83,9 @@ char *
 nautilus_burn_glue_drive_get_device(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return g_strdup (nautilus_burn_drive_get_device (drive));
+    return g_strdup (nautilus_burn_drive_get_device (drive));
 #else
-	return g_strdup (drive->device);
+    return g_strdup (drive->device);
 #endif
 }
 
@@ -93,9 +93,9 @@ gint64
 nautilus_glue_burn_drive_get_media_capacity(NautilusBurnDrive *drive)
 {
 #if LNB_215
-	return nautilus_burn_drive_get_media_capacity(drive);
+    return nautilus_burn_drive_get_media_capacity(drive);
 #else
-	return nautilus_burn_drive_get_media_size(drive);
+    return nautilus_burn_drive_get_media_size(drive);
 #endif
 }
 
@@ -103,16 +103,16 @@ NautilusBurnDrive *
 nautilus_glue_burn_drive_get_for_device(const char *path)
 {
 #if LNB_215
-	NautilusBurnDriveMonitor *monitor;
-	NautilusBurnDrive *drive;
-	
-	monitor = nautilus_burn_get_drive_monitor();
-	drive = nautilus_burn_drive_monitor_get_drive_for_device(monitor, path);
-	g_object_unref(monitor);
-	
-	return drive;
+    NautilusBurnDriveMonitor *monitor;
+    NautilusBurnDrive *drive;
+    
+    monitor = nautilus_burn_get_drive_monitor();
+    drive = nautilus_burn_drive_monitor_get_drive_for_device(monitor, path);
+    g_object_unref(monitor);
+    
+    return drive;
 #else
-
+    return nautilus_burn_drive_new_from_path(path);
 #endif
 }
 

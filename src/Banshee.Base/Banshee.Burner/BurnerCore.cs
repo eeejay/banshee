@@ -72,10 +72,10 @@ namespace Banshee.Burner
             disc_duplicator = new Banshee.Cdrom.Nautilus.NautilusDiscDuplicator();
             
             foreach(IDrive drive in drive_factory) {
-            	if(!(drive is IRecorder)) {
-            		continue;
-           		}
-           		
+                if(!(drive is IRecorder)) {
+                    continue;
+                   }
+                   
                 if(drive.HaveMedia && FindSourceForDrive(drive, false) == null) {
                     CreateSource(drive as IRecorder);
                 }

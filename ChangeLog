@@ -1,5 +1,20 @@
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/nautilus-burn.c (nautilus_glue_burn_drive_get_for_device): 
+	Use return nautilus_burn_drive_new_from_path for <2.16; CD burning
+	now works properly for 2.12 again
+
+	* libbanshee/nautilus-burn.c:
+	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/BurnDrive.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/BurnRecorder.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/BurnRecorderHandlers.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/BurnRecorderTrack.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/NautilusEnums.cs:
+	Tabs to spaces, sigh
+
+2006-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* Makefile.am: Remove burn-sharp
 
 	* configure.ac: Remove burn-sharp, set LNB_CSFLAGS for 2.16

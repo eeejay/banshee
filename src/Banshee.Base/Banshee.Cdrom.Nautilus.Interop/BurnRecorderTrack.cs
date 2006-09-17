@@ -11,34 +11,34 @@ namespace Banshee.Cdrom.Nautilus.Interop
         }
         
         public BurnRecorderTrack(string filename, BurnRecorderTrackType type) 
-        	: base(nautilus_burn_glue_create_track(filename, type))
+            : base(nautilus_burn_glue_create_track(filename, type))
         {
         }
         
         ~BurnRecorderTrack()
         {
-        	Dispose(false);
+            Dispose(false);
         }
         
         public new void Dispose() 
         {
-        	Dispose(true);
-        	GC.SuppressFinalize(this);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         
         private void Dispose(bool disposing)
         {
-        	if(Raw != IntPtr.Zero) {
-        		nautilus_burn_recorder_track_free(Handle);
-        		Raw = IntPtr.Zero;
-       		}
+            if(Raw != IntPtr.Zero) {
+                nautilus_burn_recorder_track_free(Handle);
+                Raw = IntPtr.Zero;
+               }
         }
         
         [DllImport("libbanshee")]
         private static extern IntPtr nautilus_burn_glue_create_track(string filename,
-        	BurnRecorderTrackType type);
+            BurnRecorderTrackType type);
         
-       	[DllImport("libnautilus-burn")]
+           [DllImport("libnautilus-burn")]
         private static extern void nautilus_burn_recorder_track_free(IntPtr raw);
     }
 }
