@@ -1,3 +1,9 @@
+2006-09-16  Aaron Bockover  <abock@gnome.org>
+
+	* POTFILES.in: Updated, patch from Alexandre Prokoudine
+
+	* POTFILES.skip: Added
+
 2006-09-16  David Lodge <dave@cirt.net>
 
 	* en_GB.po: Updated English (British) translation
