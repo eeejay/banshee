@@ -185,7 +185,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleLibraryReloaded (object sender, EventArgs args)
         {
-            Console.WriteLine ("LibraryReloaded");
+            //Console.WriteLine ("LibraryReloaded");
             // Listen for changes to any track to keep our playlists up to date
             IDataReader reader = Globals.Library.Db.Query(String.Format(
                 "SELECT TrackID FROM Tracks"
@@ -204,7 +204,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleSourceAdded (SourceEventArgs args)
         {
-            Console.WriteLine ("source added: {0}", args.Source.Name);
+            //Console.WriteLine ("source added: {0}", args.Source.Name);
             if (args.Source is PlaylistSource) {
                 foreach (SmartPlaylistSource pl in playlists) {
                     if (pl.PlaylistDependent) {
@@ -327,15 +327,15 @@ namespace Banshee.SmartPlaylist
     // Class used for timing different operations.  Commented out for normal operation.
     public class Timer
     {
-        DateTime time;
-        string name;
+        //DateTime time;
+        //string name;
 
         public Timer () : this ("Timer") {}
 
         public Timer (string name)
         {
-            this.name = name;
-            time = DateTime.Now;
+            //this.name = name;
+            //time = DateTime.Now;
 
             //System.Console.WriteLine ("{0} started", name);
         }
