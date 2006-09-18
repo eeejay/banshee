@@ -472,7 +472,9 @@ namespace Banshee.SmartPlaylist
             SmartPlaylistSource playlist = new SmartPlaylistSource(id, name, condition, 
                 order_by, limit_number, limit_criterion);
             LibrarySource.Instance.AddChildSource(playlist);
-            SourceManager.AddSource (playlist, false);
+
+            if(!SourceManager.ContainsSource (playlist))
+                SourceManager.AddSource (playlist, false);
         }
     }
 }
