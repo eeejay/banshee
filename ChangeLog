@@ -1,5 +1,19 @@
 2006-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Base/SourceManager.cs: Don't add a source twice.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Add debug
+	message when smart playlist is added.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Don't
+	manually add the loaded playlist to the SourceManager unless the
+	LibrarySource is already loaded.  This is a silly workaround the fact that
+	the LibrarySource adds all of its children to the SourceManager when it is
+	added, so children that aren't attached to it when it is added are left
+	out.
+
+2006-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Don't add
 	the source to the SourceManager if it's already there.
 

@@ -473,8 +473,9 @@ namespace Banshee.SmartPlaylist
                 order_by, limit_number, limit_criterion);
             LibrarySource.Instance.AddChildSource(playlist);
 
-            if(!SourceManager.ContainsSource (playlist))
-                SourceManager.AddSource (playlist, false);
+            if(!SourceManager.ContainsSource (playlist) && SourceManager.ContainsSource(Banshee.Sources.LibrarySource.Instance)) {
+                SourceManager.AddSource (playlist);
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Banshee.Sources
         
         public static void AddSource(Source source, bool isDefault)
         {
-            if(source == null) {
+            if(source == null || ContainsSource (source)) {
                 return;
             }
             

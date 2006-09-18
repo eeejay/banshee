@@ -218,6 +218,12 @@ namespace Banshee.SmartPlaylist
             if (playlist == null)
                 return;
 
+            LogCore.Instance.PushInformation (
+                    "Smart Playlist added",
+                    "Smart playlist added to sources",
+                    false
+            );
+
             Timer t = new Timer ("HandleSourceAdded" + playlist.Name);
 
             StartTimer (playlist);
