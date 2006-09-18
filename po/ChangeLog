@@ -1,3 +1,7 @@
+2006-09-18  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
 	* POTFILES.in: Updated, moved src/SourceView.cs to 
