@@ -1,5 +1,19 @@
 2006-09-17  Patrick van Staveren  <trick@vanstaveren.us>
 
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: dispose CameraFile objects when
+	sending a track to (hopefully) free up memory, dispose all objects
+	regardless (now that Dispose is safe in libgphoto2-sharp), and catch
+	doubly-disposing of the GPhotoDevice object.
+
+	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs: add method DisposeCameraFile,
+	and only access the private camera_file as this was causing it to retrieve
+	all camera files when we tried to dispose the GPhotoDevice.
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: update save progress to zero before
+	sending or deleting any tracks.
+
+2006-09-17  Patrick van Staveren  <trick@vanstaveren.us>
+
 	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs: added metadata exception
 	handling - now handles unparseable metadata.
 

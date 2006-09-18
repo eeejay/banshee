@@ -90,6 +90,12 @@ public class GPhotoDeviceFile
         }
     }
 
+    public void DisposeCameraFile () {
+        camera_file.Dispose ();
+        camera_file = null;
+        Console.WriteLine ("DisposeCameraFile for " + Name);
+    }
+
     public void GenerateProperPath() {
         directory = Dev.Store + "Music/" + GetValidName(Artist) + "/" + GetValidName(AlbumName);
         filename = GetValidName(String.Format("{0}. {1}{2}", Track, Name, Extension));
@@ -182,8 +188,8 @@ public class GPhotoDeviceFile
     }
     
     public void Dispose () {
-        if (CameraFile != null) 
-            CameraFile.Dispose ();
+        if (camera_file != null) 
+            camera_file.Dispose ();
 
         Dev = null;
     }

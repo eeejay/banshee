@@ -253,6 +253,9 @@ public class GPhotoDevice
 
         // adds the file to the local array of files.  should this array be depreciated?
         files.Add(file);
+        
+        // dispose the file - free up my memory!
+        file.DisposeCameraFile ();
     }
     
     public void PutMetadata (GPhotoDeviceFile file)
@@ -265,6 +268,7 @@ public class GPhotoDevice
             
             meta.SetFileType(CameraFileType.MetaData);
             fs.PutFile(file.Directory, meta, context);
+            meta.Dispose ();
         } catch(Exception e){
             Console.WriteLine("Failed send track metadata.  Are you using the right version of the C# bindings and libgphoto2?  Exception: {0}", e.ToString());
         }
@@ -286,17 +290,29 @@ public class GPhotoDevice
     ~GPhotoDevice() {
         Dispose();
     }
-
+    
+    private bool disposed = false;
+    
     public void Dispose() {
-        foreach(GPhotoDeviceFile file in files)
-            file.Dispose();
-        files = null;
-
-        if (fs != null) 
-            fs.Dispose ();
-        if (camera != null)
-            camera.Dispose ();
-        context.Dispose ();
+        if (!disposed) {
+            disposed = true;
+            //Console.WriteLine ("Disposing of gphotodevice: doing files");
+            foreach(GPhotoDeviceFile file in files)
+                file.Dispose();
+            files = null;
+            //Console.WriteLine ("dispose of files done. doing fs.");
+            if (fs != null) 
+                fs.Dispose ();
+            //Console.WriteLine ("dispose of fs done. doing camera.");
+            if (camera != null)
+                camera.Dispose ();
+            //Console.WriteLine ("dispose of camera done. doing context");
+    
+            context.Dispose ();
+            Console.WriteLine ("dispose done.");
+        } else {
+            Console.WriteLine ("already disposed");
+        }
     }
 }
 

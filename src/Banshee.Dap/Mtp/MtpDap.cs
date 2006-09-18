@@ -189,6 +189,8 @@ namespace Banshee.Dap.Mtp
         try {
             int remove_total = remove_queue.Count;
             
+            UpdateSaveProgress (Catalog.GetString("Synchronizing Device"), "", 0);
+
             while(remove_queue.Count > 0) {
                 MtpDapTrackInfo track = remove_queue.Dequeue() as MtpDapTrackInfo;
                 UpdateSaveProgress(Catalog.GetString("Synchronizing Device"), Catalog.GetString(String.Format("Removing: {0} - {1}", track.Artist, track.Title)),
