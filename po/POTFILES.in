@@ -42,6 +42,7 @@ src/Banshee.Base/Gui/ImageFileChooserDialog.cs
 src/Banshee.Base/Gui/LogCoreDialog.cs
 src/Banshee.Base/Gui/OpenLocationDialog.cs
 src/Banshee.Base/Gui/PreferencesDialog.cs
+src/Banshee.Base/Gui/SourceView.cs
 src/Banshee.Base/Gui/ToggleStates.cs
 src/Banshee.Base/Gui/TrackEditor.cs
 src/Banshee.Base/Gui/VersionInformationDialog.cs
@@ -100,6 +101,5 @@ src/Main.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
 src/PlaylistView.cs
-src/SourceView.cs
 src/StockIcons.cs
 
