@@ -97,7 +97,12 @@ namespace Banshee.SmartPlaylist
             // Listen for added/removed sources and added/changed songs
             SourceManager.SourceAdded += HandleSourceAdded;
             SourceManager.SourceRemoved += HandleSourceRemoved;
-            Globals.Library.Reloaded += HandleLibraryReloaded;
+
+            if(Globals.Library.IsLoaded) {
+                HandleLibraryReloaded (null, null);
+            } else {
+                Globals.Library.Reloaded += HandleLibraryReloaded;
+            }
             Globals.Library.TrackAdded += HandleTrackAdded;
             Globals.Library.TrackRemoved += HandleTrackRemoved;
 
@@ -180,6 +185,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleLibraryReloaded (object sender, EventArgs args)
         {
+            //Console.WriteLine ("LibraryReloaded");
             // Listen for changes to any track to keep our playlists up to date
             IDataReader reader = Globals.Library.Db.Query(String.Format(
                 "SELECT TrackID FROM Tracks"
@@ -198,6 +204,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleSourceAdded (SourceEventArgs args)
         {
+            //Console.WriteLine ("source added: {0}", args.Source.Name);
             if (args.Source is PlaylistSource) {
                 foreach (SmartPlaylistSource pl in playlists) {
                     if (pl.PlaylistDependent) {

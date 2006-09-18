@@ -1,3 +1,15 @@
+2006-09-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Add newly created
+	playlists to the SourceManager so they are registered and updated
+	immediately after creation.  Fixes BGO #354534.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Handle the
+	case of the library already being loaded before we are initialized.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Add old
+	playlists to the SourceManager.
+
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
 	* data/images/Makefile.am:

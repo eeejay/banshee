@@ -7,6 +7,7 @@ using Mono.Unix;
  
 using Banshee.Base;
 using Banshee.Widgets;
+using Banshee.Sources;
 
 namespace Banshee.SmartPlaylist
 {
@@ -195,6 +196,9 @@ namespace Banshee.SmartPlaylist
                         playlist = new SmartPlaylistSource(name, condition, order_by, limit_number, limit_criterion);
                         Banshee.Sources.LibrarySource.Instance.AddChildSource(playlist);
                         SmartPlaylistCore.Instance.StartTimer(playlist);
+
+                        // Add this source to the source manager, otherwise it will be ignored until we restart
+                        SourceManager.AddSource (playlist, false);
                         t.Stop();
                     } else {
                         playlist.Rename(name);
