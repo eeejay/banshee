@@ -1,3 +1,15 @@
+2006-09-17  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs: added metadata exception
+	handling - now handles unparseable metadata.
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: Better debug messages,
+	WaitForPropertyChange when device seems inaccessable
+
+	* src/Banshee.Dap/Mtp/MtpDeviceId.cs: added 14 new device IDs
+
+	* src/Banshee.Dap/Mtp/Banshee.Dap.Mtp.mdp: MonoDevelop project created
+
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Makefile.am:

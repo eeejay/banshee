@@ -69,7 +69,13 @@ public class GPhotoDeviceFile
         directory = dir;
         filename = file;
         camera_file = null;
-        Metadata = meta;
+        try {
+            Metadata = meta;
+        } catch {
+            Console.Write("Corrupt metadata.");
+            Metadata = "<Name>Corrupt metadata</Name>";
+            Name = "Corrupt metadata";
+        }
         Extension = Path.GetExtension(file);
     }
 

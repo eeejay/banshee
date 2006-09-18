@@ -70,7 +70,7 @@ namespace Banshee.Dap.Mtp
                     !halDevice.PropertyExists("usb.product_id")) {
                 return InitializeResult.Invalid;
             }
-
+            
             short hal_product_id = (short) halDevice.GetPropertyInt("usb.product_id");
             short hal_vendor_id  = (short) halDevice.GetPropertyInt("usb.vendor_id");
             
@@ -103,10 +103,10 @@ namespace Banshee.Dap.Mtp
             }
             
             if (found > 1)
-                LogCore.Instance.PushWarning ("MTP: Found more than one matching device.  Something is seriously wrong.", "");
+                LogCore.Instance.PushWarning (String.Format("MTP: Found more than one matching device.  Something is seriously wrong.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
             if (found == 0 || GPhotoDeviceID == -1) {
-                LogCore.Instance.PushDebug ("MTP: device was found in database, but libgphoto2 failed to detect it.", "");
-                return InitializeResult.Invalid;
+                LogCore.Instance.PushDebug (String.Format("MTP: device was found in database, but libgphoto2 failed to detect it.  Waiting for it to come alive.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
+                return InitializeResult.WaitForPropertyChange;
             }
             
             InstallProperty("Model", device_id.Name);
@@ -132,6 +132,7 @@ namespace Banshee.Dap.Mtp
                 dev.InitializeCamera();
             } catch (Exception e){
                 Console.WriteLine("MTP: initialization failed with exception: {0}", e);
+                LogCore.Instance.PushWarning(String.Format("Initialization of your {0} failed.  Run banshee from a terminal, and copy the debug output and file a new bug report on bugzilla.gnome.org", device_id.Name), "");
                 userEvent.Dispose();
                 Dispose();
             }
