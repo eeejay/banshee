@@ -1,5 +1,17 @@
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Makefile.am:
+	* src/Banshee.Hyena/Makefile.am: Do not build SourceView.cs
+
+	* src/Banshee.Base/Makefile.am: Added Gui/SourceView.cs
+
+	* src/SourceView.cs: Removed; had GNOME sysadmin copy with history to
+	src/Banshee.Base/Gui/SourceView.cs
+
+	* src/Banshee.Base/Gui/SourceView.cs: Changed namespace to Banshee.Gui
+
+2006-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/nautilus-burn.c (nautilus_glue_burn_drive_get_for_device): 
 	Use return nautilus_burn_drive_new_from_path for <2.16; CD burning
 	now works properly for 2.12 again

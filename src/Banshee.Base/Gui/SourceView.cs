@@ -39,7 +39,7 @@ using Banshee.Dap;
 using Banshee.Sources;
 using Banshee.Gui.DragDrop;
 
-namespace Banshee
+namespace Banshee.Gui
 {
     public class CellEdit : Entry, CellEditable
     {

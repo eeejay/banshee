@@ -30,7 +30,6 @@ BANSHEE_SOURCE = \
 	StockIcons.cs \
 	PlayerInterface.cs \
 	PlaylistView.cs \
-	SourceView.cs \
 	PlaylistModel.cs \
 	PlaylistColumns.cs
 

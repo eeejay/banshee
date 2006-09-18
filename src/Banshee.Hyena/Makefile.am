@@ -4,7 +4,6 @@ HYENA = hyena
 HYENA_ASSEMBLY = $(HYENA).exe
 
 HYENA_SOURCE = \
-	$(top_srcdir)/src/SourceView.cs \
 	HyenaEntry.cs \
 	HyenaUserInterface.cs
 

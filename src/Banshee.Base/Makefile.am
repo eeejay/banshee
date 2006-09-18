@@ -114,7 +114,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/RatingRenderer.cs \
 	$(srcdir)/Gui/TrackEditor.cs \
 	$(srcdir)/Gui/ConfirmShutdownDialog.cs \
-	$(srcdir)/Gui/ImageFileChooserDialog.cs
+	$(srcdir)/Gui/ImageFileChooserDialog.cs \
+	$(srcdir)/Gui/SourceView.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
