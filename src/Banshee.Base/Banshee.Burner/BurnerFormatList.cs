@@ -60,11 +60,11 @@ namespace Banshee.Burner
         public BurnerFormatList()
         {
             format_table.Add("audio", new Format("audio", Catalog.GetString("Audio")));
-            format_table.Add("mp3", new Format("mp3", Catalog.GetString("MP3")));
-            format_table.Add("data", new Format("data", Catalog.GetString("Data")));
+            /*format_table.Add("mp3", new Format("mp3", Catalog.GetString("MP3")));
+            format_table.Add("data", new Format("data", Catalog.GetString("Data")));*/
         
             RadioButton group = null;
-            foreach(string key in new string [] { "audio", "mp3", "data" }) {
+            foreach(string key in new string [] { "audio" /*, "mp3", "data"*/ }) {
                 Format format = format_table[key];
                 
                 if(group == null) {

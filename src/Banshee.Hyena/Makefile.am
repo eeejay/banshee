@@ -40,9 +40,9 @@ trace:
 
 EXTRA_DIST = \
 	$(HYENA_SOURCE) \
-	$(HYENA_SOURCE_IN) \
-	$(HYENA).in \
-	$(HYENA_ASSEMBLY).config.in
+	$(HYENA_SOURCE_IN) 
+#	$(HYENA).in \
+#	$(HYENA_ASSEMBLY).config.in
 
 CLEANFILES = $(HYENA) $(HYENA_ASSEMBLY) *.mdb *.dll *.pidb
 MAINTAINERCLEANFILES = Makefile.in

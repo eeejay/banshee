@@ -6,8 +6,8 @@ toolsdir = $(pkglibdir)
 tools_SCRIPTS = $(BANSHEE_IMPORT_ASSEMBLY)
 bin_SCRIPTS = $(BANSHEE_IMPORT)
 
-BANSHEE_IMPORT_SOURCES = BansheeImport.cs
-DBUS_CLIENT_SOURCES = BansheeDBusClient.cs
+BANSHEE_IMPORT_SOURCES = $(srcdir)/BansheeImport.cs
+DBUS_CLIENT_SOURCES = $(srcdir)/BansheeDBusClient.cs
 
 all: $(BANSHEE_IMPORT_ASSEMBLY) $(DBUS_CLIENT_ASSEMBLY)
 

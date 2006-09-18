@@ -68,7 +68,8 @@ EXTRA_DIST = \
 	splash.png \
 	editor-cover-album.png \
 	rating-rated.png \
-	rating-unrated.png
+	rating-unrated.png \
+	source-smart-playlist.png
 
 generate-resource-list:
 	for i in $(EXTRA_DIST); do \

@@ -1,3 +1,12 @@
+2006-09-17  Aaron Bockover  <abock@gnome.org>
+
+	* data/images/Makefile.am:
+	* src/Banshee.Hyena/Makefile.am:
+	* tools/Makefile.am: Make distcheck pass
+
+	* src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs: Disabled in the UI
+	support for MP3 and data CDs - not finished in new burner code
+
 2006-09-17  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: dispose CameraFile objects when
