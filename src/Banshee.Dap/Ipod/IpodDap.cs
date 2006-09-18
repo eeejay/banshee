@@ -263,8 +263,7 @@ namespace Banshee.Dap.Ipod
                     Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (ti.CoverArtFileName);
 
                     if (pixbuf != null) {
-                        SetCoverArt (track, ArtworkType.CoverSmall, pixbuf);
-                        SetCoverArt (track, ArtworkType.CoverLarge, pixbuf);
+                        SetCoverArt (track, ArtworkUsage.Cover, pixbuf);
                         pixbuf.Dispose ();
                     }
                 } catch (Exception e) {
@@ -273,12 +272,12 @@ namespace Banshee.Dap.Ipod
             }
         }
 
-        private void SetCoverArt (Track track, ArtworkType type, Gdk.Pixbuf pixbuf)
+        private void SetCoverArt (Track track, ArtworkUsage usage, Gdk.Pixbuf pixbuf)
         {
-            ArtworkFormat format = device.LookupFormat (type);
-
-            if (format != null && !track.HasCoverArt (format)) {
-                track.SetCoverArt (format, ArtworkHelpers.ToBytes (format, pixbuf));
+            foreach (ArtworkFormat format in device.LookupArtworkFormats (usage)) {
+                if (!track.HasCoverArt (format)) {
+                    track.SetCoverArt (format, ArtworkHelpers.ToBytes (format, pixbuf));
+                }
             }
         }
         

@@ -143,7 +143,7 @@ PKG_CHECK_MODULES(GTKSHARP,
 AC_SUBST(GTKSHARP_LIBS)
 
 dnl dap support
-IPODSHARP_REQUIRED=0.6.0
+IPODSHARP_REQUIRED=0.6.2
 PKG_CHECK_MODULES(IPODSHARP,
 	ipod-sharp >= $IPODSHARP_REQUIRED ipod-sharp-ui >= $IPODSHARP_REQUIRED,
 	enable_ipodsharp="$enable_ipodsharp", enable_ipodsharp=no)
