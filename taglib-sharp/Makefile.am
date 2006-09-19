@@ -1,6 +1,21 @@
-taglibdir = $(pkglibdir)
-taglib_SCRIPTS = $(srcdir)/taglib-sharp.dll $(srcdir)/taglib-sharp.dll.mdb
+MCS_FLAGS = -debug
+ASSEMBLY_NAME = taglib-sharp
+ASSEMBLY = $(top_builddir)/taglib-sharp/$(ASSEMBLY_NAME).dll
 
-EXTRA_DIST = $(taglib_SCRIPTS)
+taglibdir = $(pkglibdir)
+taglib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
+
+ASSEMBLY_SOURCES = \
+	$(srcdir)/TagLib/*.cs \
+	$(srcdir)/TagLib/*/*.cs \
+	$(srcdir)/TagLib/*/*/*.cs
+
+all: $(ASSEMBLY)
+
+$(ASSEMBLY): $(ASSEMBLY_SOURCES)
+	$(MCS) $(MCS_FLAGS) -out:$@ -target:library -r:Mono.Posix $(ASSEMBLY_SOURCES)
+
+EXTRA_DIST = $(ASSEMBLY_SOURCES)
+CLEANFILES = $(taglib_SCRIPTS)
 MAINTAINERCLEANFILES = Makefile.in
 

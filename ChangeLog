@@ -1,5 +1,28 @@
 2006-09-18  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Bump to 0.11.0
+
+	* autogen.sh: Check for subversion, run taglib-sharp/update-checkout.sh
+
+	* taglib-sharp/Makefile.am: Build taglib-sharp
+
+	* taglib-sharp/update-checkout.sh: Shell script to update the taglib-sharp
+	checkout
+
+	* taglib-sharp/COPYING: Added taglib-sharp license 
+
+	* taglib-sharp/taglib-sharp.dll:
+	* taglib-sharp/taglib-sharp.dll.mdb: Precompiled binaries removed
+
+	* src/Banshee.Base/Makefile.am: 
+	* src/Banshee.Dap/Ipod/Makefile.am: 
+	* src/Banshee.Dap/MassStorage/Makefile.am: Link taglib-sharp.dll from
+	top_builddir instead of top_srcdir now that we're actually building it
+
+	* src/Last.FM/Makefile.am: Added missing EXTRA_DIST files
+
+2006-09-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Dap/Ipod/IpodDap.cs: If the iPod model is unknown, run
 	the new submit data tool in ipod-sharp; installed new properties into
 	the interface

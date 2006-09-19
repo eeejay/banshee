@@ -23,7 +23,7 @@ all: $(ASSEMBLY)
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/badge.png $(srcdir)/badge-hover.png
 	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Gnome.Keyring/Gnome.Keyring.dll $(GTKSHARP_LIBS) -target:library -resource:$(srcdir)/badge.png,badge.png -resource:$(srcdir)/badge-hover.png,badge-hover.png $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES)
+EXTRA_DIST = $(ASSEMBLY_SOURCES) badge.png badge-hover.png
 
 CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb
 DISTCLEANFILES = *.pidb
