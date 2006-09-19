@@ -155,7 +155,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 return;
             }
             
-            string message = String.Format("{0}\n   <i>by</i> {1}", 
+            string message = String.Format("{0}\n<i>{1}</i>", 
                     GLib.Markup.EscapeText(current_track.DisplayTitle),
                     GLib.Markup.EscapeText(current_track.DisplayArtist));
             Gdk.Pixbuf image = null;

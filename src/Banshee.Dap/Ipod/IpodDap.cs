@@ -38,6 +38,7 @@ using IPod;
 
 using Banshee.Base;
 using Banshee.Dap;
+using Banshee.Widgets;
  
 namespace Banshee.Dap.Ipod
 {
@@ -83,13 +84,10 @@ namespace Banshee.Dap.Ipod
                         device.ProductionYear.ToString("0000")));
             }
             
-            if(device.Model == DeviceModel.Unknown) {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                string command = String.Format("mono {0}", 
-                    Path.Combine(Path.GetDirectoryName(assembly.Location), "ipod-data-submit.exe"));
-                Process.Start(command, device.DevicePath);
+            if(device.ShouldAskIfUnknown) {
+                GLib.Timeout.Add(5000, AskAboutUnknown);
             }
-          
+
             ReloadDatabase(false);
             
             CanCancelSave = false;
@@ -110,6 +108,37 @@ namespace Banshee.Dap.Ipod
             }
             
             return InitializeResult.Valid;
+        }
+        
+        private bool AskAboutUnknown()
+        {
+            HigMessageDialog dialog = new HigMessageDialog(null, Gtk.DialogFlags.Modal,
+                Gtk.MessageType.Warning, Gtk.ButtonsType.None,
+                Catalog.GetString("Your iPod model could not be identified"),
+                Catalog.GetString("Please consider submitting information about your iPod " +
+                    "to the Banshee Project so your iPod may be more fully identified in the future.\n"));
+        
+            CheckButton do_not_ask = new CheckButton(Catalog.GetString("Do not ask me again"));
+            do_not_ask.Show();
+            dialog.LabelVBox.PackStart(do_not_ask, false, false, 0);
+            
+            dialog.AddButton("gtk-cancel", Gtk.ResponseType.Cancel, false);
+            dialog.AddButton(Catalog.GetString("Go to Web Site"), Gtk.ResponseType.Ok, false);
+            
+            try {
+                if(dialog.Run() == (int)ResponseType.Ok) {
+                    do_not_ask.Active = true;
+                    Gnome.Url.Show(device.UnknownIpodUrl);
+                }
+            } finally {
+                dialog.Destroy();
+            }
+            
+            if(do_not_ask.Active) {
+                device.DoNotAskIfUnknown();
+            }
+            
+            return false;
         }
         
         public override void AddTrack(TrackInfo track)

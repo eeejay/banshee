@@ -32,6 +32,7 @@ namespace Banshee.Widgets
     {    
         private Gtk.AccelGroup accel_group;
         private Gtk.Image image;
+        private Gtk.VBox label_vbox;
 
         public HigMessageDialog(Gtk.Window parent,
                      Gtk.DialogFlags flags,
@@ -78,7 +79,7 @@ namespace Banshee.Widgets
             image.Show ();
             hbox.PackStart (image, false, false, 0);
             
-            Gtk.VBox label_vbox = new Gtk.VBox (false, 0);
+            label_vbox = new Gtk.VBox (false, 0);
             label_vbox.Show ();
             hbox.PackStart (label_vbox, true, true, 0);
 
@@ -207,6 +208,10 @@ namespace Banshee.Widgets
             get {
                 return image.Pixbuf;
             }
+        }
+        
+        public Gtk.VBox LabelVBox {
+            get { return label_vbox; }
         }
     }
 }

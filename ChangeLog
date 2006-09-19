@@ -1,3 +1,18 @@
+2006-09-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Use new unknown iPod foo in ipod-sharp,
+	show a dialog if the iPod is unknown
+
+	* data/images/source-smart-playlist.png: Updated
+
+	* src/Banshee.Widgets/HigMessageDialog.cs: Exposed LabelVBox
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs: 
+	Use slightly nicer notification string formatting
+
+	* src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in:
+	Enabled by default
+
 2006-09-18  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Bump to 0.11.0

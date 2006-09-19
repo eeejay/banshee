@@ -17,7 +17,7 @@
       <applyto>/apps/Banshee/NotificationAreaIcon/ShowNotifications</applyto>
       <owner>banshee</owner>
       <type>bool</type>
-      <default>false</default>
+      <default>true</default>
       <locale name="C">
         <short>Show notification bubbles when the song changes</short>
         <long></long>
