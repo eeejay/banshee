@@ -1,95 +1,115 @@
-Banshee 0.10.9 is out! 
+Banshee 0.11.0
 
-NEW FEATURES
+"Import, organize, play, and share your music using Banshee's simple, 
+powerful interface. Rip CDs, play and sync your iPod, create playlists, 
+and burn audio CDs. Most portable music devices are supported. Banshee 
+also has support for podcasting, smart playlists, music recommendations, 
+and much more."
+
+
+MODULE NOTES
 ------------
 
- * Simultaneous rip and play for audio CDs. When ripping a CD, tracks 
- will be disabled until they are ripped or the rip is halted
- 
- * Improved track transitioning for audio CDs
- 
- * Playback engine supports buffering and metadata extraction from the 
- incoming audio stream
- 
- * Live seeking and a new seek dialog to allow for higher precision seeking
- 
- * More keyboard accelerators for playback actions
- 
- * Open location dialog has history support
- 
- * Various fixes regarding custom source views that embed the playlist 
- view widget; Audio CD view is now completely migrated into the Audio CD 
- source object
- 
- * Plugins can now have direct access to extend the GStreamer pipeline
- by linking elements to the internal tee element; pipeline can play to 
- multiple sinks
- 
+ * Banshee is now made up of the core module, banshee, and the official 
+   plugins module, banshee-official-plugins
 
-NOTES
------
+ * banshee-official-plugins is recommended, but not required to run Banshee
 
-The Xing MP3 encoder has been moved out of the Banshee source tree and
-is now available as a separate module:
-
-http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.8.tar.gz
- 
-
-BUG FIXES
----------
-
- * 333472: [PATCH] Fix display of duration/position of tracks longer than 1 hour 
- * 313626: GUI freezes for some time on startup after "Loading" stage
- * 314525: I get an exception when running banshee
- * 321460: 0.9.11.1 Crashes when starting
- * 322573: Banshee Crashes on SMP
- * 323234: Ubuntu Dapper error
+ * libipoddevice (0.5.0) and ipod-sharp (0.6.2) are required for iPod support
 
 
-THE IMPORTANT LINKS
--------------------
+NEW CORE FEATURES
+-----------------
 
-Release Overview Page:
-http://banshee-project.org/Releases/0.10.9
+ * Improved importing, all tagging is now done through taglib-sharp; better
+   support for ID3, AAC/MP4, and ASF/WMA reading; all formats now support 
+   writing
 
-Banshee 0.10.9 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.10.9.tar.gz
+ * Import selections or all contents of a digital audio player (iPod) 
+   directly to the local music library
 
-helix-dbus-server Tarball:
-http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.2.tar.gz
+ * Redesigned track editor allows for the most efficient editing of albums:
+   enter the album information once, and then set track titles simply by
+   pressing 'Enter' in the title box. A rating entry was added as well, and
+   if turned on in Banshee Preferences, changes can now be saved back to
+   files
 
-xing MP3 Encoder Tarball:
-http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.8.tar.gz
+ * New CD burning interface - create mixed CDs as sources that allow 
+   burning songs from any number of sources: library, remote share, iPod;
+   works with new GNOME 2.16 CD Burning API yet still compatible with 
+   GNOME 2.12
 
-ipod-sharp 0.5.15 Tarball:
-http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.5.15.tar.gz
+ * Smart playlists allow defining a playlist based on selection criteria 
+   that queries against and automatically reflects changes in your library. 
+   The easy to use editor makes defining new smart playlists a snap.
 
-libipoddevice 0.4.1 Tarball:
-http://banshee-project.org/files/libipoddevice/libipoddevice-0.4.1.tar.gz
+ * One-click track rating; just click the desired rating on the track row
 
-njb-sharp 0.2.1 Tarball:
-http://banshee-project.org/files/njb-sharp/njb-sharp-0.2.1.tar.gz
+ * Redesigned Preferences dialog - simple and follows GNOME HIG; allows
+   for turning on 'Write metadata to files'
 
-Banshee Wiki: 
-http://banshee-project.org/
+ * Notification bubbles on track change using libnotify
 
 
-CONTRIBUTORS FOR THIS RELEASE
+NEW OFFICIAL PLUGINS FEATURES
 -----------------------------
 
-Ruben Vermeersch
-Sebastian Dröge
+These features are found in the banshee-official-plugins module, not in 
+Banshee core:
+
+ * The new recommendations pane lets you browse similar artist recommendations 
+   found on last.fm (http://www.last.fm/group/banshee) as you listen; you can 
+   even re-discover related music already in your library that you may 
+   have been neglecting
+
+ * The podcast source offers an easy to use interface for subscribing to, 
+   downloading, managing, and listening to your favorite shows.
+
+ * Use the Mini Mode feature to condense the interface and gain valuable 
+   desktop space. Switch between your library, playlists, and devices 
+   within Mini Mode. 
+
+
+IMPORTANT LINKS
+---------------
+
+Release Overview Page:
+http://banshee-project.org/Releases/0.11.0
+
+Banshee 0.11.0 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.11.0.tar.gz
+
+Banshee Official Plugins 0.11.0 Tarball:
+http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.0.tar.gz
+
+ipod-sharp 0.6.2 Tarball:
+http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz
+
+libipoddevice 0.5.0 Tarball:
+http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.0.tar.gz
+
+njb-sharp 0.3.0 Tarball:
+http://banshee-project.org/files/njb-sharp/njb-sharp-0.3.0.tar.gz
+
+helix-dbus-server 0.2.3 Tarball:
+http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.2.3.tar.gz
+
+xing MP3 Encoder Tarball:
+http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.10.1.tar.gz
+
+Banshee Wiki: 
+http://banshee-project.org/Discover
 
 
 DEPENDENCIES
 ------------
 
 - Mono 1.1.10 and full stack
-- gtk-sharp-2.0 (2.8)
+- gtk-sharp-2.0 2.8 or 2.10
+- GStreamer 0.10.3 
 - sqlite3
-- GStreamer 0.10.3 or GStreamer 0.8.11
 - libmusicbrainz 2.1.1 or better
-- libnautilus-burn 2.12
+- libnautilus-burn 2.12 or better
 - GTK+ 2.8 or better
 - HAL 0.5.2 or better (0.5.6+ Recommended)
 
@@ -103,18 +123,3 @@ this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to
 everyone for viewing and editing is located at
 http://banshee-project.org.
 
-
-* Bindings to the VLC libraries have been implemented and are available
-as a Banshee Media Engine. To use the VLC engine, pass --enable-vlc to
-configure. Additionally, libvlc.so must be copied to
-banshee/mediaengines/vlc before running "make install". To build
-libvlc.so, download and build Jon Lech Johansen's snd123:
-
-http://nanocrew.net/2005/09/20/snd123/
-
-Copy the resulting libvlc.so to the aforementioned build directory, and
-proceed with building Banshee as normal. Keep in mind, VLC support is
-optional. Banshee also supports GStreamer and Helix engines. GStreamer
-is required, and Helix is optional, but will be automatically detected
-and configured if your system is set up properly with either RealPlayer
-or Helix Player. See http://helixcommunity.org/

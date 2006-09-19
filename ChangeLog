@@ -1,5 +1,11 @@
 2006-09-19  Aaron Bockover  <abock@gnome.org>
 
+	0.11.0 Released
+
+	* NEWS: Updated
+
+2006-09-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Dap/Ipod/IpodDap.cs: Use new unknown iPod foo in ipod-sharp,
 	show a dialog if the iPod is unknown
 
