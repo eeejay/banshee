@@ -114,7 +114,7 @@ namespace Banshee.Dap.Ipod
         {
             HigMessageDialog dialog = new HigMessageDialog(null, Gtk.DialogFlags.Modal,
                 Gtk.MessageType.Warning, Gtk.ButtonsType.None,
-                Catalog.GetString("Your iPod model could not be identified"),
+                Catalog.GetString("Your iPod could not be identified"),
                 Catalog.GetString("Please consider submitting information about your iPod " +
                     "to the Banshee Project so your iPod may be more fully identified in the future.\n"));
         
