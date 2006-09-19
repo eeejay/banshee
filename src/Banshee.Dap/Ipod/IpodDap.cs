@@ -29,6 +29,8 @@
 using System; 
 using System.IO;
 using System.Collections;
+using System.Reflection;
+using System.Diagnostics;
 using Mono.Unix;
 using Gtk;
 using Hal;
@@ -73,6 +75,20 @@ namespace Banshee.Dap.Ipod
             InstallProperty("Serial Number", device.SerialNumber);
             InstallProperty("Firmware Version", device.FirmwareVersion);
             InstallProperty("Database Version", device.TrackDatabase.Version.ToString());
+            
+            if(device.ProductionYear > 0) {
+                // Translators "Week 25 of 2006"
+                InstallProperty(Catalog.GetString("Manufactured During"), 
+                    String.Format(Catalog.GetString("Week {0} of {1}"), device.ProductionWeek, 
+                        device.ProductionYear.ToString("0000")));
+            }
+            
+            if(device.Model == DeviceModel.Unknown) {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string command = String.Format("mono {0}", 
+                    Path.Combine(Path.GetDirectoryName(assembly.Location), "ipod-data-submit.exe"));
+                Process.Start(command, device.DevicePath);
+            }
           
             ReloadDatabase(false);
             
@@ -89,7 +105,7 @@ namespace Banshee.Dap.Ipod
             } catch(DatabaseReadException) {
                 device.LoadTrackDatabase(true);
                 database_supported = false;
-            } catch(Exception e) {
+            } catch {
                 return InitializeResult.Invalid;
             }
             

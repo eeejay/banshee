@@ -32,6 +32,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mono.Unix;
 
+using Banshee.Gui;
 using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
@@ -403,12 +404,12 @@ namespace Banshee.Dap
                     }
 
                     if(encoder == null) {
-                        encoder = new BatchTranscoder(profile);
+                        encoder = new BatchTranscoder(profile, type_properties.PipelineName);
                         encoder.FileFinished += OnFileEncodeComplete;
                         encoder.BatchFinished += OnFileEncodeBatchFinished;
                         encoder.Canceled += OnFileEncodeCanceled;
                     }
-                        
+                    
                     encoder.AddTrack(old_uri, track.Uri);
                 } else {
                     if(System.IO.File.Exists(cached_filename)) {
@@ -446,13 +447,62 @@ namespace Banshee.Dap
         {
             if(!encoder_canceled) {
                 save_report_event.Message = Catalog.GetString("Processing...");
-                if(ThreadAssist.InMainThread) {
-                    ThreadAssist.Spawn(Synchronize);
+                
+                BatchTranscoder encoder = o as BatchTranscoder;
+                if(encoder.ErrorCount > 0) {
+                    ThreadAssist.ProxyToMain(delegate {
+                        HandleTranscodeErrors(encoder);
+                    });
                 } else {
-                    Synchronize();
+                    ChainSynchronize();
                 }
             } else {
                 FinishSave();
+            }
+        }
+        
+        private void HandleTranscodeErrors(BatchTranscoder encoder)
+        {
+            ErrorListDialog dialog = new ErrorListDialog();
+            dialog.IconNameStock = Gtk.Stock.DialogError;
+            dialog.Header = Catalog.GetString("Could not encode some files");
+            dialog.Message = Catalog.GetString(
+                "Some files could not be encoded to the proper format. " +
+                "They will not be saved to the device if you continue."
+            );
+            
+            dialog.AddStockButton(Gtk.Stock.Cancel, Gtk.ResponseType.Cancel);
+            dialog.AddButton(Catalog.GetString("Continue synchronizing"), Gtk.ResponseType.Ok);
+            
+            foreach(BatchTranscoder.QueueItem item in encoder.ErrorList) {
+                if(item.Source is TrackInfo) {
+                    TrackInfo track = item.Source as TrackInfo;
+                    dialog.AppendString(String.Format("{0} - {1}", track.Artist, track.Title));
+                } else if(item.Source is SafeUri) {
+                    SafeUri uri = item.Source as SafeUri;
+                    dialog.AppendString(System.IO.Path.GetFileName(uri.LocalPath));
+                } else {
+                    dialog.AppendString(item.Source.ToString());
+                }
+            }
+            
+            try {
+                if(dialog.Run() == Gtk.ResponseType.Ok) {
+                    ChainSynchronize();
+                } else {
+                    FinishSave();
+                }
+            } finally {
+                dialog.Destroy();
+            }   
+        }
+        
+        private void ChainSynchronize()
+        {
+            if(ThreadAssist.InMainThread) {
+                ThreadAssist.Spawn(Synchronize);
+            } else {
+                Synchronize();
             }
         }
         

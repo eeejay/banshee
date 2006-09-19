@@ -75,6 +75,7 @@ namespace Banshee.Base
         private PipelineProfile profile;
         private int finished_count;
         private int total_count;
+        private string desired_profile_name;
         
         private ActiveUserEvent user_event;
         
@@ -84,13 +85,18 @@ namespace Banshee.Base
         
         private const int progress_precision = 1000;
         
-        public BatchTranscoder(PipelineProfile profile)
+        public BatchTranscoder(PipelineProfile profile) : this(profile, null)
+        {
+        }
+        
+        public BatchTranscoder(PipelineProfile profile, string desiredProfileName)
         {
             transcoder = new GstTranscoder();
             transcoder.Progress += OnTranscoderProgress;
             transcoder.Error += OnTranscoderError;
             transcoder.Finished += OnTranscoderFinished;
             
+            this.desired_profile_name = desiredProfileName;
             this.profile = profile;
         }
         
@@ -150,6 +156,8 @@ namespace Banshee.Base
             
             if(Path.GetExtension(input_uri.LocalPath) != "." + profile.Extension) {
                 transcoder.BeginTranscode(input_uri, output_uri, profile);
+            } else if(desired_profile_name != null && profile.Name != desired_profile_name) {
+                OnTranscoderError(this, new EventArgs());
             } else {
                 OnTranscoderFinished(this, new EventArgs());
             }   

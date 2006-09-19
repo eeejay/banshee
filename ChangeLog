@@ -1,3 +1,16 @@
+2006-09-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: If the iPod model is unknown, run
+	the new submit data tool in ipod-sharp; installed new properties into
+	the interface
+
+	* src/Banshee.Base/Dap/Dap.cs: Show an error list dialog if songs 
+	could not be transcoded
+
+	* src/Banshee.Base/BatchTranscoder.cs: Support an optional 'desired
+	profile' name; allows errors to be thrown is a profile doesn't exist
+	and should be required
+
 2006-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/SourceManager.cs: Don't add a source twice.
