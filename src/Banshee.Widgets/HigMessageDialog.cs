@@ -76,6 +76,7 @@ namespace Banshee.Widgets
                 break;
             }
 
+            image.Yalign = 0.1f;
             image.Show ();
             hbox.PackStart (image, false, false, 0);
             
