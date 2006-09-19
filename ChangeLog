@@ -1,5 +1,10 @@
 2006-09-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: Manually call Activate on cell renderers
+	if clicked when row is selected (Michael Quinn, BGO #348373)
+
+2006-09-19  Aaron Bockover  <abock@gnome.org>
+
 	0.11.0 Released
 
 	* NEWS: Updated

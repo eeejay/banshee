@@ -1419,7 +1419,8 @@ namespace Banshee
             }
             
             TreePath path;
-            playlistView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path);
+            TreeViewColumn column;
+            playlistView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path, out column);
         
             if(path == null) {
                 return;
@@ -1442,6 +1443,24 @@ namespace Banshee
                 case EventType.ButtonPress:
                     if(playlistView.Selection.PathIsSelected(path) && (args.Event.State & 
                         (ModifierType.ControlMask | ModifierType.ShiftMask)) == 0) {
+                        if (column != null && args.Event.Button == 1 && column.CellRenderers.Length == 1) {
+                            CellRenderer renderer = column.CellRenderers[0];
+                            Gdk.Rectangle background_area = playlistView.GetBackgroundArea(path, column);
+                            Gdk.Rectangle cell_area = playlistView.GetCellArea(path, column);
+                            
+                            renderer.Activate(args.Event,
+                                              playlistView,
+                                              path.ToString(),
+                                              background_area,
+                                              cell_area,
+                                              CellRendererState.Selected);
+                            
+                            TreeIter iter;
+                            if (playlistModel.GetIter(out iter, path)) {
+                                playlistModel.EmitRowChanged(path, iter);
+                            }
+                        }
+                        
                         args.RetVal = true;
                     }
                     
