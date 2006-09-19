@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-18 14:58+0200\n"
-"PO-Revision-Date: 2006-09-18 15:02+0200\n"
+"POT-Creation-Date: 2006-09-19 15:08+0200\n"
+"PO-Revision-Date: 2006-09-19 15:11+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -346,14 +346,12 @@ msgid "<b>Write Options</b>"
 msgstr "<b>Volby zápisu</b>"
 
 #: ../data/banshee-dialogs.glade.h:24
-#, fuzzy
 msgid "<b>_Artist:</b>"
-msgstr "_Umělec"
+msgstr "<b>_Umělec:</b>"
 
 #: ../data/banshee-dialogs.glade.h:25
-#, fuzzy
 msgid "<b>_Genre:</b>"
-msgstr "Žán_r"
+msgstr "<b>Žán_r:</b>"
 
 #: ../data/banshee-dialogs.glade.h:26
 #, fuzzy
@@ -384,9 +382,8 @@ msgid "Artwork"
 msgstr ""
 
 #: ../data/banshee-dialogs.glade.h:32
-#, fuzzy
 msgid "Back"
-msgstr "Stopa"
+msgstr ""
 
 #: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
@@ -417,9 +414,8 @@ msgid "Delete the active preset"
 msgstr "Smazat aktivní přednastavení"
 
 #: ../data/banshee-dialogs.glade.h:40
-#, fuzzy
 msgid "Details"
-msgstr "Podrobnosti o chybě"
+msgstr "Podrobnosti"
 
 #: ../data/banshee-dialogs.glade.h:41
 msgid "Disc Options"
@@ -451,9 +447,8 @@ msgid "Enabled"
 msgstr "Aktivován"
 
 #: ../data/banshee-dialogs.glade.h:48
-#, fuzzy
 msgid "Enter Next"
-msgstr "Jméno vlastníka"
+msgstr "Vložit další"
 
 #: ../data/banshee-dialogs.glade.h:49
 msgid "Enter the address of the file you would like to open:"
@@ -468,9 +463,8 @@ msgid "Error"
 msgstr "Chyba"
 
 #: ../data/banshee-dialogs.glade.h:52
-#, fuzzy
 msgid "Forward"
-msgstr "Posun vpřed"
+msgstr "Vpřed"
 
 #: ../data/banshee-dialogs.glade.h:53
 msgid "Import Music Source"
@@ -481,9 +475,8 @@ msgid "Import Music to Library"
 msgstr "Import hudby do knihovny"
 
 #: ../data/banshee-dialogs.glade.h:55
-#, fuzzy
 msgid "Metadata"
-msgstr "Úprava popisných informací skladby"
+msgstr "Metadata"
 
 #: ../data/banshee-dialogs.glade.h:56
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
@@ -499,9 +492,8 @@ msgid "Output Format:"
 msgstr "Výstupní formát:"
 
 #: ../data/banshee-dialogs.glade.h:59
-#, fuzzy
 msgid "Playlist _Name: "
-msgstr "Seznam skladeb"
+msgstr "Jmé_no seznamu skladeb: "
 
 #: ../data/banshee-dialogs.glade.h:60
 #, fuzzy
@@ -525,13 +517,12 @@ msgid "Seek to Position"
 msgstr "Přejít na pozici"
 
 #: ../data/banshee-dialogs.glade.h:65
-#, fuzzy
 msgid "Select for use"
-msgstr "Odznačit vybrané skladby"
+msgstr "Vybrat k použití"
 
 #: ../data/banshee-dialogs.glade.h:66
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:605
+#: ../src/Banshee.Base/Dap/Dap.cs:655
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
@@ -1385,7 +1376,7 @@ msgstr ""
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
 msgid "700 MB of Favorites"
-msgstr ""
+msgstr "700 MB oblíbených"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
 msgid "80 Minutes of Favorites"
@@ -1454,15 +1445,15 @@ msgstr "je větší než"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:194
 msgid "more than"
-msgstr ""
+msgstr "více než"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:199
 msgid "less than"
-msgstr ""
+msgstr "méně než"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:204
 msgid "is at least"
-msgstr ""
+msgstr "je nejméně"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:209
 #, fuzzy
@@ -1471,27 +1462,27 @@ msgstr "Nepřetržitý"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:214
 msgid "does not contain"
-msgstr ""
+msgstr "neobsahuje"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:219
 msgid "starts with"
-msgstr ""
+msgstr "začíná"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:224
 msgid "ends with"
-msgstr ""
+msgstr "končí"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:229
 msgid "is before"
-msgstr ""
+msgstr "je před"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:234
 msgid "is after"
-msgstr ""
+msgstr "je za"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:239
 msgid "is between"
-msgstr ""
+msgstr "je mezi"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:244
 msgid "between"
@@ -1699,18 +1690,18 @@ msgstr "Vymazat seznam skladeb"
 msgid "Smart Playlist"
 msgstr "Setřídit seznamy skladeb"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:110
-#: ../src/Banshee.Base/BatchTranscoder.cs:111
+#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:117
 msgid "Converting Files"
 msgstr "Převádí se soubory"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:113
+#: ../src/Banshee.Base/BatchTranscoder.cs:119
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
 msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:122
 msgid "Initializing Transcoder..."
 msgstr "Inicializace transkodéru..."
 
@@ -1738,23 +1729,39 @@ msgstr "Lokální složka"
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Nelze inicializovat DapCore, neboť není inicializováno HalCore"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:334
+#: ../src/Banshee.Base/Dap/Dap.cs:335
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Zařízení"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Banshee.Base/Dap/Dap.cs:336
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "Synchronizuje se {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:339
+#: ../src/Banshee.Base/Dap/Dap.cs:340
 msgid "Waiting for transcoder..."
 msgstr "Čekání na transkodér..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:427 ../src/Banshee.Base/Dap/Dap.cs:448
+#: ../src/Banshee.Base/Dap/Dap.cs:428 ../src/Banshee.Base/Dap/Dap.cs:449
 msgid "Processing..."
 msgstr "Zpracování..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:468
+#, fuzzy
+msgid "Could not encode some files"
+msgstr "Selhal stat pro kódovaný soubor"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:470
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr ""
+
+#: ../src/Banshee.Base/Dap/Dap.cs:475
+#, fuzzy
+msgid "Continue synchronizing"
+msgstr "Přesto pokračovat"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -2364,24 +2371,34 @@ msgstr "Ukládání nové databáze..."
 msgid "Error rebuilding iPod database"
 msgstr "Chyba přestavby iPod databáze"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:162
+#. Translators "Week 25 of 2006"
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:81
+msgid "Manufactured During"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:82
+#, fuzzy, csharp-format
+msgid "Week {0} of {1}"
+msgstr "{0} z {1}"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:178
 msgid "Could not eject iPod"
 msgstr "Nelze vysunout iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:170
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:189
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:205
 msgid "Synchronizing iPod"
 msgstr "Synchronizace iPodu"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:171
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:187
 msgid "Pre-processing tracks"
 msgstr "Předzpracování skladeb"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:202
 msgid "Flushing to Disk (may take time)"
 msgstr "Zapisování na disk (může chvíli trvat)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:196
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:212
 msgid "Failed to synchronize iPod"
 msgstr "Synchronizace iPodu selhala"
 
