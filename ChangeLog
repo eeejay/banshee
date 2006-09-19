@@ -1,5 +1,17 @@
 2006-09-19  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: explicitly check for dbus-glib-1 versions to map to
+	proper .so versions, added check on dbus-1 for 0.90, which now maps
+	to .so version 3; added lots of missing AC_MSG_RESULTs, so configure
+	output looks a little cleaner
+
+	* hal-sharp/hal-sharp.dll.config.in:
+	* src/banshee.exe.config.in: Added DBUS_GLIB_SOVERSION
+
+	* tools/Makefile.am: Do not install banshee-import
+
+2006-09-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlayerInterface.cs: Manually call Activate on cell renderers
 	if clicked when row is selected (Michael Quinn, BGO #348373)
 

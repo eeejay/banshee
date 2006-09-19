@@ -2,9 +2,9 @@ BANSHEE_IMPORT = banshee-import
 BANSHEE_IMPORT_ASSEMBLY = $(BANSHEE_IMPORT).exe
 DBUS_CLIENT_ASSEMBLY = dbus-client.exe
 
-toolsdir = $(pkglibdir)
-tools_SCRIPTS = $(BANSHEE_IMPORT_ASSEMBLY)
-bin_SCRIPTS = $(BANSHEE_IMPORT)
+#toolsdir = $(pkglibdir)
+#tools_SCRIPTS = $(BANSHEE_IMPORT_ASSEMBLY)
+#bin_SCRIPTS = $(BANSHEE_IMPORT)
 
 BANSHEE_IMPORT_SOURCES = $(srcdir)/BansheeImport.cs
 DBUS_CLIENT_SOURCES = $(srcdir)/BansheeDBusClient.cs

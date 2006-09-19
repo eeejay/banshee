@@ -176,6 +176,7 @@ PKG_CHECK_MODULES(LIBGPHOTO2SHARP,
 if test "x$enable_mtp" != "xno" -a "x$enable_mtp_dap" = "xno"; then
     AC_MSG_ERROR(libgphoto2-sharp package not found or not up to date.  Please install libgphoto2 from their subversion, or disable MTP support by not passing --enable-mtp)
 fi
+AC_MSG_RESULT([$enable_mtp_dap])
 if test "x$enable_mtp_dap" = "xyes"; then
 	LIBGPHOTO2SHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries libgphoto2-sharp`"
 	AC_SUBST(LIBGPHOTO2SHARP_ASSEMBLIES)
@@ -285,8 +286,12 @@ AC_SUBST(HAL_CFLAGS)
 AC_SUBST(HAL_LIBS)
 
 dnl DBus devel detect .so version for dll maps
-PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.60, dbus60=yes, dbus60=no)
-if test "x$dbus60" = "xyes"; then
+PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.90, dbus90=yes, dbus90=no) 
+AC_MSG_RESULT([$dbus90])
+PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.60, dbus60=yes, dbus60=no) 
+if test "x$dbus90" = "xyes"; then
+	DBUS_SOVERSION=3
+elif test "x$dbus60" = "xyes"; then
 	DBUS_SOVERSION=2
 else
 	DBUS_SOVERSION=1
@@ -294,9 +299,25 @@ fi
 AC_SUBST(DBUS_SOVERSION)
 
 
+dnl DBus-Glib devel detect .so version for dll maps
+PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.90, dbusg90=yes, dbusg90=no) 
+AC_MSG_RESULT([$dbusg90])
+PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.60, dbusg60=yes, dbusg60=no) 
+if test "x$dbusg90" = "xyes"; then
+	DBUS_GLIB_SOVERSION=3
+elif test "x$dbusg60" = "xyes"; then
+	DBUS_GLIB_SOVERSION=2
+else
+	DBUS_GLIB_SOVERSION=1
+fi
+AC_SUBST(DBUS_GLIB_SOVERSION)
+
+
 dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.15, lnb15=yes, lnb15=no)
+AC_MSG_RESULT([$lnb15])
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.13, lnb13=yes, lnb13=no)
+AC_MSG_RESULT([$lnb13])
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.12, lnb12=yes, lnb12=no)
 LNB_CSFLAGS=""
 if test "x$lnb15" = "xyes"; then
