@@ -1,5 +1,13 @@
 2006-09-20  Aaron Bockover  <abock@gnome.org>
 
+	* Makefile.am:
+	* configure.ac:
+	* dbus-sharp: Added new managed version of dbus-sharp; much to change here
+
+	* src/Banshee.Base/Makefile.am: Link against NDesk.DBus
+
+2006-09-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/DBusPlayer.cs: DBusPlayer now implements IDBusPlayer
 
 2006-09-19  Aaron Bockover  <abock@gnome.org>

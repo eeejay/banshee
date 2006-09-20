@@ -388,6 +388,7 @@ banshee.pc
 hal-sharp/Makefile
 hal-sharp/hal-sharp.dll.config
 taglib-sharp/Makefile
+dbus-sharp/Makefile
 libbanshee/Makefile
 src/banshee
 src/Makefile

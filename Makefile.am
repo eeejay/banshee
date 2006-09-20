@@ -2,6 +2,7 @@ SUBDIRS =          \
 	data           \
 	libbanshee     \
 	taglib-sharp   \
+	dbus-sharp     \
 	hal-sharp      \
 	src            \
 	docs           \
