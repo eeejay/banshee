@@ -1,0 +1,4 @@
+<configuration>
+	<dllmap dll="glib-2.0" target="libglib-2.0.so.0" />
+</configuration>
+

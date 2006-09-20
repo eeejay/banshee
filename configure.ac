@@ -389,6 +389,7 @@ hal-sharp/Makefile
 hal-sharp/hal-sharp.dll.config
 taglib-sharp/Makefile
 dbus-sharp/Makefile
+dbus-sharp/NDesk.DBus.GLib.dll.config
 libbanshee/Makefile
 src/banshee
 src/Makefile
