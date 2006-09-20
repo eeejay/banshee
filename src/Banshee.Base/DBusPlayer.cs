@@ -33,7 +33,8 @@ using Banshee.Sources;
 using Banshee.MediaEngine;
 
 namespace Banshee.Base
-{   
+{
+    [NDesk.DBus.Interface("org.gnome.Banshee.Core")]
     public interface IDBusPlayer
     {
         void Shutdown();

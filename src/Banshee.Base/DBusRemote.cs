@@ -28,20 +28,30 @@
  */
  
 using System;
-using DBus;
+using NDesk.DBus;
+using org.freedesktop.DBus;
 
 namespace Banshee.Base
 {
     public class DBusRemote
     {
-        private Service service;
+        const string my_bus_name = "org.gnome.Banshee";
+        const string my_object_root = "/org/gnome/Banshee";
+
+        string my_unique_name;
+
         private Connection connection;
+        private Bus bus;
         
         public DBusRemote()
         {
             try {
-                connection = Bus.GetSessionBus();
-                service = new Service(connection, "org.gnome.Banshee");
+                connection = DApplication.Connection;
+                bus = DApplication.Connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
+                my_unique_name = bus.Hello();
+
+                NameReply nameReply = bus.RequestName(my_bus_name, NameFlag.None);
+                //TODO: error handling based on nameReply. should probably throw if nameReply is anything other than NameReply.PrimaryOwner
             } catch(Exception e) {
                 LogCore.Instance.PushWarning("Could not connect to D-Bus", 
                     "D-Bus support will be disabled for this instance: " + e.Message, false);
@@ -50,16 +60,20 @@ namespace Banshee.Base
        
         public void RegisterObject(object o, string objectName)
         {
-            if(service != null) {
-                service.RegisterObject(o, "/org/gnome/Banshee/" + objectName);
+            if(connection != null) {
+                connection.Marshal(o, my_bus_name, new ObjectPath(my_object_root + "/" + objectName));
             }
         }
        
         public void UnregisterObject(object o)
         {
+            //TODO: unregistering objects with managed dbus
+
+            /*
             if(service != null) {
                 service.UnregisterObject(o);
             }
+            */
         }
     }
 }
