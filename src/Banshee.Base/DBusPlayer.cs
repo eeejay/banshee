@@ -34,8 +34,42 @@ using Banshee.MediaEngine;
 
 namespace Banshee.Base
 {   
+    public interface IDBusPlayer
+    {
+        void Shutdown();
+        void PresentWindow();
+        void ShowWindow();
+        void HideWindow();
+        void TogglePlaying();
+        void Play();
+        void Pause();
+        void Next();
+        void Previous();
+        void SelectAudioCd(string device);
+        void SelectDap(string device);
+        void EnqueueFiles(string [] files);
+        string GetPlayingArtist();
+        string GetPlayingAlbum();
+        string GetPlayingTitle();
+        string GetPlayingGenre();
+        string GetPlayingUri();
+        string GetPlayingCoverUri();
+        int GetPlayingDuration();
+        int GetPlayingPosition();
+        int GetPlayingRating();
+        int GetMaxRating();
+        int SetPlayingRating(int rating);
+        int GetPlayingStatus();
+        void SetVolume(int volume);
+        void IncreaseVolume();
+        void DecreaseVolume();
+        void SetPlayingPosition(int position);
+        void SkipForward();
+        void SkipBackward();
+    }
+
     [Interface("org.gnome.Banshee.Core")]
-    public class DBusPlayer
+    public class DBusPlayer : IDBusPlayer
     {
         public static DBusPlayer FindInstance()
         {

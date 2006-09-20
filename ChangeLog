@@ -1,3 +1,7 @@
+2006-09-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/DBusPlayer.cs: DBusPlayer now implements IDBusPlayer
+
 2006-09-19  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: explicitly check for dbus-glib-1 versions to map to
