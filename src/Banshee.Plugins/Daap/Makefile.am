@@ -15,6 +15,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DaapTrackInfo.cs \
 	$(srcdir)/DaapLoginDialog.cs \
 	$(srcdir)/DatabaseProxy.cs \
+	$(srcdir)/DaapPlaylistSource.cs \
 	$(srcdir)/DaapProxyWebServer.cs \
 	$(srcdir)/DaapConfigPage.cs \
 	$(srcdir)/daap-sharp/*.cs \

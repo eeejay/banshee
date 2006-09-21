@@ -1,3 +1,11 @@
+2006-09-21  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs: implement IImportable
+	and IImportSource, so you can now import and dnd from DAAP shares.
+	Also, add support for remote playlists.
+
+	* src/Banshee.Plugins/Daap/DaapPlaylistSource.cs: added
+
 2006-09-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/TrackInfoHeader.cs:

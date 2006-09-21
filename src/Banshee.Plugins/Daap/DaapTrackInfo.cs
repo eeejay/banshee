@@ -27,6 +27,7 @@
  */
 
 using System;
+using System.IO;
 using Mono.Unix;
 
 using DAAP;
@@ -77,6 +78,11 @@ namespace Banshee.Plugins.Daap
             track_count = (uint)song.TrackCount;
             track_number = (uint)song.TrackNumber;
             year = song.Year;
+        }
+
+        public Stream GetStream (out long length)
+        {
+            return database.StreamTrack (song, out length);
         }
         
         public override int GetHashCode()
