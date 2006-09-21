@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 14:41+0200\n"
-"PO-Revision-Date: 2006-09-20 14:51+0200\n"
+"POT-Creation-Date: 2006-09-21 10:34+0200\n"
+"PO-Revision-Date: 2006-09-21 10:51+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -375,11 +375,11 @@ msgstr ""
 
 #: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
-msgstr ""
+msgstr "Grafika"
 
 #: ../data/banshee-dialogs.glade.h:32
 msgid "Back"
-msgstr ""
+msgstr "Zpět"
 
 #: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
@@ -399,7 +399,7 @@ msgstr "Při importu kopírovat soubory do hudební složky"
 
 #: ../data/banshee-dialogs.glade.h:37
 msgid "Copy to all"
-msgstr ""
+msgstr "Kopírovat všude"
 
 #: ../data/banshee-dialogs.glade.h:38
 msgid "Create a new preset"
@@ -1343,9 +1343,8 @@ msgid "Copy CD failed"
 msgstr "Kopírování CD selhalo"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:47
-#, fuzzy
 msgid "Could not run nautilus-cd-burner"
-msgstr "Nelze vytvořit transkodér"
+msgstr "Nelze spustit nautilus-cd-burner"
 
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
 #. args.FileName, e.GetType(), e.Message);
@@ -1355,18 +1354,16 @@ msgid "Scanning"
 msgstr "Vyhledávám"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:32
-#, fuzzy
 msgid "Edit Smart Playlist"
-msgstr "Setřídit seznamy skladeb"
+msgstr "Upravit inteligentní seznam skladeb"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:43
-#, fuzzy
 msgid "New Smart Playlist"
-msgstr "Nový seznam skladeb"
+msgstr "Nový inteligentní seznam skladeb"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:60
 msgid "Neglected Favorites"
-msgstr ""
+msgstr "Opomenuté oblíbené"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
 msgid "700 MB of Favorites"
@@ -1374,11 +1371,11 @@ msgstr "700 MB oblíbených"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
 msgid "80 Minutes of Favorites"
-msgstr ""
+msgstr "80 minut oblíbených"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:85
 msgid "Unheard"
-msgstr ""
+msgstr "Neposlouchané"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:139
 #: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1306
@@ -1450,9 +1447,8 @@ msgid "is at least"
 msgstr "je nejméně"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:209
-#, fuzzy
 msgid "contains"
-msgstr "Nepřetržitý"
+msgstr "obsahuje"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:214
 msgid "does not contain"
@@ -1491,17 +1487,16 @@ msgid "_Match"
 msgstr ""
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:698
-#, fuzzy
 msgid "all"
-msgstr "Všechno"
+msgstr "vše"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:699
 msgid "any"
-msgstr ""
+msgstr "jakýkoliv"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
 msgid "of the following:"
-msgstr ""
+msgstr "z následujících:"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:723
 msgid "_Limit to"
@@ -1509,7 +1504,7 @@ msgstr ""
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:740
 msgid "selected by"
-msgstr ""
+msgstr "vybráno podle"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
 msgid "Random"
@@ -2137,11 +2132,11 @@ msgstr "při"
 msgid "No MP3-compatible encoders available"
 msgstr "Není dostupný žádný MP3 enkodér"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Výchozí engine přehrávače"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
@@ -2149,11 +2144,11 @@ msgstr ""
 "Nebyly nalezeny žádné přehrávací enginy. Zajistěte prosím korektní instalaci "
 "Banshee."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
 msgstr "Problém s přehrávacím enginem"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:87
 msgid "Playing Music"
 msgstr "Přehrává se hudba"
 
