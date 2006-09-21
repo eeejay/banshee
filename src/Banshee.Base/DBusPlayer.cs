@@ -27,14 +27,15 @@
  */
  
 using System;
-using DBus;
+using NDesk.DBus;
+using org.freedesktop.DBus;
 
 using Banshee.Sources;
 using Banshee.MediaEngine;
 
 namespace Banshee.Base
 {
-    [NDesk.DBus.Interface("org.gnome.Banshee.Core")]
+    [Interface("org.gnome.Banshee.Core")]
     public interface IDBusPlayer
     {
         void Shutdown();
@@ -69,14 +70,19 @@ namespace Banshee.Base
         void SkipBackward();
     }
 
-    [Interface("org.gnome.Banshee.Core")]
     public class DBusPlayer : IDBusPlayer
     {
-        public static DBusPlayer FindInstance()
+        public static IDBusPlayer FindInstance()
         {
-            Connection connection = Bus.GetSessionBus();
-            Service service = Service.Get(connection, "org.gnome.Banshee");        
-            return service.GetObject(typeof(DBusPlayer), "/org/gnome/Banshee/Player") as DBusPlayer;
+            Connection connection = DApplication.Connection;
+						Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
+						//TODO: we shouldn't say Hello() twice on the same connection
+						bus.Hello();
+
+						if (!bus.NameHasOwner(DBusRemote.my_bus_name))
+							return null;
+
+            return connection.GetObject<IDBusPlayer>(DBusRemote.my_bus_name, new ObjectPath (DBusRemote.my_object_root + "/" + "Player"));
         }
         
         public class UICommandArgs : EventArgs
@@ -128,72 +134,62 @@ namespace Banshee.Base
             get { return Available && PlayerEngineCore.CurrentTrack != null; }
         }
         
-        [Method]
-        public virtual void Shutdown()
+        public void Shutdown()
         {
             Globals.Shutdown();
         }
         
-        [Method]
-        public virtual void PresentWindow()
+        public void PresentWindow()
         {
             OnUIAction(UICommand.PresentWindow);
         }
         
-        [Method]
-        public virtual void ShowWindow()
+        public void ShowWindow()
         {
             OnUIAction(UICommand.ShowWindow);
         }
         
-        [Method]
-        public virtual void HideWindow()
+        public void HideWindow()
         {
             OnUIAction(UICommand.HideWindow);
         }
         
-        [Method]
-        public virtual void TogglePlaying()
+        public void TogglePlaying()
         {
             if(Available) {
                 Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
-        [Method]
-        public virtual void Play()
+        public void Play()
         {    
             if(HaveTrack && PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
                 Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
-        [Method]
-        public virtual void Pause()
+        public void Pause()
         {
             if(HaveTrack && PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
                 Globals.ActionManager["PlayPauseAction"].Activate();
             }
         }
         
-        [Method]
-        public virtual void Next()
+        public void Next()
         {
             if(Available) {
                 Globals.ActionManager["NextAction"].Activate();
             }
         }
         
-        [Method]
-        public virtual void Previous()
+        public void Previous()
         {
             if(Available) {
                 Globals.ActionManager["PreviousAction"].Activate();
             }
         }
 
-        [Method]
-        public virtual void SelectAudioCd(string device)
+        public void SelectAudioCd(string device)
         {
             if(!Available) {
                 return;
@@ -214,8 +210,7 @@ namespace Banshee.Base
             SourceManager.SetActiveSource(LibrarySource.Instance);
         }
         
-        [Method]
-        public virtual void SelectDap(string device)
+        public void SelectDap(string device)
         {
             if(!Available) {
                 return;
@@ -236,8 +231,7 @@ namespace Banshee.Base
             SourceManager.SetActiveSource(LibrarySource.Instance);
         }
         
-        [Method]
-        public virtual void EnqueueFiles(string [] files)
+        public void EnqueueFiles(string [] files)
         {
             if(Available) {
                 Banshee.Sources.LocalQueueSource.Instance.Enqueue(files, true);
@@ -250,68 +244,57 @@ namespace Banshee.Base
             return s == null ? String.Empty : s;
         }
         
-        [Method]
-        public virtual string GetPlayingArtist()
+        public string GetPlayingArtist()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Artist) : String.Empty;
         }
         
-        [Method]
-        public virtual string GetPlayingAlbum()
+        public string GetPlayingAlbum()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Album) : String.Empty;
         }
         
-        [Method]
-        public virtual string GetPlayingTitle()
+        public string GetPlayingTitle()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Title) : String.Empty;
         }
         
-        [Method]
-        public virtual string GetPlayingGenre()
+        public string GetPlayingGenre()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Genre) : String.Empty;
         }
         
-        [Method]
-        public virtual string GetPlayingUri()
+        public string GetPlayingUri()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Uri.AbsoluteUri) : String.Empty;
         }
 
-        [Method]
-        public virtual string GetPlayingCoverUri()
+        public string GetPlayingCoverUri()
         {
             return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.CoverArtFileName) : String.Empty;
         }
         
-        [Method]
-        public virtual int GetPlayingDuration()
+        public int GetPlayingDuration()
         {
             return HaveTrack ? (int)PlayerEngineCore.Length : -1;
         }
         
-        [Method]
-        public virtual int GetPlayingPosition()
+        public int GetPlayingPosition()
         {
             return HaveTrack ? (int)PlayerEngineCore.Position : -1;
         }
         
-        [Method]
-        public virtual int GetPlayingRating()
+        public int GetPlayingRating()
         {
             return HaveTrack ? (int)PlayerEngineCore.CurrentTrack.Rating : -1;
         }
         
-        [Method]
-        public virtual int GetMaxRating()
+        public int GetMaxRating()
         {
             return 5;
         }
         
-        [Method]
-        public virtual int SetPlayingRating(int rating)
+        public int SetPlayingRating(int rating)
         {
             try {
                 if(HaveTrack) {
@@ -325,8 +308,7 @@ namespace Banshee.Base
             return -1;
         }
         
-        [Method]
-        public virtual int GetPlayingStatus()
+        public int GetPlayingStatus()
         {
             if(!Available) {
                 return -1;
@@ -336,48 +318,42 @@ namespace Banshee.Base
                 (PlayerEngineCore.CurrentState != PlayerEngineState.Idle ? 0 : -1);
         }
         
-        [Method]
-        public virtual void SetVolume(int volume)
+        public void SetVolume(int volume)
         {
             if(Available) {
                 PlayerEngineCore.Volume = (ushort)volume;
             }
         }
 
-        [Method]
-        public virtual void IncreaseVolume()
+        public void IncreaseVolume()
         {
             if(Available) {
                 PlayerEngineCore.Volume += 10;
             }
         }
         
-        [Method]
-        public virtual void DecreaseVolume()
+        public void DecreaseVolume()
         {
             if(Available) {
                 PlayerEngineCore.Volume -= 10;
             }
         }
         
-        [Method]
-        public virtual void SetPlayingPosition(int position)
+        public void SetPlayingPosition(int position)
         {
             if(Available) {
                 PlayerEngineCore.Position = (uint)position;
             }
         }
         
-        [Method]
-        public virtual void SkipForward()
+        public void SkipForward()
         {
             if(Available) {
                 PlayerEngineCore.Position += 10;
             }
         }
         
-        [Method]
-        public virtual void SkipBackward()
+        public void SkipBackward()
         {
             if(Available) {
                 PlayerEngineCore.Position -= 10;

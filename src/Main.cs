@@ -83,7 +83,7 @@ namespace Banshee
             }, args, "enqueue");
             
             HandleShallowCommands();
-            DBusPlayer dbus_core = DetectInstanceAndDbus();
+            IDBusPlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
             Globals.Initialize();
@@ -94,11 +94,11 @@ namespace Banshee
             Gtk.Application.Run();
         }
     
-        private static DBusPlayer DetectInstanceAndDbus()
+        private static IDBusPlayer DetectInstanceAndDbus()
         {
             try {
                 return DBusPlayer.FindInstance();
-            } catch {
+            } catch (Exception e) {
                 /*Process current_process = Process.GetCurrentProcess();
                 foreach(Process process in Process.GetProcesses()) {
                     if(process.ProcessName == current_process.ProcessName && process.Id != current_process.Id) {
@@ -110,11 +110,12 @@ namespace Banshee
                     }
                 }*/
 
+                Console.Error.WriteLine(e);
                 return null;
             }
         }
         
-        private static void HandleDbusCommands(DBusPlayer remote_player)
+        private static void HandleDbusCommands(IDBusPlayer remote_player)
         {
             if(remote_player == null) {
                 return;
@@ -265,7 +266,7 @@ namespace Banshee
             }
         }
         
-        private static void Present(DBusPlayer remote_player)
+        private static void Present(IDBusPlayer remote_player)
         {
             remote_player.PresentWindow();
         }

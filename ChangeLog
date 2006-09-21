@@ -1,5 +1,11 @@
 2006-09-21  Alp Toker  <alp@atoker.com>
 
+	* src/Main.cs:
+	* src/Banshee.Base/DBusRemote.cs:
+	* src/Banshee.Base/DBusPlayer.cs: Use managed dbus for client as well
+
+2006-09-21  Alp Toker  <alp@atoker.com>
+
 	* src/Banshee.Base/DBusRemote.cs:
 	* src/Banshee.Base/DBusPlayer.cs: Start to make use of managed dbus
 
