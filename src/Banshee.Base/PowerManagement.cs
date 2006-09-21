@@ -30,16 +30,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mono.Unix;
-using DBus;
+using NDesk.DBus;
+using org.freedesktop.DBus;
 
 using Banshee.MediaEngine;
  
 namespace Banshee.Base
 {
-    public delegate void DpmsModeChangedHandler (string mode);
-    public delegate void OnAcChangedHandler (bool state);
+    public delegate void DpmsModeChangedHandler(string mode);
+    public delegate void OnAcChangedHandler(bool state);
 
-    [NDesk.DBus.Interface("org.gnome.PowerManager")]
+    // http://cvs.gnome.org/viewcvs/*checkout*/gnome-power-manager/docs/dbus-interface.html
+    [Interface("org.gnome.PowerManager")]
     public interface IPowerManager
     {
         bool Suspend();
@@ -55,6 +57,7 @@ namespace Banshee.Base
         string GetDpmsMode();
         uint Inhibit(string application, string reason);
         void UnInhibit(uint cookie);
+        //bool OnAc{get;}
         bool GetOnAc();
         //bool LowPowerMode{get;}
         bool GetLowPowerMode();
@@ -64,101 +67,44 @@ namespace Banshee.Base
 
     public static class PowerManagement
     {
-        [Interface(GnomePowerManager.INTERFACE_NAME)]
-        private abstract class GnomePowerManager : IDisposable
-        {
-            // http://cvs.gnome.org/viewcvs/*checkout*/gnome-power-manager/docs/dbus-interface.html
-        
-            internal const string INTERFACE_NAME = "org.gnome.PowerManager";
-            internal const string SERVICE_NAME = "org.gnome.PowerManager";
-            internal const string PATH_NAME = "/org/gnome/PowerManager";
-            
-            public EventHandler DpmsModeChanged;
-            public EventHandler AcChanged;
-            
-            private Service service;
-            
-            public static GnomePowerManager FindInstance()
-            {
-                Connection connection = Bus.GetSessionBus();
-                Service service = Service.Get(connection, SERVICE_NAME);
-                GnomePowerManager gpm = (GnomePowerManager)service.GetObject(
-                    typeof(GnomePowerManager), PATH_NAME);
-                gpm.Service = service;
-                return gpm;
-            }
-            
-            public void Dispose()
-            {
-                System.GC.SuppressFinalize(this);
-            }
-            
-            private void OnSignalCalled(Signal signal)
-            {
-                if(signal.PathName != PATH_NAME || signal.InterfaceName != INTERFACE_NAME) {
-                    return;
-                }
-                
-                switch(signal.Name) {
-                    case "DpmsModeChanged": RaiseEvent(DpmsModeChanged); break;
-                    case "OnAcChanged": RaiseEvent(AcChanged); break;
-                }
-            }
-            
-            private void RaiseEvent(EventHandler eventHandler) 
-            {
-                EventHandler handler = eventHandler;
-                if(handler != null) {
-                    handler(this, new EventArgs());
-                }
-            }
-            
-            private Service Service {
-                get { return service; }
-                set {
-                    if(service == null) {
-                        service = value;
-                        service.SignalCalled += OnSignalCalled;
-                    }
-                }
-            }
+        const string BUS_NAME = "org.gnome.PowerManager";
+        const string OBJECT_PATH = "/org/gnome/PowerManager";
 
-            [Method] public abstract bool Suspend();
-            [Method] public abstract bool Hibernate();
-            [Method] public abstract bool Shutdown();
-            [Method] public abstract bool Reboot();
-            [Method] public abstract bool AllowedSuspend();
-            [Method] public abstract bool AllowedHibernate();
-            [Method] public abstract bool AllowedShutdown();
-            [Method] public abstract bool AllowedReboot();
-            [Method] public abstract void SetDpmsMode(string mode);
-            [Method] public abstract string GetDpmsMode();
-            [Method] public abstract uint Inhibit(string application, string reason);
-            [Method] public abstract void UnInhibit(uint cookie);
-            [Method] public abstract void GetOnAc();
-            [Method] public abstract void GetLowPowerMode();
+        private static IPowerManager FindInstance()
+        {
+            Connection connection = DApplication.Connection;
+            Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
+            //TODO: we shouldn't say Hello() twice on the same connection
+            //DBusPlayer reliably does it for us now so the problem is avoided, but needs to be fixed
+            //my_unique_name = bus.Hello();
+
+            if (!bus.NameHasOwner(BUS_NAME))
+                throw new Exception(String.Format ("Name {0} has no owner", BUS_NAME));
+
+            return connection.GetObject<IPowerManager>(BUS_NAME, new ObjectPath(OBJECT_PATH));
         }
-        
+
         private static readonly string INHIBIT_PLAY_REASON = Catalog.GetString("Playing Music");
         
         private static Dictionary<string, uint> gpm_inhibit_cookie_map = null;
-        private static GnomePowerManager gpm = null;
+        private static IPowerManager gpm = null;
         
         public static void Initialize()
         {
             try {
-                gpm = GnomePowerManager.FindInstance();
+                gpm = FindInstance();
             } catch(Exception e) {
                 LogError("Cannot find GNOME Power Manager: " + e.Message);
                 gpm = null;
                 return;
             }
             
+            //test for gpm version >= 2.15
             try {
+                //GetOnAc() was called getOnAc() in gpm version <= 2.14.x
                 gpm.GetOnAc();
             } catch(Exception e) {
                 LogError("Unsupported version of GNOME Power Manager: " + e.Message);
-                gpm.Dispose();
                 gpm = null;
                 return;
             }
@@ -172,7 +118,7 @@ namespace Banshee.Base
             if(gpm != null) {
                 UnInhibitAll();
                 gpm_inhibit_cookie_map = null;
-                gpm.Dispose();
+                gpm = null;
             }
         }
         
