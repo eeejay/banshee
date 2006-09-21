@@ -1,5 +1,5 @@
 <Project name="Banshee.Hyena" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="hyena" />
       <Build debugmode="True" target="Exe" />

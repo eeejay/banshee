@@ -3,22 +3,35 @@
 ## directly; please use the variables in this file as they
 ## will make maintaining the build system much easier
 
+## Directories ##
+
+DIR_HAL = $(top_builddir)/hal-sharp
+DIR_TAGLIB = $(top_builddir)/taglib-sharp
+DIR_DBUS = $(top_builddir)/dbus-sharp
+DIR_LAST_FM = $(top_builddir)/src/Last.FM
+DIR_MUSICBRAINZ = $(top_builddir)/src/MusicBrainz
+DIR_GNOME_KEYRING = $(top_builddir)/src/Gnome.Keyring
+DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Banshee.Widgets
+DIR_BANSHEE_BASE = $(top_builddir)/src/Banshee.Base
+
 ## Linking ##
-LINK_HAL = -r:$(top_builddir)/hal-sharp/hal-sharp.dll
-LINK_TAGLIB = -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll
-LINK_LAST_FM = -r:$(top_builddir)/src/Last.FM/Last.FM.dll
-LINK_MUSICBRAINZ = -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll
-LINK_GNOME_KEYRING = -r:$(top_builddir)/src/Gnome.Keyring/Gnome.Keyring.dll
+
 LINK_GTK = $(GTKSHARP_LIBS)
 LINK_MONO_UNIX = -r:Mono.Posix
+
+LINK_HAL = -r:$(DIR_HAL)/hal-sharp.dll
+LINK_TAGLIB = -r:$(DIR_TAGLIB)/taglib-sharp.dll
+LINK_LAST_FM = -r:$(DIR_LAST_FM)/Last.FM.dll
+LINK_MUSICBRAINZ = -r:$(DIR_MUSICBRAINZ)/MusicBrainz.dll
+LINK_GNOME_KEYRING = -r:$(DIR_GNOME_KEYRING)/Gnome.Keyring.dll
 LINK_DBUS = \
-	-r:$(top_builddir)/dbus-sharp/NDesk.DBus.dll \
-	-r:$(top_builddir)/dbus-sharp/NDesk.DBus.GLib.dll
-LINK_BANSHEE_WIDGETS = \
-	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
+	-r:$(DIR_DBUS)/NDesk.DBus.dll \
+	-r:$(DIR_DBUS)/NDesk.DBus.GLib.dll
+	
+LINK_BANSHEE_WIDGETS = -r:$(DIR_BANSHEE_WIDGETS)/Banshee.Widgets.dll
 LINK_BANSHEE_CORE = \
 	$(LINK_BANSHEE_WIDGETS) \
-	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll
+	-r:$(DIR_BANSHEE_BASE)/Banshee.Base.dll
 
 ## Building ##
 BUILD_FLAGS = -debug
@@ -39,4 +52,10 @@ BUILD_UI_BANSHEE = \
 	$(LINK_GTK) \
 	$(LINK_HAL) \
 	$(LINK_MONO_UNIX)
+
+## Running ##
+RUN_PATH = \
+	MONO_PATH=$(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_BASE)$${MONO_PATH+:$$MONO_PATH} \
+	BANSHEE_ENGINES_PATH=$(top_builddir)/src/Banshee.MediaEngine \
+	BANSHEE_PLUGINS_PATH=$(top_builddir)/src/Banshee.Plugins$${BANSHEE_PLUGINS_PATH+:$$BANSHEE_PLUGINS_PATH}
 

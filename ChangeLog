@@ -1,3 +1,22 @@
+2006-09-21  Aaron Bockover  <abock@gnome.org>
+
+	* Makefile.include: Broken down even more, added a variable for 
+	making running uninstalled easy
+
+	* src/Makefile.am: Use new RUN_PATH variable to run banshee --uninstalled
+
+	* banshee.in: Do not set MONO_PATH; is done in Makefile with RUN_PATH
+
+	* src/Banshee.Base/Plugins/PluginFactory.cs: AddScanDirectory supports
+	recursion now, overloads to turn it off, and added new method for
+	loading plugins: AddScanDirectoryFromEnvironmentVariable
+
+	* src/Banshee.Base/PlayerEngineCore.cs: BANSHEE_ENGINES_PATH env
+	can be set for loading engines from an alternative path
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: BANSHEE_PLUGINS PATH does
+	the same, for plugins
+
 2006-09-21  Alp Toker  <alp@atoker.com>
 
 	* src/Banshee.Base/PowerManagement.cs: Use managed dbus for gpm client

@@ -110,12 +110,47 @@ namespace Banshee.Plugins
         
         public void AddScanDirectory(DirectoryInfo directory)
         {
+            AddScanDirectory(directory, false);
+        }
+        
+        public void AddScanDirectory(DirectoryInfo directory, bool recurse)
+        {        
+            if(directory == null || !directory.Exists) {
+                return;
+            }
+            
             scan_directories.Add(directory);
+            
+            if(!recurse) {
+                return;
+            }
+            
+            foreach(DirectoryInfo sub_directory in directory.GetDirectories()) {
+                AddScanDirectory(sub_directory, recurse);
+            }
         }
         
         public void AddScanDirectory(string directory)
         {
-            scan_directories.Add(new DirectoryInfo(directory));
+            AddScanDirectory(directory, false);
+        }
+        
+        public void AddScanDirectory(string directory, bool recurse)
+        {
+            scan_directories.Add(new DirectoryInfo(directory), recurse);
+        }
+        
+        public void AddScanDirectoryFromEnvironmentVariable(string env)
+        {
+            string env_path = Environment.GetEnvironmentVariable(env);
+            if(env_path == null || env_path == String.Empty) {
+                return;
+            }
+            
+            try {
+                AddScanDirectory(new DirectoryInfo(env_path), true);
+            } catch {
+            }
         }
         
         public void LoadPlugins()
@@ -134,7 +169,7 @@ namespace Banshee.Plugins
             } catch(DirectoryNotFoundException) {
                 try {
                     directory.Create();
-                } catch(IOException) { 
+                } catch { 
                 }
             }
         }

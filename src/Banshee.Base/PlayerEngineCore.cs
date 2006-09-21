@@ -60,6 +60,7 @@ namespace Banshee.Base
             
             factory.PluginLoaded += OnPluginLoaded;
             factory.AddScanDirectory(Path.Combine(ConfigureDefines.InstallDir, "Banshee.MediaEngine"));
+            factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_ENGINES_PATH");
             factory.LoadPlugins();
             factory.PluginLoaded -= OnPluginLoaded;
             
