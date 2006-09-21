@@ -137,7 +137,7 @@ namespace Banshee.Plugins
         
         public void AddScanDirectory(string directory, bool recurse)
         {
-            scan_directories.Add(new DirectoryInfo(directory), recurse);
+            AddScanDirectory(new DirectoryInfo(directory), recurse);
         }
         
         public void AddScanDirectoryFromEnvironmentVariable(string env)
