@@ -1,3 +1,14 @@
+2006-09-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/TrackInfoHeader.cs:
+	* src/Banshee.Base/TrackInfoPopup.cs: Patch from Sebastian Dröge to
+	not make TrackInfoPopup labels selectable (BGO #356990)
+
+	* src/Banshee.Base/Notifications.cs: Patch from Michael Monreal to 
+	set urgency on libnotify notifications (BGO #356985)
+
+	* tools/Makefile.am: Use new build variables
+
 2006-09-21  Alp Toker  <alp@atoker.com>
 
 	* tools/Makefile.am:

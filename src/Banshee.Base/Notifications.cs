@@ -40,6 +40,13 @@ namespace Banshee.Base {
     public static class Notifications {
         private static Gtk.Widget widget = null;
 
+        public enum Urgency : byte
+        {
+            Low,
+            Normal,
+            Critical
+        }
+    
         // This widget will be used to position the notification bubble. This
         // is set to the tray icon by the tray icon plugin (if enabled).
         // Otherwise it is set to null, which causes the notification bubble to
@@ -51,6 +58,7 @@ namespace Banshee.Base {
 
         public static void Notify (string summary,
                                    string message,
+                                   Urgency urgency,
                                    Gdk.Pixbuf image) {
             try {
                 if (!notify_init("Banshee")) {
@@ -59,6 +67,7 @@ namespace Banshee.Base {
 
                 IntPtr notification = notify_notification_new(summary, message, null, widget == null ? System.IntPtr.Zero : widget.Handle);
                 notify_notification_set_timeout(notification, 4500);
+                notify_notification_set_urgency(notification, urgency); 
 
                 if (image != null) {
                     image = image.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
@@ -73,6 +82,12 @@ namespace Banshee.Base {
             }
         }
 
+        public static void Notify (string summary,
+                                   string message,
+                                   Gdk.Pixbuf image) {
+            Notify (summary, message, Notifications.Urgency.Low, image);
+        }
+        
         [DllImport("notify")]
         private static extern bool notify_init(string app_name);
 
@@ -84,6 +99,9 @@ namespace Banshee.Base {
 
         [DllImport("notify")] 
         private static extern void notify_notification_set_icon_from_pixbuf(IntPtr notification, IntPtr icon);
+
+        [DllImport("notify")] 
+        private static extern void notify_notification_set_urgency(IntPtr notification, Urgency urgency);
 
         [DllImport("notify")] 
         private static extern bool notify_notification_show(IntPtr notification, IntPtr error);

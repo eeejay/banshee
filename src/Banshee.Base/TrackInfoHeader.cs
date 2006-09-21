@@ -140,6 +140,13 @@ namespace Banshee.Widgets
                 }
             }
         }
+
+        public bool Selectable {
+            set {
+                artist_album_label.Selectable = value;
+                title_label.Selectable = value;
+            }
+        }
         
         public VBox VBox {
             get { return box; }
