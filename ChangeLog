@@ -1,5 +1,6 @@
 2006-09-21  Alp Toker  <alp@atoker.com>
 
+	* tools/Makefile.am:
 	* tools/BansheeDBusClient.cs: Use managed dbus for example client
 
 2006-09-21  Aaron Bockover  <abock@gnome.org>
