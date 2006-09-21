@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 22:12+0200\n"
+"POT-Creation-Date: 2006-09-21 17:10+0200\n"
 "PO-Revision-Date: 2006-09-20 22:07+0200\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -63,7 +63,7 @@ msgstr "Omdøb og kopiér musik til Banshee-musikmappe ved import"
 
 #: ../data/banshee.schemas.in.h:3
 msgid "Copy music on import"
-msgstr "Kopiér musik ved import"
+msgstr "Kopiér musik ved importering"
 
 #: ../data/banshee.schemas.in.h:4
 msgid "Enable Special Keys"
@@ -135,11 +135,11 @@ msgstr "Vis avancerede sangegenskaber"
 
 #: ../data/banshee.schemas.in.h:18
 msgid "Show the Initial Import Dialog"
-msgstr "Vis det indledende importvindue"
+msgstr "Vis det indledende importeringsvindue"
 
 #: ../data/banshee.schemas.in.h:19
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
-msgstr "Vis det indledende importvindue, når Banshee-biblioteket er tomt"
+msgstr "Vis det indledende importeringsvindue, når Banshee-biblioteket er tomt"
 
 #: ../data/banshee.schemas.in.h:20
 msgid "Source View Width"
@@ -283,7 +283,7 @@ msgstr "<b>Bitrate:</b>"
 
 #: ../data/banshee-dialogs.glade.h:7
 msgid "<b>CD Importing</b>"
-msgstr "<b>Cd-import</b>"
+msgstr "<b>Cd-importering</b>"
 
 #: ../data/banshee-dialogs.glade.h:8
 msgid "<b>Channels:</b>"
@@ -311,7 +311,7 @@ msgstr "<b>Filstørrelse:</b>"
 
 #: ../data/banshee-dialogs.glade.h:14
 msgid "<b>Imported on:</b>"
-msgstr "<b>Importeret:</b>"
+msgstr "<b>Importeret den:</b>"
 
 #: ../data/banshee-dialogs.glade.h:15
 msgid "<b>Last played:</b>"
@@ -331,7 +331,7 @@ msgstr "<b>Afspilninger:</b>"
 
 #: ../data/banshee-dialogs.glade.h:19
 msgid "<b>Sample rate:</b>"
-msgstr "<b>Signalrate:</b>"
+msgstr "<b>Samplerate:</b>"
 
 #: ../data/banshee-dialogs.glade.h:20
 msgid "<b>Session Information</b>"
@@ -391,7 +391,7 @@ msgstr "Tilbage"
 
 #: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
-msgstr "Vælg en importkilde:"
+msgstr "Vælg en importeringskilde:"
 
 #: ../data/banshee-dialogs.glade.h:34
 msgid "Conversion Format:"
@@ -403,7 +403,7 @@ msgstr "Kopiér alle almindelige felter"
 
 #: ../data/banshee-dialogs.glade.h:36
 msgid "Copy files to music folder when importing"
-msgstr "Kopiér filer til musikmappe ved import"
+msgstr "Kopiér filer til musikmappe ved importering"
 
 #: ../data/banshee-dialogs.glade.h:37
 msgid "Copy to all"
@@ -489,7 +489,7 @@ msgstr "Åbn placering"
 
 #: ../data/banshee-dialogs.glade.h:57
 msgid "Open in editor"
-msgstr "Åbn i redigering"
+msgstr "Åbn til redigering"
 
 #: ../data/banshee-dialogs.glade.h:58
 msgid "Output Format:"
@@ -501,7 +501,7 @@ msgstr "Spilleliste_navn: "
 
 #: ../data/banshee-dialogs.glade.h:60
 msgid "Predefined Smart Playlists"
-msgstr "Prædefineret intelligent spilleliste"
+msgstr "Prædefinerede intelligente spillelister"
 
 #: ../data/banshee-dialogs.glade.h:61
 msgid "Preferences"
@@ -1006,7 +1006,7 @@ msgstr "Skift mellem tilfældig og løbende afspilningstilstand"
 
 #: ../src/Banshee.Base/ActionManager.cs:292
 msgid "Stop when finished"
-msgstr "Stop ved slut"
+msgstr "Stop ved slutning"
 
 #: ../src/Banshee.Base/ActionManager.cs:293
 msgid "Stop playback after the current song finishes playing"
@@ -1091,7 +1091,8 @@ msgstr "Kan ikke skubbe cd'en ud"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr "Cd'en kan ikke skubbes ud når den importeres. Afbryd importen først."
+msgstr ""
+"Cd'en kan ikke skubbes ud når den importeres. Afbryd importeringen først."
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:83
 msgid "Could not create CD Ripper"
@@ -1107,7 +1108,8 @@ msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
 msgstr ""
-"<i>{0}</i> importeres stadig til musikbiblioteket. Vil du afbryde importen?"
+"<i>{0}</i> importeres stadig til musikbiblioteket. Vil du afbryde "
+"importeringen?"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:256
 #, csharp-format
@@ -1375,11 +1377,11 @@ msgstr "Ubrugte favoritter"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
 msgid "700 MB of Favorites"
-msgstr "700 MB blandt favoritter"
+msgstr "700 MB favoritter"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
 msgid "80 Minutes of Favorites"
-msgstr "80 minutter blandt favoritter"
+msgstr "80 minutters favoritter"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:85
 msgid "Unheard"
@@ -1888,11 +1890,11 @@ msgstr "Alle billedfiler"
 
 #: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:64
 msgid "JPEG image files"
-msgstr "JPEG billedfiler"
+msgstr "JPEG-billedfiler"
 
 #: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:69
 msgid "PNG image files"
-msgstr "PNG billedfiler"
+msgstr "PNG-billedfiler"
 
 #: ../src/Banshee.Base/Gui/LogCoreDialog.cs:51
 msgid "Log Viewer"
@@ -1957,7 +1959,7 @@ msgstr "Sæt automatisk alle spornumre i stigende rækkefølge"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:213
 msgid "Set all track counts to this value"
-msgstr "Sæt alle 'antal spor' til denne værdi"
+msgstr "Sæt alle \"antal spor\" til denne værdi"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:214
 msgid "Set all artists to this value"
@@ -2037,7 +2039,7 @@ msgstr "Importerer sange"
 
 #: ../src/Banshee.Base/ImportManager.cs:89
 msgid "The import process is currently running. Would you like to stop it?"
-msgstr "Importprocessen kører i øjeblikket. Vil du afbryde denne?"
+msgstr "Importeringsprocessen kører i øjeblikket. Vil du afbryde denne?"
 
 #: ../src/Banshee.Base/ImportManager.cs:91
 msgid "Scanning for songs"
@@ -2115,11 +2117,11 @@ msgstr "på"
 msgid "No MP3-compatible encoders available"
 msgstr "Ingen MP3-kompatible kodere tilgængelige"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Standard afspillermotor"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
@@ -2127,11 +2129,11 @@ msgstr ""
 "Ingen afspilningsmotore blev fundet. Undersøg venligst om Banshee er "
 "installeret korrekt."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
 msgstr "Problemer med afspillermotor"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:87
 msgid "Playing Music"
 msgstr "Afspiller musik"
 
@@ -2219,7 +2221,7 @@ msgstr "Importerer"
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
-msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importen?"
+msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
@@ -2251,7 +2253,7 @@ msgstr "Skub {0} ud"
 
 #: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:56
 msgid "Import Errors"
-msgstr "Importfejl"
+msgstr "Importeringsfejl"
 
 #: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:72
 msgid "File Name"
