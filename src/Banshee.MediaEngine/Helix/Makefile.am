@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/HelixRemotePlayer.cs \
@@ -22,7 +24,7 @@ helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:Mono.Posix $(DBUSSHARP_LIBS) $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_GTK) $(LINK_MONO_UNIX) $(DBUSSHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 endif
 

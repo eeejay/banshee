@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Banshee.Widgets
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -46,10 +47,11 @@ Banshee_Widgets_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Widgets_
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Widgets_EXPANDED_RESOURCES)
-	$(MCS) $(MCS_FLAGS) $(GTKSHARP_LIBS) -r:Mono.Posix -r:Mono.Cairo -target:library -unsafe -out:$@ $(Banshee_Widgets_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) -unsafe -out:$@ $(LINK_GTK) $(LINK_MONO_UNIX) -r:Mono.Cairo $(Banshee_Widgets_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in
 
 CLEANFILES = $(ASSEMBLY)
 DISTCLEANFILES = *.mdb *.dll *.exe *.pidb
 MAINTAINERCLEANFILES = Makefile.in
+

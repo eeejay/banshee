@@ -1,4 +1,4 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include
 
 HYENA = hyena
 HYENA_ASSEMBLY = $(HYENA).exe
@@ -14,18 +14,10 @@ HYENA_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(HYENA_EXPANDED_RESOURCES),
 
 HYENA_SOURCE_BUILD = $(addprefix $(srcdir)/, $(HYENA_SOURCE))
 
-HYENA_REFERENCES = \
-	$(GTKSHARP_LIBS) \
-	-r:Mono.Posix \
-	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
-	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
-	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
-	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
-
 all: $(HYENA_ASSEMBLY)
 
 $(HYENA_ASSEMBLY): $(HYENA_SOURCE_BUILD) $(HYENA_EXPANDED_RESOURCES)
-	$(MCS) -out:$@ $(MCS_FLAGS) $(HYENA_REFERENCES) $(HYENA_EXPANDED_RESOURCES_BUILD) $(HYENA_SOURCE_BUILD)
+	$(BUILD_UI_BANSHEE) -out:$@ $(HYENA_EXPANDED_RESOURCES_BUILD) $(HYENA_SOURCE_BUILD)
 
 MONO_PATH = MONO_PATH=../../hal-sharp:../../burn-sharp:../Last.FM:../Gnome.Keyring:../MusicBrainz:../Banshee.Base:../Banshee.Widgets 
 	

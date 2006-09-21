@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug -unsafe $(LNB_CSFLAGS)
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Banshee.Base
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -256,7 +257,7 @@ Banshee_Base_EXPANDED_RESOURCES += $(top_builddir)/data/translators.xml
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:System.Data -r:Mono.Data.SqliteClient -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll -r:$(top_builddir)/dbus-sharp/NDesk.DBus.dll -r:$(top_builddir)/dbus-sharp/NDesk.DBus.GLib.dll $(GTKSHARP_LIBS) $(DBUSSHARP_LIBS) -r:Mono.Posix $(DAAPSHARP_LIBS) -out:$@ $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) -r:System.Data -r:Mono.Data.SqliteClient $(DBUSSHARP_LIBS)$(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include 
+
 ASSEMBLY_NAME = taglib-sharp
 ASSEMBLY = $(top_builddir)/taglib-sharp/$(ASSEMBLY_NAME).dll
 
@@ -13,7 +14,7 @@ ASSEMBLY_SOURCES = \
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -out:$@ -target:library -r:Mono.Posix $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES)
 CLEANFILES = $(taglib_SCRIPTS)

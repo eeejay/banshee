@@ -1,3 +1,5 @@
+include $(top_srcdir)/Makefile.include
+
 SUBDIRS = \
 	MusicBrainz \
 	Gnome.Keyring \
@@ -8,8 +10,6 @@ SUBDIRS = \
 	Banshee.Dap \
 	Banshee.Plugins \
 	Banshee.Hyena
-
-MCS_FLAGS = -debug -unsafe -nowarn:0169
 
 BANSHEE = banshee
 BANSHEE_ASSEMBLY = $(BANSHEE).exe
@@ -82,23 +82,10 @@ BANSHEE_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(BANSHEE_EXPANDED_RESOURC
 
 BANSHEE_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_SOURCE))
 
-BANSHEE_REFERENCES = \
-	$(GTKSHARP_LIBS) \
-	$(DBUSSHARP_LIBS) \
-	-r:System.Xml \
-	-r:System.Web.Services \
-	-r:System.Data \
-	-r:Mono.Data.SqliteClient \
-	-r:Mono.Posix \
-	-r:$(top_builddir)/hal-sharp/hal-sharp.dll \
-	-r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll \
-	-r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
-	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll
-
 all: $(BANSHEE_ASSEMBLY)
 
 $(BANSHEE_ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
-	$(MCS) -out:$@ $(MCS_FLAGS) $(BANSHEE_REFERENCES) $(BANSHEE_EXPANDED_RESOURCES_BUILD) $(BANSHEE_SOURCE_BUILD)
+	$(BUILD_UI_BANSHEE) -out:$@ -nowarn:0169 $(DBUSSHARP_LIBS) $(BANSHEE_EXPANDED_RESOURCES_BUILD) $(BANSHEE_SOURCE_BUILD)
 
 run: $(BANSHEE_ASSEMBLY)
 	sh ./banshee --uninstalled

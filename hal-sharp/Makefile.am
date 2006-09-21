@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include 
+
 ASSEMBLY_NAME = hal-sharp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -7,10 +8,8 @@ hal_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 include hal-sharp.sources
 
-all: $(ASSEMBLY)
-
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -r:Mono.Posix -out:$@ $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) hal-sharp.sources $(ASSEMBLY).config.in
 

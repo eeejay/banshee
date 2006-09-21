@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Last.FM
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -18,10 +19,8 @@ ASSEMBLY_SOURCES = \
 	$(LAST_FM_SOURCES) \
 	$(LAST_FM_GUI_SOURCES)
 
-all: $(ASSEMBLY)
-
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/badge.png $(srcdir)/badge-hover.png
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:Mono.Posix -r:$(top_builddir)/src/Gnome.Keyring/Gnome.Keyring.dll $(GTKSHARP_LIBS) -target:library -resource:$(srcdir)/badge.png,badge.png -resource:$(srcdir)/badge-hover.png,badge-hover.png $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(LINK_GNOME_KEYRING) $(LINK_GTK) -resource:$(srcdir)/badge.png,badge.png -resource:$(srcdir)/badge-hover.png,badge-hover.png $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) badge.png badge-hover.png
 

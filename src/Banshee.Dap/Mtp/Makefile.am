@@ -1,11 +1,7 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Banshee.Dap.Mtp
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-EXTRA_DIST = $(ASSEMBLY_SOURCES)
-
-CLEANFILES = $(ASSEMBLY) *.dll *.exe *.mdb
-DISTCLEANFILES = *.mdb
-MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
@@ -21,9 +17,7 @@ bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll \
-	-r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll \
-	-r:Mono.Posix $(GTKSHARP_LIBS) $(LIBGPHOTO2SHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_HAL) $(LINK_GTK) $(LINK_MONO_UNIX) $(LIBGPHOTO2SHARP_LIBS) $(ASSEMBLY_SOURCES)
 
 install-data-hook:
 	for cur in $(LIBGPHOTO2SHARP_ASSEMBLIES); do \
@@ -39,4 +33,8 @@ uninstall-hook:
 		rm -f $(DESTDIR)$(bansheedapdir)/`basename $${cur}.config`; \
 	done;
 	
+EXTRA_DIST = $(ASSEMBLY_SOURCES)
+CLEANFILES = $(ASSEMBLY) 
+DISTCLEANFILES = $(ASSEMBLY).mdb
+MAINTAINERCLEANFILES = Makefile.in 
 

@@ -1,5 +1,6 @@
 if DAAP_ENABLED
-MCS_FLAGS = -debug 
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Daap
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -18,11 +19,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DaapConfigPage.cs \
 	$(srcdir)/daap-sharp/*.cs \
 	$(srcdir)/daap-sharp/Mono.Zeroconf/*.cs
-	
-PKG_REFERENCES = \
-	$(GTKSHARP_LIBS) \
-	-r:Mono.Posix
-	
+
 schema_in_files = daap.schemas.in
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
@@ -39,7 +36,7 @@ endif
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll $(DAAPSHARP_FLAGS) -r:System.Web -r:ICSharpCode.SharpZipLib $(PKG_REFERENCES) -resource:$(srcdir)/daap-sharp/content-codes,content-codes
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@  $(DAAPSHARP_FLAGS) $(LINK_GTK) $(LINK_MONO_UNIX) -r:ICSharpCode.SharpZipLib -r:System.Web -resource:$(srcdir)/daap-sharp/content-codes,content-codes $(ASSEMBLY_SOURCES)
 	
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files) $(srcdir)/daap-sharp/content-codes
 

@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = MusicBrainz
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -24,7 +25,7 @@ all: $(ASSEMBLY)
 endif
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) -out:$@ $(ASSEMBLY_SOURCES)
 
 test: simple-disc-test.exe simple-lookup-test.exe
 

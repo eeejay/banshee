@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug 
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = MetadataSearch
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -9,12 +10,7 @@ ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/MetadataSearchPlugin.cs \
 	$(srcdir)/MetadataSearchConfigDialog.cs
-	
-PKG_REFERENCES = \
-	$(GTKSHARP_LIBS) \
-	-r:System.Data \
-	-r:Mono.Posix
-	
+
 schema_in_files = metadatasearch.schemas.in
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
 schema_DATA = $(schema_in_files:.schemas.in=.schemas)
@@ -22,7 +18,7 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
-	$(MCS) $(MCS_FLAGS) -target:library  -out:$@ $(ASSEMBLY_SOURCES) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/src/MusicBrainz/MusicBrainz.dll $(PKG_REFERENCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_MUSICBRAINZ) $(LINK_GTK) -r:System.Data $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 	
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files)
 

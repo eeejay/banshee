@@ -1,4 +1,5 @@
-MCS_FLAGS = -debug -nowarn:0169
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = GStreamerPlayerEngine
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
@@ -12,7 +13,7 @@ ASSEMBLY_SOURCES = \
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ $(GTKSHARP_LIBS) -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:Mono.Posix $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_GTK) $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.exe *.dll *.mdb *.pidb

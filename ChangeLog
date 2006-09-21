@@ -1,3 +1,12 @@
+2006-09-21  Aaron Bockover  <abock@gnome.org>
+
+	* Makefile.include: The new global build magic
+
+	* All Makefile.am: use new Makefile.include, build system is now much
+	simpler and more flexible
+
+	* src/PlayerInterface.cs: Remove unused namespace
+
 2006-09-21  Alp Toker  <alp@atoker.com>
 
 	* src/Banshee.Base/PowerManagement.cs: IPowerManager for managed dbus

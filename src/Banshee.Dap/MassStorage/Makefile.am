@@ -1,10 +1,7 @@
-MCS_FLAGS = -debug 
+include $(top_srcdir)/Makefile.include
+
 ASSEMBLY_NAME = Banshee.Dap.MassStorage
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-
-CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb
-MAINTAINERCLEANFILES = Makefile.in 
 
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
@@ -15,7 +12,10 @@ bansheedapdir = $(pkglibdir)/Banshee.Dap
 bansheedap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(MCS) $(MCS_FLAGS) -target:library -out:$@ -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll -r:$(top_builddir)/src/Banshee.Widgets/Banshee.Widgets.dll -r:$(top_builddir)/hal-sharp/hal-sharp.dll -r:Mono.Posix -r:$(top_builddir)/taglib-sharp/taglib-sharp.dll $(GTKSHARP_LIBS) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_HAL) $(LINK_GTK) $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES)
+CLEANFILES = $(ASSEMBLY)
+DISTCLEANFILES = $(ASSEMBLY).mdb
+MAINTAINERCLEANFILES = Makefile.in
 
