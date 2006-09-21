@@ -1,3 +1,8 @@
+2006-09-21  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib and map.
+	Now works on AMD64, PPC, plus bugfixes and new API.
+
 2006-09-21  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/DaapSource.cs: implement IImportable
