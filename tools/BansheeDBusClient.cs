@@ -37,58 +37,75 @@
 // must poll the server in a loop or similar to get status updates, etc.
 
 using System;
-using DBus;
+using NDesk.DBus;
+using org.freedesktop.DBus;
 using Gtk;
 
 [Interface("org.gnome.Banshee.Core")]
-public abstract class BansheePlayer
-{       
-    public static BansheePlayer FindInstance()
-    {
-        Connection connection = Bus.GetSessionBus();
-        Service service = Service.Get(connection, "org.gnome.Banshee");        
-        return (BansheePlayer)service.GetObject(typeof(BansheePlayer), "/org/gnome/Banshee/Player");
-    }
-
-    [Method] public abstract void PresentWindow();
-    [Method] public abstract void HideWindow();
-    [Method] public abstract void ShowWindow();
-    [Method] public abstract void TogglePlaying();
-    [Method] public abstract void Play();
-    [Method] public abstract void Pause();
-    [Method] public abstract void Next();
-    [Method] public abstract void Previous();
-    [Method] public abstract string GetPlayingArtist();
-    [Method] public abstract string GetPlayingAlbum();
-    [Method] public abstract string GetPlayingTitle();
-    [Method] public abstract string GetPlayingGenre();
-    [Method] public abstract string GetPlayingUri();
-    [Method] public abstract int GetPlayingPosition();
-    [Method] public abstract int GetPlayingDuration();
-    [Method] public abstract int GetPlayingStatus();
-    [Method] public abstract void SetPlayingPosition(int position);
-    [Method] public abstract void SkipForward();
-    [Method] public abstract void SkipBackward();
-    [Method] public abstract void SetVolume(int volume);
-    [Method] public abstract void IncreaseVolume();
-    [Method] public abstract void DecreaseVolume();
+public interface IPlayer
+{
+    void Shutdown();
+    void PresentWindow();
+    void ShowWindow();
+    void HideWindow();
+    void TogglePlaying();
+    void Play();
+    void Pause();
+    void Next();
+    void Previous();
+    void SelectAudioCd(string device);
+    void SelectDap(string device);
+    void EnqueueFiles(string [] files);
+    string GetPlayingArtist();
+    string GetPlayingAlbum();
+    string GetPlayingTitle();
+    string GetPlayingGenre();
+    string GetPlayingUri();
+    string GetPlayingCoverUri();
+    int GetPlayingDuration();
+    int GetPlayingPosition();
+    int GetPlayingRating();
+    int GetMaxRating();
+    int SetPlayingRating(int rating);
+    int GetPlayingStatus();
+    void SetVolume(int volume);
+    void IncreaseVolume();
+    void DecreaseVolume();
+    void SetPlayingPosition(int position);
+    void SkipForward();
+    void SkipBackward();
 }
 
-public class BansheeDbusClient : Window
+public class BansheeClient : Window
 {
-    private static BansheePlayer banshee = null;
+    const string BUS_NAME = "org.gnome.Banshee";
+    const string OBJECT_PATH = "/org/gnome/Banshee/Player";
+
+    private static IPlayer banshee = null;
+
+    static IPlayer FindInstance()
+    {
+        Connection connection = DApplication.Connection;
+        Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
+        bus.Hello();
+
+        if (!bus.NameHasOwner(BUS_NAME))
+            throw new Exception(String.Format("Name {0} has no owner", BUS_NAME));
+
+        return connection.GetObject<IPlayer>(BUS_NAME, new ObjectPath (OBJECT_PATH));
+    }
 
     public static void Main()
     {   
         try {
-            banshee = BansheePlayer.FindInstance();
+            banshee = FindInstance();
         } catch(Exception) {
             Console.Error.WriteLine("Could not locate Banshee on D-Bus. Perhaps it's not running?");
             Environment.Exit(1);
         }
         
         Application.Init();
-        new BansheeDbusClient();
+        new BansheeClient();
         Application.Run();
     }
     
@@ -100,7 +117,7 @@ public class BansheeDbusClient : Window
     private Label album_label;
     private Label title_label;
     
-    private BansheeDbusClient() : base("Banshee D-Bus Client")
+    private BansheeClient() : base("Banshee D-Bus Client")
     {
         BorderWidth = 10;
     
@@ -151,6 +168,7 @@ public class BansheeDbusClient : Window
         ShowAll();
         
         QueryServer();
+        //FIXME: this needs to go
         GLib.Timeout.Add(500, QueryServer);
     }
     
