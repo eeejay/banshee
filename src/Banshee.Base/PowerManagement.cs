@@ -36,6 +36,32 @@ using Banshee.MediaEngine;
  
 namespace Banshee.Base
 {
+    public delegate void DpmsModeChangedHandler (string mode);
+    public delegate void OnAcChangedHandler (bool state);
+
+    [NDesk.DBus.Interface("org.gnome.PowerManager")]
+    public interface IPowerManager
+    {
+        bool Suspend();
+        bool Hibernate();
+        bool Shutdown();
+        bool Reboot();
+        bool AllowedSuspend();
+        bool AllowedHibernate();
+        bool AllowedShutdown();
+        bool AllowedReboot();
+        //string DpmsMode{get; set;}
+        void SetDpmsMode(string mode);
+        string GetDpmsMode();
+        uint Inhibit(string application, string reason);
+        void UnInhibit(uint cookie);
+        bool GetOnAc();
+        //bool LowPowerMode{get;}
+        bool GetLowPowerMode();
+        event DpmsModeChangedHandler DpmsModeChanged;
+        event OnAcChangedHandler OnAcChanged;
+    }
+
     public static class PowerManagement
     {
         [Interface(GnomePowerManager.INTERFACE_NAME)]

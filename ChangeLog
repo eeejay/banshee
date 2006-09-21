@@ -1,5 +1,9 @@
 2006-09-21  Alp Toker  <alp@atoker.com>
 
+	* src/Banshee.Base/PowerManagement.cs: IPowerManager for managed dbus
+
+2006-09-21  Alp Toker  <alp@atoker.com>
+
 	* src/Main.cs:
 	* src/Banshee.Base/DBusRemote.cs:
 	* src/Banshee.Base/DBusPlayer.cs: Use managed dbus for client as well
