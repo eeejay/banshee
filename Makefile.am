@@ -51,3 +51,8 @@ MAINTAINERCLEANFILES = \
 	intltool-update.in  \
 	mkinstalldirs
 
+run:
+	pushd $(top_builddir)/src; \
+	make run; \
+	popd;
+

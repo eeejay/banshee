@@ -1,5 +1,9 @@
 2006-09-21  Aaron Bockover  <abock@gnome.org>
 
+	* Makefile.am: Added run target
+
+2006-09-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/PlayerEngineCore.cs:
 	* src/Banshee.Base/Plugins/PluginCore.cs: Do not try to load plugins
 	from their system installation path if their respective override 
