@@ -59,8 +59,13 @@ namespace Banshee.Base
             }
             
             factory.PluginLoaded += OnPluginLoaded;
-            factory.AddScanDirectory(Path.Combine(ConfigureDefines.InstallDir, "Banshee.MediaEngine"));
-            factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_ENGINES_PATH");
+            
+            if(Environment.GetEnvironmentVariable("BANSHEE_ENGINES_PATH") != null) {
+                factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_ENGINES_PATH");
+            } else {
+                factory.AddScanDirectory(Path.Combine(ConfigureDefines.InstallDir, "Banshee.MediaEngine"));
+            }
+            
             factory.LoadPlugins();
             factory.PluginLoaded -= OnPluginLoaded;
             

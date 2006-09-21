@@ -1,5 +1,12 @@
 2006-09-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/PlayerEngineCore.cs:
+	* src/Banshee.Base/Plugins/PluginCore.cs: Do not try to load plugins
+	from their system installation path if their respective override 
+	environment variable is set
+
+2006-09-21  Aaron Bockover  <abock@gnome.org>
+
 	* Makefile.include: Broken down even more, added a variable for 
 	making running uninstalled easy
 

@@ -44,9 +44,13 @@ namespace Banshee.Plugins
     
         public static void Initialize()
         {
-            factory.AddScanDirectory(Paths.UserPluginDirectory);
-            factory.AddScanDirectory(Paths.SystemPluginDirectory);
-            factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_PLUGINS_PATH");
+            if(Environment.GetEnvironmentVariable("BANSHEE_PLUGINS_PATH") != null) {
+                factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_PLUGINS_PATH");
+            } else {
+                factory.AddScanDirectory(Paths.UserPluginDirectory);
+                factory.AddScanDirectory(Paths.SystemPluginDirectory);
+            }
+            
             factory.LoadPluginFromType(typeof(Banshee.SmartPlaylist.SmartPlaylistCore));
             factory.LoadPlugins();
             
