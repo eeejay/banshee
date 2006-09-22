@@ -73,10 +73,7 @@ namespace Banshee.Base
         private static IPowerManager FindInstance()
         {
             Connection connection = DApplication.Connection;
-            Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
-            //TODO: we shouldn't say Hello() twice on the same connection
-            //DBusPlayer reliably does it for us now so the problem is avoided, but needs to be fixed
-            //my_unique_name = bus.Hello();
+            Bus bus = DApplication.SessionBus;
 
             if (!bus.NameHasOwner(BUS_NAME))
                 throw new Exception(String.Format ("Name {0} has no owner", BUS_NAME));

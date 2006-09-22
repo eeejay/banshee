@@ -38,19 +38,13 @@ namespace Banshee.Base
         public const string my_bus_name = "org.gnome.Banshee";
         public const string my_object_root = "/org/gnome/Banshee";
 
-        string my_unique_name;
-
         private Connection connection;
-        private Bus bus;
         
         public DBusRemote()
         {
             try {
                 connection = DApplication.Connection;
-                bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
-                //TODO: we shouldn't say Hello() twice on the same connection
-                //DBusPlayer reliably does it for us now so the problem is avoided, but needs to be fixed
-                //my_unique_name = bus.Hello();
+                Bus bus = DApplication.SessionBus;
 
                 NameReply nameReply = bus.RequestName(my_bus_name, NameFlag.None);
                 //TODO: error handling based on nameReply. should probably throw if nameReply is anything other than NameReply.PrimaryOwner

@@ -75,9 +75,7 @@ namespace Banshee.Base
         public static IDBusPlayer FindInstance()
         {
             Connection connection = DApplication.Connection;
-						Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", new ObjectPath("/org/freedesktop/DBus"));
-						//TODO: we shouldn't say Hello() twice on the same connection
-						bus.Hello();
+            Bus bus = DApplication.SessionBus;
 
 						if (!bus.NameHasOwner(DBusRemote.my_bus_name))
 							return null;
