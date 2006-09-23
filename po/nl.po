@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-08 10:19+0200\n"
-"PO-Revision-Date: 2006-09-08 10:44+0200\n"
+"POT-Creation-Date: 2006-09-22 02:11+0200\n"
+"PO-Revision-Date: 2006-09-23 13:53+0200\n"
 "Last-Translator: Pepijn van de Geer <pvandegeer@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
-#: ../src/Banshee.Base/BansheeBranding.cs:71
+#: ../src/Banshee.Base/BansheeBranding.cs:76
 msgid "Banshee Music Player"
 msgstr "Banshee muziekspeler"
 
@@ -354,191 +354,192 @@ msgid "<b>_Genre:</b>"
 msgstr "<b>_Genre:</b>"
 
 #: ../data/banshee-dialogs.glade.h:26
+msgid "<b>_Rating:</b>"
+msgstr "<b>_Waardering:</b>"
+
+#: ../data/banshee-dialogs.glade.h:27
 msgid "<b>_Title:</b>"
 msgstr "<b>_Titel:</b>"
 
-#: ../data/banshee-dialogs.glade.h:27
+#: ../data/banshee-dialogs.glade.h:28
 msgid "<b>_Year:</b>"
 msgstr "<b>_Jaar:</b>"
 
-#: ../data/banshee-dialogs.glade.h:28
+#: ../data/banshee-dialogs.glade.h:29
 msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Muziek importeren in bibliotheek</b></big>"
 
-#: ../data/banshee-dialogs.glade.h:29
+#: ../data/banshee-dialogs.glade.h:30
 msgid ""
 "<small><i>Enable this option to save tags and other metadata inside "
 "supported audio files</i></small>"
 msgstr ""
-"<small><i>Schakeld deze optie in om metadata op te slaan inondersteunde "
+"<small><i>Schakeld deze optie in om metadata op te slaan in ondersteunde "
 "audiobestanden.</i></small>"
 
-#: ../data/banshee-dialogs.glade.h:30
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
 msgstr "Beeldmateriaal"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:32
 msgid "Back"
 msgstr "Terug"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
 msgstr "Kies de bron voor het importeren:"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Conversion Format:"
 msgstr "Conversieformaat:"
 
-#: ../data/banshee-dialogs.glade.h:34
+#: ../data/banshee-dialogs.glade.h:35
 msgid "Copy all common fields"
 msgstr "Kopieer alle gemeenschappelijke velden"
 
-#: ../data/banshee-dialogs.glade.h:35
+#: ../data/banshee-dialogs.glade.h:36
 msgid "Copy files to music folder when importing"
 msgstr "Bestanden bij importeren naar de muziekmap kopiëren"
 
-#: ../data/banshee-dialogs.glade.h:36
+#: ../data/banshee-dialogs.glade.h:37
 msgid "Copy to all"
 msgstr "Kopieer naar alle"
 
-#: ../data/banshee-dialogs.glade.h:37
+#: ../data/banshee-dialogs.glade.h:38
 msgid "Create a new preset"
 msgstr "Nieuwe basisinstelling aanmaken"
 
-#: ../data/banshee-dialogs.glade.h:38
+#: ../data/banshee-dialogs.glade.h:39
 msgid "Delete the active preset"
 msgstr "De actieve basisinstelling verwijderen"
 
-#: ../data/banshee-dialogs.glade.h:39
+#: ../data/banshee-dialogs.glade.h:40
 msgid "Details"
 msgstr "Details"
 
-#: ../data/banshee-dialogs.glade.h:40
+#: ../data/banshee-dialogs.glade.h:41
 msgid "Disc Options"
 msgstr "Schijfopties"
 
-#: ../data/banshee-dialogs.glade.h:41
+#: ../data/banshee-dialogs.glade.h:42
 msgid "Disc format:"
 msgstr "Schijfformaat:"
 
-#: ../data/banshee-dialogs.glade.h:42
+#: ../data/banshee-dialogs.glade.h:43
 msgid "Disc name:"
 msgstr "Schijfnaam:"
 
-#: ../data/banshee-dialogs.glade.h:43
+#: ../data/banshee-dialogs.glade.h:44
 msgid "Do not show this dialog again"
 msgstr "Dit venster niet opnieuw weergeven"
 
-#: ../data/banshee-dialogs.glade.h:44
+#: ../data/banshee-dialogs.glade.h:45
 msgid "Eject disc after writing"
 msgstr "Schijf uitwerpen na het schrijven"
 
-#: ../data/banshee-dialogs.glade.h:45
+#: ../data/banshee-dialogs.glade.h:46
 msgid "Embed directly in song"
 msgstr "In het muziekbestand opslaan"
 
-#: ../data/banshee-dialogs.glade.h:46
+#: ../data/banshee-dialogs.glade.h:47
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
-#: ../data/banshee-dialogs.glade.h:47
+#: ../data/banshee-dialogs.glade.h:48
 msgid "Enter Next"
 msgstr "Volgende invoeren"
 
-#: ../data/banshee-dialogs.glade.h:48
+#: ../data/banshee-dialogs.glade.h:49
 msgid "Enter the address of the file you would like to open:"
 msgstr "Geef het adres op van het bestand dat u wilt openen:"
 
-#: ../data/banshee-dialogs.glade.h:49 ../src/Banshee.Base/ActionManager.cs:140
+#: ../data/banshee-dialogs.glade.h:50 ../src/Banshee.Base/ActionManager.cs:140
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: ../data/banshee-dialogs.glade.h:50
+#: ../data/banshee-dialogs.glade.h:51
 msgid "Error"
 msgstr "Fout"
 
-#: ../data/banshee-dialogs.glade.h:51
+#: ../data/banshee-dialogs.glade.h:52
 msgid "Forward"
 msgstr "Vooruit"
 
-#: ../data/banshee-dialogs.glade.h:52
+#: ../data/banshee-dialogs.glade.h:53
 msgid "Import Music Source"
 msgstr "Muziekbron importeren"
 
-#: ../data/banshee-dialogs.glade.h:53
+#: ../data/banshee-dialogs.glade.h:54
 msgid "Import Music to Library"
 msgstr "Bestanden importeren in bibliotheek"
 
-#: ../data/banshee-dialogs.glade.h:54
+#: ../data/banshee-dialogs.glade.h:55
 msgid "Metadata"
 msgstr "Metadata"
 
-#: ../data/banshee-dialogs.glade.h:55
+#: ../data/banshee-dialogs.glade.h:56
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Locatie openen"
 
-#: ../data/banshee-dialogs.glade.h:56
+#: ../data/banshee-dialogs.glade.h:57
 msgid "Open in editor"
 msgstr "Bewerken"
 
-#: ../data/banshee-dialogs.glade.h:57
+#: ../data/banshee-dialogs.glade.h:58
 msgid "Output Format:"
 msgstr "Doelformaat:"
 
-#: ../data/banshee-dialogs.glade.h:58
+#: ../data/banshee-dialogs.glade.h:59
 msgid "Playlist _Name: "
 msgstr "Afspeellijst_naam"
 
-#: ../data/banshee-dialogs.glade.h:59
+#: ../data/banshee-dialogs.glade.h:60
 msgid "Predefined Smart Playlists"
 msgstr "Voorgedefinieerde slimme afspeellijsten"
 
-#: ../data/banshee-dialogs.glade.h:60
+#: ../data/banshee-dialogs.glade.h:61
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: ../data/banshee-dialogs.glade.h:61
+#: ../data/banshee-dialogs.glade.h:62
 msgid "Reset"
 msgstr "Opnieuw"
 
-#: ../data/banshee-dialogs.glade.h:62
+#: ../data/banshee-dialogs.glade.h:63
 msgid "Save to song directory"
 msgstr "Opslaan in map van het nummer"
 
-#: ../data/banshee-dialogs.glade.h:63
+#: ../data/banshee-dialogs.glade.h:64
 msgid "Seek to Position"
 msgstr "Positie opzoeken"
 
-#: ../data/banshee-dialogs.glade.h:64
+#: ../data/banshee-dialogs.glade.h:65
 msgid "Select for use"
 msgstr "Selecteren voor gebruik"
 
-#: ../data/banshee-dialogs.glade.h:65
+#: ../data/banshee-dialogs.glade.h:66
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:605
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:236
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:251
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:272
+#: ../src/Banshee.Base/Dap/Dap.cs:655
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: ../data/banshee-dialogs.glade.h:66
+#: ../data/banshee-dialogs.glade.h:67
 msgid "Write disc to:"
 msgstr "Schijf schrijven naar:"
 
-#: ../data/banshee-dialogs.glade.h:67
+#: ../data/banshee-dialogs.glade.h:68
 msgid "Write metadata to files"
 msgstr "Metadata naar bestanden schrijven"
 
-#: ../data/banshee-dialogs.glade.h:68
+#: ../data/banshee-dialogs.glade.h:69
 msgid "Write speed:"
 msgstr "Schrijfsnelheid:"
 
-#: ../data/banshee-dialogs.glade.h:69
+#: ../data/banshee-dialogs.glade.h:70
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
@@ -546,7 +547,7 @@ msgstr ""
 "Uw muziekbibliotheek is leeg. U kan nu of later nieuwe muziek importeren in "
 "uw bibliotheek."
 
-#: ../data/banshee-dialogs.glade.h:70
+#: ../data/banshee-dialogs.glade.h:71
 msgid "_Write"
 msgstr "Schrijven"
 
@@ -579,8 +580,8 @@ msgid "Could not link pipeline elements"
 msgstr "Verbinden pipelinie-elementen mislukt"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:398
-#: ../src/Banshee.Base/BansheeBranding.cs:75
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
+#: ../src/Banshee.Base/BansheeBranding.cs:80
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:123
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -653,7 +654,7 @@ msgstr "_Muziek"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1572
+#: ../src/PlayerInterface.cs:1568
 msgid "New Playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -826,8 +827,8 @@ msgid "_Playback"
 msgstr "_Bediening"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
-#: ../src/Banshee.Base/ActionManager.cs:181 ../src/Banshee.Base/Source.cs:289
-#: ../src/SourceView.cs:101
+#: ../src/Banshee.Base/ActionManager.cs:181
+#: ../src/Banshee.Base/Gui/SourceView.cs:101 ../src/Banshee.Base/Source.cs:289
 msgid "Source"
 msgstr "Bron"
 
@@ -855,194 +856,196 @@ msgstr "Albumhoes tonen"
 msgid "Toggle display of album cover art"
 msgstr "Tonen van albumhoes aan/uit zetten"
 
-#: ../src/Banshee.Base/ActionManager.cs:206
+#: ../src/Banshee.Base/ActionManager.cs:208
 msgid "Remove Song(s)"
 msgstr "Nummer(s) verwijderen"
 
-#: ../src/Banshee.Base/ActionManager.cs:207
+#: ../src/Banshee.Base/ActionManager.cs:209
 msgid "Remove selected song(s) from library"
 msgstr "Nummer(s) uit bibliotheek verwijderen"
 
-#: ../src/Banshee.Base/ActionManager.cs:210
+#: ../src/Banshee.Base/ActionManager.cs:212
 msgid "Delete Song(s) From Drive"
 msgstr "Nummer(s) van schijf verwijderen"
 
-#: ../src/Banshee.Base/ActionManager.cs:211
+#: ../src/Banshee.Base/ActionManager.cs:213
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Geselecteerde nummer(s) permanent van opslagmedium verwijderen"
 
-#: ../src/Banshee.Base/ActionManager.cs:214
+#: ../src/Banshee.Base/ActionManager.cs:216
 msgid "Edit Song Metadata"
 msgstr "Metadata bewerken"
 
-#: ../src/Banshee.Base/ActionManager.cs:215
+#: ../src/Banshee.Base/ActionManager.cs:217
 msgid "Edit metadata on selected songs"
 msgstr "Metadata van het geselecteerde nummer bewerken"
 
-#: ../src/Banshee.Base/ActionManager.cs:218
+#: ../src/Banshee.Base/ActionManager.cs:220
 msgid "Search for songs"
 msgstr "Zoek naar nummers"
 
-#: ../src/Banshee.Base/ActionManager.cs:219
+#: ../src/Banshee.Base/ActionManager.cs:221
 msgid "Search for songs matching certain criteria"
 msgstr "Zoek naar nummers met bepaalde eigenschappen"
 
-#: ../src/Banshee.Base/ActionManager.cs:222
+#: ../src/Banshee.Base/ActionManager.cs:224
 msgid "By matching album"
 msgstr "van hetzelfde album"
 
-#: ../src/Banshee.Base/ActionManager.cs:223
+#: ../src/Banshee.Base/ActionManager.cs:225
 msgid "Search all songs of this album"
 msgstr "Zoek alle nummers van dit album"
 
-#: ../src/Banshee.Base/ActionManager.cs:226
+#: ../src/Banshee.Base/ActionManager.cs:228
 msgid "By matching artist"
 msgstr "van dezelfde artiest"
 
-#: ../src/Banshee.Base/ActionManager.cs:227
+#: ../src/Banshee.Base/ActionManager.cs:229
 msgid "Search all songs of this artist"
 msgstr "Zoek alle nummers van deze artiest"
 
-#: ../src/Banshee.Base/ActionManager.cs:230
+#: ../src/Banshee.Base/ActionManager.cs:232
 msgid "By matching genre"
 msgstr "van hetzelfde genre"
 
-#: ../src/Banshee.Base/ActionManager.cs:231
+#: ../src/Banshee.Base/ActionManager.cs:233
 msgid "Search all songs of this genre"
 msgstr "Zoek alle nummers van dit genre"
 
-#: ../src/Banshee.Base/ActionManager.cs:234
+#: ../src/Banshee.Base/ActionManager.cs:236
 msgid "Add to Playlist"
 msgstr "Aan afspeellijst toevoegen"
 
-#: ../src/Banshee.Base/ActionManager.cs:235
+#: ../src/Banshee.Base/ActionManager.cs:237
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 "Geselecteerde nummer aan de afspeellijst toevoegen of een nieuwe "
 "afspeellijst maken"
 
-#: ../src/Banshee.Base/ActionManager.cs:238 ../src/PlaylistView.cs:117
+#: ../src/Banshee.Base/ActionManager.cs:240
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:716
+#: ../src/PlaylistView.cs:124
 msgid "Rating"
 msgstr "Waardering"
 
-#: ../src/Banshee.Base/ActionManager.cs:239
+#: ../src/Banshee.Base/ActionManager.cs:241
 msgid "Set rating for selected songs"
 msgstr "Waardering instellen voor de geselecteeerde nummers"
 
-#: ../src/Banshee.Base/ActionManager.cs:248
+#: ../src/Banshee.Base/ActionManager.cs:250
 msgid "Import CD"
 msgstr "Cd importeren"
 
-#: ../src/Banshee.Base/ActionManager.cs:249
+#: ../src/Banshee.Base/ActionManager.cs:251
 msgid "Import audio CD to library"
 msgstr "Audio-cd importeren in bibliotheek"
 
-#: ../src/Banshee.Base/ActionManager.cs:258 ../src/PlayerInterface.cs:827
-#: ../src/PlayerInterface.cs:835
+#: ../src/Banshee.Base/ActionManager.cs:260 ../src/PlayerInterface.cs:804
+#: ../src/PlayerInterface.cs:812
 msgid "Play"
 msgstr "Afspelen"
 
-#: ../src/Banshee.Base/ActionManager.cs:259
+#: ../src/Banshee.Base/ActionManager.cs:261
 msgid "Play or pause the current song"
 msgstr "Huidig nummer afspelen of pauzeren"
 
-#: ../src/Banshee.Base/ActionManager.cs:262
+#: ../src/Banshee.Base/ActionManager.cs:264
 msgid "Next"
 msgstr "Volgende"
 
-#: ../src/Banshee.Base/ActionManager.cs:263
+#: ../src/Banshee.Base/ActionManager.cs:265
 msgid "Play the next song"
 msgstr "Volgend nummer afspelen"
 
-#: ../src/Banshee.Base/ActionManager.cs:266
+#: ../src/Banshee.Base/ActionManager.cs:268
 msgid "Previous"
 msgstr "Vorige"
 
-#: ../src/Banshee.Base/ActionManager.cs:267
+#: ../src/Banshee.Base/ActionManager.cs:269
 msgid "Play the previous song"
 msgstr "Vorig nummer afspelen"
 
-#: ../src/Banshee.Base/ActionManager.cs:272
+#: ../src/Banshee.Base/ActionManager.cs:274
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:40
 msgid "Repeat None"
 msgstr "Niets herhalen"
 
-#: ../src/Banshee.Base/ActionManager.cs:273
+#: ../src/Banshee.Base/ActionManager.cs:275
 msgid "Do not repeat playlist"
 msgstr "Afspeellijst niet herhalen"
 
-#: ../src/Banshee.Base/ActionManager.cs:276
+#: ../src/Banshee.Base/ActionManager.cs:278
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:58
 msgid "Repeat All"
 msgstr "Alles herhalen"
 
-#: ../src/Banshee.Base/ActionManager.cs:277
+#: ../src/Banshee.Base/ActionManager.cs:279
 msgid "Play all songs before repeating playlist"
 msgstr "Alle nummers afspelen voor het herhalen van de afspeellijst"
 
-#: ../src/Banshee.Base/ActionManager.cs:280
+#: ../src/Banshee.Base/ActionManager.cs:282
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:49
 msgid "Repeat Single"
 msgstr "Nummer herhalen"
 
-#: ../src/Banshee.Base/ActionManager.cs:281
+#: ../src/Banshee.Base/ActionManager.cs:283
 msgid "Repeat the current playing song"
 msgstr "Het huidige nummer herhalen"
 
-#: ../src/Banshee.Base/ActionManager.cs:286
+#: ../src/Banshee.Base/ActionManager.cs:288
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:67
 msgid "Shuffle"
 msgstr "Shuffle"
 
-#: ../src/Banshee.Base/ActionManager.cs:287
+#: ../src/Banshee.Base/ActionManager.cs:289
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Shuffle-modus aan/uit zetten"
 
-#: ../src/Banshee.Base/ActionManager.cs:290
+#: ../src/Banshee.Base/ActionManager.cs:292
 msgid "Stop when finished"
 msgstr "Stoppen na afloop"
 
-#: ../src/Banshee.Base/ActionManager.cs:291
+#: ../src/Banshee.Base/ActionManager.cs:293
 msgid "Stop playback after the current song finishes playing"
 msgstr "Het afspelen stoppen als het huidige nummer afgelopen is"
 
-#: ../src/Banshee.Base/ActionManager.cs:300
+#: ../src/Banshee.Base/ActionManager.cs:302
 msgid "Seek Backward"
 msgstr "Achterwaarts zoeken"
 
-#: ../src/Banshee.Base/ActionManager.cs:301
+#: ../src/Banshee.Base/ActionManager.cs:303
 msgid "Seek backward in current song"
 msgstr "Achterwaarts zoeken in het huidige nummer"
 
-#: ../src/Banshee.Base/ActionManager.cs:304
+#: ../src/Banshee.Base/ActionManager.cs:306
 msgid "Seek Forward"
 msgstr "Voorwaarts zoeken"
 
-#: ../src/Banshee.Base/ActionManager.cs:305
+#: ../src/Banshee.Base/ActionManager.cs:307
 msgid "Seek forward in current song"
 msgstr "Voorwaarts zoeken in het huidige nummer"
 
-#: ../src/Banshee.Base/ActionManager.cs:308
+#: ../src/Banshee.Base/ActionManager.cs:310
 msgid "Seek To..."
 msgstr "Zoeken naar..."
 
-#: ../src/Banshee.Base/ActionManager.cs:309
+#: ../src/Banshee.Base/ActionManager.cs:311
 msgid "Seek to a specific location in current song"
 msgstr "Zoeken naar een specifieke plek in het huidige nummer"
 
-#: ../src/Banshee.Base/ActionManager.cs:312
+#: ../src/Banshee.Base/ActionManager.cs:314
 msgid "Restart Song"
 msgstr "Nummer herstarten"
 
-#: ../src/Banshee.Base/ActionManager.cs:313
+#: ../src/Banshee.Base/ActionManager.cs:315
 msgid "Restart the current song"
 msgstr "Het huidige nummer opnieuw starten"
 
-#: ../src/Banshee.Base/ActionManager.cs:322 ../src/PlayerInterface.cs:1087
+#: ../src/Banshee.Base/ActionManager.cs:324 ../src/PlayerInterface.cs:1064
 msgid "Synchronize"
 msgstr "Synchroniseren"
 
-#: ../src/Banshee.Base/ActionManager.cs:323
+#: ../src/Banshee.Base/ActionManager.cs:325
 msgid "Save changes to device or synchronize music library"
 msgstr ""
 "Veranderingen opslaan op het apparaat of muziekbibliotheek synchroniseren"
@@ -1174,36 +1177,28 @@ msgstr "Onbekend aantal MB"
 msgid "{0} MB"
 msgstr "{0} MB"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:118
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
 msgid "New Audio CD"
 msgstr "Nieuwe audio-cd"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:119
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
 msgstr "Een nieuwe audio-cd maken"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:161
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
 msgid "Problem creating CD"
 msgstr "Probleem bij het maken van de cd"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:162
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:166
 msgid "No CD recording hardware was found."
 msgstr "Er is geen opname apparatuur voor cd's gevonden."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
 msgid "Audio"
 msgstr "Audio"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
-msgid "MP3"
-msgstr "MP3"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:64
-msgid "Data"
-msgstr "Data"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
 msgid "Some songs could not be found."
@@ -1371,47 +1366,391 @@ msgstr "Kon nautilus-cd-burner niet starten"
 msgid "Scanning"
 msgstr "Bezig met zoeken"
 
-#: ../src/Banshee.Base/ComponentInitializer.cs:94
-msgid "Could not initialize component"
-msgstr "Initialisatie component mislukt"
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:32
+msgid "Edit Smart Playlist"
+msgstr "Slimme afspeellijst bewerken"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:110
-#: ../src/Banshee.Base/BatchTranscoder.cs:111
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:43
+msgid "New Smart Playlist"
+msgstr "Nieuwe slimme afspeellijst"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:60
+msgid "Neglected Favorites"
+msgstr "Vergeten favorieten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
+msgid "700 MB of Favorites"
+msgstr "700 MB aan favorieten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
+msgid "80 Minutes of Favorites"
+msgstr "80 minuten aan favorieten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:85
+msgid "Unheard"
+msgstr "Nooit geluisterd"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:139
+#: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1306
+#: ../src/PlayerInterface.cs:2303
+msgid "Artist Name"
+msgstr "Artiestnaam"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:141
+#: ../src/PlayerInterface.cs:443 ../src/PlayerInterface.cs:1308
+msgid "Song Name"
+msgstr "Nummertitel"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:143
+#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1310
+#: ../src/PlayerInterface.cs:2299
+msgid "Album Title"
+msgstr "Albumtitel"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:145
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:710
+#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1312
+#: ../src/PlayerInterface.cs:2307 ../src/PlaylistView.cs:111
+msgid "Genre"
+msgstr "Genre"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:147
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:718
+#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1314
+#: ../src/PlaylistView.cs:114
+msgid "Year"
+msgstr "Jaar"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
+msgid "Create Smart Playlist from Search"
+msgstr "Slimme afspeellijst maken van zoekopdracht"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:151
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:174
+msgid "is"
+msgstr "is"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:156
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:179
+msgid "is not"
+msgstr "is niet"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:184
+msgid "is less than"
+msgstr "is minder dan"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:189
+msgid "is greater than"
+msgstr "is groter dan"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:194
+msgid "more than"
+msgstr "meer dan"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:199
+msgid "less than"
+msgstr "minder dan"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:204
+msgid "is at least"
+msgstr "is minstens"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:209
+msgid "contains"
+msgstr "bevat"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:214
+msgid "does not contain"
+msgstr "bevat niet"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:219
+msgid "starts with"
+msgstr "begint met"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:224
+msgid "ends with"
+msgstr "eindigt op"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:229
+msgid "is before"
+msgstr "is voor"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:234
+
+msgid "is after"
+msgstr "is na"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:239
+msgid "is between"
+msgstr "is tussen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:244
+msgid "between"
+msgstr "tussen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:322
+msgid "to"
+msgstr "tot"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:691
+msgid "_Match"
+msgstr "_Zoek nummers met"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:698
+msgid "all"
+msgstr "alle"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:699
+msgid "any"
+msgstr "één of meer"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
+msgid "of the following:"
+msgstr "van de volgende kenmerken:"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:723
+msgid "_Limit to"
+msgstr "_Beperk tot:"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:740
+msgid "selected by"
+msgstr "geselecteerd op"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
+msgid "Random"
+msgstr "Willekeurig"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:709
+#: ../src/PlaylistView.cs:108
+msgid "Album"
+msgstr "Album"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:707
+#: ../src/PlaylistView.cs:102
+msgid "Artist"
+msgstr "Artiest"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:708
+#: ../src/PlaylistView.cs:105
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
+msgid "Highest Rating"
+msgstr "Hoogste waardering"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
+msgid "Lowest Rating"
+msgstr "Laagste waardering"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
+msgid "Least Often Played"
+msgstr "Minst afgespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
+msgid "Most Often Played"
+msgstr "Meest afgespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
+msgid "Most Recently Added"
+msgstr "Meest recent toegevoegd"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
+msgid "Least Recently Added"
+msgstr "Minst recent toegevoegd"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
+msgid "Most Recently Played"
+msgstr "Meest recent afgespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
+msgid "Least Recently Played"
+msgstr "Minst recent afgespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
+msgid "songs"
+msgstr "nummers"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
+msgid "minutes"
+msgstr "minuten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
+msgid "hours"
+msgstr "uren"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:65
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:325
+msgid "Seconds"
+msgstr "Seconden"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:326
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:460
+msgid "Minutes"
+msgstr "Minuten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:327
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:461
+msgid "Hours"
+msgstr "Uren"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:462
+msgid "Days"
+msgstr "Dagen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:463
+msgid "Weeks"
+msgstr "Weken"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:464
+msgid "Months"
+msgstr "Maanden"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:465
+msgid "Years"
+msgstr "Jaren"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:576
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:601
+msgid "ago"
+msgstr "geleden"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:711
+msgid "Date Added"
+msgstr "Datum van toevoegen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:712
+#: ../src/PlaylistView.cs:137
+msgid "Last Played"
+msgstr "Laatst afgespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:713
+msgid "Duration"
+msgstr "Duur"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:714
+msgid "Play Count"
+msgstr "Aantal maal gespeeld"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:715
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
+msgid "Playlist"
+msgstr "Afspeellijst"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:717
+msgid "Path"
+msgstr "Pad"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:36
+msgid "Smart Playlists"
+msgstr "Slimme afspeellijsten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:42
+msgid ""
+"Create playlists that automatically add and remove songs based on "
+"customizable queries."
+msgstr ""
+"Maak afspeellijsten die automatisch nummers toevoegen of verwijderen "
+"gebasseerd op verschillende eigenschappen."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:138
+msgid "New Smart Playlist..."
+msgstr "Nieuwe slimme afspeellijst..."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:144
+msgid "New Smart Playlist from Search..."
+msgstr "Nieuwe slimme afspeellijst van zoekopdracht"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:70
+msgid "Delete Smart Playlist"
+msgstr "Slimme sfspeellijst verwijderen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
+msgid "Smart Playlist"
+msgstr "Slimme afspeellijst"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:117
 msgid "Converting Files"
 msgstr "Bestanden aan het omzetten"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:113
+#: ../src/Banshee.Base/BatchTranscoder.cs:119
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
 msgstr ""
-"Er worden bestanden omgezet naar een ander aduioformaat. Wilt u dit stoppen?"
+"Er worden bestanden omgezet naar een ander audioformaat. Wilt u dit stoppen?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:122
 msgid "Initializing Transcoder..."
 msgstr "Transcoder initialiseren..."
+
+#: ../src/Banshee.Base/ComponentInitializer.cs:94
+msgid "Could not initialize component"
+msgstr "Initialisatie component mislukt"
+
+#: ../src/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Bestanden importeren in bibliotheek"
+
+#: ../src/Banshee.Base/FileImportSource.cs:82
+msgid "Local Files"
+msgstr "Lokale bestanden"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Map importeren in bibliotheek"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:80
+msgid "Local Folder"
+msgstr "Lokale map"
 
 #: ../src/Banshee.Base/Dap/DapCore.cs:100
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kon DapCore niet initialiseren omdat HalCore niet geïnitialiseerd is"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:334
+#: ../src/Banshee.Base/Dap/Dap.cs:335
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Apparaat"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Banshee.Base/Dap/Dap.cs:336
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "{0} aan het synchroniseren"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:339
+#: ../src/Banshee.Base/Dap/Dap.cs:340
 msgid "Waiting for transcoder..."
 msgstr "Wachten op transcoder..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:427 ../src/Banshee.Base/Dap/Dap.cs:448
+#: ../src/Banshee.Base/Dap/Dap.cs:428 ../src/Banshee.Base/Dap/Dap.cs:449
 msgid "Processing..."
 msgstr "Bezig met verwerken..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:468
+msgid "Could not encode some files"
+msgstr "Kon sommige bestanden niet omzetten"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:470
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr ""
+"Sommige bestanden konden niet worden omgezet naar het juiste formaat. "
+"Ze worden niet opgeslagen op het apparaat als je doorgaat."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:475
+msgid "Continue synchronizing"
+msgstr "Doorgaan met synchroniseren"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1437,6 +1776,58 @@ msgstr "Volumegebruik"
 msgid "Advanced Details"
 msgstr "Geavanceerde details"
 
+#: ../src/Banshee.Base/Globals.cs:70 ../src/Banshee.Base/Globals.cs:79
+msgid "Starting background tasks"
+msgstr "Bezig met starten achtergrondtaken"
+
+#: ../src/Banshee.Base/Globals.cs:80
+msgid "Detecting network settings"
+msgstr "Bezig met zoeken naar netwerkinstellingen"
+
+#: ../src/Banshee.Base/Globals.cs:81
+msgid "Creating action manager"
+msgstr "Bezig met aanmaken action manager"
+
+#: ../src/Banshee.Base/Globals.cs:82
+msgid "Loading music library"
+msgstr "Bezig met laden van muziekbibliotheek"
+
+#: ../src/Banshee.Base/Globals.cs:87 ../src/Banshee.Base/Globals.cs:88
+msgid "Initializing player engine"
+msgstr "Bezig met initialiseren afspeelmotor"
+
+#: ../src/Banshee.Base/Globals.cs:90
+msgid "Initializing audio CD support"
+msgstr "Bezig met initialiseren van audio cd ondersteuning"
+
+#: ../src/Banshee.Base/Globals.cs:91
+msgid "Audio CD support will be disabled for this instance"
+msgstr "Audio cd ondersteuning zal uitgeschakeld zijn"
+
+#: ../src/Banshee.Base/Globals.cs:93
+msgid "Initializing digital audio player support"
+msgstr "Bezig met initialiseren ondersteuning audiospelers"
+
+#: ../src/Banshee.Base/Globals.cs:94
+msgid "DAP support will be disabled for this instance"
+msgstr "DAP ondersteuning zal uitgeschakeld zijn"
+
+#: ../src/Banshee.Base/Globals.cs:96
+msgid "Initializing CD writing support"
+msgstr "Bezig met initialiseren ondersteuning voor het schrijven van cd's"
+
+#: ../src/Banshee.Base/Globals.cs:97
+msgid "CD burning support will be disabled for this instance"
+msgstr "Ondersteuning voor het schrijven van cd's zal uitgeschakeld zijn"
+
+#: ../src/Banshee.Base/Globals.cs:99
+msgid "Initializing plugins"
+msgstr "Bezig met initialiseren van plugins"
+
+#: ../src/Banshee.Base/Globals.cs:100
+msgid "Initializing background tasks"
+msgstr "Bezig met initialiseren van achtergrondtaken"
+
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:46
 msgid "Primary Development"
 msgstr "Hoofdontwikkelaars"
@@ -1461,6 +1852,26 @@ msgstr ""
 msgid "Banshee Wiki"
 msgstr "Banshee Wiki"
 
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Er zijn belangrijke taken actief"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Het sluiten van Banshee beëindigd alle lopende taken. Deze kunnen niet meer "
+"automatisch worden hervat de volgende keer dat Banshee wordt gestart." 
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Toch afsluiten"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Doorgaan met uitvoeren"
+
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:52
 msgid "Banshee Encountered a Fatal Error"
 msgstr "Banshee is een fatale fout tegengekomen"
@@ -1472,6 +1883,22 @@ msgstr "Foutdetails"
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:134
 msgid "An unhandled exception was thrown: "
 msgstr "Er is een niet-afgehandelde uitzondering opgetreden: "
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:42
+msgid "Select album cover image"
+msgstr "Kies een afbeelding voor de albumhoes"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:57
+msgid "All image files"
+msgstr "Alle beeldbestanden"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:64
+msgid "JPEG image files"
+msgstr "JPEG beeldbestanden"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:69
+msgid "PNG image files"
+msgstr "PNG beeldbestanden"
 
 #: ../src/Banshee.Base/Gui/LogCoreDialog.cs:51
 msgid "Log Viewer"
@@ -1522,51 +1949,59 @@ msgstr "Bladeren..."
 msgid "Select library location"
 msgstr "Kies de bibliotheeklocatie"
 
+#: ../src/Banshee.Base/Gui/SourceView.cs:431
+msgid "Could not import tracks"
+msgstr "Kon nummers niet importeren"
+
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:78
 msgid "Continuous"
 msgstr "Ononderbroken"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:212
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Automatisch alle tracknummers in oplopende volgorde instellen"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:213
 msgid "Set all track counts to this value"
 msgstr "Stel deze waarde in voor alle track tellingen"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:214
 msgid "Set all artists to this value"
 msgstr "Stel deze waarde in voor alle artiesten "
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:181
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:215
 msgid "Set all albums to this value"
 msgstr "Stel deze waarde in voor alle albums"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:182
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:216
 msgid "Set all genres to this value"
 msgstr "Stel deze waarde in voor alle genres"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:183
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:217
 msgid "Set all years to this value"
 msgstr "Stel deze waarde in voor alle jaren"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:184
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:218
 msgid ""
 "Set all common fields in all selected tracks to the values currently set"
 msgstr ""
 "Stel alle gemeenschappelijke velden in alle geselecteerde nummers in op de "
 "deze waarden"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:234
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:219
+msgid "Set all ratings to this value"
+msgstr "Stel deze waarde in voor alle waarderingen "
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
 msgid "Never played"
 msgstr "Nooit afgespeeld"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:239
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:285
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Nummer {0} van {1} aan het bewerken"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:240
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:286
 #, csharp-format
 msgid "Editing {0}"
 msgstr "{0} aan het bewerken"
@@ -1582,22 +2017,6 @@ msgstr "Assembly-naam"
 #: ../src/Banshee.Base/Gui/VersionInformationDialog.cs:69
 msgid "Version"
 msgstr "Versie"
-
-#: ../src/Banshee.Base/FileImportSource.cs:55
-msgid "Import Files to Library"
-msgstr "Bestanden importeren in bibliotheek"
-
-#: ../src/Banshee.Base/FileImportSource.cs:82
-msgid "Local Files"
-msgstr "Lokale bestanden"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:55
-msgid "Import Folder to Library"
-msgstr "Map importeren in bibliotheek"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:80
-msgid "Local Folder"
-msgstr "Lokale map"
 
 #: ../src/Banshee.Base/GstTranscoder.cs:80
 msgid "Could not create transcoder"
@@ -1642,6 +2061,10 @@ msgstr "Kan geen vervinding maken met NetworkManager"
 #: ../src/Banshee.Base/NetworkDetect.cs:77
 msgid "An available, working network connection will be assumed"
 msgstr "Er wordt uitgegaan van een werkende netwerkverbinding"
+
+#: ../src/Banshee.Base/Notifications.cs:81
+msgid "Cannot show notification"
+msgstr "Kan aankondiging niet tonen"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
@@ -1701,11 +2124,11 @@ msgstr "bij"
 msgid "No MP3-compatible encoders available"
 msgstr "Geen voor mp3 geschikte encoders aanwezig"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Standaard speler-motor"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
@@ -1713,11 +2136,11 @@ msgstr ""
 "Er zijn geen afspeelmotors gevonden. Controleer of Banshee correct is "
 "geïnstalleerd."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
 msgstr "Probleem met speler-motor"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:87
 msgid "Playing Music"
 msgstr "Muziek aan het spelen"
 
@@ -1798,28 +2221,33 @@ msgstr ""
 "Bezig met het synchroniseren van het apparaat, een moment geduld a.u.b...."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:168
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:219
 msgid "Importing"
 msgstr "Importeren"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:221
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
 msgstr "U bent nu aan het importeren van {0}. Wilt u dit stoppen?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:274
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:223
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Aan het kopiëren van {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:275
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:224
 msgid "Scanning..."
 msgstr "Bezig met zoeken..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:393
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:340
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Kan nummer niet importeren van {0}"
@@ -1878,10 +2306,6 @@ msgstr "Lokale wachtrij"
 msgid "Delete Playlist"
 msgstr "Afspeellijst verwijderen"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
-msgid "Playlist"
-msgstr "Afspeellijst"
-
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:164
 msgid "Cannot Rename Playlist"
 msgstr "Kan afspeellijst niet hernoemen"
@@ -1891,15 +2315,20 @@ msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 "Er bestaat al een afspeellijst met deze naam. Kies a.u.b. een andere naam."
 
+#: ../src/Banshee.Base/StreamTagger.cs:153
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "Tags voor {0} opslaan"
+
 #: ../src/Banshee.Base/TrackInfo.cs:399
 msgid "Unknown Title"
 msgstr "Onbekende titel"
 
-#: ../src/Banshee.Base/TrackInfoHeader.cs:103
+#: ../src/Banshee.Base/TrackInfoHeader.cs:98
 msgid "by"
 msgstr "door"
 
-#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+#: ../src/Banshee.Base/TrackInfoHeader.cs:99
 msgid "from"
 msgstr "van"
 
@@ -1929,24 +2358,54 @@ msgstr "Nieuwe database opslaan..."
 msgid "Error rebuilding iPod database"
 msgstr "Fout bij het aanmaken van de iPod-database"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:162
+#. Translators "Week 25 of 2006"
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:82
+msgid "Manufactured During"
+msgstr "Gemaakt gedurende"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
+#, csharp-format
+msgid "Week {0} of {1}"
+msgstr "Week {0} van {1}"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:117
+msgid "Your iPod could not be identified"
+msgstr "Je iPod wordt niet herkend"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
+msgid ""
+"Please consider submitting information about your iPod to the Banshee "
+"Project so your iPod may be more fully identified in the future.\n"
+msgstr ""
+"Je kunt informatie over je iPod versturen naar het Banshee Project "
+"zodat je iPod in de toekomst volledig herkend kan worden.\n"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:121
+msgid "Do not ask me again"
+msgstr "Dit venster niet opnieuw weergeven"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:126
+msgid "Go to Web Site"
+msgstr "Ga naar de website"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:207
 msgid "Could not eject iPod"
 msgstr "Uitwerpen iPod mislukt"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:170
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:189
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:215
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:234
 msgid "Synchronizing iPod"
 msgstr "iPod synchroniseren"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:171
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:216
 msgid "Pre-processing tracks"
 msgstr "Bezig met voorbereiden tracks"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:231
 msgid "Flushing to Disk (may take time)"
 msgstr "Schrijven naar schijf (kan even duren)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:196
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:241
 msgid "Failed to synchronize iPod"
 msgstr "iPod synchroniseren mislukt"
 
@@ -2012,20 +2471,21 @@ msgstr ": Gevonden"
 msgid "Reading library information"
 msgstr "Bibliotheekinformatie aan het lezen"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:139
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:140
 msgid "Loading device"
 msgstr "Apparaat aan het laden"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
 msgid "Done"
 msgstr "Klaar"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:145
 msgid ": Ready for use"
 msgstr ": Klaar voor gebruik"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:193 ../src/Banshee.Dap/Mtp/MtpDap.cs:226
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:238 ../src/Banshee.Dap/Njb/NjbDap.cs:250
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:192 ../src/Banshee.Dap/Mtp/MtpDap.cs:196
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:229 ../src/Banshee.Dap/Njb/NjbDap.cs:238
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:250
 msgid "Synchronizing Device"
 msgstr "Apparaat synchroniseren"
 
@@ -2179,6 +2639,15 @@ msgstr "Wachtwoord:"
 msgid "Login"
 msgstr "Inloggen"
 
+#: ../src/Banshee.Plugins/Daap/DaapPlugin.cs:45
+msgid ""
+"Allow browsing and listening to songs from music shares and share your "
+"Banshee library with others. Works with other instances of Banshee, iTunes, "
+"and Rhythmbox."
+msgstr "Maak het mogelijk om gedeelde muziek te bekijken en te beluisteren "
+"en je Banshee bibliotheek te delen met anderen. Werkt met andere gebruikers "
+"van Banshee, Rhythmbox en iTunes."
+
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
 msgstr ""
@@ -2197,11 +2666,11 @@ msgstr "DAAP 'Muziek delen'-plugin inschakelen"
 msgid "Name of DAAP server share"
 msgstr "Naam van de DAAP gedeelde muziekmap"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:71
 msgid "Cannot login to DAAP share"
 msgstr "Aanmelden op DAAP gedeelde muziek mislukt"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:132
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:148
 msgid "Disconnect"
 msgstr "Verbinding verbreken"
 
@@ -2274,21 +2743,38 @@ msgstr ""
 "Instellen van de multimedia toetsenbord sneltoetsen is mogelijk via het "
 "Gnome Toestenbord Sneltoetsen instellingen-applet"
 
+#: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:47
+msgid "Adds support for multimedia keys configured through Gnome."
+msgstr "Voegt ondersteuning toe voor multimediatoetsen geconfigureerd met Gnome"
+
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
 msgstr "Multimediatoetsen-plugin inschakelen"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:49
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:47
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:57
 msgid "Notification Area Icon"
 msgstr "Mededelingengebied pictogram"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:53
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:50
 msgid "Shows the Notification Area Icon"
 msgstr "Toont het mededelingengebied pictogram"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:169
+msgid "Now Playing"
+msgstr "Bezig met afspelen"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:65
+msgid "Show notifications when song changes"
+msgstr "Toon aankondiging wanneer een nieuw nummer begint"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
 msgid "Enable the Notification Area Icon plugin"
 msgstr "Mededelingengebied pictogram-plugin inschakelen"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:2
+msgid "Show notification bubbles when the song changes"
+msgstr "Toon mededelingenballon wanneer een nieuw nummer begint"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:86
 #, csharp-format
@@ -2324,87 +2810,63 @@ msgstr "Bezig met zoeken: {0}"
 msgid "Idle"
 msgstr "Klaar"
 
-#: ../src/PlayerInterface.cs:380
+#: ../src/PlayerInterface.cs:385
 msgid "Loading..."
 msgstr "Bezig met laden..."
 
-#: ../src/PlayerInterface.cs:436
+#: ../src/PlayerInterface.cs:441
 msgid "All"
 msgstr "Alles"
 
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1331
-msgid "Song Name"
-msgstr "Nummertitel"
-
-#: ../src/PlayerInterface.cs:439 ../src/PlayerInterface.cs:1329
-#: ../src/PlayerInterface.cs:2307
-msgid "Artist Name"
-msgstr "Artiestnaam"
-
-#: ../src/PlayerInterface.cs:440 ../src/PlayerInterface.cs:1333
-#: ../src/PlayerInterface.cs:2303
-msgid "Album Title"
-msgstr "Albumtitel"
-
-#: ../src/PlayerInterface.cs:441 ../src/PlayerInterface.cs:1335
-#: ../src/PlayerInterface.cs:2311 ../src/PlaylistView.cs:106
-msgid "Genre"
-msgstr "Genre"
-
-#: ../src/PlayerInterface.cs:442 ../src/PlayerInterface.cs:1337
-#: ../src/PlaylistView.cs:109
-msgid "Year"
-msgstr "Jaar"
-
-#: ../src/PlayerInterface.cs:463
+#: ../src/PlayerInterface.cs:468
 msgid "Write selection to CD"
 msgstr "Selectie op cd branden"
 
-#: ../src/PlayerInterface.cs:464
+#: ../src/PlayerInterface.cs:469
 msgid "Import CD into library"
 msgstr "Cd importeren in bibliotheek"
 
-#: ../src/PlayerInterface.cs:465
+#: ../src/PlayerInterface.cs:470
 msgid "Play previous song"
 msgstr "Vorig nummer afspelen"
 
-#: ../src/PlayerInterface.cs:466
+#: ../src/PlayerInterface.cs:471
 msgid "Play/pause current song"
 msgstr "Huidig nummer afspelen/pauzeren"
 
-#: ../src/PlayerInterface.cs:467
+#: ../src/PlayerInterface.cs:472
 msgid "Play next song"
 msgstr "Volgend nummer afspelen"
 
-#: ../src/PlayerInterface.cs:468
+#: ../src/PlayerInterface.cs:473
 msgid "Device disk usage"
 msgstr "Schrijfgebruik apparaat"
 
-#: ../src/PlayerInterface.cs:469
+#: ../src/PlayerInterface.cs:474
 msgid "Synchronize music library to device"
 msgstr "Muziekbibliotheek synchroniseren met apparaat"
 
-#: ../src/PlayerInterface.cs:470
+#: ../src/PlayerInterface.cs:475
 msgid "Adjust volume"
 msgstr "Volume aanpassen"
 
-#: ../src/PlayerInterface.cs:471
+#: ../src/PlayerInterface.cs:476
 msgid "Change repeat playback mode"
 msgstr "Herhalingsmodus wijzigen"
 
-#: ../src/PlayerInterface.cs:472
+#: ../src/PlayerInterface.cs:477
 msgid "Toggle shuffle playback mode"
 msgstr "Shuffle-modus aan/uit zetten"
 
-#: ../src/PlayerInterface.cs:473
+#: ../src/PlayerInterface.cs:478
 msgid "Edit and view metadata of selected songs"
 msgstr "Metadata van de geselecteerde nummers bewerken en bekijken"
 
-#: ../src/PlayerInterface.cs:817
+#: ../src/PlayerInterface.cs:794
 msgid "Cannot Play Song"
 msgstr "Kan nummer niet afspelen"
 
-#: ../src/PlayerInterface.cs:818
+#: ../src/PlayerInterface.cs:795
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2418,47 +2880,47 @@ msgstr ""
 "  <big>•</big> Het nummer op een apparaat staat dat afspelen niet "
 "ondersteund\n"
 
-#: ../src/PlayerInterface.cs:838
+#: ../src/PlayerInterface.cs:815
 msgid "Pause"
 msgstr "Pauze"
 
-#: ../src/PlayerInterface.cs:881
+#: ../src/PlayerInterface.cs:858
 msgid "Playback Error"
 msgstr "Afspeelfout"
 
-#: ../src/PlayerInterface.cs:1076
+#: ../src/PlayerInterface.cs:1053
 msgid "Import"
 msgstr "Importeren"
 
-#: ../src/PlayerInterface.cs:1094
+#: ../src/PlayerInterface.cs:1071
 #, csharp-format
 msgid "Rename {0}"
 msgstr "{0} hernoemen"
 
-#: ../src/PlayerInterface.cs:1215
+#: ../src/PlayerInterface.cs:1192
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dagen"
 
-#: ../src/PlayerInterface.cs:1232
+#: ../src/PlayerInterface.cs:1209
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} item"
 msgstr[1] "{0} items"
 
-#: ../src/PlayerInterface.cs:1234
+#: ../src/PlayerInterface.cs:1211
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} totale speeltijd"
 
-#: ../src/PlayerInterface.cs:1591
+#: ../src/PlayerInterface.cs:1587
 msgid "Clear"
 msgstr "Wissen"
 
-#: ../src/PlayerInterface.cs:1858
+#: ../src/PlayerInterface.cs:1854
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2467,15 +2929,15 @@ msgstr[0] "Weet u zeker dat u dit nummer voorgoed wilt verwijderen?"
 msgstr[1] ""
 "Weet u zeker dat u de {0} geselecteerde nummers voorgoed wilt verwijderen?"
 
-#: ../src/PlayerInterface.cs:1862
+#: ../src/PlayerInterface.cs:1858
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Alsu de selectie verwijderd, gaat deze permanent verloren."
 
-#: ../src/PlayerInterface.cs:1865
+#: ../src/PlayerInterface.cs:1861
 msgid "Remove selection from library"
 msgstr "Selectie uit bibliotheek verwijderen"
 
-#: ../src/PlayerInterface.cs:1867
+#: ../src/PlayerInterface.cs:1863
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2487,17 +2949,17 @@ msgstr[1] ""
 "Weet u zeker dat u de geselecteerde nummers <b>({0})</b> wilt verwijderen "
 "uit de bibliotheek?"
 
-#: ../src/PlayerInterface.cs:2009
+#: ../src/PlayerInterface.cs:2005
 msgid "New CD"
 msgstr "Nieuwe cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2030
+#: ../src/PlayerInterface.cs:2026
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "{0} synchroniseren"
 
-#: ../src/PlayerInterface.cs:2031
+#: ../src/PlayerInterface.cs:2027
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2515,7 +2977,7 @@ msgstr ""
 "<big>•</big> <i>Handmatige veranderingen opslaan</i>: enkel handmatige "
 "veranderingen opslaan"
 
-#: ../src/PlayerInterface.cs:2037
+#: ../src/PlayerInterface.cs:2033
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2523,11 +2985,11 @@ msgstr ""
 "<b>Opgelet:</b> Deze handelingen zullen de inhoud van uw iPod aanpassen of "
 "verwijderen en kan incompatibiliteit veroorzaken met iTunes!"
 
-#: ../src/PlayerInterface.cs:2039
+#: ../src/PlayerInterface.cs:2035
 msgid "Synchronize Library"
 msgstr "Bibliotheek synchroniseren"
 
-#: ../src/PlayerInterface.cs:2041
+#: ../src/PlayerInterface.cs:2037
 msgid "Save Manual Changes"
 msgstr "Handmatige veranderingen opslaan"
 
@@ -2543,41 +3005,27 @@ msgstr "Kies kolommen"
 msgid "Visible Playlist Columns"
 msgstr "Zichtbare afspeellijstkolommen"
 
-#: ../src/PlaylistView.cs:94
+#: ../src/PlaylistView.cs:99
 msgid "Track"
 msgstr "Track"
 
-#: ../src/PlaylistView.cs:97
-msgid "Artist"
-msgstr "Artiest"
-
-#: ../src/PlaylistView.cs:100
-msgid "Title"
-msgstr "Titel"
-
-#: ../src/PlaylistView.cs:103
-msgid "Album"
-msgstr "Album"
-
-#: ../src/PlaylistView.cs:112
+#: ../src/PlaylistView.cs:117
 msgid "Time"
 msgstr "Tijd"
 
-#: ../src/PlaylistView.cs:123
+#: ../src/PlaylistView.cs:130
 msgid "Plays"
 msgstr "Afgespeeld"
 
-#: ../src/PlaylistView.cs:130
-msgid "Last Played"
-msgstr "Laatst afgespeeld"
-
-#: ../src/PlaylistView.cs:510
+#: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/SourceView.cs:431
-msgid "Could not import tracks"
-msgstr "Kon nummers niet importeren"
+#~ msgid "MP3"
+#~ msgstr "MP3"
+
+#~ msgid "Data"
+#~ msgstr "Data"
 
 #~ msgid "<b>Advanced Properties</b>"
 #~ msgstr "<b>Geavanceerde eigenschappen</b>"
@@ -2608,9 +3056,6 @@ msgstr "Kon nummers niet importeren"
 
 #~ msgid "Number of Plays:"
 #~ msgstr "Aantal keer afgespeeld:"
-
-#~ msgid "Track Duration:"
-#~ msgstr "Track-lengte"
 
 #~ msgid "VBR:"
 #~ msgstr "VBR:"
@@ -2666,9 +3111,6 @@ msgstr "Kon nummers niet importeren"
 #~ msgid "File: {0}"
 #~ msgstr "Bestand: {0}"
 
-#~ msgid "KB/Second"
-#~ msgstr "KB/Seconde"
-
 #~ msgid "{0} KHz"
 #~ msgstr "{0} KHz"
 
@@ -2708,10 +3150,6 @@ msgstr "Kon nummers niet importeren"
 
 #~ msgid "Disk Drive:"
 #~ msgstr "Schijfstation:"
-
-# Onvertaald laten lijkt me het best (Wouter Bolsterlee)
-#~ msgid "Disk at once"
-#~ msgstr "Disk at once"
 
 #~ msgid "Encoding Profile:"
 #~ msgstr "Coderingsprofiel:"
@@ -2759,9 +3197,6 @@ msgstr "Kon nummers niet importeren"
 
 #~ msgid "Writing Audio CD"
 #~ msgstr "Audio-cd aan het branden"
-
-#~ msgid "Creating Image"
-#~ msgstr "Bezig met aanmaken cd-bestand"
 
 #~ msgid "Transferring songs"
 #~ msgstr "Nummers aan het overzetten"
@@ -2929,9 +3364,6 @@ msgstr "Kon nummers niet importeren"
 
 #~ msgid "Encoding {0} - {1} ..."
 #~ msgstr "Bezig met coderen van {0} - {1}..."
-
-#~ msgid "Could not encode file: {0}"
-#~ msgstr "Bestand coderen mislukt: {0}"
 
 #~ msgid "iPod Name"
 #~ msgstr "iPod-naam"
