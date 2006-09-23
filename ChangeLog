@@ -1,3 +1,7 @@
+2006-09-23  James Willcox  <snorp@snorp.net>
+
+	* src/Bansee.Plugins/Daap/daap-sharp/*: updated to latest
+
 2006-09-23  Alp Toker  <alp@atoker.com>
 
 	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.
