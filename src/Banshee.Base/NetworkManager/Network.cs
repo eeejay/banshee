@@ -28,34 +28,40 @@
  */
  
 using System;
-using DBus;
+using NDesk.DBus;
 
 namespace NetworkManager
 {
     [Interface("org.freedesktop.NetworkManager.Devices")]
-    internal abstract class NetworkProxy
+    public interface INetwork
     {
         /* Unsupported methods: 
             
             getProperties
         */
 
-        [Method] public abstract string getName();
-        //[Method] public abstract string getAddress(); Calling this crashes NM for me
-        [Method] public abstract int getStrength();
-        [Method] public abstract double getFrequency();
-        [Method] public abstract int getRate();
-        [Method] public abstract bool getEncrypted();
-        [Method] public abstract uint getMode();
+        string getName();
+        //string getAddress(); Calling this crashes NM for me
+        int getStrength();
+        double getFrequency();
+        int getRate();
+        bool getEncrypted();
+        uint getMode();
     }
     
     public class Network
     {
-        private NetworkProxy network;
+        private INetwork network;
         
-        internal Network(NetworkProxy network)
+        internal Network(INetwork network)
         {
             this.network = network;
+        }
+
+        //TODO: this is a temporary solution
+        internal Network(ObjectPath network_path)
+        {
+            this.network = Manager.GetObject<INetwork> (network_path);
         }
         
         public string Name {

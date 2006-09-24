@@ -1,3 +1,13 @@
+2006-09-24  Alp Toker  <alp@atoker.com>
+
+	* src/Banshee.Base/Globals.cs:
+	* src/Banshee.Base/NetworkDetect.cs:
+	* src/Banshee.Base/NetworkManager/Device.cs:
+	* src/Banshee.Base/NetworkManager/Manager.cs:
+	* src/Banshee.Base/NetworkManager/Network.cs:
+	Use managed dbus for NetworkManager client
+	Note that the signals still need to be ported to ordinary events.
+
 2006-09-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: RemotePlayer does

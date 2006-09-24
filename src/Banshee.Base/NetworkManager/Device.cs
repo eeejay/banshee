@@ -29,7 +29,8 @@
  
 using System;
 using System.Collections;
-using DBus;
+using System.Collections.Generic;
+using NDesk.DBus;
 
 namespace NetworkManager
 {
@@ -40,7 +41,7 @@ namespace NetworkManager
     }
     
     [Interface("org.freedesktop.NetworkManager.Devices")]
-    internal abstract class DeviceProxy
+    public interface IDevice
     {
         /* Unsupported methods: 
             
@@ -49,24 +50,32 @@ namespace NetworkManager
             getCapabilities
         */
 
-        [Method] public abstract string getName();
-        [Method] public abstract uint getMode();
-        [Method] public abstract int getType();
-        [Method] public abstract string getHalUdi();
-        [Method] public abstract uint getIP4Address();
-        [Method] public abstract string getHWAddress();
-        [Method] public abstract bool getLinkActive();
-        [Method] public abstract NetworkProxy getActiveNetwork();
-        [Method] public abstract NetworkProxy [] getNetworks();
+        string getName();
+        uint getMode();
+        int getType();
+        string getHalUdi();
+        uint getIP4Address();
+        string getHWAddress();
+        bool getLinkActive();
+        //INetwork getActiveNetwork();
+        ObjectPath getActiveNetwork();
+        //INetwork [] getNetworks();
+        ObjectPath [] getNetworks();
     }
     
     public class Device : IEnumerable
     {
-        private DeviceProxy device;
+        private IDevice device;
         
-        internal Device(DeviceProxy device)
+        internal Device(IDevice device)
         {
             this.device = device;
+        }
+
+        //TODO: this is a temporary solution
+        internal Device(ObjectPath device_path)
+        {
+            this.device = Manager.GetObject<IDevice> (device_path);
         }
         
         public override string ToString()
@@ -153,7 +162,8 @@ namespace NetworkManager
                 
                 try {
                     return new Network(device.getActiveNetwork());
-                } catch(DBusException) {
+                } catch(Exception) {
+                    //FIXME: unacceptable silent error handling
                     return null;
                 }
             }
@@ -161,24 +171,36 @@ namespace NetworkManager
         
         public IEnumerator GetEnumerator()
         {
-            foreach(NetworkProxy network in device.getNetworks()) {
+            /*
+            foreach(INetwork network in device.getNetworks()) {
                 yield return new Network(network);
+            }
+            */
+            foreach(ObjectPath network_path in device.getNetworks()) {
+                yield return new Network(network_path);
             }
         }
         
         public Network [] Networks {
             get {
-                ArrayList list = new ArrayList();
+                List<Network> list = new List<Network>();
                 
                 try {
-                    foreach(NetworkProxy network in device.getNetworks()) {
+                    /*
+                    foreach(INetwork network in device.getNetworks()) {
                         list.Add(new Network(network));
+                    }
+                    */
+                    foreach(ObjectPath network_path in device.getNetworks()) {
+                        list.Add(new Network(network_path));
                     }
                 } catch(Exception) {
                 }
                 
-                return list.ToArray(typeof(Network)) as Network [];
+                return list.ToArray();
             }
         }
     }
 }
+
+

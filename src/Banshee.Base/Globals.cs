@@ -142,7 +142,6 @@ namespace Banshee.Base
             dbus_remote.UnregisterObject(dbus_player);
             Banshee.Kernel.Scheduler.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
-            network_detect.Dispose();
             library.Db.Dispose();
             Banshee.Dap.DapCore.Dispose();
             HalCore.Dispose();

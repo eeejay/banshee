@@ -30,7 +30,8 @@
 using System;
 using System.Reflection;
 using System.Collections;
-using DBus;
+using System.Collections.Generic;
+using NDesk.DBus;
 
 namespace NetworkManager
 {
@@ -43,7 +44,7 @@ namespace NetworkManager
     }
     
     [Interface("org.freedesktop.NetworkManager")]
-    internal abstract class ManagerProxy 
+    public interface IManager
     {
         /* Unsupported methods: 
             
@@ -55,24 +56,26 @@ namespace NetworkManager
             removeTestDevice
         */
     
-        [Method] public abstract DeviceProxy [] getDevices();
-        [Method] public abstract uint state();
-        [Method] public abstract void sleep();
-        [Method] public abstract void wake();
-        [Method] public abstract bool getWirelessEnabled();
-        [Method] public abstract void setWirelessEnabled(bool enabled); 
-        [Method] public abstract DeviceProxy getActiveDevice();
+        //IDevice [] getDevices();
+        ObjectPath [] getDevices();
+        uint state();
+        void sleep();
+        void wake();
+        bool getWirelessEnabled();
+        void setWirelessEnabled(bool enabled);
+        //IDevice getActiveDevice();
+        ObjectPath getActiveDevice();
     }
 
-    public class Manager : IEnumerable, IDisposable
+    //public class Manager : IEnumerable<Device>
+    public class Manager : IEnumerable
     {
-        private static readonly string PATH_NAME = "/org/freedesktop/NetworkManager";
-        private static readonly string INTERFACE_NAME = "org.freedesktop.NetworkManager";
+        private const string BusName = "org.freedesktop.NetworkManager";
+        private const string ObjectPath = "/org/freedesktop/NetworkManager";
 
-        private Service dbus_service;
-        private Connection dbus_connection;
-        private ManagerProxy manager;
+        private IManager manager;
         
+        //FIXME: support signals again with managed dbus
 #pragma warning disable 0067
         public event EventHandler DeviceNoLongerActive;
         public event EventHandler DeviceNowActive;
@@ -86,28 +89,19 @@ namespace NetworkManager
         public event EventHandler WirelessNetworkStrengthChanged;
 #pragma warning restore 0067
         
+        //TODO: this is a temporary solution
+        public static T GetObject<T> (ObjectPath path)
+        {
+            return DApplication.SystemConnection.GetObject<T>(BusName, path);
+        }
+
         public Manager()
         {
-            dbus_connection = Bus.GetSystemBus();
-            dbus_service = Service.Get(dbus_connection, INTERFACE_NAME);
-            manager = (ManagerProxy)dbus_service.GetObject(typeof(ManagerProxy), PATH_NAME);
-                
-            dbus_service.SignalCalled += OnSignalCalled;
-        }
-        
-        public void Dispose()
-        {
-            // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
-            System.GC.SuppressFinalize(manager);
-        }
-        
-        private void OnSignalCalled(Signal signal)
-        {
-            if(signal.PathName != PATH_NAME || signal.InterfaceName != INTERFACE_NAME) {
-                return;
+            if(!DApplication.SystemBus.NameHasOwner(BusName)) {
+                throw new ApplicationException(String.Format("Name {0} has no owner", BusName));
             }
-            
-            InvokeEvent(signal.Name);
+
+            manager = DApplication.SystemConnection.GetObject<IManager>(BusName, new ObjectPath(ObjectPath));
         }
         
         private void InvokeEvent(string nmSignalName)
@@ -151,10 +145,17 @@ namespace NetworkManager
             }
         }
         
+
+        //public IEnumerator<Device> GetEnumerator()
         public IEnumerator GetEnumerator()
         {
-            foreach(DeviceProxy device in manager.getDevices()) {
+            /*
+            foreach(IDevice device in manager.getDevices()) {
                 yield return new Device(device);
+            }
+            */
+            foreach(ObjectPath device_path in manager.getDevices()) {
+                yield return new Device(device_path);
             }
         }
         
@@ -166,13 +167,18 @@ namespace NetworkManager
         
         public Device [] Devices {
             get {
-                ArrayList list = new ArrayList();
+                List<Device> list = new List<Device>();
                 
-                foreach(DeviceProxy device in manager.getDevices()) {
+                /*
+                foreach(IDevice device in manager.getDevices()) {
+                    list.Add(new Device(device));
+                }
+                */
+                foreach(ObjectPath device in manager.getDevices()) {
                     list.Add(new Device(device));
                 }
                 
-                return list.ToArray(typeof(Device)) as Device [];
+                return list.ToArray();
             }
         }
         
@@ -198,6 +204,7 @@ namespace NetworkManager
         
         public Device ActiveDevice {
             get {
+                /*
                 foreach(Device device in this) {
                     if(device.IsLinkActive) {
                         return device;
@@ -205,7 +212,11 @@ namespace NetworkManager
                 }
                 
                 return null;
+                */
+
+                return new Device(manager.getActiveDevice());
             }
         }
     }
 }
+

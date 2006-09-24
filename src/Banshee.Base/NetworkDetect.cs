@@ -41,7 +41,7 @@ namespace Banshee.Base
         public bool Connected;
     }
 
-    public class NetworkDetect : IDisposable
+    public class NetworkDetect
     {
         public event NetworkStateChangedHandler StateChanged;
         
@@ -56,13 +56,6 @@ namespace Banshee.Base
                 }
                 
                 return instance;
-            }
-        }
-        
-        public void Dispose()
-        {
-            if(nm_manager != null) {
-                nm_manager.Dispose();
             }
         }
         
