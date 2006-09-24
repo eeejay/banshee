@@ -184,10 +184,6 @@ if test "x$enable_mtp_dap" = "xyes"; then
 fi
 AM_CONDITIONAL(ENABLE_MTP, test "x$enable_mtp_dap" = "xyes")
 
-dnl dbus
-PKG_CHECK_MODULES(DBUSSHARP, dbus-sharp)
-AC_SUBST(DBUSSHARP)
-
 dnl sqlite devel dep
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
 

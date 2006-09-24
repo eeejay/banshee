@@ -246,11 +246,13 @@ namespace Banshee
             if(present) {
                 try {
                     Present(remote_player);
-                } catch(DBus.DBusException) {
+                } catch(Exception) {
+                    //FIXME: bad silent error handling
                     return;
                 }
             }
             
+            //FIXME: remove this hack now that the old dbus-sharp is gone
             // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
             System.GC.SuppressFinalize(remote_player);
             Gdk.Global.NotifyStartupComplete();

@@ -1,5 +1,13 @@
 2006-09-24  Alp Toker  <alp@atoker.com>
 
+	* src/Main.cs: Remove last vestiges of the old dbus-sharp
+	* configure.ac:
+	* src/Makefile.am:
+	* src/Banshee.Base/Makefile.am:
+	Do not depend on the old dbus binding. It is obsoleted by managed dbus.
+
+2006-09-24  Alp Toker  <alp@atoker.com>
+
 	* src/Banshee.Base/Globals.cs:
 	* src/Banshee.Base/NetworkDetect.cs:
 	* src/Banshee.Base/NetworkManager/Device.cs:
