@@ -40,7 +40,7 @@ namespace Banshee.MediaEngine.Helix
 {    
     public class HelixRemotePlayerEngine : PlayerEngine, IEqualizer
     {
-        private RemotePlayer player;
+        private IRemotePlayer player;
         private uint timeout_id;
         private uint ping_id;
         
@@ -63,7 +63,7 @@ namespace Banshee.MediaEngine.Helix
         public override void Dispose()
         {
             base.Dispose();
-            player.Dispose();
+            player.Shutdown();
             player = null;
             GLib.Source.Remove(ping_id);
         }
@@ -102,17 +102,15 @@ namespace Banshee.MediaEngine.Helix
             player.Pause();
         }
         
-        public void OnRemotePlayerMessage(object o, MessageArgs args)
+        public void OnRemotePlayerMessage(MessageType messageType, IDictionary<string, object> args)
         {
-            Message message = args.Message;
-            
-            switch(message.Type) {
+            switch(messageType) {
                 case MessageType.ContentConcluded:
                     Close();
                     OnEventChanged(PlayerEngineEvent.EndOfStream);
                     break;
                 case MessageType.ContentState:
-                    switch((ContentState)message["NewState"]) {
+                    switch((ContentState)args["NewState"]) {
                         case ContentState.Paused:
                             OnStateChanged(PlayerEngineState.Paused);
                             break;
@@ -128,19 +126,19 @@ namespace Banshee.MediaEngine.Helix
                     }
                     break;
                 case MessageType.Buffering:
-                    uint progress = (uint)message["Percent"];
+                    uint progress = (uint)args["Percent"];
                     OnEventChanged(PlayerEngineEvent.Buffering, 
                         null, (double)progress / 100.0);
                     break;
                 case MessageType.Title:
-                    string title = message["Title"] as string;
+                    string title = args["Title"] as string;
                     if(title == null || title.Trim() == String.Empty) {
                         break;
                     }
                 
                     StreamTag tag = new StreamTag();
                     tag.Name = CommonTags.Title;
-                    tag.Value = (string)message["Title"];
+                    tag.Value = (string)args["Title"];
                     
                     OnTagFound(tag);
                     

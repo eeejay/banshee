@@ -1,3 +1,15 @@
+2006-09-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: Use new managed
+	DBus, simplified message handling as the signal signature is now ia{sv}
+	which maps directly to delegate(MessageType, IDictionary<string,object>)
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Adjust for
+	minor changes in HelixRemotePlayer
+
+	* src/Banshee.MediaEngine/Helix/Makefile.am: Link against new managed
+	DBus, drop old dbus-sharp link; we are now 80% managed DBus
+
 2006-09-23  James Willcox  <snorp@snorp.net>
 
 	* src/Bansee.Plugins/Daap/daap-sharp/*: updated to latest
