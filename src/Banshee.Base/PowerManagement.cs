@@ -67,18 +67,17 @@ namespace Banshee.Base
 
     public static class PowerManagement
     {
-        const string BUS_NAME = "org.gnome.PowerManager";
-        const string OBJECT_PATH = "/org/gnome/PowerManager";
+        private const string BusName = "org.gnome.PowerManager";
+        private const string ObjectPath = "/org/gnome/PowerManager";
 
         private static IPowerManager FindInstance()
         {
-            Connection connection = DApplication.Connection;
-            Bus bus = DApplication.SessionBus;
-
-            if (!bus.NameHasOwner(BUS_NAME))
-                throw new Exception(String.Format ("Name {0} has no owner", BUS_NAME));
-
-            return connection.GetObject<IPowerManager>(BUS_NAME, new ObjectPath(OBJECT_PATH));
+            if(!DApplication.SessionBus.NameHasOwner(BusName)) {
+                throw new ApplicationException(String.Format("Name {0} has no owner", BusName));
+            }
+            
+            return DApplication.SessionConnection.GetObject<IPowerManager>(
+                BusName, new ObjectPath(ObjectPath));
         }
 
         private static readonly string INHIBIT_PLAY_REASON = Catalog.GetString("Playing Music");

@@ -1,5 +1,15 @@
 2006-09-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: RemotePlayer does
+	not need to handle a singleton case in managed land anymore - the 
+	remote object holds 100% of the required functionality
+
+	* src/Banshee.Base/DBusPlayer.cs:
+	* src/Banshee.Base/DBusRemote.cs:
+	* src/Banshee.Base/PowerManagement.cs: Clean up
+
+2006-09-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs: Use new managed
 	DBus, simplified message handling as the signal signature is now ia{sv}
 	which maps directly to delegate(MessageType, IDictionary<string,object>)

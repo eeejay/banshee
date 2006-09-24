@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 
 using NDesk.DBus;
-using org.freedesktop.DBus;
 
 namespace Helix
 {    
@@ -58,39 +57,6 @@ namespace Helix
         bool GetIsEqualizerEnabled();
         void SetEqualizerEnabled(bool enabled);
         void SetEqualizerGain(int frequencyId, int value);
-    }
-    
-    public static class RemotePlayer
-    {
-        public const string Interface = "org.gnome.HelixDbusPlayer";
-        public const string ServiceName = "org.gnome.HelixDbusPlayer";
-        public const string ObjectPath = "/org/gnome/HelixDbusPlayer/Player";
-        
-        private static IRemotePlayer instance;
-        
-        public static IRemotePlayer Connect()
-        {
-            if(instance != null) {
-                return instance;
-            }
-            
-            Connection connection = DApplication.Connection;
-            Bus bus = connection.GetObject<Bus>("org.freedesktop.DBus", 
-                new ObjectPath("/org/freedesktop/DBus"));
-                
-            if(bus.StartServiceByName(ServiceName, 0) == StartReply.Success) {
-                Console.WriteLine("Started {0}", ServiceName);
-            } else {
-                Console.WriteLine("{0} was already started", ServiceName);
-            }
-            
-            if(!bus.NameHasOwner(Interface)) {
-                return null;
-            }
-            
-            instance = connection.GetObject<IRemotePlayer>(Interface, new ObjectPath(ObjectPath));
-            return instance;
-        }
     }
     
     public enum ContentState {
@@ -123,5 +89,24 @@ namespace Helix
         RequestAuthentication,
         RequestUpgrade,
         HasComponent
+    }
+    
+    public static class RemotePlayer
+    {
+        public const string Interface = "org.gnome.HelixDbusPlayer";
+        public const string ServiceName = "org.gnome.HelixDbusPlayer";
+        public const string ObjectPath = "/org/gnome/HelixDbusPlayer/Player";
+
+        public static IRemotePlayer Connect()
+        {
+            DApplication.SessionBus.StartServiceByName(ServiceName, 0);
+            
+            if(!DApplication.SessionBus.NameHasOwner(Interface)) {
+                return null;
+            }
+            
+            return DApplication.SessionConnection.GetObject<IRemotePlayer>(
+                Interface, new ObjectPath(ObjectPath));
+        }
     }
 }

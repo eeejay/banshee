@@ -28,7 +28,6 @@
  
 using System;
 using NDesk.DBus;
-using org.freedesktop.DBus;
 
 using Banshee.Sources;
 using Banshee.MediaEngine;
@@ -74,13 +73,12 @@ namespace Banshee.Base
     {
         public static IDBusPlayer FindInstance()
         {
-            Connection connection = DApplication.Connection;
-            Bus bus = DApplication.SessionBus;
+            if(!DApplication.SessionBus.NameHasOwner(DBusRemote.BusName)) {
+                return null;
+            }
 
-						if (!bus.NameHasOwner(DBusRemote.my_bus_name))
-							return null;
-
-            return connection.GetObject<IDBusPlayer>(DBusRemote.my_bus_name, new ObjectPath (DBusRemote.my_object_root + "/" + "Player"));
+            return DApplication.SessionConnection.GetObject<IDBusPlayer>(
+                DBusRemote.BusName, new ObjectPath(DBusRemote.ObjectRoot + "/Player"));
         }
         
         public class UICommandArgs : EventArgs

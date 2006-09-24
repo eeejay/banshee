@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DBusRemote.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover (aaron@abock.org)
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -35,19 +34,15 @@ namespace Banshee.Base
 {
     public class DBusRemote
     {
-        public const string my_bus_name = "org.gnome.Banshee";
-        public const string my_object_root = "/org/gnome/Banshee";
+        public const string BusName = "org.gnome.Banshee";
+        public const string ObjectRoot = "/org/gnome/Banshee";
 
-        private Connection connection;
-        
         public DBusRemote()
         {
             try {
-                connection = DApplication.Connection;
-                Bus bus = DApplication.SessionBus;
-
-                NameReply nameReply = bus.RequestName(my_bus_name, NameFlag.None);
-                //TODO: error handling based on nameReply. should probably throw if nameReply is anything other than NameReply.PrimaryOwner
+                NameReply nameReply = DApplication.SessionBus.RequestName(BusName, NameFlag.None);
+                // TODO: error handling based on nameReply. should probably throw if 
+                // nameReply is anything other than NameReply.PrimaryOwner
             } catch(Exception e) {
                 LogCore.Instance.PushWarning("Could not connect to D-Bus", 
                     "D-Bus support will be disabled for this instance: " + e.Message, false);
@@ -56,20 +51,14 @@ namespace Banshee.Base
        
         public void RegisterObject(object o, string objectName)
         {
-            if(connection != null) {
-                connection.Marshal(o, my_bus_name, new ObjectPath(my_object_root + "/" + objectName));
+            if(DApplication.SessionConnection != null) {
+                DApplication.SessionConnection.Marshal(o, BusName, new ObjectPath(ObjectRoot + "/" + objectName));
             }
         }
        
         public void UnregisterObject(object o)
         {
             //TODO: unregistering objects with managed dbus
-
-            /*
-            if(service != null) {
-                service.UnregisterObject(o);
-            }
-            */
         }
     }
 }
