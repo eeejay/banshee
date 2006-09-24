@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-15 10:54+0300\n"
-"PO-Revision-Date: 2006-09-15 10:57+0300\n"
+"POT-Creation-Date: 2006-09-24 10:00+0300\n"
+"PO-Revision-Date: 2006-09-24 10:11+0300\n"
 "Last-Translator: Joonas Niilola <juippis@roskakori.org>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -361,18 +361,22 @@ msgid "<b>_Genre:</b>"
 msgstr "<b>_Tyyli:</b>"
 
 #: ../data/banshee-dialogs.glade.h:26
+msgid "<b>_Rating:</b>"
+msgstr "<b>Arvostelu:</b>"
+
+#: ../data/banshee-dialogs.glade.h:27
 msgid "<b>_Title:</b>"
 msgstr "<b>_Nimi</b>"
 
-#: ../data/banshee-dialogs.glade.h:27
+#: ../data/banshee-dialogs.glade.h:28
 msgid "<b>_Year:</b>"
 msgstr "<b>_Vuosi:</b>"
 
-#: ../data/banshee-dialogs.glade.h:28
+#: ../data/banshee-dialogs.glade.h:29
 msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Tuo musiikkia kirjastoon</b></big>"
 
-#: ../data/banshee-dialogs.glade.h:29
+#: ../data/banshee-dialogs.glade.h:30
 msgid ""
 "<small><i>Enable this option to save tags and other metadata inside "
 "supported audio files</i></small>"
@@ -380,175 +384,172 @@ msgstr ""
 "<small><i>Valitse tämä vaihtoehto, jos haluat tallentaa merkinnät ja muut "
 "metatiedot tuettujen tiedostojen sisälle</i></small>"
 
-#: ../data/banshee-dialogs.glade.h:30
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
 msgstr "Kansikuvat"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:32
 msgid "Back"
 msgstr "Takaisin"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
 msgstr "Valitse tuonnin lähde:"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Conversion Format:"
-msgstr "Muunnoksen muoto:"
+msgstr "Muunnoksen tyyppi:"
 
 # CVS/HEAD:ssa on uusi ominaisuus
 # http://abock.org/~aaron/metadata-editor.png
-#: ../data/banshee-dialogs.glade.h:34
+#: ../data/banshee-dialogs.glade.h:35
 msgid "Copy all common fields"
 msgstr "Kopioi kaikki yleiset kentät"
 
-#: ../data/banshee-dialogs.glade.h:35
+#: ../data/banshee-dialogs.glade.h:36
 msgid "Copy files to music folder when importing"
 msgstr "Kopioi tiedostot musiikkikansioon tuotaessa"
 
-#: ../data/banshee-dialogs.glade.h:36
+#: ../data/banshee-dialogs.glade.h:37
 msgid "Copy to all"
 msgstr "Kopioi kaikille"
 
-#: ../data/banshee-dialogs.glade.h:37
+#: ../data/banshee-dialogs.glade.h:38
 msgid "Create a new preset"
 msgstr "Luo uusi esivalinta"
 
-#: ../data/banshee-dialogs.glade.h:38
+#: ../data/banshee-dialogs.glade.h:39
 msgid "Delete the active preset"
 msgstr "Poista aktiivinen esivalinta"
 
-#: ../data/banshee-dialogs.glade.h:39
+#: ../data/banshee-dialogs.glade.h:40
 msgid "Details"
 msgstr "Yksityiskohdat"
 
-#: ../data/banshee-dialogs.glade.h:40
+#: ../data/banshee-dialogs.glade.h:41
 msgid "Disc Options"
 msgstr "Levyn valinnat"
 
-#: ../data/banshee-dialogs.glade.h:41
+#: ../data/banshee-dialogs.glade.h:42
 msgid "Disc format:"
 msgstr "Levyn muoto:"
 
-#: ../data/banshee-dialogs.glade.h:42
+#: ../data/banshee-dialogs.glade.h:43
 msgid "Disc name:"
 msgstr "Levyn nimi:"
 
-#: ../data/banshee-dialogs.glade.h:43
+#: ../data/banshee-dialogs.glade.h:44
 msgid "Do not show this dialog again"
 msgstr "Älä näytä tätä uudestaan"
 
-#: ../data/banshee-dialogs.glade.h:44
+#: ../data/banshee-dialogs.glade.h:45
 msgid "Eject disc after writing"
 msgstr "Avaa kelkka kirjoituksen päätyttyä"
 
-#: ../data/banshee-dialogs.glade.h:45
+#: ../data/banshee-dialogs.glade.h:46
 msgid "Embed directly in song"
 msgstr "Upota kappaleen tiedostoon"
 
-#: ../data/banshee-dialogs.glade.h:46
+#: ../data/banshee-dialogs.glade.h:47
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
 msgid "Enabled"
 msgstr "Käytössä"
 
-#: ../data/banshee-dialogs.glade.h:47
+#: ../data/banshee-dialogs.glade.h:48
 msgid "Enter Next"
 msgstr "Syötä seuraava"
 
-#: ../data/banshee-dialogs.glade.h:48
+#: ../data/banshee-dialogs.glade.h:49
 msgid "Enter the address of the file you would like to open:"
 msgstr "Syötä avattavan tiedoston sijainti:"
 
-#: ../data/banshee-dialogs.glade.h:49 ../src/Banshee.Base/ActionManager.cs:140
+#: ../data/banshee-dialogs.glade.h:50 ../src/Banshee.Base/ActionManager.cs:140
 msgid "Equalizer"
 msgstr "Ekvalisaattori"
 
-#: ../data/banshee-dialogs.glade.h:50
+#: ../data/banshee-dialogs.glade.h:51
 msgid "Error"
 msgstr "Virhe"
 
 # Vai Seuraava?
-#: ../data/banshee-dialogs.glade.h:51
+#: ../data/banshee-dialogs.glade.h:52
 msgid "Forward"
 msgstr "Eteenpäin"
 
-#: ../data/banshee-dialogs.glade.h:52
+#: ../data/banshee-dialogs.glade.h:53
 msgid "Import Music Source"
 msgstr "Tuo musiikkilähde"
 
-#: ../data/banshee-dialogs.glade.h:53
+#: ../data/banshee-dialogs.glade.h:54
 msgid "Import Music to Library"
 msgstr "Tuo musiikkia kirjastoon"
 
-#: ../data/banshee-dialogs.glade.h:54
+#: ../data/banshee-dialogs.glade.h:55
 msgid "Metadata"
 msgstr "Metatiedot"
 
-#: ../data/banshee-dialogs.glade.h:55
+#: ../data/banshee-dialogs.glade.h:56
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Avaa sijainti"
 
-#: ../data/banshee-dialogs.glade.h:56
+#: ../data/banshee-dialogs.glade.h:57
 msgid "Open in editor"
 msgstr "Avaa muokkaimessa"
 
-#: ../data/banshee-dialogs.glade.h:57
-msgid "Output Format:"
-msgstr "Ulostulon muoto:"
-
 #: ../data/banshee-dialogs.glade.h:58
+msgid "Output Format:"
+msgstr "Tiedostomuoto:"
+
+#: ../data/banshee-dialogs.glade.h:59
 msgid "Playlist _Name: "
 msgstr "Soittolistan _nimi: "
 
-#: ../data/banshee-dialogs.glade.h:59
+#: ../data/banshee-dialogs.glade.h:60
 msgid "Predefined Smart Playlists"
 msgstr "Esimääritellyt älykkäät soittolistat"
 
-#: ../data/banshee-dialogs.glade.h:60
+#: ../data/banshee-dialogs.glade.h:61
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: ../data/banshee-dialogs.glade.h:61
+#: ../data/banshee-dialogs.glade.h:62
 msgid "Reset"
 msgstr "Nollaa"
 
-#: ../data/banshee-dialogs.glade.h:62
+#: ../data/banshee-dialogs.glade.h:63
 msgid "Save to song directory"
 msgstr "Tallenna kappalehakemistoon"
 
-#: ../data/banshee-dialogs.glade.h:63
+#: ../data/banshee-dialogs.glade.h:64
 msgid "Seek to Position"
 msgstr "Siirry kohtaan"
 
-#: ../data/banshee-dialogs.glade.h:64
+#: ../data/banshee-dialogs.glade.h:65
 msgid "Select for use"
 msgstr "Valitse käytettäväksi"
 
-#: ../data/banshee-dialogs.glade.h:65
+#: ../data/banshee-dialogs.glade.h:66
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:605
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:236
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:251
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:272
+#: ../src/Banshee.Base/Dap/Dap.cs:655
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
 msgstr "Tuntematon"
 
-#: ../data/banshee-dialogs.glade.h:66
+#: ../data/banshee-dialogs.glade.h:67
 msgid "Write disc to:"
 msgstr "Kirjoita levylle laitteelle:"
 
-#: ../data/banshee-dialogs.glade.h:67
+#: ../data/banshee-dialogs.glade.h:68
 msgid "Write metadata to files"
 msgstr "Kirjoita metatiedot tiedostoihin"
 
-#: ../data/banshee-dialogs.glade.h:68
+#: ../data/banshee-dialogs.glade.h:69
 msgid "Write speed:"
 msgstr "Kirjoitusnopeus:"
 
-#: ../data/banshee-dialogs.glade.h:69
+#: ../data/banshee-dialogs.glade.h:70
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
@@ -556,7 +557,7 @@ msgstr ""
 "Musiikkikirjastosi on tyhjä. Voit tuoda musiikkia kirjastoosi heti tai tehdä "
 "sen myöhemmin."
 
-#: ../data/banshee-dialogs.glade.h:70
+#: ../data/banshee-dialogs.glade.h:71
 msgid "_Write"
 msgstr "Kir_joita"
 
@@ -663,7 +664,7 @@ msgstr "_Musiikki"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1549
+#: ../src/PlayerInterface.cs:1568
 msgid "New Playlist"
 msgstr "Uusi soittolista"
 
@@ -836,8 +837,8 @@ msgid "_Playback"
 msgstr "_Toisto"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
-#: ../src/Banshee.Base/ActionManager.cs:181 ../src/Banshee.Base/Source.cs:289
-#: ../src/SourceView.cs:101
+#: ../src/Banshee.Base/ActionManager.cs:181
+#: ../src/Banshee.Base/Gui/SourceView.cs:101 ../src/Banshee.Base/Source.cs:289
 msgid "Source"
 msgstr "Lähde"
 
@@ -865,193 +866,195 @@ msgstr "Näytä kansikuvia"
 msgid "Toggle display of album cover art"
 msgstr "Näytetäänkö levyjen kansikuvia"
 
-#: ../src/Banshee.Base/ActionManager.cs:206
+#: ../src/Banshee.Base/ActionManager.cs:208
 msgid "Remove Song(s)"
 msgstr "Poista kirjastosta"
 
-#: ../src/Banshee.Base/ActionManager.cs:207
+#: ../src/Banshee.Base/ActionManager.cs:209
 msgid "Remove selected song(s) from library"
 msgstr "Poista valitut kappaleet kirjastosta"
 
-#: ../src/Banshee.Base/ActionManager.cs:210
+#: ../src/Banshee.Base/ActionManager.cs:212
 msgid "Delete Song(s) From Drive"
 msgstr "Poista levyltä"
 
-#: ../src/Banshee.Base/ActionManager.cs:211
+#: ../src/Banshee.Base/ActionManager.cs:213
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Poista valitut kappaleet pysyvästi kiintolevyltä"
 
-#: ../src/Banshee.Base/ActionManager.cs:214
+#: ../src/Banshee.Base/ActionManager.cs:216
 msgid "Edit Song Metadata"
 msgstr "Muokkaa merkintöjä"
 
-#: ../src/Banshee.Base/ActionManager.cs:215
+#: ../src/Banshee.Base/ActionManager.cs:217
 msgid "Edit metadata on selected songs"
 msgstr "Muokkaa valittujen kappaleiden merkintöjä"
 
-#: ../src/Banshee.Base/ActionManager.cs:218
+#: ../src/Banshee.Base/ActionManager.cs:220
 msgid "Search for songs"
 msgstr "Etsi kappaleita"
 
-#: ../src/Banshee.Base/ActionManager.cs:219
+#: ../src/Banshee.Base/ActionManager.cs:221
 msgid "Search for songs matching certain criteria"
 msgstr "Etsi kappaleita, jotka vastaavat annetuja hakuehtoja"
 
-#: ../src/Banshee.Base/ActionManager.cs:222
+#: ../src/Banshee.Base/ActionManager.cs:224
 msgid "By matching album"
 msgstr "Samalta levyltä"
 
-#: ../src/Banshee.Base/ActionManager.cs:223
+#: ../src/Banshee.Base/ActionManager.cs:225
 msgid "Search all songs of this album"
 msgstr "Etsi kaikki tämän levyn kappaleet"
 
-#: ../src/Banshee.Base/ActionManager.cs:226
+#: ../src/Banshee.Base/ActionManager.cs:228
 msgid "By matching artist"
 msgstr "Samalta esittäjältä"
 
-#: ../src/Banshee.Base/ActionManager.cs:227
+#: ../src/Banshee.Base/ActionManager.cs:229
 msgid "Search all songs of this artist"
 msgstr "Etsi kaikki tämän esittäjän kappaleet"
 
-#: ../src/Banshee.Base/ActionManager.cs:230
+#: ../src/Banshee.Base/ActionManager.cs:232
 msgid "By matching genre"
 msgstr "Sama tyyli"
 
-#: ../src/Banshee.Base/ActionManager.cs:231
+#: ../src/Banshee.Base/ActionManager.cs:233
 msgid "Search all songs of this genre"
 msgstr "Etsi kaikki tämän tyylin kappaleet"
 
-#: ../src/Banshee.Base/ActionManager.cs:234
+#: ../src/Banshee.Base/ActionManager.cs:236
 msgid "Add to Playlist"
 msgstr "Lisää soittolistaan"
 
-#: ../src/Banshee.Base/ActionManager.cs:235
+#: ../src/Banshee.Base/ActionManager.cs:237
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 "Lisää valitut kappaleen soittolistaan, tai luo uusi soittolista valinnasta"
 
-#: ../src/Banshee.Base/ActionManager.cs:238 ../src/PlaylistView.cs:124
+#: ../src/Banshee.Base/ActionManager.cs:240
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:716
+#: ../src/PlaylistView.cs:124
 msgid "Rating"
 msgstr "Arvostelu"
 
-#: ../src/Banshee.Base/ActionManager.cs:239
+#: ../src/Banshee.Base/ActionManager.cs:241
 msgid "Set rating for selected songs"
 msgstr "Arvostele valitut kappaleet"
 
-#: ../src/Banshee.Base/ActionManager.cs:248
+#: ../src/Banshee.Base/ActionManager.cs:250
 msgid "Import CD"
 msgstr "Tuo CD-levy"
 
-#: ../src/Banshee.Base/ActionManager.cs:249
+#: ../src/Banshee.Base/ActionManager.cs:251
 msgid "Import audio CD to library"
 msgstr "Tuo CD-levy kirjastoon"
 
-#: ../src/Banshee.Base/ActionManager.cs:258 ../src/PlayerInterface.cs:804
+#: ../src/Banshee.Base/ActionManager.cs:260 ../src/PlayerInterface.cs:804
 #: ../src/PlayerInterface.cs:812
 msgid "Play"
 msgstr "Soita"
 
-#: ../src/Banshee.Base/ActionManager.cs:259
+#: ../src/Banshee.Base/ActionManager.cs:261
 msgid "Play or pause the current song"
 msgstr "Soita tai pysäytä tämänhetkinen kappale"
 
-#: ../src/Banshee.Base/ActionManager.cs:262
+#: ../src/Banshee.Base/ActionManager.cs:264
 msgid "Next"
 msgstr "Seuraava"
 
-#: ../src/Banshee.Base/ActionManager.cs:263
+#: ../src/Banshee.Base/ActionManager.cs:265
 msgid "Play the next song"
 msgstr "Soita seuraava kappale"
 
-#: ../src/Banshee.Base/ActionManager.cs:266
+#: ../src/Banshee.Base/ActionManager.cs:268
 msgid "Previous"
 msgstr "Edellinen"
 
-#: ../src/Banshee.Base/ActionManager.cs:267
+#: ../src/Banshee.Base/ActionManager.cs:269
 msgid "Play the previous song"
 msgstr "Soita edellinen kappale"
 
-#: ../src/Banshee.Base/ActionManager.cs:272
+#: ../src/Banshee.Base/ActionManager.cs:274
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:40
 msgid "Repeat None"
 msgstr "Ei kerrata"
 
-#: ../src/Banshee.Base/ActionManager.cs:273
+#: ../src/Banshee.Base/ActionManager.cs:275
 msgid "Do not repeat playlist"
 msgstr "Älä kertaa soittolistaa"
 
-#: ../src/Banshee.Base/ActionManager.cs:276
+#: ../src/Banshee.Base/ActionManager.cs:278
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:58
 msgid "Repeat All"
 msgstr "Kertaa kaikki"
 
-#: ../src/Banshee.Base/ActionManager.cs:277
+#: ../src/Banshee.Base/ActionManager.cs:279
 msgid "Play all songs before repeating playlist"
 msgstr "Soita kaikki kappaleet ennen kuin soittolista kerrataan"
 
-#: ../src/Banshee.Base/ActionManager.cs:280
+#: ../src/Banshee.Base/ActionManager.cs:282
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:49
 msgid "Repeat Single"
 msgstr "Kertaa yksi"
 
-#: ../src/Banshee.Base/ActionManager.cs:281
+#: ../src/Banshee.Base/ActionManager.cs:283
 msgid "Repeat the current playing song"
 msgstr "Kertaa soiva kappale"
 
-#: ../src/Banshee.Base/ActionManager.cs:286
+#: ../src/Banshee.Base/ActionManager.cs:288
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:67
 msgid "Shuffle"
 msgstr "Sekoita"
 
-#: ../src/Banshee.Base/ActionManager.cs:287
+#: ../src/Banshee.Base/ActionManager.cs:289
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Vaihtele sekoitus- ja jatkuvan soiton tiloja"
 
-#: ../src/Banshee.Base/ActionManager.cs:290
+#: ../src/Banshee.Base/ActionManager.cs:292
 msgid "Stop when finished"
 msgstr "Pysäytä valmistuttua"
 
-#: ../src/Banshee.Base/ActionManager.cs:291
+#: ../src/Banshee.Base/ActionManager.cs:293
 msgid "Stop playback after the current song finishes playing"
 msgstr "Lopeta toisto, kun nykyinen kappale on soitettu"
 
-#: ../src/Banshee.Base/ActionManager.cs:300
+#: ../src/Banshee.Base/ActionManager.cs:302
 msgid "Seek Backward"
 msgstr "Siirry taaksepäin"
 
-#: ../src/Banshee.Base/ActionManager.cs:301
+#: ../src/Banshee.Base/ActionManager.cs:303
 msgid "Seek backward in current song"
 msgstr "Siirry nykyisessä kappaleessa taaksepäin"
 
-#: ../src/Banshee.Base/ActionManager.cs:304
+#: ../src/Banshee.Base/ActionManager.cs:306
 msgid "Seek Forward"
 msgstr "Siirry eteenpäin"
 
-#: ../src/Banshee.Base/ActionManager.cs:305
+#: ../src/Banshee.Base/ActionManager.cs:307
 msgid "Seek forward in current song"
 msgstr "Siirry nykyisessä kappaleessa eteenpäin"
 
-#: ../src/Banshee.Base/ActionManager.cs:308
+#: ../src/Banshee.Base/ActionManager.cs:310
 msgid "Seek To..."
 msgstr "Siirry kohtaan..."
 
-#: ../src/Banshee.Base/ActionManager.cs:309
+#: ../src/Banshee.Base/ActionManager.cs:311
 msgid "Seek to a specific location in current song"
 msgstr "Siirry tiettyyn kohtaan kappaleessa"
 
-#: ../src/Banshee.Base/ActionManager.cs:312
+#: ../src/Banshee.Base/ActionManager.cs:314
 msgid "Restart Song"
 msgstr "Aloita kappale alusta"
 
-#: ../src/Banshee.Base/ActionManager.cs:313
+#: ../src/Banshee.Base/ActionManager.cs:315
 msgid "Restart the current song"
 msgstr "Aloita soiva kappale alusta"
 
-#: ../src/Banshee.Base/ActionManager.cs:322 ../src/PlayerInterface.cs:1064
+#: ../src/Banshee.Base/ActionManager.cs:324 ../src/PlayerInterface.cs:1064
 msgid "Synchronize"
 msgstr "Synkronoi"
 
-#: ../src/Banshee.Base/ActionManager.cs:323
+#: ../src/Banshee.Base/ActionManager.cs:325
 msgid "Save changes to device or synchronize music library"
 msgstr "Tallenna muutokset laitteelle tai synkronoi musiikkikirjasto"
 
@@ -1180,36 +1183,28 @@ msgstr "Tuntematon megatavumäärä"
 msgid "{0} MB"
 msgstr "{0} Mt"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:118
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
 msgid "New Audio CD"
 msgstr "Uusi CD-levy"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:119
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
 msgstr "Luo uusi CD-levy"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:161
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
 msgid "Problem creating CD"
 msgstr "Virhe kirjoitettaessa CD-levyä"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:162
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:166
 msgid "No CD recording hardware was found."
 msgstr "CD-kirjoitukseen pystyviä laitteita ei löytynyt."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
 msgid "Audio"
 msgstr "CD-levy"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
-msgid "MP3"
-msgstr "MP3"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:64
-msgid "Data"
-msgstr "Data"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
 msgid "Some songs could not be found."
@@ -1373,16 +1368,324 @@ msgstr "Ei voitu ajaa ohjelmaa nautilus-cd-burner"
 msgid "Scanning"
 msgstr "Etsitään"
 
-#: ../src/Banshee.Base/ComponentInitializer.cs:94
-msgid "Could not initialize component"
-msgstr "Komponenttia ei voi alustaa"
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:32
+msgid "Edit Smart Playlist"
+msgstr "Muokkaa älykästä soittolistaa"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:110
-#: ../src/Banshee.Base/BatchTranscoder.cs:111
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:43
+msgid "New Smart Playlist"
+msgstr "Uusi älykäs soittolista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:60
+msgid "Neglected Favorites"
+msgstr ""
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
+msgid "700 MB of Favorites"
+msgstr "700 Mt suosikkeja"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
+msgid "80 Minutes of Favorites"
+msgstr "80 minuuttia suosikkeja"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:85
+msgid "Unheard"
+msgstr "Kuulemattomia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:139
+#: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1306
+#: ../src/PlayerInterface.cs:2303
+msgid "Artist Name"
+msgstr "Esittäjän nimi"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:141
+#: ../src/PlayerInterface.cs:443 ../src/PlayerInterface.cs:1308
+msgid "Song Name"
+msgstr "Kappaleen nimi"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:143
+#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1310
+#: ../src/PlayerInterface.cs:2299
+msgid "Album Title"
+msgstr "Levyn nimi"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:145
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:710
+#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1312
+#: ../src/PlayerInterface.cs:2307 ../src/PlaylistView.cs:111
+msgid "Genre"
+msgstr "Tyyli"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:147
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:718
+#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1314
+#: ../src/PlaylistView.cs:114
+msgid "Year"
+msgstr "Vuosi"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
+msgid "Create Smart Playlist from Search"
+msgstr "Luo haun perusteella älykäs soittolista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:151
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:174
+msgid "is"
+msgstr "on"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:156
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:179
+msgid "is not"
+msgstr "ei ole"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:184
+msgid "is less than"
+msgstr "on pienempi kuin"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:189
+msgid "is greater than"
+msgstr "on suurempi kuin"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:194
+msgid "more than"
+msgstr "enemmän kuin"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:199
+msgid "less than"
+msgstr "vähemmän kuin"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:204
+msgid "is at least"
+msgstr "on vähintään"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:209
+msgid "contains"
+msgstr "sisältää"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:214
+msgid "does not contain"
+msgstr "ei sisällä"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:219
+msgid "starts with"
+msgstr "alkaa"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:224
+msgid "ends with"
+msgstr "päättyy"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:229
+msgid "is before"
+msgstr "on ennen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:234
+msgid "is after"
+msgstr "on jälkeen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:239
+msgid "is between"
+msgstr "on välillä"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:244
+msgid "between"
+msgstr "välillä"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:322
+msgid "to"
+msgstr "saakka"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:691
+msgid "_Match"
+msgstr "_Osumat"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:698
+msgid "all"
+msgstr "kaikki"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:699
+msgid "any"
+msgstr "mikä tahansa"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
+msgid "of the following:"
+msgstr "seuraavista:"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:723
+msgid "_Limit to"
+msgstr "_Rajoita"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:740
+msgid "selected by"
+msgstr "valinnut"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
+msgid "Random"
+msgstr "Satunnainen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:709
+#: ../src/PlaylistView.cs:108
+msgid "Album"
+msgstr "Levy"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:707
+#: ../src/PlaylistView.cs:102
+msgid "Artist"
+msgstr "Esittäjä"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:708
+#: ../src/PlaylistView.cs:105
+msgid "Title"
+msgstr "Kappale"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
+msgid "Highest Rating"
+msgstr "Korkein arvostelu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
+msgid "Lowest Rating"
+msgstr "Matalin arvostelu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
+msgid "Least Often Played"
+msgstr "Vähiten soitettu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
+msgid "Most Often Played"
+msgstr "Useiten soitettu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
+msgid "Most Recently Added"
+msgstr "Viimeisimmäksi lisätty"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
+msgid "Least Recently Added"
+msgstr "Pisin aika sitten lisätty"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
+msgid "Most Recently Played"
+msgstr "Viimeksi soitettu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
+msgid "Least Recently Played"
+msgstr "Pisin aika sitten soitettu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
+msgid "songs"
+msgstr "kappaletta"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
+msgid "minutes"
+msgstr "minuuttia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
+msgid "hours"
+msgstr "tuntia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:65
+msgid "MB"
+msgstr "Mt"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:325
+msgid "Seconds"
+msgstr "Sekuntia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:326
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:460
+msgid "Minutes"
+msgstr "Minuuttia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:327
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:461
+msgid "Hours"
+msgstr "Tuntia"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:462
+msgid "Days"
+msgstr "Päivää"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:463
+msgid "Weeks"
+msgstr "Viikkoa"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:464
+msgid "Months"
+msgstr "Kuukautta"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:465
+msgid "Years"
+msgstr "Vuotta"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:576
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:601
+msgid "ago"
+msgstr "sitten"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:711
+msgid "Date Added"
+msgstr "Lisäyspäivä"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:712
+#: ../src/PlaylistView.cs:137
+msgid "Last Played"
+msgstr "Viimeksi soitettu"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:713
+msgid "Duration"
+msgstr "Kesto"
+
+# Soittokerrat?
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:714
+msgid "Play Count"
+msgstr "Soittokerrat"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:715
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
+msgid "Playlist"
+msgstr "Soittolista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:717
+msgid "Path"
+msgstr "Polku"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:36
+msgid "Smart Playlists"
+msgstr "Älykkäät soittolistat"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:42
+msgid ""
+"Create playlists that automatically add and remove songs based on "
+"customizable queries."
+msgstr ""
+"Luo soittolistoja, jotka automaattisesti lisäävät tai poistavat "
+"kappaleita muokattaviin kyselyihin perustuen."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:138
+msgid "New Smart Playlist..."
+msgstr "Uusi älykäs soittolista..."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:144
+msgid "New Smart Playlist from Search..."
+msgstr "Uusi älykäs soittolista haun perusteella..."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:70
+msgid "Delete Smart Playlist"
+msgstr "Poista älykäs soittolista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
+msgid "Smart Playlist"
+msgstr "Älykäs soittolista"
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:117
 msgid "Converting Files"
 msgstr "Muunnetaan tiedostoja"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:113
+#: ../src/Banshee.Base/BatchTranscoder.cs:119
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
@@ -1390,31 +1693,67 @@ msgstr ""
 "Tiedostoja ollaan muuntamassa toiseen äänimuotoon.Haluatko keskeyttää tämän "
 "tehtävän?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:122
 msgid "Initializing Transcoder..."
 msgstr "Alustetaan koodinmuuntajaa..."
+
+#: ../src/Banshee.Base/ComponentInitializer.cs:94
+msgid "Could not initialize component"
+msgstr "Komponenttia ei voi alustaa"
+
+#: ../src/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Tuo tiedostoja kirjastoon"
+
+#: ../src/Banshee.Base/FileImportSource.cs:82
+msgid "Local Files"
+msgstr "Paikalliset tiedostot"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Tuo kansio kirjastoon"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:80
+msgid "Local Folder"
+msgstr "Paikallinen kansio"
 
 #: ../src/Banshee.Base/Dap/DapCore.cs:100
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "DapCorea ei voi alustaa, koska HalCore ei ole alustetta"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:334
+#: ../src/Banshee.Base/Dap/Dap.cs:335
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Banshee.Base/Dap/Dap.cs:336
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "Synkronoidaan {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:339
+#: ../src/Banshee.Base/Dap/Dap.cs:340
 msgid "Waiting for transcoder..."
 msgstr "Odotetaan koodinmuuntajaa..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:427 ../src/Banshee.Base/Dap/Dap.cs:448
+#: ../src/Banshee.Base/Dap/Dap.cs:428 ../src/Banshee.Base/Dap/Dap.cs:449
 msgid "Processing..."
 msgstr "Käsitellään..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:468
+msgid "Could not encode some files"
+msgstr "Joitain tiedostoja ei voitu koodata"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:470
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr ""
+"Joitain tiedostoja ei voitu koodata oikeaan muotoon. Niitä ei "
+"tallenneta laitteelle, jos jatkat."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:475
+msgid "Continue synchronizing"
+msgstr "Jatka synkronointia"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1440,6 +1779,58 @@ msgstr "Käytetty tila"
 msgid "Advanced Details"
 msgstr "Lisätiedot"
 
+#: ../src/Banshee.Base/Globals.cs:70 ../src/Banshee.Base/Globals.cs:79
+msgid "Starting background tasks"
+msgstr "Aloitetaan taustatehtäviä"
+
+#: ../src/Banshee.Base/Globals.cs:80
+msgid "Detecting network settings"
+msgstr "Tunnistetaan verkkoasetuksia"
+
+#: ../src/Banshee.Base/Globals.cs:81
+msgid "Creating action manager"
+msgstr "Luodaan toimintojen hallintaosaa"
+
+#: ../src/Banshee.Base/Globals.cs:82
+msgid "Loading music library"
+msgstr "Ladataan musiikkikirjastoa"
+
+#: ../src/Banshee.Base/Globals.cs:87 ../src/Banshee.Base/Globals.cs:88
+msgid "Initializing player engine"
+msgstr "Alustetaan soittomoottoria"
+
+#: ../src/Banshee.Base/Globals.cs:90
+msgid "Initializing audio CD support"
+msgstr "Alustetaan CD-levyjen tukea"
+
+#: ../src/Banshee.Base/Globals.cs:91
+msgid "Audio CD support will be disabled for this instance"
+msgstr "CD-levyjen tuki ei ole käytössä tällä suorituskerralla"
+
+#: ../src/Banshee.Base/Globals.cs:93
+msgid "Initializing digital audio player support"
+msgstr "Alustetaan kannettavien soitinten tukea"
+
+#: ../src/Banshee.Base/Globals.cs:94
+msgid "DAP support will be disabled for this instance"
+msgstr "Kannettavien soitinten tuki ei ole käytössä tällä suorituskerralla"
+
+#: ../src/Banshee.Base/Globals.cs:96
+msgid "Initializing CD writing support"
+msgstr "Alustetaan CD-kirjoitustukea"
+
+#: ../src/Banshee.Base/Globals.cs:97
+msgid "CD burning support will be disabled for this instance"
+msgstr "CD-kirjoitus ei ole käytössä tällä suorituskerralla"
+
+#: ../src/Banshee.Base/Globals.cs:99
+msgid "Initializing plugins"
+msgstr "Alustetaan liitännäisiä"
+
+#: ../src/Banshee.Base/Globals.cs:100
+msgid "Initializing background tasks"
+msgstr "Alustetaan taustatehtäviä"
+
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:46
 msgid "Primary Development"
 msgstr "Ensisijainen kehitys"
@@ -1464,6 +1855,26 @@ msgstr ""
 msgid "Banshee Wiki"
 msgstr "Bansheen Wiki"
 
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Tärkeitä tehtäviä on kesken"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Bansheen sulkeminen nyt keskeyttää keskeneräiset taustatehtävät. "
+"Niitä ei voi jatkaa automaattisesti käynnistettäessä bansheeta uudestaan."
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Lopeta joka tapauksessa"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Jatka ohjelman käyttöä"
+
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:52
 msgid "Banshee Encountered a Fatal Error"
 msgstr "Banshee havaitsi vakavan virheen"
@@ -1475,6 +1886,22 @@ msgstr "Virheen yksityiskohdat"
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:134
 msgid "An unhandled exception was thrown: "
 msgstr "Tapahtui käsittelemätön virhe: "
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:42
+msgid "Select album cover image"
+msgstr "Valitse levyn kansikuva"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:57
+msgid "All image files"
+msgstr "Kaikki kuvatiedostot"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:64
+msgid "JPEG image files"
+msgstr "JPEG-kuvatiedostot"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:69
+msgid "PNG image files"
+msgstr "PNG-kuvatiedostot"
 
 #: ../src/Banshee.Base/Gui/LogCoreDialog.cs:51
 msgid "Log Viewer"
@@ -1525,50 +1952,58 @@ msgstr "Selaa..."
 msgid "Select library location"
 msgstr "Valitse kirjaston sijainti"
 
+#: ../src/Banshee.Base/Gui/SourceView.cs:431
+msgid "Could not import tracks"
+msgstr "Kappaleita ei voitu tuoda"
+
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:78
 msgid "Continuous"
 msgstr "Jatkuva"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:178
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:212
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Aseta kaikki kappalenumerot automaattisesti kasvavaan järjestykseen"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:179
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:213
 msgid "Set all track counts to this value"
 msgstr "Aseta kaikki kappalelaskurit tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:180
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:214
 msgid "Set all artists to this value"
 msgstr "Aseta kaikki esittäjät tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:181
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:215
 msgid "Set all albums to this value"
 msgstr "Aseta kaikki levyn nimet tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:182
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:216
 msgid "Set all genres to this value"
 msgstr "Aseta kaikki tyylit tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:183
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:217
 msgid "Set all years to this value"
 msgstr "Aseta kaikki vuodet tähän arvoon"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:184
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:218
 msgid ""
 "Set all common fields in all selected tracks to the values currently set"
 msgstr ""
 "Aseta kaikki yleiset kentät valittuihin tiedostoihin nykyisten arvojen mukaan"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:234
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:219
+msgid "Set all ratings to this value"
+msgstr "Aseta kaikki arvostelut tähän arvoon"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
 msgid "Never played"
 msgstr "Ei koskaan soitettu"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:239
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:285
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Muokataan kappaletta {0}/{1}"
 
-#: ../src/Banshee.Base/Gui/TrackEditor.cs:240
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:286
 #, csharp-format
 msgid "Editing {0}"
 msgstr "Muokataan {0}"
@@ -1584,22 +2019,6 @@ msgstr "Koosteen nimi"
 #: ../src/Banshee.Base/Gui/VersionInformationDialog.cs:69
 msgid "Version"
 msgstr "Versio"
-
-#: ../src/Banshee.Base/FileImportSource.cs:55
-msgid "Import Files to Library"
-msgstr "Tuo tiedostoja kirjastoon"
-
-#: ../src/Banshee.Base/FileImportSource.cs:82
-msgid "Local Files"
-msgstr "Paikalliset tiedostot"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:55
-msgid "Import Folder to Library"
-msgstr "Tuo kansio kirjastoon"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:80
-msgid "Local Folder"
-msgstr "Paikallinen kansio"
 
 #: ../src/Banshee.Base/GstTranscoder.cs:80
 msgid "Could not create transcoder"
@@ -1644,6 +2063,10 @@ msgstr "Ei saatu yhteyttä NetworkManageriin"
 #: ../src/Banshee.Base/NetworkDetect.cs:77
 msgid "An available, working network connection will be assumed"
 msgstr "Oletetaan, että käytössä on toimiva verkkoyhteys"
+
+#: ../src/Banshee.Base/Notifications.cs:81
+msgid "Cannot show notification"
+msgstr "Huomautusta ei voi näyttää"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
@@ -1703,22 +2126,22 @@ msgstr "nopeudella"
 msgid "No MP3-compatible encoders available"
 msgstr "MP3-yhteensopivia koodereita ei löydy"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Oletusmoottori"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
 msgstr ""
 "Soittomoottoreita ei löytynyt. Tarkista, että banshee on asennettu oikein."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
 msgstr "Ongelma soittomoottorin kanssa"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:84
 msgid "Playing Music"
 msgstr "Musiikin soittaminen"
 
@@ -1798,28 +2221,33 @@ msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkronoidaan laitetta, odota kärsivällisesti..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:168
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:219
 msgid "Importing"
 msgstr "Tuodaan"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:221
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
 msgstr "Olet tuomassa musiikkia lähteestä {0}. Haluatko keskeyttää tuonnin?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:274
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:223
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Kopioidaan lähteestä {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:275
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:224
 msgid "Scanning..."
 msgstr "Etsitään..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:393
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:340
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Kappaletta ei voi tuoda lähteestä {0}"
@@ -1879,10 +2307,6 @@ msgstr "Paikallinen jono"
 msgid "Delete Playlist"
 msgstr "Poista soittolista"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
-msgid "Playlist"
-msgstr "Soittolista"
-
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:164
 msgid "Cannot Rename Playlist"
 msgstr "Soittolistaa ei voi nimetä uudelleen"
@@ -1890,6 +2314,11 @@ msgstr "Soittolistaa ei voi nimetä uudelleen"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:165
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "Tämänniminen soittolista on jo olemassa, valitse toinen nimi."
+
+#: ../src/Banshee.Base/StreamTagger.cs:153
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "Tallentaan merkintää tiedostoon {0}"
 
 #: ../src/Banshee.Base/TrackInfo.cs:399
 msgid "Unknown Title"
@@ -1929,24 +2358,52 @@ msgstr "Tallennetaan uusi tietokanta..."
 msgid "Error rebuilding iPod database"
 msgstr "Virhe luotaessa uutta iPodin tietokantaa"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:162
+#. Translators "Week 25 of 2006"
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:82
+msgid "Manufactured During"
+msgstr "Valmistusaika"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
+#, csharp-format
+msgid "Week {0} of {1}"
+msgstr "Viikko {0}/{1}"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:117
+msgid "Your iPod could not be identified"
+msgstr "Ipodiasi ei voitu tunnistaa"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
+msgid ""
+"Please consider submitting information about your iPod to the Banshee "
+"Project so your iPod may be more fully identified in the future.\n"
+msgstr ""
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:121
+msgid "Do not ask me again"
+msgstr "Älä kysy uudestaan"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:126
+msgid "Go to Web Site"
+msgstr "Siirry WWW-sivulle"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:207
 msgid "Could not eject iPod"
 msgstr "iPodia ei voi irrottaa"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:170
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:189
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:215
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:234
 msgid "Synchronizing iPod"
 msgstr "Synkronoidaan iPodia"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:171
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:216
 msgid "Pre-processing tracks"
 msgstr "esikäsitellään kappaleita"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:231
 msgid "Flushing to Disk (may take time)"
 msgstr "Viedään levylle (voi viedä aikaa)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:196
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:241
 msgid "Failed to synchronize iPod"
 msgstr "iPodin synkronointi epäonnistui"
 
@@ -2012,20 +2469,21 @@ msgstr ": Löytyi"
 msgid "Reading library information"
 msgstr "Luetaan kirjaston tietoja"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:139
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:140
 msgid "Loading device"
 msgstr "Ladataan laitetta"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
 msgid "Done"
 msgstr "Valmis"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:145
 msgid ": Ready for use"
 msgstr ": Valmis käyttöön"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:193 ../src/Banshee.Dap/Mtp/MtpDap.cs:226
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:238 ../src/Banshee.Dap/Njb/NjbDap.cs:250
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:192 ../src/Banshee.Dap/Mtp/MtpDap.cs:196
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:229 ../src/Banshee.Dap/Njb/NjbDap.cs:238
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:250
 msgid "Synchronizing Device"
 msgstr "Synkronoidaan laitetta"
 
@@ -2180,6 +2638,13 @@ msgstr "Salasana:"
 msgid "Login"
 msgstr "Kirjaudu sisään"
 
+#: ../src/Banshee.Plugins/Daap/DaapPlugin.cs:45
+msgid ""
+"Allow browsing and listening to songs from music shares and share your "
+"Banshee library with others. Works with other instances of Banshee, iTunes, "
+"and Rhythmbox."
+msgstr ""
+
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
 msgstr ""
@@ -2198,11 +2663,11 @@ msgstr "Ota käyttöön DAAP-protokollan musiikinjaon liitännäinen"
 msgid "Name of DAAP server share"
 msgstr "Daap-palvelimen jaon nimi"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:71
 msgid "Cannot login to DAAP share"
 msgstr "DAAP-jakoon ei voi kirjautua"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:132
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:148
 msgid "Disconnect"
 msgstr "Katkaise yhteys"
 
@@ -2274,21 +2739,30 @@ msgstr ""
 "Multimedia-pikanäppäinten määrittely tehdään Gnomen pikanäppäinten "
 "asetuksista."
 
+#: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:47
+msgid "Adds support for multimedia keys configured through Gnome."
+msgstr "Lisää tuen multimedianäppäinten määrittelyyn Gnomen kautta."
+
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
 msgstr "Ota käyttöön multimedianäppäinten liitännäinen"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:49
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:47
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:57
 msgid "Notification Area Icon"
 msgstr "Ilmoitusalueen kuvake"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:53
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:50
 msgid "Shows the Notification Area Icon"
 msgstr "Näytä ilmoitusalueen kuvake"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:164
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:169
 msgid "Now Playing"
 msgstr "Nyt soiva kappale"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:65
+msgid "Show notifications when song changes"
+msgstr "Näytä huomautus vaihdettaessa kappaletta"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
 msgid "Enable the Notification Area Icon plugin"
@@ -2339,30 +2813,6 @@ msgstr "Ladataan..."
 #: ../src/PlayerInterface.cs:441
 msgid "All"
 msgstr "Kaikki"
-
-#: ../src/PlayerInterface.cs:443 ../src/PlayerInterface.cs:1308
-msgid "Song Name"
-msgstr "Kappaleen nimi"
-
-#: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1306
-#: ../src/PlayerInterface.cs:2284
-msgid "Artist Name"
-msgstr "Esittäjän nimi"
-
-#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1310
-#: ../src/PlayerInterface.cs:2280
-msgid "Album Title"
-msgstr "Levyn nimi"
-
-#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1312
-#: ../src/PlayerInterface.cs:2288 ../src/PlaylistView.cs:111
-msgid "Genre"
-msgstr "Tyyli"
-
-#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1314
-#: ../src/PlaylistView.cs:114
-msgid "Year"
-msgstr "Vuosi"
 
 #: ../src/PlayerInterface.cs:468
 msgid "Write selection to CD"
@@ -2461,11 +2911,11 @@ msgstr[1] "{0} kappaletta"
 msgid "{0} Total Play Time"
 msgstr "{0} kokonaissoittoaika"
 
-#: ../src/PlayerInterface.cs:1568
+#: ../src/PlayerInterface.cs:1587
 msgid "Clear"
 msgstr "Tyhjennä"
 
-#: ../src/PlayerInterface.cs:1835
+#: ../src/PlayerInterface.cs:1854
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2473,15 +2923,15 @@ msgid_plural ""
 msgstr[0] "Haluatko varmasti poistaa tämän kappaleen pysyvästi?"
 msgstr[1] "Haluatko varmasti poistaa valitut {0} kappaletta pysyvästi?"
 
-#: ../src/PlayerInterface.cs:1839
+#: ../src/PlayerInterface.cs:1858
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Jos poistat valitut kappaleet, ne hukataan pysyvästi."
 
-#: ../src/PlayerInterface.cs:1842
+#: ../src/PlayerInterface.cs:1861
 msgid "Remove selection from library"
 msgstr "Poista valitut kirjastosta"
 
-#: ../src/PlayerInterface.cs:1844
+#: ../src/PlayerInterface.cs:1863
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2489,17 +2939,17 @@ msgid_plural ""
 msgstr[0] "Haluatko varmasti poistaa valitun kappaleen musiikkikirjastosta?"
 msgstr[1] "Haluatko varmasti poistaa valitut kappaleet musiikkikirjastosta?"
 
-#: ../src/PlayerInterface.cs:1986
+#: ../src/PlayerInterface.cs:2005
 msgid "New CD"
 msgstr "Uusi CD"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2007
+#: ../src/PlayerInterface.cs:2026
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronoi {0}"
 
-#: ../src/PlayerInterface.cs:2008
+#: ../src/PlayerInterface.cs:2027
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2515,7 +2965,7 @@ msgstr ""
 "kohteeseen {0}\n"
 "<big>•</big> <i>Tallenna muutokset</i>: Tallenna vain itse tekemäsi muutokset"
 
-#: ../src/PlayerInterface.cs:2014
+#: ../src/PlayerInterface.cs:2033
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2523,11 +2973,11 @@ msgstr ""
 "<b>Varoitus:</b> Toiminnot muuttavat tai tyhjentävät iPodin nykyiset tiedot "
 "ja saattavat aiheuttaa epäyhteensopivuuden iTunesin kanssa!"
 
-#: ../src/PlayerInterface.cs:2016
+#: ../src/PlayerInterface.cs:2035
 msgid "Synchronize Library"
 msgstr "Synkronoi kirjasto"
 
-#: ../src/PlayerInterface.cs:2018
+#: ../src/PlayerInterface.cs:2037
 msgid "Save Manual Changes"
 msgstr "Tallenna tehdyt muutokset"
 
@@ -2547,18 +2997,6 @@ msgstr "Näytettävät soittolistan sarakkeet"
 msgid "Track"
 msgstr "Nr."
 
-#: ../src/PlaylistView.cs:102
-msgid "Artist"
-msgstr "Esittäjä"
-
-#: ../src/PlaylistView.cs:105
-msgid "Title"
-msgstr "Kappale"
-
-#: ../src/PlaylistView.cs:108
-msgid "Album"
-msgstr "Levy"
-
 #: ../src/PlaylistView.cs:117
 msgid "Time"
 msgstr "Kesto"
@@ -2567,14 +3005,12 @@ msgstr "Kesto"
 msgid "Plays"
 msgstr "Soi"
 
-#: ../src/PlaylistView.cs:137
-msgid "Last Played"
-msgstr "Viimeksi soitettu"
-
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "N/A"
 
-#: ../src/SourceView.cs:431
-msgid "Could not import tracks"
-msgstr "Kappaleita ei voitu tuoda"
+#~ msgid "MP3"
+#~ msgstr "MP3"
+
+#~ msgid "Data"
+#~ msgstr "Data"
