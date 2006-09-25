@@ -74,13 +74,12 @@ namespace Banshee.Base
         private void ConnectToNetworkManager()
         {
             nm_manager = new Manager();
-            nm_manager.StateChange += OnNetworkManagerEvent;
             nm_manager.DeviceNowActive += OnNetworkManagerEvent;
             nm_manager.DeviceNoLongerActive += OnNetworkManagerEvent;
             current_state = nm_manager.State;
         }
         
-        private void OnNetworkManagerEvent(object o, EventArgs args)
+        private void OnNetworkManagerEvent(string device)
         {
             try {
                 State new_state = nm_manager.State;

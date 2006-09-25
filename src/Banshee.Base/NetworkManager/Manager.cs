@@ -45,6 +45,13 @@ namespace NetworkManager
     [Interface("org.freedesktop.NetworkManager")]
     public interface IManager
     {
+        event DeviceHandler DeviceNoLongerActive;
+        event DeviceHandler DeviceNowActive;
+        event DeviceHandler DeviceActivating;
+        event DeviceHandler DevicesChanged;
+        event DeviceActivationFailedHandler DeviceActivationFailed;
+        event DeviceStrengthChangedHandler DeviceStrengthChanged;
+        
         /* Unsupported methods: 
             
             getDialup
@@ -55,18 +62,19 @@ namespace NetworkManager
             removeTestDevice
         */
     
-        //IDevice [] getDevices();
         ObjectPath [] getDevices();
         uint state();
         void sleep();
         void wake();
         bool getWirelessEnabled();
         void setWirelessEnabled(bool enabled);
-        //IDevice getActiveDevice();
         ObjectPath getActiveDevice();
     }
+    
+    public delegate void DeviceHandler(string device);
+    public delegate void DeviceActivationFailedHandler(string device, string essid);
+    public delegate void DeviceStrengthChangedHandler(string device, int percent);
 
-    //public class Manager : IEnumerable<Device>
     public class Manager : IEnumerable
     {
         private const string BusName = "org.freedesktop.NetworkManager";
@@ -74,19 +82,12 @@ namespace NetworkManager
 
         private IManager manager;
         
-        //FIXME: support signals again with managed dbus
-#pragma warning disable 0067
-        public event EventHandler DeviceNoLongerActive;
-        public event EventHandler DeviceNowActive;
-        public event EventHandler DeviceActivating;
-        public event EventHandler DevicesChanged;
-        public event EventHandler DeviceActivationStage;
-        public event EventHandler DeviceIP4AddressChange;
-        public event EventHandler StateChange;
-        public event EventHandler WirelessNetworkDisappeared;
-        public event EventHandler WirelessNetworkAppeared;
-        public event EventHandler WirelessNetworkStrengthChanged;
-#pragma warning restore 0067
+        public event DeviceHandler DeviceNoLongerActive;
+        public event DeviceHandler DeviceNowActive;
+        public event DeviceHandler DeviceActivating;
+        public event DeviceHandler DevicesChanged;
+        public event DeviceActivationFailedHandler DeviceActivationFailed;
+        public event DeviceStrengthChangedHandler DeviceStrengthChanged;
         
         //TODO: this is a temporary solution
         public static T GetObject<T> (ObjectPath path)
@@ -101,58 +102,46 @@ namespace NetworkManager
             }
 
             manager = DApplication.SystemConnection.GetObject<IManager>(BusName, new ObjectPath(ObjectPath));
-        }
-        
-        private void InvokeEvent(string nmSignalName)
-        {
-            /*
-               Ughh, this would be much nicer if it actually worked using reflection.
-               But noooo, EventInfo.GetRaiseMethod *always* returns null, so 
-               I can't invoke the registered raise method through reflection, which
-               leaves me to do this lame switch/case hard coded event raising...
-            */
             
-            switch(nmSignalName) {
-                case "DeviceNoLongerActive": InvokeEvent(DeviceNoLongerActive); break;
-                case "DeviceNowActive": InvokeEvent(DeviceNowActive); break;
-                case "DeviceActivating": InvokeEvent(DeviceActivating); break;
-                case "DeviceActivationStage": InvokeEvent(DeviceActivationStage); break;
-                case "DevicesChanged": InvokeEvent(DevicesChanged); break;
-                case "DeviceIP4AddressChange": InvokeEvent(DeviceIP4AddressChange); break;
-                case "WirelessNetworkDisappeared": InvokeEvent(WirelessNetworkDisappeared); break;
-                case "WirelessNetworkAppeared": InvokeEvent(WirelessNetworkAppeared); break;
-                case "WirelessNetworkStrengthChanged": InvokeEvent(WirelessNetworkStrengthChanged); break;
-                case "StateChange": InvokeEvent(StateChange); break;
-            }
+            manager.DeviceNoLongerActive += delegate(string device) {
+                if(DeviceNoLongerActive != null) {
+                    DeviceNoLongerActive(device);
+                }
+            };
             
-            /*EventInfo event_info = GetType().GetEvent(nmSignalName);
-            if(event_info == null) {
-               return;
-            }
+            manager.DeviceNowActive += delegate(string device) {
+                if(DeviceNowActive != null) {
+                    DeviceNowActive(device);
+                }
+            };
             
-            MethodInfo method = event_info.GetRaiseMethod(true);
-            if(method != null) {
-                method.Invoke(this, new object [] { this, new EventArgs() });
-            }*/
+            manager.DeviceActivating += delegate(string device) {
+                if(DeviceActivating != null) {
+                    DeviceActivating(device);
+                }
+            };
+            
+            manager.DevicesChanged += delegate(string device) {
+                if(DevicesChanged != null) {
+                    DevicesChanged(device);
+                }
+            };
+            
+            manager.DeviceActivationFailed += delegate(string device, string essid) {
+                if(DeviceActivationFailed != null) {
+                    DeviceActivationFailed(device, essid);
+                }
+            };
+            
+            manager.DeviceStrengthChanged += delegate(string device, int percent) {
+                if(DeviceStrengthChanged != null) {
+                    DeviceStrengthChanged(device, percent);
+                }
+            };
         }
-        
-        private void InvokeEvent(EventHandler eventHandler)
-        {
-            EventHandler handler = eventHandler;
-            if(handler != null) {
-                handler(this, new EventArgs());
-            }
-        }
-        
 
-        //public IEnumerator<Device> GetEnumerator()
         public IEnumerator GetEnumerator()
         {
-            /*
-            foreach(IDevice device in manager.getDevices()) {
-                yield return new Device(device);
-            }
-            */
             foreach(ObjectPath device_path in manager.getDevices()) {
                 yield return new Device(device_path);
             }
@@ -168,11 +157,6 @@ namespace NetworkManager
             get {
                 List<Device> list = new List<Device>();
                 
-                /*
-                foreach(IDevice device in manager.getDevices()) {
-                    list.Add(new Device(device));
-                }
-                */
                 foreach(ObjectPath device in manager.getDevices()) {
                     list.Add(new Device(device));
                 }
@@ -203,16 +187,6 @@ namespace NetworkManager
         
         public Device ActiveDevice {
             get {
-                /*
-                foreach(Device device in this) {
-                    if(device.IsLinkActive) {
-                        return device;
-                    }
-                }
-                
-                return null;
-                */
-
                 return new Device(manager.getActiveDevice());
             }
         }
