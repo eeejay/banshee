@@ -78,10 +78,9 @@ namespace Banshee.Base
             current_state = nm_manager.State;
         }
         
-        private void OnNetworkManagerEvent(object o, EventArgs args)
+        private void OnNetworkManagerEvent(State new_state)
         {
             try {
-                State new_state = nm_manager.State;
                 if(new_state != current_state && (new_state == State.Connected || new_state == State.Disconnected)) {
                     current_state = new_state;
                     

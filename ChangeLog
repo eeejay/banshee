@@ -1,5 +1,17 @@
 2006-09-25  Aaron Bockover  <abock@gnome.org>
 
+	258% hot sweet action: All of Banshee's dbus-sharp code has been ported
+	to and is working against the new managed DBus - all previous dbus-sharp
+	problems are herby eliminated - someone please by Alp a few beers!
+
+	* src/Banshee.Base/NetworkManager/Manager.cs: Use StateChangeHandler
+	for propagating the remote event
+
+	* src/Banshee.Base/NetworkDetect.cs: Use the state from the signal
+	and do not invoke a remote method while in the signal handler 
+
+2006-09-25  Aaron Bockover  <abock@gnome.org>
+
 	Fix for BGO #357548 and to add better application integration for 
 	launching web URLs into a browser
 

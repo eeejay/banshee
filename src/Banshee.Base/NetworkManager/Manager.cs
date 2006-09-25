@@ -46,10 +46,10 @@ namespace NetworkManager
     public interface IManager
     {
         event StateChangeHandler StateChange;
-        uint state();
+        State state();
     }
     
-    public delegate void StateChangeHandler(uint state);
+    public delegate void StateChangeHandler(State state);
     
     public class Manager
     {
@@ -58,7 +58,7 @@ namespace NetworkManager
 
         private IManager manager;
         
-        public event EventHandler StateChange;
+        public event StateChangeHandler StateChange;
 
         public Manager()
         {
@@ -70,15 +70,16 @@ namespace NetworkManager
             manager.StateChange += OnStateChange;
         }
         
-        private void OnStateChange(uint state)
+        private void OnStateChange(State state)
         {
-            if(StateChange != null) {
-                StateChange(this, new EventArgs());
+            StateChangeHandler handler = StateChange;
+            if(handler != null) {
+                handler(state);
             }
         }
 
         public State State {
-            get { return (State)manager.state(); }
+            get { return manager.state(); }
         }
     }
 }
