@@ -194,7 +194,11 @@ namespace Banshee.Plugins.Daap
             song.TrackCount = (int)track.TrackCount;
             song.TrackNumber = (int)track.TrackNumber;
             song.Year = track.Year;
-            song.Format = Path.GetExtension (song.FileName).Substring (1);
+
+            string ext = Path.GetExtension (song.FileName);
+            if (ext != null && ext.Length > 0) {
+                song.Format = Path.GetExtension (song.FileName).Substring (1);
+            }
             
             return song;
         }
