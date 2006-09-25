@@ -1,3 +1,11 @@
+2006-09-25  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs:
+	* src/Banshee.Plugins/Daap/DaapCore.cs:
+
+	Call DAAP.Client.Logout in all cases except when we know the server
+	has just gone away.
+
 2006-09-25  Alp Toker  <alp@atoker.com>
 
 	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.

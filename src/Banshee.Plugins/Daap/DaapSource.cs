@@ -120,12 +120,12 @@ namespace Banshee.Plugins.Daap
         {
             Unmap();
         }
-        
-        public override bool Unmap()
+
+        internal bool Disconnect (bool logout)
         {
             if(client != null) {
-                // FIXME: If the server has gone down, this call sometimes blocks for a very long time.
-                // client.Logout();
+                if (logout)
+                    client.Logout();
                 
                 client.Dispose();
                 client = null;
@@ -142,6 +142,11 @@ namespace Banshee.Plugins.Daap
             ClearChildSources ();
             
             return true;
+        }
+        
+        public override bool Unmap()
+        {
+            return Disconnect (true);
         }
         
         public override string UnmapIcon {

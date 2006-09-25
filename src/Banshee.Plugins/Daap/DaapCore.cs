@@ -142,11 +142,12 @@ namespace Banshee.Plugins.Daap
         
         private static void OnServiceRemoved(object o, ServiceArgs args)
         {
-            Source source = source_map[args.Service.Name] as DaapSource;
+            DaapSource source = source_map[args.Service.Name] as DaapSource;
             if(source == null) {
                 return;
             }
-            
+
+            source.Disconnect (false);
             source.Dispose();
             SourceManager.RemoveSource(source);
             source_map.Remove(args.Service.Name);
