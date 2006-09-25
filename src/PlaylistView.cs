@@ -593,6 +593,10 @@ namespace Banshee
 
         public void ScrollToPlaying()
         {
+            if(!IsRealized) {
+                return;
+            }
+            
             Gdk.Rectangle cellRect = GetCellArea (model.PlayingPath, Columns[0]);
 
             Point point = new Point ();

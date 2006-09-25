@@ -34,7 +34,7 @@ using NDesk.DBus;
 
 namespace NetworkManager
 {
-    public enum State {
+    public enum State : uint {
         Unknown = 0,
         Asleep,
         Connecting,
@@ -45,55 +45,20 @@ namespace NetworkManager
     [Interface("org.freedesktop.NetworkManager")]
     public interface IManager
     {
-        event DeviceHandler DeviceNoLongerActive;
-        event DeviceHandler DeviceNowActive;
-        event DeviceHandler DeviceActivating;
-        event DeviceHandler DevicesChanged;
-        event DeviceActivationFailedHandler DeviceActivationFailed;
-        event DeviceStrengthChangedHandler DeviceStrengthChanged;
-        
-        /* Unsupported methods: 
-            
-            getDialup
-            activateDialup
-            setActiveDevice
-            createWirelessNetwork
-            createTestDevice
-            removeTestDevice
-        */
-    
-        ObjectPath [] getDevices();
+        event StateChangeHandler StateChange;
         uint state();
-        void sleep();
-        void wake();
-        bool getWirelessEnabled();
-        void setWirelessEnabled(bool enabled);
-        ObjectPath getActiveDevice();
     }
     
-    public delegate void DeviceHandler(string device);
-    public delegate void DeviceActivationFailedHandler(string device, string essid);
-    public delegate void DeviceStrengthChangedHandler(string device, int percent);
-
-    public class Manager : IEnumerable
+    public delegate void StateChangeHandler(uint state);
+    
+    public class Manager
     {
         private const string BusName = "org.freedesktop.NetworkManager";
         private const string ObjectPath = "/org/freedesktop/NetworkManager";
 
         private IManager manager;
         
-        public event DeviceHandler DeviceNoLongerActive;
-        public event DeviceHandler DeviceNowActive;
-        public event DeviceHandler DeviceActivating;
-        public event DeviceHandler DevicesChanged;
-        public event DeviceActivationFailedHandler DeviceActivationFailed;
-        public event DeviceStrengthChangedHandler DeviceStrengthChanged;
-        
-        //TODO: this is a temporary solution
-        public static T GetObject<T> (ObjectPath path)
-        {
-            return DApplication.SystemConnection.GetObject<T>(BusName, path);
-        }
+        public event EventHandler StateChange;
 
         public Manager()
         {
@@ -102,93 +67,18 @@ namespace NetworkManager
             }
 
             manager = DApplication.SystemConnection.GetObject<IManager>(BusName, new ObjectPath(ObjectPath));
-            
-            manager.DeviceNoLongerActive += delegate(string device) {
-                if(DeviceNoLongerActive != null) {
-                    DeviceNoLongerActive(device);
-                }
-            };
-            
-            manager.DeviceNowActive += delegate(string device) {
-                if(DeviceNowActive != null) {
-                    DeviceNowActive(device);
-                }
-            };
-            
-            manager.DeviceActivating += delegate(string device) {
-                if(DeviceActivating != null) {
-                    DeviceActivating(device);
-                }
-            };
-            
-            manager.DevicesChanged += delegate(string device) {
-                if(DevicesChanged != null) {
-                    DevicesChanged(device);
-                }
-            };
-            
-            manager.DeviceActivationFailed += delegate(string device, string essid) {
-                if(DeviceActivationFailed != null) {
-                    DeviceActivationFailed(device, essid);
-                }
-            };
-            
-            manager.DeviceStrengthChanged += delegate(string device, int percent) {
-                if(DeviceStrengthChanged != null) {
-                    DeviceStrengthChanged(device, percent);
-                }
-            };
+            manager.StateChange += OnStateChange;
+        }
+        
+        private void OnStateChange(uint state)
+        {
+            if(StateChange != null) {
+                StateChange(this, new EventArgs());
+            }
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            foreach(ObjectPath device_path in manager.getDevices()) {
-                yield return new Device(device_path);
-            }
-        }
-        
         public State State {
-            get {
-                return (State)manager.state();
-            }
-        }
-        
-        public Device [] Devices {
-            get {
-                List<Device> list = new List<Device>();
-                
-                foreach(ObjectPath device in manager.getDevices()) {
-                    list.Add(new Device(device));
-                }
-                
-                return list.ToArray();
-            }
-        }
-        
-        public void Wake()
-        {
-            manager.wake();
-        }
-        
-        public void Sleep()
-        {
-            manager.sleep();
-        }
-        
-        public bool WirelessEnabled {
-            get {
-                return manager.getWirelessEnabled();
-            }
-            
-            set {
-                manager.setWirelessEnabled(value);
-            }
-        }
-        
-        public Device ActiveDevice {
-            get {
-                return new Device(manager.getActiveDevice());
-            }
+            get { return (State)manager.state(); }
         }
     }
 }

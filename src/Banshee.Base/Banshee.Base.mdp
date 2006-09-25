@@ -132,9 +132,7 @@
     <File name="./Gui/UIManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./MediaEngine/IEqualizer.cs" subtype="Code" buildaction="Compile" />
     <File name="./MediaEngine/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
-    <File name="./NetworkManager/Device.cs" subtype="Code" buildaction="Compile" />
     <File name="./NetworkManager/Manager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./NetworkManager/Network.cs" subtype="Code" buildaction="Compile" />
     <File name="./Plugins/IPlugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./Plugins/Plugin.cs" subtype="Code" buildaction="Compile" />
     <File name="./Plugins/PluginCore.cs" subtype="Code" buildaction="Compile" />

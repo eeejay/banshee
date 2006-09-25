@@ -74,12 +74,11 @@ namespace Banshee.Base
         private void ConnectToNetworkManager()
         {
             nm_manager = new Manager();
-            nm_manager.DeviceNowActive += OnNetworkManagerEvent;
-            nm_manager.DeviceNoLongerActive += OnNetworkManagerEvent;
+            nm_manager.StateChange += OnNetworkManagerEvent;
             current_state = nm_manager.State;
         }
         
-        private void OnNetworkManagerEvent(string device)
+        private void OnNetworkManagerEvent(object o, EventArgs args)
         {
             try {
                 State new_state = nm_manager.State;
@@ -93,13 +92,8 @@ namespace Banshee.Base
                         handler(this, state_changed_args);
                     }
                     
-                    Device active_device = nm_manager.ActiveDevice;
-                    
-                    if(Connected && active_device != null) {
-                        LogCore.Instance.PushDebug("Network Connection Established", String.Format("{0} ({1})", 
-                            active_device.Name, active_device.IP4Address));
-                    } else if(Connected) {
-                        LogCore.Instance.PushDebug("Network Connection Established", "Active Device Unknown");
+                    if(Connected) {
+                        LogCore.Instance.PushDebug("Network Connection Established", "Connected");
                     } else {
                         LogCore.Instance.PushDebug("Network Connection Unavailable", "Disconnected");
                     }
@@ -109,15 +103,11 @@ namespace Banshee.Base
         }
         
         public bool Connected {
-            get {
-                return nm_manager == null ? true : current_state == State.Connected;
-            }
+            get { return nm_manager == null ? true : current_state == State.Connected; }
         }
         
         public Manager Manager {
-            get {
-                return nm_manager;
-            }
+            get { return nm_manager; }
         }
     }
 }

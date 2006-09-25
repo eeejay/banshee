@@ -143,9 +143,7 @@ SOURCES_SOURCES = \
 	$(srcdir)/Sources/ImportErrorsSource.cs
 
 NETWORKMANAGER_SOURCES = \
-	$(srcdir)/NetworkManager/Manager.cs \
-	$(srcdir)/NetworkManager/Device.cs \
-	$(srcdir)/NetworkManager/Network.cs 
+	$(srcdir)/NetworkManager/Manager.cs 
 
 PLUGINS_SOURCES = \
 	$(srcdir)/Plugins/Plugin.cs \

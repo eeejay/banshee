@@ -1,5 +1,25 @@
 2006-09-25  Aaron Bockover  <abock@gnome.org>
 
+	* dbus-sharp/NDesk.DBus.GLib.dll:
+	* dbus-sharp/NDesk.DBus.dll: Updated
+
+	* src/PlaylistView.cs: Fixed a GTK+ critical/realized warning
+
+	* src/Banshee.Base/NetworkManager/Manager.cs: Simplified, only care about
+	a connection state, not anything fancy like device enumeration
+
+	* src/Banshee.Base/NetworkDetect.cs: Use only Manager.State and its
+	change event
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Removed Device/Network; not needed
+	in the Banshee scope as we only care about the connection status
+
+	* src/Banshee.Base/NetworkManager/Device.cs:
+	* src/Banshee.Base/NetworkManager/Network.cs: Removed
+
+2006-09-25  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/NetworkDetect.cs: 
 	* src/Banshee.Base/NetworkManager/Manager.cs: Added signal support
 
