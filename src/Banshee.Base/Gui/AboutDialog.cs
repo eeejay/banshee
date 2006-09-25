@@ -93,7 +93,7 @@ namespace Banshee.Gui.Dialogs
             WrapLicense = true;
             
             SetUrlHook(delegate(Gtk.AboutDialog dialog, string link) {
-                Gnome.Url.Show(link);
+                Banshee.Web.Browser.Open(link);
             });
         }
     }

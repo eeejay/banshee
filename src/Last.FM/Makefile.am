@@ -7,7 +7,8 @@ last_fmdir= $(pkglibdir)
 last_fm_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 LAST_FM_SOURCES = \
-	$(srcdir)/Last.FM/Account.cs
+	$(srcdir)/Last.FM/Account.cs \
+	$(srcdir)/Last.FM/Browser.cs
 
 LAST_FM_GUI_SOURCES = \
 	$(srcdir)/Last.FM.Gui/AccountLoginForm.cs \

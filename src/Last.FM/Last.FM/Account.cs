@@ -148,12 +148,12 @@ namespace Last.FM
         
         public static void SignUp()
         {
-            Gnome.Url.Show("http://www.last.fm/join");
+            Browser.Open("http://www.last.fm/join");
         }
         
         public static void VisitUserProfile(string username)
         {
-            Gnome.Url.Show(String.Format("http://last.fm/user/{0}", username));
+            Browser.Open(String.Format("http://last.fm/user/{0}", username));
         }
         
         public static void VisitUserProfile()
@@ -163,7 +163,7 @@ namespace Last.FM
         
         public static void VisitHomePage()
         {
-            Gnome.Url.Show("http://last.fm/");
+            Browser.Open("http://last.fm/");
         }
         
         public static string Username {

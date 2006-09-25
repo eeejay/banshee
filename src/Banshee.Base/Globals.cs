@@ -66,6 +66,11 @@ namespace Banshee.Base
                 System.Environment.Exit(1);
                 return;
             }
+
+            // override the browser URI launch hook in Last.FM and Banshee.Widgets.LinkLabel
+            Last.FM.Browser.Open = new Last.FM.UriOpenHandler(Banshee.Web.Browser.Open);
+            Banshee.Widgets.LinkLabel.DefaultOpen = 
+                new Banshee.Widgets.LinkLabel.UriOpenHandler(Banshee.Web.Browser.Open);
                         
             startup.Register(Catalog.GetString("Starting background tasks"), delegate {
                 try {

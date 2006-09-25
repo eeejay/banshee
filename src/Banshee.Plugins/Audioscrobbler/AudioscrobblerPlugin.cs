@@ -160,7 +160,7 @@ namespace Banshee.Plugins.Audioscrobbler
         
         private void OnVisitHomePage(object o, EventArgs args)
         {
-            Gnome.Url.Show("http://last.fm/user/" + Username);
+            Banshee.Web.Browser.Open("http://last.fm/user/" + Username);
         }        
         
         private void OnVisitGroupPage(object o, EventArgs args)
@@ -212,12 +212,12 @@ namespace Banshee.Plugins.Audioscrobbler
 
         internal void CreateAccount()
         {
-            Gnome.Url.Show("http://www.last.fm/signup.php");
+            Banshee.Web.Browser.Open("http://www.last.fm/signup.php");
         }
         
         internal void JoinGroup()
         {
-            Gnome.Url.Show("http://www.last.fm/group/Banshee");
+            Banshee.Web.Browser.Open("http://www.last.fm/group/Banshee");
         }
 
         internal string Username {

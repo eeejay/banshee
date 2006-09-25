@@ -25,6 +25,7 @@
     <File name="./badge.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./badge-hover.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./Test.cs" subtype="Code" buildaction="Nothing" />
+    <File name="./Last.FM/Browser.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

@@ -1,5 +1,37 @@
 2006-09-25  Aaron Bockover  <abock@gnome.org>
 
+	Fix for BGO #357548 and to add better application integration for 
+	launching web URLs into a browser
+
+	* src/Banshee.Base/Gui/AboutDialog.cs:
+	* src/Banshee.Base/ActionManager.cs:
+	* src/Banshee.Dap/Ipod/IpodDap.cs:
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Use 
+	Banshee.Web.Browser.Open instead of Gnome.Url.Show
+
+	* src/Banshee.Base/Banshee.Web/Browser.cs: New Browser class with an
+	Open method that currently uses Gnome.Url.Show, but provides 
+	application-integrated URL launching and common error reporting
+
+	* src/Banshee.Base/Globals.cs: Set Open hooks on Last.FM.Browser and
+	Banshee.Widgets.LinkLabel to Banshee.Web.Browser.Open
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Added Banshee.Web/Browser.cs
+
+	* src/Banshee.Widgets/LinkLabel.cs: Use an Open hook for launching URLs
+
+	* src/Last.FM/Browser.cs: Added a Browser class that allows setting
+	an override Open hook; defaults to Gnome.Url.Show
+
+	* src/Last.FM/Last.FM/Account.cs: Use Last.FM.Browser.Open instead of
+	Gnome.Url.Show
+
+	* src/Last.FM/Last.FM.mdp:
+	* src/Last.FM/Makefile.am: Added Browser.cs
+
+2006-09-25  Aaron Bockover  <abock@gnome.org>
+
 	* dbus-sharp/NDesk.DBus.GLib.dll:
 	* dbus-sharp/NDesk.DBus.dll: Updated
 

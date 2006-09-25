@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  LinkLabel.cs
  *
@@ -34,6 +33,9 @@ namespace Banshee.Widgets
 {
     public class LinkLabel : EventBox
     {
+        public delegate bool UriOpenHandler(string uri);
+    
+        private static UriOpenHandler default_open_handler;
         private static Gdk.Cursor hand_cursor = new Gdk.Cursor(Gdk.CursorType.Hand1);
         private static Gdk.Color link_color = new Gdk.Color(0, 0, 0xff);
         
@@ -46,11 +48,13 @@ namespace Banshee.Widgets
         private Uri uri;
         private bool is_pressed;
         private bool is_hovering;
+        private UriOpenHandler open_handler;
         
         public event EventHandler Clicked; 
         
         public LinkLabel() : this(null, null)
         {
+            Open = DefaultOpen;
         }
         
         public LinkLabel(string text, Uri uri)
@@ -69,7 +73,7 @@ namespace Banshee.Widgets
         protected virtual void OnClicked()
         {
             if(uri != null) {
-                Gnome.Url.Show(uri.AbsoluteUri);
+                Open(uri.AbsoluteUri);
             }
         
             EventHandler handler = Clicked;
@@ -181,6 +185,23 @@ namespace Banshee.Widgets
         public string UriString {
             get { return uri == null ? null : uri.AbsoluteUri; }
             set { uri = new Uri(value); }
+        }
+        
+        public UriOpenHandler Open {
+            get { return open_handler; }
+            set { open_handler = value; }
+        }
+        
+        public static UriOpenHandler DefaultOpen {
+            get {
+                if(default_open_handler == null) {
+                    default_open_handler = new UriOpenHandler(Gnome.Url.Show);
+                }
+                
+                return default_open_handler;
+            }
+            
+            set { default_open_handler = value; }
         }
     }
 }

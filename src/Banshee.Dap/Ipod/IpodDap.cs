@@ -128,7 +128,7 @@ namespace Banshee.Dap.Ipod
             try {
                 if(dialog.Run() == (int)ResponseType.Ok) {
                     do_not_ask.Active = true;
-                    Gnome.Url.Show(device.UnknownIpodUrl);
+                    Banshee.Web.Browser.Open(device.UnknownIpodUrl);
                 }
             } finally {
                 dialog.Destroy();
