@@ -1,3 +1,7 @@
+2006-09-25  Alp Toker  <alp@atoker.com>
+
+	* tools/BansheeDBusClient.cs: Use DApplication.SessionConnection singleton
+
 2006-09-25  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/DaapSource.cs:

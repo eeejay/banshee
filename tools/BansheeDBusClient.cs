@@ -85,7 +85,7 @@ public class BansheeClient : Window
 
     static IPlayer FindInstance()
     {
-        Connection connection = DApplication.Connection;
+        Connection connection = DApplication.SessionConnection;
         Bus bus = DApplication.SessionBus;
 
         if (!bus.NameHasOwner(BUS_NAME))
