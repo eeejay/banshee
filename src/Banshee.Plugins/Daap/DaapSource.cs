@@ -124,7 +124,9 @@ namespace Banshee.Plugins.Daap
         public override bool Unmap()
         {
             if(client != null) {
-                client.Logout();
+                // FIXME: If the server has gone down, this call sometimes blocks for a very long time.
+                // client.Logout();
+                
                 client.Dispose();
                 client = null;
                 database = null;
@@ -136,6 +138,8 @@ namespace Banshee.Plugins.Daap
                 DaapCore.ProxyServer.UnregisterDatabase(database);
                 database = null;
             }
+
+            ClearChildSources ();
             
             return true;
         }

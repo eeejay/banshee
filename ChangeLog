@@ -1,3 +1,10 @@
+2006-09-25  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*: update to latest
+	* src/Banshee.Plugins/Daap/DaapSource.cs: don't call DAAP.Client.Logout
+	for now since it sometimes causes hangs for a long time when the
+	server is unavailable (sigh)
+
 2006-09-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs:

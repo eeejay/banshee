@@ -27,6 +27,7 @@
  */
  
 using System;
+using System.IO;
 using System.Collections;
 using Mono.Unix;
 using DAAP;
@@ -192,6 +193,8 @@ namespace Banshee.Plugins.Daap
             song.TrackCount = (int)track.TrackCount;
             song.TrackNumber = (int)track.TrackNumber;
             song.Year = track.Year;
+            song.Format = Path.GetExtension (song.FileName).Substring (1);
+            
             return song;
         }
         
