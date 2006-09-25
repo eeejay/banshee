@@ -1,3 +1,9 @@
+2006-09-25  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.
+	Silence warning messages, fix big-endian (again), fix UTF-8, better
+	exception handling.
+
 2006-09-25  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp/*: update to latest
