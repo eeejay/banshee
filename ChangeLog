@@ -2,7 +2,7 @@
 
 	258% hot sweet action: All of Banshee's dbus-sharp code has been ported
 	to and is working against the new managed DBus - all previous dbus-sharp
-	problems are herby eliminated - someone please by Alp a few beers!
+	problems are herby eliminated - someone please buy Alp a few beers!
 
 	* src/Banshee.Base/NetworkManager/Manager.cs: Use StateChangeHandler
 	for propagating the remote event
