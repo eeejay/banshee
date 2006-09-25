@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-17 10:11+0200\n"
-"PO-Revision-Date: 2006-09-21 21:01+0100\n"
+"POT-Creation-Date: 2006-09-25 18:16+0200\n"
+"PO-Revision-Date: 2006-09-25 21:48+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -488,7 +488,7 @@ msgstr "Markera för användning"
 
 #: ../data/banshee-dialogs.glade.h:66
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:605
+#: ../src/Banshee.Base/Dap/Dap.cs:655
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
@@ -620,7 +620,7 @@ msgstr "_Musik"
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1549
+#: ../src/PlayerInterface.cs:1568
 msgid "New Playlist"
 msgstr "Ny spellista"
 
@@ -794,8 +794,8 @@ msgstr "_Uppspelning"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
 #: ../src/Banshee.Base/ActionManager.cs:181
+#: ../src/Banshee.Base/Gui/SourceView.cs:101
 #: ../src/Banshee.Base/Source.cs:289
-#: ../src/SourceView.cs:101
 msgid "Source"
 msgstr "Källa"
 
@@ -1133,37 +1133,29 @@ msgstr "Okänt antal MB"
 msgid "{0} MB"
 msgstr "{0} MB"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:118
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
 msgid "New Audio CD"
 msgstr "Ny ljud-cd"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:119
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
 msgstr "Skapa en ny ljud-cd"
 
 # SUN CHANGED MESSAGE
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:161
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
 msgid "Problem creating CD"
 msgstr "Problem vid skapande av cd"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:162
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:166
 msgid "No CD recording hardware was found."
 msgstr "Ingen hårdvara för cd-inspelning hittades."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
 msgid "Audio"
 msgstr "Ljud"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
-msgid "MP3"
-msgstr "MP3"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:64
-msgid "Data"
-msgstr "Data"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
 msgid "Some songs could not be found."
@@ -1328,61 +1320,61 @@ msgstr "Kunde inte köra nautilus-cd-burner"
 msgid "Scanning"
 msgstr "Söker av"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:31
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:32
 msgid "Edit Smart Playlist"
 msgstr "Redigera smart spellista"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:42
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:43
 msgid "New Smart Playlist"
 msgstr "Ny smart spellista"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:59
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:60
 msgid "Neglected Favorites"
 msgstr "Försummade favoriter"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:70
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:71
 msgid "700 MB of Favorites"
 msgstr "700 MB favoriter"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:77
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:78
 msgid "80 Minutes of Favorites"
 msgstr "80 minuter favoriter"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:84
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:85
 msgid "Unheard"
 msgstr "Inte hört"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:138
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:139
 #: ../src/PlayerInterface.cs:444
 #: ../src/PlayerInterface.cs:1306
-#: ../src/PlayerInterface.cs:2284
+#: ../src/PlayerInterface.cs:2303
 msgid "Artist Name"
 msgstr "Artistnamn"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:140
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:141
 #: ../src/PlayerInterface.cs:443
 #: ../src/PlayerInterface.cs:1308
 msgid "Song Name"
 msgstr "Låtnamn"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:142
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:143
 #: ../src/PlayerInterface.cs:445
 #: ../src/PlayerInterface.cs:1310
-#: ../src/PlayerInterface.cs:2280
+#: ../src/PlayerInterface.cs:2299
 msgid "Album Title"
 msgstr "Albumtitel"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:144
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:145
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:710
 #: ../src/PlayerInterface.cs:446
 #: ../src/PlayerInterface.cs:1312
-#: ../src/PlayerInterface.cs:2288
+#: ../src/PlayerInterface.cs:2307
 #: ../src/PlaylistView.cs:111
 msgid "Genre"
 msgstr "Genre"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:146
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:147
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:718
 #: ../src/PlayerInterface.cs:447
 #: ../src/PlayerInterface.cs:1314
@@ -1390,7 +1382,7 @@ msgstr "Genre"
 msgid "Year"
 msgstr "År"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:163
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 msgid "Create Smart Playlist from Search"
 msgstr "Skapa smart spellista från sökning"
 
@@ -1462,28 +1454,28 @@ msgstr "mellan"
 msgid "to"
 msgstr "till"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:697
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:691
 msgid "_Match"
 msgstr "_Matcha"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:698
 msgid "all"
 msgstr "alla"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:705
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:699
 msgid "any"
 msgstr "någon"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:710
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
 msgid "of the following:"
 msgstr "av följande:"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:729
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:723
 msgid "_Limit to"
 msgstr "_Begränsa till"
 
-# FIXME. This is confusing. 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:746
+# FIXME. This is confusing.
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:740
 msgid "selected by"
 msgstr "valda genom"
 
@@ -1626,11 +1618,11 @@ msgstr "Smarta spellistor"
 msgid "Create playlists that automatically add and remove songs based on customizable queries."
 msgstr "Skapa spellistor som automatiskt lägger till och tar bort låtar baserat på anpassade sökfrågor."
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:133
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:138
 msgid "New Smart Playlist..."
 msgstr "Ny smart spellista..."
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:139
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:144
 msgid "New Smart Playlist from Search..."
 msgstr "Ny smart spellista från sökning..."
 
@@ -1642,16 +1634,16 @@ msgstr "Ta bort smart spellista"
 msgid "Smart Playlist"
 msgstr "Sortera spellista"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:110
-#: ../src/Banshee.Base/BatchTranscoder.cs:111
+#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:117
 msgid "Converting Files"
 msgstr "Konverterar filer"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:113
+#: ../src/Banshee.Base/BatchTranscoder.cs:119
 msgid "Files are currently being converted to another audio format. Would you like to stop this?"
 msgstr "Filer håller för närvarande på att konverteras till ett annat ljudformat. Vill du stoppa detta?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:122
 msgid "Initializing Transcoder..."
 msgstr "Initierar omkodare..."
 
@@ -1679,24 +1671,36 @@ msgstr "Lokal mapp"
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan inte initiera DapCore på grund av att HalCore inte är initierad"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:334
+#: ../src/Banshee.Base/Dap/Dap.cs:335
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Enhet"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Banshee.Base/Dap/Dap.cs:336
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "Synkroniserar {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:339
+#: ../src/Banshee.Base/Dap/Dap.cs:340
 msgid "Waiting for transcoder..."
 msgstr "Väntar på omkodare..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:427
-#: ../src/Banshee.Base/Dap/Dap.cs:448
+#: ../src/Banshee.Base/Dap/Dap.cs:428
+#: ../src/Banshee.Base/Dap/Dap.cs:449
 msgid "Processing..."
 msgstr "Behandlar..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:468
+msgid "Could not encode some files"
+msgstr "Kunde inte koda vissa filer"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:470
+msgid "Some files could not be encoded to the proper format. They will not be saved to the device if you continue."
+msgstr "Vissa filer kunde inte kodas i det riktiga formatet. De kommer inte att sparas till enheten om du fortsätter."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:475
+msgid "Continue synchronizing"
+msgstr "Fortsätt synkronisering"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1893,6 +1897,10 @@ msgstr "Bläddra..."
 msgid "Select library location"
 msgstr "Välj biblioteksplats"
 
+#: ../src/Banshee.Base/Gui/SourceView.cs:431
+msgid "Could not import tracks"
+msgstr "Kunde inte importera spår"
+
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:78
 msgid "Continuous"
 msgstr "Kontinuerlig"
@@ -1991,16 +1999,16 @@ msgstr "Söker efter låtar"
 msgid "Could not load track from library"
 msgstr "Kunde inte läsa in spår från bibliotek"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:76
+#: ../src/Banshee.Base/NetworkDetect.cs:68
 msgid "Cannot connect to NetworkManager"
 msgstr "Kan inte ansluta till NetworkManager"
 
 # Intressant engelska
-#: ../src/Banshee.Base/NetworkDetect.cs:77
+#: ../src/Banshee.Base/NetworkDetect.cs:69
 msgid "An available, working network connection will be assumed"
 msgstr "En tillgänglig, fungerande nätverksanslutning kommer att antas"
 
-#: ../src/Banshee.Base/Notifications.cs:72
+#: ../src/Banshee.Base/Notifications.cs:81
 msgid "Cannot show notification"
 msgstr "Kan inte visa notifiering"
 
@@ -2052,19 +2060,19 @@ msgstr "i"
 msgid "No MP3-compatible encoders available"
 msgstr "Inga MP3-kompatibla kodare tillgängliga"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Standardmotor för uppspelning"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid "No player engines were found. Please ensure Banshee has been cleanly installed."
 msgstr "Inga uppspelningsmotorer hittades. Kontrollera att Banshee har installerats korrekt."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
 msgstr "Problem med uppspelningsmotor"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:83
 msgid "Playing Music"
 msgstr "Spelar musik"
 
@@ -2143,28 +2151,33 @@ msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserar din enhet, var god vänta..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:168
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:223
 msgid "Importing"
 msgstr "Importerar"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:225
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
 msgstr "Du håller för närvarande på att importera från {0}. Vill du stoppa detta?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:274
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:227
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Kopierar från {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:275
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:228
 msgid "Scanning..."
 msgstr "Söker av..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:393
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:344
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Kan inte importera spår från {0}"
@@ -2276,24 +2289,50 @@ msgstr "Sparar ny databas..."
 msgid "Error rebuilding iPod database"
 msgstr "Fel vid ombyggnation av iPod-databas"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:162
+#. Translators "Week 25 of 2006"
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:82
+msgid "Manufactured During"
+msgstr "Tillverkad under"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
+#, csharp-format
+msgid "Week {0} of {1}"
+msgstr "Vecka {0} av {1}"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:117
+msgid "Your iPod could not be identified"
+msgstr "Din iPod kunde inte identifieras"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
+msgid "Please consider submitting information about your iPod to the Banshee Project so your iPod may be more fully identified in the future.\n"
+msgstr "Fundera på att skicka in information om din iPod till Banshee-projektet så att din iPod kan bli identifierad bättre i framtiden.\n"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:121
+msgid "Do not ask me again"
+msgstr "Fråga mig inte igen"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:126
+msgid "Go to Web Site"
+msgstr "Gå till webbplatsen"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:207
 msgid "Could not eject iPod"
 msgstr "Kunde inte mata ut iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:170
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:189
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:215
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:234
 msgid "Synchronizing iPod"
 msgstr "Synkroniserar iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:171
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:216
 msgid "Pre-processing tracks"
 msgstr "Förbehandlar spår"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:231
 msgid "Flushing to Disk (may take time)"
 msgstr "Spolar till disk (kan ta tid)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:196
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:241
 msgid "Failed to synchronize iPod"
 msgstr "Misslyckades med att synkronisera iPod"
 
@@ -2357,20 +2396,21 @@ msgstr ": Hittade"
 msgid "Reading library information"
 msgstr "Läser biblioteksinformation"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:139
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:140
 msgid "Loading device"
 msgstr "Läser enhet"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
 msgid "Done"
 msgstr "Klar"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:145
 msgid ": Ready for use"
 msgstr ": Klar för användning"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:193
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:226
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:192
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:196
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:229
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:238
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:250
 msgid "Synchronizing Device"
@@ -2493,7 +2533,7 @@ msgstr "Dela mitt musikbibliotek med andra"
 msgid "Share name:"
 msgstr "Utdelningsnamn:"
 
-#: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:74
 msgid "Banshee Music Share"
 msgstr "Banshee-musikdelning"
 
@@ -2537,11 +2577,11 @@ msgstr "Aktivera insticksmodulen för DAAP-musikutdelning"
 msgid "Name of DAAP server share"
 msgstr "Namn på DAAP-serverns utdelning"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:71
 msgid "Cannot login to DAAP share"
 msgstr "Kan inte logga in på DAAP-utdelning"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:132
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:152
 msgid "Disconnect"
 msgstr "Koppla från"
 
@@ -2768,43 +2808,43 @@ msgstr[1] "{0} objekt"
 msgid "{0} Total Play Time"
 msgstr "{0} Total speltid"
 
-#: ../src/PlayerInterface.cs:1568
+#: ../src/PlayerInterface.cs:1587
 msgid "Clear"
 msgstr "Töm"
 
-#: ../src/PlayerInterface.cs:1835
+#: ../src/PlayerInterface.cs:1854
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Är du säker på att du vill permanent ta bort denna låt?"
 msgstr[1] "Är du säker på att du vill permanent ta bort de markerade {0} låtarna?"
 
-#: ../src/PlayerInterface.cs:1839
+#: ../src/PlayerInterface.cs:1858
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Om du tar bort markeringen kommer de att permanent förloras."
 
-#: ../src/PlayerInterface.cs:1842
+#: ../src/PlayerInterface.cs:1861
 msgid "Remove selection from library"
 msgstr "Ta bort markering från bibliotek"
 
-#: ../src/PlayerInterface.cs:1844
+#: ../src/PlayerInterface.cs:1863
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Är du säker att du vill ta bort den markerade låten från ditt bibliotek?"
 msgstr[1] "Är du säker att du vill ta bort de <b>({0})</b> markerade låtarna från ditt bibliotek?"
 
-#: ../src/PlayerInterface.cs:1986
+#: ../src/PlayerInterface.cs:2005
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2007
+#: ../src/PlayerInterface.cs:2026
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisera {0}"
 
-#: ../src/PlayerInterface.cs:2008
+#: ../src/PlayerInterface.cs:2027
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
@@ -2817,15 +2857,15 @@ msgstr ""
 "<big>•</big> <i>Synkronisera bibliotek</i>: synkronisera Banshees bibliotek till {0}\n"
 "<big>•</big> <i>Spara manuella ändringar</i>: spara endast de manuella ändringarna du gjorde"
 
-#: ../src/PlayerInterface.cs:2014
+#: ../src/PlayerInterface.cs:2033
 msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatability with iTunes!"
 msgstr "<b>Varning:</b> Åtgärder kommer att ändra eller radera existerande iPod-innehåll och kan orsaka inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:2016
+#: ../src/PlayerInterface.cs:2035
 msgid "Synchronize Library"
 msgstr "Synkronisera bibliotek"
 
-#: ../src/PlayerInterface.cs:2018
+#: ../src/PlayerInterface.cs:2037
 msgid "Save Manual Changes"
 msgstr "Spara manuella ändringar"
 
@@ -2857,10 +2897,10 @@ msgstr "Spelar"
 msgid "N/A"
 msgstr "-"
 
-#: ../src/SourceView.cs:431
-msgid "Could not import tracks"
-msgstr "Kunde inte importera spår"
-
+#~ msgid "MP3"
+#~ msgstr "MP3"
+#~ msgid "Data"
+#~ msgstr "Data"
 #~ msgid "<b>Advanced Properties</b>"
 #~ msgstr "<b>Avancerade egenskaper</b>"
 #~ msgid "<big><b>Editing Song</b></big>"
@@ -3119,10 +3159,6 @@ msgstr "Kunde inte importera spår"
 #, fuzzy
 #~ msgid "Encoding files..."
 #~ msgstr "Flyttar filer"
-
-#, fuzzy
-#~ msgid "Could not encode file: {0}"
-#~ msgstr "Kunde inte öppna fil"
 
 #, fuzzy
 #~ msgid "iPod Name"
