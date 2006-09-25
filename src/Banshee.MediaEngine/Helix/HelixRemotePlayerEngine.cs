@@ -147,15 +147,15 @@ namespace Banshee.MediaEngine.Helix
         }
          
         public override ushort Volume {
-            get { return (ushort)player.GetVolume(); }
+            get { return (ushort)player.Volume; }
             set {
-                player.SetVolume((uint)value);
+                player.Volume = (uint)value;
                 OnEventChanged(PlayerEngineEvent.Volume);
             }
         }
     
         public override uint Position {
-            get { return (uint)player.GetPosition() / 1000; }
+            get { return (uint)player.Position / 1000; }
             set {
                 if(player.StartSeeking()) {
                     if(player.SetPosition(value * 1000)) {
@@ -168,11 +168,11 @@ namespace Banshee.MediaEngine.Helix
         }
         
         public override uint Length { 
-            get { return (uint)player.GetLength() / 1000; }
+            get { return (uint)player.Length / 1000; }
         }        
         
         public override bool CanSeek {
-            get { return !player.GetIsLive(); }
+            get { return !player.IsLive; }
         }
         
         public override string Id {
@@ -209,8 +209,8 @@ namespace Banshee.MediaEngine.Helix
                 throw new ArgumentOutOfRangeException("value must be in range -100..100");
             }
             
-            if(player.GetIsEqualizerEnabled() == false) {
-                player.SetEqualizerEnabled(true);
+            if(!player.IsEqualizerEnabled) {
+                player.IsEqualizerEnabled = true;
             }
 
             if(frequency_map.Count == 0) {

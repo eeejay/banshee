@@ -1,3 +1,18 @@
+2006-09-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs:
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Use properties
+	in the DBus interface instead of Get/Set methods now that it is possible
+	with the lovely managed DBus
+
+	* configure.ac: Require helix-dbus-server 0.3.0 if Helix support is 
+	desired
+
+	* src/Banshee.Base/NetworkDetect.cs:
+	* src/Banshee.Base/NetworkManager/Device.cs:
+	* src/Banshee.Base/NetworkManager/Manager.cs:
+	* src/Banshee.Base/NetworkManager/Network.cs: Updated copyright
+
 2006-09-24  Alp Toker  <alp@atoker.com>
 
 	* src/Main.cs: Remove last vestiges of the old dbus-sharp

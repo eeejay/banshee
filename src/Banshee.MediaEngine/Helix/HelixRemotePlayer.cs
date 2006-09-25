@@ -39,24 +39,29 @@ namespace Helix
     public interface IRemotePlayer
     {
         event MessageHandler Message;
+        
+        void Shutdown();
+        void Ping();
+        
         bool OpenUri(string uri);
+        
         void Play();
         void Pause();
         void Stop();
+        
+        bool SetPosition(uint position);
         bool StartSeeking();
         void StopSeeking();
-        bool SetPosition(uint position);
-        uint GetPosition();
-        uint GetLength();
-        uint GetVolume();
-        void SetVolume(uint volume);
+        
         string GetGroupTitle(uint groupIndex);
-        void Shutdown();
-        void Ping();
-        bool GetIsLive();
-        bool GetIsEqualizerEnabled();
-        void SetEqualizerEnabled(bool enabled);
+        
         void SetEqualizerGain(int frequencyId, int value);
+        
+        uint Position { get; }
+        uint Length { get; }
+        uint Volume { get; set; }
+        bool IsLive { get; }
+        bool IsEqualizerEnabled { get; set; }
     }
     
     public enum ContentState {
