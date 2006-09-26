@@ -1,5 +1,14 @@
 2006-09-26  Aaron Bockover  <abock@gnome.org>
 
+	* hal-sharp/Manager.cs: Added DeviceAddedArgs and DeviceRemovedArgs as
+	in a remove event, the UDI as a device object won't exist
+
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs:
+	* src/Banshee.Base/Dap/DapCore.cs: Updated to use DeviceAdded/RemovedArgs
+
+2006-09-26  Aaron Bockover  <abock@gnome.org>
+
 	hal-sharp has been rewritten on top of the new managed DBus; with this
 	commit there is no more native DBus or HAL code in Banshee at all!
 

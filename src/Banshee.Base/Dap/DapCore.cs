@@ -121,12 +121,12 @@ namespace Banshee.Dap
             }
         }
         
-        private static void OnHalDeviceAdded(object o, DeviceArgs args)
+        private static void OnHalDeviceAdded(object o, DeviceAddedArgs args)
         {
             AddDevice(args.Device);
         }
         
-        private static void OnHalDeviceRemoved(object o, DeviceArgs args)
+        private static void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
         {
             RemoveDevice(args.Udi);
         }

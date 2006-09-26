@@ -64,14 +64,14 @@ namespace Banshee.Cdrom.Nautilus
             HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
         }
         
-        private void OnHalDeviceAdded(object o, DeviceArgs args)
+        private void OnHalDeviceAdded(object o, DeviceAddedArgs args)
         {
             CheckMedia(args.Device);
         }
         
-        private void OnHalDeviceRemoved(object o, DeviceArgs args)
+        private void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
         {
-            if(hal_disc_device != null && hal_disc_device.Udi == args.Device.Udi) {
+            if(hal_disc_device != null && hal_disc_device.Udi == args.Udi) {
                 hal_disc_device = null;
                 OnMediaRemoved();
             }

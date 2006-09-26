@@ -57,7 +57,7 @@ namespace Banshee.Cdrom.Nautilus
             HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
         }
         
-        private void OnHalDeviceAdded(object o, DeviceArgs args)
+        private void OnHalDeviceAdded(object o, DeviceAddedArgs args)
         {
             if(args.Device["storage.drive_type"] == "cdrom") {
                 NautilusDrive drive = AddDrive(args.Device);
@@ -67,7 +67,7 @@ namespace Banshee.Cdrom.Nautilus
             }
         }
         
-        private void OnHalDeviceRemoved(object o, DeviceArgs args)
+        private void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
         {
             if(drive_table.ContainsKey(args.Udi)) {
                 IDrive drive = drive_table[args.Udi];

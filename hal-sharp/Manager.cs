@@ -26,7 +26,6 @@ namespace Hal
     public class DeviceArgs : EventArgs
     {
         private string udi;
-        private Device device;
         
         public DeviceArgs(string udi)
         {
@@ -36,15 +35,31 @@ namespace Hal
         public string Udi {
             get { return udi; }
         }
+    }
+    
+    public class DeviceAddedArgs : DeviceArgs
+    {
+        private Device device;
+        
+        public DeviceAddedArgs(string udi) : base(udi)
+        {
+        }
         
         public Device Device {
             get { 
                 if(device == null) {
-                    device = new Device(udi);
+                    device = new Device(Udi);
                 }
                 
                 return device;
             }
+        }
+    }
+    
+    public class DeviceRemovedArgs : DeviceArgs
+    {
+        public DeviceRemovedArgs(string udi) : base(udi)
+        {
         }
     }
     
@@ -62,8 +77,8 @@ namespace Hal
         }
     }
     
-    public delegate void DeviceAddedHandler(object o, DeviceArgs args);
-    public delegate void DeviceRemovedHandler(object o, DeviceArgs args);
+    public delegate void DeviceAddedHandler(object o, DeviceAddedArgs args);
+    public delegate void DeviceRemovedHandler(object o, DeviceRemovedArgs args);
     public delegate void NewCapabilityHandler(object o, NewCapabilityArgs args);
     
     public class Manager : IEnumerable<string>
@@ -93,7 +108,7 @@ namespace Hal
             GLib.Idle.Add(delegate {
                 DeviceAddedHandler handler = DeviceAdded;
                 if(handler != null) {
-                    handler(this, new DeviceArgs(udi));
+                    handler(this, new DeviceAddedArgs(udi));
                 }
                 
                 return false;
@@ -105,7 +120,7 @@ namespace Hal
             GLib.Idle.Add(delegate {
                 DeviceRemovedHandler handler = DeviceRemoved;
                 if(handler != null) {
-                    handler(this, new DeviceArgs(udi));
+                    handler(this, new DeviceRemovedArgs(udi));
                 }
                 
                 return false;
