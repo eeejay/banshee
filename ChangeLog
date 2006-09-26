@@ -1,3 +1,13 @@
+2006-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/PlayerInterface.cs: Set the SearchEntry as Ready only when
+	appropriate to avoid being told to search when we are just cancelling the
+	search b/c the source is being changed, thus preventing two extra playlist
+	model reloads.
+
+	* src/Banshee.Widgets/SearchEntry.cs: Add Ready property, and only raise
+	the Changed event when we are Ready.  Refactor OnChanged raising code.
+
 2006-09-25  Aaron Bockover  <abock@gnome.org>
 
 	258% hot sweet action: All of Banshee's dbus-sharp code has been ported

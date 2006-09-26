@@ -58,6 +58,7 @@ namespace Banshee.Widgets
         
         private bool emptyEmitted;
         private uint timeoutId;
+        private bool ready = false;
         
         public event EventHandler EnterPress;
         public event EventHandler Changed;
@@ -315,10 +316,7 @@ namespace Banshee.Widgets
             
             entry.HasFocus = true;
             
-            EventHandler handler = Changed;
-            if(handler != null) {
-                handler(this, new EventArgs());
-            }
+            OnChanged(this, new EventArgs());
         }
         
         private void OnMenuDeactivated(object o, EventArgs args)
@@ -327,6 +325,16 @@ namespace Banshee.Widgets
             menuActive = false;
         }
         
+        protected virtual void OnChanged(object o, EventArgs args)
+        {
+            if (Ready) {
+                EventHandler handler = Changed;
+                if(handler != null) {
+                    handler(o, args);
+                }
+            }
+        }
+
         private void OnEntryActivated(object o, EventArgs args)
         {
             EventHandler handler = EnterPress;
@@ -337,10 +345,7 @@ namespace Banshee.Widgets
 
         private bool OnTimeout () 
         {
-            EventHandler handler = Changed;
-            if(handler != null && !emptyEmitted) {
-                handler(this, new EventArgs());
-            }
+            OnChanged(this, new EventArgs());
 
             emptyEmitted = entry.Text.Length == 0;
             return false;
@@ -420,6 +425,11 @@ namespace Banshee.Widgets
             get {
                 return Query != null && Query != String.Empty;
             }
+        }
+
+        public bool Ready {
+            get { return ready; }
+            set { ready = value; }
         }
     }
 }

@@ -1083,6 +1083,7 @@ namespace Banshee
                 return;
             }
 
+            searchEntry.Ready = false;
             searchEntry.CancelSearch();
             
             if(source is DapSource) {
@@ -1112,6 +1113,8 @@ namespace Banshee
             UpdateSourceView();
                 
             OnPlaylistViewSelectionChanged(playlistView.Selection, new EventArgs());
+
+            searchEntry.Ready = true;
         }
         
         private void UpdateDapDiskUsageBar(DapSource dapSource)
