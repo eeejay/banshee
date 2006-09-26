@@ -58,7 +58,7 @@ namespace Banshee.Dap
     public static class DapCore 
     {
         private static Dictionary<string, DapDevice> device_table = new Dictionary<string, DapDevice>();
-        private static List<Device> volume_mount_wait_list = new List<Device>();
+        private static List<string> volume_mount_wait_list = new List<string>();
         private static List<Type> supported_dap_types = new List<Type>();
         private static uint volume_mount_wait_timeout = 0;
     
@@ -135,25 +135,33 @@ namespace Banshee.Dap
         
         internal static void QueueWaitForVolumeMount(Device device)
         {
-            if(volume_mount_wait_list.Contains(device) || device_table.ContainsKey(device.Udi)) {
+            if(volume_mount_wait_list.Contains(device.Udi) || device_table.ContainsKey(device.Udi)) {
                 return;
             }
             
-            volume_mount_wait_list.Add(device);
-            volume_mount_wait_timeout = GLib.Timeout.Add(250, CheckVolumeMountWaitList);
+            if(!device.PropertyExists("volume.policy.should_mount") || 
+                !device.GetPropertyBoolean("volume.policy.should_mount")) {
+                return;
+            }
+            
+            volume_mount_wait_list.Add(device.Udi);
+            volume_mount_wait_timeout = GLib.Timeout.Add(500, CheckVolumeMountWaitList);
         }
         
         private static bool CheckVolumeMountWaitList()
         {
-            Queue<Device> remove_queue = new Queue<Device>();
+            Queue<string> remove_queue = new Queue<string>();
         
-            foreach(Device device in volume_mount_wait_list) {
-                if(device.GetPropertyBoolean("volume.is_mounted")) {
-                    AddDevice(device);
-                    remove_queue.Enqueue(device);
+            foreach(string udi in volume_mount_wait_list) {
+                try {
+                    Device device = new Device(udi);
+                    if(device.GetPropertyBoolean("volume.is_mounted")) {
+                        AddDevice(device);
+                        remove_queue.Enqueue(udi);
+                    }
+                } catch {
+                    remove_queue.Enqueue(udi);
                 }
-                
-                Console.WriteLine("IN QUEUE: {0}", device.Udi);
             }
             
             while(remove_queue.Count > 0) {
@@ -174,9 +182,12 @@ namespace Banshee.Dap
             foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("info.category", "volume")) {
                 Device device = new Device(udi);
                 if(device.PropertyExists("volume.policy.should_mount") && 
-                    device.GetPropertyBoolean("volume.policy.should_mount") &&
-                    (!device.PropertyExists("volume.is_disc") || 
-                    !device.GetPropertyBoolean("volume.is_disc"))) {
+                    device.GetPropertyBoolean("volume.policy.should_mount")) {
+                    if(device.PropertyExists("volume.is_disc") && 
+                        device.GetPropertyBoolean("volume.is_disc")) {
+                        continue;
+                    }
+                    
                     AddDevice(device);
                 }
             }
@@ -247,9 +258,9 @@ namespace Banshee.Dap
             DapDevice dap = device_table[udi];
             device_table.Remove(udi);
             
-            foreach(Device device in volume_mount_wait_list) {
-                if(device.Udi == udi) {
-                    volume_mount_wait_list.Remove(device);
+            foreach(string vmwl_udi in volume_mount_wait_list) {
+                if(vmwl_udi == udi) {
+                    volume_mount_wait_list.Remove(vmwl_udi);
                     break;
                 }
             }

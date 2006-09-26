@@ -1,5 +1,10 @@
 2006-09-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Dap/DapCore.cs: More fixes; should fix last remaining
+	known issues from the new managed HAL migration
+
+2006-09-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Dap/DapCore.cs: Ignore volumes that will not be 
 	mounted and ignore disc volumes to keep them from ever being exposed
 	as DAPs or going into the volume mount wait queue; remove items from
