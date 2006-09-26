@@ -113,9 +113,11 @@ namespace Banshee.Dap
         
         public static void Dispose()
         {
-            GLib.Source.Remove(volume_mount_wait_timeout);
-            volume_mount_wait_timeout = 0;
-        
+            if(volume_mount_wait_timeout > 0) {
+                GLib.Source.Remove(volume_mount_wait_timeout);
+                volume_mount_wait_timeout = 0;
+            }
+            
             foreach(DapDevice device in Devices) {
                 device.Dispose();
             }
@@ -150,6 +152,8 @@ namespace Banshee.Dap
                     AddDevice(device);
                     remove_queue.Enqueue(device);
                 }
+                
+                Console.WriteLine("IN QUEUE: {0}", device.Udi);
             }
             
             while(remove_queue.Count > 0) {
@@ -168,7 +172,13 @@ namespace Banshee.Dap
         {
             // All volume devices, should cover all storage based players
             foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("info.category", "volume")) {
-                AddDevice(new Device(udi));
+                Device device = new Device(udi);
+                if(device.PropertyExists("volume.policy.should_mount") && 
+                    device.GetPropertyBoolean("volume.policy.should_mount") &&
+                    (!device.PropertyExists("volume.is_disc") || 
+                    !device.GetPropertyBoolean("volume.is_disc"))) {
+                    AddDevice(device);
+                }
             }
 
             // Non-storage based players
@@ -236,6 +246,13 @@ namespace Banshee.Dap
             
             DapDevice dap = device_table[udi];
             device_table.Remove(udi);
+            
+            foreach(Device device in volume_mount_wait_list) {
+                if(device.Udi == udi) {
+                    volume_mount_wait_list.Remove(device);
+                    break;
+                }
+            }
             
             if(dap == null) {
                 return;

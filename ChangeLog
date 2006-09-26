@@ -1,5 +1,12 @@
 2006-09-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Dap/DapCore.cs: Ignore volumes that will not be 
+	mounted and ignore disc volumes to keep them from ever being exposed
+	as DAPs or going into the volume mount wait queue; remove items from
+	the volume mount wait queue if they are physically removed
+
+2006-09-26  Aaron Bockover  <abock@gnome.org>
+
 	* hal-sharp/Manager.cs: Added DeviceAddedArgs and DeviceRemovedArgs as
 	in a remove event, the UDI as a device object won't exist
 
