@@ -29,17 +29,15 @@ libbanshee_la_SOURCES = \
 	gst-tagger.c \
 	gst-tagger.h \
 	gst-mbtrm.h \
-	hal-context.c \
-	hal-context.h \
 	gtksharp-glue.c \
 	nautilus-burn.c \
 	$(GST_CFILES)
 
-libbanshee_la_LIBADD = $(GTK_LIBS) $(HAL_LIBS) $(GST_LIBS) $(LIBNAUTILUS_BURN_LIBS)
+libbanshee_la_LIBADD = $(GTK_LIBS) $(GST_LIBS) $(LIBNAUTILUS_BURN_LIBS)
 
 CLEANFILES = gst-player-test gst-encode-test
 MAINTAINERCLEANFILES = Makefile.in
-EXTRA_DIST = $(GST_0_8_CFILES) $(GST_0_10_CFILES) 
+EXTRA_DIST = $(GST_0_10_CFILES) 
 
 if ENABLE_TESTS
 endif

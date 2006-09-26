@@ -271,44 +271,6 @@ PKG_CHECK_MODULES(GTK,
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-dnl HAL devel deps
-PKG_CHECK_MODULES(HAL,
-	gobject-2.0 \
-	glib-2.0 \
-	dbus-1 \
-	dbus-glib-1 \
-	hal >= 0.5.2)
-AC_SUBST(HAL_CFLAGS)
-AC_SUBST(HAL_LIBS)
-
-dnl DBus devel detect .so version for dll maps
-PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.90, dbus90=yes, dbus90=no) 
-AC_MSG_RESULT([$dbus90])
-PKG_CHECK_MODULES(DBUS, dbus-1 >= 0.60, dbus60=yes, dbus60=no) 
-if test "x$dbus90" = "xyes"; then
-	DBUS_SOVERSION=3
-elif test "x$dbus60" = "xyes"; then
-	DBUS_SOVERSION=2
-else
-	DBUS_SOVERSION=1
-fi
-AC_SUBST(DBUS_SOVERSION)
-
-
-dnl DBus-Glib devel detect .so version for dll maps
-PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.90, dbusg90=yes, dbusg90=no) 
-AC_MSG_RESULT([$dbusg90])
-PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= 0.60, dbusg60=yes, dbusg60=no) 
-if test "x$dbusg90" = "xyes"; then
-	DBUS_GLIB_SOVERSION=3
-elif test "x$dbusg60" = "xyes"; then
-	DBUS_GLIB_SOVERSION=2
-else
-	DBUS_GLIB_SOVERSION=1
-fi
-AC_SUBST(DBUS_GLIB_SOVERSION)
-
-
 dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.15, lnb15=yes, lnb15=no)
 AC_MSG_RESULT([$lnb15])
@@ -382,7 +344,6 @@ AC_OUTPUT([
 Makefile
 banshee.pc
 hal-sharp/Makefile
-hal-sharp/hal-sharp.dll.config
 taglib-sharp/Makefile
 dbus-sharp/Makefile
 dbus-sharp/NDesk.DBus.GLib.dll.config

@@ -57,9 +57,10 @@ namespace Banshee.Dap
 
     public static class DapCore 
     {
-        private static Dictionary<string,DapDevice> device_table = new Dictionary<string,DapDevice>();
-        private static Dictionary<string,Type> device_waiting_table = new Dictionary<string,Type>();
+        private static Dictionary<string, DapDevice> device_table = new Dictionary<string, DapDevice>();
+        private static List<Device> volume_mount_wait_list = new List<Device>();
         private static List<Type> supported_dap_types = new List<Type>();
+        private static uint volume_mount_wait_timeout = 0;
     
         public static event DapEventHandler DapAdded;
         public static event DapEventHandler DapRemoved;
@@ -106,40 +107,73 @@ namespace Banshee.Dap
             
             BuildDeviceTable();
             
-            HalCore.DeviceAdded += delegate(object o, DeviceAddedArgs args) {
-                AddDevice(args.Device);
-            };
-            
-            HalCore.DeviceRemoved += delegate(object o, DeviceRemovedArgs args) {
-                RemoveDevice(args.Device);
-            };
-            
-            HalCore.DevicePropertyModified += delegate(object o, DevicePropertyModifiedArgs args) {
-                if(device_waiting_table.ContainsKey(args.Device.Udi)) {
-                    AddDevice(args.Device, device_waiting_table[args.Device.Udi] as Type);
-                }
-            };
+            HalCore.Manager.DeviceAdded += OnHalDeviceAdded;
+            HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
         }
         
         public static void Dispose()
         {
+            GLib.Source.Remove(volume_mount_wait_timeout);
+            volume_mount_wait_timeout = 0;
+        
             foreach(DapDevice device in Devices) {
                 device.Dispose();
             }
         }
         
+        private static void OnHalDeviceAdded(object o, DeviceArgs args)
+        {
+            AddDevice(args.Device);
+        }
+        
+        private static void OnHalDeviceRemoved(object o, DeviceArgs args)
+        {
+            RemoveDevice(args.Udi);
+        }
+        
+        internal static void QueueWaitForVolumeMount(Device device)
+        {
+            if(volume_mount_wait_list.Contains(device) || device_table.ContainsKey(device.Udi)) {
+                return;
+            }
+            
+            volume_mount_wait_list.Add(device);
+            volume_mount_wait_timeout = GLib.Timeout.Add(250, CheckVolumeMountWaitList);
+        }
+        
+        private static bool CheckVolumeMountWaitList()
+        {
+            Queue<Device> remove_queue = new Queue<Device>();
+        
+            foreach(Device device in volume_mount_wait_list) {
+                if(device.GetPropertyBoolean("volume.is_mounted")) {
+                    AddDevice(device);
+                    remove_queue.Enqueue(device);
+                }
+            }
+            
+            while(remove_queue.Count > 0) {
+                volume_mount_wait_list.Remove(remove_queue.Dequeue());
+            }
+            
+            if(volume_mount_wait_list.Count == 0) {
+                volume_mount_wait_timeout = 0;
+                return false;
+            }
+            
+            return true;
+        }
+        
         private static void BuildDeviceTable()
         {
             // All volume devices, should cover all storage based players
-            foreach(Device device in Device.FindByStringMatch(HalCore.Context, 
-                "info.category", "volume")) {
-                AddDevice(device);
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("info.category", "volume")) {
+                AddDevice(new Device(udi));
             }
 
-            // None storage based players
-            foreach(Device device in Device.FindByStringMatch(HalCore.Context,
-                "info.category", "portable_audio_player")) {
-                AddDevice(device);
+            // Non-storage based players
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("info.category", "portable_audio_player")) {
+                AddDevice(new Device(udi));
             }
         }
         
@@ -161,18 +195,9 @@ namespace Banshee.Dap
                 switch(dap.Initialize(device)) {
                     case InitializeResult.Valid:
                         AddDevice(device, dap);
-                        if(device_waiting_table.ContainsKey(device.Udi)) {
-                            device_waiting_table.Remove(device.Udi);
-                        }
                         return true;
-                    case InitializeResult.WaitForPropertyChange:
-                        device.WatchProperties = true;
-                        if(!device_waiting_table.ContainsKey(device.Udi)) {
-                            device_waiting_table.Add(device.Udi, type);
-                        } else {
-                            device_waiting_table[device.Udi] = type;
-                        }
-                        return true;
+                    default:
+                        break;
                 }
             } catch(Exception e) {
                 Console.WriteLine(e);
@@ -203,18 +228,14 @@ namespace Banshee.Dap
             return true;
         }
         
-        private static void RemoveDevice(Device device)
+        private static void RemoveDevice(string udi)
         {
-            if(!device_table.ContainsKey(device.Udi)) {
+            if(!device_table.ContainsKey(udi)) {
                 return;
             }
             
-            DapDevice dap = device_table[device.Udi];
-            device_table.Remove(device.Udi);
-            
-            if(device_waiting_table.ContainsKey(device.Udi)) {
-                device_waiting_table.Remove(device.Udi);
-            }
+            DapDevice dap = device_table[udi];
+            device_table.Remove(udi);
             
             if(dap == null) {
                 return;
@@ -234,7 +255,7 @@ namespace Banshee.Dap
                 return;
             }
             
-            RemoveDevice(dap.HalDevice);
+            RemoveDevice(dap.HalDevice.Udi);
         }
         
         public static IEnumerable<DapDevice> Devices {

@@ -57,11 +57,12 @@ namespace Banshee.Dap.Ipod
             hal_device = halDevice;
             
             if(!hal_device.PropertyExists("block.device") || 
-                !hal_device.GetPropertyBool("block.is_volume") ||
+                !hal_device.PropertyExists("block.is_volume") ||
+                !hal_device.GetPropertyBoolean("block.is_volume") ||
                 hal_device.Parent["portable_audio_player.type"] != "ipod") {
                 return InitializeResult.Invalid;
-            } else if(!hal_device.GetPropertyBool("volume.is_mounted")) {
-                return InitializeResult.WaitForPropertyChange;
+            } else if(!hal_device.GetPropertyBoolean("volume.is_mounted")) {
+                return WaitForVolumeMount(hal_device);
             }
             
             if(LoadIpod() == InitializeResult.Invalid) {

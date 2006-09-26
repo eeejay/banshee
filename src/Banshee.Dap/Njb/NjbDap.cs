@@ -77,12 +77,12 @@ namespace Banshee.Dap.Njb
                 return InitializeResult.Invalid;
             }
             
-            usb_bus_number = (short)halDevice.GetPropertyInt("usb.bus_number");
-            usb_device_number = (short)halDevice.GetPropertyInt("usb.linux.device_number");
+            usb_bus_number = (short)halDevice.GetPropertyInteger("usb.bus_number");
+            usb_device_number = (short)halDevice.GetPropertyInteger("usb.linux.device_number");
             
             device_id = NJB.DeviceId.GetDeviceId(
-                (short)halDevice.GetPropertyInt("usb.vendor_id"),
-                (short)halDevice.GetPropertyInt("usb.product_id"));
+                (short)halDevice.GetPropertyInteger("usb.vendor_id"),
+                (short)halDevice.GetPropertyInteger("usb.product_id"));
             
             if(device_id == null) {
                 return InitializeResult.Invalid;

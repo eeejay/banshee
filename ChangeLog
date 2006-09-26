@@ -1,3 +1,66 @@
+2006-09-26  Aaron Bockover  <abock@gnome.org>
+
+	hal-sharp has been rewritten on top of the new managed DBus; with this
+	commit there is no more native DBus or HAL code in Banshee at all!
+
+	* Makefile.include: Update build settings for new hal-sharp
+
+	* configure.ac: Removed all native DBus/HAL checks and hacks
+
+	* hal-sharp/*.cs: Removed all old hal-sharp binding code; the previous
+	hal-sharp was a binding of libhal, and had to use nasty context hacks
+	to properly integrate with other contexts and DBus connections inside
+	the application/main loop
+
+	* hal-sharp/Connection.cs:
+	* hal-sharp/Manager.cs:
+	* hal-sharp/Device.cs: New hal-sharp is very simple and implements
+	the HAL DBus specification; it integrates cleanly with everything
+
+	* banshee.mds: 
+	* hal-sharp/hal-sharp.mdp: Added hal-sharp MonoDevelop project
+	
+	* hal-sharp/Makefile.am: Updated to build the new hal-sharp
+
+	* src/banshee.exe.config.in:
+	* src/Banshee.Dap/Ipod/ipod-sharp.dll.config.in: Removed HAL/DBus maps
+
+	* taglib-sharp/Makefile.am: Build assembly as TagLib.dll instead of
+	taglib-sharp.dll
+
+	* libbanshee/Makefile.am: 
+	* libbanshee/hal-context.c:
+	* libbanshee/hal-context.h: Removed old native HAL/DBus context/mainloop 
+	integration hacks
+
+	* src/Banshee.Base/Globals.cs: Explicitly initialize HalCore
+
+	* src/Banshee.Base/HalCore.cs: Ported to new managed HAL API; removed
+	all the bindings to the crappy native HAL/DBus hacks; now exposes only
+	a global Hal.Manager object
+
+	* src/Banshee.Base/AudioCd/AudioCdCore.cs:
+	* src/Banshee.Base/AudioCd/AudioCdDisk.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs:
+	* src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs:
+	* src/Banshee.Dap/Njb/NjbDap.cs:
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs:
+	* src/Banshee.Base/Dap/DapCore.cs:
+	* src/Banshee.Dap/Ipod/IpodDap.cs: Ported to new managed HAL API; 
+	added cleanups and use more generics in place of legacy code
+
+	* src/Banshee.Base/Dap/DapMisc.cs: Removed WaitForPropertyChange;
+	Added WaitForVolumeMount
+
+	* src/Banshee.Base/Dap/Dap.cs: Added WaitForVolumeMount method to
+	queue a volume mount check on the device in DapCore
+
+	* src/Banshee.Base/Dap/DapCore.cs: Much better API and implementation
+	for dealing with DAP devices that need to be mounted. WaitForVolumeMount
+	replaces WaitForPropertyChange and a new timeout method is used to
+	check for device mounts. This avoids having to keep remote objects 
+	around to listen for a property change event
+
 2006-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/PlayerInterface.cs: Set the SearchEntry as Ready only when

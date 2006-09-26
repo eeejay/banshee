@@ -1,7 +1,7 @@
 include $(top_srcdir)/Makefile.include 
 
-ASSEMBLY_NAME = taglib-sharp
-ASSEMBLY = $(top_builddir)/taglib-sharp/$(ASSEMBLY_NAME).dll
+ASSEMBLY_NAME = TagLib
+ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 taglibdir = $(pkglibdir)
 taglib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb

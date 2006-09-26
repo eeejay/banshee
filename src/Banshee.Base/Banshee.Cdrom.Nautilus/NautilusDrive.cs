@@ -54,34 +54,44 @@ namespace Banshee.Cdrom.Nautilus
             this.hal_drive_device = device;
             this.drive = drive;
             
-            foreach(Device disc_device in Hal.Device.FindByStringMatch(HalCore.Context, 
-                "info.parent", device.Udi)) {
-                if(CheckMedia(disc_device)) {
+            foreach(string disc_udi in HalCore.Manager.FindDeviceByStringMatch("info.parent", device.Udi)) {
+                if(CheckMedia(new Device(disc_udi))) {
                     break;
                 }
             }
             
-            HalCore.DeviceAdded += delegate(object o, DeviceAddedArgs args) {
-                CheckMedia(args.Device);
-            };
-            
-            HalCore.DeviceRemoved += delegate(object o, DeviceRemovedArgs args) {
-                if(hal_disc_device != null && hal_disc_device.Udi == args.Device.Udi) {
-                    hal_disc_device = null;
-                    OnMediaRemoved();
-                }
-            };
+            HalCore.Manager.DeviceAdded += OnHalDeviceAdded;
+            HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
+        }
+        
+        private void OnHalDeviceAdded(object o, DeviceArgs args)
+        {
+            CheckMedia(args.Device);
+        }
+        
+        private void OnHalDeviceRemoved(object o, DeviceArgs args)
+        {
+            if(hal_disc_device != null && hal_disc_device.Udi == args.Device.Udi) {
+                hal_disc_device = null;
+                OnMediaRemoved();
+            }
         }
         
         private bool CheckMedia(Device discDevice)
         {
-            if(discDevice == null || discDevice.Parent == null) {
+            if(discDevice == null) {
                 return false;
             }
         
-            if(discDevice.Parent.Udi == hal_drive_device.Udi &&
-                discDevice.GetPropertyBool("volume.is_disc") &&
-                discDevice.GetPropertyBool("volume.disc.is_blank")) {
+            Device parent = discDevice.Parent;
+            
+            if(parent == null) {
+                return false;
+            }
+            
+            if(parent.Udi == hal_drive_device.Udi &&
+                discDevice.GetPropertyBoolean("volume.is_disc") &&
+                discDevice.GetPropertyBoolean("volume.disc.is_blank")) {
                 hal_disc_device = discDevice;
                 OnMediaAdded();
                 return true;

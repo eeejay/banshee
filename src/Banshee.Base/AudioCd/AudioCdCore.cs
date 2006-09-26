@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  AudioCdCore.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover (aaron@abock.org)
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -29,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Mono.Unix;
@@ -68,7 +68,7 @@ namespace Banshee.Base
             }
         }
         
-        private Hashtable disks = new Hashtable();
+        private Dictionary<string, AudioCdDisk> disks = new Dictionary<string, AudioCdDisk>();
         
         public event EventHandler Updated;
         public event AudioCdCoreDiskRemovedHandler DiskRemoved;
@@ -80,21 +80,21 @@ namespace Banshee.Base
                 throw new ApplicationException(Catalog.GetString("HAL is not initialized"));
             }
             
-            HalCore.DeviceAdded += OnDeviceAdded;
-            HalCore.DeviceRemoved += OnDeviceRemoved;
+            HalCore.Manager.DeviceAdded += OnDeviceAdded;
+            HalCore.Manager.DeviceRemoved += OnDeviceRemoved;
             
             LogCore.Instance.PushDebug(Catalog.GetString("Audio CD Core Initialized"), "");
             
             BuildInitialList();
         }
         
-        private AudioCdDisk CreateDisk(DiskInfo halDisk)
+        private AudioCdDisk CreateDisk(DiskInfo hal_disk)
         {
             try {
-                AudioCdDisk disk = new AudioCdDisk(halDisk.Udi, halDisk.DeviceNode, halDisk.VolumeName);
+                AudioCdDisk disk = new AudioCdDisk(hal_disk.Udi, hal_disk.DeviceNode, hal_disk.VolumeName);
                 disk.Updated += OnAudioCdDiskUpdated;
-                if(disk.Valid) {
-                    disks[disk.Udi] = disk;
+                if(disk.Valid && !disks.ContainsKey(disk.Udi)) {
+                    disks.Add(disk.Udi, disk);
                 }
                 SourceManager.AddSource(new AudioCdSource(disk));
                 return disk;
@@ -109,70 +109,62 @@ namespace Banshee.Base
         
         private DiskInfo CreateHalDisk(Device device)
         {
-            Device [] volumes = Device.FindByStringMatch(HalCore.Context, "info.parent", device.Udi);
+            string [] volumes = HalCore.Manager.FindDeviceByStringMatch("info.parent", device.Udi);
             
             if(volumes == null || volumes.Length < 1) {
                 return null;
             }
             
-            Device volume = volumes[0];
+            Device volume = new Device(volumes[0]);
             
-            if(!volume.GetPropertyBool("volume.disc.has_audio")) {
+            if(!volume.GetPropertyBoolean("volume.disc.has_audio")) {
                 return null;
             }
             
-            return new DiskInfo(volume.Udi, volume["block.device"], volume["info.product"]);
+            return new DiskInfo(volume.Udi, volume["block.device"] as string, 
+                volume["info.product"] as string);
         }
         
-        private DiskInfo [] GetHalDisks()
+        private IList<DiskInfo> GetHalDisks()
         {
-            ArrayList list = new ArrayList();
+            List<DiskInfo> list = new List<DiskInfo>();
         
-            foreach(Device device in Device.FindByStringMatch(HalCore.Context, "storage.drive_type", "cdrom")) {
-                DiskInfo disk = CreateHalDisk(device);
-                if(disk != null) {
-                    list.Add(disk);
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("storage.drive_type", "cdrom")) {
+                try {
+                    DiskInfo disk = CreateHalDisk(new Device(udi));
+                    if(disk != null) {
+                        list.Add(disk);
+                    }
+                } catch {
                 }
             }
             
-            return list.ToArray(typeof(DiskInfo)) as DiskInfo [];
+            return list;
         }
         
         private void BuildInitialList()
         {
-            DiskInfo [] halDisks = GetHalDisks();
-
-            if(halDisks == null || halDisks.Length == 0) {
-                return;
-            }
-
-            foreach(DiskInfo halDisk in halDisks) {
-                CreateDisk(halDisk);
+            foreach(DiskInfo hal_disk in GetHalDisks()) {
+                CreateDisk(hal_disk);
             }
 
             HandleUpdated();
         }
         
-        private void OnDeviceAdded(object o, DeviceAddedArgs args)
+        private void OnDeviceAdded(object o, DeviceArgs args)
         {
-            string udi = args.Device.Udi;
+            string udi = args.Udi;
 
-            if(udi == null || disks[udi] != null) {
+            if(udi == null || disks.ContainsKey(udi)) {
                 return;
             }
 
-            DiskInfo [] halDisks = GetHalDisks();
-
-            if(halDisks == null || halDisks.Length == 0) {
-                return;
-            }
-
-            foreach(DiskInfo halDisk in halDisks) {
-                if(halDisk.Udi != udi) {
+            foreach(DiskInfo hal_disk in GetHalDisks()) {
+                if(hal_disk.Udi != udi) {
                     continue;
                 }
                 
-                AudioCdDisk disk = CreateDisk(halDisk);
+                AudioCdDisk disk = CreateDisk(hal_disk);
                 if(disk == null) {
                     continue;
                 }
@@ -190,15 +182,18 @@ namespace Banshee.Base
             }   
         }
         
-        private void OnDeviceRemoved(object o, DeviceRemovedArgs args)
+        private void OnDeviceRemoved(object o, DeviceArgs args)
         {
-            string udi = args.Device.Udi;
+            string udi = args.Udi;
             
-            if(udi == null || disks[udi] == null) {
+            if(udi == null) {
                  return;
             }
                  
-            disks.Remove(udi);
+            if(disks.ContainsKey(udi)) {
+                disks.Remove(udi);
+            }
+            
             HandleUpdated();
             
             AudioCdCoreDiskRemovedHandler handler = DiskRemoved;
@@ -229,12 +224,8 @@ namespace Banshee.Base
             }
         }
         
-        public AudioCdDisk [] Disks
-        {
-            get {
-                ArrayList list = new ArrayList(disks.Values);
-                return list.ToArray(typeof(AudioCdDisk)) as AudioCdDisk [];
-            }
+        public ICollection<AudioCdDisk> Disks {
+            get { return disks.Values; }
         }
     }
 }

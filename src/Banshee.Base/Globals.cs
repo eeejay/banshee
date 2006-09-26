@@ -81,6 +81,10 @@ namespace Banshee.Base
                 }
             });
             
+            startup.Register(Catalog.GetString("Starting background tasks"), true,
+                Catalog.GetString("Device support will be disabled for this instance (no HAL)"),
+                HalCore.Initialize);
+                
             startup.Register(Catalog.GetString("Starting background tasks"), delegate { gconf_client = new GConf.Client(); });
             startup.Register(Catalog.GetString("Detecting network settings"), delegate { network_detect = NetworkDetect.Instance; });
             startup.Register(Catalog.GetString("Creating action manager"), delegate { action_manager = new ActionManager(); });

@@ -41,5 +41,6 @@
     <Entry filename="./libbanshee/libbanshee.mdp" />
     <Entry filename="./src/Banshee.Plugins/Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
     <Entry filename="./src/Banshee.Hyena/Banshee.Hyena.mdp" />
+    <Entry filename="./hal-sharp/hal-sharp.mdp" />
   </Entries>
 </Combine>

@@ -46,11 +46,13 @@ namespace Banshee.Dap.MassStorage
 
         private bool mounted = false, ui_initialized = false;
 
-        static MassStorageDap () {
-            if (!Gnome.Vfs.Vfs.Initialized)
+        static MassStorageDap() 
+        {
+            if(!Gnome.Vfs.Vfs.Initialized) {
                 Gnome.Vfs.Vfs.Initialize();
-
-            monitor = Gnome.Vfs.VolumeMonitor.Get ();
+            }
+            
+            monitor = Gnome.Vfs.VolumeMonitor.Get();
         }
 
         protected Hal.Device usb_device = null;
@@ -64,27 +66,29 @@ namespace Banshee.Dap.MassStorage
             volume_device = halDevice;
 
             try {
-                player_device = Hal.Device.UdisToDevices (volume_device.Context, new string [] {volume_device ["info.parent"]}) [0];
-                usb_device = Hal.Device.UdisToDevices (player_device.Context, new string [] {player_device ["storage.physical_device"]}) [0];
+                player_device = volume_device.Parent;
+                usb_device = new Hal.Device(player_device["storage.physical_device"]);
             } catch (Exception e) {
                 return InitializeResult.Invalid;
             }
 
-            if (!volume_device.PropertyExists("block.device"))
+            if(!volume_device.PropertyExists("block.device")) {
                 return InitializeResult.Invalid;
+            }
             
-            if (!volume_device.PropertyExists ("volume.is_mounted") ||
-                !volume_device.GetPropertyBool("volume.is_mounted"))
-                 return InitializeResult.WaitForPropertyChange;
+            if(!volume_device.PropertyExists("volume.is_mounted") ||
+                !volume_device.GetPropertyBoolean("volume.is_mounted")) {
+                return WaitForVolumeMount(volume_device);
+            }
 
             // Detect player via HAL property or presence of .is_audo_player file in root
-            if (player_device["portable_audio_player.access_method"] != "storage" &&
+            if(player_device["portable_audio_player.access_method"] != "storage" &&
                 !File.Exists(Path.Combine(MountPoint, ".is_audio_player"))) {                
-                 return InitializeResult.Invalid;
+                return InitializeResult.Invalid;
             }
 
             volume = monitor.GetVolumeForPath(MountPoint);
-            if (volume == null) {
+            if(volume == null) {
                 // Gnome VFS doesn't know volume is mounted yet
                 monitor.VolumeMounted += OnVolumeMounted;
                 is_read_only = true;
@@ -93,24 +97,27 @@ namespace Banshee.Dap.MassStorage
                 is_read_only = volume.IsReadOnly;
             }
 
-            base.Initialize (usb_device);
+            base.Initialize(usb_device);
  
-            if (usb_device.PropertyExists("usb.vendor"))
+            if(usb_device.PropertyExists("usb.vendor")) {
                 InstallProperty(Catalog.GetString("Vendor"), usb_device["usb.vendor"]);
-            else if (player_device.PropertyExists("info.vendor"))
+            } else if(player_device.PropertyExists("info.vendor")) {
                 InstallProperty(Catalog.GetString("Vendor"), player_device["info.vendor"]);
-
+            }
+            
             if(!Globals.UIManager.IsInitialized) {
                 Globals.UIManager.Initialized += OnUIManagerInitialized;
             } else {
                 ui_initialized = true;
             }
 
-            if (ui_initialized && mounted)
-                ReloadDatabase ();
-
+            if(ui_initialized && mounted) {
+                ReloadDatabase();
+            }
+            
             // FIXME probably should be able to cancel at some point when you can actually sync
             CanCancelSave = false;
+            
             return InitializeResult.Valid;
         }
 
@@ -294,7 +301,7 @@ namespace Banshee.Dap.MassStorage
             // If the folder_depth property exists, we have to put the files in a hiearchy of
             // the exact given depth (not including the mount point/audio_folder).
             if (player_device.PropertyExists ("portable_audio_player.folder_depth")) {
-                int depth = player_device.GetPropertyInt ("portable_audio_player.folder_depth");
+                int depth = player_device.GetPropertyInteger ("portable_audio_player.folder_depth");
 
                 if (depth == 0) {
                     // Artist - Album - 01 - Title
@@ -374,7 +381,7 @@ namespace Banshee.Dap.MassStorage
         
         public override ulong StorageCapacity {
             get {
-                return volume_device.GetPropertyUint64 ("volume.size");
+                return volume_device.GetPropertyUInt64 ("volume.size");
             }
         }
         

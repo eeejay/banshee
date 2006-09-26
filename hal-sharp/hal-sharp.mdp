@@ -1,0 +1,12 @@
+<Project name="hal-sharp" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations />
+  <DeployTargets />
+  <Contents>
+    <File name="./Communication.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Manager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Device.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Assembly" localcopy="False" refto="../dbus-sharp/NDesk.DBus.dll" />
+  </References>
+</Project>

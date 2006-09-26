@@ -1,1 +1,0 @@
-ASSEMBLY_SOURCES = $(srcdir)/DBusError.cs $(srcdir)/HalCallbacks.cs $(srcdir)/HalContext.cs $(srcdir)/HalDefines.cs $(srcdir)/HalDevice.cs $(srcdir)/HalExceptions.cs $(srcdir)/HalUnmanaged.cs

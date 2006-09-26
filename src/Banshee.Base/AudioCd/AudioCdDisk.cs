@@ -248,8 +248,8 @@ namespace Banshee.Base
                     PlayerEngineCore.Close();
                 }
             
-                Hal.Device device = new Hal.Device(HalCore.Context, udi);
-                if(device.GetPropertyBool("volume.is_mounted")) {
+                Hal.Device device = new Hal.Device(udi);
+                if(device.GetPropertyBoolean("volume.is_mounted")) {
                     if(!Utilities.UnmountVolume(device_node)) {
                         return false;
                     }

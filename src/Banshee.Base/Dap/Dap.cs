@@ -160,6 +160,12 @@ namespace Banshee.Dap
             return InitializeResult.Valid;
         }
         
+        protected InitializeResult WaitForVolumeMount(Hal.Device halDevice)
+        {
+            DapCore.QueueWaitForVolumeMount(halDevice);
+            return InitializeResult.WaitForVolumeMount;
+        }
+        
         public uint Uid {
             get {
                 return uid;

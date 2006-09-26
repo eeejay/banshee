@@ -1,6 +1,4 @@
 <configuration>
 	<dllmap dll="ipoddevice" target="libipoddevice.so.0" />
-	<dllmap dll="libdbus-1" target="libdbus-1.so.@DBUS_SOVERSION@" />
-	<dllmap dll="libhal" target="libhal.so.1" />
 </configuration>
 

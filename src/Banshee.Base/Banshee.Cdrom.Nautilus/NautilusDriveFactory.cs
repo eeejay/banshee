@@ -49,29 +49,33 @@ namespace Banshee.Cdrom.Nautilus
         
         public NautilusDriveFactory()
         {
-            foreach(Device device in Device.FindByStringMatch(HalCore.Context, 
-                "storage.drive_type", "cdrom")) {
-                AddDrive(device);
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("storage.drive_type", "cdrom")) {
+                AddDrive(new Device(udi));
             }
         
-            HalCore.DeviceAdded += delegate(object o, DeviceAddedArgs args) {
-                if(args.Device["storage.drive_type"] == "cdrom") {
-                    NautilusDrive drive = AddDrive(args.Device);
-                    if(drive != null) {
-                        OnDriveAdded(drive);
-                    }
+            HalCore.Manager.DeviceAdded += OnHalDeviceAdded;
+            HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
+        }
+        
+        private void OnHalDeviceAdded(object o, DeviceArgs args)
+        {
+            if(args.Device["storage.drive_type"] == "cdrom") {
+                NautilusDrive drive = AddDrive(args.Device);
+                if(drive != null) {
+                    OnDriveAdded(drive);
                 }
-            };
-            
-            HalCore.DeviceRemoved += delegate(object o, DeviceRemovedArgs args) {
-                if(drive_table.ContainsKey(args.Device.Udi)) {
-                    IDrive drive = drive_table[args.Device.Udi];
-                    drive.MediaAdded -= OnMediaAdded;
-                    drive.MediaRemoved -= OnMediaRemoved;
-                    drive_table.Remove(args.Device.Udi);
-                    OnDriveRemoved(drive);
-                }
-            };
+            }
+        }
+        
+        private void OnHalDeviceRemoved(object o, DeviceArgs args)
+        {
+            if(drive_table.ContainsKey(args.Udi)) {
+                IDrive drive = drive_table[args.Udi];
+                drive.MediaAdded -= OnMediaAdded;
+                drive.MediaRemoved -= OnMediaRemoved;
+                drive_table.Remove(args.Udi);
+                OnDriveRemoved(drive);
+            }
         }
         
         private NautilusDrive AddDrive(Device device)
@@ -85,7 +89,7 @@ namespace Banshee.Cdrom.Nautilus
                 return null;
             }
             
-            NautilusDrive drive = device.GetPropertyBool("storage.cdrom.cdr") ?
+            NautilusDrive drive = device.GetPropertyBoolean("storage.cdrom.cdr") ?
                 new NautilusRecorder(device, nautilus_drive) :
                 new NautilusDrive(device, nautilus_drive);
             
