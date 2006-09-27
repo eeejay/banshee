@@ -1,3 +1,29 @@
+2006-09-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/banshee.in: Set {LD,DYLD}_LIBRARY_PATH to $(libdir)/banshee to
+	ensure libbanshee.so can be loaded when needed; removes the need for
+	a map since versioning is a non-issue and allows these environment
+	variables to be overridden to allow for full uninstalled execution
+
+	* Makefile.include: Set {LD,DYLD}_LIBRARY_PATH to libbanshee/.libs
+
+	* configure.ac: Do not output Helix/GStreamer .config files
+
+	* src/banshee.exe.config.in:
+	* src/Banshee.Base/Banshee.Base.dll.config.in:
+	* src/Banshee.Plugins/Daap/Daap.dll.config.in:
+	* src/Banshee.Plugins/MMKeys/MMKeys.dll.config.in:
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearch.dll.config.in: Removed
+	libbanshee dll maps as they are not necessary
+	
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.dll.config.in:
+	* src/Banshee.MediaEngine/Gstreamer/GStreamerPlayerEngine.dll.config.in:
+	* src/Banshee.MediaEngine/Helix/Makefile.am:
+	* src/Banshee.MediaEngine/Gstreamer/Makefile.am: Removed .config file
+	maps as they only went to libbanshee, no longer needed
+
+	* Main.cs: Remove left over libdbus call
+
 2006-09-27  James Willcox  <snorp@snorp.net>
 
 	* src/PlayerInterface.cs: show an error deleting a song fails.

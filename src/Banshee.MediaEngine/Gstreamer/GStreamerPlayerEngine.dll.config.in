@@ -1,4 +1,0 @@
-<configuration>
-	<dllmap dll="libbanshee" target="@expanded_libdir@/@PACKAGE@/libbanshee.so" />
-</configuration>
-

@@ -42,9 +42,6 @@ namespace Banshee
             Banshee.Gui.CleanRoomStartup.Startup(Startup, args);
         }
         
-        [System.Runtime.InteropServices.DllImport("libdbus-glib-1")]
-        private static extern void dbus_g_thread_init();
-        
         private static void Startup(string [] args)
         {
             try {
@@ -52,7 +49,6 @@ namespace Banshee
             } catch {}
             
             Gtk.Application.Init();
-            dbus_g_thread_init();
         
             Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
                 new ArgumentLayout("enqueue <files>","Files to enqueue, must be last argument specified"),

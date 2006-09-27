@@ -358,9 +358,7 @@ src/Gnome.Keyring/Makefile
 src/Last.FM/Makefile
 src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
-src/Banshee.MediaEngine/Gstreamer/GStreamerPlayerEngine.dll.config
 src/Banshee.MediaEngine/Helix/Makefile
-src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.dll.config
 src/Banshee.Widgets/Makefile
 src/Banshee.Widgets/Banshee.Widgets.dll.config
 src/Banshee.Base/Makefile

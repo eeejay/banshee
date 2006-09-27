@@ -4,7 +4,7 @@ ASSEMBLY_NAME = GStreamerPlayerEngine
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 gstenginelibdir = $(pkglibdir)/Banshee.MediaEngine
-gstenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config 
+gstenginelib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb 
 
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
@@ -18,5 +18,5 @@ $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.exe *.dll *.mdb *.pidb
 
-EXTRA_DIST = $(ASSEMBLY).config.in  $(ASSEMBLY_SOURCES)
+EXTRA_DIST = $(ASSEMBLY_SOURCES)
 

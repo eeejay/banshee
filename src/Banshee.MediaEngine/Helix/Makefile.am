@@ -7,10 +7,7 @@ ASSEMBLY_SOURCES = \
 
 if ENABLE_HELIX
 	
-EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) \
-	$(ASSEMBLY).config.in
-
+EXTRA_DIST = $(ASSEMBLY_SOURCES)
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
 
@@ -19,7 +16,7 @@ ASSEMBLY_NAME = HelixRemotePlayerEngine
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 helixenginedir = $(pkglibdir)/Banshee.MediaEngine
-helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
+helixengine_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb 
 
 all: $(ASSEMBLY)
 
