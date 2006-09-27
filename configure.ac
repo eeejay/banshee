@@ -256,10 +256,11 @@ for element in $gst_required_plugins; do
 	fi
 done;
 
-
 dnl GTK+-2.0 C devel deps
 GTK_REQUIRED=2.8
-PKG_CHECK_MODULES(GTK,
+PKG_CHECK_MODULES(LIBBANSHEE,
+	dbus-1 \
+	dbus-glib-1 \
 	glib-2.0 \
 	libgnome-2.0 \
 	libgnomeui-2.0 \
@@ -268,8 +269,8 @@ PKG_CHECK_MODULES(GTK,
 	gnome-vfs-2.0 \
 	gnome-desktop-2.0 \
 	gtk+-2.0 >= $GTK_REQUIRED)
-AC_SUBST(GTK_CFLAGS)
-AC_SUBST(GTK_LIBS)
+AC_SUBST(LIBBANSHEE_CFLAGS)
+AC_SUBST(LIBBANSHEE_LIBS)
 
 dnl libnautilus-burn devel deps
 PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.15, lnb15=yes, lnb15=no)

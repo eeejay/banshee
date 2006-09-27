@@ -42,8 +42,13 @@ namespace Banshee
             Banshee.Gui.CleanRoomStartup.Startup(Startup, args);
         }
         
+        [System.Runtime.InteropServices.DllImport("libbanshee")]
+        private static extern void banshee_dbus_compat_thread_init();
+        
         private static void Startup(string [] args)
         {
+            banshee_dbus_compat_thread_init();
+        
             try {
                 Utilities.SetProcessName("banshee");
             } catch {}

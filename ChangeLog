@@ -1,5 +1,23 @@
 2006-09-27  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/misc-glue.c: Added banshee_dbus_compat_thread_init as a 
+	proxy to call dbus_g_thread_init in case it is necessary for native
+	libraries that will be pulled in during runtime that use libdbus; it's
+	not necessary for banshee's DBus use at all, but may be necessary for
+	things pulled in process, like libipoddevice; adding in glue to avoid
+	awful configure/map hacks to map to the correct .so version
+
+	* libbanshee/gtksharp-glue.c: Renamed to misc-glue.c; gross
+
+	* src/Main.cs: Call banshee_dbus_compat_thread_init as the first 
+	call on program entry (sigh); this is allegedly no longer necessary
+	with DBus >= 0.92, but it's here for compat and safety for now :'(
+
+	* configure.ac: Check for dbus-1/dbus-glib-1 again, but no nasty
+	library versioning hacks to make maps happy
+
+2006-09-27  Aaron Bockover  <abock@gnome.org>
+
 	* src/banshee.in: Set {LD,DYLD}_LIBRARY_PATH to $(libdir)/banshee to
 	ensure libbanshee.so can be loaded when needed; removes the need for
 	a map since versioning is a non-issue and allows these environment
