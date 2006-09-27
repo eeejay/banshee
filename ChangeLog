@@ -1,3 +1,11 @@
+2006-09-27  James Willcox  <snorp@snorp.net>
+
+	* data/banshee.glade: ellipsize the view name
+	* src/PlayerInterface.cs: limit source names to 256 chars
+	* src/Banshee.Base/Sources/PlaylistSource.cs: ditto
+
+	Fixes #199345 (Novell)
+
 2006-09-27  Alp Toker  <alp@atoker.com>
 
 	* src/Main.cs: Remove old "Suppress finalizing the dbusCore D-Bus

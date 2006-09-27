@@ -47,6 +47,7 @@ namespace Banshee.Gui
     
         public CellEdit() : base()
         {
+            MaxLength = 256;
         }
         
         protected CellEdit(System.IntPtr ptr) : base(ptr)

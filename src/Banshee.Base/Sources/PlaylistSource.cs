@@ -155,6 +155,10 @@ namespace Banshee.Sources
         
         protected override bool UpdateName(string oldName, string newName)
         {
+            if (newName.Length > 256) {
+                newName = newName.Substring (0, 256);
+            }
+            
             if(oldName.Equals(newName)) {
                 return false;
             }
