@@ -1,3 +1,12 @@
+2006-09-28  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/*: Update bundled NDesk.DBus.
+	Only hook up events that are from dbus-public interfaces, making
+	--show, --hide etc. remote control features work.
+	Return error messages when a reply is expected instead of failing
+	silently.
+	Significant event/match rule fixes.
+
 2006-09-27  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/misc-glue.c: Added banshee_dbus_compat_thread_init as a 
