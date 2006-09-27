@@ -1,5 +1,10 @@
 2006-09-27  Alp Toker  <alp@atoker.com>
 
+	* src/Main.cs: Remove old "Suppress finalizing the dbusCore D-Bus
+	proxy object" hack; no longer needed with managed dbus
+
+2006-09-27  Alp Toker  <alp@atoker.com>
+
 	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.
 	New API and variant fixes to support upcoming managed Notifications.
 	* hal-sharp/Communication.cs:

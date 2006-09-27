@@ -252,9 +252,6 @@ namespace Banshee
                 }
             }
             
-            //FIXME: remove this hack now that the old dbus-sharp is gone
-            // Major nasty hack to work around dbus-sharp bug: bad IL in object Finalizer
-            System.GC.SuppressFinalize(remote_player);
             Gdk.Global.NotifyStartupComplete();
             System.Environment.Exit(0);
         }
