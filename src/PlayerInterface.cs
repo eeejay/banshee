@@ -1817,11 +1817,7 @@ namespace Banshee
 
         private void DeleteSong(TrackInfo ti)
         {
-            try {
-                File.Delete(ti.Uri.LocalPath);
-            } catch(Exception) {
-                Console.WriteLine("Could not delete file: " + ti.Uri.LocalPath);
-            }
+            File.Delete(ti.Uri.LocalPath);
 
             // trim empty parent directories
             try {
@@ -1894,17 +1890,30 @@ namespace Banshee
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 playlistModel.GetIter(out iters[i++], path);
             }
-            
+
             for(i = 0; i < iters.Length; i++) {
                 TrackInfo track = playlistModel.IterTrackInfo(iters[i]);
+
+                try {
+                    if(deleteFromFileSystem) {
+                        DeleteSong(track);
+                    }
+                } catch (UnauthorizedAccessException e) {
+                    string header = Catalog.GetString ("Delete songs from drive");
+                    string msg = String.Format (Catalog.GetString ("You do not have the required permissions to delete '{0}'"), track.Uri.LocalPath);
+                    HigMessageDialog error = new HigMessageDialog (WindowPlayer,
+                                                                   DialogFlags.DestroyWithParent, MessageType.Error,
+                                                                   ButtonsType.Close,
+                                                                   header, msg);
+                    error.Run ();
+                    error.Destroy ();
+                    break;
+                }
+                
                 SourceManager.ActiveSource.RemoveTrack(track);
                 playlistModel.RemoveTrack(ref iters[i], track);
-                
-                if(deleteFromFileSystem) {
-                    DeleteSong(track);
-                }
             }
-            
+                
             SourceManager.ActiveSource.Commit();
             sourceView.QueueDraw();
             playlistView.QueueDraw();

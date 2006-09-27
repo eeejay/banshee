@@ -1,5 +1,11 @@
 2006-09-27  James Willcox  <snorp@snorp.net>
 
+	* src/PlayerInterface.cs: show an error deleting a song fails.
+
+	Fixes #187643 (Novell)
+
+2006-09-27  James Willcox  <snorp@snorp.net>
+
 	* data/banshee.glade: ellipsize the view name
 	* src/PlayerInterface.cs: limit source names to 256 chars
 	* src/Banshee.Base/Sources/PlaylistSource.cs: ditto
