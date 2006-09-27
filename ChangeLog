@@ -1,3 +1,11 @@
+2006-09-27  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.
+	New API and variant fixes to support upcoming managed Notifications.
+	* hal-sharp/Communication.cs:
+	* src/Banshee.Base/DBusRemote.cs: Work towards a cleaner dbus-sharp
+	public API.
+
 2006-09-26  Aaron Bockover  <abock@gnome.org>
 
 	* hal-sharp/Communication.cs: Allow setting the Bus

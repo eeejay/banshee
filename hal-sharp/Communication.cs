@@ -13,9 +13,7 @@ namespace Hal
         public static Connection Connection {
             get { 
                 if(connection == null) {
-                    connection = new Connection(false);
-                    connection.Open(Address.SystemBus);
-                    connection.Authenticate();
+                    connection = Connection.Open(Address.SystemBus);
                 }
             
                 return connection;

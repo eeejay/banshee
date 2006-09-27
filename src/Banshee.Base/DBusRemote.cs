@@ -52,7 +52,7 @@ namespace Banshee.Base
         public void RegisterObject(object o, string objectName)
         {
             if(DApplication.SessionConnection != null) {
-                DApplication.SessionConnection.Marshal(o, BusName, new ObjectPath(ObjectRoot + "/" + objectName));
+                DApplication.SessionConnection.Register(BusName, new ObjectPath(ObjectRoot + "/" + objectName), o);
             }
         }
        
