@@ -381,7 +381,14 @@ namespace Banshee.Dap.MassStorage
         
         public override ulong StorageCapacity {
             get {
-                return volume_device.GetPropertyUInt64 ("volume.size");
+                try {
+                    if(volume_device.PropertyExists("volume.size")) {
+                        return volume_device.GetPropertyUInt64("volume.size");
+                    }
+                } catch {
+                }
+                
+                return 0;
             }
         }
         

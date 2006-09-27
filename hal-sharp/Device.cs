@@ -17,17 +17,24 @@ namespace Hal
         
         event DBusPropertyModifiedHandler PropertyModified;
     
-        void SetProperty(string key, object value);
         void SetPropertyString(string key, string value);
         void SetPropertyInteger(string key, int value);
         void SetPropertyBoolean(string key, bool value);
         void SetPropertyDouble(string key, double value);
+        void SetPropertyStringList(string key, string [] value);
         
-        object GetProperty(string key);
+        void SetProperty(string key, ulong value);
+        ulong GetProperty(string key); // nasty hack to get around the fact
+                                       // that HAL doesn't actually send this
+                                       // in a variant, nor does it have a 
+                                       // GetPropertyUInt64
+                                       // should be object GetProperty(string key)
+                                      
         string GetPropertyString(string key);
         int GetPropertyInteger(string key);
         bool GetPropertyBoolean(string key);
         double GetPropertyDouble(string key);
+        string [] GetPropertyStringList(string key);
         
         IDictionary<string, object> GetAllProperties();
         void RemoveProperty(string key);
@@ -134,11 +141,6 @@ namespace Hal
         {
             device.Unlock();
         }
-        
-        public object GetProperty(string key)
-        {
-            return PropertyExists(key) ? device.GetProperty(key) : null;
-        }
 
         public string GetPropertyString(string key)
         {
@@ -152,7 +154,7 @@ namespace Hal
         
         public ulong GetPropertyUInt64(string key)
         {
-            return (ulong)device.GetProperty(key);
+            return device.GetProperty(key);
         }
 
         public double GetPropertyDouble(string key)
@@ -167,7 +169,7 @@ namespace Hal
 
         public string [] GetPropertyStringList(string key)
         {
-            return GetProperty(key) as string [];
+            return device.GetPropertyStringList(key);
         }
 
         public PropertyType GetPropertyType(string key)
@@ -175,14 +177,14 @@ namespace Hal
             return PropertyExists(key) ? device.GetPropertyType(key) : PropertyType.Invalid;
         }
         
-        public void SetProperty(string key, object value)
-        {
-            device.SetProperty(key, value);
-        }
-        
         public void SetPropertyString(string key, string value)
         {
             device.SetPropertyString(key, value);
+        }
+        
+        public void SetPropertyUInt64(string key, ulong value)
+        {
+            device.SetProperty(key, value);
         }
 
         public void SetPropertyInteger(string key, int value)
@@ -198,6 +200,11 @@ namespace Hal
         public void SetPropertyBoolean(string key, bool value)
         {
             device.SetPropertyBoolean(key, value);
+        }
+        
+        public void SetPropertyStringList(string key, string [] value)
+        {
+            device.SetPropertyStringList(key, value);
         }
         
         public void RemoveProperty(string key)

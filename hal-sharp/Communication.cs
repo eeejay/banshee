@@ -35,6 +35,8 @@ namespace Hal
                 
                 return bus;
             }
+            
+            set { bus = value; }
         }
         
         private static void OnNameAcquired(string name)

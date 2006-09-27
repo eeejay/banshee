@@ -1,3 +1,16 @@
+2006-09-26  Aaron Bockover  <abock@gnome.org>
+
+	* hal-sharp/Communication.cs: Allow setting the Bus
+
+	* hal-sharp/Device.cs: Work around big problem in the HAL spec, 
+	added explicit StringList support
+
+	* src/Banshee.Base/HalCore.cs: Set the Hal.Communication.Bus
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Minor fixes
+
+	* dbus-sharp/NDesk.DBus.dll: Updated
+
 2006-09-26  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp/*: update to 0.3.5
