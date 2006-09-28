@@ -159,6 +159,10 @@ MEDIAENGINE_SOURCES = \
 	$(srcdir)/MediaEngine/PlayerEngine.cs \
 	$(srcdir)/MediaEngine/IEqualizer.cs
 
+NOTIFICATIONS_SOURCES = \
+	$(srcdir)/Notifications/Notification.cs \
+	$(srcdir)/Notifications/Notifications.cs
+
 ASSEMBLY_SOURCES = \
     $(AUDIOCD_SOURCES) \
     $(DAP_SOURCES) \
@@ -182,6 +186,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_LIBRARY_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \
+	$(NOTIFICATIONS_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionManager.cs \
@@ -230,7 +235,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Catalog.cs \
 	$(srcdir)/Branding.cs \
 	$(srcdir)/BansheeBranding.cs \
-	$(srcdir)/Notifications.cs \
 	$(srcdir)/ComponentInitializer.cs \
 	$(srcdir)/PowerManagement.cs \
 	$(srcdir)/ProductInformation.cs \

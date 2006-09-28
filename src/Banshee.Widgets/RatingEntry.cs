@@ -100,7 +100,7 @@ namespace Banshee.Widgets
                 Allocation.Width, Height + (y_offset * 2));
             
             Gtk.Style.PaintShadow(Style, GdkWindow, StateType.Normal, ShadowType.In,
-                evnt.Area, this, "text", 0, y_mid - y_offset, Allocation.Width, 
+                evnt.Area, this, "entry", 0, y_mid - y_offset, Allocation.Width, 
                 Height + (y_offset * 2));
             
             if(HasFocus) {

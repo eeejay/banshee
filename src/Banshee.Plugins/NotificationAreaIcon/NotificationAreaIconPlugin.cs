@@ -4,7 +4,7 @@
  *  Copyright (C) 2005-2006 Novell, Inc.
  *  Copyright (C) 2006 Sebastian Dröge
  * 
- *  Written by Sebastian Dröge <slomo@ubuntu.com>
+ *  Written by Sebastian Dröge <slomo@circular-chaos.org>
  *             Aaron Bockover <aaron@abock.org>
  *  
  ****************************************************************************/
@@ -38,6 +38,7 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Widgets;
 using Mono.Unix;
+using Notifications;
 
 namespace Banshee.Plugins.NotificationAreaIcon 
 {
@@ -90,15 +91,12 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 FillPopup();
             }
 
-            Notifications.Widget = event_box;
-
             // Forcefully load this value
             show_notifications = ShowNotifications;
         }
 
         protected override void PluginDispose() 
         {
-            Notifications.Widget = null;
             if (notif_area != null) {
                 notif_area.Destroy();
                 event_box = null;
@@ -165,8 +163,16 @@ namespace Banshee.Plugins.NotificationAreaIcon
             } else {
                 image = Branding.DefaultCoverArt;
             }
+            image = image.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
             
-            Notifications.Notify(Catalog.GetString("Now Playing"), message, image);    
+            try {
+                Notification nf = new Notification (Catalog.GetString("Now Playing"), message, image, event_box);
+                nf.Urgency = Urgency.Low;
+                nf.Timeout = 4500;
+                nf.Show ();
+            } catch (Exception e) {
+                LogCore.Instance.PushError(Catalog.GetString("Cannot show notification"), e.Message, false);
+            }
         }
 
         [GLib.ConnectBefore]

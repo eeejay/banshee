@@ -1,3 +1,22 @@
+2006-09-28  Aaron Bockover  <abock@gnome.org>
+
+	Notification support now uses managed DBus instead of binding libnotify
+	DBus implementation and patch by Sebastian Dröge <slomo@circular-chaos.org>
+	Banshee BGO #357983
+
+	* src/Banshee.Base/Notifications/*.cs: New notification support that uses
+	managed DBus instead of binding libnotify
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Work with the updated Notification/DBus API
+
+	* src/Banshee.Base/Notifications.cs: Removed libnotify binding
+
+	* src/Banshee.Base/Makefile.am: Added new Notifications sources
+
+	* src/Banshee.Widgets/RatingEntry.cs: Use 'entry' not 'text' as the 
+	draw hint
+
 2006-09-28  Alp Toker  <alp@atoker.com>
 
 	* dbus-sharp/*: Update bundled NDesk.DBus.
