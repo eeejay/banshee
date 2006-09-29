@@ -122,14 +122,8 @@ namespace Hal
         
         protected virtual void OnPropertyModified(string key, bool added, bool removed)
         {
-            GLib.Idle.Add(delegate {
-                PropertyModifiedHandler handler = PropertyModified;
-                if(handler != null) {
-                    handler(this, new PropertyModifiedArgs(key, added, removed));
-                }
-                
-                return false;
-            });
+            if(PropertyModified != null)
+                PropertyModified(this, new PropertyModifiedArgs(key, added, removed));
         }
         
         public void Lock(string reason)

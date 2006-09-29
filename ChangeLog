@@ -1,5 +1,14 @@
 2006-09-29  Alp Toker  <alp@atoker.com>
 
+	* dbus-sharp/*: Update bundled NDesk.DBus.
+	* hal-sharp/Device.cs:
+	* hal-sharp/Manager.cs:
+	Remove GLib Idle Add hacks/workarounds for situations now handled by
+	managed dbus.
+	Remove GLib dependency from hal-sharp.
+
+2006-09-29  Alp Toker  <alp@atoker.com>
+
 	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs:
 	Was missed out during the recent API update.
 

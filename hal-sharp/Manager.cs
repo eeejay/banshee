@@ -105,38 +105,20 @@ namespace Hal
         
         protected virtual void OnDeviceAdded(string udi)
         {
-            GLib.Idle.Add(delegate {
-                DeviceAddedHandler handler = DeviceAdded;
-                if(handler != null) {
-                    handler(this, new DeviceAddedArgs(udi));
-                }
-                
-                return false;
-            });
+            if(DeviceAdded != null)
+                DeviceAdded(this, new DeviceAddedArgs(udi));
         }
         
         protected virtual void OnDeviceRemoved(string udi)
         {
-            GLib.Idle.Add(delegate {
-                DeviceRemovedHandler handler = DeviceRemoved;
-                if(handler != null) {
-                    handler(this, new DeviceRemovedArgs(udi));
-                }
-                
-                return false;
-            });
+            if(DeviceRemoved != null)
+                DeviceRemoved(this, new DeviceRemovedArgs(udi));
         }
         
         protected virtual void OnNewCapability(string udi, string capability)
         {
-            GLib.Idle.Add(delegate {
-                NewCapabilityHandler handler = NewCapability;
-                if(handler != null) {
-                    handler(this, new NewCapabilityArgs(udi, capability));
-                }
-                
-                return false;
-            });
+            if(NewCapability != null)
+                NewCapability(this, new NewCapabilityArgs(udi, capability));
         }
         
         public bool DeviceExists(string udi)
