@@ -104,13 +104,13 @@ namespace Helix
 
         public static IRemotePlayer Connect()
         {
-            DApplication.SessionBus.StartServiceByName(ServiceName, 0);
+            Bus.Session.StartServiceByName(ServiceName);
             
-            if(!DApplication.SessionBus.NameHasOwner(Interface)) {
+            if(!Bus.Session.NameHasOwner(Interface)) {
                 return null;
             }
             
-            return DApplication.SessionConnection.GetObject<IRemotePlayer>(
+            return Bus.Session.GetObject<IRemotePlayer>(
                 Interface, new ObjectPath(ObjectPath));
         }
     }

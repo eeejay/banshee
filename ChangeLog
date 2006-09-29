@@ -1,3 +1,8 @@
+2006-09-29  Alp Toker  <alp@atoker.com>
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayer.cs:
+	Was missed out during the recent API update.
+
 2006-09-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Wrap 
