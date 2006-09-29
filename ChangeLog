@@ -1,3 +1,11 @@
+2006-09-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Wrap 
+	plugin name in catalog call (BNC #184491)
+
+	* src/Banshee.Widgets/RatingEntry.cs: Remove explicit focus rect drawing
+	as this should be handled by the theme painting the entry shadow
+
 2006-09-29  Alp Toker  <alp@atoker.com>
 
 	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.

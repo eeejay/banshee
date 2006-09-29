@@ -91,24 +91,14 @@ namespace Banshee.Widgets
             }
             
             int y_mid = (Allocation.Height - Height) / 2;
-            
-            /*Gtk.Style.PaintFlatBox(Style, GdkWindow, StateType.Normal, ShadowType.In,
-                Gdk.Rectangle.Zero, this, "entry_bg", 0, 0, Allocation.Width, Allocation.Height);
-            */
-            
+
             GdkWindow.DrawRectangle(Style.BaseGC(StateType.Normal), true, 0, y_mid - y_offset,
                 Allocation.Width, Height + (y_offset * 2));
             
             Gtk.Style.PaintShadow(Style, GdkWindow, StateType.Normal, ShadowType.In,
                 evnt.Area, this, "entry", 0, y_mid - y_offset, Allocation.Width, 
                 Height + (y_offset * 2));
-            
-            if(HasFocus) {
-                Style.PaintFocus(Style, GdkWindow, State, evnt.Area, 
-                    this, "button", 2, y_mid - y_offset + 2, Allocation.Width - 4, 
-                    Height + (y_offset * 2) - 4);
-            }
-            
+
             GdkWindow.DrawPixbuf(Style.BackgroundGC(StateType.Normal), 
                 display_pixbuf, 0, 0, x_offset, y_mid, Width, Height, Gdk.RgbDither.None, 0, 0);
 
