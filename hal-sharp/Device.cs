@@ -98,11 +98,11 @@ namespace Hal
         {
             this.udi = udi;
             
-            if(!Communication.Bus.NameHasOwner("org.freedesktop.Hal")) {
+            if(!Bus.System.NameHasOwner("org.freedesktop.Hal")) {
                 throw new ApplicationException("Could not find org.freedesktop.Hal");
             }
             
-            device = Communication.Connection.GetObject<IDevice>("org.freedesktop.Hal", new ObjectPath(udi));
+            device = Bus.System.GetObject<IDevice>("org.freedesktop.Hal", new ObjectPath(udi));
             device.PropertyModified += OnPropertyModified;
         }
         

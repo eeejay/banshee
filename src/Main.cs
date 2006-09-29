@@ -30,6 +30,7 @@ using System;
 using System.Diagnostics;
 using Gnome;
 using Mono.Unix;
+using NDesk.DBus;
 
 using Banshee.Base;
 
@@ -53,6 +54,7 @@ namespace Banshee
                 Utilities.SetProcessName("banshee");
             } catch {}
             
+            BusG.Init();
             Gtk.Application.Init();
         
             Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {

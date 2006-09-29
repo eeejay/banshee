@@ -51,7 +51,8 @@ BUILD_UI_BANSHEE = \
 	$(BUILD_BANSHEE_CORE) \
 	$(LINK_GTK) \
 	$(LINK_HAL) \
-	$(LINK_MONO_UNIX)
+	$(LINK_MONO_UNIX) \
+	$(LINK_DBUS)
 
 ## Running ##
 RUN_PATH = \

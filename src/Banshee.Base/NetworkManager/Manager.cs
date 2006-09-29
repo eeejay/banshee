@@ -62,11 +62,11 @@ namespace NetworkManager
 
         public Manager()
         {
-            if(!DApplication.SystemBus.NameHasOwner(BusName)) {
+            if(!Bus.System.NameHasOwner(BusName)) {
                 throw new ApplicationException(String.Format("Name {0} has no owner", BusName));
             }
 
-            manager = DApplication.SystemConnection.GetObject<IManager>(BusName, new ObjectPath(ObjectPath));
+            manager = Bus.System.GetObject<IManager>(BusName, new ObjectPath(ObjectPath));
             manager.StateChange += OnStateChange;
         }
         

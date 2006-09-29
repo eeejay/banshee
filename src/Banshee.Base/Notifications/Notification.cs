@@ -92,10 +92,10 @@ namespace Notifications {
 		public event EventHandler Closed;
 		
 		public Notification () {
-			if (! DApplication.SessionBus.NameHasOwner (bus_name))
-				DApplication.SessionBus.StartServiceByName (bus_name, 0);
+			if (! Bus.Session.NameHasOwner (bus_name))
+				Bus.Session.StartServiceByName (bus_name, 0);
 
-			nf = DApplication.SessionConnection.GetObject<INotifications>
+			nf = Bus.Session.GetObject<INotifications>
 				(bus_name, new ObjectPath (object_path));
 			if (nf == null)
 				throw new ApplicationException ("Couldn't get org.freedesktop.Notifications DBus object!");

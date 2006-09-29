@@ -40,7 +40,7 @@ namespace Banshee.Base
         public DBusRemote()
         {
             try {
-                NameReply nameReply = DApplication.SessionBus.RequestName(BusName, NameFlag.None);
+                NameReply nameReply = Bus.Session.RequestName(BusName);
                 // TODO: error handling based on nameReply. should probably throw if 
                 // nameReply is anything other than NameReply.PrimaryOwner
             } catch(Exception e) {
@@ -51,8 +51,8 @@ namespace Banshee.Base
        
         public void RegisterObject(object o, string objectName)
         {
-            if(DApplication.SessionConnection != null) {
-                DApplication.SessionConnection.Register(BusName, new ObjectPath(ObjectRoot + "/" + objectName), o);
+            if(Bus.Session != null) {
+                Bus.Session.Register(BusName, new ObjectPath(ObjectRoot + "/" + objectName), o);
             }
         }
        

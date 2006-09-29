@@ -72,11 +72,11 @@ namespace Banshee.Base
 
         private static IPowerManager FindInstance()
         {
-            if(!DApplication.SessionBus.NameHasOwner(BusName)) {
+            if(!Bus.Session.NameHasOwner(BusName)) {
                 throw new ApplicationException(String.Format("Name {0} has no owner", BusName));
             }
             
-            return DApplication.SessionConnection.GetObject<IPowerManager>(
+            return Bus.Session.GetObject<IPowerManager>(
                 BusName, new ObjectPath(ObjectPath));
         }
 

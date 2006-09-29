@@ -91,11 +91,11 @@ namespace Hal
         
         public Manager()
         {
-            if(!Communication.Bus.NameHasOwner("org.freedesktop.Hal")) {
+            if(!Bus.System.NameHasOwner("org.freedesktop.Hal")) {
                 throw new ApplicationException("Could not find org.freedesktop.Hal");
             }
             
-            manager = Communication.Connection.GetObject<IManager>("org.freedesktop.Hal",
+            manager = Bus.System.GetObject<IManager>("org.freedesktop.Hal",
                 new ObjectPath("/org/freedesktop/Hal/Manager"));
             
             manager.DeviceAdded += OnDeviceAdded;

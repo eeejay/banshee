@@ -7,7 +7,6 @@ haldir = $(pkglibdir)
 hal_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 ASSEMBLY_SOURCES = \
-	$(srcdir)/Communication.cs \
 	$(srcdir)/Manager.cs \
 	$(srcdir)/Device.cs
 

@@ -38,8 +38,6 @@ namespace Banshee.Base
         
         public static void Initialize()
         {
-            Communication.Connection = NDesk.DBus.DApplication.SystemConnection;
-            Communication.Bus = NDesk.DBus.DApplication.SystemBus;
             manager = new Manager();
         }
         

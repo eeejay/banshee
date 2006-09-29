@@ -73,11 +73,11 @@ namespace Banshee.Base
     {
         public static IDBusPlayer FindInstance()
         {
-            if(!DApplication.SessionBus.NameHasOwner(DBusRemote.BusName)) {
+            if(!Bus.Session.NameHasOwner(DBusRemote.BusName)) {
                 return null;
             }
 
-            return DApplication.SessionConnection.GetObject<IDBusPlayer>(
+            return Bus.Session.GetObject<IDBusPlayer>(
                 DBusRemote.BusName, new ObjectPath(DBusRemote.ObjectRoot + "/Player"));
         }
         

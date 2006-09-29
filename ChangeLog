@@ -1,3 +1,22 @@
+2006-09-29  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.
+	* Makefile.include:
+	* hal-sharp/Device.cs:
+	* hal-sharp/Makefile.am:
+	* hal-sharp/Manager.cs:
+	* src/Banshee.Base/DBusPlayer.cs:
+	* src/Banshee.Base/DBusRemote.cs:
+	* src/Banshee.Base/HalCore.cs:
+	* src/Banshee.Base/NetworkManager/Manager.cs:
+	* src/Banshee.Base/Notifications/Notification.cs:
+	* src/Banshee.Base/PowerManagement.cs:
+	* src/Main.cs:
+	* tools/BansheeDBusClient.cs:
+	Introduce a much cleaner API for well known buses.
+	* hal-sharp/Communication.cs:
+	Obsoleted by new API, so removed.
+	
 2006-09-28  Aaron Bockover  <abock@gnome.org>
 
 	Notification support now uses managed DBus instead of binding libnotify

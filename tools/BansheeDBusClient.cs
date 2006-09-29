@@ -85,13 +85,10 @@ public class BansheeClient : Window
 
     static IPlayer FindInstance()
     {
-        Connection connection = DApplication.SessionConnection;
-        Bus bus = DApplication.SessionBus;
-
-        if (!bus.NameHasOwner(BUS_NAME))
+        if (!Bus.Session.NameHasOwner(BUS_NAME))
             throw new Exception(String.Format("Name {0} has no owner", BUS_NAME));
 
-        return connection.GetObject<IPlayer>(BUS_NAME, new ObjectPath (OBJECT_PATH));
+        return Bus.Session.GetObject<IPlayer>(BUS_NAME, new ObjectPath (OBJECT_PATH));
     }
 
     public static void Main()
@@ -103,6 +100,7 @@ public class BansheeClient : Window
             Environment.Exit(1);
         }
         
+        BusG.Init();
         Application.Init();
         new BansheeClient();
         Application.Run();
