@@ -1,3 +1,13 @@
+2006-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Remove
+	unnecessary logging.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: If a
+	smart playlist is ordered by a time-based column (eg, most recently
+	played), treat it like other smart playlists with time-dependent
+	Conditions.
+
 2006-10-01  Alp Toker  <alp@atoker.com>
 
 	* dbus-sharp/*: Update bundled NDesk.DBus, NDesk.DBus.GLib.

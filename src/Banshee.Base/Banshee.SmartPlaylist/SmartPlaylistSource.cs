@@ -36,7 +36,11 @@ namespace Banshee.SmartPlaylist
         }
 
         public bool TimeDependent {
-            get { return (Condition == null) ? false : Condition.IndexOf ("current_timestamp") != -1; }
+            get {
+                bool condition_is = (Condition == null) ? false : Condition.IndexOf ("current_timestamp") != -1;
+                bool order_is = (OrderBy == null) ? false : OrderBy.IndexOf ("Stamp") != -1;
+                return condition_is || order_is;
+            }
         }
 
         public bool PlaylistDependent {
