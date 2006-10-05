@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-09-25 16:03+0300\n"
-"PO-Revision-Date: 2006-09-25 16:07+0300\n"
+"PO-Revision-Date: 2006-10-05 13:56+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -2181,7 +2181,7 @@ msgstr "Poista {0}"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:50
 msgid "Eject CD"
-msgstr "Avaa asema"
+msgstr "Avaa kelkka"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:89
 msgid "Reading table of contents from CD..."
@@ -2260,7 +2260,7 @@ msgstr "({0} jäljellä)"
 #: ../src/Banshee.Base/Sources/DapSource.cs:359
 #, csharp-format
 msgid "Eject {0}"
-msgstr "Avaa {0}"
+msgstr "Irrota {0}"
 
 # Tuontivirheet?
 #: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:56
