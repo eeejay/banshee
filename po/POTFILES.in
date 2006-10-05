@@ -5,7 +5,6 @@ data/banshee-dialogs.glade
 [encoding: UTF-8]
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
-libbanshee/hal-context.c
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
 src/Banshee.Base/ActionManager.cs
@@ -52,7 +51,6 @@ src/Banshee.Base/HomeDirectoryImportSource.cs
 src/Banshee.Base/ImportManager.cs
 src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
-src/Banshee.Base/Notifications.cs
 src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
 src/Banshee.Base/PowerManagement.cs
