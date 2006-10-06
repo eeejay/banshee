@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-22 00:05+0200\n"
-"PO-Revision-Date: 2006-09-22 00:04+0200\n"
+"POT-Creation-Date: 2006-10-06 20:04+0200\n"
+"PO-Revision-Date: 2006-10-06 20:04+0200\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -525,7 +525,7 @@ msgstr "Vælg til brug"
 
 #: ../data/banshee-dialogs.glade.h:66
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:655
+#: ../src/Banshee.Base/Dap/Dap.cs:661
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
@@ -585,7 +585,7 @@ msgstr "Kunne ikke sammensætte kanalelementer"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:398
 #: ../src/Banshee.Base/BansheeBranding.cs:80
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:123
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:121
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -633,32 +633,15 @@ msgstr "Kunne ikke hente elementfyld fra koder"
 msgid "Could not construct pipeline"
 msgstr "Kunne ikke oprette kanal"
 
-#: ../libbanshee/hal-context.c:61
-msgid "Could not create new HAL context"
-msgstr "Kunne ikke oprette ny HAL-kontekst"
-
-#: ../libbanshee/hal-context.c:69
-#, c-format
-msgid "Could not integrate HAL with mainloop: %s"
-msgstr "Kunne ikke integrere HAL med hovedløkke: %s"
-
-#: ../libbanshee/hal-context.c:89 ../libbanshee/hal-context.c:92
-msgid "Could not initialize HAL context"
-msgstr "Kunne ikke initialisere HAL-kontekst"
-
-#: ../libbanshee/hal-context.c:101
-msgid "Could not get device list from HAL"
-msgstr "Kunne ikke hente enhedsliste fra HAL"
-
 #: ../src/Banshee.Base/ActionManager.cs:65
 msgid "_Music"
 msgstr "_Musik"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
 #: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1568
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:438
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:444
+#: ../src/PlayerInterface.cs:1571
 msgid "New Playlist"
 msgstr "Ny spilleliste"
 
@@ -832,7 +815,7 @@ msgstr "_Afspilning"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
 #: ../src/Banshee.Base/ActionManager.cs:181
-#: ../src/Banshee.Base/Gui/SourceView.cs:101 ../src/Banshee.Base/Source.cs:289
+#: ../src/Banshee.Base/Gui/SourceView.cs:102 ../src/Banshee.Base/Source.cs:289
 msgid "Source"
 msgstr "Kilde"
 
@@ -1359,7 +1342,7 @@ msgstr "Kunne ikke køre nautilus-cd-burner"
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
 #. args.FileName, e.GetType(), e.Message);
 #: ../src/Banshee.Base/Banshee.Library/Import.cs:69
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:170
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:177
 msgid "Scanning"
 msgstr "Leder"
 
@@ -1388,33 +1371,33 @@ msgid "Unheard"
 msgstr "Ikke hørte"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:139
-#: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1306
-#: ../src/PlayerInterface.cs:2303
+#: ../src/PlayerInterface.cs:444 ../src/PlayerInterface.cs:1309
+#: ../src/PlayerInterface.cs:2315
 msgid "Artist Name"
 msgstr "Kunstner"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:141
-#: ../src/PlayerInterface.cs:443 ../src/PlayerInterface.cs:1308
+#: ../src/PlayerInterface.cs:443 ../src/PlayerInterface.cs:1311
 msgid "Song Name"
 msgstr "Sang"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:143
-#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1310
-#: ../src/PlayerInterface.cs:2299
+#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1313
+#: ../src/PlayerInterface.cs:2311
 msgid "Album Title"
 msgstr "Album"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:145
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:710
-#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1312
-#: ../src/PlayerInterface.cs:2307 ../src/PlaylistView.cs:111
+#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1315
+#: ../src/PlayerInterface.cs:2319 ../src/PlaylistView.cs:111
 msgid "Genre"
 msgstr "Genre"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:147
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:718
-#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1314
+#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1317
 #: ../src/PlaylistView.cs:114
 msgid "Year"
 msgstr "År"
@@ -1666,11 +1649,11 @@ msgstr "Ny intelligent spilleliste..."
 msgid "New Smart Playlist from Search..."
 msgstr "Ny intelligent spilleliste ud fra søgning..."
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:70
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
 msgid "Delete Smart Playlist"
 msgstr "Slet intelligent spilleliste"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:78
 msgid "Smart Playlist"
 msgstr "Intelligent spilleliste"
 
@@ -1710,33 +1693,33 @@ msgstr "Importér mappe til bibliotek"
 msgid "Local Folder"
 msgstr "Lokal mappe"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:100
+#: ../src/Banshee.Base/Dap/DapCore.cs:101
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialiseret"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Banshee.Base/Dap/Dap.cs:341
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Enhed"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:336
+#: ../src/Banshee.Base/Dap/Dap.cs:342
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "Synkroniserer {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:340
+#: ../src/Banshee.Base/Dap/Dap.cs:346
 msgid "Waiting for transcoder..."
 msgstr "Venter på omkoder..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:428 ../src/Banshee.Base/Dap/Dap.cs:449
+#: ../src/Banshee.Base/Dap/Dap.cs:434 ../src/Banshee.Base/Dap/Dap.cs:455
 msgid "Processing..."
 msgstr "Behandler..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:468
+#: ../src/Banshee.Base/Dap/Dap.cs:474
 msgid "Could not encode some files"
 msgstr "Nogle filer kunne ikke kodes"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:470
+#: ../src/Banshee.Base/Dap/Dap.cs:476
 msgid ""
 "Some files could not be encoded to the proper format. They will not be saved "
 "to the device if you continue."
@@ -1744,7 +1727,7 @@ msgstr ""
 "Nogle filer kunne ikke kodes til et passende format. De vil ikke blive gemt "
 "til enheden, hvis du fortsætter."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:475
+#: ../src/Banshee.Base/Dap/Dap.cs:481
 msgid "Continue synchronizing"
 msgstr "Fortsæt synkronisering"
 
@@ -1772,55 +1755,60 @@ msgstr "Enhedsforbrug"
 msgid "Advanced Details"
 msgstr "Avancerede detaljer"
 
-#: ../src/Banshee.Base/Globals.cs:70 ../src/Banshee.Base/Globals.cs:79
+#: ../src/Banshee.Base/Globals.cs:75 ../src/Banshee.Base/Globals.cs:84
+#: ../src/Banshee.Base/Globals.cs:88
 msgid "Starting background tasks"
 msgstr "Starter baggrundsopgaver"
 
-#: ../src/Banshee.Base/Globals.cs:80
+#: ../src/Banshee.Base/Globals.cs:85
+msgid "Device support will be disabled for this instance (no HAL)"
+msgstr "Enhedsunderstøttelse vil være deaktiveret i denne instans (ingen HAL)"
+
+#: ../src/Banshee.Base/Globals.cs:89
 msgid "Detecting network settings"
 msgstr "Finder netværksopsætning"
 
-#: ../src/Banshee.Base/Globals.cs:81
+#: ../src/Banshee.Base/Globals.cs:90
 msgid "Creating action manager"
 msgstr "Opretter handlingshåndtering"
 
-#: ../src/Banshee.Base/Globals.cs:82
+#: ../src/Banshee.Base/Globals.cs:91
 msgid "Loading music library"
 msgstr "Indlæser musikbibliotek"
 
-#: ../src/Banshee.Base/Globals.cs:87 ../src/Banshee.Base/Globals.cs:88
+#: ../src/Banshee.Base/Globals.cs:96 ../src/Banshee.Base/Globals.cs:97
 msgid "Initializing player engine"
 msgstr "Initialiserer afspillermotor"
 
-#: ../src/Banshee.Base/Globals.cs:90
+#: ../src/Banshee.Base/Globals.cs:99
 msgid "Initializing audio CD support"
 msgstr "Initialiserer understøttelse af lyd-cd'er"
 
-#: ../src/Banshee.Base/Globals.cs:91
+#: ../src/Banshee.Base/Globals.cs:100
 msgid "Audio CD support will be disabled for this instance"
 msgstr "Understøttelse af lyd-cd'er vil være deaktiveret i denne instans"
 
-#: ../src/Banshee.Base/Globals.cs:93
+#: ../src/Banshee.Base/Globals.cs:102
 msgid "Initializing digital audio player support"
 msgstr "Initialiserer understøttelse af digitale lydafspillere"
 
-#: ../src/Banshee.Base/Globals.cs:94
+#: ../src/Banshee.Base/Globals.cs:103
 msgid "DAP support will be disabled for this instance"
 msgstr "Understøttelse af DAP vil være deaktiveret i denne instans"
 
-#: ../src/Banshee.Base/Globals.cs:96
+#: ../src/Banshee.Base/Globals.cs:105
 msgid "Initializing CD writing support"
 msgstr "Initialiserer understøttelse af cd-brænding"
 
-#: ../src/Banshee.Base/Globals.cs:97
+#: ../src/Banshee.Base/Globals.cs:106
 msgid "CD burning support will be disabled for this instance"
 msgstr "Understøttelse af cd-brænding vil være deaktiveret i denne instans"
 
-#: ../src/Banshee.Base/Globals.cs:99
+#: ../src/Banshee.Base/Globals.cs:108
 msgid "Initializing plugins"
 msgstr "Initialiserer udvidelsesmoduler"
 
-#: ../src/Banshee.Base/Globals.cs:100
+#: ../src/Banshee.Base/Globals.cs:109
 msgid "Initializing background tasks"
 msgstr "Initialiserer baggrundsopgaver"
 
@@ -1945,7 +1933,7 @@ msgstr "Gennemse..."
 msgid "Select library location"
 msgstr "Vælg placering af bibliotek"
 
-#: ../src/Banshee.Base/Gui/SourceView.cs:431
+#: ../src/Banshee.Base/Gui/SourceView.cs:432
 msgid "Could not import tracks"
 msgstr "Kunne ikke importere spor"
 
@@ -2017,18 +2005,6 @@ msgstr "Version"
 msgid "Could not create transcoder"
 msgstr "Kunne ikke oprette omkoder"
 
-#: ../src/Banshee.Base/HalCore.cs:97
-msgid "HAL could not be initialized"
-msgstr "HAL kunne ikke initialiseres"
-
-#: ../src/Banshee.Base/HalCore.cs:104
-msgid "HAL context could not be created"
-msgstr "HAL kontekst kunne ikke oprettes"
-
-#: ../src/Banshee.Base/HalCore.cs:105
-msgid "D-Bus may not be working or configured properly"
-msgstr "D-BUS virker muligvis ikke eller er ikke konfigureret korrekt"
-
 #: ../src/Banshee.Base/HomeDirectoryImportSource.cs:58
 msgid "Home Directory"
 msgstr "Hjemmemappe"
@@ -2049,17 +2025,13 @@ msgstr "Leder efter sange"
 msgid "Could not load track from library"
 msgstr "Kunne ikke indlæse sang fra bibliotek"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:76
+#: ../src/Banshee.Base/NetworkDetect.cs:68
 msgid "Cannot connect to NetworkManager"
 msgstr "Kan ikke tilslutte til NetworkManager"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:77
+#: ../src/Banshee.Base/NetworkDetect.cs:69
 msgid "An available, working network connection will be assumed"
 msgstr "En tilgængelig, fungerende netværksforbindelse forventes"
-
-#: ../src/Banshee.Base/Notifications.cs:81
-msgid "Cannot show notification"
-msgstr "Kan ikke vise påmindelse"
 
 #: ../src/Banshee.Base/PipelineProfile.cs:105
 msgid "Pipeline profile is empty."
@@ -2133,7 +2105,7 @@ msgstr ""
 msgid "Problem with Player Engine"
 msgstr "Problemer med afspillermotor"
 
-#: ../src/Banshee.Base/PowerManagement.cs:87
+#: ../src/Banshee.Base/PowerManagement.cs:83
 msgid "Playing Music"
 msgstr "Afspiller musik"
 
@@ -2215,12 +2187,12 @@ msgid "Synchronizing your Device, Please Wait..."
 msgstr "Synkroniserer din enhed, vent venligst..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:168
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:219
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:228
 msgid "Importing"
 msgstr "Importerer"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:221
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:230
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
 msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
@@ -2228,20 +2200,20 @@ msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
 #: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:223
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:232
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Kopierer fra {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
 #: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:224
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:233
 msgid "Scanning..."
 msgstr "Leder..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
 #: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:340
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:349
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Kan ikke importere spor fra {0}"
@@ -2300,11 +2272,11 @@ msgstr "Lokal kø"
 msgid "Delete Playlist"
 msgstr "Slet spilleliste"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:164
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:168
 msgid "Cannot Rename Playlist"
 msgstr "Kunne ikke omdøbe spilleliste"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:165
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:169
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 "En spilleliste med dette navn eksisterer allerede. Vælg venligst et andet "
@@ -2354,20 +2326,20 @@ msgid "Error rebuilding iPod database"
 msgstr "Fejl ved gendannelse af iPod database"
 
 #. Translators "Week 25 of 2006"
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:82
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
 msgid "Manufactured During"
 msgstr "Fremstillet i løbet af"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:84
 #, csharp-format
 msgid "Week {0} of {1}"
 msgstr "Uge {0} af {1}"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:117
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
 msgid "Your iPod could not be identified"
 msgstr "Din iPod kunne ikke identificeres"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:119
 msgid ""
 "Please consider submitting information about your iPod to the Banshee "
 "Project so your iPod may be more fully identified in the future.\n"
@@ -2375,32 +2347,32 @@ msgstr ""
 "Overvej venligst at indsende information omkring din iPod til Banshee-"
 "projektet, så din iPod identificeres bedre i fremtiden.\n"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:121
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:122
 msgid "Do not ask me again"
 msgstr "Spørg mig ikke igen"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:126
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:127
 msgid "Go to Web Site"
 msgstr "Gå til hjemmeside"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:207
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:208
 msgid "Could not eject iPod"
 msgstr "Kunne ikke skubbe iPod ud"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:215
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:234
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:216
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:235
 msgid "Synchronizing iPod"
 msgstr "Synkroniserer iPod"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:216
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:217
 msgid "Pre-processing tracks"
 msgstr "Forbehandler sange"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:231
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:232
 msgid "Flushing to Disk (may take time)"
 msgstr "Opdaterer til disk (kan tage noget tid)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:241
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:242
 msgid "Failed to synchronize iPod"
 msgstr "Kunne ikke synkronisere iPod"
 
@@ -2440,21 +2412,21 @@ msgstr "Geopbyg database"
 msgid "Rebuilding iPod Database..."
 msgstr "Gendanner iPod database..."
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:99
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:101
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:103
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:105
 msgid "Vendor"
 msgstr "Leverandør"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:339
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:346
 msgid "Copying Songs"
 msgstr "Kopierer sange"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:340
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:347
 #, csharp-format
 msgid "Copying {0} of {1}"
 msgstr "Kopierer {0} af {1}"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:371
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:378
 msgid "Audio Device"
 msgstr "Lydenhed"
 
@@ -2610,7 +2582,7 @@ msgstr "Del mit musikbibliotek med andre"
 msgid "Share name:"
 msgstr "Delingsnavn:"
 
-#: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:74
 msgid "Banshee Music Share"
 msgstr "Banshee musikdeling"
 
@@ -2665,7 +2637,7 @@ msgstr "Navn på DAAP-serverdeling"
 msgid "Cannot login to DAAP share"
 msgstr "Kan ikke logge ind på DAAP-deling"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:148
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:157
 msgid "Disconnect"
 msgstr "Frakobl"
 
@@ -2700,6 +2672,10 @@ msgid ""
 msgstr ""
 "Dette tilvalg kan almindeligvis afhjælpe mindre fejl i metadata, men i "
 "sjældne tilfælde kan metadata blive opdateret ukorrekt fra MusizBrainz."
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:54
+msgid "Metadata Searcher"
+msgstr "Metadata-søger"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:59
 msgid ""
@@ -2745,18 +2721,22 @@ msgstr "Giver understøttelse af multimedietaster, konfigureret gennem Gnome."
 msgid "Enable the MultimediaKeys plugin"
 msgstr "Aktivér udvidelsesmodulet til multimedietastatur genveje"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:47
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:48
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:57
 msgid "Notification Area Icon"
 msgstr "Statusikon"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:50
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:51
 msgid "Shows the Notification Area Icon"
 msgstr "Viser statusikon i statusfelt"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:169
 msgid "Now Playing"
 msgstr "Afspiller nu"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:174
+msgid "Cannot show notification"
+msgstr "Kan ikke vise påmindelse"
 
 #: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:65
 msgid "Show notifications when song changes"
@@ -2794,8 +2774,8 @@ msgstr ""
 "Indsæt\n"
 "disk"
 
-#: ../src/Banshee.Widgets/SearchEntry.cs:203
-#: ../src/Banshee.Widgets/SearchEntry.cs:314
+#: ../src/Banshee.Widgets/SearchEntry.cs:204
+#: ../src/Banshee.Widgets/SearchEntry.cs:315
 #, csharp-format
 msgid "Searching: {0}"
 msgstr "Søger: {0}"
@@ -2890,30 +2870,30 @@ msgstr "Importér"
 msgid "Rename {0}"
 msgstr "Omdøb {0}"
 
-#: ../src/PlayerInterface.cs:1192
+#: ../src/PlayerInterface.cs:1195
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dage"
 
-#: ../src/PlayerInterface.cs:1209
+#: ../src/PlayerInterface.cs:1212
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} element"
 msgstr[1] "{0} elementer"
 
-#: ../src/PlayerInterface.cs:1211
+#: ../src/PlayerInterface.cs:1214
 #, csharp-format
 msgid "{0} Total Play Time"
 msgstr "{0} samlet spilletid"
 
-#: ../src/PlayerInterface.cs:1587
+#: ../src/PlayerInterface.cs:1590
 msgid "Clear"
 msgstr "Ryd"
 
-#: ../src/PlayerInterface.cs:1854
+#: ../src/PlayerInterface.cs:1853
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2921,15 +2901,15 @@ msgid_plural ""
 msgstr[0] "Er du sikker på du vil slette denne sang permanent?"
 msgstr[1] "Er du sikker på du vil slette de {0} valgte sange permanent?"
 
-#: ../src/PlayerInterface.cs:1858
+#: ../src/PlayerInterface.cs:1857
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Hvis du sletter det valgte vil det permament være tabt."
 
-#: ../src/PlayerInterface.cs:1861
+#: ../src/PlayerInterface.cs:1860
 msgid "Remove selection from library"
 msgstr "Fjern valg fra bibliotek"
 
-#: ../src/PlayerInterface.cs:1863
+#: ../src/PlayerInterface.cs:1862
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2938,17 +2918,26 @@ msgstr[0] "Er du sikker på du vil fjerne den valgte sang fra dit bibliotek?"
 msgstr[1] ""
 "Er du sikker på du vil fjerne de valgte <b>({0})</b> sange fra dit bibliotek?"
 
-#: ../src/PlayerInterface.cs:2005
+#: ../src/PlayerInterface.cs:1902
+msgid "Delete songs from drive"
+msgstr "Slet sange fra drev"
+
+#: ../src/PlayerInterface.cs:1903
+#, csharp-format
+msgid "You do not have the required permissions to delete '{0}'"
+msgstr "Du har ikke rettigheder til at slette \"{0}\""
+
+#: ../src/PlayerInterface.cs:2017
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2026
+#: ../src/PlayerInterface.cs:2038
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisér {0}"
 
-#: ../src/PlayerInterface.cs:2027
+#: ../src/PlayerInterface.cs:2039
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2969,7 +2958,7 @@ msgstr ""
 "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende iPod indhold "
 "og kan medføre inkompatiblitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:2033
+#: ../src/PlayerInterface.cs:2045
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatability with iTunes!"
@@ -2977,11 +2966,11 @@ msgstr ""
 "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende indhold på "
 "iPod'en og kan resultere i inkompatibilitet med iTunes!"
 
-#: ../src/PlayerInterface.cs:2035
+#: ../src/PlayerInterface.cs:2047
 msgid "Synchronize Library"
 msgstr "Synkronisér bibliotek"
 
-#: ../src/PlayerInterface.cs:2037
+#: ../src/PlayerInterface.cs:2049
 msgid "Save Manual Changes"
 msgstr "Gem manuelle ændringer"
 
@@ -3012,3 +3001,24 @@ msgstr "Afspilninger"
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "I/T"
+
+#~ msgid "Could not create new HAL context"
+#~ msgstr "Kunne ikke oprette ny HAL-kontekst"
+
+#~ msgid "Could not integrate HAL with mainloop: %s"
+#~ msgstr "Kunne ikke integrere HAL med hovedløkke: %s"
+
+#~ msgid "Could not initialize HAL context"
+#~ msgstr "Kunne ikke initialisere HAL-kontekst"
+
+#~ msgid "Could not get device list from HAL"
+#~ msgstr "Kunne ikke hente enhedsliste fra HAL"
+
+#~ msgid "HAL could not be initialized"
+#~ msgstr "HAL kunne ikke initialiseres"
+
+#~ msgid "HAL context could not be created"
+#~ msgstr "HAL kontekst kunne ikke oprettes"
+
+#~ msgid "D-Bus may not be working or configured properly"
+#~ msgstr "D-BUS virker muligvis ikke eller er ikke konfigureret korrekt"
