@@ -3,15 +3,14 @@
 # Copyright (C) 2005-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Banshee package.
 #
-#
-# Žygimantas Beručka <zygis@gnome.org>, 2005-2006.
 # Gintautas Miliauskas <gintas@akl.lt>, 2006.
+# Žygimantas Beručka <zygis@gnome.org>, 2005-2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-01 02:02+0300\n"
-"PO-Revision-Date: 2006-10-01 02:03+0300\n"
+"POT-Creation-Date: 2006-10-09 13:16+0300\n"
+"PO-Revision-Date: 2006-10-09 13:30+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -1536,19 +1535,19 @@ msgstr "Dažniausiai grota"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
 msgid "Most Recently Added"
-msgstr ""
+msgstr "Vėliausiai pridėta"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
 msgid "Least Recently Added"
-msgstr ""
+msgstr "Seniausiai pridėta"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
 msgid "Most Recently Played"
-msgstr ""
+msgstr "Vėliausiai grota"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
 msgid "Least Recently Played"
-msgstr ""
+msgstr "Seniausiai grota"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
 msgid "songs"
@@ -1636,6 +1635,8 @@ msgid ""
 "Create playlists that automatically add and remove songs based on "
 "customizable queries."
 msgstr ""
+"Sukurti grojaraščius automatiškai pridedančius ir pašalinančius dainas "
+"remiantis naudotojo užklausomis."
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:138
 msgid "New Smart Playlist..."
@@ -1645,11 +1646,11 @@ msgstr "Naujas išmanusis grojaraštis..."
 msgid "New Smart Playlist from Search..."
 msgstr "Naujas išmanusis grojaraštis iš paieškos..."
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:70
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
 msgid "Delete Smart Playlist"
 msgstr "Ištrinti išmanųjį grojaraštį"
 
-#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:74
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:78
 msgid "Smart Playlist"
 msgstr "Išmanusis grojaraštis"
 
@@ -1721,6 +1722,8 @@ msgid ""
 "Some files could not be encoded to the proper format. They will not be saved "
 "to the device if you continue."
 msgstr ""
+"Kai kurių rinkmenų nepavyko perkoduoti į tinkamą formatą. Jeigu tęsite, "
+"jos nebus išsaugotos įrenginyje."
 
 #: ../src/Banshee.Base/Dap/Dap.cs:481
 msgid "Continue synchronizing"
@@ -1757,7 +1760,7 @@ msgstr "Paleidžiamos foninės užduotys"
 
 #: ../src/Banshee.Base/Globals.cs:85
 msgid "Device support will be disabled for this instance (no HAL)"
-msgstr ""
+msgstr "Įrenginių palaikymas šiai instancijai bus išjungtas (nėra HAL)"
 
 #: ../src/Banshee.Base/Globals.cs:89
 msgid "Detecting network settings"
@@ -1781,7 +1784,7 @@ msgstr "Inicializuojamas audio CD palaikymas"
 
 #: ../src/Banshee.Base/Globals.cs:100
 msgid "Audio CD support will be disabled for this instance"
-msgstr ""
+msgstr "Šiai instancijai bus išjungtas CD palaikymas"
 
 #: ../src/Banshee.Base/Globals.cs:102
 msgid "Initializing digital audio player support"
@@ -1789,7 +1792,7 @@ msgstr "Inicializuojamas skaitmeninių garso grotuvų palaikymas"
 
 #: ../src/Banshee.Base/Globals.cs:103
 msgid "DAP support will be disabled for this instance"
-msgstr ""
+msgstr "Šiai instancijai bus išjungtas DAP palaikymas"
 
 #: ../src/Banshee.Base/Globals.cs:105
 msgid "Initializing CD writing support"
@@ -1797,7 +1800,7 @@ msgstr "Inicializuojamas CD įrašymo palaikymas"
 
 #: ../src/Banshee.Base/Globals.cs:106
 msgid "CD burning support will be disabled for this instance"
-msgstr ""
+msgstr "Šiai instancijai bus išjungtas CD įrašymas"
 
 #: ../src/Banshee.Base/Globals.cs:108
 msgid "Initializing plugins"
@@ -2321,12 +2324,12 @@ msgstr "Klaida perkuriant iPod duomenų bazę"
 #. Translators "Week 25 of 2006"
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:83
 msgid "Manufactured During"
-msgstr ""
+msgstr "Pagaminimo periodas"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:84
 #, csharp-format
 msgid "Week {0} of {1}"
-msgstr ""
+msgstr "{1} metų {0} savaitė"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:118
 msgid "Your iPod could not be identified"
@@ -2337,6 +2340,8 @@ msgid ""
 "Please consider submitting information about your iPod to the Banshee "
 "Project so your iPod may be more fully identified in the future.\n"
 msgstr ""
+"Pateikite informaciją apie savo iPod Banshee projektui, kad ateityje būtų "
+"galima lengviau identifikuoti Jūsų iPod.\n"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:122
 msgid "Do not ask me again"
@@ -2603,6 +2608,8 @@ msgid ""
 "Banshee library with others. Works with other instances of Banshee, iTunes, "
 "and Rhythmbox."
 msgstr ""
+"Leisti naršyti ir klausyti dainų iš Jūsų muzikos viešinių ir viešinti Jūsų "
+"Banshee biblioteką kitiems. Veikia su Banshee, iTunes ir Rhythmbox."
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
@@ -2707,7 +2714,7 @@ msgstr ""
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:47
 msgid "Adds support for multimedia keys configured through Gnome."
-msgstr ""
+msgstr "Įjungia GNOME sukonfigūruotų multimedijos klavišų palaikymą."
 
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
