@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-08 08:36+0300\n"
-"PO-Revision-Date: 2006-10-08 08:44+0300\n"
+"POT-Creation-Date: 2006-10-09 14:29+0300\n"
+"PO-Revision-Date: 2006-10-09 14:29+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -346,7 +346,7 @@ msgstr "<b>Kappale_laskuri:</b>"
 
 #: ../data/banshee-dialogs.glade.h:22
 msgid "<b>Track _number:</b>"
-msgstr "<b>Kappale_numero:</a>"
+msgstr "<b>Kappale_numero:</b>"
 
 #: ../data/banshee-dialogs.glade.h:23
 msgid "<b>Write Options</b>"
@@ -381,8 +381,8 @@ msgid ""
 "<small><i>Enable this option to save tags and other metadata inside "
 "supported audio files</i></small>"
 msgstr ""
-"<small><i>Valitse tämä vaihtoehto, jos haluat tallentaa merkinnät ja "
-"muut kappaletiedot tiedostojen sisälle</i></small>"
+"<small><i>Valitse tämä vaihtoehto, jos haluat tallentaa merkinnät ja muut "
+"kappaletiedot tiedostojen sisälle</i></small>"
 
 #: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
