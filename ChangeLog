@@ -1,3 +1,13 @@
+2006-10-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Gui/SplashScreen.cs: Use cairo for drawing the progress
+	overlay, make more configurable and reusable for branding
+
+	* Makefile.am:
+	* configure.ac:
+	* branding/*: Added empty branding build stub/hook to allow for 
+	easy building and integration of custom branding options
+
 2006-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Remove

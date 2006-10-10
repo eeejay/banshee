@@ -27,26 +27,63 @@
  */
  
 using System;
-
 using Gtk;
+using Cairo;
+
 using Banshee.Base;
 
 namespace Banshee.Gui.Dialogs
 {
-    internal class SplashScreen : Gtk.Window, IDisposable
+    public class SplashScreenDrawArgs : EventArgs
     {
-        private static Gdk.Color fg_color = new Gdk.Color(0xc3, 0xd3, 0xe7);
-            
+        private Gdk.Rectangle allocation;
+        private Context context;
+        private Gdk.Drawable drawable;
+        private bool retval;
+        
+        public SplashScreenDrawArgs(Context context, Gdk.Drawable drawable, Gdk.Rectangle allocation)
+        {
+            this.context = context;
+            this.drawable = drawable;
+            this.allocation = allocation;
+            this.retval = true;
+        }
+        
+        public Gdk.Rectangle Allocation {
+            get { return allocation; }
+        }
+        
+        public Context Context {
+            get { return context; }
+        }
+        
+        public Gdk.Drawable Drawable {
+            get { return drawable; }
+        }
+        
+        public bool RetVal {
+            get { return retval; }
+            set { retval = value; }
+        }
+    }
+
+    public delegate void SplashScreenDrawHandler(object o, SplashScreenDrawArgs args);
+
+    public class SplashScreen : Gtk.Window, IDisposable
+    {
+        private static Color default_color = new Color(0xff, 0xff, 0xff, 0.65);
+    
+        private Color text_color = default_color;
+        private Color bar_fill_color = default_color;
+        private Color bar_outline_color = default_color;
+        
         private Gdk.Pixbuf pixbuf;
         private string message;
         private double progress;
         private Pango.Layout layout;
         
-        static SplashScreen()
-        {
-            Gdk.Colormap.System.AllocColor(ref fg_color, true, true);
-        }
-        
+        public event SplashScreenDrawHandler DrawScreen;
+
         public SplashScreen(string title, Gdk.Pixbuf pixbuf) : base(WindowType.Toplevel)
         {
             this.pixbuf = pixbuf;
@@ -78,50 +115,73 @@ namespace Banshee.Gui.Dialogs
             }
         }
         
-        private void DrawSplash()
+        private bool DrawSplash(Cairo.Context cr)
         {
+            SplashScreenDrawHandler handler = DrawScreen;
+            if(handler != null) {
+                SplashScreenDrawArgs args = new SplashScreenDrawArgs(cr, GdkWindow, Allocation);
+                handler(this, args);
+                return args.RetVal;
+            }
+        
             int bar_height = 6;
             
             GdkWindow.DrawPixbuf(Style.LightGC(StateType.Normal), pixbuf, 0, 0, 
                 Allocation.X, Allocation.Y, pixbuf.Width, pixbuf.Height,
                 Gdk.RgbDither.None, 0, 0);
                 
+            cr.Antialias = Antialias.Default;
+            cr.Color = text_color;
+            
             if(message != null) {
-                int width, height;
-                layout.SetMarkup(String.Format("<small>{0}</small>", GLib.Markup.EscapeText(message)));
-                layout.GetPixelSize(out width, out height);
-                
-                Style.PaintLayout(Style, GdkWindow, StateType.Normal, true, Allocation, 
-                    this, null, 20, Allocation.Height - height - bar_height - 24, layout);
+                cr.SelectFontFace("Sans", FontSlant.Normal, FontWeight.Normal);
+                cr.SetFontSize(12);
+                cr.MoveTo(20, Allocation.Height - bar_height - 26);
+                cr.ShowText(message);
             }
             
-            GdkWindow.DrawRectangle(this.Style.ForegroundGC(StateType.Normal), false,
-                Allocation.X + 20, Allocation.Height - bar_height - 20, 
+            cr.Antialias = Antialias.None;
+            
+            cr.Color = bar_outline_color;
+            cr.LineWidth = 1.0;
+            cr.Rectangle(Allocation.X + 20, Allocation.Height - bar_height - 20,
                 Allocation.Width - 40, bar_height);
-                
-            GdkWindow.DrawRectangle(this.Style.ForegroundGC(StateType.Normal), true,
-                Allocation.X + 20 + 2, Allocation.Height - bar_height - 18, 
+            cr.Stroke();
+            
+            cr.Color = bar_fill_color;
+            cr.Rectangle(Allocation.X + 20 + 1, Allocation.Height - bar_height - 18,
                 (int)((double)(Allocation.Width - 43) * progress), bar_height - 3);
+            cr.FillPreserve();
+            
+            return true;
         }
         
         protected override void OnRealized()
         {
             base.OnRealized();
-            
             GdkWindow.SetBackPixmap(null, false);
-            
-            ModifyText(StateType.Normal, Style.White);
-            ModifyFg(StateType.Normal, fg_color);
-            
-            DrawSplash();
+            QueueDraw();
         }
         
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {
-            DrawSplash();
-            return base.OnExposeEvent(evnt);
+            if(!IsRealized) {
+                return false;
+            }
+            
+            Cairo.Context cr = Gdk.CairoHelper.Create(GdkWindow);
+            bool retval = true;
+            
+            foreach(Gdk.Rectangle rect in evnt.Region.GetRectangles()) {
+                cr.Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+                cr.Clip();
+                retval |= DrawSplash(cr);
+            }
+            
+            ((IDisposable)cr).Dispose();
+            return retval;
         }
-
+        
         public void Run()
         {   
             Show();
@@ -134,6 +194,21 @@ namespace Banshee.Gui.Dialogs
             Destroy();
             
             base.Dispose();
+        }
+        
+        public Color TextColor {
+            get { return text_color; }
+            set { text_color = value; QueueDraw(); }
+        }
+        
+        public Color BarOutlineColor {
+            get { return bar_outline_color; }
+            set { bar_outline_color = value; QueueDraw(); }
+        }
+        
+        public Color BarFillColor {
+            get { return bar_fill_color; }
+            set { bar_fill_color = value; QueueDraw(); }
         }
     }
 }

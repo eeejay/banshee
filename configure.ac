@@ -349,6 +349,7 @@ taglib-sharp/Makefile
 dbus-sharp/Makefile
 dbus-sharp/NDesk.DBus.GLib.dll.config
 libbanshee/Makefile
+branding/Makefile
 src/banshee
 src/Makefile
 src/AssemblyInfo.cs

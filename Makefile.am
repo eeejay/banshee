@@ -8,6 +8,7 @@ SUBDIRS =          \
 	docs           \
 	tests          \
 	tools          \
+	branding       \
 	po
 
 pkgconfigdir = $(libdir)/pkgconfig
