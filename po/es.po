@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-terminal-doc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-05 09:25+0200\n"
-"PO-Revision-Date: 2006-10-05 09:42+0200\n"
+"POT-Creation-Date: 2006-10-10 23:23+0200\n"
+"PO-Revision-Date: 2006-10-10 23:28+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgid ""
 msgstr ""
 "El soporte de teclas especiales (Teclas multimedia) para Reproducir/Pausa/"
 "Siguiente/Anterior activado; funcionando con el conjunto de mapas a través "
-"de capplet de Combinaciones de teclas de Gnome"
+"de capplet de Combinaciones de teclas de GNOME"
 
 #: ../data/banshee.schemas.in.h:6
 msgid "File Name Pattern"
@@ -87,9 +87,9 @@ msgid ""
 msgstr ""
 "Formato para crear nombres de archivos/directorios para las pistas "
 "extraídas, música importada, etc. El formato es relativo al directorio de "
-"música Banshee… no forma una ruta absoluta Tokens: %artist%, %album%, %"
-"title%, %track_number%, %track_count%, %track_number_nz% (sin prefijar con "
-"cero), %track_count_nz% (sin prefijar con cero)."
+"música Banshee… no forma una ruta absoluta Tokens: %artist%, %album%, %title"
+"%, %track_number%, %track_count%, %track_number_nz% (sin prefijar con cero), "
+"%track_count_nz% (sin prefijar con cero)."
 
 #: ../data/banshee.schemas.in.h:9
 msgid "Height of the main interface window."
@@ -2735,7 +2735,7 @@ msgid ""
 "Keyboard Shortcuts configuration applet."
 msgstr ""
 "La configuración de los atajos del teclado multimedia está hecha a través de "
-"la aplicación de configuración de Atajos de Teclado de Gnome."
+"la aplicación de configuración de Atajos de Teclado de GNOME."
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:47
 msgid "Adds support for multimedia keys configured through Gnome."
@@ -3017,7 +3017,7 @@ msgstr "Duración"
 
 #: ../src/PlaylistView.cs:130
 msgid "Plays"
-msgstr "Reproducir"
+msgstr "Reproducciones"
 
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
