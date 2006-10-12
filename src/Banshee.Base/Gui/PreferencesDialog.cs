@@ -34,6 +34,8 @@ using Glade;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.AudioProfiles;
+using Banshee.AudioProfiles.Gui;
 
 namespace Banshee.Gui.Dialogs
 {
@@ -43,12 +45,15 @@ namespace Banshee.Gui.Dialogs
         [Widget] private CheckButton copy_on_import;
         [Widget] private CheckButton write_metadata;
         
+        private Tooltips tips = new Tooltips();
+        
         private FileChooserButton library_location_chooser;
-        private PipelineProfileSelector cd_importing_profile;
         private PipelineProfileSelector dap_conversion_profile;
         
+        private ProfileComboBoxConfigurable cd_importing_profile_box;
+        
         public PreferencesDialog() : base("PreferencesDialog")
-        {
+        {        
             BuildWindow();
             LoadPreferences();
             ConnectEvents();
@@ -61,18 +66,18 @@ namespace Banshee.Gui.Dialogs
             (Glade["library_location_container"] as Container).Add(library_location_chooser);
             library_location_chooser.Show();
             
-            cd_importing_profile = new PipelineProfileSelector();
-            (Glade["cd_importing_profile_container"] as Box).PackStart(cd_importing_profile, false, false, 0);
-            cd_importing_profile.Show();
+            cd_importing_profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, "cd-importing");
+            (Glade["cd_importing_profile_container"] as Box).PackStart(cd_importing_profile_box, false, false, 0);            
+            cd_importing_profile_box.Show();
             
-            dap_conversion_profile = new PipelineProfileSelector("mp3,aac,mp4,m4a,m4p");
-            (Glade["dap_conversion_profile_container"] as Box).PackStart(dap_conversion_profile, false, false, 0);
-            dap_conversion_profile.Show();
+            tips.SetTip(Glade["write_metadata"], Catalog.GetString(
+                "Enable this option to save tags and other metadata inside supported audio files"),
+                "write-metadata");
         }
         
         private void LoadPreferences()
         {                   
-            string location = (string)ReadPreference(GConfKeys.LibraryLocation, Paths.DefaultLibraryPath);
+            string location = ReadPreference<string>(GConfKeys.LibraryLocation, Paths.DefaultLibraryPath);
             if(!Directory.Exists(location)) {
                 location = Paths.DefaultLibraryPath;
             }
@@ -80,14 +85,11 @@ namespace Banshee.Gui.Dialogs
             library_location_chooser.SetFilename(location);
             SaveLibraryLocation(location);   
 
-            copy_on_import.Active = (bool)ReadPreference(GConfKeys.CopyOnImport, false);
-            write_metadata.Active = (bool)ReadPreference(GConfKeys.WriteMetadata, false);
-
-            cd_importing_profile.ProfileKey = (string)ReadPreference(GConfKeys.RippingProfile, "default");
-            cd_importing_profile.Bitrate = (int)ReadPreference(GConfKeys.RippingBitrate, -1);
+            copy_on_import.Active = ReadPreference<bool>(GConfKeys.CopyOnImport, false);
+            write_metadata.Active = ReadPreference<bool>(GConfKeys.WriteMetadata, false);
             
-            dap_conversion_profile.ProfileKey = (string)ReadPreference(GConfKeys.IpodProfile, "default");
-            dap_conversion_profile.Bitrate = (int)ReadPreference(GConfKeys.IpodBitrate, -1);
+            cd_importing_profile_box.Combo.SetActiveProfile(
+                Globals.AudioProfileManager.GetConfiguredActiveProfile("cd-importing"));
         }
         
         private void ConnectEvents()
@@ -108,28 +110,8 @@ namespace Banshee.Gui.Dialogs
                 Globals.Configuration.Set(GConfKeys.WriteMetadata, write_metadata.Active);
             };
             
-            cd_importing_profile.Changed += delegate {
-                if(cd_importing_profile == null) {
-                    return;
-                }
-                
-                try {
-                    Globals.Configuration.Set(GConfKeys.RippingProfile, cd_importing_profile.ProfileKey);
-                    Globals.Configuration.Set(GConfKeys.RippingBitrate, cd_importing_profile.Bitrate);
-                } catch {
-                }
-            };
-            
-            dap_conversion_profile.Changed += delegate {
-                if(dap_conversion_profile == null) {
-                    return;
-                }
-                
-                try {
-                    Globals.Configuration.Set(GConfKeys.IpodProfile, dap_conversion_profile.ProfileKey);
-                    Globals.Configuration.Set(GConfKeys.IpodBitrate, dap_conversion_profile.Bitrate);
-                } catch {
-                }
+            cd_importing_profile_box.Combo.Changed += delegate {
+                ProfileConfiguration.SaveActiveProfile(cd_importing_profile_box.Combo.ActiveProfile, "cd-importing");
             };
         }
         
@@ -138,18 +120,12 @@ namespace Banshee.Gui.Dialogs
             Globals.Configuration.Set(GConfKeys.LibraryLocation, path);
         }
         
-        private object ReadPreference(string key, object fallback)
+        private T ReadPreference<T>(string key, T fallback)
         {
             try {
-                object o = Globals.Configuration.Get(key);
-                if(o.GetType() != fallback.GetType()) {
-                    Console.Error.WriteLine("Preference for key '{0}' has invalid type '{1}' (expected '{2}')",
-                        key, o.GetType(), fallback.GetType());
-                    return fallback;
-                }
-                
-                return o;
-            } catch {
+                return (T)Globals.Configuration.Get(key);
+            } catch(Exception e){
+                Console.WriteLine(e);
                 return fallback;
             }
         }

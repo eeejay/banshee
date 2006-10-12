@@ -188,6 +188,26 @@
     <File name="./Banshee.Cdrom.Nautilus.Interop/NautilusEnums.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Web" subtype="Directory" buildaction="Compile" />
     <File name="./Banshee.Web/Browser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/ProfileManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Expression.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Functions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidFunctionException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidOperandException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidTokenException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Operations.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Operators.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Symbol.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/UnkownVariableException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Values.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles.Gui/ProfileComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Profile.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/ProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

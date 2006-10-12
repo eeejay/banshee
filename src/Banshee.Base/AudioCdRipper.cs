@@ -35,6 +35,7 @@ using Mono.Unix;
 
 using Banshee.Widgets;
 using Banshee.Base;
+using Banshee.AudioProfiles;
 
 namespace Banshee.Base
 {
@@ -227,7 +228,7 @@ namespace Banshee.Base
         
         private uint timeout_id; 
         private int current = 1;
-        private PipelineProfile profile;
+        private Profile profile;
         
         public event HaveTrackInfoHandler HaveTrackInfo;
         public event EventHandler Finished;
@@ -269,10 +270,10 @@ namespace Banshee.Base
             user_event.Header = Catalog.GetString("Importing Audio CD");
             user_event.Message = Catalog.GetString("Initializing Drive");
         
-            profile = PipelineProfile.GetConfiguredProfile("Ripping");
+            profile = Globals.AudioProfileManager.GetConfiguredActiveProfile("cd-importing");
             
             try {
-                string encodePipeline = profile.Pipeline;
+                string encodePipeline = profile.Pipeline.GetProcessById("gstreamer");
         
                 LogCore.Instance.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
             
@@ -303,7 +304,7 @@ namespace Banshee.Base
             status = String.Format("{0} - {1}", track.Artist, track.Title);
             user_event.Message = status;
 
-            SafeUri uri = new SafeUri(FileNamePattern.BuildFull(track, profile.Extension));
+            SafeUri uri = new SafeUri(FileNamePattern.BuildFull(track, profile.OutputFileExtension));
 
             ripper.RipTrack(track, track.TrackIndex, uri);
         }

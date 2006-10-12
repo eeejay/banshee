@@ -611,6 +611,7 @@ namespace Banshee
       
         private bool OnShutdownRequested()
         {
+            WindowPlayer.Hide();
             ActiveUserEventsManager.Instance.CancelAll();
             playlistView.Shutdown();
             PlayerEngineCore.Dispose();

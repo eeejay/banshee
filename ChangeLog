@@ -1,3 +1,38 @@
+2006-10-12  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-dialogs.glade: Remove DAP pipeline box
+
+	* data/audio-profiles.xml: Added audio profiles definition
+
+	* data/Makefile.am: Install audio-profiles.xml
+
+	* src/Banshee.Base/ConfigureDefines.cs.in: Added SystemDataDir
+
+	* src/Banshee.Base/Paths.cs: Added SystemApplicationData
+
+	* libbanshee/gst-misc-0.10.c:
+	* src/Banshee.Base/GstMisc.cs: Added better pipeline tester
+
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* src/Banshee.Base/Makefile.am: Added new pipeline files
+
+	* src/Banshee.Base/GConfKeys.cs: Cleaned up
+
+	* src/Banshee.Base/Globals.cs: Added a global AudioProfileManager with
+	pipeline tester support
+
+	* src/Banshee.Base/AudioCdRipper.cs
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Use the new pipeline profile
+	support for cd-importing profile
+
+	* src/PlayerInterface.cs: Hide main window first when closing
+
+	* src/Banshee.Base/Banshee.AudioProfiles/*
+	* src/Banshee.Base/Banshee.AudioProfiles.Gui/*: New audio profile support;
+	this entry does not do the commit here much justice - this is a big new
+	feature that makes choosing and configuring audio transformation profiles
+	a simple thing
+
 2006-10-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Gui/SplashScreen.cs: Use cairo for drawing the progress

@@ -31,6 +31,8 @@ using System.IO;
 using GConf;
 using Mono.Unix;
 
+using Banshee.AudioProfiles;
+
 namespace Banshee.Base
 {
     public delegate bool ShutdownRequestHandler();
@@ -47,6 +49,7 @@ namespace Banshee.Base
         private static DBusRemote dbus_remote;
         private static DBusPlayer dbus_player;
         private static Banshee.Gui.UIManager ui_manager;
+        private static ProfileManager audio_profile_manager;
         private static ComponentInitializer startup = new ComponentInitializer();
         
         public static event ShutdownRequestHandler ShutdownRequested;
@@ -80,7 +83,7 @@ namespace Banshee.Base
                 } catch {
                 }
             });
-            
+
             startup.Register(Catalog.GetString("Starting background tasks"), true,
                 Catalog.GetString("Device support will be disabled for this instance (no HAL)"),
                 HalCore.Initialize);
@@ -93,8 +96,23 @@ namespace Banshee.Base
                 library.ReloadLibrary();
             });
             
-            startup.Register(Catalog.GetString("Initializing player engine"), Banshee.Gstreamer.Utilities.Initialize);
-            startup.Register(Catalog.GetString("Initializing player engine"), PlayerEngineCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing audio"), Banshee.Gstreamer.Utilities.Initialize);
+            
+            startup.Register(Catalog.GetString("Initializing audio"), delegate {
+                string system_path = Path.Combine(Banshee.Base.Paths.SystemApplicationData, "audio-profiles.xml");
+                string user_path = Path.Combine(Banshee.Base.Paths.ApplicationData, "audio-profiles.xml");
+            
+                if(File.Exists(user_path)) {
+                    audio_profile_manager = new ProfileManager(user_path);
+                } else {
+                    audio_profile_manager = new ProfileManager(system_path);
+                }
+                    
+                audio_profile_manager.TestProfile += OnTestAudioProfile;
+                audio_profile_manager.TestAll();
+            });
+            
+            startup.Register(Catalog.GetString("Initializing audio"), PlayerEngineCore.Initialize);
             
             startup.Register(Catalog.GetString("Initializing audio CD support"), true, 
                 Catalog.GetString("Audio CD support will be disabled for this instance"), delegate { audio_cd_core = new AudioCdCore(); });
@@ -144,6 +162,13 @@ namespace Banshee.Base
             }
             
             return true;
+        }
+        
+        private static void OnTestAudioProfile(object o, TestProfileArgs args)
+        {
+            string pipeline = args.Profile.Pipeline.GetProcessByIdOrDefault("gstreamer");
+            args.ProfileAvailable = Banshee.Gstreamer.Utilities.TestPipeline(pipeline);
+            Console.WriteLine("{0} = {1}", args.Profile.ID, args.ProfileAvailable);
         }
         
         private static void Dispose()
@@ -200,6 +225,10 @@ namespace Banshee.Base
         
         public static Banshee.Gui.UIManager UIManager {
             get { return ui_manager; }
+        }
+        
+        public static ProfileManager AudioProfileManager {
+            get { return audio_profile_manager; }
         }
     }
     

@@ -58,6 +58,28 @@ namespace Banshee.Gstreamer
         }
         
         [DllImport("libbanshee")]
+        private static extern bool gstreamer_test_pipeline(IntPtr pipeline);
+        
+        public static bool TestPipeline(string pipeline)
+        {
+            if(pipeline == null || pipeline == String.Empty) {
+                return false;
+            }
+        
+            IntPtr pipeline_ptr = GLib.Marshaller.StringToPtrGStrdup(pipeline);
+            
+            if(pipeline_ptr == IntPtr.Zero) {
+                return false;
+            }
+            
+            try {
+                return gstreamer_test_pipeline(pipeline_ptr);
+            } finally {
+                GLib.Marshaller.Free(pipeline_ptr);
+            }
+        }
+        
+        [DllImport("libbanshee")]
         private static extern void gstreamer_initialize();
         
         public static void Initialize()

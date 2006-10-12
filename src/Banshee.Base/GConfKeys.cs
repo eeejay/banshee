@@ -50,7 +50,7 @@ namespace Banshee.Base
         public const string PlayerEngine = BasePath + "PlayerEngine";
         public const string FileNamePattern = BasePath + "FileNamePattern";
         public const string EncoderProfiles = BasePath + "EncoderProfiles";
-        public const string RippingProfile = BasePath + "RippingProfile";
+        public const string RippingProfile = BasePath + "ripping_profile";
         public const string RippingBitrate = BasePath + "RippingBitrate";
         public const string IpodProfile = BasePath + "IpodProfile";
         public const string IpodBitrate = BasePath + "IpodBitrate";

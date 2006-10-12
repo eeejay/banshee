@@ -93,6 +93,21 @@ gstreamer_test_encoder(gchar *encoder_pipeline)
     return error == NULL;
 }
 
+gboolean 
+gstreamer_test_pipeline(gchar *pipeline)
+{
+    GstElement *element = NULL;
+    GError *error = NULL;
+    
+    element = gst_parse_launch(pipeline, &error);
+    
+    if(element != NULL) {
+        gst_object_unref(GST_OBJECT(element));
+    }
+    
+    return error == NULL;
+}
+
 static void
 gst_typefind_type_found_callback(GstElement *typefind, guint probability, 
     GstCaps *caps, gchar **type)

@@ -36,8 +36,7 @@ namespace Banshee.Base
 {
     public class Paths
     {
-        public static string ApplicationData
-        {
+        public static string ApplicationData {
             get {
                 return Environment.GetFolderPath(Environment.SpecialFolder.Personal)
                     + Path.DirectorySeparatorChar
@@ -48,8 +47,11 @@ namespace Banshee.Base
             }
         }
         
-        public static string CoverArtDirectory
-        {
+        public static string SystemApplicationData {
+            get { return ConfigureDefines.SystemDataDir; }
+        }
+        
+        public static string CoverArtDirectory {
             get {
                 string path = Path.Combine(ApplicationData, "covers") 
                     + Path.DirectorySeparatorChar;
@@ -79,8 +81,7 @@ namespace Banshee.Base
             return CoverArtDirectory + asin + ".jpg";
         }
         
-        public static string DefaultLibraryPath
-        {
+        public static string DefaultLibraryPath {
             get {
                 return Environment.GetFolderPath(
                     Environment.SpecialFolder.Personal) + 
@@ -90,8 +91,7 @@ namespace Banshee.Base
             }
         }
         
-        public static string TempDir 
-        {
+        public static string TempDir {
             get {
                 string dir = Paths.ApplicationData 
                     + Path.DirectorySeparatorChar 
