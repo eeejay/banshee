@@ -1,3 +1,21 @@
+2006-10-13  Aaron Bockover  <abock@gnome.org>
+
+	Merged from 0.10.12
+
+	* src/Banshee.Widgets/CoverArtThumbnail.cs: Scale cover art to a max of
+	75% of the screen size if too large (BNC #200953)
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs: Cancel the ripper if the
+	source goes away (hardware eject) (BNC #199902)
+
+	* src/Banshee.Base/AudioCdRipper.cs: Attempt to lock CD-ROM drive when
+	ripping, unlock when done/canceled/failed using Linux CD-ROM ioctls;
+	should use HAL here, but on SLED it seems libhal_device_lock/unlock does
+	nothing - will punt HAL locking to HEAD (BNC #199902)
+
+	* src/Banshee.Base/Sources/LocalQueueSource.cs: Implement
+	Banshee.Source.Source.RemoveTrack(TrackInfo) (BNC #188437)
+
 2006-10-12  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee-dialogs.glade: Remove DAP pipeline box
