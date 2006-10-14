@@ -310,6 +310,8 @@ AC_SUBST(expanded_libdir)
 expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
 		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
 		   eval echo $datadir )`
+expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
+		   eval echo $expanded_datadir )`
 AC_SUBST(expanded_datadir)
 
 expanded_bindir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac

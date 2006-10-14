@@ -1,5 +1,10 @@
 2006-10-13  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Run a second expansion on expanded_datadir;
+	it seems that autoconf 2.60 likes to break 'API' (BGO #361943)
+
+2006-10-13  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Bump to 0.11.1
 
 	* dbus-sharp/dbus-sharp/*.cs:
