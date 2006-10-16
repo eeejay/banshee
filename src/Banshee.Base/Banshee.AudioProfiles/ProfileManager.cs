@@ -163,6 +163,23 @@ namespace Banshee.AudioProfiles
             return ProfileConfiguration.LoadActiveProfile(this, id);
         }
         
+        public Profile GetConfiguredActiveProfile(string id, string [] mimetypes)
+        {
+            Profile profile = GetConfiguredActiveProfile(id);
+            if(profile != null) {
+                return profile;
+            }
+            
+            foreach(string mimetype in mimetypes) {
+                profile = GetProfileForMimeType(mimetype);
+                if(profile != null) {
+                    return profile;
+                }
+            }
+            
+            return null;
+        }
+        
         public void TestAll()
         {
             foreach(Profile profile in this) {

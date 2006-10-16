@@ -27,6 +27,8 @@
  */
  
 using System;
+using System.Collections.Generic;
+
 using Mono.Unix;
 using Gtk;
 
@@ -36,6 +38,7 @@ namespace Banshee.AudioProfiles.Gui
     {
         private ProfileManager manager;
         private ListStore store;
+        private string [] mimetype_filter;
         
         public event EventHandler Updated;
         
@@ -65,15 +68,32 @@ namespace Banshee.AudioProfiles.Gui
             TreeIter active_iter;
             store.Clear();
             
-            if(manager.AvailableProfileCount == 0) {
+            List<Profile> mimetype_profiles = new List<Profile>();
+                
+            if(mimetype_filter != null && mimetype_filter.Length > 0) {
+                foreach(string mimetype in mimetype_filter) {
+                    Profile profile = manager.GetProfileForMimeType(mimetype);
+                    if(profile != null && !mimetype_profiles.Contains(profile)) {
+                        mimetype_profiles.Add(profile);
+                    }
+                }
+            }
+            
+            if(manager.AvailableProfileCount == 0 || (mimetype_profiles.Count == 0 && mimetype_filter != null)) {
                 store.AppendValues(Catalog.GetString("No available profiles"), null);
                 Sensitive = false;
             } else {
                 Sensitive = true;
             }
             
-            foreach(Profile profile in manager.GetAvailableProfiles()) {
-                store.AppendValues(String.Format("{0}", profile.Name), profile);
+            if(mimetype_profiles.Count > 0) {
+                foreach(Profile profile in mimetype_profiles) {
+                    store.AppendValues(String.Format("{0}", profile.Name), profile);
+                }
+            } else {
+                foreach(Profile profile in manager.GetAvailableProfiles()) {
+                    store.AppendValues(String.Format("{0}", profile.Name), profile);
+                }
             }
             
             if(store.IterNthChild(out active_iter, 0)) {
@@ -100,6 +120,14 @@ namespace Banshee.AudioProfiles.Gui
             EventHandler handler = Updated;
             if(handler != null) {
                 handler(this, new EventArgs());
+            }
+        }
+        
+        public string [] MimeTypeFilter {
+            get { return mimetype_filter; }
+            set { 
+                mimetype_filter = value;
+                ReloadProfiles();
             }
         }
         

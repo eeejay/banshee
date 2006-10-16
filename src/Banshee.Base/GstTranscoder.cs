@@ -30,6 +30,8 @@ using System;
 using System.Runtime.InteropServices;
 using Mono.Unix;
 
+using Banshee.AudioProfiles;
+
 namespace Banshee.Base
 {    
     internal delegate void GstTranscoderProgressCallback(IntPtr transcoder, double progress);
@@ -96,7 +98,7 @@ namespace Banshee.Base
             gst_transcoder_free(handle);
         }
         
-        public override void BeginTranscode(SafeUri inputUri, SafeUri outputUri, PipelineProfile profile)
+        public override void BeginTranscode(SafeUri inputUri, SafeUri outputUri, Profile profile)
         {
             if(IsTranscoding) {
                 throw new ApplicationException("Transcoder is busy");
@@ -107,7 +109,7 @@ namespace Banshee.Base
             
             error_message = null;
             
-            gst_transcoder_transcode(handle, input_uri, output_uri, profile.Pipeline);
+            gst_transcoder_transcode(handle, input_uri, output_uri, profile.Pipeline.GetProcessById("gstreamer"));
             
             GLib.Marshaller.Free(input_uri);
             GLib.Marshaller.Free(output_uri);

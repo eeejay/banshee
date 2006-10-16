@@ -46,10 +46,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private CheckButton write_metadata;
         
         private Tooltips tips = new Tooltips();
-        
         private FileChooserButton library_location_chooser;
-        private PipelineProfileSelector dap_conversion_profile;
-        
         private ProfileComboBoxConfigurable cd_importing_profile_box;
         
         public PreferencesDialog() : base("PreferencesDialog")
@@ -87,9 +84,6 @@ namespace Banshee.Gui.Dialogs
 
             copy_on_import.Active = ReadPreference<bool>(GConfKeys.CopyOnImport, false);
             write_metadata.Active = ReadPreference<bool>(GConfKeys.WriteMetadata, false);
-            
-            cd_importing_profile_box.Combo.SetActiveProfile(
-                Globals.AudioProfileManager.GetConfiguredActiveProfile("cd-importing"));
         }
         
         private void ConnectEvents()
@@ -108,10 +102,6 @@ namespace Banshee.Gui.Dialogs
             
             write_metadata.Toggled += delegate {
                 Globals.Configuration.Set(GConfKeys.WriteMetadata, write_metadata.Active);
-            };
-            
-            cd_importing_profile_box.Combo.Changed += delegate {
-                ProfileConfiguration.SaveActiveProfile(cd_importing_profile_box.Combo.ActiveProfile, "cd-importing");
             };
         }
         

@@ -1,4 +1,4 @@
-Banshee 0.11.0
+Banshee 0.11.1
 
 "Import, organize, play, and share your music using Banshee's simple, 
 powerful interface. Rip CDs, play and sync your iPod, create playlists, 
@@ -15,41 +15,39 @@ MODULE NOTES
 
  * banshee-official-plugins is recommended, but not required to run Banshee
 
- * libipoddevice (0.5.0) and ipod-sharp (0.6.2) are required for iPod support
+ * libipoddevice (0.5.1) and ipod-sharp (0.6.2) are required for iPod support
 
+ * helix-dbus-server (0.3.0) is required for Helix/RealPlayer integration
+ 
 
 NEW CORE FEATURES
 -----------------
 
- * Improved importing, all tagging is now done through taglib-sharp; better
-   support for ID3, AAC/MP4, and ASF/WMA reading; all formats now support 
-   writing
+ * New encoding profile support: user friendly and easily configurable. 
+   Vorbis uses the quality metric instead of constant bitrates. Each
+   DAP device can also save and manage its own encoding profile. 
+   (Aaron Bockover)
 
- * Import selections or all contents of a digital audio player (iPod) 
-   directly to the local music library
+ * Updated DAAP core to 0.3.5; importing from DAAP now works 
+   (daap-sharp, James Willcox)
 
- * Redesigned track editor allows for the most efficient editing of albums:
-   enter the album information once, and then set track titles simply by
-   pressing 'Enter' in the title box. A rating entry was added as well, and
-   if turned on in Banshee Preferences, changes can now be saved back to
-   files
+ * New DBus support that does not depend on old dbus-sharp or libdbus; see
+   http://ndesk.org/DBusSharp (Alp Toker, Aaron Bockover)
 
- * New CD burning interface - create mixed CDs as sources that allow 
-   burning songs from any number of sources: library, remote share, iPod;
-   works with new GNOME 2.16 CD Burning API yet still compatible with 
-   GNOME 2.12
+ * HAL support now uses DBus instead of libhal (Aaron Bockover)
 
- * Smart playlists allow defining a playlist based on selection criteria 
-   that queries against and automatically reflects changes in your library. 
-   The easy to use editor makes defining new smart playlists a snap.
+ * Notification support now uses DBus instead of libnotify (Sebastian Dröge)
 
- * One-click track rating; just click the desired rating on the track row
+ * Updates to smart playlists (Gabriel Burt)
 
- * Redesigned Preferences dialog - simple and follows GNOME HIG; allows
-   for turning on 'Write metadata to files'
+ * Updated build system - easier to build banshee components and supports
+   running fully uninstalled ('make run') (Aaron Bockover)
 
- * Notification bubbles on track change using libnotify
+ * Patches merged back from 0.10.x: BNC #200953, #199902, #188437
 
+ * Other bugs fixed: BNC #184491, #187643, #199345, BGO #357548, #356990, 
+   #356985, #348373 (Michael Quinn), #361943
+   
 
 NEW OFFICIAL PLUGINS FEATURES
 -----------------------------
@@ -57,45 +55,35 @@ NEW OFFICIAL PLUGINS FEATURES
 These features are found in the banshee-official-plugins module, not in 
 Banshee core:
 
- * The new recommendations pane lets you browse similar artist recommendations 
-   found on last.fm (http://www.last.fm/group/banshee) as you listen; you can 
-   even re-discover related music already in your library that you may 
-   have been neglecting
-
- * The podcast source offers an easy to use interface for subscribing to, 
-   downloading, managing, and listening to your favorite shows.
-
- * Use the Mini Mode feature to condense the interface and gain valuable 
-   desktop space. Switch between your library, playlists, and devices 
-   within Mini Mode. 
+ * Minor fixes and updates to podcasting (Mike Urbanski)
 
 
 IMPORTANT LINKS
 ---------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.11.0
+http://banshee-project.org/Releases/0.11.1
 
-Banshee 0.11.0 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.11.0.tar.gz
+Banshee 0.11.1 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.11.1.tar.gz
 
-Banshee Official Plugins 0.11.0 Tarball:
-http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.0.tar.gz
+Banshee Official Plugins 0.11.1 Tarball:
+http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.1.tar.gz
 
 ipod-sharp 0.6.2 Tarball:
 http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz
 
-libipoddevice 0.5.0 Tarball:
-http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.0.tar.gz
+libipoddevice 0.5.1 Tarball:
+http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.1.tar.gz
 
 njb-sharp 0.3.0 Tarball:
 http://banshee-project.org/files/njb-sharp/njb-sharp-0.3.0.tar.gz
 
-helix-dbus-server 0.2.3 Tarball:
-http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.2.3.tar.gz
+helix-dbus-server 0.3.0 Tarball:
+http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.3.0.tar.gz
 
 xing MP3 Encoder Tarball:
-http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.10.1.tar.gz
+http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.10.2.tar.gz
 
 Banshee Wiki: 
 http://banshee-project.org/Discover

@@ -50,6 +50,12 @@ namespace Banshee.AudioProfiles.Gui
             Spacing = 5;
             PackStart(combo, true, true, 0);
             PackStart(button, false, false, 0);
+            
+            Combo.SetActiveProfile(manager.GetConfiguredActiveProfile(configurationId));
+            
+            Combo.Changed += delegate {
+                ProfileConfiguration.SaveActiveProfile(Combo.ActiveProfile, configurationId);
+            };
         }
         
         public ProfileComboBox Combo {

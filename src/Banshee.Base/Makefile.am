@@ -223,7 +223,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/GstMisc.cs \
 	$(srcdir)/ImportManager.cs \
 	$(srcdir)/UriList.cs \
-	$(srcdir)/PipelineProfile.cs \
 	$(srcdir)/Transcoder.cs \
 	$(srcdir)/GstTranscoder.cs \
 	$(srcdir)/BatchTranscoder.cs \

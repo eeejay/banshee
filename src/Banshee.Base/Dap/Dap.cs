@@ -37,6 +37,7 @@ using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.Plugins;
+using Banshee.AudioProfiles;
 
 namespace Banshee.Dap
 {    
@@ -48,23 +49,13 @@ namespace Banshee.Dap
             private string val;
             
             public string Name {
-                get {
-                    return name;
-                }
-                
-                internal set {
-                    name = value;
-                }
+                get { return name; }
+                internal set { name = value; }
             }
             
             public string Value {
-                get {
-                    return val;
-                }
-                
-                internal set {
-                    val = value;
-                }
+                get { return val; }
+                internal set { val = value; }
             }
         }
         
@@ -119,9 +110,7 @@ namespace Banshee.Dap
         
         private static uint current_uid = 1;
         private static uint NextUid {
-            get {
-                return current_uid++;
-            }
+            get { return current_uid++; }
         }
         
         private uint uid;
@@ -167,9 +156,7 @@ namespace Banshee.Dap
         }
         
         public uint Uid {
-            get {
-                return uid;
-            }
+            get { return uid; }
         }
         
         IEnumerator IEnumerable.GetEnumerator()
@@ -205,11 +192,11 @@ namespace Banshee.Dap
         
         public virtual void AddTrack(TrackInfo track)
         {
-            if (track == null)
+            if(track == null) {
                 return;
+            } 
             
             tracks.Add(track);
-            
             OnTrackAdded(track);
         }
         
@@ -384,8 +371,7 @@ namespace Banshee.Dap
 
         private void Transcode()
         {
-            PipelineProfile profile = PipelineProfile.GetConfiguredProfile(
-                type_properties.PipelineName, PipelineCodecFilter);
+            Profile profile = Globals.AudioProfileManager.GetConfiguredActiveProfile(ID, SupportedPlaybackMimeTypes);
             
             Queue remove_queue = new Queue();
             
@@ -404,7 +390,7 @@ namespace Banshee.Dap
 
                     SafeUri old_uri = track.Uri;
                     try {
-                        track.Uri = ConvertSongFileName(track.Uri, profile.Extension);
+                        track.Uri = ConvertSongFileName(track.Uri, profile.OutputFileExtension);
                     } catch {
                         continue;
                     }
@@ -663,6 +649,39 @@ namespace Banshee.Dap
         
         public virtual Gtk.Widget ViewWidget {
             get { return null; }
+        }
+        
+        private string [] supported_playback_mime_types;
+        public string [] SupportedPlaybackMimeTypes {
+            get {
+                if(supported_playback_mime_types == null) {
+                    List<string> types = new List<string>();
+                    
+                    foreach(object attr in GetType().GetCustomAttributes(true)) {
+                        if(attr is SupportedCodec) {
+                            foreach(string mimetype in (attr as SupportedCodec).MimeTypes) {
+                                types.Add(mimetype);
+                            }
+                        }
+                    }
+                    
+                    supported_playback_mime_types = types.ToArray();
+                }
+                
+                return supported_playback_mime_types;
+            }
+        }
+        
+        private string id;
+        public string ID { 
+            get { 
+                if(id == null) {
+                    string [] parts = HalUdi.Split('/');
+                    id = parts[parts.Length - 1];
+                }
+                
+                return id;
+            }
         }
         
         public abstract void Synchronize();

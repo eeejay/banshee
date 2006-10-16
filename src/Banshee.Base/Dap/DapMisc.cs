@@ -2,7 +2,7 @@
  *  DapMisc.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover (aaron@abock.org)
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -27,6 +27,8 @@
  */
  
 using System;
+using System.Collections.Generic;
+
 using Banshee.Base;
 
 namespace Banshee.Dap
@@ -45,6 +47,58 @@ namespace Banshee.Dap
         public const string Wav = "wav";
         public const string Flac = "flac";
         
+        private static Dictionary<string, string []> mimetype_map;
+        
+        public static string [] GetMimeTypes(string codec) 
+        {
+            if(mimetype_map == null) {
+                mimetype_map = new Dictionary<string, string []>();
+                
+                mimetype_map.Add(Mp3, new string [] {
+                    "audio/mp3",
+                    "audio/mpeg3",
+                    "audio/x-mpeg-3",
+                    "audio/x-mpeg",
+                    "audio/mpeg",
+                    "application/x-id3",
+                    "audio/x-mp3"
+                });
+                
+                mimetype_map.Add(Mp4, new string [] {
+                    "audio/x-m4a",
+                    "audio/mp4"
+                });
+                
+                mimetype_map.Add(Wma, new string [] {
+                    "video/x-ms-asf", 
+                    "audio/x-ms-wma"
+                });
+
+                mimetype_map.Add(Ogg, new string [] {
+                    "audio/x-ogg",
+                    "audio/ogg",
+                    "audio/x-vorbis+ogg",
+                    "audio/x-vorbis",
+                    "audio/vorbis",
+                    "application/x-ogg",
+                    "application/ogg"
+                });
+
+                mimetype_map.Add(Flac, new string [] {
+                    "audio/flac",
+                    "application/x-flac",
+                    "audio/x-flac"
+                });
+                
+                mimetype_map.Add(Wav, new string [] {
+                    "audio/x-wav",
+                    "audio/wav"
+                });
+            }
+            
+            return mimetype_map[codec];
+        }
+
         public static string [] GetExtensions(string codec)
         {
             switch(codec) {
@@ -73,23 +127,13 @@ namespace Banshee.Dap
         private string pipeline_name;
         
         public DapType DapType {
-            get {
-                return dap_type;
-            }
-            
-            set {
-                dap_type = value;
-            }
+            get { return dap_type; }
+            set { dap_type = value; }
         }
         
         public string PipelineName {
-            get {
-                return pipeline_name;
-            }
-            
-            set {
-                pipeline_name = value;
-            }
+            get { return pipeline_name; }
+            set { pipeline_name = value; }
         }
     }
     
@@ -104,13 +148,12 @@ namespace Banshee.Dap
         }
         
         public string CodecType {
-            get {
-                return codec_type;
-            }
-            
-            set {
-                codec_type = value;
-            }
+            get { return codec_type; }
+            set { codec_type = value; }
+        }
+        
+        public string [] MimeTypes {
+            get { return Banshee.Dap.CodecType.GetMimeTypes(codec_type); }
         }
     }
     

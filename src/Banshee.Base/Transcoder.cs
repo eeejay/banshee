@@ -27,6 +27,7 @@
  */
 
 using System;
+using Banshee.AudioProfiles;
 
 namespace Banshee.Base
 {
@@ -43,7 +44,7 @@ namespace Banshee.Base
         public event EventHandler Finished;
         public event EventHandler Error;
         
-        public abstract void BeginTranscode(SafeUri inputUri, SafeUri outputUri, PipelineProfile profile);
+        public abstract void BeginTranscode(SafeUri inputUri, SafeUri outputUri, Profile profile);
         public abstract void Cancel();
         public abstract bool IsTranscoding { get; }
         public abstract string ErrorMessage { get; }

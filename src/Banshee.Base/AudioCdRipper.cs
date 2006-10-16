@@ -304,9 +304,14 @@ namespace Banshee.Base
             user_event.Header = Catalog.GetString("Importing Audio CD");
             user_event.Message = Catalog.GetString("Initializing Drive");
         
-            profile = Globals.AudioProfileManager.GetConfiguredActiveProfile("cd-importing");
+            profile = Globals.AudioProfileManager.GetConfiguredActiveProfile("cd-importing", 
+                new string [] { "audio/ogg", "audio/mp3", "audio/wav" });
             
             try {
+                if(profile == null) {
+                    throw new ApplicationException(Catalog.GetString("No encoder was found on your system."));
+                }
+            
                 string encodePipeline = profile.Pipeline.GetProcessById("gstreamer");
         
                 LogCore.Instance.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
@@ -323,8 +328,10 @@ namespace Banshee.Base
                 total_tracks = tracks.Count;
                 
                 RipNextTrack();
-            } catch(PipelineProfileException e) {
+            } catch(Exception e) {
                 LogCore.Instance.PushError(Catalog.GetString("Cannot Import CD"), e.Message);
+                user_event.Dispose();
+                OnFinished();
             }
         }
         

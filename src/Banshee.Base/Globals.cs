@@ -168,7 +168,6 @@ namespace Banshee.Base
         {
             string pipeline = args.Profile.Pipeline.GetProcessByIdOrDefault("gstreamer");
             args.ProfileAvailable = Banshee.Gstreamer.Utilities.TestPipeline(pipeline);
-            Console.WriteLine("{0} = {1}", args.Profile.ID, args.ProfileAvailable);
         }
         
         private static void Dispose()

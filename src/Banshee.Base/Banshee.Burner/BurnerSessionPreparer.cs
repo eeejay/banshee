@@ -34,6 +34,7 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.Cdrom;
+using Banshee.AudioProfiles;
 
 namespace Banshee.Burner
 {
@@ -49,7 +50,7 @@ namespace Banshee.Burner
     
         private Queue<TrackInfo> encode_queue = new Queue<TrackInfo>();
         private Queue<SafeUri> burn_queue = new Queue<SafeUri>();
-        private PipelineProfile profile;
+        private Profile profile;
         private BatchTranscoder transcoder;
         private bool canceled = false;
     
@@ -224,26 +225,10 @@ namespace Banshee.Burner
         {
             switch(session.DiscFormat) {
                 case "audio":
-                    foreach(PipelineProfile cp in PipelineProfile.Profiles) {
-                       if(cp.Extension == "wav") {
-                           profile = new PipelineProfile("wave|CD PCM|wav|cdwavenc|none|false|none");
-                           break;
-                       }
-                    }
+                    profile = Globals.AudioProfileManager.GetProfileForMimeType("audio/x-wav");
                     break;
                 case "mp3":
-                    foreach(PipelineProfile cp in PipelineProfile.Profiles) {
-                        if(cp.Extension == "mp3") {
-                            profile = new PipelineProfile(cp);
-                            profile.Bitrate = 160;
-                            try {
-                                profile.Bitrate = (int)Globals.Configuration.Get(GConfKeys.IpodBitrate);
-                            } catch {
-                            }
-                            
-                            break;
-                        }
-                    }
+                    profile = Globals.AudioProfileManager.GetProfileForMimeType("audio/mp3");
                     break;
                 default:
                     return CreateImage();
@@ -265,12 +250,12 @@ namespace Banshee.Burner
                 TrackInfo track = encode_queue.Dequeue();
                 string output_file = null;
                 
-                if(Path.GetExtension(track.Uri.LocalPath) == "." + profile.Extension) {
+                if(Path.GetExtension(track.Uri.LocalPath) == "." + profile.OutputFileExtension) {
                     output_file = track.Uri.LocalPath;
                 } else {
                     output_file = Paths.TempDir + "/"  +
                         Path.GetFileNameWithoutExtension(track.Uri.LocalPath) + "." + 
-                        profile.Extension;
+                        profile.OutputFileExtension;
                 }
                 
                 transcoder.AddTrack(track, new SafeUri(output_file));

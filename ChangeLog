@@ -1,3 +1,43 @@
+2006-10-16  Aaron Bockover  <abock@gnome.org>
+	
+	* NEWS: Updated with 0.11.1 release notes
+
+	* src/Banshee.Base/AudioCdRipper.cs: Fall back on ogg, mp3, and wav 
+	profiles if no profile was configured before; friendly error if no 
+	profile could be found at all
+	
+	* src/Banshee.Base/Globals.cs: Removed debugging writelines
+
+	* src/Banshee.Base/Banshee.AudioProfiles/ProfileManager.cs: Added override
+	for GetConfiguredActiveProfile to fall back on mimetypes for default
+	configurations
+
+	* src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:
+	Added mime type filtering
+
+	* src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	Load/save profiles
+
+	* src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:
+	* src/Banshee.Base/BatchTranscoder.cs:
+	* src/Banshee.Base/GstTranscoder.cs:
+	* src/Banshee.Base/Transcoder.cs: Use new audio profile stuff
+	
+	* src/Banshee.Base/Dap/Dap.cs: Use new audio profiles; added ID 
+	property for saving profile configuration (DAP)
+
+	* src/Banshee.Base/Dap/DapPropertiesDialog.cs: Added 
+	ProfileComboBoxConfigurable widget to dialog
+
+	* src/Banshee.Base/Dap/DapMisc.cs: Added mimetype support
+
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Loading/saving now done by
+	ProfileComboBoxConfigurable
+
+	* data/audio-profiles.xml: Added WMA encoding profile
+
+	* src/Banshee.Base/Makefile.am: Removed old profile support
+
 2006-10-13  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Run a second expansion on expanded_datadir;

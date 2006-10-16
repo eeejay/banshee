@@ -184,8 +184,6 @@ namespace Banshee.AudioProfiles.Gui
             
             slider.ChangeValue += delegate {
                 variable.CurrentValue = slider.Value.ToString();
-                double transform = variable.EvaluateTransformation("gstreamer");
-                Console.WriteLine("{0} => {1}", slider.Value, transform);
             };
             return slider;
         }

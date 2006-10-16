@@ -32,6 +32,7 @@ using System.Collections;
 using Mono.Unix;
 
 using Banshee.Widgets;
+using Banshee.AudioProfiles;
 
 namespace Banshee.Base
 {
@@ -72,7 +73,7 @@ namespace Banshee.Base
         private QueueItem current = null;
         
         private Transcoder transcoder;
-        private PipelineProfile profile;
+        private Profile profile;
         private int finished_count;
         private int total_count;
         private string desired_profile_name;
@@ -85,11 +86,11 @@ namespace Banshee.Base
         
         private const int progress_precision = 1000;
         
-        public BatchTranscoder(PipelineProfile profile) : this(profile, null)
+        public BatchTranscoder(Profile profile) : this(profile, null)
         {
         }
         
-        public BatchTranscoder(PipelineProfile profile, string desiredProfileName)
+        public BatchTranscoder(Profile profile, string desiredProfileName)
         {
             transcoder = new GstTranscoder();
             transcoder.Progress += OnTranscoderProgress;
@@ -154,7 +155,7 @@ namespace Banshee.Base
                 return;
             }
             
-            if(Path.GetExtension(input_uri.LocalPath) != "." + profile.Extension) {
+            if(Path.GetExtension(input_uri.LocalPath) != "." + profile.OutputFileExtension) {
                 transcoder.BeginTranscode(input_uri, output_uri, profile);
             } else if(desired_profile_name != null && profile.Name != desired_profile_name) {
                 OnTranscoderError(this, new EventArgs());

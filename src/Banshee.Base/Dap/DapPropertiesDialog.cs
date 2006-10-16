@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DapPropertiesDialog.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -34,6 +33,7 @@ using Gtk;
 using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
+using Banshee.AudioProfiles.Gui;
 
 namespace Banshee.Dap
 {
@@ -75,22 +75,26 @@ namespace Banshee.Dap
             table.RowSpacing = 5;
             
             if(!device.IsReadOnly && device.CanSetName) {
-                nameEntry = table.AddEntry(Catalog.GetString("Device Name"), device.Name);
+                nameEntry = table.AddEntry(Catalog.GetString("Device name"), device.Name);
                 nameEntry.Changed += OnEntryChanged;
             } else {
-                table.AddLabel(Catalog.GetString("Device Name"), device.Name);
+                table.AddLabel(Catalog.GetString("Device name"), device.Name);
             }
                         
             if(!device.IsReadOnly && device.CanSetOwner) {
-                ownerEntry = table.AddEntry(Catalog.GetString("Owner Name"), device.Owner);
+                ownerEntry = table.AddEntry(Catalog.GetString("Owner name"), device.Owner);
                 ownerEntry.Changed += OnEntryChanged;
             } else {
-                table.AddLabel(Catalog.GetString("Owner Name"), device.Owner);
+                table.AddLabel(Catalog.GetString("Owner name"), device.Owner);
             }
+    
+            ProfileComboBoxConfigurable profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, device.ID);
+            profile_box.Combo.MimeTypeFilter = device.SupportedPlaybackMimeTypes;
+            table.AddWidget(Catalog.GetString("Encode to"), profile_box);
             
             table.AddSeparator();
     
-            table.AddWidget(Catalog.GetString("Volume Usage"), UsedProgressBar);
+            table.AddWidget(Catalog.GetString("Volume usage"), UsedProgressBar);
     
             box.PackStart(table, true, true, 0);
             
@@ -102,7 +106,7 @@ namespace Banshee.Dap
                 extTable.AddLabel(property.Name, property.Value);
             }
             
-            Expander expander = new Expander(Catalog.GetString("Advanced Details"));
+            Expander expander = new Expander(Catalog.GetString("Advanced details"));
             expander.Add(extTable);
             box.PackStart(expander, false, false, 0);
             
