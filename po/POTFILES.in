@@ -12,6 +12,8 @@ src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
 src/Banshee.Base/AudioCdRipper.cs
 src/Banshee.Base/BansheeBranding.cs
+src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs
+src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs
 src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs
 src/Banshee.Base/Banshee.Burner/BurnerCore.cs
 src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs
@@ -26,6 +28,7 @@ src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs
 src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs
 src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs
 src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs
+src/Banshee.Base/Banshee.Web/Browser.cs
 src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/ComponentInitializer.cs
 src/Banshee.Base/FileImportSource.cs
@@ -51,7 +54,6 @@ src/Banshee.Base/HomeDirectoryImportSource.cs
 src/Banshee.Base/ImportManager.cs
 src/Banshee.Base/Library.cs
 src/Banshee.Base/NetworkDetect.cs
-src/Banshee.Base/PipelineProfile.cs
 src/Banshee.Base/PlayerEngineCore.cs
 src/Banshee.Base/PowerManagement.cs
 src/Banshee.Base/Plugins/PluginDialog.cs
@@ -95,6 +97,8 @@ src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/DiscUsageDisplay.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/Banshee.Widgets/StreamPositionLabel.cs
+src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs
+src/Last.FM/Last.FM.Gui/AccountLoginForm.cs
 src/Main.cs
 src/PlayerInterface.cs
 src/PlaylistColumns.cs
