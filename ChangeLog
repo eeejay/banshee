@@ -1,3 +1,7 @@
+2006-10-16  James Willcox  <snorp@snorp.net>
+
+	* src/Banshee.Plugins/Daap/daap-sharp/*: updated from mono svn
+
 2006-10-16  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 0.11.1 Released
