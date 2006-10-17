@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-15 08:12+0300\n"
-"PO-Revision-Date: 2006-10-15 08:13+0300\n"
+"POT-Creation-Date: 2006-10-17 19:22+0300\n"
+"PO-Revision-Date: 2006-10-17 19:25+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -515,7 +515,7 @@ msgstr "Valitse käytettäväksi"
 
 #: ../data/banshee-dialogs.glade.h:63
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:661
+#: ../src/Banshee.Base/Dap/Dap.cs:647
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:273
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:296
 msgid "Unknown"
@@ -1100,16 +1100,28 @@ msgstr "Tuodaan CD-levyä"
 msgid "Initializing Drive"
 msgstr "Alustetaan asemaa"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:327
-#: ../src/Banshee.Base/AudioCdRipper.cs:397
+#: ../src/Banshee.Base/AudioCdRipper.cs:312
+msgid "No encoder was found on your system."
+msgstr "Koodaajaa ei löytynyt tietokoneesta."
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:332
+#: ../src/Banshee.Base/AudioCdRipper.cs:404
 msgid "Cannot Import CD"
 msgstr "CD-levyä ei voi tuoda"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:345
+#: ../src/Banshee.Base/AudioCdRipper.cs:352
 #: ../src/Banshee.Base/ImportManager.cs:120
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "tuodaan {0}/{1}"
+
+#: ../src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:83
+msgid "No available profiles"
+msgstr "Profiileja ei saatavilla"
+
+#: ../src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:47
+msgid "Advanced"
+msgstr "Lisäasetukset"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
 msgid "Audio Disc:"
@@ -1160,8 +1172,8 @@ msgid "Create a new audio CD"
 msgstr "Luo uusi CD-levy"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:192
 msgid "Problem creating CD"
 msgstr "Virhe kirjoitettaessa CD-levyä"
 
@@ -1173,65 +1185,65 @@ msgstr "CD-kirjoitukseen pystyviä laitteita ei löytynyt."
 msgid "Audio"
 msgstr "CD-levy"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:101
 msgid "Some songs could not be found."
 msgstr "Joita kappaleista ei löytynyt."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:109
 msgid "No CD writers were found on your system."
 msgstr "CD-kirjoittimia ei löytynyt tietokoneesta."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:114
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
 msgid "Insert Blank CD"
 msgstr "Laita tyhjä aihio asemaan"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:116
 msgid "Please insert a blank CD disk for the write process."
 msgstr "Laita tyhjä CD-levy asemaan kirjoitusta varten."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:135
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:155
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:136
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:156
 #, csharp-format
 msgid "The inserted media is not large enough to hold your selected music."
 msgstr "Valitut kappaleet eivät mahdu asemassa olevalle levylle"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:137
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:138
 #, csharp-format
 msgid "{0} more minute is needed on the media."
 msgid_plural "{0} more minutes are needed on the media."
 msgstr[0] "Levyltä vaaditaan {0} minuutti lisää."
 msgstr[1] "Levyltä vaaditaan {0} minuuttia lisää."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:141
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:161
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:142
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:162
 msgid "Not Enough Space on Disc"
 msgstr "Levyllä ei ole tarpeeksi tilaa"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:157
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:158
 #, csharp-format
 msgid "{0} more megabyte is needed on the media."
 msgid_plural "{0} more megabytes are needed on the media."
 msgstr[0] "Kohteesta vaaditaan {0} megatavu lisää."
 msgstr[1] "Kohteesta vaaditaan {0} megatavua lisää."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:174
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
 msgid "Insufficient Disk Space"
 msgstr "Levytila ei riitä"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:176
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
 msgstr "Tämän CD-levyn luonti vaatii vähintään {0} MiB vapaata levytilaa."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:194
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:195
 msgid "Continue Anyway"
 msgstr "Jatka joka tapauksessa"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:254
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:239
 msgid "Could Not Write CD"
 msgstr "CD:n kirjoitus ei onnistunut"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:255
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:240
 msgid "No suitable encoder could be found to convert selected songs."
 msgstr "Sopivaa koodaajaa ei löytynyt valittujen kappaleien muuntamiseksi."
 
@@ -1647,12 +1659,27 @@ msgstr "Poista älykäs soittolista"
 msgid "Smart Playlist"
 msgstr "Älykäs soittolista"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/Banshee.Web/Browser.cs:43
+msgid "Could not launch URL"
+msgstr "URLia ei voi avata"
+
+#: ../src/Banshee.Base/Banshee.Web/Browser.cs:44
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"{0} ei voitu avata: {1}\n"
+"\n"
+"Tarkista \"Oletussovellukset\"-asetukset."
+
 #: ../src/Banshee.Base/BatchTranscoder.cs:117
+#: ../src/Banshee.Base/BatchTranscoder.cs:118
 msgid "Converting Files"
 msgstr "Muunnetaan tiedostoja"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:119
+#: ../src/Banshee.Base/BatchTranscoder.cs:120
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
@@ -1660,7 +1687,7 @@ msgstr ""
 "Tiedostoja ollaan muuntamassa toiseen äänimuotoon.Haluatko keskeyttää tämän "
 "tehtävän?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:122
+#: ../src/Banshee.Base/BatchTranscoder.cs:123
 msgid "Initializing Transcoder..."
 msgstr "Alustetaan koodinmuuntajaa..."
 
@@ -1688,29 +1715,29 @@ msgstr "Paikallinen kansio"
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "DapCorea ei voi alustaa, koska HalCore ei ole alustetta"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:341
+#: ../src/Banshee.Base/Dap/Dap.cs:328
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:342
+#: ../src/Banshee.Base/Dap/Dap.cs:329
 #, csharp-format
 msgid "Synchronizing {0}"
 msgstr "Synkronoidaan {0}"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:346
+#: ../src/Banshee.Base/Dap/Dap.cs:333
 msgid "Waiting for transcoder..."
 msgstr "Odotetaan koodinmuuntajaa..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:434 ../src/Banshee.Base/Dap/Dap.cs:455
+#: ../src/Banshee.Base/Dap/Dap.cs:420 ../src/Banshee.Base/Dap/Dap.cs:441
 msgid "Processing..."
 msgstr "Käsitellään..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:474
+#: ../src/Banshee.Base/Dap/Dap.cs:460
 msgid "Could not encode some files"
 msgstr "Joitain tiedostoja ei voitu koodata"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:476
+#: ../src/Banshee.Base/Dap/Dap.cs:462
 msgid ""
 "Some files could not be encoded to the proper format. They will not be saved "
 "to the device if you continue."
@@ -1718,7 +1745,7 @@ msgstr ""
 "Joitain tiedostoja ei voitu koodata oikeaan muotoon. Niitä ei tallenneta "
 "laitteelle, jos jatkat."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:481
+#: ../src/Banshee.Base/Dap/Dap.cs:467
 msgid "Continue synchronizing"
 msgstr "Jatka synkronointia"
 
@@ -1730,20 +1757,24 @@ msgstr "{0} ominaisuudet"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
-msgid "Device Name"
+msgid "Device name"
 msgstr "Laitteen nimi"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
-msgid "Owner Name"
+msgid "Owner name"
 msgstr "Omistajan nimi"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
-msgid "Volume Usage"
+msgid "Encode to"
+msgstr "Koodaa muotoon"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:97
+msgid "Volume usage"
 msgstr "Käytetty tila"
 
-#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
-msgid "Advanced Details"
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:109
+msgid "Advanced details"
 msgstr "Lisätiedot"
 
 #: ../src/Banshee.Base/Globals.cs:78 ../src/Banshee.Base/Globals.cs:87
@@ -1921,11 +1952,11 @@ msgstr "Merkinnän yksityiskohdat:"
 msgid "Browse..."
 msgstr "Selaa..."
 
-#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:64
+#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:61
 msgid "Select library location"
 msgstr "Valitse kirjaston sijainti"
 
-#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:74
+#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:71
 msgid ""
 "Enable this option to save tags and other metadata inside supported audio "
 "files"
@@ -2001,7 +2032,7 @@ msgstr "Koosteen nimi"
 msgid "Version"
 msgstr "Versio"
 
-#: ../src/Banshee.Base/GstTranscoder.cs:80
+#: ../src/Banshee.Base/GstTranscoder.cs:82
 msgid "Could not create transcoder"
 msgstr "Koodajaa ei voi luoda"
 
@@ -2032,64 +2063,6 @@ msgstr "Ei saatu yhteyttä NetworkManageriin"
 #: ../src/Banshee.Base/NetworkDetect.cs:69
 msgid "An available, working network connection will be assumed"
 msgstr "Oletetaan, että käytössä on toimiva verkkoyhteys"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:105
-msgid "Pipeline profile is empty."
-msgstr "Putken profiili on tyhjä."
-
-#: ../src/Banshee.Base/PipelineProfile.cs:111
-msgid "Pipeline profile does not have the correct number of components (7)"
-msgstr "Putken profiilissa ei ole oikeaa määrää osia (7)"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:121
-msgid "Pipeline profile does not have a lookup key"
-msgstr "Putken profiilissa ei ole hakuavainta"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:125
-msgid "Pipeline profile does not have a display name"
-msgstr "Putken profiilissa ei ole näytettävää nimeä"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:130
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a file extension"
-msgstr "Putken profiili \"{0}\" ei sisällä tiedostopäätettä"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:136
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a GStreamer element"
-msgstr "Putken profiili \"{0}\" ei sisällä GStreamer-elementtiä"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:171
-#, csharp-format
-msgid ""
-"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
-"not be run"
-msgstr ""
-"Putken profiili \"{0}\" ei ole käytettävissä: GStreamer-puthea \"{1}\" ei "
-"voitu suorittaa"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:203
-msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
-msgstr ""
-"Sisäistä bittinopeutta ei voi käyttää. Käytä sen sijaan komentoa "
-"BuildPipeline(bitrate)"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:223
-msgid ""
-"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
-"PipelineProfile(profile))"
-msgstr ""
-"Sisäistä bittinopeutta ei voi asettaa. Profiili täytyy kopioida ja "
-"bittinopeus asettaa kopiolle (new PipelineProfile(profile))"
-
-#. Translators: used to specify the bitrate for ripping
-#: ../src/Banshee.Base/PipelineProfile.cs:372
-msgid "at"
-msgstr "nopeudella"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:414
-msgid "No MP3-compatible encoders available"
-msgstr "MP3-yhteensopivia koodereita ei löydy"
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
@@ -2598,6 +2571,7 @@ msgid "Username:"
 msgstr "Käyttäjätunnus:"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginForm.cs:57
 msgid "Password:"
 msgstr "Salasana:"
 
@@ -2783,6 +2757,19 @@ msgstr "Haetaan: {0}"
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
 msgid "Idle"
 msgstr "Jouten"
+
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:48
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:75
+msgid "Last.fm Account Login"
+msgstr "Last.fm-tilin kirjautuminen"
+
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:78
+msgid "Please enter your Last.fm account credentials."
+msgstr "Syötä Last.fm -tilisi tiedot."
+
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginForm.cs:50
+msgid "Account Name:"
+msgstr "Tilin nimi:"
 
 #: ../src/PlayerInterface.cs:385
 msgid "Loading..."
@@ -2995,6 +2982,49 @@ msgstr "Soi"
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "N/A"
+
+#~ msgid "Pipeline profile is empty."
+#~ msgstr "Putken profiili on tyhjä."
+
+#~ msgid "Pipeline profile does not have the correct number of components (7)"
+#~ msgstr "Putken profiilissa ei ole oikeaa määrää osia (7)"
+
+#~ msgid "Pipeline profile does not have a lookup key"
+#~ msgstr "Putken profiilissa ei ole hakuavainta"
+
+#~ msgid "Pipeline profile does not have a display name"
+#~ msgstr "Putken profiilissa ei ole näytettävää nimeä"
+
+#~ msgid "Pipeline profile '{0}' does not have a file extension"
+#~ msgstr "Putken profiili \"{0}\" ei sisällä tiedostopäätettä"
+
+#~ msgid "Pipeline profile '{0}' does not have a GStreamer element"
+#~ msgstr "Putken profiili \"{0}\" ei sisällä GStreamer-elementtiä"
+
+#~ msgid ""
+#~ "Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' "
+#~ "could not be run"
+#~ msgstr ""
+#~ "Putken profiili \"{0}\" ei ole käytettävissä: GStreamer-puthea \"{1}\" ei "
+#~ "voitu suorittaa"
+
+#~ msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
+#~ msgstr ""
+#~ "Sisäistä bittinopeutta ei voi käyttää. Käytä sen sijaan komentoa "
+#~ "BuildPipeline(bitrate)"
+
+#~ msgid ""
+#~ "Cannot set internal bitrate. Must copy profile and set Bitrate on copy "
+#~ "(new PipelineProfile(profile))"
+#~ msgstr ""
+#~ "Sisäistä bittinopeutta ei voi asettaa. Profiili täytyy kopioida ja "
+#~ "bittinopeus asettaa kopiolle (new PipelineProfile(profile))"
+
+#~ msgid "at"
+#~ msgstr "nopeudella"
+
+#~ msgid "No MP3-compatible encoders available"
+#~ msgstr "MP3-yhteensopivia koodereita ei löydy"
 
 #~ msgid "<b>Digital Audio Player</b>"
 #~ msgstr "<b>Kannettava musiikkisoitin</b>"
