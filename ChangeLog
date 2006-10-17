@@ -1,5 +1,14 @@
 2006-10-17  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Revert to pre-intltool 0.35 method of using po/LINGUAS,
+	but in a more forward-compatible way (po/LINGUAS format does not need
+	reverting to pre-0.35 format); intltool 0.35 is not available in
+	enough distributions for it to be worth using right now - no complaining!
+
+	ALL_LINGUAS=`grep -v '^#' $srcdir/po/LINGUAS | sed -r ':a;N;$!ba;s/\n/ /g; s/[ ]+/ /g'`
+
+2006-10-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs: Fixed local
 	variable resolution problem with the anonymous delegate
 
