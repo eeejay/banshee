@@ -75,12 +75,12 @@ namespace Banshee.Burner
                 }
                 
                 format.Button.Toggled += delegate {
-                    string format = SelectedFormat;
-                    if(format == last_format) {
+                    string selected_format = SelectedFormat;
+                    if(selected_format == last_format) {
                         return;
                     }
                     
-                    last_format = format;
+                    last_format = selected_format;
                     OnFormatChanged();
                 };
                 
