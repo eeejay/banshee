@@ -1,3 +1,11 @@
+2006-10-17  Alp Toker  <alp@atoker.com>
+
+	* dbus-sharp/dbus-sharp/IntrospectionSchema.cs:
+	* dbus-sharp/dbus-sharp/UnixMonoTransport.cs:
+	Removed. This dead code was being inadvertently compiled due to the
+	wildcard in the makefile, causing the build to fail on old Mono
+	releases.
+
 2006-10-16  James Willcox  <snorp@snorp.net>
 
 	* src/Banshee.Plugins/Daap/daap-sharp/*: updated from mono svn
