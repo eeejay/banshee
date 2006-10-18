@@ -71,8 +71,8 @@ namespace Banshee.Dap.Mtp
                 return InitializeResult.Invalid;
             }
             
-            short hal_product_id = (short) halDevice.GetPropertyInt("usb.product_id");
-            short hal_vendor_id  = (short) halDevice.GetPropertyInt("usb.vendor_id");
+            short hal_product_id = (short) halDevice.GetPropertyInteger("usb.product_id");
+            short hal_vendor_id  = (short) halDevice.GetPropertyInteger("usb.vendor_id");
             
             device_id = DeviceId.GetDeviceId(hal_vendor_id, hal_product_id);
 
@@ -106,7 +106,22 @@ namespace Banshee.Dap.Mtp
                 LogCore.Instance.PushWarning (String.Format("MTP: Found more than one matching device.  Something is seriously wrong.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
             if (found == 0 || GPhotoDeviceID == -1) {
                 LogCore.Instance.PushDebug (String.Format("MTP: device was found in database, but libgphoto2 failed to detect it.  Waiting for it to come alive.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
-                return InitializeResult.WaitForPropertyChange;
+                /** FIXME: if the usb block device for libusb has no permissions,
+                  * you'll end up in this case.  Really, we need to sleep for a
+                  * few hundred ms and wait for udev/hotplug/whatever.
+                  *
+                  * I've run into this on my box since I misreconfigured udev
+                  * and HAL reacts faster than udev sets the permissions, so
+                  * adding a Thread.Sleep(1000) at the beginning of this function
+                  * works (but blocks the UI).
+                  *
+                  * Sigh.
+                  *
+                  * This return value doesn't matter; the volume won't mount b/c
+                  * this is MTP and we don't mount.  It doesn't matter anyway.
+                  * If this case is ever reached, you're gone off the deep end. */
+
+                return InitializeResult.WaitForVolumeMount;
             }
             
             InstallProperty("Model", device_id.Name);

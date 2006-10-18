@@ -1,3 +1,9 @@
+2006-10-18  Patrick van Staveren <trick@cvs.gnome.org>
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: should fix build problems
+
+	See comments on BGO 361878 before compiling MTP support
+
 2006-10-17  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Revert to pre-intltool 0.35 method of using po/LINGUAS,
