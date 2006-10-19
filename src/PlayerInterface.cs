@@ -1249,9 +1249,9 @@ namespace Banshee
             dialog.Title = args.Entry.ShortMessage;
             IconThemeUtils.SetWindowIcon(dialog);
             
-            dialog.Response += delegate(object o, ResponseArgs args)
+            dialog.Response += delegate(object obj, ResponseArgs response_args)
             {
-                (o as Dialog).Destroy();
+                (obj as Dialog).Destroy();
             };
             
             dialog.ShowAll();
@@ -2123,7 +2123,7 @@ namespace Banshee
         {
             Banshee.Gui.Dialogs.TrackEditor propEdit = 
                 new Banshee.Gui.Dialogs.TrackEditor(playlistView.SelectedTrackInfoMultiple);
-            propEdit.Saved += delegate(object o, EventArgs args) {
+            propEdit.Saved += delegate {
                 playlistView.QueueDraw();
             };
         }
@@ -2251,11 +2251,11 @@ namespace Banshee
             if(log_viewer == null) {
                 log_viewer = new Banshee.Gui.Dialogs.LogCoreDialog(LogCore.Instance, WindowPlayer);
                 
-                log_viewer.Response += delegate(object o, ResponseArgs args) {
+                log_viewer.Response += delegate {
                     log_viewer.Hide();
                 };
                 
-                log_viewer.DeleteEvent += delegate(object o, DeleteEventArgs args) {
+                log_viewer.DeleteEvent += delegate {
                     log_viewer.Destroy();
                     log_viewer = null;
                 };

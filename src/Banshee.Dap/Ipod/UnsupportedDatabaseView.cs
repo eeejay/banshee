@@ -128,7 +128,7 @@ namespace Banshee.Dap.Ipod
                 GLib.Markup.EscapeText(Catalog.GetString("Rebuilding iPod Database...")));
                 
             DatabaseRebuilder rebuilder = new DatabaseRebuilder(dap);
-            rebuilder.Finished += delegate(object o, EventArgs args) {
+            rebuilder.Finished += delegate {
                 OnRefresh();
             };
         }

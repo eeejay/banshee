@@ -69,7 +69,7 @@ namespace Banshee.Sources
             audiocd_statusbar = new HighlightMessageArea();
             audiocd_statusbar.BorderWidth = 5;
             audiocd_statusbar.LeftPadding = 15;
-            audiocd_statusbar.ButtonClicked += delegate { disk.QueryMetadata(); };
+            audiocd_statusbar.ButtonClicked += delegate { this.disk.QueryMetadata(); };
             
             box = new VBox();
             box.Spacing = 5;
