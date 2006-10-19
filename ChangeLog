@@ -1,5 +1,10 @@
 2006-10-19  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Bump to 0.11.2, output build/Makefile, use top_srcdir
+	and not top_builddir for the internal gmcs
+
+2006-10-19  Aaron Bockover  <abock@gnome.org>
+
 	* Makefile.am: Add build to SUBDIRS
 
 	* build/Makefile.am: EXTRA_DIST

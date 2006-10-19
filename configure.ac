@@ -5,7 +5,7 @@ AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
-VERSION=0.11.1
+VERSION=0.11.2
 ASM_VERSION="$VERSION.*"
 
 AM_INIT_AUTOMAKE(banshee, $VERSION)
@@ -116,7 +116,7 @@ if $MCS $srcdir/build/mcs-test-79698.cs &>/dev/null; then
 	AC_MSG_RESULT([compiler okay])
 else
 	AC_MSG_RESULT([broken, using internal gmcs])
-	MCS="$MONO \${top_builddir}/build/gmcs.exe"
+	MCS="$MONO \${top_srcdir}/build/gmcs.exe"
 	chmod +x build/gmcs.exe
 fi
 
@@ -365,6 +365,7 @@ dbus-sharp/Makefile
 dbus-sharp/NDesk.DBus.GLib.dll.config
 libbanshee/Makefile
 branding/Makefile
+build/Makefile
 src/banshee
 src/Makefile
 src/AssemblyInfo.cs
