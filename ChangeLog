@@ -1,3 +1,11 @@
+2006-10-19  Alp Toker  <alp@atoker.com>
+
+	* src/Banshee.Base/Sources/AudioCdSource.cs:
+	Avoid gmcs compiler error by referring to disk instance as a field.
+	* src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:
+	* src/PlayerInterface.cs: Replace invalid anonymous method syntax that
+	causes gmcs to fail with correct C# 2.0.
+
 2006-10-18  Patrick van Staveren <trick@cvs.gnome.org>
 
 	* src/Banshee.Dap/Mtp/MtpDap.cs: should fix build problems
