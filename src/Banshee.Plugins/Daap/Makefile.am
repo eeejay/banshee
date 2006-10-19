@@ -1,5 +1,5 @@
 if DAAP_ENABLED
-include $(top_srcdir)/Makefile.include
+include $(top_srcdir)/build/Common.Makefile
 
 ASSEMBLY_NAME = Daap
 ASSEMBLY = $(ASSEMBLY_NAME).dll

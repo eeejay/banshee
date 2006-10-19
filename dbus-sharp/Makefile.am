@@ -1,4 +1,4 @@
-include $(top_srcdir)/Makefile.include
+include $(top_srcdir)/build/Common.Makefile
 
 DBUS_ASSEMBLY = NDesk.DBus.dll
 DBUS_GLIB_ASSEMBLY = NDesk.DBus.GLib.dll

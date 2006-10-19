@@ -1,4 +1,4 @@
-include $(top_srcdir)/Makefile.include
+include $(top_srcdir)/build/Common.Makefile
 
 ASSEMBLY_NAME = Banshee.Dap.Njb
 ASSEMBLY = $(ASSEMBLY_NAME).dll

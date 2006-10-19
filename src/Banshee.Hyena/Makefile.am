@@ -1,4 +1,4 @@
-include $(top_srcdir)/Makefile.include
+include $(top_srcdir)/build/Common.Makefile
 
 HYENA = hyena
 HYENA_ASSEMBLY = $(HYENA).exe

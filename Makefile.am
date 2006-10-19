@@ -1,4 +1,5 @@
 SUBDIRS =          \
+	build          \
 	data           \
 	libbanshee     \
 	taglib-sharp   \
@@ -19,7 +20,7 @@ EXTRA_DIST =            \
 	intltool-extract.in \
 	intltool-merge.in   \
 	intltool-update.in  \
-	Makefile.include    \
+	build/Common.Makefile    \
 	MAINTAINERS         \
 	HACKING
 

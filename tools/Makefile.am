@@ -1,4 +1,4 @@
-include $(top_srcdir)/Makefile.include
+include $(top_srcdir)/build/Common.Makefile
 
 BANSHEE_IMPORT = banshee-import
 BANSHEE_IMPORT_ASSEMBLY = $(BANSHEE_IMPORT).exe

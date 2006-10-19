@@ -1,5 +1,15 @@
 2006-10-19  Aaron Bockover  <abock@gnome.org>
 
+	* Makefile.am: Add build to SUBDIRS
+
+	* build/Makefile.am: EXTRA_DIST
+
+	* build/Common.Makefile: moved from Makefile.include at the root
+
+	* All applicable Makefile.am: Include build/Common.Makefile
+
+2006-10-19  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Run gmcs on build/mcs-test-79698.cs to test for 
 	BXC #79698; use build/gmcs.exe as the MCS compiler if building 
 	build/mcs-test-79698.cs fails (indicating the installed compiler
