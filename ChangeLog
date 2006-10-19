@@ -1,3 +1,15 @@
+2006-10-19  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Run gmcs on build/mcs-test-79698.cs to test for 
+	BXC #79698; use build/gmcs.exe as the MCS compiler if building 
+	build/mcs-test-79698.cs fails (indicating the installed compiler
+	has the bug)
+
+	* build/gmcs.exe: The gmcs compiler from Mono 1.1.18 with the patch
+	for http://bugzilla.ximian.com/show_bug.cgi?id=79698 applied
+
+	* build/mcs-test-79698.cs: Test case for the above bug
+
 2006-10-19  Alp Toker  <alp@atoker.com>
 
 	* src/Banshee.Base/Sources/AudioCdSource.cs:

@@ -110,6 +110,16 @@ if test ! -x "$MCS"; then
 	AC_MSG_ERROR([No $CS compiler found])
 fi
 
+dnl Test compiler for BXC #79698
+AC_MSG_CHECKING([for broken mcs 1.1.18 compiler])
+if $MCS $srcdir/build/mcs-test-79698.cs &>/dev/null; then
+	AC_MSG_RESULT([compiler okay])
+else
+	AC_MSG_RESULT([broken, using internal gmcs])
+	MCS="$MONO \${top_builddir}/build/gmcs.exe"
+	chmod +x build/gmcs.exe
+fi
+
 AC_SUBST(MCS)
 AC_SUBST(MONO)
 
