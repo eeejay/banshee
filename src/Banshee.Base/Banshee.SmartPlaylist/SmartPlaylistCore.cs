@@ -107,9 +107,9 @@ namespace Banshee.SmartPlaylist
             Globals.Library.TrackRemoved += HandleTrackRemoved;
 
             // Load existing smart playlists
-            IDataReader reader = Globals.Library.Db.Query(String.Format(
+            IDataReader reader = Globals.Library.Db.Query(
                 "SELECT PlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM SmartPlaylists"
-            ));
+            );
 
             while (reader.Read()) {
                 SmartPlaylistSource.LoadFromReader (reader);
@@ -187,9 +187,9 @@ namespace Banshee.SmartPlaylist
         {
             //Console.WriteLine ("LibraryReloaded");
             // Listen for changes to any track to keep our playlists up to date
-            IDataReader reader = Globals.Library.Db.Query(String.Format(
+            IDataReader reader = Globals.Library.Db.Query(
                 "SELECT TrackID FROM Tracks"
-            ));
+            );
 
             while (reader.Read()) {
                 LibraryTrackInfo track = Globals.Library.GetTrack (Convert.ToInt32(reader[0]));

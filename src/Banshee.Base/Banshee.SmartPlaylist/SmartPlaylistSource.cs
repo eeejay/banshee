@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Plugins;
+using Banshee.Database;
 
 using Mono.Unix;
 
@@ -105,22 +106,18 @@ namespace Banshee.SmartPlaylist
             LimitNumber = limit_number;
             LimitCriterion = limit_criterion;
 
-            /*Statement query = new Insert("SmartPlaylists", true,
-                "Name", Name,
-                "Condition", Condition,
-                "OrderBy", OrderBy,
-                "LimitNumber", LimitNumber,
-                "LimitCriterion", LimitCriterion
-            );*/
-            
-            string query = String.Format(@"
+            DbCommand command = new DbCommand(@"
                 INSERT INTO SmartPlaylists
                     (Name, Condition, OrderBy, LimitNumber, LimitCriterion)
-                    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')",
-                    Name, Condition, OrderBy, LimitNumber, LimitCriterion
+                    VALUES (:name, :condition, :orderby, :limitnumber, :limitcriterion)",
+                    "name", Name, 
+                    "condition", Condition, 
+                    "orderby", OrderBy, 
+                    "limitnumber", LimitNumber, 
+                    "limitcriterion", LimitCriterion
             );
 
-            Id = Globals.Library.Db.Execute(query);
+            Id = Globals.Library.Db.Execute(command);
 
             Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
 
@@ -162,8 +159,9 @@ namespace Banshee.SmartPlaylist
             //Console.WriteLine ("Refreshing smart playlist {0} with condition {1}", Source.Name, Condition);
 
             // Delete existing tracks
-            Globals.Library.Db.Execute(String.Format(
-                "DELETE FROM SmartPlaylistEntries WHERE PlaylistID = {0}", Id
+            Globals.Library.Db.Execute(new DbCommand(
+                "DELETE FROM SmartPlaylistEntries WHERE PlaylistID = :playlist_id",
+                "playlist_id", Id
             ));
 
             foreach (TrackInfo track in tracks)
@@ -179,11 +177,11 @@ namespace Banshee.SmartPlaylist
             ));
 
             // Load the new tracks in
-            IDataReader reader = Globals.Library.Db.Query(String.Format(
+            IDataReader reader = Globals.Library.Db.Query(new DbCommand(
                 @"SELECT TrackID 
                     FROM SmartPlaylistEntries
-                    WHERE PlaylistID = '{0}'",
-                    Id
+                    WHERE PlaylistID = :playlist_id",
+                    "playlist_id", Id
             ));
             
             // If the limit is by any but songs, we need to prune the list up based on the desired 

@@ -8,6 +8,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
+using Banshee.Database;
 
 namespace Banshee.SmartPlaylist
 {
@@ -284,9 +285,9 @@ namespace Banshee.SmartPlaylist
                 ok_button.Sensitive = false;
                 //already_in_use_label.Markup = "";
             } else {
-                object res = Globals.Library.Db.QuerySingle(String.Format(
-                    "SELECT PlaylistID FROM Playlists WHERE lower(Name) = lower('{0}')",
-                    name_entry.Text
+                object res = Globals.Library.Db.QuerySingle(new DbCommand(
+                    "SELECT PlaylistID FROM Playlists WHERE lower(Name) = lower(:name)",
+                    "name", name_entry.Text
                 ));
 
                 if (res != null && (playlist == null || String.Compare (playlist.Name, name_entry.Text, true) != 0)) {

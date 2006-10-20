@@ -1,5 +1,12 @@
 2006-10-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Start
+	moving to DbCommand (BNC #212477)
+
+2006-10-20  Aaron Bockover  <abock@gnome.org>
+
 	Most of the work done for BNC #212477, provides nicer safer way to do
 	SQL queries against the local library, better APIs, and some optimizations
 
