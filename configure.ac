@@ -180,7 +180,7 @@ if test "x$enable_njbsharp" = "xyes"; then
 fi
 AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
 
-LIBGPHOTO2SHARP_REQUIRED=0.0.1
+LIBGPHOTO2SHARP_REQUIRED=2.2.1.4.trunk
 PKG_CHECK_MODULES(LIBGPHOTO2SHARP,
 	libgphoto2-sharp >= $LIBGPHOTO2SHARP_REQUIRED,
 	enable_mtp_dap="$enable_mtp_dap", enable_mtp_dap=no)
