@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-16 23:08+0200\n"
-"PO-Revision-Date: 2006-10-16 23:08+0200\n"
+"POT-Creation-Date: 2006-10-20 17:14+0200\n"
+"PO-Revision-Date: 2006-10-20 17:14+0200\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2167,20 +2167,20 @@ msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:292
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:232
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Kopierer fra {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:293
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:233
 msgid "Scanning..."
 msgstr "Leder..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:411
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:349
 #, csharp-format
 msgid "Cannot import track from {0}"
@@ -2398,28 +2398,28 @@ msgstr "Kopierer {0} af {1}"
 msgid "Audio Device"
 msgstr "Lydenhed"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:128
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
 msgid ": Found"
 msgstr ": Fundet"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:129
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
 msgid "Reading library information"
 msgstr "Læser biblioteksinformationer"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:140
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:155
 msgid "Loading device"
 msgstr "Indlæser enhed"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:159
 msgid "Done"
 msgstr "Færdig"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:145
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:160
 msgid ": Ready for use"
 msgstr ": Klar til brug"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:192 ../src/Banshee.Dap/Mtp/MtpDap.cs:196
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:229 ../src/Banshee.Dap/Njb/NjbDap.cs:238
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:207 ../src/Banshee.Dap/Mtp/MtpDap.cs:211
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:244 ../src/Banshee.Dap/Njb/NjbDap.cs:238
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:250
 msgid "Synchronizing Device"
 msgstr "Synkroniserer enhed"
@@ -2756,11 +2756,11 @@ msgstr "Klar"
 #: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:48
 #: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:75
 msgid "Last.fm Account Login"
-msgstr "Last.fm konto-log ind"
+msgstr "Last.fm konto-logind"
 
 #: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:78
 msgid "Please enter your Last.fm account credentials."
-msgstr "Indtast venligst dine Last.fm kontodetaljer."
+msgstr "Indtast venligst dine Last.fm-kontodetaljer."
 
 #: ../src/Last.FM/Last.FM.Gui/AccountLoginForm.cs:50
 msgid "Account Name:"
