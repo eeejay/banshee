@@ -33,6 +33,7 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.Sources;
+using Banshee.Database;
 
 namespace Banshee
 {
@@ -347,13 +348,17 @@ namespace Banshee
                 TrackInfo last_track = IterTrackInfo(playingIter);
                 
                 if(Globals.Random.NextDouble() < HOVER_FREQUENCY) {
-                    string query = "SELECT TrackID FROM Tracks "
-                        + "WHERE Genre = '" + last_track.Genre + "' "
-                        + "ORDER BY RANDOM() LIMIT 1";
-
+                    DbCommand command = new DbCommand(
+                        @"SELECT TrackID 
+                            FROM Tracks 
+                            WHERE Genre = :genre
+                            ORDER BY RANDOM() LIMIT 1",
+                            "genre", last_track.Genre
+                    );
+                    
                     int id = 0;
                     try {
-                        id = Convert.ToInt32(Globals.Library.Db.QuerySingle(query) as string);
+                        id = Convert.ToInt32((string)Globals.Library.Db.QuerySingle(command));
                     } catch { } 
     
                     if(id > 0) {

@@ -1,5 +1,16 @@
 2006-10-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlaylistModel.cs:
+	* src/Banshee.Base/Library.cs: More use of DbCommand
+
+	* src/Banshee.Base/Banshee.Kernel/Scheduler.cs: Added Unschedule(Type)
+
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs: Use
+	DbCommand for the query and use Scheduler.Unschedule(Type) before
+	rescanning the library 
+
+2006-10-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:
 	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
 	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Start

@@ -33,11 +33,12 @@ using System.Data;
 using System.IO;
 using Mono.Unix;
 
+using Banshee.Database;
+
 namespace Banshee.Base
 {
     public delegate void LibraryTrackAddedHandler(object o, LibraryTrackAddedArgs args);
     public delegate void LibraryTrackRemovedHandler(object o, LibraryTrackRemovedArgs args);
-
     
     public class LibraryTrackAddedArgs : EventArgs
     {
@@ -215,10 +216,10 @@ namespace Banshee.Base
             
             CollectionRemove(track);
             
-            Db.Execute(String.Format(
+            Db.Execute(new DbCommand(
                 @"DELETE FROM Tracks
-                    WHERE TrackID = '{0}'",
-                    track.TrackId
+                    WHERE TrackID = :track_id",
+                    "track_id", track.TrackId
             ));
                         
             LibraryTrackRemovedHandler removed_handler = TrackRemoved;

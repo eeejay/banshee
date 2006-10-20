@@ -26,8 +26,6 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
-// TODO: Add Remove(Type), Remove(IJob) to scheduler
-
 using System;
 using System.Data;
 using System.Collections;
@@ -36,6 +34,7 @@ using Mono.Unix;
 using MusicBrainz;
 using Banshee.Base;
 using Banshee.Kernel;
+using Banshee.Database;
 
 namespace Banshee.Plugins.MetadataSearch 
 {
@@ -147,6 +146,7 @@ namespace Banshee.Plugins.MetadataSearch
 
         internal void RescanLibrary()
         {
+            Scheduler.Unschedule(typeof(ProcessTrackJob));
             Globals.Library.Db.Query("UPDATE Tracks SET RemoteLookupStatus = 0");
             ScanLibrary();
         }
@@ -254,14 +254,14 @@ namespace Banshee.Plugins.MetadataSearch
                     FetchMethod fetch = plugin.FetchMethod;
                     
                     if(fetch == FetchMethod.CoversOnly) {
-                        string asin = Globals.Library.Db.QuerySingle(String.Format(
+                        string asin = (string)Globals.Library.Db.QuerySingle(new DbCommand(
                             @"SELECT ASIN 
                                 FROM Tracks
-                                WHERE Artist = '{0}'
-                                    AND AlbumTitle = '{1}'",
-                                    track.Artist,
-                                    track.Album)
-                        ) as string;
+                                WHERE Artist = :artist
+                                    AND AlbumTitle = :album",
+                                    "artist", track.Artist,
+                                    "album", track.Album)
+                        );
 
                         if(asin == NotFoundAsin) {
                             track.Asin = NotFoundAsin;
