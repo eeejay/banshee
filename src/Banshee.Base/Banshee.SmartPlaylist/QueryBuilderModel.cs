@@ -75,7 +75,7 @@ namespace Banshee.SmartPlaylist
             if (Filter == null)
                 return null;
             else
-                return Filter.Operator.FormatValues (true, Column, Value1.ToLower(), null);
+                return Filter.Operator.FormatValues (true, Column, EscapeQuotes(Value1.ToLower()), null);
         }
         
         public override string Value1 {
@@ -470,8 +470,8 @@ namespace Banshee.SmartPlaylist
 
         public override string FilterValues()
         {
-            string pv = Value1;
-            string pv2 = (spinButton2 == null) ? null : Value2;
+            string pv = EscapeQuotes(Value1);
+            string pv2 = (spinButton2 == null) ? null : EscapeQuotes(Value2);
 
             if (Filter == null)
                 return null;

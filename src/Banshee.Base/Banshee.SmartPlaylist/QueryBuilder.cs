@@ -104,6 +104,7 @@ namespace Banshee.SmartPlaylist
         public static QueryOperator StartsWith = new QueryOperator("lower({1}) LIKE '{2}%'");
         public static QueryOperator EndsWith   = new QueryOperator("lower({1}) LIKE '%{2}'");
 
+        // TODO these should either be made generic or moved somewhere else since they are Banshee/Track/Playlist specific.
         public static QueryOperator InPlaylist      = new QueryOperator("TrackID IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
         public static QueryOperator NotInPlaylist   = new QueryOperator("TrackID NOT IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
     }
@@ -328,6 +329,11 @@ namespace Banshee.SmartPlaylist
             box.Show();
             
             return box;
+        }
+
+        protected static string EscapeQuotes (string v)
+        {
+            return v == null ? String.Empty : v.Replace("'", "''");
         }
     }
     

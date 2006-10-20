@@ -1,3 +1,15 @@
+2006-10-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs: Add escape
+	method since Aaron removed it from the Sql namespace.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs: Add back in
+	escaping that Aaron took out.  Its ugly, but bigger changes will need to
+	be made to improve how Smart Playlists interacts with the db.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Fix up
+	the commit's update query to use the new DbCommand class.
+
 2006-10-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlaylistModel.cs:

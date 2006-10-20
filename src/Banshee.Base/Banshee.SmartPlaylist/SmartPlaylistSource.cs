@@ -315,19 +315,24 @@ namespace Banshee.SmartPlaylist
         {
             Timer t = new Timer ("Commit");
 
-            string query = String.Format(@"
+            DbCommand command = new DbCommand(@"
                 UPDATE SmartPlaylists
                 SET 
-                    Name = '{0}',
-                    Condition = '{1}',
-                    OrderBy = '{2}',
-                    LimitNumber = '{3}',
-                    LimitCriterion = '{4}'
-                WHERE PlaylistID = '{5}'",
-                Name, Condition, OrderBy, LimitNumber, LimitCriterion, Id
+                    Name = :name,
+                    Condition = :condition,
+                    OrderBy = :orderby,
+                    LimitNumber = :limitnumber,
+                    LimitCriterion = :limitcriterion
+                WHERE PlaylistID = :playlistid",
+                "name", Name,
+                "condition", Condition,
+                "orderby", OrderBy,
+                "limitnumber", LimitNumber,
+                "limitcriterion", LimitCriterion,
+                "playlistid", Id
             );
 
-            Globals.Library.Db.Execute(query);
+            Globals.Library.Db.Execute(command);
 
             // Make sure the tracks are up to date
             Globals.Library.Db.Execute(String.Format(
