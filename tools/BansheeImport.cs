@@ -33,7 +33,6 @@ using System.Collections;
 using Mono.Unix;
 
 using Banshee.Base;
-using Sql;
 
 public static class BansheeImport
 {

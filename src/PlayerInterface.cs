@@ -28,7 +28,7 @@
 
 using System;
 using System.IO;
-//using System.Data;
+
 using System.Threading;
 using System.Reflection;
 using System.Collections;
@@ -39,8 +39,6 @@ using Mono.Unix;
 using Gtk;
 using Gdk;
 using Glade;
-
-using Sql;
 
 using Banshee.Widgets;
 using Banshee.Base;

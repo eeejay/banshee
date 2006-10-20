@@ -286,7 +286,7 @@ namespace Banshee.SmartPlaylist
             } else {
                 object res = Globals.Library.Db.QuerySingle(String.Format(
                     "SELECT PlaylistID FROM Playlists WHERE lower(Name) = lower('{0}')",
-                    Sql.Statement.EscapeQuotes(name_entry.Text)
+                    name_entry.Text
                 ));
 
                 if (res != null && (playlist == null || String.Compare (playlist.Name, name_entry.Text, true) != 0)) {

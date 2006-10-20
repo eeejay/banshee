@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Database;
 
 namespace Banshee.Sources
 {
@@ -51,10 +52,15 @@ namespace Banshee.Sources
         private List<TrackInfo> tracks = new List<TrackInfo>();
         private Queue<TrackInfo> remove_queue = new Queue<TrackInfo>();
         private Queue<TrackInfo> append_queue = new Queue<TrackInfo>();
+        private DbParameter<int> playlist_id_param = new DbParameter<int>("playlist_id");
         private int id;
-
+        
         public int Id {
             get { return id; }
+            private set {
+                id = value;
+                playlist_id_param.Value = id;
+            }
         }
 
         public override string UnmapLabel {
@@ -75,7 +81,7 @@ namespace Banshee.Sources
 
         public PlaylistSource(int id) : base(Catalog.GetString("New Playlist"), 500)
         {
-            this.id = id;
+            Id = id;
             
             if(id < 0) {
                 return;
@@ -100,48 +106,45 @@ namespace Banshee.Sources
         
         private void CreateNewPlaylist()
         {
-            id = Globals.Library.Db.Execute(String.Format(
+            Id = Globals.Library.Db.Execute(new DbCommand(
                 @"INSERT INTO Playlists
-                    VALUES (NULL, '{0}')",
-                    Sql.Statement.EscapeQuotes(Name))
-            );
+                    VALUES (NULL, :playlist_name)",
+                    "playlist_name", Name
+            ));
         }
         
         private void LoadFromDatabase()
-        {   
-            Name = (string)Globals.Library.Db.QuerySingle(String.Format(
-                @"SELECT Name
-                    FROM Playlists
-                    WHERE PlaylistID = '{0}'",
-                    id
-            ));
-         
+        {
+            Name = (string)Globals.Library.Db.QuerySingle(new DbCommand(
+                "SELECT Name FROM Playlists WHERE PlaylistID = :playlist_id",
+                playlist_id_param));
+            
             // check to see if ViewOrder has ever been set, if not, perform
             // a default ordering as a compatibility update
-            if(Convert.ToInt32(Globals.Library.Db.QuerySingle(String.Format(
+            if(Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
                 @"SELECT COUNT(*) 
                     FROM PlaylistEntries
-                    WHERE PlaylistID = '{0}'
+                    WHERE PlaylistID = :playlist_id
                         AND ViewOrder > 0",
-                    id))) <= 0) {
+                    playlist_id_param))) <= 0) {
                 Console.WriteLine("Performing compatibility update on playlist '{0}'", Name);
-                Globals.Library.Db.Execute(String.Format(
+                Globals.Library.Db.Execute(new DbCommand(
                     @"UPDATE PlaylistEntries
                         SET ViewOrder = (ROWID -
                             (SELECT COUNT(*) 
                                 FROM PlaylistEntries
-                                WHERE PlaylistID < '{0}'))
-                        WHERE PlaylistID = '{0}'",
-                        id
+                                WHERE PlaylistID < :playlist_id))
+                        WHERE PlaylistID = :playlist_id",
+                        playlist_id_param
                 ));
             }
    
-            IDataReader reader = Globals.Library.Db.Query(String.Format(
+            IDataReader reader = Globals.Library.Db.Query(new DbCommand(
                 @"SELECT TrackID 
                     FROM PlaylistEntries
-                    WHERE PlaylistID = '{0}'
+                    WHERE PlaylistID = :playlist_id
                     ORDER BY ViewOrder",
-                    id
+                    playlist_id_param
             ));
             
             lock(TracksMutex) {
@@ -170,16 +173,16 @@ namespace Banshee.Sources
                 return false;
             }
             
-            string query = String.Format(
+            DbCommand command = new DbCommand(
                 @"UPDATE Playlists
-                    SET Name = '{0}'
-                    WHERE PlaylistID = '{1}'",
-                    Sql.Statement.EscapeQuotes(newName),
-                    id
+                    SET Name = :playlist_name
+                    WHERE PlaylistID = :playlist_id",
+                    "playlist_name", newName,
+                    playlist_id_param
             );
           
             try {
-                Globals.Library.Db.Execute(query);
+                Globals.Library.Db.Execute(command);
                 Name = newName;
                 return true;
             } catch(Exception) {
@@ -229,16 +232,16 @@ namespace Banshee.Sources
         
         public override bool Unmap()
         {
-            Globals.Library.Db.Execute(String.Format(
+            Globals.Library.Db.Execute(new DbCommand(
                 @"DELETE FROM PlaylistEntries
-                    WHERE PlaylistID = '{0}'",
-                    id
+                    WHERE PlaylistID = :playlist_id",
+                    playlist_id_param
             ));
             
-            Globals.Library.Db.Execute(String.Format(
+            Globals.Library.Db.Execute(new DbCommand(
                 @"DELETE FROM Playlists
-                    WHERE PlaylistID = '{0}'",
-                    id
+                    WHERE PlaylistID = :playlist_id",
+                    playlist_id_param
             ));
             
             tracks.Clear();
@@ -257,11 +260,12 @@ namespace Banshee.Sources
                 lock(TracksMutex) {
                     while(remove_queue.Count > 0) {
                         TrackInfo track = remove_queue.Dequeue();
-                        Globals.Library.Db.Execute(String.Format(
+                        Globals.Library.Db.Execute(new DbCommand(
                             @"DELETE FROM PlaylistEntries
-                                WHERE PlaylistID = '{0}'
-                                AND TrackID = '{1}'",
-                                id, track.TrackId
+                                WHERE PlaylistID = :playlist_id
+                                AND TrackID = :track_id",
+                                "track_id", track.TrackId,
+                                playlist_id_param
                         ));
                         OnTrackRemoved(track);
                     }
@@ -272,15 +276,17 @@ namespace Banshee.Sources
                 lock(TracksMutex) {
                     while(append_queue.Count > 0) {
                         TrackInfo track = append_queue.Dequeue();
-                        Globals.Library.Db.Execute(String.Format(
+                        Globals.Library.Db.Execute(new DbCommand(
                             @"INSERT INTO PlaylistEntries 
-                                VALUES (NULL, '{0}', '{1}', (
+                                VALUES (NULL, :playlist_id, :track_id, (
                                     SELECT CASE WHEN MAX(ViewOrder)
                                         THEN MAX(ViewOrder) + 1
                                         ELSE 1 END
                                     FROM PlaylistEntries 
-                                    WHERE PlaylistID = '{0}')
-                                )", id, track.TrackId
+                                    WHERE PlaylistID = :playlist_id)
+                                )", 
+                                "track_id", track.TrackId,
+                                playlist_id_param
                         ));
                         OnTrackAdded(track);
                     }
@@ -299,31 +305,36 @@ namespace Banshee.Sources
                         return;
                     }
                     
-                    sql_position = Convert.ToInt32(Globals.Library.Db.QuerySingle(String.Format(
+                    sql_position = Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
                         @"SELECT ViewOrder
                             FROM PlaylistEntries
-                            WHERE PlaylistID = '{0}'
-                                AND TrackID = '{1}'
-                            LIMIT 1", id, sibling.TrackId)
+                            WHERE PlaylistID = :playlist_id
+                                AND TrackID = :track_id
+                            LIMIT 1", 
+                            "track_id", sibling.TrackId, 
+                            playlist_id_param)
                     ));
                 } else if(tracks[position] == track) {
                     return;
                 } 
                 
-                Globals.Library.Db.Execute(String.Format(
+                Globals.Library.Db.Execute(new DbCommand(
                     @"UPDATE PlaylistEntries
                         SET ViewOrder = ViewOrder + 1
-                        WHERE PlaylistID = '{0}'
-                            AND ViewOrder >= '{1}'",
-                    id, sql_position
+                        WHERE PlaylistID = :playlist_id
+                            AND ViewOrder >= :sql_position",
+                    "sql_position", sql_position, 
+                    playlist_id_param
                 ));
                 
-                Globals.Library.Db.Execute(String.Format(
+                Globals.Library.Db.Execute(new DbCommand(
                     @"UPDATE PlaylistEntries
-                        SET ViewOrder = '{1}'
-                        WHERE PlaylistID = '{0}'
-                            AND TrackID = '{2}'",
-                    id, sql_position, track.TrackId
+                        SET ViewOrder = :sql_position
+                        WHERE PlaylistID = :playlist_id
+                            AND TrackID = :track_id",
+                    "sql_position", sql_position, 
+                    "track_id", track.TrackId,
+                    playlist_id_param
                 ));
                 
                 tracks.Remove(track);
@@ -412,18 +423,14 @@ namespace Banshee.Sources
     
         internal static int GetPlaylistID(string name)
         {
-            string query = String.Format(
+            try {
+                return Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
                 @"SELECT PlaylistID
                     FROM Playlists
-                    WHERE Name = '{0}'
+                    WHERE Name = :name
                     LIMIT 1",
-                    Sql.Statement.EscapeQuotes(name)
-            );
-            
-            try {
-                object result = Globals.Library.Db.QuerySingle(query);
-                int id = Convert.ToInt32(result);
-                return id;
+                    "name", name
+                )));
             } catch(Exception) {
                 return 0;
             }

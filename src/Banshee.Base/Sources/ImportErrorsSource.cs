@@ -80,7 +80,7 @@ namespace Banshee.Sources
         }
       
         public override int Count {
-            get { return store.IterNChildren(); }
+            get { return store == null ? 0 : store.IterNChildren(); }
         }
 
         public void AddError(string path, string message, Exception e)

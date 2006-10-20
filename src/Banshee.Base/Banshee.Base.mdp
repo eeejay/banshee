@@ -59,7 +59,6 @@
     <File name="./Source.cs" subtype="Code" buildaction="Compile" />
     <File name="./SourceManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./SpecialKeys.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SqlGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="./StreamTagger.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrackInfoHeader.cs" subtype="Code" buildaction="Compile" />

@@ -29,7 +29,6 @@
 using System;
 using GLib;
 using Gtk;
-using Sql;
 using System.Collections;
 
 using System.Text.RegularExpressions;

@@ -9,8 +9,6 @@ using Banshee.Plugins;
 
 using Mono.Unix;
 
-using Sql;
-
 namespace Banshee.SmartPlaylist
 {
     public class SmartPlaylistSource : Banshee.Sources.ChildSource
@@ -107,12 +105,19 @@ namespace Banshee.SmartPlaylist
             LimitNumber = limit_number;
             LimitCriterion = limit_criterion;
 
-            Statement query = new Insert("SmartPlaylists", true,
+            /*Statement query = new Insert("SmartPlaylists", true,
                 "Name", Name,
                 "Condition", Condition,
                 "OrderBy", OrderBy,
                 "LimitNumber", LimitNumber,
                 "LimitCriterion", LimitCriterion
+            );*/
+            
+            string query = String.Format(@"
+                INSERT INTO SmartPlaylists
+                    (Name, Condition, OrderBy, LimitNumber, LimitCriterion)
+                    VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')",
+                    Name, Condition, OrderBy, LimitNumber, LimitCriterion
             );
 
             Id = Globals.Library.Db.Execute(query);
@@ -312,13 +317,17 @@ namespace Banshee.SmartPlaylist
         {
             Timer t = new Timer ("Commit");
 
-            Statement query = new Update("SmartPlaylists",
-                "Name", Name,
-                "Condition", Condition,
-                "OrderBy", OrderBy,
-                "LimitNumber", LimitNumber,
-                "LimitCriterion", LimitCriterion) + 
-                new Where(new Compare("PlaylistID", Op.EqualTo, Id));
+            string query = String.Format(@"
+                UPDATE SmartPlaylists
+                SET 
+                    Name = '{0}',
+                    Condition = '{1}',
+                    OrderBy = '{2}',
+                    LimitNumber = '{3}',
+                    LimitCriterion = '{4}'
+                WHERE PlaylistID = '{5}'",
+                Name, Condition, OrderBy, LimitNumber, LimitCriterion, Id
+            );
 
             Globals.Library.Db.Execute(query);
 

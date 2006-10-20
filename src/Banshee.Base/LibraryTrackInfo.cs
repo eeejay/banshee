@@ -32,8 +32,8 @@ using System.IO;
 using System.Data;
 using System.Collections;
 using System.Threading;
-
-using Sql;
+using System.Text;
+using Banshee.Database;
 
 namespace Banshee.Base
 {
@@ -41,17 +41,14 @@ namespace Banshee.Base
     {
         public static int GetId(SafeUri lookup)
         {
-            string query = String.Format(@"
-                SELECT TrackID
-                FROM Tracks
-                WHERE Uri = '{0}'
-                LIMIT 1", Sql.Escape.EscapeQuotes(lookup.AbsoluteUri)
-            );
-            
             try {
-                object result = Globals.Library.Db.QuerySingle(query);
-                int id = Convert.ToInt32(result);
-                return id;
+                return Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(@"
+                    SELECT TrackID
+                    FROM Tracks
+                    WHERE Uri = :uri
+                    LIMIT 1", 
+                    "uri", lookup.AbsoluteUri
+                )));
             } catch(Exception) {
                 return 0;
             }
@@ -283,91 +280,123 @@ namespace Banshee.Base
                 title = /*"Unknown Title"*/ null;
         }
         
+        private static DbCommand BuildCommand(int id, string table, params object [] args)
+        {
+            if(id <= 0) {
+                return BuildInsertCommand(table, args);
+            }
+            
+            return BuildUpdateCommand(id, table, args);
+        }
+        
+        private static DbCommand BuildInsertCommand(string table, params object [] args)
+        {
+            StringBuilder statement = new StringBuilder();
+            StringBuilder columns = new StringBuilder();
+            StringBuilder values = new StringBuilder();
+            
+            statement.Append("INSERT INTO ");
+            statement.Append(table);
+            
+            columns.Append(" (");
+            values.Append(" VALUES (");
+            
+            for(int i = 0; i < args.Length; i += 2) {
+                string name = (string)args[i];
+                
+                columns.Append(name);
+                if(i < args.Length - 2) {
+                    columns.Append(", ");
+                }
+                
+                values.Append(":");
+                values.Append(name);
+                if(i < args.Length - 2) {
+                    values.Append(", ");
+                }
+            }
+            
+            columns.Append(")");
+            values.Append(")");
+            
+            statement.Append(columns.ToString());
+            statement.Append(values.ToString());
+            
+            return new DbCommand(statement.ToString(), args);
+        }
+        
+        private static DbCommand BuildUpdateCommand(int id, string table, params object [] args)
+        {
+            StringBuilder statement = new StringBuilder();
+            
+            statement.Append("UPDATE ");
+            statement.Append(table);
+            statement.Append(" SET ");
+            
+            for(int i = 0; i < args.Length; i += 2) {
+                string name = (string)args[i];
+                
+                statement.Append(name);
+                statement.Append(" = :");
+                statement.Append(name);
+                
+                if(i < args.Length - 2) {
+                    statement.Append(", ");
+                }
+            }
+            
+            statement.Append(" WHERE TrackID = :TrackID");
+            return new DbCommand(statement.ToString(), args);
+        }
+        
         private void SaveToDatabase(bool retryIfFail)
         {
-            Statement tracksQuery;
+            DbCommand command = BuildCommand(track_id, "Tracks",
+                "TrackID", track_id <= 0 ? null : (object)track_id,
+                "Uri", uri.AbsoluteUri,
+                "MimeType", mimetype, 
+                "Artist", artist, 
+                "Performer", performer, 
+                "AlbumTitle", album,
+                "ASIN", asin,
+                "Label", label,
+                "Title", title, 
+                "Genre", genre, 
+                "Year", year,
+                "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
+                "TrackNumber", track_number, 
+                "TrackCount", track_count, 
+                "Duration", (int)duration.TotalSeconds, 
+                /*"TrackGain", track_gain, 
+                "TrackPeak", track_peak, 
+                "AlbumGain", album_gain, 
+                "AlbumPeak", album_peak,*/ 
+                "Rating", rating, 
+                "NumberOfPlays", play_count, 
+                "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played),
+                "RemoteLookupStatus", (int)remote_lookup_status);
 
-//            Console.WriteLine ("{0} has id {1}", uri.LocalPath, TrackId);
-
-            if(track_id <= 0) {
-                tracksQuery = new Insert("Tracks", true,
-                    "TrackID", null, 
-                    "Uri", uri.AbsoluteUri,
-                    "MimeType", mimetype, 
-                    "Artist", artist, 
-                    "Performer", performer, 
-                    "AlbumTitle", album,
-                    "ASIN", asin,
-                    "Label", label,
-                    "Title", title, 
-                    "Genre", genre, 
-                    "Year", year,
-                    "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
-                    "TrackNumber", track_number, 
-                    "TrackCount", track_count, 
-                    "Duration", (int)duration.TotalSeconds, 
-                    "TrackGain", track_gain, 
-                    "TrackPeak", track_peak, 
-                    "AlbumGain", album_gain, 
-                    "AlbumPeak", album_peak, 
-                    "Rating", rating, 
-                    "NumberOfPlays", play_count, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played),
-                    "RemoteLookupStatus", (int)remote_lookup_status);
-            } else {
-                tracksQuery = new Update("Tracks",
-                    "Uri", uri.AbsoluteUri,
-                    "MimeType", mimetype, 
-                    "Artist", artist, 
-                    "Performer", performer, 
-                    "AlbumTitle", album,
-                    "ASIN", asin,
-                    "Label", label,
-                    "Title", title, 
-                    "Genre", genre, 
-                    "Year", year,
-                    "DateAddedStamp", DateTimeUtil.FromDateTime(date_added), 
-                    "TrackNumber", track_number, 
-                    "TrackCount", track_count, 
-                    "Duration", (int)duration.TotalSeconds, 
-                    "TrackGain", track_gain, 
-                    "TrackPeak", track_peak, 
-                    "AlbumGain", album_gain, 
-                    "AlbumPeak", album_peak, 
-                    "Rating", rating, 
-                    "NumberOfPlays", play_count, 
-                    "LastPlayedStamp", DateTimeUtil.FromDateTime(last_played),
-                    "RemoteLookupStatus", (int)remote_lookup_status) +
-                    new Where(new Compare("TrackID", Op.EqualTo, track_id));// +
-                //    new Limit(1);
-            }
-            
             try {
-                Globals.Library.Db.Execute(tracksQuery);
+                Globals.Library.Db.Execute(command);
             } catch(Exception e) {
-                throw new Banshee.Library.DatabaseWriteException(e, tracksQuery.ToString());
+                throw new Banshee.Library.DatabaseWriteException(e, command.CommandText);
             }
 
-            /*if(Core.Library.Db.Execute(query) <= 0 && retryIfFail) {
-                track_id = 0;
-                SaveToDatabase(false);
-            } else if(track_id <= 0) {*/
-            
-            if(track_id <= 0) 
+            if(track_id <= 0) { 
                track_id = GetId(uri); /* OPTIMIZE! Seems like an unnecessary query */
+            }
         }
         
         private bool LoadFromDatabase(object id)
         {
-            string query = String.Format(@"
+            IDataReader reader = Globals.Library.Db.Query(new DbCommand(@"
                 SELECT * 
                 FROM Tracks
-                WHERE Uri = '{0}'
-                    OR TrackID = '{0}'
-                LIMIT 1", Sql.Escape.EscapeQuotes(id is string ? id as string : Convert.ToString(id))
-            );
-
-            IDataReader reader = Globals.Library.Db.Query(query);
+                WHERE Uri = :uri
+                    OR TrackID = :uri
+                LIMIT 1", 
+                "uri", id is string ? id as string : Convert.ToString(id)
+            ));
             
             if(reader == null)
                 return false;

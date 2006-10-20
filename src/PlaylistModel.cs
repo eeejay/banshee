@@ -30,7 +30,6 @@ using System;
 using System.Collections;
 using System.Threading;
 using Gtk;
-using Sql;
 
 using Banshee.Base;
 using Banshee.Sources;
@@ -349,7 +348,7 @@ namespace Banshee
                 
                 if(Globals.Random.NextDouble() < HOVER_FREQUENCY) {
                     string query = "SELECT TrackID FROM Tracks "
-                        + "WHERE Genre = '" + Statement.EscapeQuotes(last_track.Genre) + "' "
+                        + "WHERE Genre = '" + last_track.Genre + "' "
                         + "ORDER BY RANDOM() LIMIT 1";
 
                     int id = 0;

@@ -232,7 +232,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/TrackInfoPopup.cs \
 	$(srcdir)/Library.cs \
 	$(srcdir)/Database.cs \
-	$(srcdir)/SqlGenerator.cs \
 	$(srcdir)/LibraryTrackInfo.cs \
 	$(srcdir)/FileTrackInfo.cs \
 	$(srcdir)/DBusRemote.cs \

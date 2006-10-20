@@ -33,8 +33,6 @@ using System.Data;
 using System.IO;
 using Mono.Unix;
 
-using Sql;
-
 namespace Banshee.Base
 {
     public delegate void LibraryTrackAddedHandler(object o, LibraryTrackAddedArgs args);

@@ -71,32 +71,47 @@ namespace Banshee.Database
             WakeUp();
         }
         
-        public SqliteDataReader Query(object query)
+        public SqliteDataReader Query(DbCommand command)
         {
             WaitForConnection();
-            QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
-                query.ToString(), Banshee.Database.CommandType.Reader);
+            command.Connection = connection;
+            command.CommandType = Banshee.Database.CommandType.Reader;
             QueueCommand(command);
             return command.WaitForResult() as SqliteDataReader;
         }
-                
-        public object QuerySingle(object query)
+        
+        public SqliteDataReader Query(object command)
         {
-            WaitForConnection();
-            QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
-                query.ToString(), Banshee.Database.CommandType.Scalar);
-            QueueCommand(command);
-            return command.WaitForResult(); 
+            return Query(new DbCommand(command.ToString()));
         }
         
-        public int Execute(object query)
+        public object QuerySingle(DbCommand command)
         {
             WaitForConnection();
-            QueuedSqliteCommand command = new QueuedSqliteCommand(connection, 
-                query.ToString(), Banshee.Database.CommandType.Execute);
+            command.Connection = connection;
+            command.CommandType = Banshee.Database.CommandType.Scalar;
+            QueueCommand(command);
+            return command.WaitForResult();
+        }
+                
+        public object QuerySingle(object command)
+        {
+            return QuerySingle(new DbCommand(command.ToString()));
+        }
+        
+        public int Execute(DbCommand command)
+        {
+            WaitForConnection();
+            command.Connection = connection;
+            command.CommandType = Banshee.Database.CommandType.Execute;;
             QueueCommand(command);
             command.WaitForResult();
             return command.InsertID;
+        }
+        
+        public int Execute(object command)
+        {
+            return Execute(new DbCommand(command.ToString()));
         }
         
         public bool TableExists(string table)
@@ -156,19 +171,23 @@ namespace Banshee.Database
         }
     }
 
-    internal enum CommandType {
+    public enum CommandType {
         Reader,
         Scalar,
         Execute
     }
 
-    internal class QueuedSqliteCommand : SqliteCommand
+    public class QueuedSqliteCommand : SqliteCommand
     {
         private CommandType command_type;
         private object result;
         private int insert_id;
         private Exception execution_exception;
         private bool finished = false;
+        
+        public QueuedSqliteCommand(string command) : base(command)
+        {
+        }
         
         public QueuedSqliteCommand(SqliteConnection connection, string command, CommandType commandType) 
             : base(command, connection)
@@ -221,6 +240,66 @@ namespace Banshee.Database
         
         public int InsertID {
             get { return insert_id; }
+        }
+        
+        public new CommandType CommandType {
+            get { return command_type; }
+            set { command_type = value; }
+        }
+    }
+    
+    public class DbCommand : QueuedSqliteCommand
+    {
+        public DbCommand(string command) : base(command)
+        {
+        }
+                
+        public DbCommand(string command, params object [] parameters) : this(command)
+        {
+            for(int i = 0; i < parameters.Length;) {
+                SqliteParameter param;
+                
+                if(parameters[i] is SqliteParameter) {
+                    param = (SqliteParameter)parameters[i];
+                    if(i < parameters.Length - 1 && !(parameters[i + 1] is SqliteParameter)) {
+                        param.Value = parameters[i + 1];
+                        i += 2;
+                    } else {
+                        i++;
+                    }
+                } else {
+                    param = new SqliteParameter();
+                    param.ParameterName = (string)parameters[i];
+                    param.Value = parameters[i + 1];
+                    i += 2;
+                }
+                
+                Parameters.Add(param);
+            }
+        }
+        
+        public void AddParameter<T>(string name, T value)
+        {
+            AddParameter<T>(new DbParameter<T>(name), value);
+        }
+        
+        public void AddParameter<T>(DbParameter<T> param, T value)
+        {
+            param.Value = value;
+            Parameters.Add(param);
+        }
+    }
+    
+    public class DbParameter<T> : SqliteParameter
+    {
+        public DbParameter(string name) : base()
+        {
+            ParameterName = name;
+        }
+        
+        public new T Value {
+            get { return (T)base.Value; }
+            set { base.Value = value; }
         }
     }
 }

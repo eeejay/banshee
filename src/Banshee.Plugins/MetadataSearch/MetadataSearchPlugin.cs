@@ -259,8 +259,8 @@ namespace Banshee.Plugins.MetadataSearch
                                 FROM Tracks
                                 WHERE Artist = '{0}'
                                     AND AlbumTitle = '{1}'",
-                                    Sql.Statement.EscapeQuotes(track.Artist),
-                                    Sql.Statement.EscapeQuotes(track.Album))
+                                    track.Artist,
+                                    track.Album)
                         ) as string;
 
                         if(asin == NotFoundAsin) {
