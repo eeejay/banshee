@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-17 12:38+0300\n"
-"PO-Revision-Date: 2006-10-17 12:38+0300\n"
+"POT-Creation-Date: 2006-10-20 10:11+0200\n"
+"PO-Revision-Date: 2006-10-20 12:35+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -2163,20 +2163,20 @@ msgstr "Dabar importuojate iš {0}. Ar norite sustabdyti šią operaciją?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:277
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:292
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:232
 #, csharp-format
 msgid "Copying from {0}"
 msgstr "Kopijuojama iš {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:278
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:293
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:233
 msgid "Scanning..."
 msgstr "Skanuojama..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:396
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:411
 #: ../src/Banshee.Plugins/Daap/DaapSource.cs:349
 #, csharp-format
 msgid "Cannot import track from {0}"
@@ -2392,28 +2392,28 @@ msgstr "Kopijuojama {0} iš {1}"
 msgid "Audio Device"
 msgstr "Garso įrenginys"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:128
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
 msgid ": Found"
 msgstr ": Rasta"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:129
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
 msgid "Reading library information"
 msgstr "Skaitoma bibliotekos informacija"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:140
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:155
 msgid "Loading device"
 msgstr "Įkeliamas įrenginys"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:159
 msgid "Done"
 msgstr "Atlikta"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:145
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:160
 msgid ": Ready for use"
 msgstr ": Paruošta naudoti"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:192 ../src/Banshee.Dap/Mtp/MtpDap.cs:196
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:229 ../src/Banshee.Dap/Njb/NjbDap.cs:238
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:207 ../src/Banshee.Dap/Mtp/MtpDap.cs:211
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:244 ../src/Banshee.Dap/Njb/NjbDap.cs:238
 #: ../src/Banshee.Dap/Njb/NjbDap.cs:250
 msgid "Synchronizing Device"
 msgstr "Sinchronizuojamas įrenginys"
@@ -2879,7 +2879,7 @@ msgstr "Išvalyti"
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
 "Are you sure you want to permanently delete the selected {0} songs?"
-msgstr[0] "Ar tikrai norite negrįžtamai ištrinti šią dainą?"
+msgstr[0] "Ar tikrai norite negrįžtamai ištrinti šią {0} dainą?"
 msgstr[1] "Ar tikrai norite negrįžtamai ištrinti {0} pasirinktas dainas?"
 msgstr[2] "Ar tikrai norite negrįžtamai ištrinti {0} pasirinktų dainų?"
 
@@ -2896,7 +2896,7 @@ msgstr "Pašalinti pasirinkimą iš bibliotekos"
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
 "Are you sure you want to remove the selected {0} songs from your library?"
-msgstr[0] "Ar tikrai norite iš bibliotekos pašalinti pasirinktą dainą?"
+msgstr[0] "Ar tikrai norite iš bibliotekos pašalinti {0} pasirinktą dainą?"
 msgstr[1] "Ar tikrai norite iš bibliotekos pašalinti {0} pasirinktas dainas?"
 msgstr[2] "Ar tikrai norite iš bibliotekos pašalinti {0} pasirinktų dainų?"
 
