@@ -168,6 +168,7 @@ NJBSHARP_REQUIRED=0.3.0
 PKG_CHECK_MODULES(NJBSHARP,
 	njb-sharp >= $NJBSHARP_REQUIRED,
 	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
+AC_MSG_RESULT([$enable_njbsharp])
 if test "x$enable_njbsharp" = "xyes"; then
 	NJBSHARP_INSTALL_FILES=""
 	for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do	

@@ -1,3 +1,7 @@
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Added a missing AC_MSG_RESULT
+
 2006-10-20  Aaron Bockover  <abock@gnome.org>
 
 	* build/Common.Makefile: Added BANSHEE_PROFILES_PATH for running uninstalled
