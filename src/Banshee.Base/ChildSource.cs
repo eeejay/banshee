@@ -32,20 +32,10 @@ namespace Banshee.Sources
 {
     public class ChildSource : Source
     {
-        private Source parent;	    
+        private Source parent;        
 
         protected ChildSource(string name, int position) : base(name, position)
         {
-        }
-
-        public override void AddChildSource(ChildSource source)
-        {
-            throw new Exception("Cannot add a child source to a child source!");
-        }
-
-        public override void RemoveChildSource(ChildSource source)
-        {
-            throw new Exception("Cannot remove a child source from a child source!");
         }
 
         public void SetParentSource(Source source)

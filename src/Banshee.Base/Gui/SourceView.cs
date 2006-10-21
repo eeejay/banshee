@@ -133,31 +133,34 @@ namespace Banshee.Gui
             };
         }
 
-        // FIXME: This is lame and could use some recusrion instead (Lukas)
         private TreeIter FindSource(Source source)
         {
-            for(int i = 0, m = store.IterNChildren(); i < m; i++) {
-                TreeIter iter = TreeIter.Zero;
-                if(!store.IterNthChild(out iter, i)) {
-                    continue;
-                }
-                
+            TreeIter iter = TreeIter.Zero;
+            store.GetIterFirst(out iter);
+            return FindSource(source, iter);
+        }
+        
+        private TreeIter FindSource(Source source, TreeIter iter)
+        {
+            if(!store.IterIsValid(iter)) {
+                return TreeIter.Zero;
+            }
+            
+            do {
                 if((store.GetValue(iter, 0) as Source) == source) {
                     return iter;
                 }
-        
-                for(int j = 0, n = store.IterNChildren(iter); j < n; j++) {
+                
+                if(store.IterHasChild(iter)) {
                     TreeIter citer = TreeIter.Zero;
-                    if(!store.IterNthChild(out citer, iter, j)) {
-                        continue;
-                    }
-    
-                    if((store.GetValue(citer, 0) as Source) == source) {
-                        return citer;
+                    store.IterChildren(out citer, iter);
+                    TreeIter result = FindSource(source, citer);
+                    if(!result.Equals(TreeIter.Zero)) {
+                        return result;
                     }
                 }
-            }
-
+            } while(store.IterNext(ref iter));
+            
             return TreeIter.Zero;
         }
         
@@ -168,29 +171,38 @@ namespace Banshee.Gui
 
         private void AddSource(Source source, int position)
         {
-            if(FindSource(source).Equals(TreeIter.Zero)) {
-                TreeIter iter = store.InsertNode(position);
-                store.SetValue(iter, 0, source);
-
-                foreach (ChildSource s in source.Children) {
-                    TreeIter i = store.AppendNode(iter);
-                    store.SetValue(i, 0, s);
-                }
+            AddSource(source, position, TreeIter.Zero);
+        }
         
-                source.ChildSourceAdded += delegate(SourceEventArgs e) {
-                    TreeIter i = store.AppendNode(iter);
-                    store.SetValue(i, 0, e.Source);
-                    Expand(iter);
-                    UpdateView ();
-                };
+        private void AddSource(Source source, int position, TreeIter parent)
+        {
+            if(!FindSource(source).Equals(TreeIter.Zero))
+                return;
 
-                source.ChildSourceRemoved += delegate(SourceEventArgs e) {
-                    RemoveSource(e.Source);
-                };
+            TreeIter iter = parent.Equals(TreeIter.Zero)
+                ? store.InsertNode(position) 
+                : store.AppendNode(parent);
+                
+            store.SetValue(iter, 0, source);
 
-                Expand(iter);
+            lock(source.Children) {
+                foreach (ChildSource s in source.Children) {
+                    AddSource(s, position, iter);
+                }
             }
 
+            source.ChildSourceAdded += delegate(SourceEventArgs e) {
+                AddSource(e.Source, position, iter);
+            };
+
+            source.ChildSourceRemoved += delegate(SourceEventArgs e) {
+                RemoveSource(e.Source);
+            };
+            
+            if(source.AutoExpand) {
+                Expand(iter);
+            }
+            
             UpdateView();
         }
 
@@ -206,17 +218,17 @@ namespace Banshee.Gui
     
         private void Expand(TreeIter iter)
         {
-            TreePath path = store.GetPath (iter);
-            ExpandRow (path, true);
+            TreePath path = store.GetPath(iter);
+            ExpandRow(path, true);
         }
     
         private void RefreshList()
         {
             store.Clear();
             foreach(Source source in SourceManager.Sources) {
-                AddSource (source);
+                AddSource(source);
             }
-        } 
+        }
 
         private bool UpdateView()
         {

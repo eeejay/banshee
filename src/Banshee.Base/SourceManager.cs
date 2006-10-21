@@ -28,6 +28,7 @@
  
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Banshee.Base;
 
 namespace Banshee.Sources
@@ -47,7 +48,7 @@ namespace Banshee.Sources
     
     public static class SourceManager 
     {
-        private static ArrayList sources = new ArrayList();
+        private static List<Source> sources = new List<Source>();
         private static Source active_source;
         private static Source default_source;
         
@@ -124,6 +125,21 @@ namespace Banshee.Sources
                     handler(args);
                 }
             });
+        }
+        
+        public static void RemoveSource(Type type)
+        {
+            Queue<Source> remove_queue = new Queue<Source>();
+            
+            foreach(Source source in Sources) {
+                if(source.GetType() == type) {
+                    remove_queue.Enqueue(source);
+                }
+            }
+            
+            while(remove_queue.Count > 0) {
+                RemoveSource(remove_queue.Dequeue());
+            }
         }
         
         public static bool ContainsSource(Source source)
@@ -231,7 +247,7 @@ namespace Banshee.Sources
             });
         }
         
-        public static ICollection Sources {
+        public static ICollection<Source> Sources {
             get { return sources; }
         }
     }

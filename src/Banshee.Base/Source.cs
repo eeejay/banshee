@@ -67,7 +67,7 @@ namespace Banshee.Sources
         private int order;
         private string name;
 
-        private ArrayList child_sources;
+        private List<Source> child_sources;
 
         public event EventHandler Updated;
         public event TrackEventHandler TrackAdded;
@@ -80,7 +80,7 @@ namespace Banshee.Sources
         {
             this.name = name;
             this.order = order;
-            this.child_sources = new ArrayList ();
+            this.child_sources = new List<Source>();
         }
         
         public void Dispose()
@@ -223,44 +223,52 @@ namespace Banshee.Sources
                 copy.Reverse ();
             }
 
-            foreach(ChildSource child in copy) {
-                AddChildSource (child);
+            lock(Children) {
+                foreach(ChildSource child in copy) {
+                    AddChildSource (child);
+                }
             }
         }
         
         public virtual void AddChildSource(ChildSource source)
         {
-            source.SetParentSource(this);
-            child_sources.Add(source);
-        
-            SourceEventHandler handler = ChildSourceAdded;
-            if(handler != null) {
-                SourceEventArgs evargs = new SourceEventArgs();
-                evargs.Source = source;
-                handler(evargs);
+            lock(Children) {
+                source.SetParentSource(this);
+                child_sources.Add(source);
+            
+                SourceEventHandler handler = ChildSourceAdded;
+                if(handler != null) {
+                    SourceEventArgs evargs = new SourceEventArgs();
+                    evargs.Source = source;
+                    handler(evargs);
+                }
             }
         }
 
         public virtual void RemoveChildSource(ChildSource source)
         {
-            child_sources.Remove(source);
-            
-            if(SourceManager.ActiveSource == source) {
-                SourceManager.SetActiveSource(SourceManager.DefaultSource);
-            }
+            lock(Children) {
+                child_sources.Remove(source);
+                
+                if(SourceManager.ActiveSource == source) {
+                    SourceManager.SetActiveSource(SourceManager.DefaultSource);
+                }
 
-            SourceEventHandler handler = ChildSourceRemoved;
-            if(handler != null) {
-                SourceEventArgs evargs = new SourceEventArgs();
-                evargs.Source = source;
-                handler(evargs);
+                SourceEventHandler handler = ChildSourceRemoved;
+                if(handler != null) {
+                    SourceEventArgs evargs = new SourceEventArgs();
+                    evargs.Source = source;
+                    handler(evargs);
+                }
             }
         }
         
         public virtual void ClearChildSources()
         {
-            while(child_sources.Count > 0) {
-                RemoveChildSource(child_sources[0] as ChildSource);
+            lock(Children) {
+                while(child_sources.Count > 0) {
+                    RemoveChildSource(child_sources[0] as ChildSource);
+                }
             }
         }
         
@@ -295,7 +303,7 @@ namespace Banshee.Sources
             get { return null; }
         }
     
-        public ICollection Children {
+        public ICollection<Source> Children {
             get { return child_sources; }
         }
 
@@ -371,6 +379,10 @@ namespace Banshee.Sources
  
         public virtual bool HasEmphasis {
             get { return false; }
+        }
+        
+        public virtual bool AutoExpand {
+            get { return true; }
         }
 
         private bool can_rename = true;

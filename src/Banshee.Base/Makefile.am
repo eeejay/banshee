@@ -163,7 +163,8 @@ SOURCES_SOURCES = \
 	$(srcdir)/Sources/AudioCdSource.cs \
 	$(srcdir)/Sources/DapSource.cs \
 	$(srcdir)/Sources/LocalQueueSource.cs \
-	$(srcdir)/Sources/ImportErrorsSource.cs
+	$(srcdir)/Sources/ImportErrorsSource.cs \
+	$(srcdir)/Sources/TestSource.cs
 
 NETWORKMANAGER_SOURCES = \
 	$(srcdir)/NetworkManager/Manager.cs 

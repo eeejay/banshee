@@ -1,5 +1,24 @@
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Sources/TestSource.cs: Test source for testing the
+	functionality of the source base class, source manager, and source view;
+	tests can be invoked using the new interactive remote debugger
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Added TestSource.cs
+
+	* src/Banshee.Base/ChildSource.cs: Child sources can now be parents
+
+	* src/Banshee.Base/Source.cs:
+	* src/Banshee.Base/SourceManager.cs:
+	* src/Banshee.Base/Gui/SourceView.cs: Patched by Scott Peterson to allow
+	recursive sources (BGO #363548)
+	
+	* src/Banshee.Base/SourceManager.cs: Added RemoveSource(Type), use
+	generics for the source list
+
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Main.cs: Run the debugger client if --debug-client is passed
 
 	* src/Banshee.Base/Globals.cs: Start the debugger server, expose the
