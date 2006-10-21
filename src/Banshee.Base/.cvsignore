@@ -4,4 +4,6 @@ Makefile.in
 *.exe
 *.mdb
 *.pidb
+*.config
+ConfigureDefines.cs
 

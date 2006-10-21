@@ -7,4 +7,5 @@ banshee.schemas
 org.gnome.Banshee.service
 *.gladep
 *.bak
+translators.xml
 

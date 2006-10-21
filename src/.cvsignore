@@ -4,4 +4,7 @@ Makefile.in
 *.exe
 *.mdb
 *.pidb
+*.config
+banshee
+AssemblyInfo.cs
 
