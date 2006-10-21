@@ -17,8 +17,8 @@
 		  audio/x-raw-float,rate=$sample_rate,channels=$channels ! 
 		  audioconvert ! 
 		  lame 
-            bitrate=$bitrate ! 
-            mode=$mode
+            bitrate=$bitrate 
+            mode=$mode !
 		  id3v2mux
 		</process>
         <variable id="bitrate">
