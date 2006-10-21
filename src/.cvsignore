@@ -1,13 +1,7 @@
-post-1.0
-AmazonSearchService.cs
-AssemblyInfo.cs
-ConfigureDefines.cs
 Makefile
 Makefile.in
-banshee
-banshee.exe.config
-banshee.exe.mdb
-ipod-sharp.dll.config
-banshee-import
-banshee-import.exe.mdb
+*.dll
+*.exe
+*.mdb
+*.pidb
 

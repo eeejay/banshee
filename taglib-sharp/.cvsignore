@@ -1,8 +1,8 @@
 Makefile
 Makefile.in
-*.config
 *.dll
 *.exe
 *.mdb
 *.pidb
+*.sh
 

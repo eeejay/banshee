@@ -1,7 +1,8 @@
 Makefile
 Makefile.in
-Banshee.Widgets.dll.config
 *.mdb
 *.dll
 *.exe
+*.pidb
+*.config
 

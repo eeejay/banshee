@@ -1,7 +1,8 @@
 Makefile
 Makefile.in
-MusicBrainz.dll.config
 *.mdb
 *.dll
 *.exe
+*.pidb
+*.config
 
