@@ -37,7 +37,7 @@
         <variable id="mode">
           <name>Mode</name>
           <control-type>combo</control-type>
-          <default-value>0</default-value>
+          <default-value>4</default-value>
           <possible-values>
             <value value="0">Stereo</value>
             <value value="1">Joint Stereo</value>
