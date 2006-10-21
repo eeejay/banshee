@@ -1,3 +1,7 @@
+2006-10-21  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* src/Banshee.Dap/Mtp/MtpDeviceId.cs: added Toshiba Gigabeat S
+
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Gui/SourceView.cs: AutoExpand now works for child
