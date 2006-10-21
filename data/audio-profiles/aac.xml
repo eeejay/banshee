@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<audio-profiles>
+  <profiles>
+    <profile id="faac-aac">
+      <name>MP4/AAC (Lossy)</name>
+      <description>Good trade-off between quality and file size.</description>
+      <output-file-extension>m4a</output-file-extension>
+      <mimetype>audio/x-m4a</mimetype>
+      <mimetype>audio/mp4</mimetype>
+      <pipeline>
+        <process id="gstreamer">
+          audioconvert ! 
+          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
+          audioconvert ! 
+          faac bitrate=$bitrate outputformat=1 ! 
+          ffmux_mp4
+        </process>
+        <variable id="bitrate">
+          <name>Bitrate</name>
+          <control-type>combo</control-type>
+          <default-value>128</default-value>
+          <possible-values>
+            <value value="64">64 Kbps</value>
+            <value value="96">96 Kbps</value>
+            <value value="128">128 Kbps</value>
+            <value value="160">160 Kbps</value>
+            <value value="192">192 Kbps</value>
+            <value value="320">320 Kbps</value>
+          </possible-values>
+        </variable>
+        <preset-variable id="channels" />
+        <preset-variable id="sample_rate" />
+      </pipeline>
+    </profile>
+  </profiles>
+</audio-profiles>

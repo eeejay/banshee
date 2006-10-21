@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<audio-profiles>
+  <preset-variables>
+    <variable id="channels">
+      <name>Channels</name>
+      <control-type>combo</control-type>
+      <default-value>2</default-value>
+      <possible-values>
+        <value value="1">1</value>
+        <value value="2">2</value>
+      </possible-values>
+      <advanced />
+    </variable>
+    <variable id="sample_rate">
+      <name>Sample Rate</name>
+      <control-type>combo</control-type>
+      <default-value>44100</default-value>
+      <possible-values>
+        <value value="44100">44.1 kHz</value>
+        <value value="22050">22.05 kHz</value>
+      </possible-values>
+      <advanced />
+    </variable>
+  </preset-variables>
+</audio-profiles>

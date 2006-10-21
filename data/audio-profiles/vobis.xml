@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<audio-profiles>
+  <profiles>
+    <profile id="vorbis">
+      <name>Ogg Vorbis (Lossy)</name>
+      <description>Good trade-off between quality and file size.</description>
+      <output-file-extension>ogg</output-file-extension>
+      <mimetype>audio/x-ogg</mimetype>
+      <mimetype>audio/ogg</mimetype>
+      <mimetype>audio/x-vorbis+ogg</mimetype>
+      <mimetype>audio/x-vorbis</mimetype>
+      <mimetype>audio/vorbis</mimetype>
+      <mimetype>application/x-ogg</mimetype>
+      <mimetype>application/ogg</mimetype>
+      <pipeline>
+        <process id="gstreamer">
+          audioconvert ! 
+          audio/x-raw-float,rate=$sample_rate,channels=$channels ! 
+          audioconvert ! 
+          vorbisenc quality=$quality ! 
+          oggmux
+        </process>
+        <variable id="quality">
+          <name>Audio Quality</name>
+          <control-type>slider</control-type>
+          <min-value>-1.0</min-value>
+          <max-value>10.0</max-value>
+          <step-value>1.0</step-value>
+          <default-value>5.0</default-value>
+          <transformation id="gstreamer">$_ / 10</transformation>
+        </variable>
+        <preset-variable id="channels" />
+        <preset-variable id="sample_rate" />
+      </pipeline>
+    </profile>
+  </profiles>
+</audio-profiles>
