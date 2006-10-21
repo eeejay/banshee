@@ -204,11 +204,11 @@ namespace Banshee.AudioProfiles.Gui
             TreeIter active_iter = TreeIter.Zero;
 
             if(variable.PossibleValuesCount > 0) {
-                foreach(KeyValuePair<string, string> value in variable.PossibleValues) {
-                    TreeIter iter = ComboAppend(model, variable, value.Value, value.Key);
+                foreach(string key in variable.PossibleValuesKeys) {
+                    TreeIter iter = ComboAppend(model, variable, variable.PossibleValues[key], key);
                 
-                    if(variable.CurrentValue == value.Key || (active_iter.Equals(TreeIter.Zero) && 
-                        variable.DefaultValue == value.Key)) {
+                    if(variable.CurrentValue == key || (active_iter.Equals(TreeIter.Zero) && 
+                        variable.DefaultValue == key)) {
                         active_iter = iter;
                     }
                 }

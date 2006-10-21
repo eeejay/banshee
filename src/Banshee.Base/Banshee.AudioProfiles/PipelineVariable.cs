@@ -54,6 +54,7 @@ namespace Banshee.AudioProfiles
         private double step_value;
         private Abakos.Compiler.Expression step_expression;
         private Dictionary<string, string> possible_values = new Dictionary<string, string>();
+        private List<string> possible_values_keys = new List<string>();
         private Dictionary<string, string> transformations = new Dictionary<string, string>();
         private bool advanced;
     
@@ -99,6 +100,7 @@ namespace Banshee.AudioProfiles
 
                     if(!possible_values.ContainsKey(value)) {
                         possible_values.Add(value, display);
+                        possible_values_keys.Add(value);
                     }
                 } catch {
                 }
@@ -270,10 +272,14 @@ namespace Banshee.AudioProfiles
             }
         }
         
-        public IEnumerable<KeyValuePair<string, string>> PossibleValues {
+        public IDictionary<string, string> PossibleValues {
             get { return possible_values; }
         }
-
+        
+        public ICollection<string> PossibleValuesKeys {
+            get { return possible_values_keys; }
+        }
+        
         public int PossibleValuesCount {
             get { return possible_values.Count; }
         }

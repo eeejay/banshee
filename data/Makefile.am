@@ -1,8 +1,8 @@
 SUBDIRS = \
 	images
 
-audioprofilesdir = $(pkgdatadir)
-audioprofiles_DATA = $(srcdir)/audio-profiles.xml
+audioprofilesdir = $(pkgdatadir)/audio-profiles
+audioprofiles_DATA = $(srcdir)/audio-profiles/*.xml
 
 desktopdir = $(datadir)/applications
 desktop_in_files=banshee.desktop.in.in
@@ -39,7 +39,7 @@ EXTRA_DIST = \
 	banshee.glade \
 	banshee-dialogs.glade \
 	contributors.xml \
-	audio-profiles.xml \
+	audio-profiles/*.xml \
 	TranslatorExtract.cs \
 	$(desktop_in_files) \
 	$(schema_in_files) \

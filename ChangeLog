@@ -1,3 +1,27 @@
+2006-10-20  Aaron Bockover  <abock@gnome.org>
+
+	* build/Common.Makefile: Added BANSHEE_PROFILES_PATH for running uninstalled
+
+	* data/Makefile.am: XML profile definitions split into multiple files to
+	make it easy for distros to add/remove/customize specific profiles
+
+	* data/audio-profiles.xml: Removed, split into multiple files
+
+	* data/audio-profiles/*.xml: Added multiple files from old single file
+
+	* src/Banshee.Base/Globals.cs: Always load profiles from path set in
+	BANSHEE_PROFILES_PATH env variable
+
+	* src/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs: Added
+	PossibleValuesKeys which can be used to look up variable values in 
+	the XML-defined order (vs distributed hash)
+
+	* src/Banshee.Base/Banshee.AudioProfiles/ProfileManager.cs: Support loading
+	multiple XML files from a directory
+
+	* src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:
+	use PossibleValuesKeys to populate the combo box in XML-defined order
+
 2006-10-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs: Add escape

@@ -99,15 +99,30 @@ namespace Banshee.Base
             startup.Register(Catalog.GetString("Initializing audio"), Banshee.Gstreamer.Utilities.Initialize);
             
             startup.Register(Catalog.GetString("Initializing audio"), delegate {
-                string system_path = Path.Combine(Banshee.Base.Paths.SystemApplicationData, "audio-profiles.xml");
-                string user_path = Path.Combine(Banshee.Base.Paths.ApplicationData, "audio-profiles.xml");
-            
-                if(File.Exists(user_path)) {
-                    audio_profile_manager = new ProfileManager(user_path);
+                string system_path = Path.Combine(Banshee.Base.Paths.SystemApplicationData, "audio-profiles");
+                string user_path = Path.Combine(Banshee.Base.Paths.ApplicationData, "audio-profiles");
+                string env_path = Environment.GetEnvironmentVariable("BANSHEE_PROFILES_PATH");
+                string load_path = null;
+                
+                if(Directory.Exists(env_path)) {
+                    load_path = env_path;
+                } else if(Directory.Exists(user_path)) {
+                    load_path = user_path;
                 } else {
-                    audio_profile_manager = new ProfileManager(system_path);
+                    /*try {
+                        Directory.CreateDirectory(user_path);
+                        foreach(string file in Directory.GetFiles(system_path, "*.xml")) {
+                            File.Copy(file, Path.Combine(user_path, Path.GetFileName(file)));
+                        }
+                        
+                        load_path = user_path;
+                    } catch {*/
+                        load_path = system_path;
+                    //}
                 }
                     
+                LogCore.Instance.PushDebug("Loading audio profiles", load_path);
+                audio_profile_manager = new ProfileManager(load_path);
                 audio_profile_manager.TestProfile += OnTestAudioProfile;
                 audio_profile_manager.TestAll();
             });

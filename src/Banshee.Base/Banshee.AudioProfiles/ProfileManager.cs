@@ -67,6 +67,24 @@ namespace Banshee.AudioProfiles
 
         public ProfileManager(string path)
         {
+            if(File.Exists(path)) {
+                LoadFromFile(path);
+            } else if(Directory.Exists(path)) {
+                string base_file = Path.Combine(path, "base.xml");
+                if(File.Exists(base_file)) {
+                    LoadFromFile(base_file);
+                }
+                
+                foreach(string file in Directory.GetFiles(path, "*.xml")) {
+                    if(Path.GetFileName(file) != "base.xml") {
+                        LoadFromFile(file);
+                    }
+                }
+            }
+        }
+        
+        private void LoadFromFile(string path)
+        {
             document = new XmlDocument();
             document.Load(path);
 
@@ -74,6 +92,8 @@ namespace Banshee.AudioProfiles
                 Load();
             } catch {
             }
+            
+            document = null;
         }
 
         private void Load()
