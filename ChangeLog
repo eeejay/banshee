@@ -1,5 +1,10 @@
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Gui/SourceView.cs: AutoExpand now works for child
+	sources (Scott Peterson, BGO #363548)
+
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Sources/TestSource.cs: Test source for testing the
 	functionality of the source base class, source manager, and source view;
 	tests can be invoked using the new interactive remote debugger

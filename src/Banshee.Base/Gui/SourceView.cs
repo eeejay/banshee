@@ -202,6 +202,12 @@ namespace Banshee.Gui
             if(source.AutoExpand) {
                 Expand(iter);
             }
+            if(source is ChildSource) {
+                ChildSource child = source as ChildSource;
+                if(child.Parent.AutoExpand) {
+                    Expand(FindSource(child.Parent));
+                }
+            }
             
             UpdateView();
         }
