@@ -1,5 +1,25 @@
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Main.cs: Run the debugger client if --debug-client is passed
+
+	* src/Banshee.Base/Globals.cs: Start the debugger server, expose the
+	Shutdown method to the remote debugger
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Added Banshee.Debugger files
+
+	* src/Banshee.Base/Banshee.Debugger/Server.cs: Remote debugger server; 
+	allows public static methods flagged with RemoteMethodAttribute in 
+	Banshee to be run remotely over DBus
+	
+	* src/Banshee.Base/Banshee.Debugger/Client.cs: Simple command line client
+	to the remote DBus debugger server
+	
+	* src/Banshee.Base/Banshee.Debugger/RemoteMethodAttribute.cs: Attribute
+	to expose a public static method to the remote debugger
+	
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Added a missing AC_MSG_RESULT
 
 2006-10-20  Aaron Bockover  <abock@gnome.org>

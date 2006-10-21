@@ -286,6 +286,12 @@ namespace Banshee
                 System.Environment.Exit(0);
             }
             
+            if(Globals.ArgumentQueue.Contains("debug-client")) {
+                Banshee.Debugger.Client debug_client = new Banshee.Debugger.Client();
+                debug_client.Run();
+                System.Environment.Exit(0);
+            }
+            
             if(!Globals.ArgumentQueue.Contains("help")) {
                 return;
             }

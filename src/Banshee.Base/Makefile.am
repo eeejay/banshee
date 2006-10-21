@@ -9,6 +9,11 @@ bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 Banshee_Base_SOURCES_IN = ConfigureDefines.cs.in
 Banshee_Base_GENERATED_SOURCES = $(Banshee_Base_SOURCES_IN:.in=)
 
+BANSHEE_DEBUGGER_SOURCES = \
+	$(srcdir)/Banshee.Debugger/Client.cs \
+	$(srcdir)/Banshee.Debugger/Server.cs \
+	$(srcdir)/Banshee.Debugger/RemoteMethodAttribute.cs
+
 BANSHEE_AUDIOPROFILES_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles/ProfileManager.cs \
 	$(srcdir)/Banshee.AudioProfiles/Profile.cs \
@@ -204,6 +209,7 @@ ASSEMBLY_SOURCES = \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \
+	$(BANSHEE_DEBUGGER_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionManager.cs \
