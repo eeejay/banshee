@@ -57,6 +57,7 @@
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
             <menuitem name="Columns" action="ColumnsAction" />
+            <menuitem name="Shell" action="ShellAction" />
         </menu>
         <menu name="HelpMenu" action="HelpMenuAction">
             <menu name="WebMenu" action="WebMenuAction">

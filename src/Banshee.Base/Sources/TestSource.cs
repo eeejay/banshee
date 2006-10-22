@@ -75,13 +75,11 @@ namespace Banshee.Sources
             get { return icon; }
         }
         
-        [RemoteMethod("test-source-add-single")]
         public static void AddSingle()
         {
             SourceManager.AddSource(new TestSource());
         }
         
-        [RemoteMethod("test-source-add-recursive")]
         public static void AddRecursive()
         {
             TestSource parent = new TestSource();
@@ -91,7 +89,6 @@ namespace Banshee.Sources
             parent.AddChildSource(new TestChildSource());
         }
         
-        [RemoteMethod("test-source-remove-all")]
         public static void RemoveAll()
         {
             SourceManager.RemoveSource(typeof(TestSource));

@@ -136,6 +136,13 @@ namespace Banshee.Base
                     Catalog.GetString("Columns..."), null,
                     Catalog.GetString("Select which columns to display in the song list"), null),
                 
+                new ActionEntry("ShellAction", null,
+                    Catalog.GetString("Shell..."), null,
+                    Catalog.GetString("Open the Boo Shell"), delegate {
+                        Banshee.Debugger.Shell shell = new Banshee.Debugger.Shell();
+                        shell.Show();
+                    }),
+                
                 new ActionEntry("ShowEqualizerAction", null,
                     Catalog.GetString("Equalizer"), null,
                     Catalog.GetString("Display the equalizer."), null),

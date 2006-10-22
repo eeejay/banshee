@@ -207,10 +207,8 @@
     <File name="./Banshee.AudioProfiles/ProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Debugger" subtype="Directory" buildaction="Compile" />
-    <File name="./Banshee.Debugger/Client.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Debugger/Server.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Debugger/RemoteMethodAttribute.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/TestSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Debugger/Shell.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

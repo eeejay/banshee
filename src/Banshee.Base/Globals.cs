@@ -140,14 +140,12 @@ namespace Banshee.Base
                 
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
             startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
-            startup.Register(Catalog.GetString("Starting background tasks"), Banshee.Debugger.Server.Initialize);
             
             startup.Run();
             
             action_manager.LoadInterface();
         }
         
-        [Banshee.Debugger.RemoteMethod("shutdown")]
         public static void Shutdown()
         {
             if(Banshee.Kernel.Scheduler.IsScheduled(typeof(Banshee.Kernel.IInstanceCriticalJob)) ||
@@ -189,9 +187,6 @@ namespace Banshee.Base
         
         private static void Dispose()
         {
-            if(Banshee.Debugger.Server.Instance != null) {
-                Banshee.Debugger.Server.Instance.Dispose();
-            }
             dbus_remote.UnregisterObject(dbus_player);
             Banshee.Kernel.Scheduler.Dispose();
             Banshee.Plugins.PluginCore.Dispose();

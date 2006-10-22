@@ -9,7 +9,8 @@ SUBDIRS = \
 	Banshee.MediaEngine \
 	Banshee.Dap \
 	Banshee.Plugins \
-	Banshee.Hyena
+	Banshee.Hyena \
+	Boo
 
 BANSHEE = banshee
 BANSHEE_ASSEMBLY = $(BANSHEE).exe

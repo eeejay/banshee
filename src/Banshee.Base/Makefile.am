@@ -10,9 +10,7 @@ Banshee_Base_SOURCES_IN = ConfigureDefines.cs.in
 Banshee_Base_GENERATED_SOURCES = $(Banshee_Base_SOURCES_IN:.in=)
 
 BANSHEE_DEBUGGER_SOURCES = \
-	$(srcdir)/Banshee.Debugger/Client.cs \
-	$(srcdir)/Banshee.Debugger/Server.cs \
-	$(srcdir)/Banshee.Debugger/RemoteMethodAttribute.cs
+	$(srcdir)/Banshee.Debugger/Shell.cs
 
 BANSHEE_AUDIOPROFILES_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles/ProfileManager.cs \
@@ -285,7 +283,7 @@ Banshee_Base_EXPANDED_RESOURCES += $(top_builddir)/data/translators.xml
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
-	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_LAST_FM) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) -r:System.Data -r:Mono.Data.SqliteClient -r:Mono.Cairo $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_LAST_FM) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) $(LINK_BOO) -r:System.Data -r:Mono.Data.SqliteClient -r:Mono.Cairo $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe

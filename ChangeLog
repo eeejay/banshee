@@ -1,3 +1,27 @@
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Main.cs: 
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Globals.cs:
+	* src/Banshee.Base/Sources/TestSource.cs:
+	* src/Banshee.Base/Banshee.Debugger/Client.cs:
+	* src/Banshee.Base/Banshee.Debugger/RemoteMethodAttribute.cs:
+	* src/Banshee.Base/Banshee.Debugger/Server.cs: Removed yesterday's DBus
+	plus reflection-based stuff
+
+	* configure.ac: Output src/Boo/Makefile
+
+	* src/Banshee.Base/ActionManager.cs:
+	* data/UIManagerLayout.xml: Added view menu item for Shell
+
+	* src/Makefile.am: Added Boo to SUBDIRS
+
+	* build/Common.Makefile: Rules for Boo
+
+	* src/Boo/*.dll: Added Boo libraries
+
+	* src/Banshee.Base/Banshee.Debugger/Shell.cs: Added new Boo support and UI
+
 2006-10-21  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Banshee.Dap/Mtp/MtpDeviceId.cs: added Toshiba Gigabeat S
