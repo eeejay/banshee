@@ -137,7 +137,7 @@ namespace Banshee.Base
                     Catalog.GetString("Select which columns to display in the song list"), null),
                 
                 new ActionEntry("ShellAction", null,
-                    Catalog.GetString("Shell..."), null,
+                    Catalog.GetString("Shell..."), "<control><shift>S",
                     Catalog.GetString("Open the Boo Shell"), delegate {
                         Banshee.Debugger.Shell shell = new Banshee.Debugger.Shell();
                         shell.Show();
@@ -335,6 +335,7 @@ namespace Banshee.Base
             ui.InsertActionGroup(dap_actions, 0);
             
             this["DebugMenuAction"].Visible = Globals.ArgumentQueue.Contains("debug");
+            this["ShellAction"].Visible = Globals.ArgumentQueue.Contains("debug");
         }
         
         public Action FindActionByName(string actionName)
