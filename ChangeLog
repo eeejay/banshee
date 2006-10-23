@@ -1,5 +1,16 @@
 2006-10-23  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 0.11.2 Released
+
+	* NEWS: Updated
+
+	* configure.ac: 
+	* build/Common.Makefile:
+	* src/Boo/Makefile.am: Use external boo if --enable-external-boo is passed
+	(Sebastian Dröge)
+
+2006-10-23  Aaron Bockover  <abock@gnome.org>
+
 	Patch by Scott Peterson, BGO #363548
 
 	* src/Banshee.Base/Source.cs: Fix for ClearChildSources

@@ -1,4 +1,4 @@
-Banshee 0.11.1
+Banshee 0.11.2
 
 "Import, organize, play, and share your music using Banshee's simple, 
 powerful interface. Rip CDs, play and sync your iPod, create playlists, 
@@ -23,31 +23,30 @@ MODULE NOTES
 NEW CORE FEATURES
 -----------------
 
- * New encoding profile support: user friendly and easily configurable. 
-   Vorbis uses the quality metric instead of constant bitrates. Each
-   DAP device can also save and manage its own encoding profile. 
+ * New interactive interpreted Boo shell (CTRL-SHIFT-S) that allows live
+   in-process manipulation of Banshee using the Boo language (Aaron Bockover)
+
+ * Show DAAP shares under a single master container source (Scott Peterson,
+   BGO #363548)
+
+ * Recursive child sources now possible (Scott Peterson, BGO #363548)
+
+ * Load XML audio profiles from multiple sources; fixed sorting issue with
+   the combo control; added 'mode' support to mp3-lame; load profiles from
+   the BANSHEE_PROFILES_PATH environment variable if set (Aaron Bockover)
+
+ * New SQL Database Command layer for more secure and optimized queries 
    (Aaron Bockover)
 
- * Updated DAAP core to 0.3.5; importing from DAAP now works 
-   (daap-sharp, James Willcox)
+ * MTP fixes and improvements (Patrick van Staveren)
 
- * New DBus support that does not depend on old dbus-sharp or libdbus; see
-   http://ndesk.org/DBusSharp (Alp Toker, Aaron Bockover)
+ * Do not require intltool 0.35 (Aaron Bockover)
 
- * HAL support now uses DBus instead of libhal (Aaron Bockover)
+ * Fixed various build problems and workaround regarding Mono 1.1.18
+   (Aaron Bockover, Alp Toker)
+ 
+ * Bugs fixed: BNC #212477, BGO #363548
 
- * Notification support now uses DBus instead of libnotify (Sebastian Dröge)
-
- * Updates to smart playlists (Gabriel Burt)
-
- * Updated build system - easier to build banshee components and supports
-   running fully uninstalled ('make run') (Aaron Bockover)
-
- * Patches merged back from 0.10.x: BNC #200953, #199902, #188437
-
- * Other bugs fixed: BNC #184491, #187643, #199345, BGO #357548, #356990, 
-   #356985, #348373 (Michael Quinn), #361943
-   
 
 NEW OFFICIAL PLUGINS FEATURES
 -----------------------------
@@ -62,13 +61,13 @@ IMPORTANT LINKS
 ---------------
 
 Release Overview Page:
-http://banshee-project.org/Releases/0.11.1
+http://banshee-project.org/Releases/0.11.2
 
-Banshee 0.11.1 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.11.1.tar.gz
+Banshee 0.11.2 Tarball:
+http://banshee-project.org/files/banshee/banshee-0.11.2.tar.gz
 
-Banshee Official Plugins 0.11.1 Tarball:
-http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.1.tar.gz
+Banshee Official Plugins 0.11.2 Tarball
+http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.2.tar.gz
 
 ipod-sharp 0.6.2 Tarball:
 http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz

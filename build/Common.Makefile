@@ -29,9 +29,14 @@ LINK_GNOME_KEYRING = -r:$(DIR_GNOME_KEYRING)/Gnome.Keyring.dll
 LINK_DBUS = \
 	-r:$(DIR_DBUS)/NDesk.DBus.dll \
 	-r:$(DIR_DBUS)/NDesk.DBus.GLib.dll
+
+if EXTERNAL_BOO
+LINK_BOO = $(BOO_LIBS)
+else
 LINK_BOO = \
 	-r:$(DIR_BOO)/Boo.Lang.Compiler.dll \
 	-r:$(DIR_BOO)/Boo.Lang.Interpreter.dll
+endif
 LINK_BOOBUDDY = -r:$(DIR_BOOBUDDY)/BooBuddy.dll
 
 LINK_BANSHEE_WIDGETS = -r:$(DIR_BANSHEE_WIDGETS)/Banshee.Widgets.dll
