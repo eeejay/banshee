@@ -248,6 +248,9 @@ namespace Banshee.Sources
         public virtual void RemoveChildSource(ChildSource source)
         {
             lock(Children) {
+                if (source.Children.Count > 0) {
+                    source.ClearChildSources();
+                }
                 child_sources.Remove(source);
                 
                 if(SourceManager.ActiveSource == source) {
@@ -267,7 +270,7 @@ namespace Banshee.Sources
         {
             lock(Children) {
                 while(child_sources.Count > 0) {
-                    RemoveChildSource(child_sources[0] as ChildSource);
+                    RemoveChildSource(child_sources[child_sources.Count - 1] as ChildSource);
                 }
             }
         }

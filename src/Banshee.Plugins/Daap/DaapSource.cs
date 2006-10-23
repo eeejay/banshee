@@ -38,8 +38,9 @@ using Banshee.Sources;
 
 namespace Banshee.Plugins.Daap
 {
-    public class DaapSource : Source, IImportable, IImportSource
-    {
+    
+    public class DaapSource : ChildSource, IImportable, IImportSource
+    {        
         private Service service;
         private Client client;
         private DAAP.Database database;
@@ -55,26 +56,27 @@ namespace Banshee.Plugins.Daap
         
         public override void Activate()
         {
-            if(client == null && !is_activating) {
-                is_activating = true;
-                Console.WriteLine("Connecting to DAAP share: " + service);
-                ThreadAssist.Spawn(delegate {
-                    client = new Client(service);
-                    client.Updated += OnClientUpdated;
-                    try {
-                        if(client.AuthenticationMethod == AuthenticationMethod.None) {
-                            client.Login();
-                        } else {
-                            ThreadAssist.ProxyToMain(PromptLogin);
-                        }
-                    } catch(Exception e) {
-                        LogCore.Instance.PushError(Catalog.GetString("Cannot login to DAAP share"),
-                            e.Message);
-                    }
-                    
-                    is_activating = false;
-                });
+            if(client != null || is_activating) {
+            	return;
             }
+            is_activating = true;
+            Console.WriteLine("Connecting to DAAP share: " + service);
+            ThreadAssist.Spawn(delegate {
+                client = new Client(service);
+                client.Updated += OnClientUpdated;
+                try {
+                    if(client.AuthenticationMethod == AuthenticationMethod.None) {
+                        client.Login();
+                    } else {
+                        ThreadAssist.ProxyToMain(PromptLogin);
+                    }
+                } catch(Exception e) {
+                    LogCore.Instance.PushError(Catalog.GetString("Cannot login to DAAP share"),
+                        e.Message);
+                }
+               
+                is_activating = false;
+            });
         }
 
         private void AddPlaylistSources ()
@@ -126,7 +128,7 @@ namespace Banshee.Plugins.Daap
             if(client != null) {
                 if (logout)
                     client.Logout();
-                
+
                 client.Dispose();
                 client = null;
                 database = null;
@@ -200,6 +202,10 @@ namespace Banshee.Plugins.Daap
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network); 
         public override Gdk.Pixbuf Icon {
             get { return icon; }
+        }
+        
+        public override bool AutoExpand {
+            get { return false; }
         }
 
         public void Import()

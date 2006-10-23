@@ -11,6 +11,7 @@ ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/DaapPlugin.cs \
 	$(srcdir)/DaapCore.cs \
+	$(srcdir)/DaapContainerSource.cs \
 	$(srcdir)/DaapSource.cs \
 	$(srcdir)/DaapTrackInfo.cs \
 	$(srcdir)/DaapLoginDialog.cs \

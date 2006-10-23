@@ -46,6 +46,7 @@ namespace Banshee.Plugins.Daap
         private static DaapProxyWebServer proxy_server;
         private static Hashtable source_map;
         private static int collision_count;
+        private static DaapContainerSource container_source;
         
         private static bool initial_db_committed = false;
         
@@ -67,8 +68,7 @@ namespace Banshee.Plugins.Daap
             
             try {
                 share_name = Globals.Configuration.Get(plugin.ConfigurationKeys["ShareName"]) as string;
-            } catch {
-            }
+            } catch {}
             
             if(share_name == null || share_name == String.Empty) {
                 share_name = Catalog.GetString("Banshee Music Share");
@@ -124,7 +124,7 @@ namespace Banshee.Plugins.Daap
                 return;
             
             try {
-                Source source = new DaapSource(args.Service);
+                DaapSource source = new DaapSource(args.Service);
                 int collision = 0;
                 string service_name = args.Service.Name;
                 
@@ -135,7 +135,12 @@ namespace Banshee.Plugins.Daap
                 while (source_map.Contains(service_name))
                     service_name = args.Service.Name + " [" + ++collision + "]";
                 source_map.Add(service_name, source);
-                SourceManager.AddSource(source);
+                if(source_map.Count == 1) {
+                    container_source = new DaapContainerSource();
+                    SourceManager.AddSource(container_source);
+                }
+                container_source.AddChildSource(source);
+                
             } catch(InvalidSourceException) {
             }
         }
@@ -146,11 +151,16 @@ namespace Banshee.Plugins.Daap
             if(source == null) {
                 return;
             }
-
+            
             source.Disconnect (false);
             source.Dispose();
-            SourceManager.RemoveSource(source);
+            container_source.RemoveChildSource(source);
             source_map.Remove(args.Service.Name);
+            if(source_map.Count == 0) {
+                container_source.Dispose();
+                SourceManager.RemoveSource(container_source);
+                container_source = null;
+            }
         }
         
         internal static void StartServer()
@@ -252,9 +262,11 @@ namespace Banshee.Plugins.Daap
         }
         
         internal static bool IsServerRunning {
-            get {
-                return server.IsRunning;
-            }
+            get { return server.IsRunning; }
+        }
+        
+        internal static int ServerCount {
+            get { return source_map.Count; }
         }
     }
 }
