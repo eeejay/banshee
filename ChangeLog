@@ -1,3 +1,12 @@
+2006-10-23  Aaron Bockover  <abock@gnome.org>
+
+	* build/Common.Makefile: Fixed make run
+
+	* data/Makefile.am:	
+	* src/Makefile.am:
+	* src/Boo/Makefile.am:
+	* src/BooBuddy/Makefile.am: Fixes for make distcheck
+
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
 	* banshee.mds: 

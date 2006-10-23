@@ -1,8 +1,18 @@
 SUBDIRS = \
 	images
 
+AUDIO_PROFILES = \
+	$(srcdir)/audio-profiles/base.xml \
+	$(srcdir)/audio-profiles/aac.xml \
+	$(srcdir)/audio-profiles/flac.xml \
+	$(srcdir)/audio-profiles/mp3-lame.xml \
+	$(srcdir)/audio-profiles/mp3-xing.xml \
+	$(srcdir)/audio-profiles/vorbis.xml \
+	$(srcdir)/audio-profiles/wav.xml \
+	$(srcdir)/audio-profiles/wma.xml 
+
 audioprofilesdir = $(pkgdatadir)/audio-profiles
-audioprofiles_DATA = $(srcdir)/audio-profiles/*.xml
+audioprofiles_DATA = $(AUDIO_PROFILES)
 
 desktopdir = $(datadir)/applications
 desktop_in_files=banshee.desktop.in.in
@@ -39,11 +49,11 @@ EXTRA_DIST = \
 	banshee.glade \
 	banshee-dialogs.glade \
 	contributors.xml \
-	audio-profiles/*.xml \
 	TranslatorExtract.cs \
 	$(desktop_in_files) \
 	$(schema_in_files) \
-	$(dbusservice_in_files)
+	$(dbusservice_in_files) \
+	$(AUDIO_PROFILES)
 
 DISTCLEANFILES =	\
 	$(dbusservice_DATA) \

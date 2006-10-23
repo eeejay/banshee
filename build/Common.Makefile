@@ -13,7 +13,7 @@ DIR_MUSICBRAINZ = $(top_builddir)/src/MusicBrainz
 DIR_GNOME_KEYRING = $(top_builddir)/src/Gnome.Keyring
 DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Banshee.Widgets
 DIR_BANSHEE_BASE = $(top_builddir)/src/Banshee.Base
-DIR_BOO = $(top_builddir)/src/Boo
+DIR_BOO = $(top_srcdir)/src/Boo
 DIR_BOOBUDDY = $(top_builddir)/src/BooBuddy
 
 ## Linking ##
@@ -64,7 +64,7 @@ BUILD_UI_BANSHEE = \
 RUN_PATH = \
 	LD_LIBRARY_PATH=$(top_builddir)/libbanshee/.libs \
 	DYLD_LIBRARY_PATH=$${LD_LIBRARY_PATH} \
-	MONO_PATH=$(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_BASE)$:$(DIR_BOO)${MONO_PATH+:$$MONO_PATH} \
+	MONO_PATH=$(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_BASE):$(DIR_BOO):$(DIR_BOOBUDDY)${MONO_PATH+:$$MONO_PATH} \
 	BANSHEE_ENGINES_PATH=$(top_builddir)/src/Banshee.MediaEngine \
 	BANSHEE_PLUGINS_PATH=$(top_builddir)/src/Banshee.Plugins$${BANSHEE_PLUGINS_PATH+:$$BANSHEE_PLUGINS_PATH} \
 	BANSHEE_PROFILES_PATH=$(top_builddir)/data/audio-profiles

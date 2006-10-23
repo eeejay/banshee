@@ -1,6 +1,8 @@
 include $(top_srcdir)/build/Common.Makefile
 
 SUBDIRS = \
+	Boo \
+	BooBuddy \
 	MusicBrainz \
 	Gnome.Keyring \
 	Last.FM \
@@ -9,9 +11,7 @@ SUBDIRS = \
 	Banshee.MediaEngine \
 	Banshee.Dap \
 	Banshee.Plugins \
-	Banshee.Hyena \
-	Boo \
-	BooBuddy
+	Banshee.Hyena
 
 BANSHEE = banshee
 BANSHEE_ASSEMBLY = $(BANSHEE).exe
