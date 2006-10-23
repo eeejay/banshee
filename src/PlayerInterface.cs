@@ -683,7 +683,8 @@ namespace Banshee
         {
             bool handled = false;
             
-            if(WindowPlayer.Focus is Entry && Gtk.Global.CurrentEvent is Gdk.EventKey) {
+            if(WindowPlayer.Focus is Entry && Gtk.Global.CurrentEvent is Gdk.EventKey &&
+                (Gtk.Global.CurrentEvent as Gdk.EventKey).State == Gdk.ModifierType.None) {
                 if(accel_group_active) {
                     WindowPlayer.RemoveAccelGroup(Globals.ActionManager.UI.AccelGroup);
                     accel_group_active = false;
