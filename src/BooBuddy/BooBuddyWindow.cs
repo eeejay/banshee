@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Shell.cs
+ *  BooBuddyWindow.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -30,56 +30,71 @@ using System;
 using System.Text;
 using System.Reflection;
 
-using Boo.Lang.Compiler;
-using Boo.Lang.Compiler.IO;
-using Boo.Lang.Compiler.Pipelines;
-
 using Gtk;
 
-namespace Banshee.Debugger
+using Boo.Lang.Compiler;
+using Boo.Lang.Interpreter;
+
+namespace BooBuddy
 {
-    public class Shell : Gtk.Window
+    public class BooBuddyWindow : Window
     {
-        private TextView editor;
-        private TextView output;
+        private BooBuddyShell interpreter_shell;
+        private InteractiveInterpreter interpreter = new InteractiveInterpreter();
         
-        public Shell() : base("Boo Compiler")
+        public BooBuddyWindow() : base("Boo Buddy")
         {
-            BorderWidth = 10;
-            SetSizeRequest(400, 300);
+            interpreter.Ducky = true;
             
-            VPaned pane = new VPaned();
+            foreach(Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+                interpreter.References.Add(assembly);
+            }
             
-            VBox box = new VBox();
-            box.Spacing = 10;
+            BorderWidth = 5;
+            SetSizeRequest(600, 250);
+            WindowPosition = WindowPosition.Center;
             
-            ScrolledWindow editor_sw = new ScrolledWindow();
-            ScrolledWindow output_sw = new ScrolledWindow();
+            Notebook notebook = new Notebook();
             
-            editor_sw.ShadowType = ShadowType.EtchedIn;
-            output_sw.ShadowType = ShadowType.EtchedIn;
+            ScrolledWindow interpreter_sw = new ScrolledWindow();
+            interpreter_sw.ShadowType = ShadowType.In;
             
-            output_sw.SetSizeRequest(-1, 80);
+            interpreter_shell = new BooBuddyShell();
+            interpreter_shell.ProcessInput += OnProcessInput;
+            interpreter_sw.Add(interpreter_shell);
             
-            editor = new TextView();
-            output = new TextView();
-            output.Editable = false;
+            notebook.AppendPage(interpreter_sw, new Label("Interpreter"));
             
-            editor_sw.Add(editor);
-            output_sw.Add(output);
-            
-            Button button = new Button("Run");
-            button.Clicked += OnRunClicked;
-            
-            box.PackStart(editor_sw, true, true, 0);
-            box.PackStart(button, false, false, 0);
-            
-            pane.Add1(box);
-            pane.Add2(output_sw);
-            
-            Add(pane);
-            pane.ShowAll();
+            Add(notebook);
+            notebook.ShowAll();
         }
+        
+        private void OnProcessInput(object o, ProcessInputArgs args)
+        {
+            CompilerContext context;
+            
+            try {            
+                context = interpreter.Eval(args.Input);
+                if(context.Errors != null && context.Errors.Count > 0) {
+                    StringBuilder error_builder = new StringBuilder();
+
+                    foreach(CompilerError error in context.Errors) {
+                        error_builder.Append(error.ToString() + "\n");
+                    }
+                    
+                    interpreter_shell.SetResult(error_builder.ToString(), true);
+                } else {
+                    interpreter_shell.SetResult();
+                }
+            } catch(Exception e) {
+                interpreter_shell.SetResult("Exception: " + e.Message + ". See stderr for stacktrace.");
+                Console.Error.WriteLine(e);
+            }
+        }
+        
+        /*
+        
+        TODO: Use this as a start for the scripted/compiled Boo Buddy pane
         
         private void OnRunClicked(object o, EventArgs args)
         {
@@ -115,10 +130,6 @@ namespace Banshee.Debugger
             }
         }
         
-        private void CompilerOutput(string message, params object [] args)
-        {
-            output.Buffer.Text += String.Format(message, args) + "\n";
-            output.ScrollToIter(output.Buffer.EndIter, 0.0, false, 0.0, 0.0);
-        }
+        */
     }
 }

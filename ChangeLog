@@ -1,5 +1,32 @@
 2006-10-21  Aaron Bockover  <abock@gnome.org>
 
+	* banshee.mds: 
+	* src/BooBuddy/BooBuddy.mdp: Added BooBuddy MonoDevelop project
+
+	* configure.ac:
+	* src/Makefile.am: Added BooBuddy
+
+	* build/Common.Makefile: Added BooBuddy/Boo rules
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Base/Banshee.Base.mdp: Updated
+	
+	* src/Banshee.Base/ActionManager.cs: Run the Boo Buddy interpreter
+
+	* src/Banshee.Base/Banshee.Debugger/Shell.cs: Removed
+
+	* src/Boo/Boo.Lang.Interpreter.dll: Added
+
+	* src/BooBuddy: Boo Buddy is simple Boo interpreter shell that lets
+	applications easly add Boo interpreting against loaded assemblies
+
+	* src/BooBuddy/BooBuddyShell.cs: Interactive shell for Boo interpreting
+
+	* src/BooBuddy/BooBuddyWindow.cs: Main Boo Buddy window that interfaces
+	with the Boo interpreter and the interactive Boo Buddy shell
+
+2006-10-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlayerInterface.cs: Only unload the accel group when the search
 	entry is focused if the key event does not have a modifier
 

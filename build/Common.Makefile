@@ -14,6 +14,7 @@ DIR_GNOME_KEYRING = $(top_builddir)/src/Gnome.Keyring
 DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Banshee.Widgets
 DIR_BANSHEE_BASE = $(top_builddir)/src/Banshee.Base
 DIR_BOO = $(top_builddir)/src/Boo
+DIR_BOOBUDDY = $(top_builddir)/src/BooBuddy
 
 ## Linking ##
 
@@ -29,7 +30,9 @@ LINK_DBUS = \
 	-r:$(DIR_DBUS)/NDesk.DBus.dll \
 	-r:$(DIR_DBUS)/NDesk.DBus.GLib.dll
 LINK_BOO = \
-	-r:$(DIR_BOO)/Boo.Lang.Compiler.dll
+	-r:$(DIR_BOO)/Boo.Lang.Compiler.dll \
+	-r:$(DIR_BOO)/Boo.Lang.Interpreter.dll
+LINK_BOOBUDDY = -r:$(DIR_BOOBUDDY)/BooBuddy.dll
 
 LINK_BANSHEE_WIDGETS = -r:$(DIR_BANSHEE_WIDGETS)/Banshee.Widgets.dll
 LINK_BANSHEE_CORE = \

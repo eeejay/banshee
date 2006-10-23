@@ -137,10 +137,10 @@ namespace Banshee.Base
                     Catalog.GetString("Select which columns to display in the song list"), null),
                 
                 new ActionEntry("ShellAction", null,
-                    Catalog.GetString("Shell..."), "<control><shift>S",
-                    Catalog.GetString("Open the Boo Shell"), delegate {
-                        Banshee.Debugger.Shell shell = new Banshee.Debugger.Shell();
-                        shell.Show();
+                    Catalog.GetString("Boo Buddy..."), "<control><shift>S",
+                    Catalog.GetString("Open Boo Buddy"), delegate {
+                        BooBuddy.BooBuddyWindow boo_buddy = new BooBuddy.BooBuddyWindow();
+                        boo_buddy.Show();
                     }),
                 
                 new ActionEntry("ShowEqualizerAction", null,

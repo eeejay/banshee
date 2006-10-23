@@ -10,7 +10,8 @@ SUBDIRS = \
 	Banshee.Dap \
 	Banshee.Plugins \
 	Banshee.Hyena \
-	Boo
+	Boo \
+	BooBuddy
 
 BANSHEE = banshee
 BANSHEE_ASSEMBLY = $(BANSHEE).exe
