@@ -17,6 +17,7 @@
   <Contents>
     <File name="./BooBuddyWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="./BooBuddyShell.cs" subtype="Code" buildaction="Compile" />
+    <File name="./BooBuddyInterpreter.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Assembly" localcopy="True" refto="../Boo/Boo.Lang.Compiler.dll" />

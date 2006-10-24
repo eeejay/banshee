@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Banshee.Base;
+using Mono.Unix;
 
 namespace Banshee.Sources
 {
@@ -247,6 +248,44 @@ namespace Banshee.Sources
             });
         }
         
+        public static void SensitizeActions(Source source)
+        {
+            Globals.ActionManager["WriteCDAction"].Visible = !(source is AudioCdSource);
+            Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
+            
+            Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;
+            Globals.ActionManager["RenameSourceAction"].Visible = source.CanRename;
+            Globals.ActionManager["UnmapSourceAction"].Visible = source.CanUnmap;
+            Globals.ActionManager.DapActions.Visible = source is DapSource;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
+            
+            if(source is IImportSource) {
+                Globals.ActionManager["ImportSourceAction"].Visible = source is IImportSource;
+                Globals.ActionManager["ImportSourceAction"].Label = Catalog.GetString("Import") + " '" + 
+                    source.Name + "'";
+            } else {
+                Globals.ActionManager["ImportSourceAction"].Visible = false;
+            }
+            
+            if(source is DapSource) {
+                DapSource dapSource = source as DapSource;
+                if (dapSource.Device.CanSynchronize) {
+                    Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
+                    Globals.ActionManager.SetActionLabel("SyncDapAction", String.Format("{0} {1}",
+                        Catalog.GetString("Synchronize"), dapSource.Device.GenericName));
+                } else {
+                    Globals.ActionManager["SyncDapAction"].Visible = false;
+                }
+            }
+
+            Globals.ActionManager["RenameSourceAction"].Label = String.Format (
+                    Catalog.GetString("Rename {0}"), source.GenericName
+            );
+
+            Globals.ActionManager["UnmapSourceAction"].Label = source.UnmapLabel;
+            Globals.ActionManager["UnmapSourceAction"].StockId = source.UnmapIcon;
+        }
+     
         public static ICollection<Source> Sources {
             get { return sources; }
         }

@@ -388,7 +388,11 @@ namespace Banshee
             ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceViewLoadingVP);
             
             sourceView = new SourceView();
-            sourceView.ButtonPressEvent += OnSourceViewButtonPressEvent;
+            sourceView.SourceDoubleClicked += delegate {
+                playlistModel.PlayingIter = TreeIter.Zero;
+                playlistModel.Advance();
+                playlistView.UpdateView();
+            };
             sourceView.Sensitive = false;
             SourceManager.ActiveSourceChanged += OnSourceManagerActiveSourceChanged;
             SourceManager.SourceUpdated += OnSourceManagerSourceUpdated;
@@ -1039,40 +1043,7 @@ namespace Banshee
         
         private void SensitizeActions(Source source)
         {
-            Globals.ActionManager["WriteCDAction"].Visible = !(source is AudioCdSource);
-            Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
-            
-            Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;
-            Globals.ActionManager["RenameSourceAction"].Visible = source.CanRename;
-            Globals.ActionManager["UnmapSourceAction"].Visible = source.CanUnmap;
-            Globals.ActionManager.DapActions.Visible = source is DapSource;
-            Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
-            
-            if(source is IImportSource) {
-                Globals.ActionManager["ImportSourceAction"].Visible = source is IImportSource;
-                Globals.ActionManager["ImportSourceAction"].Label = Catalog.GetString("Import") + " '" + 
-                    source.Name + "'";
-            } else {
-                Globals.ActionManager["ImportSourceAction"].Visible = false;
-            }
-            
-            if(source is DapSource) {
-                DapSource dapSource = source as DapSource;
-                if (dapSource.Device.CanSynchronize) {
-                    Globals.ActionManager["SyncDapAction"].Sensitive = !dapSource.Device.IsReadOnly;
-                    Globals.ActionManager.SetActionLabel("SyncDapAction", String.Format("{0} {1}",
-                        Catalog.GetString("Synchronize"), dapSource.Device.GenericName));
-                } else {
-                    Globals.ActionManager["SyncDapAction"].Visible = false;
-                }
-            }
-
-            Globals.ActionManager["RenameSourceAction"].Label = String.Format (
-                    Catalog.GetString("Rename {0}"), source.GenericName
-            );
-
-            Globals.ActionManager["UnmapSourceAction"].Label = source.UnmapLabel;
-            Globals.ActionManager["UnmapSourceAction"].StockId = source.UnmapIcon;
+            SourceManager.SensitizeActions(source);
         }
      
         // Called when SourceManager emits an ActiveSourceChanged event.
@@ -1255,47 +1226,7 @@ namespace Banshee
             
             dialog.ShowAll();
         }
-     
-        [GLib.ConnectBefore]
-        private void OnSourceViewButtonPressEvent(object o, ButtonPressEventArgs args)
-        {       
-            TreePath path;
-            if(!sourceView.GetPathAtPos((int)args.Event.X, (int)args.Event.Y, out path)) {
-                args.RetVal = true; 
-                return;
-            }
 
-            Source source = sourceView.GetSource(path);
-
-            if(args.Event.Button == 1 && args.Event.Type == EventType.TwoButtonPress) {
-                if(SourceManager.ActiveSource != source) {
-                    SourceManager.SetActiveSource(source);
-                }
- 
-                playlistModel.PlayingIter = TreeIter.Zero;
-                playlistModel.Advance();
-                playlistView.UpdateView();
-
-                args.RetVal = false;
-            } else if(args.Event.Button == 3) {
-                sourceView.HighlightPath(path);
-
-                SensitizeActions(source);
-
-                string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
-                Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
-                source_menu.SelectionDone += delegate {
-                    SensitizeActions(SourceManager.ActiveSource);
-                    sourceView.ResetHighlight();
-                };
-            
-                source_menu.Popup(null, null, null, 0, args.Event.Time);
-                source_menu.Show();
-            
-                args.RetVal = true;
-            }
-        }
-      
         private bool DoesTrackMatchSearch(TrackInfo ti)
         {
             if(!searchEntry.IsQueryAvailable) {

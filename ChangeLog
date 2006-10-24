@@ -1,3 +1,33 @@
+2006-10-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/PlayerInterface.cs: Moved SourceView ButtonPressEvent handler and
+	SensitizeActions to SourceView and SourceManager classes
+
+	* src/BooBuddy/BooBuddy.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp: 
+	* src/BooBuddy/Makefile.am: Updated
+
+	* src/BooBuddy/BooBuddyWindow.cs: 
+	* src/BooBuddy/BooBuddyInterpreter.cs: Split out the interpreter from the
+	window
+
+	* src/BooBuddy/BooBuddyShell.cs: Cosmetic work
+
+	* src/Banshee.Base/Source.cs: Added CanActivate property
+
+	* src/Banshee.Plugins/Daap/DaapContainerSource.cs: Override CanActivate to
+	be false
+
+	* src/Banshee.Base/SourceManager.cs: Added SensitizeActions
+
+	* src/Banshee.Base/Gui/SourceView.cs: Do not allow activation or 
+	button press events to happen on sources that have CanActivate=false
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Support loading Boo scripts;
+	scripts are compiled and run at startup - scripts can either provide
+	a static Main method or can implement the standard Banshee plugin API
+	for full plugin integration
+
 2006-10-23  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 0.11.2 Released

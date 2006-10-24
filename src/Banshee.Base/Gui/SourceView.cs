@@ -89,6 +89,8 @@ namespace Banshee.Gui
             Banshee.Gui.DragDrop.DragDropTarget.Source
         };
     
+        public event EventHandler SourceDoubleClicked;
+    
         public SourceView()
         {
             // Hidden expander column
@@ -113,7 +115,6 @@ namespace Banshee.Gui
         
             EnableModelDragDest(dnd_dest_entries, DragAction.Copy | DragAction.Move);
             
-            CursorChanged += OnCursorChanged;
             RefreshList();
 
             SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
@@ -176,17 +177,18 @@ namespace Banshee.Gui
         
         private void AddSource(Source source, int position, TreeIter parent)
         {
-            if(!FindSource(source).Equals(TreeIter.Zero))
+            if(!FindSource(source).Equals(TreeIter.Zero)) {
                 return;
-
+            }
+            
             TreeIter iter = parent.Equals(TreeIter.Zero)
                 ? store.InsertNode(position) 
                 : store.AppendNode(parent);
-                
+            
             store.SetValue(iter, 0, source);
 
             lock(source.Children) {
-                foreach (ChildSource s in source.Children) {
+                foreach(ChildSource s in source.Children) {
                     AddSource(s, position, iter);
                 }
             }
@@ -198,10 +200,11 @@ namespace Banshee.Gui
             source.ChildSourceRemoved += delegate(SourceEventArgs e) {
                 RemoveSource(e.Source);
             };
-            
+           
             if(source.AutoExpand) {
                 Expand(iter);
             }
+            
             if(source is ChildSource) {
                 ChildSource child = source as ChildSource;
                 if(child.Parent.AutoExpand) {
@@ -260,12 +263,15 @@ namespace Banshee.Gui
             SourceRowRenderer renderer = (SourceRowRenderer)cell;
             renderer.view = this;
             renderer.source = (Source)store.GetValue(iter, 0);
+            
             if(renderer.source == null) {
                 return;
             }
+            
             renderer.Selected = renderer.source.Equals(SourceManager.ActiveSource);
             renderer.Italicized = renderer.source.Equals(newPlaylistSource);
             renderer.Editable = renderer.source.CanRename;
+            renderer.Sensitive = renderer.source.CanActivate;
         }
         
         internal void UpdateRow(TreePath path, string text)
@@ -289,9 +295,50 @@ namespace Banshee.Gui
             
             SetCursor(store.GetPath(iter), focus_column, true);
         }
-        
-        private void OnCursorChanged(object o, EventArgs args)
-        {                
+
+        protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
+        {
+            TreePath path;
+            
+            if(!GetPathAtPos((int)evnt.X, (int)evnt.Y, out path)) {
+                return true;
+            }
+
+            Source source = GetSource(path);
+
+            if(evnt.Button == 1 && evnt.Type == EventType.TwoButtonPress) {
+                if(!source.CanActivate) {
+                    return false;
+                }
+                
+                if(SourceManager.ActiveSource != source) {
+                    SourceManager.SetActiveSource(source);
+                }
+                
+                OnSourceDoubleClicked();
+
+                return false;
+            } else if(evnt.Button == 3) {
+                HighlightPath(path);
+
+                SourceManager.SensitizeActions(source);
+
+                string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
+                Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
+                source_menu.SelectionDone += delegate {
+                    SourceManager.SensitizeActions(SourceManager.ActiveSource);
+                    ResetHighlight();
+                };
+            
+                source_menu.Popup(null, null, null, 0, evnt.Time);
+                source_menu.Show();
+            }
+            
+            return base.OnButtonPressEvent(evnt);
+        }
+
+        protected override void OnCursorChanged()
+        {
             if(currentTimeout < 0) {
                 currentTimeout = (int)GLib.Timeout.Add(200, OnCursorChangedTimeout);
             }
@@ -318,6 +365,14 @@ namespace Banshee.Gui
             QueueDraw();
 
             return false;
+        }
+        
+        protected virtual void OnSourceDoubleClicked()
+        {
+            EventHandler handler = SourceDoubleClicked;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
         }
 
         protected override void OnDragBegin(Gdk.DragContext context)

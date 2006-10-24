@@ -40,8 +40,7 @@ namespace Banshee.Plugins.Daap
 {
     public class DaapContainerSource : Source
     {
-
-        public DaapContainerSource() : base("Shared Music", 300)
+        public DaapContainerSource() : base(Catalog.GetString("Shared Music"), 300)
         {
         }
 
@@ -49,13 +48,18 @@ namespace Banshee.Plugins.Daap
             get { return DaapCore.ServerCount; }
         }
 
-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network); 
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, 
+            "applications-internet", "network-server", Gtk.Stock.Network);
 
         public override Gdk.Pixbuf Icon {
             get { return icon; }
         }
         
         public override bool AutoExpand {
+            get { return false; }
+        }
+        
+        public override bool CanActivate {
             get { return false; }
         }
     }

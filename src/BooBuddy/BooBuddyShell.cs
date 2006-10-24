@@ -30,10 +30,15 @@
  */
 
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 using Gtk;
+
+using Boo.Lang.Interpreter;
+using Boo.Lang.Compiler;
+using Boo.Lang.Compiler.TypeSystem;
 
 namespace BooBuddy
 {
@@ -66,6 +71,8 @@ namespace BooBuddy
         
         private TextMark end_of_last_processing;
         
+        private InteractiveInterpreter interpreter;
+        
         public event ProcessInputHandler ProcessInput;
         
         public BooBuddyShell() : base()
@@ -79,6 +86,7 @@ namespace BooBuddy
             TextTag prompt_tag = new TextTag("Prompt");
             prompt_tag.Foreground = "blue";
             prompt_tag.Background = "#f8f8f8";
+            prompt_tag.Weight = Pango.Weight.Bold;
             Buffer.TagTable.Add(prompt_tag);
             
             TextTag prompt_ml_tag = new TextTag("PromptML");
@@ -90,6 +98,10 @@ namespace BooBuddy
             TextTag error_tag = new TextTag("Error");
             error_tag.Foreground = "red";
             Buffer.TagTable.Add(error_tag);
+            
+            TextTag stdout_tag = new TextTag("Stdout");
+            stdout_tag.Foreground = "#006600";
+            Buffer.TagTable.Add(stdout_tag);
             
             Pango.FontDescription font_description = new Pango.FontDescription();
             font_description.Family = "Monospace";
@@ -193,7 +205,16 @@ namespace BooBuddy
                     Buffer.MoveMark(Buffer.SelectionBound, InputLineBegin);
                 }
                 return true;
-            }
+            } /*else if(evnt.Key == Gdk.Key.period) {
+                string lookup_fragment = InputLine.Substring(0, Cursor.LineIndex - 4);
+                string [] fragment_parts = Regex.Split(lookup_fragment, @"[ \t]+");
+                lookup_fragment = fragment_parts[fragment_parts.Length - 1];
+                
+                Console.WriteLine(interpreter.Lookup(lookup_fragment));
+                foreach(IEntity entity in interpreter.SuggestCodeCompletion(lookup_fragment)) {
+                    Console.WriteLine(entity.FullName);
+                }
+            }*/
             
             return base.OnKeyPressEvent(evnt);
         }
@@ -236,28 +257,31 @@ namespace BooBuddy
                 handler(this, new ProcessInputArgs(input));
             }
         }
-        
-        public void SetResult(string result)
-        {
-            SetResult(result, false);
-        }
-        
-        public void SetResult(string result, bool error)
+
+        public void SetResult(InterpreterResult result)
         {
             TextIter end_iter = Buffer.EndIter;
-            Buffer.Insert(ref end_iter, "\n" + result);
             
-            if(error) {
-                TextIter start_iter = end_iter;
-                start_iter.Offset -= result.Length;
-                Buffer.ApplyTag(Buffer.TagTable.Lookup("Error"), start_iter, end_iter);
+            StringBuilder builder = new StringBuilder();
+            if(result.Errors.Count > 0) {
+                foreach(string error in result.Errors) {
+                    builder.Append(error + "\n");
+                }
+            } else if(result.Message == null) {
+                Prompt(true);
+                return;
+            } else {
+                builder.Append(result.Message);
             }
             
-            SetResult();
-        }
-        
-        public void SetResult()
-        {
+            string str_result = builder.ToString().Trim();
+            Buffer.Insert(ref end_iter, "\n" + str_result);
+            
+            TextIter start_iter = end_iter;
+            start_iter.Offset -= str_result.Length;
+            Buffer.ApplyTag(Buffer.TagTable.Lookup(result.Errors.Count > 0 ? "Error" : "Stdout"), 
+                start_iter, end_iter);
+            
             Prompt(true);
         }
         
@@ -299,5 +323,11 @@ namespace BooBuddy
         public string Script {
             get { return script_lines; }
         }
+        
+        public InteractiveInterpreter Interpreter {
+            get { return interpreter; }
+            set { interpreter = value; }
+        }
+            
     }
 }

@@ -388,6 +388,10 @@ namespace Banshee.Sources
             get { return true; }
         }
 
+        public virtual bool CanActivate {
+            get { return true; }
+        }
+
         private bool can_rename = true;
         public bool CanRename {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "UpdateName") && can_rename; }

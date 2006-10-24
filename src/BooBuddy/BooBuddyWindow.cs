@@ -32,24 +32,15 @@ using System.Reflection;
 
 using Gtk;
 
-using Boo.Lang.Compiler;
-using Boo.Lang.Interpreter;
-
 namespace BooBuddy
 {
     public class BooBuddyWindow : Window
     {
         private BooBuddyShell interpreter_shell;
-        private InteractiveInterpreter interpreter = new InteractiveInterpreter();
+        private BooBuddyInterpreter interpreter;
         
         public BooBuddyWindow() : base("Boo Buddy")
         {
-            interpreter.Ducky = true;
-            
-            foreach(Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                interpreter.References.Add(assembly);
-            }
-            
             BorderWidth = 5;
             SetSizeRequest(600, 250);
             WindowPosition = WindowPosition.Center;
@@ -59,10 +50,13 @@ namespace BooBuddy
             ScrolledWindow interpreter_sw = new ScrolledWindow();
             interpreter_sw.ShadowType = ShadowType.In;
             
+            interpreter = new BooBuddyInterpreter();
+            
             interpreter_shell = new BooBuddyShell();
+            interpreter_shell.Interpreter = interpreter.Interpreter;
             interpreter_shell.ProcessInput += OnProcessInput;
             interpreter_sw.Add(interpreter_shell);
-            
+
             notebook.AppendPage(interpreter_sw, new Label("Interpreter"));
             
             Add(notebook);
@@ -71,25 +65,7 @@ namespace BooBuddy
         
         private void OnProcessInput(object o, ProcessInputArgs args)
         {
-            CompilerContext context;
-            
-            try {            
-                context = interpreter.Eval(args.Input);
-                if(context.Errors != null && context.Errors.Count > 0) {
-                    StringBuilder error_builder = new StringBuilder();
-
-                    foreach(CompilerError error in context.Errors) {
-                        error_builder.Append(error.ToString() + "\n");
-                    }
-                    
-                    interpreter_shell.SetResult(error_builder.ToString(), true);
-                } else {
-                    interpreter_shell.SetResult();
-                }
-            } catch(Exception e) {
-                interpreter_shell.SetResult("Exception: " + e.Message + ". See stderr for stacktrace.");
-                Console.Error.WriteLine(e);
-            }
+            interpreter_shell.SetResult(interpreter.Interpret(args.Input));
         }
         
         /*

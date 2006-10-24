@@ -7,6 +7,7 @@ boobuddydir = $(pkglibdir)
 boobuddy_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 ASSEMBLY_SOURCES = \
+	$(srcdir)/BooBuddyInterpreter.cs \
 	$(srcdir)/BooBuddyWindow.cs \
 	$(srcdir)/BooBuddyShell.cs
 
