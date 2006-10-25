@@ -1,5 +1,10 @@
 2006-10-25  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Plugins/PluginCore.cs: Do not crash 
+	if ~/.gnome2/banshee/scripts does not exist. Nice.
+
+2006-10-25  Aaron Bockover  <abock@gnome.org>
+
 	* banshee.mds:
 	* src/Banshee.Plugins/Daap/Daap.mdp: Added Daap project
 

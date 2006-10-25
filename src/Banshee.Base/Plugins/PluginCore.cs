@@ -89,9 +89,12 @@ namespace Banshee.Plugins
         
         private static void InitializeScripts()
         {
-            foreach(string file in Directory.GetFiles(Path.Combine(
-                Paths.ApplicationData, "scripts"), "*.boo")) {
-                RunBooScript(file);
+            try {
+                foreach(string file in Directory.GetFiles(Path.Combine(
+                    Paths.ApplicationData, "scripts"), "*.boo")) {
+                    RunBooScript(file);
+                } 
+            } catch {
             }
         }
         
