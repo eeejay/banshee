@@ -60,7 +60,9 @@ namespace Banshee.Plugins.Daap
             pane.HeaderIcon = IconThemeUtils.LoadIcon(48, "face-surprise", Stock.DialogError);
             pane.ArrowIcon = IconThemeUtils.LoadIcon(24, "go-next", Stock.GoForward);
             pane.HeaderMarkup = String.Format("<big><b>{0}</b></big>", 
-                GLib.Markup.EscapeText(Catalog.GetString("Unable to connect to music share")));
+                GLib.Markup.EscapeText((failure == DaapErrorType.UserDisconnect 
+                    ? Catalog.GetString("Disconnected from music share")
+                    : Catalog.GetString("Unable to connect to music share"))));
                 
             AddPaneItems();
             pane.Show();
@@ -107,7 +109,7 @@ namespace Banshee.Plugins.Daap
                     pane.Append(Catalog.GetString("The login process was canceled"));
                     pane.Append(Catalog.GetString("Too many users are connected to this share"));
                 } else {
-                    pane.Append("You disconnected");
+                    pane.Append(Catalog.GetString("You are no longer connected to this music share"));
                 }
                 
                 if(failure == DaapErrorType.UserDisconnect || failure == DaapErrorType.InvalidAuthentication) {

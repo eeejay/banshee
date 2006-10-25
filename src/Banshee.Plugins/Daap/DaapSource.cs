@@ -266,9 +266,20 @@ namespace Banshee.Plugins.Daap
             get { return database == null ? -1 : database.TrackCount; }
         }
         
-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-server", Gtk.Stock.Network); 
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "computer", 
+            "network-server", Gtk.Stock.Network);
+            
+        private static Gdk.Pixbuf locked_icon = IconThemeUtils.LoadIcon(22,
+            "system-lock-screen", "computer", "network-server", Gtk.Stock.Network);
+            
         public override Gdk.Pixbuf Icon {
-            get { return icon; }
+            get { 
+                if(service != null && service.IsProtected) {
+                    return locked_icon;
+                } else {
+                    return icon;
+                }
+            }
         }
         
         public override bool AutoExpand {

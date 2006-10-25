@@ -1,5 +1,13 @@
 2006-10-25  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Plugins/Daap/Daap.mdp: Updated
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs: Show an icon for locked
+
+	* src/Banshee.Plugins/Daap/DaapErrorView.cs: Updated disconnected message
+
+2006-10-25  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Plugins/PluginCore.cs: Do not crash 
 	if ~/.gnome2/banshee/scripts does not exist. Nice.
 
