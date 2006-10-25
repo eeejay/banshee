@@ -1,3 +1,31 @@
+2006-10-25  Aaron Bockover  <abock@gnome.org>
+
+	* banshee.mds:
+	* src/Banshee.Plugins/Daap/Daap.mdp: Added Daap project
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs: 
+	* src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs: Offer to rebuild
+	the database if iTunesDB is missing altogether; use ShadowContainer
+
+	* src/Banshee.Plugins/Daap/DaapLoginDialog.cs: Added proper dialog
+	activate accel key
+
+	* src/Banshee.Plugins/Daap/DaapSource.cs: Use DaapErrorView to display
+	errors inside the source
+
+	* src/Banshee.Plugins/Daap/DaapErrorView.cs: A ShadowContainer+MessagePane
+	view that shows friendly error messages; warns about the iTunes 7 problem
+
+	* src/Banshee.Plugins/Daap/Makefile.am: Added DaapErrorView.cs
+
+	* src/Banshee.Widgets/Makefile.am:
+	* src/Banshee.Widgets/Banshee.Widgets.mdp: Added ShadowContainer.cs
+
+	* src/Banshee.Widgets/ShadowContainer.cs: A shadowed/painted Alignment
+
+	* src/Banshee.Widgets/MessagePane.cs: Support overriding the arrow
+	pixbuf
+
 2006-10-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs: Moved SourceView ButtonPressEvent handler and

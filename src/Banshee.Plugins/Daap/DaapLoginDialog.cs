@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DaapLoginDialog.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@aaronbock.net>
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -137,7 +136,7 @@ namespace Banshee.Plugins.Daap
 
             if(is_default) {
                 DefaultResponse = response;
-                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Escape, 0, Gtk.AccelFlags.Visible);
+                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return, 0, Gtk.AccelFlags.Visible);
             }
         }
         

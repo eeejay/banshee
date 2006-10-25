@@ -31,14 +31,16 @@ using System.IO;
 using System.Collections.Generic;
 using System.Collections;
 using Mono.Unix;
+using Gtk;
+
 using DAAP;
 
 using Banshee.Base;
 using Banshee.Sources;
+using Banshee.Widgets;
 
 namespace Banshee.Plugins.Daap
 {
-    
     public class DaapSource : ChildSource, IImportable, IImportSource
     {        
         private Service service;
@@ -46,21 +48,44 @@ namespace Banshee.Plugins.Daap
         private DAAP.Database database;
         private DatabaseProxy database_proxy;
         private bool is_activating;
+        private VBox box;
+        private Alignment container;
+        private HighlightMessageArea message_area;
         
         public DaapSource(Service service) : base(service.Name, 300)
         {
             this.service = service;
             is_activating = false;
             database_proxy = new DatabaseProxy();
+            
+            box = new VBox();
+            box.Spacing = 5;
+            
+            container = new Alignment(0.0f, 0.0f, 1.0f, 1.0f);
+            
+            message_area = new HighlightMessageArea();
+            message_area.BorderWidth = 5;
+            message_area.LeftPadding = 15;
+            message_area.Pixbuf = Icon;
+            
+            box.PackStart(container, true, true, 0);
+            box.PackStart(message_area, false, false, 0);
+            box.ShowAll();
         }
         
         public override void Activate()
         {
+            InterfaceElements.DetachPlaylistContainer();
+            container.Add(InterfaceElements.PlaylistContainer);
+            
             if(client != null || is_activating) {
             	return;
             }
+            
             is_activating = true;
-            Console.WriteLine("Connecting to DAAP share: " + service);
+            
+            SetStatusMessage(String.Format(Catalog.GetString("Connecting to {0}"), Name));
+            
             ThreadAssist.Spawn(delegate {
                 client = new Client(service);
                 client.Updated += OnClientUpdated;
@@ -71,12 +96,29 @@ namespace Banshee.Plugins.Daap
                         ThreadAssist.ProxyToMain(PromptLogin);
                     }
                 } catch(Exception e) {
-                    LogCore.Instance.PushError(Catalog.GetString("Cannot login to DAAP share"),
-                        e.Message);
+                    ThreadAssist.ProxyToMain(delegate {
+                        DaapErrorView error_view = new DaapErrorView(this, DaapErrorType.BrokenAuthentication);
+                        while(box.Children.Length > 0) {
+                            box.Remove(box.Children[0]);
+                        }
+                        box.PackStart(error_view, true, true, 0);
+                        error_view.Show();
+                    });
                 }
                
                 is_activating = false;
             });
+        }
+        
+        private void SetStatusMessage(string message)
+        {
+            message_area.Message = String.Format("<big>{0}</big>", GLib.Markup.EscapeText(message));
+            message_area.Visible = true;
+        }
+        
+        private void ClearStatusMessage()
+        {
+            message_area.Visible = false;
         }
 
         private void AddPlaylistSources ()
@@ -86,7 +128,8 @@ namespace Banshee.Plugins.Daap
             }
         }
 
-        private void AddPlaylistSource (DAAP.Playlist pl) {
+        private void AddPlaylistSource (DAAP.Playlist pl) 
+        {
             DaapPlaylistSource source = new DaapPlaylistSource (database, pl);
 
             ThreadAssist.ProxyToMain (delegate {
@@ -107,12 +150,14 @@ namespace Banshee.Plugins.Daap
 
         private void PromptLogin(object o, EventArgs args)
         {
+            SetStatusMessage(String.Format(Catalog.GetString("Logging in to {0}"), Name));
+            
             DaapLoginDialog dialog = new DaapLoginDialog(client.Name, 
             client.AuthenticationMethod == AuthenticationMethod.UserAndPassword);
             if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
                 AuthenticatedLogin(dialog.Username, dialog.Password);
             } else {
-                Dispose();
+                Disconnect(false);
             }
 
             dialog.Destroy();
@@ -123,12 +168,13 @@ namespace Banshee.Plugins.Daap
             Unmap();
         }
 
-        internal bool Disconnect (bool logout)
+        internal bool Disconnect(bool logout)
         {
             if(client != null) {
-                if (logout)
+                if(logout) {
                     client.Logout();
-
+                }
+                
                 client.Dispose();
                 client = null;
                 database = null;
@@ -141,7 +187,18 @@ namespace Banshee.Plugins.Daap
                 database = null;
             }
 
-            ClearChildSources ();
+            ClearChildSources();
+            
+            ThreadAssist.ProxyToMain(delegate {
+                DaapErrorView error_view = new DaapErrorView(this, logout 
+                    ? DaapErrorType.UserDisconnect 
+                    : DaapErrorType.InvalidAuthentication);
+                while(box.Children.Length > 0) {
+                    box.Remove(box.Children[0]);
+                }
+                box.PackStart(error_view, true, true, 0);
+                error_view.Show();
+            });
             
             return true;
         }
@@ -168,6 +225,16 @@ namespace Banshee.Plugins.Daap
                 database_proxy.Database = database;
                 DaapCore.ProxyServer.RegisterDatabase(database);
                 AddPlaylistSources ();
+                
+                ThreadAssist.ProxyToMain(delegate {
+                    ClearStatusMessage();
+                    while(box.Children.Length > 0) {
+                        box.Remove(box.Children[0]);
+                    }
+                    
+                    box.PackStart(container, true, true, 0);
+                    box.PackStart(message_area, false, false, 0);
+                });
             }
             
             Name = client.Name;
@@ -206,6 +273,10 @@ namespace Banshee.Plugins.Daap
         
         public override bool AutoExpand {
             get { return false; }
+        }
+
+        public override Gtk.Widget ViewWidget {
+            get { return box; }
         }
 
         public void Import()

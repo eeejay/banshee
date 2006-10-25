@@ -34,7 +34,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DiscUsageDisplay.cs \
 	$(srcdir)/Tile.cs \
 	$(srcdir)/TileView.cs \
-	$(srcdir)/RatingEntry.cs
+	$(srcdir)/RatingEntry.cs \
+	$(srcdir)/ShadowContainer.cs
 
 Banshee_Widgets_RESOURCES = \
 	data/images/rating-rated.png \

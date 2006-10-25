@@ -99,7 +99,11 @@ namespace Banshee.Dap.Ipod
         {
             try {
                 device = new IPod.Device(hal_device["block.device"]);
-                device.LoadTrackDatabase();
+                if(File.Exists(Path.Combine(device.ControlPath, Path.Combine("iTunes", "iTunesDB")))) { 
+                    device.LoadTrackDatabase();
+                } else {
+                    throw new DatabaseReadException("iTunesDB does not exist");
+                }
                 database_supported = true;
             } catch(DatabaseReadException) {
                 device.LoadTrackDatabase(true);
@@ -376,6 +380,7 @@ namespace Banshee.Dap.Ipod
         private void BuildDatabaseUnsupportedWidget()
         {
             db_unsupported_container = new UnsupportedDatabaseView(this);
+            db_unsupported_container.Show();
             db_unsupported_container.Refresh += delegate(object o, EventArgs args) {
                 LoadIpod();
                 ReloadDatabase(false);

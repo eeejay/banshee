@@ -10,6 +10,7 @@
       <Entry build="True" name="Banshee.Plugins.Audioscrobbler" configuration="Debug" />
       <Entry build="True" name="Banshee.Hyena" configuration="Debug" />
       <Entry build="True" name="BooBuddy" configuration="Debug" />
+      <Entry build="True" name="Daap" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee.Widgets" configuration="Debug" />
@@ -21,6 +22,7 @@
       <Entry build="True" name="Banshee.Plugins.Audioscrobbler" configuration="Debug" />
       <Entry build="True" name="Banshee.Hyena" configuration="Release" />
       <Entry build="True" name="BooBuddy" configuration="Release" />
+      <Entry build="True" name="Daap" configuration="Release" />
     </Configuration>
   </Configurations>
   <DeployTargets />
@@ -34,6 +36,7 @@
     <Execute type="None" entry="Banshee.Plugins.Audioscrobbler" />
     <Execute type="None" entry="Banshee.Hyena" />
     <Execute type="None" entry="BooBuddy" />
+    <Execute type="None" entry="Daap" />
   </StartMode>
   <Entries>
     <Entry filename="./src/Banshee.Widgets/Banshee.Widgets.mdp" />
@@ -46,5 +49,6 @@
     <Entry filename="./src/Banshee.Hyena/Banshee.Hyena.mdp" />
     <Entry filename="./hal-sharp/hal-sharp.mdp" />
     <Entry filename="./src/BooBuddy/BooBuddy.mdp" />
+    <Entry filename="./src/Banshee.Plugins/Daap/Daap.mdp" />
   </Entries>
 </Combine>

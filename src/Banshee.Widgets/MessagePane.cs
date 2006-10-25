@@ -67,11 +67,11 @@ namespace Banshee.Widgets
 			}
 		}
 		
-		private void AttachArrow ()
+		private void AttachArrow (Gdk.Pixbuf arrow)
 		{
 			uint row = table.NRows;
 			
-			Gtk.Image image = new Gtk.Image (arrow);
+			Gtk.Image image = arrow == null ? new Gtk.Image (this.arrow) : new Gtk.Image(arrow);
 			image.Yalign = 0.0f;
 			image.Xalign = 1.0f;
 			image.Show ();
@@ -88,11 +88,16 @@ namespace Banshee.Widgets
 
 		public void Append (string tip, bool showArrow)
 		{
+		    Append(tip, showArrow, null);  
+		}
+		
+		public void Append (string tip, bool showArrow, Gdk.Pixbuf arrow)
+		{
 			uint row = table.NRows;
 			Gtk.Label label;
 
 			if (showArrow) {
-				AttachArrow ();
+				AttachArrow (arrow);
 			}
 
 			label = new Gtk.Label ();
@@ -114,10 +119,16 @@ namespace Banshee.Widgets
 		public void Append (Gtk.Widget widget, Gtk.AttachOptions xoptions, 
 			Gtk.AttachOptions yoptions, bool showArrow)
 		{
+		    Append(widget, xoptions, yoptions, showArrow, null);
+		}
+
+		public void Append (Gtk.Widget widget, Gtk.AttachOptions xoptions, 
+			Gtk.AttachOptions yoptions, bool showArrow, Gdk.Pixbuf arrow)
+		{
 			uint row = table.NRows;
 
 			if (showArrow) {
-				AttachArrow();
+				AttachArrow(arrow);
 			}
 
 			table.Attach (widget, 1, 2, row, row + 1, xoptions, yoptions, 0, 0);

@@ -28,6 +28,7 @@
  */
 
 using System;
+using System.IO;
 using Mono.Unix;
 using Gtk;
 using IPod;
@@ -37,7 +38,7 @@ using Banshee.Widgets;
 
 namespace Banshee.Dap.Ipod
 {
-    public class UnsupportedDatabaseView : Alignment
+    public class UnsupportedDatabaseView : ShadowContainer
     {
         private MessagePane pane;
         private bool info_link_clicked = false;
@@ -45,11 +46,8 @@ namespace Banshee.Dap.Ipod
         
         public event EventHandler Refresh;
         
-        public UnsupportedDatabaseView(IpodDap dap) : base(0.0f, 0.0f, 1.0f, 1.0f)
+        public UnsupportedDatabaseView(IpodDap dap) : base()
         {
-            AppPaintable = true;
-            BorderWidth = 10;
-            
             this.dap = dap;
             
             pane = new MessagePane();
@@ -67,14 +65,31 @@ namespace Banshee.Dap.Ipod
         private void AddPaneItems()
         {
             if(info_link_clicked) {
-                pane.Append(Catalog.GetString(GLib.Markup.EscapeText(
-                    "You have used this iPod with a version of iTunes that saves a " +
-                    "version of the song database for your iPod that is too new " +
-                    "for Banshee to recognize.\n\n" +
-                    
-                    "Banshee can either rebuild the database or you will have to " +
-                    "wait for the new iTunes version to be supported by Banshee."
-                )));
+                bool file_exists = System.IO.File.Exists(
+                    System.IO.Path.Combine(
+                        dap.Device.ControlPath, 
+                        System.IO.Path.Combine(
+                            "iTunes", 
+                            "iTunesDB"
+                        )
+                    )
+                );
+                
+                if(file_exists) {
+                    pane.Append(Catalog.GetString(
+                        "You have used this iPod with a version of iTunes that saves a " +
+                        "version of the song database for your iPod that is too new " +
+                        "for Banshee to recognize.\n\n" +
+                        
+                        "Banshee can either rebuild the database or you will have to " +
+                        "wait for the new iTunes version to be supported by Banshee."
+                    ));
+                } else {
+                    pane.Append(Catalog.GetString(
+                        "An iPod database could not be found on this device.\n\n" + 
+                        "Banshee can build a new database for you."
+                    ));
+                }
             } else {
                 LinkLabel link = new LinkLabel();
                 link.Xalign = 0.0f;
@@ -139,26 +154,6 @@ namespace Banshee.Dap.Ipod
             if(handler != null) {
                 handler(this, new EventArgs());
             }
-        }
-        
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
-        {
-            if(!IsDrawable) {
-                return false;
-            }
-            
-            if(evnt.Window == GdkWindow) {
-                GdkWindow.DrawRectangle(Style.BaseGC(State), true, 
-                    Allocation.X, Allocation.Y, Allocation.Width, Allocation.Height);
-                Style.PaintShadow(Style, GdkWindow, State, ShadowType.In, Allocation, this, "frame", 
-                    Allocation.X, Allocation.Y, Allocation.Width, Allocation.Height);
-            }
-            
-            if(Child != null) {
-                PropagateExpose(Child, evnt);
-            }
-            
-            return false;
         }
     }
 }

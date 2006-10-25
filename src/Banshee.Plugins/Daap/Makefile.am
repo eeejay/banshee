@@ -19,6 +19,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/DaapPlaylistSource.cs \
 	$(srcdir)/DaapProxyWebServer.cs \
 	$(srcdir)/DaapConfigPage.cs \
+	$(srcdir)/DaapErrorView.cs \
 	$(srcdir)/daap-sharp/*.cs \
 	$(srcdir)/daap-sharp/Mono.Zeroconf/*.cs
 
