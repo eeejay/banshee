@@ -323,11 +323,21 @@ namespace Banshee.Base
             get { 
                 return play_count;
             }
+
+            set {
+                play_count = value;
+                WriteUpdate();
+            }
         }
         
         public DateTime LastPlayed { 
             get { 
                 return last_played;
+            }
+
+            set {
+                last_played = value;
+                WriteUpdate();
             }
         }
         
