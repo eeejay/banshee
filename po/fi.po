@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-27 07:28+0300\n"
-"PO-Revision-Date: 2006-10-27 07:38+0300\n"
+"POT-Creation-Date: 2006-10-30 07:03+0300\n"
+"PO-Revision-Date: 2006-10-30 07:03+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -749,11 +749,11 @@ msgstr "Valitse kappalelistassa näytettävät sarakkeet"
 
 #: ../src/Banshee.Base/ActionManager.cs:140
 msgid "Boo Buddy..."
-msgstr ""
+msgstr "Boo Buddy..."
 
 #: ../src/Banshee.Base/ActionManager.cs:141
 msgid "Open Boo Buddy"
-msgstr ""
+msgstr "Avaa Boo Buddy"
 
 #: ../src/Banshee.Base/ActionManager.cs:148
 msgid "Display the equalizer."
