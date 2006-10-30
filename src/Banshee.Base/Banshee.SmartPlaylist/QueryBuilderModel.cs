@@ -711,7 +711,11 @@ namespace Banshee.SmartPlaylist
             AddField(Catalog.GetString("Last Played"), "LastPlayedStamp", typeof(QueryMatchDate));
             AddField(Catalog.GetString("Duration"), "Duration", typeof(QueryMatchTime));
             AddField(Catalog.GetString("Play Count"), "NumberOfPlays", typeof(QueryMatchInteger));
-            AddField(Catalog.GetString("Playlist"), "PlaylistID", typeof(QueryMatchPlaylist));
+
+            if (Banshee.Sources.PlaylistSource.PlaylistCount > 0) {
+                AddField(Catalog.GetString("Playlist"), "PlaylistID", typeof(QueryMatchPlaylist));
+            }
+
             AddField(Catalog.GetString("Rating"), "Rating", typeof(QueryMatchRating));
             AddField(Catalog.GetString("Path"), "Uri", typeof(QueryMatchString));
             AddField(Catalog.GetString("Year"), "Year", typeof(QueryMatchYear));

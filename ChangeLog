@@ -1,3 +1,8 @@
+2006-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs: Don't show
+	static playlists unless there is at least one. Fixes BGO #354389.
+
 2006-10-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/TrackInfo.cs: Make PlayCount and LastPlayed properties
