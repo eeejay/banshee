@@ -219,7 +219,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Globals.cs \
 	$(srcdir)/GConfKeys.cs \
 	$(srcdir)/SpecialKeys.cs \
-	$(srcdir)/BansheeTodo.cs \
 	$(srcdir)/IconThemeUtils.cs \
 	$(srcdir)/GstMisc.cs \
 	$(srcdir)/ImportManager.cs \

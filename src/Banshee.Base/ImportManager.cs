@@ -243,6 +243,8 @@ namespace Banshee.Base
             
             processing_queue = true;
             
+            using(new Banshee.Base.Timer("Importing")) { 
+            
             while(path_queue.Count > 0) {
                 CheckForCanceled();
                 
@@ -258,7 +260,9 @@ namespace Banshee.Base
                     UpdateCount(null);
                 }
             }
-
+            
+            }
+            
             path_queue.Clear();
             processing_queue = false;
             

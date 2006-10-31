@@ -47,9 +47,7 @@ namespace Banshee
     {
         private static int uid;
         private TimeSpan totalDuration = new TimeSpan(0);
-        
-        private ArrayList trackInfoQueue;
-        private bool trackInfoQueueLocked = false;
+
         private TreeIter playingIter;
         
         private RepeatMode repeat = RepeatMode.None;
@@ -69,58 +67,15 @@ namespace Banshee
         
         public PlaylistModel() : base(typeof(TrackInfo))
         {
-            trackInfoQueue = new ArrayList();
             SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
                 ReloadSource();
             };
-        }
-
-        // --- Load Queue and Additions ---
-        private bool OnIdle()
-        {
-            timeout_id = 0;
-            QueueSync();
-            return false;
-        }
-
-        private void QueueSync()
-        {
-            if(trackInfoQueue.Count <= 0) {
-                return;
-            }
-            
-            trackInfoQueueLocked = true;
-                
-            foreach(TrackInfo ti in trackInfoQueue)
-                AddTrack(ti, false);
-            RaiseUpdated(this, new EventArgs());
-
-            trackInfoQueue.Clear();
-            trackInfoQueueLocked = false;
-            //SyncPlayingIter();
-            
-            return;
-        }
-            
-        public void QueueAddTrack(TrackInfo ti)
-        {
-            while(trackInfoQueueLocked);
-            trackInfoQueue.Add(ti);
-            if (timeout_id == 0) {
-                timeout_id = GLib.Timeout.Add(300, new GLib.TimeoutHandler(OnIdle));
-            }
-        }
-
-        private void OnLoaderHaveTrackInfo(object o, HaveTrackInfoArgs args)
-        {
-            QueueAddTrack(args.TrackInfo);
         }
 
         public void AddTrack(TrackInfo ti)
         {
             AddTrack(ti, true);
         }
-
         
         public void AddTrack(TrackInfo ti, bool raiseUpdate)
         {
@@ -377,8 +332,6 @@ namespace Banshee
         
         public void ClearModel()
         {
-            trackInfoQueue.Clear();
-        
             totalDuration = new TimeSpan(0);
             playingIter = TreeIter.Zero;
             Clear();

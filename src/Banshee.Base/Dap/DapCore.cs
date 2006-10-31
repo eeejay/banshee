@@ -73,6 +73,7 @@ namespace Banshee.Dap
             
             PluginFactory<DapDevice> plugin_factory = new PluginFactory<DapDevice>(PluginFactoryType.Type);
             plugin_factory.AddScanDirectory(ConfigureDefines.InstallDir + "Banshee.Dap");
+            plugin_factory.IncludeMask = "*Dap.dll";
             plugin_factory.LoadPlugins();
             
             foreach(Type type in plugin_factory.PluginTypes) {

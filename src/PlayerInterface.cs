@@ -28,7 +28,7 @@
 
 using System;
 using System.IO;
-
+using System.Text;
 using System.Threading;
 using System.Reflection;
 using System.Collections;
@@ -1159,33 +1159,36 @@ namespace Banshee
         private void UpdateStatusBar()
         {
             long count = playlistModel.Count();
+            
+            if(count == 0 && SourceManager.ActiveSource == null) {
+                LabelStatusBar.Text = Branding.ApplicationLongName;
+                return;
+            } else if(count == 0) {
+                LabelStatusBar.Text = String.Empty;
+                return;
+            } 
+            
             TimeSpan span = playlistModel.TotalDuration;       
-            string timeDisp = String.Empty;
+            StringBuilder builder = new StringBuilder();
+            
+            builder.AppendFormat(Catalog.GetPluralString("{0} Item", "{0} Items", (int)count), count);
+            builder.Append(", ");
             
             if(span.Days > 0) {
-                timeDisp = String.Format(Catalog.GetPluralString("{0} day", "{0} days", span.Days), 
-                    span.Days) + " ";
+                builder.AppendFormat(Catalog.GetPluralString("{0} day", "{0} days", span.Days), span.Days);
+                builder.Append(", ");
             }
             
-            if(span.Days > 0 || span.Hours > 0) {
-                timeDisp += String.Format("{0}:{1}:{2}", span.Hours, span.Minutes.ToString("00"), 
-                    span.Seconds.ToString("00"));
-            } else {   
-                timeDisp += String.Format("{0}:{1}", span.Minutes, span.Seconds.ToString("00"));
+            if(span.Hours > 0) {
+                builder.AppendFormat(Catalog.GetPluralString("{0} hour", "{0} hours", span.Hours), span.Hours);
+                builder.Append(", ");
             }
             
-            ThreadAssist.ProxyToMain(delegate {
-                if(count == 0 && SourceManager.ActiveSource == null) {
-                    LabelStatusBar.Text = Branding.ApplicationLongName;
-                } else if(count == 0) {
-                    LabelStatusBar.Text = String.Empty;
-                } else {
-                    string text = String.Format(Catalog.GetPluralString("{0} Item", "{0} Items", 
-                        (int)count), count) + ", ";
-                    text += String.Format(Catalog.GetString("{0} Total Play Time"), timeDisp);
-                    LabelStatusBar.Text = text;
-                }
-            });
+            builder.AppendFormat(Catalog.GetPluralString("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
+            builder.Append(", ");
+            builder.AppendFormat(Catalog.GetPluralString("{0} second", "{0} seconds", span.Seconds), span.Seconds);
+            
+            LabelStatusBar.Text = builder.ToString();
         }
         
         private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)

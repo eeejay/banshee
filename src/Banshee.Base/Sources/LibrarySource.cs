@@ -57,7 +57,6 @@ namespace Banshee.Sources
               
             Globals.Library.TrackAdded += delegate(object o, LibraryTrackAddedArgs args) {
                 OnTrackAdded(args.Track);
-                OnUpdated();
             };  
 
             SortCriteria criteria;
@@ -100,6 +99,33 @@ namespace Banshee.Sources
         public override void Commit()
         {
             Globals.Library.CommitRemoveQueue();
+        }
+        
+        private Queue<TrackInfo> add_pending_queue = new Queue<TrackInfo>();
+        private uint add_pending_queue_flush_timeout = 0;
+        
+        public override void OnTrackAdded(TrackInfo track)
+        {
+            lock(this) {
+                add_pending_queue.Enqueue(track);
+            
+                if(add_pending_queue_flush_timeout == 0) {
+                    add_pending_queue_flush_timeout = GLib.Timeout.Add(1500, FlushAddPendingQueue);
+                }
+            }
+        }
+        
+        private bool FlushAddPendingQueue()
+        {
+            lock(this) {
+                while(add_pending_queue.Count > 0) {
+                    base.OnTrackAdded(add_pending_queue.Dequeue());
+                    base.OnUpdated();
+                }
+                
+                add_pending_queue_flush_timeout = 0;
+                return false;
+            }
         }
 
         private Gtk.ActionGroup action_group = null;

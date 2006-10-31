@@ -1,5 +1,23 @@
 2006-10-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Sources/LibrarySource.cs: Queue added tracks in a
+	pending queue and flush it ever 1.5 seconds, this speeds up importing
+	by around 1.5 minutes on a 5100 track set
+
+	* src/PlaylistModel.cs: Removed old unused and confusing code
+
+	* src/PlayerInterface.cs: Updated the status bar text, do not run it in
+	an idle handler
+
+	* src/Banshee.Base/ImportManager.cs: Use a timer for the import
+
+	* src/Banshee.Base/Makefile.am:
+	* src/Banshee.Plugins/Daap/Daap.mdp: Updated
+
+	* src/Banshee.Base/Dap/DapCore.cs: Use PluginFactory.IncludeMask
+
+2006-10-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/IO/IOProxy.cs: Use a static table of types instead of
 	reflection
 

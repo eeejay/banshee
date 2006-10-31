@@ -20,7 +20,6 @@
     <File name="./ArgumentQueue.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCdRipper.cs" subtype="Code" buildaction="Compile" />
     <File name="./BansheeBranding.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BansheeTodo.cs" subtype="Code" buildaction="Compile" />
     <File name="./BatchTranscoder.cs" subtype="Code" buildaction="Compile" />
     <File name="./Branding.cs" subtype="Code" buildaction="Compile" />
     <File name="./Catalog.cs" subtype="Code" buildaction="Compile" />
