@@ -35,6 +35,16 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Gstreamer;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.MediaEngine.Gstreamer.GstreamerPlayerEngine)
+        };
+    }
+}
+
 namespace Banshee.MediaEngine.Gstreamer
 {
     internal delegate void GstPlaybackEosCallback(IntPtr engine);

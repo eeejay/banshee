@@ -1,3 +1,38 @@
+2006-10-31  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/IO/IOProxy.cs: Use a static table of types instead of
+	reflection
+
+	* src/Banshee.Base/BansheeTodo.cs: Removed
+
+	* src/Main.cs: Removed BansheeTodo support
+	
+	* src/Banshee.Base/TrackInfo.cs: Removed old BansheeTodo attributes
+
+	* src/Banshee.Base/Utilities.cs: Added InvokeMethod and ModuleGetTypes
+	reflection utilities
+
+	* src/Banshee.Base/Banshee.AudioProfiles/Abakos.Compiler/Functions.cs:
+	Disabled reflection-loaded functions
+
+	* src/Banshee.Base/Branding.cs:
+	* src/Banshee.Base/Plugins/PluginFactory.cs: Check for 
+	PluginModuleEntry.GetTypes() in plugin assemblies and use that instead
+	of Assembly.GetTypes() if it exists; fall back otherwise
+
+	* src/Banshee.Dap/Ipod/IpodDap.cs:
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs:
+	* src/Banshee.Dap/Mtp/MtpDap.cs:
+	* src/Banshee.Dap/Njb/NjbDap.cs:
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs:
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs:
+	* src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Provide a PluginModuleEntry.GetTypes() 
+
 2006-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs: Don't show

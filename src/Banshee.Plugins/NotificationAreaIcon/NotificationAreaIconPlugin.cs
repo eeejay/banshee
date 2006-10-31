@@ -34,11 +34,23 @@ using System;
 using Gtk;
 using GLib;
 using GConf;
+using Mono.Unix;
+
+using Notifications;
+
 using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Widgets;
-using Mono.Unix;
-using Notifications;
+
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Plugins.NotificationAreaIcon.NotificationAreaIconPlugin)
+        };
+    }
+}
 
 namespace Banshee.Plugins.NotificationAreaIcon 
 {

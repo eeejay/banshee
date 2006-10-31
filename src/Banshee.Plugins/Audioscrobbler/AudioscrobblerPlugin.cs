@@ -40,6 +40,16 @@ using GConf;
 using Banshee.MediaEngine;
 using Banshee.Base;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Plugins.Audioscrobbler.AudioscrobblerPlugin)
+        };
+    }
+}
+
 namespace Banshee.Plugins.Audioscrobbler 
 {
     public class AudioscrobblerPlugin : Banshee.Plugins.Plugin

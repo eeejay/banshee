@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  DaapPlugin.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@aaronbock.net>
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -32,12 +31,22 @@ using Mono.Unix;
 
 using Banshee.Base;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Plugins.Daap.DaapPlugin)
+        };
+    }
+}
+
 namespace Banshee.Plugins.Daap
 {
     public class DaapPlugin : Banshee.Plugins.Plugin
     {
         protected override string ConfigurationName { get { return "Daap"; } }
-        public override string DisplayName { get { return "Music Sharing"; } }
+        public override string DisplayName { get { return Catalog.GetString("Music Sharing"); } }
         
         public override string Description {
             get {

@@ -275,12 +275,6 @@ namespace Banshee
         
         private static void HandleShallowCommands()
         {
-            if(Globals.ArgumentQueue.Contains("print-todo")) {
-                BansheeTodo.PrintReport();
-                Console.WriteLine("");
-                System.Environment.Exit(0);
-            }
-            
             if(Globals.ArgumentQueue.Contains("version")) {
                 Console.WriteLine("Banshee " + ConfigureDefines.VERSION);
                 System.Environment.Exit(0);

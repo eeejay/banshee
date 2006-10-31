@@ -64,7 +64,7 @@ namespace Abakos.Compiler
          
         static FunctionTable()
         {
-            assemblies.Add(Assembly.GetExecutingAssembly());
+            //assemblies.Add(Assembly.GetExecutingAssembly());
         }
         
         public static IEnumerable<FunctionCache> Functions {

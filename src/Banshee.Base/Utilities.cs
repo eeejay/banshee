@@ -160,6 +160,22 @@ namespace Banshee.Base
             
             return methodInfo.IsVirtual ? methodInfo != methodInfo.GetBaseDefinition() : true;
         }
+        
+        public static object InvokeMethod(Assembly assembly, string typeName, string methodName)
+        {
+            if(assembly == null) {
+                throw new ArgumentNullException("assembly");
+            }
+            
+            Type type = assembly.GetType(typeName, true);
+            MethodInfo method = type.GetMethod(methodName);
+            return method.Invoke(null, null);
+        }
+        
+        public static Type [] ModuleGetTypes(Assembly assembly, string typeName)
+        {
+            return (Type [])InvokeMethod(assembly, typeName, "GetTypes");
+        }
     }
     
     public class DateTimeUtil

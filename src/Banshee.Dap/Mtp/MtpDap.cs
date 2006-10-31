@@ -42,6 +42,16 @@ using Mono;
 using Mono.Unix;
 using Gtk;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Dap.Mtp.MtpDap)
+        };
+    }
+}
+
 namespace Banshee.Dap.Mtp
 {
     [DapProperties(DapType = DapType.NonGeneric)]

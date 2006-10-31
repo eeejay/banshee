@@ -33,6 +33,16 @@ using Mono.Unix;
 using Banshee.Dap;
 using Banshee.Base;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Dap.MassStorage.MassStorageDap)
+        };
+    }
+}
+
 namespace Banshee.Dap.MassStorage
 {
     // FIXME the codecs shouldn't be hard coded here, they should be set

@@ -74,12 +74,10 @@ namespace Banshee.Plugins
         private List<T> plugin_instances = new List<T>();
         private List<Type> plugin_types = new List<Type>();
         private List<DirectoryInfo> scan_directories = new List<DirectoryInfo>();
+        private string include_mask = "*.dll";
         private PluginFactoryType factory_type;
 
-// gmcs gives a warning when it shouldn't: http://bugzilla.ximian.com/show_bug.cgi?id=79018
-#pragma warning disable 0067
         public event GenericEventHandler<PluginFactory<T>, PluginFactoryEventArgs<T>> PluginLoaded;
-#pragma warning restore 0067
         
         public PluginFactory() : this(PluginFactoryType.Instance)
         {
@@ -107,7 +105,7 @@ namespace Banshee.Plugins
         {
             plugin_types.Remove(type);
         }
-        
+
         public void AddScanDirectory(DirectoryInfo directory)
         {
             AddScanDirectory(directory, false);
@@ -163,7 +161,7 @@ namespace Banshee.Plugins
         public void LoadPluginsFromDirectory(DirectoryInfo directory)
         {
             try {
-                foreach(FileInfo file in directory.GetFiles("*.dll")) {
+                foreach(FileInfo file in directory.GetFiles(include_mask)) {
                     LoadPluginsFromFile(file);
                 }
             } catch(DirectoryNotFoundException) {
@@ -181,7 +179,20 @@ namespace Banshee.Plugins
         
         public void LoadPluginsFromAssembly(Assembly assembly)
         {
-            foreach(Type type in assembly.GetTypes()) {
+            Type [] check_types = null;
+            List<Type> non_entry_types = null;
+            
+            try {
+                check_types = ReflectionUtil.ModuleGetTypes(assembly, "PluginModuleEntry");
+            } catch {
+            }
+            
+            if(check_types == null) {
+                check_types = assembly.GetTypes();
+                non_entry_types = new List<Type>();
+            }
+        
+            foreach(Type type in check_types) {
                 if(!type.IsSubclassOf(typeof(T)) || type.IsAbstract) {
                     continue;
                 }
@@ -199,7 +210,44 @@ namespace Banshee.Plugins
                     continue;
                 }
                 
+                if(non_entry_types != null) {
+                    non_entry_types.Add(type);
+                }
+                
                 LoadPluginFromType(type);
+            }
+            
+            if(non_entry_types != null && non_entry_types.Count > 0) {
+                Console.WriteLine(
+                    "Plugin module: {0}\n" +
+                    "Does not implement PluginModuleEntry.GetTypes. For faster startup performance\n" +
+                    "and to lower memory consumption, it is recommended that the following code\n" +
+                    "be added to the plugin module:\n",
+                    assembly.Location);
+                
+                Console.WriteLine("public static class PluginModuleEntry");
+                Console.WriteLine("{");
+                Console.WriteLine("    public static Type [] GetTypes()");
+                Console.WriteLine("    {");
+                Console.WriteLine("        return new Type [] {");
+                
+                for(int i = 0; i < non_entry_types.Count; i++) {
+                    Console.WriteLine("            typeof({0}){1}", non_entry_types[i].FullName,
+                        i < non_entry_types.Count -1 ? "," : String.Empty);
+                }
+                
+                Console.WriteLine("        };");
+                Console.WriteLine("    }");
+                Console.WriteLine("}\n");
+            } else if(non_entry_types != null) {
+                Console.WriteLine(
+                    "Assembly.GetTypes() was called on assembly:\n" +
+                    "{0}\n\n" +
+                    "This assembly does not include any {1} types\n" + 
+                    "and should probably be filtered from being passed to\n" +
+                    "PluginFactory.LoadPluginsFromAssembly to prevent memory\n" + 
+                    "loss and performance issues.\n\n",
+                    assembly.Location, typeof(T).FullName);
             }
         }
         
@@ -247,6 +295,11 @@ namespace Banshee.Plugins
         
         public IEnumerable<Type> PluginTypes {
             get { return plugin_types; }    
+        }
+        
+        public string IncludeMask {
+            get { return include_mask; }
+            set { include_mask = value; }
         }
     }
 }

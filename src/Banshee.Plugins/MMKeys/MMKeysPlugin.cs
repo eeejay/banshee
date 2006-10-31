@@ -1,4 +1,3 @@
-
 /***************************************************************************
  *  MMKeysPlugin.cs
  *
@@ -34,12 +33,22 @@ using Mono.Unix;
 
 using Banshee.Base;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Plugins.MMKeys.MMKeysPlugin)
+        };
+    }
+}
+
 namespace Banshee.Plugins.MMKeys
 {
 	public class MMKeysPlugin : Banshee.Plugins.Plugin
 	{
 	   protected override string ConfigurationName { get { return "MMKeys"; } }
-        public override string DisplayName { get { return "Multimedia Keys"; } }
+        public override string DisplayName { get { return Catalog.GetString("Multimedia Keys"); } }
 	
 		public override string Description {
             get {

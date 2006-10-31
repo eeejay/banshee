@@ -39,7 +39,17 @@ using IPod;
 using Banshee.Base;
 using Banshee.Dap;
 using Banshee.Widgets;
- 
+
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Dap.Ipod.IpodDap)
+        };
+    }
+}
+
 namespace Banshee.Dap.Ipod
 {
     [DapProperties(DapType = DapType.NonGeneric, PipelineName="Ipod")]

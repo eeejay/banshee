@@ -36,6 +36,16 @@ using Banshee.Base;
 using Banshee.Kernel;
 using Banshee.Database;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Plugins.MetadataSearch.MetadataSearchPlugin)
+        };
+    }
+}
+
 namespace Banshee.Plugins.MetadataSearch 
 {
     internal enum FetchMethod 

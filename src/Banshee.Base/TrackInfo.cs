@@ -201,7 +201,6 @@ namespace Banshee.Base
             }
         }
        
-        [BansheeTodo("MimeType should be parsed using gvfs and set accordingly")]
         public string MimeType { 
             get { 
                 return mimetype;
@@ -245,7 +244,6 @@ namespace Banshee.Base
             } 
         }
         
-        [BansheeTodo("Need to figure out how we want to display this")]
         public string Genre { 
             get { 
                 return genre;
@@ -257,7 +255,6 @@ namespace Banshee.Base
             } 
         }
 
-        [BansheeTodo("Completely unused, should we even have this?")]
         public string Performer {
             get { 
                 return performer; 
@@ -359,28 +356,24 @@ namespace Banshee.Base
             }
         }
         
-        [BansheeTodo("Placeholder for ReplayGain support")]
         public double TrackGain { 
             get { 
                 return track_gain;
             }
         }
         
-        [BansheeTodo("Placeholder for ReplayGain support")]
         public double TrackPeak { 
             get { 
                 return track_peak;
             }
         }
         
-        [BansheeTodo("Placeholder for ReplayGain support")]
         public double AlbumGain { 
             get { 
                 return album_gain;
             }
         }
         
-        [BansheeTodo("Placeholder for ReplayGain support")]
         public double AlbumPeak { 
             get { 
                 return album_peak;

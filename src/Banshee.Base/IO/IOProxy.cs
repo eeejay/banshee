@@ -39,6 +39,11 @@ namespace Banshee.IO
         private static IFile file;
         private static IIOConfig config;
         
+        private static Type [] available_config_types = new Type [] {
+            typeof(Banshee.IO.SystemIO.IOConfig),
+            typeof(Banshee.IO.Unix.IOConfig)
+        };
+        
         static IOProxy()
         {
             Reload();
@@ -68,21 +73,14 @@ namespace Banshee.IO
             } catch {
             }
             
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            foreach(Type type in assembly.GetTypes()) {
-                foreach(Type itype in type.GetInterfaces()) {
-                    if(itype != typeof(IIOConfig)) {
-                        continue;
-                    }
-                    
-                    try {
-                        IIOConfig config = (IIOConfig)Activator.CreateInstance(type);
-                        if(config.Name == name) {
-                            SetFromConfig(config);
-                            return;
-                        }
-                    } catch {
-                    }
+            foreach(Type type in available_config_types) {
+                try {
+                    IIOConfig config = (IIOConfig)Activator.CreateInstance(type);
+                    if(config.Name == name) {
+                       SetFromConfig(config);
+                       return;
+                   }
+                } catch {
                 }
             }
         }

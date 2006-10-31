@@ -36,6 +36,16 @@ using Helix;
 using Banshee.Base;
 using Banshee.MediaEngine;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.MediaEngine.Helix.HelixRemotePlayerEngine)
+        };
+    }
+}
+
 namespace Banshee.MediaEngine.Helix
 {    
     public class HelixRemotePlayerEngine : PlayerEngine, IEqualizer

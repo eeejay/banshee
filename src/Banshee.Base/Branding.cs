@@ -71,6 +71,21 @@ namespace Banshee.Base
         
         private static void LoadCustomBranding(Assembly assembly)
         {
+            // Try using a more efficient method of loading the branding type,
+            // avoiding an Assembly.GetTypes() call
+            
+            try {
+                ICustomBranding branding = (ICustomBranding)ReflectionUtil.InvokeMethod(assembly,
+                    "BrandingModuleEntry", "CreateBranding");
+                if(branding != null) {
+                    custom_branding = branding;
+                    return;
+                }
+            } catch {
+            }
+            
+            // Fall back on the old method of loading the branding type for compat
+            
             foreach(Type type in assembly.GetTypes()) {
                 foreach(Type interface_type in type.GetInterfaces()) {
                     if(interface_type == typeof(ICustomBranding)) {

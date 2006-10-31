@@ -37,6 +37,16 @@ using Banshee.Dap;
 using Banshee.Base;
 using Banshee.Sources;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Dap.Njb.NjbDap)
+        };
+    }
+}
+
 namespace Banshee.Dap.Njb
 {
     [DapProperties(DapType = DapType.NonGeneric)]
