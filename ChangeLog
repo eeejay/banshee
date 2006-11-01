@@ -1,6 +1,6 @@
 2006-10-31  Aaron Bockover  <abock@gnome.org>
 
-	* src/PlayerInterface.cs: 
+	* src/PlayerInterface.cs: Fixed modifier bug (BGO #368436)
 
 	* src/banshee.mdp: Updated
 
