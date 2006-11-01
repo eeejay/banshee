@@ -342,6 +342,11 @@ namespace Banshee.Base
             get { 
                 return date_added;
             }
+            
+            set {
+                date_added = value;
+                WriteUpdate();
+            }
         }
 
         public uint Rating { 

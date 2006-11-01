@@ -43,6 +43,12 @@ public class AmazonCoverFetcher
             return false;
         }
         
+        string coverFilename = saveDirectory + Path.DirectorySeparatorChar 
+            + asin + ".jpg";
+
+        if (File.Exists(coverFilename))
+            return true;
+    
         HttpWebRequest request = (HttpWebRequest)WebRequest.Create(
             String.Format(AmazonImageUri, asin));
         
@@ -64,8 +70,7 @@ public class AmazonCoverFetcher
     
         byte [] image_bytes = reader.ReadBytes((int)response.ContentLength);
         
-        FileStream stream = new FileStream(saveDirectory + Path.DirectorySeparatorChar 
-            + asin + ".jpg", FileMode.Create);
+        FileStream stream = new FileStream(coverFilename, FileMode.Create);
         stream.Write(image_bytes, 0, image_bytes.Length);
         stream.Close();
         reader.Close();

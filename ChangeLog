@@ -1,3 +1,11 @@
+2006-11-01  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/AmazonCoverFecther.cs: Do not download cover art
+	if the file already exists (Alexandros Frantzis, BGO #367047)
+
+	* src/Banshee.Base/TrackInfo.cs: Make DateAdded mutable (Sebastian Dröge, 
+	BGO #367889)
+
 2006-10-31  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs: Fixed modifier bug (BGO #368436)
