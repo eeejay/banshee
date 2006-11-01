@@ -128,10 +128,6 @@ namespace Banshee.Plugins.Daap
                 int collision = 0;
                 string service_name = args.Service.Name;
                 
-                if(service_name.ToLower().Contains("jono")) {
-                    return;
-                }
-                
                 while (source_map.Contains(service_name))
                     service_name = args.Service.Name + " [" + ++collision + "]";
                 source_map.Add(service_name, source);

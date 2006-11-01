@@ -680,6 +680,22 @@ namespace Banshee
             Globals.Configuration.Set(GConfKeys.WindowHeight, height);
         }
         
+        private static Gdk.ModifierType [] important_modifiers = new Gdk.ModifierType [] {
+            Gdk.ModifierType.ControlMask,
+            Gdk.ModifierType.ShiftMask
+        };
+            
+        private static bool NoImportantModifiersAreSet()
+        {
+            Gdk.ModifierType state = (Gtk.Global.CurrentEvent as Gdk.EventKey).State;
+            foreach(Gdk.ModifierType modifier in important_modifiers) {
+                if((state & modifier) == modifier) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
         private bool accel_group_active = true;
         
         [GLib.ConnectBefore]
@@ -688,7 +704,7 @@ namespace Banshee
             bool handled = false;
             
             if(WindowPlayer.Focus is Entry && Gtk.Global.CurrentEvent is Gdk.EventKey &&
-                (Gtk.Global.CurrentEvent as Gdk.EventKey).State == Gdk.ModifierType.None) {
+                NoImportantModifiersAreSet()) {
                 if(accel_group_active) {
                     WindowPlayer.RemoveAccelGroup(Globals.ActionManager.UI.AccelGroup);
                     accel_group_active = false;

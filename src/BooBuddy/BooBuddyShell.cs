@@ -206,11 +206,18 @@ namespace BooBuddy
                 }
                 return true;
             } /*else if(evnt.Key == Gdk.Key.period) {
-                string lookup_fragment = InputLine.Substring(0, Cursor.LineIndex - 4);
-                string [] fragment_parts = Regex.Split(lookup_fragment, @"[ \t]+");
-                lookup_fragment = fragment_parts[fragment_parts.Length - 1];
+                string lookup_fragment = InputLine.Substring(0, Cursor.LineIndex - 4).Trim();
+                if(lookup_fragment.Length > 1 && lookup_fragment[lookup_fragment.Length - 1] != '.') {
+                    lookup_fragment += ".";
+                }
+                lookup_fragment += "__codecomplete__";
                 
-                Console.WriteLine(interpreter.Lookup(lookup_fragment));
+                int wx, wy, tx, ty;
+                Gdk.Rectangle rect = GetIterLocation(Buffer.GetIterAtMark(Buffer.InsertMark));
+                BufferToWindowCoords(Gtk.TextWindowType.Widget, rect.X, rect.Y + rect.Height, out wx, out wy);
+                GdkWindow.GetOrigin(out tx, out ty);
+                Console.WriteLine("({0}, {1})", tx + wx, ty + wy);
+                
                 foreach(IEntity entity in interpreter.SuggestCodeCompletion(lookup_fragment)) {
                     Console.WriteLine(entity.FullName);
                 }
@@ -260,6 +267,10 @@ namespace BooBuddy
 
         public void SetResult(InterpreterResult result)
         {
+            if(!IsRealized) {
+                return;
+            }
+            
             TextIter end_iter = Buffer.EndIter;
             
             StringBuilder builder = new StringBuilder();

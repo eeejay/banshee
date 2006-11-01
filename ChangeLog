@@ -1,5 +1,18 @@
 2006-10-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: 
+
+	* src/banshee.mdp: Updated
+
+	* src/Banshee.Plugins/Daap/DaapCore.cs: Removed the Jono block from GUADEC;
+	we love Jono - rock on
+
+	* src/BooBuddy/BooBuddyShell.cs: Started on code completion
+	
+	* src/BooBuddy/BooBuddyWindow.cs: Embed reference to shell as 'shell'
+
+2006-10-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Sources/LibrarySource.cs: Queue added tracks in a
 	pending queue and flush it ever 1.5 seconds, this speeds up importing
 	by around 1.5 minutes on a 5100 track set

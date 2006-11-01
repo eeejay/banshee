@@ -51,6 +51,7 @@ namespace BooBuddy
             interpreter_sw.ShadowType = ShadowType.In;
             
             interpreter = new BooBuddyInterpreter();
+            interpreter.Interpreter.SetValue("shell", this);
             
             interpreter_shell = new BooBuddyShell();
             interpreter_shell.Interpreter = interpreter.Interpreter;
