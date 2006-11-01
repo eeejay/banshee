@@ -1,3 +1,8 @@
+2006-11-01  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Change some
+	WriteLine's to debug messages through the logger.
+
 2006-11-01  Aaron Bockover  <abock@gnome.org>
 
 	Patch by Christopher James Halse Rogers <chalserogers@gmail.com> 

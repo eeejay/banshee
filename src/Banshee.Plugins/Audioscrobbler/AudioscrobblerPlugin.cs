@@ -186,7 +186,7 @@ namespace Banshee.Plugins.Audioscrobbler
         private void StartEngine()
         {
             if(protocol_engine == null) {
-                Console.WriteLine("Audioscrobbler starting protocol engine");
+                LogCore.Instance.PushDebug("Audioscrobbler starting protocol engine", "");
                 protocol_engine = new Engine();
                 protocol_engine.SetUserPassword(Username, Password);
         			protocol_engine.Start();
@@ -196,7 +196,7 @@ namespace Banshee.Plugins.Audioscrobbler
         private void StopEngine()
         {
             if(protocol_engine != null) {
-                Console.WriteLine("Audioscrobbler stopping protocol engine");
+                LogCore.Instance.PushDebug("Audioscrobbler stopping protocol engine", "");
                 protocol_engine.Stop();
                 protocol_engine = null;
             }
