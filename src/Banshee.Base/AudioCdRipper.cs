@@ -317,8 +317,18 @@ namespace Banshee.Base
                 LogCore.Instance.PushDebug("Ripping CD and Encoding with Pipeline", encodePipeline);
             
                 LockDrive();
-            
-                ripper = new AudioCdTrackRipper(device, 0, encodePipeline);
+
+                int paranoiaMode = 0;
+                
+                try {
+                    if ((bool)Globals.Configuration.Get(GConfKeys.ErrorCorrection)) {
+                        paranoiaMode = 255;
+                        LogCore.Instance.PushDebug("CD Error-correction enabled", "using full paranoia mode (255)");
+                    }
+                } catch(Exception e){
+                    Console.WriteLine(e);
+                }
+                ripper = new AudioCdTrackRipper(device, paranoiaMode, encodePipeline);
                 ripper.Progress += OnRipperProgress;
                 ripper.TrackFinished += OnTrackRipped;
                 ripper.Error += OnRipperError;

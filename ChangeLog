@@ -1,5 +1,18 @@
 2006-11-01  Aaron Bockover  <abock@gnome.org>
 
+	Patch by Christopher James Halse Rogers <chalserogers@gmail.com> 
+	(BGO #365200)
+
+	* src/Banshee.Base/AudioCdRipper.cs: Add optional error-correction when 
+	importing CDs, enabling the paranoia mode of the cdparanoiasrc.
+
+	* data/banshee-dialogs.glade:
+	* src/Banshee.Base/GConfKeys.cs:
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Add a checkbox to the
+	Preferences dialog to enable/disable CD error-correction.
+
+2006-11-01  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/AmazonCoverFecther.cs: Do not download cover art
 	if the file already exists (Alexandros Frantzis, BGO #367047)
 

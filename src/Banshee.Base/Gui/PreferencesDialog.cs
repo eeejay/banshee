@@ -44,6 +44,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button library_reset;
         [Widget] private CheckButton copy_on_import;
         [Widget] private CheckButton write_metadata;
+        [Widget] private CheckButton error_correction;
         
         private Tooltips tips = new Tooltips();
         private FileChooserButton library_location_chooser;
@@ -82,8 +83,9 @@ namespace Banshee.Gui.Dialogs
             library_location_chooser.SetFilename(location);
             SaveLibraryLocation(location);   
 
-            copy_on_import.Active = ReadPreference<bool>(GConfKeys.CopyOnImport, false);
-            write_metadata.Active = ReadPreference<bool>(GConfKeys.WriteMetadata, false);
+            copy_on_import.Active   = ReadPreference<bool>(GConfKeys.CopyOnImport, false);
+            write_metadata.Active   = ReadPreference<bool>(GConfKeys.WriteMetadata, false);
+            error_correction.Active = ReadPreference<bool>(GConfKeys.ErrorCorrection, false);
         }
         
         private void ConnectEvents()
@@ -102,6 +104,10 @@ namespace Banshee.Gui.Dialogs
             
             write_metadata.Toggled += delegate {
                 Globals.Configuration.Set(GConfKeys.WriteMetadata, write_metadata.Active);
+            };
+
+            error_correction.Toggled += delegate {
+                Globals.Configuration.Set(GConfKeys.ErrorCorrection, error_correction.Active);
             };
         }
         

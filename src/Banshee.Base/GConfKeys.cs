@@ -45,6 +45,7 @@ namespace Banshee.Base
         public const string PlaylistRepeat = BasePath + "PlaylistRepeat";
         public const string CopyOnImport = BasePath + "CopyOnImport";
         public const string WriteMetadata = BasePath + "WriteMetadata";
+        public const string ErrorCorrection = BasePath + "ErrorCorrection";
         public const string MoveOnInfoSave = BasePath + "MoveOnInfoSave";
         public const string AdditionAction = BasePath + "AdditionAction";
         public const string PlayerEngine = BasePath + "PlayerEngine";
