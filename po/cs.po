@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-02 21:31+0100\n"
-"PO-Revision-Date: 2006-11-02 21:31+0100\n"
+"POT-Creation-Date: 2006-11-02 21:47+0100\n"
+"PO-Revision-Date: 2006-11-02 21:48+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,8 +98,7 @@ msgid "Move music on info save"
 msgstr "Přesunout hudbu při uložení informací"
 
 #: ../data/banshee.schemas.in.h:11
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Přesunout hudbu v rámci adresáře hudební knihovny Banshee při ukládání "
 "informací o skladbě"
@@ -1081,8 +1080,7 @@ msgstr "Importuje se CD"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr ""
-"<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
+msgstr "<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:291
 #, csharp-format
@@ -1682,8 +1680,7 @@ msgstr "Převádí se soubory"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
+msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
 #: ../src/Banshee.Base/BatchTranscoder.cs:123
 msgid "Initializing Transcoder..."
@@ -1989,8 +1986,7 @@ msgid "Set all years to this value"
 msgstr "Nastavit všechny roky na tuto hodnotu"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:218
-msgid ""
-"Set all common fields in all selected tracks to the values currently set"
+msgid "Set all common fields in all selected tracks to the values currently set"
 msgstr ""
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:219
@@ -2009,9 +2005,9 @@ msgid "Editing song {0} of {1}"
 msgstr "Úprava skladby {0} z {1}"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:286
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Editing {0}"
-msgstr "Úprava skladby"
+msgstr "Upravuje se {0}"
 
 #: ../src/Banshee.Base/Gui/VersionInformationDialog.cs:61
 msgid "Assembly Version Information"
@@ -2128,8 +2124,7 @@ msgid "Searching for CD cover art..."
 msgstr "Hledání přebalu k CD..."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:107
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Nelze vyhledat metadata k CD, není dostupné připojení k Internetu."
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:113
@@ -2534,10 +2529,8 @@ msgid "Configure..."
 msgstr "Konfigurace..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
-msgid ""
-"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
-msgstr ""
-"Povolit enginu odeslat údaje o skladbách do Last.fm v modulu Audioscrobbler"
+msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr "Povolit enginu odeslat údaje o skladbách do Last.fm v modulu Audioscrobbler"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
 msgid "Enable the Audioscrobbler plugin"
@@ -2598,8 +2591,7 @@ msgstr ""
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
-msgstr ""
-"Povolit ostatním procházet a poslouchat vaší hudbu z jiných DAAP klientů"
+msgstr "Povolit ostatním procházet a poslouchat vaší hudbu z jiných DAAP klientů"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
 msgid "Enable DAAP Server support"
@@ -2751,8 +2743,7 @@ msgstr "Zastavit {0}"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Operace '{0}' stále probíhá. Chcete ji zastavit?"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -2916,8 +2907,7 @@ msgstr "Žádná"
 #: ../src/PlayerInterface.cs:1803
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat tyto skladby?"
 msgstr[2] "Opravdu chcete navždy smazat tyto skladby?"
@@ -2933,8 +2923,7 @@ msgstr "Odstranit výběr z knihovny"
 #: ../src/PlayerInterface.cs:1812
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
@@ -3019,3 +3008,4 @@ msgstr "Přehráno"
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "N/A"
+
