@@ -1,3 +1,8 @@
+2006-11-02  Jakub Steiner <jimmac@ximian.com>
+
+	* music-player-banshee-32.png: add another common size for the app
+		icon, 32x32px
+
 2006-11-01  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs: Change some

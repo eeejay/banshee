@@ -9,12 +9,15 @@ install-data-local:
 	$(INSTALL_DATA) $(srcdir)/music-player-banshee-22.png $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
 	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/24x24/apps
 	$(INSTALL_DATA) $(srcdir)/music-player-banshee-24.png $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
+	$(mkinstalldirs) $(DESTDIR)$(hicolordir)/32x32/apps
+	$(INSTALL_DATA) $(srcdir)/music-player-banshee-32.png $(DESTDIR)$(hicolordir)/32x32/apps/music-player-banshee.png
 
 uninstall-hook: 
 	rm -f $(DESTDIR)$(hicolordir)/scalable/apps/music-player-banshee.svg
 	rm -f $(DESTDIR)$(hicolordir)/16x16/apps/music-player-banshee.png
 	rm -f $(DESTDIR)$(hicolordir)/22x22/apps/music-player-banshee.png
 	rm -f $(DESTDIR)$(hicolordir)/24x24/apps/music-player-banshee.png
+	rm -f $(DESTDIR)$(hicolordir)/32x32/apps/music-player-banshee.png
 
 MAINTAINERCLEANFILES = Makefile.in
 
