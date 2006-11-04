@@ -1,3 +1,12 @@
+2006-11-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Add rate
+	limiting that prevents Banshee from going nuts when many tracks are
+	changed at once (when importing, say).  Fixes BGO #363066.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Use the
+	rate limiting.  Also, don't delete the smart playlist when it's emptied.
+
 2006-11-02  Jakub Steiner <jimmac@ximian.com>
 
 	* music-player-banshee-32.png: add another common size for the app

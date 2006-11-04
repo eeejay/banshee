@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 
 using Mono.Unix;
@@ -14,11 +15,23 @@ namespace Banshee.SmartPlaylist
 {
     public class SmartPlaylistCore : Banshee.Plugins.Plugin
     {
+        private readonly double RATE_LIMIT_INTERVAL_MS = 1000.0;
+        private readonly double RATE_LIMIT_EVENTS_MAX = 5;
+        private readonly double RATE_LIMIT_CPU_MAX = 0.10;
+        private static int RATE_LIMIT_REFRESH = 5;
+
         private ArrayList playlists = new ArrayList ();
 
         private Menu musicMenu;
         private MenuItem addItem;
         private MenuItem addFromSearchItem;
+
+        private DateTime last_check = DateTime.MinValue;
+        private uint event_counter = 0;
+        private bool rate_limited = false;
+        private uint seconds_ratelimited = 0;
+        private uint ratelimit_timeout_id = 0;
+        private DateTime start;
 
         private static SmartPlaylistCore instance = null;
 
@@ -27,6 +40,13 @@ namespace Banshee.SmartPlaylist
         public static SmartPlaylistCore Instance {
             get { return instance; }
         }
+
+        private double cpu_ms_since_last_check = 0;
+        public double CpuTime {
+            get { return cpu_ms_since_last_check; }
+            set { cpu_ms_since_last_check = value; }
+        }
+
 
         protected override string ConfigurationName {
             get { return "SmartPlaylists"; }
@@ -56,6 +76,11 @@ namespace Banshee.SmartPlaylist
 
         public SmartPlaylistCore()
         {
+            if (instance != null) {
+                Console.WriteLine ("Error: multiple smart playlist core's instantiated.");
+            }
+
+            Gnome.Vfs.Vfs.Initialize();
             instance = this;
         }
  
@@ -112,7 +137,15 @@ namespace Banshee.SmartPlaylist
             );
 
             while (reader.Read()) {
-                SmartPlaylistSource.LoadFromReader (reader);
+                try {
+                    SmartPlaylistSource.LoadFromReader (reader);
+                } catch (Exception e) {
+                    LogCore.Instance.PushError (
+                        "Invalid Smart Playlist",
+                        e.ToString(),
+                        false
+                    );
+                }
             }
 
             reader.Dispose();
@@ -162,6 +195,9 @@ namespace Banshee.SmartPlaylist
             if (timeout_id != 0)
                 GLib.Source.Remove (timeout_id);
 
+            if (ratelimit_timeout_id != 0)
+                GLib.Source.Remove (ratelimit_timeout_id);
+
             if (musicMenu != null) {
                 musicMenu.Remove(addItem);
                 musicMenu.Remove(addFromSearchItem);
@@ -176,6 +212,8 @@ namespace Banshee.SmartPlaylist
             playlists.Clear();
 
             instance = null;
+
+            Timer.PrintRunningTotals ();
         }
 
         /*public override Widget GetConfigurationWidget ()
@@ -224,7 +262,7 @@ namespace Banshee.SmartPlaylist
                     false
             );*/
 
-            Timer t = new Timer ("HandleSourceAdded" + playlist.Name);
+            Timer t = new Timer ("HandleSourceAdded", playlist.Name);
 
             StartTimer (playlist);
             
@@ -247,6 +285,7 @@ namespace Banshee.SmartPlaylist
         private void HandleTrackAdded (object sender, LibraryTrackAddedArgs args)
         {
             args.Track.Changed += HandleTrackChanged;
+
             CheckTrack (args.Track);
         }
 
@@ -265,16 +304,76 @@ namespace Banshee.SmartPlaylist
                     track.Changed -= HandleTrackChanged;
         }
 
+        public bool RateLimit ()
+        {
+            event_counter++;
+
+            if (rate_limited)
+                return true;
+
+            bool retval = false;
+
+            // Every Nth event make sure that the last N events didn't all occur in the last RATE_LIMIT_INTERVAL_MS
+            if (event_counter == RATE_LIMIT_EVENTS_MAX) {
+                double delta = (DateTime.Now - last_check).TotalMilliseconds;
+                //Console.WriteLine ("{2} events in last {0} ms, CpuTime = {1}", delta, CpuTime, RATE_LIMIT_EVENTS_MAX);
+                if (delta < RATE_LIMIT_INTERVAL_MS || (CpuTime > RATE_LIMIT_CPU_MAX*delta)) {
+                    //Console.WriteLine ("rate limited");
+                    rate_limited = true;
+                    seconds_ratelimited = 0;
+                    ratelimit_timeout_id = GLib.Timeout.Add((uint)RATE_LIMIT_INTERVAL_MS, OnRateLimitTimer);
+                    retval = true;
+                }
+
+                event_counter = 0;
+                last_check = DateTime.Now;
+                CpuTime = 0;
+            }
+
+            return retval;
+        }
+
+        private bool OnRateLimitTimer ()
+        {
+            rate_limited = (event_counter >= RATE_LIMIT_EVENTS_MAX);
+
+            //Console.WriteLine ("{0} events in last second", event_counter);
+            // Refresh all the smart playlists every five seconds or when we are no longer rate limited.
+            if (!rate_limited || seconds_ratelimited++ == RATE_LIMIT_REFRESH) {
+                seconds_ratelimited = 0;
+
+                start = DateTime.Now;
+                foreach (SmartPlaylistSource pl in playlists) {
+                    pl.RefreshMembers ();
+                }
+
+                // In the case the above refresh was very slow, double the time between refreshes
+                // while rate-limited.
+                if ((DateTime.Now - start).TotalSeconds > .25 * RATE_LIMIT_REFRESH) {
+                    RATE_LIMIT_REFRESH *= 2;
+                }
+            }
+
+            if (!rate_limited) {
+                //Console.WriteLine ("NOT rate limited");
+                last_check = DateTime.Now;
+                ratelimit_timeout_id = 0;
+            }
+
+            CpuTime = 0;
+            event_counter = 0;
+            return rate_limited;
+        }
 
         public void StartTimer (SmartPlaylistSource playlist)
         {
             // Check if the playlist is time-dependent, and if it is,
-            // start the auto-refresh timer if needed.
+            // start the auto-refresh timer.
             if (timeout_id == 0 && playlist.TimeDependent) {
                 LogCore.Instance.PushInformation (
-                        "Starting timer",
-                        "Time-dependent smart playlist added, so starting auto-refresh timer.",
-                        false
+                    "Starting Smart Playlist Auto-Refresh",
+                    "Time-dependent smart playlist added, so starting one-minute auto-refresh timer.",
+                    false
                 );
                 timeout_id = GLib.Timeout.Add(1000*60, OnTimerBeep);
             }
@@ -293,9 +392,9 @@ namespace Banshee.SmartPlaylist
 
                 // No more time-dependent playlists, so remove the timer
                 LogCore.Instance.PushInformation (
-                        "Stopping timer",
-                        "There are no time-dependent smart playlists, so stopping auto-refresh timer.",
-                        false
+                    "Stopping timer",
+                    "There are no time-dependent smart playlists, so stopping auto-refresh timer.",
+                    false
                 );
 
                 GLib.Source.Remove (timeout_id);
@@ -305,6 +404,9 @@ namespace Banshee.SmartPlaylist
 
         private bool OnTimerBeep ()
         {
+            if (RateLimit())
+                return true;
+
             Timer t = new Timer ("OnTimerBeep");
 
             foreach (SmartPlaylistSource p in playlists) {
@@ -321,34 +423,69 @@ namespace Banshee.SmartPlaylist
 
         private void CheckTrack (TrackInfo track)
         {
-            Timer t = new Timer ("CheckTrack " + track.Title);
+            if (RateLimit())
+                return;
+
+            Timer t = new Timer ("CheckTrack");
+            start = DateTime.Now;
 
             foreach (SmartPlaylistSource playlist in playlists)
                 playlist.Check (track);
 
+            CpuTime += (DateTime.Now - start).TotalMilliseconds;
+
             t.Stop();
         }
     }
+
 
     // Class used for timing different operations.  Commented out for normal operation.
     public class Timer
     {
         //DateTime time;
         //string name;
+        //string details;
+
+        //static Dictionary<string, double> running_totals = new Dictionary<string, double>();
+        //static Dictionary<string, int> running_counts = new Dictionary<string, int>();
 
         public Timer () : this ("Timer") {}
 
-        public Timer (string name)
+        public Timer (string name) : this (name, null) {}
+
+        public Timer (string name, string details)
         {
-            //this.name = name;
-            //time = DateTime.Now;
+            /*this.name = name;
+            this.details = (details == null) ? "" : " (" + details + ")";
+
+            if (!running_totals.ContainsKey(name)) {
+                running_totals.Add(name, 0);
+                running_counts.Add(name, 0);
+            }
+
+            time = DateTime.Now;*/
 
             //System.Console.WriteLine ("{0} started", name);
         }
 
         public void Stop ()
         {
-            //System.Console.WriteLine ("{0} stopped: {1} seconds elapsed", name, (DateTime.Now - time).TotalSeconds);
+            /*double elapsed = (DateTime.Now - time).TotalSeconds;
+            System.Console.WriteLine ("{0}{1} stopped: {2} seconds elapsed", name, details, elapsed);
+            running_totals[name] += elapsed;
+            //running_totals[name+details] += elapsed;
+            running_counts[name]++;
+            //running_counts[name+details]++;*/
+        }
+
+        public static void PrintRunningTotals ()
+        {
+            /*Console.WriteLine("Running totals:");
+            foreach (string k in running_totals.Keys) {
+                //if (running_totals[k] > .1) {
+                    Console.WriteLine("{0}, {1}, {2}", k, running_counts[k], running_totals[k]);
+                //}
+            }*/
         }
     }
 }

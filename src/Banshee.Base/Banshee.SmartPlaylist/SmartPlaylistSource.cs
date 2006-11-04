@@ -22,6 +22,8 @@ namespace Banshee.SmartPlaylist
         public string LimitNumber;
         public int LimitCriterion;
 
+        private DateTime start;
+
         private string OrderAndLimit {
             get {
                 if (OrderBy == null || OrderBy == "")
@@ -154,7 +156,7 @@ namespace Banshee.SmartPlaylist
 
         public void RefreshMembers()
         {
-            Timer t = new Timer ("RefreshMembers " + Name);
+            Timer t = new Timer ("RefreshMembers", Name);
 
             //Console.WriteLine ("Refreshing smart playlist {0} with condition {1}", Source.Name, Condition);
 
@@ -188,7 +190,9 @@ namespace Banshee.SmartPlaylist
             // attribute (time/size)
             if (LimitCriterion == 0 || LimitNumber == "0") {
                 while(reader.Read()) {
-                    AddTrack (Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo);
+                    if (Globals.Library.Tracks.ContainsKey(Convert.ToInt32(reader[0]))) {
+                        AddTrack (Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo);
+                    }
                 }
             } else {
                 LimitTracks (reader, false);
@@ -201,40 +205,41 @@ namespace Banshee.SmartPlaylist
 
         private void LimitTracks (IDataReader reader, bool remove_if_limited)
         {
-            Timer t = new Timer ("LimitTracks " + Name);
+            Timer t = new Timer ("LimitTracks", Name);
 
             bool was_limited = false;
             double sum = 0;
             double limit = Double.Parse(LimitNumber); 
             while(reader.Read()) {
-                TrackInfo track = Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo;
+                if (Globals.Library.Tracks.ContainsKey(Convert.ToInt32(reader[0]))) {
+                    TrackInfo track = Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo;
 
-                switch (LimitCriterion) {
-                case 1: // minutes
-                    sum += track.Duration.TotalMinutes;
-                    break;
-                case 2: // hours
-                    sum += track.Duration.TotalHours;
-                    break;
-                case 3: // MB
-                    try {
-                        Gnome.Vfs.FileInfo file = new Gnome.Vfs.FileInfo(track.Uri.AbsoluteUri);
-                        sum += (double) (file.Size / (1024 * 1024));
-                    } catch (System.IO.FileNotFoundException) {}
-
-                    break;
-                }
-
-                if (sum > limit) {
-                    was_limited = true;
-
-                    if (remove_if_limited) {
-                        RemoveTrack (track);
-                    } else {
+                    switch (LimitCriterion) {
+                    case 1: // minutes
+                        sum += track.Duration.TotalMinutes;
+                        break;
+                    case 2: // hours
+                        sum += track.Duration.TotalHours;
+                        break;
+                    case 3: // MB
+                        try {
+                            Gnome.Vfs.FileInfo file = new Gnome.Vfs.FileInfo(track.Uri.AbsoluteUri);
+                            sum += (double) (file.Size / (1024 * 1024));
+                        } catch (System.IO.FileNotFoundException) {}
                         break;
                     }
-                } else if (!tracks.Contains (track)) {
-                    AddTrack (track);
+
+                    if (sum > limit) {
+                        was_limited = true;
+
+                        if (remove_if_limited) {
+                            RemoveTrack (track);
+                        } else {
+                            break;
+                        }
+                    } else if (!tracks.Contains (track)) {
+                        AddTrack (track);
+                    }
                 }
             }
 
@@ -249,6 +254,8 @@ namespace Banshee.SmartPlaylist
 
         public void Check (TrackInfo track)
         {
+            start = DateTime.Now;
+
             if (OrderAndLimit == null) {
                 // If this SmartPlaylist doesn't have an OrderAndLimit clause, then it's quite simple
                 // to check this track - if it matches the Condition we make sure it's in, and vice-versa
@@ -294,26 +301,26 @@ namespace Banshee.SmartPlaylist
                 ));
 
                 // If we are already a member of this smart playlist
-                if (tracks.Contains (track))
-                    return;
+                if (!tracks.Contains (track)) {
+                    // We have removed tracks no longer in this smart playlist, now need to add
+                    // tracks that replace those that were removed (if any), and do limited by size/duration
+                    IDataReader tracks_res = Globals.Library.Db.Query(String.Format(
+                        @"SELECT TrackId FROM Tracks 
+                            WHERE TrackID IN (SELECT TrackID FROM Tracks {1} {2})",
+                        Id, PrependCondition("WHERE"), OrderAndLimit
+                    ));
 
-                // We have removed tracks no longer in this smart playlist, now need to add
-                // tracks that replace those that were removed (if any), and do limited by size/duration
-                IDataReader tracks_res = Globals.Library.Db.Query(String.Format(
-                    @"SELECT TrackId FROM Tracks 
-                        WHERE TrackID IN (SELECT TrackID FROM Tracks {1} {2})",
-                    Id, PrependCondition("WHERE"), OrderAndLimit
-                ));
+                    LimitTracks (tracks_res, true);
 
-                LimitTracks (tracks_res, true);
-
-                tracks_res.Dispose();
+                    tracks_res.Dispose();
+                }
             }
+
         }
 
         public override void Commit ()
         {
-            Timer t = new Timer ("Commit");
+            Timer t = new Timer ("Commit", Name);
 
             DbCommand command = new DbCommand(@"
                 UPDATE SmartPlaylists
@@ -439,11 +446,7 @@ namespace Banshee.SmartPlaylist
                 if(tracks.Contains(args.Track)) {
                     RemoveTrack(args.Track);
                     
-                    if(Count == 0) {
-                        Unmap();
-                    } else {
-                        Commit();
-                    }
+                    Commit();
                 }
                 
                 return;
@@ -461,19 +464,21 @@ namespace Banshee.SmartPlaylist
             }
             
             if(removed_count > 0) {
-                if(Count == 0) {
-                    Unmap();
-                } else {
-                    Commit();
-                }
+                Commit();
             }
         }
 
         private void HandlePlaylistChanged (object sender, TrackEventArgs args)
         {
+            if (SmartPlaylistCore.Instance.RateLimit())
+                return;
+
             //Console.WriteLine ("{0} sent playlist changed to {1}", (sender as PlaylistSource).Name, Name);
-            if (args.Track != null)
+            if (args.Track != null) {
+                start = DateTime.Now;
                 Check (args.Track);
+                SmartPlaylistCore.Instance.CpuTime += (DateTime.Now - start).TotalMilliseconds;
+            }
         }
 
         public static void LoadFromReader (IDataReader reader)
