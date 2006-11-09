@@ -1993,7 +1993,7 @@ namespace Banshee
                     dapSource.Device.GenericName) + (dapSource.Device.GenericName.ToLower() == "ipod" ?
                     ("\n\n" + 
                     Catalog.GetString("<b>Warning:</b> Actions will alter or erase existing iPod contents and " +
-                    "may cause incompatability with iTunes!")) : ""),
+                    "may cause incompatibility with iTunes!")) : ""),
                 Catalog.GetString("Synchronize Library"));
             
             md.AddButton(Catalog.GetString("Save Manual Changes"), Gtk.ResponseType.Apply, true);
