@@ -153,15 +153,17 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void ShowHideMainWindow()
         {
             if (InterfaceElements.MainWindow.IsActive) {
-                InterfaceElements.MainWindow.Visible = false;
+                InterfaceElements.MainWindow.SkipTaskbarHint = true;
+                InterfaceElements.MainWindow.Iconify();
             } else {
+                InterfaceElements.MainWindow.SkipTaskbarHint = false;
                 InterfaceElements.MainWindow.Present();
             }
         }
 
         private void ShowNotification()
         {
-            if (cursor_over_trayicon || !show_notifications) {
+            if (cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
                 return;
             }
             
@@ -195,7 +197,6 @@ namespace Banshee.Plugins.NotificationAreaIcon
             if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
                 handled = true;
                 ShowHideMainWindow();
-                ResizeMoveWindow();
             }
             
             args.RetVal = handled;
@@ -213,7 +214,6 @@ namespace Banshee.Plugins.NotificationAreaIcon
                         Globals.ActionManager["PreviousAction"].Activate();
                     } else {
                         ShowHideMainWindow();
-                        ResizeMoveWindow();
                     }
                     break;
                 case 2:
@@ -374,43 +374,6 @@ namespace Banshee.Plugins.NotificationAreaIcon
             }
         }
 
-        //FIXME: GO AWAY UGLY COPY!!!
-        private void ResizeMoveWindow() {
-            Window WindowPlayer = InterfaceElements.MainWindow;
-            int x = 0, y = 0, width = 0, height = 0;
-            try {
-                x = (int)Globals.Configuration.Get(GConfKeys.WindowX);
-                y = (int)Globals.Configuration.Get(GConfKeys.WindowY);
-                
-                width = (int)Globals.Configuration.Get(GConfKeys.WindowWidth);
-                height = (int)Globals.Configuration.Get(GConfKeys.WindowHeight);
-            } catch(GConf.NoSuchKeyException) {
-                width = 800;
-                height = 600;
-                x = 0;
-                y = 0;
-            }
-            
-            if(width != 0 && height != 0) {
-                WindowPlayer.Resize(width, height);
-            }
-            
-            if(x == 0 && y == 0) {
-                WindowPlayer.SetPosition(Gtk.WindowPosition.Center);
-            } else {
-                WindowPlayer.Move(x, y);
-            }
-            
-            try {
-                if((bool)Globals.Configuration.Get(GConfKeys.WindowMaximized)) {
-                    WindowPlayer.Maximize();
-                } else {
-                    WindowPlayer.Unmaximize();
-                }
-            } catch(GConf.NoSuchKeyException) {
-            }
-        }
-        
         public bool ShowNotifications {
             get { 
                 try {

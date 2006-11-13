@@ -1,3 +1,17 @@
+2006-11-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Base/Globals.cs: Make InterfaceElements.MainWindow mutable
+	so minimode can set itself as such and the notify plugin can behave
+	correctly (eg hide and show the correct main window when the icon is
+	clicked).
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Minimize instead of hiding the main window when clicking the notify icon
+	and set the task bar hint to false to avoid having to reset the
+	size/position of the main window.  Remove ResizeMoveWindow function.
+	Only show notification popups if Banshee is not currently focused - fixes
+	BGO #361534.
+
 2006-11-09  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/PlayerInterface.cs: Fix typo as reported in BGO #372720.

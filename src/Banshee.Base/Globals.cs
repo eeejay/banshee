@@ -252,9 +252,7 @@ namespace Banshee.Base
         public static Gtk.Window MainWindow {
             get { return main_window; }
             set {
-                if(main_window == null) {
-                    main_window = value;
-                }
+                main_window = value;
             }
         }
 
