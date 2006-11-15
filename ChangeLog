@@ -1,3 +1,9 @@
+2006-11-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Fix regression caused by minimize (minimize effect showed the window being
+	put in the taskbar, which was confusing).
+
 2006-11-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Globals.cs: Make InterfaceElements.MainWindow mutable

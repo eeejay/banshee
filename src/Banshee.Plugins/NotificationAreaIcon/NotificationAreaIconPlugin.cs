@@ -153,10 +153,10 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void ShowHideMainWindow()
         {
             if (InterfaceElements.MainWindow.IsActive) {
-                InterfaceElements.MainWindow.SkipTaskbarHint = true;
-                InterfaceElements.MainWindow.Iconify();
+                SaveWindowSizePosition();
+                InterfaceElements.MainWindow.Visible = false;
             } else {
-                InterfaceElements.MainWindow.SkipTaskbarHint = false;
+                RestoreWindowSizePosition();
                 InterfaceElements.MainWindow.Present();
             }
         }
@@ -371,6 +371,27 @@ namespace Banshee.Plugins.NotificationAreaIcon
             popup.QueueDraw();
             if (!popup.Visible) {
                 PositionPopup();
+            }
+        }
+
+        private int x, y, w, h;
+        private bool maximized;
+        private void SaveWindowSizePosition()
+        {
+            maximized = ((InterfaceElements.MainWindow.GdkWindow.State & Gdk.WindowState.Maximized) > 0);
+
+            if (!maximized) {
+                InterfaceElements.MainWindow.GetPosition(out x, out y);
+                InterfaceElements.MainWindow.GetSize(out w, out h);
+            }
+        }
+
+        private void RestoreWindowSizePosition() {
+            if (maximized) {
+                InterfaceElements.MainWindow.Maximize();
+            } else {
+                InterfaceElements.MainWindow.Resize(w, h);
+                InterfaceElements.MainWindow.Move(x, y);
             }
         }
 
