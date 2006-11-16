@@ -1,5 +1,10 @@
 2006-11-16  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs: Mark string "Configure
+	Keyboard Shortcuts" for translation, fixes BGO #376070.
+
+2006-11-16  Ruben Vermeersch  <ruben@savanne.be>
+
 	* po/POTFILES.in: Add 3 missing files (src/Banshee.Base/SourceManager.cs,
 			src/Banshee.Plugins/Daap/DaapContainerSource.cs,
 			src/Banshee.Plugins/Daap/DaapErrorView.cs).
