@@ -1,3 +1,4 @@
+# translation of banshee.HEAD.po to
 # translation of hu.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -6,22 +7,22 @@
 # Gabor Kelemen <kelemeng@gnome.hu>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: hu\n"
+"Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-16 00:39+0200\n"
-"PO-Revision-Date: 2006-05-26 18:28+0200\n"
+"POT-Creation-Date: 2006-11-15 10:14+0100\n"
+"PO-Revision-Date: 2006-11-16 19:44+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Country: HUNGARY\n"
-"Plural-Forms:   nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:6
-#: ../src/Banshee.Base/BansheeBranding.cs:71
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
+#: ../src/Banshee.Base/BansheeBranding.cs:76
 msgid "Banshee Music Player"
 msgstr "Banshee zenelejátszó"
 
@@ -30,120 +31,28 @@ msgid "Music Player"
 msgstr "Zenelejátszó"
 
 #: ../data/banshee.glade.h:1
-msgid "<b>Advanced Properties</b>"
-msgstr "<b>Speciális tulajdonságok</b>"
-
-#: ../data/banshee.glade.h:2
 msgid "<b>Loading...</b>"
 msgstr "<b>Betöltés...</b>"
 
 #: ../data/banshee.glade.h:3
-msgid "<big><b>Editing Song</b></big>"
-msgstr "<big><b>Dalszerkesztés</b></big>"
-
-#: ../data/banshee.glade.h:4
-msgid "<small><i><Unknown></i></small>"
-msgstr "<small><i><ismeretlen></i></small>"
-
-#: ../data/banshee.glade.h:5
-msgid "Albu_m"
-msgstr "Albu_m"
-
-#: ../data/banshee.glade.h:7
-msgid "Bit Rate:"
-msgstr "Bitsebesség:"
-
-#: ../data/banshee.glade.h:8
-msgid "Channels:"
-msgstr "Csatornák:"
-
-#: ../data/banshee.glade.h:9
 msgid "Disk Usage:"
 msgstr "Lemezkihasználtság:"
 
-#: ../data/banshee.glade.h:10 ../src/TrackProperties.cs:247
-msgid "Editing Song"
-msgstr "Zeneszám szerkesztése"
-
-#: ../data/banshee.glade.h:11
-msgid "Encoding:"
-msgstr "Kódolás:"
-
-#: ../data/banshee.glade.h:12
-msgid "File Name:"
-msgstr "Fájl neve:"
-
-#: ../data/banshee.glade.h:13
-msgid "Imported On:"
-msgstr "Importálás ideje:"
-
-#: ../data/banshee.glade.h:14
-msgid "Last Played On:"
-msgstr "Utolsó lejátszás:"
-
-#: ../data/banshee.glade.h:15
-msgid "Mime Type:"
-msgstr "MIME-típus:"
-
-#: ../data/banshee.glade.h:16
-msgid "Number of Plays:"
-msgstr "Lejátszások száma:"
-
-#: ../data/banshee.glade.h:17
-msgid "Sample Rate:"
-msgstr "Mintavételi frekvencia:"
-
-#: ../data/banshee.glade.h:18
-msgid "Track Duration:"
-msgstr "Zeneszám hossza:"
-
-#: ../data/banshee.glade.h:19
-msgid "Track _Count"
-msgstr "Számok öss_zesen"
-
-#: ../data/banshee.glade.h:20
-msgid "Track _Number"
-msgstr "Szám _sorszáma"
-
-#: ../data/banshee.glade.h:21
-#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
-#: ../src/Banshee.Base/Dap/Dap.cs:605 ../src/TrackProperties.cs:243
-#: ../src/TrackProperties.cs:267 ../src/TrackProperties.cs:268
-#: ../src/TrackProperties.cs:269 ../src/TrackProperties.cs:270
-#: ../src/TrackProperties.cs:271 ../src/TrackProperties.cs:272
-msgid "Unknown"
-msgstr "Ismeretlen"
-
-#: ../data/banshee.glade.h:22
-msgid "VBR:"
-msgstr "VBR:"
-
-#: ../data/banshee.glade.h:23
-msgid "_Artist"
-msgstr "_Előadó"
-
-#: ../data/banshee.glade.h:24
-msgid "_Genre"
-msgstr "_Műfaj"
-
-#: ../data/banshee.glade.h:25
+#: ../data/banshee.glade.h:4
 msgid "_Search:"
 msgstr "_Keresés:"
-
-#: ../data/banshee.glade.h:26
-msgid "_Title"
-msgstr "_Cím"
 
 #: ../data/banshee.schemas.in.h:1
 msgid ""
 "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
 "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 msgstr ""
+"A \"systemio\" (.NET System.IO), \"unix\" (hagyományos Unix) vagy"
+"\"gnomevfs\" (GNOME VFS) egyike lehet; a Banshee indításakor lép életbe (újraindítás szükséges)"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr ""
-"Importáláskor másolja be a zenét a Banshee zene könyvtárba és nevezze át"
+msgstr "Importáláskor másolja be a zenét a Banshee zene könyvtárba és nevezze át"
 
 #: ../data/banshee.schemas.in.h:3
 msgid "Copy music on import"
@@ -176,7 +85,7 @@ msgid ""
 "prefixed zero)."
 msgstr ""
 "A lemásolt számok, importált zene stb. fájlneveinek/könyvtárainak formátuma. "
-"A formátum a Banshee zenekönyvtárához képest relatív... ne hozzon létre "
+"A formátum a Banshee gyűjteményéhez képest relatív... ne hozzon létre "
 "abszolút elérési utat! Használható tokenek: %artist%, %album%, %title%, %"
 "track_number%, %track_count%, %track_number_nz% (nincs nulla előtag), %"
 "track_count_nz% (nincs nulla előtag)."
@@ -190,10 +99,8 @@ msgid "Move music on info save"
 msgstr "Zene áthelyezése az adatok mentésekor"
 
 #: ../data/banshee.schemas.in.h:11
-msgid ""
-"Move music within banshee music library directory when saving track info"
-msgstr ""
-"Zene áthelyezése a banshee zenekönyvtáron belül a számok adatainak mentésekor"
+msgid "Move music within banshee music library directory when saving track info"
+msgstr "Zene áthelyezése a banshee gyűjteményen belül a számok adatainak mentésekor"
 
 #: ../data/banshee.schemas.in.h:12
 msgid "Name of media playback engine."
@@ -213,11 +120,11 @@ msgstr "Lejátszómotor neve"
 
 #: ../data/banshee.schemas.in.h:16
 msgid "Set the IO backend in Banshee"
-msgstr ""
+msgstr "A Banshee I/O hátterének beállítása"
 
 #: ../data/banshee.schemas.in.h:17
 msgid "Show advanced track properties"
-msgstr "Zeneszám speciális tulajdonságainak megjelenítése"
+msgstr "Dal speciális tulajdonságainak megjelenítése"
 
 #: ../data/banshee.schemas.in.h:18
 msgid "Show the Initial Import Dialog"
@@ -261,12 +168,11 @@ msgstr "Cím oszlop láthatósága."
 
 #: ../data/banshee.schemas.in.h:27
 msgid "Visibility of Track Column."
-msgstr "Zeneszám oszlop láthatósága."
+msgstr "Dal oszlop láthatósága."
 
 #: ../data/banshee.schemas.in.h:28
-#, fuzzy
 msgid "Visibility of Year Column."
-msgstr "Idő oszlop láthatósága."
+msgstr "Év oszlop láthatósága."
 
 #: ../data/banshee.schemas.in.h:29
 msgid "Volume Output Level"
@@ -298,7 +204,7 @@ msgstr "A Most játszott oszlop szélessége"
 
 #: ../data/banshee.schemas.in.h:35
 msgid "Width of Rating Column."
-msgstr "Frekvencia oszlop szélessége."
+msgstr "Értékelés oszlop szélessége."
 
 #: ../data/banshee.schemas.in.h:36
 msgid "Width of Source View Column."
@@ -314,12 +220,11 @@ msgstr "Cím oszlop szélessége"
 
 #: ../data/banshee.schemas.in.h:39
 msgid "Width of Track Column."
-msgstr "Zeneszám oszlop szélessége."
+msgstr "Dal oszlop szélessége."
 
 #: ../data/banshee.schemas.in.h:40
-#, fuzzy
 msgid "Width of Year Column."
-msgstr "Idő oszlop szélessége"
+msgstr "Év oszlop szélessége."
 
 #: ../data/banshee.schemas.in.h:41
 msgid "Width of the main interface window."
@@ -346,149 +251,288 @@ msgid "Window Width"
 msgstr "Ablak szélessége"
 
 #: ../data/banshee-dialogs.glade.h:1
-#, fuzzy
-msgid "<b>CD Importing</b>"
-msgstr "<b>CD-írás</b>"
+msgid "0"
+msgstr "0"
 
 #: ../data/banshee-dialogs.glade.h:2
-msgid "<b>Digital Audio Player</b>"
-msgstr ""
+msgid "0 MB"
+msgstr "0 MB"
 
 #: ../data/banshee-dialogs.glade.h:3
-#, fuzzy
-msgid "<b>Music Folder</b>"
-msgstr "<b>Banshee Zenemappa helye</b>"
+msgid "0:00"
+msgstr "0:00"
 
 #: ../data/banshee-dialogs.glade.h:4
-#, fuzzy
-msgid "<b>Session Information</b>"
-msgstr "Verzióadatok..."
+msgid "<b>Albu_m:</b>"
+msgstr "<b>_Album:</b>"
 
 #: ../data/banshee-dialogs.glade.h:5
-#, fuzzy
-msgid "<b>Write Options</b>"
-msgstr "<b>Speciális beállítások</b>"
+msgid "<b>Album Cover:</b>"
+msgstr "<b>Borító</b>"
 
 #: ../data/banshee-dialogs.glade.h:6
-msgid "<big><b>Import Music to Library</b></big>"
-msgstr "<big><b>Zene importálása a műsortárba</b></big>"
+msgid "<b>Bitrate:</b>"
+msgstr "<b>Mintavétel:</b>"
 
 #: ../data/banshee-dialogs.glade.h:7
+msgid "<b>CD Importing</b>"
+msgstr "<b>CD importálás</b>"
+
+#: ../data/banshee-dialogs.glade.h:8
+msgid "<b>Channels:</b>"
+msgstr "<b>Csatornák:</b>"
+
+#: ../data/banshee-dialogs.glade.h:9
+msgid "<b>Details</b>"
+msgstr "<b>Részletek</b>"
+
+#: ../data/banshee-dialogs.glade.h:10
+msgid "<b>Duration:</b>"
+msgstr "<b>Időtartam</b>"
+
+#: ../data/banshee-dialogs.glade.h:11
+msgid "<b>File name:</b>"
+msgstr "<b>Fájlnév:</b>"
+
+#: ../data/banshee-dialogs.glade.h:12
+msgid "<b>File size:</b>"
+msgstr "<b>Fájlméret:</b>"
+
+#: ../data/banshee-dialogs.glade.h:13
+msgid "<b>Imported on:</b>"
+msgstr "<b>Importálva:</b>"
+
+#: ../data/banshee-dialogs.glade.h:14
+msgid "<b>Last played:</b>"
+msgstr "<b>Utoljára játszott</b>"
+
+#: ../data/banshee-dialogs.glade.h:15
+msgid "<b>Location:</b>"
+msgstr "<b>Hely:</b>"
+
+#: ../data/banshee-dialogs.glade.h:16
+msgid "<b>Music Library</b>"
+msgstr "<b>Gyűjtemény</b>"
+
+#: ../data/banshee-dialogs.glade.h:17
+msgid "<b>Play count:</b>"
+msgstr "<b>Lejátszások száma:</b>"
+
+#: ../data/banshee-dialogs.glade.h:18
+msgid "<b>Sample rate:</b>"
+msgstr "<b>Mintavételi frekvencia:</b>"
+
+#: ../data/banshee-dialogs.glade.h:19
+msgid "<b>Session Information</b>"
+msgstr "<b>Munkamenet-információk</b>"
+
+#: ../data/banshee-dialogs.glade.h:20
+msgid "<b>Track _count:</b>"
+msgstr "<b>Számok öss_zesen:</b>"
+
+#: ../data/banshee-dialogs.glade.h:21
+msgid "<b>Track _number:</b>"
+msgstr "<b>Szám _sorszáma:</b>"
+
+#: ../data/banshee-dialogs.glade.h:22
+msgid "<b>Write Options</b>"
+msgstr "<b>Írás beállításai</b>"
+
+#: ../data/banshee-dialogs.glade.h:23
+msgid "<b>_Artist:</b>"
+msgstr "<b>_Előadó</b>"
+
+#: ../data/banshee-dialogs.glade.h:24
+msgid "<b>_Genre:</b>"
+msgstr "<b>_Műfaj</b>"
+
+#: ../data/banshee-dialogs.glade.h:25
+msgid "<b>_Rating:</b>"
+msgstr "<b>É_rtékelés:</b>"
+
+#: ../data/banshee-dialogs.glade.h:26
+msgid "<b>_Title:</b>"
+msgstr "<b>_Cím:</b>"
+
+#: ../data/banshee-dialogs.glade.h:27
+msgid "<b>_Year:</b>"
+msgstr "<b>É_v:</b>"
+
+#: ../data/banshee-dialogs.glade.h:28
+msgid "<big><b>Import Music to Library</b></big>"
+msgstr "<big><b>Zene importálása a gyűjteménybe</b></big>"
+
+#: ../data/banshee-dialogs.glade.h:29
+msgid "Artwork"
+msgstr "Borító"
+
+#: ../data/banshee-dialogs.glade.h:30
+msgid "Back"
+msgstr "Vissza"
+
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Choose an import source:"
 msgstr "Válassza ki az importálás forrását:"
 
-#: ../data/banshee-dialogs.glade.h:8
-#, fuzzy
-msgid "Conversion Format:"
-msgstr "Verzióadatok..."
+#: ../data/banshee-dialogs.glade.h:32
+msgid "Copy all common fields"
+msgstr "Összes közös mező másolása"
 
-#: ../data/banshee-dialogs.glade.h:9
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Copy files to music folder when importing"
-msgstr "Fájlok a Banshee zenemappába másolása a Műsortárba importáláskor"
+msgstr "Fájlok másolása a Banshee gyűjteménybe importáláskor"
 
-#: ../data/banshee-dialogs.glade.h:10
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:34
+msgid "Copy to all"
+msgstr "Összes másolása"
+
+#: ../data/banshee-dialogs.glade.h:35
 msgid "Create a new preset"
-msgstr "Új üres médialista létrehozása"
+msgstr "Új összeállítás létrehozása"
 
-#: ../data/banshee-dialogs.glade.h:11
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:36
 msgid "Delete the active preset"
-msgstr "Aktív médialista törlése"
+msgstr "Aktív összeállítás törlése"
 
-#: ../data/banshee-dialogs.glade.h:12
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:37
+msgid "Details"
+msgstr "Részletek"
+
+#: ../data/banshee-dialogs.glade.h:38
 msgid "Disc Options"
-msgstr "Leírás"
+msgstr "Lemez beállítása"
 
-#: ../data/banshee-dialogs.glade.h:13
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:39
 msgid "Disc format:"
 msgstr "Lemezformátum:"
 
-#: ../data/banshee-dialogs.glade.h:14
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:40
 msgid "Disc name:"
-msgstr "Eszköz neve"
+msgstr "Lemez neve"
 
-#: ../data/banshee-dialogs.glade.h:15
+#: ../data/banshee-dialogs.glade.h:41
 msgid "Do not show this dialog again"
 msgstr "Ez az ablak ne jelenjen meg többet"
 
-#: ../data/banshee-dialogs.glade.h:16
+#: ../data/banshee-dialogs.glade.h:42
 msgid "Eject disc after writing"
-msgstr ""
+msgstr "Lemez kiadása az írás befejeztével"
 
-#: ../data/banshee-dialogs.glade.h:17
+#: ../data/banshee-dialogs.glade.h:43
+msgid "Embed directly in song"
+msgstr "Közvetlen beágyazás a dalba"
+
+#: ../data/banshee-dialogs.glade.h:44
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:70
 msgid "Enabled"
 msgstr "Engedélyezett"
 
-#: ../data/banshee-dialogs.glade.h:18
+#: ../data/banshee-dialogs.glade.h:45
+msgid "Enter Next"
+msgstr "Következő megadása"
+
+#: ../data/banshee-dialogs.glade.h:46
 msgid "Enter the address of the file you would like to open:"
 msgstr "Adja meg a megnyitni kívánt fájl címét:"
 
-#: ../data/banshee-dialogs.glade.h:19 ../src/Banshee.Base/ActionManager.cs:140
+#: ../data/banshee-dialogs.glade.h:47 ../src/Banshee.Base/ActionManager.cs:147
 msgid "Equalizer"
-msgstr ""
+msgstr "Hangszínszabályzó"
 
-#: ../data/banshee-dialogs.glade.h:20
+#: ../data/banshee-dialogs.glade.h:48
 msgid "Error"
 msgstr "Hiba"
 
-#: ../data/banshee-dialogs.glade.h:21
+#: ../data/banshee-dialogs.glade.h:49
+msgid "Forward"
+msgstr "Előre"
+
+#: ../data/banshee-dialogs.glade.h:50
 msgid "Import Music Source"
 msgstr "Zeneforrás importálása"
 
-#: ../data/banshee-dialogs.glade.h:22
+#: ../data/banshee-dialogs.glade.h:51
 msgid "Import Music to Library"
-msgstr "Zene importálása a műsortárba"
+msgstr "Zene importálása a gyűjteménybe"
 
-#: ../data/banshee-dialogs.glade.h:23
+#: ../data/banshee-dialogs.glade.h:52
+msgid "Metadata"
+msgstr "Metaadatok"
+
+#: ../data/banshee-dialogs.glade.h:53
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:97
 msgid "Open Location"
 msgstr "Hely megnyitása"
 
-#: ../data/banshee-dialogs.glade.h:24
-#, fuzzy
-msgid "Output Format:"
-msgstr "Lemezformátum:"
+#: ../data/banshee-dialogs.glade.h:54
+msgid "Open in editor"
+msgstr "Megnyitás szerkesztőben"
 
-#: ../data/banshee-dialogs.glade.h:25
+#: ../data/banshee-dialogs.glade.h:55
+msgid "Output Format:"
+msgstr "Kimeneti fromátum:"
+
+#: ../data/banshee-dialogs.glade.h:56
+msgid "Playlist _Name: "
+msgstr "Lejátszólista _neve: "
+
+#: ../data/banshee-dialogs.glade.h:57
+msgid "Predefined Smart Playlists"
+msgstr "Előre megadott okos lejátszólisták"
+
+#: ../data/banshee-dialogs.glade.h:58
 msgid "Preferences"
 msgstr "Tulajdonságok"
 
-#: ../data/banshee-dialogs.glade.h:26
+#: ../data/banshee-dialogs.glade.h:59
 msgid "Reset"
 msgstr "Visszaállítás"
 
-#: ../data/banshee-dialogs.glade.h:27
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:60
+msgid "Save to song directory"
+msgstr "Mentés a dalok könyvtárába"
+
+#: ../data/banshee-dialogs.glade.h:61
 msgid "Seek to Position"
-msgstr "Ablak X-pozíciója"
+msgstr "Tekerés adott pozícióra"
 
-#: ../data/banshee-dialogs.glade.h:28
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:62
+msgid "Select for use"
+msgstr "Kijelölés használatra"
+
+#: ../data/banshee-dialogs.glade.h:63
+#: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
+#: ../src/Banshee.Base/Dap/Dap.cs:647
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:273
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:296
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: ../data/banshee-dialogs.glade.h:64
+msgid "Use error-correction when importing"
+msgstr "Hibajavítás importálás közben"
+
+#: ../data/banshee-dialogs.glade.h:65
 msgid "Write disc to:"
-msgstr "Válogatás kiírása CD-re"
+msgstr "Kiírás CD-re:"
 
-#: ../data/banshee-dialogs.glade.h:29
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:66
+msgid "Write metadata to files"
+msgstr "Metaadatok kiírása fájlba"
+
+#: ../data/banshee-dialogs.glade.h:67
 msgid "Write speed:"
 msgstr "Írási sebesség:"
 
-#: ../data/banshee-dialogs.glade.h:30
+#: ../data/banshee-dialogs.glade.h:68
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
-msgstr ""
-"A műsortár üres. A műsortárba tölthet be új zenét most, vagy bármikor később."
+msgstr "A gyűjtemény üres. A gyűjteménybe importálhat új zenét most, vagy bármikor később."
 
-#: ../data/banshee-dialogs.glade.h:31
-#, fuzzy
+#: ../data/banshee-dialogs.glade.h:69
 msgid "_Write"
-msgstr "CD-írás"
+msgstr "_CD-írás"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:248
 msgid "Could not create pipeline"
@@ -499,9 +543,8 @@ msgid "Could not initialize cdparanoia"
 msgstr "A cdparanoia inicializálása nem sikerült"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:265
-#, fuzzy
 msgid "Could not create mbtrm plugin"
-msgstr "A sor bővítőmodul létrehozása nem sikerült"
+msgstr "Az mbtm plugin létrehozása sikertelen"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:277
 msgid "Could not create encoder pipeline"
@@ -509,19 +552,19 @@ msgstr "A kódoló csővezeték létrehozása nem sikerült"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:283
 msgid "Could not create queue plugin"
-msgstr "A sor bővítőmodul létrehozása nem sikerült"
+msgstr "A sor bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:291
 msgid "Could not create GNOME VFS output plugin"
-msgstr "A GNOME VFS kimeneti beépülő modul létrehozása nem sikerült"
+msgstr "A GNOME VFS kimeneti bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:307
 msgid "Could not link pipeline elements"
 msgstr "A csővezeték elemeinek összekötése nem sikerült"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:398
-#: ../src/Banshee.Base/BansheeBranding.cs:75
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
+#: ../src/Banshee.Base/BansheeBranding.cs:80
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:133
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -539,23 +582,23 @@ msgstr "A kódolt fájl nem található"
 
 #: ../libbanshee/gst-transcode-0.10.c:258
 msgid "Could not create 'gnomevfssrc' plugin"
-msgstr "A 'gnomevfssrc' bővítőmodul létrehozása nem sikerült"
+msgstr "A 'gnomevfssrc' bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-transcode-0.10.c:264
 msgid "Could not create 'decodebin' plugin"
-msgstr "A 'decodebin' bővítőmodul létrehozása nem sikerült"
+msgstr "A 'decodebin' bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-transcode-0.10.c:270
 msgid "Could not create 'gnomevfssink' plugin"
-msgstr "A 'gnomevfssink' bővítőmodul létrehozása nem sikerült"
+msgstr "A 'gnomevfssink' bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-transcode-0.10.c:276
 msgid "Could not create 'sinkben' plugin"
-msgstr "A 'sinkben' bővítőmodul létrehozása nem sikerült"
+msgstr "A 'sinkben' bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-transcode-0.10.c:282
 msgid "Could not create 'audioconvert' plugin"
-msgstr "Az 'audioconvert' bővítőmodul létrehozása nem sikerült"
+msgstr "Az 'audioconvert' bővítmény létrehozása nem sikerült"
 
 #: ../libbanshee/gst-transcode-0.10.c:288
 msgid "Could not create encoding pipeline"
@@ -569,38 +612,21 @@ msgstr "A kódolóból nem kérhető le a nyelő"
 msgid "Could not construct pipeline"
 msgstr "A csővezeték létrehozása nem sikerült"
 
-#: ../libbanshee/hal-context.c:61
-msgid "Could not create new HAL context"
-msgstr "Az új HAL kontextus létrehozása nem sikerült"
-
-#: ../libbanshee/hal-context.c:69
-#, c-format
-msgid "Could not integrate HAL with mainloop: %s"
-msgstr "A HAL és a mainloop integrálása nem sikerült: %s"
-
-#: ../libbanshee/hal-context.c:89 ../libbanshee/hal-context.c:92
-msgid "Could not initialize HAL context"
-msgstr "A HAL kontextus inicializálása nem sikerült"
-
-#: ../libbanshee/hal-context.c:101
-msgid "Could not get device list from HAL"
-msgstr "Nem sikerült lekérni az eszközlistát a HAL-ból"
-
 #: ../src/Banshee.Base/ActionManager.cs:65
 msgid "_Music"
 msgstr "_Zene"
 
 #: ../src/Banshee.Base/ActionManager.cs:68
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:76
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:434
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:440
-#: ../src/PlayerInterface.cs:1554
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:82
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:445
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:451
+#: ../src/PlayerInterface.cs:1521
 msgid "New Playlist"
-msgstr "Új médialista"
+msgstr "Új lejátszólista"
 
 #: ../src/Banshee.Base/ActionManager.cs:69
 msgid "Create a new empty playlist"
-msgstr "Új üres médialista létrehozása"
+msgstr "Új üres lejátszólista létrehozása"
 
 #: ../src/Banshee.Base/ActionManager.cs:72
 msgid "Import _Folder..."
@@ -624,7 +650,7 @@ msgstr "Zene importálása..."
 
 #: ../src/Banshee.Base/ActionManager.cs:81
 msgid "Import music from a variety of sources"
-msgstr "Zeneszámok importálása különböző forrásokból"
+msgstr "Dalok importálása különböző forrásokból"
 
 #: ../src/Banshee.Base/ActionManager.cs:84
 msgid "Open Location..."
@@ -640,7 +666,7 @@ msgstr "CD-írás"
 
 #: ../src/Banshee.Base/ActionManager.cs:89
 msgid "Write selection to audio CD"
-msgstr "Válogatás kiírása audio CD-re"
+msgstr "Válogatás kiírása hang CD-re"
 
 #: ../src/Banshee.Base/ActionManager.cs:92
 msgid "Import Source"
@@ -648,7 +674,7 @@ msgstr "Forrás importálása"
 
 #: ../src/Banshee.Base/ActionManager.cs:93
 msgid "Import source to library"
-msgstr "Forrás importálása a műsortárba"
+msgstr "Forrás importálása a gyűjteménybe"
 
 #: ../src/Banshee.Base/ActionManager.cs:96
 msgid "Source Properties..."
@@ -672,11 +698,11 @@ msgstr "_Szerkesztés"
 
 #: ../src/Banshee.Base/ActionManager.cs:115
 msgid "Select All"
-msgstr "Mindent kijelöl"
+msgstr "Összes kijelölése"
 
 #: ../src/Banshee.Base/ActionManager.cs:116
 msgid "Select all songs in song list"
-msgstr "A lista összes zeneszámának kijelölése"
+msgstr "A lista összes dalának kijelölése"
 
 #: ../src/Banshee.Base/ActionManager.cs:119
 msgid "Select None"
@@ -684,20 +710,19 @@ msgstr "Egyik sem"
 
 #: ../src/Banshee.Base/ActionManager.cs:120
 msgid "Unselect all songs in song list"
-msgstr "A zenelista egyik száma se legyen kijelölve"
+msgstr "A dallista egyik száma se legyen kijelölve"
 
 #: ../src/Banshee.Base/ActionManager.cs:123
-#, fuzzy
 msgid "Jump to playing song"
-msgstr "Most játszott zeneszám ismétlése"
+msgstr "Ugrás a lejátszott dalhoz"
 
 #: ../src/Banshee.Base/ActionManager.cs:127
 msgid "Plugins..."
-msgstr "Bővítőmodulok..."
+msgstr "Bővítmények..."
 
 #: ../src/Banshee.Base/ActionManager.cs:128
 msgid "Configure Banshee plugins"
-msgstr "Banshee bővítőmodulok beállítása"
+msgstr "Banshee bővítmények beállítása"
 
 #: ../src/Banshee.Base/ActionManager.cs:133
 msgid "_View"
@@ -709,289 +734,294 @@ msgstr "Oszlopok..."
 
 #: ../src/Banshee.Base/ActionManager.cs:137
 msgid "Select which columns to display in the song list"
-msgstr "A zenelistában megjeleníteni kívánt oszlopok kijelölése"
+msgstr "A dallistában megjeleníteni kívánt oszlopok kijelölése"
+
+#: ../src/Banshee.Base/ActionManager.cs:140
+msgid "Boo Buddy..."
+msgstr "Boo Buddy..."
 
 #: ../src/Banshee.Base/ActionManager.cs:141
-msgid "Display the equalizer."
-msgstr ""
+msgid "Open Boo Buddy"
+msgstr "A Boo Buddy megnyitása"
 
-#: ../src/Banshee.Base/ActionManager.cs:144
+#: ../src/Banshee.Base/ActionManager.cs:148
+msgid "Display the equalizer."
+msgstr "Hangszínszabályzó megjelenítése."
+
+#: ../src/Banshee.Base/ActionManager.cs:151
 msgid "Logged Events Viewer..."
 msgstr "Naplózott események megjelenítése..."
 
-#: ../src/Banshee.Base/ActionManager.cs:145
+#: ../src/Banshee.Base/ActionManager.cs:152
 msgid "View a detailed log of events"
 msgstr "Események részletes naplójának megjelenítése"
 
-#: ../src/Banshee.Base/ActionManager.cs:148
+#: ../src/Banshee.Base/ActionManager.cs:155
 msgid "_Help"
 msgstr "_Súgó"
 
-#: ../src/Banshee.Base/ActionManager.cs:151
+#: ../src/Banshee.Base/ActionManager.cs:158
 msgid "Version Information..."
 msgstr "Verzióadatok..."
 
-#: ../src/Banshee.Base/ActionManager.cs:152
+#: ../src/Banshee.Base/ActionManager.cs:159
 msgid "View detailed version and configuration information"
 msgstr "Részletes verzió -és beállítási adatok megtekintése"
 
-#: ../src/Banshee.Base/ActionManager.cs:155
+#: ../src/Banshee.Base/ActionManager.cs:162
 msgid "Web Resources"
-msgstr ""
-
-#: ../src/Banshee.Base/ActionManager.cs:158
-#, fuzzy
-msgid "Banshee User Guide (Wiki)"
-msgstr "Banshee Wiki"
-
-#: ../src/Banshee.Base/ActionManager.cs:159
-msgid "Learn about how to use Banshee"
-msgstr ""
-
-#: ../src/Banshee.Base/ActionManager.cs:164
-#, fuzzy
-msgid "Banshee Home Page"
-msgstr "Banshee zenelejátszó"
+msgstr "Webes erőforrások"
 
 #: ../src/Banshee.Base/ActionManager.cs:165
-#, fuzzy
-msgid "Visit the Banshee Home Page"
-msgstr "A Banshee last.fm csoportoldal meglátogatása"
+msgid "Banshee User Guide (Wiki)"
+msgstr "Banshee felhasználói kézikönyv (Wiki)"
 
-#: ../src/Banshee.Base/ActionManager.cs:170
-msgid "Get Involved"
-msgstr ""
+#: ../src/Banshee.Base/ActionManager.cs:166
+msgid "Learn about how to use Banshee"
+msgstr "Ismerje meg a Banshee használatát"
 
 #: ../src/Banshee.Base/ActionManager.cs:171
-msgid "Become a contributor to Banshee"
-msgstr ""
+msgid "Banshee Home Page"
+msgstr "A Banshee weboldala"
+
+#: ../src/Banshee.Base/ActionManager.cs:172
+msgid "Visit the Banshee Home Page"
+msgstr "A Banshee weboldalának meglátogatása"
+
+#: ../src/Banshee.Base/ActionManager.cs:177
+msgid "Get Involved"
+msgstr "Közreműködés"
 
 #: ../src/Banshee.Base/ActionManager.cs:178
+msgid "Become a contributor to Banshee"
+msgstr "Járuljon hozzá a Banshee fejlesztéséhez"
+
+#: ../src/Banshee.Base/ActionManager.cs:185
 msgid "_Playback"
 msgstr "_Lejátszás"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
-#: ../src/Banshee.Base/ActionManager.cs:181 ../src/Banshee.Base/Source.cs:285
-#: ../src/SourceView.cs:101
+#: ../src/Banshee.Base/ActionManager.cs:188
+#: ../src/Banshee.Base/Gui/SourceView.cs:104 ../src/Banshee.Base/Source.cs:300
 msgid "Source"
 msgstr "Forrás"
 
-#: ../src/Banshee.Base/ActionManager.cs:184
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:191
 msgid "Song Menu"
-msgstr "Zeneszám címe"
+msgstr "Dal menü"
 
-#: ../src/Banshee.Base/ActionManager.cs:187
+#: ../src/Banshee.Base/ActionManager.cs:194
 msgid "Debug"
-msgstr ""
+msgstr "Hibakeresés"
 
-#: ../src/Banshee.Base/ActionManager.cs:192
+#: ../src/Banshee.Base/ActionManager.cs:199
 msgid "Fullscreen"
 msgstr "Teljes képernyő"
 
-#: ../src/Banshee.Base/ActionManager.cs:193
+#: ../src/Banshee.Base/ActionManager.cs:200
 msgid "Toggle Fullscreen Mode"
 msgstr "Teljes képernyős mód bekapcsolása"
 
-#: ../src/Banshee.Base/ActionManager.cs:196
+#: ../src/Banshee.Base/ActionManager.cs:203
 msgid "Show Cover Art"
 msgstr "Borító megjelenítése"
 
-#: ../src/Banshee.Base/ActionManager.cs:197
+#: ../src/Banshee.Base/ActionManager.cs:204
 msgid "Toggle display of album cover art"
 msgstr "Albumborító megjelenítésének bekapcsolása"
 
-#: ../src/Banshee.Base/ActionManager.cs:206
-msgid "Remove Song(s)"
-msgstr "Zeneszám(ok) eltávolítása"
-
-#: ../src/Banshee.Base/ActionManager.cs:207
-msgid "Remove selected song(s) from library"
-msgstr "Kijelölt zeneszám(ok) eltávolítása a műsortárból"
-
-#: ../src/Banshee.Base/ActionManager.cs:210
-msgid "Delete Song(s) From Drive"
-msgstr "Zeneszámok törlése a lemezről"
-
-#: ../src/Banshee.Base/ActionManager.cs:211
-msgid "Permanently delete selected song(s) from storage medium"
-msgstr "Kijelölt zeneszám(ok) ideiglenes törlése az adathordozóról"
-
-#: ../src/Banshee.Base/ActionManager.cs:214
-msgid "Edit Song Metadata"
-msgstr "Zeneszám metaadatainak szerkesztése"
-
 #: ../src/Banshee.Base/ActionManager.cs:215
-msgid "Edit metadata on selected songs"
-msgstr "Kijelölt zeneszámok metaadatainak szerkesztése"
+msgid "Remove Song(s)"
+msgstr "Dalok eltávolítása"
 
-#: ../src/Banshee.Base/ActionManager.cs:218
-#, fuzzy
-msgid "Search for songs"
-msgstr "Zeneszámok keresése"
+#: ../src/Banshee.Base/ActionManager.cs:216
+msgid "Remove selected song(s) from library"
+msgstr "Kijelölt dalok eltávolítása a gyűjteményből"
 
 #: ../src/Banshee.Base/ActionManager.cs:219
-msgid "Search for songs matching certain criteria"
-msgstr ""
+msgid "Delete Song(s) From Drive"
+msgstr "Dalok törlése a lemezről"
 
-#: ../src/Banshee.Base/ActionManager.cs:222
-msgid "By matching album"
-msgstr ""
+#: ../src/Banshee.Base/ActionManager.cs:220
+msgid "Permanently delete selected song(s) from storage medium"
+msgstr "Kijelölt dalok végleges törlése az adathordozóról"
 
 #: ../src/Banshee.Base/ActionManager.cs:223
-#, fuzzy
-msgid "Search all songs of this album"
-msgstr "Összes Kategória beállítása erre az értékre"
+msgid "Edit Song Metadata"
+msgstr "Dal metaadatainak szerkesztése"
 
-#: ../src/Banshee.Base/ActionManager.cs:226
-msgid "By matching artist"
-msgstr ""
+#: ../src/Banshee.Base/ActionManager.cs:224
+msgid "Edit metadata on selected songs"
+msgstr "Kijelölt dalok metaadatainak szerkesztése"
 
 #: ../src/Banshee.Base/ActionManager.cs:227
-#, fuzzy
-msgid "Search all songs of this artist"
-msgstr "A lista összes zeneszámának kijelölése"
+msgid "Search for songs"
+msgstr "Dalok keresése"
 
-#: ../src/Banshee.Base/ActionManager.cs:230
-msgid "By matching genre"
-msgstr ""
+#: ../src/Banshee.Base/ActionManager.cs:228
+msgid "Search for songs matching certain criteria"
+msgstr "A keresési feltételeknek megfelelő dalok keresése"
 
 #: ../src/Banshee.Base/ActionManager.cs:231
-#, fuzzy
-msgid "Search all songs of this genre"
-msgstr "Összes Kategória beállítása erre az értékre"
+msgid "By matching album"
+msgstr "Album szerint"
 
-#: ../src/Banshee.Base/ActionManager.cs:234
-msgid "Add to Playlist"
-msgstr "Hozzáadás a médialistához"
+#: ../src/Banshee.Base/ActionManager.cs:232
+msgid "Search all songs of this album"
+msgstr "Az albumhoz tartozó összes dal keresése"
 
 #: ../src/Banshee.Base/ActionManager.cs:235
-msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr ""
-"A kijelölt zeneszámok hozzáfűzése a médialistához, vagy új médialista "
-"létrehozása a kijelölt elemekből"
+msgid "By matching artist"
+msgstr "Előadó szerint"
 
-#: ../src/Banshee.Base/ActionManager.cs:238 ../src/PlaylistView.cs:117
-msgid "Rating"
-msgstr "Osztályozás"
+#: ../src/Banshee.Base/ActionManager.cs:236
+msgid "Search all songs of this artist"
+msgstr "Az előadó összes dalának keresése"
 
 #: ../src/Banshee.Base/ActionManager.cs:239
-msgid "Set rating for selected songs"
-msgstr "Minősítés megadása a kijelölt zeneszámokhoz"
+msgid "By matching genre"
+msgstr "Műfaj szerint"
+
+#: ../src/Banshee.Base/ActionManager.cs:240
+msgid "Search all songs of this genre"
+msgstr "A műfajhoz tartozó összes dal keresése"
+
+#: ../src/Banshee.Base/ActionManager.cs:243
+msgid "Add to Playlist"
+msgstr "Hozzáadás a lejátszólistához"
+
+#: ../src/Banshee.Base/ActionManager.cs:244
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr ""
+"A kijelölt dalok hozzáfűzése a lejátszólistához, vagy új lejátszólista "
+"létrehozása a kijelölt elemekből"
+
+#: ../src/Banshee.Base/ActionManager.cs:247
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:719
+#: ../src/PlaylistView.cs:124
+msgid "Rating"
+msgstr "Értékelés"
 
 #: ../src/Banshee.Base/ActionManager.cs:248
+msgid "Set rating for selected songs"
+msgstr "A kijelölt dalok értékelésének beállítása"
+
+#: ../src/Banshee.Base/ActionManager.cs:257
 msgid "Import CD"
 msgstr "CD importálása"
 
-#: ../src/Banshee.Base/ActionManager.cs:249
+#: ../src/Banshee.Base/ActionManager.cs:258
 msgid "Import audio CD to library"
-msgstr "Audio CD importálása a műsortárba"
+msgstr "Hang CD importálása a gyűjteménybe"
 
-#: ../src/Banshee.Base/ActionManager.cs:258 ../src/PlayerInterface.cs:818
-#: ../src/PlayerInterface.cs:826
+#: ../src/Banshee.Base/ActionManager.cs:267 ../src/PlayerInterface.cs:824
+#: ../src/PlayerInterface.cs:832
 msgid "Play"
 msgstr "Lejátszás"
 
-#: ../src/Banshee.Base/ActionManager.cs:259
+#: ../src/Banshee.Base/ActionManager.cs:268
 msgid "Play or pause the current song"
-msgstr "Az aktuális szám lejátszása vagy szüneteltetése"
+msgstr "Az aktuális dal lejátszása vagy szüneteltetése"
 
-#: ../src/Banshee.Base/ActionManager.cs:262
+#: ../src/Banshee.Base/ActionManager.cs:271
 msgid "Next"
 msgstr "Következő"
 
-#: ../src/Banshee.Base/ActionManager.cs:263
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:272
 msgid "Play the next song"
-msgstr "Következő szám lejátszása"
+msgstr "Következő dal lejátszása"
 
-#: ../src/Banshee.Base/ActionManager.cs:266
+#: ../src/Banshee.Base/ActionManager.cs:275
 msgid "Previous"
 msgstr "Előző"
 
-#: ../src/Banshee.Base/ActionManager.cs:267
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:276
 msgid "Play the previous song"
-msgstr "Az előző szám lejátszása"
+msgstr "Az előző dal lejátszása"
 
-#: ../src/Banshee.Base/ActionManager.cs:272
+#: ../src/Banshee.Base/ActionManager.cs:281
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:40
 msgid "Repeat None"
 msgstr "Nincs ismétlés"
 
-#: ../src/Banshee.Base/ActionManager.cs:273
+#: ../src/Banshee.Base/ActionManager.cs:282
 msgid "Do not repeat playlist"
-msgstr "Ne ismételje a médialistát"
+msgstr "Ne ismételje a lejátszólistát"
 
-#: ../src/Banshee.Base/ActionManager.cs:276
+#: ../src/Banshee.Base/ActionManager.cs:285
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:58
 msgid "Repeat All"
 msgstr "Összes ismétlése"
 
-#: ../src/Banshee.Base/ActionManager.cs:277
+#: ../src/Banshee.Base/ActionManager.cs:286
 msgid "Play all songs before repeating playlist"
-msgstr "Az összes zeneszám lejátszása a médialista ismétlése előtt"
+msgstr "Az összes dal lejátszása a lejátszólista ismétlése előtt"
 
-#: ../src/Banshee.Base/ActionManager.cs:280
+#: ../src/Banshee.Base/ActionManager.cs:289
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:49
 msgid "Repeat Single"
 msgstr "Egy fájl ismétlése"
 
-#: ../src/Banshee.Base/ActionManager.cs:281
+#: ../src/Banshee.Base/ActionManager.cs:290
 msgid "Repeat the current playing song"
-msgstr "Most játszott zeneszám ismétlése"
+msgstr "Most játszott dal ismétlése"
 
-#: ../src/Banshee.Base/ActionManager.cs:286
+#: ../src/Banshee.Base/ActionManager.cs:295
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:67
 msgid "Shuffle"
 msgstr "Véletlen sorrendű lejátszás"
 
-#: ../src/Banshee.Base/ActionManager.cs:287
+#: ../src/Banshee.Base/ActionManager.cs:296
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Váltás a kevert és folytonos lejátszási módok között"
 
-#: ../src/Banshee.Base/ActionManager.cs:296
+#: ../src/Banshee.Base/ActionManager.cs:299
+msgid "Stop when finished"
+msgstr "Leállítás befejezéskor"
+
+#: ../src/Banshee.Base/ActionManager.cs:300
+msgid "Stop playback after the current song finishes playing"
+msgstr "Lejátszás leállítása a dal végén"
+
+#: ../src/Banshee.Base/ActionManager.cs:309
 msgid "Seek Backward"
 msgstr "Visszatekerés"
 
-#: ../src/Banshee.Base/ActionManager.cs:297
+#: ../src/Banshee.Base/ActionManager.cs:310
 msgid "Seek backward in current song"
 msgstr "Az aktuális szám visszatekerése"
 
-#: ../src/Banshee.Base/ActionManager.cs:300
+#: ../src/Banshee.Base/ActionManager.cs:313
 msgid "Seek Forward"
 msgstr "Előretekerés"
 
-#: ../src/Banshee.Base/ActionManager.cs:301
+#: ../src/Banshee.Base/ActionManager.cs:314
 msgid "Seek forward in current song"
 msgstr "Az aktuális szám előretekerése"
 
-#: ../src/Banshee.Base/ActionManager.cs:304
+#: ../src/Banshee.Base/ActionManager.cs:317
 msgid "Seek To..."
-msgstr ""
+msgstr "Tekerés..."
 
-#: ../src/Banshee.Base/ActionManager.cs:305
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:318
 msgid "Seek to a specific location in current song"
-msgstr "Az aktuális szám előretekerése"
+msgstr "Adott helyre tekerés az aktuális számban"
 
-#: ../src/Banshee.Base/ActionManager.cs:308
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:321
 msgid "Restart Song"
-msgstr "Egy fájl ismétlése"
+msgstr "Dal ismétlése"
 
-#: ../src/Banshee.Base/ActionManager.cs:309
-#, fuzzy
+#: ../src/Banshee.Base/ActionManager.cs:322
 msgid "Restart the current song"
-msgstr "Most játszott zeneszám ismétlése"
+msgstr "Most játszott dal ismétlése"
 
-#: ../src/Banshee.Base/ActionManager.cs:318 ../src/PlayerInterface.cs:1069
+#: ../src/Banshee.Base/ActionManager.cs:331
 msgid "Synchronize"
 msgstr "Szinkronizálás"
 
-#: ../src/Banshee.Base/ActionManager.cs:319
+#: ../src/Banshee.Base/ActionManager.cs:332
 msgid "Save changes to device or synchronize music library"
-msgstr "Változások mentése az eszközre vagy a zenekönyvtár szinkronizálása"
+msgstr "Változások mentése az eszközre vagy a gyűjtemény szinkronizálása"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:80
 msgid "HAL is not initialized"
@@ -999,20 +1029,20 @@ msgstr "A HAL nincs inicializálva"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:86
 msgid "Audio CD Core Initialized"
-msgstr "Audio CD mag inicializálva"
+msgstr "Hang CD mag inicializálva"
 
 #. work around mcs #76642
 #: ../src/Banshee.Base/AudioCd/AudioCdCore.cs:103
 msgid "Could not Read Audio CD"
-msgstr "Nem olvasható Audio CD "
+msgstr "Nem olvasható a hang CD"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:86
-#: ../src/Banshee.Base/TrackInfo.cs:383
+#: ../src/Banshee.Base/TrackInfo.cs:391
 msgid "Unknown Artist"
 msgstr "Ismeretlen előadó"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:87
-#: ../src/Banshee.Base/TrackInfo.cs:391
+#: ../src/Banshee.Base/TrackInfo.cs:399
 msgid "Unknown Album"
 msgstr "Ismeretlen album"
 
@@ -1022,36 +1052,34 @@ msgid "Track {0}"
 msgstr "{0}. szám"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:93
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:58
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:59
 msgid "Audio CD"
-msgstr "Audio CD"
+msgstr "Hang CD"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:241
-#, fuzzy
 msgid "Cannot Eject CD"
-msgstr "A CD nem importálható"
+msgstr "A CD kiadása sikertelen"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr ""
+msgstr "A CD nem adható ki, amíg az importálás folyamatban van. Először állítsa le az importálást."
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:83
+#: ../src/Banshee.Base/AudioCdRipper.cs:84
 msgid "Could not create CD Ripper"
 msgstr "A CD-másoló nem hozható létre"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:239
-#, fuzzy
+#: ../src/Banshee.Base/AudioCdRipper.cs:274
 msgid "Importing CD"
 msgstr "CD importálása"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:248
+#: ../src/Banshee.Base/AudioCdRipper.cs:283
 #, csharp-format
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr ""
+msgstr "<i>{0}</i> importálása még folyamatban van a gyűjteménybe. Le szeretné állítani?"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:256
+#: ../src/Banshee.Base/AudioCdRipper.cs:291
 #, csharp-format
 msgid ""
 "The device node '{0}' differs from the device node already set for "
@@ -1060,61 +1088,69 @@ msgstr ""
 "A(z) '{0}' eszközcsomópont nem egyezik meg az előzőleg sorbaállított számok "
 "({1}) eszközcsomópontjával"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:269
+#: ../src/Banshee.Base/AudioCdRipper.cs:304
 msgid "Importing Audio CD"
-msgstr "Audio CD importálása"
+msgstr "Hang CD importálása"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:270
+#: ../src/Banshee.Base/AudioCdRipper.cs:305
 msgid "Initializing Drive"
 msgstr "Meghajtó inicializálása"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:290
-#: ../src/Banshee.Base/AudioCdRipper.cs:354
+#: ../src/Banshee.Base/AudioCdRipper.cs:312
+msgid "No encoder was found on your system."
+msgstr "Nem található kódoló a rendszerben."
+
+#: ../src/Banshee.Base/AudioCdRipper.cs:342
+#: ../src/Banshee.Base/AudioCdRipper.cs:414
 msgid "Cannot Import CD"
 msgstr "A CD nem importálható"
 
-#: ../src/Banshee.Base/AudioCdRipper.cs:302
+#: ../src/Banshee.Base/AudioCdRipper.cs:362
 #: ../src/Banshee.Base/ImportManager.cs:120
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "{1}/{0}. importálása"
 
+#: ../src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:83
+msgid "No available profiles"
+msgstr "Nincs profil"
+
+#: ../src/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:47
+msgid "Advanced"
+msgstr "Haladó"
+
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
-#, fuzzy
 msgid "Audio Disc:"
-msgstr "Audioeszköz"
+msgstr "Hanglemez:"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:73
-#, fuzzy
 msgid "Data Disc:"
-msgstr "Adat CD"
+msgstr "Adat CD:"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:130
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0}:{1:00} of {2}"
-msgstr "{1}/{0}."
+msgstr "{0}:{1:00} / {2}"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:132
-#, fuzzy
 msgid "Unknown Minutes"
-msgstr "Ismeretlen cím"
+msgstr "Ismeretlen időtartam"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:133
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} Minutes"
-msgstr "{0} elem"
+msgstr "{0} perc"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
 #: ../src/Banshee.Base/Sources/DapSource.cs:312
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:87
 #, csharp-format
 msgid "{0} of {1}"
-msgstr "{1}/{0}."
+msgstr "{1}/{0}"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:137
-#, fuzzy
 msgid "Unknown MB"
-msgstr "Ismeretlen"
+msgstr "Ismeretlen méret"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:138
 #: ../src/Banshee.Base/Utilities.cs:77
@@ -1122,116 +1158,99 @@ msgstr "Ismeretlen"
 msgid "{0} MB"
 msgstr "{0} MB"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:116
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:61
-#, fuzzy
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
 msgid "New Audio CD"
-msgstr "Audio CD"
+msgstr "Új hang CD"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:117
-#, fuzzy
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
-msgstr "Fiók létrehozása"
+msgstr "Új hang CD készítése"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:159
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:107
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:191
-#, fuzzy
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:192
 msgid "Problem creating CD"
-msgstr "Hiba a CD-írás közben"
+msgstr "Hiba a CD készítése közben"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:160
+#: ../src/Banshee.Base/Banshee.Burner/BurnerCore.cs:166
 msgid "No CD recording hardware was found."
-msgstr ""
+msgstr "Nem található CD-író eszköz."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
-#, fuzzy
 msgid "Audio"
-msgstr "Audio CD"
+msgstr "Hang"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:63
-#, fuzzy
-msgid "MP3"
-msgstr "MP3 CD"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:64
-#, fuzzy
-msgid "Data"
-msgstr "Adat CD"
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:100
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:101
 msgid "Some songs could not be found."
-msgstr ""
+msgstr "Néhány dal nem található."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:109
 msgid "No CD writers were found on your system."
 msgstr "Nem található CD-író a rendszerben"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:114
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
 msgid "Insert Blank CD"
 msgstr "Helyezzen be egy üres CD-t"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:116
 msgid "Please insert a blank CD disk for the write process."
 msgstr "Az íráshoz helyezzen be egy üres CD lemezt"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:135
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:155
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:136
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:156
 #, csharp-format
 msgid "The inserted media is not large enough to hold your selected music."
 msgstr ""
-"A behelyezett adathordozó nem elég nagy az összes kijelölt zeneszám "
+"A behelyezett adathordozó nem elég nagy az összes kijelölt dal "
 "tárolásához."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:137
-#, fuzzy, csharp-format
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:138
+#, csharp-format
 msgid "{0} more minute is needed on the media."
 msgid_plural "{0} more minutes are needed on the media."
 msgstr[0] "Még {0} percre lenne szükség az adathordozón."
+msgstr[1] "Még {0} percre lenne szükség az adathordozón."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:141
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:161
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:142
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:162
 msgid "Not Enough Space on Disc"
 msgstr "Nincs elegendő hely a lemezen"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:157
-#, fuzzy, csharp-format
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:158
+#, csharp-format
 msgid "{0} more megabyte is needed on the media."
 msgid_plural "{0} more megabytes are needed on the media."
-msgstr[0] "Még {0} percre lenne szükség az adathordozón."
-
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:174
-msgid "Insufficient Disk Space"
-msgstr ""
+msgstr[0] "Még {0} megabájtra lenne szükség az adathordozón."
+msgstr[1] "Még {0} megabájtra lenne szükség az adathordozón."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
+msgid "Insufficient Disk Space"
+msgstr "A lemezterület nem elegendő"
+
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:176
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr ""
+msgstr "A CD elkészítéséhez legalább {0} MB szabad területre van szükség a lemezen."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:194
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:195
 msgid "Continue Anyway"
-msgstr ""
+msgstr "Folytatás mindenképp"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:254
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:239
 msgid "Could Not Write CD"
 msgstr "Nem írható CD"
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:255
-#, fuzzy
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:240
 msgid "No suitable encoder could be found to convert selected songs."
-msgstr ""
-"Nem található alkalmas WAV-kódoló a kiválasztott zeneszámok CD audio "
-"formátummá alakításához."
+msgstr "Nem található alkalmas kódoló a kiválasztott dalok átalakításához."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:48
-#, fuzzy
 msgid "Writing a disc"
-msgstr "Lemez írása..."
+msgstr "CD írása"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:55
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:56
-#, fuzzy
 msgid "Writing Disc"
 msgstr "CD írás"
 
@@ -1239,42 +1258,36 @@ msgstr "CD írás"
 msgid ""
 "Stopping the disc writing process will render it useless. Would you like to "
 "stop writing the disc?"
-msgstr ""
+msgstr "Az írási folyamat megszakítása használhatatlanná teszi a lemezt. Le kívánja állítani a lemez írását?"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:95
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:110
-#, fuzzy
 msgid "Error writing disc"
 msgstr "Hiba a CD-írás közben"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:99
-#, fuzzy
 msgid "An unknown error occurred when attempting to write the disc."
-msgstr "Ismeretlen hiba állt elő a CD írása közben"
+msgstr "Ismeretlen hiba állt elő a CD írása közben."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:105
-#, fuzzy
 msgid "Disc writing complete"
 msgstr "A CD-írás befejeződött"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:106
-#, fuzzy
 msgid "The selected audio was successfully written to the disc."
-msgstr "A kiválasztott audio CD-re írása sikeresen befejeződött"
+msgstr "A kiválasztott hang CD írása sikeresen befejeződött."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:142
-#, fuzzy
 msgid "Preparing to record"
-msgstr "Felkészülés az írásra..."
+msgstr "Felkészülés a felvételre..."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:146
 msgid "Recording contents"
-msgstr ""
+msgstr "Tartalom rögzítése"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:150
-#, fuzzy
 msgid "Fixating disc"
-msgstr "Lemez rögzítése..."
+msgstr "Lemez rögzítése"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:168
 msgid "Waiting for Media"
@@ -1282,34 +1295,32 @@ msgstr "Adathordozóra vár"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:172
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:175
-#, fuzzy
 msgid "Insert blank disc"
 msgstr "Helyezzen be egy üres CD-t"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:173
-#, fuzzy
 msgid "Please insert a blank disc for the write process."
-msgstr "Az íráshoz helyezzen be egy üres CD lemezt"
+msgstr "Az íráshoz helyezzen be egy üres CD lemezt."
 
-#: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:225
+#: ../src/Banshee.Base/Banshee.Burner/BurnerSource.cs:233
 msgid "CD Session"
-msgstr ""
+msgstr "CD szakasz"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:69
 msgid "Maximum"
-msgstr ""
+msgstr "Maximum"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:70
 msgid "High"
-msgstr ""
+msgstr "Magas"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:71
 msgid "Medium"
-msgstr ""
+msgstr "Közép"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:72
 msgid "Low"
-msgstr ""
+msgstr "Mély"
 
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:77
 #: ../src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:90
@@ -1317,49 +1328,416 @@ msgstr ""
 msgid "{0}x"
 msgstr "{0}x "
 
-#: ../src/Banshee.Base/ComponentInitializer.cs:92
-#, fuzzy
-msgid "Could not initialize component"
-msgstr "A HAL kontextus inicializálása nem sikerült"
+#: ../src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:46
+msgid "Copy CD failed"
+msgstr "A CD másolása sikertelen"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:110
-#: ../src/Banshee.Base/BatchTranscoder.cs:111
-#, fuzzy
+#: ../src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:47
+msgid "Could not run nautilus-cd-burner"
+msgstr "A nautilus CD-írója nem indítható el"
+
+#. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
+#. args.FileName, e.GetType(), e.Message);
+#: ../src/Banshee.Base/Banshee.Library/Import.cs:69
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:187
+msgid "Scanning"
+msgstr "Keresés"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:33
+msgid "Edit Smart Playlist"
+msgstr "Okos lejátszólista szerkesztése"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:44
+msgid "New Smart Playlist"
+msgstr "Új okos lejátszólista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:61
+msgid "Neglected Favorites"
+msgstr "Elhanyagolt kedvencek"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:72
+msgid "700 MB of Favorites"
+msgstr "700 MB kedvenc"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:79
+msgid "80 Minutes of Favorites"
+msgstr "80 percnyi kedvenc"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:86
+msgid "Unheard"
+msgstr "Nem hallgatott"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:140
+#: ../src/PlayerInterface.cs:446 ../src/PlayerInterface.cs:1259
+#: ../src/PlayerInterface.cs:2265
+msgid "Artist Name"
+msgstr "Előadó neve"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:142
+#: ../src/PlayerInterface.cs:445 ../src/PlayerInterface.cs:1261
+msgid "Song Name"
+msgstr "Dal címe"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:144
+#: ../src/PlayerInterface.cs:447 ../src/PlayerInterface.cs:1263
+#: ../src/PlayerInterface.cs:2261
+msgid "Album Title"
+msgstr "Album címe"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:146
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:709
+#: ../src/PlayerInterface.cs:448 ../src/PlayerInterface.cs:1265
+#: ../src/PlayerInterface.cs:2269 ../src/PlaylistView.cs:111
+msgid "Genre"
+msgstr "Műfaj"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:148
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:721
+#: ../src/PlayerInterface.cs:449 ../src/PlayerInterface.cs:1267
+#: ../src/PlaylistView.cs:114
+msgid "Year"
+msgstr "Év"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:165
+msgid "Create Smart Playlist from Search"
+msgstr "Okos lejátszólista létrehozása keresésből"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:151
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:174
+msgid "is"
+msgstr "="
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:156
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:179
+msgid "is not"
+msgstr "nem"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:184
+msgid "is less than"
+msgstr "kevesebb, mint"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:189
+msgid "is greater than"
+msgstr "nagyobb, mint"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:194
+msgid "more than"
+msgstr "több, mint"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:199
+msgid "less than"
+msgstr "kevesebb, mint"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:204
+msgid "is at least"
+msgstr "legalább"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:209
+msgid "contains"
+msgstr "tartalmazza"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:214
+msgid "does not contain"
+msgstr "nem tartalmazza"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:219
+msgid "starts with"
+msgstr "ezzel kezdődik"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:224
+msgid "ends with"
+msgstr "ezzel végződik"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:229
+msgid "is before"
+msgstr "előtt volt"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:234
+msgid "is after"
+msgstr "után volt"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:239
+msgid "is between"
+msgstr "ezek között"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:244
+msgid "between"
+msgstr "ezek között"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:322
+msgid "to"
+msgstr "és"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:696
+msgid "_Match"
+msgstr "_Illeszkedjen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:703
+msgid "all"
+msgstr "mind"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:704
+msgid "any"
+msgstr "bármely"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:709
+msgid "of the following:"
+msgstr "a következők közül:"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:728
+msgid "_Limit to"
+msgstr "_Korlátozás"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:745
+msgid "selected by"
+msgstr "kiválasztási szempont:"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:44
+msgid "Random"
+msgstr "Véletlen"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:708
+#: ../src/PlaylistView.cs:108
+msgid "Album"
+msgstr "Album"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:706
+#: ../src/PlaylistView.cs:102
+msgid "Artist"
+msgstr "Előadó"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:707
+#: ../src/PlaylistView.cs:105
+msgid "Title"
+msgstr "Cím"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
+msgid "Highest Rating"
+msgstr "Legjobb értékelés"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
+msgid "Lowest Rating"
+msgstr "Legrosszabb értékelés"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
+msgid "Least Often Played"
+msgstr "Legritkábban játszott"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
+msgid "Most Often Played"
+msgstr "Leggyakrabban játszott"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
+msgid "Most Recently Added"
+msgstr "Legutóbb felvéve"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
+msgid "Least Recently Added"
+msgstr "Legrégebben felvéve"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
+msgid "Most Recently Played"
+msgstr "Legutóbb játszott"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
+msgid "Least Recently Played"
+msgstr "Legrégebben játszott"
+
+#. ez így jó!
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:61
+msgid "songs"
+msgstr "dal"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
+msgid "minutes"
+msgstr "perc"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
+msgid "hours"
+msgstr "óra"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:324
+msgid "Seconds"
+msgstr "másodperc"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:325
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:459
+msgid "Minutes"
+msgstr "perc"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:326
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:460
+msgid "Hours"
+msgstr "óra"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:461
+msgid "Days"
+msgstr "nap"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:462
+msgid "Weeks"
+msgstr "hét"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:463
+msgid "Months"
+msgstr "hónap"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:464
+msgid "Years"
+msgstr "év"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:575
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:600
+msgid "ago"
+msgstr "óta"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:710
+msgid "Date Added"
+msgstr "Hozzáadás dátuma"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:711
+#: ../src/PlaylistView.cs:137
+msgid "Last Played"
+msgstr "Utolsó lejátszás"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:712
+msgid "Duration"
+msgstr "Dal hossza"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:713
+msgid "Play Count"
+msgstr "Lejátszások száma"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:716
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:71
+msgid "Playlist"
+msgstr "Lejátszólista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:720
+msgid "Path"
+msgstr "Útvonal"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:56
+msgid "Smart Playlists"
+msgstr "Okos lejátszólista"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:62
+msgid ""
+"Create playlists that automatically add and remove songs based on "
+"customizable queries."
+msgstr "Személyre szabható lekérdezések alapján dalokat automatikusan felvevő és eltávolító lejátszólisták létrehozása."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:171
+msgid "New Smart Playlist..."
+msgstr "Új okos lejátszólista..."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:177
+msgid "New Smart Playlist from Search..."
+msgstr "Új okos lejátszólista keresésből..."
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:75
+msgid "Delete Smart Playlist"
+msgstr "Okos lejátszólista törlése"
+
+#: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:79
+msgid "Smart Playlist"
+msgstr "Okos lejátszólista"
+
+#: ../src/Banshee.Base/Banshee.Web/Browser.cs:43
+msgid "Could not launch URL"
+msgstr "Nem indítható az URL"
+
+#: ../src/Banshee.Base/Banshee.Web/Browser.cs:44
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"{0} nem nyitható meg: {1}\n"
+"\n"
+" Ellenőrizze az Alapértelmezett alkalmazások beállításait."
+
+#: ../src/Banshee.Base/BatchTranscoder.cs:117
+#: ../src/Banshee.Base/BatchTranscoder.cs:118
 msgid "Converting Files"
 msgstr "Fájlok átkódolása"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:113
+#: ../src/Banshee.Base/BatchTranscoder.cs:120
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
+msgstr "A fájlok éppen konvertálás alatt vannak. Kívánja megállítani a folyamatot?"
 
-#: ../src/Banshee.Base/BatchTranscoder.cs:116
+#: ../src/Banshee.Base/BatchTranscoder.cs:123
 msgid "Initializing Transcoder..."
 msgstr "Átkódoló inicializálása..."
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:100
+#: ../src/Banshee.Base/ComponentInitializer.cs:94
+msgid "Could not initialize component"
+msgstr "A komponens inicializálása sikertelen"
+
+#: ../src/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Fájlok importálása a gyűjteménybe"
+
+#: ../src/Banshee.Base/FileImportSource.cs:82
+msgid "Local Files"
+msgstr "Helyi fájlok"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Mappa importálása a gyűjteménybe"
+
+#: ../src/Banshee.Base/FolderImportSource.cs:80
+msgid "Local Folder"
+msgstr "Helyi mappa"
+
+#: ../src/Banshee.Base/Dap/DapCore.cs:102
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "A DapCore nem inicializálható, mert a HalCore nem lett inicializálva"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:334
+#: ../src/Banshee.Base/Dap/Dap.cs:328
 #: ../src/Banshee.Base/Sources/DapSource.cs:375
-#, fuzzy
 msgid "Device"
-msgstr "Eszköz neve"
+msgstr "Eszköz"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:335
-#, fuzzy, csharp-format
+#: ../src/Banshee.Base/Dap/Dap.cs:329
+#, csharp-format
 msgid "Synchronizing {0}"
 msgstr "{0} szinkronizálása"
 
-#: ../src/Banshee.Base/Dap/Dap.cs:339
+#: ../src/Banshee.Base/Dap/Dap.cs:333
 msgid "Waiting for transcoder..."
 msgstr "Várakozás az átkódolóra..."
 
-#: ../src/Banshee.Base/Dap/Dap.cs:427 ../src/Banshee.Base/Dap/Dap.cs:448
+#: ../src/Banshee.Base/Dap/Dap.cs:420 ../src/Banshee.Base/Dap/Dap.cs:441
 msgid "Processing..."
 msgstr "Folyamatban..."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:460
+msgid "Could not encode some files"
+msgstr "Néhány fájl konvertálása sikertelen"
+
+#: ../src/Banshee.Base/Dap/Dap.cs:462
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr "Néhány fájl konvertálása a kívánt formátumra nem sikerült. Amennyiben folytatja, ezek nem kerülnek mentésre az eszközön."
+
+#: ../src/Banshee.Base/Dap/Dap.cs:467
+msgid "Continue synchronizing"
+msgstr "Szinkronizáció folytatása"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:54
@@ -1369,35 +1747,91 @@ msgstr "{0} tulajdonságai"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:78
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:81
-msgid "Device Name"
+msgid "Device name"
 msgstr "Eszköz neve"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:85
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:88
-msgid "Owner Name"
+msgid "Owner name"
 msgstr "Tulajdonos neve"
 
 #: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:93
-msgid "Volume Usage"
+msgid "Encode to"
+msgstr "Kódolás ebbe:"
+
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:97
+msgid "Volume usage"
 msgstr "Kötethasználat"
 
-#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:105
-msgid "Advanced Details"
+#: ../src/Banshee.Base/Dap/DapPropertiesDialog.cs:109
+msgid "Advanced details"
 msgstr "Speciális részletek"
+
+#: ../src/Banshee.Base/Globals.cs:78 ../src/Banshee.Base/Globals.cs:87
+#: ../src/Banshee.Base/Globals.cs:91 ../src/Banshee.Base/Globals.cs:142
+msgid "Starting background tasks"
+msgstr "Háttérfolyamatok indítása"
+
+#: ../src/Banshee.Base/Globals.cs:88
+msgid "Device support will be disabled for this instance (no HAL)"
+msgstr "Az eszköztámogatás le lesz tiltva ehhez a példányhoz (nincs HAL)"
+
+#: ../src/Banshee.Base/Globals.cs:92
+msgid "Detecting network settings"
+msgstr "Hálózati beállítások felismerése"
+
+#: ../src/Banshee.Base/Globals.cs:93
+msgid "Creating action manager"
+msgstr "Műveletkezelő létrehozása"
+
+#: ../src/Banshee.Base/Globals.cs:94
+msgid "Loading music library"
+msgstr "Gyűjtemény betöltése"
+
+#: ../src/Banshee.Base/Globals.cs:99 ../src/Banshee.Base/Globals.cs:101
+#: ../src/Banshee.Base/Globals.cs:130
+msgid "Initializing audio"
+msgstr "Hang inicializálása"
+
+#: ../src/Banshee.Base/Globals.cs:132
+msgid "Initializing audio CD support"
+msgstr "Hang CD támogatásának inicializálása"
+
+#: ../src/Banshee.Base/Globals.cs:133
+msgid "Audio CD support will be disabled for this instance"
+msgstr "A hang CD támogatása le lesz tiltva ehhez a példányhoz"
+
+#: ../src/Banshee.Base/Globals.cs:135
+msgid "Initializing digital audio player support"
+msgstr "Digitális lejátszó támogatásának inicializálása"
+
+#: ../src/Banshee.Base/Globals.cs:136
+msgid "DAP support will be disabled for this instance"
+msgstr "A Digitális lejátszó támogatása le lesz tiltva ehhez a példányhoz"
+
+#: ../src/Banshee.Base/Globals.cs:138
+msgid "Initializing CD writing support"
+msgstr "CD-írás támogatásának inicializálása"
+
+#: ../src/Banshee.Base/Globals.cs:139
+msgid "CD burning support will be disabled for this instance"
+msgstr "A CD írás támogatása le lesz tiltva ehhez a példányhoz"
+
+#: ../src/Banshee.Base/Globals.cs:141
+msgid "Initializing plugins"
+msgstr "Bővítmények inicializálása"
 
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:46
 msgid "Primary Development"
-msgstr ""
+msgstr "Elsődleges fejlesztés"
 
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:53
-#, fuzzy
 msgid "Contributors"
-msgstr "Folyamatos"
+msgstr "Közreműködők"
 
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:79
-#, fuzzy
 msgid "Music Management and Playback for GNOME."
-msgstr "Gnome zenekezelés és -lejátszás"
+msgstr "Zenekezelés és -lejátszás a GNOME-hoz."
 
 #: ../src/Banshee.Base/Gui/AboutDialog.cs:81
 msgid ""
@@ -1411,18 +1845,51 @@ msgstr ""
 msgid "Banshee Wiki"
 msgstr "Banshee Wiki"
 
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Fontos feladatok futnak"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr "A Banshee azonnali bezárása megszakítja a jelenleg futó feladatokat. Ezek nem folytathatók automatikusan a Banshee következő futtatásakor."
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Kilépés mindenképp"
+
+#: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Futtatás folytatása"
+
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:52
 msgid "Banshee Encountered a Fatal Error"
 msgstr "A Banshee végzetes hibát észlelt"
 
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:88
-#, fuzzy
 msgid "Error Details"
-msgstr "Bejegyzés részletei:"
+msgstr "Hiba részletei"
 
 #: ../src/Banshee.Base/Gui/ExceptionDialog.cs:134
 msgid "An unhandled exception was thrown: "
 msgstr "Kezeletlen kivétel történt:"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:42
+msgid "Select album cover image"
+msgstr "Válasszon albumborítót"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:57
+msgid "All image files"
+msgstr "Minden képfájl"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:64
+msgid "JPEG image files"
+msgstr "JPEG képfájlok"
+
+#: ../src/Banshee.Base/Gui/ImageFileChooserDialog.cs:69
+msgid "PNG image files"
+msgstr "PNG képfájlok"
 
 #: ../src/Banshee.Base/Gui/LogCoreDialog.cs:51
 msgid "Log Viewer"
@@ -1433,6 +1900,7 @@ msgid "Time Stamp"
 msgstr "Időbélyeg"
 
 #: ../src/Banshee.Base/Gui/LogCoreDialog.cs:106
+#: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:70
 msgid "Message"
 msgstr "Üzenet"
 
@@ -1466,16 +1934,71 @@ msgstr "Bejegyzés részletei:"
 
 #: ../src/Banshee.Base/Gui/OpenLocationDialog.cs:53
 msgid "Browse..."
-msgstr ""
+msgstr "Tallózás..."
 
-#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:58
-#, fuzzy
+#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:62
 msgid "Select library location"
-msgstr "Műsortár helyének kiválasztása"
+msgstr "Gyűjtemény helyének kiválasztása"
+
+#: ../src/Banshee.Base/Gui/PreferencesDialog.cs:72
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files"
+msgstr "Engedélyezze ezt a beállítást a címkék és egyéb metaadatok mentéséhez a támogatott hangfájlokba"
+
+#: ../src/Banshee.Base/Gui/SourceView.cs:505
+msgid "Could not import tracks"
+msgstr "Nem sikerült importálni a számokat"
 
 #: ../src/Banshee.Base/Gui/ToggleStates.cs:78
 msgid "Continuous"
 msgstr "Folyamatos"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:212
+msgid "Automatically set all track numbers in increasing order"
+msgstr "Minden dal sorszámának automatikus beállítása növekvő sorrendbe"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:213
+msgid "Set all track counts to this value"
+msgstr "Minden dal-számláló beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:214
+msgid "Set all artists to this value"
+msgstr "Minden Előadó beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:215
+msgid "Set all albums to this value"
+msgstr "Minden Album beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:216
+msgid "Set all genres to this value"
+msgstr "Minden Kategória beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:217
+msgid "Set all years to this value"
+msgstr "Minden Év beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:218
+msgid "Set all common fields in all selected tracks to the values currently set"
+msgstr "Az összes kijelölt szám minden közös mezőjét a jelenleg beállított értékekre állítja be"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:219
+msgid "Set all ratings to this value"
+msgstr "Minden Értékelés beállítása erre az értékre"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:271
+msgid "Never played"
+msgstr "Sosem játszott"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:285
+#, csharp-format
+msgid "Editing song {0} of {1}"
+msgstr "{1}/{0}. dal szerkesztése"
+
+#: ../src/Banshee.Base/Gui/TrackEditor.cs:286
+#, csharp-format
+msgid "Editing {0}"
+msgstr "{0} szerkesztése"
 
 #: ../src/Banshee.Base/Gui/VersionInformationDialog.cs:61
 msgid "Assembly Version Information"
@@ -1489,37 +2012,9 @@ msgstr "Összeállítás neve"
 msgid "Version"
 msgstr "Verzió"
 
-#: ../src/Banshee.Base/FileImportSource.cs:55
-msgid "Import Files to Library"
-msgstr "Fájlok importálása a műsortárba"
-
-#: ../src/Banshee.Base/FileImportSource.cs:82
-msgid "Local Files"
-msgstr "Helyi fájlok"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:55
-msgid "Import Folder to Library"
-msgstr "Mappa importálása a műsortárba"
-
-#: ../src/Banshee.Base/FolderImportSource.cs:80
-msgid "Local Folder"
-msgstr "Helyi mappa"
-
-#: ../src/Banshee.Base/GstTranscoder.cs:80
+#: ../src/Banshee.Base/GstTranscoder.cs:82
 msgid "Could not create transcoder"
 msgstr "Az átkódoló létrehozása nem sikerült"
-
-#: ../src/Banshee.Base/HalCore.cs:97
-msgid "HAL could not be initialized"
-msgstr "A HAL nem inicializálható"
-
-#: ../src/Banshee.Base/HalCore.cs:104
-msgid "HAL context could not be created"
-msgstr "A HAL kontextus létrehozása nem sikerült"
-
-#: ../src/Banshee.Base/HalCore.cs:105
-msgid "D-Bus may not be working or configured properly"
-msgstr "A D-Bus nem működik megfelelően vagy nem lett jól beállítva"
 
 #: ../src/Banshee.Base/HomeDirectoryImportSource.cs:58
 msgid "Home Directory"
@@ -1527,113 +2022,54 @@ msgstr "Saját könyvtár"
 
 #: ../src/Banshee.Base/ImportManager.cs:88
 msgid "Importing Songs"
-msgstr "Zeneszámok importálása"
+msgstr "Dalok importálása"
 
 #: ../src/Banshee.Base/ImportManager.cs:89
 msgid "The import process is currently running. Would you like to stop it?"
-msgstr ""
+msgstr "Az importálási folyamat jelenleg fut. Meg szeretné állítani?"
 
 #: ../src/Banshee.Base/ImportManager.cs:91
 msgid "Scanning for songs"
-msgstr "Zeneszámok keresése"
+msgstr "Dalok keresése"
 
-#: ../src/Banshee.Base/Library.cs:126
+#: ../src/Banshee.Base/Library.cs:125
 msgid "Could not load track from library"
-msgstr "A szám nem tölthető be a műsortárból"
+msgstr "A szám nem tölthető be a gyűjteményből"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:76
+#: ../src/Banshee.Base/NetworkDetect.cs:68
 msgid "Cannot connect to NetworkManager"
 msgstr "Nem sikerül kapcsolódni a NetworkManagerhez"
 
-#: ../src/Banshee.Base/NetworkDetect.cs:77
+#: ../src/Banshee.Base/NetworkDetect.cs:69
 msgid "An available, working network connection will be assumed"
 msgstr "A program feltételezi egy működő hálózati kapcsolat meglétét"
 
-#: ../src/Banshee.Base/PipelineProfile.cs:105
-msgid "Pipeline profile is empty."
-msgstr "A csővezetékprofil üres."
-
-#: ../src/Banshee.Base/PipelineProfile.cs:111
-msgid "Pipeline profile does not have the correct number of components (7)"
-msgstr "A csővezetékprofilban nem megfelelő számú komponens (7) található"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:121
-msgid "Pipeline profile does not have a lookup key"
-msgstr "A csővezetékprofilban nincs keresési kulcs"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:125
-msgid "Pipeline profile does not have a display name"
-msgstr "A csővezetékprofilnak nincs megjelenítési neve"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:130
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a file extension"
-msgstr "A(z) '{0}' csővezetékprofilnak nincs fájlkiterjesztése"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:136
-#, csharp-format
-msgid "Pipeline profile '{0}' does not have a GStreamer element"
-msgstr "A(z) '{0}' csővezetékprofilban nincs GStreamer elem"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:171
-#, csharp-format
-msgid ""
-"Pipeline profile '{0}' will be unavailable: GStreamer pipeline '{1}' could "
-"not be run"
-msgstr ""
-"A(z) '{0}' csővezetékprofil elérhetetlen: a(z) '{1}' GStreamer csővezeték "
-"nem futtatható"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:203
-msgid "Cannot use internal bitrate. Use BuildPipeline(bitrate) instead."
-msgstr ""
-"A belső bitsebesség nem használható. Használja helyette a BuildPipeline"
-"(bitsebesség) parancsot."
-
-#: ../src/Banshee.Base/PipelineProfile.cs:223
-msgid ""
-"Cannot set internal bitrate. Must copy profile and set Bitrate on copy (new "
-"PipelineProfile(profile))"
-msgstr ""
-"A belső bitsebesség nem állítható be. Át kell másolni a profilt és a "
-"másolaton kell beállítani a Bitrate paramétert (new PipelineProfile(profil))"
-
-#. Translators: used to specify the bitrate for ripping
-#: ../src/Banshee.Base/PipelineProfile.cs:372
-msgid "at"
-msgstr ":"
-
-#: ../src/Banshee.Base/PipelineProfile.cs:414
-#, fuzzy
-msgid "No MP3-compatible encoders available"
-msgstr "Nincsenek elérhető iPod-kompatibilis kódolók "
-
-#: ../src/Banshee.Base/PlayerEngineCore.cs:72
+#: ../src/Banshee.Base/PlayerEngineCore.cs:78
 msgid "Default player engine"
 msgstr "Alapértelmezett lejátszómotor"
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:94
+#: ../src/Banshee.Base/PlayerEngineCore.cs:100
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
-msgstr ""
+msgstr "Nem találhatók lejátszóalrendszerek. Győződjön meg róla, hogy a Banshee telepítése hibátlanul zajlott le."
 
-#: ../src/Banshee.Base/PlayerEngineCore.cs:155
+#: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
-msgstr ""
+msgstr "Probléma a lejátszóalrendszerrel"
 
-#: ../src/Banshee.Base/PowerManagement.cs:116
+#: ../src/Banshee.Base/PowerManagement.cs:83
 msgid "Playing Music"
-msgstr ""
+msgstr "Zene lejátszása"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:52
 msgid "Banshee Plugins"
-msgstr "Banshee Plugins bővítőmodulok"
+msgstr "Banshee bővítmények"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:64
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:93
 msgid "Plugin Name"
-msgstr "Bővítőmodul neve"
+msgstr "Bővítmény neve"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:90
 msgid "Overview"
@@ -1645,87 +2081,92 @@ msgstr "Leírás"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:100
 msgid "Author(s)"
-msgstr "Szerző(k)"
+msgstr "Szerzők"
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:105
 msgid "This plugin could not be initialized."
-msgstr "A bővítőmodul inicializálása nem sikerült."
+msgstr "A bővítmény inicializálása nem sikerült."
 
 #: ../src/Banshee.Base/Plugins/PluginDialog.cs:193
 msgid "Configuration"
 msgstr "Beállítás"
 
-#: ../src/Banshee.Base/Source.cs:333
-#, fuzzy, csharp-format
+#: ../src/Banshee.Base/Source.cs:348
+#, csharp-format
 msgid "Delete {0}"
-msgstr "Fájl: {0}"
+msgstr "{0} törlése"
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:50
-#, fuzzy
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:51
 msgid "Eject CD"
-msgstr "Kiadása"
+msgstr "CD kiadása"
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:89
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:92
 msgid "Reading table of contents from CD..."
 msgstr "CD tartalomjegyzékének olvasása..."
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:94
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:97
 msgid "Searching for CD metadata..."
 msgstr "CD metaadatainak keresése..."
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:99
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:102
 msgid "Searching for CD cover art..."
 msgstr "CD-borító keresése..."
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:104
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:107
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "A CD metaadatai nem kereshetők: nincs működő Internet-kapcsolat"
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:110
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:113
 msgid "Could not fetch metadata for CD."
 msgstr "A CD metaadatainak lekérése nem sikerült."
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:191
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:194
 msgid "Invalid Selection"
 msgstr "Érvénytelen kijelölés"
 
-#: ../src/Banshee.Base/Sources/AudioCdSource.cs:192
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:195
 msgid "You must select at least one track to import."
 msgstr "Legalább egy számot ki kell választani az importáláshoz."
+
+#: ../src/Banshee.Base/Sources/AudioCdSource.cs:241
+msgid "Copy CD"
+msgstr "CD másolása"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:107
 msgid "Synchronizing your Device, Please Wait..."
 msgstr "Az eszköz szinkronizálása folyamatban, kérem várjon..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:168
-#, fuzzy
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:316
 msgid "Importing"
 msgstr "Importálás"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:170
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:318
 #, csharp-format
 msgid "You are currently importing from {0}. Would you like to stop it?"
-msgstr ""
+msgstr "Jelenleg a(z) {0} helyről importál. Meg szeretné állítani?"
 
 #. import_manager.UserEvent.Icon = GetIcon;
 #: ../src/Banshee.Base/Sources/DapSource.cs:172
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:274
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:302
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:320
 #, csharp-format
 msgid "Copying from {0}"
-msgstr ""
+msgstr "Másolás innen: {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:173
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:275
-#, fuzzy
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:303
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:321
 msgid "Scanning..."
-msgstr "Keresés"
+msgstr "Vizsgálat..."
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:286
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:393
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:421
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:437
 #, csharp-format
 msgid "Cannot import track from {0}"
-msgstr ""
+msgstr "Nem lehet importálni a dalt innen: {0}"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:322
 #, csharp-format
@@ -1733,134 +2174,193 @@ msgid "({0} Remaining)"
 msgstr "({0} hátra)"
 
 #: ../src/Banshee.Base/Sources/DapSource.cs:359
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Eject {0}"
-msgstr "Kiadása"
+msgstr "{0} kiadása"
+
+#: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:56
+msgid "Import Errors"
+msgstr "Importálási hibák"
+
+#: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:72
+msgid "File Name"
+msgstr "Fájlnév"
+
+#: ../src/Banshee.Base/Sources/ImportErrorsSource.cs:102
+msgid "Close Error Report"
+msgstr "Hibajelentés bezárása"
 
 #: ../src/Banshee.Base/Sources/LibrarySource.cs:51
 msgid "Music Library"
-msgstr "Zenekönyvtár"
+msgstr "Gyűjtemény"
 
-#: ../src/Banshee.Base/Sources/LibrarySource.cs:115
-#, fuzzy
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:141
 msgid "Sort Playlists"
-msgstr "Új médialista"
+msgstr "Lejátszólisták rendezése"
 
-#: ../src/Banshee.Base/Sources/LibrarySource.cs:118
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:144
 msgid "Name Ascending"
-msgstr ""
+msgstr "Név szerint növekvő"
 
-#: ../src/Banshee.Base/Sources/LibrarySource.cs:122
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:148
 msgid "Name Descending"
-msgstr ""
+msgstr "Név szerint csökkenő"
 
-#: ../src/Banshee.Base/Sources/LibrarySource.cs:126
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:152
 msgid "Size Ascending"
-msgstr ""
+msgstr "Méret szerint növekvő"
 
-#: ../src/Banshee.Base/Sources/LibrarySource.cs:130
+#: ../src/Banshee.Base/Sources/LibrarySource.cs:156
 msgid "Size Descending"
-msgstr ""
+msgstr "Méret szerint csökkenő"
 
 #: ../src/Banshee.Base/Sources/LocalQueueSource.cs:53
 msgid "Local Queue"
 msgstr "Helyi sor"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:61
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:67
 msgid "Delete Playlist"
-msgstr "Médialista törlése"
+msgstr "Lejátszólista törlése"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:65
-#, fuzzy
-msgid "Playlist"
-msgstr "Új médialista"
-
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:164
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:171
 msgid "Cannot Rename Playlist"
-msgstr "A médialista nem nevezhető át"
+msgstr "A lejátszólista nem nevezhető át"
 
-#: ../src/Banshee.Base/Sources/PlaylistSource.cs:165
+#: ../src/Banshee.Base/Sources/PlaylistSource.cs:172
 msgid "A playlist with this name already exists. Please choose another name."
-msgstr "Ilyen nevű médialista már létezik. Adjon egy másik nevet. "
+msgstr "Ilyen nevű lejátszólista már létezik. Adjon egy másik nevet. "
 
-#: ../src/Banshee.Base/TrackInfo.cs:399
+#: ../src/Banshee.Base/StreamTagger.cs:153
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "{0} címkéinek mentése"
+
+#: ../src/Banshee.Base/TrackInfo.cs:407
 msgid "Unknown Title"
 msgstr "Ismeretlen cím"
 
-#: ../src/Banshee.Base/TrackInfoHeader.cs:103
+#: ../src/Banshee.Base/TrackInfoHeader.cs:98
 msgid "by"
-msgstr "előadó"
+msgstr "előadó:"
 
-#: ../src/Banshee.Base/TrackInfoHeader.cs:104
+#: ../src/Banshee.Base/TrackInfoHeader.cs:99
 msgid "from"
-msgstr "helyről"
+msgstr "album:"
 
 #: ../src/Banshee.Base/Utilities.cs:76
 #, csharp-format
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} GB"
 
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:53
 #: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:54
-#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
 msgid "Rebuilding Database"
 msgstr "Adatbázis újjáépítése"
 
-#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:56
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:55
 msgid "Scanning iPod..."
 msgstr "iPod vizsgálata..."
 
-#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:90
-#, fuzzy
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:89
 msgid "Processing Tracks..."
-msgstr "Folyamatban..."
+msgstr "Számok feldolgozása..."
 
-#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:137
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:136
 msgid "Saving new database..."
 msgstr "Új adatbázis mentése..."
 
-#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:144
+#: ../src/Banshee.Dap/Ipod/DatabaseRebuilder.cs:143
 msgid "Error rebuilding iPod database"
 msgstr "Hiba az iPod-adatbázis újjáépítése során"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:162
-#, fuzzy
-msgid "Could not eject iPod"
-msgstr "Nem lehet kiadni"
+#. Translators "Week 25 of 2006"
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:93
+msgid "Manufactured During"
+msgstr "Készült"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:170
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:189
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:94
+#, csharp-format
+msgid "Week {0} of {1}"
+msgstr "{1} {0}. hetében"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:132
+msgid "Your iPod could not be identified"
+msgstr "Az iPod nem azonosítható"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:133
+msgid ""
+"Please consider submitting information about your iPod to the Banshee "
+"Project so your iPod may be more fully identified in the future.\n"
+msgstr "Kérjük küldjön be információkat iPodjáról a Banshee projekt számára, így a jövőben a készülék azonosíthatóvá válhat.\n"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:136
+msgid "Do not ask me again"
+msgstr "Ne kérdezzen többé"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:141
+msgid "Go to Web Site"
+msgstr "Ugrás a weboldalra"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:222
+msgid "Could not eject iPod"
+msgstr "Nem lehet kiadni az iPodot"
+
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:230
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:249
 msgid "Synchronizing iPod"
 msgstr "iPod szinkronizálása"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:171
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:231
 msgid "Pre-processing tracks"
 msgstr "Számok előfeldolgozása"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:186
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:246
 msgid "Flushing to Disk (may take time)"
 msgstr "Kiírás lemezre (időbe telhet)"
 
-#: ../src/Banshee.Dap/Ipod/IpodDap.cs:196
+#: ../src/Banshee.Dap/Ipod/IpodDap.cs:256
 msgid "Failed to synchronize iPod"
 msgstr "Az iPod szinkronizálása nem sikerült"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:59
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:57
 msgid "Unable to read your iPod"
 msgstr "Az iPod nem olvasható"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:82
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:80
+msgid ""
+"You have used this iPod with a version of iTunes that saves a version of the "
+"song database for your iPod that is too new for Banshee to recognize.\n"
+"\n"
+"Banshee can either rebuild the database or you will have to wait for the new "
+"iTunes version to be supported by Banshee."
+msgstr ""
+"Ezt az iPodot az iTunes olyan változatával használta, amely a készülék daladatbázisát a Banshee számára túl új formátumban tárolja.\n"
+"\n"
+"A Banshee újjá tudja építeni az adatbázist, vagy meg kell várnia hogy az új iTunes változat támogatottá váljon."
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:89
+msgid ""
+"An iPod database could not be found on this device.\n"
+"\n"
+"Banshee can build a new database for you."
+msgstr ""
+"nem található iPod adatbázis ezen az eszközön.\n"
+"\n"
+"A Banshee képes felépíteni egy új adatbázist."
+
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
 msgid "What is the reason for this?"
 msgstr "Mi lehet az oka?"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:97
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:112
 msgid "Rebuild iPod Database..."
 msgstr "Az iPod-adatbázis újjáépítése..."
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:105
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:120
 msgid "Confirm Rebuild iPod Database"
 msgstr "iPod-adatbázis újjáépítésének megerősítése"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:111
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:126
 msgid ""
 "Rebuilding your iPod database may take some time. Also note that any "
 "playlists you have on your iPod will be lost.\n"
@@ -1868,107 +2368,93 @@ msgid ""
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
 "Az iPod-adatbázis újjáépítése néhány percet igénybe vehet. Ne feledje, hogy "
-"az iPodon lévő valamennyi médialista el fog veszni.\n"
+"az iPodon lévő valamennyi lejátszólista el fog veszni.\n"
 "\n"
 "Biztosan újjá akarja építeni az iPod adatbázisát?"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:116
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:131
 msgid "Rebuild Database"
 msgstr "Adatbázis újjáépítése"
 
-#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:128
+#: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:143
 msgid "Rebuilding iPod Database..."
 msgstr "Adatbázis újjáépítése folyamatban..."
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:99
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:101
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:113
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:115
 msgid "Vendor"
-msgstr ""
+msgstr "Gyártó"
 
-#. Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName);
-#. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
-#. args.FileName, e.GetType(), e.Message);
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:166
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:170
-#: ../src/PlayerInterface.cs:1807
-msgid "Scanning"
-msgstr "Keresés"
-
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:339
-#, fuzzy
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:356
 msgid "Copying Songs"
-msgstr "Zeneszámok importálása"
+msgstr "Dalok másolása"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:340
-#, fuzzy, csharp-format
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:357
+#, csharp-format
 msgid "Copying {0} of {1}"
-msgstr "{1}/{0}. importálása"
+msgstr "{1}/{0}. másolása"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:371
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:388
 msgid "Audio Device"
-msgstr "Audioeszköz"
+msgstr "Hangeszköz"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:128
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:153
 msgid ": Found"
-msgstr ""
+msgstr ": Megtalálva"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:129
-#, fuzzy
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:154
 msgid "Reading library information"
-msgstr "Műsortár helyének kiválasztása"
+msgstr "Gyűjteményinformációk olvasása"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:139
-#, fuzzy
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:165
 msgid "Loading device"
-msgstr "Audioeszköz"
+msgstr "Eszköz betöltése"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:143
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:169
 msgid "Done"
-msgstr ""
+msgstr "Kész"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:144
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:170
 msgid ": Ready for use"
-msgstr ""
+msgstr ": Használatra kész"
 
-#: ../src/Banshee.Dap/Mtp/MtpDap.cs:193 ../src/Banshee.Dap/Mtp/MtpDap.cs:226
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:238 ../src/Banshee.Dap/Njb/NjbDap.cs:250
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:217 ../src/Banshee.Dap/Mtp/MtpDap.cs:221
+#: ../src/Banshee.Dap/Mtp/MtpDap.cs:254 ../src/Banshee.Dap/Njb/NjbDap.cs:248
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:260
 msgid "Synchronizing Device"
 msgstr "Eszközszinkronizáció"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:145
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:155
 msgid "Cannot read device"
-msgstr ""
+msgstr "Nem olvasható az eszköz"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:250
-#, fuzzy
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:260
 msgid "Removing Songs"
-msgstr "Zeneszám(ok) eltávolítása"
+msgstr "Dalok eltávolítása"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:348
-#, fuzzy
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:358
 msgid "Device Error"
-msgstr "Eszköz neve"
+msgstr "Eszközhiba"
 
-#: ../src/Banshee.Dap/Njb/NjbDap.cs:349
-#, fuzzy
+#: ../src/Banshee.Dap/Njb/NjbDap.cs:359
 msgid "Could not set the owner of the device."
-msgstr "A kódolt fájl nem található"
+msgstr "Nem állítható be az eszköz tulajdonosa."
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:64
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:74
 msgid "Could not initialize GStreamer library"
 msgstr "A GStreamer könyvtár inicializálása nem sikerült"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:142
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:152
 msgid "Unknown Error"
 msgstr "Ismeretlen hiba"
 
-#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:164
+#: ../src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs:174
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:81
 msgid "Buffering"
-msgstr ""
+msgstr "Pufferelés"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:61
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:142
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:152
 msgid "Audioscrobbler Reporting"
 msgstr "Audioscrobbler jelentés"
 
@@ -1981,10 +2467,10 @@ msgid "Join the Banshee group"
 msgstr "Csatlakozás a Banshee csoporthoz"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:91
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:114
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:123
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:124
 msgid "Enable song reporting"
-msgstr "Zeneszámok jelentéseinek engedélyezése"
+msgstr "Dalok jelentésének engedélyezése"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs:101
 msgid "Last.fm Username"
@@ -1994,55 +2480,51 @@ msgstr "Last.fm felhasználónév"
 msgid "Last.fm Password"
 msgstr "Last.fm jelszó"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:58
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:68
 msgid ""
 "Your profile page on Last.fm is automatically updated whenever you listen to "
 "music. It lets others see what you're listening to right now, and shows "
 "charts of your listening history."
 msgstr ""
 "A Last.fm helyen a profillap automatikusan frissül, amikor zenét hallgat. Ez "
-"jó például arra, hogy mások lássák, most mit hallgat, illetve láthatók "
-"listák a korábban hallgatott adókról."
+"lehetővé teszi, hogy mások lássák, most mit hallgat, illetve listákat közöl a korábban hallgatott zenékről."
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:95
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:105
 msgid "Audioscrobbler"
 msgstr "Audioscrobbler"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:96
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:108
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:106
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:118
 msgid "Configure the Audioscrobbler plugin"
-msgstr "Az Audioscrobbler beépülő modul beállítása"
+msgstr "Az Audioscrobbler bővítmény beállítása"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:99
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:109
 msgid "Visit user profile page"
 msgstr "Felhasználói profiloldal meglátogatása"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:100
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:110
 msgid "Visit your Audioscrobbler profile page"
 msgstr "Az Audioscrobbler profiloldal meglátogatása"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:103
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:113
 msgid "Visit group page"
 msgstr "Csoportoldal meglátogatása"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:104
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:114
 msgid "Visit the Banshee last.fm group page"
 msgstr "A Banshee last.fm csoportoldal meglátogatása"
 
-#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:107
+#: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:117
 msgid "Configure..."
 msgstr "Beállítás..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
-msgid ""
-"Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
-msgstr ""
-"Annak engedélyezése, hogy az alrendszer elküldheti a zeneszám adatait az "
-"Audioscrobbler beépülő modulban a last.fm helyre"
+msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
+msgstr "Az alrendszer elküldheti a dal adatait az Audioscrobbler bővítmény segítségével a last.fm helyre"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
 msgid "Enable the Audioscrobbler plugin"
-msgstr "Az Audioscrobbler beépülő modul engedélyezése"
+msgstr "Az Audioscrobbler bővítmény engedélyezése"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:3
 msgid "Your last.fm password"
@@ -2053,46 +2535,55 @@ msgid "Your last.fm username"
 msgstr "Az Ön last.fm felhasználóneve"
 
 #: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:50
+#: ../src/Banshee.Plugins/Daap/DaapPlugin.cs:49
 msgid "Music Sharing"
 msgstr "Zenemegosztás"
 
 #: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:53
 msgid "Share my music library with others"
-msgstr "A Saját zenemappa megosztása másokkal"
+msgstr "A Saját gyűjtemény megosztása másokkal"
 
 #: ../src/Banshee.Plugins/Daap/DaapConfigPage.cs:76
 msgid "Share name:"
 msgstr "Megosztó neve:"
 
-#: ../src/Banshee.Plugins/Daap/DaapCore.cs:73
+#: ../src/Banshee.Plugins/Daap/DaapCore.cs:74
 msgid "Banshee Music Share"
 msgstr "Banshee zenemegosztás"
 
-#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:48
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:47
 msgid "Login to Music Share"
 msgstr "Bejelentkezés a zenemegosztásra"
 
-#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:81
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:80
 msgid "Authentication Required"
 msgstr "Felhasználó-azonosítás szükséges"
 
-#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:105
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:104
 msgid "Username:"
 msgstr "Felhasználónév:"
 
-#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:113
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:112
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginForm.cs:57
 msgid "Password:"
 msgstr "Jelszó:"
 
-#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:124
+#: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:123
 msgid "Login"
 msgstr "Bejelentkezés"
+
+#: ../src/Banshee.Plugins/Daap/DaapPlugin.cs:54
+msgid ""
+"Allow browsing and listening to songs from music shares and share your "
+"Banshee library with others. Works with other instances of Banshee, iTunes, "
+"and Rhythmbox."
+msgstr "Lehetővé teszi megosztott zene böngészését és hallgatását, valamint a Banshee gyűjteményének megosztását másokkal. A Banshee, iTunes és Rhythmbox programokkal működik."
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
 msgstr ""
 "Lehetővé teszi, hogy mások, más DAAP-kliensekből is megtekintsék és "
-"meghallgassák a zeneszámait"
+"meghallgassák a dalait"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:2
 msgid "Enable DAAP Server support"
@@ -2100,19 +2591,25 @@ msgstr "DAAP-kiszolgáló támogatásának engedélyezése"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:3
 msgid "Enable the DAAP Music Sharing plugin"
-msgstr "A DAAP zenemegosztás beépülő modul engedélyezése"
+msgstr "A DAAP zenemegosztás bővítmény engedélyezése"
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:4
 msgid "Name of DAAP server share"
 msgstr "A DAAP kiszolgálómegosztás neve"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:70
-msgid "Cannot login to DAAP share"
-msgstr "Nem sikerült bejelentkezni a DAAP-megosztásra"
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:87
+#, csharp-format
+msgid "Connecting to {0}"
+msgstr "Kapcsolódás: {0}"
 
-#: ../src/Banshee.Plugins/Daap/DaapSource.cs:132
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:153
+#, csharp-format
+msgid "Logging in to {0}"
+msgstr "Belépés: {0}"
+
+#: ../src/Banshee.Plugins/Daap/DaapSource.cs:216
 msgid "Disconnect"
-msgstr ""
+msgstr "Bontás"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:61
 msgid "Metadata and Cover Art Searching"
@@ -2128,12 +2625,11 @@ msgstr "Album borítójának és a számok hiányzó adatainak letöltése"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:74
 msgid "Download album cover artwork and overwrite any existing track data"
-msgstr ""
-"Album borítójának letöltése és valamennyi meglévő zene adatainak felülírása"
+msgstr "Album borítójának letöltése és valamennyi meglévő zene adatainak felülírása"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:76
 msgid "Rescan Library"
-msgstr "A műsortár újbóli átvizsgálása"
+msgstr "A gyűjtemény újbóli átvizsgálása"
 
 #: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs:96
 msgid "Warning"
@@ -2148,13 +2644,17 @@ msgstr ""
 "ritkán előfordulhat, hogy a metaadatok helytelenül frissülnek a MusicBrainz "
 "oldaláról."
 
-#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:59
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:63
+msgid "Metadata Searcher"
+msgstr "Metaadat-kereső"
+
+#: ../src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:68
 msgid ""
 "Automatically search for missing and supplementary metadata and cover art "
 "for songs in your library."
 msgstr ""
 "Automatikusan megkeresi a könyvtáron belül a dalok hiányzó és kiegészítő "
-"metaadatait és borítóit. "
+"metaadatait és borítóit."
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:1
 msgid ""
@@ -2166,7 +2666,7 @@ msgstr ""
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:2
 msgid "Enable the MetadataSearch plugin"
-msgstr "A MetadataSearch bővítőmodul engedélyezése"
+msgstr "A MetadataSearch bővítmény engedélyezése"
 
 #: ../src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in.h:3
 msgid "Method of fetching cover art and supplementary metadata"
@@ -2181,140 +2681,153 @@ msgid ""
 "Configuration of multimedia keyboard shortcuts is done through the Gnome "
 "Keyboard Shortcuts configuration applet."
 msgstr ""
-"A multimédia-billentyűzetek gombjainak beállítása a Gnome Billentyűparancsok "
-"beállítása kisalkalmazásával történik."
+"A multimédia-billentyűzetek gombjainak beállítása a Gnome Gyorsbillentyűk "
+"beállítóalkalmazásával történik."
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:51
+msgid "Multimedia Keys"
+msgstr "Multimédia-billentyűk"
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:56
+msgid "Adds support for multimedia keys configured through Gnome."
+msgstr "A Gnome alatt beállított multimédia-billentyűk támogatása."
 
 #: ../src/Banshee.Plugins/MMKeys/mmkeys.schemas.in.h:1
 msgid "Enable the MultimediaKeys plugin"
-msgstr "A MultimediaKeys bővítőmodul engedélyezése"
+msgstr "A MultimediaKeys bővítmény engedélyezése"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:49
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:60
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:57
 msgid "Notification Area Icon"
 msgstr "Értesítési terület ikon"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:53
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:63
 msgid "Shows the Notification Area Icon"
 msgstr "Az Értesítési terület ikon megjelenítése"
 
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:183
+msgid "Now Playing"
+msgstr "Most játszott"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:188
+msgid "Cannot show notification"
+msgstr "Nem jeleníthető meg értesítés"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:65
+msgid "Show notifications when song changes"
+msgstr "Értesítések megjelenítése dalváltáskor"
+
 #: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:1
-#, fuzzy
 msgid "Enable the Notification Area Icon plugin"
-msgstr "Az Értesítési terület ikon megjelenítése"
+msgstr "Az Értesítési terület ikon bővítmény engedélyezése"
+
+#: ../src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in.h:2
+msgid "Show notification bubbles when the song changes"
+msgstr "Értesítő buborékok megjelenítése dalváltáskor"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:86
 #, csharp-format
 msgid "Stop {0}"
-msgstr ""
+msgstr "{0} leállítása"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
-msgstr ""
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr "A(z) {0} művelet még dolgozik. Meg szeretné állítani?"
 
 #: ../src/Banshee.Widgets/ActiveUserEvent.cs:92
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Continue {0}"
-msgstr "Folyamatos"
+msgstr "{0} folytatása"
 
-#: ../src/Banshee.Widgets/DiscUsageDisplay.cs:195
+#: ../src/Banshee.Widgets/DiscUsageDisplay.cs:201
 msgid ""
 "Insert\n"
 "Disc"
 msgstr ""
+"Helyezzen\n"
+"be lemezt"
 
-#: ../src/Banshee.Widgets/SearchEntry.cs:203
-#: ../src/Banshee.Widgets/SearchEntry.cs:314
+#: ../src/Banshee.Widgets/SearchEntry.cs:204
+#: ../src/Banshee.Widgets/SearchEntry.cs:315
 #, csharp-format
 msgid "Searching: {0}"
 msgstr "Keresés: {0}"
 
 #: ../src/Banshee.Widgets/StreamPositionLabel.cs:83
 msgid "Idle"
-msgstr "Tétlenség"
+msgstr "Tétlen"
 
-#: ../src/PlayerInterface.cs:376
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:48
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:75
+msgid "Last.fm Account Login"
+msgstr "Last.fm fiók bejelentkezés"
+
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:78
+msgid "Please enter your Last.fm account credentials."
+msgstr "Adja meg a Last.fm-en használt hitelesítési adatait."
+
+#: ../src/Last.FM/Last.FM.Gui/AccountLoginForm.cs:50
+msgid "Account Name:"
+msgstr "Felhasználói fiók neve:"
+
+#: ../src/PlayerInterface.cs:383
 msgid "Loading..."
 msgstr "Betöltés..."
 
-#: ../src/PlayerInterface.cs:432
+#: ../src/PlayerInterface.cs:443
 msgid "All"
 msgstr "Mind"
 
-#: ../src/PlayerInterface.cs:434 ../src/PlayerInterface.cs:1313
-msgid "Song Name"
-msgstr "Zeneszám címe"
-
-#: ../src/PlayerInterface.cs:435 ../src/PlayerInterface.cs:1311
-#: ../src/PlayerInterface.cs:2309
-msgid "Artist Name"
-msgstr "Előadó neve"
-
-#: ../src/PlayerInterface.cs:436 ../src/PlayerInterface.cs:1315
-#: ../src/PlayerInterface.cs:2305
-msgid "Album Title"
-msgstr "Album címe"
-
-#: ../src/PlayerInterface.cs:437 ../src/PlayerInterface.cs:1317
-#: ../src/PlayerInterface.cs:2313 ../src/PlaylistView.cs:106
-msgid "Genre"
-msgstr "Műfaj"
-
-#: ../src/PlayerInterface.cs:438 ../src/PlayerInterface.cs:1319
-#: ../src/PlaylistView.cs:109
-#, fuzzy
-msgid "Year"
-msgstr "Törlés"
-
-#: ../src/PlayerInterface.cs:459
+#: ../src/PlayerInterface.cs:470
 msgid "Write selection to CD"
 msgstr "Válogatás kiírása CD-re"
 
-#: ../src/PlayerInterface.cs:460
+#: ../src/PlayerInterface.cs:471
 msgid "Import CD into library"
-msgstr "CD importálása a műsortárba"
+msgstr "CD importálása a gyűjteménybe"
 
-#: ../src/PlayerInterface.cs:461
+#: ../src/PlayerInterface.cs:472
 msgid "Play previous song"
-msgstr "Az előző szám lejátszása"
+msgstr "Az előző dal lejátszása"
 
-#: ../src/PlayerInterface.cs:462
+#: ../src/PlayerInterface.cs:473
 msgid "Play/pause current song"
 msgstr "A most játszott dal lejátszása/szüneteltetése"
 
-#: ../src/PlayerInterface.cs:463
+#: ../src/PlayerInterface.cs:474
 msgid "Play next song"
-msgstr "Következő szám lejátszása"
+msgstr "Következő dal lejátszása"
 
-#: ../src/PlayerInterface.cs:464
+#: ../src/PlayerInterface.cs:475
 msgid "Device disk usage"
 msgstr "Eszközlemez kihasználtsága"
 
-#: ../src/PlayerInterface.cs:465
+#: ../src/PlayerInterface.cs:476
 msgid "Synchronize music library to device"
-msgstr "Zenemappa szinkronizálása az eszközzel"
+msgstr "Gyűjtemény szinkronizálása az eszközzel"
 
-#: ../src/PlayerInterface.cs:466
+#: ../src/PlayerInterface.cs:477
 msgid "Adjust volume"
 msgstr "Hangerőszabályozás"
 
-#: ../src/PlayerInterface.cs:467
+#: ../src/PlayerInterface.cs:478
 msgid "Change repeat playback mode"
 msgstr "Lejátszás ismétlése mód váltása"
 
-#: ../src/PlayerInterface.cs:468
+#: ../src/PlayerInterface.cs:479
 msgid "Toggle shuffle playback mode"
 msgstr "Véletlen sorrendű lejátszásmód bekapcsolása"
 
-#: ../src/PlayerInterface.cs:469
+#: ../src/PlayerInterface.cs:480
 msgid "Edit and view metadata of selected songs"
 msgstr "A kijelölt dalok metaadatainak megjelenítése és szerkesztése"
 
-#: ../src/PlayerInterface.cs:808
+#: ../src/PlayerInterface.cs:814
 msgid "Cannot Play Song"
 msgstr "A dalt nem lehet lejátszani"
 
-#: ../src/PlayerInterface.cs:809
+#: ../src/PlayerInterface.cs:815
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2325,88 +2838,98 @@ msgstr ""
 "A Banshee nem tudja lejátszani a(z) {0} tételt. Ennek leggyakoribb okai:\n"
 "\n"
 "  <big>•</big> A dal védett (DRM)\n"
-"  <big>•</big> A dal egy olyan DAP-n található, amelyik nem támogatja a "
+"  <big>•</big> A dal egy olyan zenelejátszón található, amelyik nem támogatja a "
 "lejátszást\n"
 
-#: ../src/PlayerInterface.cs:829
+#: ../src/PlayerInterface.cs:835
 msgid "Pause"
 msgstr "Szünet"
 
-#: ../src/PlayerInterface.cs:863
-#, fuzzy
+#: ../src/PlayerInterface.cs:878
 msgid "Playback Error"
-msgstr "_Lejátszás"
+msgstr "Lejátszási hiba"
 
-#: ../src/PlayerInterface.cs:1058
-msgid "Import"
-msgstr "Importálás"
-
-#: ../src/PlayerInterface.cs:1076
-#, fuzzy, csharp-format
-msgid "Rename {0}"
-msgstr "Forrás átnevezése"
-
-#: ../src/PlayerInterface.cs:1197
-#, fuzzy, csharp-format
-msgid "{0} day"
-msgid_plural "{0} days"
-msgstr[0] "{0} nap"
-
-#: ../src/PlayerInterface.cs:1214
-#, fuzzy, csharp-format
+#: ../src/PlayerInterface.cs:1190
+#, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} elem"
+msgstr[1] "{0} elem"
 
-#: ../src/PlayerInterface.cs:1216
+#: ../src/PlayerInterface.cs:1194
 #, csharp-format
-msgid "{0} Total Play Time"
-msgstr "{0} Teljes idő"
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} nap"
+msgstr[1] "{0} nap"
 
-#: ../src/PlayerInterface.cs:1573
+#: ../src/PlayerInterface.cs:1199
+#, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} óra"
+msgstr[1] "{0} óra"
+
+#: ../src/PlayerInterface.cs:1203
+#, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} perc"
+msgstr[1] "{0} perc"
+
+#: ../src/PlayerInterface.cs:1205
+#, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "{0} másodperc"
+msgstr[1] "{0} másodperc"
+
+#: ../src/PlayerInterface.cs:1540
 msgid "Clear"
 msgstr "Törlés"
 
-#: ../src/PlayerInterface.cs:1823
-#, fuzzy, csharp-format
-msgid "Cannot Import: {0} ({1})"
-msgstr "Nem importálható: {0} ({1}, {2})"
-
-#: ../src/PlayerInterface.cs:1866
-#, fuzzy, csharp-format
+#: ../src/PlayerInterface.cs:1803
+#, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
-msgstr[0] "Biztos, hogy vissza akarja vonni a '{0}' műveletet?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
+msgstr[0] "Biztos, hogy törölni kívánja ezt a dalt?"
+msgstr[1] "Biztos, hogy törölni kívánja a kijelölt {0} dalt?"
 
-#: ../src/PlayerInterface.cs:1870
+#: ../src/PlayerInterface.cs:1807
 msgid "If you delete the selection, it will be permanently lost."
-msgstr ""
+msgstr "Amennyiben törli a kiválasztott elemet, akkor az végleg elvész."
 
-#: ../src/PlayerInterface.cs:1873
-#, fuzzy
+#: ../src/PlayerInterface.cs:1810
 msgid "Remove selection from library"
-msgstr "Kijelölt zeneszám(ok) eltávolítása a műsortárból"
+msgstr "Kijelölt dalok eltávolítása a gyűjteményből"
 
-#: ../src/PlayerInterface.cs:1875
+#: ../src/PlayerInterface.cs:1812
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
-msgstr[0] "Biztosan törli a kiválasztott számot a műsortárból?"
-msgstr[1] "Biztosan törli a kiválasztott <b>({0})</b> számot a műsortárból?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
+msgstr[0] "Biztosan törli a kiválasztott dalt a gyűjteményből?"
+msgstr[1] "Biztosan törli a kiválasztott <b>({0})</b> dalt a gyűjteményből?"
 
-#: ../src/PlayerInterface.cs:2012
+#: ../src/PlayerInterface.cs:1852
+msgid "Delete songs from drive"
+msgstr "Dalok törlése a lemezről"
+
+#: ../src/PlayerInterface.cs:1853
+#, csharp-format
+msgid "You do not have the required permissions to delete '{0}'"
+msgstr "Nincs jogosultsága törölni a következőt: {0}"
+
+#: ../src/PlayerInterface.cs:1967
 msgid "New CD"
-msgstr ""
+msgstr "Új CD"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/PlayerInterface.cs:2033
+#: ../src/PlayerInterface.cs:1988
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "{0} szinkronizálása"
 
-#: ../src/PlayerInterface.cs:2034
+#: ../src/PlayerInterface.cs:1989
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2419,24 +2942,24 @@ msgstr ""
 "{0} módosításra került. Válasszon egy módszert {0} tartalmának "
 "frissítésére.\n"
 "\n"
-"<big>•</big> <i>Műsortár szinkronizálása</i>: a Banshee műsortár és {0} "
+"<big>•</big> <i>Gyűjtemény szinkronizálása</i>: a Banshee gyűjtemény és {0} "
 "szinkronizálása\n"
 "<big>•</big> <i>Kézi módosítások elmentése</i>: csak a kézzel végzett "
 "módosítások mentése"
 
-#: ../src/PlayerInterface.cs:2040
+#: ../src/PlayerInterface.cs:1995
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
-"cause incompatability with iTunes!"
+"cause incompatibility with iTunes!"
 msgstr ""
 "<b>Figyelem:</b> A műveletek módosítják vagy törlik az iPod meglévő "
 "tartalmát és inkompatibilitást okozhatnak az iTunes-szal!"
 
-#: ../src/PlayerInterface.cs:2042
+#: ../src/PlayerInterface.cs:1997
 msgid "Synchronize Library"
-msgstr "Műsortár szinkronizálása"
+msgstr "Gyűjtemény szinkronizálása"
 
-#: ../src/PlayerInterface.cs:2044
+#: ../src/PlayerInterface.cs:1999
 msgid "Save Manual Changes"
 msgstr "Kézi változtatások mentése"
 
@@ -2450,275 +2973,21 @@ msgstr "Válasszon oszlopot"
 
 #: ../src/PlaylistColumns.cs:155
 msgid "Visible Playlist Columns"
-msgstr "Médialista látható oszlopai"
+msgstr "Lejátszólista látható oszlopai"
 
-#: ../src/PlaylistView.cs:94
+#: ../src/PlaylistView.cs:99
 msgid "Track"
 msgstr "Szám"
 
-#: ../src/PlaylistView.cs:97
-msgid "Artist"
-msgstr "Előadó"
-
-#: ../src/PlaylistView.cs:100
-msgid "Title"
-msgstr "Cím"
-
-#: ../src/PlaylistView.cs:103
-msgid "Album"
-msgstr "Album"
-
-#: ../src/PlaylistView.cs:112
+#: ../src/PlaylistView.cs:117
 msgid "Time"
 msgstr "Idő"
 
-#: ../src/PlaylistView.cs:123
+#: ../src/PlaylistView.cs:130
 msgid "Plays"
 msgstr "Most játszott"
 
-#: ../src/PlaylistView.cs:130
-msgid "Last Played"
-msgstr "Utoljára játszott"
-
-#: ../src/PlaylistView.cs:510
+#: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "n.a."
 
-#: ../src/SourceView.cs:431
-#, fuzzy
-msgid "Could not import tracks"
-msgstr "Nem sikerült lekérni a szám pozícióját"
-
-#: ../src/TrackProperties.cs:184
-msgid "Set all Track Numbers to this value"
-msgstr "Összes zeneszám sorszámának erre az értékre állítása"
-
-#: ../src/TrackProperties.cs:185
-msgid "Automatically Set All Track Numbers"
-msgstr "Összes zeneszám sorszámának automatikus beállítása"
-
-#: ../src/TrackProperties.cs:186
-msgid "Set all Track Counts to this value"
-msgstr "Összes zeneszám-számláló beállítása erre az értékre"
-
-#: ../src/TrackProperties.cs:187
-msgid "Set all Artists to this value"
-msgstr "Összes Előadó beállítása erre az értékre"
-
-#: ../src/TrackProperties.cs:188
-msgid "Set all Albums to this value"
-msgstr "Összes Album beállítása erre az értékre"
-
-#: ../src/TrackProperties.cs:189
-msgid "Set all Titles to this value"
-msgstr "Összes Cím beállítása erre az értékre"
-
-#: ../src/TrackProperties.cs:190
-msgid "Set all Genres to this value"
-msgstr "Összes Kategória beállítása erre az értékre"
-
-#: ../src/TrackProperties.cs:241
-msgid "Never Played"
-msgstr "Nem játszott"
-
-#: ../src/TrackProperties.cs:246
-#, csharp-format
-msgid "Editing Song {0} of {1}"
-msgstr "{1}/{0}. zeneszám szerkesztése"
-
-#: ../src/TrackProperties.cs:253 ../src/TrackProperties.cs:254
-#, csharp-format
-msgid "File: {0}"
-msgstr "Fájl: {0}"
-
-#: ../src/TrackProperties.cs:260
-msgid "KB/Second"
-msgstr "KB/mp"
-
-#: ../src/TrackProperties.cs:261
-#, csharp-format
-msgid "{0} KHz"
-msgstr "{0} KHz"
-
-#: ../src/TrackProperties.cs:262
-msgid "Yes"
-msgstr "Igen"
-
-#: ../src/TrackProperties.cs:262
-msgid "No"
-msgstr "Nem"
-
-#~ msgid "<b>CD Ripping</b>"
-#~ msgstr "<b>CD-másolás</b>"
-
-#~ msgid "<b>Playback Engines</b>"
-#~ msgstr "<b>Lejátszómotorok</b>"
-
-#~ msgid "<b>iPod Transcoding</b>"
-#~ msgstr "<b>iPod-átkódolás</b>"
-
-#~ msgid "<small>Advanced</small>"
-#~ msgstr "<small>Speciális</small>"
-
-#~ msgid "<small>Burning</small>"
-#~ msgstr "<small>Írás</small>"
-
-#~ msgid "<small>Encoding</small>"
-#~ msgstr "<small>Kódolás</small>"
-
-#~ msgid "<small>Library</small>"
-#~ msgstr "<small>Műsortár</small>"
-
-#~ msgid "<span size=\"small\">Idle</span>"
-#~ msgstr "<span size=\"small\">Tétlen</span>"
-
-#~ msgid "Burnproof"
-#~ msgstr "Burnproof"
-
-#~ msgid "Default Engine"
-#~ msgstr "Alapértelmezett motor"
-
-#~ msgid "Disk Drive:"
-#~ msgstr "Lemezmeghajtó:"
-
-#~ msgid "Disk at once"
-#~ msgstr "DAO (disk-at-once)"
-
-#~ msgid "Eject when finished"
-#~ msgstr "Lemez kiadása befejezéskor"
-
-#~ msgid "Encoding Profile:"
-#~ msgstr "Kódolási profil:"
-
-#~ msgid "Overburn"
-#~ msgstr "Overburn"
-
-#~ msgid "Simulate write"
-#~ msgstr "Írás szimulálása"
-
-#~ msgid "Could not send seek event to cdparanoia"
-#~ msgstr "A keresés eseményt nem sikerült elküldeni a cdparanoia-nak"
-
-#~ msgid "Could not get track start position"
-#~ msgstr "Nem sikerült lekérni a szám kezdő pozícióját"
-
-#~ msgid "Could not find or create the 'playbin' GStreamer plugin"
-#~ msgstr ""
-#~ "A 'playbin' GStreamer bővítőmodul nem található vagy nem hozható létre"
-
-#~ msgid ""
-#~ "Could not load an output sink from GStreamer/GConf and could not fall "
-#~ "back on alsasink"
-#~ msgstr ""
-#~ "Nem sikerült betölteni a kimeneti nyelőt a GStreamer/GConf-ból és nem "
-#~ "sikerült visszalépni az alsasink-re"
-
-#~ msgid ""
-#~ "Could not load an output sink from GStreamer/GConf, falling back on "
-#~ "alsasink"
-#~ msgstr ""
-#~ "Nem sikerült betölteni a kimeneti nyelőt a GStreamer/GConf-ból, "
-#~ "visszalépés az alsasink-re"
-
-#~ msgid "Could not create 'spider' plugin"
-#~ msgstr "A 'spider' bővítőmodul létrehozása nem sikerült"
-
-#~ msgid "Could not create encoding pipeline: %s"
-#~ msgstr "A csővezeték létrehozása nem sikerült: %s"
-
-#~ msgid "Could not create 'filesink' plugin"
-#~ msgstr "A 'filesink' bővítőmodul létrehozása nem sikerült"
-
-#~ msgid "Rename the active source"
-#~ msgstr "Az aktív forrás átnevezése"
-
-#~ msgid "Eject the active source"
-#~ msgstr "Az aktív forrás kiadása"
-
-#~ msgid "File Transcoder"
-#~ msgstr "Fájlátkódoló"
-
-#~ msgid "Processing Songs..."
-#~ msgstr "Zeneszámok feldolgozása..."
-
-#~ msgid "Enable the FileSystemMonitor plugin"
-#~ msgstr "A FileSystemMonitor beépülő modul engedélyezése"
-
-#~ msgid ""
-#~ "Automatically keep your Banshee library directory in sync with your music "
-#~ "folder. This plugin responds to changes made in the file system to "
-#~ "reflect them in your library."
-#~ msgstr ""
-#~ "A Banshee műsortár könyvtár szinkronizálása a saját zenekönyvtárral. Ez a "
-#~ "beépülő modul figyeli a fájlrendszer módosításait és tükrözi azokat a "
-#~ "műsortárban."
-
-#~ msgid "Enable the Tray Icon plugin"
-#~ msgstr "A Tálca ikon beépülő modul engedélyezése"
-
-#~ msgid "Cancel Operation"
-#~ msgstr "Művelet visszavonása"
-
-#~ msgid "Writing Audio CD"
-#~ msgstr "Audio CD írása"
-
-#~ msgid "Error Burning CD"
-#~ msgstr "Hiba CD-írás közben"
-
-#~ msgid "An Error Occurred"
-#~ msgstr "Hiba lépett fel"
-
-#~ msgid ""
-#~ "This may be due to a programming error. Please help us make Banshee "
-#~ "better by reporting this error. Thank you in advance!"
-#~ msgstr ""
-#~ "Programozási hiba. Kérjük, hogy jelentse a hibát, hogy még jobbá tehessük "
-#~ "a Banshee programot. Előre is köszönjük!"
-
-#~ msgid "Current position in song"
-#~ msgstr "Aktuális pozíció a zeneszámon belül"
-
-#~ msgid "Rename Device"
-#~ msgstr "Eszköz átnevezése"
-
-#~ msgid "Rename Playlist"
-#~ msgstr "Médialista átnevezése"
-
-#~ msgid "Cannot Import"
-#~ msgstr "Nem lehet importálni"
-
-#~ msgid ""
-#~ "Are you sure you want to remove the selected song from your library "
-#~ "<i><b>and</b></i> your drive? This action will permanently delete the "
-#~ "file."
-#~ msgid_plural ""
-#~ "Are you sure you want to remove the selected <b>({0})</b> songs from your "
-#~ "library <i><b>and</b></i> your drive? This action will permanently delete "
-#~ "the files."
-#~ msgstr[0] ""
-#~ "Biztosan törli a kiválasztott számot a műsortárból <i><b>és</b></i> a "
-#~ "meghajtóról? A művelet hatására a fájl végleg törlődik."
-#~ msgstr[1] ""
-#~ "Biztosan törli a kiválasztott <b>({0})</b> számot a műsortárból <i><b>és</"
-#~ "b></i> a meghajtóról? A művelet hatására a fájlok végleg törlődnek."
-
-#~ msgid "Remove Selected Songs from Library"
-#~ msgstr "Kijelölt dalok törlése a könyvtárból"
-
-#~ msgid "Enter new playlist name"
-#~ msgstr "Új médialista nevének megadása"
-
-#~ msgid "Enter new name for your device"
-#~ msgstr "Adja meg az eszköz új nevét"
-
-#~ msgid "Unavailable"
-#~ msgstr "Nem elérhető"
-
-#~ msgid "Loading Drive List..."
-#~ msgstr "Lemezlista betöltése..."
-
-#~ msgid "No CD Burners Detected"
-#~ msgstr "Nem található CD-író"
-
-#~ msgid "Fastest Possible"
-#~ msgstr "Lehető leggyorsabb"
