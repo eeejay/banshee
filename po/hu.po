@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-15 10:14+0100\n"
-"PO-Revision-Date: 2006-11-16 19:44+0100\n"
+"POT-Creation-Date: 2006-11-17 00:54+0100\n"
+"PO-Revision-Date: 2006-11-17 13:58+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -47,8 +47,9 @@ msgid ""
 "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
 "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 msgstr ""
-"A \"systemio\" (.NET System.IO), \"unix\" (hagyományos Unix) vagy"
-"\"gnomevfs\" (GNOME VFS) egyike lehet; a Banshee indításakor lép életbe (újraindítás szükséges)"
+"A \"systemio\" (.NET System.IO), \"unix\" (hagyományos Unix) vagy \"gnomevfs"
+"\" (GNOME VFS) egyike lehet; a Banshee indításakor lép életbe (újraindítás "
+"szükséges)"
 
 #: ../data/banshee.schemas.in.h:2
 msgid "Copy and rename music to banshee music library directory when importing"
@@ -367,6 +368,7 @@ msgid "Artwork"
 msgstr "Borító"
 
 #: ../data/banshee-dialogs.glade.h:30
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:79
 msgid "Back"
 msgstr "Vissza"
 
@@ -470,7 +472,7 @@ msgstr "Megnyitás szerkesztőben"
 
 #: ../data/banshee-dialogs.glade.h:55
 msgid "Output Format:"
-msgstr "Kimeneti fromátum:"
+msgstr "Kimeneti formátum:"
 
 #: ../data/banshee-dialogs.glade.h:56
 msgid "Playlist _Name: "
@@ -528,7 +530,9 @@ msgstr "Írási sebesség:"
 msgid ""
 "Your music library is empty. You may import new music into your library now, "
 "or choose to do so later."
-msgstr "A gyűjtemény üres. A gyűjteménybe importálhat új zenét most, vagy bármikor később."
+msgstr ""
+"A gyűjtemény üres. A gyűjteménybe importálhat új zenét most, vagy bármikor "
+"később."
 
 #: ../data/banshee-dialogs.glade.h:69
 msgid "_Write"
@@ -1016,6 +1020,7 @@ msgid "Restart the current song"
 msgstr "Most játszott dal ismétlése"
 
 #: ../src/Banshee.Base/ActionManager.cs:331
+#: ../src/Banshee.Base/SourceManager.cs:275
 msgid "Synchronize"
 msgstr "Szinkronizálás"
 
@@ -1062,7 +1067,9 @@ msgstr "A CD kiadása sikertelen"
 
 #: ../src/Banshee.Base/AudioCd/AudioCdDisk.cs:242
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr "A CD nem adható ki, amíg az importálás folyamatban van. Először állítsa le az importálást."
+msgstr ""
+"A CD nem adható ki, amíg az importálás folyamatban van. Először állítsa le "
+"az importálást."
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:84
 msgid "Could not create CD Ripper"
@@ -1077,7 +1084,9 @@ msgstr "CD importálása"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr "<i>{0}</i> importálása még folyamatban van a gyűjteménybe. Le szeretné állítani?"
+msgstr ""
+"<i>{0}</i> importálása még folyamatban van a gyűjteménybe. Le szeretné "
+"állítani?"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:291
 #, csharp-format
@@ -1201,9 +1210,7 @@ msgstr "Az íráshoz helyezzen be egy üres CD lemezt"
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:156
 #, csharp-format
 msgid "The inserted media is not large enough to hold your selected music."
-msgstr ""
-"A behelyezett adathordozó nem elég nagy az összes kijelölt dal "
-"tárolásához."
+msgstr "A behelyezett adathordozó nem elég nagy az összes kijelölt dal tárolásához."
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:138
 #, csharp-format
@@ -1258,7 +1265,9 @@ msgstr "CD írás"
 msgid ""
 "Stopping the disc writing process will render it useless. Would you like to "
 "stop writing the disc?"
-msgstr "Az írási folyamat megszakítása használhatatlanná teszi a lemezt. Le kívánja állítani a lemez írását?"
+msgstr ""
+"Az írási folyamat megszakítása használhatatlanná teszi a lemezt. Le kívánja "
+"állítani a lemez írását?"
 
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:95
 #: ../src/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:110
@@ -1549,7 +1558,6 @@ msgstr "Legutóbb játszott"
 msgid "Least Recently Played"
 msgstr "Legrégebben játszott"
 
-#. ez így jó!
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:61
 msgid "songs"
 msgstr "dal"
@@ -1635,7 +1643,9 @@ msgstr "Okos lejátszólista"
 msgid ""
 "Create playlists that automatically add and remove songs based on "
 "customizable queries."
-msgstr "Személyre szabható lekérdezések alapján dalokat automatikusan felvevő és eltávolító lejátszólisták létrehozása."
+msgstr ""
+"Személyre szabható lekérdezések alapján dalokat automatikusan felvevő és "
+"eltávolító lejátszólisták létrehozása."
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:171
 msgid "New Smart Playlist..."
@@ -1733,7 +1743,9 @@ msgstr "Néhány fájl konvertálása sikertelen"
 msgid ""
 "Some files could not be encoded to the proper format. They will not be saved "
 "to the device if you continue."
-msgstr "Néhány fájl konvertálása a kívánt formátumra nem sikerült. Amennyiben folytatja, ezek nem kerülnek mentésre az eszközön."
+msgstr ""
+"Néhány fájl konvertálása a kívánt formátumra nem sikerült. Amennyiben "
+"folytatja, ezek nem kerülnek mentésre az eszközön."
 
 #: ../src/Banshee.Base/Dap/Dap.cs:467
 msgid "Continue synchronizing"
@@ -1853,7 +1865,9 @@ msgstr "Fontos feladatok futnak"
 msgid ""
 "Closing Banshee now will cancel any currently running tasks. They cannot be "
 "resumed automatically the next time Banshee is run."
-msgstr "A Banshee azonnali bezárása megszakítja a jelenleg futó feladatokat. Ezek nem folytathatók automatikusan a Banshee következő futtatásakor."
+msgstr ""
+"A Banshee azonnali bezárása megszakítja a jelenleg futó feladatokat. Ezek "
+"nem folytathatók automatikusan a Banshee következő futtatásakor."
 
 #: ../src/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
 msgid "Quit anyway"
@@ -1944,7 +1958,9 @@ msgstr "Gyűjtemény helyének kiválasztása"
 msgid ""
 "Enable this option to save tags and other metadata inside supported audio "
 "files"
-msgstr "Engedélyezze ezt a beállítást a címkék és egyéb metaadatok mentéséhez a támogatott hangfájlokba"
+msgstr ""
+"Engedélyezze ezt a beállítást a címkék és egyéb metaadatok mentéséhez a "
+"támogatott hangfájlokba"
 
 #: ../src/Banshee.Base/Gui/SourceView.cs:505
 msgid "Could not import tracks"
@@ -1980,7 +1996,9 @@ msgstr "Minden Év beállítása erre az értékre"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:218
 msgid "Set all common fields in all selected tracks to the values currently set"
-msgstr "Az összes kijelölt szám minden közös mezőjét a jelenleg beállított értékekre állítja be"
+msgstr ""
+"Az összes kijelölt szám minden közös mezőjét a jelenleg beállított értékekre "
+"állítja be"
 
 #: ../src/Banshee.Base/Gui/TrackEditor.cs:219
 msgid "Set all ratings to this value"
@@ -2052,7 +2070,9 @@ msgstr "Alapértelmezett lejátszómotor"
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
-msgstr "Nem találhatók lejátszóalrendszerek. Győződjön meg róla, hogy a Banshee telepítése hibátlanul zajlott le."
+msgstr ""
+"Nem találhatók lejátszóalrendszerek. Győződjön meg róla, hogy a Banshee "
+"telepítése hibátlanul zajlott le."
 
 #: ../src/Banshee.Base/PlayerEngineCore.cs:161
 msgid "Problem with Player Engine"
@@ -2095,6 +2115,15 @@ msgstr "Beállítás"
 #, csharp-format
 msgid "Delete {0}"
 msgstr "{0} törlése"
+
+#: ../src/Banshee.Base/SourceManager.cs:264
+msgid "Import"
+msgstr "Importálás"
+
+#: ../src/Banshee.Base/SourceManager.cs:282
+#, csharp-format
+msgid "Rename {0}"
+msgstr "{0} átnevezése"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:51
 msgid "Eject CD"
@@ -2291,7 +2320,9 @@ msgstr "Az iPod nem azonosítható"
 msgid ""
 "Please consider submitting information about your iPod to the Banshee "
 "Project so your iPod may be more fully identified in the future.\n"
-msgstr "Kérjük küldjön be információkat iPodjáról a Banshee projekt számára, így a jövőben a készülék azonosíthatóvá válhat.\n"
+msgstr ""
+"Kérjük küldjön be információkat iPodjáról a Banshee projekt számára, így a "
+"jövőben a készülék azonosíthatóvá válhat.\n"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:136
 msgid "Do not ask me again"
@@ -2334,9 +2365,11 @@ msgid ""
 "Banshee can either rebuild the database or you will have to wait for the new "
 "iTunes version to be supported by Banshee."
 msgstr ""
-"Ezt az iPodot az iTunes olyan változatával használta, amely a készülék daladatbázisát a Banshee számára túl új formátumban tárolja.\n"
+"Ezt az iPodot az iTunes olyan változatával használta, amely a készülék "
+"daladatbázisát a Banshee számára túl új formátumban tárolja.\n"
 "\n"
-"A Banshee újjá tudja építeni az adatbázist, vagy meg kell várnia hogy az új iTunes változat támogatottá váljon."
+"A Banshee újjá tudja építeni az adatbázist, vagy meg kell várnia hogy az új "
+"iTunes változat támogatottá váljon."
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:89
 msgid ""
@@ -2487,7 +2520,8 @@ msgid ""
 "charts of your listening history."
 msgstr ""
 "A Last.fm helyen a profillap automatikusan frissül, amikor zenét hallgat. Ez "
-"lehetővé teszi, hogy mások lássák, most mit hallgat, illetve listákat közöl a korábban hallgatott zenékről."
+"lehetővé teszi, hogy mások lássák, most mit hallgat, illetve listákat közöl "
+"a korábban hallgatott zenékről."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:105
 msgid "Audioscrobbler"
@@ -2520,7 +2554,9 @@ msgstr "Beállítás..."
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:1
 msgid "Allow engine to submit song data to last.fm in the Audioscrobbler plugin"
-msgstr "Az alrendszer elküldheti a dal adatait az Audioscrobbler bővítmény segítségével a last.fm helyre"
+msgstr ""
+"Az alrendszer elküldheti a dal adatait az Audioscrobbler bővítmény "
+"segítségével a last.fm helyre"
 
 #: ../src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in.h:2
 msgid "Enable the Audioscrobbler plugin"
@@ -2547,9 +2583,62 @@ msgstr "A Saját gyűjtemény megosztása másokkal"
 msgid "Share name:"
 msgstr "Megosztó neve:"
 
+#: ../src/Banshee.Plugins/Daap/DaapContainerSource.cs:43
+msgid "Shared Music"
+msgstr "Megosztott zene"
+
 #: ../src/Banshee.Plugins/Daap/DaapCore.cs:74
 msgid "Banshee Music Share"
 msgstr "Banshee zenemegosztás"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:64
+msgid "Disconnected from music share"
+msgstr "Kapcsolat bontva a zenemegosztással"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:65
+msgid "Unable to connect to music share"
+msgstr "Nem lehet csatlakozni a zenemegosztáshoz"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:92
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
+msgstr ""
+"Az iTunes® 7 új kompatibilitási problémákat vezetett be és jelenleg csak az iTunes® 7 kliensekkel működik együtt.\n"
+"\n"
+"Az iTunes® zenemegosztásokhoz már nem képesek harmadik féltől származó kliensek csatlakozni. Ez egy szándékos korlátozás az Apple részéről az iTunes® 7 programban és mi kérünk elnézést a kellemetlenségért."
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:102
+msgid "Common reasons for connection failures:"
+msgstr "A kapcsolathibák leggyakoribb okai:"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:108
+msgid "The provided login credentials are invalid"
+msgstr "A megadott hitelesítési adatok érvénytelenek"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:109
+msgid "The login process was canceled"
+msgstr "A bejelentkezési folyamatot megszakították"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:110
+msgid "Too many users are connected to this share"
+msgstr "Túl sok felhasználó csatlakozik a megosztáshoz"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:112
+msgid "You are no longer connected to this music share"
+msgstr "Már nem csatlakozik a megosztáshoz"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:116
+msgid "Try connecting again"
+msgstr "Próbáljon meg újra kapcsolódni"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:130
+msgid "The music share is hosted by iTunes® 7"
+msgstr "A zenemegosztást az iTunes® 7 biztosítja"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:47
 msgid "Login to Music Share"
@@ -2577,7 +2666,10 @@ msgid ""
 "Allow browsing and listening to songs from music shares and share your "
 "Banshee library with others. Works with other instances of Banshee, iTunes, "
 "and Rhythmbox."
-msgstr "Lehetővé teszi megosztott zene böngészését és hallgatását, valamint a Banshee gyűjteményének megosztását másokkal. A Banshee, iTunes és Rhythmbox programokkal működik."
+msgstr ""
+"Lehetővé teszi megosztott zene böngészését és hallgatását, valamint a "
+"Banshee gyűjteményének megosztását másokkal. A Banshee, iTunes és Rhythmbox "
+"programokkal működik."
 
 #: ../src/Banshee.Plugins/Daap/daap.schemas.in.h:1
 msgid "Allow others to browse and listen to your music from other DAAP clients"
@@ -2683,6 +2775,10 @@ msgid ""
 msgstr ""
 "A multimédia-billentyűzetek gombjainak beállítása a Gnome Gyorsbillentyűk "
 "beállítóalkalmazásával történik."
+
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:57
+msgid "Configure Keyboard Shortcuts"
+msgstr "Gyorsbillentyűk beállítása"
 
 #: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:51
 msgid "Multimedia Keys"
@@ -2838,8 +2934,8 @@ msgstr ""
 "A Banshee nem tudja lejátszani a(z) {0} tételt. Ennek leggyakoribb okai:\n"
 "\n"
 "  <big>•</big> A dal védett (DRM)\n"
-"  <big>•</big> A dal egy olyan zenelejátszón található, amelyik nem támogatja a "
-"lejátszást\n"
+"  <big>•</big> A dal egy olyan zenelejátszón található, amelyik nem "
+"támogatja a lejátszást\n"
 
 #: ../src/PlayerInterface.cs:835
 msgid "Pause"
