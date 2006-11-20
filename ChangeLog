@@ -1,3 +1,10 @@
+2006-11-21  Aaron Bockover  <abock@gnome.org>
+
+	* build/Common.Makefile: Rules for running uninstalled with DAP support
+
+	* src/Banshee.Base/Dap/DapCore.cs: Fixed tiny regression introduced after
+	0.11.2 (CVS only) regarding the loading of DAP assemblies
+
 2006-11-16  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs: Mark string "Configure

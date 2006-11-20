@@ -72,8 +72,14 @@ namespace Banshee.Dap
             }
             
             PluginFactory<DapDevice> plugin_factory = new PluginFactory<DapDevice>(PluginFactoryType.Type);
-            plugin_factory.AddScanDirectory(ConfigureDefines.InstallDir + "Banshee.Dap");
-            plugin_factory.IncludeMask = "*Dap.dll";
+            
+            if(Environment.GetEnvironmentVariable("BANSHEE_DAP_PATH") != null) {
+                plugin_factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_DAP_PATH");
+            } else {
+                plugin_factory.AddScanDirectory(ConfigureDefines.InstallDir + "Banshee.Dap");
+            }
+            
+            plugin_factory.IncludeMask = "*Dap*.dll";
             plugin_factory.LoadPlugins();
             
             foreach(Type type in plugin_factory.PluginTypes) {
@@ -141,40 +147,48 @@ namespace Banshee.Dap
             }
             
             if(!device.PropertyExists("volume.policy.should_mount") || 
-                !device.GetPropertyBoolean("volume.policy.should_mount")) {
+                !device.GetPropertyBoolean("volume.policy.should_mount")) {        
+                Console.WriteLine("Not queueing device for mount wait (policy says device shouldn't mount): " 
+                    + device.Udi);
                 return;
             }
             
-            volume_mount_wait_list.Add(device.Udi);
-            volume_mount_wait_timeout = GLib.Timeout.Add(500, CheckVolumeMountWaitList);
+            Console.WriteLine("Queueing device for mount wait: " + device.Udi);
+        
+            lock(volume_mount_wait_list) {
+                volume_mount_wait_list.Add(device.Udi);
+            }
         }
         
         private static bool CheckVolumeMountWaitList()
         {
-            Queue<string> remove_queue = new Queue<string>();
-        
-            foreach(string udi in volume_mount_wait_list) {
-                try {
-                    Device device = new Device(udi);
-                    if(device.GetPropertyBoolean("volume.is_mounted")) {
-                        AddDevice(device);
+            lock(volume_mount_wait_list) {
+                Queue<string> remove_queue = new Queue<string>();
+            
+                foreach(string udi in volume_mount_wait_list) {
+                    try {
+                        Device device = new Device(udi);
+                        if(device.GetPropertyBoolean("volume.is_mounted")) {
+                            AddDevice(device);
+                            Console.WriteLine("Removing device from mount wait queue: " + udi);
+                            remove_queue.Enqueue(udi);
+                        }
+                    } catch {
                         remove_queue.Enqueue(udi);
                     }
-                } catch {
-                    remove_queue.Enqueue(udi);
                 }
+                
+                while(remove_queue.Count > 0) {
+                    volume_mount_wait_list.Remove(remove_queue.Dequeue());
+                }
+                
+                if(volume_mount_wait_list.Count == 0) {
+                    volume_mount_wait_timeout = 0;
+                    return false;
+                }
+                
+                return true;
             }
-            
-            while(remove_queue.Count > 0) {
-                volume_mount_wait_list.Remove(remove_queue.Dequeue());
-            }
-            
-            if(volume_mount_wait_list.Count == 0) {
-                volume_mount_wait_timeout = 0;
-                return false;
-            }
-            
-            return true;
         }
         
         private static void BuildDeviceTable()

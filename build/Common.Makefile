@@ -16,6 +16,13 @@ DIR_BANSHEE_BASE = $(top_builddir)/src/Banshee.Base
 DIR_BOO = $(top_srcdir)/src/Boo
 DIR_BOOBUDDY = $(top_builddir)/src/BooBuddy
 
+DIR_DAP = $(top_builddir)/src/Banshee.Dap
+DIR_DAP_IPOD = $(DIR_DAP)/Ipod:$$(dirname `pkg-config --variable=Libraries ipod-sharp`)
+DIR_DAP_NJB = $(DIR_DAP)/Njb
+DIR_DAP_MTP = $(DIR_DAP)/Mtp
+DIR_DAP_MASS_STORAGE = $(DIR_DAP)/MassStorage
+DIR_DAP_ALL=$(DIR_DAP_IPOD):$(DIR_DAP_NJB):$(DIR_DAP_MTP):$(DIR_DAP_MASS_STORAGE)
+
 ## Linking ##
 
 LINK_GTK = $(GTKSHARP_LIBS)
@@ -69,8 +76,9 @@ BUILD_UI_BANSHEE = \
 RUN_PATH = \
 	LD_LIBRARY_PATH=$(top_builddir)/libbanshee/.libs \
 	DYLD_LIBRARY_PATH=$${LD_LIBRARY_PATH} \
-	MONO_PATH=$(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_BASE):$(DIR_BOO):$(DIR_BOOBUDDY)${MONO_PATH+:$$MONO_PATH} \
+	MONO_PATH=$(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_BASE):$(DIR_BOO):$(DIR_BOOBUDDY):$(DIR_DAP_ALL)${MONO_PATH+:$$MONO_PATH} \
 	BANSHEE_ENGINES_PATH=$(top_builddir)/src/Banshee.MediaEngine \
 	BANSHEE_PLUGINS_PATH=$(top_builddir)/src/Banshee.Plugins$${BANSHEE_PLUGINS_PATH+:$$BANSHEE_PLUGINS_PATH} \
+    BANSHEE_DAP_PATH=$(top_builddir)/src/Banshee.Dap$${BANSHEE_DAP_PATH+:$$BANSHEE_DAP_PATH} \
 	BANSHEE_PROFILES_PATH=$(top_builddir)/data/audio-profiles
 
