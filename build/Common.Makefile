@@ -52,7 +52,10 @@ LINK_BANSHEE_CORE = \
 	-r:$(DIR_BANSHEE_BASE)/Banshee.Base.dll
 
 ## Building ##
-BUILD_FLAGS = -debug
+
+# Ignoring 0278 due to a bug in gmcs: 
+# http://bugzilla.ximian.com/show_bug.cgi?id=79998
+BUILD_FLAGS = -debug -nowarn:0278
 BUILD = $(MCS) $(BUILD_FLAGS)
 BUILD_LIB = $(BUILD) -target:library
 
@@ -73,6 +76,7 @@ BUILD_UI_BANSHEE = \
 	$(LINK_DBUS)
 
 ## Running ##
+
 RUN_PATH = \
 	LD_LIBRARY_PATH=$(top_builddir)/libbanshee/.libs \
 	DYLD_LIBRARY_PATH=$${LD_LIBRARY_PATH} \
