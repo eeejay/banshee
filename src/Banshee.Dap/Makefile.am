@@ -1,4 +1,9 @@
-SUBDIRS = Ipod MassStorage Mtp Njb
+SUBDIRS = \
+	Ipod \
+	Karma \
+	MassStorage \
+	Mtp \
+	Njb
 
 MAINTAINERCLEANFILES = Makefile.in
 

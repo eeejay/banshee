@@ -1,5 +1,14 @@
 2006-11-22  Aaron Bockover  <abock@gnome.org>
 
+	Initial Rio Karma support by Bob Copeland <me@bobcopeland.com> (BGO #348730)
+
+	* configure.ac:
+	* src/Banshee.Dap/Makefile.am: Added build settings for Karma
+
+	* src/Banshee.Dap/Karma/*: Initial support for the Rio Karma DAPs
+
+2006-11-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Dap/DapCore.cs: Use Device.PropertyModified instead
 	of a poll/wait table to check for volume.is_mounted
 

@@ -41,6 +41,9 @@ enable_njbsharp="${enable_njb}"
 AC_ARG_ENABLE(mtp, AC_HELP_STRING([--enable-mtp], [Enable MTP DAP support]), , enable_mtp="no")
 enable_mtp_dap="${enable_mtp}"
 
+AC_ARG_ENABLE(karma, AC_HELP_STRING([--enable-karma], [Enable Rio Karma DAP support]), , enable_karma="yes")
+enable_karmasharp="${enable_karma}"
+
 AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
 
 AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
@@ -210,6 +213,17 @@ if test "x$enable_mtp_dap" = "xyes"; then
 	AC_SUBST(LIBGPHOTO2SHARP_LIBS)
 fi
 AM_CONDITIONAL(ENABLE_MTP, test "x$enable_mtp_dap" = "xyes")
+
+KARMASHARP_REQUIRED=0.0.5
+PKG_CHECK_MODULES(KARMASHARP,
+      karma-sharp >= $KARMASHARP_REQUIRED,
+      enable_karmasharp="$enable_karmasharp", enable_karmasharp=no)
+if test "x$enable_karmasharp" = "xyes"; then
+      KARMASHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries karma-sharp`"
+      AC_SUBST(KARMASHARP_ASSEMBLIES)
+      AC_SUBST(KARMASHARP_LIBS)
+fi
+AM_CONDITIONAL(ENABLE_KARMA, test "x$enable_karmasharp" = "xyes")
 
 dnl sqlite devel dep
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
@@ -401,6 +415,7 @@ src/Banshee.Base/ConfigureDefines.cs
 src/Banshee.Dap/Makefile
 src/Banshee.Dap/Ipod/Makefile
 src/Banshee.Dap/Ipod/ipod-sharp.dll.config
+src/Banshee.Dap/Karma/Makefile
 src/Banshee.Dap/MassStorage/Makefile
 src/Banshee.Dap/Mtp/Makefile
 src/Banshee.Dap/Njb/Makefile
@@ -452,6 +467,7 @@ banshee-$VERSION
       iPod:            ${enable_ipodsharp}
       NJB:             ${enable_njbsharp}
       MTP:             ${enable_mtp_dap}
+      Karma:           ${enable_karmasharp}
 
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
