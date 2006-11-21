@@ -60,7 +60,6 @@ namespace Banshee.Dap
         private static Dictionary<string, DapDevice> device_table = new Dictionary<string, DapDevice>();
         private static List<string> volume_mount_wait_list = new List<string>();
         private static List<Type> supported_dap_types = new List<Type>();
-        private static uint volume_mount_wait_timeout = 0;
     
         public static event DapEventHandler DapAdded;
         public static event DapEventHandler DapRemoved;
@@ -120,11 +119,6 @@ namespace Banshee.Dap
         
         public static void Dispose()
         {
-            if(volume_mount_wait_timeout > 0) {
-                GLib.Source.Remove(volume_mount_wait_timeout);
-                volume_mount_wait_timeout = 0;
-            }
-            
             foreach(DapDevice device in Devices) {
                 device.Dispose();
             }
@@ -142,52 +136,25 @@ namespace Banshee.Dap
         
         internal static void QueueWaitForVolumeMount(Device device)
         {
-            if(volume_mount_wait_list.Contains(device.Udi) || device_table.ContainsKey(device.Udi)) {
-                return;
-            }
-            
             if(!device.PropertyExists("volume.policy.should_mount") || 
-                !device.GetPropertyBoolean("volume.policy.should_mount")) {        
-                Console.WriteLine("Not queueing device for mount wait (policy says device shouldn't mount): " 
-                    + device.Udi);
+                !device.GetPropertyBoolean("volume.policy.should_mount") ||
+                (device.PropertyExists("volume.is_disc") && 
+                    device.GetPropertyBoolean("volume.is_disc"))) {
                 return;
             }
-            
-            Console.WriteLine("Queueing device for mount wait: " + device.Udi);
-        
-            lock(volume_mount_wait_list) {
-                volume_mount_wait_list.Add(device.Udi);
-            }
+
+            device.PropertyModified += OnDevicePropertyModified;
         }
         
-        private static bool CheckVolumeMountWaitList()
+        private static void OnDevicePropertyModified(object o, PropertyModifiedArgs args)
         {
-            lock(volume_mount_wait_list) {
-                Queue<string> remove_queue = new Queue<string>();
-            
-                foreach(string udi in volume_mount_wait_list) {
-                    try {
-                        Device device = new Device(udi);
-                        if(device.GetPropertyBoolean("volume.is_mounted")) {
-                            AddDevice(device);
-                            Console.WriteLine("Removing device from mount wait queue: " + udi);
-                            remove_queue.Enqueue(udi);
-                        }
-                    } catch {
-                        remove_queue.Enqueue(udi);
-                    }
-                }
-                
-                while(remove_queue.Count > 0) {
-                    volume_mount_wait_list.Remove(remove_queue.Dequeue());
-                }
-                
-                if(volume_mount_wait_list.Count == 0) {
-                    volume_mount_wait_timeout = 0;
+            Device device = o as Device;
+            if(device.GetPropertyBoolean("volume.is_mounted")) {
+                device.PropertyModified -= OnDevicePropertyModified;
+                GLib.Timeout.Add(50, delegate {
+                    AddDevice(device);
                     return false;
-                }
-                
-                return true;
+                });
             }
         }
         
@@ -220,26 +187,32 @@ namespace Banshee.Dap
                     return true;
                 }
             }
-            
+
             return false;
         }
         
         private static bool AddDevice(Device device, Type type)
         {
-            try {
-                DapDevice dap = Activator.CreateInstance(type) as DapDevice;
-                switch(dap.Initialize(device)) {
-                    case InitializeResult.Valid:
-                        AddDevice(device, dap);
-                        return true;
-                    default:
-                        break;
+            lock(device_table) {
+                try {
+                    if(device_table.ContainsKey(device.Udi)) {
+                        return false;
+                    }
+                    
+                    DapDevice dap = Activator.CreateInstance(type) as DapDevice;
+                    switch(dap.Initialize(device)) {
+                        case InitializeResult.Valid:
+                            AddDevice(device, dap);
+                            return true;
+                        default:
+                            break;
+                    }
+                } catch(Exception e) {
+                    Console.WriteLine(e);
                 }
-            } catch(Exception e) {
-                Console.WriteLine(e);
+                
+                return false;
             }
-            
-            return false;
         }
         
         private static bool AddDevice(Device device, DapDevice dap)
