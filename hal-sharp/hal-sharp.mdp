@@ -6,7 +6,5 @@
     <File name="./Manager.cs" subtype="Code" buildaction="Compile" />
     <File name="./Device.cs" subtype="Code" buildaction="Compile" />
   </Contents>
-  <References>
-    <ProjectReference type="Assembly" localcopy="False" refto="../dbus-sharp/NDesk.DBus.dll" />
-  </References>
+  <References />
 </Project>

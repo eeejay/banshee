@@ -1,9 +1,8 @@
-/* ex: set ts=4: */
 /***************************************************************************
- *  gst-misc.h
+ *  DebugAliasAttribute.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2006 Novell, Inc.
+ *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -27,12 +26,51 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef GST_MISC_H
-#define GST_MISC_H
+using System;
+using System.Reflection;
 
-#include <gst/gst.h>
-
-gboolean gstreamer_test_encoder(gchar *encoder_pipeline);
-void gstreamer_initialize();
-
-#endif
+namespace BooBuddy.Debugger
+{
+    public class DebugAliasAttribute : System.Attribute
+    {
+        private string alias;
+        private string description;
+        private string prefix;
+        private MethodInfo method_info;
+        
+        public DebugAliasAttribute(string alias) : this(alias, null)
+        {
+        }
+        
+        public DebugAliasAttribute(string alias, string description)
+        {
+            this.alias = alias;
+            this.description = description;
+        }
+        
+        public string Alias {
+            get { return alias; }
+            set { alias = value; }
+        }
+        
+        public string Description {
+            get { return description; }
+            set { description = value; }
+        }
+        
+        public string Prefix {
+            get { return prefix; }
+            set { prefix = value; }
+        }
+        
+        public MethodInfo MethodInfo {
+            get { return method_info; }
+            set { method_info = value; }
+        }
+    }
+    
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class DebugAliasAssemblyAttribute : System.Attribute
+    {
+    }
+}

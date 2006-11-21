@@ -41,7 +41,8 @@ namespace Banshee.IO
         
         private static Type [] available_config_types = new Type [] {
             typeof(Banshee.IO.SystemIO.IOConfig),
-            typeof(Banshee.IO.Unix.IOConfig)
+            typeof(Banshee.IO.Unix.IOConfig),
+            //typeof(Banshee.IO.GnomeVfs.IOConfig)
         };
         
         static IOProxy()
@@ -49,7 +50,7 @@ namespace Banshee.IO
             Reload();
         }
         
-        private static void SetFromConfig(IIOConfig _config)
+        public static void SetFromConfig(IIOConfig _config)
         {
             config = _config;
             Console.WriteLine("Setting IO Backend to {0} ({1})", config.GetType(), config.Name);

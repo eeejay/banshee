@@ -112,7 +112,8 @@ IO_SOURCES = \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
 	$(srcdir)/IO/SystemIO.cs \
-	$(srcdir)/IO/Unix.cs
+	$(srcdir)/IO/Unix.cs \
+	$(srcdir)/IO/GnomeVfs.cs
 
 GUI_SOURCES = \
 	$(srcdir)/Gui/GladeWindow.cs \
@@ -253,7 +254,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ComponentInitializer.cs \
 	$(srcdir)/PowerManagement.cs \
 	$(srcdir)/ProductInformation.cs \
-	$(srcdir)/DBusPlayer.cs
+	$(srcdir)/DBusPlayer.cs \
+	$(srcdir)/GenericCollectionController.cs
 
 Banshee_Base_RESOURCES = \
 	data/UIManagerLayout.xml \

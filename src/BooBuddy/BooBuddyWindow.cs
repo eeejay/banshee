@@ -51,17 +51,22 @@ namespace BooBuddy
             interpreter_sw.ShadowType = ShadowType.In;
             
             interpreter = new BooBuddyInterpreter();
-            interpreter.Interpreter.SetValue("shell", this);
+            interpreter.SetValue("shell", this);
             
             interpreter_shell = new BooBuddyShell();
-            interpreter_shell.Interpreter = interpreter.Interpreter;
+            interpreter_shell.Interpreter = interpreter;
             interpreter_shell.ProcessInput += OnProcessInput;
+            interpreter_shell.Realized += delegate {
+                interpreter.InitializeDebugging();
+            };
             interpreter_sw.Add(interpreter_shell);
-
+            
             notebook.AppendPage(interpreter_sw, new Label("Interpreter"));
             
             Add(notebook);
             notebook.ShowAll();
+            
+            interpreter_shell.HasFocus = true;
         }
         
         private void OnProcessInput(object o, ProcessInputArgs args)

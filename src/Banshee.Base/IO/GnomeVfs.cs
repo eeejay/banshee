@@ -27,23 +27,47 @@
  */
 
 using System;
-using System.IO;
 using System.Collections;
+
+using Gnome.Vfs;
 
 using Banshee.Base;
 
-namespace Banshee.IO.SystemIO
+namespace Banshee.IO.GnomeVfs
 {
     public class IOConfig : IIOConfig
     {
-        public string Name           { get { return "systemio";        } }
+        public string Name           { get { return "gnomevfs";        } }
         public Type FileBackend      { get { return typeof(File);      } }
         public Type DirectoryBackend { get { return typeof(Directory); } }
         public Type DemuxVfsBackend  { get { return typeof(DemuxVfs);  } }
         
         public string DetectMimeType(SafeUri uri)
         {
-            return Banshee.IO.GnomeVfs.IOConfig._DetectMimeType(uri);
+            return _DetectMimeType(uri);
+        }
+        
+        internal static string _DetectMimeType(SafeUri uri)
+        {
+            try {
+                string mime = MimeType.GetMimeTypeForUri(uri.AbsoluteUri);
+                if(mime != null && mime != "application/octet-stream") {
+                    return FilterMimeType(mime);
+                }
+            } catch {
+            }
+            
+            return null;
+        }
+        
+        private static string FilterMimeType(string mime)
+        {
+            string [] parts = mime.Split(',');
+            if(parts == null || parts.Length <= 0) {
+                return mime.Trim();
+            }
+            
+            return parts[0].Trim();
         }
     }
 
@@ -51,7 +75,18 @@ namespace Banshee.IO.SystemIO
     {
         public bool Exists(string path)
         {
-            return System.IO.File.Exists(path);
+            try {
+                return Exists(new FileInfo(path));
+            } catch {
+                return false;
+            }
+        }
+        
+        public static bool Exists(FileInfo info)
+        {
+            return info != null && info.Size > 0 && 
+                (info.Type & FileType.Regular) != 0 && 
+                (info.Type & FileType.Directory) == 0;
         }
     }
 
@@ -59,12 +94,12 @@ namespace Banshee.IO.SystemIO
     {
         public void Create(string directory)
         {
-            System.IO.Directory.CreateDirectory(directory);
+            Gnome.Vfs.Directory.Create(directory, FilePermissions.UserAll);
         }
         
         public void Delete(string directory)
         {
-            Delete(directory, false);
+            Delete(directory);
         }
         
         public void Delete(string directory, bool recursive)
@@ -74,61 +109,63 @@ namespace Banshee.IO.SystemIO
         
         public bool Exists(string directory)
         {
-            return System.IO.Directory.Exists(directory);
+            return Exists(new FileInfo(directory));
+        }
+        
+        public bool Exists(FileInfo info)
+        {
+            return (info.Type & FileType.Directory) != 0;
         }
         
         public IEnumerable GetFiles(string directory)
         {
-            return System.IO.Directory.GetFiles(directory);
+            foreach(FileInfo file in Gnome.Vfs.Directory.GetEntries(directory)) {
+                if(Banshee.IO.GnomeVfs.File.Exists(file)) {
+                    yield return System.IO.Path.Combine(directory, file.Name);
+                }
+            }
         }
         
         public IEnumerable GetDirectories(string directory)
         {
-            return System.IO.Directory.GetDirectories(directory);
+            foreach(FileInfo file in Gnome.Vfs.Directory.GetEntries(directory)) {
+                if(Exists(file)) {
+                    yield return System.IO.Path.Combine(directory, file.Name);
+                }
+            }
         }
     }
     
     public class DemuxVfs: IDemuxVfs
-    {   
-        private FileInfo file_info;
+    {
+        private FilePermissions permissions;
+        private string name;
         
         public DemuxVfs(string path)
         {
-            file_info = new FileInfo(path);
+            name = path;
+            permissions = new FileInfo(name, FileInfoOptions.FollowLinks 
+                | FileInfoOptions.GetAccessRights).Permissions;
         }
         
         public string Name { 
-            get { return file_info.FullName; }
+            get { return name; }
         }
-        
-        public Stream ReadStream {
-            get { return file_info.Open(FileMode.Open, FileAccess.Read); }
+
+        public System.IO.Stream ReadStream {
+            get { return new VfsStream(Name, System.IO.FileMode.Open); }
         }
-        
-        public Stream WriteStream {
-            get { return file_info.Open(FileMode.Open, FileAccess.ReadWrite); }
+
+        public System.IO.Stream WriteStream {
+            get { return new VfsStream(Name, System.IO.FileMode.Open); }
         }
-   
+
         public bool IsReadable {
-            get {
-                try {
-                    ReadStream.Close();
-                    return true;
-                } catch { 
-                    return false;
-                }
-            }
+            get { return (permissions | FilePermissions.AccessReadable) != 0; }
         }
 
         public bool IsWritable {
-            get {
-                try {
-                    WriteStream.Close();
-                    return true;
-                } catch { 
-                    return false;
-                }
-            }
+            get { return (permissions | FilePermissions.AccessWritable) != 0; }
         }
     }
 }

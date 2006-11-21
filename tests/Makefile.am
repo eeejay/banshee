@@ -3,7 +3,9 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 
 ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-ASSEMBLY_CSFILES = $(srcdir)/Banshee.Kernel.cs
+ASSEMBLY_CSFILES = \
+	$(srcdir)/Banshee.Kernel.cs \
+	$(srcdir)/GenericCollectionController.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe

@@ -86,46 +86,6 @@ namespace Banshee.Gstreamer
         {
             gstreamer_initialize();
         }
-        
-        [System.Runtime.InteropServices.DllImport("libbanshee")]
-        private static extern IntPtr gstreamer_detect_mimetype(IntPtr uri);
-        
-        public static string DetectMimeType(SafeUri uri)
-        {
-            string mime = null;
-            IntPtr file_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
-            IntPtr mime_ptr = gstreamer_detect_mimetype(file_ptr);
-            GLib.Marshaller.Free(file_ptr);
-
-            if(mime_ptr != IntPtr.Zero) {
-                mime = GLib.Marshaller.Utf8PtrToString(mime_ptr);
-                GLib.Marshaller.Free(mime_ptr);
-                
-                if(mime != null) {
-                    return FilterMimeType(mime);
-                }
-            } 
-            
-            try {
-                mime = Gnome.Vfs.MimeType.GetMimeTypeForUri(uri.AbsoluteUri);
-                if(mime != null && mime != "application/octet-stream") {
-                    return FilterMimeType(mime);
-                }
-            } catch {
-            }
-            
-            return null;
-        }
-        
-        private static string FilterMimeType(string mime)
-        {
-            string [] parts = mime.Split(',');
-            if(parts == null || parts.Length <= 0) {
-                return mime.Trim();
-            }
-            
-            return parts[0].Trim();
-        }
     }
 }
 

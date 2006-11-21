@@ -120,8 +120,23 @@ else
 	chmod +x build/gmcs.exe
 fi
 
+dnl Check for Boo
+AC_ARG_ENABLE(external_boo, AC_HELP_STRING([--enable-external-boo], [Use external Boo instead of the bundled one]), enable_external_boo="yes", enable_external_boo="no")
+
+if test "x$enable_external_boo" = "xyes"; then
+	PKG_CHECK_MODULES(BOO, boo >= 0.7.6)
+	AC_SUBST(BOO_LIBS)
+	AM_CONDITIONAL(EXTERNAL_BOO, true)
+else
+	AM_CONDITIONAL(EXTERNAL_BOO, false)
+fi
+
+AC_PATH_PROG(BOOC, booc, no)
+AM_CONDITIONAL(HAVE_BOOC, test ! "x$BOOC" = "xno")
+
 AC_SUBST(MCS)
 AC_SUBST(MONO)
+AC_SUBST(BOOC)
 
 if test "x$with_docs" = "xyes"; then
 	AC_PATH_PROG(MONODOCER, monodocer, no)
@@ -311,17 +326,6 @@ dnl GConf
 
 AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
-
-dnl Boo
-AC_ARG_ENABLE(external_boo, AC_HELP_STRING([--enable-external-boo], [Use external Boo instead of the bundled one]), enable_external_boo="yes", enable_external_boo="no")
-
-if test "x$enable_external_boo" = "xyes"; then
-	PKG_CHECK_MODULES(BOO, boo >= 0.7.6)
-	AC_SUBST(BOO_LIBS)
-	AM_CONDITIONAL(EXTERNAL_BOO, true)
-else
-	AM_CONDITIONAL(EXTERNAL_BOO, false)
-fi
 
 dnl Find the real @libdir@
 

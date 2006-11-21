@@ -1,3 +1,57 @@
+2006-11-22  Aaron Bockover  <abock@gnome.org>
+
+	* taglib-sharp/update-checkout.sh: Updated
+
+	* tests/Makefile.am:
+	* tests/GenericCollectionController.cs: Added some tests for the yet
+	to be completed GenericCollectionController
+
+	* src/BooBuddy/BooBuddy.mdp:
+	* src/BooBuddy/BooBuddyInterpreter.cs:
+	* src/BooBuddy/BooBuddyShell.cs:
+	* src/BooBuddy/BooBuddyWindow.cs:
+	* src/BooBuddy/Makefile.am: Updated; support new reflection debugging
+	
+	* src/BooBuddy/BooBuddy.Debugger/DebugAliasAttribute.cs: Attribute
+	to alias methods for easier invocation in the shell
+	
+	* src/BooBuddy/BooBuddy.Debugger/DebugAliasBuilder.cs: Builds alias
+	methods using reflection
+	
+	* src/BooBuddy/BooBuddy.Debugger/Reflection.cs: Some reflection utilities
+	useful in debugging
+	
+	* src/Banshee.Base/IO/IOProxy.cs:
+	* src/Banshee.Base/IO/SystemIO.cs:
+	* src/Banshee.Base/IO/Unix.cs: 
+	* src/Banshee.Base/IO/GnomeVfs.cs: Initial pass at GNOME VFS backend
+	support - not complete. Other backends use the MimeType support from
+	the GNOME VFS backend however
+
+	* src/Banshee.Widgets/Banshee.Widgets.mdp:
+	* src/Banshee.Widgets/Makefile.am:
+	* src/Banshee.Widgets/DictionaryComboBox.cs: Added a custom combo box
+	for displaying a string-valued dictionary
+
+	* src/Banshee.Base/GenericCollectionController.cs: Initial work for 
+	a new playback controller
+
+	* src/Banshee.Base/Makefile.am: Added GenericCollectionController.cs
+
+	* src/banshee.mdp:
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* hal-sharp/hal-sharp.mdp: Updated
+
+	* banshee.mds: Added 
+	* src/Banshee.Dap/Ipod/Ipod.mdp: Added Ipod MD project
+
+	* configure.ac: Added booc check; booc will be used to 'pre-compile' Boo
+	macros during build to ensure they at least compile; optional 
+
+	* libbanshee/gst-misc-0.10.c:
+	* libbanshee/gst-misc.h:
+	* src/Banshee.Base/GstMisc.cs: Removed GStreamer-based mime type detection
+
 2006-11-21  Aaron Bockover  <abock@gnome.org>
 
 	* build/Common.Makefile: Rules for running uninstalled with DAP support

@@ -34,6 +34,8 @@ using System.Collections.Generic;
 using Boo.Lang.Compiler;
 using Boo.Lang.Interpreter;
 
+using BooBuddy.Debugger;
+
 namespace BooBuddy
 {
     public class InterpreterResult
@@ -64,23 +66,55 @@ namespace BooBuddy
             get { return errors; }
         }
     }
+    
+    public delegate void InterpreterResultHandler(InterpreterResult result);
 
-    public class BooBuddyInterpreter
+    public class BooBuddyInterpreter : InteractiveInterpreter
     {
-        private InteractiveInterpreter interpreter;
+        private DebugAliasBuilder alias_builder;
         
+        public event InterpreterResultHandler HaveInterpreterResult;
+    
         public BooBuddyInterpreter()
         {
-            interpreter = new InteractiveInterpreter();
-            interpreter.RememberLastValue = true;
-            interpreter.Ducky = true;
+            RememberLastValue = true;
+            Ducky = true;
+            
+            alias_builder = new DebugAliasBuilder();
             
             foreach(Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                interpreter.References.Add(assembly);
+                References.Add(assembly);
+                alias_builder.LoadFromAssembly(assembly);
+            }
+            
+            Assembly asm = typeof(BooBuddyInterpreter).Assembly;
+            Stream stream = asm.GetManifestResourceStream("AliasMacro.boo");
+            
+            if(stream != null) {
+                using(StreamReader reader = new StreamReader(stream)) {
+                    Interpret(reader.ReadToEnd());
+                }
             }
         }
         
+        public void InitializeDebugging()
+        {
+            string procname = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+            procname = Convert.ToString(procname[0]).ToUpper() + procname.Substring(1);
+            
+            alias_builder.BuildAliases(this);
+            Interpret(String.Format(
+                "print \"Welcome to BooBuddy for {0}. Run p_help() for debugging " + 
+                "help or start writing Boo code against all loaded assembly APIs\"",
+                procname), true);
+        }
+        
         public InterpreterResult Interpret(string block)
+        {
+            return Interpret(block, false);
+        }
+        
+        public InterpreterResult Interpret(string block, bool raise)
         {
             CompilerContext context;
             InterpreterResult result = new InterpreterResult();
@@ -90,7 +124,7 @@ namespace BooBuddy
                 TextWriter old_out_stream = Console.Out;
             
                 Console.SetOut(captured_out_stream);
-                context = interpreter.Eval(block);
+                context = Eval(block);
                 Console.SetOut(old_out_stream);
                 
                 if(context.Errors != null && context.Errors.Count > 0) {
@@ -102,17 +136,20 @@ namespace BooBuddy
                 result.Message = captured_out_stream.ToString();
             } catch(Exception e) {
                 if(e.InnerException != null) {
-                    result.PushError(e.Message.ToString());
+                    result.PushError(e.InnerException.Message.ToString());
                 } else {
                     result.PushError(String.Format("Execution exception: {0}", e.Message));
                 }
             }
             
+            if(raise) {
+                InterpreterResultHandler handler = HaveInterpreterResult;
+                if(handler != null) {
+                    handler(result);
+                }
+            }
+            
             return result;
-        }
-        
-        public InteractiveInterpreter Interpreter {
-            get { return interpreter; }
         }
     }
 }

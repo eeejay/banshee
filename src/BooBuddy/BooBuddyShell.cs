@@ -71,7 +71,7 @@ namespace BooBuddy
         
         private TextMark end_of_last_processing;
         
-        private InteractiveInterpreter interpreter;
+        private BooBuddyInterpreter interpreter;
         
         public event ProcessInputHandler ProcessInput;
         
@@ -106,8 +106,6 @@ namespace BooBuddy
             Pango.FontDescription font_description = new Pango.FontDescription();
             font_description.Family = "Monospace";
             ModifyFont(font_description);
-            
-            Prompt(false);
         }
         
         protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
@@ -226,7 +224,7 @@ namespace BooBuddy
             return base.OnKeyPressEvent(evnt);
         }
         
-        private void Prompt(bool newline)
+        public void Prompt(bool newline)
         {
             Prompt(newline, false);
         }
@@ -293,7 +291,9 @@ namespace BooBuddy
             Buffer.ApplyTag(Buffer.TagTable.Lookup(result.Errors.Count > 0 ? "Error" : "Stdout"), 
                 start_iter, end_iter);
             
-            Prompt(true);
+            if(script_lines != null) {
+                Prompt(true);
+            }
         }
         
         private TextIter InputLineBegin {
@@ -335,10 +335,18 @@ namespace BooBuddy
             get { return script_lines; }
         }
         
-        public InteractiveInterpreter Interpreter {
+        public BooBuddyInterpreter Interpreter {
             get { return interpreter; }
-            set { interpreter = value; }
-        }
-            
+            set {
+                if(interpreter != null && interpreter != value) {
+                    interpreter.HaveInterpreterResult -= SetResult;
+                } else if(value != null) {
+                    interpreter = value;
+                    interpreter.HaveInterpreterResult += SetResult;
+                } else {
+                    interpreter = null;
+                } 
+            }
+        } 
     }
 }

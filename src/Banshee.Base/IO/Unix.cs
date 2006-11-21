@@ -46,7 +46,7 @@ namespace Banshee.IO.Unix
         
         public string DetectMimeType(SafeUri uri)
         {
-            return Banshee.Gstreamer.Utilities.DetectMimeType(uri);
+            return Banshee.IO.GnomeVfs.IOConfig._DetectMimeType(uri);
         }
     }
 
