@@ -1,5 +1,16 @@
 2006-11-22  Aaron Bockover  <abock@gnome.org>
 
+	* autogen.sh: Set ACLOCAL_FLAGS to include new m4 macros
+
+	* configure.ac: Use the new SHAMROCK mono macros
+
+	* build/m4/shamrock/*.m4: Helper macros, new mono-specific macros for 
+	properly detecting mono components
+
+	* build/m4/banshee/*.m4: Banshee-specific m4 macros
+
+2006-11-22  Aaron Bockover  <abock@gnome.org>
+
 	Initial Rio Karma support by Bob Copeland <me@bobcopeland.com> (BGO #348730)
 
 	* configure.ac:

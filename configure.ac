@@ -51,20 +51,6 @@ AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
 
 AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
 
-dnl pkg-config, install programs
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test "x$PKG_CONFIG" = "xno"; then
-	AC_MSG_ERROR([You need to install pkg-config])
-fi
-
-AC_PATH_PROG(INSTALL, install, no)
-if test "x$INSTALL" = "xno"; then
-	AC_MSG_ERROR([You need to install 'install'])
-fi
-
-AC_SUBST(INSTALL)
-AC_SUBST(PKG_CONFIG)
-
 dnl Helix
 
 AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
@@ -75,53 +61,19 @@ fi
 
 AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
 
-
-MONO_REQUIRED_VERSION=1.1.10
-PKG_CHECK_MODULES(MONO, mono >= $MONO_REQUIRED_VERSION)
-
-dnl Mono programs
-MONODIR=`$PKG_CONFIG --variable=exec_prefix mono`
-MONOBIN="$MONODIR/bin"
-MONO="$MONOBIN/mono"
-MCS="$MONOBIN/gmcs"
-
-AC_MSG_CHECKING([for mono.pc])
-if test -z `$PKG_CONFIG --variable=prefix mono`; then
-	AC_MSG_ERROR([missing the mono.pc file, usually found in the mono-devel package])
-else
-	AC_MSG_RESULT([found])
-fi
-
-required_assemblies="Mono.Cairo Mono.Data.SqliteClient Mono.Posix System.Web System.Data System.Web.Services"
-
-for asm in $required_assemblies; do
-	AC_MSG_CHECKING([for $asm.dll])
-	if test ! -e `$PKG_CONFIG --variable=prefix mono`/lib/mono/2.0/$asm.dll; then
-		AC_MSG_RESULT([not found])
-		AC_MSG_ERROR([missing required Mono 2.0 assembly: $asm.dll])
-	else
-		AC_MSG_RESULT([found])
-	fi
-done
-
-if test ! -x "$MONO"; then
-	AC_MSG_ERROR([No Mono runtime found])
-fi
-
-CS="C#"
-if test ! -x "$MCS"; then
-	AC_MSG_ERROR([No $CS compiler found])
-fi
-
-dnl Test compiler for BXC #79698
-AC_MSG_CHECKING([for broken mcs 1.1.18 compiler])
-if $MCS $srcdir/build/mcs-test-79698.cs &>/dev/null; then
-	AC_MSG_RESULT([compiler okay])
-else
-	AC_MSG_RESULT([broken, using internal gmcs])
-	MCS="$MONO \${top_srcdir}/build/gmcs.exe"
-	chmod +x build/gmcs.exe
-fi
+dnl Mono
+SHAMROCK_CHECK_MONO_MODULE(1.1.10)
+SHAMROCK_FIND_MONO_2_0_COMPILER
+SHAMROCK_FIND_MONO_RUNTIME
+SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES(	
+	System.Data,
+	System.Web,
+	System.Web.Services,
+	Mono.Cairo, 
+	Mono.Data.SqliteClient, 
+	Mono.Posix,
+)
+BANSHEE_VERIFY_GMCS
 
 dnl Check for Boo
 AC_ARG_ENABLE(external_boo, AC_HELP_STRING([--enable-external-boo], [Use external Boo instead of the bundled one]), enable_external_boo="yes", enable_external_boo="no")
@@ -218,6 +170,7 @@ KARMASHARP_REQUIRED=0.0.5
 PKG_CHECK_MODULES(KARMASHARP,
       karma-sharp >= $KARMASHARP_REQUIRED,
       enable_karmasharp="$enable_karmasharp", enable_karmasharp=no)
+AC_MSG_RESULT([$enable_karmasharp])
 if test "x$enable_karmasharp" = "xyes"; then
       KARMASHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries karma-sharp`"
       AC_SUBST(KARMASHARP_ASSEMBLIES)
