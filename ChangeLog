@@ -1,3 +1,8 @@
+2006-11-25  Ruben Vermeersch  <ruben@savanne.be>
+
+	* data/banshee.glade: Lower the border size of vbox3 to zero. 
+	Fixes BGO #369786.
+
 2006-11-22  Aaron Bockover  <abock@gnome.org>
 
 	* autogen.sh: Set ACLOCAL_FLAGS to include new m4 macros
