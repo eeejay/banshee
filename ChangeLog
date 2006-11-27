@@ -1,5 +1,10 @@
 2006-11-26  Aaron Bockover  <abock@gnome.org>
 
+	* build/Common.Makefile: Reference installed njb-sharp libraries in the
+	run path (Bertrand Lorentz, BGO #379119)
+
+2006-11-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Globals.cs: Initialize gstreamer before gconf. (Tim 
 	Yamin, BGO #379529)
 
