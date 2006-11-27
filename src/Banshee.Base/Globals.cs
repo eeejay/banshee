@@ -88,6 +88,7 @@ namespace Banshee.Base
                 Catalog.GetString("Device support will be disabled for this instance (no HAL)"),
                 HalCore.Initialize);
                 
+            startup.Register(Catalog.GetString("Initializing audio engine"), Banshee.Gstreamer.Utilities.Initialize);
             startup.Register(Catalog.GetString("Starting background tasks"), delegate { gconf_client = new GConf.Client(); });
             startup.Register(Catalog.GetString("Detecting network settings"), delegate { network_detect = NetworkDetect.Instance; });
             startup.Register(Catalog.GetString("Creating action manager"), delegate { action_manager = new ActionManager(); });
@@ -96,9 +97,7 @@ namespace Banshee.Base
                 library.ReloadLibrary();
             });
             
-            startup.Register(Catalog.GetString("Initializing audio"), Banshee.Gstreamer.Utilities.Initialize);
-            
-            startup.Register(Catalog.GetString("Initializing audio"), delegate {
+            startup.Register(Catalog.GetString("Initializing audio profiles"), delegate {
                 string system_path = Path.Combine(Banshee.Base.Paths.SystemApplicationData, "audio-profiles");
                 string user_path = Path.Combine(Banshee.Base.Paths.ApplicationData, "audio-profiles");
                 string env_path = Environment.GetEnvironmentVariable("BANSHEE_PROFILES_PATH");
@@ -127,7 +126,7 @@ namespace Banshee.Base
                 audio_profile_manager.TestAll();
             });
             
-            startup.Register(Catalog.GetString("Initializing audio"), PlayerEngineCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing audio engine"), PlayerEngineCore.Initialize);
             
             startup.Register(Catalog.GetString("Initializing audio CD support"), true, 
                 Catalog.GetString("Audio CD support will be disabled for this instance"), delegate { audio_cd_core = new AudioCdCore(); });

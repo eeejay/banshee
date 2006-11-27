@@ -1,3 +1,8 @@
+2006-11-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Globals.cs: Initialize gstreamer before gconf. (Tim 
+	Yamin, BGO #379529)
+
 2006-11-25  Ruben Vermeersch  <ruben@savanne.be>
 
 	* data/banshee.glade: Lower the border size of vbox3 to zero. 
