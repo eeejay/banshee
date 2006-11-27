@@ -6,7 +6,15 @@ using NDesk.DBus;
 
 namespace Hal
 {
-    internal delegate void DBusPropertyModifiedHandler(string key, bool added, bool removed);
+    public struct PropertyModification
+    {
+        public string Key;
+        public bool Added;
+        public bool Removed;
+    }
+
+    internal delegate void DBusPropertyModifiedHandler(int modificationsLength, 
+        PropertyModification [] modifications);
     
     [Interface("org.freedesktop.Hal.Device")]
     internal interface IDevice
@@ -60,27 +68,15 @@ namespace Hal
 
     public class PropertyModifiedArgs : EventArgs
     {
-        private string key;
-        private bool added;
-        private bool removed;
+        private PropertyModification [] modifications;
         
-        public PropertyModifiedArgs(string key, bool added, bool removed)
+        public PropertyModifiedArgs(PropertyModification [] modifications)
         {
-            this.key = key;
-            this.added = added;
-            this.removed = removed;
+            this.modifications = modifications;
         }
         
-        public string Key {
-            get { return key; }
-        }
-        
-        public bool Added {
-            get { return added; }
-        }
-        
-        public bool Removed {
-            get { return removed; }
+        public PropertyModification [] Modifications {
+            get { return modifications; }
         }
     }
 
@@ -120,10 +116,16 @@ namespace Hal
             return devices;
         }
         
-        protected virtual void OnPropertyModified(string key, bool added, bool removed)
+        protected virtual void OnPropertyModified(int modificationsLength, PropertyModification [] modifications)
         {
-            if(PropertyModified != null)
-                PropertyModified(this, new PropertyModifiedArgs(key, added, removed));
+            if(modifications.Length != modificationsLength) {
+                throw new ApplicationException("Number of modified properties does not match");
+            }
+        
+            PropertyModifiedHandler handler = PropertyModified;
+            if(handler != null) {
+                handler(this, new PropertyModifiedArgs(modifications));   
+            }
         }
         
         public void Lock(string reason)

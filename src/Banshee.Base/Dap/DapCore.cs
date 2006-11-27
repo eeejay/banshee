@@ -134,27 +134,39 @@ namespace Banshee.Dap
             RemoveDevice(args.Udi);
         }
         
+        private static List<Device> mount_wait_list = new List<Device>();
+        
         internal static void QueueWaitForVolumeMount(Device device)
         {
-            if(!device.PropertyExists("volume.policy.should_mount") || 
-                !device.GetPropertyBoolean("volume.policy.should_mount") ||
-                (device.PropertyExists("volume.is_disc") && 
-                    device.GetPropertyBoolean("volume.is_disc"))) {
-                return;
+            lock(device) {
+                if(mount_wait_list.Contains(device) ||
+                    !device.PropertyExists("volume.policy.should_mount") ||
+                    !device.GetPropertyBoolean("volume.policy.should_mount") ||
+                    (device.PropertyExists("volume.is_disc") && 
+                        device.GetPropertyBoolean("volume.is_disc"))) {
+                    return;
+                }
+                
+                lock(((ICollection)mount_wait_list).SyncRoot) {
+                    mount_wait_list.Add(device);
+                    device.PropertyModified += OnDevicePropertyModified;
+                }
             }
-
-            device.PropertyModified += OnDevicePropertyModified;
         }
         
         private static void OnDevicePropertyModified(object o, PropertyModifiedArgs args)
         {
             Device device = o as Device;
-            if(device.GetPropertyBoolean("volume.is_mounted")) {
-                device.PropertyModified -= OnDevicePropertyModified;
-                GLib.Timeout.Add(50, delegate {
-                    AddDevice(device);
-                    return false;
-                });
+            lock(device) {
+                foreach(Hal.PropertyModification property in args.Modifications) {
+                    if(property.Key == "volume.is_mounted" && device.GetPropertyBoolean("volume.is_mounted")) {
+                        device.PropertyModified -= OnDevicePropertyModified;
+                        AddDevice(device);
+                        lock(((ICollection)mount_wait_list).SyncRoot) {
+                            mount_wait_list.Remove(device);
+                        }
+                    }
+                }
             }
         }
         

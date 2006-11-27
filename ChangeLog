@@ -1,3 +1,16 @@
+2006-11-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Dap/DapCore.cs: Work with the new PropertyModified
+	event args, use a registration wait list to make sure the same device
+	doesn't get multiple event handler registrations; this _should_ finally
+	fix all the iPod detection problems - the root of which was outdated
+	and incorrect HAL documentation
+
+	* hal-sharp/Device.cs: Wrap the proper delegate signature of 
+	Hal.Device.PropertyModified which is ia(sbb), not sbb like the outdated
+	HAL specification implies. Thanks to Sebastian Dröge and Alp Toker for
+	looking into the issue.
+
 2006-11-26  Aaron Bockover  <abock@gnome.org>
 
 	* build/Common.Makefile: Reference installed njb-sharp libraries in the
