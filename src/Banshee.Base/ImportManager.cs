@@ -85,8 +85,8 @@ namespace Banshee.Base
         {
             lock(user_event_mutex) {
                 if(user_event == null) {
-                    user_event = new ActiveUserEvent(Catalog.GetString("Importing Songs"));
-                    user_event.CancelMessage = Catalog.GetString("The import process is currently running. Would you like to stop it?");
+                    user_event = new ActiveUserEvent(Title);
+                    user_event.CancelMessage = CancelMessage;
                     user_event.Icon = user_event_icon;
                     user_event.Message = Catalog.GetString("Scanning for songs");
                     total_count = 0;
@@ -117,7 +117,7 @@ namespace Banshee.Base
             double old_progress = user_event.Progress;
             
             if(new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs(new_progress - old_progress) > 0.001) {
-                string disp_progress = String.Format(Catalog.GetString("Importing {0} of {1}"),
+                string disp_progress = String.Format(ProgressMessage,
                     processed_count, total_count);
                 
                 user_event.Header = disp_progress;
@@ -269,6 +269,24 @@ namespace Banshee.Base
             if(scan_ref_count == 0) {
                 DestroyUserEvent();
             }
+        }
+
+        private string title = Catalog.GetString("Importing Songs");
+        public string Title {
+            get { return title; }
+            set { title = value; }
+        }
+
+        private string cancel_message = Catalog.GetString("The import process is currently running. Would you like to stop it?");
+        public string CancelMessage {
+            get { return cancel_message; }
+            set { cancel_message = value; }
+        }
+
+        private string progress_message = Catalog.GetString("Importing {0} of {1}");
+        public string ProgressMessage {
+            get { return progress_message; }
+            set { progress_message = value; }
         }
     }
 }

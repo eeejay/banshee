@@ -238,6 +238,11 @@ namespace Banshee.Dap.MassStorage
             ClearTracks (false);
 
             ImportManager importer = new ImportManager ();
+
+            importer.Title = Catalog.GetString("Loading Songs");
+            importer.CancelMessage = Catalog.GetString("The audio device song loading process is currently running.  Would you like to stop it?");
+            importer.ProgressMessage = Catalog.GetString("Loading {0} of {1}");
+
             importer.ImportRequested += HandleImportRequested;
 
             foreach (string music_dir in AudioFolders) {

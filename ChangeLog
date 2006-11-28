@@ -1,5 +1,14 @@
 2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Base/ImportManager.cs: Expose label strings as public
+	properties.
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Set the strings for the
+	ImportManager to make it clear that the songs are being loaded, not
+	imported from the DAP. Fixes BGO #355880.
+
+2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Lazy load several HAL
 	properties that won't change instead of going over the dbus to get them
 	every time, fixing the managed-dbus related crashes. Allow overriding the
