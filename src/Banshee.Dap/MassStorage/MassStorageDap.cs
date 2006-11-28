@@ -85,10 +85,20 @@ namespace Banshee.Dap.MassStorage
             if(!volume_device.PropertyExists("block.device")) {
                 return InitializeResult.Invalid;
             }
-            
+
             if(!volume_device.PropertyExists("volume.is_mounted") ||
                 !volume_device.GetPropertyBoolean("volume.is_mounted")) {
                 return WaitForVolumeMount(volume_device);
+            }
+            
+            if(player_device["portable_audio_player.type"] == "ipod") {
+                LogCore.Instance.PushInformation(
+                    "Mass Storage Support Ignoring iPod",
+                    "The USB mass storage audio player support ignored an iPod. " +
+                    "Either Banshee's iPod support is broken or missing, or the iPod itself may be corrupted.",
+                    false);
+
+                return InitializeResult.Invalid;
             }
 
             // Detect player via HAL property or presence of .is_audo_player file in root

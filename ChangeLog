@@ -1,3 +1,9 @@
+2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Silently ignore iPods so
+	as not to confuse the user if iPod support isn't installed or their iPod
+	isn't recognized by it. Fixes BGO #355890.
+
 2006-11-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Dap/DapCore.cs: Work with the new PropertyModified
