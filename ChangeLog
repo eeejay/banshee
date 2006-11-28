@@ -1,5 +1,15 @@
 2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Lazy load several HAL
+	properties that won't change instead of going over the dbus to get them
+	every time, fixing the managed-dbus related crashes. Allow overriding the
+	HAL properties (or setting them in case they are missing) in key=value
+	form within the .is_audio_player file.  Display folder depth, audio
+	folders, and playback formats in the DAP properties. Use LogCore instead
+	of Console.WriteLine's in several places.
+
+2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Silently ignore iPods so
 	as not to confuse the user if iPod support isn't installed or their iPod
 	isn't recognized by it. Fixes BGO #355890.

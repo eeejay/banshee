@@ -103,8 +103,51 @@ namespace Banshee.Dap.MassStorage
 
             // Detect player via HAL property or presence of .is_audo_player file in root
             if(player_device["portable_audio_player.access_method"] != "storage" &&
-                !File.Exists(Path.Combine(MountPoint, ".is_audio_player"))) {                
+                !File.Exists(IsAudioPlayerPath)) {                
                 return InitializeResult.Invalid;
+            }
+
+            // Allow the HAL values to be overridden by corresponding key=value pairs in .is_audio_player
+            if (File.Exists(IsAudioPlayerPath)) {
+                StreamReader reader = null;
+                try {
+                    reader = new StreamReader(IsAudioPlayerPath);
+
+                    string line;
+                    while ((line = reader.ReadLine()) != null) {
+                        string [] pieces = line.Split('=');
+                        if (line.StartsWith("#") || pieces == null || pieces.Length != 2)
+                            continue;
+
+                        string key = pieces[0], val = pieces[1];
+
+                        switch (key) {
+                        case "audio_folders":
+                            AudioFolders = val.Split(',');
+                            break;
+
+                        case "output_formats":
+                            PlaybackFormats = val.Split(',');
+                            break;
+
+                        case "folder_depth":
+                            FolderDepth = Int32.Parse(val);
+                            break;
+
+                        case "input_formats":
+                        case "playlist_format":
+                        case "playlist_path":
+                        default:
+                            Console.WriteLine("Unsupported key: {0}", key);
+                            break;
+                        }
+                    }
+                } catch(Exception e) {
+                    LogCore.Instance.PushWarning("Error parsing .is_audio_player file", e.ToString(), false);
+                } finally {
+                    if (reader != null)
+                        reader.Close();
+                }
             }
 
             volume = monitor.GetVolumeForPath(MountPoint);
@@ -119,12 +162,32 @@ namespace Banshee.Dap.MassStorage
 
             base.Initialize(usb_device);
  
+            // Install properties
             if(usb_device.PropertyExists("usb.vendor")) {
                 InstallProperty(Catalog.GetString("Vendor"), usb_device["usb.vendor"]);
             } else if(player_device.PropertyExists("info.vendor")) {
                 InstallProperty(Catalog.GetString("Vendor"), player_device["info.vendor"]);
             }
-            
+
+            if (AudioFolders.Length > 1 || AudioFolders[0] != "") {
+                InstallProperty(String.Format(
+                    Catalog.GetPluralString("Audio Folder", "Audio Folders", AudioFolders.Length), AudioFolders.Length),
+                    System.String.Join("\n", AudioFolders)
+                );
+            }
+
+            if (FolderDepth != -1) {
+                InstallProperty(Catalog.GetString("Required Folder Depth"), FolderDepth.ToString());
+            }
+
+            if (PlaybackFormats.Length > 0) {
+                InstallProperty(String.Format(
+                    Catalog.GetPluralString("Audio Format", "Audio Formats", PlaybackFormats.Length), PlaybackFormats.Length),
+                    System.String.Join("\n", PlaybackFormats)
+                );
+            }
+
+            // Don't continue until the UI is initialized
             if(!Globals.UIManager.IsInitialized) {
                 Globals.UIManager.Initialized += OnUIManagerInitialized;
             } else {
@@ -177,8 +240,9 @@ namespace Banshee.Dap.MassStorage
             ImportManager importer = new ImportManager ();
             importer.ImportRequested += HandleImportRequested;
 
-            foreach (string music_dir in AudioFolders)
+            foreach (string music_dir in AudioFolders) {
                 importer.QueueSource (System.IO.Path.Combine (MountPoint, music_dir));
+            }
         }
 
         private void HandleImportRequested (object o, ImportEventArgs args)
@@ -200,7 +264,7 @@ namespace Banshee.Dap.MassStorage
 
         public override void Synchronize()
         {
-            Console.WriteLine ("Error: Synchronize called on MassStorage DAP");
+            LogCore.Instance.PushError("Synchronize called in MassStorageDap.cs.", "", false);
         }
 
         public override void Eject ()
@@ -214,7 +278,7 @@ namespace Banshee.Dap.MassStorage
             if (succeeded)
                 volume.Eject (EjectCallback);
             else
-                Console.WriteLine ("Failed to unmount.  {0} {1}", error, detailed_error);
+                LogCore.Instance.PushWarning("Failed to unmount mass storage audio player", error + "\n" + detailed_error, false);
         }
 
         private void EjectCallback (bool succeeded, string error, string detailed_error)
@@ -222,7 +286,7 @@ namespace Banshee.Dap.MassStorage
             if (succeeded)
                 base.Eject ();
             else
-                Console.WriteLine ("Failed to eject.  {0} {1}", error, detailed_error);
+                LogCore.Instance.PushWarning("Failed to eject mass storage audio player", error + "\n" + detailed_error, false);
         }
 
         public override void AddTrack(TrackInfo track)
@@ -262,6 +326,7 @@ namespace Banshee.Dap.MassStorage
 
                 TrackInfo new_track = new MassStorageTrackInfo (new SafeUri (new_path));
                 tracks.Add(new_track);
+
                 OnTrackAdded(new_track);
 
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
@@ -284,7 +349,7 @@ namespace Banshee.Dap.MassStorage
                 File.Delete(track.Uri.LocalPath);
                 //Console.WriteLine ("Deleted {0}", track.Uri.LocalPath);
             } catch(Exception) {
-                Console.WriteLine("Could not delete file: " + track.Uri.LocalPath);
+                LogCore.Instance.PushInformation("Could not delete file", track.Uri.LocalPath, false);
             }
 
             // trim empty parent directories
@@ -306,13 +371,7 @@ namespace Banshee.Dap.MassStorage
 
         private string GetTrackPath (TrackInfo track)
         {
-            string file_path = MountPoint;
-
-            // According to the HAL spec, the first folder listed in the audio_folders property
-            // is the folder to write files to.
-            if (AudioFolders != null && AudioFolders.Length > 0) {
-                file_path = System.IO.Path.Combine (file_path, AudioFolders[0]);
-            }
+            string file_path = WritePath;
 
             string artist = FileNamePattern.Escape (track.Artist);
             string album = FileNamePattern.Escape (track.Album);
@@ -320,8 +379,8 @@ namespace Banshee.Dap.MassStorage
 
             // If the folder_depth property exists, we have to put the files in a hiearchy of
             // the exact given depth (not including the mount point/audio_folder).
-            if (player_device.PropertyExists ("portable_audio_player.folder_depth")) {
-                int depth = player_device.GetPropertyInteger ("portable_audio_player.folder_depth");
+            if (FolderDepth != -1) {
+                int depth = FolderDepth;
 
                 if (depth == 0) {
                     // Artist - Album - 01 - Title
@@ -379,36 +438,44 @@ namespace Banshee.Dap.MassStorage
             }
         }
  
+        private string name = null;
         public override string Name {
             get {
-                if (player_device.PropertyExists("info.product"))
-                    return player_device["info.product"];
+                if (name == null) {
+                    if (player_device.PropertyExists("info.product")) {
+                        name = player_device["info.product"];
+                    } else if (volume_device.PropertyExists("volume.label") && 
+                        volume_device["volume.label"].Length > 0) {
+                        name = volume_device["volume.label"];
+                    } else {
+                        name = GenericName;
+                    }
+                }
 
-                if (volume_device.PropertyExists("volume.label") &&
-                    volume_device["volume.label"].Length > 0)
-                    return volume_device["volume.label"];
-
-
-                return GenericName;
+                return name;
             }
         }
         
+        private static string generic_name = Catalog.GetString ("Audio Device");
         public override string GenericName {
             get {
-                return Catalog.GetString ("Audio Device");
+                return generic_name;
             }
         }
         
+        ulong storage_capacity = 0;
         public override ulong StorageCapacity {
             get {
-                try {
-                    if(volume_device.PropertyExists("volume.size")) {
-                        return volume_device.GetPropertyUInt64("volume.size");
+                if (storage_capacity == 0) {
+                    try {
+                        if(volume_device.PropertyExists("volume.size")) {
+                            storage_capacity = volume_device.GetPropertyUInt64("volume.size");
+                        }
+                    } catch {
                     }
-                } catch {
                 }
-                
-                return 0;
+
+                return storage_capacity;
             }
         }
         
@@ -423,7 +490,7 @@ namespace Banshee.Dap.MassStorage
         
         public override ulong StorageUsed {
             get {
-                return StorageCapacity - StorageFree;
+                return Math.Max(StorageCapacity - StorageFree, 0);
             }
         }
 
@@ -445,24 +512,93 @@ namespace Banshee.Dap.MassStorage
             get { return false; }
         }
 
+        private string mount_point = null;
         public string MountPoint {
             get {
-                return volume_device ["volume.mount_point"];
+                if (mount_point == null) {
+                    mount_point =  volume_device ["volume.mount_point"];
+                }
+
+                return mount_point;
             }
+        }
+
+        private int folder_depth = -2;
+        public int FolderDepth {
+            get {
+                if (folder_depth == -2) {
+                    if (player_device.PropertyExists ("portable_audio_player.folder_depth")) {
+                        folder_depth = player_device.GetPropertyInteger ("portable_audio_player.folder_depth");
+                    } else {
+                        folder_depth = -1;
+                    }
+                }
+
+                return folder_depth;
+            }
+
+            protected set { folder_depth = value; }
+        }
+
+        private string write_path = null;
+        public string WritePath {
+            get {
+                if (write_path == null) {
+                    write_path = MountPoint;
+                    // According to the HAL spec, the first folder listed in the audio_folders property
+                    // is the folder to write files to.
+                    if (AudioFolders != null && AudioFolders.Length > 0) {
+                        write_path = System.IO.Path.Combine (write_path, AudioFolders[0]);
+                    }
+                }
+
+                return write_path;
+            }
+
+            protected set { write_path = value; }
         }
 
         // The path relative to the mount point where music is stored
+        private string [] audio_folders = null;
         public string [] AudioFolders {
             get {
-                if (! player_device.PropertyExists ("portable_audio_player.audio_folders"))
-                    return new string [] {""};
+                if (audio_folders == null) {
+                    if (player_device.PropertyExists ("portable_audio_player.audio_folders")) {
+                        audio_folders = player_device.GetPropertyStringList ("portable_audio_player.audio_folders");
+                    } else {
+                        audio_folders = new string [] {""};
+                    }
+                }
 
-                return player_device.GetPropertyStringList ("portable_audio_player.audio_folders");
+                return audio_folders;
+            }
+
+            protected set {
+                audio_folders = value;
+                WritePath = null;
             }
         }
-    }
 
-    //[DapProperties(DapType = DapType.NonGeneric)]
-    //[SupportedCodec(CodecType.Mp3)]
-    //[SupportedCodec(CodecType.Mp4)]
+        private string [] playback_formats = null;
+        public string [] PlaybackFormats {
+            get {
+                if (playback_formats == null) {
+                    if (player_device.PropertyExists ("portable_audio_player.output_formats")) {
+                        playback_formats = player_device.GetPropertyStringList ("portable_audio_player.output_formats");
+                    } else {
+                        playback_formats = new string [] {};
+                    }
+                }
+
+                return playback_formats;
+            }
+
+            protected set { playback_formats = value; }
+        }
+
+        protected string IsAudioPlayerPath {
+            get { return Path.Combine(MountPoint, ".is_audio_player"); }
+        }
+
+    }
 }
