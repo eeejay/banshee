@@ -126,7 +126,15 @@ namespace Banshee.Dap
         
         private static void OnHalDeviceAdded(object o, DeviceAddedArgs args)
         {
-            AddDevice(args.Device);
+            Device device = args.Device;
+            if(device["info.category"] == "portable_audio_player" ||
+                (device["info.category"] == "volume" &&
+                device.PropertyExists("volume.policy.should_mount") &&
+                device.GetPropertyBoolean("volume.policy.should_mount") &&
+                (!device.PropertyExists("volume.is_disc") || 
+                !device.GetPropertyBoolean("volume.is_disc")))) {
+                AddDevice(args.Device);
+            }
         }
         
         private static void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
@@ -139,16 +147,24 @@ namespace Banshee.Dap
         internal static void QueueWaitForVolumeMount(Device device)
         {
             lock(device) {
-                if(mount_wait_list.Contains(device) ||
-                    !device.PropertyExists("volume.policy.should_mount") ||
+                if(mount_wait_list.Contains(device) || 
+                    (device.PropertyExists("block.is_volume") && 
+                    !device.GetPropertyBoolean("block.is_volume"))) {
+                    return;
+                }
+                
+                if(!device.PropertyExists("volume.policy.should_mount") ||
                     !device.GetPropertyBoolean("volume.policy.should_mount") ||
                     (device.PropertyExists("volume.is_disc") && 
-                        device.GetPropertyBoolean("volume.is_disc"))) {
+                    device.GetPropertyBoolean("volume.is_disc"))) {
+                    LogCore.Instance.PushDebug("Discarding possible DAP", 
+                        "Either volume.is_disc = true or volume.policy.should_mount = false (" + device.Udi + ")");
                     return;
                 }
                 
                 lock(((ICollection)mount_wait_list).SyncRoot) {
                     mount_wait_list.Add(device);
+                    LogCore.Instance.PushDebug("Waiting for possible DAP to mount", device.Udi);
                     device.PropertyModified += OnDevicePropertyModified;
                 }
             }
@@ -161,6 +177,7 @@ namespace Banshee.Dap
                 foreach(Hal.PropertyModification property in args.Modifications) {
                     if(property.Key == "volume.is_mounted" && device.GetPropertyBoolean("volume.is_mounted")) {
                         device.PropertyModified -= OnDevicePropertyModified;
+                        LogCore.Instance.PushDebug("Possible DAP has mounted", device.Udi);
                         AddDevice(device);
                         lock(((ICollection)mount_wait_list).SyncRoot) {
                             mount_wait_list.Remove(device);
@@ -177,8 +194,10 @@ namespace Banshee.Dap
                 Device device = new Device(udi);
                 if(device.PropertyExists("volume.policy.should_mount") && 
                     device.GetPropertyBoolean("volume.policy.should_mount")) {
-                    if(device.PropertyExists("volume.is_disc") && 
-                        device.GetPropertyBoolean("volume.is_disc")) {
+                    if((device.PropertyExists("volume.is_disc") && 
+                        device.GetPropertyBoolean("volume.is_disc")) || 
+                        (device.PropertyExists("volume.ignore") &&
+                        device.GetPropertyBoolean("volume.ignore"))) {
                         continue;
                     }
                     
@@ -194,11 +213,15 @@ namespace Banshee.Dap
         
         private static bool AddDevice(Device device)
         {
+            LogCore.Instance.PushDebug("Testing device for DAP support", device.Udi);
+        
             foreach(Type type in supported_dap_types) {
                 if(AddDevice(device, type)) {
                     return true;
                 }
             }
+            
+            LogCore.Instance.PushDebug("DAP has not been added", device.Udi);
 
             return false;
         }
@@ -215,6 +238,7 @@ namespace Banshee.Dap
                     switch(dap.Initialize(device)) {
                         case InitializeResult.Valid:
                             AddDevice(device, dap);
+                            LogCore.Instance.PushDebug("DAP has been added", type.FullName + ": " + device.Udi);
                             return true;
                         default:
                             break;

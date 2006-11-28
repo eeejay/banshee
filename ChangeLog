@@ -1,3 +1,8 @@
+2006-11-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Dap/DapCore.cs: Added some debug logging calls; respect
+	volume.ignore
+
 2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Trim white space from
