@@ -402,7 +402,7 @@ namespace Banshee.Dap.MassStorage
                 } else {
                     // If the *required* depth is more than 2..go nuts!
                     for (int i = 0; i < depth - 2; i++) {
-                        file_path = System.IO.Path.Combine (file_path, artist.Substring (0, Math.Min (i, artist.Length)));
+                        file_path = System.IO.Path.Combine (file_path, artist.Substring(0, Math.Min (i, artist.Length)).Trim());
                     }
 
                     // Finally add on the Artist/Album/01 - Track

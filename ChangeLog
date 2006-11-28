@@ -1,5 +1,10 @@
 2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Trim white space from
+	directory names to prevent bug.  Fixes BGO #375146.
+
+2006-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Banshee.Base/ImportManager.cs: Expose label strings as public
 	properties.
 
