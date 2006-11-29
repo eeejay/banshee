@@ -45,6 +45,7 @@ EXTRA_DIST = \
 	music-player-banshee-16.png \
 	music-player-banshee-22.png \
 	music-player-banshee-24.png \
+	music-player-banshee-32.png \
 	music-player-banshee.png \
 	music-player-banshee.svg \
 	now-playing-arrow.png \

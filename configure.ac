@@ -65,14 +65,14 @@ dnl Mono
 SHAMROCK_CHECK_MONO_MODULE(1.1.10)
 SHAMROCK_FIND_MONO_2_0_COMPILER
 SHAMROCK_FIND_MONO_RUNTIME
-SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES(	
-	System.Data,
-	System.Web,
-	System.Web.Services,
-	Mono.Cairo, 
-	Mono.Data.SqliteClient, 
-	Mono.Posix,
-)
+SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([	
+	System.Data
+	System.Web
+	System.Web.Services
+	Mono.Cairo
+	Mono.Data.SqliteClient
+	Mono.Posix
+])
 BANSHEE_VERIFY_GMCS
 
 dnl Check for Boo
@@ -294,27 +294,12 @@ dnl GConf
 AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
 
-dnl Find the real @libdir@
-
-expanded_libdir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
-		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
-		   eval echo $libdir )`
-AC_SUBST(expanded_libdir)
-
-expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
-		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
-		   eval echo $datadir )`
-expanded_datadir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
-		   eval echo $expanded_datadir )`
-AC_SUBST(expanded_datadir)
-
-expanded_bindir=`( case $prefix in NONE) prefix=$ac_default_prefix ;; *) ;; esac
-		   case $exec_prefix in NONE) exec_prefix=$prefix ;; *) ;; esac
-		   eval echo $bindir )`
-AC_SUBST(expanded_bindir)
+dnl Expansions
+SHAMROCK_EXPAND_LIBDIR
+SHAMROCK_EXPAND_BINDIR
+SHAMROCK_EXPAND_DATADIR
 
 dnl Defines for C Exec Wrapper (${prefix}/bin/banshee)
-
 AC_DEFINE_UNQUOTED([PREFIX], ["${prefix}"], [install prefix])
 AC_DEFINE_UNQUOTED([LIBDIR], ["${expanded_libdir}"], [libdir])
 AC_DEFINE_UNQUOTED([MONO], ["${MONO}"], [Mono Runtime])
@@ -349,6 +334,7 @@ dbus-sharp/NDesk.DBus.GLib.dll.config
 libbanshee/Makefile
 branding/Makefile
 build/Makefile
+build/m4/Makefile
 src/banshee
 src/Makefile
 src/AssemblyInfo.cs

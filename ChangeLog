@@ -1,3 +1,13 @@
+2006-11-29  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Use Shamrock expansion macros
+
+	* build/Makefile.am:
+	* build/m4/Makefile.am: Added Makefile to EXTRA_DIST the m4 macros
+
+	* data/images/Makefile.am: 
+	* src/BooBuddy/Makefile.am: Add missing files to EXTRA_DIST
+
 2006-11-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Dap/DapCore.cs: Added some debug logging calls; respect
