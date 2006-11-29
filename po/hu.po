@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-17 00:54+0100\n"
-"PO-Revision-Date: 2006-11-17 13:58+0100\n"
+"POT-Creation-Date: 2006-11-29 00:48+0100\n"
+"PO-Revision-Date: 2006-11-29 03:43+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: KBabel 1.11.2\n"
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Country: HUNGARY\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
@@ -1115,7 +1115,7 @@ msgid "Cannot Import CD"
 msgstr "A CD nem importálható"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:362
-#: ../src/Banshee.Base/ImportManager.cs:120
+#: ../src/Banshee.Base/ImportManager.cs:286
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "{1}/{0}. importálása"
@@ -1348,7 +1348,7 @@ msgstr "A nautilus CD-írója nem indítható el"
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
 #. args.FileName, e.GetType(), e.Message);
 #: ../src/Banshee.Base/Banshee.Library/Import.cs:69
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:187
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:266
 msgid "Scanning"
 msgstr "Keresés"
 
@@ -1713,7 +1713,7 @@ msgstr "Mappa importálása a gyűjteménybe"
 msgid "Local Folder"
 msgstr "Helyi mappa"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:102
+#: ../src/Banshee.Base/Dap/DapCore.cs:107
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "A DapCore nem inicializálható, mert a HalCore nem lett inicializálva"
 
@@ -1780,7 +1780,7 @@ msgid "Advanced details"
 msgstr "Speciális részletek"
 
 #: ../src/Banshee.Base/Globals.cs:78 ../src/Banshee.Base/Globals.cs:87
-#: ../src/Banshee.Base/Globals.cs:91 ../src/Banshee.Base/Globals.cs:142
+#: ../src/Banshee.Base/Globals.cs:92 ../src/Banshee.Base/Globals.cs:141
 msgid "Starting background tasks"
 msgstr "Háttérfolyamatok indítása"
 
@@ -1788,48 +1788,51 @@ msgstr "Háttérfolyamatok indítása"
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr "Az eszköztámogatás le lesz tiltva ehhez a példányhoz (nincs HAL)"
 
-#: ../src/Banshee.Base/Globals.cs:92
+#: ../src/Banshee.Base/Globals.cs:91 ../src/Banshee.Base/Globals.cs:129
+msgid "Initializing audio engine"
+msgstr "Hang alrendszer inicializálása"
+
+#: ../src/Banshee.Base/Globals.cs:93
 msgid "Detecting network settings"
 msgstr "Hálózati beállítások felismerése"
 
-#: ../src/Banshee.Base/Globals.cs:93
+#: ../src/Banshee.Base/Globals.cs:94
 msgid "Creating action manager"
 msgstr "Műveletkezelő létrehozása"
 
-#: ../src/Banshee.Base/Globals.cs:94
+#: ../src/Banshee.Base/Globals.cs:95
 msgid "Loading music library"
 msgstr "Gyűjtemény betöltése"
 
-#: ../src/Banshee.Base/Globals.cs:99 ../src/Banshee.Base/Globals.cs:101
-#: ../src/Banshee.Base/Globals.cs:130
-msgid "Initializing audio"
-msgstr "Hang inicializálása"
+#: ../src/Banshee.Base/Globals.cs:100
+msgid "Initializing audio profiles"
+msgstr "Hangprofilok inicializálása"
 
-#: ../src/Banshee.Base/Globals.cs:132
+#: ../src/Banshee.Base/Globals.cs:131
 msgid "Initializing audio CD support"
 msgstr "Hang CD támogatásának inicializálása"
 
-#: ../src/Banshee.Base/Globals.cs:133
+#: ../src/Banshee.Base/Globals.cs:132
 msgid "Audio CD support will be disabled for this instance"
 msgstr "A hang CD támogatása le lesz tiltva ehhez a példányhoz"
 
-#: ../src/Banshee.Base/Globals.cs:135
+#: ../src/Banshee.Base/Globals.cs:134
 msgid "Initializing digital audio player support"
 msgstr "Digitális lejátszó támogatásának inicializálása"
 
-#: ../src/Banshee.Base/Globals.cs:136
+#: ../src/Banshee.Base/Globals.cs:135
 msgid "DAP support will be disabled for this instance"
 msgstr "A Digitális lejátszó támogatása le lesz tiltva ehhez a példányhoz"
 
-#: ../src/Banshee.Base/Globals.cs:138
+#: ../src/Banshee.Base/Globals.cs:137
 msgid "Initializing CD writing support"
 msgstr "CD-írás támogatásának inicializálása"
 
-#: ../src/Banshee.Base/Globals.cs:139
+#: ../src/Banshee.Base/Globals.cs:138
 msgid "CD burning support will be disabled for this instance"
 msgstr "A CD írás támogatása le lesz tiltva ehhez a példányhoz"
 
-#: ../src/Banshee.Base/Globals.cs:141
+#: ../src/Banshee.Base/Globals.cs:140
 msgid "Initializing plugins"
 msgstr "Bővítmények inicializálása"
 
@@ -2038,17 +2041,17 @@ msgstr "Az átkódoló létrehozása nem sikerült"
 msgid "Home Directory"
 msgstr "Saját könyvtár"
 
-#: ../src/Banshee.Base/ImportManager.cs:88
-msgid "Importing Songs"
-msgstr "Dalok importálása"
-
-#: ../src/Banshee.Base/ImportManager.cs:89
-msgid "The import process is currently running. Would you like to stop it?"
-msgstr "Az importálási folyamat jelenleg fut. Meg szeretné állítani?"
-
 #: ../src/Banshee.Base/ImportManager.cs:91
 msgid "Scanning for songs"
 msgstr "Dalok keresése"
+
+#: ../src/Banshee.Base/ImportManager.cs:274
+msgid "Importing Songs"
+msgstr "Dalok importálása"
+
+#: ../src/Banshee.Base/ImportManager.cs:280
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Az importálási folyamat jelenleg fut. Meg szeretné állítani?"
 
 #: ../src/Banshee.Base/Library.cs:125
 msgid "Could not load track from library"
@@ -2413,21 +2416,54 @@ msgstr "Adatbázis újjáépítése"
 msgid "Rebuilding iPod Database..."
 msgstr "Adatbázis újjáépítése folyamatban..."
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:113
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:115
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:167
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:169
 msgid "Vendor"
 msgstr "Gyártó"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:356
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:174
+#, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "Hangmappa"
+msgstr[1] "Hangmappák"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:180
+msgid "Required Folder Depth"
+msgstr "Szükséges mappamélység"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:185
+#, csharp-format
+msgid "Audio Format"
+msgid_plural "Audio Formats"
+msgstr[0] "Hangformátum"
+msgstr[1] "Hangformátumok"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:242
+msgid "Loading Songs"
+msgstr "Dalok betöltése"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:243
+msgid ""
+"The audio device song loading process is currently running.  Would you like "
+"to stop it?"
+msgstr "A hangeszköz dalbetöltési folyamata jelenleg fut. Meg szeretné állítani?"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:244
+#, csharp-format
+msgid "Loading {0} of {1}"
+msgstr "{1}/{0}. betöltése"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:430
 msgid "Copying Songs"
 msgstr "Dalok másolása"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:357
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:431
 #, csharp-format
 msgid "Copying {0} of {1}"
 msgstr "{1}/{0}. másolása"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:388
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:464
 msgid "Audio Device"
 msgstr "Hangeszköz"
 
@@ -2608,9 +2644,12 @@ msgid ""
 "an intentional limitation by Apple in iTunes® 7 and we apologize for the "
 "unfortunate inconvenience."
 msgstr ""
-"Az iTunes® 7 új kompatibilitási problémákat vezetett be és jelenleg csak az iTunes® 7 kliensekkel működik együtt.\n"
+"Az iTunes® 7 új kompatibilitási problémákat vezetett be és jelenleg csak az "
+"iTunes® 7 kliensekkel működik együtt.\n"
 "\n"
-"Az iTunes® zenemegosztásokhoz már nem képesek harmadik féltől származó kliensek csatlakozni. Ez egy szándékos korlátozás az Apple részéről az iTunes® 7 programban és mi kérünk elnézést a kellemetlenségért."
+"Az iTunes® zenemegosztásokhoz már nem képesek harmadik féltől származó "
+"kliensek csatlakozni. Ez egy szándékos korlátozás az Apple részéről az "
+"iTunes® 7 programban és mi kérünk elnézést a kellemetlenségért."
 
 #: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:102
 msgid "Common reasons for connection failures:"
