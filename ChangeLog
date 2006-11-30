@@ -1,5 +1,10 @@
 2006-11-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Dap/DapCore.cs: Use volume.fsusage=filesystem instead
+	of volume.policy.should_mount
+
+2006-11-29  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Use Shamrock expansion macros
 
 	* build/Makefile.am:

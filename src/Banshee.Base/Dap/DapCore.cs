@@ -129,8 +129,8 @@ namespace Banshee.Dap
             Device device = args.Device;
             if(device["info.category"] == "portable_audio_player" ||
                 (device["info.category"] == "volume" &&
-                device.PropertyExists("volume.policy.should_mount") &&
-                device.GetPropertyBoolean("volume.policy.should_mount") &&
+                device.PropertyExists("volume.fsusage") &&
+                device["volume.fsusage"] == "filesystem" &&
                 (!device.PropertyExists("volume.is_disc") || 
                 !device.GetPropertyBoolean("volume.is_disc")))) {
                 AddDevice(args.Device);
@@ -153,12 +153,12 @@ namespace Banshee.Dap
                     return;
                 }
                 
-                if(!device.PropertyExists("volume.policy.should_mount") ||
-                    !device.GetPropertyBoolean("volume.policy.should_mount") ||
+                if(!device.PropertyExists("volume.fsusage") ||
+                    device["volume.fsusage"] != "filesystem" ||
                     (device.PropertyExists("volume.is_disc") && 
                     device.GetPropertyBoolean("volume.is_disc"))) {
                     LogCore.Instance.PushDebug("Discarding possible DAP", 
-                        "Either volume.is_disc = true or volume.policy.should_mount = false (" + device.Udi + ")");
+                        "Either volume.is_disc = true or volume.fsusage != 'filesystem' (" + device.Udi + ")");
                     return;
                 }
                 
@@ -192,8 +192,8 @@ namespace Banshee.Dap
             // All volume devices, should cover all storage based players
             foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("info.category", "volume")) {
                 Device device = new Device(udi);
-                if(device.PropertyExists("volume.policy.should_mount") && 
-                    device.GetPropertyBoolean("volume.policy.should_mount")) {
+                if(device.PropertyExists("volume.fsusage") && 
+                    device["volume.fsusage"] == "filesystem") {
                     if((device.PropertyExists("volume.is_disc") && 
                         device.GetPropertyBoolean("volume.is_disc")) || 
                         (device.PropertyExists("volume.ignore") &&
