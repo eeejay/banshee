@@ -1,6 +1,17 @@
-<?xml version="1.0"?>
+'<?xml version="1.0"?>
 <gconfschemafile>
   <schemalist>
+    <schema>
+      <key>/schemas/apps/Banshee/WriteMetadata</key>
+      <applyto>/apps/Banshee/WriteMetadata</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Write metadata back to audio files</short>
+        <long>If enabled, metadata (tags) will be written back to audio files when using the track metadata editor.</long>
+      </locale>
+    </schema>
     <schema>
       <key>/schemas/apps/Banshee/IOBackend</key>
       <applyto>/apps/Banshee/IOBackend</applyto>

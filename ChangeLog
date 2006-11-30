@@ -1,5 +1,9 @@
 2006-11-29  Aaron Bockover  <abock@gnome.org>
 
+	* data/banshee.schemas.in: Added WriteMetadata schema
+
+2006-11-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Dap/DapCore.cs: Use volume.fsusage=filesystem instead
 	of volume.policy.should_mount
 
