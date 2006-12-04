@@ -1,5 +1,9 @@
 2006-12-04  Aaron Bockover  <abock@gnome.org>
 
+	* build/m4/shamrock/expansions.m4: Fixed datadir expansion macro
+
+2006-12-04  Aaron Bockover  <abock@gnome.org>
+
 	* data/banshee-dialogs.glade: 
 	* src/Banshee.Base/Gui/PreferencesDialog.cs: Added file/folder pattern
 	boxes and fixed up mnemonics

@@ -32,24 +32,19 @@ AC_DEFUN([SHAMROCK_EXPAND_BINDIR],
 
 AC_DEFUN([SHAMROCK_EXPAND_DATADIR],
 [
-	expanded_datadir=`(
-		case $prefix in 
-			NONE) prefix=$ac_default_prefix ;; 
-			*) ;; 
-		esac
-		case $exec_prefix in 
-			NONE) exec_prefix=$prefix ;; 
-			*) ;; 
-		esac
-		eval echo $datadir
-	)`
-	expanded_datadir=`(
-		case $prefix in
-			NONE) prefix = $ac_default_prefix ;;
-			*) ;;
-		esac
-		eval echo $expanded_datadir
-	)`
+	case $prefix in
+		NONE) prefix=$ac_default_prefix ;;
+		*) ;;
+	esac
+
+	case $exec_prefix in
+		NONE) exec_prefix=$prefix ;;
+		*) ;;
+	esac
+
+	expanded_datadir=`(eval echo $datadir)`
+	expanded_datadir=`(eval echo $expanded_datadir)`
+
 	AC_SUBST(expanded_datadir)
 ])
 
