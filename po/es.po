@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-07 11:15+0100\n"
-"PO-Revision-Date: 2006-11-05 19:18+0100\n"
+"POT-Creation-Date: 2006-12-04 10:51+0100\n"
+"PO-Revision-Date: 2006-12-03 16:33+0100\n"
 "Last-Translator: maria <maria.majadas@hispalinux.es>\n"
 "Language-Team: español <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,60 +97,68 @@ msgid "Height of the main interface window."
 msgstr "Altura de la ventana principal del interfaz."
 
 #: ../data/banshee.schemas.in.h:10
+msgid ""
+"If enabled, metadata (tags) will be written back to audio files when using "
+"the track metadata editor."
+msgstr ""
+"Si está activado, los metadatos (etiquetas) se escribirán en los "
+"archivos de audio cuando se utilice el editor de metadatos de pistas."
+
+#: ../data/banshee.schemas.in.h:11
 msgid "Move music on info save"
 msgstr "Mueve la música al guardar la información"
 
-#: ../data/banshee.schemas.in.h:11
+#: ../data/banshee.schemas.in.h:12
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Mueve la música dentro del directorio de la fonoteca de Banshee cuando se "
 "guarda la información de una canción"
 
-#: ../data/banshee.schemas.in.h:12
+#: ../data/banshee.schemas.in.h:13
 msgid "Name of media playback engine."
 msgstr "Nombre del motor de reproducción de medios."
 
-#: ../data/banshee.schemas.in.h:13
+#: ../data/banshee.schemas.in.h:14
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Posición de píxel de la ventana principal del Reproductor en el eje X"
 
-#: ../data/banshee.schemas.in.h:14
+#: ../data/banshee.schemas.in.h:15
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Posición de píxel de la ventana principal del reproductor en el eje Y"
 
-#: ../data/banshee.schemas.in.h:15
+#: ../data/banshee.schemas.in.h:16
 msgid "Player Engine Name"
 msgstr "Nombre del motor de reproducción"
 
-#: ../data/banshee.schemas.in.h:16
+#: ../data/banshee.schemas.in.h:17
 msgid "Set the IO backend in Banshee"
 msgstr "Establecer el backend de E/S en Banshee"
 
-#: ../data/banshee.schemas.in.h:17
+#: ../data/banshee.schemas.in.h:18
 msgid "Show advanced track properties"
 msgstr "Mostrar las propiedades de pista avanzadas"
 
-#: ../data/banshee.schemas.in.h:18
+#: ../data/banshee.schemas.in.h:19
 msgid "Show the Initial Import Dialog"
 msgstr "Mostrar el diálogo de importación inicial"
 
-#: ../data/banshee.schemas.in.h:19
+#: ../data/banshee.schemas.in.h:20
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr ""
 "Mostrar el diálogo de Importación Inicial cuando la fonoteca de Banshee esté "
 "vacía"
 
-#: ../data/banshee.schemas.in.h:20
+#: ../data/banshee.schemas.in.h:21
 msgid "Source View Width"
 msgstr "Ancho de la vista de la fuente"
 
-#: ../data/banshee.schemas.in.h:21
+#: ../data/banshee.schemas.in.h:22
 msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
 "Verdadero si la ventana principal se va a maximizar, falso si no lo está."
 
-#: ../data/banshee.schemas.in.h:22
+#: ../data/banshee.schemas.in.h:23
 msgid ""
 "True if the advanced expander should be expanded in the track properties "
 "dialog, false if it should be closed"
@@ -158,35 +166,35 @@ msgstr ""
 "Verdadero si el expansor avanzado debe expandirse en el diálogo de las "
 "propiedades de la pista, falso si debe cerrarse"
 
-#: ../data/banshee.schemas.in.h:23
+#: ../data/banshee.schemas.in.h:24
 msgid "Visibility of Album Column."
 msgstr "Visibilidad de la columna de Álbum."
 
-#: ../data/banshee.schemas.in.h:24
+#: ../data/banshee.schemas.in.h:25
 msgid "Visibility of Artist Column."
 msgstr "Visibilidad de columna Artista."
 
-#: ../data/banshee.schemas.in.h:25
+#: ../data/banshee.schemas.in.h:26
 msgid "Visibility of Time Column."
 msgstr "Visibilidad de columna Tiempo."
 
-#: ../data/banshee.schemas.in.h:26
+#: ../data/banshee.schemas.in.h:27
 msgid "Visibility of Title Column."
 msgstr "Visibilidad de columna Título."
 
-#: ../data/banshee.schemas.in.h:27
+#: ../data/banshee.schemas.in.h:28
 msgid "Visibility of Track Column."
 msgstr "Visibilidad de la columna Pista."
 
-#: ../data/banshee.schemas.in.h:28
+#: ../data/banshee.schemas.in.h:29
 msgid "Visibility of Year Column."
 msgstr "Visibilidad de columna Año."
 
-#: ../data/banshee.schemas.in.h:29
+#: ../data/banshee.schemas.in.h:30
 msgid "Volume Output Level"
 msgstr "Nivel de volumen de reproducción"
 
-#: ../data/banshee.schemas.in.h:30
+#: ../data/banshee.schemas.in.h:31
 msgid ""
 "Volume of playback relative to mixer output (except on Helix, which sets "
 "volume directly on PCM"
@@ -194,69 +202,73 @@ msgstr ""
 "Volumen de reproducción relativo a la salida del mezclador (excepto en "
 "Helix, que establece el volumen directamente en PCM)"
 
-#: ../data/banshee.schemas.in.h:31
+#: ../data/banshee.schemas.in.h:32
 msgid "Width of Album Column."
 msgstr "Anchura de la columna de Álbum."
 
-#: ../data/banshee.schemas.in.h:32
+#: ../data/banshee.schemas.in.h:33
 msgid "Width of Artist Column."
 msgstr "Anchura de columna Artista."
 
-#: ../data/banshee.schemas.in.h:33
+#: ../data/banshee.schemas.in.h:34
 msgid "Width of Last Played Column."
 msgstr "Anchura de la columna Última reproducción."
 
-#: ../data/banshee.schemas.in.h:34
+#: ../data/banshee.schemas.in.h:35
 msgid "Width of Plays Column."
 msgstr "Anchura de la columna Reproducciones."
 
-#: ../data/banshee.schemas.in.h:35
+#: ../data/banshee.schemas.in.h:36
 msgid "Width of Rating Column."
 msgstr "Anchura de columna Puntuación."
 
-#: ../data/banshee.schemas.in.h:36
+#: ../data/banshee.schemas.in.h:37
 msgid "Width of Source View Column."
 msgstr "Anchura de la columna de Vista de fuente."
 
-#: ../data/banshee.schemas.in.h:37
+#: ../data/banshee.schemas.in.h:38
 msgid "Width of Time Column."
 msgstr "Anchura de columna Tiempo."
 
-#: ../data/banshee.schemas.in.h:38
+#: ../data/banshee.schemas.in.h:39
 msgid "Width of Title Column."
 msgstr "Anchura de columna Título."
 
-#: ../data/banshee.schemas.in.h:39
+#: ../data/banshee.schemas.in.h:40
 msgid "Width of Track Column."
 msgstr "Anchura de la columna Pista."
 
-#: ../data/banshee.schemas.in.h:40
+#: ../data/banshee.schemas.in.h:41
 msgid "Width of Year Column."
 msgstr "Anchura de columna Año."
 
-#: ../data/banshee.schemas.in.h:41
+#: ../data/banshee.schemas.in.h:42
 msgid "Width of the main interface window."
 msgstr "Anchura de la ventana de interfaz principal."
 
-#: ../data/banshee.schemas.in.h:42
+#: ../data/banshee.schemas.in.h:43
 msgid "Window Height"
 msgstr "Altura de la ventana"
 
-#: ../data/banshee.schemas.in.h:43
+#: ../data/banshee.schemas.in.h:44
 msgid "Window Maximized"
 msgstr "Ventana maximizada"
 
-#: ../data/banshee.schemas.in.h:44
+#: ../data/banshee.schemas.in.h:45
 msgid "Window Position X"
 msgstr "Posición de la ventana X"
 
-#: ../data/banshee.schemas.in.h:45
+#: ../data/banshee.schemas.in.h:46
 msgid "Window Position Y"
 msgstr "Posición de la ventana Y"
 
-#: ../data/banshee.schemas.in.h:46
+#: ../data/banshee.schemas.in.h:47
 msgid "Window Width"
 msgstr "Anchura de la ventana"
+
+#: ../data/banshee.schemas.in.h:48
+msgid "Write metadata back to audio files"
+msgstr "Escribir metadatos en los archivos de audio"
 
 #: ../data/banshee-dialogs.glade.h:1
 msgid "0"
@@ -375,6 +387,7 @@ msgid "Artwork"
 msgstr "Portada"
 
 #: ../data/banshee-dialogs.glade.h:30
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:79
 msgid "Back"
 msgstr "Atrás"
 
@@ -518,7 +531,7 @@ msgstr "Desconocido"
 
 #: ../data/banshee-dialogs.glade.h:64
 msgid "Use error-correction when importing"
-msgstr ""
+msgstr "Usar corrección de errores al importar"
 
 #: ../data/banshee-dialogs.glade.h:65
 msgid "Write disc to:"
@@ -1030,6 +1043,7 @@ msgid "Restart the current song"
 msgstr "Repetir la canción actual"
 
 #: ../src/Banshee.Base/ActionManager.cs:331
+#: ../src/Banshee.Base/SourceManager.cs:275
 msgid "Synchronize"
 msgstr "Sincronizar"
 
@@ -1122,7 +1136,7 @@ msgid "Cannot Import CD"
 msgstr "No se puede importar el CD"
 
 #: ../src/Banshee.Base/AudioCdRipper.cs:362
-#: ../src/Banshee.Base/ImportManager.cs:120
+#: ../src/Banshee.Base/ImportManager.cs:286
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importando {0} de {1}"
@@ -1359,7 +1373,7 @@ msgstr "No se pudo ejecutar nautilus-cd-burner"
 #. Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"),
 #. args.FileName, e.GetType(), e.Message);
 #: ../src/Banshee.Base/Banshee.Library/Import.cs:69
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:187
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:266
 msgid "Scanning"
 msgstr "Inspeccionando"
 
@@ -1647,7 +1661,6 @@ msgid "Path"
 msgstr "Ruta"
 
 #: ../src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:56
-#, fuzzy
 msgid "Smart Playlists"
 msgstr "Listas de reproducción inteligentes"
 
@@ -1726,7 +1739,7 @@ msgstr "Importar carpeta a la fonoteca"
 msgid "Local Folder"
 msgstr "Carpeta local"
 
-#: ../src/Banshee.Base/Dap/DapCore.cs:102
+#: ../src/Banshee.Base/Dap/DapCore.cs:107
 msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "No se puede inicializar DapCore porque HalCore no está iniciado"
 
@@ -1793,56 +1806,60 @@ msgid "Advanced details"
 msgstr "Detalles avanzados"
 
 #: ../src/Banshee.Base/Globals.cs:78 ../src/Banshee.Base/Globals.cs:87
-#: ../src/Banshee.Base/Globals.cs:91 ../src/Banshee.Base/Globals.cs:142
+#: ../src/Banshee.Base/Globals.cs:92 ../src/Banshee.Base/Globals.cs:141
 msgid "Starting background tasks"
 msgstr "Empezando tareas secundarias"
 
 #: ../src/Banshee.Base/Globals.cs:88
 msgid "Device support will be disabled for this instance (no HAL)"
-msgstr "El soporte del dispositivo será deshabilitado para esta instancia (sin HAL)"
+msgstr ""
+"El soporte del dispositivo será deshabilitado para esta instancia (sin HAL)"
 
-#: ../src/Banshee.Base/Globals.cs:92
+#: ../src/Banshee.Base/Globals.cs:91 ../src/Banshee.Base/Globals.cs:129
+msgid "Initializing audio engine"
+msgstr "Inicializando motor de audio"
+
+#: ../src/Banshee.Base/Globals.cs:93
 msgid "Detecting network settings"
 msgstr "Detectando ajustes de la red"
 
-#: ../src/Banshee.Base/Globals.cs:93
+#: ../src/Banshee.Base/Globals.cs:94
 msgid "Creating action manager"
 msgstr "Creando gestor de acciones"
 
-#: ../src/Banshee.Base/Globals.cs:94
+#: ../src/Banshee.Base/Globals.cs:95
 msgid "Loading music library"
 msgstr "Cargando fonoteca"
 
-#: ../src/Banshee.Base/Globals.cs:99 ../src/Banshee.Base/Globals.cs:101
-#: ../src/Banshee.Base/Globals.cs:130
-msgid "Initializing audio"
-msgstr "Inicializando audio"
+#: ../src/Banshee.Base/Globals.cs:100
+msgid "Initializing audio profiles"
+msgstr "Inicializando perfiles de audio"
 
-#: ../src/Banshee.Base/Globals.cs:132
+#: ../src/Banshee.Base/Globals.cs:131
 msgid "Initializing audio CD support"
 msgstr "Inicializando soporte de audio CD"
 
-#: ../src/Banshee.Base/Globals.cs:133
+#: ../src/Banshee.Base/Globals.cs:132
 msgid "Audio CD support will be disabled for this instance"
 msgstr "El soporte de audio CD será deshabilitado para esta instancia"
 
-#: ../src/Banshee.Base/Globals.cs:135
+#: ../src/Banshee.Base/Globals.cs:134
 msgid "Initializing digital audio player support"
 msgstr "Inicializando soporte de reproductor de audio digital"
 
-#: ../src/Banshee.Base/Globals.cs:136
+#: ../src/Banshee.Base/Globals.cs:135
 msgid "DAP support will be disabled for this instance"
 msgstr "El soporte DAP será deshabilitado para esta instancia"
 
-#: ../src/Banshee.Base/Globals.cs:138
+#: ../src/Banshee.Base/Globals.cs:137
 msgid "Initializing CD writing support"
 msgstr "Inicializando el soporte de grabación de CD"
 
-#: ../src/Banshee.Base/Globals.cs:139
+#: ../src/Banshee.Base/Globals.cs:138
 msgid "CD burning support will be disabled for this instance"
 msgstr "El soporte para grabar CD será deshabilitado para esta instancia"
 
-#: ../src/Banshee.Base/Globals.cs:141
+#: ../src/Banshee.Base/Globals.cs:140
 msgid "Initializing plugins"
 msgstr "Inicializando complementos"
 
@@ -2052,17 +2069,17 @@ msgstr "No se pudo crear el transcodificador"
 msgid "Home Directory"
 msgstr "Directorio personal"
 
-#: ../src/Banshee.Base/ImportManager.cs:88
-msgid "Importing Songs"
-msgstr "Importando canciones"
-
-#: ../src/Banshee.Base/ImportManager.cs:89
-msgid "The import process is currently running. Would you like to stop it?"
-msgstr "El proceso de importación está ejecutándose. ¿Quiere pararlo?"
-
 #: ../src/Banshee.Base/ImportManager.cs:91
 msgid "Scanning for songs"
 msgstr "Buscando canciones"
+
+#: ../src/Banshee.Base/ImportManager.cs:274
+msgid "Importing Songs"
+msgstr "Importando canciones"
+
+#: ../src/Banshee.Base/ImportManager.cs:280
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "El proceso de importación está ejecutándose. ¿Quiere pararlo?"
 
 #: ../src/Banshee.Base/Library.cs:125
 msgid "Could not load track from library"
@@ -2129,6 +2146,15 @@ msgstr "Configuración"
 #, csharp-format
 msgid "Delete {0}"
 msgstr "Borrar {0}"
+
+#: ../src/Banshee.Base/SourceManager.cs:264
+msgid "Import"
+msgstr "Importar"
+
+#: ../src/Banshee.Base/SourceManager.cs:282
+#, csharp-format
+msgid "Rename {0}"
+msgstr "Renombrar {0}"
 
 #: ../src/Banshee.Base/Sources/AudioCdSource.cs:51
 msgid "Eject CD"
@@ -2332,8 +2358,8 @@ msgid ""
 "Please consider submitting information about your iPod to the Banshee "
 "Project so your iPod may be more fully identified in the future.\n"
 msgstr ""
-"Por favor, considere enviar información sobre su iPod para el proyecto "
-"de Banshee para que así su iPod sea completamente identificado en el futuro.\n"
+"Por favor, considere enviar información sobre su iPod para el proyecto de "
+"Banshee para que así su iPod sea completamente identificado en el futuro.\n"
 
 #: ../src/Banshee.Dap/Ipod/IpodDap.cs:136
 msgid "Do not ask me again"
@@ -2376,11 +2402,12 @@ msgid ""
 "Banshee can either rebuild the database or you will have to wait for the new "
 "iTunes version to be supported by Banshee."
 msgstr ""
-"Ha usado este iPod con una versión de iTunes que guarda una versión de "
-"la base de datos de canciones del iPod que es demasiado nueva para que la reconozca Banshee.\n"
+"Ha usado este iPod con una versión de iTunes que guarda una versión de la "
+"base de datos de canciones del iPod que es demasiado nueva para que la "
+"reconozca Banshee.\n"
 "\n"
-"Banshee puede o bien reconstruir la base de datos o bien tendrá que esperar hasta "
-"que la nueva versión de iTunes sea soportada por Banshee."
+"Banshee puede o bien reconstruir la base de datos o bien tendrá que esperar "
+"hasta que la nueva versión de iTunes sea soportada por Banshee."
 
 #: ../src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs:89
 msgid ""
@@ -2425,21 +2452,56 @@ msgstr "Reconstruir base de datos"
 msgid "Rebuilding iPod Database..."
 msgstr "Reconstruyendo base de datos del iPod…"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:113
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:115
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:167
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:169
 msgid "Vendor"
 msgstr "Fabricante"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:356
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:174
+#, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "Carpeta de audio"
+msgstr[1] "Carpetas de audio"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:180
+msgid "Required Folder Depth"
+msgstr "Profundidad de carpeta requerida"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:185
+#, csharp-format
+msgid "Audio Format"
+msgid_plural "Audio Formats"
+msgstr[0] "Formato de audio"
+msgstr[1] "Formatos de audio"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:242
+msgid "Loading Songs"
+msgstr "Cargando canciones"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:243
+msgid ""
+"The audio device song loading process is currently running.  Would you like "
+"to stop it?"
+msgstr ""
+"El proceso de carga de canciones al dispositivo de audio está ejecutándose. "
+"¿Quiere pararlo?"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:244
+#, csharp-format
+msgid "Loading {0} of {1}"
+msgstr "Cargando {0} de {1}"
+
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:430
 msgid "Copying Songs"
 msgstr "Copiando canciones"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:357
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:431
 #, csharp-format
 msgid "Copying {0} of {1}"
 msgstr "Copiando {0} de {1}"
 
-#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:388
+#: ../src/Banshee.Dap/MassStorage/MassStorageDap.cs:464
 msgid "Audio Device"
 msgstr "Dispositivo de sonido"
 
@@ -2596,9 +2658,65 @@ msgstr "Compartir mi fonoteca con otros"
 msgid "Share name:"
 msgstr "Nombre de la compartición:"
 
+#: ../src/Banshee.Plugins/Daap/DaapContainerSource.cs:43
+msgid "Shared Music"
+msgstr "Música compartida"
+
 #: ../src/Banshee.Plugins/Daap/DaapCore.cs:74
 msgid "Banshee Music Share"
 msgstr "Compartición de música de Banshee"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:64
+msgid "Disconnected from music share"
+msgstr "Desconectarse de la compartición de música"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:65
+msgid "Unable to connect to music share"
+msgstr "No es posible conectar a la compartición de música"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:92
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
+msgstr ""
+"iTunes® 7 introdujo nuevos problemas de compatibilidad y sólo funciona con "
+"otros clientes de  iTunes® 7.\n"
+"\n"
+"NIngún cliente de terceras partes puede conectarse a comparticiones de música de "
+"iTunes® nunca más. Esto es una limitación intencionada de Apple en iTunes® 7 y "
+"pedimos disculpas por las infortunadas incovenencias."
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:102
+msgid "Common reasons for connection failures:"
+msgstr "Razones comunes de fallos de conexión:"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:108
+msgid "The provided login credentials are invalid"
+msgstr "Las credenciales de entrada que se han provisto son inválidas"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:109
+msgid "The login process was canceled"
+msgstr "El proceso de entrada ha sido cancelado"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:110
+msgid "Too many users are connected to this share"
+msgstr "Muchos usuarios están conectados a esta compartición"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:112
+msgid "You are no longer connected to this music share"
+msgstr "Ya no está conectado a esta compartición de música"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:116
+msgid "Try connecting again"
+msgstr "Intente conectarse otra vez"
+
+#: ../src/Banshee.Plugins/Daap/DaapErrorView.cs:130
+msgid "The music share is hosted by iTunes® 7"
+msgstr "La compartición de música está alojada en iTunes® 7"
 
 #: ../src/Banshee.Plugins/Daap/DaapLoginDialog.cs:47
 msgid "Login to Music Share"
@@ -2740,6 +2858,10 @@ msgstr ""
 "La configuración de los atajos del teclado multimedia está hecha a través de "
 "la aplicación de configuración de Atajos de Teclado de GNOME."
 
+#: ../src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs:57
+msgid "Configure Keyboard Shortcuts"
+msgstr "Configurar atajos del teclado "
+
 #: ../src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:51
 msgid "Multimedia Keys"
 msgstr "Teclas multimedia"
@@ -2761,11 +2883,11 @@ msgstr "Icono del área de notificación"
 msgid "Shows the Notification Area Icon"
 msgstr "Muestra el icono del área de notificación"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:181
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:183
 msgid "Now Playing"
 msgstr "Ahora reproduciendo"
 
-#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:186
+#: ../src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:188
 msgid "Cannot show notification"
 msgstr "No es posible mostrar notificación"
 
@@ -2920,25 +3042,25 @@ msgstr[0] "{0} día"
 msgstr[1] "{0} días"
 
 #: ../src/PlayerInterface.cs:1199
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
-msgstr[0] "horas"
-msgstr[1] "horas"
+msgstr[0] "{0} hora"
+msgstr[1] "{0} horas"
 
 #: ../src/PlayerInterface.cs:1203
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
-msgstr[0] "{0} minutos"
+msgstr[0] "{0} minuto"
 msgstr[1] "{0} minutos"
 
 #: ../src/PlayerInterface.cs:1205
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} segundo"
+msgstr[1] "{0} segundos"
 
 #: ../src/PlayerInterface.cs:1540
 msgid "Clear"
@@ -3010,7 +3132,7 @@ msgstr ""
 #: ../src/PlayerInterface.cs:1995
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
-"cause incompatability with iTunes!"
+"cause incompatibility with iTunes!"
 msgstr ""
 "<b>Atención:</b> Las acciones alterarán o borrarán el contenido existente en "
 "el iPod y podría causar incompatibilidades con iTunes."
@@ -3050,6 +3172,3 @@ msgstr "Reproducciones"
 #: ../src/PlaylistView.cs:528
 msgid "N/A"
 msgstr "N/D"
-
-#~ msgid "{0} Total Play Time"
-#~ msgstr "Tiempo total de reproducción {0}"
