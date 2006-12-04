@@ -119,14 +119,27 @@ Implementation Guidelines
   3. When a platform-specific task needs to be performed, a top-level, 
      generic API must be designed first and then the platform implementation
      of the API can be added. See Banshee.Cdrom for ideas.
-     
-  4. Organize code into logical namespaces:
+   
+  4. Do not hard code path separators. Use Path.DirectorySeparatorChar instead
+     as it is portable to other platforms. 
+
+  5. Try not to perform many string concatenations. Use a StringBuilder if
+     necessary
+   
+  6. Avoid calls to Assembly.GetTypes as memory resulting from these calls
+     will not be GCed.
+
+
+Organization Guidelines
+=======================
+
+  1. Organize code into logical namespaces:
 
       Banshee.Cdrom
       Banshee.Cdrom.Gui
       Banshee.Cdrom.Nautilus
 
-  5. Try to keep GUI as separate as possible from "real work" and keep
+  2. Try to keep GUI as separate as possible from "real work" and keep
      the namespace separate as well, if possible and applicable. For instance,
      Many different CD-ROM backends could be written for different 
      platforms, but the same GUI should be used. Don't put GUI code in
@@ -136,11 +149,11 @@ Implementation Guidelines
       Banshee.Cdrom.Gui
       Banshee.Cdrom.Nautilus
 
-  6. Banshee's sources are layed out in the following way in the build [3]:
+  3. Banshee's sources are layed out in the following way in the build [3]:
 
      src/<assembly-name>/<namespace>/<class-or-interface>.cs
 
-  7. Small member definitions (delegates, argument classes, enums) can go
+  4. Small member definitions (delegates, argument classes, enums) can go
      inside the same file containing the primary class, but classes should
      generally be in separate files. Use logical grouping with files.
 
