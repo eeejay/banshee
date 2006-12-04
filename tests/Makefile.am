@@ -5,7 +5,8 @@ ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES = \
 	$(srcdir)/Banshee.Kernel.cs \
-	$(srcdir)/GenericCollectionController.cs
+	$(srcdir)/GenericCollectionController.cs \
+	$(srcdir)/FileNamePattern.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe

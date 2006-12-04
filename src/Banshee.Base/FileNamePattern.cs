@@ -28,21 +28,172 @@
  
 using System;
 using System.Text.RegularExpressions;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using Mono.Unix;
 
 namespace Banshee.Base
 {
-    public class FileNamePattern
+    public static class FileNamePattern
     {
+        private delegate string ExpandTokenHandler(TrackInfo track, object replace);
+        
+        private struct Conversion
+        {
+            private string token;
+            private string name;
+            private ExpandTokenHandler handler;
+            
+            public Conversion(string token, string name, ExpandTokenHandler handler)
+            {
+                this.token = token;
+                this.name = name;
+                this.handler = handler;
+            }
+            
+            public string Token {
+                get { return token; }
+            }
+            
+            public string Name {
+                get { return name; }
+            }
+            
+            public ExpandTokenHandler Handler {
+                get { return handler; }
+            }
+        }
+    
+        private static SortedList<string, Conversion> conversion_table;
+
+        private static void AddConversion(string token, string name, ExpandTokenHandler handler)
+        {
+            conversion_table.Add(token, new Conversion(token, name, handler));
+        }
+        
+        static FileNamePattern()
+        {
+            conversion_table = new SortedList<string, Conversion>();
+            
+            AddConversion("artist", Catalog.GetString("Artist"),  
+                delegate(TrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayArtist);
+            });
+            
+            AddConversion("album", Catalog.GetString("Album"),  
+                delegate(TrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayAlbum);
+            });
+            
+            AddConversion("title", Catalog.GetString("Title"),  
+                delegate(TrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayTitle);
+            });
+             
+            AddConversion("track_count", Catalog.GetString("Count"),  
+                delegate(TrackInfo t, object r) {
+                    return String.Format("{0:00}", t == null ? (uint)r : t.TrackCount);
+            });
+             
+            AddConversion("track_number", Catalog.GetString("Number"),  
+                delegate(TrackInfo t, object r) {
+                    return String.Format("{0:00}", t == null ? (uint)r : t.TrackNumber);
+            });
+             
+            AddConversion("track_count_nz", Catalog.GetString("Count (unsorted)"),  
+                delegate(TrackInfo t, object r) {
+                    return String.Format("{0}", t == null ? (uint)r : t.TrackCount);
+            });
+             
+            AddConversion("track_number_nz", Catalog.GetString("Number (unsorted)"),  
+                delegate(TrackInfo t, object r) {
+                    return String.Format("{0}", t == null ? (uint)r : t.TrackNumber);
+            });
+            
+            AddConversion("path_sep", Path.DirectorySeparatorChar.ToString(),
+                delegate(TrackInfo t, object r) {
+                    return Path.DirectorySeparatorChar.ToString();
+            });
+        }
+        
+        public static IEnumerable<Conversion> PatternConversions {
+            get {
+                foreach(KeyValuePair<string, Conversion> conversion in conversion_table) {
+                    yield return conversion.Value;
+                }
+            }
+        }
+        
+        public static string DefaultFolder {
+            get { return "%artist%%path_sep%%album%"; }
+        }
+        
+        public static string DefaultFile {
+            get { return "%track_number%. %title%"; }
+        }
+        
+        public static string DefaultPattern {
+            get { return CreateFolderFilePattern(DefaultFolder, DefaultFile); }
+        }
+        
+        private static string [] suggested_folders = new string [] {
+            DefaultFolder,
+            "%artist%%path_sep%%artist% - %album%",
+            "%artist% - %album%",
+            "%album%",
+            "%artist%"
+        };
+        
+        public static string [] SuggestedFolders {
+            get { return suggested_folders; }
+        }
+    
+        private static string [] suggested_files = new string [] {
+            DefaultFile,
+            "%track_number%. %artist% - %title%",
+            "%artist% - %title%",
+            "%artist% - %track_number% - %title%",
+            "%artist% (%album%) - %track_number% - %title%",
+            "%title%"
+        };
+        
+        public static string [] SuggestedFiles {
+            get { return suggested_files; }
+        }
+
+        public static string CreateFolderFilePattern(string folder, string file)
+        {
+            return String.Format("{0}%path_sep%{1}", folder, file);
+        }
+
+        public static string CreatePatternDescription(string pattern)
+        {
+            string repl_pattern = pattern;
+            foreach(Conversion conversion in PatternConversions) {
+                repl_pattern = repl_pattern.Replace("%" + conversion.Token + "%", conversion.Name);
+            }
+            return repl_pattern;
+        }
+
         public static string CreateFromTrackInfo(TrackInfo track)
         {
-            string pattern;
+            string pattern = null;
 
             try {
-                pattern = Globals.Configuration.Get(GConfKeys.FileNamePattern) as string;
-            } catch(Exception) {
-                pattern = null;
+                pattern = CreateFolderFilePattern(
+                    Globals.Configuration.Get(GConfKeys.LibraryFolderPattern) as string,
+                    Globals.Configuration.Get(GConfKeys.LibraryFilePattern) as string
+                );
+            } catch {
+            }
+            
+            if(pattern == null) {
+                try {
+                    // TODO: This key is deprecated in favor of the two above, but checked for compat
+                    pattern = Globals.Configuration.Get(GConfKeys.FileNamePattern_DEPRECATED) as string;
+                } catch(Exception) {
+                    pattern = null;
+                }
             }
             
             return CreateFromTrackInfo(pattern, track);
@@ -50,26 +201,17 @@ namespace Banshee.Base
 
         public static string CreateFromTrackInfo(string pattern, TrackInfo track)
         {
-            Hashtable convtable = new Hashtable();
             string repl_pattern;
 
             if(pattern == null || pattern.Trim() == String.Empty) {
-                repl_pattern = "%artist%/%album%/%track_number%. %title%";
+                repl_pattern = DefaultPattern;
             } else {
                 repl_pattern = pattern;
             }
-            
-            convtable["%artist%"] = Escape(track.DisplayArtist);
-            convtable["%album%"] = Escape(track.DisplayAlbum);
-            convtable["%title%"] = Escape(track.DisplayTitle);
 
-            convtable["%track_count%"] = String.Format("{0:00}", track.TrackCount);
-            convtable["%track_number%"] = String.Format("{0:00}", track.TrackNumber);
-            convtable["%track_count_nz%"] = String.Format("{0}", track.TrackCount);
-            convtable["%track_number_nz%"] = String.Format("{0}", track.TrackNumber);
-
-            foreach(string key in convtable.Keys) {
-                repl_pattern = repl_pattern.Replace(key, convtable[key] as string);
+            foreach(Conversion conversion in PatternConversions) {
+                repl_pattern = repl_pattern.Replace("%" + conversion.Token + "%", 
+                    conversion.Handler(track, null));
             }
             
             return repl_pattern;
@@ -90,8 +232,8 @@ namespace Banshee.Base
             string filename = dir + Path.DirectorySeparatorChar + 
                 Path.GetFileName(songpath);
              
-            if(!Directory.Exists(dir)) {
-                Directory.CreateDirectory(dir);
+            if(!Banshee.IO.IOProxy.Directory.Exists(dir)) {
+                Banshee.IO.IOProxy.Directory.Create(dir);
             }
             
             return filename;
@@ -99,7 +241,7 @@ namespace Banshee.Base
 
         public static string Escape(string input)
         {
-            return Regex.Replace(input, @"[\\/\$\%\?\*:]+", "_");
+            return Regex.Replace(input, @"[\\\\\\/\$\%\?\*:]+", "_");
         }
     }
 }

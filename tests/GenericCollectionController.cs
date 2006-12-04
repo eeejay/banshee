@@ -10,7 +10,7 @@ namespace Banshee.Base.Tests
     [TestFixture]
     public class GenericCollectionControllerTest : GenericCollectionController<GenericCollectionControllerTest.TestTrack>
     {
-        private class TestTrack
+        public class TestTrack
         {
             public int Value;
             

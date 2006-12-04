@@ -1,3 +1,29 @@
+2006-12-04  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-dialogs.glade: 
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Added file/folder pattern
+	boxes and fixed up mnemonics
+	
+	* data/banshee.schemas.in: 
+	* src/Banshee.Base/GConfKeys.cs: Added LibraryFilePattern and 
+	LibraryFolderPattern; deprecated FileNamePattern
+
+	* src/Banshee.Base/Makefile.am: Added SampleTrackInfo.cs
+
+	* src/Banshee.Base/SampleTrackInfo.cs: A sample track info object used
+	for demonstrating file/folder patterns
+
+	* src/Banshee.Base/FileNamePattern.cs: More flexible patterns; broken
+	into file and folder components; tokens have full descriptions and 
+	expansion delegate handlers (the conversion token handles its own
+	expansion)
+
+	* tests/FileNamePattern.cs: Added unit tests for FileNamePattern
+
+	* tests/GenericCollectionController.cs: Fixed broken test
+
+	* tests/Makefile.am: Added FileNamePattern.cs
+
 2006-11-29  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee.schemas.in: Added WriteMetadata schema

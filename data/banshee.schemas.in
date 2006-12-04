@@ -332,14 +332,25 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/Banshee/FileNamePattern</key>
-      <applyto>/apps/Banshee/FileNamePattern</applyto>
+      <key>/schemas/apps/Banshee/LibraryFolderPattern</key>
+      <applyto>/apps/Banshee/LibraryFolderPattern</applyto>
       <owner>banshee</owner>
       <type>string</type>
-      <default>%artist%/%album%/%track_number%. %title%</default>
+      <default>%artist%%path_sep%%album%</default>
       <locale name="C">
-        <short>File Name Pattern</short>
-        <long>Format for creating filenames/directories for ripped tracks, imported music, etc. Format is relative to the Banshee music directory... do not form an absolute path! Tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
+        <short>Library Folder Pattern</short>
+        <long>Format for creating a track folder inside the library. Do not create an absolute path. Path here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/).</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/LibraryFilePattern</key>
+      <applyto>/apps/Banshee/LibraryFilePattern</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default>%track_number%. %title%</default>
+      <locale name="C">
+        <short>Library File Pattern</short>
+        <long>Format for creating a track filename inside the library. Do not use path tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
       </locale>
     </schema>
   </schemalist>

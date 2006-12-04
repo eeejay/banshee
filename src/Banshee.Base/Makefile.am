@@ -255,7 +255,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/PowerManagement.cs \
 	$(srcdir)/ProductInformation.cs \
 	$(srcdir)/DBusPlayer.cs \
-	$(srcdir)/GenericCollectionController.cs
+	$(srcdir)/GenericCollectionController.cs \
+	$(srcdir)/SampleTrackInfo.cs
 
 Banshee_Base_RESOURCES = \
 	data/UIManagerLayout.xml \

@@ -49,7 +49,9 @@ namespace Banshee.Base
         public const string MoveOnInfoSave = BasePath + "MoveOnInfoSave";
         public const string AdditionAction = BasePath + "AdditionAction";
         public const string PlayerEngine = BasePath + "PlayerEngine";
-        public const string FileNamePattern = BasePath + "FileNamePattern";
+        public const string FileNamePattern_DEPRECATED = BasePath + "FileNamePattern"; // deprecated
+        public const string LibraryFilePattern = BasePath + "LibraryFilePattern";
+        public const string LibraryFolderPattern = BasePath + "LibraryFolderPattern";
         public const string EncoderProfiles = BasePath + "EncoderProfiles";
         public const string RippingProfile = BasePath + "ripping_profile";
         public const string RippingBitrate = BasePath + "RippingBitrate";
