@@ -394,6 +394,9 @@ echo "
 banshee-$VERSION
 
     Install Prefix:    ${prefix}
+    Datadir:           ${expanded_datadir}
+    Libdir:            ${expanded_libdir}
+
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
