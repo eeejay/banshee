@@ -1864,7 +1864,7 @@ namespace Banshee
                     if(deleteFromFileSystem) {
                         DeleteSong(track);
                     }
-                } catch (UnauthorizedAccessException e) {
+                } catch (UnauthorizedAccessException) {
                     string header = Catalog.GetString ("Delete songs from drive");
                     string msg = String.Format (Catalog.GetString ("You do not have the required permissions to delete '{0}'"), track.Uri.LocalPath);
                     HigMessageDialog error = new HigMessageDialog (WindowPlayer,

@@ -506,8 +506,10 @@ namespace Banshee
                 case TrackPlaybackError.Drm:
                     suffix = "DRM";
                     break;
-                case TrackPlaybackError.Unknown:
                 case TrackPlaybackError.CodecNotFound:
+                    suffix = Catalog.GetString("No Codec");
+                    break;
+                case TrackPlaybackError.Unknown:
                     suffix = Catalog.GetString("Unknown Error");
                     break;
                 default:

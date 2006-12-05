@@ -1,5 +1,20 @@
 2006-12-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlaylistView.cs: Show a message for TrackPlaybackError.CodecNotFound
+
+	* libbanshee/gst-playback-0.10.c: Extended the error callback to 
+	propagate the error code 
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Update managed
+	delegate and handler to handle the new error code parameter; 
+	Set PlaybackError on the track based on the GStreamer error code, 
+	not the string message
+
+	* src/PlayerInterface.cs:
+	* src/PlaylistModel.cs: Cleaned up unused variables
+
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
 	Patch to fix BGO #340222: Do not stop playing after a playback error
 
 	* src/PlayerInterface.cs: On playback error, advance to the next song

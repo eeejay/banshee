@@ -57,8 +57,6 @@ namespace Banshee
         public event EventHandler Updated;
         public event EventHandler Stopped;
 
-        private uint timeout_id = 0;
-
         public static int NextUid
         {
             get {

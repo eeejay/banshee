@@ -48,7 +48,7 @@ public static class PluginModuleEntry
 namespace Banshee.MediaEngine.Gstreamer
 {
     internal delegate void GstPlaybackEosCallback(IntPtr engine);
-    internal delegate void GstPlaybackErrorCallback(IntPtr engine, IntPtr error, IntPtr debug);
+    internal delegate void GstPlaybackErrorCallback(IntPtr engine, int code, IntPtr error, IntPtr debug);
     internal delegate void GstPlaybackStateChangedCallback(IntPtr engine, int old_state, int new_state, int pending_state);
     internal delegate void GstPlaybackIterateCallback(IntPtr engine);
     internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
@@ -144,7 +144,7 @@ namespace Banshee.MediaEngine.Gstreamer
             OnEventChanged(PlayerEngineEvent.Iterate);
         }
         
-        private void OnError(IntPtr engine, IntPtr error, IntPtr debug)
+        private void OnError(IntPtr engine, int code, IntPtr error, IntPtr debug)
         {
             Close();
             
@@ -157,8 +157,16 @@ namespace Banshee.MediaEngine.Gstreamer
                     GLib.Marshaller.Utf8PtrToString(debug));
             } 
             
-            if(error_message.ToLower().Contains("resource not found")) {
-                CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
+            switch(code) {
+                case 3: 
+                    CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound; 
+                    break;
+                case 6:
+                    CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound; 
+                    break;
+                default:
+                    CurrentTrack.PlaybackError = TrackPlaybackError.Unknown;
+                    break;
             }
             
             OnEventChanged(PlayerEngineEvent.Error, error_message);
