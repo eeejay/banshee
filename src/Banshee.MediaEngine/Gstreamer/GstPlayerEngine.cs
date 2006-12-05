@@ -157,6 +157,10 @@ namespace Banshee.MediaEngine.Gstreamer
                     GLib.Marshaller.Utf8PtrToString(debug));
             } 
             
+            if(error_message.ToLower().Contains("resource not found")) {
+                CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
+            }
+            
             OnEventChanged(PlayerEngineEvent.Error, error_message);
         }
         

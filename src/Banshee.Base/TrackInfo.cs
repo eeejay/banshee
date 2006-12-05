@@ -39,6 +39,14 @@ namespace Banshee.Base
         Failure
     }
     
+    public enum TrackPlaybackError {
+        None,
+        ResourceNotFound,
+        CodecNotFound,
+        Drm,
+        Unknown
+    }
+    
     public class HaveTrackInfoArgs : EventArgs
     {
         public TrackInfo TrackInfo;
@@ -78,6 +86,7 @@ namespace Banshee.Base
         protected bool can_save_to_database;
         protected bool can_play = true;
         protected RemoteLookupStatus remote_lookup_status = RemoteLookupStatus.NoAttempt;
+        protected TrackPlaybackError playback_error = TrackPlaybackError.None;
 
         public Gtk.TreeIter PreviousTrack;
         public Gtk.TreeIter TreeIter;
@@ -118,49 +127,27 @@ namespace Banshee.Base
         }
 
         public int TrackId { 
-            get { 
-                return track_id;
-            }
-            
-            protected set {
-                track_id = value;
-            }
+            get { return track_id; }
+            protected set { track_id = value; }
         }
         
         public int Uid { 
-            get { 
-                return uid;
-            }
+            get { return uid; }
         }
 
         public SafeUri Uri { 
-            get { 
-                return uri;
-            }
-            
-            set { 
-                uri = value; WriteUpdate();
-            } 
+            get { return uri; }
+            set { uri = value; WriteUpdate(); } 
         }
        
         public string Asin { 
-            get { 
-                return asin;
-            }
-            
-            set { 
-                asin = value;
-            } 
+            get { return asin; }
+            set { asin = value; } 
         }
         
         public RemoteLookupStatus RemoteLookupStatus {
-            get {
-                return remote_lookup_status;
-            }
-            
-            set {
-                remote_lookup_status = value;
-            }
+            get { return remote_lookup_status; }
+            set { remote_lookup_status = value; }
         }
         
         protected string cover_art_file = null;
@@ -202,189 +189,79 @@ namespace Banshee.Base
         }
        
         public string MimeType { 
-            get { 
-                return mimetype;
-            } 
-            
-            set {
-                mimetype = value;
-            }
+            get { return mimetype; }
+            set { mimetype = value; }
         }
         
         public string Artist { 
-            get { 
-                return artist;
-            }
-            
-            set { 
-                artist = value; 
-                WriteUpdate();   
-            } 
+            get { return artist; }
+            set { artist = value; WriteUpdate(); } 
         }
         
         public string Album { 
-            get { 
-                return album;
-            }
-            
-            set { 
-                album = value; 
-                WriteUpdate();
-            } 
+            get { return album; }
+            set { album = value; WriteUpdate(); } 
         }
         
         public string Title { 
-            get { 
-                return title;
-            }
-            
-            set { 
-                title = value; 
-                WriteUpdate();
-            } 
+            get { return title; }
+            set { title = value; WriteUpdate(); } 
         }
         
         public string Genre { 
-            get { 
-                return genre;
-            } 
-            
-            set { 
-                genre = value; 
-                WriteUpdate(); 
-            } 
+            get { return genre; }
+            set { genre = value; WriteUpdate(); } 
         }
 
         public string Performer {
-            get { 
-                return performer; 
-            } 
-            
-            set {
-                performer = value;
-                WriteUpdate();
-            }
+            get { return performer; } 
+            set { performer = value; WriteUpdate(); }
         }
         
         public int Year { 
-            get { 
-                return year;
-            }
-            
-            set { 
-                year = value; 
-                WriteUpdate(); 
-            }
+            get { return year; }
+            set { year = value; WriteUpdate(); }
         }
 
         public TimeSpan Duration {
-            get { 
-                return duration;
-            }
-            
-            set { 
-                duration = value; 
-                WriteUpdate(); 
-            } 
+            get { return duration; }
+            set { duration = value; WriteUpdate(); } 
         }
 
         public uint TrackNumber { 
-            get { 
-                return track_number;
-            } 
-            
-            set { 
-                track_number = value; 
-                WriteUpdate();
-            }
+            get { return track_number; }
+            set { track_number = value; WriteUpdate(); }
         }
         
         public string TrackNumberTitle {
-            get {
-                return String.Format ("{0:00} - {1}", track_number, title);
-            }
+            get { return String.Format ("{0:00} - {1}", track_number, title); }
         }
         
         public uint TrackCount { 
-            get { 
-                return track_count;
-            }
-            
-            set { 
-                track_count = value; 
-                WriteUpdate();
-            }
+            get { return track_count; }
+            set { track_count = value; WriteUpdate(); }
         }
 
         public uint PlayCount { 
-            get { 
-                return play_count;
-            }
-
-            set {
-                play_count = value;
-                WriteUpdate();
-            }
+            get { return play_count; }
+            set { play_count = value; WriteUpdate(); }
         }
         
         public DateTime LastPlayed { 
-            get { 
-                return last_played;
-            }
-
-            set {
-                last_played = value;
-                WriteUpdate();
-            }
+            get { return last_played; }
+            set { last_played = value; WriteUpdate(); }
         }
         
         public DateTime DateAdded { 
-            get { 
-                return date_added;
-            }
-            
-            set {
-                date_added = value;
-                WriteUpdate();
-            }
+            get { return date_added; }
+            set { date_added = value; WriteUpdate(); }
         }
 
         public uint Rating { 
-            get { 
-                return rating;
-            }
-            
-            set { 
-                rating = value; 
-                WriteUpdate(); 
-                SaveRating();
-            }
+            get { return rating; }
+            set { rating = value; WriteUpdate(); SaveRating(); }
         }
         
-        public double TrackGain { 
-            get { 
-                return track_gain;
-            }
-        }
-        
-        public double TrackPeak { 
-            get { 
-                return track_peak;
-            }
-        }
-        
-        public double AlbumGain { 
-            get { 
-                return album_gain;
-            }
-        }
-        
-        public double AlbumPeak { 
-            get { 
-                return album_peak;
-            }
-        }
-
         public string DisplayArtist { 
             get { 
                 return artist == null || artist == String.Empty
@@ -410,23 +287,18 @@ namespace Banshee.Base
         }        
 
         public bool CanSaveToDatabase {
-            get { 
-                return can_save_to_database; 
-            }
-            
-            protected set {
-                can_save_to_database = value;
-            }
+            get { return can_save_to_database; }
+            protected set { can_save_to_database = value; }
         }
 
         public virtual bool CanPlay {
-            get { 
-                return can_play; 
-            }
-            
-            protected set {
-                can_play = value;
-            }
+            get { return can_play; }
+            set { can_play = value; }
+        }
+        
+        public virtual TrackPlaybackError PlaybackError {
+            get { return playback_error; }
+            set { playback_error = value; }
         }
 
         public override string ToString()

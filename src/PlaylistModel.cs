@@ -40,7 +40,8 @@ namespace Banshee
     public enum RepeatMode {
         None,
         All,
-        Single
+        Single,
+        ErrorHalt
     }
 
     public class PlaylistModel : ListStore
@@ -227,8 +228,18 @@ namespace Banshee
             currentIter = playingIter;
         
             if(repeat == RepeatMode.Single) {
+                if(repeat == RepeatMode.ErrorHalt) {
+                    StopPlaying();
+                    return;
+                }
+                
                 nextIter = currentIter;
             } else if(forward) {
+                if(lastTrack && repeat == RepeatMode.ErrorHalt) {
+                    StopPlaying();
+                    return;
+                }
+                
                 if(lastTrack && repeat == RepeatMode.All) {
                     if(!IterNthChild(out nextIter, 0)) {
                         StopPlaying();

@@ -106,7 +106,11 @@ namespace Banshee.Dap.Ipod
             track_count = (uint)song.TotalTracks;
             track_number = (uint)song.TrackNumber;
             year = song.Year;
-            can_play = !song.IsProtected;
+
+            if(song.IsProtected) {
+                can_play = false;
+                PlaybackError = TrackPlaybackError.Drm;
+            }
         }
         
         public override void Save()

@@ -128,6 +128,14 @@ namespace Banshee.Base
                 return;
             }
             
+            if(args.Event == PlayerEngineEvent.Error 
+                && CurrentTrack.PlaybackError == TrackPlaybackError.None) {
+                CurrentTrack.PlaybackError = TrackPlaybackError.Unknown;
+            } else if(args.Event == PlayerEngineEvent.Iterate 
+                && CurrentTrack.PlaybackError != TrackPlaybackError.None) {
+                CurrentTrack.PlaybackError = TrackPlaybackError.None;
+            }
+            
             PlayerEngineEventHandler handler = EventChanged;
             if(handler != null) {
                 handler(o, args);

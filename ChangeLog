@@ -1,3 +1,30 @@
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
+	Patch to fix BGO #340222: Do not stop playing after a playback error
+
+	* src/PlayerInterface.cs: On playback error, advance to the next song
+	linearly and without repeating (eliminates the possibility of an endless
+	loop if all tracks in the source cannot be played)
+
+	* src/PlaylistModel.cs: Stop playing in some states when the repeat
+	mode is ErrorHalt
+
+	* src/PlaylistView.cs: Set row pixbuf based on new TrackPlaybackError
+	enum of the track, show status on errored tracks ('Missing')
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Set default TrackPlaybackError
+	on a track for which the underlying engine raises an error but does
+	not set it on the track itself
+
+	* src/Banshee.Base/TrackInfo.cs: Small syntax cleanup, added 
+	TrackPlaybackError enum and PlaybackError property to TrackInfo
+
+	* src/Banshee.Dap/Ipod/IpodDapTrackInfo.cs: Set PlaybackError to 
+	TrackPlaybackError.Drm if the song is protected
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Support the
+	resource not found error and set PlaybackError accordingly
+
 2006-12-05  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Base/Gui/PreferencesDialog.cs: Allow users to specify

@@ -66,13 +66,16 @@ namespace Banshee
         };
             
         private ArrayList columns;
-        PlaylistModel model;
+        private PlaylistModel model;
         
-        PlaylistColumnChooserDialog columnChooser;
-        Pixbuf nowPlayingPixbuf;
-        Pixbuf songDrmedPixbuf;
-        Pixbuf ripColumnPixbuf;
-        Banshee.Gui.CellRendererRating rating_renderer;
+        private PlaylistColumnChooserDialog columnChooser;
+        private Pixbuf ripColumnPixbuf;
+        private Banshee.Gui.CellRendererRating rating_renderer;
+
+        private Pixbuf now_playing_pixbuf;
+        private Pixbuf drm_pixbuf;
+        private Pixbuf resource_not_found_pixbuf;
+        private Pixbuf unknown_error_pixbuf;
 
         public TreeViewColumn RipColumn;
         public PlaylistColumn RatingColumn;
@@ -157,9 +160,12 @@ namespace Banshee
             playIndColumn.Reorderable = false;
             playIndColumn.Widget = playIndImg;
             
-            nowPlayingPixbuf = IconThemeUtils.LoadIcon(16, "media-playback-start", 
+            now_playing_pixbuf = IconThemeUtils.LoadIcon(16, "media-playback-start", 
                 Stock.MediaPlay, "now-playing-arrow");
-            songDrmedPixbuf = Gdk.Pixbuf.LoadFromResource("song-drm.png");
+            drm_pixbuf = IconThemeUtils.LoadIcon(16, "emblem-readonly", "emblem-important", Stock.DialogError);
+            resource_not_found_pixbuf = IconThemeUtils.LoadIcon(16, "emblem-unreadable", Stock.DialogError);
+            unknown_error_pixbuf = IconThemeUtils.LoadIcon(16, "dialog-error", Stock.DialogError);
+            
             ripColumnPixbuf = Gdk.Pixbuf.LoadFromResource("cd-action-rip-16.png");
             
             CellRendererPixbuf indRenderer = new CellRendererPixbuf();
@@ -383,16 +389,40 @@ namespace Banshee
                 : (int)Pango.Weight.Normal;
             
             renderer.Foreground = null;
-            
             renderer.Sensitive = true;
             
             TrackInfo ti = model.IterTrackInfo(iter);
             if(ti == null) {
                 return;
             }
-          
-            if(ti is AudioCdTrackInfo) {
-                renderer.Sensitive = ti.CanPlay; 
+            
+            renderer.Sensitive = ti.CanPlay && ti.PlaybackError == TrackPlaybackError.None;
+        }
+        
+        private void SetTrackPixbuf(CellRendererPixbuf renderer, TrackInfo track, bool nowPlaying)
+        {
+            if(nowPlaying) {
+                renderer.Pixbuf = now_playing_pixbuf;
+                return;
+            } else if(track is AudioCdTrackInfo) {
+                renderer.Pixbuf = null;
+                return;
+            }
+            
+            switch(track.PlaybackError) {
+                case TrackPlaybackError.ResourceNotFound:
+                    renderer.Pixbuf = resource_not_found_pixbuf;
+                    break;
+                case TrackPlaybackError.Drm:
+                    renderer.Pixbuf = drm_pixbuf;
+                    break;
+                case TrackPlaybackError.Unknown:
+                case TrackPlaybackError.CodecNotFound:
+                    renderer.Pixbuf = unknown_error_pixbuf;
+                    break;
+                default:
+                    renderer.Pixbuf = null;
+                    break;
             }
         }
         
@@ -404,12 +434,7 @@ namespace Banshee
             
             if(PlayerEngineCore.CurrentTrack == null) {
                 model.PlayingIter = TreeIter.Zero;
-                if(ti != null && !(ti is AudioCdTrackInfo)) {
-                    renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
-                } else {
-                    renderer.Pixbuf = null;
-                }
-                
+                SetTrackPixbuf(renderer, ti, false);
                 return;
             }
         
@@ -421,14 +446,7 @@ namespace Banshee
                     same_track = PlayerEngineCore.CurrentTrack == ti;
                 }
                 
-                if(same_track) {
-                    renderer.Pixbuf = nowPlayingPixbuf;
-                    model.PlayingIter = iter;
-                } else if(ti is AudioCdTrackInfo) {
-                    renderer.Pixbuf = null;
-                } else {
-                    renderer.Pixbuf = ti.CanPlay ? null : songDrmedPixbuf;
-                }
+                SetTrackPixbuf(renderer, ti, same_track);
             } else {
                 renderer.Pixbuf = null;
             }
@@ -479,7 +497,27 @@ namespace Banshee
                 return;
             }
             
-            SetRendererAttributes((CellRendererText)cell, ti.Title, iter);
+            string suffix = null;
+            
+            switch(ti.PlaybackError) {
+                case TrackPlaybackError.ResourceNotFound:
+                    suffix = Catalog.GetString("Missing");
+                    break;
+                case TrackPlaybackError.Drm:
+                    suffix = "DRM";
+                    break;
+                case TrackPlaybackError.Unknown:
+                case TrackPlaybackError.CodecNotFound:
+                    suffix = Catalog.GetString("Unknown Error");
+                    break;
+                default:
+                    break;
+            }
+            
+            SetRendererAttributes((CellRendererText)cell, suffix == null 
+                ? ti.Title
+                : String.Format("({0}) {1}", suffix, ti.Title),
+                iter);
         }
         
         protected void TrackCellAlbum(TreeViewColumn tree_column,

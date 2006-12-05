@@ -875,8 +875,16 @@ namespace Banshee
                     stream_position_label.BufferingProgress = args.BufferingPercent;
                     break;
                 case PlayerEngineEvent.Error:
-                    LogCore.Instance.PushError(Catalog.GetString("Playback Error"), args.Message);
-                    UpdateMetaDisplay();
+                    RepeatMode old_repeat_mode = playlistModel.Repeat;
+                    bool old_shuffle_mode = playlistModel.Shuffle;
+                    
+                    playlistModel.Repeat = RepeatMode.ErrorHalt;
+                    playlistModel.Shuffle = false;
+                    
+                    Next();
+                    
+                    playlistModel.Repeat = old_repeat_mode;
+                    playlistModel.Shuffle = old_shuffle_mode;
                     break;
                 case PlayerEngineEvent.TrackInfoUpdated:
                     UpdateMetaDisplay();
