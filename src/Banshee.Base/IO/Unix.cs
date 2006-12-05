@@ -100,7 +100,7 @@ namespace Banshee.IO.Unix
                     throw new Exception("Failed to allocate native directory string");
                 }
             
-                if(g_mkdir_with_parents(path_ptr, 0755) == -1) {
+                if(g_mkdir_with_parents(path_ptr, 493 /*0755 - C# doesn't do octal literals*/) == -1) {
                     Mono.Unix.UnixMarshal.ThrowExceptionForLastError();
                 }
             } catch(EntryPointNotFoundException) {
