@@ -1,3 +1,10 @@
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/PlayerInterface.cs: Save/restore the active filter on 
+	sources (BGO #345218)
+
+	* src/Banshee.Base/Source.cs: Added FilterQuery and FilterField
+
 2006-12-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/IO/Unix.cs: Specify directory perms in base 10; C# 

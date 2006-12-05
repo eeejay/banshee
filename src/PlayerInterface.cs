@@ -1073,6 +1073,11 @@ namespace Banshee
             searchEntry.Ready = false;
             searchEntry.CancelSearch();
             
+            if(source.FilterQuery != null && source.FilterField != null) {
+                searchEntry.Query = source.FilterQuery;
+                searchEntry.Field = source.FilterField;
+            }
+            
             if(source is DapSource) {
                 DapSource dap_source = source as DapSource;
                 UpdateDapDiskUsageBar(dap_source);
@@ -1326,6 +1331,9 @@ namespace Banshee
         
         private void OnSimpleSearch(object o, EventArgs args)
         {
+            SourceManager.ActiveSource.FilterField = searchEntry.Field;
+            SourceManager.ActiveSource.FilterQuery = searchEntry.Query;
+        
             if(SourceManager.ActiveSource.HandlesSearch) {
                 return;
             }

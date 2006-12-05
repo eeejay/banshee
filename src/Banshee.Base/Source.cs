@@ -66,6 +66,8 @@ namespace Banshee.Sources
     {
         private int order;
         private string name;
+        private string filter_query;
+        private string filter_field;
 
         private List<Source> child_sources;
 
@@ -317,6 +319,16 @@ namespace Banshee.Sources
         public string Name {
             get { return name; }
             protected set { name = value; }
+        }
+        
+        public string FilterQuery {
+            get { return filter_query; }
+            set { filter_query = value; }
+        }
+        
+        public string FilterField {
+            get { return filter_field; }
+            set { filter_field = value; }
         }
         
         private static readonly List<TrackInfo> empty_track_list = new List<TrackInfo>();
