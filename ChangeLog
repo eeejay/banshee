@@ -1,5 +1,10 @@
 2006-12-05  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/gst-playback-0.10.c: Set gconfaudiosink.profile=1 if
+	supported ('music and movies' profile)
+
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/gst-playback-0.10.c: Added gst_playback_get_error_quarks
 	to return the GST_*_ERROR quarks/domains
 

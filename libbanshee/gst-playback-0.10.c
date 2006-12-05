@@ -235,6 +235,11 @@ gst_playback_construct(GstPlayback *engine)
 
     audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
     g_return_val_if_fail(audiosink != NULL, FALSE);
+        
+    /* Set the profile to "music and movies" (gst-plugins-good 0.10.3) */
+    if(g_object_class_find_property(G_OBJECT_GET_CLASS(audiosink), "profile")) {
+        g_object_set(G_OBJECT(audiosink), "profile", 1, NULL);
+    }
     
     engine->audiobin = gst_bin_new("audiobin");
     g_return_val_if_fail(engine->audiobin != NULL, FALSE);
