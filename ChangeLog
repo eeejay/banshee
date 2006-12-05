@@ -1,5 +1,10 @@
 2006-12-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/IO/Unix.cs: Use g_mkdir_with_parents to recursively
+	create directories or fall back on System.IO.Directory.CreateDirectory
+
+2006-12-04  Aaron Bockover  <abock@gnome.org>
+
 	* build/m4/shamrock/expansions.m4: Fixed datadir expansion macro
 
 2006-12-04  Aaron Bockover  <abock@gnome.org>

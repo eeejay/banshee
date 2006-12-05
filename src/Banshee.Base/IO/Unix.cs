@@ -86,10 +86,31 @@ namespace Banshee.IO.Unix
 
     public class Directory : IDirectory
     {
+        
+        [System.Runtime.InteropServices.DllImport("libglib-2.0.so")]
+        private static extern int g_mkdir_with_parents(IntPtr path, int mode);
+    
         public void Create(string directory)
         {
-            UnixDirectoryInfo unix_dir = new UnixDirectoryInfo(directory);
-            unix_dir.Create();
+            IntPtr path_ptr = IntPtr.Zero;
+            
+            try {
+                path_ptr = GLib.Marshaller.StringToPtrGStrdup(directory);
+                if(path_ptr == IntPtr.Zero) {
+                    throw new Exception("Failed to allocate native directory string");
+                }
+            
+                if(g_mkdir_with_parents(path_ptr, 0755) == -1) {
+                    Mono.Unix.UnixMarshal.ThrowExceptionForLastError();
+                }
+            } catch(EntryPointNotFoundException) {
+                Console.WriteLine("g_mkdir_with_parents could not be found");
+                System.IO.Directory.CreateDirectory(directory);
+            } finally {
+                if(!path_ptr.Equals(IntPtr.Zero)) {
+                    GLib.Marshaller.Free(path_ptr);
+                }
+            }
         }
         
         public void Delete(string directory)
@@ -105,8 +126,12 @@ namespace Banshee.IO.Unix
         
         public bool Exists(string directory)
         {
-            FileStat stat = new FileStat(directory);
-            return stat.IsDirectory;
+            try {
+                FileStat stat = new FileStat(directory);
+                return stat.IsDirectory;
+            } catch {
+                return false;
+            }
         }
         
         public IEnumerable GetFiles(string directory)
