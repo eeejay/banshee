@@ -33,4 +33,5 @@ compile
 RELEASE_NOTES
 generate-bug-fix-list.sh
 banshee.userprefs
+banshee.usertasks
 
