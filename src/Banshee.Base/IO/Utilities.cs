@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Interfaces.cs
+ *  Utilities.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -27,39 +27,25 @@
  */
 
 using System;
-using System.Collections;
 
 using Banshee.Base;
 
 namespace Banshee.IO
 {
-    public interface IIOConfig
+    public static class Utilities
     {
-        string Name { get; }
-        Type FileBackend { get; }
-        Type DirectoryBackend { get; }
-        Type DemuxVfsBackend { get; }
-        
-        string DetectMimeType(SafeUri uri);
-    }
-
-    public interface IFile
-    {
-        bool Exists(SafeUri uri);
-        void Delete(SafeUri uri);
-    }
-    
-    public interface IDirectory
-    {
-        void Create(string directory);
-        void Delete(string directory);
-        void Delete(string directory, bool recursive);
-        bool Exists(string directory);
-        IEnumerable GetFiles(string directory);
-        IEnumerable GetDirectories(string directory);
-    }
-    
-    public interface IDemuxVfs : TagLib.File.IFileAbstraction
-    {
+        public static void DeleteFileTrimmingParentDirectories(SafeUri uri)
+        {
+            Banshee.IO.IOProxy.File.Delete(uri);
+            
+            try {
+                string old_dir = System.IO.Path.GetDirectoryName(uri.LocalPath);
+                while(old_dir != null && old_dir != String.Empty) {
+                    Banshee.IO.IOProxy.Directory.Delete(old_dir);
+                    old_dir = System.IO.Path.GetDirectoryName(old_dir);
+                }
+            } catch {
+            }
+        }
     }
 }

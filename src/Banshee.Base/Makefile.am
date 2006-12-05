@@ -109,6 +109,7 @@ BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
 IO_SOURCES = \
+	$(srcdir)/IO/Utilities.cs \
 	$(srcdir)/IO/IOProxy.cs \
 	$(srcdir)/IO/Interfaces.cs \
 	$(srcdir)/IO/SystemIO.cs \

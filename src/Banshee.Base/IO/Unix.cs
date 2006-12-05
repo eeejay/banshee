@@ -77,10 +77,16 @@ namespace Banshee.IO.Unix
 
     public class File : IFile
     {
-        public bool Exists(string path)
+        public bool Exists(SafeUri uri)
         {
-            FileStat stat = new FileStat(path);
+            FileStat stat = new FileStat(uri.LocalPath);
             return stat.IsRegularFile && !stat.IsDirectory;
+        }
+        
+        public void Delete(SafeUri uri)
+        {
+            UnixFileInfo info = new UnixFileInfo(uri.LocalPath);
+            info.Delete();
         }
     }
 

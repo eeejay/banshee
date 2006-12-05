@@ -1,5 +1,20 @@
 2006-12-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/IO/Interfaces.cs: 
+	* src/Banshee.Base/IO/Unix.cs:
+	* src/Banshee.Base/IO/SystemIO.cs:
+	* src/Banshee.Base/IO/GnomeVfs.cs: Use SafeUri for IFile methods
+
+	* src/Banshee.Base/IO/Utilities.cs: Delete a file and trim its parent
+	directories
+
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* src/Banshee.Base/Makefile.am: Added Utilities.cs
+
+	* src/Banshee.Base/ImportManager.cs: Use SafeUri when checking file
+
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlayerInterface.cs: Save/restore the active filter on 
 	sources (BGO #345218)
 

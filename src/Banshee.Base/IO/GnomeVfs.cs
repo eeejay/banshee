@@ -1,5 +1,5 @@
 /***************************************************************************
- *  SystemIO.cs
+ *  GnomeVfs.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -73,10 +73,10 @@ namespace Banshee.IO.GnomeVfs
 
     public class File : IFile
     {
-        public bool Exists(string path)
+        public bool Exists(SafeUri uri)
         {
             try {
-                return Exists(new FileInfo(path));
+                return Exists(new FileInfo(uri.AbsoluteUri));
             } catch {
                 return false;
             }
@@ -87,6 +87,11 @@ namespace Banshee.IO.GnomeVfs
             return info != null && info.Size > 0 && 
                 (info.Type & FileType.Regular) != 0 && 
                 (info.Type & FileType.Directory) == 0;
+        }
+        
+        public void Delete(SafeUri uri)
+        {
+            Gnome.Vfs.Unlink.FromUri(new Gnome.Vfs.Uri(uri.AbsoluteUri));
         }
     }
 

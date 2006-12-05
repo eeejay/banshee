@@ -197,8 +197,10 @@ namespace Banshee.Base
             bool is_regular_file = false;
             bool is_directory = false;
             
+            SafeUri source_uri = new SafeUri(source);
+            
             try {
-                is_regular_file = IOProxy.File.Exists(source);
+                is_regular_file = IOProxy.File.Exists(source_uri);
                 is_directory = !is_regular_file && IOProxy.Directory.Exists(source);
             } catch {
                 scan_ref_count--;

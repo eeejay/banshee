@@ -49,9 +49,14 @@ namespace Banshee.IO.SystemIO
 
     public class File : IFile
     {
-        public bool Exists(string path)
+        public bool Exists(SafeUri uri)
         {
-            return System.IO.File.Exists(path);
+            return System.IO.File.Exists(uri.LocalPath);
+        }
+        
+        public void Delete(SafeUri uri)
+        {
+            System.IO.File.Delete(uri.LocalPath);
         }
     }
 
