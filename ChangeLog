@@ -1,5 +1,11 @@
 2006-12-05  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Banshee.Base/Gui/PreferencesDialog.cs: Allow users to specify
+	custom LibraryFilePattern and LibraryFolderPattern preferences to gconf,
+	yet don't crash in the preferences screen.
+
+2006-12-05  Ruben Vermeersch  <ruben@savanne.be>
+
 	* data/banshee.schemas.in: Stupid detail of the day: add missing closing )
 	to make them all line up in /apps/Banshee/LibraryFolderPattern. Ony char
 	fix.

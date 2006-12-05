@@ -74,14 +74,32 @@ namespace Banshee.Gui.Dialogs
             (Glade["cd_importing_profile_label"] as Label).MnemonicWidget = cd_importing_profile_box.Combo;        
             cd_importing_profile_box.Show();
             
+            string file_pattern = ReadPreference<string>(GConfKeys.LibraryFilePattern, FileNamePattern.DefaultFile);
+            string folder_pattern = ReadPreference<string>(GConfKeys.LibraryFolderPattern, FileNamePattern.DefaultFolder); 
+            bool preference_already_added;
+            
             folder_box = new DictionaryComboBox<string>();
+            preference_already_added = false;
             foreach(string pattern in FileNamePattern.SuggestedFolders) {
+                if (pattern.Equals(folder_pattern)) {
+                    preference_already_added = true;
+                }
                 folder_box.Add(FileNamePattern.CreatePatternDescription(pattern), pattern);
             }
+            if (!preference_already_added) {
+                folder_box.Add(FileNamePattern.CreatePatternDescription(folder_pattern), folder_pattern);
+            }
             
+            preference_already_added = false;
             file_box = new DictionaryComboBox<string>();
             foreach(string pattern in FileNamePattern.SuggestedFiles) {
+                if (pattern.Equals(file_pattern)) {
+                    preference_already_added = true;
+                }
                 file_box.Add(FileNamePattern.CreatePatternDescription(pattern), pattern);
+            }
+            if (!preference_already_added) {
+                file_box.Add(FileNamePattern.CreatePatternDescription(file_pattern), file_pattern);
             }
             
             organization_table.Attach(folder_box, 1, 2, 0, 1, AttachOptions.Fill | AttachOptions.Expand,
