@@ -43,7 +43,7 @@ typedef struct GstPlayback GstPlayback;
 
 typedef void (* GstPlaybackEosCallback) (GstPlayback *engine);
 typedef void (* GstPlaybackErrorCallback) (GstPlayback *engine, 
-    gint code, const gchar *error, const gchar *debug);
+    GQuark domain, gint code, const gchar *error, const gchar *debug);
 typedef void (* GstPlaybackStateChangedCallback) (
     GstPlayback *engine, GstState old_state, 
     GstState new_state, GstState pending_state);
@@ -101,7 +101,7 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             
             if(engine->error_cb != NULL) {
                 gst_message_parse_error(message, &error, &debug);
-                engine->error_cb(engine, error->code, error->message, debug);
+                engine->error_cb(engine, error->domain, error->code, error->message, debug);
                 g_error_free(error);
                 g_free(debug);
             }
@@ -569,4 +569,13 @@ gst_playback_get_pipeline_elements(GstPlayback *engine, GstElement **playbin, Gs
     *audiotee = engine->audiotee;
     
     return TRUE;
+}
+
+void
+gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, GQuark *stream)
+{
+    *core = GST_CORE_ERROR;
+    *library = GST_LIBRARY_ERROR;
+    *resource = GST_RESOURCE_ERROR;
+    *stream = GST_STREAM_ERROR;
 }

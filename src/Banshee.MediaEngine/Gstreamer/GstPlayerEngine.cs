@@ -48,13 +48,77 @@ public static class PluginModuleEntry
 namespace Banshee.MediaEngine.Gstreamer
 {
     internal delegate void GstPlaybackEosCallback(IntPtr engine);
-    internal delegate void GstPlaybackErrorCallback(IntPtr engine, int code, IntPtr error, IntPtr debug);
+    internal delegate void GstPlaybackErrorCallback(IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug);
     internal delegate void GstPlaybackStateChangedCallback(IntPtr engine, int old_state, int new_state, int pending_state);
     internal delegate void GstPlaybackIterateCallback(IntPtr engine);
     internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
 
+    internal enum GstCoreError {
+        Failed = 1,
+        TooLazy,
+        NotImplemented,
+        StateChange,
+        Pad,
+        Thread,
+        Negotiation,
+        Event,
+        Seek,
+        Caps,
+        Tag,
+        MissingPlugin,
+        Clock,
+        NumErrors
+    }
+    
+    internal enum GstLibraryError {
+        Failed = 1,
+        Init,
+        Shutdown,
+        Settings,
+        Encode,
+        NumErrors
+    }
+    
+    internal enum GstResourceError {
+        Failed = 1,
+        TooLazy,
+        NotFound,
+        Busy,
+        OpenRead,
+        OpenWrite,
+        OpenReadWrite,
+        Close,
+        Read,
+        Write,
+        Seek,
+        Sync,
+        Settings,
+        NoSpaceLeft,
+        NumErrors
+    }
+    
+    internal enum GstStreamError {
+        Failed = 1,
+        TooLazy,
+        NotImplemented,
+        TypeNotFound,
+        WrongType,
+        CodecNotFound,
+        Decode,
+        Encode,
+        Demux,
+        Mux,
+        Format,
+        NumErrors
+    }
+    
     public class GstreamerPlayerEngine : PlayerEngine
     {
+        private uint GST_CORE_ERROR = 0;
+        private uint GST_LIBRARY_ERROR = 0;
+        private uint GST_RESOURCE_ERROR = 0;
+        private uint GST_STREAM_ERROR = 0; 
+    
         private HandleRef handle;
         
         private GstPlaybackEosCallback eos_callback;
@@ -75,6 +139,9 @@ namespace Banshee.MediaEngine.Gstreamer
             }
             
             handle = new HandleRef(this, ptr);
+            
+            gst_playback_get_error_quarks(out GST_CORE_ERROR, out GST_LIBRARY_ERROR, 
+                out GST_RESOURCE_ERROR, out GST_STREAM_ERROR);
             
             eos_callback = new GstPlaybackEosCallback(OnEos);
             error_callback = new GstPlaybackErrorCallback(OnError);
@@ -144,29 +211,40 @@ namespace Banshee.MediaEngine.Gstreamer
             OnEventChanged(PlayerEngineEvent.Iterate);
         }
         
-        private void OnError(IntPtr engine, int code, IntPtr error, IntPtr debug)
+        private void OnError(IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug)
         {
             Close();
             
             string error_message = error == IntPtr.Zero
                 ? Catalog.GetString("Unknown Error")
                 : GLib.Marshaller.Utf8PtrToString(error);
+
+            if(domain == GST_RESOURCE_ERROR) {
+                GstResourceError domain_code = (GstResourceError)code;
+                switch(domain_code) {
+                    case GstResourceError.NotFound:
+                        CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
+                        break;
+                    default:
+                        break;
+                }        
                 
-            if(debug != IntPtr.Zero) {
-                Console.Error.WriteLine("GST-DEBUG: {0}: {1}", error_message, 
-                    GLib.Marshaller.Utf8PtrToString(debug));
-            } 
-            
-            switch(code) {
-                case 3: 
-                    CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound; 
-                    break;
-                case 6:
-                    CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound; 
-                    break;
-                default:
-                    CurrentTrack.PlaybackError = TrackPlaybackError.Unknown;
-                    break;
+                Console.WriteLine("GStreamer resource error: {0}", domain_code);
+            } else if(domain == GST_STREAM_ERROR) {
+                GstStreamError domain_code = (GstStreamError)code;
+                switch(domain_code) {
+                    case GstStreamError.CodecNotFound:
+                        CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                        break;
+                    default:
+                        break;
+                }
+                
+                Console.WriteLine("GStreamer stream error: {0}", domain_code);
+            } else if(domain == GST_CORE_ERROR) {
+                Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);
+            } else if(domain == GST_LIBRARY_ERROR) {
+                Console.WriteLine("GStreamer library error: {0}", (GstLibraryError)code);
             }
             
             OnEventChanged(PlayerEngineEvent.Error, error_message);
@@ -290,6 +368,10 @@ namespace Banshee.MediaEngine.Gstreamer
         
         [DllImport("libbanshee")]
         private static extern bool gst_playback_get_pipeline_elements(HandleRef engine, out IntPtr playbin,
-            out IntPtr audiobin, out IntPtr audiotee);    
+            out IntPtr audiobin, out IntPtr audiotee);
+            
+        [DllImport("libbanshee")]
+        private static extern void gst_playback_get_error_quarks(out uint core, out uint library, 
+            out uint resource, out uint stream);
     }
 }

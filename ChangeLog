@@ -1,5 +1,14 @@
 2006-12-05  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/gst-playback-0.10.c: Added gst_playback_get_error_quarks
+	to return the GST_*_ERROR quarks/domains
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Added enums
+	for all the error codes in the GST_*_ERROR domains; work off those
+	domains/codes
+
+2006-12-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/PlaylistView.cs: Show a message for TrackPlaybackError.CodecNotFound
 
 	* libbanshee/gst-playback-0.10.c: Extended the error callback to 
