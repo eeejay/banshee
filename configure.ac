@@ -1,7 +1,5 @@
+dnl Automake setup
 AC_INIT(src/Main.cs)
-
-AM_CONFIG_HEADER(config.h)
-
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
@@ -15,53 +13,27 @@ DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 AM_MAINTAINER_MODE
-
-#IT_PROG_INTLTOOL([0.35.0])
-AC_PROG_INTLTOOL([0.21])
-
 AC_PROG_INSTALL
-AC_ISC_POSIX
-AM_PROG_LIBTOOL
-AC_PROG_CC
-AC_PROG_CXX
 
-dnl check headers
-AC_HEADER_STDC
+dnl libbanshee/native dependencies (required)
+BANSHEE_CHECK_LIBBANSHEE
+BANSHEE_CHECK_NAUTILUS_BURN
+BANSHEE_CHECK_GSTREAMER
+SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
+	decodebin
+	playbin
+	cdparanoia
+	gnomevfssink
+	gnomevfssrc
+	audioconvert
+	gconfaudiosink
+])
 
-GNOME_COMPILE_WARNINGS
-AM_PATH_GLIB_2_0
+dnl GConf
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+AM_GCONF_SOURCE_2
 
-dnl configure options
-AC_ARG_ENABLE(ipod, AC_HELP_STRING([--enable-ipod], [Enable iPod DAP support]), , enable_ipod="yes")
-enable_ipodsharp="${enable_ipod}"
-
-AC_ARG_ENABLE(njb, AC_HELP_STRING([--enable-njb], [Enable NJB DAP support]), , enable_njb="yes")
-enable_njbsharp="${enable_njb}"
-
-AC_ARG_ENABLE(mtp, AC_HELP_STRING([--enable-mtp], [Enable MTP DAP support]), , enable_mtp="no")
-enable_mtp_dap="${enable_mtp}"
-
-AC_ARG_ENABLE(karma, AC_HELP_STRING([--enable-karma], [Enable Rio Karma DAP support]), , enable_karma="yes")
-enable_karmasharp="${enable_karma}"
-
-AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], [Do not build documentation]), with_docs=no, with_docs=yes)
-
-AC_ARG_ENABLE(dev-tests, AC_HELP_STRING([--enable-dev-tests], [Whether or not to build various test programs for components in libbanshee and mediaengines]), , enable_dev_tests="no")
-AM_CONDITIONAL(ENABLE_TESTS, test "x$enable_dev_tests" = "xyes")
-
-AC_ARG_ENABLE(daap, AC_HELP_STRING([--disable-daap], [Do not build with DAAP support]), enable_daap=no, enable_daap=yes)
-
-dnl Helix
-
-AC_ARG_ENABLE(helix, AC_HELP_STRING([--enable-helix], [Enable Helix/RealPlayer engine]), , enable_helix="yes")
-
-if test "x$enable_helix" = "xyes"; then
-	PKG_CHECK_MODULES(HELIX_REMOTE, helix-dbus-server >= 0.3, enable_helix="yes", enable_helix="no")
-fi
-
-AM_CONDITIONAL(ENABLE_HELIX, test "x$enable_helix" = "xyes")
-
-dnl Mono
+dnl Mono and gmcs
 SHAMROCK_CHECK_MONO_MODULE(1.1.10)
 SHAMROCK_FIND_MONO_2_0_COMPILER
 SHAMROCK_FIND_MONO_RUNTIME
@@ -75,253 +47,38 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 ])
 BANSHEE_VERIFY_GMCS
 
-dnl Check for Boo
-AC_ARG_ENABLE(external_boo, AC_HELP_STRING([--enable-external-boo], [Use external Boo instead of the bundled one]), enable_external_boo="yes", enable_external_boo="no")
+dnl Monodoc (optional through --disable-docs)
+SHAMROCK_CHECK_MONODOC
 
-if test "x$enable_external_boo" = "xyes"; then
-	PKG_CHECK_MODULES(BOO, boo >= 0.7.6)
-	AC_SUBST(BOO_LIBS)
-	AM_CONDITIONAL(EXTERNAL_BOO, true)
-else
-	AM_CONDITIONAL(EXTERNAL_BOO, false)
-fi
+dnl NUnit (optional)
+SHAMROCK_CHECK_MONO_NUNIT
 
-AC_PATH_PROG(BOOC, booc, no)
-AM_CONDITIONAL(HAVE_BOOC, test ! "x$BOOC" = "xno")
+dnl Boo libraries and compiler (optional)
+BANSHEE_CHECK_BOO
 
-AC_SUBST(MCS)
-AC_SUBST(MONO)
-AC_SUBST(BOOC)
-
-if test "x$with_docs" = "xyes"; then
-	AC_PATH_PROG(MONODOCER, monodocer, no)
-	if test "x$MONODOCER" = "xno"; then
-		AC_MSG_ERROR([You need to install monodoc, or pass --disable-docs to configure to skip documentation installation])
-	fi
-
-	AC_PATH_PROG(MDASSEMBLER, mdassembler, no)
-	if test "x$MDASSEMBLER" = "xno"; then
-		AC_MSG_ERROR([You need to install mdassembler, or pass --disable-docs to configure to skip documentation installation])
-	fi
-
-	DOCDIR=`$PKG_CONFIG monodoc --variable=sourcesdir`
-	AC_SUBST(DOCDIR)
-	AM_CONDITIONAL(BUILD_DOCS, true)
-else
-	AC_MSG_NOTICE([not building Banshee API documentation])
-	AM_CONDITIONAL(BUILD_DOCS, false)
-fi
-
-dnl gtk-sharp, other CLR deps
-GTKSHARP_REQUIRED=2.7
-PKG_CHECK_MODULES(GTKSHARP,
-	gtk-sharp-2.0 >= $GTKSHARP_REQUIRED \
-	gnome-sharp-2.0 >= $GTKSHARP_REQUIRED \
-	gnome-vfs-sharp-2.0 >= $GTKSHARP_REQUIRED \
-	glade-sharp-2.0 >= $GTKSHARP_REQUIRED \
-	gconf-sharp-2.0 >= $GTKSHARP_REQUIRED)
-AC_SUBST(GTKSHARP_LIBS)
-
-dnl dap support
-IPODSHARP_REQUIRED=0.6.2
-PKG_CHECK_MODULES(IPODSHARP,
-	ipod-sharp >= $IPODSHARP_REQUIRED ipod-sharp-ui >= $IPODSHARP_REQUIRED,
-	enable_ipodsharp="$enable_ipodsharp", enable_ipodsharp=no)
-if test "x$enable_ipodsharp" = "xyes"; then
-	IPODSHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries ipod-sharp` `$PKG_CONFIG --variable=Libraries ipod-sharp-ui`"
-	AC_SUBST(IPODSHARP_ASSEMBLIES)
-	AC_SUBST(IPODSHARP_LIBS)
-fi
-AM_CONDITIONAL(ENABLE_IPOD, test "x$enable_ipodsharp" = "xyes")
-
-NJBSHARP_REQUIRED=0.3.0
-PKG_CHECK_MODULES(NJBSHARP,
-	njb-sharp >= $NJBSHARP_REQUIRED,
-	enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
-AC_MSG_RESULT([$enable_njbsharp])
-if test "x$enable_njbsharp" = "xyes"; then
-	NJBSHARP_INSTALL_FILES=""
-	for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do	
-		if test -z "`echo \"$i\" | grep config`"; then	
-			NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
-		fi
-	done;
-	AC_SUBST(NJBSHARP_INSTALL_FILES)
-	AC_SUBST(NJBSHARP_LIBS)
-fi
-AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
-
-LIBGPHOTO2SHARP_REQUIRED=2.2.1.4.trunk
-PKG_CHECK_MODULES(LIBGPHOTO2SHARP,
-	libgphoto2-sharp >= $LIBGPHOTO2SHARP_REQUIRED,
-	enable_mtp_dap="$enable_mtp_dap", enable_mtp_dap=no)
-if test "x$enable_mtp" != "xno" -a "x$enable_mtp_dap" = "xno"; then
-    AC_MSG_ERROR(libgphoto2-sharp package not found or not up to date.  Please install libgphoto2 from their subversion, or disable MTP support by not passing --enable-mtp)
-fi
-AC_MSG_RESULT([$enable_mtp_dap])
-if test "x$enable_mtp_dap" = "xyes"; then
-	LIBGPHOTO2SHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries libgphoto2-sharp`"
-	AC_SUBST(LIBGPHOTO2SHARP_ASSEMBLIES)
-	AC_SUBST(LIBGPHOTO2SHARP_LIBS)
-fi
-AM_CONDITIONAL(ENABLE_MTP, test "x$enable_mtp_dap" = "xyes")
-
-KARMASHARP_REQUIRED=0.0.5
-PKG_CHECK_MODULES(KARMASHARP,
-      karma-sharp >= $KARMASHARP_REQUIRED,
-      enable_karmasharp="$enable_karmasharp", enable_karmasharp=no)
-AC_MSG_RESULT([$enable_karmasharp])
-if test "x$enable_karmasharp" = "xyes"; then
-      KARMASHARP_ASSEMBLIES="`$PKG_CONFIG --variable=Libraries karma-sharp`"
-      AC_SUBST(KARMASHARP_ASSEMBLIES)
-      AC_SUBST(KARMASHARP_LIBS)
-fi
-AM_CONDITIONAL(ENABLE_KARMA, test "x$enable_karmasharp" = "xyes")
-
-dnl sqlite devel dep
+dnl Required dependencies (managed/core)
+BANSHEE_CHECK_GTK_SHARP
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
 
-dnl musicbrainz
-PKG_CHECK_MODULES(MUSICBRAINZ, libmusicbrainz >= 2.1.1)
+dnl DAP support (each module is optional)
+BANSHEE_CHECK_DAP_IPOD
+BANSHEE_CHECK_DAP_NJB
+BANSHEE_CHECK_DAP_MTP
+BANSHEE_CHECK_DAP_KARMA
 
-dnl avahi-sharp for DAAP
-AC_ARG_ENABLE(mdnsd, AC_HELP_STRING([--enable-mdnsd], [Use mDNSResponder instead of Avahi for DAAP]), enable_mdnsd="yes", enable_mdnsd="no")
-AM_CONDITIONAL(ENABLE_MDNSD, test "x$enable_mdnsd" = "yes")
+dnl DAAP support (optional)
+BANSHEE_CHECK_DAAP
 
-AC_ARG_ENABLE(avahi, AC_HELP_STRING([--enable-avahi], [Use Avahi for DAAP]), enable_avahi="yes", enable_avahi="no")
-
-if test "x$enable_daap" = "xyes"; then 
-	if test "x$enable_avahi" = "xno"; then
-		AC_PATH_PROG(MDNSRESPONDER, mdnsd, no, /sbin:/usr/sbin:/usr/bin)
-		if test ! "x$MDNSRESPONDER" = "xno"; then
-			enable_mdnsd="yes"
-		fi
-	fi
-
-	if test "x$enable_mdnsd" = "xyes"; then
-		DAAPSHARP_FLAGS="-define:ENABLE_MDNSD"
-		AC_SUBST(DAAPSHARP_FLAGS)
-	else
-		PKG_CHECK_MODULES(AVAHISHARP, avahi-sharp)
-		DAAPSHARP_FLAGS=$AVAHISHARP_LIBS
-		AC_SUBST(DAAPSHARP_FLAGS)
-	fi
-	AM_CONDITIONAL(DAAP_ENABLED, true)
-else
-	AM_CONDITIONAL(DAAP_ENABLED, false)
-fi
-
-dnl gstreamer devel deps
-GSTREAMER_REQUIRED_VERSION=0.10.3
-AC_SUBST(GSTREAMER_REQUIRED_VERSION)
-PKG_CHECK_MODULES(GST,
-	gstreamer-0.10 >= $GSTREAMER_REQUIRED_VERSION
-	gstreamer-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
-	gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
-	gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
-	gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
-
-AC_SUBST(GST_CFLAGS)
-AC_SUBST(GST_LIBS)
-
-dnl gstreamer plugins
-gst_pkg_name="gstreamer-0.10"
-gst_inspect="gst-inspect-0.10"
-gst_version="0.10"
-gst_required_plugins="decodebin playbin cdparanoia gnomevfssink gnomevfssrc audioconvert gconfaudiosink"
-gst_toolsdir=`$PKG_CONFIG --variable=toolsdir $gst_pkg_name`
-gst_inspect="$gst_toolsdir/$gst_inspect"
-
-AC_MSG_CHECKING([for gst-inspect])
-if ! test -x $gst_inspect; then
-	AC_MSG_RESULT([no])
-	AC_MSG_ERROR([Cannot find required gst-inspect tool.])
-else
-	AC_MSG_RESULT([yes])
-fi
-
-for element in $gst_required_plugins; do
-	AC_MSG_CHECKING([for GStreamer $gst_version $element plugin])
-	if $gst_inspect $element > /dev/null 2>/dev/null; then
-		AC_MSG_RESULT([yes])
-	else
-		AC_MSG_RESULT([no])
-		AC_MSG_ERROR([Cannot find required GStreamer-$gst_version plugin '$element'.])
-	fi
-done;
-
-dnl GTK+-2.0 C devel deps
-GTK_REQUIRED=2.8
-PKG_CHECK_MODULES(LIBBANSHEE,
-	dbus-1 \
-	dbus-glib-1 \
-	glib-2.0 \
-	libgnome-2.0 \
-	libgnomeui-2.0 \
-	gconf-2.0 \
-	gdk-pixbuf-2.0 \
-	gnome-vfs-2.0 \
-	gnome-desktop-2.0 \
-	gtk+-2.0 >= $GTK_REQUIRED)
-AC_SUBST(LIBBANSHEE_CFLAGS)
-AC_SUBST(LIBBANSHEE_LIBS)
-
-dnl libnautilus-burn devel deps
-PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.15, lnb15=yes, lnb15=no)
-AC_MSG_RESULT([$lnb15])
-PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.13, lnb13=yes, lnb13=no)
-AC_MSG_RESULT([$lnb13])
-PKG_CHECK_MODULES(LIBNAUTILUS_BURN, libnautilus-burn >= 2.12, lnb12=yes, lnb12=no)
-LNB_CSFLAGS=""
-if test "x$lnb15" = "xyes"; then
-	LNB_SOVERSION=4
-	LNB_CSFLAGS="-define:HAVE_LNB_216"
-	AC_DEFINE(HAVE_LIBNAUTILUS_BURN_4, 1, [Define if libnautilus-burn is version 2.15 (soversion 4) or later])
-elif test "x$lnb13" = "xyes"; then
-	LNB_SOVERSION=3
-elif test "x$lnb12" = "xyes"; then
-	LNB_SOVERSION=2
-else
-	AC_MSG_ERROR([You need libnautilus-burn 2.12 or better])
-fi
-AC_SUBST(LNB_CSFLAGS)
-AC_SUBST(LNB_SOVERSION)
-AC_SUBST(LIBNAUTILUS_BURN_CFLAGS)
-AC_SUBST(LIBNAUTILUS_BURN_LIBS)
-
-dnl GConf
-
-AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
-AM_GCONF_SOURCE_2
+dnl Helix playback engine (optional)
+BANSHEE_CHECK_HELIX_ENGINE
 
 dnl Expansions
 SHAMROCK_EXPAND_LIBDIR
 SHAMROCK_EXPAND_BINDIR
 SHAMROCK_EXPAND_DATADIR
 
-dnl Defines for C Exec Wrapper (${prefix}/bin/banshee)
-AC_DEFINE_UNQUOTED([PREFIX], ["${prefix}"], [install prefix])
-AC_DEFINE_UNQUOTED([LIBDIR], ["${expanded_libdir}"], [libdir])
-AC_DEFINE_UNQUOTED([MONO], ["${MONO}"], [Mono Runtime])
-AC_DEFINE_UNQUOTED([MONO_PATH], ["${MONO_PATH}"], [MONO_PATH Env])
-AC_DEFINE_UNQUOTED([HELIX_LIBRARY_PATH], ["${HELIX_LIBRARY_PATH}"], [Helix Library Path])
-
-dnl Nunit
-PKG_CHECK_MODULES(MONO_NUNIT, mono-nunit >= 1.0, do_tests="yes", do_tests="no")
-AC_SUBST(MONO_NUNIT_LIBS)
-AM_CONDITIONAL(ENABLE_TESTS, test "x$do_tests" = "xyes")
-if test "x$do_tests" = "xno"; then
-	AC_MSG_WARN([Could not find mono-nunit: tests will not be available.])
-fi
-
-dnl Intl
-
-ALL_LINGUAS=`grep -v '^#' $srcdir/po/LINGUAS | sed -r ':a;N;$!ba;s/\n/ /g; s/[ ]+/ /g'`
-GETTEXT_PACKAGE=banshee
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Gettext Package])
-AM_GLIB_GNU_GETTEXT
-AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
+dnl i18n
+SHAMROCK_CONFIGURE_I18N(banshee)
 
 dnl generated files
 AC_OUTPUT([

@@ -3,22 +3,12 @@ INCLUDES = \
 	-Wall \
 	-ggdb3 \
 	-D_FORTIFY_SOURCE=2 \
-	$(HAL_CFLAGS) \
-	$(GST_CFLAGS) \
 	$(LIBBANSHEE_CFLAGS) \
+	$(GST_CFLAGS) \
 	$(LIBNAUTILUS_BURN_CFLAGS)
 
 bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
-
-GST_0_10_CFILES = \
-	gst-playback-0.10.c \
-	gst-misc-0.10.c \
-	gst-transcode-0.10.c \
-	gst-cd-rip-0.10.c \
-	gst-mbtrm.c
-
-GST_CFILES = $(GST_0_10_CFILES)
 
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES = \
@@ -31,14 +21,17 @@ libbanshee_la_SOURCES = \
 	gst-mbtrm.h \
 	misc-glue.c \
 	nautilus-burn.c \
-	$(GST_CFILES)
+	gst-playback-0.10.c \
+	gst-misc-0.10.c \
+	gst-transcode-0.10.c \
+	gst-cd-rip-0.10.c \
+	gst-mbtrm.c
 
-libbanshee_la_LIBADD = $(LIBBANSHEE_LIBS) $(GST_LIBS) $(LIBNAUTILUS_BURN_LIBS)
+libbanshee_la_LIBADD = \
+	$(LIBBANSHEE_LIBS) \
+	$(GST_LIBS) \
+	$(LIBNAUTILUS_BURN_LIBS)
 
-CLEANFILES = gst-player-test gst-encode-test
 MAINTAINERCLEANFILES = Makefile.in
-EXTRA_DIST = $(GST_0_10_CFILES) 
-
-if ENABLE_TESTS
-endif
+EXTRA_DIST = $(libbanshee_la_SOURCES)
 
