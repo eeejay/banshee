@@ -254,6 +254,8 @@ namespace Banshee
             return prev != null;
         }
 
+        /* Model Sorting Comparisons */
+
         private int StringFieldCompare(string a, string b)
         {
             if(a != null)
@@ -269,94 +271,72 @@ namespace Banshee
         {
             return a < b ? -1 : (a == b ? 0 : 1);
         }
-            
-        public int TrackTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
-        {
+        
+        private int TrackBaseTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
+        {   
             return LongFieldCompare((long)model.IterTrackInfo(a).TrackNumber,
                 (long)model.IterTrackInfo(b).TrackNumber);
         }
             
-        public int ArtistTreeIterCompareFunc(TreeModel _model, TreeIter a, 
-            TreeIter b)
+        private int TrackTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            int v = StringFieldCompare(model.IterTrackInfo(a).Artist, 
-                model.IterTrackInfo(b).Artist);
+            int v = ArtistTreeIterCompareFunc(_model, a, b);
+            return v != 0 ? v : TrackBaseTreeIterCompareFunc(_model, a, b);
+        }
             
-            if(v != 0)
-                return v;
-            
-            return AlbumTreeIterCompareFunc(_model, a, b);
+        private int ArtistTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
+        {
+            int v = StringFieldCompare(model.IterTrackInfo(a).Artist, model.IterTrackInfo(b).Artist);
+            return v != 0 ? v : AlbumTreeIterCompareFunc(_model, a, b);
         }
         
-        public int TitleTreeIterCompareFunc(TreeModel _model, TreeIter a, 
-            TreeIter b)
+        private int TitleTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return StringFieldCompare(model.IterTrackInfo(a).Title, 
-                model.IterTrackInfo(b).Title);
+            return StringFieldCompare(model.IterTrackInfo(a).Title, model.IterTrackInfo(b).Title);
         }
         
-        public int AlbumTreeIterCompareFunc(TreeModel _model, TreeIter a, 
-            TreeIter b)
+        private int AlbumTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            int v = StringFieldCompare(model.IterTrackInfo(a).Album, 
-                model.IterTrackInfo(b).Album);
-
-            if(v != 0)
-                return v;
-
-            return TrackTreeIterCompareFunc(_model, a, b);
+            int v = StringFieldCompare(model.IterTrackInfo(a).Album, model.IterTrackInfo(b).Album);
+            return v != 0 ? v : TrackBaseTreeIterCompareFunc(_model, a, b);
         }
         
-        public int GenreTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        private int GenreTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return StringFieldCompare(model.IterTrackInfo(a).Genre, 
-                model.IterTrackInfo(b).Genre);
+            return StringFieldCompare(model.IterTrackInfo(a).Genre, model.IterTrackInfo(b).Genre);
         }
         
-        public int YearTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        private int YearTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return LongFieldCompare(model.IterTrackInfo(a).Year, 
-                model.IterTrackInfo(b).Year);
+            return LongFieldCompare(model.IterTrackInfo(a).Year, model.IterTrackInfo(b).Year);
         }
         
-        public int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        private int TimeTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            //return LongFieldCompare(model.IterTrackInfo(a).Duration,
-            //    model.IterTrackInfo(b).Duration);
-                
             return model.IterTrackInfo(a).Duration.CompareTo(model.IterTrackInfo(b).Duration);
         }
         
-        public int RatingTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        private int RatingTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return LongFieldCompare((long)model.IterTrackInfo(a).Rating,
-                (long)model.IterTrackInfo(b).Rating);
+            return LongFieldCompare((long)model.IterTrackInfo(a).Rating, (long)model.IterTrackInfo(b).Rating);
         }
         
-        public int PlayCountTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        public int PlayCountTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return LongFieldCompare((long)model.IterTrackInfo(a).PlayCount,
-                (long)model.IterTrackInfo(b).PlayCount);
+            return LongFieldCompare((long)model.IterTrackInfo(a).PlayCount, (long)model.IterTrackInfo(b).PlayCount);
         }
         
-        public int LastPlayedTreeIterCompareFunc(TreeModel _model, TreeIter a,
-            TreeIter b)
+        private int LastPlayedTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return DateTime.Compare(model.IterTrackInfo(a).LastPlayed,
-                model.IterTrackInfo(b).LastPlayed);
+            return DateTime.Compare(model.IterTrackInfo(a).LastPlayed, model.IterTrackInfo(b).LastPlayed);
         }
         
-        public int DefaultTreeIterCompareFunc(TreeModel _model, TreeIter a, 
-            TreeIter b)
+        private int DefaultTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
             return 0;
         }
+        
+        /* ----- */
             
         public TrackInfo IterTrackInfo(TreeIter iter)
         {

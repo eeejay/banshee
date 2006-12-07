@@ -1,5 +1,11 @@
 2006-12-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlaylistView.cs: Fix the sort order for the track number column
+	to properly sort by artist, album, then track number; sorting by track
+	number is now the most logical sort/group operation
+
+2006-12-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/ActionManager.cs: Don't set the default string 
 	for the source properties label here
 
