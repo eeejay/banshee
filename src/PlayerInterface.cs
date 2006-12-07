@@ -1045,19 +1045,63 @@ namespace Banshee
         private void OnSourceTrackAdded(object o, TrackEventArgs args)
         {
             if(SourceManager.ActiveSource == o) {
-                if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(args.Track)) {
-                    return;
+                // We only want to update the playlist view once
+                if (args.Track != null) {
+                    AddTrackToModel(args.Track, (args.Tracks == null || args.Tracks.Count == 0));
                 }
-                
-                playlistModel.AddTrack(args.Track);
+
+                if (args.Tracks != null) {
+                    if (args.Tracks.Count > 3) {
+                        playlistModel.ClearSortOrder();
+                    }
+
+                    int i = 1, last = args.Tracks.Count;
+                    foreach (TrackInfo track in args.Tracks) {
+                        AddTrackToModel(track, i++ == last);
+                    }
+
+                    if (args.Tracks.Count > 3) {
+                        playlistModel.RestoreSortOrder();
+                    }
+                }
             }
+        }
+
+        private void AddTrackToModel(TrackInfo track, bool update)
+        {
+            if(searchEntry.IsQueryAvailable && !DoesTrackMatchSearch(track)) {
+                return;
+            }
+            
+            playlistModel.AddTrack(track, update);
         }
         
         private void OnSourceTrackRemoved(object o, TrackEventArgs args)
         {
             if(SourceManager.ActiveSource == o) {
-                playlistModel.RemoveTrack(args.Track);
+                if (args.Track != null) {
+                    RemoveTrackFromModel(args.Track);
+                }
+
+                if (args.Tracks != null) {
+                    if (args.Tracks.Count > 3) {
+                        playlistModel.ClearSortOrder();
+                    }
+
+                    foreach (TrackInfo track in args.Tracks) {
+                        RemoveTrackFromModel(track);
+                    }
+
+                    if (args.Tracks.Count > 3) {
+                        playlistModel.RestoreSortOrder();
+                    }
+                }
             }
+        }
+
+        private void RemoveTrackFromModel(TrackInfo track)
+        {
+            playlistModel.RemoveTrack(track);
         }
         
         private void UpdateViewName(Source source)

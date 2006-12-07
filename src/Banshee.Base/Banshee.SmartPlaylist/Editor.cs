@@ -208,6 +208,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitNumber = limit_number;
                         playlist.LimitCriterion = limit_criterion;
                         playlist.Commit();
+
                         playlist.RefreshMembers();
 
                         if (playlist.TimeDependent)

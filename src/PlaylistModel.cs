@@ -53,6 +53,9 @@ namespace Banshee
         
         private RepeatMode repeat = RepeatMode.None;
         private bool shuffle = false;
+
+        private int sort_column;
+        private SortType sort_type;
         
         public event EventHandler Updated;
         public event EventHandler Stopped;
@@ -88,17 +91,22 @@ namespace Banshee
                 RaiseUpdated(this, new EventArgs());
             }
         }
-        
+
         public void ReloadSource()
         {
             ClearModel();
+
+            ClearSortOrder();
             
             lock(SourceManager.ActiveSource.TracksMutex) {
                 foreach(TrackInfo track in SourceManager.ActiveSource.Tracks) {
                     AddTrack(track, false);
                 }
-                RaiseUpdated(this, new EventArgs());
             }
+
+            RestoreSortOrder();
+
+            RaiseUpdated(this, new EventArgs());
         }
 
         // --- Helper Methods ---
@@ -122,6 +130,18 @@ namespace Banshee
                 
             return IterTrackInfo(iter);
         }
+
+        public void ClearSortOrder()
+        {
+            GetSortColumnId(out sort_column, out sort_type);
+            SetSortColumnId(-1, SortType.Ascending);
+        }
+
+        public void RestoreSortOrder()
+        {
+            SetSortColumnId(sort_column, sort_type);
+        }
+        
         
         // --- Playback Methods ---
         
@@ -370,7 +390,13 @@ namespace Banshee
         
         public void RemoveTrack(TrackInfo track)
         {
-        
+            TreeIter iter = track.TreeIter;
+
+            if (!iter.Equals(TreeIter.Zero)) {
+                RemoveTrack(ref iter, track);
+            } else {
+                Console.WriteLine ("failed to remove track {0}", track);
+            }
         }
         
         public int GetIterIndex(TreeIter iter)

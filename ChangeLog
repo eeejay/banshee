@@ -1,3 +1,26 @@
+2006-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/PlayerInterface.cs: Handle multiple tracks being added or removed at
+	once in OnSourceTrackAdded/Removed.
+
+	* src/PlaylistModel.cs: Add helpers for turning off and then restoring the
+	sort order of the model, useful b/c otherwise when doing many additions or
+	removals from the model it sorts after each one.  Fixes BGO #325968.
+
+	Also, actually do something in RemoveTrack, fixes BGO #344833.
+
+	* src/Banshee.Base/Source.cs: Make TrackEventArgs an ICollection instead
+	of IEnumerable so we can get a Count easily.  Support sending multiple
+	tracks with the OnTrackAdded and OnTrackRemoved helpers.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: whitespace.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Make some
+	translated strings static.  Simplify and improve the way smart playlists
+	are refreshed, removing unnecessary track removals (used to just clear
+	everything out and start over).  Make sure to raise events inside the main
+	loop to prevent crashing.
+
 2006-12-05  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Organized, moved major pieces to shamrock/banshee m4

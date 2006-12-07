@@ -47,7 +47,7 @@ namespace Banshee.Sources
     public class TrackEventArgs : EventArgs
     {
         public TrackInfo Track;
-        public IEnumerable Tracks;
+        public ICollection Tracks;
     }
 
     public enum SortCriteria
@@ -151,20 +151,32 @@ namespace Banshee.Sources
         
         public virtual void OnTrackAdded(TrackInfo track)
         {
+            OnTrackAdded(track, null);
+        }
+
+        public virtual void OnTrackAdded(TrackInfo track, ICollection tracks)
+        {
             TrackEventHandler handler = TrackAdded;
             if(handler != null) {
                 TrackEventArgs args = new TrackEventArgs();
                 args.Track = track;
+                args.Tracks = tracks;
                 handler(this, args);
             }
         }
         
         public virtual void OnTrackRemoved(TrackInfo track)
         {
+            OnTrackRemoved(track, null);
+        }
+
+        public virtual void OnTrackRemoved(TrackInfo track, ICollection tracks)
+        {
             TrackEventHandler handler = TrackRemoved;
             if(handler != null) {
                 TrackEventArgs args = new TrackEventArgs();
                 args.Track = track;
+                args.Tracks = tracks;
                 handler(this, args);
             }
         }

@@ -22,8 +22,6 @@ namespace Banshee.SmartPlaylist
         public string LimitNumber;
         public int LimitCriterion;
 
-        private DateTime start;
-
         private string OrderAndLimit {
             get {
                 if (OrderBy == null || OrderBy == "")
@@ -71,12 +69,14 @@ namespace Banshee.SmartPlaylist
             get { return ((IList)tracks).SyncRoot; }
         }
 
+        private static string unmap_label = Catalog.GetString ("Delete Smart Playlist");
         public override string UnmapLabel {
-            get { return Catalog.GetString ("Delete Smart Playlist"); }
+            get { return unmap_label; }
         }
 
+        private static string generic_name = Catalog.GetString ("Smart Playlist");
         public override string GenericName {
-            get { return Catalog.GetString ("Smart Playlist"); }
+            get { return generic_name; }
         }
 
         // For existing smart playlists that we're loading from the database
@@ -156,6 +156,11 @@ namespace Banshee.SmartPlaylist
 
         public void RefreshMembers()
         {
+            RefreshMembers(true);
+        }
+
+        public void RefreshMembers(bool notify)
+        {
             Timer t = new Timer ("RefreshMembers", Name);
 
             //Console.WriteLine ("Refreshing smart playlist {0} with condition {1}", Source.Name, Condition);
@@ -165,11 +170,6 @@ namespace Banshee.SmartPlaylist
                 "DELETE FROM SmartPlaylistEntries WHERE PlaylistID = :playlist_id",
                 "playlist_id", Id
             ));
-
-            foreach (TrackInfo track in tracks)
-                OnTrackRemoved (track);
-
-            tracks.Clear();
 
             // Add matching tracks
             Globals.Library.Db.Execute(String.Format(
@@ -182,38 +182,33 @@ namespace Banshee.SmartPlaylist
             IDataReader reader = Globals.Library.Db.Query(new DbCommand(
                 @"SELECT TrackID 
                     FROM SmartPlaylistEntries
-                    WHERE PlaylistID = :playlist_id",
+                    WHERE PlaylistID = :playlist_id ORDER BY TrackId",
                     "playlist_id", Id
             ));
             
-            // If the limit is by any but songs, we need to prune the list up based on the desired 
-            // attribute (time/size)
-            if (LimitCriterion == 0 || LimitNumber == "0") {
-                while(reader.Read()) {
-                    if (Globals.Library.Tracks.ContainsKey(Convert.ToInt32(reader[0]))) {
-                        AddTrack (Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo);
-                    }
-                }
-            } else {
-                LimitTracks (reader, false);
+            List<TrackInfo> tracks_to_add = new List<TrackInfo>();
+            List<TrackInfo> tracks_to_remove = new List<TrackInfo>();
+            Queue<TrackInfo> old_tracks = new Queue<TrackInfo>(tracks);
+
+            double sum = 0;
+            double limit = 0;
+            bool check_limit = LimitCriterion != 0 && LimitNumber != "0";
+            if (check_limit) {
+                limit = Double.Parse(LimitNumber); 
             }
 
-            reader.Dispose();
-
-            t.Stop();
-        }
-
-        private void LimitTracks (IDataReader reader, bool remove_if_limited)
-        {
-            Timer t = new Timer ("LimitTracks", Name);
-
-            bool was_limited = false;
-            double sum = 0;
-            double limit = Double.Parse(LimitNumber); 
+            int counter = 0;
             while(reader.Read()) {
-                if (Globals.Library.Tracks.ContainsKey(Convert.ToInt32(reader[0]))) {
-                    TrackInfo track = Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo;
+                int id = Convert.ToInt32(reader[0]);
 
+                TrackInfo track = Globals.Library.Tracks[id] as TrackInfo;
+                //Console.WriteLine ("evaluating track {0} (old? {1})", track, old_tracks.Contains(track));
+                if (track == null || track.TrackId <= 0) {
+                    Console.WriteLine ("bad track = {0}", track);
+                    continue;
+                }
+
+                if (check_limit) {
                     switch (LimitCriterion) {
                     case 1: // minutes
                         sum += track.Duration.TotalMinutes;
@@ -229,37 +224,44 @@ namespace Banshee.SmartPlaylist
                         break;
                     }
 
+                    // If we've reached the limit, break out of the add track cycle
                     if (sum > limit) {
-                        was_limited = true;
-
-                        if (remove_if_limited) {
-                            RemoveTrack (track);
-                        } else {
-                            break;
-                        }
-                    } else if (!tracks.Contains (track)) {
-                        AddTrack (track);
+                        break;
                     }
                 }
+
+                if (old_tracks.Count == 0 || id < old_tracks.Peek().TrackId) {
+                    // If we've examined all the old tracks or
+                    // if the new track's ID is less than the old track's, add it
+                    tracks_to_add.Add(track);
+                } else if (id > old_tracks.Peek().TrackId) {
+                    // We know the old track has been removed if this track's ID is greater than it b/c of how we've sorted things
+                    tracks_to_remove.Add(old_tracks.Dequeue());
+
+                    tracks_to_add.Add(track);
+                } else {
+                    // The new track is equal to the old track, so move on to the next old track
+                    old_tracks.Dequeue();
+                }
+                counter++;
             }
 
-            // We do a commit here to clean up the tracks listed in the database..the commit deletes
-            // all Entries for this playlist then inserts them based on one's that are actually in the playlist...
-            // so all the tracks that were beyond the limit point are cleaned out
-            if (was_limited || remove_if_limited)
-                Commit();
+            // If there are old tracks we didn't examine, they should be removed
+            tracks_to_remove.AddRange (old_tracks);
+
+            RemoveTracks(tracks_to_remove, notify);
+            AddTracks(tracks_to_add, notify);
+
+            reader.Dispose();
 
             t.Stop();
         }
 
         public void Check (TrackInfo track)
         {
-            start = DateTime.Now;
-
             if (OrderAndLimit == null) {
                 // If this SmartPlaylist doesn't have an OrderAndLimit clause, then it's quite simple
                 // to check this track - if it matches the Condition we make sure it's in, and vice-versa
-                //Console.WriteLine ("Limitless condition");
                 
                 object id = Globals.Library.Db.QuerySingle(String.Format(
                     "SELECT TrackId FROM Tracks WHERE TrackId = {0} {1}",
@@ -267,55 +269,17 @@ namespace Banshee.SmartPlaylist
                 ));
 
                 if (id == null || (int) id != track.TrackId) {
+                    // If it didn't match and is in the playlist, remove it
                     if (tracks.Contains (track)) {
-                        // If it didn't match and is in the playlist, remove it
-                        RemoveTrack (track);
+                        RemoveTrack(track);
                     }
                 } else if(! tracks.Contains (track)) {
                     // If it matched and isn't already in the playlist
                     AddTrack (track);
                 }
             } else {
-                // If this SmartPlaylist has an OrderAndLimit clause things are more complicated as there are a limited
-                // number of tracks -- so if we remove a track, we probably need to add a different one and vice-versa.
-                //Console.WriteLine ("Checking track {0} ({1}) against condition & order/limit {2} {3}", track.Uri.LocalPath, track.TrackId, Condition, OrderAndLimit);
-
-                // See if there is a track that was in the SmartPlaylist that now shouldn't be because
-                // this track we are checking displaced it.
-                IDataReader reader = Globals.Library.Db.Query(String.Format(
-                    "SELECT TrackId FROM SmartPlaylistEntries WHERE PlaylistID = {0} " +
-                    "AND TrackId NOT IN (SELECT TrackID FROM Tracks {1} {2})",
-                    Id, PrependCondition("WHERE"), OrderAndLimit
-                ));
-
-                while (reader.Read())
-                    RemoveTrack  (Globals.Library.Tracks[Convert.ToInt32(reader[0])] as TrackInfo);
-
-                reader.Dispose();
-
-                // Remove those tracks from the database
-                Globals.Library.Db.Execute(String.Format(
-                    "DELETE FROM SmartPlaylistEntries WHERE PlaylistID = {0} " +
-                    "AND TrackId NOT IN (SELECT TrackID FROM Tracks {1} {2})",
-                    Id, PrependCondition("WHERE"), OrderAndLimit
-                ));
-
-                // If we are already a member of this smart playlist
-                if (!tracks.Contains (track)) {
-                    // We have removed tracks no longer in this smart playlist, now need to add
-                    // tracks that replace those that were removed (if any), and do limited by size/duration
-                    IDataReader tracks_res = Globals.Library.Db.Query(String.Format(
-                        @"SELECT TrackId FROM Tracks 
-                            WHERE TrackID IN (SELECT TrackID FROM Tracks {1} {2})",
-                        Id, PrependCondition("WHERE"), OrderAndLimit
-                    ));
-
-                    LimitTracks (tracks_res, true);
-
-                    tracks_res.Dispose();
-                }
+                RefreshMembers();
             }
-
         }
 
         public override void Commit ()
@@ -341,27 +305,6 @@ namespace Banshee.SmartPlaylist
 
             Globals.Library.Db.Execute(command);
 
-            // Make sure the tracks are up to date
-            Globals.Library.Db.Execute(String.Format(
-                @"DELETE FROM SmartPlaylistEntries
-                    WHERE PlaylistID = '{0}'",
-                    id
-            ));
-
-            
-            lock(TracksMutex) {
-                foreach(TrackInfo track in Tracks) {
-                    if(track == null || track.TrackId <= 0)
-                        continue;
-                        
-                    Globals.Library.Db.Execute(String.Format(
-                        @"INSERT INTO SmartPlaylistEntries 
-                            VALUES (NULL, '{0}', '{1}')",
-                            id, track.TrackId
-                    ));
-                }
-            }
-
             t.Stop();
         }
 
@@ -371,35 +314,64 @@ namespace Banshee.SmartPlaylist
             ed.RunDialog ();
         }
 
-        public override void Reorder(TrackInfo track, int position)
+        // TODO shouldn't try implement this until I understand what is does.
+        /*public override void Reorder(TrackInfo track, int position)
         {
-            RemoveTrack(track);
             lock(TracksMutex) {
                 tracks.Insert(position, track);
+            }
+        }*/
+
+        public void AddTracks(List<TrackInfo> tracks_to_add, bool notify)
+        {
+            lock(TracksMutex) {
+                tracks.AddRange(tracks_to_add);
+            }
+
+            if (notify) {
+                ThreadAssist.ProxyToMain(delegate {
+                    OnTrackAdded(null, tracks_to_add);
+                    OnUpdated();
+                });
             }
         }
 
         public override void AddTrack(TrackInfo track)
         {
-            //Console.WriteLine ("Adding track ... == null ? {0}", track == null);
             if(track is LibraryTrackInfo) {
-                //Console.WriteLine ("its a LibraryTrackInfo! track = {0}", track);
                 lock(TracksMutex) {
                     tracks.Add(track);
                 }
 
                 OnTrackAdded (track);
+                OnUpdated();
             }
         }
-        
+
+        public void RemoveTracks(List<TrackInfo> tracks_to_remove, bool notify)
+        {
+            lock(TracksMutex) {
+                foreach (TrackInfo track in tracks_to_remove) {
+                    tracks.Remove(track);
+                }
+            }
+
+            if (notify) {
+                ThreadAssist.ProxyToMain(delegate {
+                    OnTrackRemoved(null, tracks_to_remove);
+                    OnUpdated();
+                });
+            }
+        }
+
         public override void RemoveTrack(TrackInfo track)
         {
             lock(TracksMutex) {
                 tracks.Remove (track);
-                //  playlistModel.RemoveTrack(ref iters[i], track);
             }
 
             OnTrackRemoved (track);
+            OnUpdated();
         }
 
         protected override bool UpdateName(string oldName, string newName)
@@ -445,8 +417,7 @@ namespace Banshee.SmartPlaylist
             if(args.Track != null) {
                 if(tracks.Contains(args.Track)) {
                     RemoveTrack(args.Track);
-                    
-                    Commit();
+                    RefreshMembers();
                 }
                 
                 return;
@@ -454,17 +425,16 @@ namespace Banshee.SmartPlaylist
                 return;
             }
             
-            int removed_count = 0;
-            
+            bool removed_any = false;
             foreach(TrackInfo track in args.Tracks) {
                 if(tracks.Contains(track)) {
                     RemoveTrack (track);
-                    removed_count++;
+                    removed_any = true;
                 }
             }
             
-            if(removed_count > 0) {
-                Commit();
+            if (removed_any) {
+                RefreshMembers();
             }
         }
 
@@ -475,7 +445,7 @@ namespace Banshee.SmartPlaylist
 
             //Console.WriteLine ("{0} sent playlist changed to {1}", (sender as PlaylistSource).Name, Name);
             if (args.Track != null) {
-                start = DateTime.Now;
+                DateTime start = DateTime.Now;
                 Check (args.Track);
                 SmartPlaylistCore.Instance.CpuTime += (DateTime.Now - start).TotalMilliseconds;
             }
@@ -492,6 +462,7 @@ namespace Banshee.SmartPlaylist
 
             SmartPlaylistSource playlist = new SmartPlaylistSource(id, name, condition, 
                 order_by, limit_number, limit_criterion);
+
             LibrarySource.Instance.AddChildSource(playlist);
 
             if(!SourceManager.ContainsSource (playlist) && SourceManager.ContainsSource(Banshee.Sources.LibrarySource.Instance)) {
