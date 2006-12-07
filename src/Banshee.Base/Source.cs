@@ -68,6 +68,8 @@ namespace Banshee.Sources
         private string name;
         private string filter_query;
         private string filter_field;
+        private int sort_column = -1;
+        private Gtk.SortType sort_type = Gtk.SortType.Ascending;
 
         private List<Source> child_sources;
 
@@ -440,6 +442,16 @@ namespace Banshee.Sources
         
         public bool AcceptsSourceDrop {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SourceDrop"); }
+        }
+        
+        public int SortColumn {
+            get { return sort_column; }
+            set { sort_column = value; }
+        }
+        
+        public Gtk.SortType SortType {
+            get { return sort_type; }
+            set { sort_type = value; }
         }
     }
 }

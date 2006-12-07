@@ -53,9 +53,6 @@ namespace Banshee
         
         private RepeatMode repeat = RepeatMode.None;
         private bool shuffle = false;
-
-        private int sort_column;
-        private SortType sort_type;
         
         public event EventHandler Updated;
         public event EventHandler Stopped;
@@ -131,17 +128,34 @@ namespace Banshee
             return IterTrackInfo(iter);
         }
 
+        private bool can_save_sort_id = true;
+
         public void ClearSortOrder()
         {
-            GetSortColumnId(out sort_column, out sort_type);
+            can_save_sort_id = false;
             SetSortColumnId(-1, SortType.Ascending);
+            can_save_sort_id = true;
         }
 
         public void RestoreSortOrder()
         {
-            SetSortColumnId(sort_column, sort_type);
+            SetSortColumnId(SourceManager.ActiveSource.SortColumn, SourceManager.ActiveSource.SortType);
         }
         
+        protected override void OnSortColumnChanged()
+        {
+            if(!can_save_sort_id) {
+                return;
+            }
+            
+            int sort_column;
+            SortType sort_type;
+            
+            GetSortColumnId(out sort_column, out sort_type);
+            
+            SourceManager.ActiveSource.SortColumn = sort_column;
+            SourceManager.ActiveSource.SortType = sort_type;
+        }
         
         // --- Playback Methods ---
         
