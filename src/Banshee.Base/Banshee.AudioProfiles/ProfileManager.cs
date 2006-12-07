@@ -59,6 +59,12 @@ namespace Banshee.AudioProfiles
 
     public class ProfileManager : IEnumerable<Profile>
     {
+        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
+        
+        internal static System.Globalization.CultureInfo CultureInfo {
+            get { return culture_info; }
+        }
+    
         private XmlDocument document;
         private List<Profile> profiles = new List<Profile>();
         private Dictionary<string, PipelineVariable> preset_variables = new Dictionary<string, PipelineVariable>();

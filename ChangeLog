@@ -1,5 +1,14 @@
 2006-12-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Banshee.AudioProfiles/Pipeline.cs:
+	* src/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs:
+	* src/Banshee.Base/Banshee.AudioProfiles/ProfileManager.cs: Fixed locale
+	issues with loading of some profiles (vorbis) due to culture format
+	rules that are not compatible with GStreamer (all pipeline input should
+	be en_US); all conversions use an en-US CultureInfo now
+
+2006-12-07  Aaron Bockover  <abock@gnome.org>
+
 	* data/audio-profiles/aac.xml: Fixed faac bitrate range problem
 
 2006-12-07  Aaron Bockover  <abock@gnome.org>

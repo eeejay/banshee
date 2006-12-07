@@ -75,7 +75,7 @@ namespace Banshee.AudioProfiles
                 string variable_value = variable.CurrentValue;
                 
                 try {
-                    variable_value = variable.EvaluateTransformation(id).ToString();
+                    variable_value = Convert.ToString(variable.EvaluateTransformation(id), ProfileManager.CultureInfo);
                 } catch {
                 }
                 

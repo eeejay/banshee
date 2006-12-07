@@ -133,7 +133,7 @@ namespace Banshee.AudioProfiles
         private static double ToDouble(string str)
         {
             try {
-                return Convert.ToDouble(str);
+                return Convert.ToDouble(str, ProfileManager.CultureInfo);
             } catch {
             }
 
@@ -171,7 +171,7 @@ namespace Banshee.AudioProfiles
         public double EvaluateTransformation(string id)
         {
             Abakos.Compiler.Expression expression = new Abakos.Compiler.Expression(transformations[id]);
-            expression.DefineVariable("$_", Convert.ToDouble(CurrentValue));
+            expression.DefineVariable("$_", Convert.ToDouble(CurrentValue, ProfileManager.CultureInfo));
             return expression.EvaluateNumeric();
         }
 
@@ -215,13 +215,13 @@ namespace Banshee.AudioProfiles
                 try {
                     return DefaultValue == null || DefaultValue == String.Empty ?
                         (double?)null :
-                        Convert.ToDouble(DefaultValue);
+                        Convert.ToDouble(DefaultValue, ProfileManager.CultureInfo);
                 } catch {
                     return null;
                 }
             }
 
-            set { DefaultValue = value.ToString(); }
+            set { DefaultValue = Convert.ToString(value, ProfileManager.CultureInfo); }
         }
 
         public double? CurrentValueNumeric {
@@ -229,13 +229,13 @@ namespace Banshee.AudioProfiles
                 try {
                     return CurrentValue == null || CurrentValue == String.Empty ?
                         (double?)null :
-                        Convert.ToDouble(CurrentValue);
+                        Convert.ToDouble(CurrentValue, ProfileManager.CultureInfo);
                 } catch {
                     return null;
                 }
             }
 
-            set { CurrentValue = value.ToString(); }
+            set { CurrentValue = Convert.ToString(value, ProfileManager.CultureInfo); }
         }
 
         public double MinValue {
@@ -259,9 +259,9 @@ namespace Banshee.AudioProfiles
 
         public double EvaluateStepExpression(double input)
         {
-            step_expression.DefineVariable("$min", Convert.ToDouble(MinValue));
-            step_expression.DefineVariable("$max", Convert.ToDouble(MaxValue));
-            step_expression.DefineVariable("$step", Convert.ToDouble(StepValue));
+            step_expression.DefineVariable("$min", Convert.ToDouble(MinValue, ProfileManager.CultureInfo));
+            step_expression.DefineVariable("$max", Convert.ToDouble(MaxValue, ProfileManager.CultureInfo));
+            step_expression.DefineVariable("$step", Convert.ToDouble(StepValue, ProfileManager.CultureInfo));
             step_expression.DefineVariable("$this", input);
             
             try {
