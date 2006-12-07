@@ -1,3 +1,10 @@
+2006-12-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs: Handle the 
+	MissingPlugins error code
+
+	* Gabriel Burt: The next time you see this man, buy him some beer.
+
 2006-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/PlayerInterface.cs: Handle multiple tracks being added or removed at

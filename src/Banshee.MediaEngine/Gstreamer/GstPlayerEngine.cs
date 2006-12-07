@@ -242,6 +242,15 @@ namespace Banshee.MediaEngine.Gstreamer
                 
                 Console.WriteLine("GStreamer stream error: {0}", domain_code);
             } else if(domain == GST_CORE_ERROR) {
+                GstCoreError domain_code = (GstCoreError)code;
+                switch(domain_code) {
+                    case GstCoreError.MissingPlugin:
+                        CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                        break;
+                    default:
+                        break;
+                }
+                
                 Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);
             } else if(domain == GST_LIBRARY_ERROR) {
                 Console.WriteLine("GStreamer library error: {0}", (GstLibraryError)code);
