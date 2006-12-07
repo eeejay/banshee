@@ -332,6 +332,8 @@ namespace Banshee.Gui
             
                 source_menu.Popup(null, null, null, 0, evnt.Time);
                 source_menu.Show();
+                
+                return true;
             }
             
             return base.OnButtonPressEvent(evnt);

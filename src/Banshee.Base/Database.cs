@@ -83,7 +83,9 @@ namespace Banshee.Base
                 Execute(@"
                 CREATE TABLE Playlists (
                     PlaylistID INTEGER PRIMARY KEY,
-                    Name TEXT NOT NULL
+                    Name TEXT NOT NULL,
+                    SortColumn INTEGER NOT NULL DEFAULT -1,
+                    SortType INTEGER NOT NULL DEFAULT 0
                 )");
             }
             
@@ -127,6 +129,20 @@ namespace Banshee.Base
             } catch(ApplicationException) {
                 LogCore.Instance.PushDebug("Adding new database column", "ViewOrder INTEGER");
                 Execute("ALTER TABLE PlaylistEntries ADD ViewOrder INTEGER NOT NULL DEFAULT 0");
+            }            
+            
+            try {
+                QuerySingle("SELECT SortColumn FROM Playlists LIMIT 1");
+            } catch(ApplicationException) {
+                LogCore.Instance.PushDebug("Adding new database column", "Playlists.SortColumn INTEGER");
+                Execute("ALTER TABLE Playlists ADD SortColumn INTEGER NOT NULL DEFAULT -1");
+            }       
+            
+            try {
+                QuerySingle("SELECT SortType FROM Playlists LIMIT 1");
+            } catch(ApplicationException) {
+                LogCore.Instance.PushDebug("Adding new database column", "Playlists.SortType INTEGER");
+                Execute("ALTER TABLE Playlists ADD SortType INTEGER NOT NULL DEFAULT 0");
             }
         }
     }

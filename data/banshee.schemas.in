@@ -353,6 +353,28 @@
         <long>Format for creating a track filename inside the library. Do not use path tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero).</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/LibrarySortColumn</key>
+      <applyto>/apps/Banshee/LibrarySortColumn</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>-1</default>
+      <locale name="C">
+        <short>Column index</short>
+        <long>Column index for sorting the library source. -1 for unset.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/LibrarySortType</key>
+      <applyto>/apps/Banshee/LibrarySortType</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Column sort type</short>
+        <long>Column sort type for the library source. Ascending (0) or Descending (1)</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>
 

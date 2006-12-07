@@ -64,5 +64,7 @@ namespace Banshee.Base
         public const string ShowInitialImportDialog = BasePath + "ShowInitialImportDialog";
         public const string OpenLocationHistory = BasePath + "OpenLocationHistory";
         public const string IOBackend = BasePath + "IOBackend";
+        public const string LibrarySortColumn = BasePath + "LibrarySortColumn";
+        public const string LibrarySortType = BasePath + "LibrarySortType";
     }
 }

@@ -257,7 +257,7 @@ namespace Banshee.Sources
             Globals.ActionManager["RenameSourceAction"].Visible = source.CanRename;
             Globals.ActionManager["UnmapSourceAction"].Visible = source.CanUnmap;
             Globals.ActionManager.DapActions.Visible = source is DapSource;
-            Globals.ActionManager["SelectedSourcePropertiesAction"].Sensitive = source.HasProperties;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].Visible = source.HasProperties;
             
             if(source is IImportSource) {
                 Globals.ActionManager["ImportSourceAction"].Visible = source is IImportSource;

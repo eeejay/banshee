@@ -108,7 +108,7 @@ namespace Banshee.Sources
         {
             Id = Globals.Library.Db.Execute(new DbCommand(
                 @"INSERT INTO Playlists
-                    VALUES (NULL, :playlist_name)",
+                    VALUES (NULL, :playlist_name, -1, 0)",
                     "playlist_name", Name
             ));
         }
@@ -395,6 +395,60 @@ namespace Banshee.Sources
         
         public override bool IsDragSource {
             get { return true; }
+        }        
+        
+        public override int SortColumn {
+            get { 
+                try {
+                    return Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
+                        @"SELECT SortColumn
+                            FROM Playlists
+                            WHERE PlaylistID = :playlist_id",
+                            playlist_id_param)));
+                } catch {
+                    return base.SortColumn;
+                }
+            }
+            
+            set {
+                try {
+                    Globals.Library.Db.Execute(new DbCommand(
+                        @"UPDATE Playlists
+                            SET SortColumn = :sort_column
+                            WHERE PlaylistID = :playlist_id",
+                            "sort_column", value,
+                            playlist_id_param));
+                } catch {
+                    base.SortColumn = value;
+                }
+            }
+        }        
+        
+        public override Gtk.SortType SortType {
+            get { 
+                try {
+                    return (Gtk.SortType)Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
+                        @"SELECT SortType
+                            FROM Playlists
+                            WHERE PlaylistID = :playlist_id",
+                            playlist_id_param)));
+                } catch {
+                    return base.SortType;
+                }
+            }
+            
+            set {
+                try {
+                    Globals.Library.Db.Execute(new DbCommand(
+                        @"UPDATE Playlists
+                            SET SortType = :sort_type
+                            WHERE PlaylistID = :playlist_id",
+                            "sort_type", value,
+                            playlist_id_param));
+                } catch {
+                    base.SortType = value;
+                }
+            }
         }
         
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist");

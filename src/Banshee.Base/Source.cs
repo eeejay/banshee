@@ -444,12 +444,12 @@ namespace Banshee.Sources
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SourceDrop"); }
         }
         
-        public int SortColumn {
+        public virtual int SortColumn {
             get { return sort_column; }
             set { sort_column = value; }
         }
         
-        public Gtk.SortType SortType {
+        public virtual Gtk.SortType SortType {
             get { return sort_type; }
             set { sort_type = value; }
         }

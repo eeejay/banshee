@@ -188,6 +188,42 @@ namespace Banshee.Sources
             get { return Globals.Library.Tracks.Count; }
         }  
         
+        public override int SortColumn {
+            get { 
+                try {
+                    return (int)Globals.Configuration.Get(GConfKeys.LibrarySortColumn);
+                } catch {
+                    return base.SortColumn;
+                }
+            }
+            
+            set {
+                try {
+                    Globals.Configuration.Set(GConfKeys.LibrarySortColumn, value);
+                } catch {
+                    base.SortColumn = value;
+                }
+            }
+        }        
+        
+        public override Gtk.SortType SortType {
+            get { 
+                try {
+                    return (Gtk.SortType)Globals.Configuration.Get(GConfKeys.LibrarySortType);
+                } catch {
+                    return base.SortType;
+                }
+            }
+            
+            set {
+                try {
+                    Globals.Configuration.Set(GConfKeys.LibrarySortType, (int)value);
+                } catch {
+                    base.SortType = value;
+                }
+            }
+        }
+        
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library");
         public override Gdk.Pixbuf Icon {
             get { return icon; } 
