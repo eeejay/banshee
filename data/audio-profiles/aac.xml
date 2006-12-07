@@ -20,13 +20,13 @@
           <control-type>combo</control-type>
           <default-value>128</default-value>
           <possible-values>
-            <value value="64">64 Kbps</value>
             <value value="96">96 Kbps</value>
             <value value="128">128 Kbps</value>
             <value value="160">160 Kbps</value>
             <value value="192">192 Kbps</value>
             <value value="320">320 Kbps</value>
           </possible-values>
+		  <transformation id="gstreamer">$_ * 1024</transformation>
         </variable>
         <preset-variable id="channels" />
         <preset-variable id="sample_rate" />
