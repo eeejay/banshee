@@ -121,15 +121,12 @@ namespace Banshee.Widgets
             evBox.FocusInEvent += OnFocusInEvent;
             evBox.FocusOutEvent += OnFocusOutEvent;
             evBox.Add(img);
-            evBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
-            evContainer.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             
             cancelImage = new Image(Stock.Clear, IconSize.Menu);
             cancelImage.Xpad = 2;
             evCancelBox = new EventBox();
             evCancelBox.CanFocus = true;
             evCancelBox.Add(cancelImage);
-            evCancelBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
             evCancelBox.EnterNotifyEvent += OnCancelEnterNotifyEvent;
             evCancelBox.ButtonPressEvent += OnCancelButtonPressEvent;
             evCancelBox.KeyPressEvent += OnCancelKeyPressEvent;
@@ -144,6 +141,10 @@ namespace Banshee.Widgets
             SetSizeRequest(175, -1);
             
             entry.Changed += OnEntryChanged;
+            entry.StyleSet += delegate {
+                evBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
+                evCancelBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
+            };
         }
         
         private static byte PixelClamp(int val)
