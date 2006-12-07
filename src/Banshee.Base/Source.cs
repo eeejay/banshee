@@ -364,6 +364,14 @@ namespace Banshee.Sources
             get { return null; }
         }
 
+        public virtual string SourcePropertiesIcon {
+            get { return Gtk.Stock.Properties; }
+        }
+
+        public virtual string SourcePropertiesLabel {
+            get { return Catalog.GetString("Source Properties..."); }
+        }
+
         public virtual string UnmapIcon {
             get { return Gtk.Stock.Delete; }
         }

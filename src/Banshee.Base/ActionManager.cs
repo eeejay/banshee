@@ -93,8 +93,8 @@ namespace Banshee.Base
                     Catalog.GetString("Import source to library"), null),
                     
                 new ActionEntry("SelectedSourcePropertiesAction", Stock.Properties,
-                    Catalog.GetString("Source Properties..."), null,
-                    Catalog.GetString("View source properties"), null),
+                    "Source Properties", null,
+                    null, null),
                     
                 new ActionEntry("QuitAction", Stock.Quit,
                     Catalog.GetString("_Quit"), "<control>Q",

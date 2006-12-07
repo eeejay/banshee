@@ -284,6 +284,8 @@ namespace Banshee.Sources
 
             Globals.ActionManager["UnmapSourceAction"].Label = source.UnmapLabel;
             Globals.ActionManager["UnmapSourceAction"].StockId = source.UnmapIcon;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].Label = source.SourcePropertiesLabel;
+            Globals.ActionManager["SelectedSourcePropertiesAction"].StockId = source.SourcePropertiesIcon;
         }
      
         public static ICollection<Source> Sources {

@@ -73,7 +73,12 @@ namespace Banshee.SmartPlaylist
         public override string UnmapLabel {
             get { return unmap_label; }
         }
-
+        
+        private static string properties_label = Catalog.GetString ("Edit Smart Playlist...");
+        public override string SourcePropertiesLabel {
+            get { return properties_label; }
+        }
+        
         private static string generic_name = Catalog.GetString ("Smart Playlist");
         public override string GenericName {
             get { return generic_name; }
