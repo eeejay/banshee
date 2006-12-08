@@ -1,7 +1,7 @@
 AC_DEFUN([SHAMROCK_CONFIGURE_I18N],
 [
 	#IT_PROG_INTLTOOL([0.35.0])
-	AC_PROG_INTLTOOL([0.21])
+	#AC_PROG_INTLTOOL([0.21])
 
 	ALL_LINGUAS=`grep -v '^#' $srcdir/po/LINGUAS | sed -r ':a;N;$!ba;s/\n/ /g; s/[ ]+/ /g'`
 	GETTEXT_PACKAGE=$1

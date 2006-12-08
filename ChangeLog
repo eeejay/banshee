@@ -1,3 +1,13 @@
+2006-12-08  Aaron Bockover  <aaron@abock.org>
+
+	* configure.ac:
+	* build/m4/banshee/libbanshee.m4:
+	* build/m4/shamrock/i18n.m4: Moved some macro calls back to configure.ac
+	as gnome-autogen greps configure.ac (booo) for these call to see what
+	programs it will need to run (libtoolize, intltoolize, autoheader); 
+	would be nice if gnome-autogen could parse ACLOCAL_FLAGS and grep
+	through the -I files as well. Hiss. Fixes BGO #383844.
+
 2006-12-08  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Base/IO/GnomeVfs.cs:
