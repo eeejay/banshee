@@ -1880,7 +1880,7 @@ namespace Banshee
                     DialogFlags.DestroyWithParent, MessageType.Warning,
                     ButtonsType.None,
                     header, message);
-                md.AddButton("gtk-cancel", ResponseType.No, true);
+                md.AddButton("gtk-cancel", ResponseType.No, false);
                 md.AddButton(button_label, ResponseType.Yes, false);
                 
                 try {

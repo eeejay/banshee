@@ -52,6 +52,8 @@ namespace Banshee.Widgets
             
             Adjustment.Lower = 0;
             Adjustment.Upper = 0;
+            
+            SetIdle();
         }
         
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
@@ -126,6 +128,7 @@ namespace Banshee.Widgets
         
         public void SetIdle()
         {
+            Sensitive = false;
             SeekValue = 0;
             Duration = 0;
         }
