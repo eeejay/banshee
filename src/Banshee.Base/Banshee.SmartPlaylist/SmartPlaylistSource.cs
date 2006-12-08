@@ -143,6 +143,7 @@ namespace Banshee.SmartPlaylist
                 source.TrackAdded -= HandlePlaylistChanged;
                 source.TrackRemoved -= HandlePlaylistChanged;
             }
+
             watchedPlaylists.Clear();
 
             if (PlaylistDependent) {
@@ -160,11 +161,6 @@ namespace Banshee.SmartPlaylist
         }
 
         public void RefreshMembers()
-        {
-            RefreshMembers(true);
-        }
-
-        public void RefreshMembers(bool notify)
         {
             Timer t = new Timer ("RefreshMembers", Name);
 
@@ -258,8 +254,8 @@ namespace Banshee.SmartPlaylist
             // If there are old tracks we didn't examine, they should be removed
             tracks_to_remove.AddRange (old_tracks);
 
-            RemoveTracks(tracks_to_remove, notify);
-            AddTracks(tracks_to_add, notify);
+            RemoveTracks(tracks_to_remove);
+            AddTracks(tracks_to_add);
 
             reader.Dispose();
 
@@ -331,18 +327,16 @@ namespace Banshee.SmartPlaylist
             }
         }*/
 
-        public void AddTracks(List<TrackInfo> tracks_to_add, bool notify)
+        public void AddTracks(List<TrackInfo> tracks_to_add)
         {
             lock(TracksMutex) {
                 tracks.AddRange(tracks_to_add);
             }
 
-            if (notify) {
-                ThreadAssist.ProxyToMain(delegate {
-                    OnTrackAdded(null, tracks_to_add);
-                    OnUpdated();
-                });
-            }
+            ThreadAssist.ProxyToMain(delegate {
+                OnTrackAdded(null, tracks_to_add);
+                OnUpdated();
+            });
         }
 
         public override void AddTrack(TrackInfo track)
@@ -357,7 +351,7 @@ namespace Banshee.SmartPlaylist
             }
         }
 
-        public void RemoveTracks(List<TrackInfo> tracks_to_remove, bool notify)
+        public void RemoveTracks(List<TrackInfo> tracks_to_remove)
         {
             lock(TracksMutex) {
                 foreach (TrackInfo track in tracks_to_remove) {
@@ -365,12 +359,10 @@ namespace Banshee.SmartPlaylist
                 }
             }
 
-            if (notify) {
-                ThreadAssist.ProxyToMain(delegate {
-                    OnTrackRemoved(null, tracks_to_remove);
-                    OnUpdated();
-                });
-            }
+            ThreadAssist.ProxyToMain(delegate {
+                OnTrackRemoved(null, tracks_to_remove);
+                OnUpdated();
+            });
         }
 
         public override void RemoveTrack(TrackInfo track)
@@ -421,29 +413,34 @@ namespace Banshee.SmartPlaylist
             RefreshMembers();
         }
 
+        private List<TrackInfo> remove_queue = new List<TrackInfo>();
+        private uint remove_queue_timeout = 0;
+
         private void OnLibraryTrackRemoved(object o, LibraryTrackRemovedArgs args)
         {
-            if(args.Track != null) {
-                if(tracks.Contains(args.Track)) {
-                    RemoveTrack(args.Track);
-                    RefreshMembers();
-                }
-                
-                return;
-            } else if(args.Tracks == null) {
-                return;
-            }
+            lock(this) {
+                if (args.Track != null && tracks.Contains(args.Track))
+                    remove_queue.Add(args.Track);
+
+                if (args.Tracks != null)
+                    foreach(TrackInfo track in args.Tracks)
+                        if (track != null && tracks.Contains(track))
+                            remove_queue.Add(track);
             
-            bool removed_any = false;
-            foreach(TrackInfo track in args.Tracks) {
-                if(tracks.Contains(track)) {
-                    RemoveTrack (track);
-                    removed_any = true;
+                if(remove_queue.Count > 0 && remove_queue_timeout == 0) {
+                    remove_queue_timeout = GLib.Timeout.Add(500, FlushRemoveQueue);
                 }
             }
-            
-            if (removed_any) {
+        }
+
+        private bool FlushRemoveQueue()
+        {
+            lock(this) {
+                RemoveTracks(remove_queue);
                 RefreshMembers();
+                
+                remove_queue_timeout = 0;
+                return false;
             }
         }
 
