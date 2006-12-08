@@ -120,6 +120,11 @@ namespace Banshee
                 Banshee.Gui.DragDrop.DragDropTarget.PlaylistRows,
                 Banshee.Gui.DragDrop.DragDropTarget.UriList
             };
+            
+        private static TargetEntry [] nautilus_file_copy_entries = 
+            new TargetEntry [] { 
+                new TargetEntry("x-special/gnome-copied-files", 0, 0)
+            };
 
         public PlayerUI() 
         {
@@ -150,6 +155,7 @@ namespace Banshee
             Globals.ActionManager.AudioCdActions.Visible = false;
             Globals.ActionManager.SongActions.Sensitive = false;
             Globals.ActionManager.PlaylistActions.Sensitive = false;
+            Globals.ActionManager["JumpToPlayingAction"].Visible = false;
             
             foreach(Action action in Globals.ActionManager) {
                 string method_name = "On" + action.Name;
@@ -806,6 +812,7 @@ namespace Banshee
                 case PlayerEngineState.Loaded:
                     incrementedCurrentSongPlayCount = false;
                     seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+                    Globals.ActionManager["JumpToPlayingAction"].Visible = true;
                     UpdateMetaDisplay();
                     playlistView.QueueDraw();
                     
@@ -822,6 +829,7 @@ namespace Banshee
                     break;
                 case PlayerEngineState.Idle:
                     Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
+                    Globals.ActionManager["JumpToPlayingAction"].Visible = false;
                     seek_slider.SetIdle();
                     trackInfoHeader.SetIdle();
                     
@@ -2095,8 +2103,7 @@ namespace Banshee
             }
             
             Clipboard clipboard = Clipboard.Get(Gdk.Selection.Clipboard);
-            clipboard.SetWithData(new TargetEntry [] { new TargetEntry("x-special/gnome-copied-files", 0, 0) },
-                OnGetClipboard, OnClearClipboard);   
+            clipboard.SetWithData(nautilus_file_copy_entries, OnGetClipboard, OnClearClipboard);   
         }
         
         private void OnGetClipboard(Clipboard clipboard, SelectionData selection, uint info)
@@ -2110,7 +2117,7 @@ namespace Banshee
                 uris.Append("\n");
             }
             
-            byte [] raw_selection_data = Encoding.ASCII.GetBytes(uris.ToString());
+            byte [] raw_selection_data = Encoding.UTF8.GetBytes(uris.ToString());
             selection.Set(selection.Target, 8, raw_selection_data, raw_selection_data.Length);
         }
 
