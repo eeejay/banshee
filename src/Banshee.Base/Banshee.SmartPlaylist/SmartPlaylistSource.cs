@@ -206,7 +206,11 @@ namespace Banshee.SmartPlaylist
             while(reader.Read()) {
                 int id = Convert.ToInt32(reader[0]);
 
-                TrackInfo track = Globals.Library.Tracks[id] as TrackInfo;
+                TrackInfo track = null;
+                try {
+                    track = Globals.Library.Tracks[id] as TrackInfo;
+                } catch {}
+
                 //Console.WriteLine ("evaluating track {0} (old? {1})", track, old_tracks.Contains(track));
                 if (track == null || track.TrackId <= 0) {
                     Console.WriteLine ("bad track = {0}", track);
