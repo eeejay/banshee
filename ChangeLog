@@ -1,5 +1,14 @@
 2006-12-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Main.cs: Added a --no-source-change argument that can be supplied
+	with --dap or --audio-cd to disable selecting the source in the source
+	view and instead simply present the already running instance. This will
+	allow Banshee to start with the source selected if no instance was running
+	but not change to the source if an instance was already started. Fixes
+	BGO #345476
+
+2006-12-08  Aaron Bockover  <abock@gnome.org>
+
 	* data/UIManagerLayout.xml: Added Copy to the context menu
 
 	* src/Banshee.Base/ActionManager.cs: Removed 'Song(s)' from the menu
