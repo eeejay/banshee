@@ -15,6 +15,7 @@
             <separator />
             <menuitem name="SyncDap" action="SyncDapAction" />
             <separator />
+            <placeholder name="ClosePlaceholder" />
             <menuitem name="Quit" action="QuitAction" />
         </menu>
         <menu name="EditMenu" action="EditMenuAction">

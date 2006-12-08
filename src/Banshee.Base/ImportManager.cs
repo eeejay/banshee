@@ -75,6 +75,7 @@ namespace Banshee.Base
         private bool processing_queue = false;
         
         public event ImportEventHandler ImportRequested;
+        public event EventHandler ImportFinished;
         
         public ImportManager()
         {
@@ -270,6 +271,9 @@ namespace Banshee.Base
             
             if(scan_ref_count == 0) {
                 DestroyUserEvent();
+                if(ImportFinished != null) {
+                    ImportFinished(this, new EventArgs());
+                }
             }
         }
 

@@ -429,8 +429,14 @@ namespace Banshee.Gui
         
             TreePath path;
             TreeViewDropPosition pos;
+            
             if(GetDestRowAtPos(x, y, out path, out pos)) {
                 Source source = GetSource(path);
+                
+                if(source == SourceManager.ActiveSource) {
+                    return false;
+                }
+                
                 SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
                 
                 if((source is LibrarySource && (SourceManager.ActiveSource is IImportable 

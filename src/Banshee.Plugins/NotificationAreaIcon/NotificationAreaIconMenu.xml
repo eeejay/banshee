@@ -12,4 +12,11 @@
         <separator />
         <menuitem name="Quit" action="QuitAction" />
     </popup>
+    <menubar name="MainMenu">
+        <menu name="MusicMenu" action="MusicMenuAction">
+            <placeholder name="ClosePlaceholder">
+                 <menuitem name="Close" action="CloseAction" />
+            </placeholder>
+        </menu>
+    </menubar>
 </ui>

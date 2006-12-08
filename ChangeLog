@@ -1,5 +1,28 @@
 2006-12-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Banshee.Base/Sources/PlaylistSource.cs: Added a confirmation
+	method that shows a dialog asking to unmap; has do not show me again 
+	check box, fixes BGO #360466
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Use
+	PlaylistUtil.ConfirmUnmap
+
+	* data/UIManagerLayout.xml: Added a close item placeholder
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconMenu.xml:
+	Fill in the close item placeholder
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Added close action that hides to the tray
+
+	* src/Banshee.Base/Gui/SourceView.cs: Do not allow dragging tracks from
+	a source onto itself (BGO #345620)
+
+	* src/Banshee.Base/ImportManager.cs: Added ImportFinished event 
+	Scott Peterson, BGO #362994
+
+2006-12-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Main.cs: Added a --no-source-change argument that can be supplied
 	with --dap or --audio-cd to disable selecting the source in the source
 	view and instead simply present the already running instance. This will

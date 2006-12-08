@@ -232,6 +232,10 @@ namespace Banshee.Sources
         
         public override bool Unmap()
         {
+            if(Count > 0 && !PlaylistUtil.ConfirmUnmap(this)) {
+                return false;
+            }
+        
             Globals.Library.Db.Execute(new DbCommand(
                 @"DELETE FROM PlaylistEntries
                     WHERE PlaylistID = :playlist_id",
@@ -503,6 +507,54 @@ namespace Banshee.Sources
         {
             return NamingUtil.PostfixDuplicate(NamingUtil.GenerateTrackCollectionName(
                 tracks, Catalog.GetString("New Playlist")), PlaylistExists);
+        }
+        
+        public static bool ConfirmUnmap(Source source)
+        {
+            bool do_not_ask = false;
+            string key = GConfKeys.BasePath + "no_confirm_unmap_" + source.GetType().Name.ToLower();
+            
+            try {
+                do_not_ask = (bool)Globals.Configuration.Get(key);
+            } catch {
+            }
+            
+            if(do_not_ask) {
+                return true;
+            }
+        
+            Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog(
+                InterfaceElements.MainWindow,
+                Gtk.DialogFlags.Modal,
+                Gtk.MessageType.Question,
+                Gtk.ButtonsType.Cancel,
+                String.Format(Catalog.GetString("Are you sure you want to delete this {0}?"),
+                    source.GenericName.ToLower()),
+                source.Name);
+            
+            dialog.AddButton(Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
+            
+            Gtk.Alignment alignment = new Gtk.Alignment(0.0f, 0.0f, 0.0f, 0.0f);
+            alignment.TopPadding = 10;
+            Gtk.CheckButton confirm_button = new Gtk.CheckButton(String.Format(Catalog.GetString(
+                "Do not ask me this again"), source.GenericName.ToLower()));
+            confirm_button.Toggled += delegate {
+                do_not_ask = confirm_button.Active;
+            };
+            alignment.Add(confirm_button);
+            alignment.ShowAll();
+            dialog.LabelVBox.PackStart(alignment, false, false, 0);
+            
+            try {
+                if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
+                    Globals.Configuration.Set(key, do_not_ask);
+                    return true;
+                }
+                
+                return false;
+            } finally {
+                dialog.Destroy();
+            }
         }
     }
 }

@@ -76,6 +76,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private EventBox event_box;
         private NotificationArea notif_area;
         private Menu menu;
+        private ActionGroup actions;
         private uint ui_manager_id;
 
         private TrackInfoPopup popup;
@@ -87,11 +88,27 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private static readonly uint SkipDelta = 10;
         private static readonly int VolumeDelta = 10;
         
-        protected override void PluginInitialize() 
+        protected override void PluginInitialize()
+        {
+        }
+        
+        protected override void InterfaceInitialize() 
         {
             Init();
 
-            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("NotificationAreaIconMenu.xml");        
+            actions = new ActionGroup("NotificationArea");
+
+            actions.Add(new ActionEntry [] {
+                new ActionEntry("CloseAction", Stock.Close,
+                    Catalog.GetString("Close"), "<Control>W",
+                    Catalog.GetString("Close"), delegate { 
+                        ShowHideMainWindow(); 
+                 })
+            });
+
+            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
+            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("NotificationAreaIconMenu.xml");      
+            
             menu = (Menu) Globals.ActionManager.UI.GetWidget("/NotificationAreaIconMenu");
             menu.ShowAll();
         
@@ -105,6 +122,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
             // Forcefully load this value
             show_notifications = ShowNotifications;
+            InterfaceElements.MainWindow.KeyPressEvent += OnKeyPressEvent;
         }
 
         protected override void PluginDispose() 
@@ -114,20 +132,18 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 event_box = null;
                 notif_area = null;
             }
+            
             PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
+            
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+            Globals.ActionManager.UI.RemoveActionGroup(actions);
         }
 
         public override Gtk.Widget GetConfigurationWidget()
         {            
             return new NotificationAreaIconConfigPage(this);
         }
-
-        protected override void InterfaceInitialize() 
-        {
-            InterfaceElements.MainWindow.KeyPressEvent += OnKeyPressEvent;
-        }
-
+        
         private void Init() 
         {
             notif_area = new NotificationArea(Catalog.GetString("Banshee"));

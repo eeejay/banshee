@@ -387,6 +387,10 @@ namespace Banshee.SmartPlaylist
 
         public override bool Unmap()
         {
+            if(!PlaylistUtil.ConfirmUnmap(this)) {
+                return false;
+            }
+            
             Globals.Library.Db.Execute(String.Format(
                 @"DELETE FROM SmartPlaylistEntries
                     WHERE PlaylistID = '{0}'",
