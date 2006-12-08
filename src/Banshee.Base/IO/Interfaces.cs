@@ -45,8 +45,9 @@ namespace Banshee.IO
 
     public interface IFile
     {
-        bool Exists(SafeUri uri);
         void Delete(SafeUri uri);
+        bool Exists(SafeUri uri);
+        void Move(SafeUri from, SafeUri to);
     }
     
     public interface IDirectory
@@ -57,6 +58,7 @@ namespace Banshee.IO
         bool Exists(string directory);
         IEnumerable GetFiles(string directory);
         IEnumerable GetDirectories(string directory);
+        void Move(SafeUri from, SafeUri to);
     }
     
     public interface IDemuxVfs : TagLib.File.IFileAbstraction

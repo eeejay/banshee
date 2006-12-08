@@ -77,16 +77,21 @@ namespace Banshee.IO.Unix
 
     public class File : IFile
     {
+        public void Delete(SafeUri uri)
+        {
+            UnixFileInfo info = new UnixFileInfo(uri.LocalPath);
+            info.Delete();
+        }
+
         public bool Exists(SafeUri uri)
         {
             FileStat stat = new FileStat(uri.LocalPath);
             return stat.IsRegularFile && !stat.IsDirectory;
         }
         
-        public void Delete(SafeUri uri)
+        public void Move(SafeUri from, SafeUri to)
         {
-            UnixFileInfo info = new UnixFileInfo(uri.LocalPath);
-            info.Delete();
+            Mono.Unix.Native.Stdlib.rename(from.LocalPath, to.LocalPath);
         }
     }
 
@@ -158,6 +163,11 @@ namespace Banshee.IO.Unix
                     yield return entry.FullName;
                 }
             }
+        }
+        
+        public void Move(SafeUri from, SafeUri to)
+        {
+            Mono.Unix.Native.Stdlib.rename(from.LocalPath, to.LocalPath);
         }
     }
     

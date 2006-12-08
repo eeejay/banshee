@@ -73,6 +73,11 @@ namespace Banshee.IO.GnomeVfs
 
     public class File : IFile
     {
+        public void Delete(SafeUri uri)
+        {
+            Gnome.Vfs.Unlink.FromUri(new Gnome.Vfs.Uri(uri.AbsoluteUri));
+        }
+        
         public bool Exists(SafeUri uri)
         {
             try {
@@ -89,9 +94,10 @@ namespace Banshee.IO.GnomeVfs
                 (info.Type & FileType.Directory) == 0;
         }
         
-        public void Delete(SafeUri uri)
+        public void Move(SafeUri from, SafeUri to)
         {
-            Gnome.Vfs.Unlink.FromUri(new Gnome.Vfs.Uri(uri.AbsoluteUri));
+            Gnome.Vfs.Move.Uri(new Gnome.Vfs.Uri(from.AbsoluteUri), 
+                               new Gnome.Vfs.Uri(to.AbsoluteUri), true);
         }
     }
 
@@ -138,6 +144,12 @@ namespace Banshee.IO.GnomeVfs
                     yield return System.IO.Path.Combine(directory, file.Name);
                 }
             }
+        }
+        
+        public void Move(SafeUri from, SafeUri to)
+        {
+            Gnome.Vfs.Move.Uri(new Gnome.Vfs.Uri(from.AbsoluteUri), 
+                               new Gnome.Vfs.Uri(to.AbsoluteUri), true);
         }
     }
     

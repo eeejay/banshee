@@ -49,14 +49,19 @@ namespace Banshee.IO.SystemIO
 
     public class File : IFile
     {
+        public void Delete(SafeUri uri)
+        {
+            System.IO.File.Delete(uri.LocalPath);
+        }
+
         public bool Exists(SafeUri uri)
         {
             return System.IO.File.Exists(uri.LocalPath);
         }
-        
-        public void Delete(SafeUri uri)
+
+        public void Move(SafeUri from, SafeUri to)
         {
-            System.IO.File.Delete(uri.LocalPath);
+            System.IO.File.Move(from.LocalPath, to.LocalPath);
         }
     }
 
@@ -90,6 +95,11 @@ namespace Banshee.IO.SystemIO
         public IEnumerable GetDirectories(string directory)
         {
             return System.IO.Directory.GetDirectories(directory);
+        }
+
+        public void Move(SafeUri from, SafeUri to)
+        {
+            System.IO.Directory.Move(from.LocalPath, to.LocalPath);
         }
     }
     

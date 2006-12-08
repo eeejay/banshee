@@ -1,3 +1,10 @@
+2006-12-08  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Base/IO/GnomeVfs.cs:
+	* src/Banshee.Base/IO/Interfaces.cs:
+	* src/Banshee.Base/IO/SystemIO.cs:
+	* src/Banshee.Base/IO/Unix.cs: Added a Move(from, to) method.
+
 2006-12-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Banshee.Base/Sources/PlaylistSource.cs: Added a confirmation
