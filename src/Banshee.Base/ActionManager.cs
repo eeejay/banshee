@@ -211,6 +211,10 @@ namespace Banshee.Base
             /* Song Selected Actions */
             
             song_actions.Add(new ActionEntry [] {
+                new ActionEntry("CopySongsAction", Stock.Copy,
+                    Catalog.GetString("Copy Song(s)"), "<Control>C",
+                    Catalog.GetString("Copy selected song(s) to clipboard"), null),
+                    
                 new ActionEntry("RemoveSongsAction", Stock.Remove,
                     Catalog.GetString("Remove Song(s)"), "Delete",
                     Catalog.GetString("Remove selected song(s) from library"), null),
@@ -219,7 +223,7 @@ namespace Banshee.Base
                     Catalog.GetString("Delete Song(s) From Drive"), null,
                     Catalog.GetString("Permanently delete selected song(s) from storage medium"), null),
                     
-                new ActionEntry("PropertiesAction", Stock.Properties,
+                new ActionEntry("PropertiesAction", Stock.Edit,
                     Catalog.GetString("Edit Song Metadata"), null,
                     Catalog.GetString("Edit metadata on selected songs"), null),
 

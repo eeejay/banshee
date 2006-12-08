@@ -2084,6 +2084,41 @@ namespace Banshee
         
         // --- Edit Menu ---
         
+        private List<TrackInfo> clipboard_tracks = new List<TrackInfo>();
+        
+        private void OnCopySongsAction(object o, EventArgs args)
+        {
+            clipboard_tracks.Clear();
+            
+            foreach(TrackInfo track in playlistView.SelectedTrackInfoMultiple) {
+                clipboard_tracks.Add(track);
+            }
+            
+            Clipboard clipboard = Clipboard.Get(Gdk.Selection.Clipboard);
+            clipboard.SetWithData(new TargetEntry [] { new TargetEntry("x-special/gnome-copied-files", 0, 0) },
+                OnGetClipboard, OnClearClipboard);   
+        }
+        
+        private void OnGetClipboard(Clipboard clipboard, SelectionData selection, uint info)
+        {
+            StringBuilder uris = new StringBuilder();
+            
+            uris.Append("copy\n");
+            
+            foreach(TrackInfo track in clipboard_tracks) {
+                uris.Append(track.Uri);
+                uris.Append("\n");
+            }
+            
+            byte [] raw_selection_data = Encoding.ASCII.GetBytes(uris.ToString());
+            selection.Set(selection.Target, 8, raw_selection_data, raw_selection_data.Length);
+        }
+
+        private void OnClearClipboard(Clipboard clipboard)
+        {   
+            clipboard_tracks.Clear();
+        }
+
         private void OnRemoveSongsAction(object o, EventArgs args)
         {
             RemoveSongs(false);
