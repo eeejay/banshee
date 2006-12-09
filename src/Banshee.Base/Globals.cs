@@ -54,6 +54,11 @@ namespace Banshee.Base
         
         public static event ShutdownRequestHandler ShutdownRequested;
         
+        public static void Initialize()
+        {
+            Initialize(null);
+        }
+        
         public static void Initialize(ComponentInitializerHandler interfaceStartupHandler)
         {
             if(!Directory.Exists(Paths.ApplicationData)) {
