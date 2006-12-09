@@ -20,8 +20,8 @@ EXTRA_DIST =            \
 	intltool-extract.in \
 	intltool-merge.in   \
 	intltool-update.in  \
-	build/Common.Makefile    \
-	MAINTAINERS         \
+	build/Common.Makefile \
+	AUTHORS             \
 	HACKING
 
 CLEANFILES = \
