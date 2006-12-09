@@ -32,7 +32,8 @@ using System.Collections;
 using System.Text;
 using LibGPhoto2;
 
-namespace Banshee.Dap.Mtp{
+namespace Banshee.Dap.Mtp
+{
 
 public class GPhotoDevice
 {
@@ -50,16 +51,16 @@ public class GPhotoDevice
     {
         context = new Context();
 
-        port_info_list = new PortInfoList ();
-        port_info_list.Load ();
+        port_info_list = new PortInfoList();
+        port_info_list.Load();
             
-        abilities_list = new CameraAbilitiesList ();
+        abilities_list = new CameraAbilitiesList();
         abilities_list.Load (context);
         
         camera_list = new CameraList();
     }
         
-    public int Detect ()
+    public int Detect()
     {
         abilities_list.Detect (port_info_list, camera_list, context);
         return CameraCount;
@@ -83,51 +84,35 @@ public class GPhotoDevice
        }
     }
         
-    public void SelectCamera (int index)
+    public void SelectCamera(int index)
     {
-        camera = new Camera ();
+        camera = new Camera();
 
         camera.SetAbilities(abilities_list.GetAbilities(
-            abilities_list.LookupModel(camera_list.GetName (index))
-        ));
+            abilities_list.LookupModel(camera_list.GetName (index))));
 
         camera.SetPortInfo(port_info_list.GetInfo(
-            port_info_list.LookupPath(camera_list.GetValue(index)))
-        );
+            port_info_list.LookupPath(camera_list.GetValue(index))));
 
         Store = "/store_00010001/"; //FIXME: autodetect this
     }
     
-    public void InitializeCamera ()
+    public void InitializeCamera()
     {
         if (camera == null) 
             throw new InvalidOperationException();
 
-        try{
+        try {
             camera.Init (context);
-        } catch(LibGPhoto2.GPhotoException e){
+        } catch (LibGPhoto2.GPhotoException e) {
             Console.WriteLine("Init() Exception: {0}", e.ToString());
         }
-        fs = camera.GetFS ();
+        fs = camera.GetFS();
         
-        files = new ArrayList ();
-        GetFileList ();
+        files = new ArrayList();
+        GetFileList();
     }
 
-/*  public short UsbVendorID {
-        get {
-            Console.WriteLine("USB Vendor: {0}", camera.GetAbilities.usb_vendor);
-            return (short) camera.GetAbilities.usb_vendor;
-        }
-    }
-    
-    public int UsbProductID {
-        get {
-            Console.WriteLine("USB ProdID: {0}", camera.GetAbilities.usb_product);
-            return (short) camera.GetAbilities.usb_product;
-        }
-    }*/
-    
     public int DiskFree {
         get {
             //FIXME: find DiskFree
@@ -148,15 +133,15 @@ public class GPhotoDevice
         }
     }
     
-    private void GetFileList ()
+    private void GetFileList()
     {
-        GetFileList (Store);
+        GetFileList(Store);
     }
         
-    private void GetFileList (string dir)
+    private void GetFileList(string dir)
     {
         if (fs == null) 
-            throw new InvalidOperationException ();
+            throw new InvalidOperationException ("fs is null");
         
         //files
         System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -166,22 +151,18 @@ public class GPhotoDevice
             Console.Write("{0}.", i);
             string metadata;
             
-            try{
+            try {
                 CameraFile meta = fs.GetFile(dir, filelist.GetName(i), CameraFileType.MetaData, context);
                 metadata = encoding.GetString(meta.GetDataAndSize());
-            }catch{
+            } catch {
                 metadata = "<Name>No Metadata Available</Name>";
             }
-            //      fs.GetFile(dir, filelist.GetName(i), CameraFileType.Normal, context),
-            if(filelist.GetName(i).IndexOf(".mp3") > 0 ||
+            if (filelist.GetName(i).IndexOf(".mp3") > 0 ||
                     filelist.GetName(i).IndexOf(".wma") > 0 ||
                     filelist.GetName(i).IndexOf(".asx") > 0 ||
-                    filelist.GetName(i).IndexOf(".wav") > 0){
-                files.Add(
-                    new GPhotoDeviceFile(
-                        dir, filelist.GetName(i), metadata, this
-                    )
-                );
+                    filelist.GetName(i).IndexOf(".wav") > 0) {
+                files.Add(new GPhotoDeviceFile(
+                        dir, filelist.GetName(i), metadata, this));
             }
         }
         Console.Write("\n");
@@ -200,55 +181,44 @@ public class GPhotoDevice
         }
     }
     
-    public void PutFile (GPhotoDeviceFile file)
+    public void PutFile(GPhotoDeviceFile file)
     {
         if (fs == null || file == null)
             return;
 
-        /*  FIXME: handle store_x locally
-            save it as a class variable as it could be different per camera
-            detect on Initialize()
-        */
-        
         file.GenerateProperPath();
 
-        // FIXME: don't assume path separator is "/" - use Path.getseparator or whatev
-        string[] path_split = file.Directory.Split('/'); // split up the path
+        string[] path_split = file.Directory.Split(Path.PathSeparator); // split up the path
         string path_base = Store.Remove(Store.Length - 1, 1); // take store, minus the trailing slash
         string path_build = path_base; // the path_build variable is basically the "working directory" (aka cwd) here as we search for and if necessary create directories.
 
-        for(int i = 2; i < path_split.GetLength(0); i++) {
-            if (path_split[i].Trim() == "") { // if it's blank for some reason (like an extra slash or something)
+        for (int i = 2; i < path_split.GetLength(0); i++) {
+            if (path_split[i].Trim() == "") {
                 Console.WriteLine("Blank parameter found at {0}, skipping...", i);
                 continue;
             }
             
             Console.Write("Checking for {0} in {1}...", path_split[i], path_build);
             
-            // enumerate a list of folders in the current working directory (aka path_build)
             CameraList folders = fs.ListFolders(path_build, context);
             
             bool found = false;
-            for(int j = 0; j < folders.Count(); j++) // loop thru folders that exist in path_build (aka cwd)
-                if(folders.GetName(j) == path_split[i]) // check to see if the folder at current index j is what we need
+            for (int j = 0; j < folders.Count(); j++) // loop thru folders that exist in path_build (aka cwd)
+                if (folders.GetName(j) == path_split[i]) // check to see if the folder at current index j is what we need
                     found = true; // if so, set found to true 
             
-            if(!found) { // then the directory was not found.  create it!
+            if (!found) { // then the directory was not found.  create it!
                 Console.WriteLine("not found; creating {0} in {1}...", path_split[i], path_build);
                 fs.MakeDirectory(path_build, path_split[i], context);
             } else {
                 Console.WriteLine("OK");
             }
             
-            //Console.Write("Path element: {0}...", path_split[i]);
-            //Console.WriteLine("Path: {0}", path_build);
             path_build += "/" + path_split[i]; // tack on the directory to the path_build string so next iteration we'll be looking in it
         }
 
-        // drops the file in the directory
         fs.PutFile(file.Directory, file.CameraFile, context);
 
-        // drops the metadata in place
         PutMetadata(file);
 
         // adds the file to the local array of files.  should this array be depreciated?
@@ -258,7 +228,7 @@ public class GPhotoDevice
         file.DisposeCameraFile ();
     }
     
-    public void PutMetadata (GPhotoDeviceFile file)
+    public void PutMetadata(GPhotoDeviceFile file)
     {
         try {
             CameraFile meta = new CameraFile();
@@ -268,22 +238,22 @@ public class GPhotoDevice
             
             meta.SetFileType(CameraFileType.MetaData);
             fs.PutFile(file.Directory, meta, context);
-            meta.Dispose ();
-        } catch(Exception e){
+            meta.Dispose();
+        } catch (Exception e){
             Console.WriteLine("Failed send track metadata.  Are you using the right version of the C# bindings and libgphoto2?  Exception: {0}", e.ToString());
         }
     }
 
-    public void DeleteFile (GPhotoDeviceFile file)
+    public void DeleteFile(GPhotoDeviceFile file)
     {
         files.Remove(file);
         fs.DeleteFile(file.Directory, file.Filename, context);
         file = null;
     }
     
-    public CameraFile GetFile (GPhotoDeviceFile file)
+    public CameraFile GetFile(GPhotoDeviceFile file)
     {
-        file.CameraFile = fs.GetFile (file.Directory, file.Filename, CameraFileType.Normal, context);
+        file.CameraFile = fs.GetFile(file.Directory, file.Filename, CameraFileType.Normal, context);
         return file.CameraFile;
     }
     
@@ -302,16 +272,16 @@ public class GPhotoDevice
             files = null;
             //Console.WriteLine ("dispose of files done. doing fs.");
             if (fs != null) 
-                fs.Dispose ();
+                fs.Dispose();
             //Console.WriteLine ("dispose of fs done. doing camera.");
             if (camera != null)
-                camera.Dispose ();
+                camera.Dispose();
             //Console.WriteLine ("dispose of camera done. doing context");
     
-            context.Dispose ();
-            Console.WriteLine ("dispose done.");
+            context.Dispose();
+            Console.WriteLine("dispose done.");
         } else {
-            Console.WriteLine ("already disposed");
+            Console.WriteLine("already disposed");
         }
     }
 }

@@ -30,7 +30,6 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Threading;
 using Hal;
 using LibGPhoto2;
@@ -62,7 +61,7 @@ namespace Banshee.Dap.Mtp
     public sealed class MtpDap : DapDevice, IImportable
     {
         private static GPhotoDevice dev;
-        private DeviceId device_id;
+        private string device_name;
         private int sync_total;
         private int sync_finished;
         private Queue remove_queue = new Queue();
@@ -71,34 +70,49 @@ namespace Banshee.Dap.Mtp
         private Hal.Device hal_device;
         private QueuedOperationManager import_manager;
         
-        static MtpDap() {
-        }
+        static MtpDap() { }
 
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
             if(!halDevice.PropertyExists("usb.vendor_id") ||
-                    !halDevice.PropertyExists("usb.product_id")) {
+                    !halDevice.PropertyExists("usb.product_id") ||
+                    !halDevice.PropertyExists("portable_audio_player.access_method") ||
+                    !halDevice.PropertyExists("info.category")) {
                 return InitializeResult.Invalid;
             }
             
-            short hal_product_id = (short) halDevice.GetPropertyInteger("usb.product_id");
-            short hal_vendor_id  = (short) halDevice.GetPropertyInteger("usb.vendor_id");
+            short product_id = (short) halDevice.GetPropertyInteger("usb.product_id");
+            short vendor_id  = (short) halDevice.GetPropertyInteger("usb.vendor_id");
+            string info_category = halDevice.GetPropertyString("info.category");
+            string access_method = halDevice.GetPropertyString("portable_audio_player.access_method");
+            device_name = halDevice.GetPropertyString("camera.libgphoto2.name");
             
-            device_id = DeviceId.GetDeviceId(hal_vendor_id, hal_product_id);
-
-            if(device_id == null)
+            LogCore.Instance.PushDebug("MTP: Starting initialization",
+                String.Format("product_id={0}, vendor_id={1}, info_category={2}, access_method={3}",
+                product_id, vendor_id, info_category, access_method));
+            
+            if (info_category != "portable_audio_player") {
+                LogCore.Instance.PushDebug("MTP: passed device does not have hal info.category = " +
+                    "'portable_audio_player'", String.Format("vendor={0}, prod={1}", vendor_id, product_id));
                 return InitializeResult.Invalid;
+            }
+            
+            if (access_method != "libgphoto2") {
+                LogCore.Instance.PushDebug("MTP: passed device's portable_audio_player.access_method != " +
+                    "libgphoto2",  String.Format("vendor={0}, prod={1}, access_method={2}", vendor_id, product_id, access_method));
+                return InitializeResult.Invalid;
+            }
 
             try {
                 if (dev == null)
                     dev = new GPhotoDevice ();
                 dev.Detect ();
             } catch (Exception e) {
-                Console.WriteLine("Failed to run libgphoto2 DetectCameras.\nException: {0}", e.ToString());
+                LogCore.Instance.PushDebug("Failed to run libgphoto2 DetectCameras.\nException: {0}", e.ToString());
                 return InitializeResult.Invalid;
             }
 
-            LogCore.Instance.PushDebug(String.Format("MTP: device found: vendor={0}, prod={1}", hal_vendor_id, hal_product_id), "");
+            LogCore.Instance.PushDebug("MTP: device found", String.Format("vendor={0}, prod={1}", vendor_id, product_id));
             
             int found = 0;
             GPhotoDeviceID = -1;
@@ -106,16 +120,22 @@ namespace Banshee.Dap.Mtp
             for (int i = 0; i < dev.CameraList.Count(); i++) {
                 int abilities_index = dev.AbilitiesList.LookupModel(dev.CameraList.GetName(i));
                 CameraAbilities a = dev.AbilitiesList.GetAbilities(abilities_index);
-                if (a.usb_vendor != hal_vendor_id || a.usb_product != hal_product_id)
-                    return InitializeResult.Invalid;
-                found++;
-                GPhotoDeviceID = i;
+                if (a.usb_vendor == vendor_id && a.usb_product == product_id) {
+                    found++;
+                    GPhotoDeviceID = i;
+                } else {
+                    LogCore.Instance.PushDebug("MTP: found a device that's not what we're looking for; " +
+                        "perhaps a camera?", String.Format("vendor={0}, prod={1}", vendor_id, product_id));
+                }
             }
             
-            if (found > 1)
-                LogCore.Instance.PushWarning (String.Format("MTP: Found more than one matching device.  Something is seriously wrong.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
+            if (found > 1) {
+                LogCore.Instance.PushDebug (String.Format("MTP: Found more than one matching device. " +
+                    "Something could be seriously wrong.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
+            }
             if (found == 0 || GPhotoDeviceID == -1) {
-                LogCore.Instance.PushDebug (String.Format("MTP: device was found in database, but libgphoto2 failed to detect it.  Waiting for it to come alive.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
+                LogCore.Instance.PushDebug (String.Format("MTP: device was found in database, but libgphoto2 failed to detect it. " +
+                    "Waiting for it to come alive.  GPhotoDeviceID == {0}, # found = {1}", GPhotoDeviceID, found), "");
                 /** FIXME: if the usb block device for libusb has no permissions,
                   * you'll end up in this case.  Really, we need to sleep for a
                   * few hundred ms and wait for udev/hotplug/whatever.
@@ -134,10 +154,8 @@ namespace Banshee.Dap.Mtp
                 return InitializeResult.WaitForVolumeMount;
             }
             
-            InstallProperty("Model", device_id.Name);
+            InstallProperty("Model", device_name);
             InstallProperty("Vendor", halDevice["usb.vendor"]);
-            //InstallProperty("Firmware Revision", "FIXME: implement");
-            //InstallProperty("Hardware Revision", "FIXME: implement");
             InstallProperty("Serial Number", halDevice["usb.serial"]);
             hal_device = halDevice;
             ThreadAssist.Spawn(InitializeBackgroundThread);
@@ -150,14 +168,14 @@ namespace Banshee.Dap.Mtp
         {
             userEvent = new ActiveUserEvent("MTP Initialization");
             userEvent.CanCancel = false;
-            userEvent.Header = Catalog.GetString(device_id.Name + ": Found");
+            userEvent.Header = Catalog.GetString(device_name + ": Found");
             userEvent.Message = Catalog.GetString("Reading library information");
             try{
                 dev.SelectCamera(GPhotoDeviceID);
                 dev.InitializeCamera();
             } catch (Exception e){
                 Console.WriteLine("MTP: initialization failed with exception: {0}", e);
-                LogCore.Instance.PushWarning(String.Format("Initialization of your {0} failed.  Run banshee from a terminal, and copy the debug output and file a new bug report on bugzilla.gnome.org", device_id.Name), "");
+                LogCore.Instance.PushWarning(String.Format("Initialization of your {0} failed.  Run banshee from a terminal, and copy the debug output and file a new bug report on bugzilla.gnome.org", device_name), "");
                 userEvent.Dispose();
                 Dispose();
             }
@@ -167,7 +185,7 @@ namespace Banshee.Dap.Mtp
             ReloadDatabase();
 
             userEvent.Message = Catalog.GetString("Done");
-            userEvent.Header = Catalog.GetString(device_id.Name + ": Ready for use");
+            userEvent.Header = Catalog.GetString(device_name + ": Ready for use");
             userEvent.Progress = 1;
             GLib.Timeout.Add(4000, delegate {
                 userEvent.Dispose();
@@ -214,9 +232,9 @@ namespace Banshee.Dap.Mtp
         try {
             int remove_total = remove_queue.Count;
             
-            UpdateSaveProgress (Catalog.GetString("Synchronizing Device"), "", 0);
+            UpdateSaveProgress(Catalog.GetString("Synchronizing Device"), "", 0);
 
-            while(remove_queue.Count > 0) {
+            while (remove_queue.Count > 0) {
                 MtpDapTrackInfo track = remove_queue.Dequeue() as MtpDapTrackInfo;
                 UpdateSaveProgress(Catalog.GetString("Synchronizing Device"), Catalog.GetString(String.Format("Removing: {0} - {1}", track.Artist, track.Title)),
                     (double)(remove_total - remove_queue.Count) / (double)remove_total);
@@ -226,16 +244,16 @@ namespace Banshee.Dap.Mtp
             sync_finished = 0;
             sync_total = 0;
 
-            foreach(TrackInfo track in Tracks) {
-                if(track is MtpDapTrackInfo) {
+            foreach (TrackInfo track in Tracks) {
+                if (track is MtpDapTrackInfo) {
                     continue;
                 }
                 
                 sync_total++;
             }
             
-            foreach(TrackInfo track in Tracks) {
-                if(track == null ||  track is MtpDapTrackInfo || track.Uri == null) {
+            foreach (TrackInfo track in Tracks) {
+                if (track == null ||  track is MtpDapTrackInfo || track.Uri == null) {
                     continue;
                 }
                 
@@ -243,7 +261,7 @@ namespace Banshee.Dap.Mtp
                 
                 try {
                     file = new FileInfo(track.Uri.LocalPath);
-                    if(!file.Exists) {
+                    if (!file.Exists) {
                         continue;
                     }
                 } catch {
@@ -255,22 +273,18 @@ namespace Banshee.Dap.Mtp
                         Catalog.GetString(String.Format("Adding: {0} - {1}", track.Artist, track.Title)),
                         (double) sync_finished / (double) sync_total);
 
-                    /*  this appears to be the most logical path for my Zen Micro
-                        LMK if your device traditionally uses something different and it'll be changed :)
-                    */
+                    GPhotoDeviceFile new_file = new GPhotoDeviceFile(track.Uri, dev);
                     
-                    GPhotoDeviceFile newfile = new GPhotoDeviceFile(track.Uri, dev);
-                    
-                    newfile.Duration = track.Duration.TotalMilliseconds;
-                    newfile.Artist = track.Artist;
-                    newfile.AlbumName = track.Album;
-                    newfile.Name = track.Title;
-                    newfile.Track = track.TrackNumber;
-                    newfile.Genre = track.Genre;
-                    newfile.UseCount = track.PlayCount;
-                    newfile.Year = track.Year;
+                    new_file.Duration = track.Duration.TotalMilliseconds;
+                    new_file.Artist = track.Artist;
+                    new_file.AlbumName = track.Album;
+                    new_file.Name = track.Title;
+                    new_file.Track = track.TrackNumber;
+                    new_file.Genre = track.Genre;
+                    new_file.UseCount = track.PlayCount;
+                    new_file.Year = track.Year;
 
-                    dev.PutFile(newfile);
+                    dev.PutFile(new_file);
 
                     sync_finished++;
                 } catch (Exception e){
@@ -278,7 +292,7 @@ namespace Banshee.Dap.Mtp
                 }
             }
             
-        } catch(Exception e) {
+        } catch (Exception e) {
             Console.WriteLine(e);
         } finally {
             FinishSave();
@@ -290,12 +304,12 @@ namespace Banshee.Dap.Mtp
 	{
             ArrayList temp_files = new ArrayList();
             
-            if(playlist != null && playlist.Count == 0) {
+            if (playlist != null && playlist.Count == 0) {
                 playlist.Rename(PlaylistUtil.GoodUniqueName(tracks));
                 playlist.Commit();
             }
         
-            if(import_manager == null) {
+            if (import_manager == null) {
                 import_manager = new QueuedOperationManager();
                 import_manager.HandleActveUserEvent = false;
                 //import_manager.UserEvent.Icon = GetIcon;
@@ -303,7 +317,7 @@ namespace Banshee.Dap.Mtp
                 import_manager.UserEvent.Message = Catalog.GetString("Scanning...");
                 import_manager.OperationRequested += OnImportOperationRequested;
                 import_manager.Finished += delegate {
-                    foreach(string cur in temp_files)
+                    foreach (string cur in temp_files)
                         File.Delete(cur);
                     import_manager = null;
                 };
@@ -318,9 +332,9 @@ namespace Banshee.Dap.Mtp
                 }*/
             }
             
-            foreach(TrackInfo track in tracks) {
-                if(playlist == null) {
-                    if(track.Uri.IsLocalPath){
+            foreach (TrackInfo track in tracks) {
+                if (playlist == null) {
+                    if (track.Uri.IsLocalPath){
                         import_manager.Enqueue(track);
                         temp_files.Add(track.Uri.LocalPath);
                     }
@@ -335,9 +349,9 @@ namespace Banshee.Dap.Mtp
             TrackInfo track = null;
             PlaylistSource playlist = null;
             
-            if(args.Object is TrackInfo) {
+            if (args.Object is TrackInfo) {
                 track = args.Object as TrackInfo;
-            } else if(args.Object is KeyValuePair<TrackInfo, PlaylistSource>) {
+            } else if (args.Object is KeyValuePair<TrackInfo, PlaylistSource>) {
                 KeyValuePair<TrackInfo, PlaylistSource> container = 
                     (KeyValuePair<TrackInfo, PlaylistSource>)args.Object;
                 track = container.Key;
@@ -351,12 +365,12 @@ namespace Banshee.Dap.Mtp
             string to = FileNamePattern.BuildFull(track, Path.GetExtension(from));
             
             try {
-                if(File.Exists(to)) {
+                if (File.Exists(to)) {
                     FileInfo from_info = new FileInfo(from);
                     FileInfo to_info = new FileInfo(to);
                     
                     // probably already the same file
-                    if(from_info.Length == to_info.Length) {
+                    if (from_info.Length == to_info.Length) {
                         try {
                             new LibraryTrackInfo(new SafeUri(to, false), track);
                         } catch {
@@ -367,22 +381,22 @@ namespace Banshee.Dap.Mtp
                     }
                 }
             
-                using(FileStream from_stream = new FileStream(from, FileMode.Open, FileAccess.Read)) {
+                using (FileStream from_stream = new FileStream(from, FileMode.Open, FileAccess.Read)) {
                     long total_bytes = from_stream.Length;
                     long bytes_read = 0;
                     
-                    using(FileStream to_stream = new FileStream(to, FileMode.Create, FileAccess.ReadWrite)) {
+                    using (FileStream to_stream = new FileStream(to, FileMode.Create, FileAccess.ReadWrite)) {
                         byte [] buffer = new byte[8192];
                         int chunk_bytes_read = 0;
                         
                         DateTime last_message_pump = DateTime.MinValue;
                         TimeSpan message_pump_delay = TimeSpan.FromMilliseconds(500);
                         
-                        while((chunk_bytes_read = from_stream.Read(buffer, 0, buffer.Length)) > 0) {
+                        while ((chunk_bytes_read = from_stream.Read(buffer, 0, buffer.Length)) > 0) {
                             to_stream.Write(buffer, 0, chunk_bytes_read);
                             bytes_read += chunk_bytes_read;
                             
-                            if(DateTime.Now - last_message_pump < message_pump_delay) {
+                            if (DateTime.Now - last_message_pump < message_pump_delay) {
                                 continue;
                             }
                             
@@ -392,7 +406,7 @@ namespace Banshee.Dap.Mtp
                             import_manager.UserEvent.Progress = (tracks_processed / tracks_total) +
                                 ((bytes_read / (double)total_bytes) / tracks_total);
                                 
-                            if(import_manager.UserEvent.IsCancelRequested) {
+                            if (import_manager.UserEvent.IsCancelRequested) {
                                 throw new QueuedOperationManager.OperationCanceledException();
                             }
                             
@@ -402,7 +416,7 @@ namespace Banshee.Dap.Mtp
                 }
                 
                 LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
-                if(playlist != null) {
+                if (playlist != null) {
                     playlist.AddTrack(library_track);
                     playlist.Commit();
                 }
@@ -412,7 +426,7 @@ namespace Banshee.Dap.Mtp
                 } catch {
                 }
                 
-                if(e is QueuedOperationManager.OperationCanceledException) {
+                if (e is QueuedOperationManager.OperationCanceledException) {
                     return;
                 }
                 
@@ -424,13 +438,11 @@ namespace Banshee.Dap.Mtp
             } 
         }
         
-        public void Import(IEnumerable<TrackInfo> tracks)
-        {
+        public void Import(IEnumerable<TrackInfo> tracks) {
             Import(tracks, null);
         }
 
-        public override Gdk.Pixbuf GetIcon(int size)
-        {
+        public override Gdk.Pixbuf GetIcon(int size) {
             string prefix = "multimedia-player-";
             string id = "dell-pocket-dj";
             Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(prefix + id, size);
@@ -439,7 +451,7 @@ namespace Banshee.Dap.Mtp
 
         public override string Name {
             get {
-                return device_id.DisplayName;
+                return device_name;
             }
         }
 
@@ -460,7 +472,7 @@ namespace Banshee.Dap.Mtp
 
         public override string GenericName {
             get {
-                return device_id.DisplayName;
+                return device_name;
             }
         }
 

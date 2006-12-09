@@ -33,7 +33,8 @@ using System.Text;
 using LibGPhoto2;
 using Banshee.Base;
 
-namespace Banshee.Dap.Mtp{
+namespace Banshee.Dap.Mtp
+{
 
 public class GPhotoDeviceFile
 {
@@ -53,7 +54,7 @@ public class GPhotoDeviceFile
     public string Name;
     public uint UseCount;
     
-    public GPhotoDeviceFile (SafeUri uri, GPhotoDevice device)
+    public GPhotoDeviceFile(SafeUri uri, GPhotoDevice device)
     {
         Dev = device;
         camera_file = new CameraFile();
@@ -63,7 +64,7 @@ public class GPhotoDeviceFile
         directory = null;
     }
 
-    public GPhotoDeviceFile (string dir, string file, string meta, GPhotoDevice device)
+    public GPhotoDeviceFile(string dir, string file, string meta, GPhotoDevice device)
     {
         Dev = device;
         directory = dir;
@@ -72,7 +73,7 @@ public class GPhotoDeviceFile
         try {
             Metadata = meta;
         } catch {
-            Console.Write("Corrupt metadata.");
+            Console.Write("C");
             Metadata = "<Name>Corrupt metadata</Name>";
             Name = "Corrupt metadata";
         }
@@ -81,7 +82,7 @@ public class GPhotoDeviceFile
 
     public CameraFile CameraFile {
         get {
-            if(camera_file == null)
+            if (camera_file == null)
                 Dev.GetFile(this);
             return camera_file;
         }
@@ -90,10 +91,10 @@ public class GPhotoDeviceFile
         }
     }
 
-    public void DisposeCameraFile () {
-        camera_file.Dispose ();
+    public void DisposeCameraFile() {
+        camera_file.Dispose();
         camera_file = null;
-        Console.WriteLine ("DisposeCameraFile for " + Name);
+        Console.WriteLine("DisposeCameraFile for " + Name);
     }
 
     public void GenerateProperPath() {
@@ -106,11 +107,11 @@ public class GPhotoDeviceFile
     private string GetValidName(string input) {
         string output = "";
 
-        for(int i = 0; i < input.Length; i++) {
-            if(input[i] == '/' || input[i] == '\\' || input[i] == ':' || input[i] == '?') {
+        for (int i = 0; i < input.Length; i++) {
+            if (input[i] == '/' || input[i] == '\\' || input[i] == ':' || input[i] == '?') {
                 output = output + '_';
             } else {
-                if(output == "")
+                if (output == "")
                     output = input[i].ToString().ToUpper();
                 else
                     output = output + input[i];
@@ -141,16 +142,16 @@ public class GPhotoDeviceFile
     {
         int loc_start = meta.IndexOf("<" + tag + ">");
         int loc_end   = meta.IndexOf("</" + tag + ">");
-        if(loc_start <= 0 || loc_end <= 0){
-            if(isNumeric)
+        if (loc_start <= 0 || loc_end <= 0){
+            if (isNumeric)
                 return "0000";
             return "";
         }
         int start = loc_start + 1 + tag.Length + 1;
         string metaValue = meta.Substring(start, loc_end - start);
-        if(metaValue == "(null)" && isNumeric)
+        if (metaValue == "(null)" && isNumeric)
             metaValue = "0000";
-        return(metaValue);
+        return (metaValue);
     }
 
     public string Metadata {
@@ -178,16 +179,15 @@ public class GPhotoDeviceFile
         }
     }
 
-    public void SaveMetadata()
-    {
+    public void SaveMetadata() {
         Dev.PutMetadata(this);
     }
 
-    ~GPhotoDeviceFile () {
+    ~GPhotoDeviceFile() {
         Dispose();
     }
     
-    public void Dispose () {
+    public void Dispose() {
         if (camera_file != null) 
             camera_file.Dispose ();
 

@@ -7,7 +7,6 @@ ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/MtpDap.cs \
 	$(srcdir)/MtpDapTrackInfo.cs \
-	$(srcdir)/MtpDeviceId.cs \
 	$(srcdir)/GPhotoDevice.cs \
 	$(srcdir)/GPhotoDeviceFile.cs
 
@@ -34,7 +33,7 @@ uninstall-hook:
 	done;
 	
 EXTRA_DIST = $(ASSEMBLY_SOURCES)
-CLEANFILES = $(ASSEMBLY) 
+CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb
 DISTCLEANFILES = $(ASSEMBLY).mdb
 MAINTAINERCLEANFILES = Makefile.in 
 

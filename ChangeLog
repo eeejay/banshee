@@ -1,3 +1,20 @@
+2006-12-09  Patrick van Staveren  <trick@vanstaveren.us>
+
+	First update in quite some time...
+
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs:
+	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs: lots of syntax cleanups
+	Who the heck wrote this to begin with?  Oh...it was me...
+
+	* src/Banshee.Dap/Mtp/MtpDeviceId.cs:
+	* src/Banshee.Dap/Mtp/Makefile.am: removed MtpDeviceId in favour of
+	detecting libgphoto2 compatible devices from HAL properties.
+
+	* src/Banshee.Dap/Mtp/MtpDap.cs: lots of syntax cleanups, use HAL
+	properties to determine if this is a MTP device, lots more debug.
+	Handle multiple instance devices without a popup.  Play nicely if 
+	there is a libgphoto2 camera plugged in as well.
+
 2006-12-09  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 0.11.3 Released!
