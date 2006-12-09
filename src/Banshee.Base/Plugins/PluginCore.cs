@@ -56,6 +56,14 @@ namespace Banshee.Plugins
                 factory.AddScanDirectory(Paths.SystemPluginDirectory);
             }
             
+            try {
+                Directory.CreateDirectory(Paths.UserPluginDirectory);
+            } catch(Exception e) {
+                LogCore.Instance.PushError("Could not create plugins directory",
+                    Paths.UserPluginDirectory + "\nPlugins will not be loaded\n" + e, false);
+                return;
+            }
+            
             factory.LoadPluginFromType(typeof(Banshee.SmartPlaylist.SmartPlaylistCore));
             factory.LoadPlugins();
             

@@ -1,4 +1,4 @@
 SUBDIRS = m4
-EXTRA_DIST = Common.Makefile mcs-test-79698.cs gmcs.exe
+EXTRA_DIST = Common.Makefile mcs-test-79698.cs gmcs.exe icon-theme-installer
 MAINTAINERCLEANFILES = Makefile.in
 

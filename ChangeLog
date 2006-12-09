@@ -1,3 +1,18 @@
+2006-12-08  Aaron Bockover  <abock@gnome.org>
+
+	* build/icon-theme-installer: New script that meant to be used from
+	within make/automake to install icons into the theme in an easy and
+	proper way. It also updates the icon cache
+
+	* data/images/Makefile.am: Use new icon-theme-installer
+
+	* build/Makefile.am: EXTRA_DIST icon-theme-installer
+
+	* data/images/splash.png: Updated splash from Jakub
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Create the user plugins
+	directory as some plugins expect it to be there
+
 2006-12-08  Aaron Bockover  <aaron@abock.org>
 
 	* configure.ac:
