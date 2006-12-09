@@ -49,6 +49,10 @@ namespace Banshee.Plugins
     
         public static void Initialize()
         {
+            if(Environment.GetEnvironmentVariable("BANSHEE_PLUGINS_DISABLE") != null) {
+                return;
+            }
+        
             if(Environment.GetEnvironmentVariable("BANSHEE_PLUGINS_PATH") != null) {
                 factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_PLUGINS_PATH");
             } else {

@@ -90,10 +90,11 @@ namespace Banshee
             IDBusPlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
-            Globals.Initialize();
-            StockIcons.Initialize();
-            new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), ConfigureDefines.VERSION, Modules.UI, args);
-            new Banshee.PlayerUI();
+            Globals.Initialize(delegate {
+                StockIcons.Initialize();
+                new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), ConfigureDefines.VERSION, Modules.UI, args);
+                new Banshee.PlayerUI();
+            });
             
             Gtk.Application.Run();
         }

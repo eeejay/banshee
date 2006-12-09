@@ -107,6 +107,8 @@ namespace Banshee.SmartPlaylist
             Dialog.SetGeometryHints(Dialog, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
 
             Update();
+            
+            name_entry.GrabFocus();
         }
 
         public void SetQueryFromSearch()
@@ -175,7 +177,6 @@ namespace Banshee.SmartPlaylist
         public override ResponseType Run()
         {
             Dialog.ShowAll();
-            builder.MatchesBox.FirstRow.FieldBox.GrabFocus();
 
             ResponseType response = (ResponseType)Dialog.Run ();
 

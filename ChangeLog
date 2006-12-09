@@ -1,3 +1,23 @@
+2006-12-09  Aaron Bockover  <abock@gnome.org>
+
+	* NEWS: Updated with release notes
+
+	* data/contributors.xml: Updated
+
+	* src/PlayerInterface.cs: Get rid of the old source view loading pane
+
+	* src/Banshee.Base/ActionManager.cs:
+	* src/Banshee.Base/Globals.cs:
+	* src/Main.cs: Load the interface itself as a startup component; this
+	allows the splash screen to stay up the entire startup time, showing
+	progress of the interface load
+
+	* src/Banshee.Base/Plugins/PluginCore.cs: Added support for disabling
+	plugins altogether by setting BANSHEE_PLUGINS_DISABLE
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Focus the playlist
+	name entry on UI load
+
 2006-12-08  Aaron Bockover  <abock@gnome.org>
 
 	* build/icon-theme-installer: New script that meant to be used from

@@ -1,112 +1,339 @@
-Banshee 0.11.2
+===============================================================================
+WELCOME TO BANSHEE 0.11.3
+===============================================================================
 
-"Import, organize, play, and share your music using Banshee's simple, 
-powerful interface. Rip CDs, play and sync your iPod, create playlists, 
-and burn audio CDs. Most portable music devices are supported. Banshee 
-also has support for podcasting, smart playlists, music recommendations, 
-and much more."
+ * What? Banshee is a music management and playback application for GNOME.
+ * Really? Yes! 
+
+   "Import, organize, play, and share your music using Banshee's simple, 
+    powerful interface. Rip CDs, play and sync your iPod, create playlists, 
+    and burn audio CDs. Most portable music devices are supported. Banshee 
+    also has support for podcasting, smart playlists, music recommendations, 
+    and much more."
+
+ * Learn More: http://banshee-project.org/Discover
+ * Release Overview Page: http://banshee-project.org/Releases/0.11.
 
 
+===============================================================================
+TABLE OF CONTENTS
+===============================================================================
+
+ * Welcome
+ * Module Notes
+ * Get The Goods
+   - Sources
+   - ChangeLogs
+   - Dependencies
+ * Major Feature/Fixes/Performance Updates
+   - Cool New Features
+   - The Most Important Bad-Bug Fixes
+   - Performance Improvements
+   - Choose a Lingua!
+   - For all the Awesome Banshee Developers
+ * Bugzilla Overview
+   - Noteworthy bugs fixes/enhancements embraced in this release
+   - Other minor/uninteresting bugs fixed in this release
+   - Show all bugs marked FIXED during this release cycle
+   - File Bugs... Be Proactive... Contribute to Open Source!
+ * Miscellaneous
+   - Contributors for this release
+   - Something to share with friends and family
+   - Thanks!
+
+
+===============================================================================
 MODULE NOTES
-------------
+===============================================================================
 
  * Banshee is now made up of the core module, banshee, and the official 
    plugins module, banshee-official-plugins
 
  * banshee-official-plugins is recommended, but not required to run Banshee
 
- * libipoddevice (0.5.1) and ipod-sharp (0.6.2) are required for iPod support
+ * libipoddevice (0.5.2) and ipod-sharp (0.6.2) are required for iPod support
 
  * helix-dbus-server (0.3.0) is required for Helix/RealPlayer integration
  
 
-NEW CORE FEATURES
------------------
+===============================================================================
+GET THE GOODS
+===============================================================================
 
- * New interactive interpreted Boo shell (CTRL-SHIFT-S) that allows live
-   in-process manipulation of Banshee using the Boo language (Aaron Bockover)
+Sources
+-------
 
- * Show DAAP shares under a single master container source (Scott Peterson,
-   BGO #363548)
+ * Banshee 0.11.3 Tarball:
+   http://banshee-project.org/files/banshee/banshee-0.11.3.tar.gz
 
- * Recursive child sources now possible (Scott Peterson, BGO #363548)
+ * Banshee Official Plugins 0.11.3 Tarball
+   http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.3.tar.gz
 
- * Load XML audio profiles from multiple sources; fixed sorting issue with
-   the combo control; added 'mode' support to mp3-lame; load profiles from
-   the BANSHEE_PROFILES_PATH environment variable if set (Aaron Bockover)
+ * ipod-sharp 0.6.2 Tarball:
+   http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz
 
- * New SQL Database Command layer for more secure and optimized queries 
-   (Aaron Bockover)
+ * libipoddevice 0.5.2 Tarball:
+   http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.2.tar.gz
 
- * MTP fixes and improvements (Patrick van Staveren)
+ * njb-sharp 0.3.0 Tarball:
+   http://banshee-project.org/files/njb-sharp/njb-sharp-0.3.0.tar.gz
 
- * Do not require intltool 0.35 (Aaron Bockover)
+ * helix-dbus-server 0.3.0 Tarball:
+   http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.3.0.tar.gz
 
- * Fixed various build problems and workaround regarding Mono 1.1.18
-   (Aaron Bockover, Alp Toker)
+ChangeLogs
+----------
  
- * Bugs fixed: BNC #212477, BGO #363548
+ * http://banshee-project.org/files/banshee/banshee-0.11.3.changes
+ * http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.3.changes
 
-
-NEW OFFICIAL PLUGINS FEATURES
------------------------------
-
-These features are found in the banshee-official-plugins module, not in 
-Banshee core:
-
- * Minor fixes and updates to podcasting (Mike Urbanski)
-
-
-IMPORTANT LINKS
----------------
-
-Release Overview Page:
-http://banshee-project.org/Releases/0.11.2
-
-Banshee 0.11.2 Tarball:
-http://banshee-project.org/files/banshee/banshee-0.11.2.tar.gz
-
-Banshee Official Plugins 0.11.2 Tarball
-http://banshee-project.org/files/banshee-official-plugins/banshee-official-plugins-0.11.2.tar.gz
-
-ipod-sharp 0.6.2 Tarball:
-http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz
-
-libipoddevice 0.5.1 Tarball:
-http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.1.tar.gz
-
-njb-sharp 0.3.0 Tarball:
-http://banshee-project.org/files/njb-sharp/njb-sharp-0.3.0.tar.gz
-
-helix-dbus-server 0.3.0 Tarball:
-http://banshee-project.org/files/helix-dbus-server/helix-dbus-server-0.3.0.tar.gz
-
-xing MP3 Encoder Tarball:
-http://banshee-project.org/files/gstreamer-xing/gstreamer-xing-0.10.2.tar.gz
-
-Banshee Wiki: 
-http://banshee-project.org/Discover
-
-
-DEPENDENCIES
+Dependencies
 ------------
 
-- Mono 1.1.10 and full stack
-- gtk-sharp-2.0 2.8 or 2.10
-- GStreamer 0.10.3 
-- sqlite3
-- libmusicbrainz 2.1.1 or better
-- libnautilus-burn 2.12 or better
-- GTK+ 2.8 or better
-- HAL 0.5.2 or better (0.5.6+ Recommended)
+ * Mono 1.1.10 and full stack
+ * gtk-sharp-2.0 2.8 or 2.10
+ * GStreamer 0.10.3 
+ * sqlite3
+ * libmusicbrainz 2.1.1 or better
+ * libnautilus-burn 2.12 or better
+ * GTK+ 2.8 or better
+ * HAL 0.5.2 or better (0.5.6+ Recommended)
 
 
-MORE NOTES
-----------
+===============================================================================
+MAJOR FEATURE/FIXES/PERFORMANCE UPDATES
+===============================================================================
 
-* Please do not hesitate to file bugs against Banshee in GNOME Bugzilla
-(http://bugzilla.gnome.org, component: banshee), or discuss Banshee on
-this list or in #banshee on irc.gnome.org. The Banshee Wiki, open to
-everyone for viewing and editing is located at
-http://banshee-project.org.
+Cool New Features
+-----------------
 
+ * Much improved sorting! Sorting by track number now properly sorts first 
+   by artist, album, then track number. Sort settings are done now at the 
+   source level, not the global level, so different sorts can be applied 
+   on different sources independently. Sort settings are also saved (persist 
+   across instances) for the library and playlists. Nat Friedman is "a man of 
+   few wants." (Aaron Bockover)
+
+ * Search works similarly now - each source can have its own filter. 
+   No longer is it shared between all sources. (Aaron Bockover)
+
+ * Set preferred library structure in preferences dialog, which allows 
+   for the selection of folder and filename patterns. (Aaron Bockover)
+
+ * Initial support for Rio Karma DAP devices. (Experimental, Bob Copeland)
+
+ * Do not stop playback on an error or report error in a dialog. Disable 
+   the problematic track instead and continue playing. (Aaron Bockover)
+
+ * Added a "Close" (CTRL+W) option above "Quit". Close hides to 
+   the tray. (Aaron Bockover)
+
+ * Show a lock icon on password protected DAAP sources. (Aaron Bockover)
+
+ * Improved DAAP connection status and error reporting UI. (Aaron Bockover)
+
+ * A confirmation dialog will now be presented when a playlist is to be 
+   deleted to help prevent accidental data loss. It has a "do not ask me 
+   again" check box if you find such a prompt annoying. (Aaron Bockover)
+
+ * It is now possible to copy songs directly from Banshee to Nautilus using 
+   the edit+copy menu item, accelerator, or context menu item. This has always 
+   been possible with drag and drop, but some prefer CTRL+C. (Aaron Bockover)
+
+ * Updated artwork: two excellent new icons for static and smart playlists, 
+   a perfected 32px application icon, and a new splash screen. (Jakub Steiner)
+
+ * Error correction option (paranoia mode) for CD importing. 
+   (Christopher James Halse Rogers)
+
+ * The audio output sync is now configured for the "Music and 
+   Movies" profile. (Aaron Bockover)
+
+ * Added a --no-source-change command line argument that will prevent 
+   the active source from changing when Banshee is launched with --dap or 
+   --audio-cd and an instance was already running. Add --no-source-change 
+   to your GNOME Volume Manager Banshee commands if you don't agree with our 
+   default behavior of changing sources when a device or disc becomes present 
+   in the system. (Aaron Bockover)
+
+ * Improved podcasting support, including certificate support (Nathan Palmer,
+   Mike Urbanski). Better support for enclosures, lots of minor UI polish.
+   (Mike Urbanski, Aaron Bockover) [Banshee Official Plugins]
+
+ * UI improvements to Mini Mode plugin (Michael Monreal) 
+   [Banshee Official Plugins]
+
+The Most Important Bad-Bug Fixes
+--------------------------------
+
+ * Lots of fixes regarding iPod detection, mass storage syncing, and managed 
+   DBus/HAL. This should solve all the issues in previous releases regarding 
+   iPod detection. It requires HAL volumes for the iPod to have a
+   volume.fsusage=filesystem property. If this is not the case, it's a 
+   distro issue. (Aaron Bockover, Alp Toker, Gabriel Burt, David Zeuthen)
+
+ * Locale/culture fixes regarding number formatting when parsing audio profile
+   pipelines. Fixed bitrate issue with faac profile. (Aaron Bockover)
+
+ * Fix some crashes coming from the podcast plugin (Mike Urbanski)
+
+Performance Improvements
+------------------------
+
+ * Newly-imported tracks handled in batches, greatly improving import time; 
+   many very large optimizations in taglib-sharp that also improve import 
+   time. Import time has gone down from 10 minutes to almost 2.5 minutes 
+   on a T60p with a 5200 song library. (Aaron Bockover)
+
+ * Massive performance improvement regarding switching sources. Time is 
+   down from 1 minute to under 1 second in some extreme cases. (Gabriel Burt)
+
+ * Assembly reflection performance improvements. (saves memory, small 
+   amount of startup time - Aaron Bockover)
+
+ * Lots of good performance and functionality improvements to smart 
+   playlists. (Gabriel Burt)
+
+Choose a Lingua!
+----------------
+
+   New translations for this release:
+
+     * Arabic (Khaled Hosny)
+
+   Updated translations for this release:
+ 
+    * Catalan (Jordi Mas)
+    * Czech (Jakub Friedl) 
+    * Finnish (Ilkka Tuohela)
+    * Hungarian (Gabor Kelemen)
+    * Lithuanian (Žygimantas Beručka)
+    * Norwegian bokmål (Kjartan Maraas)
+    * Russian (Alexandre Prokoudine)
+    * Swedish (Daniel Nylander)
+    * Spanish (Francisco Javier F. Serrador)
+
+For all the Awesome Banshee Developers
+--------------------------------------
+
+ * Boo scripting support; scripts can provide a static entry point or use 
+   the standard Banshee plugin API, but no compilation is necessary. Scripts 
+   must be placed in in ~/.gnome2/banshee/scripts. (Aaron Bockover)
+
+ * Lots of work on the Boo shell integration for live debugging and testing.
+   Reflection-based live debugging was started, lots to add here. 
+   (Aaron Bockover)
+
+ * New icon-theme-installer script that can be used from within make 
+   to properly install lots of icons into the theme and also update the 
+   icon cache. See build/icon-theme-installer for details (other project 
+   developers may like this!) (Aaron Bockover)
+
+ * Run uninstalled with full plugin and DAP support. "make run" from the 
+   top source directory (seriously, just build and run - no installation is 
+   necessary) (Aaron Bockover)
+
+ * Much much much cleaner configure.ac. Lots of isolated and reusable 
+   macros replacing spaghetti autoconf+bash. Generic detection and 
+   configuration done through reusable Shamrock [1] m4 macros. For instance, 
+   this is as hard as it gets to setup an autotools environment for 
+   Mono with Shamrock:
+
+      dnl Mono and gmcs
+      SHAMROCK_CHECK_MONO_MODULE(1.1.10)
+      SHAMROCK_FIND_MONO_2_0_COMPILER
+      SHAMROCK_FIND_MONO_RUNTIME
+      SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
+          System.Data
+          System.Web
+          System.Web.Services
+          Mono.Cairo
+          Mono.Data.SqliteClient
+          Mono.Posix
+      ])
+
+   [1] Shamrock is a set of m4 macros for properly doing common and useful
+       stuff in a configure.ac. It's focused on making Mono+autotools 
+       integration easy, and is part of the Banshee project. Feel free to 
+       use the macros in any project. See build/m4/shamrock. (Aaron Bockover)
+
+
+===============================================================================
+BUGZILLA OVERVIEW
+===============================================================================
+
+Noteworthy bugs fixes/enhancements embraced in this release
+-----------------------------------------------------------
+
+ * 314149 - Properly sort on track number (artist->album->track number)
+ * 353125 - Make sort settings apply to each source, not globally
+ * 345218 - Make filter/search settings apply to each source, not globally
+ * 340222 - Do not stop playback due to error; disable problematic track
+ * 348730 - Initial support for Rio Karma devices
+ * 344542 - Allow copying songs for pasting in nautilus (edit->copy)
+ * 365200 - Added an error correction option for CD importing 
+ * 325968 - Massive performance improvement when switching sources and sorting
+ * 363066 - Add sane update rate limiting to smart playlists
+ * 321773 - Fixed themeing/style issue with the search entry
+ * 361534 - Only show track change notifications if not focused 
+ * 360466 - Confirm dialog for playlist deletions 
+ * 345476 - Add --no-source-change argument; supplements --dap, --audio-cd
+ * 375992 - Ensure user data directory for plugins exists
+ * 345620 - Prevent dragging tracks from within same source on the source view
+ * 355880 - Reworded the 'import' text for the mass storage DAP track loader
+ * 355890 - Ignore iPods in the mass storage DAP to avoid confusion
+
+Other minor/uninteresting bugs fixed in this release
+----------------------------------------------------
+
+   383844, 344833, 362994, 375146, 379119, 379529, 
+   369786, 376070, 375890, 372720, 368436, 354389
+
+Show all bugs marked FIXED during this release cycle [1]
+--------------------------------------------------------
+
+ * http://banshee-project.org/files/closedbugs.php/2006-10-24,2006-12-09
+
+   [1] 28 bugs were actually addressed during the 0.11.3 development cycle,
+       but many more were verified and resolved that were actually fixed
+       in previous releases.
+
+File Bugs... Be Proactive... Contribute to Open Source!
+-------------------------------------------------------
+
+ * Please do not hesitate to file bugs against Banshee in GNOME Bugzilla.
+ * http://bugzilla.gnome.org, component: banshee
+ * Discuss Banshee on the mailing list list or in #banshee on irc.gnome.org.
+ * Lots of information on the Banshee Wiki: http://banshee-project.org
+ * Need to debug Banshee? http://banshee-project.org/Debugging
+
+
+===============================================================================
+MISCELLANEOUS
+===============================================================================
+
+Contributors for this release
+-----------------------------
+
+   Community makes Open Source work!
+
+   Aaron Bockover, Alexandros Frantzis, Alp Toker, Bertrand Lorentz, 
+   Bob Copeland, Christopher James Halse Rogers, Gabriel Burt, 
+   Jakub Steiner, James Willcox, Michael Monreal, Mike Urbanski, 
+   Nathan Palmer, Patrick van Staveren, Ruben Vermeersch, 
+   Sebastian Dröge, Scott Peterson, Tim Yamin
+
+Something to share with friends and family
+------------------------------------------
+
+   "Changes recorded for Banshee from 0.11.2 (October 23, 2006) to 0.11.3 
+   (December 8, 2006) account for 7 percent of the entire ChangeLog file."
+
+   "The first ChangeLog entry was recorded on February 17, 2005, marking the 
+   0.1 release of Banshee - at the time called Sonance. 0.2 was released 
+   quickly the following day."
+
+Thanks!
+-------
+
+   Enjoy the release! We appreciate your support and involvement!

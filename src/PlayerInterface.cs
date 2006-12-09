@@ -132,6 +132,7 @@ namespace Banshee
             gxml.Autoconnect(this);
             InterfaceElements.MainWindow = WindowPlayer;
 
+            Globals.ActionManager.LoadInterface();
             ResizeMoveWindow();
             BuildWindow();   
             
@@ -146,9 +147,6 @@ namespace Banshee
             Globals.DBusPlayer.UIAction += OnDBusPlayerUIAction;
             
             InitialLoadTimeout();
-            if(!Globals.ArgumentQueue.Contains("hide")) {
-                WindowPlayer.Show();
-            }
             
             // Bind available methods to actions defined in ActionManager
             Globals.ActionManager.DapActions.Visible = false;
@@ -180,6 +178,10 @@ namespace Banshee
             
             Globals.UIManager.SourceViewContainer = gxml["SourceViewContainer"] as Box;
             Globals.UIManager.Initialize();
+            
+            if(!Globals.ArgumentQueue.Contains("hide")) {
+                WindowPlayer.Show();
+            }
         }
    
         private bool InitialLoadTimeout()
@@ -383,28 +385,23 @@ namespace Banshee
             (gxml["LeftContainer"] as Box).PackStart(cover_art_view, false, false, 0);
             
             // Source View
-            Label sourceViewLoading = new Label();
-            sourceViewLoading.Yalign = 0.15f;
-            sourceViewLoading.Xalign = 0.5f;
-            sourceViewLoading.Markup = "<big><i>" + Catalog.GetString("Loading...") + "</i></big>";
-            sourceViewLoadingVP = new Viewport();
-            sourceViewLoadingVP.ShadowType = ShadowType.None;
-            sourceViewLoadingVP.Add(sourceViewLoading);
-            sourceViewLoadingVP.ShowAll();
-            ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceViewLoadingVP);
-            
             sourceView = new SourceView();
             sourceView.SourceDoubleClicked += delegate {
                 playlistModel.PlayingIter = TreeIter.Zero;
                 playlistModel.Advance();
                 playlistView.UpdateView();
             };
-            sourceView.Sensitive = false;
+            
+            sourceView.Sensitive = true;
+            sourceView.Show();
+            
             SourceManager.ActiveSourceChanged += OnSourceManagerActiveSourceChanged;
             SourceManager.SourceUpdated += OnSourceManagerSourceUpdated;
             SourceManager.SourceViewChanged += OnSourceManagerSourceViewChanged;
             SourceManager.SourceTrackAdded += OnSourceTrackAdded;
             SourceManager.SourceTrackRemoved += OnSourceTrackRemoved;
+            
+            ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
 
             InterfaceElements.MainContainer = gxml["MainContainer"] as VBox;
 
@@ -465,6 +462,8 @@ namespace Banshee
             };
             searchEntry.Changed += OnSimpleSearch;
             searchEntry.Show();
+            gxml["SearchLabel"].Sensitive = true;
+            searchEntry.Sensitive = true;
             InterfaceElements.SearchEntry = searchEntry;
             ((HBox)gxml["PlaylistHeaderBox"]).PackStart(searchEntry, false, false, 0);
                 
@@ -567,21 +566,8 @@ namespace Banshee
             }
         }
 
-        private void LoadSourceView()
-        {        
-            sourceView.Sensitive = true;
-            ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Remove(sourceViewLoadingVP);
-            ((Gtk.ScrolledWindow)gxml["SourceContainer"]).Add(sourceView);
-            sourceView.Show();
-            
-            gxml["SearchLabel"].Sensitive = true;
-            searchEntry.Sensitive = true;
-        }
-        
         private void OnLibraryReloaded(object o, EventArgs args)
         {
-            LoadSourceView();
-            
             if(LocalQueueSource.Instance.Count > 0) {
                 SourceManager.SetActiveSource(LocalQueueSource.Instance);
             } else if(Globals.ArgumentQueue.Contains("audio-cd")) {
@@ -606,15 +592,7 @@ namespace Banshee
                 });
             }
         }
-        
-        private bool PromptForImportTimeout()
-        {
-            LoadSourceView();
-            PromptForImport();
-            
-            return false;
-        }
-        
+
         // ---- Misc. Utility Routines ----
       
         private bool OnShutdownRequested()

@@ -216,7 +216,7 @@ namespace Banshee.Base
                     Catalog.GetString("Copy selected song(s) to clipboard"), null),
                     
                 new ActionEntry("RemoveSongsAction", Stock.Remove,
-                    Catalog.GetString("Remove)"), "Delete",
+                    Catalog.GetString("Remove"), "Delete",
                     Catalog.GetString("Remove selected song(s) from library"), null),
                     
                 new ActionEntry("DeleteSongsFromDriveAction", null,

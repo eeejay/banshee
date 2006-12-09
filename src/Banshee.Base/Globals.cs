@@ -54,7 +54,7 @@ namespace Banshee.Base
         
         public static event ShutdownRequestHandler ShutdownRequested;
         
-        public static void Initialize()
+        public static void Initialize(ComponentInitializerHandler interfaceStartupHandler)
         {
             if(!Directory.Exists(Paths.ApplicationData)) {
                 Directory.CreateDirectory(Paths.ApplicationData);
@@ -140,9 +140,11 @@ namespace Banshee.Base
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
             startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
             
-            startup.Run();
+            if(interfaceStartupHandler != null) {
+                startup.Register(Catalog.GetString("Loading user interface"), interfaceStartupHandler);
+            }
             
-            action_manager.LoadInterface();
+            startup.Run();
         }
         
         public static void Shutdown()
