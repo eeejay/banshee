@@ -1,3 +1,29 @@
+2006-12-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Widgets/ActiveUserEvent.cs:
+	* src/Banshee.Widgets/ActiveUserEventsManager.cs: Queue ActiveUserEvent
+	objects if the ActiveUserEventsManager is not yet available
+
+	* src/Banshee.Base/Dap/Dap.cs: Do not remove source if it is null
+
+	* src/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs: Check for
+	null to prevent NullReferenceExceptions, even though they're handled;
+	this allows startup to work inside gdb without having to set pass on
+	SIGSEGV
+
+	* libbanshee/gst-cd-rip-0.10.c: Use gst_element_link instead of 
+	gst_element_link_many to provide higher resolution error reporting;
+	removed old muxer injection hacks now that we have awesome audio
+	profile support with proper pipeline definitions
+
+	* build/m4/shamrock/gstreamer.m4: Print the full gst-inspect path that
+	is found instead of just 'yes'
+
+	* build/m4/banshee/dap-njb.m4: Fixed lib64 detection for njb-sharp
+	Libraries variable
+
+	* build/Common.Makefile: Support running MTP uninstalled
+
 2006-12-12  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* build/m4/banshee/dap-mtp.m4:

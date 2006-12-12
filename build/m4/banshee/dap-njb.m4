@@ -20,6 +20,13 @@ AC_DEFUN([BANSHEE_CHECK_DAP_NJB],
 				NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
 			fi
 		done;
+		if test `$PKG_CONFIG --variable=LibraryBase njb-sharp` != `$PKG_CONFIG --variable=libdir njb-sharp`/njb-sharp ; then
+			for i in `$PKG_CONFIG --variable=libdir njb-sharp`/njb-sharp/*; do
+				if test -z "`echo \"$i\" | grep config`"; then
+					NJBSHARP_INSTALL_FILES="$NJBSHARP_INSTALL_FILES \"$i\"";
+				fi
+			done;
+		fi
 		AC_SUBST(NJBSHARP_INSTALL_FILES)
 		AC_SUBST(NJBSHARP_LIBS)
 	fi

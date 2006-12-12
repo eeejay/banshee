@@ -11,7 +11,7 @@ AC_DEFUN([SHAMROCK_CHECK_GSTREAMER_PLUGINS],
 		AC_MSG_RESULT([no])
 		AC_MSG_ERROR([Cannot find required gst-inspect tool.])
 	else
-		AC_MSG_RESULT([yes])
+		AC_MSG_RESULT([$gst_inspect])
 	fi
 
 	for element in $(echo "$*" | cut -d, -f2- | sed 's/\,/ /g'); do

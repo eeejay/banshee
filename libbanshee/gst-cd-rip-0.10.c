@@ -191,55 +191,29 @@ gst_cd_ripper_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 }
 
 static GstElement *
-gst_cd_ripper_build_encoder(const gchar *encoder_pipeline)
+gst_cd_ripper_build_encoder(const gchar *pipeline, GError **error_out)
 {
-    GstElement *encoder = NULL;
-    gchar *pipeline = NULL;
+    GstElement *encoder;
     GError *error = NULL;
-    
-    // FIXME: ugly
-    if(strstr(encoder_pipeline, "vorbisenc") != NULL 
-        && strstr(encoder_pipeline, "oggmux") == NULL) {
-        g_warning("vorbisenc added without oggmux, attempting to insert oggmux element in pipeline");
-        pipeline = g_strdup_printf("audioconvert ! %s ! oggmux", encoder_pipeline);
-    } else if((strstr(encoder_pipeline, "lame") != NULL || strstr(encoder_pipeline, "xingenc") != NULL) &&
-        strstr(encoder_pipeline, "mux") == NULL) {
-        const gchar *muxer_names [] = { "id3v2mux", "taglibid3mux", "id3mux", NULL};
-        gint i;
-        
-        for(i = 0; muxer_names[i] != NULL; i++) {
-            GstElementFactory *id3mux = gst_element_factory_find(muxer_names[i]);
-            if(id3mux == NULL) {
-                continue;
-            }
-            
-            g_warning("MP3 encoder added without %s, attempting to insert %s element in pipeline",
-                muxer_names[i], muxer_names[i]);
-            pipeline = g_strdup_printf("audioconvert ! %s ! %s", encoder_pipeline, muxer_names[i]);
-            gst_object_unref(GST_OBJECT(id3mux));
-            break;
-        }
-    }
-    
-    if(pipeline == NULL) {
-        pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
-    }
-    
+   
     encoder = gst_parse_bin_from_description(pipeline, TRUE, &error);
-    g_free(pipeline);
     
     if(error != NULL) {
+        if(error_out != NULL) {
+            *error_out = error;
+        }
         return NULL;
     }
     
     return encoder;
-}    
+}
 
 static gboolean
 gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
 {
     GstElement *queue;
     GstElement *mbtrm;
+    GError *error = NULL;
     
     g_return_val_if_fail(ripper != NULL, FALSE);
         
@@ -272,9 +246,9 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
     g_signal_connect(G_OBJECT(mbtrm), "have-trm-id",
         G_CALLBACK(gst_cd_ripper_have_trm_id_cb), ripper);
     
-    ripper->encoder = gst_cd_ripper_build_encoder(ripper->encoder_pipeline);
+    ripper->encoder = gst_cd_ripper_build_encoder(ripper->encoder_pipeline, &error);
     if(ripper->encoder == NULL) {
-        gst_cd_ripper_raise_error(ripper, _("Could not create encoder pipeline"), NULL);
+        gst_cd_ripper_raise_error(ripper, _("Could not create encoder pipeline"), error->message);
         return FALSE;
     }
     
@@ -303,11 +277,26 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
         ripper->filesink,
         NULL);
         
-    if(!gst_element_link_many(ripper->cdparanoia, mbtrm, queue, ripper->encoder, ripper->filesink, NULL)) {
-        gst_cd_ripper_raise_error(ripper, _("Could not link pipeline elements"), NULL);
+    if(!gst_element_link(ripper->cdparanoia, mbtrm)) {
+        gst_cd_ripper_raise_error(ripper, _("Could not link cdparanoiasrc to mbtrm"), NULL);
         return FALSE;
     }
-
+        
+    if(!gst_element_link(mbtrm, queue)) {
+        gst_cd_ripper_raise_error(ripper, _("Could not link mbtrm to queue"), NULL);
+        return FALSE;
+    }
+        
+    if(!gst_element_link(queue, ripper->encoder)) {
+        gst_cd_ripper_raise_error(ripper, _("Could not link queue to encoder"), NULL);
+        return FALSE;
+    }
+        
+    if(!gst_element_link(ripper->encoder, ripper->filesink)) {
+        gst_cd_ripper_raise_error(ripper, _("Could not link encoder to gnomevfssink"), NULL);
+        return FALSE;
+    }
+    
     gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(ripper->pipeline)), 
         gst_cd_ripper_bus_callback, ripper);
 

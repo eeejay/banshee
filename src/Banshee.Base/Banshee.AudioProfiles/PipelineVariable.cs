@@ -65,7 +65,10 @@ namespace Banshee.AudioProfiles
             control_type = StringToControlType(node.SelectSingleNode("control-type").InnerText.Trim());
             
             try {
-                unit = node.SelectSingleNode("unit").InnerText.Trim();
+                XmlNode unit_node = node.SelectSingleNode("unit");
+                if(unit_node != null) {
+                    unit = node.SelectSingleNode("unit").InnerText.Trim();
+                }
             } catch {
             }
             
@@ -88,8 +91,11 @@ namespace Banshee.AudioProfiles
             }
             
             try {
-                string step_expression_str = node.SelectSingleNode("step-expression").InnerText;
-                step_expression = new Abakos.Compiler.Expression(step_expression_str);
+                XmlNode step_expression_node = node.SelectSingleNode("step-expression");
+                if(step_expression_node != null) {
+                    string step_expression_str = step_expression_node.InnerText;
+                    step_expression = new Abakos.Compiler.Expression(step_expression_str);
+                }
             } catch {
             }
 
@@ -122,7 +128,12 @@ namespace Banshee.AudioProfiles
         private static string ReadValue(XmlNode node, string name)
         {
             try {
-                string str = node.SelectSingleNode(name).InnerText.Trim();
+                XmlNode str_node = node.SelectSingleNode(name);
+                if(str_node == null) {
+                    return null;
+                }
+                
+                string str = str_node.InnerText.Trim();
                 return str == String.Empty ? null : str;
             } catch {
             }

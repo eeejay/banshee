@@ -19,7 +19,7 @@ DIR_BOOBUDDY = $(top_builddir)/src/BooBuddy
 DIR_DAP = $(top_builddir)/src/Banshee.Dap
 DIR_DAP_IPOD = $(DIR_DAP)/Ipod:$$(dirname `pkg-config --variable=Libraries ipod-sharp`)
 DIR_DAP_NJB = $(DIR_DAP)/Njb:$$(dirname `pkg-config --variable=Libraries njb-sharp`)
-DIR_DAP_MTP = $(DIR_DAP)/Mtp
+DIR_DAP_MTP = $(DIR_DAP)/Mtp:$$(dirname `pkg-config --variable=Libraries libgphoto2-sharp`)
 DIR_DAP_MASS_STORAGE = $(DIR_DAP)/MassStorage
 DIR_DAP_ALL=$(DIR_DAP_IPOD):$(DIR_DAP_NJB):$(DIR_DAP_MTP):$(DIR_DAP_MASS_STORAGE)
 

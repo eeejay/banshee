@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  ActiveUserEventsManager.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -28,7 +27,7 @@
  */
  
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Gtk;
  
 namespace Banshee.Widgets
@@ -37,12 +36,36 @@ namespace Banshee.Widgets
     {
         private static ActiveUserEventsManager instance;
         public static ActiveUserEventsManager Instance {
-            get {
-                return instance;
+            get { return instance; }
+        }
+        
+        private static List<ActiveUserEvent> user_events = new List<ActiveUserEvent>();
+        
+        public static void Register(ActiveUserEvent userEvent)
+        {
+            lock(user_events) {
+                if(userEvent == null) {
+                    return;
+                }
+                
+                user_events.Add(userEvent);
+                RegisterUI(userEvent);
             }
         }
         
-        private ArrayList user_events;
+        private static void RegisterUI(ActiveUserEvent userEvent)
+        {
+            if(Instance != null) {
+                userEvent.Disposed += OnUserEventDisposed;
+
+                Gtk.Application.Invoke(delegate {
+                    if(userEvent.Widget != null) {
+                        Instance.PackStart(userEvent.Widget, false, false, 0);
+                        Instance.Show();
+                    }
+                });
+            }
+        }
         
         public ActiveUserEventsManager() : base()
         {
@@ -52,16 +75,20 @@ namespace Banshee.Widgets
             
             Spacing = 8;
             instance = this;
-        
-            user_events = new ArrayList();
             
             Hide();
+            
+            lock(user_events) {
+                foreach(ActiveUserEvent user_event in user_events) {
+                    RegisterUI(user_event);
+                }
+            }
         }
         
         public void Clear()
         {
             while(user_events.Count > 0) {
-                (user_events[0] as ActiveUserEvent).Dispose();
+                (user_events[0]).Dispose();
             }
         }
         
@@ -75,31 +102,23 @@ namespace Banshee.Widgets
             canceling = true;
             
             while(user_events.Count > 0) {
-                (user_events[0] as ActiveUserEvent).Cancel();
+                (user_events[0]).Cancel();
             }
         }
         
-        private void OnUserEventDisposed(object o, EventArgs args)
+        private static void OnUserEventDisposed(object o, EventArgs args)
         {
-            user_events.Remove(o);
+            lock(user_events) {
+                user_events.Remove(o as ActiveUserEvent);
             
-            Gtk.Application.Invoke(delegate {
-                Remove((o as ActiveUserEvent).Widget);
-                
-                if(user_events.Count == 0) {
-                    Hide();
-                }
-            });
-        }
-        
-        public void Register(ActiveUserEvent userEvent)
-        {
-            userEvent.Disposed += OnUserEventDisposed;
-            user_events.Add(userEvent);
-            Gtk.Application.Invoke(delegate {
-                PackStart(userEvent.Widget, false, false, 0);
-                Show();
-            });
+                Gtk.Application.Invoke(delegate {
+                    Instance.Remove((o as ActiveUserEvent).Widget);
+                    
+                    if(user_events.Count == 0) {
+                        Instance.Hide();
+                    }
+                });
+            }
         }
     }
 }

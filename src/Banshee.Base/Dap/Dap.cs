@@ -213,7 +213,9 @@ namespace Banshee.Dap
         
         public virtual void Dispose()
         {
-            SourceManager.RemoveSource(source);
+            if(source != null) {
+                SourceManager.RemoveSource(source);
+            }
         }
         
         public void ClearTracks()

@@ -135,7 +135,7 @@ namespace Banshee.Widgets
             if(delayShow) {
                 slow_timeout_id = GLib.Timeout.Add(1000, OnCheckForDisplay);
             } else {
-                ActiveUserEventsManager.Instance.Register(this);
+                ActiveUserEventsManager.Register(this);
             }
             
             header_update_needed = true;
@@ -183,7 +183,7 @@ namespace Banshee.Widgets
             
             // If the event has not made enough progress, show this event
             if(Progress < 0.33) {
-                ActiveUserEventsManager.Instance.Register(this);
+                ActiveUserEventsManager.Register(this);
             }
             
             return false;
