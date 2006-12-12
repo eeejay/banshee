@@ -76,30 +76,27 @@ namespace Banshee.Dap.Mtp
         {
             if(!halDevice.PropertyExists("usb.vendor_id") ||
                     !halDevice.PropertyExists("usb.product_id") ||
-                    !halDevice.PropertyExists("portable_audio_player.access_method") ||
-                    !halDevice.PropertyExists("info.category")) {
+                    !halDevice.PropertyExists("portable_audio_player.type") ||
+                    !halDevice.PropertyExists("camera.libgphoto2.support")) {
                 return InitializeResult.Invalid;
             }
             
             short product_id = (short) halDevice.GetPropertyInteger("usb.product_id");
             short vendor_id  = (short) halDevice.GetPropertyInteger("usb.vendor_id");
-            string info_category = halDevice.GetPropertyString("info.category");
-            string access_method = halDevice.GetPropertyString("portable_audio_player.access_method");
+            string type = halDevice.GetPropertyString("portable_audio_player.type");
             device_name = halDevice.GetPropertyString("camera.libgphoto2.name");
-            
+
             LogCore.Instance.PushDebug("MTP: Starting initialization",
-                String.Format("product_id={0}, vendor_id={1}, info_category={2}, access_method={3}",
-                product_id, vendor_id, info_category, access_method));
+                String.Format("product_id={0}, vendor_id={1}, type={2}, name={3}",
+                product_id, vendor_id, type, device_name));
             
-            if (info_category != "portable_audio_player") {
-                LogCore.Instance.PushDebug("MTP: passed device does not have hal info.category = " +
-                    "'portable_audio_player'", String.Format("vendor={0}, prod={1}", vendor_id, product_id));
+            if (type != "mtp") {
+                LogCore.Instance.PushDebug("MTP: passed device's portable_audio_player.type IS NOT mtp", "");
                 return InitializeResult.Invalid;
             }
-            
-            if (access_method != "libgphoto2") {
-                LogCore.Instance.PushDebug("MTP: passed device's portable_audio_player.access_method != " +
-                    "libgphoto2",  String.Format("vendor={0}, prod={1}, access_method={2}", vendor_id, product_id, access_method));
+
+            if (!halDevice.GetPropertyBoolean("camera.libgphoto2.support")) {
+                LogCore.Instance.PushDebug("MTP: got passed a device that has camera.libgphoto2.support = false", "");
                 return InitializeResult.Invalid;
             }
 

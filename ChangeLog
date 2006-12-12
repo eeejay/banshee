@@ -1,3 +1,10 @@
+2006-12-12  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* build/m4/banshee/dap-mtp.m4:
+	* src/Banshee.Dap/Mtp/MtpDap.cs: fix verification based on newer
+	hal fdi information.  Initialization should work now with
+	libgphoto2 2.3.0 or later, but not younger.
+
 2006-12-09  Patrick van Staveren  <trick@vanstaveren.us>
 
 	First update in quite some time...

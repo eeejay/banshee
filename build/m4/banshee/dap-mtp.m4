@@ -1,6 +1,6 @@
 AC_DEFUN([BANSHEE_CHECK_DAP_MTP],
 [
-	LIBGPHOTO2SHARP_REQUIRED=2.2.1.4.trunk
+	LIBGPHOTO2SHARP_REQUIRED=2.3.0
 
 	AC_ARG_ENABLE(mtp, AC_HELP_STRING([--enable-mtp], 
 		[Enable MTP DAP support]), , enable_mtp="no")
