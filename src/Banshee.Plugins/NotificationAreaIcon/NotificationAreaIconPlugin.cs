@@ -194,7 +194,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
                     Notification nf = new Notification(
                         Catalog.GetString("Still Running"), 
                         Catalog.GetString("Banshee was closed to the notification area. " + 
-                            "Use the 'Quit' option to end your session."),
+                            "Use the <i>Quit</i> option to end your session."),
                         image, event_box);
                     nf.Urgency = Urgency.Low;
                     nf.Timeout = 4500;
