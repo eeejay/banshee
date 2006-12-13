@@ -10,9 +10,7 @@ AC_DEFUN([BANSHEE_CHECK_DAP_NJB],
 	PKG_CHECK_MODULES(NJBSHARP,
 		njb-sharp >= $NJBSHARP_REQUIRED,
 		enable_njbsharp="$enable_njbsharp", enable_njbsharp=no)
-
-	AC_MSG_RESULT([$enable_njbsharp])
-	
+			
 	if test "x$enable_njbsharp" = "xyes"; then
 		NJBSHARP_INSTALL_FILES=""
 		for i in `$PKG_CONFIG --variable=LibraryBase njb-sharp`*; do	
@@ -28,7 +26,9 @@ AC_DEFUN([BANSHEE_CHECK_DAP_NJB],
 			done;
 		fi
 		AC_SUBST(NJBSHARP_INSTALL_FILES)
-		AC_SUBST(NJBSHARP_LIBS)
+		AC_SUBST(NJBSHARP_LIBS)	
+	else 
+		AC_MSG_RESULT([no])
 	fi
 
 	AM_CONDITIONAL(ENABLE_NJB, test "x$enable_njbsharp" = "xyes")
