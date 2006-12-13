@@ -642,6 +642,13 @@ namespace Banshee
         
         private void OnWindowPlayerDeleteEvent(object o, DeleteEventArgs args) 
         {
+            if(InterfaceElements.PrimaryWindowClose != null) {
+                if(InterfaceElements.PrimaryWindowClose()) {
+                    args.RetVal = true;
+                    return;
+                }
+            }
+            
             Quit();
             args.RetVal = true;
         }

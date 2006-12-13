@@ -254,6 +254,10 @@ namespace Banshee.Base
     
     public static class InterfaceElements
     {
+        public delegate bool PrimaryWindowCloseHandler();
+        
+        public static PrimaryWindowCloseHandler PrimaryWindowClose;
+    
         private static Gtk.Window main_window;
         public static Gtk.Window MainWindow {
             get { return main_window; }

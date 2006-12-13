@@ -23,5 +23,27 @@
         <long></long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/NotificationAreaIcon/notify_on_close</key>
+      <applyto>/apps/Banshee/NotificationAreaIcon/notify_on_close</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Notify that application was closed</short>
+        <long>Notify that the application was closed to the notification area and is still running.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/Banshee/NotificationAreaIcon/quit_on_close</key>
+      <applyto>/apps/Banshee/NotificationAreaIcon/quit_on_close</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Quit instead of close</short>
+        <long>Terminate the application instance instead of closing to the notification area</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

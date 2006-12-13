@@ -1,5 +1,36 @@
 2006-12-13  Aaron Bockover  <abock@gnome.org>
 
+	* build/Common.Makefile: Run NJB uninstalled properly
+
+	* src/Main.cs: Do not use UcFirst - just pass the program name
+
+	* src/PlayerInterface.cs: Call InterfaceElements.PrimaryWindowClose if it 
+	is set; if set, the close action from the title bar will close the 
+	window instead of quitting the application (Fixes BGO #358192)
+
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Set InterfaceElements.PrimaryWindowClose handler to override the quit
+	behavior for the window's [X] button. Notify user of the action if
+	it's never been performed before; only set the close handler if
+	/apps/Banshee/NotificationAreaIcon/quit_on_close in GConf is not set 
+
+	* src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in: Added schema keys for quit_on_close and notify_on_close
+
+	* src/Banshee.Base/Globals.cs: Added InterfaceElements.PrimaryWindowClose
+
+	* src/Banshee.Base/StringUtils.cs: Implemented culture aware sorting
+	that also ignore 'the' prefixes on strings; speeds sort operation up
+	by about 15%. (Fixes BGO #384235)
+
+	* src/PlaylistView.cs: Use new culture aware sorting for strings
+
+	* src/Banshee.Base/Banshee.Base.mdp:
+	* src/Banshee.Base/Makefile.am: Added StringUtils.cs
+
+	* src/Banshee.Base/Utilities.cs: Removed old StringUtils class
+
+2006-12-13  Aaron Bockover  <abock@gnome.org>
+
 	* build/m4/banshee/boo.m4: Require 0.7.6 for booc precompilation
 
 	* build/m4/banshee/dap-njb.m4: Cosmetic AC_MSG_RESULT fix

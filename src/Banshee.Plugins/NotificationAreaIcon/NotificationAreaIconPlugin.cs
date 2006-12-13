@@ -101,9 +101,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
             actions.Add(new ActionEntry [] {
                 new ActionEntry("CloseAction", Stock.Close,
                     Catalog.GetString("Close"), "<Control>W",
-                    Catalog.GetString("Close"), delegate { 
-                        ShowHideMainWindow(); 
-                 })
+                    Catalog.GetString("Close"), CloseWindow)
             });
 
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
@@ -133,6 +131,8 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 notif_area = null;
             }
             
+            InterfaceElements.PrimaryWindowClose = null;
+            
             PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
             
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
@@ -159,11 +159,53 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
             notif_area.Add(event_box);
             notif_area.ShowAll();
+            
+            bool quit_on_close = false;
+            
+            try {
+                quit_on_close = (bool)Globals.Configuration.Get(ConfigurationBase + "/quit_on_close");
+            } catch {
+            }
+            
+            if(!quit_on_close) {
+                InterfaceElements.PrimaryWindowClose = delegate {
+                    CloseWindow(null, null);
+                    return true;
+                };
+            }
         }
 
         private void OnDestroyEvent(object o, DestroyEventArgs args) 
         {
             Init();
+        }
+
+        private void CloseWindow(object o, EventArgs args)
+        {
+            try {
+                bool notify = true;
+                try {
+                    notify = (bool)Globals.Configuration.Get(ConfigurationBase + "/notify_on_close");
+                } catch {
+                }
+                
+                if(notify) {
+                    Gdk.Pixbuf image = Branding.ApplicationLogo.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
+                    Notification nf = new Notification(
+                        Catalog.GetString("Still Running"), 
+                        Catalog.GetString("Banshee was closed to the notification area. " + 
+                            "Use the 'Quit' option to end your session."),
+                        image, event_box);
+                    nf.Urgency = Urgency.Low;
+                    nf.Timeout = 4500;
+                    nf.Show();
+                    
+                    Globals.Configuration.Set(ConfigurationBase + "/notify_on_close", false);
+                }
+            } catch {
+            }
+
+            ShowHideMainWindow();
         }
 
         private void ShowHideMainWindow()
@@ -402,7 +444,8 @@ namespace Banshee.Plugins.NotificationAreaIcon
             }
         }
 
-        private void RestoreWindowSizePosition() {
+        private void RestoreWindowSizePosition() 
+        {
             if (maximized) {
                 InterfaceElements.MainWindow.Maximize();
             } else {
@@ -414,15 +457,14 @@ namespace Banshee.Plugins.NotificationAreaIcon
         public bool ShowNotifications {
             get { 
                 try {
-                    show_notifications = (bool)Globals.Configuration.Get(GConfKeys.BasePath
-                            +ConfigurationName+"/ShowNotifications");
+                    show_notifications = (bool)Globals.Configuration.Get(ConfigurationBase + "/ShowNotifications");
                 } catch (GConf.NoSuchKeyException) { 
                     show_notifications = false;
                 }
                 return show_notifications; 
             }
             set { 
-                Globals.Configuration.Set(GConfKeys.BasePath+ConfigurationName+"/ShowNotifications", value);
+                Globals.Configuration.Set(ConfigurationBase + "/ShowNotifications", value);
                 show_notifications = value;
             }
         }

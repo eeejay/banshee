@@ -90,7 +90,7 @@ namespace Banshee
             IDBusPlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
-            new Program(StringUtil.UcFirst(ConfigureDefines.PACKAGE), ConfigureDefines.VERSION, Modules.UI, args);
+            new Program("Banshee", ConfigureDefines.VERSION, Modules.UI, args);
             
             Globals.Initialize(delegate {
                 StockIcons.Initialize();

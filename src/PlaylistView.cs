@@ -256,17 +256,6 @@ namespace Banshee
 
         /* Model Sorting Comparisons */
 
-        private int StringFieldCompare(string a, string b)
-        {
-            if(a != null)
-                a = a.ToLower();
-                
-            if(b != null)
-                b = b.ToLower();
-                
-            return String.Compare(a, b);
-        }
-        
         private int LongFieldCompare(long a, long b)
         {
             return a < b ? -1 : (a == b ? 0 : 1);
@@ -286,24 +275,24 @@ namespace Banshee
             
         private int ArtistTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            int v = StringFieldCompare(model.IterTrackInfo(a).Artist, model.IterTrackInfo(b).Artist);
+            int v = StringUtil.RelaxedCompare(model.IterTrackInfo(a).Artist, model.IterTrackInfo(b).Artist);
             return v != 0 ? v : AlbumTreeIterCompareFunc(_model, a, b);
         }
         
         private int TitleTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return StringFieldCompare(model.IterTrackInfo(a).Title, model.IterTrackInfo(b).Title);
+            return StringUtil.RelaxedCompare(model.IterTrackInfo(a).Title, model.IterTrackInfo(b).Title);
         }
         
         private int AlbumTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            int v = StringFieldCompare(model.IterTrackInfo(a).Album, model.IterTrackInfo(b).Album);
+            int v = StringUtil.RelaxedCompare(model.IterTrackInfo(a).Album, model.IterTrackInfo(b).Album);
             return v != 0 ? v : TrackBaseTreeIterCompareFunc(_model, a, b);
         }
         
         private int GenreTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)
         {
-            return StringFieldCompare(model.IterTrackInfo(a).Genre, model.IterTrackInfo(b).Genre);
+            return StringUtil.RelaxedCompare(model.IterTrackInfo(a).Genre, model.IterTrackInfo(b).Genre);
         }
         
         private int YearTreeIterCompareFunc(TreeModel _model, TreeIter a, TreeIter b)

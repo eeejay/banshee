@@ -212,6 +212,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
+	$(srcdir)/StringUtil.cs \
 	$(srcdir)/ArgumentQueue.cs \
 	$(srcdir)/LogCore.cs \
 	$(srcdir)/AmazonCoverFetcher.cs \
