@@ -168,13 +168,13 @@ namespace Banshee.SmartPlaylist
             Timer t = new Timer ("OnUIManagerInitialized");
 
             musicMenu = (Globals.ActionManager.GetWidget ("/MainMenu/MusicMenu") as MenuItem).Submenu as Menu;
-            addItem = new MenuItem (Catalog.GetString("New Smart Playlist..."));
+            addItem = new MenuItem (Catalog.GetString("New _Smart Playlist..."));
             addItem.Activated += delegate {
                 Editor ed = new Editor ();
                 ed.RunDialog ();
             };
 
-            addFromSearchItem = new MenuItem (Catalog.GetString("New Smart Playlist from Search..."));
+            addFromSearchItem = new MenuItem (Catalog.GetString("New Smart Playlist _from Search..."));
             addFromSearchItem.Activated += delegate {
                 Editor ed = new Editor ();
                 ed.SetQueryFromSearch ();

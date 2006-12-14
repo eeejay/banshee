@@ -102,25 +102,25 @@ namespace Banshee.Plugins.Audioscrobbler
             
             actions.Add(new ActionEntry [] {
                 new ActionEntry("AudioscrobblerAction", null,
-                    Catalog.GetString("Audioscrobbler"), null,
+                    Catalog.GetString("_Audioscrobbler"), null,
                     Catalog.GetString("Configure the Audioscrobbler plugin"), null),
                     
                 new ActionEntry("AudioscrobblerVisitAction", null,
-                    Catalog.GetString("Visit user profile page"), null,
+                    Catalog.GetString("Visit _user profile page"), null,
                     Catalog.GetString("Visit your Audioscrobbler profile page"), OnVisitHomePage),
                 
                 new ActionEntry("AudioscrobblerGroupAction", null,
-                    Catalog.GetString("Visit group page"), null,
+                    Catalog.GetString("Visit _group page"), null,
                     Catalog.GetString("Visit the Banshee last.fm group page"), OnVisitGroupPage),
                 
                 new ActionEntry("AudioscrobblerConfigureAction", null,
-                    Catalog.GetString("Configure..."), null,
+                    Catalog.GetString("_Configure..."), null,
                     Catalog.GetString("Configure the Audioscrobbler plugin"), OnConfigurePlugin)
             });
             
             actions.Add(new ToggleActionEntry [] { 
                 new ToggleActionEntry("AudioscrobblerEnableAction", null,
-                    Catalog.GetString("Enable song reporting"), "<control>U",
+                    Catalog.GetString("_Enable song reporting"), "<control>U",
                     Catalog.GetString("Enable song reporting"), OnToggleEnabled, Enabled)
             });
             

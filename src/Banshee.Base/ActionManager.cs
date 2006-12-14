@@ -65,7 +65,7 @@ namespace Banshee.Base
                     Catalog.GetString("_Music"), null, null, null),
                 
                 new ActionEntry("NewPlaylistAction", Stock.New,
-                    Catalog.GetString("New Playlist"), "<control>N",
+                    Catalog.GetString("_New Playlist"), "<control>N",
                     Catalog.GetString("Create a new empty playlist"), null),
                 
                 new ActionEntry("ImportFolderAction", Stock.Open,
@@ -77,11 +77,11 @@ namespace Banshee.Base
                     Catalog.GetString("Import files inside a folder"), null),
                     
                 new ActionEntry("ImportMusicAction", Stock.Open,
-                    Catalog.GetString("Import Music..."), "<control>I",
+                    Catalog.GetString("Import _Music..."), "<control>I",
                     Catalog.GetString("Import music from a variety of sources"), null),
                     
                 new ActionEntry("OpenLocationAction", null, 
-                    Catalog.GetString("Open Location..."), "<control>L",
+                    Catalog.GetString("Open _Location..."), "<control>L",
                     Catalog.GetString("Open a remote location for playback"), null),
                     
                 new ActionEntry("WriteCDAction", null,
@@ -112,19 +112,19 @@ namespace Banshee.Base
                     null, null),
                     
                 new ActionEntry("SelectAllAction", null,
-                    Catalog.GetString("Select All"), "<control>A",
+                    Catalog.GetString("Select _All"), "<control>A",
                     Catalog.GetString("Select all songs in song list"), null),
                     
                 new ActionEntry("SelectNoneAction", null,
-                    Catalog.GetString("Select None"), "<control><shift>A",
+                    Catalog.GetString("Select _None"), "<control><shift>A",
                     Catalog.GetString("Unselect all songs in song list"), null),
 
                 new ActionEntry("JumpToPlayingAction", null,
-                    Catalog.GetString("Jump to playing song"), "<control>J",
+                    Catalog.GetString("_Jump to playing song"), "<control>J",
                     null, null),
                 
                 new ActionEntry("PluginsAction", null,
-                    Catalog.GetString("Plugins..."), null,
+                    Catalog.GetString("Plu_gins..."), null,
                     Catalog.GetString("Configure Banshee plugins"), null),
                 
                 new ActionEntry("PreferencesAction", Stock.Preferences, null),
@@ -133,11 +133,11 @@ namespace Banshee.Base
                     Catalog.GetString("_View"), null, null, null),
 
                 new ActionEntry("ColumnsAction", null,
-                    Catalog.GetString("Columns..."), null,
+                    Catalog.GetString("_Columns..."), null,
                     Catalog.GetString("Select which columns to display in the song list"), null),
                 
                 new ActionEntry("ShellAction", null,
-                    Catalog.GetString("Boo Buddy..."), "<control><shift>S",
+                    Catalog.GetString("_Boo Buddy..."), "<control><shift>S",
                     Catalog.GetString("Open Boo Buddy"), delegate {
                         BooBuddy.BooBuddyWindow boo_buddy = new BooBuddy.BooBuddyWindow();
                         boo_buddy.Show();
@@ -148,33 +148,33 @@ namespace Banshee.Base
                     Catalog.GetString("Display the equalizer."), null),
                     
                 new ActionEntry("LoggedEventsAction", null,
-                    Catalog.GetString("Logged Events Viewer..."), null,
+                    Catalog.GetString("_Logged Events Viewer..."), null,
                     Catalog.GetString("View a detailed log of events"), null),
                     
                 new ActionEntry("HelpMenuAction", null, 
                     Catalog.GetString("_Help"), null, null, null),
                     
                 new ActionEntry("VersionInformationAction", null,
-                    Catalog.GetString("Version Information..."), null,
+                    Catalog.GetString("_Version Information..."), null,
                     Catalog.GetString("View detailed version and configuration information"), null),
                     
                 new ActionEntry("WebMenuAction", null,
-                    Catalog.GetString("Web Resources"), null, null, null),
+                    Catalog.GetString("_Web Resources"), null, null, null),
                     
                 new ActionEntry("WikiGuideAction", Stock.Help,
-                    Catalog.GetString("Banshee User Guide (Wiki)"), null,
+                    Catalog.GetString("Banshee _User Guide (Wiki)"), null,
                     Catalog.GetString("Learn about how to use Banshee"), delegate {
                         Banshee.Web.Browser.Open("http://banshee-project.org/Guide");
                     }),
                     
                 new ActionEntry("WikiAction", null,
-                    Catalog.GetString("Banshee Home Page"), null,
+                    Catalog.GetString("Banshee _Home Page"), null,
                     Catalog.GetString("Visit the Banshee Home Page"), delegate {
                         Banshee.Web.Browser.Open("http://banshee-project.org/");
                     }),
                     
                 new ActionEntry("WikiDeveloperAction", null,
-                    Catalog.GetString("Get Involved"), null,
+                    Catalog.GetString("_Get Involved"), null,
                     Catalog.GetString("Become a contributor to Banshee"), delegate {
                         Banshee.Web.Browser.Open("http://banshee-project.org/Developers");
                     }),
@@ -191,16 +191,16 @@ namespace Banshee.Base
                     Catalog.GetString("Song Menu"), null, null, null),
                     
                 new ActionEntry("DebugMenuAction", null,
-                    Catalog.GetString("Debug"), null, null, null)
+                    Catalog.GetString("_Debug"), null, null, null)
             });
             
             global_actions.Add(new ToggleActionEntry [] {               
                 new ToggleActionEntry("FullScreenAction", null,
-                    Catalog.GetString("Fullscreen"), "F11",
+                    Catalog.GetString("_Fullscreen"), "F11",
                     Catalog.GetString("Toggle Fullscreen Mode"), null, false),
                 
                 new ToggleActionEntry("ShowCoverArtAction", null,
-                    Catalog.GetString("Show Cover Art"), null,
+                    Catalog.GetString("Show Cover _Art"), null,
                     Catalog.GetString("Toggle display of album cover art"), null, false),              
             });
 
@@ -212,43 +212,43 @@ namespace Banshee.Base
             
             song_actions.Add(new ActionEntry [] {
                 new ActionEntry("CopySongsAction", Stock.Copy,
-                    Catalog.GetString("Copy"), "<Control>C",
+                    Catalog.GetString("_Copy"), "<Control>C",
                     Catalog.GetString("Copy selected song(s) to clipboard"), null),
                     
                 new ActionEntry("RemoveSongsAction", Stock.Remove,
-                    Catalog.GetString("Remove"), "Delete",
+                    Catalog.GetString("_Remove"), "Delete",
                     Catalog.GetString("Remove selected song(s) from library"), null),
                     
                 new ActionEntry("DeleteSongsFromDriveAction", null,
-                    Catalog.GetString("Delete From Drive"), null,
+                    Catalog.GetString("_Delete From Drive"), null,
                     Catalog.GetString("Permanently delete selected song(s) from storage medium"), null),
                     
                 new ActionEntry("PropertiesAction", Stock.Edit,
-                    Catalog.GetString("Edit Song Metadata"), null,
+                    Catalog.GetString("_Edit Song Metadata"), null,
                     Catalog.GetString("Edit metadata on selected songs"), null),
 
                 new ActionEntry("SearchMenuAction", Stock.Find,
-                    Catalog.GetString("Search for songs"), null,
+                    Catalog.GetString("_Search for songs"), null,
                     Catalog.GetString("Search for songs matching certain criteria"), null),
 
                 new ActionEntry("SearchForSameAlbumAction", null,
-                    Catalog.GetString("By matching album"), null,
+                    Catalog.GetString("By matching _album"), null,
                     Catalog.GetString("Search all songs of this album"), null),
 
                 new ActionEntry("SearchForSameArtistAction", null,
-                    Catalog.GetString("By matching artist"), null,
+                    Catalog.GetString("By matching a_rtist"), null,
                     Catalog.GetString("Search all songs of this artist"), null),
 
                 new ActionEntry("SearchForSameGenreAction", null,
-                    Catalog.GetString("By matching genre"), null,
+                    Catalog.GetString("By matching _genre"), null,
                     Catalog.GetString("Search all songs of this genre"), null),
                     
                 new ActionEntry("AddToPlaylistAction", null,
-                    Catalog.GetString("Add to Playlist"), null,
+                    Catalog.GetString("Add _to Playlist"), null,
                     Catalog.GetString("Append selected songs to playlist or create new playlist from selection"), null),
                     
                 new ActionEntry("RatingAction", null,
-                    Catalog.GetString("Rating"), null,
+                    Catalog.GetString("Ratin_g"), null,
                     Catalog.GetString("Set rating for selected songs"), null)
             });
             
@@ -268,39 +268,39 @@ namespace Banshee.Base
             
             playback_actions.Add(new ActionEntry [] {
                 new ActionEntry("PlayPauseAction", "media-playback-start",
-                    Catalog.GetString("Play"), "space",
+                    Catalog.GetString("_Play"), "space",
                     Catalog.GetString("Play or pause the current song"), null),
                     
                 new ActionEntry("NextAction", "media-skip-forward",
-                    Catalog.GetString("Next"), "N",
+                    Catalog.GetString("_Next"), "N",
                     Catalog.GetString("Play the next song"), null),
                     
                 new ActionEntry("PreviousAction", "media-skip-backward",
-                    Catalog.GetString("Previous"), "B",
+                    Catalog.GetString("Pre_vious"), "B",
                     Catalog.GetString("Play the previous song"), null),
             });
             
             playback_actions.Add(new RadioActionEntry [] {
                 new RadioActionEntry("RepeatNoneAction", null, 
-                    Catalog.GetString("Repeat None"), null,
+                    Catalog.GetString("Repeat N_one"), null,
                     Catalog.GetString("Do not repeat playlist"), 0),
                     
                 new RadioActionEntry("RepeatAllAction", null,
-                    Catalog.GetString("Repeat All"), null,
+                    Catalog.GetString("Repeat _All"), null,
                     Catalog.GetString("Play all songs before repeating playlist"), 1),
                     
                 new RadioActionEntry("RepeatSingleAction", null,
-                    Catalog.GetString("Repeat Single"), null,
+                    Catalog.GetString("Repeat Si_ngle"), null,
                     Catalog.GetString("Repeat the current playing song"), 2)
             }, 0, null);
             
             playback_actions.Add(new ToggleActionEntry [] {
                 new ToggleActionEntry("ShuffleAction", "media-playlist-shuffle",
-                    Catalog.GetString("Shuffle"), null,
+                    Catalog.GetString("Shu_ffle"), null,
                     Catalog.GetString("Toggle between shuffle or continuous playback modes"), null, false),
                     
                 new ToggleActionEntry("StopWhenFinishedAction", null,
-                    Catalog.GetString("Stop when finished"), "<Shift>space",
+                    Catalog.GetString("_Stop when finished"), "<Shift>space",
                     Catalog.GetString("Stop playback after the current song finishes playing"), null, false)
             });
 
@@ -310,19 +310,19 @@ namespace Banshee.Base
             
             playback_seek_actions.Add(new ActionEntry [] {
                 new ActionEntry("SeekBackwardAction", "media-seek-backward",
-                    Catalog.GetString("Seek Backward"), "<control>Left",
+                    Catalog.GetString("Seek _Backward"), "<control>Left",
                     Catalog.GetString("Seek backward in current song"), null),
                     
                 new ActionEntry("SeekForwardAction", "media-seek-forward",
-                    Catalog.GetString("Seek Forward"), "<control>Right",
+                    Catalog.GetString("Seek _Forward"), "<control>Right",
                     Catalog.GetString("Seek forward in current song"), null),
                     
                 new ActionEntry("SeekToAction", null,
-                    Catalog.GetString("Seek To..."), "T",
+                    Catalog.GetString("Seek _To..."), "T",
                     Catalog.GetString("Seek to a specific location in current song"), null),
                     
                 new ActionEntry("RestartSongAction", null,
-                    Catalog.GetString("Restart Song"), "R",
+                    Catalog.GetString("_Restart Song"), "R",
                     Catalog.GetString("Restart the current song"), null)
             });
             

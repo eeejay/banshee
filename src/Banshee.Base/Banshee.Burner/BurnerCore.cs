@@ -119,7 +119,7 @@ namespace Banshee.Burner
         {
             Globals.ActionManager.GlobalActions.Add(new ActionEntry [] {
                 new ActionEntry("NewCDAction", null,
-                Catalog.GetString("New Audio CD"), null,
+                Catalog.GetString("New Audio _CD"), null,
                 Catalog.GetString("Create a new audio CD"), OnNewCDAction)
             });
         }
