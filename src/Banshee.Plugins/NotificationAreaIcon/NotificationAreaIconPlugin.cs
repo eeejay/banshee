@@ -100,7 +100,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
             actions.Add(new ActionEntry [] {
                 new ActionEntry("CloseAction", Stock.Close,
-                    Catalog.GetString("Close"), "<Control>W",
+                    Catalog.GetString("_Close"), "<Control>W",
                     Catalog.GetString("Close"), CloseWindow)
             });
 
