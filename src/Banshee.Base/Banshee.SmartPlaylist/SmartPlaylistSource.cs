@@ -183,13 +183,17 @@ namespace Banshee.SmartPlaylist
             IDataReader reader = Globals.Library.Db.Query(new DbCommand(
                 @"SELECT TrackID 
                     FROM SmartPlaylistEntries
-                    WHERE PlaylistID = :playlist_id ORDER BY TrackId",
+                    WHERE PlaylistID = :playlist_id",
                     "playlist_id", Id
             ));
             
             List<TrackInfo> tracks_to_add = new List<TrackInfo>();
             List<TrackInfo> tracks_to_remove = new List<TrackInfo>();
-            Queue<TrackInfo> old_tracks = new Queue<TrackInfo>(tracks);
+
+            Dictionary<int, TrackInfo> old_tracks = new Dictionary<int, TrackInfo>(tracks.Count);
+            foreach (TrackInfo track in tracks) {
+                old_tracks.Add(track.TrackId, track);
+            }
 
             double sum = 0;
             double limit = 0;
@@ -198,7 +202,6 @@ namespace Banshee.SmartPlaylist
                 limit = Double.Parse(LimitNumber); 
             }
 
-            int counter = 0;
             while(reader.Read()) {
                 int id = Convert.ToInt32(reader[0]);
 
@@ -235,24 +238,17 @@ namespace Banshee.SmartPlaylist
                     }
                 }
 
-                if (old_tracks.Count == 0 || id < old_tracks.Peek().TrackId) {
-                    // If we've examined all the old tracks or
-                    // if the new track's ID is less than the old track's, add it
-                    tracks_to_add.Add(track);
-                } else if (id > old_tracks.Peek().TrackId) {
-                    // We know the old track has been removed if this track's ID is greater than it b/c of how we've sorted things
-                    tracks_to_remove.Add(old_tracks.Dequeue());
-
-                    tracks_to_add.Add(track);
+                if (old_tracks.ContainsKey(track.TrackId)) {
+                    // If we already have it, remove it from the old_tracks list so it isn't removed
+                    old_tracks.Remove(track.TrackId);
                 } else {
-                    // The new track is equal to the old track, so move on to the next old track
-                    old_tracks.Dequeue();
+                    // Otherwise, we need to add it.
+                    tracks_to_add.Add(track);
                 }
-                counter++;
             }
 
             // If there are old tracks we didn't examine, they should be removed
-            tracks_to_remove.AddRange (old_tracks);
+            tracks_to_remove.AddRange(old_tracks.Values);
 
             RemoveTracks(tracks_to_remove);
             AddTracks(tracks_to_add);
@@ -333,10 +329,8 @@ namespace Banshee.SmartPlaylist
                 tracks.AddRange(tracks_to_add);
             }
 
-            ThreadAssist.ProxyToMain(delegate {
-                OnTrackAdded(null, tracks_to_add);
-                OnUpdated();
-            });
+            OnTrackAdded(null, tracks_to_add);
+            OnUpdated();
         }
 
         public override void AddTrack(TrackInfo track)
@@ -359,10 +353,8 @@ namespace Banshee.SmartPlaylist
                 }
             }
 
-            ThreadAssist.ProxyToMain(delegate {
-                OnTrackRemoved(null, tracks_to_remove);
-                OnUpdated();
-            });
+            OnTrackRemoved(null, tracks_to_remove);
+            OnUpdated();
         }
 
         public override void RemoveTrack(TrackInfo track)
@@ -415,6 +407,20 @@ namespace Banshee.SmartPlaylist
         private void OnLibraryReloaded (object o, EventArgs args)
         {
             RefreshMembers();
+        }
+
+        private uint refresh_timeout = 0;
+        public void QueueRefresh() {
+            if(refresh_timeout == 0) {
+                refresh_timeout = GLib.Timeout.Add(200, DoQueuedRefresh);
+            }
+        }
+
+        private bool DoQueuedRefresh()
+        {
+            RefreshMembers();
+            refresh_timeout = 0;
+            return false;
         }
 
         private List<TrackInfo> remove_queue = new List<TrackInfo>();

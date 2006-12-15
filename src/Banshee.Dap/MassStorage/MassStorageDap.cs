@@ -273,6 +273,23 @@ namespace Banshee.Dap.MassStorage
                     //args.FileName, e.GetType(), e.Message);
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
+
+            QueuePropertiesChanged();
+        }
+
+
+        private uint properties_timeout = 0;
+        private void QueuePropertiesChanged() {
+            if(properties_timeout == 0) {
+                properties_timeout = GLib.Timeout.Add(100, DoPropertiesChanged);
+            }
+        }
+
+        private bool DoPropertiesChanged()
+        {
+            OnPropertiesChanged();
+            properties_timeout = 0;
+            return false;
         }
 
         public override void Synchronize()
@@ -282,24 +299,59 @@ namespace Banshee.Dap.MassStorage
 
         public override void Eject ()
         {
+            // If we're playing a track on the device, stop playing it before trying to eject
+            if (PlayerEngineCore.CurrentTrack is MassStorageTrackInfo) {
+                LogCore.Instance.PushInformation(
+                    Catalog.GetString("Song Playing on Device"),
+                    Catalog.GetString("Before you can eject your device, you need to start playing a song that is not on it.  This is a known bug."),
+                    true
+                );
+
+                //PlayerEngineCore.StateChanged += HandleStopped;
+                //PlayerEngineCore.Close();
+            } else {
+                Unmount();
+            }
+        }
+
+        private void HandleStopped(object o, Banshee.MediaEngine.PlayerEngineStateArgs args)
+        {
+            if (args.State == Banshee.MediaEngine.PlayerEngineState.Idle) {
+                PlayerEngineCore.StateChanged -= HandleStopped;
+                Unmount();
+            }
+        }
+
+        private void Unmount()
+        {
             if(volume != null)
                 volume.Unmount (UnmountCallback);
         }
 
         private void UnmountCallback (bool succeeded, string error, string detailed_error)
         {
-            if (succeeded)
+            if (succeeded) {
                 volume.Eject (EjectCallback);
-            else
-                LogCore.Instance.PushWarning("Failed to unmount mass storage audio player", error + "\n" + detailed_error, false);
+            } else {
+                LogCore.Instance.PushWarning(
+                    String.Format(Catalog.GetString("Failed to Unmount {0}"), Name),
+                    Catalog.GetString("Make sure no other programs are using it."),
+                    true
+                );
+            }
         }
 
         private void EjectCallback (bool succeeded, string error, string detailed_error)
         {
-            if (succeeded)
+            if (succeeded) {
                 base.Eject ();
-            else
-                LogCore.Instance.PushWarning("Failed to eject mass storage audio player", error + "\n" + detailed_error, false);
+            } else {
+                LogCore.Instance.PushWarning(
+                    String.Format(Catalog.GetString("Failed to Eject {0}"), Name),
+                    error,
+                    false
+                );
+            }
         }
 
         public override void AddTrack(TrackInfo track)

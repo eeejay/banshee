@@ -210,7 +210,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitCriterion = limit_criterion;
                         playlist.Commit();
 
-                        playlist.RefreshMembers();
+                        playlist.QueueRefresh();
 
                         if (playlist.TimeDependent)
                             SmartPlaylistCore.Instance.StartTimer(playlist);

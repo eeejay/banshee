@@ -132,7 +132,7 @@ namespace Banshee.Dap
         public event EventHandler Reactivate;
         
         public Hal.Device HalDevice;
-        private Source source;
+        private DapSource source;
         
         public virtual InitializeResult Initialize(Hal.Device halDevice)
         {
@@ -158,6 +158,10 @@ namespace Banshee.Dap
         public uint Uid {
             get { return uid; }
         }
+
+        public DapSource Source {
+            get { return source; }
+        }
         
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -171,8 +175,9 @@ namespace Banshee.Dap
         
         protected void OnPropertiesChanged()
         {
-            if(PropertiesChanged != null) {
-                PropertiesChanged(this, new EventArgs());
+            EventHandler handler = PropertiesChanged;
+            if(handler != null) {
+                handler(this, new EventArgs());
             }
         }
         

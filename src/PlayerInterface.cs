@@ -1166,16 +1166,12 @@ namespace Banshee
 
         private void OnDapPropertiesChanged(object o, EventArgs args)
         {
-            Application.Invoke(delegate {
+            ThreadAssist.ProxyToMain(delegate {
                 DapDevice device = o as DapDevice;
                 
-                foreach(object [] obj in (sourceView.Model as ListStore)) {
-                    if(obj[0] is DapSource && (obj[0] as DapSource).Device == device) {
-                        (obj[0] as DapSource).SetSourceName(device.Name);
-                        sourceView.QueueDraw();
-                    }
-                }
-                
+                device.Source.SetSourceName(device.Name);
+                sourceView.QueueDraw();
+
                 if(SourceManager.ActiveSource is DapSource && (SourceManager.ActiveSource as DapSource).Device == device) {
                     UpdateDapDiskUsageBar(SourceManager.ActiveSource as DapSource);
                     (gxml["ViewNameLabel"] as Label).Markup = "<b>" 
