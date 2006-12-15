@@ -92,13 +92,21 @@ namespace Banshee.Dap.MassStorage
             }
             
             if(player_device["portable_audio_player.type"] == "ipod") {
-                LogCore.Instance.PushInformation(
-                    "Mass Storage Support Ignoring iPod",
-                    "The USB mass storage audio player support ignored an iPod. " +
-                    "Either Banshee's iPod support is broken or missing, or the iPod itself may be corrupted.",
-                    false);
+                if (File.Exists(IsAudioPlayerPath)) {
+                    LogCore.Instance.PushInformation(
+                        "Mass Storage Support Loading iPod",
+                        "The USB mass storage audio player support is loading an iPod because it has an .is_audio_player file. " +
+                        "If you aren't running Rockbox or don't know what you're doing, things might not behave as expected.",
+                        false);
+                } else {
+                    LogCore.Instance.PushInformation(
+                        "Mass Storage Support Ignoring iPod",
+                        "The USB mass storage audio player support ignored an iPod. " +
+                        "Either Banshee's iPod support is broken or missing, or the iPod itself may be corrupted.",
+                        false);
 
-                return InitializeResult.Invalid;
+                    return InitializeResult.Invalid;
+                }
             }
 
             // Detect player via HAL property or presence of .is_audo_player file in root

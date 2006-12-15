@@ -1,3 +1,8 @@
+2006-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: Load iPods that have an
+	.is_audio_player file as regular USB mass storage devices.
+
 2006-12-13  Peter Teichman  <peter@novell.com>
 
 	* src/Banshee.Base/Banshee.Burner/BurnerCore.cs:
@@ -5170,8 +5175,8 @@
 	* src/Banshee.Dap/MassStorage/Makefile.am: New file.
 
 	* src/Banshee.Dap/MassStorage/MassStorageDap.cs: New file for generic
-	USB mass storage device DAP support.  Not connected to buils system,
-	so not run except by develpers.  In CVS to further development.
+	USB mass storage device DAP support.  Not connected to build system,
+	so not run except by developers.  In CVS to further development.
 
 2006-03-02  Aaron Bockover  <aaron@abock.org>
 
