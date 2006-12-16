@@ -96,6 +96,13 @@ namespace Banshee.SmartPlaylist
                 "0",
                 0);
 
+            list_model.AppendValues (
+                Catalog.GetString ("Unheard Podcasts"),
+                " (NumberOfPlays = 0) AND (lower(Uri) LIKE '%podcast%') ",
+                null,
+                "0",
+                0);
+
             adv_tree_view.Selection.Mode = SelectionMode.Multiple;
             adv_tree_view.Model = list_model;
             adv_tree_view.AppendColumn ("title", new CellRendererText (), "text", 0);

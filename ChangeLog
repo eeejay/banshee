@@ -1,5 +1,10 @@
 2006-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Add a predefined smart
+	playlist for 'Unheard Podcasts'.
+
+2006-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Rename PlaylistID to SmartPlaylistID in the two relevant tables. Add
 	ability to have smart playlists derived from other smart playlists.
 
