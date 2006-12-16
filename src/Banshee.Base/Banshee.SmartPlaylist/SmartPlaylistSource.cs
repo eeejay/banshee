@@ -43,7 +43,52 @@ namespace Banshee.SmartPlaylist
         }
 
         public bool PlaylistDependent {
-            get { return (Condition == null) ? false : Condition.IndexOf ("PlaylistID") != -1; }
+            get { return (Condition != null && Condition.IndexOf("PlaylistID") != -1); }
+        }
+
+        public List<SmartPlaylistSource> DependedOnBy {
+            get {
+                List<SmartPlaylistSource> list = new List<SmartPlaylistSource>();
+                foreach (Banshee.Sources.Source src in SourceManager.Sources) {
+                    SmartPlaylistSource pl = src as SmartPlaylistSource;
+                    if (pl != null) {
+                        if (pl.DependsOn(this)) {
+                            list.Add(src as SmartPlaylistSource);
+                        }
+                    }
+                }
+                return list;
+            }
+        }
+
+        public bool DependsOn(PlaylistSource pl)
+        {
+            return (Condition != null && Condition.IndexOf(String.Format(" PlaylistID = {0}", pl.Id)) != -1);
+        }
+
+        // Recursively figure out if this playlist depends on another one
+        public bool DependsOn(SmartPlaylistSource other_sp)
+        {
+            return DependsOn(other_sp, true);
+        }
+
+        public bool DependsOn(SmartPlaylistSource other_sp, bool recurse)
+        {
+            if (other_sp == this)
+                return false;
+
+            bool ret = false;
+            ret |= (Condition != null && Condition.IndexOf(String.Format("SmartPlaylistID = {0}", other_sp.Id)) != -1);
+
+            if (recurse) {
+                foreach (Banshee.Sources.Source source in watchedPlaylists) {
+                    if (source is SmartPlaylistSource) {
+                        ret |= (source as SmartPlaylistSource).DependsOn(other_sp);
+                    }
+                }
+            }
+
+            return ret;
         }
 
         private int id;
@@ -139,7 +184,7 @@ namespace Banshee.SmartPlaylist
         public void ListenToPlaylists()
         {
             // First, stop listening to any/all playlists
-            foreach (PlaylistSource source in watchedPlaylists) {
+            foreach (Banshee.Sources.Source source in watchedPlaylists) {
                 source.TrackAdded -= HandlePlaylistChanged;
                 source.TrackRemoved -= HandlePlaylistChanged;
             }
@@ -147,14 +192,13 @@ namespace Banshee.SmartPlaylist
             watchedPlaylists.Clear();
 
             if (PlaylistDependent) {
-                foreach (PlaylistSource source in PlaylistSource.Playlists) {
-                    if (Condition.IndexOf (String.Format ("PlaylistID = {0}", source.Id)) != -1 ||
-                        Condition.IndexOf (String.Format ("PlaylistID != {0}", source.Id)) != -1)
+                foreach (Banshee.Sources.Source source in SourceManager.Sources) {
+                    if ((source is PlaylistSource && DependsOn(source as PlaylistSource)) ||
+                        (source is SmartPlaylistSource && DependsOn(source as SmartPlaylistSource, false)))
                     {
-                        //Console.WriteLine ("{0} now listening to {1}", Name, source.Name);
                         source.TrackAdded += HandlePlaylistChanged;
                         source.TrackRemoved += HandlePlaylistChanged;
-                        watchedPlaylists.Add (source);
+                        watchedPlaylists.Add(source);
                     }
                 }
             }
@@ -168,14 +212,14 @@ namespace Banshee.SmartPlaylist
 
             // Delete existing tracks
             Globals.Library.Db.Execute(new DbCommand(
-                "DELETE FROM SmartPlaylistEntries WHERE PlaylistID = :playlist_id",
+                "DELETE FROM SmartPlaylistEntries WHERE SmartPlaylistID = :playlist_id",
                 "playlist_id", Id
             ));
 
             // Add matching tracks
             Globals.Library.Db.Execute(String.Format(
                 @"INSERT INTO SmartPlaylistEntries 
-                    SELECT NULL as EntryId, {0} as PlaylistID, TrackId FROM Tracks {1} {2}",
+                    SELECT {0} as SmartPlaylistID, TrackId FROM Tracks {1} {2}",
                     Id, PrependCondition("WHERE"), OrderAndLimit
             ));
 
@@ -183,7 +227,7 @@ namespace Banshee.SmartPlaylist
             IDataReader reader = Globals.Library.Db.Query(new DbCommand(
                 @"SELECT TrackID 
                     FROM SmartPlaylistEntries
-                    WHERE PlaylistID = :playlist_id",
+                    WHERE SmartPlaylistID = :playlist_id",
                     "playlist_id", Id
             ));
             
@@ -295,7 +339,7 @@ namespace Banshee.SmartPlaylist
                     OrderBy = :orderby,
                     LimitNumber = :limitnumber,
                     LimitCriterion = :limitcriterion
-                WHERE PlaylistID = :playlistid",
+                WHERE SmartPlaylistID = :playlistid",
                 "name", Name,
                 "condition", Condition,
                 "orderby", OrderBy,
@@ -379,23 +423,56 @@ namespace Banshee.SmartPlaylist
 
         public override bool Unmap()
         {
-            if(!PlaylistUtil.ConfirmUnmap(this)) {
+            return Delete(true);
+        }
+
+        public bool Delete(bool prompt)
+        {
+            List<SmartPlaylistSource> dependencies = DependedOnBy;
+            if (dependencies.Count > 0) {
+                if (prompt) {
+                    Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog(
+                        InterfaceElements.MainWindow,
+                        Gtk.DialogFlags.Modal,
+                        Gtk.MessageType.Warning,
+                        Gtk.ButtonsType.Cancel,
+                        Catalog.GetString("Smart Playlist has Dependencies"),
+                        String.Format(Catalog.GetString(
+                            "{0} is depended on by other smart playlists. Are you sure you want to delete this and all dependent smart playlists?"), Name)
+                    );
+                    dialog.AddButton(Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
+                    
+                    try {
+                        if(dialog.Run() != (int)Gtk.ResponseType.Ok) {
+                            return false;
+                        }
+                    } finally {
+                        dialog.Destroy();
+                    }
+                }
+
+                // Delete all dependent smart playlists (without further prompts) before continuing.
+                foreach(SmartPlaylistSource pl in dependencies) {
+                    pl.Delete(false);
+                }
+            } else if(prompt && !PlaylistUtil.ConfirmUnmap(this)) {
                 return false;
             }
             
             Globals.Library.Db.Execute(String.Format(
                 @"DELETE FROM SmartPlaylistEntries
-                    WHERE PlaylistID = '{0}'",
+                    WHERE SmartPlaylistID = '{0}'",
                     id
             ));
             
             Globals.Library.Db.Execute(String.Format(
                 @"DELETE FROM SmartPlaylists
-                    WHERE PlaylistID = '{0}'",
+                    WHERE SmartPlaylistID = '{0}'",
                     id
             ));
             
             LibrarySource.Instance.RemoveChildSource(this);
+            SourceManager.RemoveSource(this);
             return true;
         }
 
@@ -459,12 +536,15 @@ namespace Banshee.SmartPlaylist
             if (SmartPlaylistCore.Instance.RateLimit())
                 return;
 
-            //Console.WriteLine ("{0} sent playlist changed to {1}", (sender as PlaylistSource).Name, Name);
-            if (args.Track != null) {
-                DateTime start = DateTime.Now;
+            DateTime start = DateTime.Now;
+
+            if (args.Tracks != null && args.Tracks.Count > 0) {
+                RefreshMembers();
+            } else if (args.Track != null) {
                 Check (args.Track);
-                SmartPlaylistCore.Instance.CpuTime += (DateTime.Now - start).TotalMilliseconds;
             }
+
+            SmartPlaylistCore.Instance.CpuTime += (DateTime.Now - start).TotalMilliseconds;
         }
 
         public static void LoadFromReader (IDataReader reader)

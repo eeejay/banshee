@@ -26,9 +26,11 @@ namespace Banshee.SmartPlaylist
         [Widget] private Gtk.Button adv_use_button;
         [Widget] private Gtk.Button adv_add_button;
 
-        public Editor (SmartPlaylistSource playlist) : this ()
+        public Editor (SmartPlaylistSource playlist) : base("SmartPlaylistEditorDialog")
         {
             this.playlist = playlist;
+
+            Initialize();
 
             Dialog.Title = Catalog.GetString ("Edit Smart Playlist");
 
@@ -41,10 +43,15 @@ namespace Banshee.SmartPlaylist
     
         public Editor () : base("SmartPlaylistEditorDialog")
         {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
             Dialog.Title = Catalog.GetString ("New Smart Playlist");
 
             // Add the QueryBuilder widget
-            model = new TracksQueryModel();
+            model = new TracksQueryModel(this.playlist);
             builder = new QueryBuilder(model);
             builder.Show();
             builder.Spacing = 4;
@@ -218,6 +225,7 @@ namespace Banshee.SmartPlaylist
                             SmartPlaylistCore.Instance.StopTimer();
 
                         playlist.ListenToPlaylists();
+                        SmartPlaylistCore.Instance.SortPlaylists();
                     }
                 });
             }
@@ -288,7 +296,7 @@ namespace Banshee.SmartPlaylist
                 //already_in_use_label.Markup = "";
             } else {
                 object res = Globals.Library.Db.QuerySingle(new DbCommand(
-                    "SELECT PlaylistID FROM Playlists WHERE lower(Name) = lower(:name)",
+                    "SELECT Name FROM SmartPlaylists WHERE lower(Name) = lower(:name)",
                     "name", name_entry.Text
                 ));
 

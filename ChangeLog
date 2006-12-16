@@ -1,5 +1,29 @@
 2006-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Rename PlaylistID to SmartPlaylistID in the two relevant tables. Add
+	ability to have smart playlists derived from other smart playlists.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: If editing an existing
+	playlist, pass it on to the QueryModel so it can use it to figure out what
+	smart playlists to show as condition options.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs: Add operators
+	for being/not being in a smart playlist. In terms of eventual code reuse
+	somewhere like F-Spot, this is hacky and gross.  But it's quick.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs: Support
+	using other smart playlists in the condition for this one.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Do the
+	column rename, support smart playlists being dependent on one another.
+
+	* src/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs: Support
+	identifying and listening to smart playlists we depend on.  Show a special
+	dialog confirmation if we have dependent smart playlists and we are
+	removed.
+
+2006-12-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/PlayerInterface.cs: Handle DapPropertiesChanged more gracefully.
 
 	* src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: When saving a smart

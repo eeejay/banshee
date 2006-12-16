@@ -20,7 +20,7 @@ namespace Banshee.SmartPlaylist
         private readonly double RATE_LIMIT_CPU_MAX = 0.10;
         private static int RATE_LIMIT_REFRESH = 5;
 
-        private ArrayList playlists = new ArrayList ();
+        private ArrayList playlists = new ArrayList();
 
         private Menu musicMenu;
         private MenuItem addItem;
@@ -90,33 +90,24 @@ namespace Banshee.SmartPlaylist
 
             // Check that our SmartPlaylists table exists in the database, otherwise make it
             if(!Globals.Library.Db.TableExists("SmartPlaylists")) {
-                Globals.Library.Db.Execute(@"
-                    CREATE TABLE SmartPlaylists (
-                        PlaylistID  INTEGER PRIMARY KEY,
-                        Name        TEXT NOT NULL,
-                        Condition   TEXT,
-                        OrderBy     TEXT,
-                        LimitNumber TEXT,
-                        LimitCriterion INTEGER)
-                ");
+                CreateTable("SmartPlaylists");
             } else {
                 // Database Schema Updates
                 try {
                     Globals.Library.Db.QuerySingle("SELECT LimitCriterion FROM SmartPlaylists LIMIT 1");
-                } catch(ApplicationException) {
+                } catch {
                     LogCore.Instance.PushDebug("Adding new database column", "LimitCriterion INTEGER");
                     Globals.Library.Db.Execute("ALTER TABLE SmartPlaylists ADD LimitCriterion INTEGER");
                     Globals.Library.Db.Execute("UPDATE SmartPlaylists SET LimitCriterion = 0");
                 }
+
+                RenameColumn("SmartPlaylists", "PlaylistID", "SmartPlaylistID", "Name, Condition, OrderBy, LimitNumber, LimitCriterion");
             }
 
             if(!Globals.Library.Db.TableExists("SmartPlaylistEntries")) {
-                Globals.Library.Db.Execute(@"
-                    CREATE TABLE SmartPlaylistEntries (
-                        EntryID     INTEGER PRIMARY KEY,
-                        PlaylistID  INTEGER NOT NULL,
-                        TrackID     INTEGER NOT NULL)
-                ");
+                CreateTable("SmartPlaylistEntries");
+            } else {
+                RenameColumn("SmartPlaylistEntries", "PlaylistID", "SmartPlaylistID", "TrackID");
             }
 
             // Listen for added/removed sources and added/changed songs
@@ -133,7 +124,7 @@ namespace Banshee.SmartPlaylist
 
             // Load existing smart playlists
             IDataReader reader = Globals.Library.Db.Query(
-                "SELECT PlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM SmartPlaylists"
+                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM SmartPlaylists"
             );
 
             while (reader.Read()) {
@@ -151,6 +142,31 @@ namespace Banshee.SmartPlaylist
             reader.Dispose();
 
             t.Stop();
+        }
+
+        private void CreateTable(string table)
+        {
+            switch (table) {
+            case "SmartPlaylists":
+                Globals.Library.Db.Execute(@"
+                    CREATE TABLE SmartPlaylists (
+                        SmartPlaylistID     INTEGER PRIMARY KEY,
+                        Name                TEXT NOT NULL,
+                        Condition           TEXT,
+                        OrderBy             TEXT,
+                        LimitNumber         TEXT,
+                        LimitCriterion      INTEGER)
+                ");
+                break;
+
+            case "SmartPlaylistEntries":
+                Globals.Library.Db.Execute(@"
+                    CREATE TABLE SmartPlaylistEntries (
+                        SmartPlaylistID     INTEGER NOT NULL,
+                        TrackID             INTEGER NOT NULL)
+                ");
+                break;
+            }
         }
 
         protected override void InterfaceInitialize()
@@ -243,13 +259,15 @@ namespace Banshee.SmartPlaylist
         private void HandleSourceAdded (SourceEventArgs args)
         {
             //Console.WriteLine ("source added: {0}", args.Source.Name);
-            if (args.Source is PlaylistSource) {
+            if (args.Source is PlaylistSource || args.Source is SmartPlaylistSource) {
                 foreach (SmartPlaylistSource pl in playlists) {
                     if (pl.PlaylistDependent) {
                         pl.ListenToPlaylists();
                     }
                 }
-                return;
+                
+                if (args.Source is PlaylistSource)
+                    return;
             }
 
             SmartPlaylistSource playlist = args.Source as SmartPlaylistSource;
@@ -267,6 +285,7 @@ namespace Banshee.SmartPlaylist
             StartTimer (playlist);
             
             playlists.Add(playlist);
+            SortPlaylists();
 
             t.Stop();
         }
@@ -436,6 +455,23 @@ namespace Banshee.SmartPlaylist
 
             t.Stop();
         }
+
+        public void SortPlaylists () {
+            playlists.Sort(new DependencyComparer());
+        }
+
+        public void RenameColumn(string table, string old_name, string new_name, string other_columns)
+        {
+            try {
+                Globals.Library.Db.QuerySingle(String.Format("SELECT {0} FROM {1} LIMIT 1", new_name, table));
+            } catch {
+                LogCore.Instance.PushDebug(String.Format("Renaming column {0} in {1}", old_name, table), "");
+                Globals.Library.Db.Execute(String.Format("ALTER TABLE {0} RENAME TO {0}_tmp", table));
+                CreateTable(table);
+                Globals.Library.Db.Execute(String.Format("INSERT INTO {0} SELECT {1} as {2}, {3} FROM {0}_tmp", table, old_name, new_name, other_columns));
+                Globals.Library.Db.Execute(String.Format("DROP TABLE {0}_tmp", table));
+            }
+        }
     }
 
 
@@ -486,6 +522,22 @@ namespace Banshee.SmartPlaylist
                     Console.WriteLine("{0}, {1}, {2}", k, running_counts[k], running_totals[k]);
                 //}
             }*/
+        }
+    }
+
+    public class DependencyComparer : IComparer {
+        public int Compare(object ao, object bo)
+        {
+            SmartPlaylistSource a = ao as SmartPlaylistSource;
+            SmartPlaylistSource b = bo as SmartPlaylistSource;
+
+            if (b.DependsOn(a)) {
+                return -1;
+            } else if (a.DependsOn(b)) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }

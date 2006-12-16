@@ -30,6 +30,7 @@ using System;
 using GLib;
 using Gtk;
 using System.Collections;
+using System.Collections.Generic;
 
 using Mono.Unix;
 
@@ -698,11 +699,90 @@ namespace Banshee.SmartPlaylist
             }
         }
     }
+
+    public class QueryMatchSmartPlaylist : QueryMatch
+    {
+        private ComboBox comboBox1;
+
+        private static ComboBox GetComboBox ()
+        {
+            ComboBox box = ComboBox.NewText();
+
+            foreach (SmartPlaylistSource src in TracksQueryModel.SmartPlaylists) {
+                box.AppendText(src.Name);
+            }
+
+            box.Active = 0;
+
+            return box;
+        }
+
+        public override string FilterValues()
+        {
+            int playlist_id = -1;
+
+            playlist_id = TracksQueryModel.SmartPlaylists[comboBox1.Active].Id;
+
+            return Filter.Operator.FormatValues (false, "SmartPlaylistID", playlist_id.ToString(), null);
+        }
+
+        public override string Value1 {
+            get { return (comboBox1 == null) ? null : comboBox1.ActiveText; }
+            set {
+                if (value == null)
+                    return;
+
+                int val = Int32.Parse (value);
+
+                int i = 1;
+                foreach (SmartPlaylistSource src in TracksQueryModel.SmartPlaylists) {
+                    if (src.Id == val) {
+                        comboBox1.Active = i - 1;
+                        break;
+                    }
+                    i++;
+                }
+            }
+        }
+
+        public override string Value2 {
+            get { return null; }
+            set { }
+        }
+
+        public override Widget DisplayWidget
+        {
+            get {
+                if(comboBox1 == null) {
+                    comboBox1 = GetComboBox();
+                    comboBox1.ShowAll();
+                }
+                
+                return comboBox1;
+            }
+        }
+        
+        public override QueryFilter [] ValidFilters {
+            get {    
+                return new QueryFilter [] {
+                    QueryFilter.InSmartPlaylist,
+                    QueryFilter.NotInSmartPlaylist
+                };
+            }
+        }
+    }
     
     public class TracksQueryModel : QueryBuilderModel
     {
-        public TracksQueryModel() : base()
+        private SmartPlaylistSource playlist = null;
+
+        public static List<SmartPlaylistSource> SmartPlaylists;
+
+        public TracksQueryModel(SmartPlaylistSource smart_playlist) : base()
         {
+            this.playlist = smart_playlist;
+            SmartPlaylists = new List<SmartPlaylistSource>();
+
             AddField(Catalog.GetString("Artist"), "Artist", typeof(QueryMatchString));
             AddField(Catalog.GetString("Title"), "Title", typeof(QueryMatchString));
             AddField(Catalog.GetString("Album"), "AlbumTitle", typeof(QueryMatchString));
@@ -714,6 +794,20 @@ namespace Banshee.SmartPlaylist
 
             if (Banshee.Sources.PlaylistSource.PlaylistCount > 0) {
                 AddField(Catalog.GetString("Playlist"), "PlaylistID", typeof(QueryMatchPlaylist));
+            }
+
+            foreach (Banshee.Sources.Source src in SourceManager.Sources) {
+                SmartPlaylistSource sp_src = src as SmartPlaylistSource;
+                if (sp_src != null && sp_src != playlist) {
+                    // Keep it acyclic
+                    if (playlist == null || !sp_src.DependsOn(playlist)) {
+                        SmartPlaylists.Add(sp_src);
+                    }
+                }
+            }
+
+            if (SmartPlaylists.Count > 0) {
+                AddField(Catalog.GetString("Smart Playlist"), "SmartPlaylistID", typeof(QueryMatchSmartPlaylist));
             }
 
             AddField(Catalog.GetString("Rating"), "Rating", typeof(QueryMatchRating));
@@ -767,7 +861,7 @@ namespace Banshee.SmartPlaylist
             win.Add(box);
             box.Spacing = 10;
             
-            model = new TracksQueryModel();
+            model = new TracksQueryModel(null);
             builder = new QueryBuilder(model);
             builder.Show();
             builder.Spacing = 4;

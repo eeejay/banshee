@@ -107,6 +107,9 @@ namespace Banshee.SmartPlaylist
         // TODO these should either be made generic or moved somewhere else since they are Banshee/Track/Playlist specific.
         public static QueryOperator InPlaylist      = new QueryOperator("TrackID IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
         public static QueryOperator NotInPlaylist   = new QueryOperator("TrackID NOT IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
+
+        public static QueryOperator InSmartPlaylist      = new QueryOperator("TrackID IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
+        public static QueryOperator NotInSmartPlaylist   = new QueryOperator("TrackID NOT IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
     }
 
     public sealed class QueryFilter
@@ -155,6 +158,16 @@ namespace Banshee.SmartPlaylist
         public static QueryFilter NotInPlaylist = NewOperation (
             Catalog.GetString ("is not"),
             QueryOperator.NotInPlaylist
+        );
+
+        public static QueryFilter InSmartPlaylist = NewOperation (
+            Catalog.GetString ("is"),
+            QueryOperator.InSmartPlaylist
+        );
+
+        public static QueryFilter NotInSmartPlaylist = NewOperation (
+            Catalog.GetString ("is not"),
+            QueryOperator.NotInSmartPlaylist
         );
     
         // caution: the equal/not-equal operators for text fields (TextIs and TextNotIs) have to be defined
