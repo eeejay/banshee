@@ -188,7 +188,7 @@ public class GPhotoDevice
 
         file.GenerateProperPath();
 
-        string[] path_split = file.Directory.Split(Path.PathSeparator); // split up the path
+        string[] path_split = file.Directory.Split('/'); // split up the path
         string path_base = Store.Remove(Store.Length - 1, 1); // take store, minus the trailing slash
         string path_build = path_base; // the path_build variable is basically the "working directory" (aka cwd) here as we search for and if necessary create directories.
 

@@ -1,5 +1,10 @@
 2006-12-17  Patrick van Staveren  <trick@vanstaveren.us>
 
+	* src/Banshee.Dap/Mtp/GPhotoDevice.cs: fix sync'ing not creating
+	path properly.
+
+2006-12-17  Patrick van Staveren  <trick@vanstaveren.us>
+
 	* src/Banshee.Dap/Mtp/GPhotoDeviceFile.cs:
 	* src/Banshee.Dap/Mtp/MtpDap.cs: add / clean up debug info
 
