@@ -1,5 +1,10 @@
 2006-12-17  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Banshee.Base/FileNamePattern.cs: Also escape |, < and >. Again
+	related to BGO #333813.
+
+2006-12-17  Ruben Vermeersch  <ruben@savanne.be>
+
 	* src/Banshee.Base/FileNamePattern.cs: Also escape single and double
 	quotes. (Should fix BGO #333813).
 
