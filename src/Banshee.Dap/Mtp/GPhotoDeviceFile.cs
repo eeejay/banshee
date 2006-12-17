@@ -73,9 +73,8 @@ public class GPhotoDeviceFile
         try {
             Metadata = meta;
         } catch {
-            Console.Write("C");
+            Console.Write("C.");
             Metadata = "<Name>Corrupt metadata</Name>";
-            Name = "Corrupt metadata";
         }
         Extension = Path.GetExtension(file);
     }

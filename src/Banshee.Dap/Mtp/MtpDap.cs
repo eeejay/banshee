@@ -299,6 +299,7 @@ namespace Banshee.Dap.Mtp
 
 	public void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist)
 	{
+            LogCore.Instance.PushDebug("MTP: importing tracks", "");
             ArrayList temp_files = new ArrayList();
             
             if (playlist != null && playlist.Count == 0) {
@@ -321,6 +322,7 @@ namespace Banshee.Dap.Mtp
             }
             
             foreach(TrackInfo track in tracks) {
+                LogCore.Instance.PushDebug(String.Format("MTP: copying {1} to /tmp for importing", track.Title), "");
                 (track as MtpDapTrackInfo).MakeFileUri();
                 /*if(!track.Uri.IsLocalPath) {
                     tracks.Remove(track);
@@ -332,6 +334,7 @@ namespace Banshee.Dap.Mtp
             foreach (TrackInfo track in tracks) {
                 if (playlist == null) {
                     if (track.Uri.IsLocalPath){
+                        LogCore.Instance.PushDebug(String.Format("MTP: adding {1} to the import queue", track.Title), "");
                         import_manager.Enqueue(track);
                         temp_files.Add(track.Uri.LocalPath);
                     }
