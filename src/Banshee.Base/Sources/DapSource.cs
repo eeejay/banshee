@@ -142,10 +142,33 @@ namespace Banshee.Sources
             device.Eject();
             return true;
         }
-        
+
         public void Import()
         {
             Import(Tracks);
+        }
+
+        public override void SourceDrop(Source source)
+        {
+            if (!device.IsReadOnly) {
+                if (device is IPlaylistCapable && (source is AbstractPlaylistSource || source is Banshee.SmartPlaylist.SmartPlaylistSource)) {
+                    DapPlaylistSource dap_playlist = null;
+                    foreach (ChildSource child in Children) {
+                        if (child.Name == source.Name) {
+                            dap_playlist = child as DapPlaylistSource;
+                            break;
+                        }
+                    }
+
+                    if (dap_playlist == null) {
+                        AddChildSource((device as IPlaylistCapable).AddPlaylist(source));
+                    } else {
+                        dap_playlist.AddTrack(source.Tracks);
+                    }
+                } else if (source is LibrarySource) {
+                    Console.WriteLine("Dragging Library onto DAP not yet supported.");
+                }
+            }
         }
         
         private QueuedOperationManager import_manager;

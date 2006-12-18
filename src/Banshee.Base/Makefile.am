@@ -105,6 +105,11 @@ BANSHEE_SMARTPLAYLIST_SOURCES = \
 	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistCore.cs \
 	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistSource.cs
 
+BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
+    $(srcdir)/Banshee.Playlists.Formats/PlaylistFile.cs \
+    $(srcdir)/Banshee.Playlists.Formats/M3u.cs \
+    $(srcdir)/Banshee.Playlists.Formats/Pls.cs  
+
 BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
@@ -154,6 +159,7 @@ SOURCES_SOURCES = \
 	$(srcdir)/SourceManager.cs \
 	$(srcdir)/Source.cs \
 	$(srcdir)/ChildSource.cs \
+	$(srcdir)/Sources/AbstractPlaylistSource.cs \
 	$(srcdir)/Sources/IImportable.cs \
 	$(srcdir)/Sources/LibrarySource.cs \
 	$(srcdir)/Sources/PlaylistSource.cs \
@@ -161,7 +167,9 @@ SOURCES_SOURCES = \
 	$(srcdir)/Sources/DapSource.cs \
 	$(srcdir)/Sources/LocalQueueSource.cs \
 	$(srcdir)/Sources/ImportErrorsSource.cs \
-	$(srcdir)/Sources/TestSource.cs
+	$(srcdir)/Sources/TestSource.cs \
+	$(srcdir)/Sources/IPlaylistCapable.cs \
+	$(srcdir)/Sources/DapPlaylistSource.cs
 
 NETWORKMANAGER_SOURCES = \
 	$(srcdir)/NetworkManager/Manager.cs 
@@ -203,6 +211,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_KERNEL_SOURCES) \
 	$(BANSHEE_LIBRARY_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
+	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \

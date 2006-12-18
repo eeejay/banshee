@@ -37,9 +37,10 @@ using Banshee.Database;
 
 namespace Banshee.Sources
 {
-    public class PlaylistSource : ChildSource
+    public class PlaylistSource : AbstractPlaylistSource
     {
         private static List<PlaylistSource> playlists = new List<PlaylistSource>();
+        private DbParameter<int> playlist_id_param = new DbParameter<int>("playlist_id");
     
         public static IEnumerable<PlaylistSource> Playlists {
             get { return playlists; }
@@ -49,26 +50,15 @@ namespace Banshee.Sources
             get { return playlists.Count; }
         }
         
-        private List<TrackInfo> tracks = new List<TrackInfo>();
         private Queue<TrackInfo> remove_queue = new Queue<TrackInfo>();
         private Queue<TrackInfo> append_queue = new Queue<TrackInfo>();
-        private DbParameter<int> playlist_id_param = new DbParameter<int>("playlist_id");
-        private int id;
         
-        public int Id {
+        public override int Id {
             get { return id; }
-            private set {
+            protected set {
                 id = value;
                 playlist_id_param.Value = id;
             }
-        }
-
-        public override string UnmapLabel {
-            get { return Catalog.GetString("Delete Playlist"); }
-        }
-
-        public override string GenericName {
-            get { return Catalog.GetString("Playlist"); }
         }
 
         public PlaylistSource() : this(0)
@@ -201,11 +191,6 @@ namespace Banshee.Sources
             }
         }
 
-        public void ClearTracks()
-        {
-            tracks.Clear();
-        }
-        
         public override void RemoveTrack(TrackInfo track)
         {
             lock(TracksMutex) {
@@ -225,37 +210,30 @@ namespace Banshee.Sources
             }
         }
 
-        public bool ContainsTrack(TrackInfo track)
-        {
-            return tracks.Contains(track);
-        }
-        
         public override bool Unmap()
         {
-            if(Count > 0 && !PlaylistUtil.ConfirmUnmap(this)) {
-                return false;
-            }
-        
-            Globals.Library.Db.Execute(new DbCommand(
-                @"DELETE FROM PlaylistEntries
-                    WHERE PlaylistID = :playlist_id",
-                    playlist_id_param
-            ));
+            if (base.Unmap()) {
+                Globals.Library.Db.Execute(new DbCommand(
+                    @"DELETE FROM PlaylistEntries
+                        WHERE PlaylistID = :playlist_id",
+                        playlist_id_param
+                ));
+                
+                Globals.Library.Db.Execute(new DbCommand(
+                    @"DELETE FROM Playlists
+                        WHERE PlaylistID = :playlist_id",
+                        playlist_id_param
+                ));
             
-            Globals.Library.Db.Execute(new DbCommand(
-                @"DELETE FROM Playlists
-                    WHERE PlaylistID = :playlist_id",
-                    playlist_id_param
-            ));
-            
-            tracks.Clear();
-            append_queue.Clear();
-            remove_queue.Clear();
-            
-            SourceManager.RemoveSource(this);
-            playlists.Remove(this);
+                append_queue.Clear();
+                remove_queue.Clear();
 
-            return true;
+                playlists.Remove(this);
+
+                return true;
+            }
+
+            return false;
         }
         
         public override void Commit()
@@ -385,22 +363,6 @@ namespace Banshee.Sources
             }
         }
         
-        public override IEnumerable<TrackInfo> Tracks {
-            get { return tracks; }
-        }
-        
-        public override object TracksMutex {
-            get { return ((IList)tracks).SyncRoot; }
-        }
-        
-        public override int Count {
-            get { return tracks.Count; }
-        }  
-        
-        public override bool IsDragSource {
-            get { return true; }
-        }        
-        
         public override int SortColumn {
             get { 
                 try {
@@ -454,11 +416,6 @@ namespace Banshee.Sources
                 }
             }
         }
-        
-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist");
-        public override Gdk.Pixbuf Icon {
-            get { return icon; }
-        }
     }
     
     public static class PlaylistUtil
@@ -507,54 +464,6 @@ namespace Banshee.Sources
         {
             return NamingUtil.PostfixDuplicate(NamingUtil.GenerateTrackCollectionName(
                 tracks, Catalog.GetString("New Playlist")), PlaylistExists);
-        }
-        
-        public static bool ConfirmUnmap(Source source)
-        {
-            bool do_not_ask = false;
-            string key = GConfKeys.BasePath + "no_confirm_unmap_" + source.GetType().Name.ToLower();
-            
-            try {
-                do_not_ask = (bool)Globals.Configuration.Get(key);
-            } catch {
-            }
-            
-            if(do_not_ask) {
-                return true;
-            }
-        
-            Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog(
-                InterfaceElements.MainWindow,
-                Gtk.DialogFlags.Modal,
-                Gtk.MessageType.Question,
-                Gtk.ButtonsType.Cancel,
-                String.Format(Catalog.GetString("Are you sure you want to delete this {0}?"),
-                    source.GenericName.ToLower()),
-                source.Name);
-            
-            dialog.AddButton(Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
-            
-            Gtk.Alignment alignment = new Gtk.Alignment(0.0f, 0.0f, 0.0f, 0.0f);
-            alignment.TopPadding = 10;
-            Gtk.CheckButton confirm_button = new Gtk.CheckButton(String.Format(Catalog.GetString(
-                "Do not ask me this again"), source.GenericName.ToLower()));
-            confirm_button.Toggled += delegate {
-                do_not_ask = confirm_button.Active;
-            };
-            alignment.Add(confirm_button);
-            alignment.ShowAll();
-            dialog.LabelVBox.PackStart(alignment, false, false, 0);
-            
-            try {
-                if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
-                    Globals.Configuration.Set(key, do_not_ask);
-                    return true;
-                }
-                
-                return false;
-            } finally {
-                dialog.Destroy();
-            }
         }
     }
 }

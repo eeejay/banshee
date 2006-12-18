@@ -455,7 +455,7 @@ namespace Banshee.SmartPlaylist
                 foreach(SmartPlaylistSource pl in dependencies) {
                     pl.Delete(false);
                 }
-            } else if(prompt && !PlaylistUtil.ConfirmUnmap(this)) {
+            } else if(prompt && !AbstractPlaylistSource.ConfirmUnmap(this)) {
                 return false;
             }
             
