@@ -78,6 +78,7 @@ namespace Banshee.Gui
         
         private TreeStore store;
         private TreeViewColumn focus_column;
+        private SourceRowRenderer renderer;
         private int currentTimeout = -1;
         
         private static TargetEntry [] dnd_source_entries = new TargetEntry [] {
@@ -100,7 +101,7 @@ namespace Banshee.Gui
             ExpanderColumn = col;
         
             focus_column = new TreeViewColumn();
-            SourceRowRenderer renderer = new SourceRowRenderer();
+            renderer = new SourceRowRenderer();
             focus_column.Title = Catalog.GetString("Source");
             focus_column.PackStart(renderer, true);
             focus_column.SetCellDataFunc(renderer, new TreeCellDataFunc(SourceCellDataFunc));
@@ -270,7 +271,6 @@ namespace Banshee.Gui
             
             renderer.Selected = renderer.source.Equals(SourceManager.ActiveSource);
             renderer.Italicized = renderer.source.Equals(newPlaylistSource);
-            renderer.Editable = renderer.source.CanRename;
             renderer.Sensitive = renderer.source.CanActivate;
         }
         
@@ -293,7 +293,9 @@ namespace Banshee.Gui
                 return;
             }
             
+            renderer.Editable = true;
             SetCursor(store.GetPath(iter), focus_column, true);
+            renderer.Editable = false;
         }
 
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
@@ -608,8 +610,6 @@ namespace Banshee.Gui
 
         public SourceRowRenderer()
         {
-            Editable = true;
-            //Editable = false;
         }
         
         protected SourceRowRenderer(System.IntPtr ptr) : base(ptr)

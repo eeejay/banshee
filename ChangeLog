@@ -1,5 +1,12 @@
 2006-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Banshee.Base/Gui/SourceView.cs: Don't enter source renaming mode
+	unless the user presses F2 or right clicks and selects 'Rename'.  Prevents
+	entering rename mode when a source is selected and you try to drag it or
+	double click it to start it playing.
+
+2006-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Add initial support for DAPs to have playlists.  Code contributed by Trey
 	Ethridge, Patrick van Staveren, Kevin Kubasik, and Gabriel Burt.
 
