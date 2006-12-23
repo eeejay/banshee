@@ -1,3 +1,121 @@
+2006-12-23  Aaron Bockover  <abock@gnome.org>
+
+	NOTE: A new configuration system has been added. With this change also
+	comes a reorganization of the GConf keys. Keys are organized into 
+	namespaces and also are now correctly formatted (under_cased and not
+	CamelCased). As such, all old settings will be lost. A migration path
+	will be introduced before the next release, but be warned if using CVS
+	from here until 0.11.4 - your settings will not be migrated until otherwise
+	noted!
+
+	* src/Banshee.Base/Banshee.Configuration/ConfigurationClient.cs: new static 
+	top-level configuration API that is platform agnostic
+
+	* src/Banshee.Base/Banshee.Configuration/GConfConfigurationClient.cs: GConf 
+	backend to new configuration API
+
+	* src/Banshee.Base/Banshee.Configuration/IConfigurationClient.cs: Interface
+	for configuration backends
+
+	* src/Banshee.Base/Banshee.Configuration/SchemaEntry.cs: Generic structure
+	representing a configuration setting. Should be defined as public static
+	readonly instances in classes so GConf schema XML files can be generated
+	automatically
+
+	* src/Banshee.Base/Banshee.Configuration.Schema/ImportSchema.cs:
+	* src/Banshee.Base/Banshee.Configuration.Schema/LibrarySchema.cs: Define
+	lots of namespaced configuration settings (SchemaEntry<T>)
+
+	* src/TrackViewColumnWindow.cs: Column window using new TrackViewColumn API
+
+	* src/Basnhee.TrackView.Columns/*: Added TrackViewColumn base column
+	implementation that extends Gtk.TreeViewColumn and specific column
+	implementations extending TrackViewColumn. Each column implementation
+	handles its own configuration, sorting, and rendering.
+
+	* src/Banshee.Base/DBusRemote.cs: NameReply changed to RequestNameReply
+	in managed DBus 0.3.0
+
+	* src/Banshee.Base/BatchTranscoder.cs: Return if the batch_queue is empty,
+	avoids a possible nullref
+
+	* src/Banshee.Base/Gui/FileChooserDialog.cs: FileChooserDialog that
+	automatically restores/sets the last folder URI
+
+	* src/Banshee.Base/Gui/ImageFileChooserDialog.cs:
+	* src/Banshee.Base/FolderImportSource.cs:
+	* src/Banshee.Base/FileImportSource.cs: Use the new Banshee 
+	FileChooserDialog
+
+	* src/Banshee.Base/GConfKeys.cs: Removed
+
+	* src/Banshee.Base/Globals.cs: Removed old GConf client
+	
+	* src/Banshee.Base/StringUtil.cs: Added CamelCaseToUnderCase
+	
+	* src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs:
+	* src/Banshee.Plugins/Daap/DaapCore.cs:
+	* src/Banshee.Plugins/Daap/DaapPlugin.cs:
+	* src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs:
+	* src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs:
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs:
+	* src/Banshee.Base/Gui/OpenLocationDialog.cs:
+	* src/Banshee.Base/Gui/PreferencesDialog.cs:
+	* src/Banshee.Base/Gui/TrackEditor.cs:
+	* src/Banshee.Base/IO/IOProxy.cs:
+	* src/Banshee.Base/Plugins/Plugin.cs:
+	* src/Banshee.Base/Plugins/PluginCore.cs:
+	* src/Banshee.Base/Plugins/PluginDialog.cs:
+	* src/Banshee.Base/Sources/AbstractPlaylistSource.cs:
+	* src/Banshee.Base/Sources/LibrarySource.cs:
+	* src/Banshee.Base/StreamTagger.cs:
+	* src/Banshee.Base/PlayerEngineCore.cs:
+	* src/Banshee.Base/LibraryTrackInfo.cs:
+	* src/Banshee.Base/Library.cs:
+	* src/Banshee.Base/FileNamePattern.cs:
+	* src/Banshee.Base/AudioCdRipper.cs: 
+	* src/PlayerInterface.cs: Use the new Banshee.Configuration APIs, getting
+	and setting configuration from SchemaEntry<T> objects
+
+	* src/Banshee.Base/Banshee.AudioProfiles/ProfileConfiguration.cs: 
+	Use the new configuration APIs to get the base key
+
+	* src/Banshee.Base/Banshee.AudioProfiles/ProfileManager.cs: Place
+	document.Load inside try/catch, dump exception if it occurs (useful if
+	profile XML is invalid)
+
+	* src/Banshee.Base/Banshee.AudioProfiles/Pipeline.cs: 
+	Added GetPendingProcessesById, CompileProcess(Process), AddProcess(Process)
+	methods and allow defining multiple pipeline processes with the same id
+	using an order attribute. This allows for defining various pipelines for
+	a single process, the first pipeline that compiles will be used.
+
+	* src/PlaylistView.cs: Use new columns, cleaned up lots of code
+
+	* src/Makefile.am: Added new files, include new auto-schema rule
+
+	* banshee.mds: Updated
+
+	* build/Common.Makefile: Added MONO_BASE_PATH and LINK_BANSHEE_BASE
+
+	* build/Makefile.am: Build GConfSchemaExtractor.cs
+
+	* build/GConfSchemaExtractor.cs: Creates a GConf schema XML file from
+	assemblies containing SchemaEntry<T> objects
+
+	* build/gconf-schema-rules: Makefile.am include file with rule for 
+	automatically generating and installing schemas from assemblies
+
+	* data/audio-profiles/*.xml: Updated
+
+	* dbus-sharp/*: Updated to 0.3.0
+
+	* data/Makefile.am:
+	* data/banshee.schemas.in: Removed old manual schemas
+
+	* Makefile.am:
+	* autogen.sh: Manually copy mkinstalldirs if it wasn't copied by automake
+
 2006-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Banshee.Base/Gui/SourceView.cs: Don't enter source renaming mode

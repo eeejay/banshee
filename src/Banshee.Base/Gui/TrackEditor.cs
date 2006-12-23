@@ -29,11 +29,12 @@
 using System;
 using Gtk;
 using Glade;
-using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Widgets;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Gui.Dialogs
 {
@@ -139,13 +140,13 @@ namespace Banshee.Gui.Dialogs
         private Tooltips tips = new Tooltips();
         private RatingEntry rating_entry = new RatingEntry();
         
-        private ArrayList TrackSet = new ArrayList();
+        private List<EditorTrack> TrackSet = new List<EditorTrack>();
         private int currentIndex = 0;
         private bool first_load = false;
 
         public event EventHandler Saved;
 
-        public TrackEditor(TrackInfo [] selection) : base("TrackEditorWindow")
+        public TrackEditor(IList<TrackInfo> selection) : base("TrackEditorWindow")
         {
             if(selection == null) {
                 return;
@@ -570,11 +571,8 @@ namespace Banshee.Gui.Dialogs
             if(writeToDatabase) {
                 track.Track.Save();
                 
-                try {
-                    if((bool)Globals.Configuration.Get(GConfKeys.WriteMetadata)) {
-                        SaveToFile(track);
-                    }
-                } catch(GConf.NoSuchKeyException) {
+                if(LibrarySchema.WriteMetadata.Get()) {
+                    SaveToFile(track);
                 }
             }
                 

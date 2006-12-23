@@ -47,6 +47,7 @@ using Banshee.Dap;
 using Banshee.Sources;
 using Banshee.Gui;
 using Banshee.Gui.DragDrop;
+using Banshee.Configuration.Schema;
 
 namespace Banshee
 {
@@ -204,20 +205,11 @@ namespace Banshee
           
         private void ResizeMoveWindow()
         {
-            int x = 0, y = 0, width = 0, height = 0;
-              
-            try {
-                x = (int)Globals.Configuration.Get(GConfKeys.WindowX);
-                y = (int)Globals.Configuration.Get(GConfKeys.WindowY); 
-                width = (int)Globals.Configuration.Get(GConfKeys.WindowWidth);
-                height = (int)Globals.Configuration.Get(GConfKeys.WindowHeight);
-            } catch(GConf.NoSuchKeyException) {
-                width = 800;
-                height = 600;
-                x = 0;
-                y = 0;
-            }
-
+            int x = PlayerWindowSchema.XPos.Get();
+            int y = PlayerWindowSchema.YPos.Get(); 
+            int width = PlayerWindowSchema.Width.Get();
+            int height = PlayerWindowSchema.Height.Get();
+           
             if(width != 0 && height != 0) {
                 WindowPlayer.Resize(width, height);
             }
@@ -228,13 +220,10 @@ namespace Banshee
                 WindowPlayer.Move(x, y);
             }
             
-            try {
-                if((bool)Globals.Configuration.Get(GConfKeys.WindowMaximized)) {
-                    WindowPlayer.Maximize();
-                } else {
-                    WindowPlayer.Unmaximize();
-                }
-            } catch(GConf.NoSuchKeyException) {
+            if(PlayerWindowSchema.Maximized.Get()) {
+                WindowPlayer.Maximize();
+            } else {
+                WindowPlayer.Unmaximize();
             }
         }
         
@@ -256,8 +245,7 @@ namespace Banshee
         private void OnWindowStateEvent(object o, WindowStateEventArgs args)
         {
             if((args.Event.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
-                Globals.Configuration.Set(GConfKeys.WindowMaximized,
-                    (args.Event.NewWindowState & Gdk.WindowState.Maximized) != 0);
+                PlayerWindowSchema.Maximized.Set((args.Event.NewWindowState & Gdk.WindowState.Maximized) != 0);
             }
         }
           
@@ -493,17 +481,12 @@ namespace Banshee
         }
           
         private void LoadSettings()
-        {    
-            try {
-                volumeButton.Volume = (int)Globals.Configuration.Get(GConfKeys.Volume);
-            } catch(GConf.NoSuchKeyException) {
-                volumeButton.Volume = 80;
-            }
-
+        {  
+            volumeButton.Volume = PlayerEngineCore.VolumeSchema.Get();
             PlayerEngineCore.Volume = (ushort)volumeButton.Volume;
             
             try {
-                int state = (int)Globals.Configuration.Get(GConfKeys.PlaylistRepeat);
+                int state = (int)PlayerWindowSchema.PlaybackRepeat.Get();
                 
                 foreach(RadioAction radio in (Globals.ActionManager["RepeatAllAction"] as RadioAction).Group) {
                     if(radio.Value == state) {
@@ -511,24 +494,18 @@ namespace Banshee
                         break;
                     }
                 }
-            } catch(Exception) {}
-            
-            try {
-                (Globals.ActionManager["ShuffleAction"] as ToggleAction).Active = 
-                    (bool)Globals.Configuration.Get(GConfKeys.PlaylistShuffle);
-            } catch(Exception) {}
-            
-            try {
-                bool active = (bool)Globals.Configuration.Get(GConfKeys.ShowCoverArt);
-                cover_art_view.Enabled = active;
-                (Globals.ActionManager["ShowCoverArtAction"] as ToggleAction).Active = active;
-            } catch(Exception) {}
-            
-            try {
-                SourceSplitter.Position = (int)Globals.Configuration.Get(GConfKeys.SourceViewWidth);
-            } catch(GConf.NoSuchKeyException) {
-                SourceSplitter.Position = 125;
+            } catch {
             }
+            
+            try {
+                (Globals.ActionManager["ShuffleAction"] as ToggleAction).Active 
+                    = PlayerWindowSchema.PlaybackShuffle.Get();
+            } catch {
+            }
+            
+            cover_art_view.Enabled = PlayerWindowSchema.ShowCoverArt.Get();
+            (Globals.ActionManager["ShowCoverArtAction"] as ToggleAction).Active = cover_art_view.Enabled; 
+            SourceSplitter.Position = PlayerWindowSchema.SourceViewWidth.Get();
         }
         
         private void PromptForImport()
@@ -538,13 +515,8 @@ namespace Banshee
         
         private void PromptForImport(bool startup)
         {
-            if(startup) {
-                try {
-                    if(!(bool)Globals.Configuration.Get(GConfKeys.ShowInitialImportDialog)) {
-                        return;
-                    }
-                } catch {
-                }
+            if(startup && !ImportSchema.ShowInitialImportDialog.Get()) {
+                return;
             }
             
             Banshee.Gui.ImportDialog dialog = new Banshee.Gui.ImportDialog(startup);
@@ -552,7 +524,7 @@ namespace Banshee
             IImportSource import_source = dialog.ActiveSource;
             
             if(startup) {
-                Globals.Configuration.Set(GConfKeys.ShowInitialImportDialog, !dialog.DoNotShowAgain);
+                ImportSchema.ShowInitialImportDialog.Set(!dialog.DoNotShowAgain);
             }
             
             dialog.Destroy();
@@ -599,9 +571,9 @@ namespace Banshee
         {
             WindowPlayer.Hide();
             ActiveUserEventsManager.Instance.CancelAll();
-            playlistView.Shutdown();
+            playlistView.Dispose();
             PlayerEngineCore.Dispose();
-            Globals.Configuration.Set(GConfKeys.SourceViewWidth, SourceSplitter.Position);
+            PlayerWindowSchema.SourceViewWidth.Set(SourceSplitter.Position);
             Application.Quit();
             return true;
         }
@@ -664,11 +636,11 @@ namespace Banshee
             
             WindowPlayer.GetPosition(out x, out y);
             WindowPlayer.GetSize(out width, out height);
-            
-            Globals.Configuration.Set(GConfKeys.WindowX, x);
-            Globals.Configuration.Set(GConfKeys.WindowY, y);
-            Globals.Configuration.Set(GConfKeys.WindowWidth, width);
-            Globals.Configuration.Set(GConfKeys.WindowHeight, height);
+           
+            PlayerWindowSchema.XPos.Set(x);
+            PlayerWindowSchema.YPos.Set(y);
+            PlayerWindowSchema.Width.Set(width);
+            PlayerWindowSchema.Height.Set(height);
         }
         
         private static Gdk.ModifierType [] important_modifiers = new Gdk.ModifierType [] {
@@ -781,7 +753,7 @@ namespace Banshee
         private void OnVolumeScaleChanged(int volume)
         {
             PlayerEngineCore.Volume = (ushort)volume;
-            Globals.Configuration.Set(GConfKeys.Volume, volume);
+            PlayerEngineCore.VolumeSchema.Set(volume);
         }
         
         private void OnSeekRequested(object o, EventArgs args)
@@ -1142,10 +1114,10 @@ namespace Banshee
             // last-played info. Only show the rip button for audio CDs
             gxml["SearchLabel"].Sensitive = source.SearchEnabled;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
-            playlistView.RipColumn.Visible = source is AudioCdSource;
+            /*playlistView.RipColumn.Visible = source is AudioCdSource;
             playlistView.RatingColumn.Hidden = (source is AudioCdSource);
             playlistView.PlaysColumn.Hidden = (source is AudioCdSource);
-            playlistView.LastPlayedColumn.Hidden = (source is AudioCdSource);
+            playlistView.LastPlayedColumn.Hidden = (source is AudioCdSource);*/
                 
             UpdateSourceView();
                 
@@ -2223,7 +2195,7 @@ namespace Banshee
         private void SetRepeatMode(RepeatMode mode)
         {
             playlistModel.Repeat = mode;
-            Globals.Configuration.Set(GConfKeys.PlaylistRepeat, (int)mode);
+            PlayerWindowSchema.PlaybackRepeat.Set((int)mode);
         }
         
         private void OnRepeatNoneAction(object o, EventArgs args)
@@ -2245,7 +2217,7 @@ namespace Banshee
         {
             ToggleAction action = o as ToggleAction;
             playlistModel.Shuffle = action.Active;
-            Globals.Configuration.Set(GConfKeys.PlaylistShuffle, action.Active);
+            PlayerWindowSchema.PlaybackShuffle.Set(action.Active);
         }
         
         // --- View Menu ---
@@ -2254,7 +2226,7 @@ namespace Banshee
         {
             ToggleAction action = o as ToggleAction;
             cover_art_view.Enabled = action.Active;
-            Globals.Configuration.Set(GConfKeys.ShowCoverArt, action.Active);
+            PlayerWindowSchema.ShowCoverArt.Set(action.Active);
         }
         
         private void OnFullScreenAction(object o, EventArgs args)

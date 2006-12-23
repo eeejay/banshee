@@ -7,25 +7,22 @@
 
 using System;
 using System.Text;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace NDesk.DBus
 {
 	public class MessageReader
 	{
-		//FIXME: use endianness instead of failing on non-native endianness
 		protected EndianFlag endianness;
 		protected byte[] data;
 		//TODO: this should be uint or long to handle long messages
 		protected int pos = 0;
+		protected Message message;
 
 		public MessageReader (EndianFlag endianness, byte[] data)
 		{
-			if (endianness != Connection.NativeEndianness)
-				throw new NotImplementedException ("Only native-endian message reading is currently supported");
-
 			if (data == null)
 				throw new ArgumentNullException ("data");
 
@@ -37,12 +34,8 @@ namespace NDesk.DBus
 		{
 			if (message == null)
 				throw new ArgumentNullException ("message");
-		}
 
-		public void CloseRead ()
-		{
-			ReadPad (8);
-			//this needs more thought
+			this.message = message;
 		}
 
 		public void GetValue (Type type, out object val)
@@ -64,25 +57,22 @@ namespace NDesk.DBus
 				Signature valSig;
 				GetValue (out valSig);
 				val = valSig;
+			} else if (type == typeof (object)) {
+				GetValue (out val);
+			} else if (type == typeof (string)) {
+				string valStr;
+				GetValue (out valStr);
+				val = valStr;
 			} else if (type.IsGenericType && type.GetGenericTypeDefinition () == typeof (IDictionary<,>)) {
 				Type[] genArgs = type.GetGenericArguments ();
 				Type dictType = typeof (Dictionary<,>).MakeGenericType (genArgs);
 				val = Activator.CreateInstance(dictType, new object[0]);
 				System.Collections.IDictionary idict = (System.Collections.IDictionary)val;
 				GetValueToDict (genArgs[0], genArgs[1], idict);
-				/*
-			} else if (type == typeof (ObjectPath)) {
-				//FIXME: find a better way of specifying structs that must be marshaled by value and not as a struct like ObjectPath
-				//this is just a quick proof of concept fix
-				//TODO: are there others we should special case in this hack?
-				//TODO: this code has analogues elsewhere that need both this quick fix, and the real fix when it becomes available
-				DType dtype = Signature.TypeToDType (type);
-				GetValue (dtype, out val);
-				*/
-			} else if (!type.IsPrimitive && type.IsValueType && !type.IsEnum) {
-				ValueType valV;
-				GetValue (type, out valV);
-				val = valV;
+			} else if (Mapper.IsPublic (type)) {
+				GetObject (type, out val);
+			} else if (!type.IsPrimitive && !type.IsEnum) {
+				GetValueStruct (type, out val);
 			} else {
 				DType dtype = Signature.TypeToDType (type);
 				GetValue (dtype, out val);
@@ -203,124 +193,12 @@ namespace NDesk.DBus
 			}
 		}
 
-		/*
-		public void GetValue (out byte val)
+		public void GetObject (Type type, out object val)
 		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (1);
-			val = br.ReadByte ();
+			ObjectPath path;
+			GetValue (out path);
+			val = message.Connection.GetObject (type, (string)message.Header.Fields[FieldCode.Sender], path);
 		}
-
-		public void GetValue (out bool val)
-		{
-			uint intval;
-			GetValue (out intval);
-
-			//TODO: confirm semantics of dbus boolean
-			val = intval == 0 ? false : true;
-		}
-
-		public void GetValue (out short val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (2);
-			val = br.ReadInt16 ();
-		}
-
-		public void GetValue (out ushort val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (2);
-			val = br.ReadUInt16 ();
-		}
-
-		public void GetValue (out int val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (4);
-			val = br.ReadInt32 ();
-		}
-
-		public void GetValue (out uint val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (4);
-			val = br.ReadUInt32 ();
-		}
-
-		public void GetValue (out long val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (8);
-			val = br.ReadInt64 ();
-		}
-
-		public void GetValue (out ulong val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (8);
-			val = br.ReadUInt64 ();
-		}
-
-#if PROTO_TYPE_SINGLE
-		public void GetValue (out float val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (4);
-			val = br.ReadSingle ();
-		}
-#endif
-
-		public void GetValue (out double val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			ReadPad (8);
-			val = br.ReadDouble ();
-		}
-
-		public void GetValue (out string val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			uint ln;
-			GetValue (out ln);
-
-			byte[] rbytes = br.ReadBytes ((int)ln);
-			val = Encoding.UTF8.GetString (rbytes);
-			br.ReadByte (); //null string terminator
-		}
-
-		public void GetValue (out ObjectPath val)
-		{
-			//exactly the same as string
-			GetValue (out val.Value);
-		}
-
-		public void GetValue (out Signature val)
-		{
-			BinaryReader br = new BinaryReader (stream);
-
-			//ReadPad (1); //alignment for signature is 1
-			byte ln;
-			GetValue (out ln);
-
-			val.Data = br.ReadBytes ((int)ln);
-			br.ReadByte (); //null signature terminator
-		}
-		*/
-
-		//alternative GetValue() implementations
-		//needed for reading messages in machine-native format, until we do this properly
-		//TODO: don't ignore the endian flag in the header
 
 		public void GetValue (out byte val)
 		{
@@ -332,66 +210,115 @@ namespace NDesk.DBus
 			uint intval;
 			GetValue (out intval);
 
-			//TODO: confirm semantics of dbus boolean
-			val = intval == 0 ? false : true;
+			switch (intval) {
+				case 0:
+					val = false;
+					break;
+				case 1:
+					val = true;
+					break;
+				default:
+					throw new Exception ("Read value " + intval + " at position " + pos + " while expecting boolean (0/1)");
+			}
 		}
 
-		public void GetValue (out short val)
+		unsafe protected void MarshalUShort (byte *dst)
 		{
 			ReadPad (2);
-			val = BitConverter.ToInt16 (data, pos);
+
+			if (endianness == Connection.NativeEndianness) {
+				dst[0] = data[pos + 0];
+				dst[1] = data[pos + 1];
+			} else {
+				dst[0] = data[pos + 1];
+				dst[1] = data[pos + 0];
+			}
+
 			pos += 2;
 		}
 
-		public void GetValue (out ushort val)
+		unsafe public void GetValue (out short val)
 		{
-			ReadPad (2);
-			val = BitConverter.ToUInt16 (data, pos);
-			pos += 2;
+			fixed (short* ret = &val)
+				MarshalUShort ((byte*)ret);
 		}
 
-		public void GetValue (out int val)
+		unsafe public void GetValue (out ushort val)
+		{
+			fixed (ushort* ret = &val)
+				MarshalUShort ((byte*)ret);
+		}
+
+		unsafe protected void MarshalUInt (byte *dst)
 		{
 			ReadPad (4);
-			val = BitConverter.ToInt32 (data, pos);
+
+			if (endianness == Connection.NativeEndianness) {
+				dst[0] = data[pos + 0];
+				dst[1] = data[pos + 1];
+				dst[2] = data[pos + 2];
+				dst[3] = data[pos + 3];
+			} else {
+				dst[0] = data[pos + 3];
+				dst[1] = data[pos + 2];
+				dst[2] = data[pos + 1];
+				dst[3] = data[pos + 0];
+			}
+
 			pos += 4;
 		}
 
-		public void GetValue (out uint val)
+		unsafe public void GetValue (out int val)
 		{
-			ReadPad (4);
-			val = BitConverter.ToUInt32 (data, pos);
-			pos += 4;
+			fixed (int* ret = &val)
+				MarshalUInt ((byte*)ret);
 		}
 
-		public void GetValue (out long val)
+		unsafe public void GetValue (out uint val)
+		{
+			fixed (uint* ret = &val)
+				MarshalUInt ((byte*)ret);
+		}
+
+		unsafe protected void MarshalULong (byte *dst)
 		{
 			ReadPad (8);
-			val = BitConverter.ToInt64 (data, pos);
+
+			if (endianness == Connection.NativeEndianness) {
+				for (int i = 0; i < 8; ++i)
+					dst[i] = data[pos + i];
+			} else {
+				for (int i = 0; i < 8; ++i)
+					dst[i] = data[pos + (7 - i)];
+			}
+
 			pos += 8;
 		}
 
-		public void GetValue (out ulong val)
+		unsafe public void GetValue (out long val)
 		{
-			ReadPad (8);
-			val = BitConverter.ToUInt64 (data, pos);
-			pos += 8;
+			fixed (long* ret = &val)
+				MarshalULong ((byte*)ret);
+		}
+
+		unsafe public void GetValue (out ulong val)
+		{
+			fixed (ulong* ret = &val)
+				MarshalULong ((byte*)ret);
 		}
 
 #if PROTO_TYPE_SINGLE
-		public void GetValue (out float val)
+		unsafe public void GetValue (out float val)
 		{
-			ReadPad (4);
-			val = BitConverter.ToSingle (data, pos);
-			pos += 4;
+			fixed (float* ret = &val)
+				MarshalUInt ((byte*)ret);
 		}
 #endif
 
-		public void GetValue (out double val)
+		unsafe public void GetValue (out double val)
 		{
-			ReadPad (8);
-			val = BitConverter.ToDouble (data, pos);
-			pos += 8;
+			fixed (double* ret = &val)
+				MarshalULong ((byte*)ret);
 		}
 
 		public void GetValue (out string val)
@@ -400,13 +327,16 @@ namespace NDesk.DBus
 			GetValue (out ln);
 
 			val = Encoding.UTF8.GetString (data, pos, (int)ln);
-			pos += (int)ln + 1; //+1 is null string terminator
+			pos += (int)ln;
+			ReadNull ();
 		}
 
 		public void GetValue (out ObjectPath val)
 		{
 			//exactly the same as string
-			GetValue (out val.Value);
+			string sval;
+			GetValue (out sval);
+			val = new ObjectPath (sval);
 		}
 
 		public void GetValue (out Signature val)
@@ -417,7 +347,8 @@ namespace NDesk.DBus
 			byte[] sigData = new byte[ln];
 			Array.Copy (data, pos, sigData, 0, (int)ln);
 			val = new Signature (sigData);
-			pos += (int)ln + 1; //+1 is null signature terminator
+			pos += (int)ln;
+			ReadNull ();
 		}
 
 		//variant
@@ -431,27 +362,7 @@ namespace NDesk.DBus
 
 		public void GetValue (Signature sig, out object val)
 		{
-			if (sig == Signature.Empty) {
-				val = null;
-				return;
-			}
-
-			if (sig.Length == 1) {
-				GetValue (sig[0], out val);
-				return;
-			}
-
-			if (sig.Length == 2 && sig[0] == DType.Array) {
-				DType elem_t = sig[1];
-				Type elem_type = Signature.DTypeToType (elem_t);
-				Type array_type = elem_type.MakeArrayType ();
-				GetValue (array_type, out val);
-				return;
-			}
-
-			//TODO: more flexibilty needed here
-
-			throw new NotSupportedException ("Reading variants with more than one primitive value or primitive array is not supported (signature of variant was '" + sig + "')");
+			GetValue (sig.ToType (), out val);
 		}
 
 		//not pretty or efficient but works
@@ -485,17 +396,15 @@ namespace NDesk.DBus
 		}
 
 		//this could be made generic to avoid boxing
-		//restricted to primitive elements because of the DType bottleneck
 		public void GetValue (Type type, out Array val)
 		{
-			if (type.IsArray)
-			type = type.GetElementType ();
+			Type elemType = type.GetElementType ();
 
 			uint ln;
 			GetValue (out ln);
 
 			//advance to the alignment of the element
-			ReadPad (Protocol.GetAlignment (Signature.TypeToDType (type)));
+			ReadPad (Protocol.GetAlignment (Signature.TypeToDType (elemType)));
 
 			int endPos = pos + (int)ln;
 
@@ -506,58 +415,26 @@ namespace NDesk.DBus
 			while (pos < endPos)
 			{
 				object elem;
-				//GetValue (Signature.TypeToDType (type), out elem);
-				GetValue (type, out elem);
+				//GetValue (Signature.TypeToDType (elemType), out elem);
+				GetValue (elemType, out elem);
 				vals.Add (elem);
 			}
 
 			if (pos != endPos)
 				throw new Exception ("Read pos " + pos + " != ep " + endPos);
 
-			val = vals.ToArray (type);
-			//val = Array.CreateInstance (type.UnderlyingSystemType, vals.Count);
+			val = vals.ToArray (elemType);
+			//val = Array.CreateInstance (elemType.UnderlyingSystemType, vals.Count);
 		}
 
 		//struct
 		//probably the wrong place for this
 		//there might be more elegant solutions
-		public void GetValue (Type type, out ValueType val)
+		public void GetValueStruct (Type type, out object val)
 		{
-			System.Reflection.ConstructorInfo[] cis = type.GetConstructors ();
-			if (cis.Length != 0) {
-				System.Reflection.ConstructorInfo ci = cis[0];
-				//Console.WriteLine ("ci: " + ci);
-				System.Reflection.ParameterInfo[]  parms = ci.GetParameters ();
-
-				/*
-				Type[] sig = new Type[parms.Length];
-				for (int i = 0 ; i != parms.Length ; i++)
-					sig[i] = parms[i].ParameterType;
-				object retObj = ci.Invoke (null, MessageHelper.GetDynamicValues (msg, sig));
-				*/
-
-				//TODO: use MessageHelper.GetDynamicValues() when it's refactored to be applicable
-				/*
-				object[] vals;
-				vals = MessageHelper.GetDynamicValues (msg, parms);
-				*/
-
-				List<object> vals = new List<object> (parms.Length);
-				foreach (System.Reflection.ParameterInfo parm in parms) {
-					object arg;
-					GetValue (parm.ParameterType, out arg);
-					vals.Add (arg);
-				}
-
-				//object retObj = ci.Invoke (val, vals.ToArray ());
-				val = (ValueType)Activator.CreateInstance (type, vals.ToArray ());
-				return;
-			}
-
-			//no suitable ctor, marshal as a struct
 			ReadPad (8);
 
-			val = (ValueType)Activator.CreateInstance (type);
+			val = Activator.CreateInstance (type);
 
 			/*
 			if (type.IsGenericType && type.GetGenericTypeDefinition () == typeof (KeyValuePair<,>)) {
@@ -575,7 +452,7 @@ namespace NDesk.DBus
 			}
 			*/
 
-			System.Reflection.FieldInfo[] fis = type.GetFields ();
+			FieldInfo[] fis = type.GetFields (BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
 			foreach (System.Reflection.FieldInfo fi in fis) {
 				object elem;
@@ -588,8 +465,9 @@ namespace NDesk.DBus
 
 		public void ReadNull ()
 		{
-			if (data[pos++] != 0)
-				throw new Exception ("Read non-zero null terminator");
+			if (data[pos] != 0)
+				throw new Exception ("Read non-zero byte at position " + pos + " while expecting null terminator");
+			pos++;
 		}
 
 		/*
@@ -601,10 +479,9 @@ namespace NDesk.DBus
 
 		public void ReadPad (int alignment)
 		{
-			//make sure the pos-1 is right for the exception message when we have a test suite
-			while (pos != Protocol.Padded (pos, alignment))
-				if (data[pos++] != 0)
-					throw new Exception ("Read non-zero padding byte at pos " + (pos-1) + ", pad value was " + data[pos-1]);
+			for (int endPos = Protocol.Padded (pos, alignment) ; pos != endPos ; pos++)
+				if (data[pos] != 0)
+					throw new Exception ("Read non-zero byte at position " + pos + " while expecting padding");
 		}
 	}
 }

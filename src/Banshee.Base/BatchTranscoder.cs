@@ -131,6 +131,10 @@ namespace Banshee.Base
         
         private void TranscodeNext()
         {
+            if(batch_queue.Count <= 0) {
+                return;
+            }
+
             current = batch_queue.Dequeue() as QueueItem;
             
             if(current == null) {

@@ -35,6 +35,7 @@ using Mono.Unix;
 using Hal;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 using Boo.Lang.Compiler;
 using Boo.Lang.Compiler.IO;
@@ -86,8 +87,8 @@ namespace Banshee.Plugins
                         to_remove.Add(plugin);
                         continue;
                     }
-                
-                    if((bool)Globals.Configuration.Get(plugin.ConfigurationBase + "/Enabled")) {
+                    
+                    if(ConfigurationClient.Get<bool>(plugin.ConfigurationNamespace, "enabled", false)) {
                         plugin.Initialize();
                     }
                 } catch(GConf.NoSuchKeyException) {

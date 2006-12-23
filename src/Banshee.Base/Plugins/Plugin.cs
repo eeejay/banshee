@@ -27,7 +27,6 @@
  */
  
 using System;
-using System.Collections.Specialized;
 using Banshee.Base;
 
 namespace Banshee.Plugins
@@ -43,28 +42,16 @@ namespace Banshee.Plugins
     {
         private bool initialized;
         private bool broken;
-        private NameValueCollection configuration_keys;
         private bool dispose_requested;
     
-        protected abstract string ConfigurationName {
-            get;
-        }
-    
+        protected abstract string ConfigurationName { get; }
+        public abstract string DisplayName { get; }
+        public abstract string Description { get; }
+        public abstract string [] Authors { get; }
+        
         public Plugin()
         {
-            configuration_keys = new NameValueCollection();
             broken = false;
-        }
-        
-        protected void RegisterConfigurationKey(string name)
-        {
-            configuration_keys[name] = ConfigurationBase + "/" + name;
-        }
-        
-        public NameValueCollection ConfigurationKeys {
-            get {
-                return configuration_keys;
-            }
         }
         
         internal void Initialize()
@@ -99,7 +86,6 @@ namespace Banshee.Plugins
             if(initialized && !broken) {
                 dispose_requested = true;
                 PluginDispose();
-                configuration_keys.Clear();
                 initialized = false;
             }
         }
@@ -118,7 +104,7 @@ namespace Banshee.Plugins
         {
             return null;
         }
-        
+
         private void OnUIManagerInitialized(object o, EventArgs args)
         {
             Globals.UIManager.Initialized -= OnUIManagerInitialized;
@@ -129,43 +115,27 @@ namespace Banshee.Plugins
         }
         
         protected bool DisposeRequested {
-            get {
-                return dispose_requested;
-            }
+            get { return dispose_requested; }
         }
         
         internal bool HasConfigurationWidget {
-            get {
-                return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "GetConfigurationWidget");
-            }
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "GetConfigurationWidget"); }
         }
         
         internal bool Broken {
-            get {
-                return broken;
-            }
+            get { return broken; }
         }
         
         public string Name {
-            get {
-                return ConfigurationName;
-            }
+            get { return ConfigurationName; }
+        }
+        
+        public string ConfigurationNamespace {
+            get { return "plugins." + StringUtil.CamelCaseToUnderCase(ConfigurationName); }
         }
         
         public bool Initialized {
-            get {
-                return initialized;
-            }
+            get { return initialized; }
         }
-        
-        public string ConfigurationBase {
-            get {
-                return GConfKeys.BasePath + Name;
-            }
-        }
-        
-        public abstract string DisplayName { get; }
-        public abstract string Description { get; }
-        public abstract string [] Authors { get; }
     }
 }

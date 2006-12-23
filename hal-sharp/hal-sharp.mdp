@@ -1,4 +1,4 @@
-<Project name="hal-sharp" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="hal-sharp" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations />
   <DeployTargets />
   <Contents>
@@ -7,4 +7,7 @@
     <File name="./Device.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References />
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

@@ -37,6 +37,7 @@ using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.AudioProfiles;
 using Banshee.AudioProfiles.Gui;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Gui.Dialogs
 {
@@ -74,8 +75,8 @@ namespace Banshee.Gui.Dialogs
             (Glade["cd_importing_profile_label"] as Label).MnemonicWidget = cd_importing_profile_box.Combo;        
             cd_importing_profile_box.Show();
             
-            string file_pattern = ReadPreference<string>(GConfKeys.LibraryFilePattern, FileNamePattern.DefaultFile);
-            string folder_pattern = ReadPreference<string>(GConfKeys.LibraryFolderPattern, FileNamePattern.DefaultFolder); 
+            string file_pattern = LibrarySchema.FilePattern.Get(FileNamePattern.DefaultFile);
+            string folder_pattern = LibrarySchema.FolderPattern.Get(FileNamePattern.DefaultFolder); 
             bool preference_already_added;
             
             folder_box = new DictionaryComboBox<string>();
@@ -86,7 +87,8 @@ namespace Banshee.Gui.Dialogs
                 }
                 folder_box.Add(FileNamePattern.CreatePatternDescription(pattern), pattern);
             }
-            if (!preference_already_added) {
+            
+            if(!preference_already_added) {
                 folder_box.Add(FileNamePattern.CreatePatternDescription(folder_pattern), folder_pattern);
             }
             
@@ -98,7 +100,8 @@ namespace Banshee.Gui.Dialogs
                 }
                 file_box.Add(FileNamePattern.CreatePatternDescription(pattern), pattern);
             }
-            if (!preference_already_added) {
+            
+            if(!preference_already_added) {
                 file_box.Add(FileNamePattern.CreatePatternDescription(file_pattern), file_pattern);
             }
             
@@ -124,7 +127,7 @@ namespace Banshee.Gui.Dialogs
         
         private void LoadPreferences()
         {                   
-            string location = ReadPreference<string>(GConfKeys.LibraryLocation, Paths.DefaultLibraryPath);
+            string location = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
             if(!Directory.Exists(location)) {
                 location = Paths.DefaultLibraryPath;
             }
@@ -132,13 +135,13 @@ namespace Banshee.Gui.Dialogs
             library_location_chooser.SetFilename(location);
             SaveLibraryLocation(location);   
             
-            file_box.ActiveValue = ReadPreference<string>(GConfKeys.LibraryFilePattern, FileNamePattern.DefaultFile);
-            folder_box.ActiveValue = ReadPreference<string>(GConfKeys.LibraryFolderPattern, FileNamePattern.DefaultFolder); 
+            file_box.ActiveValue = LibrarySchema.FilePattern.Get();
+            folder_box.ActiveValue = LibrarySchema.FolderPattern.Get(); 
             OnFolderFileChanged(null, null);
 
-            copy_on_import.Active   = ReadPreference<bool>(GConfKeys.CopyOnImport, false);
-            write_metadata.Active   = ReadPreference<bool>(GConfKeys.WriteMetadata, false);
-            error_correction.Active = ReadPreference<bool>(GConfKeys.ErrorCorrection, false);
+            copy_on_import.Active = LibrarySchema.CopyOnImport.Get();
+            write_metadata.Active = LibrarySchema.WriteMetadata.Get();
+            error_correction.Active = ImportSchema.AudioCDErrorCorrection.Get();
         }
         
         private void ConnectEvents()
@@ -152,15 +155,15 @@ namespace Banshee.Gui.Dialogs
             };
             
             copy_on_import.Toggled += delegate {
-                Globals.Configuration.Set(GConfKeys.CopyOnImport, copy_on_import.Active);
+                LibrarySchema.CopyOnImport.Set(copy_on_import.Active);
             };
             
             write_metadata.Toggled += delegate {
-                Globals.Configuration.Set(GConfKeys.WriteMetadata, write_metadata.Active);
+                LibrarySchema.WriteMetadata.Set(write_metadata.Active);
             };
 
             error_correction.Toggled += delegate {
-                Globals.Configuration.Set(GConfKeys.ErrorCorrection, error_correction.Active);
+                ImportSchema.AudioCDErrorCorrection.Set(error_correction.Active);
             };
             
             folder_box.Changed += OnFolderFileChanged;
@@ -174,22 +177,13 @@ namespace Banshee.Gui.Dialogs
                     FileNamePattern.CreateFolderFilePattern(folder_box.ActiveValue, 
                         file_box.ActiveValue), new SampleTrackInfo())));
                         
-            Globals.Configuration.Set(GConfKeys.LibraryFilePattern, file_box.ActiveValue);
-            Globals.Configuration.Set(GConfKeys.LibraryFolderPattern, folder_box.ActiveValue);
+            LibrarySchema.FilePattern.Set(file_box.ActiveValue);
+            LibrarySchema.FolderPattern.Set(folder_box.ActiveValue);
         }
         
         private void SaveLibraryLocation(string path)
         {
-            Globals.Configuration.Set(GConfKeys.LibraryLocation, path);
-        }
-        
-        private T ReadPreference<T>(string key, T fallback)
-        {
-            try {
-                return (T)Globals.Configuration.Get(key);
-            } catch {
-                return fallback;
-            }
+            LibrarySchema.Location.Set(path);
         }
     }
 }

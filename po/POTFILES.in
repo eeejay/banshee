@@ -1,12 +1,12 @@
-data/banshee.desktop.in.in
-data/banshee.glade
-data/banshee.schemas.in
-data/banshee-dialogs.glade
-[encoding: UTF-8]
-libbanshee/gst-cd-rip-0.10.c
-libbanshee/gst-transcode-0.10.c
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
+[encoding: UTF-8]
+data/banshee.desktop.in.in
+data/banshee.glade
+data/banshee-dialogs.glade
+libbanshee/gst-cd-rip-0.10.c
+libbanshee/gst-transcode-0.10.c
+src/Banshee.Base/banshee-core.schemas.in
 src/Banshee.Base/ActionManager.cs
 src/Banshee.Base/AudioCd/AudioCdCore.cs
 src/Banshee.Base/AudioCd/AudioCdDisk.cs
@@ -23,6 +23,8 @@ src/Banshee.Base/Banshee.Burner/BurnerSource.cs
 src/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs
 src/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs
 src/Banshee.Base/Banshee.Library/Import.cs
+src/Banshee.Base/Banshee.Playlists.Formats/M3u.cs
+src/Banshee.Base/Banshee.Playlists.Formats/Pls.cs
 src/Banshee.Base/Banshee.SmartPlaylist/Editor.cs
 src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs
 src/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs
@@ -32,6 +34,7 @@ src/Banshee.Base/Banshee.Web/Browser.cs
 src/Banshee.Base/BatchTranscoder.cs
 src/Banshee.Base/ComponentInitializer.cs
 src/Banshee.Base/FileImportSource.cs
+src/Banshee.Base/FileNamePattern.cs
 src/Banshee.Base/FolderImportSource.cs
 src/Banshee.Base/Dap/DapCore.cs
 src/Banshee.Base/Dap/Dap.cs
@@ -59,6 +62,7 @@ src/Banshee.Base/PowerManagement.cs
 src/Banshee.Base/Plugins/PluginDialog.cs
 src/Banshee.Base/Source.cs
 src/Banshee.Base/SourceManager.cs
+src/Banshee.Base/Sources/AbstractPlaylistSource.cs
 src/Banshee.Base/Sources/AudioCdSource.cs
 src/Banshee.Base/Sources/DapSource.cs
 src/Banshee.Base/Sources/ImportErrorsSource.cs
@@ -72,39 +76,51 @@ src/Banshee.Base/Utilities.cs
 src/Banshee.Dap/Ipod/DatabaseRebuilder.cs
 src/Banshee.Dap/Ipod/IpodDap.cs
 src/Banshee.Dap/Ipod/UnsupportedDatabaseView.cs
+src/Banshee.Dap/Karma/Karma.cs
 src/Banshee.Dap/MassStorage/MassStorageDap.cs
 src/Banshee.Dap/Mtp/MtpDap.cs
 src/Banshee.Dap/Njb/NjbDap.cs
 src/Banshee.MediaEngine/Gstreamer/GstPlayerEngine.cs
+src/Banshee.Plugins/Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Banshee.Plugins/Audioscrobbler/AudioscrobblerPlugin.cs
-src/Banshee.Plugins/Audioscrobbler/audioscrobbler.schemas.in
+src/Banshee.Plugins/Daap/banshee-plugin-daap.schemas.in
 src/Banshee.Plugins/Daap/DaapConfigPage.cs
 src/Banshee.Plugins/Daap/DaapContainerSource.cs
 src/Banshee.Plugins/Daap/DaapCore.cs
 src/Banshee.Plugins/Daap/DaapErrorView.cs
 src/Banshee.Plugins/Daap/DaapLoginDialog.cs
 src/Banshee.Plugins/Daap/DaapPlugin.cs
-src/Banshee.Plugins/Daap/daap.schemas.in
 src/Banshee.Plugins/Daap/DaapSource.cs
+src/Banshee.Plugins/MetadataSearch/banshee-plugin-metadatasearcher.schemas.in
 src/Banshee.Plugins/MetadataSearch/MetadataSearchConfigDialog.cs
 src/Banshee.Plugins/MetadataSearch/MetadataSearchPlugin.cs
-src/Banshee.Plugins/MetadataSearch/metadatasearch.schemas.in
+src/Banshee.Plugins/MMKeys/banshee-plugin-mmkeys.schemas.in
 src/Banshee.Plugins/MMKeys/MMKeysConfigPage.cs
 src/Banshee.Plugins/MMKeys/MMKeysPlugin.cs
-src/Banshee.Plugins/MMKeys/mmkeys.schemas.in
+src/Banshee.Plugins/NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in
 src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs
 src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs
-src/Banshee.Plugins/NotificationAreaIcon/banshee-notificationareaicon.schemas.in
+src/Banshee.TrackView.Columns/AlbumColumn.cs
+src/Banshee.TrackView.Columns/ArtistColumn.cs
+src/Banshee.TrackView.Columns/GenreColumn.cs
+src/Banshee.TrackView.Columns/LastPlayedColumn.cs
+src/Banshee.TrackView.Columns/PlayCountColumn.cs
+src/Banshee.TrackView.Columns/RatingColumn.cs
+src/Banshee.TrackView.Columns/TimeColumn.cs
+src/Banshee.TrackView.Columns/TitleColumn.cs
+src/Banshee.TrackView.Columns/TrackColumn.cs
+src/Banshee.TrackView.Columns/YearColumn.cs
 src/Banshee.Widgets/ActiveUserEvent.cs
 src/Banshee.Widgets/DiscUsageDisplay.cs
 src/Banshee.Widgets/SearchEntry.cs
 src/Banshee.Widgets/StreamPositionLabel.cs
 src/Last.FM/Last.FM.Gui/AccountLoginDialog.cs
 src/Last.FM/Last.FM.Gui/AccountLoginForm.cs
+src/banshee-interface.schemas.in
 src/Main.cs
 src/PlayerInterface.cs
-src/PlaylistColumns.cs
 src/PlaylistView.cs
 src/StockIcons.cs
+src/TrackViewColumnWindow.cs
 

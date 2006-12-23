@@ -51,17 +51,10 @@ namespace Banshee.Base
     
         public void Import()
         {
-            FileChooserDialog chooser = new FileChooserDialog(
+            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
                 Catalog.GetString("Import Files to Library"),
-                null,
                 FileChooserAction.Open
             );
-            
-            try {
-                 chooser.SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
-            } catch(Exception) {
-                 chooser.SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            }
             
             chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
             chooser.AddButton(Stock.Open, ResponseType.Ok);
@@ -72,8 +65,6 @@ namespace Banshee.Base
             if(chooser.Run() == (int)ResponseType.Ok) {
                 Banshee.Library.Import.QueueSource(chooser.Uris);
             }
-            
-            Globals.Configuration.Set(GConfKeys.LastFileSelectorUri, chooser.CurrentFolderUri);
             
             chooser.Destroy();
         }

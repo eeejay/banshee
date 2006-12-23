@@ -13,14 +13,14 @@
       <mimetype>audio/x-mp3</mimetype>
       <pipeline>
         <process id="gstreamer">
-		  audioconvert ! 
-		  audio/x-raw-float,rate=$sample_rate,channels=$channels ! 
-		  audioconvert ! 
-		  lame 
+          audioconvert ! 
+          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
+          audioconvert ! 
+          lame 
             bitrate=$bitrate 
             mode=$mode !
-		  id3v2mux
-		</process>
+          id3v2mux
+        </process>
         <variable id="bitrate">
           <name>Bitrate</name>
           <control-type>combo</control-type>

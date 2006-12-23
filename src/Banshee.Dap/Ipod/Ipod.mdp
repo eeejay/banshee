@@ -20,4 +20,7 @@
     <File name="./UnsupportedDatabaseView.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References />
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

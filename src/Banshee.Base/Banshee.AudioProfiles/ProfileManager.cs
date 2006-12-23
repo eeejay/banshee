@@ -92,11 +92,12 @@ namespace Banshee.AudioProfiles
         private void LoadFromFile(string path)
         {
             document = new XmlDocument();
-            document.Load(path);
 
             try {
+                document.Load(path);
                 Load();
-            } catch {
+            } catch(Exception e) {
+                Console.WriteLine("Could not load profile: {0}\n{1}", path, e);
             }
             
             document = null;

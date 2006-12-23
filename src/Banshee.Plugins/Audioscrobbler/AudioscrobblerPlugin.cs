@@ -35,10 +35,9 @@ using System.Security.Cryptography;
 using Gtk;
 using Mono.Unix;
 
-using GConf;
-
 using Banshee.MediaEngine;
 using Banshee.Base;
+using Banshee.Configuration;
 
 public static class PluginModuleEntry
 {
@@ -55,11 +54,10 @@ namespace Banshee.Plugins.Audioscrobbler
     public class AudioscrobblerPlugin : Banshee.Plugins.Plugin
     {
         private Engine protocol_engine;
-        private GConf.Client gconf;
         private ActionGroup actions;
         private uint ui_manager_id;
-
-        protected override string ConfigurationName { get { return "Audioscrobbler"; } }
+        
+        protected override string ConfigurationName { get { return "audioscrobbler"; } }
         public override string DisplayName { get { return "Audioscrobbler"; } }
         
         public override string Description {
@@ -83,14 +81,7 @@ namespace Banshee.Plugins.Audioscrobbler
         }
 
         protected override void PluginInitialize()
-        {
-            RegisterConfigurationKey("EngineEnabled");
-            RegisterConfigurationKey("Username");
-            RegisterConfigurationKey("Password");
-            
-            gconf = Globals.Configuration;
-            gconf.AddNotify(ConfigurationBase, GConfNotifier);
-
+        { 
             if(Enabled) {
                 StartEngine();
             }
@@ -136,7 +127,6 @@ namespace Banshee.Plugins.Audioscrobbler
             StopEngine();
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
             Globals.ActionManager.UI.RemoveActionGroup(actions);
-            gconf.RemoveNotify(ConfigurationBase, GConfNotifier);
             actions = null;
         }
         
@@ -189,8 +179,8 @@ namespace Banshee.Plugins.Audioscrobbler
                 LogCore.Instance.PushDebug("Audioscrobbler starting protocol engine", "");
                 protocol_engine = new Engine();
                 protocol_engine.SetUserPassword(Username, Password);
-        			protocol_engine.Start();
-        	    }
+                protocol_engine.Start();
+            }
         }
         
         private void StopEngine()
@@ -199,24 +189,6 @@ namespace Banshee.Plugins.Audioscrobbler
                 LogCore.Instance.PushDebug("Audioscrobbler stopping protocol engine", "");
                 protocol_engine.Stop();
                 protocol_engine = null;
-            }
-        }
-
-        private void GConfNotifier(object sender, NotifyEventArgs args)
-        {
-            //Console.WriteLine ("key that changed: {0}", args.Key);
-            if(args.Key == ConfigurationKeys["EngineEnabled"]) {
-                if((bool)args.Value == false) {
-                    StopEngine();
-                } else {
-                    StartEngine();
-                }
-                
-                (Globals.ActionManager["AudioscrobblerEnableAction"] as ToggleAction).Active = (bool)args.Value;
-            } else if(args.Key == ConfigurationKeys["Username"] || args.Key == ConfigurationKeys["Password"]) {
-                if(protocol_engine != null) {
-                    protocol_engine.SetUserPassword(Username, Password);
-                }
             }
         }
 
@@ -231,53 +203,68 @@ namespace Banshee.Plugins.Audioscrobbler
         }
 
         internal string Username {
-            get {
-                return GetStringPref(ConfigurationKeys["Username"], String.Empty);
-            }
-            
-            set {
-                gconf.Set(ConfigurationKeys["Username"], value);
+            get { return UsernameSchema.Get(); }
+            set { 
+                UsernameSchema.Set(value);
                 Globals.ActionManager["AudioscrobblerVisitAction"].Sensitive = Username != null 
                     && Username != String.Empty;
+                if(protocol_engine != null) {
+                    protocol_engine.SetUserPassword(Username, Password);
+                }
             }
         }
         
         internal string Password {
-            get {
-                return GetStringPref(ConfigurationKeys["Password"], String.Empty);
-            }
-            
-            set {
-                gconf.Set(ConfigurationKeys["Password"], value);
+            get { return PasswordSchema.Get(); }
+            set { 
+                PasswordSchema.Set(value); 
+                if(protocol_engine != null) {
+                    protocol_engine.SetUserPassword(Username, Password);
+                }
             }
         }
         
         internal bool Enabled {
-            get {
-                return GetBoolPref(ConfigurationKeys["EngineEnabled"], false);
-            }
+            get { return EngineEnabledSchema.Get(); }
+            set { 
+                EngineEnabledSchema.Set(value);
             
-            set {
-                gconf.Set(ConfigurationKeys["EngineEnabled"], value);
+                if(!value) {
+                    StopEngine();
+                } else {
+                    StartEngine();
+                }
+                
+                (Globals.ActionManager["AudioscrobblerEnableAction"] as ToggleAction).Active = value;
             }
         }
-
-        private string GetStringPref(string key, string def)
-        {
-            try {
-                return (string)gconf.Get(key);
-            } catch {
-                return def;
-            }
-        }
-
-        private bool GetBoolPref(string key, bool def)
-        {
-            try {
-                return (bool)gconf.Get(key);
-            } catch {
-                return def;
-            }
-        }
+           
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+            "plugins.audioscrobbler", "enabled",
+            true,
+            "Plugin enabled",
+            "Audioscrobbler reporting plugin enabled"
+        );
+        
+        public static readonly SchemaEntry<string> UsernameSchema = new SchemaEntry<string>(
+            "plugins.audioscrobbler", "username",
+            String.Empty,
+            "Username",
+            "last.fm Username"
+        );
+   
+        public static readonly SchemaEntry<string> PasswordSchema = new SchemaEntry<string>(
+            "plugins.audioscrobbler", "password",
+            String.Empty,
+            "Password",
+            "last.fm Password"
+        );
+   
+        public static readonly SchemaEntry<bool> EngineEnabledSchema = new SchemaEntry<bool>(
+            "plugins.audioscrobbler", "engine_enabled",
+            false,
+            "Engine enabled",
+            "Audioscrobbler reporting engine enabled"
+        );
     }
 }

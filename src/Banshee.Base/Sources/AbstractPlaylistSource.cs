@@ -34,6 +34,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Database;
+using Banshee.Configuration;
 
 namespace Banshee.Sources
 {
@@ -139,13 +140,8 @@ namespace Banshee.Sources
     
         public static bool ConfirmUnmap(Source source)
         {
-            bool do_not_ask = false;
-            string key = GConfKeys.BasePath + "no_confirm_unmap_" + source.GetType().Name.ToLower();
-            
-            try {
-                do_not_ask = (bool)Globals.Configuration.Get(key);
-            } catch {
-            }
+            string key = "no_confirm_unmap_" + source.GetType().Name.ToLower();
+            bool do_not_ask = ConfigurationClient.Get<bool>("sources", key, false);
             
             if(do_not_ask) {
                 return true;
@@ -175,7 +171,7 @@ namespace Banshee.Sources
             
             try {
                 if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
-                    Globals.Configuration.Set(key, do_not_ask);
+                    ConfigurationClient.Set<bool>("sources", key, do_not_ask);
                     return true;
                 }
                 

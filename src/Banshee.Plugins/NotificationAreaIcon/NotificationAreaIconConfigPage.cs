@@ -40,7 +40,6 @@ namespace Banshee.Plugins.NotificationAreaIcon
     public class NotificationAreaIconConfigPage : VBox
     {
         private NotificationAreaIconPlugin plugin;
-        private CheckButton toggle_notifications_button;
 
         public NotificationAreaIconConfigPage(NotificationAreaIconPlugin plugin) : base()
         {
@@ -54,7 +53,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
             
             Label title = new Label();
             title.Markup = String.Format("<big><b>{0}</b></big>", 
-                                         GLib.Markup.EscapeText(Catalog.GetString("Notification Area Icon")));
+                GLib.Markup.EscapeText(Catalog.GetString("Notification Area Icon")));
             title.Xalign = 0.0f;
             
             PackStart(title, false, false, 0);
@@ -62,20 +61,20 @@ namespace Banshee.Plugins.NotificationAreaIcon
             VBox box = new VBox();
             box.Spacing = 5;
             
-            toggle_notifications_button = new CheckButton(Catalog.GetString("Show notifications when song changes"));
-            toggle_notifications_button.Active = plugin.ShowNotifications;
-            toggle_notifications_button.Toggled += OnShowNotificationsToggled;
+            CheckButton show_notifications = new CheckButton(Catalog.GetString("Show notifications when song changes"));
+            show_notifications.Active = plugin.ShowNotifications;
+            show_notifications.Toggled += delegate { plugin.ShowNotifications = show_notifications.Active; };
 
-            box.Add(toggle_notifications_button);
+            CheckButton quit_on_close = new CheckButton(Catalog.GetString("Quit Banshee when title bar close button is clicked"));
+            quit_on_close.Active = plugin.QuitOnClose;
+            quit_on_close.Toggled += delegate { plugin.QuitOnClose = quit_on_close.Active; };
+
+            box.Add(show_notifications);
+            box.Add(quit_on_close);
             
             PackStart(box, false, false, 0);
             
             ShowAll();
-        }
-
-        private void OnShowNotificationsToggled(object o, EventArgs args)
-        {
-            plugin.ShowNotifications = toggle_notifications_button.Active;
         }
     }
 }

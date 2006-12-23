@@ -14,14 +14,15 @@ SUBDIRS = \
 	Banshee.Hyena
 
 BANSHEE = banshee
-BANSHEE_ASSEMBLY = $(BANSHEE).exe
+ASSEMBLY = $(BANSHEE).exe
+ASSEMBLY_GCONF_SCHEMA = banshee-interface.schemas.in
 
 bansheedir = $(pkglibdir)
 bin_SCRIPTS = $(BANSHEE)
 banshee_SCRIPTS = \
-	$(BANSHEE_ASSEMBLY) \
-	$(BANSHEE_ASSEMBLY).mdb \
-	$(BANSHEE_ASSEMBLY).config 
+	$(ASSEMBLY) \
+	$(ASSEMBLY).mdb \
+	$(ASSEMBLY).config 
 
 BANSHEE_SOURCE_IN = AssemblyInfo.cs.in
 BANSHEE_GENERATED_SOURCE = $(BANSHEE_SOURCE_IN:.in=)
@@ -33,8 +34,20 @@ BANSHEE_SOURCE = \
 	PlayerInterface.cs \
 	PlaylistView.cs \
 	PlaylistModel.cs \
-	PlaylistColumns.cs
-
+	PlayerWindowSchema.cs \
+	TrackViewColumnWindow.cs \
+	Banshee.TrackView.Columns/TrackViewColumn.cs \
+	Banshee.TrackView.Columns/TrackColumn.cs \
+	Banshee.TrackView.Columns/ArtistColumn.cs \
+	Banshee.TrackView.Columns/TitleColumn.cs \
+	Banshee.TrackView.Columns/AlbumColumn.cs \
+	Banshee.TrackView.Columns/GenreColumn.cs \
+	Banshee.TrackView.Columns/YearColumn.cs \
+	Banshee.TrackView.Columns/TimeColumn.cs \
+	Banshee.TrackView.Columns/PlayCountColumn.cs \
+	Banshee.TrackView.Columns/LastPlayedColumn.cs \
+	Banshee.TrackView.Columns/RatingColumn.cs
+	
 BANSHEE_RESOURCES = \
 	data/banshee.glade \
 	data/images/advanced-icon-32.png \
@@ -84,21 +97,22 @@ BANSHEE_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(BANSHEE_EXPANDED_RESOURC
 
 BANSHEE_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_SOURCE))
 
-all: $(BANSHEE_ASSEMBLY)
-
-$(BANSHEE_ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
+$(ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
 	$(BUILD_UI_BANSHEE) -out:$@ -nowarn:0169 $(BANSHEE_EXPANDED_RESOURCES_BUILD) $(BANSHEE_SOURCE_BUILD)
 
-run: $(BANSHEE_ASSEMBLY)
+include $(top_srcdir)/build/gconf-schema-rules
+
+run: $(ASSEMBLY)
 	$(RUN_PATH) bash ./banshee --uninstalled
 
 EXTRA_DIST = \
 	$(BANSHEE_SOURCE) \
 	$(BANSHEE_SOURCE_IN) \
 	$(BANSHEE).in \
-	$(BANSHEE_ASSEMBLY).config.in
+	$(ASSEMBLY).config.in \
+	$(ASSEMBLY_GCONF_SCHEMA)
 
-CLEANFILES = $(BANSHEE) $(BANSHEE_ASSEMBLY) *.mdb *.dll *.pidb libbanshee.so
-DISTCLEANFILES = $(BANSHEE_GENERATED_SOURCE)
+CLEANFILES = $(BANSHEE) $(ASSEMBLY) *.mdb *.dll *.pidb
+DISTCLEANFILES = $(BANSHEE_GENERATED_SOURCE) $(schema_DATA)
 MAINTAINERCLEANFILES = Makefile.in
 

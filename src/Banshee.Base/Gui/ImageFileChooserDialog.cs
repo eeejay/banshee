@@ -34,20 +34,12 @@ using Banshee.Base;
 
 namespace Banshee.Gui.Dialogs
 {
-    public class ImageFileChooserDialog : FileChooserDialog
+    public class ImageFileChooserDialog : Banshee.Gui.Dialogs.FileChooserDialog
     {
         private Image preview = new Image();
     
-        public ImageFileChooserDialog() : base(
-            Catalog.GetString("Select album cover image"),
-            null, FileChooserAction.Open)
+        public ImageFileChooserDialog() : base(Catalog.GetString("Select album cover image"), FileChooserAction.Open)
         {
-            try {
-                SetCurrentFolderUri(Globals.Configuration.Get(GConfKeys.LastFileSelectorUri) as string);
-            } catch {
-                SetCurrentFolder(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
-            }
-            
             AddButton(Stock.Cancel, ResponseType.Cancel);
             AddButton(Stock.Open, ResponseType.Ok);
             

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Sources
 {
@@ -63,10 +64,8 @@ namespace Banshee.Sources
             SortOrder order;
             
             try {
-                criteria = (SortCriteria)Globals.Configuration.Get(
-                    GConfKeys.BasePath + "PlaylistSortCriteria");
-                order = (SortOrder)Globals.Configuration.Get(
-                    GConfKeys.BasePath + "PlaylistSortOrder");
+                criteria = (SortCriteria)LibrarySchema.PlaylistSortCriteria.Get();
+                order = (SortOrder)LibrarySchema.PlaylistSortOrder.Get();
             } catch {
                 criteria = SortCriteria.Name;
                 order = SortOrder.Ascending;
@@ -86,9 +85,9 @@ namespace Banshee.Sources
         public override void SortChildren(SortCriteria criteria, SortOrder order)
         {
             base.SortChildren(criteria, order);
-
-            Globals.Configuration.Set(GConfKeys.BasePath + "PlaylistSortCriteria", (int)criteria);
-            Globals.Configuration.Set(GConfKeys.BasePath + "PlaylistSortOrder", (int)order);
+            
+            LibrarySchema.PlaylistSortCriteria.Set((int)criteria);
+            LibrarySchema.PlaylistSortOrder.Set((int)order);
         }
         
         public override void RemoveTrack(TrackInfo track)
@@ -189,39 +188,13 @@ namespace Banshee.Sources
         }  
         
         public override int SortColumn {
-            get { 
-                try {
-                    return (int)Globals.Configuration.Get(GConfKeys.LibrarySortColumn);
-                } catch {
-                    return base.SortColumn;
-                }
-            }
-            
-            set {
-                try {
-                    Globals.Configuration.Set(GConfKeys.LibrarySortColumn, value);
-                } catch {
-                    base.SortColumn = value;
-                }
-            }
+            get { return LibrarySchema.SortColumn.Get(base.SortColumn); }
+            set { LibrarySchema.SortColumn.Set(value); }
         }        
         
         public override Gtk.SortType SortType {
-            get { 
-                try {
-                    return (Gtk.SortType)Globals.Configuration.Get(GConfKeys.LibrarySortType);
-                } catch {
-                    return base.SortType;
-                }
-            }
-            
-            set {
-                try {
-                    Globals.Configuration.Set(GConfKeys.LibrarySortType, (int)value);
-                } catch {
-                    base.SortType = value;
-                }
-            }
+            get { return (Gtk.SortType)LibrarySchema.SortType.Get((int)base.SortType); }
+            set { LibrarySchema.SortType.Set((int)value); }
         }
         
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library");

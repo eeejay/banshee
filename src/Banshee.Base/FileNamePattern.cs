@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using System.IO;
 using Mono.Unix;
 
+using Banshee.Configuration.Schema;
+
 namespace Banshee.Base
 {
     public static class FileNamePattern
@@ -181,21 +183,12 @@ namespace Banshee.Base
 
             try {
                 pattern = CreateFolderFilePattern(
-                    Globals.Configuration.Get(GConfKeys.LibraryFolderPattern) as string,
-                    Globals.Configuration.Get(GConfKeys.LibraryFilePattern) as string
+                    LibrarySchema.FolderPattern.Get(),
+                    LibrarySchema.FilePattern.Get()
                 );
             } catch {
             }
-            
-            if(pattern == null) {
-                try {
-                    // TODO: This key is deprecated in favor of the two above, but checked for compat
-                    pattern = Globals.Configuration.Get(GConfKeys.FileNamePattern_DEPRECATED) as string;
-                } catch(Exception) {
-                    pattern = null;
-                }
-            }
-            
+
             return CreateFromTrackInfo(pattern, track);
         }
 

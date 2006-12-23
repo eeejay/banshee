@@ -36,15 +36,59 @@ namespace Banshee.AudioProfiles
 {
     public class Pipeline : IEnumerable<PipelineVariable>
     {
+        public struct Process : IComparable<Process>
+        {
+            public static readonly Process Zero;
+        
+            private string id;
+            private int order;
+            private string pipeline;
+            
+            public Process(string id, int order, string pipeline)
+            {
+                this.id = id;
+                this.order = order;
+                this.pipeline = pipeline;
+            }
+            
+            public int CompareTo(Process process)
+            {
+                int id_cmp = id.CompareTo(process.ID);
+                return id_cmp != 0 ? id_cmp : order.CompareTo(process.Order);
+            }
+            
+            public string ID {
+                get { return id; }
+            }
+            
+            public int Order { 
+                get { return order; }
+            }
+            
+            public string Pipeline {
+                get { return pipeline; }
+            }
+        }
+    
         private List<PipelineVariable> variables = new List<PipelineVariable>();
         private Dictionary<string, string> processes = new Dictionary<string, string>();
+        private List<Process> processes_pending = new List<Process>();
         
         internal Pipeline(ProfileManager manager, XmlNode node)
         {
             foreach(XmlNode process_node in node.SelectNodes("process")) {
                 string process_id = process_node.Attributes["id"].Value.Trim();
                 string process = process_node.InnerText.Trim();
-                AddProcess(process_id, process);
+                int order = 0;
+                try {
+                    XmlAttribute order_attr = process_node.Attributes["order"];
+                    if(order_attr != null) {
+                        order = Convert.ToInt32(order_attr.Value);
+                    }
+                } catch {
+                }
+                
+                processes_pending.Add(new Process(process_id, order, process));
             }
 
             foreach(XmlNode variable_node in node.SelectNodes("variable")) {
@@ -61,6 +105,11 @@ namespace Banshee.AudioProfiles
                 } catch {
                 }
             }
+        }
+        
+        public string CompileProcess(Process process)
+        {
+            return CompileProcess(process.Pipeline, process.ID);
         }
         
         private string CompileProcess(string process, string id)
@@ -83,6 +132,11 @@ namespace Banshee.AudioProfiles
             }
             
             return result;
+        }
+        
+        public void AddProcess(Process process)
+        {
+            AddProcess(process.ID, process.Pipeline);
         }
 
         public void AddProcess(string id, string process)
@@ -124,6 +178,18 @@ namespace Banshee.AudioProfiles
             }
             
             throw new ApplicationException("No processes in pipeline");
+        }
+        
+        public IList<Process> GetPendingProcessesById(string id)
+        {
+            List<Process> processes = new List<Process>();
+            foreach(Process process in processes_pending) {
+                if(process.ID == id) {
+                    processes.Add(process);
+                }
+            }
+            processes.Sort();
+            return processes;
         }
 
         public void AddVariable(PipelineVariable variable)

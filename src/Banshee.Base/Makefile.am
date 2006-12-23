@@ -2,6 +2,7 @@ include $(top_srcdir)/build/Common.Makefile
 
 ASSEMBLY_NAME = Banshee.Base
 ASSEMBLY = $(ASSEMBLY_NAME).dll
+ASSEMBLY_GCONF_SCHEMA = banshee-core.schemas.in
 
 bansheebasedir = $(pkglibdir)
 bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
@@ -113,6 +114,16 @@ BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
 BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
+BANSHEE_CONFIGURATION_SOURCES = \
+	$(srcdir)/Banshee.Configuration/ConfigurationClient.cs \
+	$(srcdir)/Banshee.Configuration/GConfConfigurationClient.cs \
+	$(srcdir)/Banshee.Configuration/IConfigurationClient.cs \
+	$(srcdir)/Banshee.Configuration/SchemaEntry.cs
+
+BANSHEE_CONFIGURATION_SCHEMA_SOURCES = \
+	$(srcdir)/Banshee.Configuration.Schema/LibrarySchema.cs \
+	$(srcdir)/Banshee.Configuration.Schema/ImportSchema.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/Utilities.cs \
 	$(srcdir)/IO/IOProxy.cs \
@@ -141,7 +152,8 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/TrackEditor.cs \
 	$(srcdir)/Gui/ConfirmShutdownDialog.cs \
 	$(srcdir)/Gui/ImageFileChooserDialog.cs \
-	$(srcdir)/Gui/SourceView.cs
+	$(srcdir)/Gui/SourceView.cs \
+	$(srcdir)/Gui/FileChooserDialog.cs
 
 AUDIOCD_SOURCES = \
 	$(srcdir)/AudioCd/AudioCdCore.cs \
@@ -213,6 +225,8 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \
+	$(BANSHEE_CONFIGURATION_SOURCES) \
+	$(BANSHEE_CONFIGURATION_SCHEMA_SOURCES) \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \
@@ -229,7 +243,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/TrackInfo.cs \
 	$(srcdir)/FileNamePattern.cs \
 	$(srcdir)/Globals.cs \
-	$(srcdir)/GConfKeys.cs \
 	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/IconThemeUtils.cs \
 	$(srcdir)/GstMisc.cs \
@@ -267,7 +280,7 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ProductInformation.cs \
 	$(srcdir)/DBusPlayer.cs \
 	$(srcdir)/GenericCollectionController.cs \
-	$(srcdir)/SampleTrackInfo.cs
+	$(srcdir)/SampleTrackInfo.cs 
 
 Banshee_Base_RESOURCES = \
 	data/UIManagerLayout.xml \
@@ -294,8 +307,15 @@ Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPAND
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
 	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_LAST_FM) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) $(LINK_BOO) $(LINK_BOOBUDDY) -r:System.Data -r:Mono.Data.SqliteClient -r:Mono.Cairo $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(bansheebase_sources_in) $(ASSEMBLY).config.in 
-CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb
+include $(top_srcdir)/build/gconf-schema-rules
+
+EXTRA_DIST = \
+	$(ASSEMBLY_SOURCES) \
+	$(bansheebase_sources_in) \
+	$(ASSEMBLY).config.in \
+	$(ASSEMBLY_GCONF_SCHEMA)
+	
+CLEANFILES = $(ASSEMBLY) *.dll *.exe 
+DISTCLEANFILES = *.mdb $(schema_DATA)
 MAINTAINERCLEANFILES = Makefile.in
 

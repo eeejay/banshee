@@ -36,6 +36,7 @@ using Mono.Unix;
 using Banshee.Widgets;
 using Banshee.Base;
 using Banshee.AudioProfiles;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Base
 {
@@ -321,7 +322,7 @@ namespace Banshee.Base
                 int paranoiaMode = 0;
                 
                 try {
-                    if ((bool)Globals.Configuration.Get(GConfKeys.ErrorCorrection)) {
+                    if (ImportSchema.AudioCDErrorCorrection.Get()) {
                         paranoiaMode = 255;
                         LogCore.Instance.PushDebug("CD Error-correction enabled", "using full paranoia mode (255)");
                     }

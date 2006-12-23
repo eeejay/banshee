@@ -28,6 +28,7 @@
  
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Banshee.Base
 {    
@@ -57,6 +58,25 @@ namespace Banshee.Base
 
             return CultureInfo.CurrentCulture.CompareInfo.Compare(a, a_offset, a.Length - a_offset, 
                 b, b_offset, b.Length - b_offset, compare_options);
+        }
+        
+        public static string CamelCaseToUnderCase(string s)
+        {
+            string undercase = String.Empty;
+            string [] tokens = Regex.Split(s, "([A-Z]{1}[a-z]+)");
+            
+            for(int i = 0; i < tokens.Length; i++) {
+                if(tokens[i] == String.Empty) {
+                    continue;
+                }
+
+                undercase += tokens[i].ToLower();
+                if(i < tokens.Length - 2) {
+                    undercase += "_";
+                }
+            }
+            
+            return undercase;
         }
     }
 }

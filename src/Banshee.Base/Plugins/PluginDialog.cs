@@ -1,8 +1,7 @@
-
 /***************************************************************************
  *  PluginDialog.cs
  *
- *  Copyright (C) 2005 Novell
+ *  Copyright (C) 2005-2006 Novell, Inc.
  *  Written by Aaron Bockover (aaron@aaronbock.net)
  ****************************************************************************/
 
@@ -32,6 +31,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 namespace Banshee.Plugins
 {
@@ -217,7 +217,7 @@ namespace Banshee.Plugins
                 plugin_store.SetValue(iter, 1, plugin.Initialized);
                 plugin_store.SetValue(iter, 3, plugin.Broken ? disabled_color : normal_color);
                 
-                Globals.Configuration.Set(plugin.ConfigurationBase + "/Enabled", plugin.Initialized);
+                ConfigurationClient.Set<bool>(plugin.ConfigurationNamespace, "enabled", plugin.Initialized);
             }
         }
     }

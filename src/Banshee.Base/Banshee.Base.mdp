@@ -1,15 +1,15 @@
-<Project name="Banshee.Base" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.Base" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="Banshee.Base" />
       <Build executeBeforeBuild="../../build/mdp-precompile" debugmode="True" target="Library" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="Banshee.Base" />
       <Build debugmode="False" target="Library" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
@@ -32,7 +32,6 @@
     <File name="./FileNamePattern.cs" subtype="Code" buildaction="Compile" />
     <File name="./FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./FolderImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./GConfKeys.cs" subtype="Code" buildaction="Compile" />
     <File name="./Globals.cs" subtype="Code" buildaction="Compile" />
     <File name="./GstMisc.cs" subtype="Code" buildaction="Compile" />
     <File name="./GstTagger.cs" subtype="Code" buildaction="Compile" />
@@ -209,8 +208,18 @@
     <File name="./SampleTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./IO/Utilities.cs" subtype="Code" buildaction="Compile" />
     <File name="./StringUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Configuration/SchemaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration/GConfConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration.Schema" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Configuration.Schema/ImportSchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Sources/AbstractPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/DapPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/IPlaylistCapable.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Gui/FileChooserDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -236,4 +245,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="gnome-vfs-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

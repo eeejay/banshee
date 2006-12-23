@@ -40,7 +40,7 @@ namespace Banshee.Base
         public DBusRemote()
         {
             try {
-                NameReply nameReply = Bus.Session.RequestName(BusName);
+                RequestNameReply nameReply = Bus.Session.RequestName(BusName);
                 // TODO: error handling based on nameReply. should probably throw if 
                 // nameReply is anything other than NameReply.PrimaryOwner
             } catch(Exception e) {

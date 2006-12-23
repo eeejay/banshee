@@ -29,6 +29,8 @@
 using System;
 using Mono.Unix;
 
+using Banshee.Configuration.Schema;
+
 namespace Banshee.Base
 {
     public struct StreamTag
@@ -160,7 +162,7 @@ namespace Banshee.Base
     
         public void Run()
         {
-            if(!(bool)Globals.Configuration.Get(GConfKeys.WriteMetadata)) {
+            if(!LibrarySchema.WriteMetadata.Get()) {
                 Console.WriteLine("Skipping scheduled metadata write, preference disabled after scheduling");
                 return;
             }

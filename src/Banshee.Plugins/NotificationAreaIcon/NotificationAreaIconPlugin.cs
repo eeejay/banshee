@@ -6,7 +6,6 @@
  * 
  *  Written by Sebastian Dröge <slomo@circular-chaos.org>
  *             Aaron Bockover <aaron@abock.org>
- *  
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -41,6 +40,7 @@ using Notifications;
 using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Widgets;
+using Banshee.Configuration;
 
 public static class PluginModuleEntry
 {
@@ -56,7 +56,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
 {
     public class NotificationAreaIconPlugin : Banshee.Plugins.Plugin 
     {
-        protected override string ConfigurationName { get { return "NotificationAreaIcon"; } }
+        protected override string ConfigurationName { get { return "notification_area"; } }
         public override string DisplayName { get { return Catalog.GetString("Notification Area Icon"); } }
 
         public override string Description {
@@ -160,19 +160,29 @@ namespace Banshee.Plugins.NotificationAreaIcon
             notif_area.Add(event_box);
             notif_area.ShowAll();
             
-            bool quit_on_close = false;
-            
-            try {
-                quit_on_close = (bool)Globals.Configuration.Get(ConfigurationBase + "/quit_on_close");
-            } catch {
+            if(!QuitOnCloseSchema.Get()) {
+                RegisterCloseHandler();
             }
-            
-            if(!quit_on_close) {
-                InterfaceElements.PrimaryWindowClose = delegate {
-                    CloseWindow(null, null);
-                    return true;
-                };
+        }
+        
+        private void RegisterCloseHandler()
+        {
+            if(InterfaceElements.PrimaryWindowClose == null) {
+                InterfaceElements.PrimaryWindowClose = OnPrimaryWindowClose;
             }
+        }
+        
+        private void UnregisterCloseHandler()
+        {
+            if(InterfaceElements.PrimaryWindowClose != null) {
+                InterfaceElements.PrimaryWindowClose = null;
+            }
+        }
+        
+        private bool OnPrimaryWindowClose()
+        {
+            CloseWindow(null, null);
+            return true;
         }
 
         private void OnDestroyEvent(object o, DestroyEventArgs args) 
@@ -183,13 +193,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void CloseWindow(object o, EventArgs args)
         {
             try {
-                bool notify = true;
-                try {
-                    notify = (bool)Globals.Configuration.Get(ConfigurationBase + "/notify_on_close");
-                } catch {
-                }
-                
-                if(notify) {
+                if(NotifyOnCloseSchema.Get()) {
                     Gdk.Pixbuf image = Branding.ApplicationLogo.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
                     Notification nf = new Notification(
                         Catalog.GetString("Still Running"), 
@@ -200,7 +204,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
                     nf.Timeout = 4500;
                     nf.Show();
                     
-                    Globals.Configuration.Set(ConfigurationBase + "/notify_on_close", false);
+                    NotifyOnCloseSchema.Set(false);
                 }
             } catch {
             }
@@ -456,17 +460,56 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
         public bool ShowNotifications {
             get { 
-                try {
-                    show_notifications = (bool)Globals.Configuration.Get(ConfigurationBase + "/ShowNotifications");
-                } catch (GConf.NoSuchKeyException) { 
-                    show_notifications = false;
-                }
-                return show_notifications; 
+                show_notifications = ShowNotificationsSchema.Get(); 
+                return show_notifications;
             }
             set { 
-                Globals.Configuration.Set(ConfigurationBase + "/ShowNotifications", value);
+                ShowNotificationsSchema.Set(value);
                 show_notifications = value;
             }
         }
+        
+        public bool QuitOnClose {
+            get {
+                return QuitOnCloseSchema.Get();
+            }
+            
+            set {
+                QuitOnCloseSchema.Set(value);
+                if(value) {
+                    UnregisterCloseHandler();
+                } else {
+                    RegisterCloseHandler();
+                }
+            }
+        }
+        
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+            "plugins.notification_area", "enabled",
+            true,
+            "Plugin enabled",
+            "Notification area plugin enabled"
+        );
+                
+        public static readonly SchemaEntry<bool> ShowNotificationsSchema = new SchemaEntry<bool>(
+            "plugins.notification_area", "show_notifications",
+            true,
+            "Show notifications",
+            "Show track information notifications when track starts playing"
+        );
+                
+        public static readonly SchemaEntry<bool> NotifyOnCloseSchema = new SchemaEntry<bool>(
+            "plugins.notification_area", "notify_on_close",
+            true,
+            "Show a notification when closing main window",
+            "When the main window is closed, show a notification stating this has happened."
+        );
+                
+        public static readonly SchemaEntry<bool> QuitOnCloseSchema = new SchemaEntry<bool>(
+            "plugins.notification_area", "quit_on_close",
+            false,
+            "Quit on close",
+            "Quit instead of hide to notification area on close"
+        );
     }
 }

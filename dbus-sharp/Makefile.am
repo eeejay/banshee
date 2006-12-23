@@ -15,7 +15,7 @@ DBUS_GLIB_SRC = $(srcdir)/dbus-sharp-glib/*.cs
 all: $(DBUS_ASSEMBLY) $(DBUS_GLIB_ASSEMBLY)
 
 $(DBUS_ASSEMBLY): $(DBUS_SRC)
-	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(DBUS_SRC)
+	$(BUILD_LIB) -out:$@ -unsafe $(LINK_MONO_UNIX) $(DBUS_SRC)
 
 $(DBUS_GLIB_ASSEMBLY): $(DBUS_GLIB_SRC)
 	$(BUILD_LIB) -out:$@ -r:$(DBUS_ASSEMBLY) $(DBUS_GLIB_SRC)

@@ -32,6 +32,7 @@ using Gdk;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 public static class PluginModuleEntry
 {
@@ -47,13 +48,13 @@ namespace Banshee.Plugins.MMKeys
 {
 	public class MMKeysPlugin : Banshee.Plugins.Plugin
 	{
-	   protected override string ConfigurationName { get { return "MMKeys"; } }
+	   protected override string ConfigurationName { get { return "mmkeys"; } }
         public override string DisplayName { get { return Catalog.GetString("Multimedia Keys"); } }
 	
 		public override string Description {
             get {
                 return Catalog.GetString(
-                    "Adds support for multimedia keys configured through Gnome."
+                    "Adds support for multimedia keys configured through GNOME."
                 );
             }
         }
@@ -108,5 +109,12 @@ namespace Banshee.Plugins.MMKeys
         {
             return new MMKeysConfigPage();
         }
+        
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+            "plugins.mmkeys", "enabled",
+            false,
+            "Plugin enabled",
+            "Multimedia Keys plugin enabled"
+        );
 	}
 }

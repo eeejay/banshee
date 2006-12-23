@@ -27,12 +27,13 @@
  */
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 using Glade;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 namespace Banshee.Gui
 {
@@ -42,7 +43,7 @@ namespace Banshee.Gui
         private ComboBoxEntry address_entry;
         private Button browse_button;
         
-        private ArrayList history = new ArrayList();
+        private List<string> history = new List<string>();
     
         public OpenLocationDialog() : base("OpenLocationDialog")
         {
@@ -74,7 +75,7 @@ namespace Banshee.Gui
                 return;
             }
             
-            ArrayList filtered_history = new ArrayList();
+            List<string> filtered_history = new List<string>();
             
             history.Insert(0, Address);
             foreach(string uri in history) {
@@ -88,7 +89,7 @@ namespace Banshee.Gui
                 trimmed_history[i] = filtered_history[i] as string;
             }
             
-            Globals.Configuration.Set(GConfKeys.OpenLocationHistory, trimmed_history);
+            OpenLocationHistorySchema.Set(trimmed_history);
         }
         
         private void OnBrowseClicked(object o, EventArgs args)
@@ -114,17 +115,26 @@ namespace Banshee.Gui
         
         private void LoadHistory()
         {
-            try {
-                foreach(string uri in (string [])Globals.Configuration.Get(GConfKeys.OpenLocationHistory)) {
-                    history.Add(uri);
-                    address_entry.AppendText(uri);
-                }
-            } catch {
+            string [] history_array = OpenLocationHistorySchema.Get();
+            if(history_array == null || history_array.Length == 0) {
+                return;
+            }
+            
+            foreach(string uri in history_array) {
+                history.Add(uri);
+                address_entry.AppendText(uri);
             }
         }
         
         public string Address {
             get { return address_entry.Entry.Text; }
         }
+        
+        public static readonly SchemaEntry<string []> OpenLocationHistorySchema = new SchemaEntry<string []>(
+            "player_window", "open_location_history",
+            new string [] { String.Empty },
+            "URI List",
+            "List of URIs in the history drop-down for the open location dialog"
+        );
     }
 }

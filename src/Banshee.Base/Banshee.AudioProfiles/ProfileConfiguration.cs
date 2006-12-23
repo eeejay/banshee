@@ -43,7 +43,8 @@ namespace Banshee.AudioProfiles
         public static ProfileConfiguration Load(Profile profile, string id)
         {
             ProfileConfiguration configuration = new GConfProfileConfiguration(profile,
-                Banshee.Base.GConfKeys.BasePath + "audio_profiles/" + id + "/" + profile.ID + "/", id);
+                Banshee.Configuration.GConfConfigurationClient.BaseKey + 
+                    "audio_profiles/" + id + "/" + profile.ID + "/", id);
             configuration.Load();
             return configuration;
         }
@@ -52,7 +53,7 @@ namespace Banshee.AudioProfiles
         {
             try {
                 string profile_id = GConfProfileConfiguration.LoadActiveProfile(
-                    Banshee.Base.GConfKeys.BasePath + "audio_profiles/", id);
+                    Banshee.Configuration.GConfConfigurationClient.BaseKey + "audio_profiles/", id);
                 
                 if(profile_id == null) {
                     return null;
@@ -72,7 +73,7 @@ namespace Banshee.AudioProfiles
         public static void SaveActiveProfile(Profile profile, string id)
         {
             GConfProfileConfiguration.SaveActiveProfile(profile,
-                Banshee.Base.GConfKeys.BasePath + "audio_profiles/", id);
+                Banshee.Configuration.GConfConfigurationClient.BaseKey + "audio_profiles/", id);
         }
         
         public ProfileConfiguration(Profile profile, string id)

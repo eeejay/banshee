@@ -33,7 +33,9 @@ using System.Data;
 using System.Collections;
 using System.Threading;
 using System.Text;
+
 using Banshee.Database;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Base
 {
@@ -86,10 +88,7 @@ namespace Banshee.Base
 //            Console.WriteLine ("\"{0}\" in \"{1}\": {2}", old_filename, Core.Library.Location, in_library);
 
             if (initial_import && !in_library) {
-                bool copy = false;
-                try {
-                    copy = (bool)Globals.Configuration.Get(GConfKeys.CopyOnImport);
-                } catch {}
+                bool copy = LibrarySchema.CopyOnImport.Get();
 
                 if (copy) {
                     string new_filename = FileNamePattern.BuildFull(this,
@@ -113,11 +112,7 @@ namespace Banshee.Base
             }
 
             if (in_library) {
-                bool move = false;
-
-                try {
-                    move = (bool)Globals.Configuration.Get(GConfKeys.MoveOnInfoSave);
-                } catch {}
+                bool move = LibrarySchema.MoveOnInfoSave.Get();
     
                 if (move) {
                     string new_filename = FileNamePattern.BuildFull(this,

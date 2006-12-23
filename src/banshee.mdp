@@ -1,15 +1,15 @@
-<Project name="Banshee" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="banshee" />
       <Build debugmode="True" target="Exe" />
-      <Execution executeScript="./banshee --uninstalled" runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution executeScript="./banshee --uninstalled" runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./" assembly="banshee" />
       <Build debugmode="False" target="Exe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
@@ -17,7 +17,6 @@
   <Contents>
     <File name="./Main.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlayerInterface.cs" subtype="Code" buildaction="Compile" />
-    <File name="./PlaylistColumns.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlaylistModel.cs" subtype="Code" buildaction="Compile" />
     <File name="./PlaylistView.cs" subtype="Code" buildaction="Compile" />
     <File name="./StockIcons.cs" subtype="Code" buildaction="Compile" />
@@ -65,6 +64,20 @@
     <File name="../data/images/splash.svg" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../data/images/sync-needed.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./PlayerWindowSchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrackViewColumnWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TrackViewColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TrackColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/ArtistColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TitleColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/AlbumColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/GenreColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/YearColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TimeColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/PlayCountColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/LastPlayedColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/RatingColumn.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Base" />
@@ -80,4 +93,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="gconf-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

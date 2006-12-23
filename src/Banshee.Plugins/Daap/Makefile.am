@@ -3,6 +3,7 @@ include $(top_srcdir)/build/Common.Makefile
 
 ASSEMBLY_NAME = Daap
 ASSEMBLY = $(ASSEMBLY_NAME).dll
+ASSEMBLY_GCONF_SCHEMA = banshee-plugin-daap.schemas.in
 
 daapdir = $(pkglibdir)/Banshee.Plugins
 daap_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
@@ -23,25 +24,19 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/daap-sharp/*.cs \
 	$(srcdir)/daap-sharp/Mono.Zeroconf/*.cs
 
-schema_in_files = daap.schemas.in
-schemadir = $(GCONF_SCHEMA_FILE_DIR)
-schema_DATA = $(schema_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if [ -z "$(DESTDIR)" ]; then \
-		GCONF_CONFIG_SOURCE="" $(GCONFTOOL) --makefile-install-rule $(builddir)$(schema_DATA); \
-	fi;
-endif
-
-endif
-
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) 
 	$(BUILD_LIB_BANSHEE_CORE) -out:$@  $(DAAPSHARP_FLAGS) $(LINK_GTK) $(LINK_MONO_UNIX) -r:ICSharpCode.SharpZipLib -r:System.Web -resource:$(srcdir)/daap-sharp/content-codes,content-codes $(ASSEMBLY_SOURCES)
-	
-EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in $(schema_in_files) $(srcdir)/daap-sharp/content-codes
+
+include $(top_srcdir)/build/gconf-schema-rules
+
+endif
+
+EXTRA_DIST = \
+	$(ASSEMBLY_SOURCES) \
+	$(ASSEMBLY).config.in \
+	$(schema_in_files) \
+	$(srcdir)/daap-sharp/content-codes \
+	$(ASSEMBLY_GCONF_SCHEMA)
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb $(schema_DATA)

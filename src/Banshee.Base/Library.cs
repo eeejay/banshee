@@ -34,6 +34,7 @@ using System.IO;
 using Mono.Unix;
 
 using Banshee.Database;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Base
 {
@@ -149,16 +150,8 @@ namespace Banshee.Base
 
         public string Location {
              get {
-                string libraryLocation;
-            
-                try {
-                    libraryLocation = (string)Globals.Configuration.Get(GConfKeys.LibraryLocation);
-                } catch(Exception) {
-                    libraryLocation = Paths.DefaultLibraryPath;
-                }
-            
-                Globals.Configuration.Set(GConfKeys.LibraryLocation, libraryLocation);
-                
+                string libraryLocation = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+                LibrarySchema.Location.Set(libraryLocation);
                 return libraryLocation;             
              }    
         }

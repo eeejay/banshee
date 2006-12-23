@@ -36,4 +36,7 @@
     <File name="./nautilus-burn.c" subtype="Code" buildaction="Compile" />
   </Contents>
   <References />
+  <DeploymentInformation strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

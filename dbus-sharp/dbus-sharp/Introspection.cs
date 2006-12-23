@@ -3,7 +3,6 @@
 // See COPYING for details
 
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -21,9 +20,7 @@ namespace NDesk.DBus
 
 		public StringBuilder sb;
 		public string xml;
-		public Type target_type = null;
 		public ObjectPath root_path = ObjectPath.Root;
-		public ObjectPath target_path = ObjectPath.Root;
 
 		protected XmlWriter writer;
 
@@ -39,43 +36,33 @@ namespace NDesk.DBus
 			writer = XmlWriter.Create (sb, settings);
 		}
 
-		public void HandleIntrospect ()
+		public void WriteStart ()
 		{
 			writer.WriteDocType ("node", PUBLIC_IDENTIFIER, SYSTEM_IDENTIFIER, null);
 
-			//TODO: write version info in a comment, when we get an AssemblyInfo.cs
-
-			writer.WriteComment (" Never rely on XML introspection data for dynamic binding. It is provided only for convenience and is subject to change at any time. ");
-
-			writer.WriteComment (" Warning: Intospection support is incomplete in this implementation ");
-
-			writer.WriteComment (" This is the introspection result for ObjectPath: " + root_path + " ");
+			AssemblyName aname = Assembly.GetExecutingAssembly().GetName ();
+			writer.WriteComment (" " + aname.Name + " " + aname.Version.ToString (3) + " ");
 
 			//the root node element
 			writer.WriteStartElement ("node");
+		}
 
-			//FIXME: don't hardcode this stuff, do it properly!
-			if (root_path.Value == "/") {
-				writer.WriteStartElement ("node");
-				writer.WriteAttributeString ("name", "org");
-				writer.WriteEndElement ();
-			}
+		public void WriteNode (string name)
+		{
+			writer.WriteStartElement ("node");
+			writer.WriteAttributeString ("name", name);
+			writer.WriteEndElement ();
+		}
 
-			if (root_path.Value == "/org") {
-				writer.WriteStartElement ("node");
-				writer.WriteAttributeString ("name", "ndesk");
-				writer.WriteEndElement ();
-			}
-
-			if (root_path.Value == "/org/ndesk") {
-				writer.WriteStartElement ("node");
-				writer.WriteAttributeString ("name", "test");
-				writer.WriteEndElement ();
-			}
-
-			if (root_path.Value == target_path.Value) {
-				WriteNodeBody ();
-			}
+		public void WriteEnd ()
+		{
+			/*
+			WriteEnum (typeof (org.freedesktop.DBus.NameFlag));
+			WriteEnum (typeof (org.freedesktop.DBus.NameReply));
+			WriteEnum (typeof (org.freedesktop.DBus.ReleaseNameReply));
+			WriteEnum (typeof (org.freedesktop.DBus.StartReply));
+			WriteInterface (typeof (org.freedesktop.DBus.IBus));
+			*/
 
 			writer.WriteEndElement ();
 
@@ -84,7 +71,7 @@ namespace NDesk.DBus
 		}
 
 		//public void WriteNode ()
-		public void WriteNodeBody ()
+		public void WriteType (Type target_type)
 		{
 			//writer.WriteStartElement ("node");
 
@@ -126,12 +113,6 @@ namespace NDesk.DBus
 			if (argType == typeof (void))
 				return;
 
-			//FIXME: remove these special cases, they are just for testing
-			if (argType.FullName == "GLib.Value")
-				argType = typeof (object);
-			if (argType.FullName == "GLib.GType")
-				argType = typeof (Signature);
-
 			writer.WriteStartElement ("arg");
 
 			if (!String.IsNullOrEmpty (argName))
@@ -146,12 +127,12 @@ namespace NDesk.DBus
 
 			Signature sig = Signature.GetSig (argType);
 
-			//FIXME: this hides the fact that there are invalid types coming up
-			//sig.Value = sig.Value.Replace ((char)DType.Invalid, (char)DType.Variant);
-			//sig.Value = sig.Value.Replace ((char)DType.Single, (char)DType.UInt32);
-
-			//writer.WriteAttributeString ("type", Signature.GetSig (argType).Value);
+			//TODO: avoid writing null (DType.Invalid) to the XML stream
 			writer.WriteAttributeString ("type", sig.Value);
+
+			//annotations aren't valid in an arg element, so this is disabled
+			//if (argType.IsEnum)
+			//	WriteAnnotation ("org.ndesk.DBus.Enum", Mapper.GetInterfaceName (argType));
 
 			writer.WriteEndElement ();
 		}
@@ -168,6 +149,8 @@ namespace NDesk.DBus
 			//WriteArgReverse (mi.ReturnParameter);
 			WriteArg (mi.ReturnType, Mapper.GetArgumentName (mi.ReturnTypeCustomAttributes, "ret"), false, true);
 
+			WriteAnnotations (mi);
+
 			writer.WriteEndElement ();
 		}
 
@@ -179,6 +162,7 @@ namespace NDesk.DBus
 			writer.WriteAttributeString ("type", Signature.GetSig (pri.PropertyType).Value);
 			string access = (pri.CanRead ? "read" : String.Empty) + (pri.CanWrite ? "write" : String.Empty);
 			writer.WriteAttributeString ("access", access);
+			WriteAnnotations (pri);
 			writer.WriteEndElement ();
 
 			//expose properties as methods also
@@ -208,6 +192,8 @@ namespace NDesk.DBus
 
 			foreach (ParameterInfo pi in ei.EventHandlerType.GetMethod ("Invoke").GetParameters ())
 				WriteArgReverse (pi);
+
+			WriteAnnotations (ei);
 
 			//no need to consider the delegate return value as dbus doesn't support it
 			writer.WriteEndElement ();
@@ -268,12 +254,39 @@ namespace NDesk.DBus
 			WriteInterface (type.BaseType);
 		}
 
+		public void WriteAnnotations (ICustomAttributeProvider attrProvider)
+		{
+			if (Mapper.IsDeprecated (attrProvider))
+				WriteAnnotation ("org.freedesktop.DBus.Deprecated", "true");
+		}
+
 		public void WriteAnnotation (string name, string value)
 		{
 			writer.WriteStartElement ("annotation");
 
 			writer.WriteAttributeString ("name", name);
 			writer.WriteAttributeString ("value", value);
+
+			writer.WriteEndElement ();
+		}
+
+		//this is not in the spec, and is not finalized
+		public void WriteEnum (Type type)
+		{
+			writer.WriteStartElement ("enum");
+			writer.WriteAttributeString ("name", Mapper.GetInterfaceName (type));
+			writer.WriteAttributeString ("type", Signature.GetSig (type.GetElementType ()).Value);
+			writer.WriteAttributeString ("flags", (type.IsDefined (typeof (FlagsAttribute), false)) ? "true" : "false");
+
+			string[] names = Enum.GetNames (type);
+
+			int i = 0;
+			foreach (Enum val in Enum.GetValues (type)) {
+				writer.WriteStartElement ("element");
+				writer.WriteAttributeString ("name", names[i++]);
+				writer.WriteAttributeString ("value", val.ToString ("d"));
+				writer.WriteEndElement ();
+			}
 
 			writer.WriteEndElement ();
 		}

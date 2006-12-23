@@ -64,15 +64,12 @@ namespace Banshee.Plugins.Daap
             proxy_server = new DaapProxyWebServer();
             proxy_server.Start();
             
-            string share_name = null;
-            
-            try {
-                share_name = Globals.Configuration.Get(plugin.ConfigurationKeys["ShareName"]) as string;
-            } catch {}
+            string share_name = DaapPlugin.ShareNameSchema.Get();
             
             if(share_name == null || share_name == String.Empty) {
                 share_name = Catalog.GetString("Banshee Music Share");
             }
+            
             collision_count = 0;
             
             database = new DAAP.Database(share_name);
@@ -168,7 +165,8 @@ namespace Banshee.Plugins.Daap
                 server.Port = 0;
                 server.Start();
             }
-            Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], true);
+            
+            DaapPlugin.ServerEnabledSchema.Set(true);
             
             if(!initial_db_committed) {
                 server.Commit();
@@ -180,7 +178,7 @@ namespace Banshee.Plugins.Daap
         {
             Console.WriteLine("Stopping DAAP Server");
             server.Stop();
-            Globals.Configuration.Set(plugin.ConfigurationKeys["ServerEnabled"], false);
+            DaapPlugin.ServerEnabledSchema.Set(false);
         }
         
         private static DAAP.Track TrackInfoToTrack(TrackInfo track)
@@ -223,7 +221,7 @@ namespace Banshee.Plugins.Daap
             }
             
             try {
-                if((bool)Globals.Configuration.Get(plugin.ConfigurationKeys["ServerEnabled"])) {
+                if(DaapPlugin.ServerEnabledSchema.Get()) {
                     StartServer();
                 }
             } catch {
@@ -252,7 +250,7 @@ namespace Banshee.Plugins.Daap
                     collision_count = 0;
                     server.Name = value;
                     database.Name = value;
-                    Globals.Configuration.Set(plugin.ConfigurationKeys["ShareName"], value);
+                    DaapPlugin.ShareNameSchema.Set(value);
                 }
             }
         }

@@ -30,6 +30,7 @@ using System;
 using System.Reflection;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 namespace Banshee.IO
 {
@@ -67,12 +68,7 @@ namespace Banshee.IO
         
         public static void Reload()
         {
-            string name = "unix";
-            
-            try {
-                name = (string)Globals.Configuration.Get(GConfKeys.IOBackend);
-            } catch {
-            }
+            string name = IOBackendSchema.Get();
             
             foreach(Type type in available_config_types) {
                 try {
@@ -98,5 +94,14 @@ namespace Banshee.IO
         {
             return config.DetectMimeType(uri);
         }
+        
+        public static readonly SchemaEntry<string> IOBackendSchema = new SchemaEntry<string>(
+            "core", "io_backend",
+            "unix",
+            "Set the IO backend in Banshee",
+            "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or " + 
+                "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+        );
+
     }
 }

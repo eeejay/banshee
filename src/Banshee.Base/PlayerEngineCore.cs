@@ -34,6 +34,7 @@ using Mono.Unix;
 
 using Banshee.MediaEngine;
 using Banshee.Plugins;
+using Banshee.Configuration;
 
 namespace Banshee.Base
 {
@@ -53,10 +54,7 @@ namespace Banshee.Base
 
         private static void InstantiateEngines()
         {
-            try {
-                preferred_engine_id = (string)Globals.Configuration.Get(GConfKeys.PlayerEngine);
-            } catch {
-            }
+            preferred_engine_id = EngineSchema.Get();
             
             factory.PluginLoaded += OnPluginLoaded;
             
@@ -321,12 +319,26 @@ namespace Banshee.Base
                 engines.Insert(0, value);
             
                 default_engine = value;
-                Globals.Configuration.Set(GConfKeys.PlayerEngine, value.Id);
+                EngineSchema.Set(value.Id);
             }
         }
         
         public static IEnumerable<PlayerEngine> Engines {
             get { return engines; }
         }
+        
+        public static readonly SchemaEntry<int> VolumeSchema = new SchemaEntry<int>(
+            "player_engine", "volume",
+            80,
+            "Volume",
+            "Volume of playback relative to mixer output"
+        );
+
+        public static readonly SchemaEntry<string> EngineSchema = new SchemaEntry<string>(
+            "player_engine", "backend",
+            "helix-remote",
+            "Backend",
+            "Name of media playback engine backend"
+        );
     }
 }

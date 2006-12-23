@@ -30,6 +30,7 @@ using System;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Configuration;
 
 public static class PluginModuleEntry
 {
@@ -45,7 +46,7 @@ namespace Banshee.Plugins.Daap
 {
     public class DaapPlugin : Banshee.Plugins.Plugin
     {
-        protected override string ConfigurationName { get { return "Daap"; } }
+        protected override string ConfigurationName { get { return "daap"; } }
         public override string DisplayName { get { return Catalog.GetString("Music Sharing"); } }
         
         public override string Description {
@@ -68,8 +69,6 @@ namespace Banshee.Plugins.Daap
 
         protected override void PluginInitialize()
         {
-            RegisterConfigurationKey("ShareName");
-            RegisterConfigurationKey("ServerEnabled");
             DaapCore.Initialize(this);
         }
         
@@ -82,5 +81,26 @@ namespace Banshee.Plugins.Daap
         {
             return new DaapConfigPage();
         }
+        
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+            "plugins.daap", "enabled",
+            false,
+            "Plugin enabled",
+            "DAAP plugin enabled"
+        );
+        
+        public static readonly SchemaEntry<bool> ServerEnabledSchema = new SchemaEntry<bool>(
+            "plugins.daap", "server_enabled",
+            false,
+            "Share server enabled",
+            "Share local music with others"
+        );
+        
+        public static readonly SchemaEntry<string> ShareNameSchema = new SchemaEntry<string>(
+            "plugins.daap", "share_name",
+            "Banshee Music Share",
+            "Share name",
+            "Music share name"
+        );
     }
 }

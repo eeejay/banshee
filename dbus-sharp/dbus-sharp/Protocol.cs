@@ -123,11 +123,11 @@ namespace NDesk.DBus
 		NoAutoStart = 0x2,
 	}
 
-	public struct ObjectPath
+	public struct ObjectPath //: IComparable, IComparable<ObjectPath>, IEquatable<ObjectPath>
 	{
 		public static readonly ObjectPath Root = new ObjectPath ("/");
 
-		public string Value;
+		public readonly string Value;
 
 		public ObjectPath (string value)
 		{
@@ -143,11 +143,44 @@ namespace NDesk.DBus
 		public string[] Decomposed
 		{
 			get {
-				return Value.Split ('/');
+				return Value.Split (new char[] {'/'}, StringSplitOptions.RemoveEmptyEntries);
+			/*
 			} set {
 				Value = String.Join ("/", value);
+			*/
 			}
 		}
+
+		public ObjectPath Parent
+		{
+			get {
+				if (Value == Root.Value)
+					return new ObjectPath (null);
+
+				string par = Value.Substring (0, Value.LastIndexOf ('/'));
+				if (par == String.Empty)
+					par = "/";
+
+				return new ObjectPath (par);
+			}
+		}
+
+		/*
+		public int CompareTo (object value)
+		{
+			return 1;
+		}
+
+		public int CompareTo (ObjectPath value)
+		{
+			return 1;
+		}
+
+		public bool Equals (ObjectPath value)
+		{
+			return false;
+		}
+		*/
 	}
 
 	public static class Protocol
@@ -155,11 +188,7 @@ namespace NDesk.DBus
 		//protocol versions that we support
 		public const byte MinVersion = 0;
 		public const byte Version = 1;
-#if PROTO_TYPE_SINGLE
-		public const byte MaxVersion = 2;
-#else
-		public const byte MaxVersion = 1;
-#endif
+		public const byte MaxVersion = Version;
 
 		public static int PadNeeded (int pos, int alignment)
 		{

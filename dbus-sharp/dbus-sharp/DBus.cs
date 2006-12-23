@@ -33,7 +33,7 @@ namespace org.freedesktop.DBus
 		DoNotQueue = 0x4,
 	}
 
-	public enum NameReply : uint
+	public enum RequestNameReply : uint
 	{
 		PrimaryOwner = 1,
 		InQueue,
@@ -90,10 +90,11 @@ namespace org.freedesktop.DBus
 	[Interface ("org.freedesktop.DBus")]
 	public interface IBus : Introspectable
 	{
-		NameReply RequestName (string name, NameFlag flags);
+		RequestNameReply RequestName (string name, NameFlag flags);
 		ReleaseNameReply ReleaseName (string name);
 		string Hello ();
 		string[] ListNames ();
+		string[] ListActivatableNames ();
 		bool NameHasOwner (string name);
 		event NameOwnerChangedHandler NameOwnerChanged;
 		event NameLostHandler NameLost;
@@ -104,10 +105,10 @@ namespace org.freedesktop.DBus
 		void AddMatch (string rule);
 		void RemoveMatch (string rule);
 
-#if UNDOCUMENTED_IN_SPEC
 		//undocumented in spec
-		//there are more of these
+		string[] ListQueuedOwners (string name);
+		uint GetConnectionUnixProcessID (string connection_name);
+		byte[] GetConnectionSELinuxSecurityContext (string connection_name);
 		void ReloadConfig ();
-#endif
 	}
 }

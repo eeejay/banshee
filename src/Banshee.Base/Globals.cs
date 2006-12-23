@@ -28,7 +28,6 @@
  
 using System;
 using System.IO;
-using GConf;
 using Mono.Unix;
 
 using Banshee.AudioProfiles;
@@ -94,7 +93,6 @@ namespace Banshee.Base
                 HalCore.Initialize);
                 
             startup.Register(Catalog.GetString("Initializing audio engine"), Banshee.Gstreamer.Utilities.Initialize);
-            startup.Register(Catalog.GetString("Starting background tasks"), delegate { gconf_client = new GConf.Client(); });
             startup.Register(Catalog.GetString("Detecting network settings"), delegate { network_detect = NetworkDetect.Instance; });
             startup.Register(Catalog.GetString("Creating action manager"), delegate { action_manager = new ActionManager(); });
             startup.Register(Catalog.GetString("Loading music library"), delegate { 
@@ -187,8 +185,18 @@ namespace Banshee.Base
         
         private static void OnTestAudioProfile(object o, TestProfileArgs args)
         {
-            string pipeline = args.Profile.Pipeline.GetProcessByIdOrDefault("gstreamer");
-            args.ProfileAvailable = Banshee.Gstreamer.Utilities.TestPipeline(pipeline);
+            bool available = false;
+            
+            foreach(Pipeline.Process process in args.Profile.Pipeline.GetPendingProcessesById("gstreamer")) {
+                string pipeline = args.Profile.Pipeline.CompileProcess(process);
+                if(Banshee.Gstreamer.Utilities.TestPipeline(pipeline)) {
+                    args.Profile.Pipeline.AddProcess(process);
+                    available = true;
+                    break;
+                }
+            }
+            
+            args.ProfileAvailable = available;
         }
         
         private static void Dispose()
@@ -204,10 +212,6 @@ namespace Banshee.Base
         
         public static ComponentInitializer StartupInitializer {
             get { return startup; }
-        }
-        
-        public static GConf.Client Configuration {
-            get { return gconf_client; }
         }
 
         public static NetworkDetect Network {

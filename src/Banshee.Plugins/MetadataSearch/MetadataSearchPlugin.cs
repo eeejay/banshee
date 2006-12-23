@@ -35,6 +35,7 @@ using MusicBrainz;
 using Banshee.Base;
 using Banshee.Kernel;
 using Banshee.Database;
+using Banshee.Configuration;
 
 public static class PluginModuleEntry
 {
@@ -59,7 +60,7 @@ namespace Banshee.Plugins.MetadataSearch
     {
         private const string NotFoundAsin = "NOTFOUND";
         
-        protected override string ConfigurationName { get { return "MetadataSearch"; } }
+        protected override string ConfigurationName { get { return "metadata_searcher"; } }
         public override string DisplayName { get { return Catalog.GetString("Metadata Searcher"); } }
         
         public override string Description {
@@ -90,8 +91,6 @@ namespace Banshee.Plugins.MetadataSearch
             System.Threading.Interlocked.Exchange(ref scan_ref_count, 0);
             
             mb_client = new Client();
-            
-            RegisterConfigurationKey("FetchMethod");
             
             if(Globals.Library.IsLoaded) {
                 ScanLibrary();
@@ -169,14 +168,14 @@ namespace Banshee.Plugins.MetadataSearch
         internal FetchMethod FetchMethod {
             get {
                 try {
-                    return (FetchMethod)Globals.Configuration.Get(ConfigurationKeys["FetchMethod"]);
+                    return (FetchMethod)FetchMethodSchema.Get();
                 } catch {
                     return FetchMethod.CoversOnly;
                 }
             }
             
             set {
-                Globals.Configuration.Set(ConfigurationKeys["FetchMethod"], (int)value);
+                FetchMethodSchema.Set((int)value);
             }
         }
 
@@ -345,5 +344,20 @@ namespace Banshee.Plugins.MetadataSearch
                 track.Save();
             }
         }
+        
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+            "plugins.metadata_searcher", "enabled",
+            false,
+            "Plugin enabled",
+            "Metadata searcher plugin enabled"
+        );    
+        
+        public static readonly SchemaEntry<int> FetchMethodSchema = new SchemaEntry<int>(
+            "plugins.metadata_searcher", "fetch_mode",
+            0,
+            "Method of fetching cover art and supplementary metadata",
+            "0 - Download only cover art, 1 - Download cover art, fill in missing metadata, " + 
+                "2 - Download cover art, overwrite metadata"
+        );
     }
 }

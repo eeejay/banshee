@@ -26,7 +26,7 @@
             <value value="192">192 Kbps</value>
             <value value="320">320 Kbps</value>
           </possible-values>
-		  <transformation id="gstreamer">$_ * 1024</transformation>
+          <transformation id="gstreamer">$_ * 1024</transformation>
         </variable>
         <preset-variable id="channels" />
         <preset-variable id="sample_rate" />

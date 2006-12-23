@@ -28,4 +28,13 @@ popd
 
 ACLOCAL_FLAGS="-I build/m4/shamrock -I build/m4/banshee" REQUIRED_AUTOMAKE_VERSION=1.9 USE_GNOME2_MACROS=1 . gnome-autogen.sh
 
+if ! test -x ./mkinstalldirs; then 
+	for automake_path in `whereis automake-1.9`; do 
+		if ! test -z `echo $automake_path | grep share`; then 
+			if test -x $automake_path/mkinstalldirs; then
+				cp $automake_path/mkinstalldirs .
+			fi
+		fi 
+	done
+fi
 
