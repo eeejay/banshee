@@ -51,9 +51,14 @@ namespace Banshee.Widgets
             }
             
             last_width = evnt.Width;
-            SetSizeRequest(-1, (int)(ratio * (double)evnt.Width));
+            SetSizeRequest();
             
             return true;
+        }
+
+        private void SetSizeRequest()
+        {
+            SetSizeRequest(-1, (int)(ratio * (double)last_width));
         }
         
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
@@ -104,7 +109,8 @@ namespace Banshee.Widgets
                         throw new ApplicationException("Could not create pixbuf");
                     }
                     
-                    ratio = (double)pixbuf.Width / (double)pixbuf.Height;
+                    ratio = (double)pixbuf.Height / (double)pixbuf.Width;
+                    SetSizeRequest();
                     
                     if(enabled) {
                         Show();
