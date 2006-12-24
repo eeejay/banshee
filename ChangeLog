@@ -1,3 +1,9 @@
+2006-12-24  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Banshee.Base/Gui/ExceptionDialog.cs: Set UseUnderline to false on
+	the label of the exception, this caused exception messages to be garbled
+	if they contained an underscore.
+
 2006-12-23  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Widgets/CoverArtThumbnail.cs: Fix funny aspect ratio

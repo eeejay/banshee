@@ -79,6 +79,7 @@ namespace Banshee.Gui.Dialogs
             label = new Label(e.Message);
                 
             label.UseMarkup = true;
+            label.UseUnderline = false;
             label.Justify = Gtk.Justification.Left;
             label.LineWrap = true;
             label.SetAlignment(0.0f, 0.5f);
