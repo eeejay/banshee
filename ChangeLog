@@ -1,3 +1,9 @@
+2006-12-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/banshee.in: source scripts into the wrapper that are installed
+	into $(libdir)/banshee/shell-init/ and are +x; Useful if plugins need
+	to ensure certain environment variables are initialized
+
 2006-12-24  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Banshee.Base/Gui/ExceptionDialog.cs: Set UseUnderline to false on
