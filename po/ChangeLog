@@ -1,3 +1,8 @@
+2006-12-27  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* POTFILES.skip: Add file that is not built.
+	* nb.po: Updated Norwegian bokmål translation.
+
 2006-12-26  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.
