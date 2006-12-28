@@ -220,6 +220,17 @@
     <File name="./Sources/DapPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/IPlaylistCapable.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/FileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/M3u.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistFile.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/Pls.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

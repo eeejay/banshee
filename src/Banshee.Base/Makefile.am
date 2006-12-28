@@ -111,6 +111,15 @@ BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
     $(srcdir)/Banshee.Playlists.Formats/M3u.cs \
     $(srcdir)/Banshee.Playlists.Formats/Pls.cs  
 
+BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES = \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/Playlist.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/Track.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/XmlUtil.cs \
+	$(srcdir)/Banshee.Playlists.Formats.Xspf/W3CDateTime.cs
+
 BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
@@ -224,6 +233,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_LIBRARY_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
+	$(BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \
 	$(BANSHEE_CONFIGURATION_SOURCES) \
 	$(BANSHEE_CONFIGURATION_SCHEMA_SOURCES) \

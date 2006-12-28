@@ -6,14 +6,15 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES = \
 	$(srcdir)/Banshee.Kernel.cs \
 	$(srcdir)/GenericCollectionController.cs \
-	$(srcdir)/FileNamePattern.cs
+	$(srcdir)/FileNamePattern.cs \
+	$(srcdir)/Xspf/Xspf.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
 NUNIT_TESTER_CSFILES = $(srcdir)/$(NUNIT_TESTER_NAME).cs $(srcdir)/AssemblyInfo.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll $(ASSEMBLY_CSFILES)
 
 $(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
 	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)
