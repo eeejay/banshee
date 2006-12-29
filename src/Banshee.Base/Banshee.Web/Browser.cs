@@ -47,5 +47,7 @@ namespace Banshee.Web
             
             return false;
         }
+
+        public static readonly string UserAgent = String.Format("Banshee {0} (http://banshee-project.org/", Banshee.Base.ConfigureDefines.VERSION);
     }
 }
