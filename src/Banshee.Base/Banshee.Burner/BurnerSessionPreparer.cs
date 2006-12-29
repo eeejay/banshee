@@ -174,7 +174,7 @@ namespace Banshee.Burner
             if(free_space >= 0 && estimated_encoded_bytes >= free_space) {
                 LogCore.Instance.PushError(Catalog.GetString("Insufficient Disk Space"),
                     String.Format(Catalog.GetString("Creating this CD requires at least {0} MiB of free disk space."),
-                        Math.Ceiling(estimated_encoded_bytes / 1000000)));
+                        Math.Ceiling((double)estimated_encoded_bytes / 1000000)));
                 return false;
             }
             
