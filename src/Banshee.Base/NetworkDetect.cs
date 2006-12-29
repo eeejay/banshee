@@ -40,6 +40,17 @@ namespace Banshee.Base
         public bool Connected;
     }
 
+    public class NetworkUnavailableException : ApplicationException
+    {
+        public NetworkUnavailableException() : base(Catalog.GetString("There is no available network connection"))
+        {
+        }
+
+        public NetworkUnavailableException(string message) : base(message)
+        {
+        }
+    }
+
     public class NetworkDetect
     {
         public event NetworkStateChangedHandler StateChanged;
