@@ -61,6 +61,10 @@ namespace Banshee
         public TreeViewColumn PlaysColumn;
         public TreeViewColumn LastPlayedColumn;
 
+        protected PlaylistView(IntPtr ptr) : base(ptr)
+        {
+        }
+
         public PlaylistView(PlaylistModel model)
         {        
             Model = this.model = model;

@@ -43,6 +43,7 @@ namespace Banshee
             "media-skip-backward",
             "media-playback-start",
             "media-playback-pause",
+            "media-playback-stop",
             "media-eject",
             
             /* Volume Button Icons */

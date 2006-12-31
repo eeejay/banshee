@@ -37,18 +37,15 @@ namespace Banshee.Widgets
     
         private static UriOpenHandler default_open_handler;
         private static Gdk.Cursor hand_cursor = new Gdk.Cursor(Gdk.CursorType.Hand1);
-        private static Gdk.Color link_color = new Gdk.Color(0, 0, 0xff);
-        
-        static LinkLabel()
-        {
-            Gdk.Colormap.System.AllocColor(ref link_color, true, true);
-        }
         
         private Label label;
         private Uri uri;
+        private bool act_as_link;
         private bool is_pressed;
         private bool is_hovering;
+        private bool selectable;
         private UriOpenHandler open_handler;
+        private Gdk.Color link_color;
         
         public event EventHandler Clicked; 
         
@@ -65,8 +62,11 @@ namespace Banshee.Widgets
             this.uri = uri;
             
             label = new Label(text);
-            label.ModifyFg(Gtk.StateType.Normal, link_color);
             label.Show();
+            
+            link_color = label.Style.Background(StateType.Selected);
+            ActAsLink = true;
+            
             Add(label);
         }
         
@@ -154,6 +154,11 @@ namespace Banshee.Widgets
             return false;
         }
         
+        public Pango.EllipsizeMode Ellipsize {
+            get { return label.Ellipsize; }
+            set { label.Ellipsize = value; }
+        }
+        
         public string Text {
             get { return label.Text; }
             set { label.Text = value; }
@@ -177,6 +182,17 @@ namespace Banshee.Widgets
             set { label.Yalign = value; }
         }
         
+        public bool Selectable {
+            get { return selectable; }
+            set {
+                if((value && !ActAsLink) || !value) {
+                    label.Selectable = value;
+                }
+                
+                selectable = value;
+            }
+        }
+        
         public Uri Uri {
             get { return uri; }
             set { uri = value; }
@@ -184,12 +200,33 @@ namespace Banshee.Widgets
         
         public string UriString {
             get { return uri == null ? null : uri.AbsoluteUri; }
-            set { uri = new Uri(value); }
+            set { uri = value == null ? null : new Uri(value); }
         }
         
         public UriOpenHandler Open {
             get { return open_handler; }
             set { open_handler = value; }
+        }
+        
+        public bool ActAsLink {
+            get { return act_as_link; }
+            set {
+                if(act_as_link == value) {
+                    return;
+                }
+                
+                act_as_link = value;
+                
+                if(act_as_link) {
+                    label.Selectable = false;
+                    label.ModifyFg(Gtk.StateType.Normal, link_color);
+                } else {
+                    label.Selectable = selectable;
+                    label.ModifyFg(Gtk.StateType.Normal, label.Style.Foreground(Gtk.StateType.Normal));
+                }
+                
+                label.QueueDraw();
+            }
         }
         
         public static UriOpenHandler DefaultOpen {

@@ -1,5 +1,55 @@
 2006-12-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs: Use Album instead of DisplayAlbum, set the
+	MoreInfoUri on the TrackInfoHeader; Use a stop icon instead of a pause
+	icon if the stream cannot pause; support the Contacting engine state
+
+	* src/StockIcons.cs: Added stop icon
+
+	* src/PlaylistView.cs: Added protected IntPtr constructor
+
+	* src/Banshee.Base/Banshee.Metadata/SchedulerMetadataProvider.cs: Added
+	some more null checks
+	
+	* src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Use Album instead of DisplayAlbum
+
+	* src/Banshee.MediaEngine/Helix/HelixRemotePlayerEngine.cs: Support parsing
+	Real Radio clip metadata and sending results as StreamTags; support 
+	cover art lookup inside live streams when track changes occur; support
+	virtual sub-tracks on live streams when duration events come in; this
+	allows the UI to show proper position/duration on subsets of a live stream
+	
+	* src/Banshee.Base/PlayerEngineCore.cs: Added CanPause property, if
+	Pause() is called and the track cannot pause, stop it instead
+	
+	* src/Banshee.Base/MediaEngine/PlayerEngine.cs: Added a Contacting state
+	and use current_track.IsLive instead of current_track is UnknownTrackInfo
+	to ensure tag updates only occur on live/radio streams
+	
+	* src/Banshee.Base/StreamTagger.cs: Added CommonTags.MoreInfoUri and
+	support merging a duration that is already a TimeSpan
+
+	* src/Banshee.Base/UnknownTrackInfo.cs: Set is_live
+
+	* src/Banshee.Base/TrackInfoHeader.cs: Set MoreInfoUri, use a LinkLabel
+	for the title; do not show the album if it is null
+	
+	* src/Banshee.Base/TrackInfo.cs: Removed Equals/GetHashCode overrides,
+	added AreEqual(a,b) static method; Added IsLive and MoreInfoUri properties
+	
+	* src/Banshee.Widgets/StreamPositionLabel.cs: Added IsContacting
+	
+	* src/Banshee.Widgets/LinkLabel.cs: Added ActAsLink - link functionality
+	can be disabled by setting this to false, it will act as a normal label;
+	use the selection background color for the link foreground color; Added
+	Ellipsize and Selectable properties; Selectable is always disabled if
+	in link mode
+
+	* src/Banshee.Widgets/Banshee.Widgets.mdp: Updated
+
+2006-12-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Banshee.Base/Banshee.Metadata/*.cs: New generic metadata query APIs
 
 	* src/Banshee.Base/Banshee.Metadata.Rhapsody/*.cs: Rhapsody cover art 

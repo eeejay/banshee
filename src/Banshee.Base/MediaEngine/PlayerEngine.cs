@@ -49,6 +49,7 @@ namespace Banshee.MediaEngine
     
     public enum PlayerEngineState {
         Idle,
+        Contacting,
         Loaded,
         Playing,
         Paused
@@ -207,10 +208,10 @@ namespace Banshee.MediaEngine
         
         protected void OnTagFound(StreamTag tag)
         {
-            if(tag.Equals(StreamTag.Zero) || current_track == null || !(current_track is UnknownTrackInfo)) {
+            if(tag.Equals(StreamTag.Zero) || current_track == null || !current_track.IsLive) {
                 return;
             }
-            
+                        
             StreamTagger.TrackInfoMerge(current_track, tag);
             
             if(track_info_updated_timeout <= 0) {

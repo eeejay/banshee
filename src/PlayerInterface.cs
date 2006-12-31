@@ -595,11 +595,14 @@ namespace Banshee
         
             trackInfoHeader.Artist = track.DisplayArtist;
             trackInfoHeader.Title = track.DisplayTitle;
-            trackInfoHeader.Album = track.DisplayAlbum;
+            trackInfoHeader.Album = track.Album;
+            trackInfoHeader.MoreInfoUri = track.MoreInfoUri != null ? track.MoreInfoUri.AbsoluteUri : null;
             
             trackInfoHeader.Visible = true;
             
-            WindowPlayer.Title = track.DisplayTitle + " (" + track.DisplayArtist + ")";
+            WindowPlayer.Title = track.DisplayTitle + ((track.Artist != null && track.Artist != String.Empty) 
+                ? (" (" + track.DisplayArtist + ")")
+                : "");
             
             try {
                 trackInfoHeader.Cover.FileName = track.CoverArtFileName;
@@ -762,10 +765,24 @@ namespace Banshee
         }
    
         // ---- Player Event Handlers ----
+                
+        private void SetPlayButton()
+        {
+            if(PlayerEngineCore.CanPause) {
+                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), "media-playback-pause");
+            } else {
+                Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Stop"), "media-playback-stop");
+            }
+        }
         
         private void OnPlayerEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
             switch(args.State) {
+                case PlayerEngineState.Contacting:
+                    stream_position_label.IsContacting = true;
+                    seek_slider.SetIdle();
+                    SetPlayButton();
+                    break;
                 case PlayerEngineState.Loaded:
                     incrementedCurrentSongPlayCount = false;
                     seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
@@ -797,7 +814,7 @@ namespace Banshee
                     Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Play"), "media-playback-start");
                     break;
                 case PlayerEngineState.Playing:
-                    Globals.ActionManager.UpdateAction("PlayPauseAction", Catalog.GetString("Pause"), "media-playback-pause");
+                    SetPlayButton();
                     break;
             }
             
@@ -838,6 +855,7 @@ namespace Banshee
                     
                     stream_position_label.IsBuffering = true;
                     stream_position_label.BufferingProgress = args.BufferingPercent;
+                    seek_slider.SetIdle();
                     break;
                 case PlayerEngineEvent.Error:
                     RepeatMode old_repeat_mode = playlistModel.Repeat;
@@ -863,6 +881,7 @@ namespace Banshee
             uint stream_length = PlayerEngineCore.Length;
             uint stream_position = PlayerEngineCore.Position;
             
+            stream_position_label.IsContacting = false;
             seek_slider.CanSeek = PlayerEngineCore.CanSeek;
             seek_slider.Duration = stream_length;
             seek_slider.SeekValue = stream_position;

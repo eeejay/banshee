@@ -38,9 +38,10 @@ namespace Banshee.Widgets
         private string artist;
         private string album;
         private string title;
+        private string more_info_uri;
     
         private Label artist_album_label;
-        private Label title_label;
+        private LinkLabel title_label;
         private CoverArtThumbnail cover;
         private VBox box;
         
@@ -71,11 +72,17 @@ namespace Banshee.Widgets
             artist_album_label.Yalign = 0.5f;
             artist_album_label.Selectable = true;
             
-            title_label = ellipsize ? new EllipsizeLabel() : new Label();
-            title_label.Show();            
+            title_label = new LinkLabel();
+            if(ellipsize) {
+                title_label.Ellipsize = Pango.EllipsizeMode.End;
+            }
+            
+            title_label.Show();
             title_label.Xalign = 0.0f;
             title_label.Yalign = 0.5f;
             title_label.Selectable = true;
+            title_label.ActAsLink = false;
+            title_label.Open = Banshee.Web.Browser.Open;
             
             box.PackStart(title_label, false, false, 0);
             box.PackStart(artist_album_label, false, false, 0);
@@ -91,20 +98,30 @@ namespace Banshee.Widgets
                 artist_album_label.Style.Background(StateType.Normal),
                 artist_album_label.Style.Foreground(StateType.Normal));
             string hex_blend = String.Format("#{0:x2}{1:x2}{2:x2}", blend.Red, blend.Green, blend.Blue);
+                        
+            if(album == null || album == String.Empty) {
+                artist_album_label.Markup = String.Format(
+                    "<span color=\"{0}\">{1}</span>  {2}",
+                    hex_blend, 
+                    Catalog.GetString("by"),
+                    GLib.Markup.EscapeText(artist));
+            } else {
+                artist_album_label.Markup = String.Format(
+                    "<span color=\"{0}\">{1}</span>  {3}  <span color=\"{0}\">{2}</span>  {4}",
+                    hex_blend, 
+                    Catalog.GetString("by"),
+                    Catalog.GetString("from"),
+                    GLib.Markup.EscapeText(artist), 
+                    GLib.Markup.EscapeText(album));
+            }
             
-            artist_album_label.Markup = String.Format(
-                "<span color=\"{0}\">{1}</span>  {3}  <span color=\"{0}\">{2}</span>  {4}",
-                hex_blend, 
-                Catalog.GetString("by"),
-                Catalog.GetString("from"),
-                GLib.Markup.EscapeText(artist), 
-                GLib.Markup.EscapeText(album));
-                
             title_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(title));
+            title_label.ActAsLink = more_info_uri != null;
+            title_label.UriString = more_info_uri;
             
             ShowAll();
         }
-        
+
         public string Artist {
             set {
                 artist = value;
@@ -122,6 +139,13 @@ namespace Banshee.Widgets
         public string Album {
             set {
                 album = value;
+                UpdateDisplay();
+            }
+        }
+        
+        public string MoreInfoUri {
+            set {
+                more_info_uri = value;
                 UpdateDisplay();
             }
         }

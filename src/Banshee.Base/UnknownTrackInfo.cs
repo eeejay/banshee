@@ -35,6 +35,7 @@ namespace Banshee.Base
         public UnknownTrackInfo(SafeUri uri) 
         {
             this.uri = uri;
+            is_live = true;
         }
     }
 }

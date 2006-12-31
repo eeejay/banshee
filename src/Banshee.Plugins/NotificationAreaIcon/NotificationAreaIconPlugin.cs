@@ -406,7 +406,9 @@ namespace Banshee.Plugins.NotificationAreaIcon
                     }
                     break;
                 case PlayerEngineEvent.StartOfStream:
+                case PlayerEngineEvent.TrackInfoUpdated:
                     FillPopup();
+                    ShowNotification();
                     break;
                 case PlayerEngineEvent.EndOfStream:
                     // only hide the popup when we don't play again after 250ms
@@ -427,7 +429,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
         {
             can_show_popup = true;
             popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtist;
-            popup.Album = PlayerEngineCore.CurrentTrack.DisplayAlbum;
+            popup.Album = PlayerEngineCore.CurrentTrack.Album;
             popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTitle;
             popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
             popup.QueueDraw();

@@ -28,6 +28,7 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -47,12 +48,100 @@ public static class PluginModuleEntry
 }
 
 namespace Banshee.MediaEngine.Helix
-{    
+{
+    public class HelixClipParser
+    {
+        private string artist;
+        private string title;
+        private string album;
+        private TimeSpan duration;
+        private SafeUri more_info;
+        
+        public HelixClipParser(string clip)
+        {
+            Parse(clip);
+        }
+        
+        private void Parse(string clip)
+        {
+            string clip_s = clip.Trim();
+            
+            if(!clip_s.StartsWith("clipinfo:")) {
+                title = clip_s;
+                return;
+            }
+            
+            foreach(string part in clip_s.Substring(9).Split('|')) {
+                string [] kvp = part.Split(new char [] {'='}, 2);
+                if(kvp.Length != 2) {
+                    continue;
+                }
+
+                string key = kvp[0].ToLower().Trim();
+                string value = kvp[1].Trim();
+                
+                try {
+                    switch(key) {
+                        case "title": title = value; break;
+                        case "artist name": artist = value; break;
+                        case "album name": album = value; break;
+                        case "duration": duration = TimeSpan.FromSeconds(Int32.Parse(value)); break;
+                        case "track:rhapsody track id": break;
+                        default: break;
+                    }
+                } catch {
+                }
+            }
+            
+            SafeUri album_uri = null;
+            if(artist != null && album != null) {
+                album_uri = new SafeUri(String.Format("http://www.rhapsody.com/{0}/{1}",
+                    MakeUriPart(artist), MakeUriPart(album), MakeUriPart(title)));
+            }
+            
+            if(artist != null && album != null && title != null) {
+                more_info = new SafeUri(String.Format("http://www.rhapsody.com/{0}/{1}/{2}", 
+                    MakeUriPart(artist), MakeUriPart(album), MakeUriPart(title)));
+            } else if(artist != null && album != null) {
+                more_info = album_uri;
+            } else if(artist != null) {
+                more_info = new SafeUri(String.Format("http://www.rhapsody.com/{0}", MakeUriPart(artist)));
+            }
+        }
+        
+        private string MakeUriPart(string str)
+        {
+            return Regex.Replace(str, @"[^A-Za-z0-9]*", "");
+        }
+        
+        public string Artist {
+            get { return artist; }
+        }
+        
+        public string Title {
+            get { return title; }
+        }
+        
+        public string Album {
+            get { return album; }
+        }
+        
+        public SafeUri MoreInfo {
+            get { return more_info; }
+        }
+        
+        public TimeSpan Duration {
+            get { return duration; }
+        }
+    }
+
     public class HelixRemotePlayerEngine : PlayerEngine, IEqualizer
     {
         private IRemotePlayer player;
         private uint timeout_id;
         private uint ping_id;
+        private uint position_mark = 0;
+        private uint stream_songs = 0;
         
         public HelixRemotePlayerEngine()
         {
@@ -83,6 +172,9 @@ namespace Banshee.MediaEngine.Helix
             if(!player.OpenUri(uri.AbsoluteUri)) {
                 throw new ApplicationException("Cannot open URI");
             }
+            
+            stream_songs = 0;
+            position_mark = 0;
 
             timeout_id = GLib.Timeout.Add(500, delegate {
                 if(CurrentState == PlayerEngineState.Playing) {
@@ -128,7 +220,9 @@ namespace Banshee.MediaEngine.Helix
                             OnStateChanged(PlayerEngineState.Playing);
                             break;
                         case ContentState.Loading:
+                            break;
                         case ContentState.Contacting:
+                            OnStateChanged(PlayerEngineState.Contacting);
                             break;
                         default:
                             OnStateChanged(PlayerEngineState.Idle);
@@ -145,12 +239,54 @@ namespace Banshee.MediaEngine.Helix
                     if(title == null || title.Trim() == String.Empty) {
                         break;
                     }
-                
-                    StreamTag tag = new StreamTag();
-                    tag.Name = CommonTags.Title;
-                    tag.Value = (string)args["Title"];
                     
-                    OnTagFound(tag);
+                    if(CurrentTrack == null) {
+                        break;
+                    }
+                    
+                    HelixClipParser parser = new HelixClipParser(title);
+                    
+                    if(parser.Title != null) {
+                        StreamTag tag = new StreamTag();
+                        tag.Name = CommonTags.Title;
+                        tag.Value = parser.Title;
+                        OnTagFound(tag);
+                    }
+                     
+                    if(parser.Artist != null) {
+                        StreamTag tag = new StreamTag();
+                        tag.Name = CommonTags.Artist;
+                        tag.Value = parser.Artist;
+                        OnTagFound(tag);
+                    }
+                    
+                    if(parser.Album != null) {
+                        StreamTag tag = new StreamTag();
+                        tag.Name = CommonTags.Album;
+                        tag.Value = parser.Album;
+                        OnTagFound(tag);
+                    }
+                    
+                    if(!parser.Duration.Equals(TimeSpan.Zero)) {
+                        StreamTag tag = new StreamTag();
+                        tag.Name = CommonTags.Duration;
+                        tag.Value = parser.Duration;
+                        OnTagFound(tag);
+                        position_mark = player.Position;
+                        stream_songs++;
+                    }
+                    
+                    if(parser.MoreInfo != null) {
+                        StreamTag tag = new StreamTag();
+                        tag.Name = CommonTags.MoreInfoUri;
+                        tag.Value = parser.MoreInfo;
+                        OnTagFound(tag);
+                        
+                        if(CurrentTrack != null) {
+                            CurrentTrack.CoverArtFileName = null;
+                            Banshee.Metadata.MultipleMetadataProvider.Instance.Lookup(CurrentTrack);
+                        }
+                    }
                     
                     break;
             }
@@ -165,7 +301,7 @@ namespace Banshee.MediaEngine.Helix
         }
     
         public override uint Position {
-            get { return (uint)player.Position / 1000; }
+            get { return (uint)(player.Position - (stream_songs > 1 ? position_mark : 0)) / 1000; }
             set {
                 if(player.StartSeeking()) {
                     if(player.SetPosition(value * 1000)) {

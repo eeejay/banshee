@@ -70,6 +70,9 @@ namespace Banshee.Base
         protected string asin;
         protected string label;
 
+        protected SafeUri more_info_uri;
+        protected bool is_live = false;
+
         protected uint rating;
         protected uint play_count;
         protected DateTime last_played;
@@ -139,6 +142,15 @@ namespace Banshee.Base
         public SafeUri Uri { 
             get { return uri; }
             set { uri = value; WriteUpdate(); } 
+        }
+        
+        public SafeUri MoreInfoUri {
+            get { return more_info_uri; }
+            set { more_info_uri = value; }
+        }
+        
+        public bool IsLive {
+            get { return is_live; }
         }
        
         public string Asin { 
@@ -315,23 +327,13 @@ namespace Banshee.Base
             return String.Format ("{0} - {1} - {2} ({3})", Artist, Album, Title, Uri.AbsoluteUri);
         }
         
-        public override bool Equals(object o)
+        public static bool AreEqual(TrackInfo a, TrackInfo b)
         {
-            if(!(o is TrackInfo)) {
-                return false;
-            }
-            
-            if(o == this) {
+            if(a == b) {
                 return true;
             }
             
-            TrackInfo t = o as TrackInfo;
-            return t.Artist == Artist && t.Album == Album && t.Title == Title;
-        }
-        
-        public override int GetHashCode()
-        {
-            return Artist.GetHashCode() ^ Album.GetHashCode() ^ Title.GetHashCode();
+            return a.Artist == b.Artist && a.Album == b.Album && a.Title == b.Title;
         }
         
         public static string CreateArtistAlbumID(string artist, string album, bool asPath)

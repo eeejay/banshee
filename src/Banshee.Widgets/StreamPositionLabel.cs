@@ -37,6 +37,7 @@ namespace Banshee.Widgets
         private Gdk.GC bar_gc;
         private double buffering_progress;
         private bool is_buffering;
+        private bool is_contacting;
         private SeekSlider seekRange;
         private Label label;
         private string format_string = "<small>{0}</small>";
@@ -79,6 +80,8 @@ namespace Banshee.Widgets
             if(is_buffering) {
                 double progress = buffering_progress * 100.0;
                 UpdateLabel(Catalog.GetString("Buffering") + ": " + progress.ToString("0.0") + "%");
+            } else if(is_contacting) {
+                UpdateLabel(Catalog.GetString("Contacting..."));
             } else if(seekRange.Value == 0 && seekRange.Duration == 0) {
                 UpdateLabel(Catalog.GetString("Idle"));
             } else if(seekRange.Value == seekRange.Duration) {
@@ -118,9 +121,22 @@ namespace Banshee.Widgets
         public bool IsBuffering {
             get { return is_buffering; }
             set { 
-                is_buffering = value;
-                UpdateLabel();
-                QueueDraw();
+                if(is_buffering != value) {
+                    is_buffering = value;
+                    UpdateLabel();
+                    QueueDraw();
+                }
+            }
+        }
+        
+        public bool IsContacting {
+            get { return is_contacting; }
+            set { 
+                if(is_contacting != value) {
+                    is_contacting = value;
+                    UpdateLabel();
+                    QueueDraw();
+                }
             }
         }
         

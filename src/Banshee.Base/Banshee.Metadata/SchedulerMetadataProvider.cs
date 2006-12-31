@@ -52,9 +52,17 @@ namespace Banshee.Metadata
         
         public void Lookup(IBasicTrackInfo track)
         {
+            if(track == null || queries == null) {
+                return;
+            }
+            
             lock(((ICollection)queries).SyncRoot) {
                 if(!queries.ContainsKey(track)) {
                     SchedulerMetadataLookupJob job = CreateJob(track);
+                    if(job == null) {
+                        return;
+                    }
+                    
                     queries.Add(track, job);
                     Scheduler.Schedule(job, JobPriority.Highest);
                 }

@@ -257,7 +257,11 @@ namespace Banshee.Base
         
         public static void Pause()
         {
-            active_engine.Pause();
+            if(!CanPause) {
+                Close();
+            } else {
+                active_engine.Pause();
+            }
         }
         
         public static void TrackInfoUpdated()
@@ -309,6 +313,10 @@ namespace Banshee.Base
         
         public static bool CanSeek {
             get { return active_engine.CanSeek; }
+        }
+        
+        public static bool CanPause {
+            get { return CurrentTrack != null && !CurrentTrack.IsLive; }
         }
         
         public static uint Length {

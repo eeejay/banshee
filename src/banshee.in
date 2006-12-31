@@ -24,6 +24,11 @@ case "x--debug" in ("x$1" | "x$2")
 	echo "** Running Banshee in Debug Mode **"
 esac
 
+case "x--trace=" in ("x${1:0:8}")
+	MONO_OPTIONS="$MONO_OPTIONS $1"
+	echo "** Running Mono with $1 **"
+esac
+
 # Plugins can install scripts to be sourced into this script. 
 # Sourcing is useful if a plugin needs to ensure certain environment 
 # variables are initialized.

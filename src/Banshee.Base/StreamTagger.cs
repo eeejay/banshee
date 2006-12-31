@@ -132,7 +132,14 @@ namespace Banshee.Base
                         track.TrackCount = (uint)tag.Value;
                         break;
                     case CommonTags.Duration:
-                        track.Duration = new TimeSpan((uint)tag.Value * TimeSpan.TicksPerMillisecond);
+                        if(tag.Value is TimeSpan) {
+                            track.Duration = (TimeSpan)tag.Value;
+                        } else {
+                            track.Duration = new TimeSpan((uint)tag.Value * TimeSpan.TicksPerMillisecond);
+                        }
+                        break;
+                    case CommonTags.MoreInfoUri:
+                        track.MoreInfoUri = (SafeUri)tag.Value;
                         break;
                     /* No year tag in GST it seems 
                     case CommonTags.Year:
@@ -219,6 +226,7 @@ namespace Banshee.Base
         public const string AlbumGain         = "replaygain-album-gain";
         public const string AlbumPeak         = "replaygain-album-peak";
         public const string StreamType        = "stream-type";
-        public const string AlbumCoverID      = "album-cover-id";
+        public const string AlbumCoverID      = "album-cover-id"; 
+        public const string MoreInfoUri       = "more-info-uri";
     }
 }
