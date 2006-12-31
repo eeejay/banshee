@@ -133,6 +133,19 @@ BANSHEE_CONFIGURATION_SCHEMA_SOURCES = \
 	$(srcdir)/Banshee.Configuration.Schema/LibrarySchema.cs \
 	$(srcdir)/Banshee.Configuration.Schema/ImportSchema.cs
 
+BANSHEE_METADATA_SOURCES = \
+	$(srcdir)/Banshee.Metadata/IBasicTrackInfo.cs \
+	$(srcdir)/Banshee.Metadata/IMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata/IMetadataLookupJob.cs \
+	$(srcdir)/Banshee.Metadata/SchedulerMetadataLookupJob.cs \
+	$(srcdir)/Banshee.Metadata/SchedulerMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata/MetadataProviderFactory.cs \
+	$(srcdir)/Banshee.Metadata/MultipleMetadataProvider.cs
+
+BANSHEE_METADATA_RHAPSODY_SOURCES = \
+	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/Utilities.cs \
 	$(srcdir)/IO/IOProxy.cs \
@@ -237,6 +250,8 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_WEB_SOURCES) \
 	$(BANSHEE_CONFIGURATION_SOURCES) \
 	$(BANSHEE_CONFIGURATION_SCHEMA_SOURCES) \
+	$(BANSHEE_METADATA_SOURCES) \
+	$(BANSHEE_METADATA_RHAPSODY_SOURCES) \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \

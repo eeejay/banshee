@@ -141,6 +141,9 @@ namespace Banshee.Base
                     case CommonTags.StreamType:
                         track.MimeType = (string)tag.Value;
                         break;
+                    case CommonTags.AlbumCoverID:
+                        track.CoverArtFileName = Paths.GetCoverArtPath((string)tag.Value);
+                        break;
                 }
             } catch {
             }
@@ -216,5 +219,6 @@ namespace Banshee.Base
         public const string AlbumGain         = "replaygain-album-gain";
         public const string AlbumPeak         = "replaygain-album-peak";
         public const string StreamType        = "stream-type";
+        public const string AlbumCoverID      = "album-cover-id";
     }
 }

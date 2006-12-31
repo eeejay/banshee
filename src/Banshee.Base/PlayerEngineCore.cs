@@ -35,6 +35,7 @@ using Mono.Unix;
 using Banshee.MediaEngine;
 using Banshee.Plugins;
 using Banshee.Configuration;
+using Banshee.Metadata;
 
 namespace Banshee.Base
 {
@@ -97,6 +98,8 @@ namespace Banshee.Base
                 throw new ApplicationException(Catalog.GetString(
                     "No player engines were found. Please ensure Banshee has been cleanly installed."));
             }
+            
+            MultipleMetadataProvider.Instance.HaveResult += OnMetadataProviderHaveResult;
         }
 
         public static void Dispose()
@@ -107,11 +110,28 @@ namespace Banshee.Base
             
             factory.Dispose();
         }
-
+        
+        private static void OnMetadataProviderHaveResult(object o, MetadataLookupResultArgs args)
+        {
+            if(CurrentTrack != null && args.Track == CurrentTrack) {
+                foreach(StreamTag tag in args.ResultTags) {
+                    StreamTagger.TrackInfoMerge(CurrentTrack, tag);
+                }
+                
+                PlayerEngineEventArgs eventargs = new PlayerEngineEventArgs();
+                eventargs.Event = PlayerEngineEvent.TrackInfoUpdated;
+                OnEngineEventChanged(active_engine, eventargs);
+            }
+        }
+        
         private static void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
             if(o != active_engine) {
                 return;
+            }
+            
+            if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
+                MultipleMetadataProvider.Instance.Lookup(CurrentTrack);
             }
             
             PlayerEngineStateHandler handler = StateChanged;

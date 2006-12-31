@@ -231,6 +231,17 @@
     <File name="./Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata.Rhapsody" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Metadata" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Metadata/IMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/SchedulerMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/IMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/SchedulerMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/MetadataProviderFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/MultipleMetadataProvider.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -255,6 +266,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="gnome-vfs-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <DeploymentInformation strategy="File">
     <excludeFiles />

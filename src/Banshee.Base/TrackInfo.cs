@@ -28,6 +28,7 @@
 
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Mono.Unix;
 using Gtk;
  
@@ -54,7 +55,7 @@ namespace Banshee.Base
 
     public delegate void HaveTrackInfoHandler(object o, HaveTrackInfoArgs args);
     
-    public abstract class TrackInfo
+    public abstract class TrackInfo : Banshee.Metadata.IBasicTrackInfo
     {
         protected SafeUri uri;
         protected string mimetype;
@@ -162,6 +163,12 @@ namespace Banshee.Base
                     cover_art_file = path;
                     return path;
                 }
+                
+                path = Paths.GetCoverArtPath(CreateArtistAlbumID(Artist, Album, false));
+                if(File.Exists(path)) {
+                    cover_art_file = path;
+                    return path;
+                }
                
                 string basepath = Path.GetDirectoryName(Uri.AbsolutePath) + Path.DirectorySeparatorChar;
                
@@ -186,6 +193,8 @@ namespace Banshee.Base
                 
                 return null;
             }
+            
+            set { cover_art_file = value; }
         }
        
         public string MimeType { 
@@ -323,6 +332,23 @@ namespace Banshee.Base
         public override int GetHashCode()
         {
             return Artist.GetHashCode() ^ Album.GetHashCode() ^ Title.GetHashCode();
+        }
+        
+        public static string CreateArtistAlbumID(string artist, string album, bool asPath)
+        {
+            string sm_artist = CreateArtistAlbumIDPart(artist);
+            string sm_album = CreateArtistAlbumIDPart(album);
+            
+            return sm_artist == null || sm_album == null 
+                ? null 
+                : String.Format("{0}{1}{2}", sm_artist, (asPath ? "/" : "-"), sm_album); 
+        }
+        
+        private static string CreateArtistAlbumIDPart(string part)
+        {
+            return part == null || part == String.Empty 
+                ? null 
+                : Regex.Replace(part, @"[^A-Za-z0-9]*", "").ToLower();
         }
     }    
 }

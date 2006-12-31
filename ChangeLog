@@ -1,3 +1,20 @@
+2006-12-31  Aaron Bockover  <abock@gnome.org>
+
+	* src/Banshee.Base/Banshee.Metadata/*.cs: New generic metadata query APIs
+
+	* src/Banshee.Base/Banshee.Metadata.Rhapsody/*.cs: Rhapsody cover art 
+	fetching implementation of Banshee.Metadata APIs
+
+	* src/Banshee.Base/PlayerEngineCore.cs: Query the metadata query APIs
+	on track change; send results as a track info update event
+
+	* src/Banshee.Base/TrackInfo.cs: Cover art fixes
+
+	* src/Banshee.Base/StreamTagger.cs: Added album-cover-id
+
+	* src/Banshee.Base/Makefile.am: 
+	* src/Banshee.Base/Banshee.Base.mdp: Updated
+
 2006-12-30  Aaron Bockover  <abock@gnome.org>
 
 	* GNOME Subversion: About f*cking time.
