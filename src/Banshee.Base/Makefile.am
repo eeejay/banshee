@@ -131,7 +131,8 @@ BANSHEE_CONFIGURATION_SOURCES = \
 
 BANSHEE_CONFIGURATION_SCHEMA_SOURCES = \
 	$(srcdir)/Banshee.Configuration.Schema/LibrarySchema.cs \
-	$(srcdir)/Banshee.Configuration.Schema/ImportSchema.cs
+	$(srcdir)/Banshee.Configuration.Schema/ImportSchema.cs \
+	$(srcdir)/Banshee.Configuration.Schema/PlayerWindowSchema.cs
 
 BANSHEE_METADATA_SOURCES = \
 	$(srcdir)/Banshee.Metadata/IBasicTrackInfo.cs \

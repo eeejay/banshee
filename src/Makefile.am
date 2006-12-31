@@ -34,7 +34,6 @@ BANSHEE_SOURCE = \
 	PlayerInterface.cs \
 	PlaylistView.cs \
 	PlaylistModel.cs \
-	PlayerWindowSchema.cs \
 	TrackViewColumnWindow.cs \
 	Banshee.TrackView.Columns/TrackViewColumn.cs \
 	Banshee.TrackView.Columns/TrackColumn.cs \

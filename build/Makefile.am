@@ -4,6 +4,9 @@ SUBDIRS = m4
 
 GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
 
+bansheedir = $(pkglibdir)
+banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
+
 all: $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
 
 $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs

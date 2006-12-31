@@ -168,6 +168,105 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/banshee/player_window/width</key>
+      <applyto>/apps/banshee/player_window/width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>1024</default>
+      <locale name="C">
+        <short>Window Width</short>
+        <long>Width of the main interface window.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/height</key>
+      <applyto>/apps/banshee/player_window/height</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>700</default>
+      <locale name="C">
+        <short>Window Height</short>
+        <long>Height of the main interface window.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/x_pos</key>
+      <applyto>/apps/banshee/player_window/x_pos</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Window Position X</short>
+        <long>Pixel position of Main Player Window on the X Axis</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/y_pos</key>
+      <applyto>/apps/banshee/player_window/y_pos</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Window Position Y</short>
+        <long>Pixel position of Main Player Window on the Y Axis</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/maximized</key>
+      <applyto>/apps/banshee/player_window/maximized</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Window Maximized</short>
+        <long>True if main window is to be maximized, false if it is not.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/source_view_width</key>
+      <applyto>/apps/banshee/player_window/source_view_width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>175</default>
+      <locale name="C">
+        <short>Source View Width</short>
+        <long>Width of Source View Column.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/show_cover_art</key>
+      <applyto>/apps/banshee/player_window/show_cover_art</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Show cover art</short>
+        <long>Show cover art below source view if available</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/playback/shuffle</key>
+      <applyto>/apps/banshee/playback/shuffle</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Shuffle playback</short>
+        <long>Enable shuffle mode</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/playback/repeat</key>
+      <applyto>/apps/banshee/playback/repeat</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Repeat playback</short>
+        <long>Repeat mode (0 = None, 1 = All, 2 = Single)</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/banshee/player_engine/volume</key>
       <applyto>/apps/banshee/player_engine/volume</applyto>
       <owner>banshee</owner>
