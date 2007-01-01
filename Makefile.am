@@ -2,9 +2,7 @@ SUBDIRS =          \
 	build          \
 	data           \
 	libbanshee     \
-	taglib-sharp   \
-	dbus-sharp     \
-	hal-sharp      \
+	ext            \
 	src            \
 	docs           \
 	tests          \

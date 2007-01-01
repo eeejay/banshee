@@ -5,9 +5,9 @@
 
 ## Directories ##
 
-DIR_HAL = $(top_builddir)/hal-sharp
-DIR_TAGLIB = $(top_builddir)/taglib-sharp
-DIR_DBUS = $(top_builddir)/dbus-sharp
+DIR_HAL = $(top_builddir)/ext/hal-sharp
+DIR_TAGLIB = $(top_builddir)/ext/taglib-sharp
+DIR_DBUS = $(top_builddir)/ext/dbus-sharp
 DIR_LAST_FM = $(top_builddir)/src/Extras/Last.FM
 DIR_MUSICBRAINZ = $(top_builddir)/src/Extras/MusicBrainz
 DIR_GNOME_KEYRING = $(top_builddir)/src/Extras/Gnome.Keyring
