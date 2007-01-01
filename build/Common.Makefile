@@ -59,7 +59,7 @@ BUILD = $(MCS) $(BUILD_FLAGS)
 BUILD_LIB = $(BUILD) -target:library
 
 BUILD_BANSHEE_CORE = \
-	MONO_PATH=$(top_builddir)/dbus-sharp \
+	MONO_PATH=$(DIR_DBUS) \
 	$(BUILD) \
 	$(LINK_BANSHEE_CORE)
 	
