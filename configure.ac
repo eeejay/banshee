@@ -88,23 +88,28 @@ SHAMROCK_CONFIGURE_I18N(banshee)
 dnl generated files
 AC_OUTPUT([
 Makefile
-banshee.pc
-hal-sharp/Makefile
-taglib-sharp/Makefile
-dbus-sharp/Makefile
-dbus-sharp/NDesk.DBus.GLib.dll.config
-libbanshee/Makefile
-branding/Makefile
+
 build/Makefile
 build/m4/Makefile
+build/banshee.pc
+
 data/Makefile
 data/org.gnome.Banshee.service
 data/images/Makefile
+
 docs/Makefile
 tests/Makefile
 tools/Makefile
 tools/banshee-import
+branding/Makefile
 po/Makefile.in
+
+libbanshee/Makefile
+
+ext/hal-sharp/Makefile
+ext/taglib-sharp/Makefile
+ext/dbus-sharp/Makefile
+ext/dbus-sharp/NDesk.DBus.GLib.dll.config
 
 src/Makefile
 src/AssemblyInfo.cs

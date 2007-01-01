@@ -1,36 +1,31 @@
-SUBDIRS =          \
-	build          \
-	data           \
-	libbanshee     \
-	ext            \
-	src            \
-	docs           \
-	tests          \
-	tools          \
-	branding       \
+SUBDIRS = \
+	build \
+	data \
+	libbanshee \
+	ext \
+	src \
+	docs \
+	tests \
+	tools \
+	branding \
 	po
 
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = banshee.pc
-
-EXTRA_DIST =            \
-	banshee.pc.in       \
+EXTRA_DIST = \
 	intltool-extract.in \
-	intltool-merge.in   \
-	intltool-update.in  \
-	mkinstalldirs       \
-	AUTHORS             \
+	intltool-merge.in \
+	intltool-update.in \
+	mkinstalldirs \
+	AUTHORS \
 	HACKING
 
 CLEANFILES = \
-	intltool-extract    \
-	intltool-update     \
+	intltool-extract \
+	intltool-update \
 	intltool-merge
 
-DISTCLEANFILES =        \
-	banshee.pc    \
-	*.bak         \
-	*~            \
+DISTCLEANFILES = \
+	*.bak \
+	*~ \
 	*.pidb
 
 MAINTAINERCLEANFILES = \

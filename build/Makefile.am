@@ -4,6 +4,9 @@ SUBDIRS = m4
 
 GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = banshee.pc
+
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
 
@@ -18,8 +21,10 @@ EXTRA_DIST = \
 	gmcs.exe \
 	icon-theme-installer \
 	GConfSchemaExtractor.cs \
-	gconf-schema-rules
+	gconf-schema-rules \
+	banshee.pc.in
 
 CLEANFILES = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY){,.mdb} 
+DISTCLEANFILES = banshee.pc
 MAINTAINERCLEANFILES = Makefile.in
 
