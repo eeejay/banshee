@@ -51,3 +51,8 @@ run:
 	make run; \
 	popd;
 
+uninstall-hook:
+	if test `find $(pkglibdir) | wc -l` -eq 1; then \
+		rmdir $(pkglibdir); \
+	fi
+
