@@ -22,10 +22,6 @@ which gnome-autogen.sh || {
     exit 1
 }
 
-pushd taglib-sharp
-./update-checkout.sh
-popd
-
 ACLOCAL_FLAGS="-I build/m4/shamrock -I build/m4/banshee" REQUIRED_AUTOMAKE_VERSION=1.9 USE_GNOME2_MACROS=1 . gnome-autogen.sh
 
 if ! test -x ./mkinstalldirs; then 
