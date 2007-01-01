@@ -106,6 +106,7 @@ po/Makefile.in
 
 libbanshee/Makefile
 
+ext/Makefile
 ext/hal-sharp/Makefile
 ext/taglib-sharp/Makefile
 ext/dbus-sharp/Makefile
