@@ -1,5 +1,10 @@
 2006-12-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/PlayerInterface.cs:
+	* src/Banshee.Base/Gui/SeekDialog.cs: Synced functionality, minor fixes
+
+2006-12-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Makefile.am:
 	* src/Banshee.Base/Makefile.am:
 	* src/PlayerWindowSchema.cs:

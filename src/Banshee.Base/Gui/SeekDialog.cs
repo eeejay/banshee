@@ -80,10 +80,15 @@ namespace Banshee.Gui
         private void OnPlayerEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
             switch(args.State) {
+                case PlayerEngineState.Contacting:
+                    stream_position_label.IsContacting = true;
+                    seek_slider.SetIdle();
+                    break;
                 case PlayerEngineState.Loaded:
                     seek_slider.Duration = PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
                     break;
                 case PlayerEngineState.Idle:
+                    stream_position_label.IsContacting = false;
                     seek_slider.SetIdle();
                     break;
             }
@@ -96,6 +101,7 @@ namespace Banshee.Gui
                     seek_slider.CanSeek = PlayerEngineCore.CanSeek;
                     seek_slider.SeekValue = PlayerEngineCore.Position;
                     seek_slider.Duration = PlayerEngineCore.Length;
+                    stream_position_label.IsContacting = false;
                     break;
                 case PlayerEngineEvent.EndOfStream:
                     seek_slider.SetIdle();

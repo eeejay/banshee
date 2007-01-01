@@ -806,7 +806,7 @@ namespace Banshee
                     Globals.ActionManager["JumpToPlayingAction"].Visible = false;
                     seek_slider.SetIdle();
                     trackInfoHeader.SetIdle();
-                    
+                    stream_position_label.IsContacting = false;
                     UpdateMetaDisplay();
                     
                     break;
