@@ -42,12 +42,12 @@ public static class PluginModuleEntry
     public static Type [] GetTypes()
     {
         return new Type [] {
-            typeof(Banshee.MediaEngine.Helix.HelixRemotePlayerEngine)
+            typeof(Banshee.MediaEngine.HelixRemote.HelixRemotePlayerEngine)
         };
     }
 }
 
-namespace Banshee.MediaEngine.Helix
+namespace Banshee.MediaEngine.HelixRemote
 {
     public class HelixClipParser
     {
