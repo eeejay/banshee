@@ -1,17 +1,16 @@
 dnl Automake setup
-AC_INIT(src/AssemblyInfo.cs.in)
+
+AC_INIT([banshee], [0.11.4])
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
-
-VERSION=0.11.4
-ASM_VERSION="$VERSION.*"
-AC_SUBST(ASM_VERSION)
-
-AM_INIT_AUTOMAKE(banshee, $VERSION)
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+
+ASM_VERSION="$VERSION.*"
+AC_SUBST(ASM_VERSION)
 
 dnl Pieces needed by gnome-autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
