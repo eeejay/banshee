@@ -1,5 +1,5 @@
 dnl Automake setup
-AC_INIT(src/Main.cs)
+AC_INIT(src/AssemblyInfo.cs.in)
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 
@@ -97,14 +97,15 @@ libbanshee/Makefile
 branding/Makefile
 build/Makefile
 build/m4/Makefile
-src/banshee
 src/Makefile
 src/AssemblyInfo.cs
-src/banshee.exe.config
 src/MusicBrainz/Makefile
 src/MusicBrainz/MusicBrainz.dll.config
 src/Gnome.Keyring/Makefile
 src/Last.FM/Makefile
+src/Banshee/Makefile
+src/Banshee/banshee
+src/Banshee/banshee.exe.config
 src/Banshee.MediaEngine/Makefile
 src/Banshee.MediaEngine/Gstreamer/Makefile
 src/Banshee.MediaEngine/Helix/Makefile

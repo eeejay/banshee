@@ -1,18 +1,5 @@
 include $(top_srcdir)/build/Common.Makefile
 
-SUBDIRS = \
-	Boo \
-	BooBuddy \
-	MusicBrainz \
-	Gnome.Keyring \
-	Last.FM \
-	Banshee.Widgets \
-	Banshee.Base \
-	Banshee.MediaEngine \
-	Banshee.Dap \
-	Banshee.Plugins \
-	Banshee.Hyena
-
 BANSHEE = banshee
 ASSEMBLY = $(BANSHEE).exe
 ASSEMBLY_GCONF_SCHEMA = banshee-interface.schemas.in
@@ -24,7 +11,7 @@ banshee_SCRIPTS = \
 	$(ASSEMBLY).mdb \
 	$(ASSEMBLY).config 
 
-BANSHEE_SOURCE_IN = AssemblyInfo.cs.in
+BANSHEE_SOURCE_IN = $(top_srcdir)/src/AssemblyInfo.cs.in
 BANSHEE_GENERATED_SOURCE = $(BANSHEE_SOURCE_IN:.in=)
 	
 BANSHEE_SOURCE = \
