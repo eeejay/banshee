@@ -1,6 +1,6 @@
 include $(top_srcdir)/build/Common.Makefile
 
-ASSEMBLY_NAME = MMKeys
+ASSEMBLY_NAME = Banshee.Plugins.MMKeys
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_GCONF_SCHEMA = banshee-plugin-mmkeys.schemas.in
 

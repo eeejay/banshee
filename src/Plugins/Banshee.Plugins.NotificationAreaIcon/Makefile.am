@@ -1,6 +1,6 @@
 include $(top_srcdir)/build/Common.Makefile
 
-ASSEMBLY_NAME = NotificationAreaIcon
+ASSEMBLY_NAME = Banshee.Plugins.NotificationAreaIcon
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_GCONF_SCHEMA = banshee-plugin-notificationarea.schemas.in
 

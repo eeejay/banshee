@@ -1,7 +1,7 @@
 if DAAP_ENABLED
 include $(top_srcdir)/build/Common.Makefile
 
-ASSEMBLY_NAME = Daap
+ASSEMBLY_NAME = Banshee.Plugins.Daap
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_GCONF_SCHEMA = banshee-plugin-daap.schemas.in
 

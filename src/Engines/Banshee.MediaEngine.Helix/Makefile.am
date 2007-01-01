@@ -12,7 +12,7 @@ MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *.dll *.mdb *.exe *.pidb
 
 MCS_FLAGS = -debug
-ASSEMBLY_NAME = HelixRemotePlayerEngine
+ASSEMBLY_NAME = Banshee.MediaEngine.HelixRemote
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 helixenginedir = $(pkglibdir)/Banshee.MediaEngine

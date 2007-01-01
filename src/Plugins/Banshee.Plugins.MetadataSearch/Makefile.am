@@ -1,6 +1,6 @@
 include $(top_srcdir)/build/Common.Makefile
 
-ASSEMBLY_NAME = MetadataSearch
+ASSEMBLY_NAME = Banshee.Plugins.MetadataSearch
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_GCONF_SCHEMA = banshee-plugin-metadatasearcher.schemas.in
 

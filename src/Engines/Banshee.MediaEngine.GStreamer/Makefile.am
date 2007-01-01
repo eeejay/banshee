@@ -1,6 +1,6 @@
 include $(top_srcdir)/build/Common.Makefile
 
-ASSEMBLY_NAME = GStreamerPlayerEngine
+ASSEMBLY_NAME = Banshee.MediaEngine.GStreamer
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 
 gstenginelibdir = $(pkglibdir)/Banshee.MediaEngine

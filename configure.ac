@@ -150,13 +150,13 @@ src/Plugins/Makefile
 src/Plugins/Banshee.Plugins.Audioscrobbler/Makefile
 src/Plugins/Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.dll.config
 src/Plugins/Banshee.Plugins.Daap/Makefile
-src/Plugins/Banshee.Plugins.Daap/Daap.dll.config
+src/Plugins/Banshee.Plugins.Daap/Banshee.Plugins.Daap.dll.config
 src/Plugins/Banshee.Plugins.MetadataSearch/Makefile
-src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearch.dll.config
+src/Plugins/Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.dll.config
 src/Plugins/Banshee.Plugins.MMKeys/Makefile
-src/Plugins/Banshee.Plugins.MMKeys/MMKeys.dll.config
+src/Plugins/Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.dll.config
 src/Plugins/Banshee.Plugins.NotificationAreaIcon/Makefile
-src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIcon.dll.config
+src/Plugins/Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.dll.config
 ])
 
 if test "x${enable_daap}" = "xyes"; then
@@ -189,4 +189,10 @@ banshee-$VERSION
 
     DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
+if test -d ${expanded_libdir}/banshee; then
+	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/banshee"
+	echo "         Remove the existing install before installing this build."
+	echo "         Installing over an existing install will cause conflicts!"
+	echo 
+fi
 
