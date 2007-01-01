@@ -32,6 +32,41 @@
     <File name="./Banshee.TrackView.Columns/TrackColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/TrackViewColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/YearColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="../../../data/banshee.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/cd-action-burn-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/cd-action-burn-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/cd-action-burn-48.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/cd-action-rip-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/cd-action-rip-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-decrease.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-high.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-increase.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-low.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-medium.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/audio-volume-muted.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/encode-action-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/encoding-icon-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-eject.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-playback-pause.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-playback-start.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-skip-backward.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-skip-forward.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/music-player-banshee.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/music-player-banshee-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/music-player-banshee-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/music-player-banshee-24.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/music-player-banshee-32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/now-playing-arrow.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/song-drm.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/sync-needed.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />

@@ -1,0 +1,33 @@
+<Combine name="Plugins" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Banshee.Plugins.Audioscrobbler" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Daap" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.MetadataSearch" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.MMKeys" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.NotificationAreaIcon" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="Banshee.Plugins.Audioscrobbler" configuration="Release" />
+      <Entry build="True" name="Banshee.Plugins.Daap" configuration="Release" />
+      <Entry build="True" name="Banshee.Plugins.MetadataSearch" configuration="Release" />
+      <Entry build="True" name="Banshee.Plugins.MMKeys" configuration="Release" />
+      <Entry build="True" name="Banshee.Plugins.NotificationAreaIcon" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <StartMode startupentry="Banshee.Plugins.Audioscrobbler" single="True">
+    <Execute type="None" entry="Banshee.Plugins.Audioscrobbler" />
+    <Execute type="None" entry="Banshee.Plugins.Daap" />
+    <Execute type="None" entry="Banshee.Plugins.MetadataSearch" />
+    <Execute type="None" entry="Banshee.Plugins.MMKeys" />
+    <Execute type="None" entry="Banshee.Plugins.NotificationAreaIcon" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
+    <Entry filename="./Banshee.Plugins.Daap/Banshee.Plugins.Daap.mdp" />
+    <Entry filename="./Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.mdp" />
+    <Entry filename="./Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.mdp" />
+    <Entry filename="./Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.mdp" />
+  </Entries>
+</Combine>

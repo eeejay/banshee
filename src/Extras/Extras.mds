@@ -1,20 +1,22 @@
-<Combine name="Extras" fileversion="2.0">
+<Combine name="Extras" fileversion="2.0" outputpath="./build/bin/">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MusicBrainz" configuration="Debug" />
       <Entry build="True" name="Last.FM" configuration="Debug" />
-      <Entry build="True" name="BooBuddy" configuration="Debug" />
+      <Entry build="True" name="Gnome.Keyring" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MusicBrainz" configuration="Release" />
       <Entry build="True" name="Last.FM" configuration="Release" />
       <Entry build="True" name="BooBuddy" configuration="Release" />
+      <Entry build="True" name="Gnome.Keyring" configuration="Release" />
     </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="MusicBrainz" single="True">
     <Execute type="None" entry="MusicBrainz" />
     <Execute type="None" entry="Last.FM" />
+    <Execute type="None" entry="Gnome.Keyring" />
     <Execute type="None" entry="BooBuddy" />
   </StartMode>
   <Entries>

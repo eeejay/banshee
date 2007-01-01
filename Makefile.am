@@ -47,7 +47,7 @@ MAINTAINERCLEANFILES = \
 	mkinstalldirs
 
 run:
-	pushd $(top_builddir)/src; \
+	pushd $(top_builddir)/src/Core/Banshee; \
 	make run; \
 	popd;
 

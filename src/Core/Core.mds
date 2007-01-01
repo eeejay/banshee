@@ -12,7 +12,7 @@
     </Configuration>
   </Configurations>
   <DeployTargets />
-  <StartMode startupentry="Banshee.Widgets" single="True">
+  <StartMode startupentry="Banshee" single="True">
     <Execute type="None" entry="Banshee.Widgets" />
     <Execute type="None" entry="Banshee.Base" />
     <Execute type="None" entry="Banshee" />

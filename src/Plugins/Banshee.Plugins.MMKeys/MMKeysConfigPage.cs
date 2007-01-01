@@ -29,7 +29,6 @@
 
 using System;
 using Gtk;
-using GConf;
 using Mono.Unix;
 
 using Banshee.Base;

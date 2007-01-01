@@ -32,7 +32,6 @@
 using System;
 using Gtk;
 using GLib;
-using GConf;
 using Mono.Unix;
 
 using Notifications;

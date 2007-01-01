@@ -82,8 +82,8 @@ RUN_PATH = \
 	LD_LIBRARY_PATH=$(top_builddir)/libbanshee/.libs:$(RUN_DIR_DAP_NJB) \
 	DYLD_LIBRARY_PATH=$${LD_LIBRARY_PATH} \
 	MONO_PATH=$(MONO_BASE_PATH):$(RUN_DIR_DAP_ALL)${MONO_PATH+:$$MONO_PATH} \
-	BANSHEE_ENGINES_PATH=$(top_builddir)/src/Banshee.MediaEngine \
-	BANSHEE_PLUGINS_PATH=$(top_builddir)/src/Banshee.Plugins$${BANSHEE_PLUGINS_PATH+:$$BANSHEE_PLUGINS_PATH} \
-    BANSHEE_DAP_PATH=$(top_builddir)/src/Banshee.Dap$${BANSHEE_DAP_PATH+:$$BANSHEE_DAP_PATH} \
+	BANSHEE_ENGINES_PATH=$(top_builddir)/src/Engines \
+	BANSHEE_PLUGINS_PATH=$(top_builddir)/src/Plugins$${BANSHEE_PLUGINS_PATH+:$$BANSHEE_PLUGINS_PATH} \
+    BANSHEE_DAP_PATH=$(top_builddir)/src/Dap$${BANSHEE_DAP_PATH+:$$BANSHEE_DAP_PATH} \
 	BANSHEE_PROFILES_PATH=$(top_builddir)/data/audio-profiles
 

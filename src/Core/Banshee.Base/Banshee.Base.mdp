@@ -226,6 +226,22 @@
     <File name="./Utilities.cs" subtype="Code" buildaction="Compile" />
     <File name="./ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
     <File name="./Paths.cs" subtype="Code" buildaction="Compile" />
+    <File name="../../../data/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/contributors.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/UIManagerLayout.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../COPYING" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/banshee-logo.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/editor-cover-album.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-playlist-continuous.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-playlist-shuffle.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-repeat-all.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-repeat-none.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/media-repeat-single.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
