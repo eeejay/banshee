@@ -1,9 +1,9 @@
 SUBDIRS = \
-	Ipod \
-	Karma \
-	MassStorage \
-	Mtp \
-	Njb
+	Banshee.Dap.Ipod \
+	Banshee.Dap.Karma \
+	Banshee.Dap.MassStorage \
+	Banshee.Dap.Mtp \
+	Banshee.Dap.Njb
 
 MAINTAINERCLEANFILES = Makefile.in
 

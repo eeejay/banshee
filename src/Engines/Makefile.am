@@ -1,7 +1,7 @@
-SUBDIRS = Gstreamer
+SUBDIRS = Banshee.MediaEngine.GStreamer
 
 if ENABLE_HELIX
-SUBDIRS += Helix
+SUBDIRS += Banshee.MediaEngine.Helix
 endif
 
 MAINTAINERCLEANFILES = Makefile.in

@@ -8,19 +8,19 @@
 DIR_HAL = $(top_builddir)/hal-sharp
 DIR_TAGLIB = $(top_builddir)/taglib-sharp
 DIR_DBUS = $(top_builddir)/dbus-sharp
-DIR_LAST_FM = $(top_builddir)/src/Last.FM
-DIR_MUSICBRAINZ = $(top_builddir)/src/MusicBrainz
-DIR_GNOME_KEYRING = $(top_builddir)/src/Gnome.Keyring
-DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Banshee.Widgets
-DIR_BANSHEE_BASE = $(top_builddir)/src/Banshee.Base
-DIR_BOO = $(top_srcdir)/src/Boo
-DIR_BOOBUDDY = $(top_builddir)/src/BooBuddy
+DIR_LAST_FM = $(top_builddir)/src/Extras/Last.FM
+DIR_MUSICBRAINZ = $(top_builddir)/src/Extras/MusicBrainz
+DIR_GNOME_KEYRING = $(top_builddir)/src/Extras/Gnome.Keyring
+DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Core/Banshee.Widgets
+DIR_BANSHEE_BASE = $(top_builddir)/src/Core/Banshee.Base
+DIR_BOO = $(top_srcdir)/src/Extras/Boo
+DIR_BOOBUDDY = $(top_builddir)/src/Extras/BooBuddy
 
-DIR_DAP = $(top_builddir)/src/Banshee.Dap
-RUN_DIR_DAP_IPOD = $(DIR_DAP)/Ipod:$$(dirname `pkg-config --variable=Libraries ipod-sharp`)
-RUN_DIR_DAP_NJB = $(DIR_DAP)/Njb:$$(dirname `pkg-config --variable=Libraries njb-sharp`):$$(pkg-config --variable=libdir njb-sharp)/njb-sharp
-RUN_DIR_DAP_MTP = $(DIR_DAP)/Mtp:$$(dirname `pkg-config --variable=Libraries libgphoto2-sharp`)
-RUN_DIR_DAP_MASS_STORAGE = $(DIR_DAP)/MassStorage
+DIR_DAP = $(top_builddir)/src/Dap
+RUN_DIR_DAP_IPOD = $(DIR_DAP)/Banshee.Dap.Ipod:$$(dirname `pkg-config --variable=Libraries ipod-sharp`)
+RUN_DIR_DAP_NJB = $(DIR_DAP)/Banshee.Dap.Njb:$$(dirname `pkg-config --variable=Libraries njb-sharp`):$$(pkg-config --variable=libdir njb-sharp)/njb-sharp
+RUN_DIR_DAP_MTP = $(DIR_DAP)/Banshee.Dap.Mtp:$$(dirname `pkg-config --variable=Libraries libgphoto2-sharp`)
+RUN_DIR_DAP_MASS_STORAGE = $(DIR_DAP)/Banshee.Dap.MassStorage
 RUN_DIR_DAP_ALL=$(RUN_DIR_DAP_IPOD):$(RUN_DIR_DAP_NJB):$(RUN_DIR_DAP_MTP):$(RUN_DIR_DAP_MASS_STORAGE)
 
 ## Linking ##
