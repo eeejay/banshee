@@ -1,3 +1,8 @@
+2007-01-01  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Makefile.am: Quick'n dirty fix to make HEAD build again. Happy
+	newyear all!
+
 2006-12-31  Aaron Bockover  <abock@gnome.org>
 
 	* src/PlayerInterface.cs:
