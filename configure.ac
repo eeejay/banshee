@@ -136,7 +136,7 @@ src/Dap/Banshee.Dap.Njb/njb-sharp.dll.config
 
 src/Engines/Makefile
 src/Engines/Banshee.MediaEngine.GStreamer/Makefile
-src/Engines/Banshee.MediaEngine.Helix/Makefile
+src/Engines/Banshee.MediaEngine.HelixRemote/Makefile
 
 src/Extras/Makefile
 src/Extras/Boo/Makefile
