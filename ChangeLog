@@ -1,5 +1,9 @@
 2007-01-02  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Globals.cs: FreeHGlobal(mono_jig_segv_handler)
+
+2007-01-02  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/GstMisc.cs:
 	* libbanshee/gst-misc-0.10.c: Removed TestEncoder
 

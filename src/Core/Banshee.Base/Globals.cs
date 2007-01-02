@@ -164,6 +164,7 @@ namespace Banshee.Base
             
             // Reset the SEGV handle to that of the JIT again (SIGH!)
             sigaction(Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
+            System.Runtime.InteropServices.Marshal.FreeHGlobal(mono_jit_segv_handler);
         }
         
         public static void Shutdown()
