@@ -83,6 +83,8 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private bool cursor_over_trayicon = false;
         private bool show_notifications = false;
         private TrackInfo current_track = null;
+        private string notify_last_title = null;
+        private string notify_last_artist = null;
 
         private static readonly uint SkipDelta = 10;
         private static readonly int VolumeDelta = 10;
@@ -224,6 +226,13 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
         private void ShowNotification()
         {
+            // This has to happen before the next if, otherwise the last_* members aren't set correctly.
+            if (current_track == null || (notify_last_title == current_track.DisplayTitle && notify_last_artist == current_track.DisplayArtist)) {
+                return;
+            }
+            notify_last_title = current_track.DisplayTitle;
+            notify_last_artist = current_track.DisplayArtist;
+
             if (cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
                 return;
             }

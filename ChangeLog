@@ -1,3 +1,8 @@
+2007-01-02  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs: 
+	Prevent the notification bubble from showing up twice.
+
 2007-01-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Globals.cs: FreeHGlobal(mono_jig_segv_handler)
