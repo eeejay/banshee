@@ -4,10 +4,6 @@
       <Entry build="True" name="Banshee.MediaEngine.GStreamer" configuration="Debug" />
       <Entry build="True" name="Banshee.MediaEngine.HelixRemote" configuration="Debug" />
     </Configuration>
-    <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="Banshee.MediaEngine.GStreamer" configuration="Release" />
-      <Entry build="True" name="Banshee.MediaEngine.HelixRemote" configuration="Release" />
-    </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="Banshee.MediaEngine.GStreamer" single="True">

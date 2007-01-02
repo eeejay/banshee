@@ -5,11 +5,6 @@
       <Entry build="True" name="Banshee.Base" configuration="Debug" />
       <Entry build="True" name="Banshee" configuration="Debug" />
     </Configuration>
-    <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="Banshee.Widgets" configuration="Release" />
-      <Entry build="True" name="Banshee.Base" configuration="Release" />
-      <Entry build="True" name="Banshee" configuration="Release" />
-    </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="Banshee" single="True">

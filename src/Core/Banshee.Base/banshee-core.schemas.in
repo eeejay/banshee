@@ -2,37 +2,25 @@
 <gconfschemafile>
   <schemalist>
     <schema>
-      <key>/schemas/apps/banshee/player_window/open_location_history</key>
-      <applyto>/apps/banshee/player_window/open_location_history</applyto>
+      <key>/schemas/apps/banshee/import/audio_cd_error_correction</key>
+      <applyto>/apps/banshee/import/audio_cd_error_correction</applyto>
       <owner>banshee</owner>
-      <type>list</type>
-      <list_type>string</list_type>
-      <default>[]</default>
+      <type>bool</type>
+      <default>false</default>
       <locale name="C">
-        <short>URI List</short>
-        <long>List of URIs in the history drop-down for the open location dialog</long>
+        <short>Enable error correction</short>
+        <long>When importing an audio CD, enable error correction (paranoia mode)</long>
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/banshee/player_window/last_file_chooser_uri</key>
-      <applyto>/apps/banshee/player_window/last_file_chooser_uri</applyto>
+      <key>/schemas/apps/banshee/import/show_initial_import_dialog</key>
+      <applyto>/apps/banshee/import/show_initial_import_dialog</applyto>
       <owner>banshee</owner>
-      <type>string</type>
-      <default></default>
+      <type>bool</type>
+      <default>true</default>
       <locale name="C">
-        <short>URI</short>
-        <long>URI of last file folder</long>
-      </locale>
-    </schema>
-    <schema>
-      <key>/schemas/apps/banshee/core/io_backend</key>
-      <applyto>/apps/banshee/core/io_backend</applyto>
-      <owner>banshee</owner>
-      <type>string</type>
-      <default>unix</default>
-      <locale name="C">
-        <short>Set the IO backend in Banshee</short>
-        <long>Can be either "systemio" (.NET System.IO), "unix" (Native Unix), or "gnomevfs" (GNOME VFS); takes effect on Banshee start (restart necessary)</long>
+        <short>Show the Initial Import Dialog</short>
+        <long>Show the Initial Import Dialog when the Banshee library is empty</long>
       </locale>
     </schema>
     <schema>
@@ -146,28 +134,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/banshee/import/audio_cd_error_correction</key>
-      <applyto>/apps/banshee/import/audio_cd_error_correction</applyto>
-      <owner>banshee</owner>
-      <type>bool</type>
-      <default>false</default>
-      <locale name="C">
-        <short>Enable error correction</short>
-        <long>When importing an audio CD, enable error correction (paranoia mode)</long>
-      </locale>
-    </schema>
-    <schema>
-      <key>/schemas/apps/banshee/import/show_initial_import_dialog</key>
-      <applyto>/apps/banshee/import/show_initial_import_dialog</applyto>
-      <owner>banshee</owner>
-      <type>bool</type>
-      <default>true</default>
-      <locale name="C">
-        <short>Show the Initial Import Dialog</short>
-        <long>Show the Initial Import Dialog when the Banshee library is empty</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/banshee/player_window/width</key>
       <applyto>/apps/banshee/player_window/width</applyto>
       <owner>banshee</owner>
@@ -264,6 +230,40 @@
       <locale name="C">
         <short>Repeat playback</short>
         <long>Repeat mode (0 = None, 1 = All, 2 = Single)</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/last_file_chooser_uri</key>
+      <applyto>/apps/banshee/player_window/last_file_chooser_uri</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>URI</short>
+        <long>URI of last file folder</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/player_window/open_location_history</key>
+      <applyto>/apps/banshee/player_window/open_location_history</applyto>
+      <owner>banshee</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[]</default>
+      <locale name="C">
+        <short>URI List</short>
+        <long>List of URIs in the history drop-down for the open location dialog</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/core/io_backend</key>
+      <applyto>/apps/banshee/core/io_backend</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default>unix</default>
+      <locale name="C">
+        <short>Set the IO backend in Banshee</short>
+        <long>Can be either "systemio" (.NET System.IO), "unix" (Native Unix), or "gnomevfs" (GNOME VFS); takes effect on Banshee start (restart necessary)</long>
       </locale>
     </schema>
     <schema>

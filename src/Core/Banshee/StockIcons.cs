@@ -53,12 +53,7 @@ namespace Banshee
             "audio-volume-muted",
             "audio-volume-decrease",
             "audio-volume-increase",
-            
-            /* Now Playing Images */
-            "icon-artist",
-            "icon-album",
-            "icon-title",
-            
+
             /* Other */
             "cd-action-burn",
             "cd-action-rip",

@@ -7,13 +7,6 @@
       <Entry build="True" name="Banshee.Plugins.MMKeys" configuration="Debug" />
       <Entry build="True" name="Banshee.Plugins.NotificationAreaIcon" configuration="Debug" />
     </Configuration>
-    <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="Banshee.Plugins.Audioscrobbler" configuration="Release" />
-      <Entry build="True" name="Banshee.Plugins.Daap" configuration="Release" />
-      <Entry build="True" name="Banshee.Plugins.MetadataSearch" configuration="Release" />
-      <Entry build="True" name="Banshee.Plugins.MMKeys" configuration="Release" />
-      <Entry build="True" name="Banshee.Plugins.NotificationAreaIcon" configuration="Release" />
-    </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="Banshee.Plugins.Audioscrobbler" single="True">

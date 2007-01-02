@@ -193,6 +193,8 @@ namespace Banshee.Base
                     args.Profile.Pipeline.AddProcess(process);
                     available = true;
                     break;
+                } else if(Debugging) {
+                    LogCore.Instance.PushDebug("GStreamer pipeline does not run", pipeline);
                 }
             }
             
@@ -253,6 +255,19 @@ namespace Banshee.Base
         
         public static ProfileManager AudioProfileManager {
             get { return audio_profile_manager; }
+        }
+        
+        private static bool? debugging = null;
+        public static bool Debugging {
+            get {
+                if(debugging == null) {
+                    debugging = ArgumentQueue.Contains("debug");
+                    string debug_env = Environment.GetEnvironmentVariable("BANSHEE_DEBUG");
+                    debugging |= debug_env != null && debug_env != String.Empty;
+                }
+                
+                return debugging.Value;
+            }
         }
     }
     

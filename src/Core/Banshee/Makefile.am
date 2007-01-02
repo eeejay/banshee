@@ -89,7 +89,7 @@ $(ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
 include $(top_srcdir)/build/gconf-schema-rules
 
 run: $(ASSEMBLY)
-	$(RUN_PATH) bash ./banshee --uninstalled
+	$(RUN_PATH) $(MONO) $(ASSEMBLY)
 
 EXTRA_DIST = \
 	$(BANSHEE_SOURCE) \
