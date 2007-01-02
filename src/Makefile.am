@@ -14,3 +14,5 @@ run:
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
+
+CLEANFILES = *.mdb *.pidb *.exe
