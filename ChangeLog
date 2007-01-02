@@ -1,3 +1,13 @@
+2007-01-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/GstMisc.cs:
+	* libbanshee/gst-misc-0.10.c: Removed TestEncoder
+
+	* src/Core/Banshee.Base/Globals.cs: Use sigaction before and after
+	startup to grab and restore the JIT's SEGV handler due to a bad bug
+	in GStreamer's SEGV signal handling (Gst BGO #391777); this should stop
+	the random segfaults that have been happening lately
+
 2007-01-01  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Makefile.am: Quick'n dirty fix to make HEAD build again. Happy

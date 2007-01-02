@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  GstMisc.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2007 Novell, Inc.
+ *  Written by Aaron Bockover <abock@gnome.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -35,28 +34,6 @@ namespace Banshee.Gstreamer
 {
     public static class Utilities
     {
-        [DllImport("libbanshee")]
-        private static extern bool gstreamer_test_encoder(IntPtr encoder_pipeline);
-        
-        public static bool TestEncoder(string pipeline)
-        {
-            if(pipeline == null || pipeline == String.Empty) {
-                return false;
-            }
-        
-            IntPtr pipeline_ptr = GLib.Marshaller.StringToPtrGStrdup(pipeline);
-            
-            if(pipeline_ptr == IntPtr.Zero) {
-                return false;
-            }
-            
-            try {
-                return gstreamer_test_encoder(pipeline_ptr);
-            } finally {
-                GLib.Marshaller.Free(pipeline_ptr);
-            }
-        }
-        
         [DllImport("libbanshee")]
         private static extern bool gstreamer_test_pipeline(IntPtr pipeline);
         

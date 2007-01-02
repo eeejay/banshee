@@ -38,6 +38,10 @@ namespace Banshee.Base
 
     public static class Globals
     {
+        // For the SEGV trap hack (see below)
+        [System.Runtime.InteropServices.DllImport("libc")]
+        private static extern int sigaction(Mono.Unix.Native.Signum sig, IntPtr act, IntPtr oact);
+
         private static GConf.Client gconf_client;
         private static NetworkDetect network_detect;
         private static ActionManager action_manager;
@@ -147,7 +151,19 @@ namespace Banshee.Base
                 startup.Register(Catalog.GetString("Loading user interface"), interfaceStartupHandler);
             }
             
+            // We must get a reference to the JIT's SEGV handler because 
+            // GStreamer will set its own and not restore the previous, which
+            // will cause what should be NullReferenceExceptions to be unhandled
+            // segfaults for the duration of the instance, as the JIT is powerless!
+            // FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=391777
+            IntPtr mono_jit_segv_handler = System.Runtime.InteropServices.Marshal.AllocHGlobal(512);
+            sigaction(Mono.Unix.Native.Signum.SIGSEGV, IntPtr.Zero, mono_jit_segv_handler);
+
+            // Begin the Banshee boot process
             startup.Run();
+            
+            // Reset the SEGV handle to that of the JIT again (SIGH!)
+            sigaction(Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
         }
         
         public static void Shutdown()

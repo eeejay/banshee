@@ -71,26 +71,8 @@ void gstreamer_initialize()
 
     gst_init(NULL, NULL);
     _gst_plugin_register_static(&gst_mbtrm_plugin_desc);
-    
-    gstreamer_initialized = TRUE;
-}
 
-gboolean
-gstreamer_test_encoder(gchar *encoder_pipeline)
-{
-    GstElement *element = NULL;
-    gchar *pipeline;
-    GError *error = NULL;
-    
-    pipeline = g_strdup_printf("audioconvert ! %s", encoder_pipeline);
-    element = gst_parse_launch(pipeline, &error);
-    g_free(pipeline);
-    
-    if(element != NULL) {
-        gst_object_unref(GST_OBJECT(element));
-    }
-    
-    return error == NULL;
+    gstreamer_initialized = TRUE;
 }
 
 gboolean 
@@ -100,10 +82,11 @@ gstreamer_test_pipeline(gchar *pipeline)
     GError *error = NULL;
     
     element = gst_parse_launch(pipeline, &error);
-    
+
     if(element != NULL) {
         gst_object_unref(GST_OBJECT(element));
     }
     
     return error == NULL;
 }
+
