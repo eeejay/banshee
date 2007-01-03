@@ -1,5 +1,15 @@
 2007-01-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/PlaylistView.cs: Call CreatePopupableHeader on the
+	columns after adding to the view (must be done after AppendColumn)
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs: Added
+	clever hack from Peter Johanson to allow button press events on tree
+	view column headers, thus display a context menu on each column header
+	on right click, allowing to hide the column or show the columns dialog
+
+2007-01-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/Banshee.TrackView.Columns/*.cs: Make the SchemaEntry
 	properties all public so they can be picked up by gconf schema extractor
 

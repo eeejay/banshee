@@ -70,6 +70,7 @@ namespace Banshee.TrackView.Columns
         
         private PlaylistModel model;
         private CellRenderer renderer;
+        private Menu menu;
         
         protected virtual ModelCompareHandler CompareHandler {
             get { return null; }
@@ -98,7 +99,7 @@ namespace Banshee.TrackView.Columns
             Reorderable = true;
             Sizing = TreeViewColumnSizing.Fixed;
             PackStart(renderer, false);
-
+            
             Clickable = true;
             SortColumnId = id;
             
@@ -108,6 +109,48 @@ namespace Banshee.TrackView.Columns
             
             if(!OrderSchema.Equals(SchemaEntry<int>.Zero)) {
                 this.order = OrderSchema.Get();
+            }
+        }
+        
+        public void CreatePopupableHeader()
+        {
+            Widget = new Label(Title);
+            Widget.Show();
+            
+            Widget parent_widget = Widget.Parent;
+            Button parent_button = parent_widget as Button;
+            
+            while(parent_widget != null && parent_button == null) {
+                parent_widget = parent_widget.Parent;
+                parent_button = parent_widget as Button;
+            }
+            
+            if(parent_button != null) {
+                parent_button.ButtonPressEvent += OnLabelButtonPressEvent;
+                
+                menu = new Menu();
+                
+                MenuItem columns_item = new MenuItem(Catalog.GetString("Columns..."));
+                
+                // Translators: {0} is the title of the column, e.g. 'Hide Artist'
+                MenuItem hide_item = new MenuItem(String.Format(Catalog.GetString("Hide {0}"), Title));
+                
+                columns_item.Activated += delegate { Globals.ActionManager["ColumnsAction"].Activate(); };
+                hide_item.Activated += delegate { VisibilityPreference = !VisibilityPreference; };
+                
+                menu.Add(columns_item);
+                menu.Add(hide_item);
+                
+                menu.ShowAll();
+            }
+        }
+        
+        [GLib.ConnectBefore]
+        private void OnLabelButtonPressEvent(object o, ButtonPressEventArgs args)
+        {
+            if(args.Event.Button == 3 && menu != null) {
+                menu.Popup();
+                args.RetVal = false;
             }
         }
         

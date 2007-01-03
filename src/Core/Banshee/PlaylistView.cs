@@ -95,6 +95,7 @@ namespace Banshee
             foreach(TrackViewColumn column in columns) {
                 column.Model = model;
                 AppendColumn(column);
+                column.CreatePopupableHeader();
             }
 
             // Create static columns
