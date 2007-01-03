@@ -65,21 +65,21 @@ namespace Banshee.TrackView.Columns
             return LongFieldCompare(model.IterTrackInfo(a).Year, model.IterTrackInfo(b).Year);
         }
         
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.year", "width",
             75,
             "Width",
             "Width of Year column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.year", "order",
             ID,
             "Order",
             "Order of Year column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.year", "visible",
             false,
             "Visiblity",

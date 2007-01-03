@@ -71,21 +71,21 @@ namespace Banshee.TrackView.Columns
             return v != 0 ? v : TrackNumberColumn.ModelCompareBase(model, a, b, trackAscending);
         }
         
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.album", "width",
             75,
             "Width",
             "Width of Album column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.album", "order",
             ID,
             "Order",
             "Order of Album column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.album", "visible",
             true,
             "Visiblity",

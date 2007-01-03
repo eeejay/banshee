@@ -65,21 +65,21 @@ namespace Banshee.TrackView.Columns
             return LongFieldCompare((long)model.IterTrackInfo(a).PlayCount, (long)model.IterTrackInfo(b).PlayCount);
         }
 
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.play_count", "width",
             75,
             "Width",
             "Width of Play Count column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.play_count", "order",
             ID,
             "Order",
             "Order of Play Count column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.play_count", "visible",
             false,
             "Visiblity",

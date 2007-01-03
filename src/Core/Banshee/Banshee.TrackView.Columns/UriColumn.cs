@@ -94,21 +94,21 @@ namespace Banshee.TrackView.Columns
             return String.Compare(uri_a.AbsoluteUri, uri_b.AbsoluteUri);
         }
         
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.uri", "width",
             75,
             "Width",
             "Width of Uri column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.uri", "order",
             ID,
             "Order",
             "Order of Uri column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.uri", "visible",
             false,
             "Visiblity",

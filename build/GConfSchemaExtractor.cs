@@ -2,11 +2,13 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using System.Reflection;
 
 public class GConfSchemaExtractor
 {
-    private static StringBuilder builder = new StringBuilder();
+	private static Dictionary<string, StringBuilder> entries = 
+		new Dictionary<string, StringBuilder>();
     private static int schema_count = 0;
 
     public static void Main(string [] args)
@@ -38,7 +40,14 @@ public class GConfSchemaExtractor
             final.Append("<?xml version=\"1.0\"?>\n");
             final.Append("<gconfschemafile>\n");
             final.Append("  <schemalist>\n");
-            final.Append(builder);
+
+			List<string> keys = new List<string>(entries.Keys);
+			keys.Sort();
+
+			foreach(string key in keys) {
+				final.Append(entries[key]);
+			}
+			
             final.Append("  </schemalist>\n");
             final.Append("</gconfschemafile>\n");
 
@@ -102,7 +111,8 @@ public class GConfSchemaExtractor
         } else {
             str_val = GetValueString(type, value, out str_type);
         }
-    
+ 
+ 		StringBuilder builder = new StringBuilder();
         builder.AppendFormat("    <schema>\n");
         builder.AppendFormat("      <key>/schemas{0}</key>\n", full_key);
         builder.AppendFormat("      <applyto>{0}</applyto>\n", full_key);
@@ -119,6 +129,7 @@ public class GConfSchemaExtractor
         builder.AppendFormat("        <long>{0}</long>\n", long_desc);
         builder.AppendFormat("      </locale>\n");
         builder.AppendFormat("    </schema>\n");
+		entries.Add(full_key, builder);
     }
         
     private static string CamelCaseToUnderCase(string s)

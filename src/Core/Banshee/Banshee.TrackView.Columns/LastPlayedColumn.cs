@@ -72,21 +72,21 @@ namespace Banshee.TrackView.Columns
             return DateTime.Compare(model.IterTrackInfo(a).LastPlayed, model.IterTrackInfo(b).LastPlayed);
         }
         
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.last_played", "width",
             75,
             "Width",
             "Width of Last Played column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.last_played", "order",
             ID,
             "Order",
             "Order of Last Played column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.last_played", "visible",
             false,
             "Visiblity",

@@ -64,21 +64,21 @@ namespace Banshee.TrackView.Columns
             return StringUtil.RelaxedCompare(model.IterTrackInfo(a).Genre, model.IterTrackInfo(b).Genre);
         }
         
-        private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.genre", "width",
             75,
             "Width",
             "Width of Genre column"
         );
         
-        private static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.genre", "order",
             ID,
             "Order",
             "Order of Genre column"
         );
         
-        private static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.genre", "visible",
             false,
             "Visiblity",

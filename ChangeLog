@@ -1,5 +1,20 @@
 2007-01-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/Banshee.TrackView.Columns/*.cs: Make the SchemaEntry
+	properties all public so they can be picked up by gconf schema extractor
+
+	* src/Core/Banshee/banshee-interface.schemas.in:
+	* src/Core/Banshee.Base/banshee-core.schemas.in: Updated, schema entries
+	are sorted by key now
+
+	* build/GConfSchemaExtractor.cs: Sort the schema entries by key to ensure
+	that the schema content doesn't change just because the reflection 
+	iterating order in the assembly may have changed, which will cause 
+	false modifications (this is apparent when compiling between gmcs/make and
+	gmcs/MonoDevelop)
+
+2007-01-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/Banshee.TrackView.Columns/*.cs: Use an enum to ID
 	columns and their sort orders, will make adding new columns easier; always
 	sort track number in ascending order if not explicitly sorting on the
