@@ -1,3 +1,9 @@
+2007-01-03  Peter Teichman  <peter@novell.com>
+
+	* src/Core/Banshee/PlayerInterface.cs:
+	Disable "Delete Song From Drive" in playlist listings (BNC #218997)
+	Start playing the next song if the current one is deleted (BNC #218993)
+
 2007-01-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs: Make the

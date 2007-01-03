@@ -929,6 +929,8 @@ namespace Banshee
             Globals.ActionManager["RemoveSongsAction"].Sensitive = !(source is AudioCdSource);
             Globals.ActionManager["DeleteSongsFromDriveAction"].Sensitive = 
                 !(source is AudioCdSource || source is DapSource);
+            Globals.ActionManager["DeleteSongsFromDriveAction"].Visible =
+                !(source is PlaylistSource);
         }
         
         private void OnPlaylistViewVadjustmentChanged(object o, EventArgs args)
@@ -1883,6 +1885,11 @@ namespace Banshee
 
             for(i = 0; i < iters.Length; i++) {
                 TrackInfo track = playlistModel.IterTrackInfo(iters[i]);
+
+                if (track == PlayerEngineCore.CurrentTrack
+                    && PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
+                    Globals.ActionManager["NextAction"].Activate();
+                }
 
                 try {
                     if(deleteFromFileSystem) {
