@@ -37,7 +37,7 @@ namespace Banshee.TrackView.Columns
 {
     public class ArtistColumn : TrackViewColumnText
     {
-        public const int ID = 1;
+        public const int ID = (int)TrackColumnID.Artist;
        
         public ArtistColumn() : base(Catalog.GetString("Artist"), ID)
         {
@@ -61,8 +61,13 @@ namespace Banshee.TrackView.Columns
         
         public static int ModelCompare(PlaylistModel model, TreeIter a, TreeIter b)
         {
+            return ModelCompare(model, a, b, true);
+        }
+        
+        public static int ModelCompare(PlaylistModel model, TreeIter a, TreeIter b, bool trackAscending)
+        {
             int v = StringUtil.RelaxedCompare(model.IterTrackInfo(a).Artist, model.IterTrackInfo(b).Artist);
-            return v != 0 ? v : AlbumColumn.ModelCompare(model, a, b);
+            return v != 0 ? v : AlbumColumn.ModelCompare(model, a, b, trackAscending);
         }
         
         private static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(

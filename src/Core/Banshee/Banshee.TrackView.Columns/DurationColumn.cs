@@ -1,5 +1,5 @@
 /***************************************************************************
- *  TimeColumn.cs
+ *  DurationColumn.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <abockover@novell.com>
@@ -35,11 +35,11 @@ using Banshee.Configuration;
 
 namespace Banshee.TrackView.Columns
 {
-    public class TimeColumn : TrackViewColumnText
+    public class DurationColumn : TrackViewColumnText
     {
-        public const int ID = 4;
+        public const int ID = (int)TrackColumnID.Duration;
     
-        public TimeColumn() : base(Catalog.GetString("Time"), ID)
+        public DurationColumn() : base(Catalog.GetString("Time"), ID)
         {
             SetCellDataFunc(Renderer, new TreeCellDataFunc(DataHandler));
         }

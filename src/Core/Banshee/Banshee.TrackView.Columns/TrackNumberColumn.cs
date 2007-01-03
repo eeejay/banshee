@@ -1,5 +1,5 @@
 /***************************************************************************
- *  TrackColumn.cs
+ *  TrackNumberColumn.cs
  *
  *  Copyright (C) 2006 Novell, Inc.
  *  Written by Aaron Bockover <abockover@novell.com>
@@ -35,11 +35,11 @@ using Banshee.Configuration;
 
 namespace Banshee.TrackView.Columns
 {
-    public class TrackColumn : TrackViewColumnText
+    public class TrackNumberColumn : TrackViewColumnText
     {
-        public const int ID = 0;
+        public const int ID = (int)TrackColumnID.TrackNumber;
     
-        public TrackColumn() : base(Catalog.GetString("Track"), ID)
+        public TrackNumberColumn() : base(Catalog.GetString("Track"), ID)
         {
             SetCellDataFunc(Renderer, new TreeCellDataFunc(DataHandler));
         }
@@ -62,13 +62,26 @@ namespace Banshee.TrackView.Columns
         
         public static int ModelCompareBase(PlaylistModel model, TreeIter a, TreeIter b)
         {
-            return LongFieldCompare((long)model.IterTrackInfo(a).TrackNumber,
+            return ModelCompareBase(model, a, b, false);
+        }
+        
+        public static int ModelCompareBase(PlaylistModel model, TreeIter a, TreeIter b, bool ascending)
+        {
+            int ascending_value = 1;
+            int column;
+            SortType sort_type;
+            
+            if(ascending && model.GetSortColumnId(out column, out sort_type)) {
+                ascending_value = sort_type == SortType.Ascending ? 1 : -1;
+            }
+            
+            return ascending_value * LongFieldCompare((long)model.IterTrackInfo(a).TrackNumber,
                 (long)model.IterTrackInfo(b).TrackNumber);
         }
         
         public static int ModelCompare(PlaylistModel model, TreeIter a, TreeIter b)
         {
-            int v = ArtistColumn.ModelCompare(model, a, b);
+            int v = ArtistColumn.ModelCompare(model, a, b, false);
             return v != 0 ? v : ModelCompareBase(model, a, b);
         }
         

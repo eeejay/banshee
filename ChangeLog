@@ -1,3 +1,27 @@
+2007-01-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/*.cs: Use an enum to ID
+	columns and their sort orders, will make adding new columns easier; always
+	sort track number in ascending order if not explicitly sorting on the
+	track number column; sort by the parent folder uri of a track before
+	sorting by album, which allows the same album to be in the library 
+	multiple times in different file system locations, but grouped and sorted
+	properly in the view when sorting by track, album, or artist
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/UriColumn.cs: Added Uri Column;
+	shows the local path if the file is local; if local, show the relative 
+	path from the base library path if path is a child of the base library
+
+	* src/Core/Banshee/PlaylistView.cs: Instantiate Uri column
+
+	* src/Core/Banshee.Base/Gui/PreferencesDialog.cs: QueueDraw on the playlist
+	view when the library location changes; if the Uri column is visible,
+	the displayed path may change when changing base library location
+
+	* src/Core/Banshee.Base/Library.cs: Added set accessor on the Location 
+	property, added CachedLocation to avoid GConf calls on the get accessor
+	to improve rendering in the Uri column renderer
+
 2007-01-02  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs: 

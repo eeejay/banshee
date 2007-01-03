@@ -38,7 +38,7 @@ namespace Banshee.TrackView.Columns
 {
     public class RatingColumn : TrackViewColumn
     {
-        public const int ID = 5;
+        public const int ID = (int)TrackColumnID.Rating;
         
         public RatingColumn() : base(Catalog.GetString("Rating"), new CellRendererRating(), ID)
         {

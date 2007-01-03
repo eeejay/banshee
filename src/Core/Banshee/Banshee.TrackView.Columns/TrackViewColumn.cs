@@ -36,6 +36,21 @@ using Banshee.Configuration;
 
 namespace Banshee.TrackView.Columns
 {
+    public enum TrackColumnID
+    {
+        TrackNumber,
+        Artist,
+        Title,
+        Album,
+        Duration,
+        Rating,
+        Genre,
+        Year,
+        PlayCount,
+        LastPlayed,
+        Uri
+    }
+
     public class TrackViewColumn : TreeViewColumn, IComparable<TrackViewColumn>
     {
         public class IDComparer : IComparer<TrackViewColumn>

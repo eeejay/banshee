@@ -37,7 +37,7 @@ namespace Banshee.TrackView.Columns
 {
     public class LastPlayedColumn : TrackViewColumnText
     {
-        public const int ID = 8;
+        public const int ID = (int)TrackColumnID.LastPlayed;
         
         public LastPlayedColumn() : base(Catalog.GetString("Last Played"), ID)
         {

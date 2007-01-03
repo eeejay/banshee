@@ -127,13 +127,13 @@ namespace Banshee.Gui.Dialogs
         
         private void LoadPreferences()
         {                   
-            string location = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+            string location = Globals.Library.Location;
             if(!Directory.Exists(location)) {
                 location = Paths.DefaultLibraryPath;
             }
             
             library_location_chooser.SetFilename(location);
-            SaveLibraryLocation(location);   
+            Globals.Library.Location = location;   
             
             file_box.ActiveValue = LibrarySchema.FilePattern.Get();
             folder_box.ActiveValue = LibrarySchema.FolderPattern.Get(); 
@@ -151,7 +151,8 @@ namespace Banshee.Gui.Dialogs
             };
             
             library_location_chooser.SelectionChanged += delegate {
-                SaveLibraryLocation(library_location_chooser.Filename);
+                Globals.Library.Location = library_location_chooser.Filename;
+                InterfaceElements.PlaylistView.QueueDraw();
             };
             
             copy_on_import.Toggled += delegate {
@@ -179,11 +180,6 @@ namespace Banshee.Gui.Dialogs
                         
             LibrarySchema.FilePattern.Set(file_box.ActiveValue);
             LibrarySchema.FolderPattern.Set(folder_box.ActiveValue);
-        }
-        
-        private void SaveLibraryLocation(string path)
-        {
-            LibrarySchema.Location.Set(path);
         }
     }
 }

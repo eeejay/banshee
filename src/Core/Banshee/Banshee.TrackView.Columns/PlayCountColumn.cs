@@ -37,7 +37,7 @@ namespace Banshee.TrackView.Columns
 {
     public class PlayCountColumn : TrackViewColumnText
     {
-        public const int ID = 7;
+        public const int ID = (int)TrackColumnID.PlayCount;
         
         public PlayCountColumn() : base(Catalog.GetString("Plays"), ID)
         {

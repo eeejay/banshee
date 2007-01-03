@@ -21,9 +21,9 @@
     <File name="./Banshee.TrackView.Columns/LastPlayedColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/PlayCountColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/RatingColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.TrackView.Columns/TimeColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/DurationColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/TitleColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.TrackView.Columns/TrackColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TrackNumberColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/TrackViewColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.TrackView.Columns/YearColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="../../../data/banshee.glade" subtype="Code" buildaction="EmbedAsResource" />
@@ -61,6 +61,7 @@
     <File name="../../../data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.TrackView.Columns/UriColumn.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />

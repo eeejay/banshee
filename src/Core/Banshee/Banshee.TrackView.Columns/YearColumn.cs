@@ -37,7 +37,7 @@ namespace Banshee.TrackView.Columns
 {
     public class YearColumn : TrackViewColumnText
     {
-        public const int ID = 6;
+        public const int ID = (int)TrackColumnID.Year;
         
         public YearColumn() : base(Catalog.GetString("Year"), ID)
         {

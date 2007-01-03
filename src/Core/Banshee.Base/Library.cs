@@ -147,13 +147,23 @@ namespace Banshee.Base
                 return is_loaded;
             }
         }
+        
+        private string cached_location;
 
         public string Location {
              get {
-                string libraryLocation = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
-                LibrarySchema.Location.Set(libraryLocation);
-                return libraryLocation;             
-             }    
+                Location = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+                return cached_location;
+             }
+             
+             set {
+                cached_location = value;
+                LibrarySchema.Location.Set(cached_location); 
+            }
+        }
+        
+        public string CachedLocation {
+            get { return cached_location ?? Location; }
         }
         
         public void SetTrack(int id, LibraryTrackInfo track)

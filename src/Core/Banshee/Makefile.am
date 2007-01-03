@@ -23,16 +23,17 @@ BANSHEE_SOURCE = \
 	PlaylistModel.cs \
 	TrackViewColumnWindow.cs \
 	Banshee.TrackView.Columns/TrackViewColumn.cs \
-	Banshee.TrackView.Columns/TrackColumn.cs \
+	Banshee.TrackView.Columns/TrackNumberColumn.cs \
 	Banshee.TrackView.Columns/ArtistColumn.cs \
 	Banshee.TrackView.Columns/TitleColumn.cs \
 	Banshee.TrackView.Columns/AlbumColumn.cs \
 	Banshee.TrackView.Columns/GenreColumn.cs \
 	Banshee.TrackView.Columns/YearColumn.cs \
-	Banshee.TrackView.Columns/TimeColumn.cs \
+	Banshee.TrackView.Columns/DurationColumn.cs \
 	Banshee.TrackView.Columns/PlayCountColumn.cs \
 	Banshee.TrackView.Columns/LastPlayedColumn.cs \
-	Banshee.TrackView.Columns/RatingColumn.cs
+	Banshee.TrackView.Columns/RatingColumn.cs \
+	Banshee.TrackView.Columns/UriColumn.cs
 	
 BANSHEE_RESOURCES = \
 	data/banshee.glade \
@@ -89,6 +90,9 @@ $(ASSEMBLY): $(BANSHEE_SOURCE_BUILD) $(BANSHEE_EXPANDED_RESOURCES)
 include $(top_srcdir)/build/gconf-schema-rules
 
 run: $(ASSEMBLY)
+	$(RUN_PATH) $(MONO) $(ASSEMBLY)
+
+run-nocheck: 
 	$(RUN_PATH) $(MONO) $(ASSEMBLY)
 
 EXTRA_DIST = \

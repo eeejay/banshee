@@ -79,16 +79,17 @@ namespace Banshee
                 
             // Load configurable columns
             columns = new List<TrackViewColumn>();            
-            columns.Add(new TrackColumn());
+            columns.Add(new TrackNumberColumn());
             columns.Add(new ArtistColumn());
             columns.Add(new TitleColumn());
             columns.Add(new AlbumColumn());
             columns.Add(new GenreColumn());
             columns.Add(new YearColumn());
-            columns.Add(new TimeColumn());
+            columns.Add(new DurationColumn());
             columns.Add(new LastPlayedColumn());
             columns.Add(new PlayCountColumn());
             columns.Add(new RatingColumn());
+            columns.Add(new UriColumn());
             columns.Sort();
             
             foreach(TrackViewColumn column in columns) {

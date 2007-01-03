@@ -37,7 +37,7 @@ namespace Banshee.TrackView.Columns
 {
     public class GenreColumn : TrackViewColumnText
     {
-        public const int ID = 6;
+        public const int ID = (int)TrackColumnID.Genre;
         
         public GenreColumn() : base(Catalog.GetString("Genre"), ID)
         {
