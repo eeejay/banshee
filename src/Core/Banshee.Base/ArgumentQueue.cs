@@ -100,7 +100,9 @@ namespace Banshee.Base
 
         public void Enqueue(string arg, string val)
         {
-            args.Add(arg, val);
+            if (!args.ContainsKey(arg)) {
+                args.Add(arg, val);
+            }
         }
 
         public string Dequeue(string arg)

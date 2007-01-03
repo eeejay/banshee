@@ -1,3 +1,18 @@
+2007-01-03  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Core/Banshee.Base/ArgumentQueue.cs: Allow duplicate arguments to be
+	passed. This avoids a crash when you pass --play --play (or similar) and
+	avoids dirty hacks in the launcher script. The first passed argument will
+	be used. Any subsequent arguments with the same name (and their
+	parameters) will be ignored.
+
+	* src/Core/Banshee/banshee.in: Add support for profiling banshee. By
+	passing --profile=name (where name is the name of the profiler you wish to
+	use), the chosen profiler will be started. Also added support for starting
+	profilers, traces and enabling debug by using environment variables. You
+	can now start banshee with BANSHEE_DEBUG=1, BANSHEE_PROFILE=heap-shot and
+	BANSHEE_TRACE=something.
+
 2007-01-03  Peter Teichman  <peter@novell.com>
 
 	* src/Core/Banshee/PlayerInterface.cs:

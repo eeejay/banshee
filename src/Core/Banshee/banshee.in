@@ -9,15 +9,32 @@ export DYLD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${DYLD_LIB
 export LD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
 export GST_PLUGIN_PATH=@expanded_libdir@/@PACKAGE@/gstreamer-0.10
 
-case "x--debug" in ("x$1" | "x$2")
-	MONO_OPTIONS="--debug"
-	echo "** Running Banshee in Debug Mode **"
-esac
+[ -n "$BANSHEE_DEBUG" ] && BANSHEE_DEBUG="--debug"
+[ -n "$BANSHEE_TRACE" ] && BANSHEE_TRACE="--trace=$BANSHEE_TRACE"
+[ -n "$BANSHEE_PROFILE" ] && BANSHEE_PROFILE="--profile=$BANSHEE_PROFILE"
 
-case "x--trace=" in ("x${1:0:8}")
-	MONO_OPTIONS="$MONO_OPTIONS $1"
-	echo "** Running Mono with $1 **"
-esac
+for arg in $*; do
+    case "x--debug" in ("x$arg")
+        BANSHEE_DEBUG=$arg
+    esac
+
+    case "x--trace=" in ("x${arg:0:8}")
+        BANSHEE_TRACE=$arg
+    esac
+
+    case "x--profile=" in ("x${arg:0:10}")
+        BANSHEE_PROFILE=$arg
+    esac
+done
+
+if [ -n "$BANSHEE_DEBUG" ]; then
+    echo "** Running Banshee in Debug Mode **"
+fi
+
+if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
+    MONO_OPTIONS="$BANSHEE_DEBUG $BANSHEE_TRACE $BANSHEE_PROFILE"
+    echo "** Running Mono with $MONO_OPTIONS **"
+fi
 
 # Plugins can install scripts to be sourced into this script. 
 # Sourcing is useful if a plugin needs to ensure certain environment 
@@ -34,5 +51,5 @@ if [ -d $libdir/@PACKAGE@/shell-init ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE "$@"
+exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG "$@"
 
