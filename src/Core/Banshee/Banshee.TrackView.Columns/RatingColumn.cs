@@ -45,6 +45,8 @@ namespace Banshee.TrackView.Columns
             CellRendererRating rating_renderer = Renderer as CellRendererRating;
             rating_renderer.RatingChanged += OnRatingChanged;
             SetCellDataFunc(rating_renderer, new TreeCellDataFunc(DataHandler));
+            Resizable = false;
+            FixedWidth = CellRendererRating.Width;
         }
         
         protected void DataHandler(TreeViewColumn tree_column, CellRenderer cell, 
@@ -79,13 +81,6 @@ namespace Banshee.TrackView.Columns
             return LongFieldCompare((long)model.IterTrackInfo(a).Rating, (long)model.IterTrackInfo(b).Rating);
         }
         
-        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
-            "view_columns.rating", "width",
-            75,
-            "Width",
-            "Width of Rating column"
-        );
-        
         public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.rating", "order",
             ID,
@@ -99,10 +94,6 @@ namespace Banshee.TrackView.Columns
             "Visiblity",
             "Visibility of Rating column"
         );
-        
-        protected override SchemaEntry<int> WidthSchema {
-            get { return width_schema; }
-        }
         
         protected override SchemaEntry<int> OrderSchema {
             get { return order_schema; }

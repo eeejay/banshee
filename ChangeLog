@@ -1,5 +1,12 @@
 2007-01-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs: Make the
+	column a fixed width and not resizable (BGO #385547)
+
+	* src/Core/Banshee.Base/Gui/RatingRenderer.cs: Added static Width propery
+
+2007-01-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/PlaylistView.cs: Call CreatePopupableHeader on the
 	columns after adding to the view (must be done after AppendColumn)
 

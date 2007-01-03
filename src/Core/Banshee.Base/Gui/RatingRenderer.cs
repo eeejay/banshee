@@ -168,7 +168,7 @@ namespace Banshee.Gui
             out int x_offset, out int y_offset, out int width, out int height)
         {
             height = RatedPixbuf.Height + 2;
-            width = (RatedPixbuf.Width * (int)MaxRating) + 4;
+            width = Width - 4;
             x_offset = 0;
             y_offset = 0;
         }
@@ -230,6 +230,10 @@ namespace Banshee.Gui
         public bool TextMode {
             get { return text_mode; }
             set { text_mode = value; }
+        }
+        
+        public static int Width {
+            get { return (RatedPixbuf.Width * (int)MaxRating) + 8; }
         }
     }
 }
