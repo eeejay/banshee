@@ -263,5 +263,6 @@
     <ProjectReference type="Assembly" localcopy="False" refto="../../Extras/Boo/Boo.Lang.Parser.dll" />
     <ProjectReference type="Project" localcopy="False" refto="BooBuddy" />
     <ProjectReference type="Project" localcopy="False" refto="Last.FM" />
+    <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
 </Project>

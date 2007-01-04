@@ -1,5 +1,28 @@
 2007-01-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/FileNamePattern.cs: Filter the display pattern too
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs: 
+	Support enables/disables on preset variables; support min/max labels
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs: Added
+	enables/disables support and min-label, max-label
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/Abakos.Compiler/Expression.cs:
+	Work around parser bug
+
+	* src/Core/Banshee.Base/Globals.cs: Do not test audio profiles if
+	BANSHEE_PROFILES_NO_TEST is set
+
+	* src/MonoDevelopBootstrap.cs: Use Mono.Unix.Native.Syscall.system to 
+	exec make run so the environment can be set
+
+	* data/audio-profiles/vorbis.xml: Set min-label, max-label
+
+	* data/audio-profiles/mp3-lame.xml: Support VBR
+
+2007-01-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Plugins/PluginFactory.cs: Handle reflecting
 	against dynamic modules
 

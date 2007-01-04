@@ -202,6 +202,11 @@ namespace Banshee.Base
         
         private static void OnTestAudioProfile(object o, TestProfileArgs args)
         {
+            if(EnvironmentIsSet("BANSHEE_PROFILES_NO_TEST")) {
+                args.ProfileAvailable = true;
+                return;
+            }
+            
             bool available = false;
             
             foreach(Pipeline.Process process in args.Profile.Pipeline.GetPendingProcessesById("gstreamer")) {
@@ -285,6 +290,12 @@ namespace Banshee.Base
                 
                 return debugging.Value;
             }
+        }
+        
+        public static bool EnvironmentIsSet(string env)
+        {
+            string env_val = Environment.GetEnvironmentVariable(env);
+            return env_val != null && env_val != String.Empty;
         }
     }
     

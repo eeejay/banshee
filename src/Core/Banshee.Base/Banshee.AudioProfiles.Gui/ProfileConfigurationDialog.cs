@@ -36,6 +36,30 @@ using Banshee.AudioProfiles;
 
 namespace Banshee.AudioProfiles.Gui
 {
+    internal class PipelineVariableComboBox : Gtk.ComboBox
+    {
+        private PipelineVariable variable;
+        private ListStore model;
+        
+        public PipelineVariableComboBox(PipelineVariable variable, ListStore model) : base()
+        {
+            this.variable = variable;
+            this.model = model;
+        }
+        
+        protected PipelineVariableComboBox(IntPtr ptr) : base(ptr)
+        {
+        }
+        
+        public PipelineVariable Variable {
+            get { return variable; }
+        }
+        
+        public ListStore Store {
+            get { return model; }
+        }
+    }
+
     public class ProfileConfigurationDialog : Gtk.Dialog
     {
         private Profile profile;
@@ -45,6 +69,8 @@ namespace Banshee.AudioProfiles.Gui
         private Table normal_controls_table = new Table(1, 1, false);
         private Table advanced_controls_table = new Table(1, 1, false);
         private Expander advanced_expander = new Expander(Catalog.GetString("Advanced"));
+        
+        private Dictionary<string, Widget> variable_widgets = new Dictionary<string, Widget>();
 
         public ProfileConfigurationDialog(Profile profile) : base()
         {
@@ -136,6 +162,9 @@ namespace Banshee.AudioProfiles.Gui
                     if(control == null) {
                         throw new ApplicationException("Control could not be created");
                     }
+                    
+                    variable_widgets.Add(variable.ID, control);
+                    variable_widgets.Add(".label." + variable.ID, label);
 
                     control.Show();
                 
@@ -148,6 +177,12 @@ namespace Banshee.AudioProfiles.Gui
 
                     y++;
                 } catch {
+                }
+            }
+            
+            foreach(Widget widget in variable_widgets.Values) {
+                if(widget is PipelineVariableComboBox) {
+                    OnComboChanged(widget, EventArgs.Empty);
                 }
             }
 
@@ -172,8 +207,13 @@ namespace Banshee.AudioProfiles.Gui
             if(variable.StepValue <= 0.0) {
                 return null;
             }
+            
+            HBox box = new HBox();
         
             HScale slider = new HScale(variable.MinValue, variable.MaxValue, variable.StepValue);
+            slider.DrawValue = true;
+            slider.Digits = variable.StepPrecision;
+            
             if(variable.DefaultValueNumeric != null) {
                 slider.Value = (double)variable.DefaultValueNumeric;
             }
@@ -185,7 +225,28 @@ namespace Banshee.AudioProfiles.Gui
             slider.ChangeValue += delegate {
                 variable.CurrentValue = slider.Value.ToString();
             };
-            return slider;
+            
+            if(variable.MinLabel != null) {
+                Label min_label = new Label();
+                min_label.Yalign = 0.9f;
+                min_label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(variable.MinLabel));
+                box.PackStart(min_label, false, false, 0);
+                box.Spacing = 5;
+            }
+            
+            box.PackStart(slider, true, true, 0);
+            
+            if(variable.MaxLabel != null) {
+                Label max_label = new Label();
+                max_label.Yalign = 0.9f;
+                max_label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(variable.MaxLabel));
+                box.PackStart(max_label, false, false, 0);
+                box.Spacing = 5;
+            }
+            
+            box.ShowAll();
+            
+            return box;
         }
 
         private TreeIter ComboAppend(ListStore model, PipelineVariable variable, string display, string value)
@@ -199,13 +260,15 @@ namespace Banshee.AudioProfiles.Gui
 
         private Widget BuildCombo(PipelineVariable variable)
         {
-            ComboBox box = new ComboBox();
             ListStore model = new ListStore(typeof(string), typeof(string));
+            PipelineVariableComboBox box = new PipelineVariableComboBox(variable, model);
             TreeIter active_iter = TreeIter.Zero;
+
+            box.Changed += OnComboChanged;
 
             if(variable.PossibleValuesCount > 0) {
                 foreach(string key in variable.PossibleValuesKeys) {
-                    TreeIter iter = ComboAppend(model, variable, variable.PossibleValues[key], key);
+                    TreeIter iter = ComboAppend(model, variable, variable.PossibleValues[key].Display, key);
                 
                     if(variable.CurrentValue == key || (active_iter.Equals(TreeIter.Zero) && 
                         variable.DefaultValue == key)) {
@@ -253,7 +316,7 @@ namespace Banshee.AudioProfiles.Gui
             box.AddAttribute(text_renderer, "text", 0);
 
             box.Model = model;
-
+            
             if(active_iter.Equals(TreeIter.Zero)) {
                 if(model.IterNthChild(out active_iter, 0)) {
                     box.SetActiveIter(active_iter);
@@ -262,14 +325,45 @@ namespace Banshee.AudioProfiles.Gui
                 box.SetActiveIter(active_iter);
             }
             
-            box.Changed += delegate {
-                TreeIter selected_iter = TreeIter.Zero;
-                if(box.GetActiveIter(out selected_iter)) {
-                    variable.CurrentValue = (string)model.GetValue(selected_iter, 1);
-                }
-            };
-
             return box;
+        }
+        
+        private void OnComboChanged(object o, EventArgs args)
+        {
+            if(!(o is PipelineVariableComboBox)) {
+                return;
+            }
+            
+            PipelineVariableComboBox box = o as PipelineVariableComboBox;
+            PipelineVariable variable = box.Variable;
+            ListStore model = box.Store;
+            TreeIter selected_iter = TreeIter.Zero;
+            
+            if(box.GetActiveIter(out selected_iter)) {
+                variable.CurrentValue = (string)model.GetValue(selected_iter, 1);
+                
+                if(variable.PossibleValuesCount > 0 && 
+                    variable.PossibleValues.ContainsKey(variable.CurrentValue)) {
+                    PipelineVariable.PossibleValue possible_value = variable.PossibleValues[variable.CurrentValue];
+                    if(possible_value.Disables != null) {
+                        for(int i = 0; i < possible_value.Disables.Length; i++) {
+                            if(variable_widgets.ContainsKey(possible_value.Disables[i])) {
+                                variable_widgets[possible_value.Disables[i]].Visible = false;
+                                variable_widgets[".label." + possible_value.Disables[i]].Visible = false;
+                            }
+                        }
+                    }
+                    
+                    if(possible_value.Enables != null) {
+                        for(int i = 0; i < possible_value.Enables.Length; i++) {
+                            if(variable_widgets.ContainsKey(possible_value.Enables[i])) {
+                                variable_widgets[possible_value.Enables[i]].Visible = true;
+                                variable_widgets[".label." + possible_value.Enables[i]].Visible = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

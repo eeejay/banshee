@@ -44,8 +44,8 @@ namespace Abakos.Compiler
         
         public Expression(string expression)
         {
-            raw_expression = expression;
-            infix_queue = ToInfixQueue(expression);
+            raw_expression = "(" + expression + ")";
+            infix_queue = ToInfixQueue(raw_expression);
             postfix_queue = ToPostfixQueue(infix_queue);
         }
         

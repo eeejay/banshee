@@ -2,7 +2,7 @@
 <audio-profiles>
   <profiles>
     <profile id="lame-mp3">
-      <name>MP3 (Lossy)</name>
+      <name>Lame MP3 (Lossy)</name>
       <description>Good trade-off between quality and file size.</description>
       <output-file-extension>mp3</output-file-extension>
       <mimetype>audio/mp3</mimetype>
@@ -18,9 +18,33 @@
           audioconvert ! 
           lame 
             bitrate=$bitrate 
-            mode=$mode !
+            mode=$mode
+            vbr=$vbr_mode
+            vbr-quality=$vbr_quality !
           id3v2mux
         </process>
+        <variable id="vbr_mode">
+          <name>VBR Mode</name>
+          <control-type>combo</control-type>
+          <default-value>0</default-value>
+          <possible-values>
+            <value value="0" enables="bitrate" disables="vbr_quality">Constant Bitrate</value>
+            <value value="4" disables="bitrate" enables="vbr_quality">Variable Bitrate</value>
+            <!--<value value="2" disables="bitrate" enables="vbr_quality">Lame's Old VBR</value>-->
+            <value value="3" disables="bitrate" enables="vbr_quality">Average Bitrate</value>
+          </possible-values>
+        </variable>
+        <variable id="vbr_quality">
+          <name>VBR Quality</name>
+          <control-type>slider</control-type>
+          <min-value>0</min-value>
+          <min-label>Worst</min-label>
+          <max-value>9</max-value>
+          <max-label>Best</max-label>
+          <step-value>1</step-value>
+          <default-value>5</default-value>
+          <transformation id="gstreamer">9 - $_</transformation>
+        </variable>
         <variable id="bitrate">
           <name>Bitrate</name>
           <control-type>combo</control-type>

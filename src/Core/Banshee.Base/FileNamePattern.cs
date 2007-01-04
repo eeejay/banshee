@@ -165,6 +165,18 @@ namespace Banshee.Base
         public static string [] SuggestedFiles {
             get { return suggested_files; }
         }
+        
+        private static string OnFilter(string input)
+        {
+            string repl_pattern = input;
+            
+            FilterHandler filter_handler = Filter;
+            if(filter_handler != null) {
+                repl_pattern = filter_handler(repl_pattern);
+            }
+            
+            return repl_pattern;
+        }
 
         public static string CreateFolderFilePattern(string folder, string file)
         {
@@ -177,7 +189,7 @@ namespace Banshee.Base
             foreach(Conversion conversion in PatternConversions) {
                 repl_pattern = repl_pattern.Replace("%" + conversion.Token + "%", conversion.Name);
             }
-            return repl_pattern;
+            return OnFilter(repl_pattern);
         }
 
         public static string CreateFromTrackInfo(TrackInfo track)
@@ -210,12 +222,7 @@ namespace Banshee.Base
                     conversion.Handler(track, null));
             }
             
-            FilterHandler filter_handler = Filter;
-            if(filter_handler != null) {
-                repl_pattern = filter_handler(repl_pattern);
-            }
-            
-            return repl_pattern;
+            return OnFilter(repl_pattern);
         }
 
         public static string BuildFull(TrackInfo track, string ext)

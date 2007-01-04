@@ -1,11 +1,7 @@
-using System;
-using System.Diagnostics;
-
 public class MonoDevelopBootstrap
 {
     public static void Main()
     {
-        Process process = Process.Start("make", "run-nocheck");
-        process.WaitForExit();
+        Mono.Unix.Native.Syscall.system("XBANSHEE_PROFILES_NO_TEST=1 make run-nocheck");
     }
 }

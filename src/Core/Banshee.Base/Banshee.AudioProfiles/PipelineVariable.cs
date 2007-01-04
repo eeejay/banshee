@@ -43,17 +43,42 @@ namespace Banshee.AudioProfiles
     
     public class PipelineVariable
     {
+        public struct PossibleValue
+        {
+            public string Value;
+            public string Display;
+            public string [] Enables;
+            public string [] Disables;
+            
+            public PossibleValue(string value, string display)
+            {
+                Value = value;
+                Display = display;
+                Enables = null;
+                Disables = null;
+            }
+            
+            public override string ToString()
+            {
+                return Display;
+            }
+        }
+    
         private PipelineVariableControlType control_type;
         private string id;
         private string name;
         private string unit;
         private string default_value;
         private string current_value;
+        private string min_label;
+        private string max_label;
         private double min_value;
         private double max_value;
         private double step_value;
+        private int step_precision;
+        
         private Abakos.Compiler.Expression step_expression;
-        private Dictionary<string, string> possible_values = new Dictionary<string, string>();
+        private Dictionary<string, PossibleValue> possible_values = new Dictionary<string, PossibleValue>();
         private List<string> possible_values_keys = new List<string>();
         private Dictionary<string, string> transformations = new Dictionary<string, string>();
         private bool advanced;
@@ -83,7 +108,24 @@ namespace Banshee.AudioProfiles
             default_value = ReadValue(node, "default-value");
             min_value = ToDouble(ReadValue(node, "min-value"));
             max_value = ToDouble(ReadValue(node, "max-value"));
-            step_value = ToDouble(ReadValue(node, "step-value"));
+            min_label = ReadValue(node, "min-label");
+            max_label = ReadValue(node, "max-label");
+            
+            string step_value_str = ReadValue(node, "step-value");
+            if(step_value_str != null) {
+                bool zeros = true;
+                step_precision = step_value_str.IndexOf(".") + 1;
+                
+                for(int i = step_precision; i > 0 && i < step_value_str.Length; i++) {
+                    if(step_value_str[i] != '0') {
+                        zeros = false;
+                        break;
+                    }
+                }
+                
+                step_precision = zeros ? 0 : step_value_str.Length - step_precision;
+                step_value = ToDouble(step_value_str);
+            }
             
             if(default_value != null && default_value != String.Empty && (current_value == null ||
                 current_value == String.Empty)) {
@@ -104,8 +146,32 @@ namespace Banshee.AudioProfiles
                     string value = possible_value_node.Attributes["value"].Value.Trim();
                     string display = possible_value_node.InnerText.Trim();
 
+                    PossibleValue possible_value = new PossibleValue(value, display);
+                    
+                    XmlAttribute attr = possible_value_node.Attributes["enables"];
+                    if(attr != null && attr.Value != null) {
+                        string [] vars = attr.Value.Split(',');
+                        if(vars != null && vars.Length > 0) {
+                            possible_value.Enables = new string[vars.Length];
+                            for(int i = 0; i < vars.Length; i++) {
+                                possible_value.Enables[i] = vars[i].Trim();
+                            }
+                        }
+                    }
+
+                    attr = possible_value_node.Attributes["disables"];
+                    if(attr != null && attr.Value != null) {
+                        string [] vars = attr.Value.Split(',');
+                        if(vars != null && vars.Length > 0) {
+                            possible_value.Disables = new string[vars.Length];
+                            for(int i = 0; i < vars.Length; i++) {
+                                possible_value.Disables[i] = vars[i].Trim();
+                            }
+                        }
+                    }
+                    
                     if(!possible_values.ContainsKey(value)) {
-                        possible_values.Add(value, display);
+                        possible_values.Add(value, possible_value);
                         possible_values_keys.Add(value);
                     }
                 } catch {
@@ -221,6 +287,20 @@ namespace Banshee.AudioProfiles
             set { current_value = value; }
         }
 
+        public string MinLabel {
+            get { return min_label; }
+            set { min_label = value; }
+        }
+        
+        public string MaxLabel {
+            get { return max_label; }
+            set { max_label = value; }
+        }
+        
+        public int StepPrecision {
+            get { return step_precision; }
+        }
+
         public double? DefaultValueNumeric {
             get {
                 try {
@@ -283,7 +363,7 @@ namespace Banshee.AudioProfiles
             }
         }
         
-        public IDictionary<string, string> PossibleValues {
+        public IDictionary<string, PossibleValue> PossibleValues {
             get { return possible_values; }
         }
         
@@ -314,7 +394,7 @@ namespace Banshee.AudioProfiles
             builder.Append(String.Format("\tStep Value    = {0}\n", StepValue));
             builder.Append(String.Format("\tPossible Values:\n"));
             
-            foreach(KeyValuePair<string, string> value in PossibleValues) {
+            foreach(KeyValuePair<string, PossibleValue> value in PossibleValues) {
                 builder.Append(String.Format("\t\t{0} => {1}\n", value.Value, value.Key));
             }
 
