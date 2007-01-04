@@ -1,3 +1,18 @@
+2007-01-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Plugins/PluginFactory.cs: Handle reflecting
+	against dynamic modules
+
+	* src/Core/Banshee.Base/Plugins/PluginCore.cs: After compiling a boo
+	script, always call factory.LoadPluginsFromAssembly, and always invoke
+	the assembly.EntryPoint and with the proper number of arguments; this
+	allows you to not have to specify a Main() method at all in the boo
+	script
+
+	* src/Core/Banshee.Base/FileNamePattern.cs: Added FilterHandler to
+	allow plugins and scripts to perform further formatting on the 
+	FileNamePattern
+
 2007-01-03  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Core/Banshee.Base/ArgumentQueue.cs: Allow duplicate arguments to be

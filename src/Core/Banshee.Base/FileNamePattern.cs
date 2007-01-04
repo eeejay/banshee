@@ -39,6 +39,9 @@ namespace Banshee.Base
     public static class FileNamePattern
     {
         private delegate string ExpandTokenHandler(TrackInfo track, object replace);
+        public delegate string FilterHandler(string path);
+        
+        public static FilterHandler Filter;
         
         private struct Conversion
         {
@@ -207,6 +210,11 @@ namespace Banshee.Base
                     conversion.Handler(track, null));
             }
             
+            FilterHandler filter_handler = Filter;
+            if(filter_handler != null) {
+                repl_pattern = filter_handler(repl_pattern);
+            }
+            
             return repl_pattern;
         }
 
@@ -224,7 +232,7 @@ namespace Banshee.Base
                 Path.GetDirectoryName(songpath));
             string filename = dir + Path.DirectorySeparatorChar + 
                 Path.GetFileName(songpath);
-             
+                
             if(!Banshee.IO.IOProxy.Directory.Exists(dir)) {
                 Banshee.IO.IOProxy.Directory.Create(dir);
             }

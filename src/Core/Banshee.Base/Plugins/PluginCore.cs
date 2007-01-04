@@ -131,12 +131,9 @@ namespace Banshee.Plugins
                     if(script_module == null) {
                         BooScriptOutput(file, "Could not find module in script");
                     } else {
-                        MethodInfo main_entry = script_module.GetMethod("Main");
-                        if(main_entry == null) {
-                            factory.LoadPluginsFromAssembly(context.GeneratedAssembly);
-                        } else {
-                            main_entry.Invoke(null, null);
-                        }
+                        MethodInfo main_entry = script_module.Assembly.EntryPoint;
+                        factory.LoadPluginsFromAssembly(script_module.Assembly);
+                        main_entry.Invoke(null, new object[main_entry.GetParameters().Length]);
                     }
                 } catch(Exception e) {
                     BooScriptOutput(file, e.ToString());

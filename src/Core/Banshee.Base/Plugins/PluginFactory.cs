@@ -240,14 +240,17 @@ namespace Banshee.Plugins
                 Console.WriteLine("    }");
                 Console.WriteLine("}\n");
             } else if(non_entry_types != null) {
-                Console.WriteLine(
-                    "Assembly.GetTypes() was called on assembly:\n" +
-                    "{0}\n\n" +
-                    "This assembly does not include any {1} types\n" + 
-                    "and should probably be filtered from being passed to\n" +
-                    "PluginFactory.LoadPluginsFromAssembly to prevent memory\n" + 
-                    "loss and performance issues.\n\n",
-                    assembly.Location, typeof(T).FullName);
+                try {
+                    Console.WriteLine(
+                        "Assembly.GetTypes() was called on assembly:\n" +
+                        "{0}\n\n" +
+                        "This assembly does not include any {1} types\n" + 
+                        "and should probably be filtered from being passed to\n" +
+                        "PluginFactory.LoadPluginsFromAssembly to prevent memory\n" + 
+                        "loss and performance issues.\n\n",
+                        assembly.Location, typeof(T).FullName);
+                } catch {
+                }
             }
         }
         
