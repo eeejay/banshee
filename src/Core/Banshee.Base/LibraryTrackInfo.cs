@@ -224,11 +224,18 @@ namespace Banshee.Base
             
             fileName = Path.GetFileNameWithoutExtension(fileName);
         
-            match = Regex.Match(fileName, @"(\d+)\.? *(.*)$");
+            match = Regex.Match(fileName, @"^(\d+)\.? *(.*)$");
             if(match.Success) {
-                track_number = Convert.ToUInt32(match.Groups[1].ToString());
-//                Console.WriteLine ("track_number = {0}", track_number);
-                fileName = match.Groups[2].ToString().Trim();
+		try {
+		    track_number = Convert.ToUInt32(match.Groups[1].ToString());
+		    fileName = match.Groups[2].ToString().Trim();
+		    if(fileName.Length == 0) {
+			/* If we only have a number in the filename,
+			 * use that for the title too */
+			fileName = Convert.ToString(track_number);
+		    }
+		} catch {
+		}
             }
 
             /* Artist - Album - Title */
