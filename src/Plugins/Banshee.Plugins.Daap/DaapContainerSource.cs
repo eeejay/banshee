@@ -55,7 +55,7 @@ namespace Banshee.Plugins.Daap
             get { return icon; }
         }
         
-        public override bool AutoExpand {
+        public override bool? AutoExpand {
             get { return false; }
         }
         

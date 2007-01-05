@@ -282,7 +282,7 @@ namespace Banshee.Plugins.Daap
             }
         }
         
-        public override bool AutoExpand {
+        public override bool? AutoExpand {
             get { return false; }
         }
 
