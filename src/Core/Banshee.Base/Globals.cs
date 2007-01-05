@@ -42,7 +42,6 @@ namespace Banshee.Base
         [System.Runtime.InteropServices.DllImport("libc")]
         private static extern int sigaction(Mono.Unix.Native.Signum sig, IntPtr act, IntPtr oact);
 
-        private static GConf.Client gconf_client;
         private static NetworkDetect network_detect;
         private static ActionManager action_manager;
         private static Library library;

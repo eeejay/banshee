@@ -178,7 +178,7 @@ namespace Banshee.Base
             }
         
             TagLib.File file = StreamTagger.ProcessUri(track.Uri);
-            file.Tag.Artists = new string [] { track.Artist };
+            file.Tag.AlbumArtists = new string [] { track.Artist };
             file.Tag.Album = track.Album;
             file.Tag.Genres = new string [] { track.Genre };
             file.Tag.Title = track.Title;

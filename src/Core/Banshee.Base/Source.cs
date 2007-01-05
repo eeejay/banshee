@@ -70,6 +70,7 @@ namespace Banshee.Sources
         private string filter_field;
         private int sort_column = -1;
         private Gtk.SortType sort_type = Gtk.SortType.Ascending;
+        private bool expanded;
 
         private List<Source> child_sources;
 
@@ -418,7 +419,7 @@ namespace Banshee.Sources
             get { return false; }
         }
         
-        public virtual bool AutoExpand {
+        public virtual bool? AutoExpand {
             get { return true; }
         }
 
@@ -452,6 +453,18 @@ namespace Banshee.Sources
         public virtual Gtk.SortType SortType {
             get { return sort_type; }
             set { sort_type = value; }
+        }
+        
+        public virtual bool Expanded {
+            get { return expanded; }
+            set {
+                if(expanded == value) {
+                    return;
+                }
+                
+                expanded = value;
+                OnUpdated();
+            }
         }
     }
 }

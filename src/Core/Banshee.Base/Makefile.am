@@ -214,7 +214,8 @@ PLUGINS_SOURCES = \
 	$(srcdir)/Plugins/PluginCore.cs \
 	$(srcdir)/Plugins/PluginDialog.cs \
 	$(srcdir)/Plugins/IPlugin.cs \
-	$(srcdir)/Plugins/PluginFactory.cs
+	$(srcdir)/Plugins/PluginFactory.cs \
+	$(srcdir)/Plugins/ScriptCore.cs
 
 MEDIAENGINE_SOURCES = \
 	$(srcdir)/MediaEngine/PlayerEngine.cs \

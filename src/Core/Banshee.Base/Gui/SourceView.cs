@@ -202,7 +202,7 @@ namespace Banshee.Gui
                 RemoveSource(e.Source);
             };
            
-            if(source.AutoExpand) {
+            if(source.Expanded || (source.AutoExpand != null && source.AutoExpand.Value)) {
                 Expand(iter);
             }
             
@@ -257,7 +257,19 @@ namespace Banshee.Gui
             ExpanderColumn = Columns[0];
             return false;
         }
-                    
+        
+        protected override void OnRowExpanded(TreeIter iter, TreePath path)
+        {
+            base.OnRowExpanded(iter, path);
+            GetSource(iter).Expanded = true;
+        }
+        
+        protected override void OnRowCollapsed(TreeIter iter, TreePath path)
+        {
+            base.OnRowCollapsed(iter, path);
+            GetSource(iter).Expanded = false;
+        }
+        
         protected void SourceCellDataFunc(TreeViewColumn tree_column,
             CellRenderer cell, TreeModel tree_model, TreeIter iter)
         {
@@ -558,12 +570,17 @@ namespace Banshee.Gui
             Selection.SelectPath(path);
         }
         
+        public Source GetSource(TreeIter iter)
+        {
+            return store.GetValue(iter, 0) as Source;
+        }
+        
         public Source GetSource(TreePath path)
         {
             TreeIter iter;
         
             if(store.GetIter(out iter, path)) {
-                return store.GetValue(iter, 0) as Source;
+                return GetSource(iter);
             }
         
             return null;

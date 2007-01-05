@@ -73,6 +73,13 @@ namespace Banshee.Configuration.Schema
             "Column sort type for the library source. Ascending (0) or Descending (1)"
         );
         
+        public static readonly SchemaEntry<bool> SourceExpanded = new SchemaEntry<bool>(
+            "library", "source_expanded",
+            true,
+            "Library source expansion",
+            "Whether to expand the library node in the source view"
+        );
+        
         public static readonly SchemaEntry<bool> CopyOnImport = new SchemaEntry<bool>(
             "library", "copy_on_import",
             false,

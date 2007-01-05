@@ -197,6 +197,15 @@ namespace Banshee.Sources
             set { LibrarySchema.SortType.Set((int)value); }
         }
         
+        public override bool? AutoExpand {
+            get { return null; }
+        }
+        
+        public override bool Expanded {
+            get { return LibrarySchema.SourceExpanded.Get(); }
+            set { LibrarySchema.SourceExpanded.Set(value); }
+        }
+        
         private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Gtk.Stock.Home, "user-home", "source-library");
         public override Gdk.Pixbuf Icon {
             get { return icon; } 

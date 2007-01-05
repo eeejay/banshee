@@ -232,7 +232,7 @@ namespace Banshee.Gui
             set { text_mode = value; }
         }
         
-        public static int Width {
+        public new static int Width {
             get { return (RatedPixbuf.Width * (int)MaxRating) + 8; }
         }
     }

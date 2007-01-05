@@ -1,5 +1,28 @@
 2007-01-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Gui/SourceView.cs: Expand node if source.Expanded
+	is true or source.AutoExpand is not null and is true; override the 
+	OnRowExpanded/OnRowCollapsed methods to store the expansion state in
+	the source
+
+	* src/Core/Banshee.Base/Source.cs: Added Expanded virtual bool property
+	and made AutoExpand a nullable bool
+
+	* src/Core/Banshee.Base/Sources/LibrarySource.cs: Override Expanded and
+	read/store the value in configuration; Override AutoExpand and return
+	it as null, so the Expanded property is used exclusively in the view
+
+	* src/Core/Banshee.Base/Banshee.Configuration.Schema/LibrarySchema.cs: 
+	Added SourceExpanded property
+
+	* src/Core/Banshee.Base/Globals.cs: 
+	* src/Core/Banshee.Base/StreamTagger.cs: 
+	* src/Core/Banshee.Base/Gui/RatingRenderer.cs: Fixed some minor warnings
+
+	* src/Core/Banshee.Base/Makefile.am: Added ScriptCore.cs
+
+2007-01-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/PlaylistView.cs: Removed old unused column variables
 
 	* src/Core/Banshee/PlayerInterface.cs: Show the rip check button again
