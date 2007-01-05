@@ -96,6 +96,10 @@ namespace Banshee.Base
                     "Source Properties", null,
                     null, null),
                     
+                new ActionEntry("ScriptsAction", null,
+                    Catalog.GetString("User Scripts"), null,
+                    Catalog.GetString("Run available user scripts"), null),
+                    
                 new ActionEntry("QuitAction", Stock.Quit,
                     Catalog.GetString("_Quit"), "<control>Q",
                     Catalog.GetString("Quit Banshee"), null),

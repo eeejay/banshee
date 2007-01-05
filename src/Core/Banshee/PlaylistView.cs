@@ -57,9 +57,6 @@ namespace Banshee
         private Gdk.Pixbuf unknown_error_pixbuf;
 
         public TreeViewColumn RipColumn;
-        public TreeViewColumn RatingColumn;
-        public TreeViewColumn PlaysColumn;
-        public TreeViewColumn LastPlayedColumn;
 
         protected PlaylistView(IntPtr ptr) : base(ptr)
         {

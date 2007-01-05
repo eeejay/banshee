@@ -236,6 +236,7 @@
     <File name="../../../data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Plugins/ScriptCore.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

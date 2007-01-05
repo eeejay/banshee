@@ -9,6 +9,7 @@
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
             <placeholder name="MusicMenuAdditions" />
+            <menuitem name="Scripts" action="ScriptsAction" />
             <separator />
             <menuitem name="ImportSource" action="ImportSourceAction" />
             <menuitem name="WriteCD" action="WriteCDAction" />

@@ -1135,10 +1135,7 @@ namespace Banshee
             // last-played info. Only show the rip button for audio CDs
             gxml["SearchLabel"].Sensitive = source.SearchEnabled;
             searchEntry.Sensitive = gxml["SearchLabel"].Sensitive;
-            /*playlistView.RipColumn.Visible = source is AudioCdSource;
-            playlistView.RatingColumn.Hidden = (source is AudioCdSource);
-            playlistView.PlaysColumn.Hidden = (source is AudioCdSource);
-            playlistView.LastPlayedColumn.Hidden = (source is AudioCdSource);*/
+            playlistView.RipColumn.Visible = source is AudioCdSource;
                 
             UpdateSourceView();
                 

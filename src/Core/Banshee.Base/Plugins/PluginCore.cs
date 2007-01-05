@@ -28,7 +28,6 @@
  
 using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Mono.Unix;
@@ -36,11 +35,6 @@ using Hal;
 
 using Banshee.Base;
 using Banshee.Configuration;
-
-using Boo.Lang.Compiler;
-using Boo.Lang.Compiler.IO;
-using Boo.Lang.Compiler.Pipelines;
-using Boo.Lang.Interpreter;
 
 namespace Banshee.Plugins
 {
@@ -72,7 +66,6 @@ namespace Banshee.Plugins
             factory.LoadPluginFromType(typeof(Banshee.SmartPlaylist.SmartPlaylistCore));
             factory.LoadPlugins();
             
-            InitializeScripts();
             InitializePlugins();
         }
         
@@ -99,57 +92,7 @@ namespace Banshee.Plugins
                 factory.RemovePlugin(plugin);
             }
         }
-        
-        private static void InitializeScripts()
-        {
-            try {
-                foreach(string file in Directory.GetFiles(Path.Combine(
-                    Paths.ApplicationData, "scripts"), "*.boo")) {
-                    RunBooScript(file);
-                } 
-            } catch {
-            }
-        }
-        
-        private static void RunBooScript(string file)
-        {
-            BooCompiler compiler = new BooCompiler();
-            
-            compiler.Parameters.Input.Add(new FileInput(file));
-            compiler.Parameters.Pipeline = new CompileToMemory();
-            compiler.Parameters.Ducky = true;
 
-            foreach(Assembly assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                compiler.Parameters.References.Add(assembly);
-            }
-            
-            CompilerContext context = compiler.Run();
-            
-            if(context.GeneratedAssembly != null) {
-                try {
-                    Type script_module = context.GeneratedAssembly.GetTypes()[0];
-                    if(script_module == null) {
-                        BooScriptOutput(file, "Could not find module in script");
-                    } else {
-                        MethodInfo main_entry = script_module.Assembly.EntryPoint;
-                        factory.LoadPluginsFromAssembly(script_module.Assembly);
-                        main_entry.Invoke(null, new object[main_entry.GetParameters().Length]);
-                    }
-                } catch(Exception e) {
-                    BooScriptOutput(file, e.ToString());
-                }
-            } else {
-                foreach(CompilerError error in context.Errors) {
-                    BooScriptOutput(file, error.ToString());
-                }
-            }
-        }
-        
-        private static void BooScriptOutput(string file, string output)
-        {
-            Console.WriteLine("BooCompiler: {0}: {1}", Path.GetFileName(file), output);
-        }
-        
         public static void Dispose()
         {
             factory.Dispose();

@@ -145,6 +145,7 @@ namespace Banshee.Base
                 Catalog.GetString("CD burning support will be disabled for this instance"), Banshee.Burner.BurnerCore.Initialize);
                 
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
+            startup.Register(Catalog.GetString("Initializing scripts"), Banshee.Plugins.ScriptCore.Initialize);
             startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
             
             if(interfaceStartupHandler != null) {

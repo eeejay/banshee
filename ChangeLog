@@ -1,3 +1,23 @@
+2007-01-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee/PlaylistView.cs: Removed old unused column variables
+
+	* src/Core/Banshee/PlayerInterface.cs: Show the rip check button again
+
+	* src/Core/Banshee.Base/Plugins/ScriptCore.cs: Split script support out
+	from PluginCore into new ScriptCore; added StartupInvocationEntry and
+	ScriptCore.InstallInvocation to allow scripts to install menu/UI hooks
+	in the Music menu - provides simple user-initiated invocation for scripts
+
+	* src/Core/Banshee.Base/Plugins/PluginCore.cs: Split script support out
+	into new ScriptCore
+
+	* src/Core/Banshee.Base/Globals.cs: Initialize ScriptCore
+
+	* data/UIManagerLayout.xml:
+	* src/Core/Banshee.Base/ActionManager.cs: Created action for the 
+	Scripts menu
+
 2007-01-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/FileNamePattern.cs: Filter the display pattern too
