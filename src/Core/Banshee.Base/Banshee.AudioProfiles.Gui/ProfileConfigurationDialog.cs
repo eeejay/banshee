@@ -69,7 +69,8 @@ namespace Banshee.AudioProfiles.Gui
         private Table normal_controls_table = new Table(1, 1, false);
         private Table advanced_controls_table = new Table(1, 1, false);
         private Expander advanced_expander = new Expander(Catalog.GetString("Advanced"));
-        
+        private TextView sexpr_results = null;
+            
         private Dictionary<string, Widget> variable_widgets = new Dictionary<string, Widget>();
 
         public ProfileConfigurationDialog(Profile profile) : base()
@@ -91,9 +92,13 @@ namespace Banshee.AudioProfiles.Gui
                 Button test_button = new Button("Test S-Expr");
                 test_button.Show();
                 test_button.Clicked += delegate {
-                    Console.WriteLine(profile.Pipeline.GetDefaultProcess());
+                    if(sexpr_results != null) {
+                        sexpr_results.Buffer.Text = profile.Pipeline.GetDefaultProcess();
+                    }
                 };
                 ActionArea.PackStart(test_button);
+                
+                sexpr_results = new TextView();
             }
             
             AddActionWidget(button, ResponseType.Close);
@@ -102,6 +107,7 @@ namespace Banshee.AudioProfiles.Gui
                 0, AccelFlags.Visible);
 
             BuildContents();
+            
             LoadProfile();
         }
         
@@ -128,6 +134,29 @@ namespace Banshee.AudioProfiles.Gui
             box.PackStart(description_label, false, false, 0);
             box.PackStart(normal_controls_table, false, false, 5);
             box.PackStart(advanced_expander, false, false, 0);
+            
+            if(sexpr_results != null) {
+                ScrolledWindow scroll = new Gtk.ScrolledWindow();
+                scroll.HscrollbarPolicy = PolicyType.Automatic;
+                scroll.VscrollbarPolicy = PolicyType.Automatic;
+                scroll.ShadowType = ShadowType.In;
+                sexpr_results.WrapMode = WrapMode.Word;
+                sexpr_results.SetSizeRequest(-1, 100);
+                scroll.Add(sexpr_results);
+                scroll.ShowAll();
+                
+                VSeparator sep = new VSeparator();
+                sep.Show();
+                
+                Label label = new Label();
+                label.Markup = "<b>S-Expr Results</b>";
+                label.Xalign = 0.0f;
+                label.Show();
+               
+                box.PackStart(sep, false, false, 0);
+                box.PackStart(label, false, false, 0);
+                box.PackStart(scroll, false, false, 0);
+            }
 
             VBox.PackStart(box, false, false, 0);
         }
@@ -173,16 +202,23 @@ namespace Banshee.AudioProfiles.Gui
                     }
                     
                     variable_widgets.Add(variable.ID, control);
-                    variable_widgets.Add(".label." + variable.ID, label);
+                    
+                    if(variable.ControlType != PipelineVariableControlType.Check) {
+                        variable_widgets.Add(".label." + variable.ID, label);
+                    }
 
                     control.Show();
                 
                     table.Resize(y + 1, 2);
                 
-                    table.Attach(label, 0, 1, y, y + 1, AttachOptions.Fill, AttachOptions.Fill, 0, 0);
+                    if(variable.ControlType != PipelineVariableControlType.Check) {
+                        table.Attach(label, 0, 1, y, y + 1, AttachOptions.Fill, AttachOptions.Fill, 0, 0);
+                    }
+                    
                     table.Attach(control, 1, 2, y, y + 1, 
                         control is ComboBox ? AttachOptions.Fill : AttachOptions.Fill | AttachOptions.Expand, 
-                        AttachOptions.Fill, 0, 0);
+                        AttachOptions.Fill, 0, 
+                        (uint)(variable.ControlType == PipelineVariableControlType.Check ? 6 : 0));
 
                     y++;
                 } catch {
@@ -208,7 +244,19 @@ namespace Banshee.AudioProfiles.Gui
                     return BuildSlider(variable);
                 case PipelineVariableControlType.Combo:
                     return BuildCombo(variable);
+                case PipelineVariableControlType.Check:
+                    return BuildCheck(variable);
             }
+        }
+        
+        private Widget BuildCheck(PipelineVariable variable)
+        {
+            CheckButton check = new CheckButton(variable.Name);
+            check.Toggled += delegate {
+                variable.CurrentValue = Convert.ToString(check.Active ? 1 : 0);
+            };
+            check.Show();
+            return check;
         }
 
         private Widget BuildSlider(PipelineVariable variable)

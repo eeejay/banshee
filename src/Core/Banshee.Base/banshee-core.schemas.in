@@ -134,6 +134,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/banshee/library/source_expanded</key>
+      <applyto>/apps/banshee/library/source_expanded</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Library source expansion</short>
+        <long>Whether to expand the library node in the source view</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/banshee/library/write_metadata</key>
       <applyto>/apps/banshee/library/write_metadata</applyto>
       <owner>banshee</owner>

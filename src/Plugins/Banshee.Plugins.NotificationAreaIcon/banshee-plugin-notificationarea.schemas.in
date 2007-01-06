@@ -13,17 +13,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/banshee/plugins/notification_area/show_notifications</key>
-      <applyto>/apps/banshee/plugins/notification_area/show_notifications</applyto>
-      <owner>banshee</owner>
-      <type>bool</type>
-      <default>true</default>
-      <locale name="C">
-        <short>Show notifications</short>
-        <long>Show track information notifications when track starts playing</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/banshee/plugins/notification_area/notify_on_close</key>
       <applyto>/apps/banshee/plugins/notification_area/notify_on_close</applyto>
       <owner>banshee</owner>
@@ -43,6 +32,17 @@
       <locale name="C">
         <short>Quit on close</short>
         <long>Quit instead of hide to notification area on close</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/plugins/notification_area/show_notifications</key>
+      <applyto>/apps/banshee/plugins/notification_area/show_notifications</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Show notifications</short>
+        <long>Show track information notifications when track starts playing</long>
       </locale>
     </schema>
   </schemalist>

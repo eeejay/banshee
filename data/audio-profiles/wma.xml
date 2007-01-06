@@ -10,32 +10,52 @@
         <process id="gstreamer">
         <![CDATA[
           + "audioconvert ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audio/x-raw-float,rate=" (if (< $sample_rate 40000) 8000 50000)
+          ",channels=" $channels " ! "
           "audioconvert ! "
             
-          "fluwmaenc bitrate=" (* 1000 $bitrate) " ! " 
-          
+          "fluwmaenc "
+            (if (cast-bool $vbr)
+			  (+ "quality=" $quality)
+			  (+ "bitrate=" (* 1000 $bitrate))
+			)
+            " vbr=" (cast-bool $vbr) " ! "
+
           "fluasfmux"
         ]]>
         </process>
+        <variable id="vbr">
+          <name>Variable Bitrate</name>
+          <control-type>combo</control-type>
+          <default-value>0</default-value>
+		  <possible-values>
+		    <value value="0" enables="bitrate" disables="quality">No</value>
+			<value value="1" enables="quality" disables="bitrate">Yes</value>
+	      </possible-values>
+        </variable>
         <variable id="bitrate">
           <name>Bitrate</name>
           <control-type>combo</control-type>
           <default-value>64</default-value>
           <possible-values>
+            <value value="16">16 Kbps</value>
+            <value value="24">24 Kbps</value>
+            <value value="32">32 Kbps</value>
             <value value="64">64 Kbps</value>
             <value value="96">96 Kbps</value>
             <value value="128">128 Kbps</value>
           </possible-values>
         </variable>
-        <!--<variable id="quality">
-            <name>Audio Quality</name>
-            <control-type>slider</control-type>
-            <min-value>0</min-value>
-            <max-value>100</max-value>
-            <step-value>1</step-value>
-            <default-value>75</default-value>
-        </variable>-->
+        <variable id="quality">
+          <name>Audio Quality</name>
+          <control-type>slider</control-type>
+          <min-value>0</min-value>
+          <max-value>100</max-value>
+          <min-label>Worst</min-label>
+          <max-label>Best</max-label>
+          <step-value>1</step-value>
+          <default-value>75</default-value>
+        </variable>
         <preset-variable id="channels" />
         <preset-variable id="sample_rate" />
       </pipeline>

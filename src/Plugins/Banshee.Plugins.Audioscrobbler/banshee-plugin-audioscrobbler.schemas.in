@@ -13,14 +13,14 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/banshee/plugins/audioscrobbler/username</key>
-      <applyto>/apps/banshee/plugins/audioscrobbler/username</applyto>
+      <key>/schemas/apps/banshee/plugins/audioscrobbler/engine_enabled</key>
+      <applyto>/apps/banshee/plugins/audioscrobbler/engine_enabled</applyto>
       <owner>banshee</owner>
-      <type>string</type>
-      <default></default>
+      <type>bool</type>
+      <default>false</default>
       <locale name="C">
-        <short>Username</short>
-        <long>last.fm Username</long>
+        <short>Engine enabled</short>
+        <long>Audioscrobbler reporting engine enabled</long>
       </locale>
     </schema>
     <schema>
@@ -35,14 +35,14 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/banshee/plugins/audioscrobbler/engine_enabled</key>
-      <applyto>/apps/banshee/plugins/audioscrobbler/engine_enabled</applyto>
+      <key>/schemas/apps/banshee/plugins/audioscrobbler/username</key>
+      <applyto>/apps/banshee/plugins/audioscrobbler/username</applyto>
       <owner>banshee</owner>
-      <type>bool</type>
-      <default>false</default>
+      <type>string</type>
+      <default></default>
       <locale name="C">
-        <short>Engine enabled</short>
-        <long>Audioscrobbler reporting engine enabled</long>
+        <short>Username</short>
+        <long>last.fm Username</long>
       </locale>
     </schema>
   </schemalist>

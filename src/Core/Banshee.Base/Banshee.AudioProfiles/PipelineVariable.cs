@@ -38,7 +38,8 @@ namespace Banshee.AudioProfiles
     {
         Text,
         Slider,
-        Combo
+        Combo,
+        Check
     }
     
     public class PipelineVariable
@@ -199,6 +200,7 @@ namespace Banshee.AudioProfiles
             switch(str.ToLower()) {
                 case "combo": return PipelineVariableControlType.Combo; 
                 case "slider": return PipelineVariableControlType.Slider;
+                case "check": return PipelineVariableControlType.Check;
                 case "text": 
                 default:
                     return PipelineVariableControlType.Text;

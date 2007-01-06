@@ -12,7 +12,8 @@
         <process id="gstreamer">
         <![CDATA[
           + "audioconvert ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audio/x-raw-int,rate=" (if (< $sample_rate 40000) 11025 48000)
+          ",channels=" $channels " ! "
           "audioconvert ! "
           "flacenc"
         ]]>

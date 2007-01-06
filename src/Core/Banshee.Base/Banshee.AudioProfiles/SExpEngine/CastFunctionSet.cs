@@ -59,6 +59,13 @@ namespace SExpEngine
             return new IntLiteral((int)result.Value);
         }
         
+        [Function("cast-bool")]
+        public virtual TreeNode OnCastBool(TreeNode [] args)
+        {
+            DoubleLiteral result = (DoubleLiteral)OnCastDouble(args);
+            return new BooleanLiteral((int)result.Value != 0);
+        }
+        
         [Function("cast-string")]
         public virtual TreeNode OnCastString(TreeNode [] args)
         {

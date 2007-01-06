@@ -1,5 +1,25 @@
 2007-01-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs: 
+	Support the check type; added a text view to dump the S-Expression eval
+	in when running in debug mode
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs: Added
+	check type
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/SExpEngine/CastFunctionSet.cs:
+	Added cast-bool
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/SExpEngine/Literals.cs: 
+	Override ToString on BooleanLiteral to return lower-case true/false
+
+	* data/audio-profiles/mp3-xing.xml:
+	* data/audio-profiles/wma.xml:
+	* data/audio-profiles/vorbis.xml: 
+	* data/audio-profiles/flac.xml: Updated
+
+2007-01-06  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds some incredible power to the audio profiles support.
 	Profile process (i.e. GStreamer pipelines) are now defined using an
 	S-Expression like language. This is a big change, but very, very well

@@ -16,7 +16,8 @@
         <process id="gstreamer">
         <![CDATA[
           + "audioconvert ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audio/x-raw-float,rate=" (if (< $sample_rate 40000) 8000 50000)
+          ",channels=" $channels " ! "
           "audioconvert ! "
             
           "vorbisenc quality=" (/ $quality 10.0) " ! "
