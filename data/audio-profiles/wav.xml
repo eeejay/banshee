@@ -9,10 +9,13 @@
       <mimetype>audio/wav</mimetype>
       <pipeline>
         <process id="gstreamer">
-          audioconvert ! 
-          audio/x-raw-float,rate=$sample_rate,channels=$channels ! 
-          audioconvert ! 
-          wavenc
+        <![CDATA[
+          + "audioconvert ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+            
+          "wavenc"
+        ]]>
         </process>
         <preset-variable id="channels" />
         <preset-variable id="sample_rate" />

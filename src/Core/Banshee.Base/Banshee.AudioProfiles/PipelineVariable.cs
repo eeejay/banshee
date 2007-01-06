@@ -77,10 +77,8 @@ namespace Banshee.AudioProfiles
         private double step_value;
         private int step_precision;
         
-        private Abakos.Compiler.Expression step_expression;
         private Dictionary<string, PossibleValue> possible_values = new Dictionary<string, PossibleValue>();
         private List<string> possible_values_keys = new List<string>();
-        private Dictionary<string, string> transformations = new Dictionary<string, string>();
         private bool advanced;
     
         internal PipelineVariable(XmlNode node)
@@ -132,15 +130,6 @@ namespace Banshee.AudioProfiles
                 current_value = default_value;
             }
             
-            try {
-                XmlNode step_expression_node = node.SelectSingleNode("step-expression");
-                if(step_expression_node != null) {
-                    string step_expression_str = step_expression_node.InnerText;
-                    step_expression = new Abakos.Compiler.Expression(step_expression_str);
-                }
-            } catch {
-            }
-
             foreach(XmlNode possible_value_node in node.SelectNodes("possible-values/value")) {
                 try {
                     string value = possible_value_node.Attributes["value"].Value.Trim();
@@ -173,18 +162,6 @@ namespace Banshee.AudioProfiles
                     if(!possible_values.ContainsKey(value)) {
                         possible_values.Add(value, possible_value);
                         possible_values_keys.Add(value);
-                    }
-                } catch {
-                }
-            }
-
-            foreach(XmlNode transformation_node in node.SelectNodes("transformation")) {
-                try {
-                    string transformation_id = transformation_node.Attributes["id"].Value.Trim();
-                    string expression = transformation_node.InnerText.Trim();
-
-                    if(!transformations.ContainsKey(transformation_id)) {
-                        transformations.Add(transformation_id, expression);
                     }
                 } catch {
                 }
@@ -243,13 +220,6 @@ namespace Banshee.AudioProfiles
                 default:
                     return false;
             }
-        }
-
-        public double EvaluateTransformation(string id)
-        {
-            Abakos.Compiler.Expression expression = new Abakos.Compiler.Expression(transformations[id]);
-            expression.DefineVariable("$_", Convert.ToDouble(CurrentValue, ProfileManager.CultureInfo));
-            return expression.EvaluateNumeric();
         }
 
         public string ID {
@@ -343,25 +313,6 @@ namespace Banshee.AudioProfiles
             get { return step_value; }
             set { step_value = value; }
         }
-
-        public bool HasStepExpression {
-            get { return step_expression != null; }
-        }
-
-        public double EvaluateStepExpression(double input)
-        {
-            step_expression.DefineVariable("$min", Convert.ToDouble(MinValue, ProfileManager.CultureInfo));
-            step_expression.DefineVariable("$max", Convert.ToDouble(MaxValue, ProfileManager.CultureInfo));
-            step_expression.DefineVariable("$step", Convert.ToDouble(StepValue, ProfileManager.CultureInfo));
-            step_expression.DefineVariable("$this", input);
-            
-            try {
-                return step_expression.EvaluateNumeric();
-            } catch(Exception e) {
-                Console.WriteLine(e);
-                throw e;
-            }
-        }
         
         public IDictionary<string, PossibleValue> PossibleValues {
             get { return possible_values; }
@@ -373,10 +324,6 @@ namespace Banshee.AudioProfiles
         
         public int PossibleValuesCount {
             get { return possible_values.Count; }
-        }
-
-        public IEnumerable<KeyValuePair<string, string>> Transformations {
-            get { return transformations; }
         }
 
         public override string ToString()
@@ -396,12 +343,6 @@ namespace Banshee.AudioProfiles
             
             foreach(KeyValuePair<string, PossibleValue> value in PossibleValues) {
                 builder.Append(String.Format("\t\t{0} => {1}\n", value.Value, value.Key));
-            }
-
-            builder.Append(String.Format("\tTransformations:\n"));
-
-            foreach(KeyValuePair<string, string> value in Transformations) {
-                builder.Append(String.Format("\t\t{0} => {1}\n", value.Key, value.Value));
             }
 
             builder.Append("\n");

@@ -31,6 +31,9 @@ using System.Text;
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+using SExpEngine;
 
 namespace Banshee.AudioProfiles
 {
@@ -70,6 +73,9 @@ namespace Banshee.AudioProfiles
             }
         }
     
+        private static Dictionary<string, SExpFunctionHandler> sexpr_functions = 
+            new Dictionary<string, SExpFunctionHandler>();
+            
         private List<PipelineVariable> variables = new List<PipelineVariable>();
         private Dictionary<string, string> processes = new Dictionary<string, string>();
         private List<Process> processes_pending = new List<Process>();
@@ -107,31 +113,60 @@ namespace Banshee.AudioProfiles
             }
         }
         
+        public static void AddSExprFunction(string name, SExpFunctionHandler handler)
+        {
+            if(!sexpr_functions.ContainsKey(name)) { 
+                sexpr_functions.Add(name, handler);
+            }
+        }
+        
         public string CompileProcess(Process process)
         {
             return CompileProcess(process.Pipeline, process.ID);
         }
         
-        private string CompileProcess(string process, string id)
+        public string CompileProcess(string process, string id)
         {
-            if(process == null) {
-                return null;
-            }
+            Evaluator eval = new Evaluator();
             
-            string result = process;
+            foreach(KeyValuePair<string, SExpFunctionHandler> function in sexpr_functions) {
+                eval.RegisterFunction(function.Value, function.Key);
+            }
             
             foreach(PipelineVariable variable in this) {
-                string variable_value = variable.CurrentValue;
-                
-                try {
-                    variable_value = Convert.ToString(variable.EvaluateTransformation(id), ProfileManager.CultureInfo);
-                } catch {
+                double ?numeric = variable.CurrentValueNumeric;
+                if(numeric != null) {
+                    if(variable.CurrentValue.Contains(".")) {
+                        eval.RegisterVariable(variable.ID, numeric.Value);
+                    } else {
+                        eval.RegisterVariable(variable.ID, (int)numeric.Value);
+                    }
+                } else {
+                    eval.RegisterVariable(variable.ID, variable.CurrentValue);
                 }
-                
-                result = result.Replace(String.Format("${0}", variable.ID), variable_value);
             }
             
-            return result;
+            TreeNode result = eval.EvaluateString(process);
+            if(eval.Success && result is StringLiteral) {
+                return (result as StringLiteral).Value;
+            } else if(!eval.Success && Banshee.Base.Globals.Debugging) {
+                Console.WriteLine("Could not compile pipeline S-Expression for pipeline:");
+                Console.WriteLine(process);
+                Console.WriteLine("-----");
+                Console.WriteLine(eval.ErrorMessage);
+                Console.WriteLine("-----");
+                Console.WriteLine("Stack Trace:");
+            
+                foreach(Exception e in eval.Exceptions) {
+                    Console.WriteLine(e);
+                }
+                
+                Console.WriteLine("-----");
+                Console.WriteLine("Expression Tree:");
+                SExpEngine.TreeNode.DumpTree(eval.ExpressionTree);
+            }
+            
+            return null;
         }
         
         public void AddProcess(Process process)

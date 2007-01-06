@@ -30,6 +30,8 @@ using System;
 using System.Runtime.InteropServices;
 using Banshee.Base;
 
+using SExpEngine;
+
 namespace Banshee.Gstreamer
 {
     public static class Utilities
@@ -62,6 +64,21 @@ namespace Banshee.Gstreamer
         public static void Initialize()
         {
             gstreamer_initialize();
+        }
+        
+        public static TreeNode SExprTestElement(EvaluatorBase evaluator, TreeNode [] args)
+        {
+            if(args.Length != 1) {
+                throw new ArgumentException("gst-test-element accepts one argument");
+            }
+            
+            TreeNode arg = evaluator.Evaluate(args[0]);
+            if(!(arg is StringLiteral)) {
+                throw new ArgumentException("gst-test-element requires a string argument");
+            }
+            
+            StringLiteral element_node = (StringLiteral)arg;
+            return new BooleanLiteral(TestPipeline(element_node.Value));
         }
     }
 }

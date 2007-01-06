@@ -17,7 +17,7 @@ BANSHEE_AUDIOPROFILES_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles/PipelineVariable.cs \
 	$(srcdir)/Banshee.AudioProfiles/ProfileConfiguration.cs \
 	$(srcdir)/Banshee.AudioProfiles/GConfProfileConfiguration.cs \
-	$(srcdir)/Banshee.AudioProfiles/Abakos.Compiler/*.cs
+	$(srcdir)/Banshee.AudioProfiles/SExpEngine/*.cs
 
 BANSHEE_AUDIOPROFILES_GUI_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \

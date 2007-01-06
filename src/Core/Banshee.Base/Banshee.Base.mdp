@@ -12,16 +12,6 @@
     <File name="./AudioCd/AudioCdCore.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCd/AudioCdDisk.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCd/AudioCdTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Expression.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Functions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidFunctionException.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidOperandException.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/InvalidTokenException.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Operations.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Operators.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Symbol.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/UnkownVariableException.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.AudioProfiles/Abakos.Compiler/Values.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
@@ -237,6 +227,20 @@
     <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./Plugins/ScriptCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/Parser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/Literals.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/FunctionNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/VariableNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/Evaluator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/FunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/LogicFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles/SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

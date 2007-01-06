@@ -8,11 +8,15 @@
       <mimetype>audio/x-ms-wma</mimetype>
       <pipeline>
         <process id="gstreamer">
-          audioconvert ! 
-          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
-          audioconvert ! 
-          fluwmaenc bitrate=$bitrate ! 
-          fluasfmux
+        <![CDATA[
+          + "audioconvert ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+            
+          "fluwmaenc bitrate=" (* 1000 $bitrate) " ! " 
+          
+          "fluasfmux"
+        ]]>
         </process>
         <variable id="bitrate">
           <name>Bitrate</name>
@@ -23,7 +27,6 @@
             <value value="96">96 Kbps</value>
             <value value="128">128 Kbps</value>
           </possible-values>
-          <transformation id="gstreamer">$_ * 1000</transformation>
         </variable>
         <!--<variable id="quality">
             <name>Audio Quality</name>

@@ -13,15 +13,29 @@
       <mimetype>audio/x-mp3</mimetype>
       <pipeline>
         <process id="gstreamer">
-          audioconvert ! 
-          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
-          audioconvert ! 
-          lame 
-            bitrate=$bitrate 
-            mode=$mode
-            vbr=$vbr_mode
-            vbr-quality=$vbr_quality !
-          id3v2mux
+        <![CDATA[
+          + "audioconvert ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+            
+          "lame mode=" $mode " "
+            
+          (if (= $vbr_mode 0)
+            (+ "bitrate=" $bitrate)
+              (+ "vbr-mode=" $vbr_mode
+                " vbr-quality=" (- 9 $vbr_quality)
+                (if (gst-element-is-available "xingmux")
+                  " ! xingmux"
+                  ""
+                )
+             )
+          ) 
+      
+          (if (gst-element-is-available "id3v2mux")
+            " ! id3v2mux"
+            " ! id3mux"
+          )
+        ]]>
         </process>
         <variable id="vbr_mode">
           <name>VBR Mode</name>
@@ -43,7 +57,6 @@
           <max-label>Best</max-label>
           <step-value>1</step-value>
           <default-value>5</default-value>
-          <transformation id="gstreamer">9 - $_</transformation>
         </variable>
         <variable id="bitrate">
           <name>Bitrate</name>

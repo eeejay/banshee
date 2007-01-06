@@ -127,6 +127,9 @@ namespace Banshee.Base
                 }
                     
                 LogCore.Instance.PushDebug("Loading audio profiles", load_path);
+                
+                Pipeline.AddSExprFunction("gst-element-is-available", Banshee.Gstreamer.Utilities.SExprTestElement);
+                
                 audio_profile_manager = new ProfileManager(load_path);
                 audio_profile_manager.TestProfile += OnTestAudioProfile;
                 audio_profile_manager.TestAll();

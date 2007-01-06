@@ -86,7 +86,16 @@ namespace Banshee.AudioProfiles.Gui
             Button button = new Button(Stock.Close);
             button.CanDefault = true;
             button.Show();
-
+            
+            if(Banshee.Base.Globals.Debugging) {
+                Button test_button = new Button("Test S-Expr");
+                test_button.Show();
+                test_button.Clicked += delegate {
+                    Console.WriteLine(profile.Pipeline.GetDefaultProcess());
+                };
+                ActionArea.PackStart(test_button);
+            }
+            
             AddActionWidget(button, ResponseType.Close);
             DefaultResponse = ResponseType.Close;
             button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return,
@@ -283,18 +292,8 @@ namespace Banshee.AudioProfiles.Gui
 
                 TreeIter iter;
                 
-                if(variable.HasStepExpression) {
-                    for(;;) {
-                        current = variable.EvaluateStepExpression(current);
-                        iter = ComboAppend(model, variable, current.ToString(), current.ToString());
-                        if(current >= max) {
-                            break;
-                        }
-                    }
-                } else {
-                    for(; current <= max; current += step) {
-                        iter = ComboAppend(model, variable, current.ToString(), current.ToString());
-                    }
+                for(; current <= max; current += step) {
+                    iter = ComboAppend(model, variable, current.ToString(), current.ToString());
                 }
             }
             

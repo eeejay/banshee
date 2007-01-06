@@ -1,3 +1,33 @@
+2007-01-06  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds some incredible power to the audio profiles support.
+	Profile process (i.e. GStreamer pipelines) are now defined using an
+	S-Expression like language. This is a big change, but very, very well
+	worth it. I will be flying and unavailable today/Jan 6, so if this commit
+	breaks the build or functionality somehow, revert to the previous svn
+	revision. 
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/Pipeline.cs: Added 
+	SExpEngine integration to compile the pipeline process; removed 
+	transformation/Abakos support as it can now be done inline in S-Exp
+
+	* src/Core/Banshee.Base/Globals.cs: Add the gst-element-is-available
+	S-Exp function
+
+	* src/Core/Banshee.Base/GstMisc.cs: Added a S-Exp function, 
+	gst-element-is-available, which is a S-Exp wrapper around TestPipeline;
+	this S-Exp function can be used to conditionally include an element
+	or pipeline piece inside of the master pipeline:
+
+	  (+ "lame" (if (gst-element-is-available "xingmux") "! xingmux" ""))
+
+	* data/audio-profiles/*.xml: Ported all the pipelines to S-Exp expressions
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/SExpEngine/*: The new
+	SExpEngine - written in 10 hours! Probably lots of holes to fill, but 
+	it has a lot of built in functionality and is working for what we need
+	for audio profiles; the parser could probably use some love
+
 2007-01-05  Peter Teichman  <peter@novell.com>
 
 	* src/Core/Banshee.Base/LibraryTrackInfo.cs: Fix an integer

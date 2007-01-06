@@ -9,11 +9,16 @@
       <mimetype>audio/mp4</mimetype>
       <pipeline>
         <process id="gstreamer">
-          audioconvert ! 
-          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
-          audioconvert ! 
-          faac bitrate=$bitrate outputformat=1 ! 
-          ffmux_mp4
+        <![CDATA[
+          + "audioconvert ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+            
+          "faac bitrate=" (* 1024 $bitrate) 
+          " outputformat=1 ! "
+          
+          "ffmux_mp4"
+        ]]>
         </process>
         <variable id="bitrate">
           <name>Bitrate</name>

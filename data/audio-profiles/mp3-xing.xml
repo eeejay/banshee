@@ -13,11 +13,18 @@
       <mimetype>audio/x-mp3</mimetype>
       <pipeline>
         <process id="gstreamer">
-          audioconvert ! 
-          audio/x-raw-int,rate=$sample_rate,channels=$channels ! 
-          audioconvert ! 
-          xingenc bitrate=$bitrate ! 
-          id3v2mux
+        <![CDATA[
+          + "audioconvert ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+          
+          "xingenc bitrate=" $bitrate " ! "
+      
+          (if (gst-element-is-available "id3v2mux")
+            "id3v2mux"
+            "id3mux"
+          )
+        ]]>
         </process>
         <variable id="bitrate">
           <name>Bitrate</name>
