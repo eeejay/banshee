@@ -53,17 +53,7 @@ namespace SExpEngine
         {
             child.Parent = this;
             children.Add(child);
-        }
-        
-        public void Replace(TreeNode original, TreeNode node)
-        {
-            int index = children.IndexOf(original);
-            if(index < 0) {
-                children.Add(node);
-            } else {
-                children[index] = node;
-            }
-        }
+        } 
 
         public TreeNode Parent {
             get { return parent; }
