@@ -107,10 +107,12 @@ src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/PlayCountColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs
-src/Core/Banshee/Banshee.TrackView.Columns/TimeColumn.cs
+src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs
-src/Core/Banshee/Banshee.TrackView.Columns/TrackColumn.cs
+src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs
+src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs
+src/Core/Banshee/Banshee.TrackView.Columns/UriColumn.cs
 src/Core/Banshee.Widgets/ActiveUserEvent.cs
 src/Core/Banshee.Widgets/DiscUsageDisplay.cs
 src/Core/Banshee.Widgets/SearchEntry.cs
