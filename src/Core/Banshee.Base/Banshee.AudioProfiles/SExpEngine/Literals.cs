@@ -36,7 +36,7 @@ namespace SExpEngine
         
         public Type EnclosedType {
             get { return type ?? GetType(); }
-            protected set { type = value; }
+            set { type = value; }
         }
     }
 
