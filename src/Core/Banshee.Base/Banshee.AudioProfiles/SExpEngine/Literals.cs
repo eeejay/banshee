@@ -80,7 +80,9 @@ namespace SExpEngine
         
         public override string ToString()
         {
-            return Value.ToString(culture_info);
+            return (Value - (int)Value) == 0.0 
+                ? String.Format("{0}.0", Value.ToString(culture_info))
+                : Value.ToString(culture_info);
         }
     }
 
