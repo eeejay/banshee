@@ -72,8 +72,15 @@ namespace SExpEngine
     
     public class DoubleLiteral : LiteralNode<double>
     {
+        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
+        
         public DoubleLiteral(double value) : base(value)
         {
+        }
+        
+        public override string ToString()
+        {
+            return Value.ToString(culture_info);
         }
     }
 

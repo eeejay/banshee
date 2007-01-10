@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<audio-profiles>
+  <profiles>
+    <profile id="wavpack">
+      <name>Wavpack (Lossless/Lossy)</name>
+      <description>Fast lossless or lossy compression.</description>
+      <output-file-extension>wv</output-file-extension>
+      <mimetype>audio/x-wavpack</mimetype>
+      <mimetype>application/x-apetag</mimetype>
+      <pipeline>
+        <process id="gstreamer">
+        <![CDATA[
+          + "audioconvert ! audioresample ! "
+          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
+          "audioconvert ! "
+            
+          "wavpackenc mode=" $mode
+            
+          (if (cast-bool $lossy_mode)
+            (+ " bitrate=" (* $bitrate 1000.0))
+          )
+          
+          (+ " md5=" (cast-bool $md5_sum))
+          (+ " extra-processing=" (cast-bool $extra_processing))
+
+          (if (gst-element-is-available "apev2mux")
+            (+ " ! apev2mux")
+          )
+        ]]>
+        </process>
+        <variable id="mode">
+          <name>Mode</name>
+          <control-type>combo</control-type>
+          <default-value>2</default-value>
+          <possible-values>
+            <value value="1">Fast Compression</value>
+            <value value="2">Default Compression</value>
+            <value value="3">High Compression</value>
+            <value value="4">Very High Compression</value>
+          </possible-values>
+        </variable>
+        <variable id="lossy_mode" enables="bitrate">
+          <name>Lossy Mode</name>
+          <control-type>check</control-type>
+          <default-value>0</default-value>
+        </variable>
+        <variable id="md5_sum">
+          <name>Store MD5 sum in the file</name>
+          <control-type>check</control-type>
+          <default-value>0</default-value>
+        </variable>
+        <variable id="extra_processing">
+          <name>Extra Processing</name>
+          <control-type>check</control-type>
+          <default-value>0</default-value>
+        </variable>
+        <variable id="bitrate">
+          <name>Bitrate</name>
+          <control-type>slider</control-type>
+          <default-value>260</default-value>
+          <min-value>24</min-value>
+          <min-label>Worst</min-label>
+          <max-value>9600</max-value>
+          <max-label>Best</max-label>
+          <step-value>1</step-value>
+        </variable>
+        <preset-variable id="channels" />
+        <preset-variable id="sample_rate" />
+      </pipeline>
+    </profile>
+  </profiles>
+</audio-profiles>

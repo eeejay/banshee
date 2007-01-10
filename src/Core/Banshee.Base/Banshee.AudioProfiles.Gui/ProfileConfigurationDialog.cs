@@ -218,7 +218,7 @@ namespace Banshee.AudioProfiles.Gui
                     table.Attach(control, 1, 2, y, y + 1, 
                         control is ComboBox ? AttachOptions.Fill : AttachOptions.Fill | AttachOptions.Expand, 
                         AttachOptions.Fill, 0, 
-                        (uint)(variable.ControlType == PipelineVariableControlType.Check ? 6 : 0));
+                        (uint)(variable.ControlType == PipelineVariableControlType.Check ? 2 : 0));
 
                     y++;
                 } catch {
@@ -228,6 +228,8 @@ namespace Banshee.AudioProfiles.Gui
             foreach(Widget widget in variable_widgets.Values) {
                 if(widget is PipelineVariableComboBox) {
                     OnComboChanged(widget, EventArgs.Empty);
+                } else if(widget is CheckButton) {
+                    (widget as CheckButton).Toggle();
                 }
             }
 
@@ -252,9 +254,26 @@ namespace Banshee.AudioProfiles.Gui
         private Widget BuildCheck(PipelineVariable variable)
         {
             CheckButton check = new CheckButton(variable.Name);
+
             check.Toggled += delegate {
                 variable.CurrentValue = Convert.ToString(check.Active ? 1 : 0);
+                
+                for(int i = 0; i < variable.Enables.Length; i++) {
+                   if(variable_widgets.ContainsKey(variable.Enables[i])) {
+                       variable_widgets[variable.Enables[i]].Visible = check.Active;
+                       variable_widgets[".label." + variable.Enables[i]].Visible = check.Active;
+                   }
+                }
+                
+                for(int i = 0; i < variable.Disables.Length; i++) {
+                   if(variable_widgets.ContainsKey(variable.Disables[i])) {
+                       variable_widgets[variable.Disables[i]].Visible = !check.Active;
+                       variable_widgets[".label." + variable.Disables[i]].Visible = !check.Active;
+                   }
+                }
             };
+            
+            check.Active = ((int)variable.CurrentValueNumeric.Value) != 0; 
             check.Show();
             return check;
         }

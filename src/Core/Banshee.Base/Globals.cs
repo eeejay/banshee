@@ -206,8 +206,11 @@ namespace Banshee.Base
         private static void OnTestAudioProfile(object o, TestProfileArgs args)
         {
             if(EnvironmentIsSet("BANSHEE_PROFILES_NO_TEST")) {
-                args.ProfileAvailable = true;
-                return;
+                foreach(Pipeline.Process process in args.Profile.Pipeline.GetPendingProcessesById("gstreamer")) {
+                    args.Profile.Pipeline.AddProcess(process);
+                    args.ProfileAvailable = true;
+                    return;
+                }
             }
             
             bool available = false;

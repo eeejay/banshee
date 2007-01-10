@@ -1,3 +1,23 @@
+2007-01-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/SExpEngine/Literals.cs: Use
+	the en-US culture to format doubles
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs: Add
+	enables/disables support on the variable node, used by the check type
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs: 
+	Fixed minor bug with check control, add enables/disables support for
+	the check control
+
+	* src/Core/Banshee.Base/Globals.cs: Load profiles even if they're not
+	being tested
+	
+	* data/audio-profiles/wma.xml: Use the check control for vbr 
+
+	* data/audio-profiles/wavpack.xml: Added a wavpack profile by 
+	Sebastian Dröge
+
 2007-01-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs: 

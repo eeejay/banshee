@@ -24,14 +24,10 @@
           "fluasfmux"
         ]]>
         </process>
-        <variable id="vbr">
-          <name>Variable Bitrate</name>
-          <control-type>combo</control-type>
+        <variable id="vbr" enables="quality" disables="bitrate">
+          <name>Use a variable bitrate</name>
+          <control-type>check</control-type>
           <default-value>0</default-value>
-		  <possible-values>
-		    <value value="0" enables="bitrate" disables="quality">No</value>
-			<value value="1" enables="quality" disables="bitrate">Yes</value>
-	      </possible-values>
         </variable>
         <variable id="bitrate">
           <name>Bitrate</name>

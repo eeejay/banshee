@@ -77,6 +77,8 @@ namespace Banshee.AudioProfiles
         private double max_value;
         private double step_value;
         private int step_precision;
+        private string [] enables = new string[0];
+        private string [] disables = new string[0];
         
         private Dictionary<string, PossibleValue> possible_values = new Dictionary<string, PossibleValue>();
         private List<string> possible_values_keys = new List<string>();
@@ -87,6 +89,28 @@ namespace Banshee.AudioProfiles
             id = node.Attributes["id"].Value.Trim();
             name = node.SelectSingleNode("name").InnerText.Trim();
             control_type = StringToControlType(node.SelectSingleNode("control-type").InnerText.Trim());
+            
+            XmlAttribute enables_attr = node.Attributes["enables"];
+            if(enables_attr != null && enables_attr.Value != null) {
+                string [] vars = enables_attr.Value.Split(',');
+                if(vars != null && vars.Length > 0) {
+                    enables = new string[vars.Length];
+                    for(int i = 0; i < vars.Length; i++) {
+                        enables[i] = vars[i].Trim();
+                    }
+                }
+            }
+            
+            XmlAttribute disables_attr = node.Attributes["disables"];
+            if(disables_attr != null && disables_attr.Value != null) {
+                string [] vars = disables_attr.Value.Split(',');
+                if(vars != null && vars.Length > 0) {
+                    disables = new string[vars.Length];
+                    for(int i = 0; i < vars.Length; i++) {
+                        disables[i] = vars[i].Trim();
+                    }
+                }
+            }
             
             try {
                 XmlNode unit_node = node.SelectSingleNode("unit");
@@ -271,6 +295,14 @@ namespace Banshee.AudioProfiles
         
         public int StepPrecision {
             get { return step_precision; }
+        }
+        
+        public string [] Enables {
+            get { return enables; }
+        }
+        
+        public string [] Disables {
+            get { return disables; }
         }
 
         public double? DefaultValueNumeric {
