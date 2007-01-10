@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 10:59+0100\n"
-"PO-Revision-Date: 2007-01-08 10:59+0100\n"
+"POT-Creation-Date: 2007-01-10 14:46+0100\n"
+"PO-Revision-Date: 2007-01-10 14:46+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -640,16 +640,12 @@ msgid "URI of last file folder"
 msgstr "URI poslední složky souborů"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
-#, fuzzy
 msgid "Volume"
-msgstr "Využití místa"
+msgstr "Hlasitost"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
-#, fuzzy
 msgid "Volume of playback relative to mixer output"
-msgstr ""
-"Hlasitost přehrávání relativně k výstupu mixéru (kromě Helix, který "
-"nastavuje hlasitost přímo na PCM)"
+msgstr "Hlasitost přehrávání relativně k výstupu mixéru"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
@@ -758,7 +754,7 @@ msgstr "Uživatelské skripty"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:101
 msgid "Run available user scripts"
-msgstr ""
+msgstr "Spustit dostupné uživatelské skripty"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:104
 msgid "_Quit"
@@ -790,9 +786,8 @@ msgid "Unselect all songs in song list"
 msgstr "Zrušit výběr všech skladeb v seznamu skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:127
-#, fuzzy
 msgid "_Jump to playing song"
-msgstr "Skočit na přehrávanou skladbu"
+msgstr "_Skočit na přehrávanou skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:131
 msgid "Plu_gins..."
@@ -827,9 +822,8 @@ msgid "Display the equalizer."
 msgstr "Zobrazit ekvalizér"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:155
-#, fuzzy
 msgid "_Logged Events Viewer..."
-msgstr "Správce položek logování..."
+msgstr "_Prohlížeč zaznamenaných událostí..."
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:156
 msgid "View a detailed log of events"
@@ -903,91 +897,80 @@ msgid "Toggle Fullscreen Mode"
 msgstr "Přepnout celoobrazovkový režim"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:207
-#, fuzzy
 msgid "Show Cover _Art"
-msgstr "Zobrazit přebal"
+msgstr "Zobrazit přeb_al"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:208
 msgid "Toggle display of album cover art"
 msgstr "Přepnout zobrazení přebalu alba"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:219
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopírovat CD"
+msgstr "_Kopírovat"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:220
-#, fuzzy
 msgid "Copy selected song(s) to clipboard"
-msgstr "Odstranit vybrané skladby z knihovny"
+msgstr "Kopírovat vybrané skladby do schránky"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:223
-#, fuzzy
 msgid "_Remove"
-msgstr "Odstranit skladbu(y)"
+msgstr "Odst_ranit"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:224
 msgid "Remove selected song(s) from library"
 msgstr "Odstranit vybrané skladby z knihovny"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:227
-#, fuzzy
 msgid "_Delete From Drive"
-msgstr "Smazat skladbu(y) z disku"
+msgstr "_Smazat z disku"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:228
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Trvale smazat vybrané skladby z úložného média"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:231
-#, fuzzy
 msgid "_Edit Song Metadata"
-msgstr "Úprava popisných informací skladby"
+msgstr "_Upravit metadata skladby"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:232
 msgid "Edit metadata on selected songs"
 msgstr "Upravit metadata vybraných skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:235
-#, fuzzy
 msgid "_Search for songs"
-msgstr "Hledat skladby"
+msgstr "_Hledat skladby"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:236
 msgid "Search for songs matching certain criteria"
 msgstr "Hledat skladby podle kritérií"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:239
-#, fuzzy
 msgid "By matching _album"
-msgstr "Podle odpovídajícího alba"
+msgstr "Podle odpovídajícího _alba"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:240
 msgid "Search all songs of this album"
 msgstr "Vyhledat všechny skladby z tohoto alba"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:243
-#, fuzzy
 msgid "By matching a_rtist"
-msgstr "Podle odpovídajícího umělce"
+msgstr "Podle odpovídajícího _umělce"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:244
 msgid "Search all songs of this artist"
 msgstr "Vyhledat všechny skladby tohoto umělce"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:247
-#, fuzzy
 msgid "By matching _genre"
-msgstr "Podle odpovídajícího žándru"
+msgstr "Podle odpovídajícího _žánru"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:248
 msgid "Search all songs of this genre"
 msgstr "Vyhledat všechny skladby tohoto žánru"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:251
-#, fuzzy
 msgid "Add _to Playlist"
-msgstr "Přidat do seznamu skladeb"
+msgstr "Přidat _do seznamu skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:252
 msgid "Append selected songs to playlist or create new playlist from selection"
@@ -996,9 +979,8 @@ msgstr ""
 "seznam skaldeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:255
-#, fuzzy
 msgid "Ratin_g"
-msgstr "Oblíbenost"
+msgstr "_Hodnocení"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:256
 msgid "Set rating for selected songs"
@@ -1013,45 +995,40 @@ msgid "Import audio CD to library"
 msgstr "Importovat audio CD do knihovny"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:275
-#, fuzzy
 msgid "_Play"
-msgstr "Přehrát"
+msgstr "_Přehrát"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:276
 msgid "Play or pause the current song"
 msgstr "Přehrát nebo pozastavit aktuální skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:279
-#, fuzzy
 msgid "_Next"
-msgstr "Další"
+msgstr "_Další"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:280
 msgid "Play the next song"
 msgstr "Přehrát další skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:283
-#, fuzzy
 msgid "Pre_vious"
-msgstr "Předchozí"
+msgstr "_Předchozí"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:284
 msgid "Play the previous song"
 msgstr "Přehrát předchozí skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:289
-#, fuzzy
 msgid "Repeat N_one"
-msgstr "Neopakovat"
+msgstr "_Neopakovat nic"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "Do not repeat playlist"
 msgstr "Neopakovat seznam skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:293
-#, fuzzy
 msgid "Repeat _All"
-msgstr "Opakovat stále dokola"
+msgstr "Opakovat _vše"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:294
 msgid "Play all songs before repeating playlist"
@@ -1076,9 +1053,8 @@ msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Přepnout mezi režimem náhodného a plynulého přehrávání"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:307
-#, fuzzy
 msgid "_Stop when finished"
-msgstr "Zastavit při dokončení"
+msgstr "Za_stavit při dokončení"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:308
 msgid "Stop playback after the current song finishes playing"
@@ -1456,16 +1432,16 @@ msgstr "Vyhledávám"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
-msgstr ""
+msgstr "MPEG Version 3.0 Extended (*.m3u)"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
 msgid "Exception: "
-msgstr ""
+msgstr "Výjimka: "
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
 msgid "Shoutcast Playlist version 2 (*.pls)"
-msgstr ""
+msgstr "Shoutcast Playlist verze 2 (*.pls)"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
 msgid "Edit Smart Playlist"
@@ -1606,7 +1582,7 @@ msgstr "mezi"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:335
 msgid "to"
-msgstr ""
+msgstr "do"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:709
 msgid "_Match"
@@ -2715,7 +2691,7 @@ msgstr ""
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:337
 #, csharp-format
 msgid "Failed to Unmount {0}"
-msgstr ""
+msgstr "Selhalo odpojení {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:338
 msgid "Make sure no other programs are using it."
@@ -2925,7 +2901,7 @@ msgstr "Jméno sdílení:"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
 msgid "Share server enabled"
-msgstr ""
+msgstr "Server sdílení povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:49
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:50
@@ -3299,7 +3275,7 @@ msgstr "Jméno účtu:"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
 msgid "Order"
-msgstr ""
+msgstr "Pořadí"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:2
 #, fuzzy
@@ -3413,11 +3389,11 @@ msgstr "Viditelnost sloupce roku."
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
 msgid "Visiblity"
-msgstr ""
+msgstr "Viditelnost"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
 msgid "Width"
-msgstr ""
+msgstr "Šířka"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
 #, fuzzy
