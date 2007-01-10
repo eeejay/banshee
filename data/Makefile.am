@@ -2,14 +2,7 @@ SUBDIRS = \
 	images
 
 AUDIO_PROFILES = \
-	$(srcdir)/audio-profiles/base.xml \
-	$(srcdir)/audio-profiles/aac.xml \
-	$(srcdir)/audio-profiles/flac.xml \
-	$(srcdir)/audio-profiles/mp3-lame.xml \
-	$(srcdir)/audio-profiles/mp3-xing.xml \
-	$(srcdir)/audio-profiles/vorbis.xml \
-	$(srcdir)/audio-profiles/wav.xml \
-	$(srcdir)/audio-profiles/wma.xml 
+	$(srcdir)/audio-profiles/*.xml
 
 audioprofilesdir = $(pkgdatadir)/audio-profiles
 audioprofiles_DATA = $(AUDIO_PROFILES)
