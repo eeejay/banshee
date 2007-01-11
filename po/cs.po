@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 14:46+0100\n"
-"PO-Revision-Date: 2007-01-10 14:46+0100\n"
+"POT-Creation-Date: 2007-01-11 12:35+0100\n"
+"PO-Revision-Date: 2007-01-11 12:35+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -371,14 +371,12 @@ msgid "Could not link cdparanoiasrc to mbtrm"
 msgstr "Nemohu slinkovat cdparanoiasrc s mbtrm"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:286
-#, fuzzy
 msgid "Could not link mbtrm to queue"
-msgstr "Nelze vytvořit modul 'mbtrm'"
+msgstr "Nelze připojit modul mbtrm do fronty"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:291
-#, fuzzy
 msgid "Could not link queue to encoder"
-msgstr "Nelze získat sink pad z enkodéru"
+msgstr "Nelze připojit frontu k enkodéru"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:296
 msgid "Could not link encoder to gnomevfssink"
@@ -452,7 +450,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:4
 msgid "Column index"
-msgstr ""
+msgstr "Index sloupce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:5
 msgid "Column index for sorting the library source. -1 for unset."
@@ -460,7 +458,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:6
 msgid "Column sort type"
-msgstr ""
+msgstr "Typ třídění sloupce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
 msgid ""
@@ -536,7 +534,7 @@ msgstr "Umístění knihovny"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 msgid "Library source expansion"
-msgstr ""
+msgstr "Rozšíření zdroje knihovny"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "List of URIs in the history drop-down for the open location dialog"
@@ -604,9 +602,8 @@ msgid ""
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
-#, fuzzy
 msgid "Sort criteria of playlists"
-msgstr "Setřídit seznamy skladeb"
+msgstr "Třídící kritéria seznamů skladeb"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid ""
@@ -615,9 +612,8 @@ msgid ""
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
-#, fuzzy
 msgid "Sort order of playlists"
-msgstr "Setřídit seznamy skladeb"
+msgstr "Pořadí třídění seznamů skladeb"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Source View Width"
@@ -692,9 +688,8 @@ msgid "_Music"
 msgstr "H_udba"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:68
-#, fuzzy
 msgid "_New Playlist"
-msgstr "Nový seznam skladeb"
+msgstr "_Nový seznam skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:69
 msgid "Create a new empty playlist"
@@ -1044,9 +1039,8 @@ msgid "Repeat the current playing song"
 msgstr "Zopakovat právě přehrávanou skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:303
-#, fuzzy
 msgid "Shu_ffle"
-msgstr "Skladby přehrávat v náhodném pořadí"
+msgstr "_Náhodně"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Toggle between shuffle or continuous playback modes"
@@ -1061,36 +1055,32 @@ msgid "Stop playback after the current song finishes playing"
 msgstr "Zastavit přehrávání po ukončení aktuální skladby"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:317
-#, fuzzy
 msgid "Seek _Backward"
-msgstr "Posun vzad"
+msgstr "Posun _vzad"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:318
 msgid "Seek backward in current song"
 msgstr "Posun vzad v aktuální skladbě"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:321
-#, fuzzy
 msgid "Seek _Forward"
-msgstr "Posun vpřed"
+msgstr "Posun _vpřed"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:322
 msgid "Seek forward in current song"
 msgstr "Posun vpřed v aktuální skladbě"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:325
-#, fuzzy
 msgid "Seek _To..."
-msgstr "Přejít na..."
+msgstr "Přejít _na..."
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:326
 msgid "Seek to a specific location in current song"
 msgstr "Přesun na určitou pozici v aktuální skladbě"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:329
-#, fuzzy
 msgid "_Restart Song"
-msgstr "Přehrát skladbu od začátku"
+msgstr "_Přehrát skladbu od začátku"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:330
 msgid "Restart the current song"
@@ -1242,9 +1232,8 @@ msgid "{0} MB"
 msgstr "{0} MB"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
-#, fuzzy
 msgid "New Audio C_D"
-msgstr "Nové audio CD"
+msgstr "Nové audio C_D"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
@@ -1784,9 +1773,8 @@ msgid "Edit Smart Playlist..."
 msgstr "Upravit inteligentní seznam skladeb"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:439
-#, fuzzy
 msgid "Smart Playlist has Dependencies"
-msgstr "Inteligentní seznamy skladeb"
+msgstr "Inteligentní seznam skladeb má závislosti"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:441
 #, csharp-format
@@ -2695,7 +2683,7 @@ msgstr "Selhalo odpojení {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:338
 msgid "Make sure no other programs are using it."
-msgstr ""
+msgstr "Ujistěte se, že není používán jinými programy."
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:350
 #, fuzzy, csharp-format
@@ -3101,21 +3089,19 @@ msgstr "Multimediální klávesy"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:57
 msgid "Adds support for multimedia keys configured through GNOME."
-msgstr ""
+msgstr "Přidává podporu pro multimediální klávesy nastavené v GNOME."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
-#, fuzzy
 msgid "Notification area plugin enabled"
-msgstr "Ikona v upozorňovací oblasti"
+msgstr "Povolen modul upozorňovací oblasti"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:3
 msgid "Quit instead of hide to notification area on close"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:4
-#, fuzzy
 msgid "Quit on close"
-msgstr "Ukončit Banshee"
+msgstr "Ukončit při zavření"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:5
 #, fuzzy
