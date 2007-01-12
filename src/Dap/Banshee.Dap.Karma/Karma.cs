@@ -34,6 +34,16 @@ using KarmaLib=Karma;
 using Banshee.Dap;
 using Banshee.Base;
 
+public static class PluginModuleEntry
+{
+    public static Type [] GetTypes()
+    {
+        return new Type [] {
+            typeof(Banshee.Dap.Karma.KarmaDap)
+        };
+    }
+}
+
 namespace Banshee.Dap.Karma
 {
     [DapProperties(DapType = DapType.NonGeneric)]
