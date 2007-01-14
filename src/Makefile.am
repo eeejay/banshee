@@ -20,4 +20,4 @@ run-nocheck:
 MAINTAINERCLEANFILES = \
 	Makefile.in
 
-CLEANFILES = *.mdb *.pidb *.exe
+CLEANFILES = *.mdb *.pidb *.exe *.dll
