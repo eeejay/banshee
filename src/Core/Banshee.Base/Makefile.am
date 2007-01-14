@@ -16,8 +16,7 @@ BANSHEE_AUDIOPROFILES_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles/Pipeline.cs \
 	$(srcdir)/Banshee.AudioProfiles/PipelineVariable.cs \
 	$(srcdir)/Banshee.AudioProfiles/ProfileConfiguration.cs \
-	$(srcdir)/Banshee.AudioProfiles/GConfProfileConfiguration.cs \
-	$(srcdir)/Banshee.AudioProfiles/SExpEngine/*.cs
+	$(srcdir)/Banshee.AudioProfiles/GConfProfileConfiguration.cs
 
 BANSHEE_AUDIOPROFILES_GUI_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \
@@ -259,6 +258,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
+	$(top_srcdir)/ext/sexp-engine/src/SExpEngine/*.cs \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
 	$(srcdir)/Utilities.cs \
