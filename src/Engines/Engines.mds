@@ -2,16 +2,13 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee.MediaEngine.GStreamer" configuration="Debug" />
-      <Entry build="True" name="Banshee.MediaEngine.HelixRemote" configuration="Debug" />
     </Configuration>
   </Configurations>
   <DeployTargets />
   <StartMode startupentry="Banshee.MediaEngine.GStreamer" single="True">
     <Execute type="None" entry="Banshee.MediaEngine.GStreamer" />
-    <Execute type="None" entry="Banshee.MediaEngine.HelixRemote" />
   </StartMode>
   <Entries>
     <Entry filename="./Banshee.MediaEngine.GStreamer/Banshee.MediaEngine.GStreamer.mdp" />
-    <Entry filename="./Banshee.MediaEngine.HelixRemote/Banshee.MediaEngine.HelixRemote.mdp" />
   </Entries>
 </Combine>

@@ -63,20 +63,21 @@ namespace Banshee.Base
         
         public static void Initialize(ComponentInitializerHandler interfaceStartupHandler)
         {
-            if(!Directory.Exists(Paths.ApplicationData)) {
-                Directory.CreateDirectory(Paths.ApplicationData);
-            }
-            
             Mono.Unix.Catalog.Init(ConfigureDefines.GETTEXT_PACKAGE, ConfigureDefines.LOCALE_DIR);
         
             ui_manager = new Banshee.Gui.UIManager();
-            random = new Random();
             
             if(!Branding.Initialize()) {
                 System.Environment.Exit(1);
                 return;
             }
-
+            
+            random = new Random();
+            
+            if(!Directory.Exists(Paths.ApplicationData)) {
+                Directory.CreateDirectory(Paths.ApplicationData);
+            }
+            
             // override the browser URI launch hook in Last.FM and Banshee.Widgets.LinkLabel
             Last.FM.Browser.Open = new Last.FM.UriOpenHandler(Banshee.Web.Browser.Open);
             Banshee.Widgets.LinkLabel.DefaultOpen = 

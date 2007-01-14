@@ -73,9 +73,6 @@ BANSHEE_CHECK_DAP_KARMA
 dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
 
-dnl Helix playback engine (optional)
-BANSHEE_CHECK_HELIX_ENGINE
-
 dnl Expansions
 SHAMROCK_EXPAND_LIBDIR
 SHAMROCK_EXPAND_BINDIR
@@ -136,7 +133,6 @@ src/Dap/Banshee.Dap.Njb/njb-sharp.dll.config
 
 src/Engines/Makefile
 src/Engines/Banshee.MediaEngine.GStreamer/Makefile
-src/Engines/Banshee.MediaEngine.HelixRemote/Makefile
 
 src/Extras/Makefile
 src/Extras/Boo/Makefile
@@ -176,11 +172,7 @@ banshee-$VERSION
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
-
-    Engines:
-      GStreamer:       yes
-      Helix Remote:    ${enable_helix}
-
+ 
     Digital Audio Players (DAP):
       iPod:            ${enable_ipodsharp}
       NJB:             ${enable_njbsharp}

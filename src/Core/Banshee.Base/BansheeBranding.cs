@@ -1,7 +1,7 @@
 /***************************************************************************
  *  BansheeBranding.cs
  *
- *  Copyright (C) 2006 Novell, Inc.
+ *  Copyright (C) 2006-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
