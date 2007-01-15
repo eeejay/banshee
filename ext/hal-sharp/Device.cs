@@ -55,6 +55,32 @@ namespace Hal
         void Unlock();
     }
     
+    internal enum DType : byte
+    {
+      Invalid = (byte)'\0',
+      Byte = (byte)'y',
+      Boolean = (byte)'b',
+      Int16 = (byte)'n',
+      UInt16 = (byte)'q',
+      Int32 = (byte)'i',
+      UInt32 = (byte)'u',
+      Int64 = (byte)'x',
+      UInt64 = (byte)'t',
+      Single = (byte)'f',
+      Double = (byte)'d',
+      String = (byte)'s',
+      ObjectPath = (byte)'o',
+      Signature = (byte)'g',
+      Array = (byte)'a',
+      Struct = (byte)'r',
+      DictEntry = (byte)'e',
+      Variant = (byte)'v',
+      StructBegin = (byte)'(',
+      StructEnd = (byte)')',
+      DictEntryBegin = (byte)'{',
+      DictEntryEnd = (byte)'}',
+    }
+    
     public enum PropertyType
     {
         Invalid = DType.Invalid,
