@@ -58,11 +58,11 @@ namespace Banshee.Plugins.Podcast
         public override string Description {
             get
             {
-                return String.Format (
-                    "{0}\n\n{1}",
-                    Catalog.GetString ("Next generation radio content, where you want it, when you want it."),
-                    Catalog.GetString ("\"Hey, guess what you're accessories to.\"")
-                );
+                return String.Format(Catalog.GetString(
+                    "Podcasting is a form of audio blogging where users subscribe to a feed of shows and " +
+                    "its episodes are downloaded and managed for offline listening.\n\nIts name comes from " +
+                    "the targeting of audio posts to Apple's iPod\u00ae audio player, although podcasts " + 
+                    "can be listened to directly in {0}."), Branding.ApplicationName);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Banshee.Plugins.Podcast
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
             "plugins.podcast", "enabled",
-            false,
+            true,
             "Plugin enabled",
             "Podcast plugin enabled"
         );

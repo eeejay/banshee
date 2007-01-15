@@ -9,11 +9,10 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
-using Banshee.Plugins;
 
 namespace Banshee.SmartPlaylist
 {
-    public class SmartPlaylistCore : Banshee.Plugins.Plugin
+    public class SmartPlaylistCore
     {
         private readonly double RATE_LIMIT_INTERVAL_MS = 1000.0;
         private readonly double RATE_LIMIT_EVENTS_MAX = 5;
@@ -32,13 +31,17 @@ namespace Banshee.SmartPlaylist
         private uint seconds_ratelimited = 0;
         private uint ratelimit_timeout_id = 0;
         private DateTime start;
-
-        private static SmartPlaylistCore instance = null;
-
         private uint timeout_id = 0;
 
+        private static SmartPlaylistCore instance = null;
         public static SmartPlaylistCore Instance {
-            get { return instance; }
+            get { 
+                if(instance == null) {
+                    instance = new SmartPlaylistCore();
+                }
+                
+                return instance; 
+            }
         }
 
         private double cpu_ms_since_last_check = 0;
@@ -47,46 +50,15 @@ namespace Banshee.SmartPlaylist
             set { cpu_ms_since_last_check = value; }
         }
 
-
-        protected override string ConfigurationName {
-            get { return "SmartPlaylists"; }
-        }
-
-        public override string DisplayName {
-            get { return Catalog.GetString("Smart Playlists"); }
-        }
-        
-        public override string Description {
-            get {
-                return Catalog.GetString(
-                    "Create playlists that automatically add and remove songs based on customizable queries."
-                );
-            }
-        }
-        
-        public override string [] Authors {
-            get {
-                return new string [] {
-                    "Aaron Bockover",
-                    "Gabriel Burt",
-                    "Dominik Meister"
-                };
-            }
-        }
-
-        public SmartPlaylistCore()
+        private SmartPlaylistCore()
         {
-            if (instance != null) {
-                Console.WriteLine ("Error: multiple smart playlist core's instantiated.");
-            }
-
+        }
+        
+        public void Initialize()
+        {
             Gnome.Vfs.Vfs.Initialize();
-            instance = this;
-        }
- 
-        protected override void PluginInitialize()
-        {
-            Timer t = new Timer ("PluginInitialize");
+            
+            Timer t = new Timer("PluginInitialize");
 
             // Check that our SmartPlaylists table exists in the database, otherwise make it
             if(!Globals.Library.Db.TableExists("SmartPlaylists")) {
@@ -142,6 +114,13 @@ namespace Banshee.SmartPlaylist
             reader.Dispose();
 
             t.Stop();
+            
+            // Add a menu option to create a new smart playlist
+            if(!Globals.UIManager.IsInitialized) {
+                Globals.UIManager.Initialized += OnUIManagerInitialized;
+            } else {
+                OnUIManagerInitialized (null, null);
+            }
         }
 
         private void CreateTable(string table)
@@ -166,16 +145,6 @@ namespace Banshee.SmartPlaylist
                         TrackID             INTEGER NOT NULL)
                 ");
                 break;
-            }
-        }
-
-        protected override void InterfaceInitialize()
-        {
-            // Add a menu option to create a new smart playlist
-            if(!Globals.UIManager.IsInitialized) {
-                Globals.UIManager.Initialized += OnUIManagerInitialized;
-            } else {
-                OnUIManagerInitialized (null, null);
             }
         }
 
@@ -206,7 +175,7 @@ namespace Banshee.SmartPlaylist
             t.Stop();
         }
 
-        protected override void PluginDispose()
+        public void Dispose()
         {
             if (timeout_id != 0)
                 GLib.Source.Remove (timeout_id);
@@ -231,11 +200,6 @@ namespace Banshee.SmartPlaylist
 
             Timer.PrintRunningTotals ();
         }
-
-        /*public override Widget GetConfigurationWidget ()
-        {
-            return new ConfigPage (this);
-        }*/
 
         private void HandleLibraryReloaded (object sender, EventArgs args)
         {

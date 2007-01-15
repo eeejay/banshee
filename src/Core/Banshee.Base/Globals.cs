@@ -147,6 +147,7 @@ namespace Banshee.Base
             startup.Register(Catalog.GetString("Initializing CD writing support"), true, 
                 Catalog.GetString("CD burning support will be disabled for this instance"), Banshee.Burner.BurnerCore.Initialize);
                 
+            startup.Register(Catalog.GetString("Initializing plugins"), Banshee.SmartPlaylist.SmartPlaylistCore.Instance.Initialize);
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
             startup.Register(Catalog.GetString("Initializing scripts"), Banshee.Plugins.ScriptCore.Initialize);
             startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
@@ -234,6 +235,7 @@ namespace Banshee.Base
         {
             dbus_remote.UnregisterObject(dbus_player);
             Banshee.Kernel.Scheduler.Dispose();
+            Banshee.SmartPlaylist.SmartPlaylistCore.Instance.Dispose();
             Banshee.Plugins.PluginCore.Dispose();
             library.Db.Dispose();
             Banshee.Dap.DapCore.Dispose();

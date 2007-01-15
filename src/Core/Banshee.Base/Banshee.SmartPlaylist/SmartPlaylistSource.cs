@@ -5,7 +5,6 @@ using System.Collections.Generic;
  
 using Banshee.Base;
 using Banshee.Sources;
-using Banshee.Plugins;
 using Banshee.Database;
 
 using Mono.Unix;

@@ -257,7 +257,7 @@ namespace Banshee.Plugins.Recommendation
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
             "plugins.recommendation", "enabled",
-            false,
+            true,
             "Plugin enabled",
             "Recommendation plugin enabled"
         );

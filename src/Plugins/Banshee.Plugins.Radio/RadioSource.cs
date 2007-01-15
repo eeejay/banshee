@@ -211,7 +211,8 @@ namespace Banshee.Plugins.Radio
             get { return false; }
         }
         
-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "network-wireless", "source-library");
+        private static Gdk.Pixbuf icon = Gdk.Pixbuf.LoadFromResource("source-radio.png");
+        
         public override Gdk.Pixbuf Icon {
             get { return icon; } 
         }

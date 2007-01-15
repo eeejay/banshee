@@ -17,7 +17,7 @@
       <applyto>/apps/banshee/plugins/radio/enabled</applyto>
       <owner>banshee</owner>
       <type>bool</type>
-      <default>false</default>
+      <default>true</default>
       <locale name="C">
         <short>Plugin enabled</short>
         <long>Radio plugin enabled</long>

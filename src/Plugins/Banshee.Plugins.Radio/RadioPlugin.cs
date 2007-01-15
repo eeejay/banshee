@@ -147,7 +147,7 @@ namespace Banshee.Plugins.Radio
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
             "plugins.radio", "enabled",
-            false,
+            true,
             "Plugin enabled",
             "Radio plugin enabled"
         );

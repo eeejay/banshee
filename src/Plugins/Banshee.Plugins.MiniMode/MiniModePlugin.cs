@@ -95,7 +95,7 @@ namespace Banshee.Plugins.MiniMode
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
             "plugins.minimode", "enabled",
-            false,
+            true,
             "Plugin enabled",
             "MiniMode plugin enabled"
         );

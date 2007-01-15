@@ -6,7 +6,7 @@
       <applyto>/apps/banshee/plugins/podcast/enabled</applyto>
       <owner>banshee</owner>
       <type>bool</type>
-      <default>false</default>
+      <default>true</default>
       <locale name="C">
         <short>Plugin enabled</short>
         <long>Podcast plugin enabled</long>

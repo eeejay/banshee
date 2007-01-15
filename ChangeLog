@@ -1,3 +1,18 @@
+2007-01-14  Aaron Bockover <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs: Added a better
+	description of what podcasting is
+
+	* src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:	
+	* src/Plugins/Banshee.Plugins.Radio/source-radio.png: Use Jakub's new
+	radio icon (sweeeet)
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Base/Globals.cs: Rework the SmartPlaylistCore so
+	that it is not a plugin, instead initialize/dispose it directly as we
+	always want smart playlists to be available
+
 2007-01-14  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/: Moved Radio, Podcast, MiniMode, Recommendation plugins
