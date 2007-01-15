@@ -1,0 +1,8 @@
+<ui>
+    <popup name='RadioSourcePopup' action='RadioSourcePopupAction'>
+        <menuitem name='RefreshRadio' action='RefreshRadioAction' />
+    </popup>
+    <popup name='StationViewPopup' action='StationViewPopupAction'>
+        <menuitem name='CopyUri' action='CopyUriAction' />
+    </popup>
+</ui>
