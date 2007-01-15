@@ -43,7 +43,7 @@ namespace Banshee.IO
         private static Type [] available_config_types = new Type [] {
             typeof(Banshee.IO.SystemIO.IOConfig),
             typeof(Banshee.IO.Unix.IOConfig),
-            //typeof(Banshee.IO.GnomeVfs.IOConfig)
+            typeof(Banshee.IO.GnomeVfs.IOConfig)
         };
         
         static IOProxy()
