@@ -1,3 +1,12 @@
+2007-01-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.Configuration/GConfConfigurationClient.cs:
+	Support disabling actual GConf support via BANSHEE_DISABLE_GCONF
+
+	* build/gconf-schema-rules: Set BANSHEE_DISABLE_GCONF so a GConf client
+	is not actually created during the schema generation; necessary for 
+	building in build services, etc.
+
 2007-01-15  Alp Toker  <alp@atoker.com>
 
 	* ext/hal-sharp/Device.cs: Add internal DType enum copied from

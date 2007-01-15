@@ -4,7 +4,7 @@ schema_DATA = $(schema_in_files:.schemas.in=.schemas)
 
 $(srcdir)/$(ASSEMBLY_GCONF_SCHEMA): $(ASSEMBLY)
 	if test -w $@ -o \( ! -e $@ -a -w $(srcdir) \); then \
-		MONO_PATH=$(MONO_BASE_PATH) $(MONO) $(top_builddir)/build/gconf-schema-extractor.exe $< $(srcdir)/$@; \
+		BANSHEE_DISABLE_GCONF=1 MONO_PATH=$(MONO_BASE_PATH) $(MONO) $(top_builddir)/build/gconf-schema-extractor.exe $< $(srcdir)/$@; \
 	fi
 
 @INTLTOOL_SCHEMAS_RULE@

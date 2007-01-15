@@ -42,6 +42,20 @@ namespace Banshee.Configuration
         private GConf.Client client;
         private Dictionary<string, string> key_table = new Dictionary<string, string>();
         
+        private static bool disable_gconf_checked = false;
+        private static bool disable_gconf = false;
+        
+        private static bool DisableGConf {
+            get { 
+                if(!disable_gconf_checked) {
+                    disable_gconf = Globals.EnvironmentIsSet("BANSHEE_DISABLE_GCONF");
+                    disable_gconf_checked = true;
+                }
+                
+                return disable_gconf;
+            }
+        }
+        
         public static string BaseKey {
             get { return base_key; }
         }
@@ -81,13 +95,17 @@ namespace Banshee.Configuration
         
         public T Get<T>(string namespce, string key, T fallback)
         {
+            if(DisableGConf) {
+                return fallback;
+            }
+            
             if(client == null) {
                 client = new GConf.Client();
             }
             
             try {
                 return (T)client.Get(CreateKey(namespce, key));
-            } catch(GConf.NoSuchKeyException) {
+            } catch {
                 return fallback;
             }
         }
@@ -104,6 +122,10 @@ namespace Banshee.Configuration
         
         public void Set<T>(string namespce, string key, T value)
         {
+            if(DisableGConf) {
+                return;
+            }
+            
             if(client == null) {
                 client = new GConf.Client();
             }
