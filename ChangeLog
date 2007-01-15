@@ -1,3 +1,10 @@
+2007-01-14  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/: Moved Radio, Podcast, MiniMode, Recommendation plugins
+	from banshee-official-plugins
+
+	* build/m4/shamrock/mono.m4: Use Mono's libdir (BGO #394033)
+
 2007-01-12  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* src/Dap/Banshee.Dap.Karma/KarmaDap.cs: add PluginModuleEntry,

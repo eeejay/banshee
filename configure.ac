@@ -149,10 +149,14 @@ src/Plugins/Banshee.Plugins.Daap/Makefile
 src/Plugins/Banshee.Plugins.Daap/Banshee.Plugins.Daap.dll.config
 src/Plugins/Banshee.Plugins.MetadataSearch/Makefile
 src/Plugins/Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.dll.config
+src/Plugins/Banshee.Plugins.MiniMode/Makefile
 src/Plugins/Banshee.Plugins.MMKeys/Makefile
 src/Plugins/Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.dll.config
 src/Plugins/Banshee.Plugins.NotificationAreaIcon/Makefile
 src/Plugins/Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.dll.config
+src/Plugins/Banshee.Plugins.Podcast/Makefile
+src/Plugins/Banshee.Plugins.Radio/Makefile
+src/Plugins/Banshee.Plugins.Recommendation/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then

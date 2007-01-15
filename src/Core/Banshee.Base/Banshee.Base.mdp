@@ -227,6 +227,20 @@
     <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./Plugins/ScriptCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Evaluator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Literals.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/LogicFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Parser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/VariableNode.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

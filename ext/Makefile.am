@@ -3,7 +3,7 @@ SUBDIRS = \
 	dbus-sharp \
 	hal-sharp
 
-EXTRA_DIST = sexp-engine/src/SExpEngine/*.cs
+EXTRA_DIST = $(srcdir)/sexp-engine/src/SExpEngine/*.cs
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

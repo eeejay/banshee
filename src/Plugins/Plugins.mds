@@ -6,6 +6,10 @@
       <Entry build="True" name="Banshee.Plugins.MetadataSearch" configuration="Debug" />
       <Entry build="True" name="Banshee.Plugins.MMKeys" configuration="Debug" />
       <Entry build="True" name="Banshee.Plugins.NotificationAreaIcon" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.MiniMode" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Podcast" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Radio" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Recommendation" configuration="Debug" />
     </Configuration>
   </Configurations>
   <DeployTargets />
@@ -15,6 +19,10 @@
     <Execute type="None" entry="Banshee.Plugins.MetadataSearch" />
     <Execute type="None" entry="Banshee.Plugins.MMKeys" />
     <Execute type="None" entry="Banshee.Plugins.NotificationAreaIcon" />
+    <Execute type="None" entry="Banshee.Plugins.MiniMode" />
+    <Execute type="None" entry="Banshee.Plugins.Podcast" />
+    <Execute type="None" entry="Banshee.Plugins.Radio" />
+    <Execute type="None" entry="Banshee.Plugins.Recommendation" />
   </StartMode>
   <Entries>
     <Entry filename="./Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
@@ -22,5 +30,9 @@
     <Entry filename="./Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.mdp" />
     <Entry filename="./Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.mdp" />
     <Entry filename="./Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.mdp" />
+    <Entry filename="./Banshee.Plugins.MiniMode/Banshee.Plugins.MiniMode.mdp" />
+    <Entry filename="./Banshee.Plugins.Podcast/Banshee.Plugins.Podcast.mdp" />
+    <Entry filename="./Banshee.Plugins.Radio/Banshee.Plugins.Radio.mdp" />
+    <Entry filename="./Banshee.Plugins.Recommendation/Banshee.Plugins.Recommendation.mdp" />
   </Entries>
 </Combine>
