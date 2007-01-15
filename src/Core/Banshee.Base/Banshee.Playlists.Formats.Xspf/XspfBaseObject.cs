@@ -69,6 +69,10 @@ namespace Banshee.Playlists.Formats.Xspf
         
         public MetaEntry FindMetaEntry(Uri uri)
         {
+            if(meta == null) {
+                return MetaEntry.Zero;
+            }
+            
             foreach(MetaEntry meta_entry in meta) {
                 if(meta_entry.Rel == uri) {
                     return meta_entry;

@@ -1,3 +1,11 @@
+2007-01-14  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Radio/*: Added initial code for local
+	station management, not complete
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs:
+	Add a null check
+
 2007-01-14  Aaron Bockover <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs: Added a better

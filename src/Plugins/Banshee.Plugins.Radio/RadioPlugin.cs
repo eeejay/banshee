@@ -70,7 +70,8 @@ namespace Banshee.Plugins.Radio
         private RadioSource source;
         private StationManager manager;
         
-        private ActionGroup actions;
+        private ActionGroup source_actions;
+        private ActionGroup popup_actions;
         private uint ui_manager_id;
         
         protected override void PluginInitialize()
@@ -96,40 +97,62 @@ namespace Banshee.Plugins.Radio
         protected override void PluginDispose()
         {
             Globals.ActionManager.UI.RemoveUi(ui_manager_id);
-            Globals.ActionManager.UI.RemoveActionGroup(actions);
+            Globals.ActionManager.UI.RemoveActionGroup(source_actions);
+            Globals.ActionManager.UI.RemoveActionGroup(popup_actions);
 
-            actions = null;
+            source_actions = null;
+            popup_actions = null;
+            
             SourceManager.RemoveSource(source);
         }
         
         private void InstallInterfaceActions()
         {
-            actions = new ActionGroup("Radio");
+            source_actions = new ActionGroup("Radio");
+            popup_actions = new ActionGroup("Radio Popup");
             
-            actions.Add(new ActionEntry [] {
+            source_actions.Add(new ActionEntry [] {
                 new ActionEntry("RefreshRadioAction", Stock.Refresh,
                     Catalog.GetString("Refresh Stations"), null,
-                    Catalog.GetString("Refresh stations from the Banshee Radio Web Service"), OnRefreshStations)
+                    Catalog.GetString("Refresh stations from the Banshee Radio Web Service"), OnRefreshStations),
             });
             
-            actions.Add(new ActionEntry [] {
+            popup_actions.Add(new ActionEntry [] {
+                new ActionEntry("NewStationGroupAction", Stock.New,
+                    Catalog.GetString("New Station Group"), null,
+                    Catalog.GetString("Create a new local station group"), null),
+                    
                 new ActionEntry("CopyUriAction", Stock.Copy,
                     Catalog.GetString("Copy URI"), null,
-                    Catalog.GetString("Copy stream URI to clipboard"), null)
+                    Catalog.GetString("Copy stream URI to clipboard"), null),
+                    
+                new ActionEntry("EditAction", Stock.Edit,
+                    Catalog.GetString("Edit"), null,
+                    Catalog.GetString("Edit Radio Station"), null),
+                    
+                new ActionEntry("AddAction", Stock.Add,
+                    Catalog.GetString("Add Station"), null,
+                    Catalog.GetString("Add new Radio Station"), null),
+                    
+                new ActionEntry("RemoveAction", Stock.Remove,
+                    Catalog.GetString("Remove"), null,
+                    Catalog.GetString("Remove selected Radio Station"), null)
             });
 
-            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
+            Globals.ActionManager.UI.InsertActionGroup(source_actions, 0);
+            Globals.ActionManager.UI.InsertActionGroup(popup_actions, 0);
+            
             ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("RadioActions.xml");
         }
         
         private void EnableRefresh()
         {
-            actions.GetAction("RefreshRadioAction").Sensitive = true;
+            source_actions.GetAction("RefreshRadioAction").Sensitive = true;
         }
         
         private void DisableRefresh()
         {
-            actions.GetAction("RefreshRadioAction").Sensitive = false;
+            source_actions.GetAction("RefreshRadioAction").Sensitive = false;
         }
         
         private void OnRefreshStations(object o, EventArgs args)
@@ -141,8 +164,12 @@ namespace Banshee.Plugins.Radio
             get { return manager; }
         }
         
-        public ActionGroup Actions {
-            get { return actions; }
+        public ActionGroup SourceActions {
+            get { return source_actions; }
+        }
+        
+        public ActionGroup PopupActions {
+            get { return popup_actions; }
         }
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(

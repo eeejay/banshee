@@ -56,15 +56,37 @@ namespace Banshee.Plugins.Radio
                 get { return message; }
             }
         }
+        
+        public class StationGroupArgs : EventArgs
+        {
+            private StationGroup group;
+            
+            public StationGroupArgs(StationGroup group)
+            {
+                this.group = group;
+            }
+            
+            public StationGroup Group {
+                get { return group; }
+            }
+        }
     
         public delegate void StationsLoadFailedHandler(object o, StationsLoadFailedArgs args);
-    
+        public delegate void StationGroupHandler(object o, StationGroupArgs args);
+        
         private static readonly Uri master_xspf_uri = new Uri("http://radio.banshee-project.org/"); 
         private static readonly TimeSpan check_timeout = TimeSpan.FromDays(1);
         private static readonly string stations_path = Path.Combine(Paths.UserPluginDirectory, "stations");
         
-        private List<Playlist> station_groups = new List<Playlist>();
+        public static string StationsPath {
+            get { return stations_path; }
+        }
+        
+        private List<StationGroup> station_groups = new List<StationGroup>();
         private int total_stations = 0;
+        
+        public event StationGroupHandler StationGroupAdded;
+        public event StationGroupHandler StationGroupRemoved;
         
         public event EventHandler StationsLoaded;
         public event EventHandler StationsRefreshing;
@@ -119,11 +141,11 @@ namespace Banshee.Plugins.Radio
                 Directory.CreateDirectory(stations_path);
                 
                 foreach(string xspf_file in Directory.GetFiles(stations_path, "*.xspf")) {
-                    LoadStation(xspf_file);
+                    LoadStation(xspf_file, false);
                 }
                 
                 foreach(string xspf_file in Directory.GetFiles(Path.Combine(stations_path, "user"), "*.xspf")) {
-                    LoadStation(xspf_file);
+                    LoadStation(xspf_file, true);
                 }
             } catch {
             }
@@ -133,12 +155,21 @@ namespace Banshee.Plugins.Radio
             });
         }
         
-        private void LoadStation(string file)
+        private void LoadStation(string file, bool canEdit)
         {
-            Playlist playlist = new Playlist();
-            playlist.Load(file);
-            
-            MetaEntry helix_meta = playlist.FindMetaEntry("/BansheeXSPF:helix_required");
+            StationGroup station = new StationGroup(file, canEdit);
+            station.Load();
+            LoadStationGroup(station, false);
+        }
+        
+        public void LoadStationGroup(StationGroup group)
+        {
+            LoadStationGroup(group, true);
+        }
+        
+        private void LoadStationGroup(StationGroup station, bool raiseAdded)
+        {   
+            MetaEntry helix_meta = station.FindMetaEntry("/BansheeXSPF:helix_required");
             if(!helix_meta.Equals(MetaEntry.Zero) && !AlwaysShowHelixStationsSchema.Get()) {
                 bool have_helix = false;
                 foreach(Banshee.MediaEngine.PlayerEngine engine in PlayerEngineCore.Engines) {
@@ -153,8 +184,42 @@ namespace Banshee.Plugins.Radio
                 }
             }
             
-            total_stations += playlist.Tracks.Count;
-            station_groups.Add(playlist);
+            total_stations += station.Tracks.Count;
+            station_groups.Add(station);
+            
+            if(raiseAdded) {
+                OnStationGroupAdded(station);
+            }
+        }
+        
+        public void RemoveStationGroup(StationGroup group)
+        {
+            if(!group.CanEdit) {
+                return;
+            }
+            
+            try {
+                File.Delete(group.LocalPath);
+            } catch {
+            }
+            
+            OnStationGroupRemoved(group);
+        }
+        
+        private void OnStationGroupAdded(StationGroup group)
+        {
+            StationGroupHandler handler = StationGroupAdded;
+            if(handler != null) {
+                handler(this, new StationGroupArgs(group));
+            }
+        }
+        
+        private void OnStationGroupRemoved(StationGroup group)
+        {
+            StationGroupHandler handler = StationGroupRemoved;
+            if(handler != null) {
+                handler(this, new StationGroupArgs(group));
+            }
         }
         
         private void OnStationsLoaded()
@@ -252,7 +317,7 @@ namespace Banshee.Plugins.Radio
             return ((HttpWebResponse)request.GetResponse()).GetResponseStream();
         }
         
-        public List<Playlist> StationGroups {
+        public List<StationGroup> StationGroups {
             get { return station_groups; }
         }
         

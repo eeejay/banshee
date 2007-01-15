@@ -191,5 +191,18 @@ namespace Banshee.Plugins.Radio
                 return model.GetRadioTrackInfo(iter);
             }
         }
+        
+        public StationGroup SelectedStationGroup {
+            get {
+                TreeModel _model;
+                TreeIter iter;
+            
+                if(!Selection.GetSelected(out _model, out iter)) {
+                    return null;
+                }
+                
+                return model.GetStationGroup(iter);
+            }
+        }
     }
 }

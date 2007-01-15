@@ -1,7 +1,7 @@
 /***************************************************************************
  *  AboutDialog.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2005-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -70,7 +70,6 @@ namespace Banshee.Gui.Dialogs
             }
             
             // build dialog
-            
             IconThemeUtils.SetWindowIcon(this);
             
             Logo = Branding.AboutBoxLogo;
@@ -78,7 +77,7 @@ namespace Banshee.Gui.Dialogs
             Version = ConfigureDefines.VERSION;
             Comments = Catalog.GetString("Music Management and Playback for GNOME.");
             Copyright = Catalog.GetString(
-                "Copyright \u00a9 2005-2006 Novell, Inc.\n" + 
+                "Copyright \u00a9 2005-2007 Novell, Inc.\n" + 
                 "Copyright \u00a9 2005 Aaron Bockover"
             );
             

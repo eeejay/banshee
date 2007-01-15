@@ -94,7 +94,10 @@ namespace Banshee.Plugins.Radio
                 }
             };
             
-            plugin.Actions.GetAction("CopyUriAction").Activated += OnCopyUri;
+            plugin.PopupActions.GetAction("CopyUriAction").Activated += OnCopyUri;
+            plugin.PopupActions.GetAction("NewStationGroupAction").Activated += OnNewStationGroup;
+            plugin.PopupActions.GetAction("RemoveAction").Activated += OnRemoveStation;
+            plugin.PopupActions.GetAction("EditAction").Activated += OnEditStation;
             
             BuildInterface();
         }
@@ -146,11 +149,36 @@ namespace Banshee.Plugins.Radio
         
         private void OnViewSelectionChanged(object o, EventArgs args)
         {
-            plugin.Actions.GetAction("CopyUriAction").Sensitive = view.SelectedTrack != null;
+            bool can_edit = false;
+            
+            if(view.SelectedStationGroup != null) {
+                can_edit = view.SelectedStationGroup.CanEdit;
+            }
+        
+            plugin.PopupActions.GetAction("NewStationGroupAction").Visible = true;
+            plugin.PopupActions.GetAction("CopyUriAction").Sensitive = view.SelectedTrack != null;
+            plugin.PopupActions.GetAction("EditAction").Visible = can_edit;
+            plugin.PopupActions.GetAction("RemoveAction").Visible = can_edit;
+            plugin.PopupActions.GetAction("AddAction").Visible = can_edit && view.SelectedTrack == null;
+        }
+        
+        private bool ShouldShowPopup()
+        {
+            foreach(Action action in plugin.PopupActions.ListActions()) {
+                if(action.Visible) {
+                    return true;
+                }
+            }
+            
+            return false;
         }
         
         private void OnViewPopup(object o, StationViewPopupArgs args) 
         {
+            if(!ShouldShowPopup()) {
+                return;
+            }
+            
             Menu menu = Globals.ActionManager.GetWidget("/StationViewPopup") as Menu;
             menu.ShowAll();
             menu.Popup(null, null, null, 0, args.Time);
@@ -178,6 +206,81 @@ namespace Banshee.Plugins.Radio
         private void OnTrackParsingPlaylistEvent(object o, EventArgs args)
         {
             view.QueueDraw();
+        }
+        
+        private void EditStationGroup(StationGroup group)
+        {
+            string previous_path = group == null ? null : group.LocalPath;
+            StationGroup new_group = group;
+            
+            StationGroupEditor editor = new StationGroupEditor(new_group);
+            editor.Show();
+            
+            editor.Response += delegate(object eo, ResponseArgs eargs) {
+                if(eargs.ResponseId != ResponseType.Ok) {
+                    editor.Destroy();
+                    return;
+                }
+                
+                if(group != null) {
+                    group.Title = editor.Value;
+                    group.UpdatePath();
+                }
+                
+                if(previous_path != null && new_group.LocalPath == previous_path) {
+                    editor.Destroy();
+                    return;
+                }   
+                
+                if(new_group == null) {
+                    new_group = new StationGroup(editor.Value);
+                }
+                
+                if(File.Exists(new_group.LocalPath)) {
+                    editor.ShowExistsMessage();
+                    editor.FocusEntry();
+                    return;
+                }
+                
+                if(group == null) {
+                    plugin.StationManager.LoadStationGroup(new_group);
+                } else {
+                    model.UpdateStationGroup(group);
+                    try {
+                        File.Move(previous_path, group.LocalPath);
+                    } catch {
+                    }
+                }
+                
+                editor.Destroy();
+            };
+        }
+        
+        private void OnNewStationGroup(object o, EventArgs args)
+        {
+            EditStationGroup(null);
+        }
+        
+        private void OnRemoveStation(object o, EventArgs args)
+        {
+            if(!view.SelectedStationGroup.CanEdit) {
+                return;
+            }
+            
+            if(view.SelectedTrack == null) {
+                plugin.StationManager.RemoveStationGroup(view.SelectedStationGroup);
+            }
+        }
+        
+        private void OnEditStation(object o, EventArgs args)
+        {
+            if(!view.SelectedStationGroup.CanEdit) {
+                return;
+            }
+            
+            if(view.SelectedTrack == null) {
+                EditStationGroup(view.SelectedStationGroup);
+            }
         }
         
         private void OnCopyUri(object o, EventArgs args)
