@@ -16,6 +16,8 @@ SOURCES = \
 	$(srcdir)/StationManager.cs \
 	$(srcdir)/StationModel.cs \
 	$(srcdir)/StationView.cs \
+	$(srcdir)/StationGroup.cs \
+	$(srcdir)/StationGroupEditor.cs \
 	$(srcdir)/CellRendererStation.cs \
 	$(srcdir)/totem-plparser/*.cs
 
