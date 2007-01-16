@@ -1,8 +1,8 @@
 /***************************************************************************
- *  RhapsodyQueryJob.cs
+ *  MusicBrainzQueryJob.cs
  *
  *  Copyright (C) 2006-2007 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Written by James Willcox <snorp@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -31,32 +31,29 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-
-using Gdk;
 
 using Banshee.Base;
 using Banshee.Metadata;
 using Banshee.Kernel;
 
-namespace Banshee.Metadata.Rhapsody
+namespace Banshee.Metadata.MusicBrainz
 {
-    public class RhapsodyQueryJob : SchedulerMetadataLookupJob
+    public class MusicBrainzQueryJob : SchedulerMetadataLookupJob
     {
-        private static Uri base_uri = new Uri("http://www.rhapsody.com/");
+        private static string AmazonUriFormat = "http://images.amazon.com/images/P/{0}.01._SCLZZZZZZZ_.jpg";
     
-        private IBasicTrackInfo track;
+        private TrackInfo track;
         private List<StreamTag> tags;
         
-        public RhapsodyQueryJob(IBasicTrackInfo track)
+        public MusicBrainzQueryJob(IBasicTrackInfo track)
         {
-            this.track = track;
+            this.track = track as TrackInfo;
         }
         
         public override void Run()
         {
-            if(track == null || (track is TrackInfo && (track as TrackInfo).CoverArtFileName != null)) {
+            if(track == null || track.CoverArtFileName != null) {
                 return;
             }
         
@@ -68,34 +65,54 @@ namespace Banshee.Metadata.Rhapsody
             } else if(!Globals.Network.Connected) {
                 return;
             }
-            
-            Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", album_artist_id.Replace('-', '/')));
-        
+
             try {
-                XmlDocument doc = new XmlDocument();
-                Stream stream = GetHttpStream(data_uri);
-                if(stream == null) {
+                string asin = FindAsin ();
+                if (asin == null)
                     return;
-                }
 
-                using(stream) {
-                    doc.Load(stream);
-                }
-
-                XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
-                if(art_node != null && art_node.Attributes["src"] != null) {
-                    Uri art_uri = new Uri(art_node.Attributes["src"].Value);
-                    SaveHttpStream(art_uri, Paths.GetCoverArtPath(album_artist_id));
-                    tags = new List<StreamTag>();
-                    StreamTag tag = new StreamTag();
-                    tag.Name = CommonTags.AlbumCoverID;
-                    tag.Value = album_artist_id;
-                    tags.Add(tag);
-                }
-            } catch {
+                SaveHttpStream (new Uri (String.Format (AmazonUriFormat, asin)),
+                                Paths.GetCoverArtPath(album_artist_id));
+                tags = new List<StreamTag>();
+                StreamTag tag = new StreamTag();
+                tag.Name = CommonTags.AlbumCoverID;
+                tag.Value = album_artist_id;
+                tags.Add(tag);
+            } catch (Exception e) {
+                Console.Error.WriteLine ("Failed to fetch metadata: " + e);
             }
         }
-        
+
+        // MusicBrainz has this new XML API, so I'm using that hereinstead of using the stuff in the
+        // MusicBrainz namespace which sucks and doesn't even appear to work anymore.
+        private string FindAsin () {
+            string uri = String.Format ("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
+                                        track.Artist, track.Album);
+
+            XmlTextReader reader = new XmlTextReader (GetHttpStream (new Uri (uri)));
+
+            bool haveMatch = false;
+            
+            while (reader.Read ()) {
+                if (reader.NodeType == XmlNodeType.Element) {
+                    switch (reader.LocalName) {
+                    case "release":
+                        haveMatch = reader["ext:score"] == "100";
+                        break;
+                    case "asin":
+                        if (haveMatch) {
+                            return reader.ReadString ();
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public override IBasicTrackInfo Track {
             get { return track; }
         }

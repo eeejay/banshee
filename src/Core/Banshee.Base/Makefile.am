@@ -146,6 +146,10 @@ BANSHEE_METADATA_RHAPSODY_SOURCES = \
 	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs \
 	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs
 
+BANSHEE_METADATA_MUSICBRAINZ_SOURCES = \
+	$(srcdir)/Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs
+
 IO_SOURCES = \
 	$(srcdir)/IO/Utilities.cs \
 	$(srcdir)/IO/IOProxy.cs \
@@ -253,6 +257,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_CONFIGURATION_SCHEMA_SOURCES) \
 	$(BANSHEE_METADATA_SOURCES) \
 	$(BANSHEE_METADATA_RHAPSODY_SOURCES) \
+	$(BANSHEE_METADATA_MUSICBRAINZ_SOURCES) \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \

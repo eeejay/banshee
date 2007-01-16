@@ -1,3 +1,14 @@
+2007-01-16  James Willcox  <snorp@snorp.net>
+
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	Move the HTTP stuff up to the parent class
+
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/*.cs: new metadata
+	provider which uses MusicBrainz to find cover art.  It is the default
+	provider now, since it gets much higher quality images compared to the
+	Rhapsody backend.  If it fails, the Rhapsody backend is used as a
+	fallback.
+
 2007-01-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.Configuration/GConfConfigurationClient.cs:

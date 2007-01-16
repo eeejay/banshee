@@ -33,6 +33,7 @@ namespace Banshee.Metadata
     public static class MetadataProviderFactory
     {
         private static Type [] providers = new Type [] {
+            typeof(Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider),
             typeof(Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider)
         };
         
