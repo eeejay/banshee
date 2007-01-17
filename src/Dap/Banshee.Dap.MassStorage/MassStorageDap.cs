@@ -300,8 +300,20 @@ namespace Banshee.Dap.MassStorage
 
         public override void Synchronize()
         {
-            foreach(TrackInfo track in uncopiedTracks) {
-                Copier.Enqueue(track);
+            List<TrackInfo> tracksToCopy;
+            lock (uncopiedTracks) {
+                tracksToCopy = new List<TrackInfo>(uncopiedTracks);
+                uncopiedTracks.Clear();
+            }
+
+            int count = 1;
+            foreach(TrackInfo track in tracksToCopy) {
+                UpdateSaveProgress(
+                    String.Format(Catalog.GetString("Copying {0} of {1}"), count, tracksToCopy.Count), 
+                    String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle),
+                    count / tracksToCopy.Count);
+
+                CopyTrack(track);
             }
 
             FinishSave();
@@ -366,21 +378,21 @@ namespace Banshee.Dap.MassStorage
 
         public override void AddTrack(TrackInfo track)
         {
-            if (track == null || IsReadOnly)
+            if (track == null || IsReadOnly && !tracks.Contains(track))
                 return;
 
             tracks.Add(track);
             OnTrackAdded(track);
 
             if (!(track is MassStorageTrackInfo)) {
-                uncopiedTracks.Add(track);
+                lock(uncopiedTracks) {
+                    uncopiedTracks.Add(track);
+                }
             }
         }
         
-        private void HandleCopyRequested (object o, QueuedOperationArgs args)
+        private void CopyTrack (TrackInfo track)
         {
-            TrackInfo track = args.Object as TrackInfo;
-
             if(track == null)
                 return;
             
@@ -394,19 +406,16 @@ namespace Banshee.Dap.MassStorage
                 if(!File.Exists(new_path)) {
                     Directory.CreateDirectory(Path.GetDirectoryName(new_path));
                     File.Copy(track.Uri.LocalPath, new_path);
+
+                    TrackInfo new_track = new MassStorageTrackInfo(new SafeUri(new_path));
+
+                    // Add the new MassStorageTrackInfo and remove the old TrackInfo from the treeview
+                    tracks.Add(new_track);
+                    OnTrackAdded(new_track);
                 }
 
-                TrackInfo new_track = new MassStorageTrackInfo (new SafeUri (new_path));
-
-                // Add the new MassStorageTrackInfo and remove the old TrackInfo from the treeview
-                tracks.Add(new_track);
-                OnTrackAdded(new_track);
                 tracks.Remove(track);
-
-                args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
-            } catch {
-                args.ReturnMessage = String.Format("Skipping Song", track.Artist, track.Title);
-            }
+            } catch {}
         }
 
         protected override void OnTrackRemoved(TrackInfo track)
@@ -414,8 +423,20 @@ namespace Banshee.Dap.MassStorage
             if (IsReadOnly)
                 return;
 
+            Remover.Enqueue(track);
+        }
+
+
+        private void HandleRemoveRequested (object o, QueuedOperationArgs args)
+        {
+            TrackInfo track = args.Object as TrackInfo;
+
+            args.ReturnMessage = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle);
+
             if (!(track is MassStorageTrackInfo)) {
-                uncopiedTracks.Remove(track);
+                lock(uncopiedTracks) {
+                    uncopiedTracks.Remove(track);
+                }
             }
 
             // FIXME shouldn't need to check for this
@@ -495,19 +516,23 @@ namespace Banshee.Dap.MassStorage
             return file_path;
         }
 
-        private QueuedOperationManager copier;
-        public QueuedOperationManager Copier {
+        private QueuedOperationManager remover;
+        public QueuedOperationManager Remover {
             get {
-                if (copier == null) {
-                    copier = new QueuedOperationManager ();
-                    copier.ActionMessage = Catalog.GetString ("Copying Songs");
-                    copier.ProgressMessage = Catalog.GetString ("Copying {0} of {1}");
-                    copier.OperationRequested += HandleCopyRequested;
+                if (remover == null) {
+                    lock (this) {
+                        if (remover == null) {
+                            remover = new QueuedOperationManager();
+                            remover.ActionMessage = String.Format(Catalog.GetString("Removing songs from {0}"), Name);
+                            remover.ProgressMessage = Catalog.GetString("Removing {0} of {1}");
+                            remover.OperationRequested += HandleRemoveRequested;
+                        }
+                    }
                 }
 
-                return copier;
+                return remover;
             }
-            set { copier = value; }
+            set { remover = value; }
         }
 
         public virtual string IconId {

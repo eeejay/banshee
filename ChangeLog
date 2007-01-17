@@ -1,5 +1,11 @@
 2007-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Make sure not to
+	modify a list while iterating over it.  Push removal of songs into a
+	separate thread so it doesn't block.
+
+2007-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Instead of copying
 	instantly when adding a file to a DAP, wait until the Synchronize button
 	is pressed like how other DAPs operate.  Fixes BGO #370229.  Doing so
