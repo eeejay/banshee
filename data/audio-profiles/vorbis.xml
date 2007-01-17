@@ -15,14 +15,11 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! "
-          "audio/x-raw-float,rate=" (if (< $sample_rate 40000) 8000 50000)
-          ",channels=" $channels " ! "
-          "audioconvert ! "
-            
-          "vorbisenc quality=" (/ $quality 10.0) " ! "
-       
-          "oggmux"
+            (gst-construct-pipeline
+                "audioconvert"
+                (gst-construct-element "vorbisenc"
+                    "quality" (/ quality 10.0))
+                "oggmux")
         ]]>
         </process>
         <variable id="quality">
@@ -35,8 +32,6 @@
           <step-value>1.0</step-value>
           <default-value>5.0</default-value>
         </variable>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

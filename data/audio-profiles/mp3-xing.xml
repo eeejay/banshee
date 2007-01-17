@@ -14,17 +14,13 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! "
-          "audio/x-raw-float,rate=" (if (< $sample_rate 40000) 8000 50000)
-          ",channels=" $channels " ! "
-          "audioconvert ! "
-          
-          "xingenc bitrate=" $bitrate " ! "
-      
-          (if (gst-element-is-available "id3v2mux")
-            "id3v2mux"
-            "id3mux"
-          )
+            (gst-construct-pipeline
+                "audioconvert" 
+                (gst-construct-element "xingenc"
+                    "bitrate" bitrate)
+                (if (gst-element-is-available "id3v2mux")
+                    "id3v2mux"
+                    "id3mux"))
         ]]>
         </process>
         <variable id="bitrate">
@@ -38,8 +34,6 @@
             <value value="192">192 Kbps</value>
           </possible-values>
         </variable>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

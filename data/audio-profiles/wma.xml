@@ -9,19 +9,14 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! "
-          "audio/x-raw-float,rate=" (if (< $sample_rate 40000) 8000 50000)
-          ",channels=" $channels " ! "
-          "audioconvert ! "
-            
-          "fluwmaenc "
-            (if (cast-bool $vbr)
-			  (+ "quality=" $quality)
-			  (+ "bitrate=" (* 1000 $bitrate))
-			)
-            " vbr=" (cast-bool $vbr) " ! "
-
-          "fluasfmux"
+            (gst-construct-pipeline
+                "audioconvert" 
+                (gst-construct-element "fluwmaenc"
+                    (if (cast-bool vbr)
+                        ("quality" quality)
+                        ("bitrate" (* 1000 bitrate)))
+                    "vbr" (cast-bool vbr))
+                "fluasfmux")
         ]]>
         </process>
         <variable id="vbr" enables="quality" disables="bitrate">
@@ -52,8 +47,6 @@
           <step-value>1</step-value>
           <default-value>75</default-value>
         </variable>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

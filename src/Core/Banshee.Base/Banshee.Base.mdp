@@ -231,7 +231,6 @@
     <File name="./SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/Evaluator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/FunctionNode.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/FunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/Literals.cs" subtype="Code" buildaction="Compile" />
@@ -240,7 +239,12 @@
     <File name="./SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SExpEngine/VariableNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/ControlFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/ListFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

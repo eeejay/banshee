@@ -10,22 +10,18 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! audioresample ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
-          "audioconvert ! "
-            
-          "wavpackenc mode=" $mode
-            
-          (if (cast-bool $lossy_mode)
-            (+ " bitrate=" (* $bitrate 1000.0))
-          )
-          
-          (+ " md5=" (cast-bool $md5_sum))
-          (+ " extra-processing=" (cast-bool $extra_processing))
-
-          (if (gst-element-is-available "apev2mux")
-            (+ " ! apev2mux")
-          )
+            (gst-construct-pipeline
+                "audioconvert" 
+                (gst-construct-element "wavpackenc"
+                    "mode" mode
+                    (if (cast-bool lossy_mode)
+                        ("bitrate" (* bitrate 1000.0))
+                        "")
+                    "md5" (cast-bool mdf_sum)
+                    "extra-processing" (cast-bool extra_processing))
+                (if (gst-element-is-available "apev2mux")
+                    "apev2mux"
+                    ""))
         ]]>
         </process>
         <variable id="mode">
@@ -44,7 +40,7 @@
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
-        <variable id="md5_sum">
+        <variable id="mdf_sum">
           <name>Store MD5 sum in the file</name>
           <control-type>check</control-type>
           <default-value>0</default-value>
@@ -64,8 +60,6 @@
           <max-label>Best</max-label>
           <step-value>1</step-value>
         </variable>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

@@ -11,15 +11,5 @@
       </possible-values>
       <advanced />
     </variable>
-    <variable id="sample_rate">
-      <name>Sample Rate</name>
-      <control-type>combo</control-type>
-      <default-value>44100</default-value>
-      <possible-values>
-        <value value="44100">44.1 kHz</value>
-        <value value="22050">22.05 kHz</value>
-      </possible-values>
-      <advanced />
-    </variable>
   </preset-variables>
 </audio-profiles>

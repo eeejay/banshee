@@ -27,6 +27,8 @@
  */
  
 using System;
+using System.Text;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Banshee.Base;
 
@@ -79,6 +81,81 @@ namespace Banshee.Gstreamer
             
             StringLiteral element_node = (StringLiteral)arg;
             return new BooleanLiteral(TestPipeline(element_node.Value));
+        }
+        
+        public static TreeNode SExprConstructPipeline(EvaluatorBase evaluator, TreeNode [] args)
+        {
+            StringBuilder builder = new StringBuilder();
+            List<string> elements = new List<string>();
+            
+            for(int i = 0; i < args.Length; i++) {
+                TreeNode node = evaluator.Evaluate(args[i]);
+                if(!(node is LiteralNodeBase)) {
+                    throw new ArgumentException("node must evaluate to a literal");
+                }
+                
+                string value = node.ToString().Trim();
+                
+                if(value.Length == 0) {
+                    continue;
+                }
+                
+                elements.Add(value);
+            }
+            
+            for(int i = 0; i < elements.Count; i++) {
+                builder.Append(elements[i]);
+                
+                if(i < elements.Count - 1) {
+                    builder.Append(" ! ");
+                }
+            }
+            
+            return new StringLiteral(builder.ToString());
+        }
+        
+        public static TreeNode SExprConstructElement(EvaluatorBase evaluator, TreeNode [] args)
+        {
+            return SExprConstructPipelinePart(evaluator, args, true);
+        }
+        
+        public static TreeNode SExprConstructCaps(EvaluatorBase evaluator, TreeNode [] args)
+        {
+            return SExprConstructPipelinePart(evaluator, args, false);
+        }
+        
+        private static TreeNode SExprConstructPipelinePart(EvaluatorBase evaluator, TreeNode [] args, bool element)
+        {
+            StringBuilder builder = new StringBuilder();
+            
+            TreeNode list = new TreeNode();
+            foreach(TreeNode arg in args) {
+                list.AddChild(evaluator.Evaluate(arg));
+            }
+            
+            list = list.Flatten();
+            
+            for(int i = 0; i < list.ChildCount; i++) {
+                TreeNode node = list.Children[i];
+                
+                string value = node.ToString().Trim();
+                
+                builder.Append(value);
+                
+                if(i == 0) {
+                    if(list.ChildCount > 1) {
+                        builder.Append(element ? " " : ",");
+                    }
+                    
+                    continue;
+                } else if(i % 2 == 1) {
+                    builder.Append("=");
+                } else if(i < list.ChildCount - 1) {
+                    builder.Append(element ? " " : ",");
+                }
+            }
+            
+            return new StringLiteral(builder.ToString());
         }
     }
 }

@@ -14,27 +14,21 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
-          "audioconvert ! "
-            
-          "lame mode=" $mode " "
-            
-          (if (= $vbr_mode 0)
-            (+ "bitrate=" $bitrate)
-              (+ "vbr-mode=" $vbr_mode
-                " vbr-quality=" (- 9 $vbr_quality)
-                (if (gst-element-is-available "xingmux")
-                  " ! xingmux"
-                  ""
-                )
-             )
-          ) 
-      
-          (if (gst-element-is-available "id3v2mux")
-            " ! id3v2mux"
-            " ! id3mux"
-          )
+            (gst-construct-pipeline
+                "audioconvert"
+                (gst-construct-element "lame"
+                    "mode" 4
+                    (if (= vbr_mode 0) 
+                        ("bitrate" bitrate)
+                        ("vbr-mode" vbr_mode "vbr-quality" (- 9 vbr_quality))))
+                (if (and 
+                    (!= vbr_mode 0) 
+                    (gst-element-is-available "xingmux")) 
+                        "xingmux" 
+                        "")
+                (if (gst-element-is-available "id3v2mux")
+                    "id3v2mux"
+                    "id3mux"))
         ]]>
         </process>
         <variable id="vbr_mode">
@@ -71,21 +65,6 @@
             <value value="320">320 Kbps</value>
           </possible-values>
         </variable>
-        <variable id="mode">
-          <name>Mode</name>
-          <control-type>combo</control-type>
-          <default-value>4</default-value>
-          <possible-values>
-            <value value="0">Stereo</value>
-            <value value="1">Joint Stereo</value>
-            <value value="2">Dual Channel</value>
-            <value value="3">Mono</value>
-            <value value="4">Auto</value>
-          </possible-values>
-          <advanced />
-        </variable>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

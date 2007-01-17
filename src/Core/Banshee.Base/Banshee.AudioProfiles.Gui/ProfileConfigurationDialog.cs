@@ -170,6 +170,8 @@ namespace Banshee.AudioProfiles.Gui
 
             LoadControlTable(normal_controls_table, false);
             LoadControlTable(advanced_controls_table, true);
+            
+            advanced_expander.Visible = advanced_controls_table.Visible;
         }
 
         private void LoadControlTable(Table table, bool advanced)

@@ -10,15 +10,11 @@
       <pipeline>
         <process id="gstreamer">
         <![CDATA[
-          + "audioconvert ! "
-          "audio/x-raw-int,rate=" $sample_rate ",channels=" $channels " ! "
-          "audioconvert ! "
-            
-          "wavenc"
+            (gst-construct-pipeline
+                "audioconvert" 
+                "wavenc")
         ]]>
         </process>
-        <preset-variable id="channels" />
-        <preset-variable id="sample_rate" />
       </pipeline>
     </profile>
   </profiles>

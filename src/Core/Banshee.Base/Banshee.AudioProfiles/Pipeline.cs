@@ -148,7 +148,7 @@ namespace Banshee.AudioProfiles
             
             TreeNode result = eval.EvaluateString(process);
             if(eval.Success && result is StringLiteral) {
-                return (result as StringLiteral).Value;
+                return (result.Flatten() as StringLiteral).Value;
             } else if(!eval.Success && Banshee.Base.Globals.Debugging) {
                 Console.WriteLine("Could not compile pipeline S-Expression for pipeline:");
                 Console.WriteLine(process);
@@ -158,7 +158,7 @@ namespace Banshee.AudioProfiles
                 Console.WriteLine("Stack Trace:");
             
                 foreach(Exception e in eval.Exceptions) {
-                    Console.WriteLine(e);
+                    Console.WriteLine(e.Message);
                 }
                 
                 Console.WriteLine("-----");

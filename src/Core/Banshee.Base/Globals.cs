@@ -130,6 +130,9 @@ namespace Banshee.Base
                 LogCore.Instance.PushDebug("Loading audio profiles", load_path);
                 
                 Pipeline.AddSExprFunction("gst-element-is-available", Banshee.Gstreamer.Utilities.SExprTestElement);
+                Pipeline.AddSExprFunction("gst-construct-pipeline", Banshee.Gstreamer.Utilities.SExprConstructPipeline);
+                Pipeline.AddSExprFunction("gst-construct-caps", Banshee.Gstreamer.Utilities.SExprConstructCaps);
+                Pipeline.AddSExprFunction("gst-construct-element", Banshee.Gstreamer.Utilities.SExprConstructElement);
                 
                 audio_profile_manager = new ProfileManager(load_path);
                 audio_profile_manager.TestProfile += OnTestAudioProfile;

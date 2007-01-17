@@ -1,3 +1,29 @@
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs:
+	Only enable when the profile can be configured
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:
+	Do not show the advanced expander if there are no advanced variables
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	Show the description of the profile in a label below the combo box
+
+	* src/Core/Banshee.Base/Globals.cs:
+	* src/Core/Banshee.Base/GstMisc.cs: Added SExp functions for building
+	GStreamer pipelines
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/Pipeline.cs: Flatten the
+	SExp result tree
+
+	* build/m4/shamrock/mono.m4: Hopefull this will work on evil distros
+	that put the GAC in lib64 and on good distros that put it in lib
+
+	* data/banshee-dialogs.glade: Fix alignment on label
+
+	* data/audio-profiles/*: Updated to the latest SExp syntax and use
+	new gst-construct-* functions to help build pretty pipelines
+
 2007-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Make sure not to

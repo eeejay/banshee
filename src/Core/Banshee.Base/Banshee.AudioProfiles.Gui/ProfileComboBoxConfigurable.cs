@@ -31,14 +31,17 @@ using Gtk;
 
 namespace Banshee.AudioProfiles.Gui
 {
-    public class ProfileComboBoxConfigurable : HBox
+    public class ProfileComboBoxConfigurable : VBox
     {
         private ProfileComboBox combo;
         private ProfileConfigureButton button;
+        private Label description;
         private string configuration_id;
         
         public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId)
         {
+            HBox editor = new HBox();
+            
             configuration_id = configurationId;
             combo = new ProfileComboBox(manager);
             combo.Show();
@@ -47,15 +50,34 @@ namespace Banshee.AudioProfiles.Gui
             button.ComboBox = combo;
             button.Show();
             
-            Spacing = 5;
-            PackStart(combo, true, true, 0);
-            PackStart(button, false, false, 0);
+            editor.Spacing = 5;
+            editor.PackStart(combo, true, true, 0);
+            editor.PackStart(button, false, false, 0);
+            editor.Show();
+            
+            description = new Label();
+            description.Xalign = 0.0f;
+            description.Wrap = true;
+            description.Show();
+            
+            SetDescription();
             
             Combo.SetActiveProfile(manager.GetConfiguredActiveProfile(configurationId));
             
             Combo.Changed += delegate {
                 ProfileConfiguration.SaveActiveProfile(Combo.ActiveProfile, configurationId);
+                SetDescription();
             };
+            
+            Spacing = 5;
+            PackStart(editor, true, true, 0);
+            PackStart(description, false, false, 0);
+        }
+        
+        private void SetDescription()
+        {
+            description.Markup = String.Format("<small><i>{0}</i></small>", GLib.Markup.EscapeText(
+                Combo.ActiveProfile.Description));
         }
         
         public ProfileComboBox Combo {

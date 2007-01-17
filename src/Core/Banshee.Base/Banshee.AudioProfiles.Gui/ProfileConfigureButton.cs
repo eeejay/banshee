@@ -57,7 +57,7 @@ namespace Banshee.AudioProfiles.Gui
         private void OnComboUpdated(object o, EventArgs args)
         {
             if(combo != null) {
-                Sensitive = combo.Sensitive;
+                Sensitive = combo.Sensitive && combo.ActiveProfile.Pipeline.VariableCount > 0;
             }
         }
         
@@ -68,12 +68,14 @@ namespace Banshee.AudioProfiles.Gui
                     return;
                 } else if(combo != null) {
                     combo.Updated -= OnComboUpdated;
+                    combo.Changed -= OnComboUpdated;
                 }
                 
                 combo = value;
                 
                 if(combo != null) {
                     combo.Updated += OnComboUpdated;
+                    combo.Changed += OnComboUpdated;
                     OnComboUpdated(null, null);
                 }
             }
