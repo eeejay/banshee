@@ -128,6 +128,10 @@ namespace Banshee.SmartPlaylist
             get { return generic_name; }
         }
 
+        public override bool IsDragSource {
+            get { return true; }
+        }
+
         // For existing smart playlists that we're loading from the database
         public SmartPlaylistSource(int id, string name, string condition, string order_by, string limit_number, int limit_criterion) : base(name, 100)
         {

@@ -427,6 +427,7 @@ namespace Banshee.Gui
             if(Gtk.Drag.GetSourceWidget(context) != this && 
                 !(SourceManager.ActiveSource is LibrarySource ||
                 SourceManager.ActiveSource is PlaylistSource ||
+                SourceManager.ActiveSource is Banshee.SmartPlaylist.SmartPlaylistSource ||
                 SourceManager.ActiveSource is IImportable)) {
                 return false;
             }
