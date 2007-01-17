@@ -1,3 +1,8 @@
+2007-01-17  Ruben Vermeersch  <ruben@savanne.be>
+
+	* data/audio-profiles/mp3-lame.xml: Change the vbr-mode parameter, which
+	doesn't exist, to vbr. Fixes BGO #397753.
+
 2007-01-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs:

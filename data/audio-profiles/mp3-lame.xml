@@ -20,7 +20,7 @@
                     "mode" 4
                     (if (= vbr_mode 0) 
                         ("bitrate" bitrate)
-                        ("vbr-mode" vbr_mode "vbr-quality" (- 9 vbr_quality))))
+                        ("vbr" vbr_mode "vbr-quality" (- 9 vbr_quality))))
                 (if (and 
                     (!= vbr_mode 0) 
                     (gst-element-is-available "xingmux")) 
