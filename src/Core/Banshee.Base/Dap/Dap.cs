@@ -524,6 +524,10 @@ namespace Banshee.Dap
                 supported_extensions = extensions.ToArray(typeof(string)) as string [];
                 return supported_extensions;
             }
+
+            set {
+                supported_extensions = value;
+            }
         }
         
         protected string PipelineCodecFilter {
@@ -676,6 +680,10 @@ namespace Banshee.Dap
                 }
                 
                 return supported_playback_mime_types;
+            }
+
+            protected set {
+                supported_playback_mime_types = value;
             }
         }
         

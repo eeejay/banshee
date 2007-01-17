@@ -28,6 +28,8 @@
 
 using System;
 using System.IO;
+using System.Collections;
+using System.Collections.Generic;
 using Hal;
 using Mono.Unix;
 using Banshee.Dap;
@@ -45,16 +47,10 @@ public static class PluginModuleEntry
 
 namespace Banshee.Dap.MassStorage
 {
-    // FIXME the codecs shouldn't be hard coded here, they should be set
-    // by looking at the hal device's accepted formats
     [DapProperties(DapType = DapType.Generic)]
-    [SupportedCodec(CodecType.Mp3)]
-    [SupportedCodec(CodecType.Ogg)]
     public class MassStorageDap : DapDevice
     {
         private static Gnome.Vfs.VolumeMonitor monitor;
-
-        private bool mounted = false, ui_initialized = false;
 
         static MassStorageDap() 
         {
@@ -65,10 +61,12 @@ namespace Banshee.Dap.MassStorage
             monitor = Gnome.Vfs.VolumeMonitor.Get();
         }
 
+        private bool mounted = false, ui_initialized = false;
+        private List<TrackInfo> uncopiedTracks = new List<TrackInfo>();
+
         protected Hal.Device usb_device = null;
         protected Hal.Device player_device = null;
         protected Hal.Device volume_device = null;
-
         protected Gnome.Vfs.Volume volume = null;
 
         public override InitializeResult Initialize(Hal.Device halDevice)
@@ -78,7 +76,7 @@ namespace Banshee.Dap.MassStorage
             try {
                 player_device = volume_device.Parent;
                 usb_device = new Hal.Device(player_device["storage.physical_device"]);
-            } catch (Exception e) {
+            } catch {
                 return InitializeResult.Invalid;
             }
 
@@ -169,8 +167,21 @@ namespace Banshee.Dap.MassStorage
             }
 
             base.Initialize(usb_device);
+
+            // Configure the extensions and mimetypes this DAP supports
+            List<string> extensions = new List<string>();
+            List<string> mimetypes = new List<string>();
+            foreach (string format in PlaybackFormats) {
+                string codec = Banshee.Dap.CodecType.GetCodec(format);
+                extensions.AddRange(CodecType.GetExtensions(codec));
+                mimetypes.AddRange(CodecType.GetMimeTypes(codec));
+            }
+
+            SupportedExtensions = extensions.ToArray();
+            SupportedPlaybackMimeTypes = mimetypes.ToArray();
  
             // Install properties
+ 
             if(usb_device.PropertyExists("usb.vendor")) {
                 InstallProperty(Catalog.GetString("Vendor"), usb_device["usb.vendor"]);
             } else if(player_device.PropertyExists("info.vendor")) {
@@ -265,12 +276,7 @@ namespace Banshee.Dap.MassStorage
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
 
                 AddTrack (track);
-            /* TODO: TagLib exception? } catch(Entagged.Audioformats.Exceptions.CannotReadException) {
-                //Console.WriteLine(Catalog.GetString("Cannot Import") + ": {0}", args.FileName); 
-                args.ReturnMessage = Catalog.GetString("Scanning") + "..."; */
-            } catch(Exception e) {
-                //Console.WriteLine(Catalog.GetString("Cannot Import: {0} ({1}, {2})"), 
-                    //args.FileName, e.GetType(), e.Message);
+            } catch {
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
 
@@ -294,7 +300,11 @@ namespace Banshee.Dap.MassStorage
 
         public override void Synchronize()
         {
-            LogCore.Instance.PushError("Synchronize called in MassStorageDap.cs.", "", false);
+            foreach(TrackInfo track in uncopiedTracks) {
+                Copier.Enqueue(track);
+            }
+
+            FinishSave();
         }
 
         public override void Eject ()
@@ -359,14 +369,11 @@ namespace Banshee.Dap.MassStorage
             if (track == null || IsReadOnly)
                 return;
 
-            if (track is MassStorageTrackInfo) {
-                // If we're "adding" it when it's already on the device, then
-                // we don't need to copy it
-                tracks.Add(track);
-                OnTrackAdded(track);
-            } else {
-                // Otherwise queue it up to be transferred over to the device
-                Copier.Enqueue (track);
+            tracks.Add(track);
+            OnTrackAdded(track);
+
+            if (!(track is MassStorageTrackInfo)) {
+                uncopiedTracks.Add(track);
             }
         }
         
@@ -374,28 +381,30 @@ namespace Banshee.Dap.MassStorage
         {
             TrackInfo track = args.Object as TrackInfo;
 
-            if (track == null)
+            if(track == null)
                 return;
             
             try {
                 string new_path = GetTrackPath (track);
 
                 // If it already is on the device but it's out of date, remove it
-                if (File.Exists (new_path) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_path))
+                if(File.Exists(new_path) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_path))
                     RemoveTrack(new MassStorageTrackInfo(new SafeUri(new_path)));
 
-                if (!File.Exists (new_path)) {
-                        Directory.CreateDirectory (Path.GetDirectoryName (new_path));
-                        File.Copy (track.Uri.LocalPath, new_path);
+                if(!File.Exists(new_path)) {
+                    Directory.CreateDirectory(Path.GetDirectoryName(new_path));
+                    File.Copy(track.Uri.LocalPath, new_path);
                 }
 
                 TrackInfo new_track = new MassStorageTrackInfo (new SafeUri (new_path));
-                tracks.Add(new_track);
 
+                // Add the new MassStorageTrackInfo and remove the old TrackInfo from the treeview
+                tracks.Add(new_track);
                 OnTrackAdded(new_track);
+                tracks.Remove(track);
 
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
-            } catch (Exception e) {
+            } catch {
                 args.ReturnMessage = String.Format("Skipping Song", track.Artist, track.Title);
             }
         }
@@ -405,6 +414,10 @@ namespace Banshee.Dap.MassStorage
             if (IsReadOnly)
                 return;
 
+            if (!(track is MassStorageTrackInfo)) {
+                uncopiedTracks.Remove(track);
+            }
+
             // FIXME shouldn't need to check for this
             // Make sure it's on the drive
             if (track.Uri.LocalPath.IndexOf (MountPoint) == -1)
@@ -413,7 +426,7 @@ namespace Banshee.Dap.MassStorage
             try {
                 File.Delete(track.Uri.LocalPath);
                 //Console.WriteLine ("Deleted {0}", track.Uri.LocalPath);
-            } catch(Exception) {
+            } catch {
                 LogCore.Instance.PushInformation("Could not delete file", track.Uri.LocalPath, false);
             }
 
@@ -424,7 +437,7 @@ namespace Banshee.Dap.MassStorage
                     Directory.Delete(old_dir);
                     old_dir = Path.GetDirectoryName(old_dir);
                 }
-            } catch(Exception) {}
+            } catch {}
         }
 
         public override Gdk.Pixbuf GetIcon(int size)
@@ -536,8 +549,7 @@ namespace Banshee.Dap.MassStorage
                         if(volume_device.PropertyExists("volume.size")) {
                             storage_capacity = volume_device.GetPropertyUInt64("volume.size");
                         }
-                    } catch {
-                    }
+                    } catch {}
                 }
 
                 return storage_capacity;
@@ -573,10 +585,6 @@ namespace Banshee.Dap.MassStorage
             }
         }
         
-        public override bool CanSynchronize {
-            get { return false; }
-        }
-
         private string mount_point = null;
         public string MountPoint {
             get {
@@ -651,7 +659,8 @@ namespace Banshee.Dap.MassStorage
                     if (player_device.PropertyExists ("portable_audio_player.output_formats")) {
                         playback_formats = player_device.GetPropertyStringList ("portable_audio_player.output_formats");
                     } else {
-                        playback_formats = new string [] {};
+                        // If no playback formats are set, default to MP3 and Ogg
+                        playback_formats = new string [] {"audio/mp3", "audio/ogg"};
                     }
                 }
 

@@ -47,57 +47,75 @@ namespace Banshee.Dap
         public const string Wav = "wav";
         public const string Flac = "flac";
         
-        private static Dictionary<string, string []> mimetype_map;
+        private static Dictionary<string, string []> mimetype_map = null;
+
+        public static Dictionary<string, string []> MimeTypeMap {
+            get {
+                if(mimetype_map == null) {
+                    mimetype_map = new Dictionary<string, string []>();
+                    
+                    mimetype_map.Add(Mp3, new string [] {
+                        "audio/mp3",
+                        "audio/mpeg3",
+                        "audio/x-mpeg-3",
+                        "audio/x-mpeg",
+                        "audio/mpeg",
+                        "application/x-id3",
+                        "audio/x-mp3"
+                    });
+                    
+                    mimetype_map.Add(Mp4, new string [] {
+                        "audio/x-m4a",
+                        "audio/mp4"
+                    });
+                    
+                    mimetype_map.Add(Wma, new string [] {
+                        "video/x-ms-asf", 
+                        "audio/x-ms-wma"
+                    });
+
+                    mimetype_map.Add(Ogg, new string [] {
+                        "audio/x-ogg",
+                        "audio/ogg",
+                        "audio/x-vorbisogg",
+                        "audio/x-vorbis",
+                        "audio/vorbis",
+                        "application/x-ogg",
+                        "application/ogg"
+                    });
+
+                    mimetype_map.Add(Flac, new string [] {
+                        "audio/flac",
+                        "application/x-flac",
+                        "audio/x-flac"
+                    });
+                    
+                    mimetype_map.Add(Wav, new string [] {
+                        "audio/x-wav",
+                        "audio/wav"
+                    });
+                }
+
+                return mimetype_map;
+            }
+        }
         
         public static string [] GetMimeTypes(string codec) 
         {
-            if(mimetype_map == null) {
-                mimetype_map = new Dictionary<string, string []>();
-                
-                mimetype_map.Add(Mp3, new string [] {
-                    "audio/mp3",
-                    "audio/mpeg3",
-                    "audio/x-mpeg-3",
-                    "audio/x-mpeg",
-                    "audio/mpeg",
-                    "application/x-id3",
-                    "audio/x-mp3"
-                });
-                
-                mimetype_map.Add(Mp4, new string [] {
-                    "audio/x-m4a",
-                    "audio/mp4"
-                });
-                
-                mimetype_map.Add(Wma, new string [] {
-                    "video/x-ms-asf", 
-                    "audio/x-ms-wma"
-                });
-
-                mimetype_map.Add(Ogg, new string [] {
-                    "audio/x-ogg",
-                    "audio/ogg",
-                    "audio/x-vorbis+ogg",
-                    "audio/x-vorbis",
-                    "audio/vorbis",
-                    "application/x-ogg",
-                    "application/ogg"
-                });
-
-                mimetype_map.Add(Flac, new string [] {
-                    "audio/flac",
-                    "application/x-flac",
-                    "audio/x-flac"
-                });
-                
-                mimetype_map.Add(Wav, new string [] {
-                    "audio/x-wav",
-                    "audio/wav"
-                });
-            }
-            
-            return mimetype_map[codec];
+            return MimeTypeMap[codec];
         }
+
+        public static string GetCodec(string mimeType) 
+        {
+            foreach (string codec in MimeTypeMap.Keys) {
+                if (System.Array.IndexOf(MimeTypeMap[codec], mimeType) != -1) {
+                    return codec;
+                }
+             }
+
+            LogCore.Instance.PushWarning("Unknown DAP mimetype " + mimeType, "", false);
+            return null;
+        } 
 
         public static string [] GetExtensions(string codec)
         {

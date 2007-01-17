@@ -1,3 +1,16 @@
+2007-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Instead of copying
+	instantly when adding a file to a DAP, wait until the Synchronize button
+	is pressed like how other DAPs operate.  Fixes BGO #370229.  Doing so
+	gives us transcoding nearly for free, fixing BGO #354727.  Based on patch
+	by Juri Pakaste.
+
+	* src/Core/Banshee.Base/Dap/DapMisc.cs: Add GetCodec method.
+
+	* src/Core/Banshee.Base/Dap/Dap.cs: Allow subclasses to set the
+	SupportedExtensions and SupportedPlaybackMimeTypes properties.
+
 2007-01-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Base/Gui/SourceView.cs: Let tracks from smart playlists
