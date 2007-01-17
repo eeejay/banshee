@@ -16,8 +16,8 @@
                     "mode" mode
                     (if (cast-bool lossy_mode)
                         ("bitrate" (* bitrate 1000.0))
-                        "")
-                    "md5" (cast-bool mdf_sum)
+                        ("" ""))
+                    "md5" (cast-bool md5_sum)
                     "extra-processing" (cast-bool extra_processing))
                 (if (gst-element-is-available "apev2mux")
                     "apev2mux"
@@ -40,7 +40,7 @@
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
-        <variable id="mdf_sum">
+        <variable id="md5_sum">
           <name>Store MD5 sum in the file</name>
           <control-type>check</control-type>
           <default-value>0</default-value>
