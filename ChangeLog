@@ -1,5 +1,16 @@
 2007-01-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/BansheeBranding.cs: Fixed branding initialization
+	bug wherein the default cover art would never be loaded if a custom 
+	branding were available
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:
+	* src/Core/Banshee/banshee-interface.schemas.in: Rating is on by default
+
+	* src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs: Removed debug line
+
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs: Make
 	this column a fixed width
 	

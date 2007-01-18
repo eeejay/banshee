@@ -37,7 +37,7 @@ namespace Banshee.Base
         private Gdk.Pixbuf default_cover_art;
         private Banshee.Gui.Dialogs.SplashScreen splash;
         
-        public bool Initialize()
+        public BansheeBranding()
         {
             about_box_logo = Gdk.Pixbuf.LoadFromResource("banshee-logo.png");
             default_cover_art = Banshee.Base.IconThemeUtils.LoadIcon("audio-x-generic", 128);
@@ -45,7 +45,10 @@ namespace Banshee.Base
             if(default_cover_art == null) {
                 default_cover_art = about_box_logo;   
             }
-            
+        }
+        
+        public bool Initialize()
+        {
             if(Globals.ArgumentQueue.Contains("hide")) {
                 return true;
             }

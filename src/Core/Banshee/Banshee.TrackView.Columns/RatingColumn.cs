@@ -90,7 +90,7 @@ namespace Banshee.TrackView.Columns
         
         public static readonly SchemaEntry<bool> visible_schema = new SchemaEntry<bool>(
             "view_columns.rating", "visible",
-            false,
+            true,
             "Visiblity",
             "Visibility of Rating column"
         );

@@ -182,7 +182,7 @@
       <applyto>/apps/banshee/view_columns/rating/visible</applyto>
       <owner>banshee</owner>
       <type>bool</type>
-      <default>false</default>
+      <default>true</default>
       <locale name="C">
         <short>Visiblity</short>
         <long>Visibility of Rating column</long>

@@ -509,7 +509,7 @@ namespace Banshee.Plugins.Podcast
                     initialized = true;
                 }
 
-                Console.WriteLine (Catalog.GetString("Loading Podcast Feeds:  {0} ms"), span.Milliseconds);
+                //Console.WriteLine (Catalog.GetString("Loading Podcast Feeds:  {0} ms"), span.Milliseconds);
             } catch {
                 Console.WriteLine (Catalog.GetString("Unable to load Podcast DB"));
             } finally
