@@ -35,10 +35,17 @@ namespace Banshee.AudioProfiles.Gui
     {
         private ProfileComboBox combo;
         private ProfileConfigureButton button;
-        private Label description;
+        private TextView description;
         private string configuration_id;
         
-        public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId)
+        private static Gdk.Color window_color = Gdk.Color.Zero;
+        
+        public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId) 
+            : this(manager, configurationId, null)
+        {
+        }
+        
+        public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId, Box parent) 
         {
             HBox editor = new HBox();
             
@@ -55,14 +62,27 @@ namespace Banshee.AudioProfiles.Gui
             editor.PackStart(button, false, false, 0);
             editor.Show();
             
-            description = new Label();
-            description.Xalign = 0.0f;
-            description.Wrap = true;
+            if(window_color.Equals(Gdk.Color.Zero)) {
+                Window temp = new Window("temp");
+                temp.EnsureStyle();
+                window_color = temp.Style.Background(StateType.Normal);
+            }
+            
+            description = new TextView();
+            description.WrapMode = WrapMode.Word;
+            description.Editable = false;
+            description.CursorVisible = false;
+            description.ModifyBase(StateType.Normal, window_color);
             description.Show();
             
-            SetDescription();
+            TextTag tag = new TextTag("small");
+            tag.Scale = Pango.Scale.Small;
+            tag.Style = Pango.Style.Italic;
+            description.Buffer.TagTable.Add(tag);
             
             Combo.SetActiveProfile(manager.GetConfiguredActiveProfile(configurationId));
+            
+            SetDescription();
             
             Combo.Changed += delegate {
                 ProfileConfiguration.SaveActiveProfile(Combo.ActiveProfile, configurationId);
@@ -71,13 +91,20 @@ namespace Banshee.AudioProfiles.Gui
             
             Spacing = 5;
             PackStart(editor, true, true, 0);
-            PackStart(description, false, false, 0);
+            
+            bool expand = parent != null;
+            
+            if(parent == null) {
+                parent = this;
+            }
+            
+            parent.PackStart(description, expand, expand, 0);
         }
         
         private void SetDescription()
         {
-            description.Markup = String.Format("<small><i>{0}</i></small>", GLib.Markup.EscapeText(
-                Combo.ActiveProfile.Description));
+            description.Buffer.Text = Combo.ActiveProfile.Description;
+            description.Buffer.ApplyTag("small", description.Buffer.StartIter, description.Buffer.EndIter);
         }
         
         public ProfileComboBox Combo {

@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="xing-mp3">
-      <name>Xing MP3 (Lossy)</name>
-      <description>Good trade-off between quality and file size.</description>
+      <name>MP3 (Xing Encoder)</name>
+      <description>A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates.</description>
       <output-file-extension>mp3</output-file-extension>
       <mimetype>audio/mp3</mimetype>
       <mimetype>audio/mpeg3</mimetype>

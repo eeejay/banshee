@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="wma-asf">
-      <name>WMA (Lossy)</name>
-      <description>Good trade-off between quality and file size.</description>
+      <name>Windows Media Audio</name>
+      <description>A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3.</description>
       <output-file-extension>wma</output-file-extension>
       <mimetype>audio/x-ms-wma</mimetype>
       <pipeline>

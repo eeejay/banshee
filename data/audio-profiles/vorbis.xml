@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="vorbis">
-      <name>Ogg Vorbis (Lossy)</name>
-      <description>Good trade-off between quality and file size.</description>
+      <name>Ogg Vorbis</name>
+      <description>Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3.</description>
       <output-file-extension>ogg</output-file-extension>
       <mimetype>audio/x-ogg</mimetype>
       <mimetype>audio/ogg</mimetype>

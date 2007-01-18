@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="faac-aac">
-      <name>MP4/AAC (Lossy)</name>
-      <description>Good trade-off between quality and file size.</description>
+      <name>Advanced Audio Coding (AAC)</name>
+      <description>Proprietary and standardized format that is superior to MP3, but not as popular.</description>
       <output-file-extension>m4a</output-file-extension>
       <mimetype>audio/x-m4a</mimetype>
       <mimetype>audio/mp4</mimetype>

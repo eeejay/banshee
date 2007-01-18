@@ -1,5 +1,16 @@
 2007-01-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Gui/PreferencesDialog.cs:
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	Show the description in a GtkTextView
+
+	* data/banshee-dialogs.glade: Fixed more alignment issues
+
+	* data/audio-profiles/*: Updated profile names and descriptions to 
+	provide more detail and be more user-friendly
+
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
 	* data/audio-profiles/wavpack.xml: Fixed
 
 2007-01-17  Ruben Vermeersch  <ruben@savanne.be>

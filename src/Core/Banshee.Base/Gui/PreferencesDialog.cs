@@ -70,7 +70,8 @@ namespace Banshee.Gui.Dialogs
             (Glade["library_location_label"] as Label).MnemonicWidget = library_location_chooser;
             library_location_chooser.Show();
             
-            cd_importing_profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, "cd-importing");
+            cd_importing_profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, "cd-importing", 
+                Glade["cd_importing_profile_description"] as Box);
             (Glade["cd_importing_profile_container"] as Box).PackStart(cd_importing_profile_box, false, false, 0);  
             (Glade["cd_importing_profile_label"] as Label).MnemonicWidget = cd_importing_profile_box.Combo;        
             cd_importing_profile_box.Show();
