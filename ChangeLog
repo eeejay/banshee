@@ -1,5 +1,20 @@
 2007-01-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs: Make
+	this column a fixed width
+	
+	* src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:
+	* src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:
+	* src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:
+	* src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs: Set better
+	default widths for these columns
+
+	* src/Core/Banshee/banshee-interface.schemas.in: Updated from above
+
+	* src/Core/Banshee.Base/Library.cs: Fixed library path bug found in SP1
+
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Gui/PreferencesDialog.cs:
 	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs:
 	Show the description in a GtkTextView

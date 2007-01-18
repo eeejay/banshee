@@ -42,6 +42,14 @@ namespace Banshee.TrackView.Columns
         public TrackNumberColumn() : base(Catalog.GetString("Track"), ID)
         {
             SetCellDataFunc(Renderer, new TreeCellDataFunc(DataHandler));
+            Resizable = false;
+            
+            int width, height;
+            Label label = new Label();
+            Pango.Layout layout = new Pango.Layout(label.PangoContext);
+            layout.SetText(Title);
+            layout.GetPixelSize(out width, out height);
+            FixedWidth = (int)(width * 1.5);
         }
         
         protected void DataHandler(TreeViewColumn tree_column, CellRenderer cell, 
@@ -84,14 +92,7 @@ namespace Banshee.TrackView.Columns
             int v = ArtistColumn.ModelCompare(model, a, b, false);
             return v != 0 ? v : ModelCompareBase(model, a, b);
         }
-        
-        public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
-            "view_columns.track", "width",
-            75,
-            "Width",
-            "Width of Track column"
-        );
-        
+
         public static readonly SchemaEntry<int> order_schema = new SchemaEntry<int>(
             "view_columns.track", "order",
             ID,
@@ -105,10 +106,6 @@ namespace Banshee.TrackView.Columns
             "Visiblity",
             "Visibility of Track column"
         );
-        
-        protected override SchemaEntry<int> WidthSchema {
-            get { return width_schema; }
-        }
         
         protected override SchemaEntry<int> OrderSchema {
             get { return order_schema; }

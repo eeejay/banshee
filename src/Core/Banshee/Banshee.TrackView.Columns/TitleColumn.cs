@@ -88,7 +88,7 @@ namespace Banshee.TrackView.Columns
         
         public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.title", "width",
-            75,
+            190,
             "Width",
             "Width of Title column"
         );

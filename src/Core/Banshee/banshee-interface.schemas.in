@@ -28,7 +28,7 @@
       <applyto>/apps/banshee/view_columns/album/width</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>75</default>
+      <default>190</default>
       <locale name="C">
         <short>Width</short>
         <long>Width of Album column</long>
@@ -61,7 +61,7 @@
       <applyto>/apps/banshee/view_columns/artist/width</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>75</default>
+      <default>190</default>
       <locale name="C">
         <short>Width</short>
         <long>Width of Artist column</long>
@@ -215,7 +215,7 @@
       <applyto>/apps/banshee/view_columns/time/width</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>75</default>
+      <default>60</default>
       <locale name="C">
         <short>Width</short>
         <long>Width of Time column</long>
@@ -248,7 +248,7 @@
       <applyto>/apps/banshee/view_columns/title/width</applyto>
       <owner>banshee</owner>
       <type>int</type>
-      <default>75</default>
+      <default>190</default>
       <locale name="C">
         <short>Width</short>
         <long>Width of Title column</long>
@@ -274,17 +274,6 @@
       <locale name="C">
         <short>Visiblity</short>
         <long>Visibility of Track column</long>
-      </locale>
-    </schema>
-    <schema>
-      <key>/schemas/apps/banshee/view_columns/track/width</key>
-      <applyto>/apps/banshee/view_columns/track/width</applyto>
-      <owner>banshee</owner>
-      <type>int</type>
-      <default>75</default>
-      <locale name="C">
-        <short>Width</short>
-        <long>Width of Track column</long>
       </locale>
     </schema>
     <schema>

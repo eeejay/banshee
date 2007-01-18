@@ -152,7 +152,12 @@ namespace Banshee.Base
 
         public string Location {
              get {
-                Location = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+                string path = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+                if(path == null || path == String.Empty) {
+                    path = Paths.DefaultLibraryPath;
+                }
+                
+                Location = path;
                 return cached_location;
              }
              

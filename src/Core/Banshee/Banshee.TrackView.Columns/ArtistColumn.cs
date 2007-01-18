@@ -72,7 +72,7 @@ namespace Banshee.TrackView.Columns
         
         public static readonly SchemaEntry<int> width_schema = new SchemaEntry<int>(
             "view_columns.artist", "width",
-            75,
+            190,
             "Width",
             "Width of Artist column"
         );
