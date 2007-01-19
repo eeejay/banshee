@@ -1,5 +1,29 @@
 2007-01-19  Aaron Bockover  <abock@gnome.org>
 
+	Merged patch by Trey Ethridge <tale@juno.com> that loads embedded cover
+	art in streams; implemented as the first-priority metadata provider in
+	the new metadata services framework. BGO #388162.
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataProviderFactory.cs: Added
+	EmbeddedMetadataProvider.
+
+	* src/Core/Banshee.Base/Paths.cs: Added overloaded method to get
+	cover art path that takes the file extension
+	
+	* src/Core/Banshee.Base/TrackInfo.cs: Updated CoverArtFileName to try all
+	possible file extensions that we support when using the new artist_album_id 
+
+	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs:
+	Implements the metadata provider interface.    
+	
+	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	Does the work of retrieving the cover art from the file and caching it.
+	
+	* src/Core/Banshee.Base/StreamTagger.cs: Updated TrackInfoMerge method
+	to use any file extension.  It was hard coded to only use ".jpg".
+	
+2007-01-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs: New 
 	metadata service job that runs all provider jobs in chain+sync
 

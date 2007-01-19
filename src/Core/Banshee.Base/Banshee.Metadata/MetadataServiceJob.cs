@@ -54,10 +54,8 @@ namespace Banshee.Metadata
     
         public virtual void Run()
         {
-            Console.WriteLine("MetadataServiceJob");
             foreach(IMetadataProvider provider in service.Providers) {
                 try {
-                    Console.WriteLine("   " + provider.GetType().ToString());
                     IMetadataLookupJob job = provider.CreateJob(track);
                     job.Run();
                     
@@ -68,7 +66,6 @@ namespace Banshee.Metadata
                     Console.WriteLine(e);
                 }
             }
-            Console.WriteLine("Done");
         }
         
         public virtual IBasicTrackInfo Track { 

@@ -163,6 +163,18 @@ namespace Banshee.Base
             set { remote_lookup_status = value; }
         }
         
+        protected static string[] cover_names = { "cover", "Cover", "folder", "Folder" };
+        public static string[] CoverNames 
+        {
+            get { return TrackInfo.cover_names; }
+        }
+        
+        protected static string[] cover_extensions = { "jpg", "png", "jpeg", "gif" };
+        public static string[] CoverExtensions
+        {
+            get { return TrackInfo.cover_extensions; }
+        }
+        
         protected string cover_art_file = null;
         public string CoverArtFileName { 
             get {
@@ -170,31 +182,21 @@ namespace Banshee.Base
                     return cover_art_file;
                 }
                 
-                string path = Paths.GetCoverArtPath(asin);
-                if(File.Exists(path)) {
-                    cover_art_file = path;
-                    return path;
-                }
-                
-                path = Paths.GetCoverArtPath(CreateArtistAlbumID(Artist, Album, false));
-                if(File.Exists(path)) {
-                    cover_art_file = path;
-                    return path;
+                string path = null;
+                string id = CreateArtistAlbumID(Artist, Album, false);
+                                
+                foreach(string ext in TrackInfo.CoverExtensions) {
+                    path = Paths.GetCoverArtPath(id, "." + ext);
+                    if(File.Exists(path)) {
+                        cover_art_file = path;
+                        return path;
+                    }
                 }
                
                 string basepath = Path.GetDirectoryName(Uri.AbsolutePath) + Path.DirectorySeparatorChar;
-               
-                path = basepath + Asin + ".01._SCLZZZZZZZ_.jpg";
-                if(File.Exists(path)) { 
-                    cover_art_file = path;
-                    return path;
-                }
-               
-                string [] cover_names = { "cover", "Cover", "folder", "Folder" };
-                string [] cover_extensions = { "jpg", "png", "jpeg", "gif" };
                 
-                foreach(string cover in cover_names) {
-                    foreach(string ext in cover_extensions) {
+                foreach(string cover in TrackInfo.CoverNames) {
+                    foreach(string ext in TrackInfo.CoverExtensions) {
                         string img = basepath + cover + "." + ext;
                         if(File.Exists(img)) {
                             cover_art_file = img;

@@ -149,7 +149,13 @@ namespace Banshee.Base
                         track.MimeType = (string)tag.Value;
                         break;
                     case CommonTags.AlbumCoverID:
-                        track.CoverArtFileName = Paths.GetCoverArtPath((string)tag.Value);
+                        foreach(string ext in TrackInfo.CoverExtensions) {
+                            string path = Paths.GetCoverArtPath((string) tag.Value, "." + ext);
+                            if(System.IO.File.Exists(path)) {
+                                track.CoverArtFileName = path;
+                                break;
+                            }
+                        }
                         break;
                 }
             } catch {

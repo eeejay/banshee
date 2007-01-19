@@ -76,9 +76,14 @@ namespace Banshee.Base
             }
         }
         
-        public static string GetCoverArtPath(string asin)
+        public static string GetCoverArtPath(string artist_album_id)
         {
-            return CoverArtDirectory + asin + ".jpg";
+            return GetCoverArtPath(artist_album_id, ".jpg");
+        }
+        
+        public static string GetCoverArtPath(string artist_album_id, string extension)
+        {
+            return CoverArtDirectory + artist_album_id + extension;
         }
         
         public static string DefaultLibraryPath {
