@@ -1,7 +1,7 @@
 /***************************************************************************
- *  SchedulerMetadataLookupJob.cs
+ *  BaseMetadataProvider.cs
  *
- *  Copyright (C) 2006-2007 Novell, Inc.
+ *  Copyright (C) 2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -27,51 +27,47 @@
  */
 
 using System;
-using System.IO;
-using System.Net;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-using Banshee.Kernel;
 using Banshee.Base;
 
 namespace Banshee.Metadata
 {
-    public abstract class SchedulerMetadataLookupJob : IMetadataLookupJob
+    public abstract class BaseMetadataProvider : IMetadataProvider
     {
-        public abstract void Run();
+        public event MetadataLookupResultHandler HaveResult;
         
-        public abstract IBasicTrackInfo Track { get; }
-        public abstract IList<StreamTag> ResultTags { get; }
-
-        protected Stream GetHttpStream(Uri uri)
+        protected BaseMetadataProvider()
         {
-            if(!Globals.Network.Connected) {
-                throw new NetworkUnavailableException();
-            }
-        
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
-            request.UserAgent = Banshee.Web.Browser.UserAgent;
-            request.Timeout = 20 * 1000;
-            request.KeepAlive = false;
-            request.AllowAutoRedirect = true;
-            
-            return ((HttpWebResponse)request.GetResponse()).GetResponseStream();
         }
         
-        protected void SaveHttpStream(Uri uri, string path)
+        public abstract IMetadataLookupJob CreateJob(IBasicTrackInfo track);
+        
+        public virtual void Lookup(IBasicTrackInfo track)
         {
-            using(Stream from_stream = GetHttpStream(uri)) {
-                long bytes_read = 0;
-
-                using(FileStream to_stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite)) {
-                    byte [] buffer = new byte[8192];
-                    int chunk_bytes_read = 0;
-
-                    while((chunk_bytes_read = from_stream.Read(buffer, 0, buffer.Length)) > 0) {
-                        to_stream.Write(buffer, 0, chunk_bytes_read);
-                        bytes_read += chunk_bytes_read;
-                    }
-                }
+            IMetadataLookupJob job = CreateJob(track);
+            job.Run();
+        }
+        
+        public virtual void Cancel(IBasicTrackInfo track)
+        {
+        }
+        
+        public virtual void Cancel()
+        {
+        }
+        
+        protected virtual void OnHaveResult(IBasicTrackInfo track, IList<StreamTag> tags)
+        {
+            if(tags == null) {
+                return;
+            }
+            
+            MetadataLookupResultHandler handler = HaveResult;
+            if(handler != null) {
+                handler(this, new MetadataLookupResultArgs(track, 
+                    new ReadOnlyCollection<StreamTag>(tags)));
             }
         }
     }

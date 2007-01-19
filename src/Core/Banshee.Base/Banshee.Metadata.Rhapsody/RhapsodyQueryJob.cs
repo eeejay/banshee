@@ -42,25 +42,22 @@ using Banshee.Kernel;
 
 namespace Banshee.Metadata.Rhapsody
 {
-    public class RhapsodyQueryJob : SchedulerMetadataLookupJob
+    public class RhapsodyQueryJob : MetadataServiceJob
     {
         private static Uri base_uri = new Uri("http://www.rhapsody.com/");
-    
-        private IBasicTrackInfo track;
-        private List<StreamTag> tags;
         
         public RhapsodyQueryJob(IBasicTrackInfo track)
         {
-            this.track = track;
+            Track = track;
         }
         
         public override void Run()
         {
-            if(track == null || (track is TrackInfo && (track as TrackInfo).CoverArtFileName != null)) {
+            if(Track == null || (Track is TrackInfo && (Track as TrackInfo).CoverArtFileName != null)) {
                 return;
             }
         
-            string album_artist_id = TrackInfo.CreateArtistAlbumID(track.Artist, track.Album, false);
+            string album_artist_id = TrackInfo.CreateArtistAlbumID(Track.Artist, Track.Album, false);
             if(album_artist_id == null) {
                 return;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
@@ -71,37 +68,27 @@ namespace Banshee.Metadata.Rhapsody
             
             Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", album_artist_id.Replace('-', '/')));
         
-            try {
-                XmlDocument doc = new XmlDocument();
-                Stream stream = GetHttpStream(data_uri);
-                if(stream == null) {
-                    return;
-                }
-
-                using(stream) {
-                    doc.Load(stream);
-                }
-
-                XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
-                if(art_node != null && art_node.Attributes["src"] != null) {
-                    Uri art_uri = new Uri(art_node.Attributes["src"].Value);
-                    SaveHttpStream(art_uri, Paths.GetCoverArtPath(album_artist_id));
-                    tags = new List<StreamTag>();
-                    StreamTag tag = new StreamTag();
-                    tag.Name = CommonTags.AlbumCoverID;
-                    tag.Value = album_artist_id;
-                    tags.Add(tag);
-                }
-            } catch {
+            XmlDocument doc = new XmlDocument();
+            Stream stream = GetHttpStream(data_uri);
+            if(stream == null) {
+                return;
             }
-        }
-        
-        public override IBasicTrackInfo Track {
-            get { return track; }
-        }
-        
-        public override IList<StreamTag> ResultTags {
-            get { return tags; }
+
+            using(stream) {
+                doc.Load(stream);
+            }
+
+            XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
+            if(art_node != null && art_node.Attributes["src"] != null) {
+                Uri art_uri = new Uri(art_node.Attributes["src"].Value);
+                SaveHttpStream(art_uri, Paths.GetCoverArtPath(album_artist_id));
+                
+                StreamTag tag = new StreamTag();
+                tag.Name = CommonTags.AlbumCoverID;
+                tag.Value = album_artist_id;
+                
+                AddTag(tag);
+            }
         }
     }
 }

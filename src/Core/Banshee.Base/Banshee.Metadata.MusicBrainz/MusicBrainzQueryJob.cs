@@ -39,16 +39,16 @@ using Banshee.Kernel;
 
 namespace Banshee.Metadata.MusicBrainz
 {
-    public class MusicBrainzQueryJob : SchedulerMetadataLookupJob
+    public class MusicBrainzQueryJob : MetadataServiceJob
     {
         private static string AmazonUriFormat = "http://images.amazon.com/images/P/{0}.01._SCLZZZZZZZ_.jpg";
     
         private TrackInfo track;
-        private List<StreamTag> tags;
         
         public MusicBrainzQueryJob(IBasicTrackInfo track)
         {
-            this.track = track as TrackInfo;
+            Track = track;
+            this.track = track as TrackInfo; 
         }
         
         public override void Run()
@@ -56,7 +56,7 @@ namespace Banshee.Metadata.MusicBrainz
             if(track == null || track.CoverArtFileName != null) {
                 return;
             }
-        
+            
             string album_artist_id = TrackInfo.CreateArtistAlbumID(track.Artist, track.Album, false);
             if(album_artist_id == null) {
                 return;
@@ -65,44 +65,46 @@ namespace Banshee.Metadata.MusicBrainz
             } else if(!Globals.Network.Connected) {
                 return;
             }
-
-            try {
-                string asin = FindAsin ();
-                if (asin == null)
-                    return;
-
-                SaveHttpStream (new Uri (String.Format (AmazonUriFormat, asin)),
-                                Paths.GetCoverArtPath(album_artist_id));
-                tags = new List<StreamTag>();
-                StreamTag tag = new StreamTag();
-                tag.Name = CommonTags.AlbumCoverID;
-                tag.Value = album_artist_id;
-                tags.Add(tag);
-            } catch (Exception e) {
-                Console.Error.WriteLine ("Failed to fetch metadata: " + e);
+            
+            string asin = FindAsin();
+            if (asin == null) {
+                return;
             }
+            
+            SaveHttpStream(new Uri(String.Format(AmazonUriFormat, asin)),  Paths.GetCoverArtPath(album_artist_id));
+            
+            StreamTag tag = new StreamTag();
+            tag.Name = CommonTags.AlbumCoverID;
+            tag.Value = album_artist_id;
+            
+            AddTag(tag);
         }
 
-        // MusicBrainz has this new XML API, so I'm using that hereinstead of using the stuff in the
-        // MusicBrainz namespace which sucks and doesn't even appear to work anymore.
-        private string FindAsin () {
-            string uri = String.Format ("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
-                                        track.Artist, track.Album);
+        // MusicBrainz has this new XML API, so I'm using that here 
+        // instead of using the stuff in the MusicBrainz namespace 
+        // which sucks and doesn't even appear to work anymore.
+        
+        private string FindAsin()
+        {
+            Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
+                track.Artist, track.Album));
+                                        
+            Console.WriteLine(uri.AbsoluteUri);
 
-            XmlTextReader reader = new XmlTextReader (GetHttpStream (new Uri (uri)));
+            XmlTextReader reader = new XmlTextReader(GetHttpStream(uri));
 
             bool haveMatch = false;
             
-            while (reader.Read ()) {
-                if (reader.NodeType == XmlNodeType.Element) {
+            while(reader.Read()) {
+                if(reader.NodeType == XmlNodeType.Element) {
                     switch (reader.LocalName) {
-                    case "release":
-                        haveMatch = reader["ext:score"] == "100";
-                        break;
-                    case "asin":
-                        if (haveMatch) {
-                            return reader.ReadString ();
-                        }
+                        case "release":
+                            haveMatch = reader["ext:score"] == "100";
+                            break;
+                        case "asin":
+                            if(haveMatch) {
+                                return reader.ReadString();
+                            }
                         break;
                     default:
                         break;
@@ -111,14 +113,6 @@ namespace Banshee.Metadata.MusicBrainz
             }
 
             return null;
-        }
-
-        public override IBasicTrackInfo Track {
-            get { return track; }
-        }
-        
-        public override IList<StreamTag> ResultTags {
-            get { return tags; }
         }
     }
 }

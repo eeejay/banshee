@@ -1,5 +1,5 @@
 /***************************************************************************
- *  SchedulerMetadataProvider.cs
+ *  MetadataService.cs
  *
  *  Copyright (C) 2006-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -36,21 +36,42 @@ using Banshee.Base;
 
 namespace Banshee.Metadata
 {
-    public abstract class SchedulerMetadataProvider : IMetadataProvider
+    public class MetadataService : BaseMetadataProvider
     {
-        private Dictionary<IBasicTrackInfo, SchedulerMetadataLookupJob> queries 
-            = new Dictionary<IBasicTrackInfo, SchedulerMetadataLookupJob>();
-    
-        public event MetadataLookupResultHandler HaveResult;
+        private static MetadataService instance;
         
-        protected abstract SchedulerMetadataLookupJob CreateJob(IBasicTrackInfo track);
+        public static MetadataService Instance {
+            get {
+                if(instance == null) {
+                    instance = new MetadataService();
+                }
+                
+                return instance;
+            }
+        }
         
-        protected SchedulerMetadataProvider()
+        private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
+            = new Dictionary<IBasicTrackInfo, IMetadataLookupJob>();
+
+        private IMetadataProvider [] providers;
+        
+        protected MetadataService()
         {
+            providers = new IMetadataProvider[MetadataProviderFactory.Providers.Length];
+            
+            for(int i = 0; i < providers.Length; i++) {
+                providers[i] = MetadataProviderFactory.CreateProvider(MetadataProviderFactory.Providers[i]);
+            }
+            
             Scheduler.JobFinished += OnSchedulerJobFinished;
         }
         
-        public void Lookup(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        {
+            return new MetadataServiceJob(this, track);
+        }
+        
+        public override void Lookup(IBasicTrackInfo track)
         {
             if(track == null || queries == null) {
                 return;
@@ -58,7 +79,7 @@ namespace Banshee.Metadata
             
             lock(((ICollection)queries).SyncRoot) {
                 if(!queries.ContainsKey(track)) {
-                    SchedulerMetadataLookupJob job = CreateJob(track);
+                    IMetadataLookupJob job = CreateJob(track);
                     if(job == null) {
                         return;
                     }
@@ -69,15 +90,7 @@ namespace Banshee.Metadata
             }
         }
         
-        public void Cancel(IBasicTrackInfo lookupId)
-        {
-        }
-        
-        public void Cancel()
-        {
-        }
-        
-        private bool RemoveJob(SchedulerMetadataLookupJob job)
+        private bool RemoveJob(IMetadataLookupJob job)
         {
             lock(((ICollection)queries).SyncRoot) {
                 if(queries.ContainsKey(job.Track)) {
@@ -91,11 +104,11 @@ namespace Banshee.Metadata
         
         private void OnSchedulerJobFinished(IJob job)
         {
-            if(!(job is SchedulerMetadataLookupJob)) {
+            if(!(job is IMetadataLookupJob)) {
                 return;
             }
             
-            SchedulerMetadataLookupJob lookup_job = (SchedulerMetadataLookupJob)job;
+            IMetadataLookupJob lookup_job = (IMetadataLookupJob)job;
             if(RemoveJob(lookup_job)) {
                 ThreadAssist.ProxyToMain(delegate { 
                     OnHaveResult(lookup_job.Track, lookup_job.ResultTags); 
@@ -103,16 +116,19 @@ namespace Banshee.Metadata
             }
         }
         
-        protected virtual void OnHaveResult(IBasicTrackInfo track, IList<StreamTag> tags)
+        public IMetadataProvider [] Providers {
+            get { return providers; }
+        }
+    }
+    
+    public static class MultipleMetadataProvider 
+    {
+        public static class Instance
         {
-            if(tags == null) {
-                return;
-            }
-            
-            MetadataLookupResultHandler handler = HaveResult;
-            if(handler != null) {
-                handler(this, new MetadataLookupResultArgs(track, 
-                    new ReadOnlyCollection<StreamTag>(tags)));
+            [Obsolete("Use MetadataService.Instance.Lookup instead")]
+            public static void Lookup(IBasicTrackInfo track)
+            {
+                MetadataService.Instance.Lookup(track);
             }
         }
     }

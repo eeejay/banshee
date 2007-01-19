@@ -34,13 +34,13 @@ using Banshee.Metadata;
 
 namespace Banshee.Metadata.Rhapsody
 {
-    public class RhapsodyMetadataProvider : SchedulerMetadataProvider
+    public class RhapsodyMetadataProvider : BaseMetadataProvider
     {
         public RhapsodyMetadataProvider() : base()
         {
         }
         
-        protected override SchedulerMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
             return new RhapsodyQueryJob(track);
         }

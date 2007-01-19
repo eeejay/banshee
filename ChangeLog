@@ -1,3 +1,23 @@
+2007-01-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs: New 
+	metadata service job that runs all provider jobs in chain+sync
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataService.cs: Primary 
+	singleton for scheduling metadata lookups; runs a MetadataServiceJob
+	in the Banshee scheduler
+
+	* src/Core/Banshee.Base/Banshee.Metadata/IMetadataProvider.cs: Updated
+
+	* src/Core/Banshee.Base/Banshee.Metadata/BaseMetadataProvider.cs: New
+	base class for service jobs
+
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs:
+	Updated to work with the changes in the metadata service APIs
+
 2007-01-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/BansheeBranding.cs: Fixed branding initialization

@@ -83,9 +83,8 @@
     <File name="./Banshee.Metadata/IMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/IMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/MetadataProviderFactory.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Metadata/MultipleMetadataProvider.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Metadata/SchedulerMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Metadata/SchedulerMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/MetadataServiceJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/MetadataService.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats/M3u.cs" subtype="Code" buildaction="Compile" />
@@ -245,6 +244,7 @@
     <File name="./SExpEngine/FunctionFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/ListFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Metadata/BaseMetadataProvider.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

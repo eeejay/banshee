@@ -34,13 +34,13 @@ using Banshee.Metadata;
 
 namespace Banshee.Metadata.MusicBrainz
 {
-    public class MusicBrainzMetadataProvider : SchedulerMetadataProvider
+    public class MusicBrainzMetadataProvider : BaseMetadataProvider
     {
         public MusicBrainzMetadataProvider() : base()
         {
         }
         
-        protected override SchedulerMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
             return new MusicBrainzQueryJob(track);
         }

@@ -137,10 +137,10 @@ BANSHEE_METADATA_SOURCES = \
 	$(srcdir)/Banshee.Metadata/IBasicTrackInfo.cs \
 	$(srcdir)/Banshee.Metadata/IMetadataProvider.cs \
 	$(srcdir)/Banshee.Metadata/IMetadataLookupJob.cs \
-	$(srcdir)/Banshee.Metadata/SchedulerMetadataLookupJob.cs \
-	$(srcdir)/Banshee.Metadata/SchedulerMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata/BaseMetadataProvider.cs \
+	$(srcdir)/Banshee.Metadata/MetadataService.cs \
 	$(srcdir)/Banshee.Metadata/MetadataProviderFactory.cs \
-	$(srcdir)/Banshee.Metadata/MultipleMetadataProvider.cs
+	$(srcdir)/Banshee.Metadata/MetadataServiceJob.cs
 
 BANSHEE_METADATA_RHAPSODY_SOURCES = \
 	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs \

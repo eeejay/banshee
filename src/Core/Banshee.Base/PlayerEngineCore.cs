@@ -99,7 +99,7 @@ namespace Banshee.Base
                     "No player engines were found. Please ensure Banshee has been cleanly installed."));
             }
             
-            MultipleMetadataProvider.Instance.HaveResult += OnMetadataProviderHaveResult;
+            MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
         }
 
         public static void Dispose()
@@ -111,7 +111,7 @@ namespace Banshee.Base
             factory.Dispose();
         }
         
-        private static void OnMetadataProviderHaveResult(object o, MetadataLookupResultArgs args)
+        private static void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
         {
             if(CurrentTrack != null && args.Track == CurrentTrack) {
                 foreach(StreamTag tag in args.ResultTags) {
@@ -131,7 +131,7 @@ namespace Banshee.Base
             }
             
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
-                MultipleMetadataProvider.Instance.Lookup(CurrentTrack);
+                MetadataService.Instance.Lookup(CurrentTrack);
             }
             
             PlayerEngineStateHandler handler = StateChanged;
