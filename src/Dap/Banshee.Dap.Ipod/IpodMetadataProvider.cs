@@ -2,7 +2,7 @@
  *  IMetadataProvider.cs
  *
  *  Copyright (C) 2006-2007 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Written by James Willcox <snorp@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 

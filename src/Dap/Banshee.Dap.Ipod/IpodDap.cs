@@ -1,8 +1,8 @@
 /***************************************************************************
  *  IpodDap.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Copyright (C) 2005-2007 Novell, Inc.
+ *  Written by James Willcox  <snorp@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -62,13 +62,13 @@ namespace Banshee.Dap.Ipod
         private Hal.Device hal_device;
         private bool database_supported;
         private UnsupportedDatabaseView db_unsupported_container;
-        private bool initialized = false;
+        private bool metadata_provider_initialized = false;
     
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
-            if (!initialized) {
+            if (!metadata_provider_initialized) {
                 MetadataService.Instance.AddProvider (0, new IpodMetadataProvider ());
-                initialized = true;
+                metadata_provider_initialized = true;
             }
             
             hal_device = halDevice;
