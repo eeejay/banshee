@@ -1,7 +1,7 @@
 /***************************************************************************
- *  IMetadataProvider.cs
+ *  IpodMetadataProvider.cs
  *
- *  Copyright (C) 2006-2007 Novell, Inc.
+ *  Copyright (C) 2007 Novell, Inc.
  *  Written by James Willcox <snorp@novell.com>
  ****************************************************************************/
 

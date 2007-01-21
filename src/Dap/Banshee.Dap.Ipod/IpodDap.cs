@@ -2,7 +2,7 @@
  *  IpodDap.cs
  *
  *  Copyright (C) 2005-2007 Novell, Inc.
- *  Written by James Willcox  <snorp@novell.com>
+ *  Written by Aaron Bockvoer <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
