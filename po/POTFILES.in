@@ -117,7 +117,6 @@ src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs
 src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs
 src/Plugins/Banshee.Plugins.Daap/DaapSource.cs
 src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in
-src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs
 src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs
 src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in
 src/Plugins/Banshee.Plugins.MiniMode/minimode.glade
