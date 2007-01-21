@@ -39,6 +39,7 @@ using IPod;
 using Banshee.Base;
 using Banshee.Dap;
 using Banshee.Widgets;
+using Banshee.Metadata;
 
 public static class PluginModuleEntry
 {
@@ -61,9 +62,15 @@ namespace Banshee.Dap.Ipod
         private Hal.Device hal_device;
         private bool database_supported;
         private UnsupportedDatabaseView db_unsupported_container;
+        private bool initialized = false;
     
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
+            if (!initialized) {
+                MetadataService.Instance.AddProvider (0, new IpodMetadataProvider ());
+                initialized = true;
+            }
+            
             hal_device = halDevice;
             
             if(!hal_device.PropertyExists("block.device") || 

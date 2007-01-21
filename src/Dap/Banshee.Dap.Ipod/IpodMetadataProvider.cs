@@ -1,5 +1,5 @@
 /***************************************************************************
- *  MetadataProviderFactory.cs
+ *  IMetadataProvider.cs
  *
  *  Copyright (C) 2006-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
@@ -27,24 +27,22 @@
  */
 
 using System;
+using System.Collections.Generic;
 
-namespace Banshee.Metadata
+using Banshee.Base;
+using Banshee.Metadata;
+
+namespace Banshee.Dap.Ipod
 {
-    public static class MetadataProviderFactory
+    public class IpodMetadataProvider : BaseMetadataProvider
     {
-        private static Type [] providers = new Type [] {
-            typeof(Banshee.Metadata.Embedded.EmbeddedMetadataProvider),
-            typeof(Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider),
-            typeof(Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider)
-        };
-        
-        public static IMetadataProvider CreateProvider(Type type)
+        public IpodMetadataProvider() : base()
         {
-            return (IMetadataProvider)Activator.CreateInstance(type);
         }
         
-        public static Type [] Providers {
-            get { return providers; }
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        {
+            return new IpodQueryJob(track);
         }
     }
 }

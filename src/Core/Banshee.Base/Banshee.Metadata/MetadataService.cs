@@ -52,21 +52,18 @@ namespace Banshee.Metadata
         
         private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
             = new Dictionary<IBasicTrackInfo, IMetadataLookupJob>();
+        private List<IMetadataProvider> providers = new List<IMetadataProvider> ();
 
-        private IMetadataProvider [] providers;
-        
         protected MetadataService()
         {
-            providers = new IMetadataProvider[MetadataProviderFactory.Providers.Length];
-            
-            for(int i = 0; i < providers.Length; i++) {
-                providers[i] = MetadataProviderFactory.CreateProvider(MetadataProviderFactory.Providers[i]);
-            }
+            AddProvider (new Banshee.Metadata.Embedded.EmbeddedMetadataProvider ());
+            AddProvider (new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider ());
+            AddProvider (new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider ());
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
         }
-        
+
         public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
             return new MetadataServiceJob(this, track);
@@ -93,6 +90,29 @@ namespace Banshee.Metadata
                     queries.Add(track, job);
                     Scheduler.Schedule(job, priority);
                 }
+            }
+        }
+
+        public void AddProvider (IMetadataProvider provider)
+        {
+            AddProvider (-1, provider);
+        }
+
+        public void AddProvider (int position, IMetadataProvider provider)
+        {
+            lock (providers) {
+                if (position < 0) {
+                    providers.Add (provider);
+                } else {
+                    providers.Insert (position, provider);
+                }
+            }
+        }
+
+        public void RemoveProvider (IMetadataProvider provider)
+        {
+            lock (providers) {
+                providers.Remove (provider);
             }
         }
         
@@ -131,8 +151,12 @@ namespace Banshee.Metadata
             RemoveJob(job as IMetadataLookupJob);
         }
         
-        public IMetadataProvider [] Providers {
-            get { return providers; }
+        public ReadOnlyCollection<IMetadataProvider> Providers {
+            get {
+                lock (providers) {
+                    return new ReadOnlyCollection<IMetadataProvider> (providers);
+                }
+            }
         }
     }
     

@@ -1,3 +1,16 @@
+2007-01-21  James Willcox  <snorp@snorp.net>
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataService.cs: add a
+	'AddProvider' method
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataProviderFactory.cs:
+	removed
+
+	* src/Dap/Banshee.Dap.Ipod/IpodMetadataProvider.cs: add a new metadata
+	provider which gets the cover art off the iPod when available.
+
+	* src/Dap/Banshee.Dap.Ipod/IpodQueryJob.cs: added
+
 2007-01-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs:

@@ -6,6 +6,8 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/IpodDap.cs \
+	$(srcdir)/IpodMetadataProvider.cs \
+	$(srcdir)/IpodQueryJob.cs \
 	$(srcdir)/IpodDapTrackInfo.cs \
 	$(srcdir)/UnsupportedDatabaseView.cs \
 	$(srcdir)/DatabaseRebuilder.cs
