@@ -274,7 +274,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/StringUtil.cs \
 	$(srcdir)/ArgumentQueue.cs \
 	$(srcdir)/LogCore.cs \
-	$(srcdir)/AmazonCoverFetcher.cs \
 	$(srcdir)/Paths.cs \
 	$(srcdir)/TrackInfo.cs \
 	$(srcdir)/FileNamePattern.cs \

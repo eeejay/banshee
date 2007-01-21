@@ -1,3 +1,15 @@
+2007-01-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Added a Lookup method that returns bool; support instances with a 
+	pre-determined ASIN
+
+	* src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs: Perform a sync lookup
+	through MusicBrainzQueryJob to fetch cover art for audio CDs
+
+	* src/Core/Banshee.Base/AmazonCoverFetcher.cs: Removed legacy cover art
+	downloader
+
 2007-01-21  James Willcox  <snorp@snorp.net>
 
 	* src/Core/Banshee.Base/Banshee.Metadata/MetadataService.cs: add a

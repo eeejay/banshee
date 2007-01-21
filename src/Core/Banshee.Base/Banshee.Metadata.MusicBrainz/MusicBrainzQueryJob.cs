@@ -44,6 +44,7 @@ namespace Banshee.Metadata.MusicBrainz
         private static string AmazonUriFormat = "http://images.amazon.com/images/P/{0}.01._SCLZZZZZZZ_.jpg";
     
         private TrackInfo track;
+        private string asin;
         
         public MusicBrainzQueryJob(IBasicTrackInfo track)
         {
@@ -51,24 +52,36 @@ namespace Banshee.Metadata.MusicBrainz
             this.track = track as TrackInfo; 
         }
         
+        public MusicBrainzQueryJob(IBasicTrackInfo track, string asin) : this(track)
+        {
+            this.asin = asin;
+        }
+        
         public override void Run()
         {
+            Lookup();
+        }
+        
+        public bool Lookup()
+        {
             if(track == null || track.CoverArtFileName != null) {
-                return;
+                return false;
             }
             
             string album_artist_id = TrackInfo.CreateArtistAlbumID(track.Artist, track.Album, false);
             if(album_artist_id == null) {
-                return;
+                return false;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
-                return;
+                return false;
             } else if(!Globals.Network.Connected) {
-                return;
+                return false;
             }
             
-            string asin = FindAsin();
-            if (asin == null) {
-                return;
+            if(asin == null) {
+                asin = FindAsin();
+                if(asin == null) {
+                    return false;
+                }
             }
             
             if(SaveHttpStreamPixbuf(new Uri(String.Format(AmazonUriFormat, asin)), album_artist_id, 
@@ -78,7 +91,11 @@ namespace Banshee.Metadata.MusicBrainz
                 tag.Value = album_artist_id;
 
                 AddTag(tag);
+                
+                return true;
             }
+            
+            return false;
         }
 
         // MusicBrainz has this new XML API, so I'm using that here 

@@ -157,7 +157,6 @@
     <File name="./Sources/PlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/TestSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./ActionManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./AmazonCoverFetcher.cs" subtype="Code" buildaction="Compile" />
     <File name="./ArgumentQueue.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCdRipper.cs" subtype="Code" buildaction="Compile" />
     <File name="./BansheeBranding.cs" subtype="Code" buildaction="Compile" />
