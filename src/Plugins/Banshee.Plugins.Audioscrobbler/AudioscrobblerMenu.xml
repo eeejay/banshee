@@ -1,15 +1,13 @@
 <ui>
     <menubar name="MainMenu">
-        <menu name="MusicMenu" action="MusicMenuAction">
-            <placeholder name="MusicMenuAdditions">
-                <menu name="Audioscrobbler" action="AudioscrobblerAction">
+        <menu name="ToolsMenu" action="ToolsMenuAction">
+            <menu name="Audioscrobbler" action="AudioscrobblerAction">
                     <menuitem name="AudioscrobblerEnable" action="AudioscrobblerEnableAction" />
                     <menuitem name="AudioscrobblerVisit" action="AudioscrobblerVisitAction" />
                     <menuitem name="AudioscrobblerGroup" action="AudioscrobblerGroupAction" />
                     <separator />
                     <menuitem name="AudioscrobblerConfigure" action="AudioscrobblerConfigureAction" />
-                </menu>
-            </placeholder> 
+            </menu>
         </menu>
     </menubar>
 </ui>

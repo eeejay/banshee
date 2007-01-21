@@ -64,6 +64,7 @@ namespace Banshee.Metadata
             }
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
+            Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
         }
         
         public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
@@ -72,6 +73,11 @@ namespace Banshee.Metadata
         }
         
         public override void Lookup(IBasicTrackInfo track)
+        {
+            Lookup(track, JobPriority.Highest);
+        }
+        
+        public void Lookup(IBasicTrackInfo track, JobPriority priority)
         {
             if(track == null || queries == null) {
                 return;
@@ -85,13 +91,17 @@ namespace Banshee.Metadata
                     }
                     
                     queries.Add(track, job);
-                    Scheduler.Schedule(job, JobPriority.Highest);
+                    Scheduler.Schedule(job, priority);
                 }
             }
         }
         
         private bool RemoveJob(IMetadataLookupJob job)
         {
+            if(job == null) {
+                return false;
+            }
+            
             lock(((ICollection)queries).SyncRoot) {
                 if(queries.ContainsKey(job.Track)) {
                     queries.Remove(job.Track);
@@ -114,6 +124,11 @@ namespace Banshee.Metadata
                     OnHaveResult(lookup_job.Track, lookup_job.ResultTags); 
                 });
             }
+        }
+        
+        private void OnSchedulerJobUnscheduled(IJob job)
+        {
+            RemoveJob(job as IMetadataLookupJob);
         }
         
         public IMetadataProvider [] Providers {

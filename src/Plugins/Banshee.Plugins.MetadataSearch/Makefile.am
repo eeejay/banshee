@@ -9,18 +9,18 @@ fsmon_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
 ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
-	$(srcdir)/MetadataSearchPlugin.cs \
-	$(srcdir)/MetadataSearchConfigDialog.cs
+	$(srcdir)/MetadataSearchPlugin.cs 
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES) 
-	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_MUSICBRAINZ) $(LINK_GTK) -r:System.Data $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
+$(ASSEMBLY): $(ASSEMBLY_SOURCES) MetadataSearchMenu.xml
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(LINK_MUSICBRAINZ) $(LINK_GTK) -r:System.Data $(LINK_MONO_UNIX) -resource:$(srcdir)/MetadataSearchMenu.xml,MetadataSearchMenu.xml $(ASSEMBLY_SOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules
 
 EXTRA_DIST = \
 	$(ASSEMBLY_SOURCES) \
 	$(ASSEMBLY).config.in \
-	$(ASSEMBLY_GCONF_SCHEMA)
+	$(ASSEMBLY_GCONF_SCHEMA) \
+	MetadataSearchMenu.xml
 
 CLEANFILES = $(ASSEMBLY) *.dll *.exe
 DISTCLEANFILES = *.mdb $(schema_DATA)

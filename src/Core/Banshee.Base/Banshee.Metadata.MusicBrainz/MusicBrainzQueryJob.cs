@@ -88,8 +88,6 @@ namespace Banshee.Metadata.MusicBrainz
         {
             Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
                 track.Artist, track.Album));
-                                        
-            Console.WriteLine(uri.AbsoluteUri);
 
             XmlTextReader reader = new XmlTextReader(GetHttpStream(uri));
 

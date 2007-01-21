@@ -1,3 +1,27 @@
+2007-01-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:
+	Removed
+
+	* src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs: R
+	Rewritten to use the new Banshee.Metadata services APIs; shows progress
+	of the operation in an ActiveUserEvent
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs: Ensure 
+	jobs are removed from the private queries table when they are unscheduled
+	as well as finished
+
+	* src/Core/Banshee.Base/Banshee.Kernel/Scheduler.cs: In Unschedule(), 
+	match jobs that implement the interface of a type or is that are a 
+	subclass of a type; added ScheduledJobsCount; use Globals.Debugging
+
+	* src/Core/Banshee.Base/ActionManager.cs:
+	* data/UIManagerLayout.xml: Added a top level 'Tools' menu
+
+	* src/Plugins/Banshee.Plugins.Podcast/data/PodcastMenu.xml:
+	* src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerMenu.xml:
+	Moved main menu actions to the new 'Tools' top level menu
+
 2007-01-19  Aaron Bockover  <abock@gnome.org>
 
 	Merged patch by Trey Ethridge <tale@juno.com> that loads embedded cover

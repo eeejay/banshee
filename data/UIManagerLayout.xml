@@ -9,7 +9,6 @@
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
             <placeholder name="MusicMenuAdditions" />
-            <menuitem name="Scripts" action="ScriptsAction" />
             <separator />
             <menuitem name="ImportSource" action="ImportSourceAction" />
             <menuitem name="WriteCD" action="WriteCDAction" />
@@ -54,6 +53,9 @@
             <menuitem name="RepeatSingle" action="RepeatSingleAction" />
             <separator />
             <menuitem name="Shuffle" action="ShuffleAction" />
+        </menu>
+        <menu name="ToolsMenu" action="ToolsMenuAction">
+            <menuitem name="Scripts" action="ScriptsAction" />
         </menu>
         <menu name="ViewMenu" action="ViewMenuAction">
             <menuitem name="ShowEqualizer" action="ShowEqualizerAction" />

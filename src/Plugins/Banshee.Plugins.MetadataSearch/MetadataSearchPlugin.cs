@@ -1,8 +1,8 @@
 /***************************************************************************
  *  MetadataSearchPlugin.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Copyright (C) 2006-2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -30,12 +30,14 @@ using System;
 using System.Data;
 using System.Collections;
 using Mono.Unix;
+using Gtk;
 
-using MusicBrainz;
 using Banshee.Base;
 using Banshee.Kernel;
+using Banshee.Metadata;
 using Banshee.Database;
 using Banshee.Configuration;
+using Banshee.Widgets;
 
 public static class PluginModuleEntry
 {
@@ -49,17 +51,8 @@ public static class PluginModuleEntry
 
 namespace Banshee.Plugins.MetadataSearch 
 {
-    internal enum FetchMethod 
-    {
-        CoversOnly,
-        FillBlank,
-        Overwrite
-    }
-
     public class MetadataSearchPlugin : Banshee.Plugins.Plugin
     {
-        private const string NotFoundAsin = "NOTFOUND";
-        
         protected override string ConfigurationName { get { return "metadata_searcher"; } }
         public override string DisplayName { get { return Catalog.GetString("Metadata Searcher"); } }
         
@@ -75,273 +68,259 @@ namespace Banshee.Plugins.MetadataSearch
         public override string [] Authors {
             get { return new string [] { "Aaron Bockover" }; }
         }
-
-        public event EventHandler ScanStarted;
-        public event EventHandler ScanEnded;
         
-        private int generation;
-        private int scan_ref_count;
+        private Gdk.Pixbuf user_event_icon = IconThemeUtils.LoadIcon(22, "document-save", Gtk.Stock.Save);
+        private int metadata_jobs_scheduled = 0;
+        private int library_albums_count = 0;
+        private ActiveUserEvent user_event;
+        private ActionGroup actions;
+        private uint ui_manager_id;
         
-        private object mb_client_mutex = new object();
-        private Client mb_client;
+        public event EventHandler ScanStartStop;
         
         protected override void PluginInitialize()
         {
-            System.Threading.Interlocked.Increment(ref generation);
-            System.Threading.Interlocked.Exchange(ref scan_ref_count, 0);
+            metadata_jobs_scheduled = 0;
+            library_albums_count = 0;
             
-            mb_client = new Client();
+            CountScheduledJobs();
             
+            Scheduler.JobStarted += OnJobStarted;
+            Scheduler.JobScheduled += OnJobScheduled;
+            Scheduler.JobFinished += OnJobUnscheduled;
+            Scheduler.JobUnscheduled += OnJobUnscheduled;
+        
             if(Globals.Library.IsLoaded) {
-                ScanLibrary();
+                OnLibraryReloaded(null, EventArgs.Empty);
             } else {
                 Globals.Library.Reloaded += OnLibraryReloaded;
             }
-            
-            Globals.Library.TrackAdded += OnLibraryTrackAdded;
         }
         
         protected override void PluginDispose()
         {
-            System.Threading.Interlocked.Exchange(ref scan_ref_count, 0);
+            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+            Globals.ActionManager.UI.RemoveActionGroup(actions);
             
-            lock(mb_client_mutex) {
-                if(mb_client != null) {
-                    mb_client.Dispose();
-                    mb_client = null;
-                }
-            }
+            actions = null;
+            ui_manager_id = 0;
+            
+            CancelJobs();
             
             Globals.Library.Reloaded -= OnLibraryReloaded;
             Globals.Library.TrackAdded -= OnLibraryTrackAdded;
-        }
-        
-        public override Gtk.Widget GetConfigurationWidget()
-        {            
-            return new MetadataSearchConfigPage(this);
-        }
-        
-        // ----------------------------------------------------
-
-        protected virtual void OnScanStarted()
-        {
-            System.Threading.Interlocked.Increment(ref scan_ref_count);
-        
-            EventHandler handler = ScanStarted;
-            if(handler != null) {
-                handler(this, new EventArgs());
+            
+            Scheduler.JobStarted -= OnJobStarted;
+            Scheduler.JobScheduled -= OnJobScheduled;
+            Scheduler.JobFinished -= OnJobUnscheduled;
+            Scheduler.JobUnscheduled -= OnJobUnscheduled;
+            
+            if(user_event != null) {
+                user_event.Dispose();
+                user_event = null;
             }
         }
-        
-        protected virtual void OnScanEnded()
+
+        protected override void InterfaceInitialize()
         {
-            System.Threading.Interlocked.Decrement(ref scan_ref_count);
-        
-            EventHandler handler = ScanEnded;
-            if(handler != null) {
-                handler(this, new EventArgs());
+            actions = new ActionGroup("Metadata Search");
+            
+            actions.Add(new ActionEntry [] {
+                new ActionEntry("GetCoverArtAction", null,
+                    Catalog.GetString("Download Cover Art"), null,
+                    Catalog.GetString("Download Cover Art"), RescanLibrary)
+            });
+            
+            actions.GetAction("GetCoverArtAction").Sensitive = !IsScanning;
+            
+            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
+            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("MetadataSearchMenu.xml");
+        }
+
+        private void CountScheduledJobs()
+        {
+            metadata_jobs_scheduled = 0;
+
+            foreach(IJob job in Scheduler.ScheduledJobs) {
+                if(job is IMetadataLookupJob) {
+                    metadata_jobs_scheduled++;
+                }
             }
         }
 
         private void OnLibraryReloaded(object o, EventArgs args)
         {
-            ScanLibrary();
+            Globals.Library.TrackAdded += OnLibraryTrackAdded;
         }
 
         private void OnLibraryTrackAdded(object o, LibraryTrackAddedArgs args)
         {
-            Scheduler.Schedule(new ProcessTrackJob(this, args.Track));
-        }
-
-        internal void RescanLibrary()
-        {
-            Scheduler.Unschedule(typeof(ProcessTrackJob));
-            Globals.Library.Db.Query("UPDATE Tracks SET RemoteLookupStatus = 0");
-            ScanLibrary();
-        }
-                
-        private void ScanLibrary()
-        {
-            Scheduler.Schedule(new ScanLibraryJob(this));
+            MetadataService.Instance.Lookup(args.Track, JobPriority.Lowest);
+            library_albums_count++;
         }
         
-        internal FetchMethod FetchMethod {
-            get {
-                try {
-                    return (FetchMethod)FetchMethodSchema.Get();
-                } catch {
-                    return FetchMethod.CoversOnly;
+        private void OnJobScheduled(IJob job)
+        {
+            if(job is IMetadataLookupJob) {
+                bool previous = IsScanning;
+            
+                metadata_jobs_scheduled++;
+                
+                if(IsScanning != previous) {
+                    OnScanStartStop();
                 }
             }
-            
-            set {
-                FetchMethodSchema.Set((int)value);
+        }
+        
+        private void OnJobStarted(IJob job)
+        {
+            lock(this) {
+                if(job is IMetadataLookupJob) {
+                    OnUpdateProgress(job as IMetadataLookupJob);
+                }
             }
         }
-
-        internal bool IsScanning {
-            get { return scan_ref_count > 0; }
+        
+        private void OnJobUnscheduled(IJob job)
+        {
+            if(job is IMetadataLookupJob) {
+                bool previous = IsScanning;
+            
+                metadata_jobs_scheduled--;
+                
+                OnUpdateProgress(job as IMetadataLookupJob);
+                
+                if(IsScanning != previous) {
+                    OnScanStartStop();
+                }
+            }
         }
-
+        
+        private void OnScanStartStop()
+        {
+            ThreadAssist.ProxyToMain(OnRaiseScanStartStop);
+        }
+        
+        private void OnUpdateProgress(IMetadataLookupJob job)
+        {
+            lock(this) {
+                try{
+                    if(IsScanning && user_event == null) {
+                        user_event = new ActiveUserEvent(Catalog.GetString("Download"));
+                        user_event.Header = Catalog.GetString("Downloading Cover Art");
+                        user_event.Message = Catalog.GetString("Searching");
+                        user_event.CancelMessage = Catalog.GetString(
+                            "Are you sure you want to stop downloading cover art for the albums in your library? "
+                            + "The operation can be resumed at any time from the <i>Tools</i> menu.");
+                        user_event.Icon = user_event_icon;
+                        user_event.CancelRequested += OnUserEventCancelRequested;
+                    } else if(!IsScanning && user_event != null) {
+                        user_event.Dispose();
+                        user_event = null;
+                    } else if(user_event != null) {
+                        user_event.Progress = ScanningProgress;
+                        user_event.Message = String.Format("{0} - {1}", job.Track.Artist, job.Track.Album);
+                        
+                        if(job.Track is TrackInfo) {
+                            try {
+                                TrackInfo track = (TrackInfo)job.Track;
+                                if(track.CoverArtFileName != null) {
+                                    Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(track.CoverArtFileName);
+                                    if(pixbuf != null) {
+                                        user_event.Icon = pixbuf.ScaleSimple(22, 22, Gdk.InterpType.Bilinear);
+                                    }
+                                }
+                            } catch {
+                            }
+                        }
+                    }
+                } catch {
+                }
+            }
+        }
+        
+        private void OnUserEventCancelRequested(object o, EventArgs args)
+        {
+            ThreadAssist.Spawn(CancelJobs);
+        }
+        
+        private void OnRaiseScanStartStop(object o, EventArgs args)
+        {
+            actions.GetAction("GetCoverArtAction").Sensitive = !IsScanning;
+        
+            EventHandler handler = ScanStartStop;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
+        
+        private void CancelJobs()
+        {
+            library_albums_count = 0;
+            metadata_jobs_scheduled = 0;
+            Scheduler.Unschedule(typeof(IMetadataLookupJob));
+            
+            ThreadAssist.ProxyToMain(delegate {
+                if(actions != null) {
+                    actions.GetAction("GetCoverArtAction").Sensitive = !IsScanning;
+                }
+            });
+        }
+        
+        private void UpdateAlbumsCount()
+        {
+            lock(this) {
+               try {
+                    library_albums_count = Convert.ToInt32(Globals.Library.Db.QuerySingle(
+                        @"SELECT COUNT(DISTINCT AlbumTitle) FROM Tracks"));
+                } catch {
+                }
+            }
+        }
+        
+        internal void RescanLibrary(object o, EventArgs args)
+        {
+            CancelJobs();
+            Scheduler.Schedule(new ScanLibraryJob(this), JobPriority.BelowNormal);
+        }
+        
+        public int AlbumsCount {
+            get { return library_albums_count; }
+        }
+        
+        public int JobsScheduledCount {
+            get { return metadata_jobs_scheduled; }
+        }
+        
+        public bool IsScanning {
+            get { return metadata_jobs_scheduled > 3; }
+        }
+        
+        public double ScanningProgress {
+            get { return (AlbumsCount - JobsScheduledCount) / (double)AlbumsCount; }
+        }
+        
         private class ScanLibraryJob : IJob
         {
             private MetadataSearchPlugin plugin;
-            private int generation;
-            
+        
             public ScanLibraryJob(MetadataSearchPlugin plugin)
             {
                 this.plugin = plugin;
-                this.generation = plugin.generation;
             }
         
             public void Run()
             {
-                if(generation != plugin.generation) {
-                    return;
-                }
-                
-                plugin.OnScanStarted();
-                //Console.WriteLine("Scanning library for tracks to update");
-                
-                IDataReader reader = Globals.Library.Db.Query(
-                    @"SELECT TrackID 
-                        FROM Tracks 
-                        WHERE RemoteLookupStatus IS NULL
-                            OR RemoteLookupStatus = 0"
-                );
+                plugin.UpdateAlbumsCount();
+
+                IDataReader reader = Globals.Library.Db.Query(@"SELECT TrackID FROM Tracks GROUP BY AlbumTitle");
                 
                 while(reader.Read()) {
-                    Scheduler.Schedule(new ProcessTrackJob(plugin, Convert.ToInt32(reader["TrackID"])));
+                    MetadataService.Instance.Lookup(Globals.Library.Tracks[Convert.ToInt32(reader["TrackID"])], 
+                        JobPriority.Lowest);
                 }
                 
                 reader.Dispose();
-                
-                //Console.WriteLine("Done scanning library");
-                plugin.OnScanEnded();
-            }
-        }
-        
-        private class ProcessTrackJob : IJob
-        {
-            private LibraryTrackInfo track;
-            private int track_id;
-            private MetadataSearchPlugin plugin;
-            private int generation;
-            
-            public ProcessTrackJob(MetadataSearchPlugin plugin, LibraryTrackInfo track)
-            {
-                this.plugin = plugin;
-                this.track = track;
-                this.generation = plugin.generation;
-            }
-            
-            public ProcessTrackJob(MetadataSearchPlugin plugin, int trackId)
-            {
-                this.plugin = plugin;
-                this.track_id = trackId;
-                this.generation = plugin.generation;
-            }
-        
-            public void Run()
-            {
-                if(plugin.generation != generation) {
-                    return;
-                }
-                
-                lock(plugin.mb_client_mutex) {
-                    ProcessTrack(track != null ? track : Globals.Library.GetTrack(track_id));
-                }
-            }
-
-            private void ProcessTrack(LibraryTrackInfo track)
-            {   
-                if(track == null) {
-                    return;
-                }
-                
-                try {
-                    FetchMethod fetch = plugin.FetchMethod;
-                    
-                    if(fetch == FetchMethod.CoversOnly) {
-                        string asin = (string)Globals.Library.Db.QuerySingle(new DbCommand(
-                            @"SELECT ASIN 
-                                FROM Tracks
-                                WHERE Artist = :artist
-                                    AND AlbumTitle = :album",
-                                    "artist", track.Artist,
-                                    "album", track.Album)
-                        );
-
-                        if(asin == NotFoundAsin) {
-                            track.Asin = NotFoundAsin;
-                            track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                            track.Save();
-                            return;
-                        } else if(asin != null && asin != String.Empty) {
-                            //Console.WriteLine("Setting ASIN from previous lookup ({0} / {1})", track.Artist, track.Title);
-                            track.Asin = asin;
-                            track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                            AmazonCoverFetcher.Fetch(asin, Paths.CoverArtDirectory);
-                            track.Save();
-                            return;
-                        }
-                    }
-                    
-                    //Console.Write("Querying MusicBrainz for {0} / {1}... ", track.Artist, track.Title);
-                    
-                    if(plugin.mb_client == null) {
-                        return;
-                    }
-                    
-                    SimpleTrack mb_track = SimpleQuery.FileLookup(plugin.mb_client, 
-                        track.Artist, track.Album, track.Title,
-                        (int)track.TrackNumber, 
-                        (int)track.Duration.TotalMilliseconds);
-                 
-                    if(mb_track == null) {
-                        return;
-                    }
-                    
-                    if(fetch != FetchMethod.CoversOnly) {
-                        if(mb_track.Artist != null && (fetch == FetchMethod.Overwrite 
-                            || (track.Artist == null || track.Artist == String.Empty))) {
-                            track.Artist = mb_track.Artist;
-                        }
-                        
-                        if(mb_track.Album != null && (fetch == FetchMethod.Overwrite 
-                            || (track.Album == null || track.Album == String.Empty))) {
-                            track.Album = mb_track.Album;
-                        }
-                        
-                        if(mb_track.Title != null && (fetch == FetchMethod.Overwrite 
-                            || (track.Title == null || track.Title == String.Empty))) {
-                            track.Title = mb_track.Title;
-                        }
-                        
-                        if(mb_track.TrackNumber > 0 && (fetch == FetchMethod.Overwrite || track.TrackNumber == 0)) {
-                            track.TrackNumber = (uint)mb_track.TrackNumber;
-                        }
-                        
-                        if(mb_track.TrackCount > 0 && (fetch == FetchMethod.Overwrite || track.TrackCount == 0)) {
-                            track.TrackCount = (uint)mb_track.TrackCount;
-                        }
-                    }
-                    
-                    if(mb_track.Asin != null && mb_track.Asin != String.Empty) {
-                        track.Asin = mb_track.Asin;
-                        AmazonCoverFetcher.Fetch(mb_track.Asin, Paths.CoverArtDirectory);
-                    } else {
-                        track.Asin = NotFoundAsin;
-                    }
-                    
-                    track.RemoteLookupStatus = RemoteLookupStatus.Success;
-                    //Console.WriteLine("OK");
-                } catch(Exception e) {
-                    track.RemoteLookupStatus = RemoteLookupStatus.Failure;
-                    //Console.WriteLine("FAILED ({0})", e.Message);
-                }
-                
-                track.Save();
             }
         }
         
@@ -350,14 +329,6 @@ namespace Banshee.Plugins.MetadataSearch
             false,
             "Plugin enabled",
             "Metadata searcher plugin enabled"
-        );    
-        
-        public static readonly SchemaEntry<int> FetchMethodSchema = new SchemaEntry<int>(
-            "plugins.metadata_searcher", "fetch_mode",
-            0,
-            "Method of fetching cover art and supplementary metadata",
-            "0 - Download only cover art, 1 - Download cover art, fill in missing metadata, " + 
-                "2 - Download cover art, overwrite metadata"
         );
     }
 }

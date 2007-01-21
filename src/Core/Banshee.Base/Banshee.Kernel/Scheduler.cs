@@ -88,7 +88,10 @@ namespace Banshee.Kernel
                 Queue<IJob> to_remove = new Queue<IJob>();
                 
                 foreach(IJob job in ScheduledJobs) {
-                    if(job.GetType() == type) {
+                    Type job_type = job.GetType();
+                    
+                    if((type.IsInterface && job_type.GetInterface(type.Name) != null) ||
+                        job_type == type || job_type.IsSubclassOf(job_type)) {
                         to_remove.Enqueue(job);
                     }
                 }
@@ -147,6 +150,10 @@ namespace Banshee.Kernel
         
         public static IEnumerable<IJob> ScheduledJobs {
             get { lock(this_mutex) { return heap; } }
+        }
+       
+        public static int ScheduledJobsCount {
+            get { lock(this_mutex) { return heap.Count; } }
         }
         
         public static void Dispose()
@@ -247,10 +254,9 @@ namespace Banshee.Kernel
             }
         }
         
-        private static bool print_debug = Banshee.Base.Globals.ArgumentQueue.Contains("debug");
         private static void Debug(string message, params object [] args)
         {
-            if(print_debug) {
+            if(Banshee.Base.Globals.Debugging) {
                 Console.Error.WriteLine(String.Format("** Scheduler: {0}", message), args);
             }
         }

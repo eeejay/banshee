@@ -133,6 +133,9 @@ namespace Banshee.Base
                 
                 new ActionEntry("PreferencesAction", Stock.Preferences, null),
                 
+                new ActionEntry("ToolsMenuAction", null, 
+                    Catalog.GetString("_Tools"), null, null, null),
+                
                 new ActionEntry("ViewMenuAction", null,
                     Catalog.GetString("_View"), null, null, null),
 

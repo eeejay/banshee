@@ -34,7 +34,7 @@ plugin_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 all: $(ASSEMBLY)
 
-$(ASSEMBLY): $(SOURCES)
+$(ASSEMBLY): $(SOURCES) data/PodcastMenu.xml
 	$(BUILD_LIB_BANSHEE_CORE) -out:$@ -r:System.Data -r:System.Web -r:System.Xml $(podcast_resources_build) $(LINK_GTK) $(LINK_MONO_UNIX) $(SOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules

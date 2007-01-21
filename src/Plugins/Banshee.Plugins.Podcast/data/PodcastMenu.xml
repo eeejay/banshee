@@ -1,14 +1,12 @@
 <ui>
-	<menubar name="MainMenu">
-		<menu name="MusicMenu" action="MusicMenuAction">
-			<placeholder name="MusicMenuAdditions">
-				<menu name="Podcast" action="PodcastAction">
-					<menuitem name="PodcastUpdateFeeds" action="PodcastUpdateFeedsAction" />
-					<menuitem name="PodcastSubscribe" action="PodcastSubscribeAction" />
-					<separator />
-					<menuitem name="PodcastVisitPodcastAlley" action="PodcastVisitPodcastAlleyAction" />
-	           	</menu>
-        	</placeholder> 
+    <menubar name="MainMenu">
+        <menu name="ToolsMenu" action="ToolsMenuAction">
+            <menu name="Podcast" action="PodcastAction">
+                <menuitem name="PodcastUpdateFeeds" action="PodcastUpdateFeedsAction" />
+                <menuitem name="PodcastSubscribe" action="PodcastSubscribeAction" />
+                <separator />
+                <menuitem name="PodcastVisitPodcastAlley" action="PodcastVisitPodcastAlleyAction" />
+            </menu>
         </menu>
 	</menubar>
 </ui>
