@@ -1,3 +1,14 @@
+2007-01-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs:
+	Added SaveHttpStreamPixbuf that normalizes image data over HTTP to 
+	JPEG form and saves it to the cover art location, if the dimensions are
+	greater than 50x50
+
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Use SaveHttpStreamPixbuf from the base class
+
 2007-01-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:

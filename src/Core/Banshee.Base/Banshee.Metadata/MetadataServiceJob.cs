@@ -81,8 +81,13 @@ namespace Banshee.Metadata
         {
             tags.Add(tag);
         }
-
+        
         protected Stream GetHttpStream(Uri uri)
+        {
+            return GetHttpStream(uri, null);
+        }
+
+        protected Stream GetHttpStream(Uri uri, string [] ignoreMimeTypes)
         {
             if(!Globals.Network.Connected) {
                 throw new NetworkUnavailableException();
@@ -94,12 +99,37 @@ namespace Banshee.Metadata
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;
             
-            return ((HttpWebResponse)request.GetResponse()).GetResponseStream();
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            
+            if(ignoreMimeTypes != null) {
+                string [] content_types = response.Headers.GetValues("Content-Type");
+                if(content_types != null) {
+                    foreach(string content_type in content_types) {
+                        for(int i = 0; i < ignoreMimeTypes.Length; i++) {
+                            if(content_type == ignoreMimeTypes[i]) {
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return response.GetResponseStream();
         }
         
-        protected void SaveHttpStream(Uri uri, string path)
+        protected bool SaveHttpStream(Uri uri, string path)
         {
-            using(Stream from_stream = GetHttpStream(uri)) {
+            return SaveHttpStream(uri, path, null);
+        }
+        
+        protected bool SaveHttpStream(Uri uri, string path, string [] ignoreMimeTypes)
+        {
+            Stream from_stream = GetHttpStream(uri, ignoreMimeTypes);
+            if(from_stream == null) {
+                return false;
+            }
+            
+            using(from_stream) {
                 long bytes_read = 0;
 
                 using(FileStream to_stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite)) {
@@ -111,6 +141,25 @@ namespace Banshee.Metadata
                         bytes_read += chunk_bytes_read;
                     }
                 }
+            }
+            
+            return true;
+        }
+        
+        protected bool SaveHttpStreamPixbuf(Uri uri, string albumArtistId, string [] ignoreMimeTypes)
+        { 
+            Stream stream = GetHttpStream(uri, ignoreMimeTypes);
+            if(stream == null) {
+                return false;
+            }
+            
+            using(stream) {
+                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(stream);
+                if(pixbuf == null || pixbuf.Width < 50 || pixbuf.Height < 50) {
+                    return false;
+                }
+                
+                return pixbuf.Save(Paths.GetCoverArtPath(albumArtistId), "jpeg");
             }
         }
     }

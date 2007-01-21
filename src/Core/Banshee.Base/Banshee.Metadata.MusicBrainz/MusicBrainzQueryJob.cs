@@ -71,13 +71,14 @@ namespace Banshee.Metadata.MusicBrainz
                 return;
             }
             
-            SaveHttpStream(new Uri(String.Format(AmazonUriFormat, asin)),  Paths.GetCoverArtPath(album_artist_id));
-            
-            StreamTag tag = new StreamTag();
-            tag.Name = CommonTags.AlbumCoverID;
-            tag.Value = album_artist_id;
-            
-            AddTag(tag);
+            if(SaveHttpStreamPixbuf(new Uri(String.Format(AmazonUriFormat, asin)), album_artist_id, 
+                new string [] { "image/gif" })) {
+                StreamTag tag = new StreamTag();
+                tag.Name = CommonTags.AlbumCoverID;
+                tag.Value = album_artist_id;
+
+                AddTag(tag);
+            }
         }
 
         // MusicBrainz has this new XML API, so I'm using that here 

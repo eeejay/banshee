@@ -81,13 +81,13 @@ namespace Banshee.Metadata.Rhapsody
             XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
             if(art_node != null && art_node.Attributes["src"] != null) {
                 Uri art_uri = new Uri(art_node.Attributes["src"].Value);
-                SaveHttpStream(art_uri, Paths.GetCoverArtPath(album_artist_id));
+                if(SaveHttpStreamPixbuf(art_uri, album_artist_id, null)) {
+                    StreamTag tag = new StreamTag();
+                    tag.Name = CommonTags.AlbumCoverID;
+                    tag.Value = album_artist_id;
                 
-                StreamTag tag = new StreamTag();
-                tag.Name = CommonTags.AlbumCoverID;
-                tag.Value = album_artist_id;
-                
-                AddTag(tag);
+                    AddTag(tag);
+                }
             }
         }
     }
