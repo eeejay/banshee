@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Widgets;
@@ -47,6 +48,19 @@ namespace Banshee.Base
 
     public class BatchTranscoder
     {
+        private static Dictionary<string, Type> alternate_wav_transcoders = new Dictionary<string, Type>();
+    
+        public static void RegisterAlternateWavTranscoder(string extension, Type type)
+        {
+            lock(alternate_wav_transcoders) {
+                if(alternate_wav_transcoders.ContainsKey(extension)) {
+                    alternate_wav_transcoders[extension] = type;
+                } else {
+                    alternate_wav_transcoders.Add(extension, type);
+                }
+            }
+        }
+    
         public class QueueItem
         {
             private object source;
@@ -73,6 +87,8 @@ namespace Banshee.Base
         private QueueItem current = null;
         
         private Transcoder transcoder;
+        private Transcoder default_transcoder;
+        
         private Profile profile;
         private int finished_count;
         private int total_count;
@@ -96,6 +112,8 @@ namespace Banshee.Base
             transcoder.Progress += OnTranscoderProgress;
             transcoder.Error += OnTranscoderError;
             transcoder.Finished += OnTranscoderFinished;
+            
+            default_transcoder = transcoder;
             
             this.desired_profile_name = desiredProfileName;
             this.profile = profile;
@@ -126,7 +144,20 @@ namespace Banshee.Base
             total_count = batch_queue.Count;
             finished_count = 0;
             error_list.Clear();
-            TranscodeNext();
+            
+            try {
+                TranscodeNext();
+            } catch(Exception e) {
+                Console.WriteLine(e);
+                
+                error_list.Add(e.Message);
+                
+                if(user_event != null) {
+                    user_event.Dispose();
+                }
+                
+                OnBatchFinished();
+            }
         }
         
         private void TranscodeNext()
@@ -159,13 +190,30 @@ namespace Banshee.Base
                 return;
             }
             
-            if(Path.GetExtension(input_uri.LocalPath) != "." + profile.OutputFileExtension) {
+            string input_extension = Path.GetExtension(input_uri.LocalPath).Substring(1);
+            
+            transcoder = default_transcoder;
+            
+            if(profile.OutputFileExtension == "wav" && alternate_wav_transcoders.ContainsKey(input_extension)) {
+                Transcoder alt_transcoder = (Transcoder)Activator.CreateInstance(alternate_wav_transcoders[input_extension]);
+                alt_transcoder.Progress += OnTranscoderProgress;
+                alt_transcoder.Error += OnTranscoderError;
+                alt_transcoder.Finished += OnTranscoderFinished;
+                transcoder = alt_transcoder;
+            }
+            
+            if(input_extension != profile.OutputFileExtension) {
                 transcoder.BeginTranscode(input_uri, output_uri, profile);
             } else if(desired_profile_name != null && profile.Name != desired_profile_name) {
                 OnTranscoderError(this, new EventArgs());
             } else {
                 OnTranscoderFinished(this, new EventArgs());
-            }   
+            }
+            
+            if(transcoder != default_transcoder) {
+                transcoder.Dispose();
+                transcoder = default_transcoder;
+            }
         }
         
         private void PostTranscode()
@@ -176,12 +224,18 @@ namespace Banshee.Base
             if(batch_queue.Count > 0) {
                 TranscodeNext();
             } else {
-                user_event.Dispose();
-            
-                EventHandler handler = BatchFinished;
-                if(handler != null) {
-                    handler(this, new EventArgs());
+                if(user_event != null) {
+                    user_event.Dispose();
                 }
+                OnBatchFinished();
+            }
+        }
+        
+        private void OnBatchFinished()
+        {
+            EventHandler handler = BatchFinished;
+            if(handler != null) {
+                handler(this, new EventArgs());
             }
         }
         

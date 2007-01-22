@@ -1,11 +1,6 @@
 ===============================================================================
-WELCOME TO BANSHEE 0.11.4
+WELCOME TO BANSHEE 0.11.5
 ===============================================================================
-
- * WARNING: Banshee 0.11.4 has a lot of rough edges and may be fairly 
-   unstable! The release was made early to meet the SLED 10 SP1 feature
-   complete deadline. Banshee 0.11.5 will be better suited for more widespread
-   use. Distributions *SHOULD NOT* package this release!
 
  * What? Banshee is a music management and playback application for GNOME.
  * Really? Yes! 
@@ -17,7 +12,7 @@ WELCOME TO BANSHEE 0.11.4
     and much more."
 
  * Learn More: http://banshee-project.org/Discover
- * Release Overview Page: http://banshee-project.org/Releases/0.11.4
+ * Release Overview Page: http://banshee-project.org/Releases/0.11.5
 
 
 ===============================================================================
@@ -37,16 +32,16 @@ TABLE OF CONTENTS
    - Noteworthy bugs fixes/enhancements embraced in this release
    - Show all bugs marked FIXED during this release cycle
    - File Bugs... Be Proactive... Contribute to Open Source!
+ * Miscellaneous
+   - Contributors for this release
+   - Contributors for past releases
+   - Something to share with friends and family
+   - Thanks!
 
 
 ===============================================================================
 MODULE NOTES
 ===============================================================================
-
- * WARNING: Banshee 0.11.4 has a lot of rough edges and may be fairly 
-   unstable! The release was made early to meet the SLED 10 SP1 feature
-   complete deadline. Banshee 0.11.5 will be better suited for more widespread
-   use. Distributions *SHOULD NOT* package this release!
 
  * The banshee-official-plugins module has been merged with core, so 
    banshee-official-plugins is now obsolete
@@ -65,9 +60,9 @@ GET THE GOODS
 Sources
 -------
 
- * Banshee 0.11.4 Tarball:
-   http://banshee-project.org/files/banshee/banshee-0.11.4.tar.bz2
-   http://banshee-project.org/files/banshee/banshee-0.11.4.tar.gz
+ * Banshee 0.11.5 Tarball:
+   http://banshee-project.org/files/banshee/banshee-0.11.5.tar.bz2
+   http://banshee-project.org/files/banshee/banshee-0.11.5.tar.gz
  
  * ipod-sharp 0.6.2 Tarball:
    http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.2.tar.gz
@@ -81,7 +76,7 @@ Sources
 ChangeLogs
 ----------
  
- * http://banshee-project.org/files/banshee/banshee-0.11.4.changes
+ * http://banshee-project.org/files/banshee/banshee-0.11.5.changes
 
 Dependencies
 ------------
@@ -103,28 +98,21 @@ MAJOR FEATURE/FIXES/PERFORMANCE UPDATES
 Cool New Features
 -----------------
 
- * New Internet Radio plugin
+ * Added new metadata service providers which include support for fetching
+   cover art from your iPod, covers embedded in music files, downloading
+   from MusicBrainz/Amazon.com, and Rhapsody
 
- * Merged banshee-official-plugins with core, so core now features Podcast,
-   Recommendation, MiniMode, and Radio plugins
+ * Major update of the Metadata Search plugin to use the new metadata 
+   services APIs. It now shows progress as it downloads covers when 
+   scanning the whole library
 
- * Automatically fetch cover art when a track is played
+ * Transcoding support should now work for generic mass storage devices
 
- * Improved audio profile configuration
+ * Show audio profile descriptions below the profile chooser combo box. All
+   profiles now have meaningful descriptions.
 
- * Added a WAV Pack profile (Sebastian Dröge)
-
- * Added VBR support for the LAME profile
-
- * Improved sorting and new URI column
-
- * Right clicking on column headers to adjust visibility now supported
-
- * New configuration system
-
- * Improved scripting support
-
- * Hide to tray on close
+ * Track number column now has a fixed width and the rating column is now
+   turned on by default. All default columns now have better default widths
 
 For all the Awesome Banshee Developers
 --------------------------------------
@@ -143,20 +131,17 @@ BUGZILLA OVERVIEW
 Noteworthy bugs fixes/enhancements embraced in this release
 -----------------------------------------------------------
 
- * 358192 - Hide to tray on close
- * 384235 - Ignore 'the' when sorting by artists, albums, titles
- * 385873 - 2 Channel MP3s reported to have only 1 (Brian Nickel)
- * 384816 - Improved random/MB limit matching in smart playlists (Gabriel Burt)
- * 386385 - Smart playlists can reference other smart playlists (Gabriel Burt)
- * 333813 - Importing CD with : in title crashes Banshee (Ruben Vermeersch)
- * 388903 - Cover art aspect ratio wrong
- * 385547 - Ratings column should not be resizable
- * 393217 - Save/restore source view tree state
+ * 377885 - Let tracks from smart playlists be dragged around (Chris Turchin)
+ * 370229 - Wait until synchronized is pressed to copy files to UMS DAP
+ * 354727 - Get transcoding nearly for free by fixing 370229 
+            (Gabriel Burt, Juri Pakaste)
+ * 397753 - Change vbr-mode to vbr on the LAME profile (Ruben Vermeersch)
+ * 388162 - Read embedded cover art from music files (Trey Ethridge)
 
-Show all bugs marked FIXED during this release cycle [1]
---------------------------------------------------------
+Show all bugs marked FIXED during this release cycle
+----------------------------------------------------
 
- * http://banshee-project.org/files/closedbugs.php/2006-12-09,2007-01-15
+ * http://banshee-project.org/files/closedbugs.php/2007-01-15,2007-01-22
 
 File Bugs... Be Proactive... Contribute to Open Source!
 -------------------------------------------------------
@@ -166,4 +151,41 @@ File Bugs... Be Proactive... Contribute to Open Source!
  * Discuss Banshee on the mailing list list or in #banshee on irc.gnome.org.
  * Lots of information on the Banshee Wiki: http://banshee-project.org
  * Need to debug Banshee? http://banshee-project.org/Debugging
+
+
+===============================================================================
+MISCELLANEOUS
+===============================================================================
+
+Contributors for this release
+-----------------------------
+   
+   Community makes Open Source work!
+
+   Aaron Bockover, Alp Toker, Gabriel Burt, James Willcox, 
+   Ruben Vermeersch, Trey Ethridge
+
+Contributors for past releases [1]
+----------------------------------
+
+   Aaron Bockover, Alexandros Frantzis, Alp Toker, Bertrand Lorentz, 
+   Bob Copeland, Chris Turchin, Christopher James Halse Rogers, Gabriel Burt, 
+   Jakub Steiner, James Willcox, Juri Pakaste, Michael Monreal, Mike Urbanski, 
+   Nathan Palmer, Patrick van Staveren, Ruben Vermeersch, Sebastian Dröge, 
+   Scott Peterson, Tim Yamin, Trey Ethridge
+
+   [1] This list is actually only accurate since 0.11.3. I need to grep the
+   ChangeLog to build a complete list. If your name is missing here, feel
+   free to let us know, or just wait for it to appear in a later release.
+
+Something to share with friends and family
+------------------------------------------
+
+   We hit the 2000th commit in Banshee Subversion between 0.11.4 and 0.11.5!
+
+Thanks!
+-------
+
+   Enjoy the release! We appreciate your support and involvement!
+
 

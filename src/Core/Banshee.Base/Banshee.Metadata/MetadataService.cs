@@ -159,16 +159,4 @@ namespace Banshee.Metadata
             }
         }
     }
-    
-    public static class MultipleMetadataProvider 
-    {
-        public static class Instance
-        {
-            [Obsolete("Use MetadataService.Instance.Lookup instead")]
-            public static void Lookup(IBasicTrackInfo track)
-            {
-                MetadataService.Instance.Lookup(track);
-            }
-        }
-    }
 }

@@ -1,3 +1,18 @@
+2007-01-22  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Bumped to 0.11.5
+
+	* NEWS: Updated with 0.11.5 release notes
+
+	* src/Core/Banshee.Base/BatchTranscoder.cs: Added the ability to register
+	alternative Transcoder types for handing WAV encoding 
+
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataService.cs: Removed
+	the obsolete API
+
+	* src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in: 
+	Updated
+
 2007-01-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
