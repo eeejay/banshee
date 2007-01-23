@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-19 17:12+0100\n"
-"PO-Revision-Date: 2007-01-19 21:04+0100\n"
+"POT-Creation-Date: 2007-01-23 14:45+0100\n"
+"PO-Revision-Date: 2007-01-23 14:59+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <dominikowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -219,7 +219,7 @@ msgid "Enter the address of the file you would like to open:"
 msgstr "Wprowadź adres pliku, który chcesz otworzyć:"
 
 #: ../data/banshee-dialogs.glade.h:48
-#: ../src/Core/Banshee.Base/ActionManager.cs:151
+#: ../src/Core/Banshee.Base/ActionManager.cs:154
 msgid "Equalizer"
 msgstr "Korektor graficzny"
 
@@ -768,302 +768,306 @@ msgid "Configure Banshee plugins"
 msgstr "Konfiguracja wtyczek do Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:137
+msgid "_Tools"
+msgstr "_Narzędzia"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:140
 msgid "_View"
 msgstr "_Widok"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:140
+#: ../src/Core/Banshee.Base/ActionManager.cs:143
 msgid "_Columns..."
 msgstr "_Kolumny"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:141
+#: ../src/Core/Banshee.Base/ActionManager.cs:144
 msgid "Select which columns to display in the song list"
 msgstr "Zaznacz kolumny, które mają być wyświetlone na liście utworół"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:144
+#: ../src/Core/Banshee.Base/ActionManager.cs:147
 msgid "_Boo Buddy..."
 msgstr "_Boo Buddy..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:145
+#: ../src/Core/Banshee.Base/ActionManager.cs:148
 msgid "Open Boo Buddy"
 msgstr "Otwórz Boo Buddy"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:152
+#: ../src/Core/Banshee.Base/ActionManager.cs:155
 msgid "Display the equalizer."
 msgstr "Wyświetl korektor graficzny."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:155
+#: ../src/Core/Banshee.Base/ActionManager.cs:158
 msgid "_Logged Events Viewer..."
 msgstr "Przeg_lądarka dziennika..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:156
+#: ../src/Core/Banshee.Base/ActionManager.cs:159
 msgid "View a detailed log of events"
 msgstr "Wyświetl szczegóły dziennik zdarzeń"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:159
+#: ../src/Core/Banshee.Base/ActionManager.cs:162
 msgid "_Help"
 msgstr "_Pomoc"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:162
+#: ../src/Core/Banshee.Base/ActionManager.cs:165
 msgid "_Version Information..."
 msgstr "_Informacje o wersji..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:163
+#: ../src/Core/Banshee.Base/ActionManager.cs:166
 msgid "View detailed version and configuration information"
 msgstr "Wyświetl szczegółowe informacje o wersji i konfiguracji"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:166
+#: ../src/Core/Banshee.Base/ActionManager.cs:169
 msgid "_Web Resources"
 msgstr "_Zasoby sieciowe"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:169
+#: ../src/Core/Banshee.Base/ActionManager.cs:172
 msgid "Banshee _User Guide (Wiki)"
 msgstr "Instrukcja _użytkownika Banshee (Wiki)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:170
+#: ../src/Core/Banshee.Base/ActionManager.cs:173
 msgid "Learn about how to use Banshee"
 msgstr "Poznaj obsługę Banshee"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:175
+#: ../src/Core/Banshee.Base/ActionManager.cs:178
 msgid "Banshee _Home Page"
 msgstr "_Strona domowa Banshee"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:176
+#: ../src/Core/Banshee.Base/ActionManager.cs:179
 msgid "Visit the Banshee Home Page"
 msgstr "Odwiedź stronę domową Banshee"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:181
+#: ../src/Core/Banshee.Base/ActionManager.cs:184
 msgid "_Get Involved"
 msgstr "W_eź udział"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:182
+#: ../src/Core/Banshee.Base/ActionManager.cs:185
 msgid "Become a contributor to Banshee"
 msgstr "Zostań współtwórcą Banshee"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:189
+#: ../src/Core/Banshee.Base/ActionManager.cs:192
 msgid "_Playback"
 msgstr "O_dtwarzanie"
 
 #. Translators: Source being the generic word for playlist, device, library, etc
-#: ../src/Core/Banshee.Base/ActionManager.cs:192
+#: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:105
 #: ../src/Core/Banshee.Base/Source.cs:317
 msgid "Source"
 msgstr "Źródło"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:195
+#: ../src/Core/Banshee.Base/ActionManager.cs:198
 msgid "Song Menu"
 msgstr "Menu utworu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:198
+#: ../src/Core/Banshee.Base/ActionManager.cs:201
 msgid "_Debug"
 msgstr "_Debugowanie"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:203
+#: ../src/Core/Banshee.Base/ActionManager.cs:206
 msgid "_Fullscreen"
 msgstr "Pełny _ekran"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:204
+#: ../src/Core/Banshee.Base/ActionManager.cs:207
 msgid "Toggle Fullscreen Mode"
 msgstr "Przełączanie trybu pełnego ekranu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:207
+#: ../src/Core/Banshee.Base/ActionManager.cs:210
 msgid "Show Cover _Art"
 msgstr "Wyświetlanie okł_adek"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:208
+#: ../src/Core/Banshee.Base/ActionManager.cs:211
 msgid "Toggle display of album cover art"
 msgstr "Przełączanie wyświetlania okładek"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:219
+#: ../src/Core/Banshee.Base/ActionManager.cs:222
 msgid "_Copy"
 msgstr "_Kopiuj"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:220
+#: ../src/Core/Banshee.Base/ActionManager.cs:223
 msgid "Copy selected song(s) to clipboard"
 msgstr "Kopiuj zaznaczony(e) utwór(ory) do schowka"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:223
+#: ../src/Core/Banshee.Base/ActionManager.cs:226
 msgid "_Remove"
 msgstr "_Usuń"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:224
+#: ../src/Core/Banshee.Base/ActionManager.cs:227
 msgid "Remove selected song(s) from library"
 msgstr "Usuń zaznaczony(e) utwór(ory) z kolekcji"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:227
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
 msgid "_Delete From Drive"
 msgstr "Usuń z _napędu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:228
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Bezpowrotnie usuń zaznaczony(e) utwór(ory) z zasobów komputera "
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:231
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
 msgid "_Edit Song Metadata"
 msgstr "Mo_dyfikuj metadane utworu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:232
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
 msgid "Edit metadata on selected songs"
 msgstr "Modyfikuj metadane w zaznaczonych utworach"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:235
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Search for songs"
 msgstr "_Szukaj utwory"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:236
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Search for songs matching certain criteria"
 msgstr "Wyszukaj utwory spełniające odpowiednie kryteria"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:239
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "By matching _album"
 msgstr "Wg _albumu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:240
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
 msgid "Search all songs of this album"
 msgstr "Wyszukaj wszystkie utwory z tego albumu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:243
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
 msgid "By matching a_rtist"
 msgstr "Wg _wykonawcy"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:244
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search all songs of this artist"
 msgstr "Wyszukaj wszystkie utwory tego wykonawcy"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:247
+#: ../src/Core/Banshee.Base/ActionManager.cs:250
 msgid "By matching _genre"
 msgstr "Wg _gatunku"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:248
+#: ../src/Core/Banshee.Base/ActionManager.cs:251
 msgid "Search all songs of this genre"
 msgstr "Wyszukaj wszystkie utwory z tego gatunku"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:251
+#: ../src/Core/Banshee.Base/ActionManager.cs:254
 msgid "Add _to Playlist"
 msgstr "Dodaj _do listy odtwarzania"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:252
+#: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr "Dołącz zaznaczone utwory do listy odtwarzania lub utwórz nową listę odtwarzania z zaznaczenia"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:255
+#: ../src/Core/Banshee.Base/ActionManager.cs:258
 msgid "Ratin_g"
 msgstr "_Ocena"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:256
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
 msgid "Set rating for selected songs"
 msgstr "Oceń zaznaczone utwory"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:265
+#: ../src/Core/Banshee.Base/ActionManager.cs:268
 msgid "Import CD"
 msgstr "Importuj CD"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:266
+#: ../src/Core/Banshee.Base/ActionManager.cs:269
 msgid "Import audio CD to library"
 msgstr "Importuj CD-Audio do kolekcji"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:275
+#: ../src/Core/Banshee.Base/ActionManager.cs:278
 msgid "_Play"
 msgstr "_Odtwarzaj"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:276
+#: ../src/Core/Banshee.Base/ActionManager.cs:279
 msgid "Play or pause the current song"
 msgstr "Odtwórz lub pauzuj bieżący utwór"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:279
+#: ../src/Core/Banshee.Base/ActionManager.cs:282
 msgid "_Next"
 msgstr "_Następny"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:280
+#: ../src/Core/Banshee.Base/ActionManager.cs:283
 msgid "Play the next song"
 msgstr "Odtwórz następny utwór"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:283
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "Pre_vious"
 msgstr "Pop_rzedni"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:284
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play the previous song"
 msgstr "Odtwórz poprzedni utwór"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:289
+#: ../src/Core/Banshee.Base/ActionManager.cs:292
 msgid "Repeat N_one"
 msgstr "Bez p_owtarzania"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:290
+#: ../src/Core/Banshee.Base/ActionManager.cs:293
 msgid "Do not repeat playlist"
 msgstr "Nie powtarzaj listy odtwarzania"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:293
+#: ../src/Core/Banshee.Base/ActionManager.cs:296
 msgid "Repeat _All"
 msgstr "Powtarz_aj wszystko"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:294
+#: ../src/Core/Banshee.Base/ActionManager.cs:297
 msgid "Play all songs before repeating playlist"
 msgstr "Odtwórz wszystkie utwory przed powtórzeniem listy odtwarzania"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:297
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat Si_ngle"
 msgstr "Powtarzaj _jeden"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:298
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Repeat the current playing song"
 msgstr "Powtarzaj odtwarzanie bieżącego utworu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:303
+#: ../src/Core/Banshee.Base/ActionManager.cs:306
 msgid "Shu_ffle"
 msgstr "Lo_sowo"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:304
+#: ../src/Core/Banshee.Base/ActionManager.cs:307
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Przełączanie pomiędzy odtwarzaniem losowym a ciągłym"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:307
+#: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "_Stop when finished"
 msgstr "_Zatrzymaj po zakończeniu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:308
+#: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Stop playback after the current song finishes playing"
 msgstr "Zatrzymaj odtwarzanie po zakończeniu odtwarzania bieżącego utworu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:317
+#: ../src/Core/Banshee.Base/ActionManager.cs:320
 msgid "Seek _Backward"
 msgstr "Przewiń do _tyłu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:318
+#: ../src/Core/Banshee.Base/ActionManager.cs:321
 msgid "Seek backward in current song"
 msgstr "Przewijaj bieżący utwór wstecz"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:321
+#: ../src/Core/Banshee.Base/ActionManager.cs:324
 msgid "Seek _Forward"
 msgstr "Przewiń do _przodu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:322
+#: ../src/Core/Banshee.Base/ActionManager.cs:325
 msgid "Seek forward in current song"
 msgstr "Przewijaj bieżący utwór do przodu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:325
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _To..."
 msgstr "Przewiń _do..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:326
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek to a specific location in current song"
 msgstr "Wyszukaj odpowiednie położenie w bieżącym utworze"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
 msgid "_Restart Song"
 msgstr "_Odtwórz utwór ponownie"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:330
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Restart the current song"
 msgstr "Powtórz odtwarzanie bieżącego utworu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:339
+#: ../src/Core/Banshee.Base/ActionManager.cs:342
 #: ../src/Core/Banshee.Base/SourceManager.cs:275
 msgid "Synchronize"
 msgstr "Synchronizuj"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:340
+#: ../src/Core/Banshee.Base/ActionManager.cs:343
 msgid "Save changes to device or synchronize music library"
 msgstr "Zapisz zmiany w urządzeniu lub synchronizuj kolekcję muzyczną"
 
@@ -1081,12 +1085,12 @@ msgid "Could not Read Audio CD"
 msgstr "Nie można odczytać CD-Audio"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:86
-#: ../src/Core/Banshee.Base/TrackInfo.cs:289
+#: ../src/Core/Banshee.Base/TrackInfo.cs:291
 msgid "Unknown Artist"
 msgstr "Nieznany wykonawca"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:87
-#: ../src/Core/Banshee.Base/TrackInfo.cs:297
+#: ../src/Core/Banshee.Base/TrackInfo.cs:299
 msgid "Unknown Album"
 msgstr "Nieznany album"
 
@@ -1100,11 +1104,11 @@ msgstr "Ścieżka {0}"
 msgid "Audio CD"
 msgstr "Płyta CD-Audio"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:241
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:243
 msgid "Cannot Eject CD"
 msgstr "Nie można wysunąć płyty CD"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:242
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
 msgstr "Płyta CD nie może zostać wysunięta podczas importowania. Najpierw zatrzymaj importowanie."
 
@@ -1422,12 +1426,12 @@ msgstr "Włączenie trybu odtwarzania losowego"
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
 #, no-c-format
 msgid "Format for creating a track filename inside the library. Do not use path tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
-msgstr ""
+msgstr "Format tworzenia nazwy pliku ścieżki wewnątrz kolekcji. Nie można używać znaków/znaczników ścieżek. Proszę zobaczyć LibraryFolderPattern. Prawidłowe znaczniki: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (bez początkowego zera), %track_count_nz% (bez początkowego zera)."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
 #, no-c-format
 msgid "Format for creating a track folder inside the library. Do not create an absolute path. Path here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/))."
-msgstr ""
+msgstr "Format tworzenia folderu ścieżek wewnątrz kolekcji. Nie można tworzyć ścieżki bezwzględnej. Ścieżka jest względna do katalogu muzyki Banshee. Proszę zobaczyć LibraryLocation. Prawidłowe znaczniki: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (bez początkowego zera), %track_count_nz% (bez początkowego zera), %path_sep% (separator przenośnego katalogu (/))."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 msgid "Height of the main interface window."
@@ -1455,27 +1459,27 @@ msgstr "Rozszerzenie źródła kolekcji"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "List of URIs in the history drop-down for the open location dialog"
-msgstr ""
+msgstr "Lista adresów URI w rozwijalnej liście historii w oknie dialogowym otwierania położenia"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "Move music on info save"
-msgstr ""
+msgstr "Przenoszenie muzyki podczas zapisu informacji"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music within banshee music library directory when saving track info"
-msgstr ""
+msgstr "Przenoszenie muzyki wewnątrz katalogu kolekcji muzycznej banshee podczas zapisu danych o ścieżce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
 msgid "Name of media playback engine backend"
-msgstr ""
+msgstr "Nazwa silnika odtwarzającego"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
 msgid "Pixel position of Main Player Window on the X Axis"
-msgstr ""
+msgstr "Położenia piksela głównego okna odtwarzacza na osi X"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
 msgid "Pixel position of Main Player Window on the Y Axis"
-msgstr ""
+msgstr "Położenia piksela głównego okna odtwarzacza na osi Y"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
 msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
@@ -1487,7 +1491,7 @@ msgstr "Powtarzanie odtwarzania"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
 msgid "Set the IO backend in Banshee"
-msgstr ""
+msgstr "Ustawienie wewnętrznego elementu przetwarzającego"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Show cover art"
@@ -1499,11 +1503,11 @@ msgstr "Wyświetlaj okładki poniżej widoku źródeł, jeśli są dostępne"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show the Initial Import Dialog"
-msgstr ""
+msgstr "Wyświetlanie początkowego okna dialogowego importowania"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
-msgstr ""
+msgstr "Wyświetlanie początkowego okna dialogowego importu, gdy kolekcja Banshee jest pusta"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
 msgid "Shuffle playback"
@@ -1511,15 +1515,15 @@ msgstr "Odtwarzanie losowe"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
 msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
-msgstr ""
+msgstr "Kryterium sortowania list odtwarzania kolekcji w widoku źródeł (0 = Nazwa, 1 = Rozmiar)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid "Sort criteria of playlists"
-msgstr ""
+msgstr "Kryteria sortowania list odtwarzania"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort order of library playlists in the source view (0 = Ascending, 1 = Descending)"
-msgstr ""
+msgstr "Kolejność sortowania list odtwarzania kolekcji w widoku źródeł (0 = Rosnąca, 1 = Malejąca)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid "Sort order of playlists"
@@ -1910,16 +1914,16 @@ msgstr ""
 "\n"
 "Sprawdź ustawienia \"Preferowanych aplikacji\"."
 
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:117
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:118
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:135
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:136
 msgid "Converting Files"
 msgstr "Konwertowanie plików"
 
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:120
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
 msgid "Files are currently being converted to another audio format. Would you like to stop this?"
 msgstr "Pliki są obecnie konwertowane do innego formatu dźwiękowego. Czy chcesz zatrzymać ten proces?"
 
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:123
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
 msgid "Initializing Transcoder..."
 msgstr "Inicjowanie transkodera..."
 
@@ -2550,12 +2554,12 @@ msgstr "Nie można zmienić nazwy listy odtwarzania"
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "Lista odtwarzania o takiej nazwie już istnieje. Proszę wybrać inną nazwę."
 
-#: ../src/Core/Banshee.Base/StreamTagger.cs:165
+#: ../src/Core/Banshee.Base/StreamTagger.cs:171
 #, csharp-format
 msgid "Saving tags for {0}"
 msgstr "Zapisz tagi dla {0}"
 
-#: ../src/Core/Banshee.Base/TrackInfo.cs:305
+#: ../src/Core/Banshee.Base/TrackInfo.cs:307
 msgid "Unknown Title"
 msgstr "Nieznany tytuł"
 
@@ -2842,49 +2846,49 @@ msgid "Error rebuilding iPod database"
 msgstr "Błąd podczas odbudowywania bazy danych iPoda"
 
 #. Translators "Week 25 of 2006"
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:93
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:100
 msgid "Manufactured During"
 msgstr "Wyprodukowano podczas"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:94
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:101
 #, csharp-format
 msgid "Week {0} of {1}"
 msgstr "Tygodnia {0} roku {1}"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:132
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:139
 msgid "Your iPod could not be identified"
 msgstr "Twój iPod nie mógł zostać zidentyfikowany"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:133
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:140
 msgid "Please consider submitting information about your iPod to the Banshee Project so your iPod may be more fully identified in the future.\n"
 msgstr "Proszę rozważyć wysłanie informacji o iPodzie do projektu Banshee, aby ten model iPoda był w przyszłości lepiej rozpoznawany.\n"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:136
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
 msgid "Do not ask me again"
 msgstr "Nie pytaj mnie ponownie"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:141
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:148
 msgid "Go to Web Site"
 msgstr "Przejdź do strony WWW"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:222
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:229
 msgid "Could not eject iPod"
 msgstr "Nie można wysunąć iPoda"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:230
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:249
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:237
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:256
 msgid "Synchronizing iPod"
 msgstr "Synchronizowanie iPoda"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:231
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:238
 msgid "Pre-processing tracks"
 msgstr "Przetwarzanie ścieżek"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:246
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:253
 msgid "Flushing to Disk (may take time)"
 msgstr "Zapisywanie na dysku (może to chwilę potrwać)"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:256
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:263
 msgid "Failed to synchronize iPod"
 msgstr "Synchronizacja z iPodem nieudana"
 
@@ -3171,7 +3175,7 @@ msgstr "Hasło"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:4
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
@@ -3315,52 +3319,39 @@ msgid "Disconnect"
 msgstr "Rozłącz"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
-msgid "0 - Download only cover art, 1 - Download cover art, fill in missing metadata, 2 - Download cover art, overwrite metadata"
-msgstr "0 - Pobierz wyłącznie okładki, 1 - Pobierz okładki, uzupełnij brakujące metadane, 2 - Pobierz okładki, nadpisz metadane"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 msgid "Metadata searcher plugin enabled"
 msgstr "Wtyczka wyszukiwania metadanych włączona"
 
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:3
-msgid "Method of fetching cover art and supplementary metadata"
-msgstr "Metoda pobierania okładek i metadanych uzupełniających"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:60
-msgid "Metadata and Cover Art Searching"
-msgstr "Wyszukiwanie metadanych i okładek"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:69
-msgid "Only download album cover artwork"
-msgstr "Pobieraj tylko okładki"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:71
-msgid "Download album cover artwork and fill in missing track data"
-msgstr "Pobieraj okładki i wypełniaj brakujące dane o ścieżkach"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:73
-msgid "Download album cover artwork and overwrite any existing track data"
-msgstr "Pobieraj okładki i nadpisuj wszystkie istniejące informacje o ścieżkach"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:75
-msgid "Rescan Library"
-msgstr "Przeskanuj kolekcję ponownie"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:95
-msgid "Warning"
-msgstr "Ostrzeżenie"
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchConfigDialog.cs:97
-msgid "This option can usually correct minor mistakes in metadata, however on rare occasions metadata may be incorrectly updated from MusicBrainz."
-msgstr "Ta opcja pozwala na poprawki niewielkich błędów w metadanych, jednakże może się zdarzyć, iż dane z MusicBrainz zostaną zaktualizowanie nieprawidłowo. "
-
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:64
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:57
 msgid "Metadata Searcher"
 msgstr "Wyszukiwarka metadanych"
 
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:69
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:62
 msgid "Automatically search for missing and supplementary metadata and cover art for songs in your library."
 msgstr "Automatycznie szukaj brakujących i dodatkowych metadanych oraz okładek dla utworów w kolekcji."
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:131
+msgid "Download Cover Art"
+msgstr "Pobierz okładki"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:735
+msgid "Download"
+msgstr "Pobierz"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
+msgid "Downloading Cover Art"
+msgstr "Pobieranie okładek"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:211
+msgid "Searching"
+msgstr "Wyszukiwanie"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:213
+msgid "Are you sure you want to stop downloading cover art for the albums in your library? The operation can be resumed at any time from the <i>Tools</i> menu."
+msgstr "Czy mają zostać pobrane okładki do albumów w kolekcji? To zadanie może zostać wznowione w dowolnym momencie z menu <i>Narzędzia</i>."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
 msgid "MiniMode plugin enabled"
@@ -3560,11 +3551,6 @@ msgstr "Adres URI jest pusty"
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:291
 msgid "path is empty"
 msgstr "ścieżka jest pusta"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:735
-msgid "Download"
-msgstr "Pobierz"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:497
 msgid "Downloading Files"
@@ -4072,6 +4058,34 @@ msgstr "Automatycznie rekomenduje muzykę, którą użytkownik może polubić, o
 msgid "Show Recommendations"
 msgstr "Wyświetlanie rekomendacji"
 
+#~ msgid ""
+#~ "0 - Download only cover art, 1 - Download cover art, fill in missing "
+#~ "metadata, 2 - Download cover art, overwrite metadata"
+#~ msgstr ""
+#~ "0 - Pobierz wyłącznie okładki, 1 - Pobierz okładki, uzupełnij brakujące "
+#~ "metadane, 2 - Pobierz okładki, nadpisz metadane"
+#~ msgid "Method of fetching cover art and supplementary metadata"
+#~ msgstr "Metoda pobierania okładek i metadanych uzupełniających"
+#~ msgid "Metadata and Cover Art Searching"
+#~ msgstr "Wyszukiwanie metadanych i okładek"
+#~ msgid "Only download album cover artwork"
+#~ msgstr "Pobieraj tylko okładki"
+#~ msgid "Download album cover artwork and fill in missing track data"
+#~ msgstr "Pobieraj okładki i wypełniaj brakujące dane o ścieżkach"
+#~ msgid "Download album cover artwork and overwrite any existing track data"
+#~ msgstr ""
+#~ "Pobieraj okładki i nadpisuj wszystkie istniejące informacje o ścieżkach"
+#~ msgid "Rescan Library"
+#~ msgstr "Przeskanuj kolekcję ponownie"
+#~ msgid "Warning"
+#~ msgstr "Ostrzeżenie"
+#~ msgid ""
+#~ "This option can usually correct minor mistakes in metadata, however on "
+#~ "rare occasions metadata may be incorrectly updated from MusicBrainz."
+#~ msgstr ""
+#~ "Ta opcja pozwala na poprawki niewielkich błędów w metadanych, jednakże "
+#~ "może się zdarzyć, iż dane z MusicBrainz zostaną zaktualizowanie "
+#~ "nieprawidłowo. "
 #~ msgid "Smart Playlists"
 #~ msgstr "Inteligentne listy odtwarzania"
 #~ msgid ""
