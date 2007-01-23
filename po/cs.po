@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-22 11:43+0100\n"
-"PO-Revision-Date: 2007-01-22 11:43+0100\n"
+"POT-Creation-Date: 2007-01-23 11:33+0100\n"
+"PO-Revision-Date: 2007-01-23 11:41+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2063,21 +2063,20 @@ msgid "Local Files"
 msgstr "Lokální soubory"
 
 #: ../src/Core/Banshee.Base/FileNamePattern.cs:98
-#, fuzzy
 msgid "Count"
-msgstr "Počet přehrání"
+msgstr "Počet"
 
 #: ../src/Core/Banshee.Base/FileNamePattern.cs:103
 msgid "Number"
-msgstr ""
+msgstr "Číslo"
 
 #: ../src/Core/Banshee.Base/FileNamePattern.cs:108
 msgid "Count (unsorted)"
-msgstr ""
+msgstr "Počet (netříděný)"
 
 #: ../src/Core/Banshee.Base/FileNamePattern.cs:113
 msgid "Number (unsorted)"
-msgstr ""
+msgstr "Číslo (netříděné)"
 
 #: ../src/Core/Banshee.Base/FolderImportSource.cs:55
 msgid "Import Folder to Library"
@@ -2148,14 +2147,12 @@ msgid "Initializing plugins"
 msgstr "Inicializace zásuvných modulů"
 
 #: ../src/Core/Banshee.Base/Globals.cs:155
-#, fuzzy
 msgid "Initializing scripts"
-msgstr "Inicializace jednotky"
+msgstr "Inicializují se skripty"
 
 #: ../src/Core/Banshee.Base/Globals.cs:159
-#, fuzzy
 msgid "Loading user interface"
-msgstr "Nahrává se zařízení"
+msgstr "Nahrává se uživatelské rozhraní"
 
 #: ../src/Core/Banshee.Base/GstTranscoder.cs:82
 msgid "Could not create transcoder"
@@ -2174,12 +2171,11 @@ msgid "Music Management and Playback for GNOME."
 msgstr "Správa a přehrávání hudby pro prostředí GNOME."
 
 #: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:80
-#, fuzzy
 msgid ""
 "Copyright © 2005-2007 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 msgstr ""
-"Copyright © 2005-2006 Novell, Inc.\n"
+"Copyright © 2005-2007 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 
 #: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:85
@@ -2401,9 +2397,8 @@ msgid "Could not load track from library"
 msgstr "Nelze načíst skladbu z knihovny"
 
 #: ../src/Core/Banshee.Base/NetworkDetect.cs:45
-#, fuzzy
 msgid "There is no available network connection"
-msgstr "Bude předpokládáno dostupné a funkční síťové připojení"
+msgstr "Není dostupné žádné síťové připojení"
 
 #: ../src/Core/Banshee.Base/NetworkDetect.cs:79
 msgid "Cannot connect to NetworkManager"
@@ -2716,9 +2711,8 @@ msgid "Pause"
 msgstr "Přerušit"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:774
-#, fuzzy
 msgid "Stop"
-msgstr "Zastavit {0}"
+msgstr "Zastavit"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:795
 msgid "Cannot Play Song"
@@ -3100,9 +3094,8 @@ msgid "Copying {0} of {1}"
 msgstr "Kopíruji {0} z {1}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:327
-#, fuzzy
 msgid "Song Playing on Device"
-msgstr "Synchronizace zařízení"
+msgstr "Skladba se přehrává na zařízení"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:328
 msgid ""
@@ -3120,14 +3113,14 @@ msgid "Make sure no other programs are using it."
 msgstr "Ujistěte se, že není používán jinými programy."
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:372
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Failed to Eject {0}"
-msgstr "Vysunout {0}"
+msgstr "Selhalo vysunutí {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:526
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Removing songs from {0}"
-msgstr "Odstraňují se skladby"
+msgstr "Odstraňují se skladby z {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:527
 #, fuzzy, csharp-format
@@ -3229,9 +3222,8 @@ msgstr ""
 "poslechu."
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:96
-#, fuzzy
 msgid "_Audioscrobbler"
-msgstr "Audioscrobbler"
+msgstr "_Audioscrobbler"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:97
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:109
@@ -3248,23 +3240,20 @@ msgid "Visit your Audioscrobbler profile page"
 msgstr "Navštívit stránku vašeho Audioscrobbler profilu"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:104
-#, fuzzy
 msgid "Visit _group page"
-msgstr "Navštívit stránku skupin"
+msgstr "Navštívit stránku _skupin"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:105
 msgid "Visit the Banshee last.fm group page"
 msgstr "Navštívit last.fm stránku skupiny Banshee"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:108
-#, fuzzy
 msgid "_Configure..."
-msgstr "Konfigurace..."
+msgstr "_Konfigurace..."
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:114
-#, fuzzy
 msgid "_Enable song reporting"
-msgstr "Povolit oznámení skladby"
+msgstr "_Povolit oznámení skladby"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:1
 #, fuzzy
@@ -3282,9 +3271,8 @@ msgid "Engine enabled"
 msgstr "Aktivován"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:4
-#, fuzzy
 msgid "Password"
-msgstr "Heslo:"
+msgstr "Heslo"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
@@ -3295,29 +3283,24 @@ msgstr "Heslo:"
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
-#, fuzzy
 msgid "Plugin enabled"
-msgstr "Název zásuvného modulu"
+msgstr "Zásuvný modul povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:6
-#, fuzzy
 msgid "Username"
-msgstr "Uživatelské jméno:"
+msgstr "Uživatelské jméno"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:7
-#, fuzzy
 msgid "last.fm Password"
 msgstr "Heslo pro Last.fm"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
-#, fuzzy
 msgid "last.fm Username"
 msgstr "Uživatelské jméno pro Last.fm"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
-#, fuzzy
 msgid "DAAP plugin enabled"
-msgstr "Název zásuvného modulu"
+msgstr "DAAP modul povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:2
 #, fuzzy
@@ -3330,9 +3313,8 @@ msgid "Share local music with others"
 msgstr "Sdílet mou hudební knihovnu s ostatními"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:5
-#, fuzzy
 msgid "Share name"
-msgstr "Jméno sdílení:"
+msgstr "Jméno sdílení"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
 msgid "Share server enabled"
@@ -3443,9 +3425,8 @@ msgid "Disconnect"
 msgstr "Odpojit"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
-#, fuzzy
 msgid "Metadata searcher plugin enabled"
-msgstr "Prohledávání metadat"
+msgstr "Modul prohledávání metadat povolen"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:57
 msgid "Metadata Searcher"
@@ -3461,9 +3442,8 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:131
-#, fuzzy
 msgid "Download Cover Art"
-msgstr "Zobrazit přeb_al"
+msgstr "Stáhnout přebal alba"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
@@ -3752,11 +3732,11 @@ msgstr "Již ve frontě, musí být jedinečné."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:103
 msgid "Item not in queue."
-msgstr ""
+msgstr "Položka není ve frontě."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:239
 msgid "Uri scheme not supported"
-msgstr ""
+msgstr "Schéma uri není podporováno"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:280
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:327
@@ -3782,7 +3762,7 @@ msgstr "Konfigurace..."
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:232
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:240
 msgid "HTTP error"
-msgstr ""
+msgstr "Chyba HTTP"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/FeedParsers/RssPodcastFeedParser.cs:58
 msgid "Feed has no title"
@@ -3790,7 +3770,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:432
 msgid "Uri Scheme Not Supported"
-msgstr ""
+msgstr "Schéma uri není podporováno"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:433
 msgid "Podcast feed URI scheme is not supported."
@@ -3798,7 +3778,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:445
 msgid "Invalid URL"
-msgstr ""
+msgstr "Neplatné URL"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:446
 msgid "Podcast feed URL is invalid."
@@ -3811,7 +3791,7 @@ msgstr "Nelze číst z vašeho iPodu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:665
 msgid "Download Failed"
-msgstr ""
+msgstr "Stahování selhalo"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:745
 #, fuzzy
@@ -3844,7 +3824,7 @@ msgstr "Upravuje se skladba {0} z {1}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:339
 msgid "Canceling updates"
-msgstr ""
+msgstr "Ruší se aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:340
 #, fuzzy
@@ -3913,9 +3893,8 @@ msgid "Find New Podcasts at PodcastAlley.com"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastErrorsSource.cs:51
-#, fuzzy
 msgid "Errors"
-msgstr "Chyba"
+msgstr "Chyby"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:75
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:87
