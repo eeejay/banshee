@@ -12,7 +12,7 @@ AC_DEFUN([BANSHEE_CHECK_DAP_MTP],
 		enable_mtp_dap="$enable_mtp_dap", enable_mtp_dap=no)
 		
 	if test "x$enable_mtp" != "xno" -a "x$enable_mtp_dap" = "xno"; then
-    	AC_MSG_ERROR(libgphoto2-sharp package not found or not up to date. Please install libgphoto2 from their subversion, or disable MTP support by not passing --enable-mtp)
+		AC_MSG_ERROR([libgphoto2-sharp was not found or is not up to date. Please install libgphoto2-sharp of at least version $LIBGPHOTO2SHARP_REQUIRED, or disable MTP support by not passing --enable-mtp])
 	fi
 
 	AC_MSG_RESULT([$enable_mtp_dap])

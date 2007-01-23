@@ -1,3 +1,8 @@
+2007-01-22  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* build/m4/banshee/dap-mtp.m4: properly quote error string and
+	give more useful output.
+
 2007-01-22  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Bumped to 0.11.5
