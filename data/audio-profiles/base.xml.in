@@ -2,7 +2,7 @@
 <audio-profiles>
   <preset-variables>
     <variable id="channels">
-      <name>Channels</name>
+      <_name>Channels</_name>
       <control-type>combo</control-type>
       <default-value>2</default-value>
       <possible-values>

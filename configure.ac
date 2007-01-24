@@ -91,6 +91,7 @@ build/banshee.pc
 
 data/Makefile
 data/org.gnome.Banshee.service
+data/audio-profiles/Makefile
 data/images/Makefile
 
 docs/Makefile

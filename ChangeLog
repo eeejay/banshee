@@ -1,3 +1,16 @@
+2007-01-23  Aaron Bockover  <abock@gnome.org>
+
+	* data/audio-profiles/*.xml.in: Moved from *.xml, edit to allow intltool
+	to extract and merge translations
+
+	* data/audio-profiles/Makefile.am: Added, use INTLTOOL_XML_RULE to 
+	support translating the audio profiles
+
+	* data/Makefile.am: Include audio-profiles in SUBDIRS, do not install
+	the audio profiles as the audio-profiles/Makefile will do that now
+
+	* configure.ac: Generate data/audio-profiles/Makefile
+
 2007-01-22  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* build/m4/banshee/dap-mtp.m4: properly quote error string and

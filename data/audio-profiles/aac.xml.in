@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="faac-aac">
-      <name>Advanced Audio Coding (AAC)</name>
-      <description>Proprietary and standardized format that is superior to MP3, but not as popular.</description>
+      <_name>Advanced Audio Coding (AAC)</_name>
+      <_description>Proprietary and standardized format that is superior to MP3, but not as popular.</_description>
       <output-file-extension>m4a</output-file-extension>
       <mimetype>audio/x-m4a</mimetype>
       <mimetype>audio/mp4</mimetype>
@@ -19,7 +19,7 @@
         ]]>
         </process>
         <variable id="bitrate">
-          <name>Bitrate</name>
+          <_name>Bitrate</_name>
           <control-type>combo</control-type>
           <default-value>128</default-value>
           <possible-values>

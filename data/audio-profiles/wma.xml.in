@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="wma-asf">
-      <name>Windows Media Audio</name>
-      <description>A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3.</description>
+      <_name>Windows Media Audio</_name>
+      <_description>A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3.</_description>
       <output-file-extension>wma</output-file-extension>
       <mimetype>audio/x-ms-wma</mimetype>
       <pipeline>
@@ -20,12 +20,12 @@
         ]]>
         </process>
         <variable id="vbr" enables="quality" disables="bitrate">
-          <name>Use a variable bitrate</name>
+          <_name>Use a variable bitrate</_name>
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
         <variable id="bitrate">
-          <name>Bitrate</name>
+          <_name>Bitrate</_name>
           <control-type>combo</control-type>
           <default-value>64</default-value>
           <possible-values>
@@ -38,12 +38,12 @@
           </possible-values>
         </variable>
         <variable id="quality">
-          <name>Audio Quality</name>
+          <_name>Audio Quality</_name>
           <control-type>slider</control-type>
           <min-value>0</min-value>
           <max-value>100</max-value>
-          <min-label>Worst</min-label>
-          <max-label>Best</max-label>
+          <_min-label>Worst</_min-label>
+          <_max-label>Best</_max-label>
           <step-value>1</step-value>
           <default-value>75</default-value>
         </variable>

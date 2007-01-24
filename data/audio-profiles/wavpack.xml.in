@@ -2,8 +2,8 @@
 <audio-profiles>
   <profiles>
     <profile id="wavpack">
-      <name>Wavpack</name>
-      <description>A fast and efficient open source audio format offering lossless and high-quality lossy encoding with great dynamic range.</description>
+      <_name>Wavpack</_name>
+      <_description>A fast and efficient open source audio format offering lossless and high-quality lossy encoding with great dynamic range.</_description>
       <output-file-extension>wv</output-file-extension>
       <mimetype>audio/x-wavpack</mimetype>
       <mimetype>application/x-apetag</mimetype>
@@ -27,7 +27,7 @@
         ]]>
         </process>
         <variable id="mode">
-          <name>Mode</name>
+          <_name>Mode</_name>
           <control-type>combo</control-type>
           <default-value>2</default-value>
           <possible-values>
@@ -38,29 +38,29 @@
           </possible-values>
         </variable>
         <variable id="lossy_mode" enables="bitrate">
-          <name>Lossy Mode</name>
+          <_name>Lossy mode</_name>
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
         <variable id="md5_sum">
-          <name>Store MD5 sum in the file</name>
+          <_name>Store MD5 sum in the file</_name>
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
         <variable id="extra_processing">
-          <name>Extra Processing</name>
+          <_name>Extra processing</_name>
           <control-type>check</control-type>
           <default-value>0</default-value>
         </variable>
         <variable id="bitrate">
-          <name>Bitrate</name>
+          <_name>Bitrate</_name>
           <control-type>slider</control-type>
           <default-value>260</default-value>
           <min-value>24</min-value>
-          <min-label>Worst</min-label>
+          <_min-label>Worst</_min-label>
           <max-value>9600</max-value>
-          <max-label>Best</max-label>
-          <step-value>1</step-value>
+          <_max-label>Best</_max-label>
+          <step-value>32</step-value>
         </variable>
       </pipeline>
     </profile>

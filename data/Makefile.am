@@ -1,11 +1,6 @@
 SUBDIRS = \
+	audio-profiles \
 	images
-
-AUDIO_PROFILES = \
-	$(srcdir)/audio-profiles/*.xml
-
-audioprofilesdir = $(pkgdatadir)/audio-profiles
-audioprofiles_DATA = $(AUDIO_PROFILES)
 
 desktopdir = $(datadir)/applications
 desktop_in_files=banshee.desktop.in.in
@@ -38,8 +33,7 @@ EXTRA_DIST = \
 	contributors.xml \
 	TranslatorExtract.cs \
 	$(desktop_in_files) \
-	$(dbusservice_in_files) \
-	$(AUDIO_PROFILES)
+	$(dbusservice_in_files)
 
 DISTCLEANFILES =	\
 	$(dbusservice_DATA) \
