@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Polish translation of Banshee.
+# Copyright (C) 2007 Tomasz Dominikowski
+# This file is distributed under the same license as the banshee package.
+# Tomasz Dominikowski <dominikowski@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 14:45+0100\n"
-"PO-Revision-Date: 2007-01-23 14:59+0100\n"
+"POT-Creation-Date: 2007-01-24 21:12+0100\n"
+"PO-Revision-Date: 2007-01-24 21:59+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <dominikowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -385,7 +385,7 @@ msgstr "Banshee"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:413
 msgid "Encoding element does not support tagging!"
-msgstr "Element enkodujący nie obsługuje tagowania!"
+msgstr "Element enkodujący nie obsługuje znaczników!"
 
 #: ../libbanshee/gst-transcode-0.10.c:160
 msgid "No decoder could be found for source format."
@@ -781,7 +781,7 @@ msgstr "_Kolumny"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:144
 msgid "Select which columns to display in the song list"
-msgstr "Zaznacz kolumny, które mają być wyświetlone na liście utworół"
+msgstr "Zaznacz kolumny, które mają być wyświetlone na liście utworów"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:147
 msgid "_Boo Buddy..."
@@ -992,7 +992,7 @@ msgstr "Odtwórz poprzedni utwór"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:292
 msgid "Repeat N_one"
-msgstr "Bez p_owtarzania"
+msgstr "Bez p_owtarzania utworów"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:293
 msgid "Do not repeat playlist"
@@ -1000,7 +1000,7 @@ msgstr "Nie powtarzaj listy odtwarzania"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:296
 msgid "Repeat _All"
-msgstr "Powtarz_aj wszystko"
+msgstr "Powtarz_anie wszystkich utworów"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:297
 msgid "Play all songs before repeating playlist"
@@ -1008,7 +1008,7 @@ msgstr "Odtwórz wszystkie utwory przed powtórzeniem listy odtwarzania"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat Si_ngle"
-msgstr "Powtarzaj _jeden"
+msgstr "Powtarzanie po_jedynczego utworu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Repeat the current playing song"
@@ -1016,7 +1016,7 @@ msgstr "Powtarzaj odtwarzanie bieżącego utworu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:306
 msgid "Shu_ffle"
-msgstr "Lo_sowo"
+msgstr "Odtwarzanie lo_sowe"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:307
 msgid "Toggle between shuffle or continuous playback modes"
@@ -1024,7 +1024,7 @@ msgstr "Przełączanie pomiędzy odtwarzaniem losowym a ciągłym"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "_Stop when finished"
-msgstr "_Zatrzymaj po zakończeniu"
+msgstr "_Zatrzymywanie po zakończeniu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Stop playback after the current song finishes playing"
@@ -1439,7 +1439,7 @@ msgstr "Wysokość okna głównego interfejsu."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 msgid "If enabled, metadata (tags) will be written back to audio files when using the track metadata editor."
-msgstr "Jeśli włączone, metadane (tagi) będą zapisywane w plikach dźwiękowych podczas korzystania z edytora metadanych scieżek."
+msgstr "Jeśli włączone, metadane (tagi) będą zapisywane w plikach dźwiękowych podczas korzystania z edytora metadanych ścieżek."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid "Library File Pattern"
@@ -1683,11 +1683,11 @@ msgstr "nie jest"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:197
 msgid "is less than"
-msgstr "jest mniejszy niż"
+msgstr "jest mniejsza niż"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:202
 msgid "is greater than"
-msgstr "jest większy niż"
+msgstr "jest większa niż"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:207
 msgid "more than"
@@ -1735,7 +1735,7 @@ msgstr "pomiędzy"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:335
 msgid "to"
-msgstr "do"
+msgstr "a"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:709
 msgid "_Match"
@@ -1854,7 +1854,7 @@ msgstr "Data dodania"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
 msgid "Duration"
-msgstr "Czas trwania"
+msgstr "Długość"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:793
 msgid "Play Count"
@@ -2218,7 +2218,7 @@ msgstr "Wybierz położenie kolekcji"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
 msgid "Enable this option to save tags and other metadata inside supported audio files"
-msgstr "Włącz tę funkcję, aby zapisywać tagi i inne metadane wewnątrz obsługiwanych plików dźwiękowych"
+msgstr "Włącz tę funkcję, aby zapisywać znaczniki i inne metadane wewnątrz obsługiwanych plików dźwiękowych"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
 msgid "Error correction tries to work around problem areas on a disc, such as surface scratches, but will slow down importing substantially."
@@ -2557,7 +2557,7 @@ msgstr "Lista odtwarzania o takiej nazwie już istnieje. Proszę wybrać inną n
 #: ../src/Core/Banshee.Base/StreamTagger.cs:171
 #, csharp-format
 msgid "Saving tags for {0}"
-msgstr "Zapisz tagi dla {0}"
+msgstr "Zapisywanie znaczników w {0}"
 
 #: ../src/Core/Banshee.Base/TrackInfo.cs:307
 msgid "Unknown Title"
@@ -2776,7 +2776,7 @@ msgstr "Zapisz ręczne zmiany"
 
 #: ../src/Core/Banshee/TrackViewColumnWindow.cs:59
 msgid "Choose Columns"
-msgstr "Wybierz kolumny"
+msgstr "Wybieranie kolumn"
 
 #: ../src/Core/Banshee/TrackViewColumnWindow.cs:74
 msgid "Visible Playlist Columns"
@@ -3151,11 +3151,11 @@ msgstr "Odwiedź stronę grupy last.fm Banshee"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:108
 msgid "_Configure..."
-msgstr "_Konfiguruj"
+msgstr "_Konfiguruj..."
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:114
 msgid "_Enable song reporting"
-msgstr "_Włącz raportowanie utworów"
+msgstr "Raporto_wanie utworów"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:1
 msgid "Audioscrobbler reporting engine enabled"
@@ -3278,7 +3278,7 @@ msgstr "Połączenie z tym zasobem muzyki zostało już zerwane"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:116
 msgid "Try connecting again"
-msgstr "Spróbuj połączyć się ponownie"
+msgstr "Proszę spróbować połączyć się ponownie"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:130
 msgid "The music share is hosted by iTunes® 7"
@@ -3286,7 +3286,7 @@ msgstr "Zasób muzyczny jest obsługiwany przez iTunes® 7"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:47
 msgid "Login to Music Share"
-msgstr "Zaloguj się do zasobu muzyki"
+msgstr "Zaloguj do zasobu muzycznego"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:80
 msgid "Authentication Required"
@@ -3508,7 +3508,7 @@ msgstr "Kolumna tytułu podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
 msgid "Position of the podcast date playlist column"
-msgstr "Położenie kolumny listy od"
+msgstr "Położenie kolumny z datami podcastów"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:9
 msgid "Position of the podcast feed playlist column"
@@ -3712,7 +3712,7 @@ msgid ""
 "\n"
 "Its name comes from the targeting of audio posts to Apple's iPod® audio player, although podcasts can be listened to directly in {0}."
 msgstr ""
-"Podcasting to forma dźwiękowego bloga, gdzie użytkownicy subskrybują źródło, którego odcinki są pobieranie i gotowe do odsłuchu offline.\n"
+"Podcasting to forma dźwiękowego bloga, gdzie użytkownicy subskrybują źródło, którego odcinki są pobieranie i gotowe do odsłuchu bez połączenia z Internetem.\n"
 "\n"
 "Nazwa pochodzi od nazwy odtwarzacza muzyki Apple iPod®, aczkolwiek podcasty mogą być odsłuchiwane bezpośrednio w {0}."
 
@@ -3828,7 +3828,7 @@ msgstr "Aktualizuj wszystkie źródła"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:618
 msgid "Visit Podcast Alley"
-msgstr "Odwiedź aleję podcastów"
+msgstr "Odwiedź PodcastAlley.com"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:653
 msgid "Subscribed"
