@@ -1,3 +1,7 @@
+2007-01-24  Aaron Bockover  <abock@gnome.org>
+
+	* POTFILES.in: Added audio profiles for translation
+
 2007-01-24  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* nb.po: Updated Norwegian bokmål translation.
