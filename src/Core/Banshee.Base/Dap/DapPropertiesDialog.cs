@@ -88,9 +88,13 @@ namespace Banshee.Dap
                 table.AddLabel(Catalog.GetString("Owner name"), device.Owner);
             }
     
-            ProfileComboBoxConfigurable profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, device.ID);
+            VBox profile_description_box = new VBox();
+            ProfileComboBoxConfigurable profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, 
+                device.ID, profile_description_box);
             profile_box.Combo.MimeTypeFilter = device.SupportedPlaybackMimeTypes;
             table.AddWidget(Catalog.GetString("Encode to"), profile_box);
+            table.AddWidget(null, profile_description_box);
+            profile_description_box.Show();
             
             table.AddSeparator();
     

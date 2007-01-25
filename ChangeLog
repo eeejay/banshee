@@ -1,5 +1,23 @@
 2007-01-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/PropertyTable.cs: Do not add a key label
+	if the key string is null
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs:
+	Protected against a potential nullref
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:
+	Added ':' to the end of the control labels
+
+	* src/Core/Banshee.Base/Sources/DapSource.cs: Override the default source
+	property label to 'iPod Properties', where iPod is the generic device 
+	name - nicer than 'Source Properties'
+
+	* src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs: Use a description box
+	container so the profile selector doesn't look goofy
+
+2007-01-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs:
 	* src/Core/Banshee.Base/Banshee.AudioProfiles/Profile.cs: Use the XML
 	utilities in Banshee.Base.Localization to select the right string node

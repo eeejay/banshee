@@ -397,5 +397,9 @@ namespace Banshee.Sources
         public override string GenericName {
             get { return Device != null ? Device.GenericName : Catalog.GetString("Device"); }
         }
+        
+        public override string SourcePropertiesLabel {
+            get { return String.Format(Catalog.GetString("{0} Properties"), GenericName); }
+        }
     }
 }

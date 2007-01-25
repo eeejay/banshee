@@ -42,15 +42,19 @@ namespace Banshee.Widgets
         public void AddWidget(string key, Widget widget, bool boldLabel)
         {
             uint rows = NRows;
-            Label keyLabel = new Label();
-            if(boldLabel) {
-                keyLabel.Markup = "<b>" + GLib.Markup.EscapeText(key) + "</b>:";
-            } else {
-                keyLabel.Text = key;
-            }
-            keyLabel.Xalign = 0.0f;
             
-            Attach(keyLabel, 0, 1, rows, rows + 1);
+            if(key != null) {
+                Label keyLabel = new Label();
+                if(boldLabel) {
+                    keyLabel.Markup = "<b>" + GLib.Markup.EscapeText(key) + "</b>:";
+                } else {
+                    keyLabel.Text = key;
+                }
+                keyLabel.Xalign = 0.0f; 
+            
+                Attach(keyLabel, 0, 1, rows, rows + 1);
+            }
+            
             Attach(widget, 1, 2, rows, rows + 1);
         }
         

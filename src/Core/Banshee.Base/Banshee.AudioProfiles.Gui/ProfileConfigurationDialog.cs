@@ -194,7 +194,7 @@ namespace Banshee.AudioProfiles.Gui
             
                 Label label = new Label();
                 label.Show();
-                label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(variable.Name));
+                label.Markup = String.Format("<b>{0}:</b>", GLib.Markup.EscapeText(variable.Name));
                 label.Xalign = 0.0f;
 
                 try {
