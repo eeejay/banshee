@@ -1,3 +1,20 @@
+2007-01-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/PipelineVariable.cs:
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/Profile.cs: Use the XML
+	utilities in Banshee.Base.Localization to select the right string node
+	based on xml:lang
+
+	* src/Core/Banshee.Base/Localization.cs: Utilities to read the instance
+	language setting (based on g_get_language_names()); XML utilities to to
+	select nodes matching a query that also match against an xml:lang for
+	the language in the current instance
+
+	* src/Core/Banshee.Base/Makefile.am:
+	* src/Core/Banshee.Base/Banshee.Base.mdp: Added Localization.cs
+
+	* data/audio-profiles/vorbis.xml.in: Missed two strings to be translated
+
 2007-01-23  Aaron Bockover  <abock@gnome.org>
 
 	* data/audio-profiles/*.xml.in: Moved from *.xml, edit to allow intltool

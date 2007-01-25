@@ -87,7 +87,7 @@ namespace Banshee.AudioProfiles
         internal PipelineVariable(XmlNode node)
         {
             id = node.Attributes["id"].Value.Trim();
-            name = node.SelectSingleNode("name").InnerText.Trim();
+            name = Banshee.Base.Localization.SelectSingleNode(node, "name").InnerText.Trim();
             control_type = StringToControlType(node.SelectSingleNode("control-type").InnerText.Trim());
             
             XmlAttribute enables_attr = node.Attributes["enables"];
@@ -131,8 +131,8 @@ namespace Banshee.AudioProfiles
             default_value = ReadValue(node, "default-value");
             min_value = ToDouble(ReadValue(node, "min-value"));
             max_value = ToDouble(ReadValue(node, "max-value"));
-            min_label = ReadValue(node, "min-label");
-            max_label = ReadValue(node, "max-label");
+            min_label = ReadValue(node, "min-label", true);
+            max_label = ReadValue(node, "max-label", true);
             
             string step_value_str = ReadValue(node, "step-value");
             if(step_value_str != null) {
@@ -155,7 +155,7 @@ namespace Banshee.AudioProfiles
                 current_value = default_value;
             }
             
-            foreach(XmlNode possible_value_node in node.SelectNodes("possible-values/value")) {
+            foreach(XmlNode possible_value_node in Banshee.Base.Localization.SelectNodes(node, "possible-values/value")) {
                 try {
                     string value = possible_value_node.Attributes["value"].Value.Trim();
                     string display = possible_value_node.InnerText.Trim();
@@ -195,8 +195,16 @@ namespace Banshee.AudioProfiles
 
         private static string ReadValue(XmlNode node, string name)
         {
+            return ReadValue(node, name, false);
+        }
+
+        private static string ReadValue(XmlNode node, string name, bool localize)
+        {
             try {
-                XmlNode str_node = node.SelectSingleNode(name);
+                XmlNode str_node = localize ? 
+                    Banshee.Base.Localization.SelectSingleNode(node, name) : 
+                    node.SelectSingleNode(name);
+                    
                 if(str_node == null) {
                     return null;
                 }

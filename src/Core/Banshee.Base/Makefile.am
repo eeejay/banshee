@@ -315,7 +315,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ProductInformation.cs \
 	$(srcdir)/DBusPlayer.cs \
 	$(srcdir)/GenericCollectionController.cs \
-	$(srcdir)/SampleTrackInfo.cs 
+	$(srcdir)/SampleTrackInfo.cs \
+	$(srcdir)/Localization.cs
 
 Banshee_Base_RESOURCES = \
 	data/UIManagerLayout.xml \

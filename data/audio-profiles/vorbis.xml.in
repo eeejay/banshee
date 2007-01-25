@@ -26,9 +26,9 @@
           <_name>Audio quality</_name>
           <control-type>slider</control-type>
           <min-value>-1.0</min-value>
-          <min-label>Worst</min-label>
+          <_min-label>Worst</_min-label>
           <max-value>10.0</max-value>
-          <max-label>Best</max-label>
+          <_max-label>Best</_max-label>
           <step-value>1.0</step-value>
           <default-value>5.0</default-value>
         </variable>

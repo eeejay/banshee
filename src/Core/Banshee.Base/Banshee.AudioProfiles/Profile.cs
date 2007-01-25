@@ -48,8 +48,8 @@ namespace Banshee.AudioProfiles
         internal Profile(ProfileManager manager, XmlNode node)
         {
             id = node.Attributes["id"].Value.Trim();
-            name = node.SelectSingleNode("name").InnerText.Trim();
-            description = node.SelectSingleNode("description").InnerText.Trim();
+            name = Banshee.Base.Localization.SelectSingleNode(node, "name").InnerText.Trim();
+            description = Banshee.Base.Localization.SelectSingleNode(node, "description").InnerText.Trim();
             output_file_extension = node.SelectSingleNode("output-file-extension").InnerText.Trim();
             
             foreach(XmlNode mimetype_node in node.SelectNodes("mimetype")) {
