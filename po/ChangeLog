@@ -1,3 +1,9 @@
+2007-01-24  Aaron Bockover  <abock@gnome.org>
+
+	* ru.po: Committed Alexandre Prokoudine's latest translations since
+	he helped translate the new audio profile strings for testing xml:lang
+	support in the Banshee code
+
 2007-01-24  Artur Flinta  <aflinta@cvs.gnome.org>
 
 	* pl.po: Updated Polish translation by GNOME PL Team.
