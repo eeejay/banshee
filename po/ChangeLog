@@ -1,3 +1,8 @@
+2007-01-26  Matic Zgur <mr.zgur@gmail.com>
+
+	* sl.po: Added Slovenian translation.
+	* LINGUAS: Added 'sl' to the list.
+
 2007-01-24  Aaron Bockover  <abock@gnome.org>
 
 	* ru.po: Committed Alexandre Prokoudine's latest translations since
