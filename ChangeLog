@@ -1,3 +1,8 @@
+2007-01-29  James Willcox  <snorp@snorp.net>
+
+	* src/Plugins/Banshee.Plugins.Daap/daap-sharp/Database.cs: updated from
+	upstream, fixes a problem where track numbers weren't showing up.
+
 2007-01-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/PropertyTable.cs: Do not add a key label
