@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 11:33+0100\n"
-"PO-Revision-Date: 2007-01-23 11:41+0100\n"
+"POT-Creation-Date: 2007-01-30 14:10+0100\n"
+"PO-Revision-Date: 2007-01-30 14:10+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -341,6 +341,161 @@ msgstr "Využití disku:"
 #: ../data/banshee.glade.h:4
 msgid "_Search:"
 msgstr "_Vyhledat:"
+
+#: ../data/audio-profiles/aac.xml.in.h:1
+msgid "Advanced Audio Coding (AAC)"
+msgstr ""
+
+#: ../data/audio-profiles/aac.xml.in.h:2
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "Datový tok"
+
+#: ../data/audio-profiles/aac.xml.in.h:3
+msgid ""
+"Proprietary and standardized format that is superior to MP3, but not as "
+"popular."
+msgstr ""
+
+#: ../data/audio-profiles/base.xml.in.h:1
+#, fuzzy
+msgid "Channels"
+msgstr "<b>Kanály:</b>"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr ""
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+#, fuzzy
+msgid "Best"
+msgstr "Obnovit výchozí"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "Stálý datový tok"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (enkodér LAME)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "Režim VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "Kvalita VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "Proměnlivý datový tok"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wma.xml.in.h:7
+msgid "Worst"
+msgstr "Nejhorší"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (enkodér Xing)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Kvalita zvuku"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis je opensource ztrátový zvukový kodek s vysoce kvalitním výstupem a "
+"menší velikostí souborů ve srovnání s MP3."
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM je bezeztrátový formát obsahující nekomprimovaný surový zvuk s "
+"pulzně kódovou modulací (PCM)."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Extra processing"
+msgstr "Zvláštní zpracování"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Lossy mode"
+msgstr "Ztrátový režim"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Mode"
+msgstr "Režim"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Store MD5 sum in the file"
+msgstr "Uložit MD5 součet do souboru"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Wavpack"
+msgstr ""
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "Kvalita zvuku"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "Použít proměnlivý datový tok"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:222
 msgid "Could not create pipeline"
@@ -754,9 +909,8 @@ msgid "Select all songs in song list"
 msgstr "Vybrat všechny skladby v seznamu skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:123
-#, fuzzy
 msgid "Select _None"
-msgstr "Odznačit vybrané skladby"
+msgstr "Vybrat _nic"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:124
 msgid "Unselect all songs in song list"
@@ -1016,9 +1170,8 @@ msgid "Play all songs before repeating playlist"
 msgstr "Přehrát všechny skladby před opakováním seznamu skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:300
-#, fuzzy
 msgid "Repeat Si_ngle"
-msgstr "Opakovat jednou"
+msgstr "Opakovat _skladbu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Repeat the current playing song"
@@ -1135,7 +1288,8 @@ msgstr "Importuje se CD"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr "<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
+msgstr ""
+"<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
 #, csharp-format
@@ -1426,7 +1580,8 @@ msgid "Column sort type"
 msgstr "Typ třídění sloupce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
-msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
+msgid ""
+"Column sort type for the library source. Ascending (0) or Descending (1)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
@@ -1509,7 +1664,8 @@ msgid "Move music on info save"
 msgstr "Přesunout hudbu při uložení informací"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
-msgid "Move music within banshee music library directory when saving track info"
+msgid ""
+"Move music within banshee music library directory when saving track info"
 msgstr ""
 "Přesunout hudbu v rámci adresáře hudební knihovny Banshee při ukládání "
 "informací o skladbě"
@@ -1560,7 +1716,8 @@ msgid "Shuffle playback"
 msgstr "Náhodné přehrávání"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
-msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+msgid ""
+"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
@@ -1977,7 +2134,8 @@ msgstr "Převádí se soubory"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
+msgstr ""
+"Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
 msgid "Initializing Transcoder..."
@@ -2028,6 +2186,7 @@ msgstr "Pokračovat v synchronizaci"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
 #, csharp-format
 msgid "{0} Properties"
 msgstr "Vlastnosti {0}"
@@ -2042,15 +2201,15 @@ msgstr "Jméno zařízení"
 msgid "Owner name"
 msgstr "Jméno vlastníka"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:93
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:95
 msgid "Encode to"
 msgstr "Zakódovat do"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:101
 msgid "Volume usage"
 msgstr "Využití místa"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:109
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:113
 msgid "Advanced details"
 msgstr "Pokročilé detaily"
 
@@ -2341,7 +2500,8 @@ msgid "Set all years to this value"
 msgstr "Nastavit všechny roky na tuto hodnotu"
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
-msgid "Set all common fields in all selected tracks to the values currently set"
+msgid ""
+"Set all common fields in all selected tracks to the values currently set"
 msgstr ""
 "Nastavit všechna společná pole ve všech vybraných skladbách na právě "
 "nastavené hodnoty"
@@ -2506,7 +2666,8 @@ msgid "Searching for CD cover art..."
 msgstr "Hledání přebalu k CD..."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:107
-msgid "Cannot search for CD metadata: there is no available Internet connection"
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Nelze vyhledat metadata k CD, není dostupné připojení k Internetu."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
@@ -2783,7 +2944,8 @@ msgstr "Žádná"
 #: ../src/Core/Banshee/PlayerInterface.cs:1842
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural ""
+"Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat {0} vybrané skladby?"
 msgstr[2] "Opravdu chcete navždy smazat {0} vybraných skladeb?"
@@ -2799,7 +2961,8 @@ msgstr "Odstranit výběr z knihovny"
 #: ../src/Core/Banshee/PlayerInterface.cs:1851
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
@@ -2871,7 +3034,8 @@ msgstr "Zastavit {0}"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid "The '{0}' operation is still performing work. Would you like to stop it?"
+msgid ""
+"The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Operace '{0}' stále probíhá. Chcete ji zastavit?"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -2899,9 +3063,8 @@ msgid "Buffering"
 msgstr "Načítá se do vyrovnávací paměti"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:84
-#, fuzzy
 msgid "Contacting..."
-msgstr "Konfigurace..."
+msgstr "Připojování..."
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
 msgid "Idle"
@@ -3123,9 +3286,9 @@ msgid "Removing songs from {0}"
 msgstr "Odstraňují se skladby z {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:527
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Removing {0} of {1}"
-msgstr "Importuji {0} z {1}"
+msgstr "Odstraňuji {0} z {1}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:562
 msgid "Audio Device"
@@ -3266,9 +3429,8 @@ msgid "Audioscrobbler reporting plugin enabled"
 msgstr "Oznámení výsledků Audioscrobbler"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:3
-#, fuzzy
 msgid "Engine enabled"
-msgstr "Aktivován"
+msgstr "Engine aktivován"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:4
 msgid "Password"
@@ -3303,14 +3465,12 @@ msgid "DAAP plugin enabled"
 msgstr "DAAP modul povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:2
-#, fuzzy
 msgid "Music share name"
-msgstr "Sdílení hudby"
+msgstr "Jméno sdílení hudby"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:4
-#, fuzzy
 msgid "Share local music with others"
-msgstr "Sdílet mou hudební knihovnu s ostatními"
+msgstr "Sdílet lokální hudbu s ostatními"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:5
 msgid "Share name"
@@ -4228,4 +4388,3 @@ msgstr ""
 #, fuzzy
 msgid "Show Recommendations"
 msgstr "Nelze zobrazit upozornění"
-
