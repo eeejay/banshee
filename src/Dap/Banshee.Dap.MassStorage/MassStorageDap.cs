@@ -398,6 +398,7 @@ namespace Banshee.Dap.MassStorage
             
             try {
                 string new_path = GetTrackPath(track);
+                Console.WriteLine("have path {0} for track {1}", new_path, track.Uri);
 
                 // If it already is on the device but it's out of date, remove it
                 if(File.Exists(new_path) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_path))
@@ -505,11 +506,8 @@ namespace Banshee.Dap.MassStorage
                     file_path = System.IO.Path.Combine(file_path, number_title);
                 }
             } else {
-                file_path = System.IO.Path.Combine(file_path, artist);
-                file_path = System.IO.Path.Combine(file_path, album);
-                file_path = System.IO.Path.Combine(file_path, number_title);
+                file_path = System.IO.Path.Combine(file_path, FileNamePattern.CreateFromTrackInfo(track));
             }
-                    
 
             file_path += Path.GetExtension(track.Uri.LocalPath);
 
