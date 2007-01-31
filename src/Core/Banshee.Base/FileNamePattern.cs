@@ -249,7 +249,7 @@ namespace Banshee.Base
 
         public static string Escape(string input)
         {
-            return Regex.Replace(input, @"[\\\\\\/\$\%\?\*\|<>:'""]+", "_");
+            return Regex.Replace(input, @"[\\\\\\/\$\%\?\*\|<>:'""&]+", "_");
         }
     }
 }

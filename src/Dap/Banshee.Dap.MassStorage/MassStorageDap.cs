@@ -396,8 +396,8 @@ namespace Banshee.Dap.MassStorage
             if(track == null)
                 return;
             
+            string new_path = GetTrackPath(track);
             try {
-                string new_path = GetTrackPath(track);
                 Console.WriteLine("have path {0} for track {1}", new_path, track.Uri);
 
                 // If it already is on the device but it's out of date, remove it
@@ -416,7 +416,9 @@ namespace Banshee.Dap.MassStorage
                 }
 
                 tracks.Remove(track);
-            } catch {}
+            } catch (Exception e) {
+                LogCore.Instance.PushInformation("Unable to copy file", new_path + e.ToString(), false);
+            }
         }
 
         protected override void OnTrackRemoved(TrackInfo track)

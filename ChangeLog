@@ -1,5 +1,12 @@
 2007-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Base/FileNamePattern.cs: Escape &'s too.
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Log exceptions caught
+	while transferring songs.
+
+2007-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: If the DAP is not
 	restricted to a particular folder depth, use the normal Banshee
 	FileNamePattern when copying music over. Fixes BGO #398491.
