@@ -90,7 +90,7 @@ namespace Banshee.Dap.MassStorage
             }
             
             if(player_device["portable_audio_player.type"] == "ipod") {
-                if (File.Exists(IsAudioPlayerPath)) {
+                if(File.Exists(IsAudioPlayerPath)) {
                     LogCore.Instance.PushInformation(
                         "Mass Storage Support Loading iPod",
                         "The USB mass storage audio player support is loading an iPod because it has an .is_audio_player file. " +
@@ -114,20 +114,20 @@ namespace Banshee.Dap.MassStorage
             }
 
             // Allow the HAL values to be overridden by corresponding key=value pairs in .is_audio_player
-            if (File.Exists(IsAudioPlayerPath)) {
+            if(File.Exists(IsAudioPlayerPath)) {
                 StreamReader reader = null;
                 try {
                     reader = new StreamReader(IsAudioPlayerPath);
 
                     string line;
-                    while ((line = reader.ReadLine()) != null) {
+                    while((line = reader.ReadLine()) != null) {
                         string [] pieces = line.Split('=');
-                        if (line.StartsWith("#") || pieces == null || pieces.Length != 2)
+                        if(line.StartsWith("#") || pieces == null || pieces.Length != 2)
                             continue;
 
                         string key = pieces[0], val = pieces[1];
 
-                        switch (key) {
+                        switch(key) {
                         case "audio_folders":
                             AudioFolders = val.Split(',');
                             break;
@@ -151,7 +151,7 @@ namespace Banshee.Dap.MassStorage
                 } catch(Exception e) {
                     LogCore.Instance.PushWarning("Error parsing .is_audio_player file", e.ToString(), false);
                 } finally {
-                    if (reader != null)
+                    if(reader != null)
                         reader.Close();
                 }
             }
@@ -171,7 +171,7 @@ namespace Banshee.Dap.MassStorage
             // Configure the extensions and mimetypes this DAP supports
             List<string> extensions = new List<string>();
             List<string> mimetypes = new List<string>();
-            foreach (string format in PlaybackFormats) {
+            foreach(string format in PlaybackFormats) {
                 string codec = Banshee.Dap.CodecType.GetCodec(format);
                 extensions.AddRange(CodecType.GetExtensions(codec));
                 mimetypes.AddRange(CodecType.GetMimeTypes(codec));
@@ -188,18 +188,18 @@ namespace Banshee.Dap.MassStorage
                 InstallProperty(Catalog.GetString("Vendor"), player_device["info.vendor"]);
             }
 
-            if (AudioFolders.Length > 1 || AudioFolders[0] != "") {
+            if(AudioFolders.Length > 1 || AudioFolders[0] != "") {
                 InstallProperty(String.Format(
                     Catalog.GetPluralString("Audio Folder", "Audio Folders", AudioFolders.Length), AudioFolders.Length),
                     System.String.Join("\n", AudioFolders)
                 );
             }
 
-            if (FolderDepth != -1) {
+            if(FolderDepth != -1) {
                 InstallProperty(Catalog.GetString("Required Folder Depth"), FolderDepth.ToString());
             }
 
-            if (PlaybackFormats.Length > 0) {
+            if(PlaybackFormats.Length > 0) {
                 InstallProperty(String.Format(
                     Catalog.GetPluralString("Audio Format", "Audio Formats", PlaybackFormats.Length), PlaybackFormats.Length),
                     System.String.Join("\n", PlaybackFormats)
@@ -233,8 +233,8 @@ namespace Banshee.Dap.MassStorage
 
                 mounted = true;
 
-                if (ui_initialized)
-                    ReloadDatabase ();
+                if(ui_initialized)
+                    ReloadDatabase();
             }
         }
 
@@ -248,15 +248,15 @@ namespace Banshee.Dap.MassStorage
         private void OnUIManagerInitialized(object o, EventArgs args)
         {
             ui_initialized = true;
-            if (mounted)
-                ReloadDatabase ();
+            if(mounted)
+                ReloadDatabase();
         }
  
         private void ReloadDatabase()
         {
-            ClearTracks (false);
+            ClearTracks(false);
 
-            ImportManager importer = new ImportManager ();
+            ImportManager importer = new ImportManager();
 
             importer.Title = Catalog.GetString("Loading Songs");
             importer.CancelMessage = Catalog.GetString("The audio device song loading process is currently running.  Would you like to stop it?");
@@ -264,18 +264,18 @@ namespace Banshee.Dap.MassStorage
 
             importer.ImportRequested += HandleImportRequested;
 
-            foreach (string music_dir in AudioFolders) {
-                importer.QueueSource (System.IO.Path.Combine (MountPoint, music_dir));
+            foreach(string music_dir in AudioFolders) {
+                importer.QueueSource(System.IO.Path.Combine(MountPoint, music_dir));
             }
         }
 
-        private void HandleImportRequested (object o, ImportEventArgs args)
+        private void HandleImportRequested(object o, ImportEventArgs args)
         {
             try {
-                TrackInfo track = new MassStorageTrackInfo (new SafeUri (args.FileName));
+                TrackInfo track = new MassStorageTrackInfo(new SafeUri(args.FileName));
                 args.ReturnMessage = String.Format("{0} - {1}", track.Artist, track.Title);
 
-                AddTrack (track);
+                AddTrack(track);
             } catch {
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
             }
@@ -301,7 +301,7 @@ namespace Banshee.Dap.MassStorage
         public override void Synchronize()
         {
             List<TrackInfo> tracksToCopy;
-            lock (uncopiedTracks) {
+            lock(uncopiedTracks) {
                 tracksToCopy = new List<TrackInfo>(uncopiedTracks);
                 uncopiedTracks.Clear();
             }
@@ -319,10 +319,10 @@ namespace Banshee.Dap.MassStorage
             FinishSave();
         }
 
-        public override void Eject ()
+        public override void Eject()
         {
             // If we're playing a track on the device, stop playing it before trying to eject
-            if (PlayerEngineCore.CurrentTrack is MassStorageTrackInfo) {
+            if(PlayerEngineCore.CurrentTrack is MassStorageTrackInfo) {
                 LogCore.Instance.PushInformation(
                     Catalog.GetString("Song Playing on Device"),
                     Catalog.GetString("Before you can eject your device, you need to start playing a song that is not on it.  This is a known bug."),
@@ -338,7 +338,7 @@ namespace Banshee.Dap.MassStorage
 
         private void HandleStopped(object o, Banshee.MediaEngine.PlayerEngineStateArgs args)
         {
-            if (args.State == Banshee.MediaEngine.PlayerEngineState.Idle) {
+            if(args.State == Banshee.MediaEngine.PlayerEngineState.Idle) {
                 PlayerEngineCore.StateChanged -= HandleStopped;
                 Unmount();
             }
@@ -347,13 +347,13 @@ namespace Banshee.Dap.MassStorage
         private void Unmount()
         {
             if(volume != null)
-                volume.Unmount (UnmountCallback);
+                volume.Unmount(UnmountCallback);
         }
 
-        private void UnmountCallback (bool succeeded, string error, string detailed_error)
+        private void UnmountCallback(bool succeeded, string error, string detailed_error)
         {
-            if (succeeded) {
-                volume.Eject (EjectCallback);
+            if(succeeded) {
+                volume.Eject(EjectCallback);
             } else {
                 LogCore.Instance.PushWarning(
                     String.Format(Catalog.GetString("Failed to Unmount {0}"), Name),
@@ -363,10 +363,10 @@ namespace Banshee.Dap.MassStorage
             }
         }
 
-        private void EjectCallback (bool succeeded, string error, string detailed_error)
+        private void EjectCallback(bool succeeded, string error, string detailed_error)
         {
-            if (succeeded) {
-                base.Eject ();
+            if(succeeded) {
+                base.Eject();
             } else {
                 LogCore.Instance.PushWarning(
                     String.Format(Catalog.GetString("Failed to Eject {0}"), Name),
@@ -378,26 +378,26 @@ namespace Banshee.Dap.MassStorage
 
         public override void AddTrack(TrackInfo track)
         {
-            if (track == null || IsReadOnly && !tracks.Contains(track))
+            if(track == null || IsReadOnly && !tracks.Contains(track))
                 return;
 
             tracks.Add(track);
             OnTrackAdded(track);
 
-            if (!(track is MassStorageTrackInfo)) {
+            if(!(track is MassStorageTrackInfo)) {
                 lock(uncopiedTracks) {
                     uncopiedTracks.Add(track);
                 }
             }
         }
         
-        private void CopyTrack (TrackInfo track)
+        private void CopyTrack(TrackInfo track)
         {
             if(track == null)
                 return;
             
             try {
-                string new_path = GetTrackPath (track);
+                string new_path = GetTrackPath(track);
 
                 // If it already is on the device but it's out of date, remove it
                 if(File.Exists(new_path) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_path))
@@ -420,20 +420,20 @@ namespace Banshee.Dap.MassStorage
 
         protected override void OnTrackRemoved(TrackInfo track)
         {
-            if (IsReadOnly)
+            if(IsReadOnly)
                 return;
 
             Remover.Enqueue(track);
         }
 
 
-        private void HandleRemoveRequested (object o, QueuedOperationArgs args)
+        private void HandleRemoveRequested(object o, QueuedOperationArgs args)
         {
             TrackInfo track = args.Object as TrackInfo;
 
             args.ReturnMessage = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle);
 
-            if (!(track is MassStorageTrackInfo)) {
+            if(!(track is MassStorageTrackInfo)) {
                 lock(uncopiedTracks) {
                     uncopiedTracks.Remove(track);
                 }
@@ -441,12 +441,12 @@ namespace Banshee.Dap.MassStorage
 
             // FIXME shouldn't need to check for this
             // Make sure it's on the drive
-            if (track.Uri.LocalPath.IndexOf (MountPoint) == -1)
+            if(track.Uri.LocalPath.IndexOf(MountPoint) == -1)
                 return;
             
             try {
                 File.Delete(track.Uri.LocalPath);
-                //Console.WriteLine ("Deleted {0}", track.Uri.LocalPath);
+                //Console.WriteLine("Deleted {0}", track.Uri.LocalPath);
             } catch {
                 LogCore.Instance.PushInformation("Could not delete file", track.Uri.LocalPath, false);
             }
@@ -468,50 +468,50 @@ namespace Banshee.Dap.MassStorage
             return icon == null ? base.GetIcon(size) : icon;
         }
 
-        private string GetTrackPath (TrackInfo track)
+        private string GetTrackPath(TrackInfo track)
         {
             string file_path = WritePath;
 
-            string artist = FileNamePattern.Escape (track.Artist);
-            string album = FileNamePattern.Escape (track.Album);
-            string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
+            string artist = FileNamePattern.Escape(track.Artist);
+            string album = FileNamePattern.Escape(track.Album);
+            string number_title = FileNamePattern.Escape(track.TrackNumberTitle);
 
             // If the folder_depth property exists, we have to put the files in a hiearchy of
             // the exact given depth (not including the mount point/audio_folder).
-            if (FolderDepth != -1) {
+            if(FolderDepth != -1) {
                 int depth = FolderDepth;
 
-                if (depth == 0) {
+                if(depth == 0) {
                     // Artist - Album - 01 - Title
-                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1} - {2}", artist, album, number_title));
-                } else if (depth == 1) {
+                    file_path = System.IO.Path.Combine(file_path, String.Format("{0} - {1} - {2}", artist, album, number_title));
+                } else if(depth == 1) {
                     // Artist - Album/01 - Title
-                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", artist, album));
-                    file_path = System.IO.Path.Combine (file_path, number_title);
-                } else if (depth == 2) {
+                    file_path = System.IO.Path.Combine(file_path, String.Format("{0} - {1}", artist, album));
+                    file_path = System.IO.Path.Combine(file_path, number_title);
+                } else if(depth == 2) {
                     // Artist/Album/01 - Title
-                    file_path = System.IO.Path.Combine (file_path, artist);
-                    file_path = System.IO.Path.Combine (file_path, album);
-                    file_path = System.IO.Path.Combine (file_path, number_title);
+                    file_path = System.IO.Path.Combine(file_path, artist);
+                    file_path = System.IO.Path.Combine(file_path, album);
+                    file_path = System.IO.Path.Combine(file_path, number_title);
                 } else {
                     // If the *required* depth is more than 2..go nuts!
-                    for (int i = 0; i < depth - 2; i++) {
-                        file_path = System.IO.Path.Combine (file_path, artist.Substring(0, Math.Min (i, artist.Length)).Trim());
+                    for(int i = 0; i < depth - 2; i++) {
+                        file_path = System.IO.Path.Combine(file_path, artist.Substring(0, Math.Min(i, artist.Length)).Trim());
                     }
 
                     // Finally add on the Artist/Album/01 - Track
-                    file_path = System.IO.Path.Combine (file_path, artist);
-                    file_path = System.IO.Path.Combine (file_path, album);
-                    file_path = System.IO.Path.Combine (file_path, number_title);
+                    file_path = System.IO.Path.Combine(file_path, artist);
+                    file_path = System.IO.Path.Combine(file_path, album);
+                    file_path = System.IO.Path.Combine(file_path, number_title);
                 }
             } else {
-                file_path = System.IO.Path.Combine (file_path, artist);
-                file_path = System.IO.Path.Combine (file_path, album);
-                file_path = System.IO.Path.Combine (file_path, number_title);
+                file_path = System.IO.Path.Combine(file_path, artist);
+                file_path = System.IO.Path.Combine(file_path, album);
+                file_path = System.IO.Path.Combine(file_path, number_title);
             }
                     
 
-            file_path += Path.GetExtension (track.Uri.LocalPath);
+            file_path += Path.GetExtension(track.Uri.LocalPath);
 
             return file_path;
         }
@@ -519,9 +519,9 @@ namespace Banshee.Dap.MassStorage
         private QueuedOperationManager remover;
         public QueuedOperationManager Remover {
             get {
-                if (remover == null) {
-                    lock (this) {
-                        if (remover == null) {
+                if(remover == null) {
+                    lock(this) {
+                        if(remover == null) {
                             remover = new QueuedOperationManager();
                             remover.ActionMessage = String.Format(Catalog.GetString("Removing songs from {0}"), Name);
                             remover.ProgressMessage = Catalog.GetString("Removing {0} of {1}");
@@ -544,10 +544,10 @@ namespace Banshee.Dap.MassStorage
         private string name = null;
         public override string Name {
             get {
-                if (name == null) {
-                    if (player_device.PropertyExists("info.product")) {
+                if(name == null) {
+                    if(player_device.PropertyExists("info.product")) {
                         name = player_device["info.product"];
-                    } else if (volume_device.PropertyExists("volume.label") && 
+                    } else if(volume_device.PropertyExists("volume.label") && 
                         volume_device["volume.label"].Length > 0) {
                         name = volume_device["volume.label"];
                     } else {
@@ -559,7 +559,7 @@ namespace Banshee.Dap.MassStorage
             }
         }
         
-        private static string generic_name = Catalog.GetString ("Audio Device");
+        private static string generic_name = Catalog.GetString("Audio Device");
         public override string GenericName {
             get {
                 return generic_name;
@@ -569,7 +569,7 @@ namespace Banshee.Dap.MassStorage
         ulong storage_capacity = 0;
         public override ulong StorageCapacity {
             get {
-                if (storage_capacity == 0) {
+                if(storage_capacity == 0) {
                     try {
                         if(volume_device.PropertyExists("volume.size")) {
                             storage_capacity = volume_device.GetPropertyUInt64("volume.size");
@@ -584,7 +584,7 @@ namespace Banshee.Dap.MassStorage
         public ulong StorageFree {
             get {
                 Mono.Unix.Native.Statvfs info;
-                Mono.Unix.Native.Syscall.statvfs (MountPoint, out info);
+                Mono.Unix.Native.Syscall.statvfs(MountPoint, out info);
 
                 return (ulong) (info.f_bavail * info.f_bsize);
             }
@@ -613,7 +613,7 @@ namespace Banshee.Dap.MassStorage
         private string mount_point = null;
         public string MountPoint {
             get {
-                if (mount_point == null) {
+                if(mount_point == null) {
                     mount_point =  volume_device ["volume.mount_point"];
                 }
 
@@ -624,9 +624,9 @@ namespace Banshee.Dap.MassStorage
         private int folder_depth = -2;
         public int FolderDepth {
             get {
-                if (folder_depth == -2) {
-                    if (player_device.PropertyExists ("portable_audio_player.folder_depth")) {
-                        folder_depth = player_device.GetPropertyInteger ("portable_audio_player.folder_depth");
+                if(folder_depth == -2) {
+                    if(player_device.PropertyExists("portable_audio_player.folder_depth")) {
+                        folder_depth = player_device.GetPropertyInteger("portable_audio_player.folder_depth");
                     } else {
                         folder_depth = -1;
                     }
@@ -641,12 +641,12 @@ namespace Banshee.Dap.MassStorage
         private string write_path = null;
         public string WritePath {
             get {
-                if (write_path == null) {
+                if(write_path == null) {
                     write_path = MountPoint;
                     // According to the HAL spec, the first folder listed in the audio_folders property
                     // is the folder to write files to.
-                    if (AudioFolders != null && AudioFolders.Length > 0) {
-                        write_path = System.IO.Path.Combine (write_path, AudioFolders[0]);
+                    if(AudioFolders != null && AudioFolders.Length > 0) {
+                        write_path = System.IO.Path.Combine(write_path, AudioFolders[0]);
                     }
                 }
 
@@ -660,9 +660,9 @@ namespace Banshee.Dap.MassStorage
         private string [] audio_folders = null;
         public string [] AudioFolders {
             get {
-                if (audio_folders == null) {
-                    if (player_device.PropertyExists ("portable_audio_player.audio_folders")) {
-                        audio_folders = player_device.GetPropertyStringList ("portable_audio_player.audio_folders");
+                if(audio_folders == null) {
+                    if(player_device.PropertyExists("portable_audio_player.audio_folders")) {
+                        audio_folders = player_device.GetPropertyStringList("portable_audio_player.audio_folders");
                     } else {
                         audio_folders = new string [] {""};
                     }
@@ -680,9 +680,9 @@ namespace Banshee.Dap.MassStorage
         private string [] playback_formats = null;
         public string [] PlaybackFormats {
             get {
-                if (playback_formats == null) {
-                    if (player_device.PropertyExists ("portable_audio_player.output_formats")) {
-                        playback_formats = player_device.GetPropertyStringList ("portable_audio_player.output_formats");
+                if(playback_formats == null) {
+                    if(player_device.PropertyExists("portable_audio_player.output_formats")) {
+                        playback_formats = player_device.GetPropertyStringList("portable_audio_player.output_formats");
                     } else {
                         // If no playback formats are set, default to MP3 and Ogg
                         playback_formats = new string [] {"audio/mp3", "audio/ogg"};

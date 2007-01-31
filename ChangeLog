@@ -1,3 +1,9 @@
+2007-01-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageTrackInfo.cs: Cleanup
+	whitespace (follow HACKING).
+
 2007-01-29  James Willcox  <snorp@snorp.net>
 
 	* src/Plugins/Banshee.Plugins.Daap/daap-sharp/Database.cs: updated from
