@@ -1,5 +1,22 @@
 2007-02-01  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/PlaylistView.cs: Add a 1px fixed column that can't be 
+	moved or resized and is always in the last position; do not allow columns
+	to be dragged to the right of this special column; this ensures that if
+	the user drags a resizable column into the 'last' position, it will not
+	fill to eat the remaining width of the view, thus creating a false width;
+	this should _finally_ get rid of unwanted horizontal scrolling. This
+	fix is hereby dedicated to Whiprush.
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs: Turn
+	on ellipsizing on columns CellRendererText renderers, fixed packing of
+	the renderer - a bug exposed by setting ellipsizing
+
+	* src/Core/Banshee.Base/Sources/AudioCdSource.cs: Show a 'Copy CD' action
+	button in the header when the source is active
+
+2007-02-01  Aaron Bockover  <abock@gnome.org>
+
 	* data/banshee.glade: Made spacing look better now that buttons do not
 	have a relief style
 

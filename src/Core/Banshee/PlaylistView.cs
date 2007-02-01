@@ -123,7 +123,15 @@ namespace Banshee
             RipColumn.PackStart(rip_renderer, true);
             RipColumn.SetCellDataFunc(rip_renderer, new TreeCellDataFunc(RipColumnDataHandler));
             InsertColumn(RipColumn, 1);
-                
+            
+            TreeViewColumn void_hack_column = new TreeViewColumn();
+            void_hack_column.Expand = false;
+            void_hack_column.Resizable = false;
+            void_hack_column.Clickable = false;
+            void_hack_column.Reorderable = false;
+            void_hack_column.FixedWidth = 1;
+            AppendColumn(void_hack_column);
+            
             // set up tree view
             RulesHint = true;
             HeadersClickable = true;
@@ -147,8 +155,7 @@ namespace Banshee
         
         private bool CheckColumnDrop(TreeView tree, TreeViewColumn col, TreeViewColumn prev, TreeViewColumn next)
         {
-            // Don't allow moving other columns before the first column
-            return prev != null;
+            return prev != null && next != null;
         }
             
         public TrackInfo IterTrackInfo(TreeIter iter)

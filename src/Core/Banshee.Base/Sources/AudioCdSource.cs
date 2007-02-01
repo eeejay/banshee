@@ -44,6 +44,7 @@ namespace Banshee.Sources
         private VBox box;
         private Alignment container;
         private AudioCdRipper ripper;
+        private ActionButton copy_button;
         
         private HighlightMessageArea audiocd_statusbar;
 
@@ -78,6 +79,11 @@ namespace Banshee.Sources
             
             container.Show();
             box.Show();
+            
+            CreateActions();
+            
+            copy_button = new ActionButton(Globals.ActionManager["DuplicateDiscAction"]);
+            copy_button.Pixbuf = IconThemeUtils.LoadIcon(22, "media-cdrom", Stock.Cdrom);
             
             SourceManager.SourceRemoved += OnSourceRemoved;
         }
@@ -133,6 +139,36 @@ namespace Banshee.Sources
             audiocd_statusbar.Pixbuf = icon;
         }
         
+        private void CreateActions()
+        {
+            action_group = new Gtk.ActionGroup("AudioCD");
+            action_group.Add(new Gtk.ActionEntry [] {
+                new Gtk.ActionEntry("DuplicateDiscAction", null, 
+                    Catalog.GetString("Copy CD"), null, null, 
+                    delegate { 
+                        foreach(Banshee.Cdrom.IDrive drive in Banshee.Burner.BurnerCore.DriveFactory) {
+                            if(drive.Device == disk.DeviceNode) {
+                                Banshee.Burner.BurnerCore.DiscDuplicator.Duplicate(drive);
+                                return;
+                            }
+                        }
+                    })
+            });
+                
+            Globals.ActionManager.UI.AddUiFromString(@"
+                <ui>
+                    <popup name='AudioCDMenu' action='AudioCDMenuActions'>
+                        <menuitem name='ImportSource' action='ImportSourceAction' />
+                        <menuitem name='DuplicateDisc' action='DuplicateDiscAction' />
+                        <separator />
+                        <menuitem name='UnmapSource' action='UnmapSourceAction' />
+                    </popup>
+                </ui>
+            ");
+                
+            Globals.ActionManager.UI.InsertActionGroup(action_group, 0);
+        }
+        
         public override bool Unmap()
         {
             if(!disk.Eject()) {
@@ -147,7 +183,13 @@ namespace Banshee.Sources
         {
             InterfaceElements.DetachPlaylistContainer();
             container.Add(InterfaceElements.PlaylistContainer);
+            InterfaceElements.ActionButtonBox.PackStart(copy_button, false, false, 0);
             UpdateAudioCdStatus();
+        }
+        
+        public override void Deactivate()
+        {
+            InterfaceElements.ActionButtonBox.Remove(copy_button);
         }
         
         public void Import()
@@ -235,32 +277,7 @@ namespace Banshee.Sources
                     return "/AudioCDMenu";
                 }
                 
-                action_group = new Gtk.ActionGroup("AudioCD");
-                action_group.Add(new Gtk.ActionEntry [] {
-                    new Gtk.ActionEntry("DuplicateDiscAction", null, 
-                        Catalog.GetString("Copy CD"), null, null, 
-                        delegate { 
-                            foreach(Banshee.Cdrom.IDrive drive in Banshee.Burner.BurnerCore.DriveFactory) {
-                                if(drive.Device == disk.DeviceNode) {
-                                    Banshee.Burner.BurnerCore.DiscDuplicator.Duplicate(drive);
-                                    return;
-                                }
-                            }
-                        })
-                });
-                
-                Globals.ActionManager.UI.AddUiFromString(@"
-                    <ui>
-                        <popup name='AudioCDMenu' action='AudioCDMenuActions'>
-                            <menuitem name='ImportSource' action='ImportSourceAction' />
-                            <menuitem name='DuplicateDisc' action='DuplicateDiscAction' />
-                            <separator />
-                            <menuitem name='UnmapSource' action='UnmapSourceAction' />
-                        </popup>
-                    </ui>
-                ");
-                
-                Globals.ActionManager.UI.InsertActionGroup(action_group, 0);
+                CreateActions();
                 
                 return "/AudioCDMenu";
             }

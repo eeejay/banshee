@@ -98,7 +98,12 @@ namespace Banshee.TrackView.Columns
             Resizable = true;
             Reorderable = true;
             Sizing = TreeViewColumnSizing.Fixed;
-            PackStart(renderer, false);
+            
+            if(renderer is CellRendererText) {
+                ((CellRendererText)renderer).Ellipsize = Pango.EllipsizeMode.End;
+            }
+            
+            PackStart(renderer, true);
             
             Clickable = true;
             SortColumnId = id;
