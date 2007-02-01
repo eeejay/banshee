@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-30 14:10+0100\n"
-"PO-Revision-Date: 2007-01-30 14:10+0100\n"
+"POT-Creation-Date: 2007-02-01 14:42+0100\n"
+"PO-Revision-Date: 2007-02-01 14:42+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -361,19 +361,20 @@ msgid ""
 msgstr ""
 
 #: ../data/audio-profiles/base.xml.in.h:1
-#, fuzzy
 msgid "Channels"
-msgstr "<b>Kanály:</b>"
+msgstr "Kanály:"
 
 #: ../data/audio-profiles/flac.xml.in.h:1
 msgid "Free Lossless Audio Codec"
-msgstr ""
+msgstr "Svobodný bezeztrátový zvukový kodek"
 
 #: ../data/audio-profiles/flac.xml.in.h:2
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
 msgstr ""
+"Svobodný bezeztrátový zvukový kodek (FLAC) je opensource kodek využívající "
+"kompresi beze ztráty kvality zvuku"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
@@ -381,18 +382,19 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
+"Proprietární a starší, ale také oblíbený, ztrátový zvukový formát "
+"vytvářející při nižších datových tocích větší soubory."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
-msgstr ""
+msgstr "Průměrný datový tok"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
 #: ../data/audio-profiles/vorbis.xml.in.h:2
 #: ../data/audio-profiles/wavpack.xml.in.h:2
 #: ../data/audio-profiles/wma.xml.in.h:3
-#, fuzzy
 msgid "Best"
-msgstr "Obnovit výchozí"
+msgstr "Nejlepší"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:5
 msgid "Constant Bitrate"
@@ -1764,7 +1766,7 @@ msgstr "Hlasitost přehrávání relativně k výstupu mixéru"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
-msgstr ""
+msgstr "Při importu zvukového CD aktivovat korekci chyb (režim paranoia)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
 msgid "Whether to expand the library node in the source view"
@@ -2095,9 +2097,8 @@ msgid "Delete Smart Playlist"
 msgstr "Vymazat inteligentní seznam skladeb"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:121
-#, fuzzy
 msgid "Edit Smart Playlist..."
-msgstr "Upravit inteligentní seznam skladeb"
+msgstr "Upravit inteligentní seznam skladeb..."
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:442
 msgid "Smart Playlist has Dependencies"
@@ -3265,6 +3266,8 @@ msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
 msgstr ""
+"Před vysunutím svého zařízení musíte spustit přehrávání skladby umístěné "
+"jinde. To je známá chyba."
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:359
 #, csharp-format
@@ -3612,14 +3615,12 @@ msgid "Download"
 msgstr "Stažení"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
-#, fuzzy
 msgid "Downloading Cover Art"
-msgstr "Zobrazit přeb_al"
+msgstr "Stahuje se přebal alba"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:211
-#, fuzzy
 msgid "Searching"
-msgstr "Vyhledávám: {0}"
+msgstr "Probíhá hledání"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:213
 msgid ""
@@ -3641,18 +3642,16 @@ msgid "<i>This is the album</i>"
 msgstr "<i>Toto je album</i>"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:4
-#, fuzzy
 msgid "Current source:"
-msgstr "Vyberte zdroj hudby pro import:"
+msgstr "Aktuální zdroj:"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:5
 msgid "Full Mode"
 msgstr "Plný režim"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:6
-#, fuzzy
 msgid "This is the artist"
-msgstr "Jaký je k tomu důvod?"
+msgstr "Toto je umělec"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
 msgid ""
@@ -3662,7 +3661,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
 msgid "Mini mode"
-msgstr ""
+msgstr "Minimální režim"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
 msgid "Switch back to full mode"
@@ -3715,9 +3714,8 @@ msgid "Show a notification when closing main window"
 msgstr "Zobrazovat oznámení při změně skladby"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:6
-#, fuzzy
 msgid "Show notifications"
-msgstr "Nelze zobrazit upozornění"
+msgstr "Zobrazovat upozornění"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
 msgid "Show track information notifications when track starts playing"
@@ -3906,18 +3904,18 @@ msgid "File complete"
 msgstr "Jméno souboru"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:345
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Unable to create directory:  {0}"
-msgstr "Nelze číst z vašeho iPodu"
+msgstr "Nelze vytvořit adresář:  {0}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:450
 msgid "Dif is not in 'running' state"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:224
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Contacting {0}..."
-msgstr "Konfigurace..."
+msgstr "Kontaktuji {0}..."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:232
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:240
@@ -3959,18 +3957,17 @@ msgid "Unable to add file to library"
 msgstr "Nelze číst z vašeho iPodu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:226
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Updating \"{0}\""
-msgstr "Upravuje se {0}"
+msgstr "Aktualizuje se \"{0}\""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:263
 msgid "Podcast Feed Update"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:267
-#, fuzzy
 msgid "Updating"
-msgstr "Oblíbenost"
+msgstr "Probíhá aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:268
 #, fuzzy
@@ -4058,14 +4055,12 @@ msgstr "Chyby"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:75
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:87
-#, fuzzy
 msgid "Description:"
-msgstr "Popis"
+msgstr "Popis:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:80
-#, fuzzy
 msgid "Last Updated:"
-msgstr "Naposledy přehráno"
+msgstr "Naposledy aktualizováno:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:85
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:83
@@ -4080,7 +4075,7 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:108
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:104
 msgid "No description available"
-msgstr ""
+msgstr "Není dostupný žádný popis"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:78
 #, fuzzy
@@ -4103,9 +4098,8 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:201
-#, fuzzy
 msgid "New"
-msgstr "Nové CD"
+msgstr "Nový"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
 msgid "Feed"
@@ -4113,7 +4107,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:107
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:75
 msgid "Feed:"
@@ -4121,7 +4115,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:79
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:105
 #, fuzzy
@@ -4150,19 +4144,17 @@ msgid "Delete Feed"
 msgstr "Smazat {0}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:668
-#, fuzzy
 msgid "Homepage"
-msgstr "Využití místa"
+msgstr "Domovská stránka"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:672
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:755
-#, fuzzy
 msgid "Properties"
-msgstr "Vlastnosti {0}"
+msgstr "Vlastnosti"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:731
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:741
 #, fuzzy
@@ -4170,9 +4162,8 @@ msgid "Remove Podcast(s)"
 msgstr "Neposlouchané"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:745
-#, fuzzy
 msgid "Select All"
-msgstr "Vybr_at vše"
+msgstr "Vybrat vše"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:748
 #, fuzzy
