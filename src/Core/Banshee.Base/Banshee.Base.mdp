@@ -82,7 +82,6 @@
     <File name="./Banshee.Metadata/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/IMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/IMetadataProvider.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Metadata/MetadataProviderFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/MetadataServiceJob.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/MetadataService.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />

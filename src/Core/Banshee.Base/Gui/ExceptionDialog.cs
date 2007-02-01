@@ -108,7 +108,7 @@ namespace Banshee.Gui.Dialogs
 			
             hbox.ShowAll();
 
-            Banshee.Base.IconThemeUtils.SetWindowIcon(this);
+            IconName = "music-player-banshee";
 
             AddButton(Stock.Close, ResponseType.Close, true);
         }

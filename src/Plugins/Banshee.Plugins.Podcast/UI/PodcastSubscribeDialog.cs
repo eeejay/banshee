@@ -75,12 +75,12 @@ namespace Banshee.Plugins.Podcast.UI
 
             Label header = new Label();
             header.Markup = "<big><b>" + GLib.Markup.EscapeText (Catalog.GetString (
-                                "Subscribe to New Podcast Feed")) + "</b></big>";
+                                "Subscribe to New Podcast")) + "</b></big>";
             header.Justify = Justification.Left;
             header.SetAlignment(0.0f, 0.0f);
 
             Label message = new Label (Catalog.GetString (
-                                           "Please enter the URL of the podcast you wish to subscribe to"));
+                                           "Please enter the URL of the podcast to which you are subscribing."));
             message.Wrap = true;
             message.Justify = Justification.Left;
             message.SetAlignment (0.0f, 0.0f);

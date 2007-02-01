@@ -65,7 +65,7 @@ namespace Banshee
         private PlaylistModel playlistModel;
 
         private Label LabelStatusBar;
-        private VolumeButton volumeButton;
+        private Bacon.VolumeButton volumeButton;
         private PlaylistView playlistView;
         private SourceView sourceView;
         private ImageAnimation spinner;
@@ -306,7 +306,7 @@ namespace Banshee
             (gxml["RightToolbarContainer"] as Box).PackStart(sync_dap_button, false, false, 0);
             
             // Volume Button
-            volumeButton = new VolumeButton();
+            volumeButton = new Bacon.VolumeButton();
             (gxml["RightToolbarContainer"] as Box).PackStart(volumeButton, false, false, 0);
             volumeButton.Show();
             volumeButton.VolumeChanged += OnVolumeScaleChanged;
@@ -473,6 +473,8 @@ namespace Banshee
             SetTip(song_properties_button, Catalog.GetString("Edit and view metadata of selected songs"));
             
             playlistMenuMap = new Hashtable();
+            
+            playlistView.HasFocus = true;
         }
         
         private void SetTip(Widget widget, string tip)
@@ -1003,11 +1005,15 @@ namespace Banshee
             alignment.ShowAll();
             
             gxml["PlaylistHeaderBox"].Show();
+            gxml["PlaylistHeaderSeparator"].Show();
         }
         
         private void ShowSourceWidget()
         {
             Alignment alignment = gxml["LibraryAlignment"] as Alignment;
+            
+            gxml["PlaylistHeaderBox"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
+            gxml["PlaylistHeaderSeparator"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
             
             if(alignment.Child == SourceManager.ActiveSource.ViewWidget) {
                 return;
@@ -1024,8 +1030,6 @@ namespace Banshee
             
             alignment.Add(SourceManager.ActiveSource.ViewWidget);
             alignment.Show();
-            
-            gxml["PlaylistHeaderBox"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
         }
         
         private void OnSourceTrackAdded(object o, TrackEventArgs args)

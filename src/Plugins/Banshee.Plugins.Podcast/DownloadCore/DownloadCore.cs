@@ -493,7 +493,7 @@ namespace Banshee.Plugins.Podcast.Download
         {
             if(userEvent == null) {
                 userEvent = new ActiveUserEvent(Catalog.GetString("Download"));
-                userEvent.Icon = IconThemeUtils.LoadIcon (Stock.Network, 22);
+                userEvent.Icon = IconThemeUtils.LoadIcon (22, "network-receive", Stock.Network);
                 userEvent.Header = Catalog.GetString ("Downloading Files");
                 userEvent.Message = Catalog.GetString ("Initializing downloads");
                 userEvent.CancelRequested += OnUserEventCancelRequestedHandler;

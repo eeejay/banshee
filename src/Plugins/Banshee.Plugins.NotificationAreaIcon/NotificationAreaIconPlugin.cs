@@ -227,34 +227,43 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void ShowNotification()
         {
             // This has to happen before the next if, otherwise the last_* members aren't set correctly.
-            if (current_track == null || (notify_last_title == current_track.DisplayTitle && notify_last_artist == current_track.DisplayArtist)) {
+            if(current_track == null || (notify_last_title == current_track.DisplayTitle 
+                && notify_last_artist == current_track.DisplayArtist)) {
                 return;
             }
+            
             notify_last_title = current_track.DisplayTitle;
             notify_last_artist = current_track.DisplayArtist;
 
-            if (cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
+            if(cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
                 return;
             }
             
             string message = String.Format("{0}\n<i>{1}</i>", 
-                    GLib.Markup.EscapeText(current_track.DisplayTitle),
-                    GLib.Markup.EscapeText(current_track.DisplayArtist));
+                GLib.Markup.EscapeText(current_track.DisplayTitle),
+                GLib.Markup.EscapeText(current_track.DisplayArtist));
+            
             Gdk.Pixbuf image = null;
             
-            if (current_track.CoverArtFileName != null) {
-                image = new Gdk.Pixbuf(current_track.CoverArtFileName);
-            } else {
+            try {
+                if(current_track.CoverArtFileName != null) {
+                    image = new Gdk.Pixbuf(current_track.CoverArtFileName);
+                } 
+            } catch {
+            }
+            
+            if(image == null) {
                 image = Branding.DefaultCoverArt;
             }
+            
             image = image.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
             
             try {
-                Notification nf = new Notification (Catalog.GetString("Now Playing"), message, image, event_box);
+                Notification nf = new Notification(Catalog.GetString("Now Playing"), message, image, event_box);
                 nf.Urgency = Urgency.Low;
                 nf.Timeout = 4500;
-                nf.Show ();
-            } catch (Exception e) {
+                nf.Show();
+            } catch(Exception e) {
                 LogCore.Instance.PushError(Catalog.GetString("Cannot show notification"), e.Message, false);
             }
         }

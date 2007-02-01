@@ -114,13 +114,13 @@ namespace Banshee.Plugins.Podcast
                                               Catalog.GetString ("Manage the Podcast plugin"), null),
 
                              new ActionEntry ("PodcastUpdateFeedsAction", Stock.Refresh,
-                                              Catalog.GetString ("Update Feeds"), "<control><shift>U",
-                                              Catalog.GetString ("Update Subscribed Podcast Feeds"),
+                                              Catalog.GetString ("Update Podcasts"), "<control><shift>U",
+                                              Catalog.GetString ("Update Subscribed Podcasts"),
                                               OnPodcastUpdateFeedsHandler),
 
-                             new ActionEntry ("PodcastSubscribeAction", Stock.New,
-                                              Catalog.GetString ("Subscribe to New Feed"), "<control>F",
-                                              Catalog.GetString ("Subscribe to New Podcast Feed"),
+                             new ActionEntry ("PodcastSubscribeAction", null,
+                                              Catalog.GetString ("Subscribe to Podcast"), "<control>F",
+                                              Catalog.GetString ("Subscribe to a new Podcast"),
                                               OnPodcastSubscribeHandler),
 
                              new ActionEntry ("PodcastVisitPodcastAlleyAction", Stock.JumpTo,

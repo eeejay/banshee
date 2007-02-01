@@ -61,7 +61,7 @@ namespace Banshee.Widgets
             cover = new CoverArtThumbnail(size);
             cover.NoArtworkPixbuf = Banshee.Base.Branding.DefaultCoverArt;
             PackStart(cover, false, false, 0);
-            cover.Show();
+            cover.Hide();
         
             box = new VBox();
             box.Spacing = 2;

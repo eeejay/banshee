@@ -66,6 +66,7 @@ namespace Banshee.Plugins.Podcast.UI
         private VPaned feed_playlist_pane;
 
         private ActionButton update_button;
+        private ActionButton subscribe_button;
 
         private bool loaded = false;
         private bool loading = false;
@@ -143,7 +144,6 @@ namespace Banshee.Plugins.Podcast.UI
 
         protected override void OnDispose()
         {
-
             PodcastCore.Library.TrackAdded -= OnLibraryTrackAdded;
             PodcastCore.Library.TrackRemoved -= OnLibraryTrackRemoved;
 
@@ -158,12 +158,13 @@ namespace Banshee.Plugins.Podcast.UI
 
         public override void Activate()
         {
+            InterfaceElements.ActionButtonBox.PackStart (subscribe_button, false, false, 0);
             InterfaceElements.ActionButtonBox.PackStart (update_button, false, false, 0);
         }
 
         public override void Deactivate()
         {
-
+            InterfaceElements.ActionButtonBox.Remove (subscribe_button);
             InterfaceElements.ActionButtonBox.Remove (update_button);
             Commit ();
         }
@@ -235,6 +236,8 @@ namespace Banshee.Plugins.Podcast.UI
             }
 
             update_button = new ActionButton (Globals.ActionManager ["PodcastUpdateFeedsAction"]);
+            subscribe_button = new ActionButton (Globals.ActionManager ["PodcastSubscribeAction"]);
+            subscribe_button.Pixbuf = PodcastPixbufs.PodcastIcon22;
             viewWidget = feed_playlist_pane;
 
             viewWidget.ShowAll ();
@@ -268,10 +271,14 @@ namespace Banshee.Plugins.Podcast.UI
             );
         }
 
+        public override bool CanWriteToCD {
+            get { return false; }
+        }
+        
         public override bool SearchEnabled {
             get { return false; }
         }
-
+        
         public override IEnumerable<TrackInfo> Tracks {
             get
             {
@@ -286,7 +293,11 @@ namespace Banshee.Plugins.Podcast.UI
         public override Gdk.Pixbuf Icon {
             get { return icon; }
         }
-
+        
+        public override bool ShowPlaylistHeader {
+            get { return false; }
+        }
+        
         public override Widget ViewWidget {
             get { return viewWidget; }
         }
@@ -605,12 +616,12 @@ namespace Banshee.Plugins.Podcast.UI
                 default_popup_menu = new Menu ();
 
                 default_new_menu_item = new ImageMenuItem (
-                                            Catalog.GetString ("Subscribe to New Feed"));
+                                            Catalog.GetString ("Subscribe to Podcast"));
                 default_new_menu_item.Image = new Gtk.Image (Gtk.Stock.New, IconSize.Menu);
                 default_new_menu_item.Activated += OnFeedMenuNewActivated;
 
                 default_update_all_menu_item =
-                    new ImageMenuItem (Catalog.GetString("Update All Feeds"));
+                    new ImageMenuItem (Catalog.GetString("Update All Podcasts"));
                 default_update_all_menu_item.Image = new Gtk.Image (Gtk.Stock.Refresh, IconSize.Menu);
                 default_update_all_menu_item.Activated += OnUpdateAllActivated;
 
@@ -653,15 +664,15 @@ namespace Banshee.Plugins.Podcast.UI
                 feed_subscription_menu_item = new CheckMenuItem (Catalog.GetString("Subscribed"));
                 feed_subscription_menu_item.Toggled += OnFeedMenuSubscribeToggled;
 
-                feed_update_menu_item = new ImageMenuItem (Catalog.GetString ("Update Feed"));
+                feed_update_menu_item = new ImageMenuItem (Catalog.GetString ("Update Podcast"));
                 feed_update_menu_item.Image = new Gtk.Image (Gtk.Stock.Refresh, IconSize.Menu);
                 feed_update_menu_item.Activated += OnFeedMenuUpdateCurrentActivated;
 
-                feed_remove_menu_item = new ImageMenuItem (Catalog.GetString ("Delete Feed"));
+                feed_remove_menu_item = new ImageMenuItem (Catalog.GetString ("Delete Podcast"));
                 feed_remove_menu_item.Image = new Gtk.Image (Gtk.Stock.Delete, IconSize.Menu);
                 feed_remove_menu_item.Activated += OnFeedMenuRemoveActivated;
 
-                feed_new_menu_item = new ImageMenuItem (Catalog.GetString ("Subscribe to New Feed"));
+                feed_new_menu_item = new ImageMenuItem (Catalog.GetString ("Subscribe to Podcast"));
                 feed_new_menu_item.Image = new Gtk.Image (Gtk.Stock.New, IconSize.Menu);
                 feed_new_menu_item.Activated += OnFeedMenuNewActivated;
 
@@ -738,7 +749,7 @@ namespace Banshee.Plugins.Podcast.UI
 
                 download_cancel_separator = new SeparatorMenuItem ();
 
-                playlist_remove_item  = new ImageMenuItem (Catalog.GetString ("Remove Podcast(s)"));
+                playlist_remove_item  = new ImageMenuItem (Catalog.GetString ("Remove Episodes(s)"));
                 playlist_remove_item.Image = new Gtk.Image (Gtk.Stock.Remove, IconSize.Menu);
                 playlist_remove_item.Activated += OnRemovePodcasts;
 

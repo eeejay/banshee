@@ -1,8 +1,8 @@
 /***************************************************************************
  *  DrawingUtilities.cs
  *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Copyright (C) 2006-2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -27,6 +27,10 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
+
+using Gdk;
+using Cairo;
 using Gtk;
 
 namespace Banshee.Widgets
@@ -60,6 +64,20 @@ namespace Banshee.Widgets
             Gdk.Color color = new Gdk.Color((byte)blR, (byte)blG, (byte)blB);
             Gdk.Colormap.System.AllocColor(ref color, true, true);
             return color;
+        }
+        
+        public static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
+        {
+            return GdkColorToCairoColor(color, 1.0);
+        }
+        
+        public static Cairo.Color GdkColorToCairoColor(Gdk.Color color, double alpha)
+        {
+            return new Cairo.Color(
+                (double)(color.Red >> 8) / 255.0,
+                (double)(color.Green >> 8) / 255.0,
+                (double)(color.Blue >> 8) / 255.0,
+                alpha);
         }
     }
 }

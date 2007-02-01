@@ -314,6 +314,14 @@ namespace Banshee.Plugins.Radio
             get { return false; }
         }
         
+        public override bool CanWriteToCD {
+            get { return false; }
+        }
+                
+        public override bool ShowPlaylistHeader {
+            get { return false; }
+        }
+        
         private static Gdk.Pixbuf icon = Gdk.Pixbuf.LoadFromResource("source-radio.png");
         
         public override Gdk.Pixbuf Icon {

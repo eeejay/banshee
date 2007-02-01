@@ -31,7 +31,7 @@ namespace Banshee.Plugins.MiniMode
         [Widget] private Gtk.Label ArtistLabel;
         
         private CoverArtThumbnail cover_art_thumbnail;
-        private VolumeButton volume_button;
+        private Bacon.VolumeButton volume_button;
         private SourceComboBox source_combo_box;
         private SeekSlider seek_slider;
         private StreamPositionLabel stream_position_label;
@@ -91,7 +91,7 @@ namespace Banshee.Plugins.MiniMode
             SeekContainer.ShowAll();
 
             // Volume button
-            volume_button = new VolumeButton();
+            volume_button = new Bacon.VolumeButton();
             VolumeContainer.PackStart(volume_button, false, false, 0);
             volume_button.Show();
             volume_button.VolumeChanged += delegate(int volume) {

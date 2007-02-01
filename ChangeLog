@@ -1,3 +1,56 @@
+2007-02-01  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee.glade: Made spacing look better now that buttons do not
+	have a relief style
+
+	* data/UIManagerLayout.xml: Added placeholder for actions that are 'new'
+
+	* data/audio-profiles/Makefile.am: CLEANFILES->DISTCLEANFILES, fixes a 
+	potential build issue regarding generating the audio profiles .xml files
+
+	* src/Plugins/Banshee.Plugins.Podcast/*: Added a subscribe button to the
+	toolbar, change the verbage of 'feed' to 'podcast' as it's more user 
+	friendly (BNC 237045, 237038)
+
+	* src/Plugins/Banshee.Plugins.Radio/RadioSource.cs: Do not show the
+	playlist header and disable Write to CD action
+
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Fixed a potential crasher regarding showing cover art (BNC 236428)
+
+	* src/Core/Banshee/PlayerInterface.cs: Fixed visibility logic of the
+	playlist header; fixed a tiny focus bug
+
+	* src/Core/Banshee.Widgets/ActionButton.cs: Set relief to none
+
+	* src/Core/Banshee.Widgets/FadingAlignment.cs: Added a nice fading
+	widget, but it's not in use anywhere right now; my idea didn't work
+	out like I wanted it to, but the widget may still be useful
+
+	* src/Core/Banshee.Widgets/DiscUsageDisplay.cs:
+	* src/Core/Banshee.Widgets/DrawingUtilities.cs: Moved GdkColorToCairoColor
+	from private widgets to avoid duplication
+
+	* src/Core/Banshee.Base/Gui/ExceptionDialog.cs: Do not load the icon
+	name for the window from branding because the dialog might be handling
+	a crash from before branding initialization, in which case a nullref
+	will occur
+
+	* src/Core/Banshee.Base/IconThemeUtils.cs: Finally updated to use the
+	binding API for Gtk.IconTheme love; this code was written in the Gtk# 2.4
+	era, when there was no binding for Gtk.IconTheme; gets rid of a lot of
+	native interop at the Banshee level
+
+	* src/Core/Banshee.Base/Sources/AudioCdSource.cs: Disable the Write to CD
+	action
+
+	* src/Core/Banshee.Base/TrackInfoHeader.cs: Ensure the cover art thumbnail
+	is hidden on idle, not just empty
+
+	* src/Core/Banshee.Base/SourceManager.cs: Respect source.CanWriteToCD
+
+	* src/Core/Banshee.Base/Source.cs: Added CanWriteToCD virtual property
+
 2007-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Base/FileNamePattern.cs: Escape &'s too.

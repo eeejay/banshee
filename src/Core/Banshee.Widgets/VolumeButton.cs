@@ -32,7 +32,7 @@ using GLib;
 using Gtk;
 using System;
 
-namespace Banshee.Widgets
+namespace Bacon
 {
 	public class VolumeButton : ToggleButton
 	{
@@ -79,6 +79,8 @@ namespace Banshee.Widgets
 
 		public VolumeButton () : base ()
 		{
+            Relief = ReliefStyle.None;
+
 			icon = new Image ();
 			icon.Show ();
 			Add (icon);

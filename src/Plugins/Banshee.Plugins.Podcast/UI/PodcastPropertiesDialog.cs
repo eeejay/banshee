@@ -72,7 +72,7 @@ namespace Banshee.Plugins.Podcast.UI
             ArrayList labels = new ArrayList ();
 
             Label feed_label = new Label ();
-            feed_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString ("Feed:")));
+            feed_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString ("Podcast:")));
             labels.Add (feed_label);
 
             Label pubdate_label = new Label ();

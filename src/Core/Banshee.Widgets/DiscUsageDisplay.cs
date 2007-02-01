@@ -64,30 +64,16 @@ namespace Banshee.Widgets
         {
             AppPaintable = true;
         }
-
-        private static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
-        {
-            return GdkColorToCairoColor(color, 1.0);
-        }
-        
-        private static Cairo.Color GdkColorToCairoColor(Gdk.Color color, double alpha)
-        {
-            return new Cairo.Color(
-                (double)(color.Red >> 8) / 255.0,
-                (double)(color.Green >> 8) / 255.0,
-                (double)(color.Blue >> 8) / 255.0,
-                alpha);
-        }
         
         protected override void OnStyleSet(Gtk.Style style)
         {
-            fill_color_a = GdkColorToCairoColor(Style.Background(StateType.Selected));
-            fill_color_b = GdkColorToCairoColor(Style.Foreground(StateType.Selected));
-            fill_color_c = GdkColorToCairoColor(Style.Background(StateType.Normal));
-            stroke_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.6);
-            inner_stroke_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.4);
-            text_color = GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.8);
-            text_bg_color = GdkColorToCairoColor(Style.Background(StateType.Normal), 0.6);
+            fill_color_a = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Selected));
+            fill_color_b = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Selected));
+            fill_color_c = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Normal));
+            stroke_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.6);
+            inner_stroke_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.4);
+            text_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.8);
+            text_bg_color = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Normal), 0.6);
         }
         
         protected override void OnSizeAllocated(Gdk.Rectangle rect)

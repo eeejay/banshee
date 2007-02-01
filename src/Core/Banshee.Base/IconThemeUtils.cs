@@ -1,7 +1,7 @@
 /***************************************************************************
  *  IconThemeUtils.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2005-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -27,27 +27,15 @@
  */
  
 using System;
-using System.Runtime.InteropServices;
-using Gdk;
-using GLib;
+using Gtk;
 
 namespace Banshee.Base
 {
     public static class IconThemeUtils
     {
-        [DllImport("libgtk-win32-2.0-0.dll")]
-        private extern static IntPtr gtk_icon_theme_get_default();
-
-        [DllImport("libgtk-win32-2.0-0.dll")]
-        private extern static IntPtr gtk_icon_theme_load_icon(IntPtr theme, string name, int size, 
-            int flags, IntPtr error);
-            
-        [DllImport("libgtk-win32-2.0-0.dll")]
-        private static extern bool gtk_icon_theme_has_icon(IntPtr theme, string name);
-
         public static bool HasIcon(string name)
         {
-            return gtk_icon_theme_has_icon(gtk_icon_theme_get_default(), name);
+            return IconTheme.Default.HasIcon(name);
         }
 
         public static Gdk.Pixbuf LoadIcon(int size, params string [] names)
@@ -70,14 +58,11 @@ namespace Banshee.Base
         public static Gdk.Pixbuf LoadIcon(string name, int size, bool fallBackOnResource)
         {
             try {
-                IntPtr native = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(), name, size, 0, IntPtr.Zero);
-                if(native != IntPtr.Zero) {
-                    Gdk.Pixbuf ret = (Gdk.Pixbuf)GLib.Object.GetObject(native, true);
-                    if(ret != null) {
-                        return ret;
-                    }
+                Gdk.Pixbuf pixbuf = IconTheme.Default.LoadIcon(name, size, (IconLookupFlags)0);
+                if(pixbuf != null) {
+                    return pixbuf;
                 }
-            } catch(Exception) {
+            } catch {
             }
             
             if(!fallBackOnResource) {
@@ -91,15 +76,6 @@ namespace Banshee.Base
             }
         }
 
-		[DllImport("libgobject-2.0-0.dll")]
-		static extern IntPtr g_type_class_peek(IntPtr gtype);
-
-		[DllImport("libgobject-2.0-0.dll")]
-		static extern IntPtr g_object_class_find_property(IntPtr klass, string name);
-
-		[DllImport("libgobject-2.0-0.dll")]
-		static extern void g_object_set(IntPtr obj, string property, IntPtr value, IntPtr nullarg);
-
         public static void SetWindowIcon(Gtk.Window window)
         {
             SetWindowIcon(window, Branding.ApplicationIconName);
@@ -107,14 +83,8 @@ namespace Banshee.Base
 
         public static void SetWindowIcon(Gtk.Window window, string iconName)
         {
-            GType gtype = (GType)typeof(Gtk.Window);
-            IntPtr klass = g_type_class_peek(gtype.Val);
-            IntPtr property = g_object_class_find_property(klass, "icon-name");
-
-            if(property != IntPtr.Zero) {
-                IntPtr str_ptr = GLib.Marshaller.StringToPtrGStrdup(iconName);
-                g_object_set(window.Handle, "icon-name", str_ptr, IntPtr.Zero);
-                GLib.Marshaller.Free(str_ptr);
+            if(window != null && iconName != null) {
+                window.IconName = iconName;
             }
         }
     }

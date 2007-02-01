@@ -426,6 +426,10 @@ namespace Banshee.Sources
         public virtual bool CanActivate {
             get { return true; }
         }
+        
+        public virtual bool CanWriteToCD {
+            get { return true; }
+        }
 
         private bool can_rename = true;
         public bool CanRename {

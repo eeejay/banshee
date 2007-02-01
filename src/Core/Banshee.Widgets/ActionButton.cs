@@ -62,6 +62,8 @@ namespace Banshee.Widgets
         
         private void BuildButton()
         {
+            Relief = ReliefStyle.None;
+        
             box.Spacing = 5;
             box.PackStart(image, false, false, 0);
             box.PackStart(label, true, true, 0);

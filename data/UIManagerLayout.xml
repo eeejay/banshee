@@ -3,6 +3,7 @@
         <menu name="MusicMenu" action="MusicMenuAction">
             <menuitem name="NewPlaylist" action="NewPlaylistAction" />
             <menuitem name="NewCD" action="NewCDAction" />
+            <placeholder name="NewMusicMenuAdditions" />
             <!--<menuitem name="ImportFolder" action="ImportFolderAction" />
             <menuitem name="ImportFiles" action="ImportFilesAction" />-->
             <separator />

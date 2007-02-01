@@ -92,13 +92,13 @@ namespace Banshee.Plugins.Podcast.UI
             Model = sort;
 
             podcast_title_column = NewColumn (
-                Catalog.GetString ("Title"), 
+                Catalog.GetString ("Episode"), 
                 (int) Column.PodcastTitle,
                 GConfSchemas.PodcastTitleColumnSchema
             );
             
             feed_title_column = NewColumn (
-                Catalog.GetString ("Feed"), 
+                Catalog.GetString ("Podcast"), 
                 (int) Column.FeedTitle,
                 GConfSchemas.PodcastFeedColumnSchema
             );
@@ -108,6 +108,9 @@ namespace Banshee.Plugins.Podcast.UI
                 (int) Column.PubDate,
                 GConfSchemas.PodcastDateColumnSchema
             );
+            
+            pubdate_column.Resizable = false;
+            pubdate_column.FixedWidth = 120;
 
             /********************************************/
 

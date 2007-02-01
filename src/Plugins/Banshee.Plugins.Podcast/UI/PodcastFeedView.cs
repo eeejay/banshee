@@ -75,7 +75,7 @@ namespace Banshee.Plugins.Podcast.UI
             feed_activity_column.Visible = true;
             feed_activity_column.MinWidth = 32;
 
-            feed_title_column.Title = Catalog.GetString ("Feeds");
+            feed_title_column.Title = Catalog.GetString ("Podcasts");
             feed_title_column.Expand = true;
             feed_title_column.Resizable = false;
             feed_title_column.Clickable = false;
@@ -176,7 +176,7 @@ namespace Banshee.Plugins.Podcast.UI
 
                 renderer.Text = String.Format( 
 				     Catalog.GetPluralString (
-					"{0} Feed", "{0} Feeds", PodcastCore.Library.FeedCount
+					"{0} Podcast", "{0} Podcasts", PodcastCore.Library.FeedCount
 				     ),
                                      PodcastCore.Library.FeedCount
                                 );

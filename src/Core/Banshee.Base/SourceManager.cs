@@ -250,7 +250,7 @@ namespace Banshee.Sources
         
         public static void SensitizeActions(Source source)
         {
-            Globals.ActionManager["WriteCDAction"].Visible = !(source is AudioCdSource);
+            Globals.ActionManager["WriteCDAction"].Visible = source.CanWriteToCD;
             Globals.ActionManager["WriteCDAction"].Sensitive = source is Banshee.Burner.BurnerSource;
             
             Globals.ActionManager.AudioCdActions.Visible = source is AudioCdSource;

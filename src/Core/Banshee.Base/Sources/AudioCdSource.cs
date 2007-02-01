@@ -287,6 +287,10 @@ namespace Banshee.Sources
             get { return false; }
         }
         
+        public override bool CanWriteToCD {
+            get { return false; }
+        }
+        
         public override Gtk.Widget ViewWidget {
             get { return box; }
         }
