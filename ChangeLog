@@ -1,3 +1,13 @@
+2007-02-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/CoverArtThumbnail.cs: Call SetSizeRequest on
+	the image, not on the window, ensure Resize on the window is always smaller
+	than the image so the image.SetSizeRequest ends up making the window 
+	fit perfectly to the scaled cover art (Fixes BGO 334698); split 
+	CoverArtView into a separate file
+	
+	* src/Core/Banshee.Widgets/CoverArtView.cs: Split class out of old file
+
 2007-02-01  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee/PlaylistView.cs: Add a 1px fixed column that can't be 

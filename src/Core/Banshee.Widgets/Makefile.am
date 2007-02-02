@@ -10,6 +10,7 @@ ASSEMBLY_SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/ActionButton.cs \
 	$(srcdir)/AltProgressBar.cs \
+	$(srcdir)/CoverArtView.cs \
 	$(srcdir)/CoverArtThumbnail.cs \
 	$(srcdir)/DateButton.cs \
 	$(srcdir)/EllipsizeLabel.cs \

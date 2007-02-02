@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  CoverArtThumbnail.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -33,97 +32,6 @@ using Gdk;
 
 namespace Banshee.Widgets
 {
-    public class CoverArtView : DrawingArea
-    {
-        private Pixbuf pixbuf;
-        private double ratio;
-        private int last_width;
-        private bool enabled;
-        
-        public CoverArtView() : base()
-        {
-        }
-        
-        protected override bool OnConfigureEvent(Gdk.EventConfigure evnt)
-        {
-            if(last_width == evnt.Width) {
-                return true;
-            }
-            
-            last_width = evnt.Width;
-            SetSizeRequest();
-            
-            return true;
-        }
-
-        private void SetSizeRequest()
-        {
-            SetSizeRequest(-1, (int)(ratio * (double)last_width));
-        }
-        
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
-        {
-            if(pixbuf == null) {
-                return true;
-            }
-            
-            Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(Allocation.Width, Allocation.Height, 
-                Gdk.InterpType.Bilinear);
-            GdkWindow.DrawPixbuf(Style.BackgroundGC(State), scaled_pixbuf, 0, 0, 
-                0, 0, scaled_pixbuf.Width, scaled_pixbuf.Height, RgbDither.Normal, 0, 0);
-                
-            return true;
-        }
-        
-        public bool Enabled {
-            get {
-                return enabled;
-            }
-            
-            set {
-                enabled = value;
-                
-                if(!enabled || pixbuf == null) {
-                    Hide();
-                    return;
-                }
-                
-                if(pixbuf == null) {
-                    Hide();
-                }
-                
-                Show();
-                QueueDraw();
-            }
-        }
-        
-        public string FileName {
-            set {
-                try {
-                    if(value == null || !System.IO.File.Exists(value)) {
-                        throw new ApplicationException("Invalid file name");
-                    }
-                    
-                    pixbuf = new Pixbuf(value);
-                    if(pixbuf == null) {
-                        throw new ApplicationException("Could not create pixbuf");
-                    }
-                    
-                    ratio = (double)pixbuf.Height / (double)pixbuf.Width;
-                    SetSizeRequest();
-                    
-                    if(enabled) {
-                        Show();
-                        QueueDraw();
-                    }
-                } catch(Exception) {
-                    pixbuf = null;
-                    Hide();
-                }
-            }
-        }
-    }
-    
     public class CoverArtThumbnail : EventBox
     {
         private Gtk.Image image;
@@ -249,78 +157,80 @@ namespace Banshee.Widgets
             popup.Image = this.pixbuf;
             Show();
         }
-    }
-
-    public class CoverArtPopup : Gtk.Window
-    {
-        private Gtk.Image image;
-        private Label label;
-        
-        public event EventHandler CursorLeave;
-        
-        public CoverArtPopup() : base(Gtk.WindowType.Popup)
+    
+        private class CoverArtPopup : Gtk.Window
         {
-            VBox vbox = new VBox();
-            Add(vbox);
+            private Gtk.Image image;
+            private Label label;
             
-            Decorated = false;
-            BorderWidth = 6;
+            public event EventHandler CursorLeave;
             
-            SetPosition(WindowPosition.CenterAlways);
+            public CoverArtPopup() : base(Gtk.WindowType.Popup)
+            {
+                VBox vbox = new VBox();
+                Add(vbox);
+                
+                Decorated = false;
+                BorderWidth = 6;
+                
+                SetPosition(WindowPosition.CenterAlways);
 
-            LeaveNotifyEvent += OnLeaveNotifyEvent;
-           
-            image = new Gtk.Image();
-            label = new Label("");
-            label.CanFocus = false;
-            
-            label.ModifyBg(StateType.Normal, new Color(0, 0, 0));
-            label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
-            ModifyBg(StateType.Normal, new Color(0, 0, 0));
-            ModifyFg(StateType.Normal, new Color(160, 160, 160));
-            
-            vbox.PackStart(image, true, true, 0);
-            vbox.PackStart(label, false, false, 0);
-            
-            vbox.Spacing = 6;
-            vbox.ShowAll();
-        }
-        
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
-        {
-            if(CursorLeave != null) {
-                CursorLeave(this, new EventArgs());
-            }    
-        }
-        
-        public Pixbuf Image {
-            set {
-                int width = value.Width, height = value.Height;
-                if (height >= Screen.Height * 0.75) {
-                    width = (int) (width * ((Screen.Height * 0.75) / height));
-                    height = (int) (Screen.Height * 0.75);
-                }
-
-                if (width >= Screen.Width * 0.75) {
-                    height = (int) (height * ((Screen.Width * 0.75) / width));
-                    width = (int) (Screen.Width * 0.75);
-                }
-
-                if ((width != value.Width) || (height != value.Height))
-                    image.Pixbuf = value.ScaleSimple(width, height, InterpType.Bilinear);
-                else
-                    image.Pixbuf = value;
-
-                SetSizeRequest(image.Pixbuf.Width, image.Pixbuf.Height);
-                Resize(image.Pixbuf.Width, image.Pixbuf.Height);
+                LeaveNotifyEvent += OnLeaveNotifyEvent;
+               
+                image = new Gtk.Image();
+                label = new Label("");
+                label.CanFocus = false;
+                
+                label.ModifyBg(StateType.Normal, new Color(0, 0, 0));
+                label.ModifyFg(StateType.Normal, new Color(160, 160, 160));
+                ModifyBg(StateType.Normal, new Color(0, 0, 0));
+                ModifyFg(StateType.Normal, new Color(160, 160, 160));
+                
+                vbox.PackStart(image, true, true, 0);
+                vbox.PackStart(label, false, false, 0);
+                
+                vbox.Spacing = 6;
+                vbox.ShowAll();
             }
-        }
-        
-        public string Label {
-            set {
-                try {
-                    label.Markup = String.Format("<small><b>{0}</b></small>", GLib.Markup.EscapeText(value));
-                } catch(Exception) {
+            
+            private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
+            {
+                if(CursorLeave != null) {
+                    CursorLeave(this, new EventArgs());
+                }    
+            }
+            
+            public Pixbuf Image {
+                set {
+                    int width = value.Width, height = value.Height;
+                    
+                    if(height >= Screen.Height * 0.75) {
+                        width = (int)(width * ((Screen.Height * 0.75) / height));
+                        height = (int)(Screen.Height * 0.75);
+                    }
+
+                    if(width >= Screen.Width * 0.75) {
+                        height = (int)(height * ((Screen.Width * 0.75) / width));
+                        width = (int)(Screen.Width * 0.75);
+                    }
+
+                    if(width != value.Width || height != value.Height) {
+                        image.Pixbuf = value.ScaleSimple(width, height, InterpType.Bilinear);
+                    } else {
+                        image.Pixbuf = value;
+                    }
+                    
+                    image.SetSizeRequest(image.Pixbuf.Width, image.Pixbuf.Height);
+                    Resize(1, 1);
+                }
+            }
+            
+            public string Label {
+                set {
+                    try {
+                        label.Markup = String.Format("<small><b>{0}</b></small>", GLib.Markup.EscapeText(value));
+                    } catch(Exception) {
+                    }
                 }
             }
         }
