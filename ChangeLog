@@ -1,5 +1,11 @@
 2007-02-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Gui/TrackEditor.cs:
+	* data/banshee-dialogs.glade: Changed wording on the copy all fields button
+	to make it easier to understand and translate (BGO 399650)
+
+2007-02-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/PlaylistView.cs: Remove Dispose override, 
 	added SaveColumns
 

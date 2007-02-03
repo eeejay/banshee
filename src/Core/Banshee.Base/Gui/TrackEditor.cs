@@ -1,7 +1,7 @@
 /***************************************************************************
  *  TrackEditor.cs
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2005-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -216,7 +216,7 @@ namespace Banshee.Gui.Dialogs
             tips.SetTip(AlbumSync, Catalog.GetString("Set all albums to this value"), "albums");
             tips.SetTip(GenreSync, Catalog.GetString("Set all genres to this value"), "genres"); 
             tips.SetTip(YearSync, Catalog.GetString("Set all years to this value"), "years");
-            tips.SetTip(SyncAll, Catalog.GetString("Set all common fields in all selected tracks to the values currently set"), "all");
+            tips.SetTip(SyncAll, Catalog.GetString("Apply the values of this track set for the Artist, Album Title, Genre, Track count, Year, and Rating fields to the rest of the selected tracks in this editor."), "all");
             tips.SetTip(RatingSync, Catalog.GetString("Set all ratings to this value"), "ratings");
             
             LoadTrack(0);
