@@ -573,7 +573,7 @@ namespace Banshee
         {
             WindowPlayer.Hide();
             ActiveUserEventsManager.Instance.CancelAll();
-            playlistView.Dispose();
+            playlistView.SaveColumns();
             PlayerEngineCore.Dispose();
             PlayerWindowSchema.SourceViewWidth.Set(SourceSplitter.Position);
             Application.Quit();

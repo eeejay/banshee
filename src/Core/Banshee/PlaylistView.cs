@@ -168,14 +168,12 @@ namespace Banshee
             TrackViewColumnWindow chooser = new TrackViewColumnWindow(columns);
             chooser.Show();
         }
-        
-        public override void Dispose()
+
+        public void SaveColumns()
         {
             foreach(TrackViewColumn column in columns) {
                 column.Save(Columns);
             }
-            
-            base.Dispose();
         }
         
         private void SetTrackPixbuf(CellRendererPixbuf renderer, TrackInfo track, bool nowPlaying)

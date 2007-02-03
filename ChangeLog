@@ -1,3 +1,10 @@
+2007-02-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee/PlaylistView.cs: Remove Dispose override, 
+	added SaveColumns
+
+	* src/Core/Banshee/PlayerInterface.cs: Call playlistView.SaveColumns
+
 2007-02-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/CoverArtThumbnail.cs: Call SetSizeRequest on
