@@ -1,3 +1,8 @@
+2007-02-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/VolumeButton.cs: Port of the C version of
+	BaconVolumeWidget - a much more natural and easy to use volume button
+
 2007-02-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Gui/TrackEditor.cs:
