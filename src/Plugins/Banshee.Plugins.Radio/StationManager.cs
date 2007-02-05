@@ -1,7 +1,7 @@
 /***************************************************************************
  *  StationManager.cs
  *
- *  Copyright (C) 2006 Novell, Inc.
+ *  Copyright (C) 2006-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
@@ -70,16 +70,42 @@ namespace Banshee.Plugins.Radio
                 get { return group; }
             }
         }
+        
+        public class StationArgs : EventArgs
+        {
+            private StationGroup group;
+            private Track station;
+            
+            public StationArgs(StationGroup group, Track station)
+            {
+                this.group = group;
+                this.station = station;
+            }
+            
+            public StationGroup Group {
+                get { return group; }
+            }
+            
+            public Track Station {
+                get { return station; }
+            }
+        }
     
         public delegate void StationsLoadFailedHandler(object o, StationsLoadFailedArgs args);
         public delegate void StationGroupHandler(object o, StationGroupArgs args);
+        public delegate void StationHandler(object o, StationArgs args);
         
         private static readonly Uri master_xspf_uri = new Uri("http://radio.banshee-project.org/"); 
         private static readonly TimeSpan check_timeout = TimeSpan.FromDays(1);
         private static readonly string stations_path = Path.Combine(Paths.UserPluginDirectory, "stations");
+        private static readonly string local_stations_path = Path.Combine(stations_path, "user");
         
         public static string StationsPath {
             get { return stations_path; }
+        }
+        
+        public static string LocalStationsPath {
+            get { return local_stations_path; }
         }
         
         private List<StationGroup> station_groups = new List<StationGroup>();
@@ -87,9 +113,12 @@ namespace Banshee.Plugins.Radio
         
         public event StationGroupHandler StationGroupAdded;
         public event StationGroupHandler StationGroupRemoved;
+        public event StationHandler StationAdded;
+        public event StationHandler StationRemoved;
         
         public event EventHandler StationsLoaded;
         public event EventHandler StationsRefreshing;
+        public event EventHandler CountUpdated;
         public event StationsLoadFailedHandler StationsLoadFailed;
         
         public StationManager()
@@ -139,12 +168,15 @@ namespace Banshee.Plugins.Radio
         
             try {
                 Directory.CreateDirectory(stations_path);
+                Directory.CreateDirectory(local_stations_path);
                 
-                foreach(string xspf_file in Directory.GetFiles(stations_path, "*.xspf")) {
-                    LoadStation(xspf_file, false);
+                if(ShowRemoteStationsSchema.Get()) {
+                    foreach(string xspf_file in Directory.GetFiles(stations_path, "*.xspf")) {
+                        LoadStation(xspf_file, false);
+                    }
                 }
                 
-                foreach(string xspf_file in Directory.GetFiles(Path.Combine(stations_path, "user"), "*.xspf")) {
+                foreach(string xspf_file in Directory.GetFiles(local_stations_path, "*.xspf")) {
                     LoadStation(xspf_file, true);
                 }
             } catch {
@@ -206,6 +238,78 @@ namespace Banshee.Plugins.Radio
             OnStationGroupRemoved(group);
         }
         
+        public void UpdateStation(Track station, string title, string uri, string description)
+        {
+            station.Title = title;
+            station.Annotation = description;
+            station.InsertLocation(0, new Uri(uri));
+            (station.Parent as StationGroup).Save();
+        }
+        
+        public void CreateStation(string group_name, string title, string uri, string description)
+        {
+            StationGroup parent = null;
+            
+            foreach(StationGroup group in station_groups) {
+                if(group.CanEdit && group.Title == group_name) {
+                    parent = group;
+                    break;
+                }
+            }
+            
+            if(parent == null) {
+                parent = new StationGroup(group_name);
+                station_groups.Add(parent);
+                OnStationGroupAdded(parent);
+            } 
+            
+            total_stations++;
+            OnCountUpdated();
+            
+            Track station = new Track();
+            parent.AddTrack(station);
+            UpdateStation(station, title, uri, description);
+            
+            OnStationAdded(parent, station);
+        }
+        
+        public void RemoveStation(StationGroup group, Track station)
+        {
+            if(!group.CanEdit) {
+                return;
+            }
+            
+            total_stations--;
+            OnCountUpdated();
+            
+            group.RemoveTrack(station);
+            
+            OnStationRemoved(group, station);
+            
+            if(group.TrackCount == 0) {
+                station_groups.Remove(group);
+                File.Delete(group.LocalPath);
+            } else {
+                group.Save();
+            }
+        }
+        
+        private void OnStationAdded(StationGroup group, Track station)
+        {
+            StationHandler handler = StationAdded;
+            if(handler != null) {
+                handler(this, new StationArgs(group, station));
+            }
+        }
+        
+        private void OnStationRemoved(StationGroup group, Track station)
+        {
+            StationHandler handler = StationRemoved;
+            if(handler != null) {
+                handler(this, new StationArgs(group, station));
+            }
+        }
+        
         private void OnStationGroupAdded(StationGroup group)
         {
             StationGroupHandler handler = StationGroupAdded;
@@ -243,6 +347,14 @@ namespace Banshee.Plugins.Radio
             StationsLoadFailedHandler handler = StationsLoadFailed;
             if(handler != null) {
                 handler(this, new StationsLoadFailedArgs(e.Message));
+            }
+        }
+        
+        private void OnCountUpdated()
+        {
+            EventHandler handler = CountUpdated;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
             }
         }
         
@@ -368,6 +480,13 @@ namespace Banshee.Plugins.Radio
             false,
             "Show stations requiring Helix/RealPlayer",
             "Always show stations that require the Helix/RealPlayer engine, even if the engine is not loaded."
+        );
+        
+        public static readonly SchemaEntry<bool> ShowRemoteStationsSchema = new SchemaEntry<bool>(
+            "plugins.radio", "show_remote_stations",
+            true,
+            "Show remote stations",
+            "Update remote stations from radio.banshee-project.org"
         );
     }
 }

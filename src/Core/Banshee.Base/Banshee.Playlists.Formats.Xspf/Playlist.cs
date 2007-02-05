@@ -38,6 +38,8 @@ namespace Banshee.Playlists.Formats.Xspf
     {
         // TODO: Add attribution, extension support
         
+        private static string XspfNamespace = "http://xspf.org/ns/0/";
+        
         private Uri default_base_uri;
         private Uri document_base_uri;
         
@@ -47,6 +49,8 @@ namespace Banshee.Playlists.Formats.Xspf
         private Uri identifier;
         private Uri license;
         private DateTime date;
+        
+        private XmlDocument doc;
 
         private List<Track> tracks = new List<Track>();
         
@@ -56,8 +60,10 @@ namespace Banshee.Playlists.Formats.Xspf
         
         private void Load(XmlDocument doc)
         {
+            this.doc = doc;
+            
             XmlNamespaceManager xmlns = new XmlNamespaceManager(doc.NameTable);
-            xmlns.AddNamespace("xspf", "http://xspf.org/ns/0/");
+            xmlns.AddNamespace("xspf", XspfNamespace);
             
             XmlNode playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
 
@@ -91,7 +97,7 @@ namespace Banshee.Playlists.Formats.Xspf
             foreach(XmlNode node in playlist_node.SelectNodes("xspf:trackList/xspf:track", xmlns)) {
                 Track track = new Track();
                 track.Load(this, node, xmlns);
-                tracks.Add(track);
+                AddTrack(track);
             }
             
             loaded = true;
@@ -123,6 +129,57 @@ namespace Banshee.Playlists.Formats.Xspf
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);
             Load(doc);
+        }
+        
+        public void Save(string path)
+        {
+            Save(new XmlTextWriter(path, System.Text.Encoding.UTF8));
+        }
+        
+        public void Save(Stream stream)
+        {
+            Save(new XmlTextWriter(stream, System.Text.Encoding.UTF8));
+        }
+        
+        public void Save(XmlTextWriter writer)
+        {
+            // FIXME: This is very very limited write support
+            
+            writer.Indentation = 2;
+            writer.IndentChar = ' ';
+            writer.Formatting = System.Xml.Formatting.Indented;
+            
+            writer.WriteStartDocument();
+            writer.WriteStartElement("playlist", XspfNamespace);
+            writer.WriteAttributeString("version", "1");
+            
+            SaveBase(writer);
+            
+            writer.WriteStartElement("trackList");
+            foreach(Track track in tracks) {
+                writer.WriteStartElement("track");
+                track.Save(writer);
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+            
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            
+            writer.Flush();
+            writer.Close();
+        }
+        
+        public void AddTrack(Track track)
+        {
+            track.Parent = this;
+            tracks.Add(track);
+        }
+        
+        public void RemoveTrack(Track track)
+        {
+            track.Parent = null;
+            tracks.Remove(track);
         }
         
         public Uri DefaultBaseUri {
@@ -178,6 +235,10 @@ namespace Banshee.Playlists.Formats.Xspf
         
         public ReadOnlyCollection<Track> Tracks {
             get { return new ReadOnlyCollection<Track>(tracks); }
+        }
+        
+        public int TrackCount {
+            get { return tracks.Count; }
         }
     }
 }

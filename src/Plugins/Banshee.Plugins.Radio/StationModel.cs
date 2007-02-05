@@ -28,7 +28,7 @@
  
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 
 using Banshee.Base;
@@ -55,6 +55,8 @@ namespace Banshee.Plugins.Radio
             plugin.StationManager.StationsLoaded += OnStationsLoaded;
             plugin.StationManager.StationGroupAdded += OnStationGroupAdded;
             plugin.StationManager.StationGroupRemoved += OnStationGroupRemoved;
+            plugin.StationManager.StationAdded += OnStationAdded;
+            plugin.StationManager.StationRemoved += OnStationRemoved;
         }
         
         private void OnStationsLoaded(object o, EventArgs args)
@@ -68,6 +70,16 @@ namespace Banshee.Plugins.Radio
             OnReloaded();
         }
         
+        private void OnStationAdded(object o, StationManager.StationArgs args)
+        {
+            AddStation(args.Group, args.Station);
+        }
+        
+        private void OnStationRemoved(object o, StationManager.StationArgs args)
+        {
+            RemoveStation(args.Group, args.Station);
+        }
+        
         private void OnStationGroupAdded(object o, StationManager.StationGroupArgs args)
         {
             AddStationGroup(args.Group);
@@ -78,9 +90,45 @@ namespace Banshee.Plugins.Radio
             RemoveStationGroup(args.Group);
         }
         
+        private void AddStation(StationGroup group, Track track)
+        {
+            TreeIter iter;
+            if(FindStationGroup(group, out iter) || FindStationGroup(group.Title, out iter)) {
+                TreeIter new_iter = AppendNode(iter);
+                UpdateStation(new_iter, track);
+                SetValue(new_iter, 4, group);
+            }
+        }
+        
+        public void UpdateStation(TreeIter iter, Track track)
+        {
+            SetValue(iter, 0, track.Title);
+            SetValue(iter, 1, track.Annotation);
+            SetValue(iter, 2, track);
+        }
+        
+        private void RemoveStation(StationGroup group, Track track)
+        {
+            TreeIter iter;
+            TreeIter parent;
+            
+            if(FindStation(group, track, out iter)) {
+                bool has_parent = IterParent(out parent, iter);
+                Remove(ref iter);
+                
+                if(has_parent && !parent.Equals(TreeIter.Zero) && IterNChildren(parent) == 0) {
+                    Remove(ref parent);
+                }
+            }
+        }
+        
         private void AddStationGroup(StationGroup group)
         {
-            TreeIter iter = AppendValues(group.Title, String.Empty, null, null, group);
+            TreeIter iter;
+            
+            if(!FindStationGroup(group.Title, out iter)) {
+                iter = AppendValues(group.Title, String.Empty, null, null, null);
+            }
             
             foreach(Track track in group.Tracks) {
                 AppendValues(iter, track.Title, track.Annotation, track, null, group);
@@ -95,6 +143,30 @@ namespace Banshee.Plugins.Radio
             }
         }
         
+        private bool FindStation(StationGroup group, Track station, out TreeIter out_iter)
+        {
+            TreeIter parent;
+            
+            if(!FindStationGroup(group, out parent) && !FindStationGroup(group.Title, out parent)) {
+                out_iter = TreeIter.Zero;
+                return false;
+            }
+            
+            for(int i = 0, n = IterNChildren(parent); i < n; i++) {
+                TreeIter iter;
+                if(IterNthChild(out iter, parent, i)) {
+                    Track compare_station = GetTrack(iter);
+                    if(compare_station == station) {
+                        out_iter = iter;
+                        return true;
+                    }
+                }
+            }
+            
+            out_iter = TreeIter.Zero;
+            return false;
+        }
+        
         private bool FindStationGroup(StationGroup group, out TreeIter out_iter)
         {
             for(int i = 0, n = IterNChildren(); i < n; i++) {
@@ -102,6 +174,22 @@ namespace Banshee.Plugins.Radio
                 if(IterNthChild(out iter, i)) {
                     StationGroup compare_group = GetStationGroup(iter);
                     if(compare_group == group) {
+                        out_iter = iter;
+                        return true;
+                    }
+                }
+            }
+            
+            out_iter = TreeIter.Zero;
+            return false;
+        }
+        
+        private bool FindStationGroup(string group_title, out TreeIter out_iter)
+        {
+            for(int i = 0, n = IterNChildren(); i < n; i++) {
+                TreeIter iter;
+                if(IterNthChild(out iter, i)) {
+                    if(String.Compare((string)GetValue(iter, 0), group_title) == 0) {
                         out_iter = iter;
                         return true;
                     }
@@ -196,6 +284,17 @@ namespace Banshee.Plugins.Radio
             
             if(GetIter(out iter, path)) {
                 SetRadioTrackInfo(iter, track);
+            }
+        }
+        
+        public IEnumerable<string> StationGroupNames {
+            get {
+                for(int i = 0, n = IterNChildren(); i < n; i++) {
+                    TreeIter iter;
+                    if(IterNthChild(out iter, i)) {
+                        yield return (string)GetValue(iter, 0);
+                    }
+                }
             }
         }
     }

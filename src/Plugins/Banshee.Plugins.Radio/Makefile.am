@@ -3,6 +3,8 @@ include $(top_srcdir)/build/Common.Makefile
 CUSTOM_MCS_FLAGS = $(MCS_FLAGS) \
 	-unsafe \
 	-resource:$(srcdir)/source-radio.png,source-radio.png \
+	-resource:$(srcdir)/dialog-radio.png,dialog-radio.png \
+	-resource:$(srcdir)/dialog-radio.svg,dialog-radio.svg \
 	-resource:$(srcdir)/radio.png,radio.png \
 	-resource:$(srcdir)/RadioActions.xml,RadioActions.xml
 
@@ -17,7 +19,7 @@ SOURCES = \
 	$(srcdir)/StationModel.cs \
 	$(srcdir)/StationView.cs \
 	$(srcdir)/StationGroup.cs \
-	$(srcdir)/StationGroupEditor.cs \
+	$(srcdir)/StationEditor.cs \
 	$(srcdir)/CellRendererStation.cs \
 	$(srcdir)/totem-plparser/*.cs
 
@@ -26,7 +28,7 @@ plugin_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 all: $(ASSEMBLY)
 
-$(ASSEMBLY): $(SOURCES)
+$(ASSEMBLY): $(SOURCES) RadioActions.xml
 	$(BUILD_LIB_BANSHEE_CORE) $(CUSTOM_MCS_FLAGS) -out:$@ $(LINK_GTK) $(LINK_MONO_UNIX) $(SOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules

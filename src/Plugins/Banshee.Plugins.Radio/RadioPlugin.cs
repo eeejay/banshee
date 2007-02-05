@@ -111,6 +111,13 @@ namespace Banshee.Plugins.Radio
             source_actions = new ActionGroup("Radio");
             popup_actions = new ActionGroup("Radio Popup");
             
+            source_actions.Add(new ToggleActionEntry [] {
+                new ToggleActionEntry("ShowRemoteStationsAction", null,
+                    Catalog.GetString("Show Remote Stations"), null,
+                    Catalog.GetString("Update and show radio station content from radio.banshee-project.org"), 
+                    OnToggleRemoteStations, StationManager.ShowRemoteStationsSchema.Get())
+            });
+            
             source_actions.Add(new ActionEntry [] {
                 new ActionEntry("RefreshRadioAction", Stock.Refresh,
                     Catalog.GetString("Refresh Stations"), null,
@@ -118,10 +125,6 @@ namespace Banshee.Plugins.Radio
             });
             
             popup_actions.Add(new ActionEntry [] {
-                new ActionEntry("NewStationGroupAction", Stock.New,
-                    Catalog.GetString("New Station Group"), null,
-                    Catalog.GetString("Create a new local station group"), null),
-                    
                 new ActionEntry("CopyUriAction", Stock.Copy,
                     Catalog.GetString("Copy URI"), null,
                     Catalog.GetString("Copy stream URI to clipboard"), null),
@@ -143,21 +146,34 @@ namespace Banshee.Plugins.Radio
             Globals.ActionManager.UI.InsertActionGroup(popup_actions, 0);
             
             ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("RadioActions.xml");
+            
+            source_actions.GetAction("RefreshRadioAction").Sensitive = StationManager.ShowRemoteStationsSchema.Get();
         }
         
+        private bool updating = false;
         private void EnableRefresh()
         {
-            source_actions.GetAction("RefreshRadioAction").Sensitive = true;
+            updating = false;
+            source_actions.GetAction("RefreshRadioAction").Sensitive = StationManager.ShowRemoteStationsSchema.Get();
         }
         
         private void DisableRefresh()
         {
+            updating = true;
             source_actions.GetAction("RefreshRadioAction").Sensitive = false;
         }
         
         private void OnRefreshStations(object o, EventArgs args)
         {
             manager.ReloadStations(true);
+        }
+        
+        private void OnToggleRemoteStations(object o, EventArgs args)
+        {
+            bool active = ((ToggleAction)source_actions.GetAction("ShowRemoteStationsAction")).Active;
+            source_actions.GetAction("RefreshRadioAction").Sensitive = active && !updating;
+            StationManager.ShowRemoteStationsSchema.Set(active);
+            manager.ReloadStations(false);
         }
         
         public StationManager StationManager {

@@ -52,6 +52,7 @@ namespace Banshee.Plugins.Radio
         
         private VBox box;
         private HighlightMessageArea status_bar;
+        private ActionButton add_button;
         
         private RadioTrackInfo last_loaded_track;
         
@@ -94,10 +95,12 @@ namespace Banshee.Plugins.Radio
                 }
             };
             
+            plugin.StationManager.CountUpdated += delegate { OnUpdated(); };
+            
             plugin.PopupActions.GetAction("CopyUriAction").Activated += OnCopyUri;
-            plugin.PopupActions.GetAction("NewStationGroupAction").Activated += OnNewStationGroup;
             plugin.PopupActions.GetAction("RemoveAction").Activated += OnRemoveStation;
             plugin.PopupActions.GetAction("EditAction").Activated += OnEditStation;
+            plugin.PopupActions.GetAction("AddAction").Activated += OnAddStation;
             
             BuildInterface();
         }
@@ -129,6 +132,18 @@ namespace Banshee.Plugins.Radio
             view_scroll.ShowAll();
             box.Show();
             status_bar.Hide();
+            
+            add_button = new ActionButton(plugin.PopupActions.GetAction("AddAction"));
+        }
+        
+        public override void Activate()
+        {
+            InterfaceElements.ActionButtonBox.PackStart(add_button, false, false, 0);
+        }
+        
+        public override void Deactivate()
+        {
+            InterfaceElements.ActionButtonBox.Remove(add_button);
         }
         
         private void OnPlayerStateChanged(object o, PlayerEngineStateArgs args)
@@ -155,11 +170,9 @@ namespace Banshee.Plugins.Radio
                 can_edit = view.SelectedStationGroup.CanEdit;
             }
         
-            plugin.PopupActions.GetAction("NewStationGroupAction").Visible = true;
             plugin.PopupActions.GetAction("CopyUriAction").Sensitive = view.SelectedTrack != null;
             plugin.PopupActions.GetAction("EditAction").Visible = can_edit;
             plugin.PopupActions.GetAction("RemoveAction").Visible = can_edit;
-            plugin.PopupActions.GetAction("AddAction").Visible = can_edit && view.SelectedTrack == null;
         }
         
         private bool ShouldShowPopup()
@@ -207,13 +220,66 @@ namespace Banshee.Plugins.Radio
         {
             view.QueueDraw();
         }
-        
-        private void EditStationGroup(StationGroup group)
+
+        private void OnRemoveStation(object o, EventArgs args)
         {
-            string previous_path = group == null ? null : group.LocalPath;
-            StationGroup new_group = group;
+            TreeIter iter;
+            StationGroup group = null;
+            Track station = null;
             
-            StationGroupEditor editor = new StationGroupEditor(new_group);
+            if(view.Selection.GetSelected(out iter)) {
+                group = model.GetStationGroup(iter);
+                station = model.GetTrack(iter);
+            }
+            
+            if(group != null && station != null) {
+                plugin.StationManager.RemoveStation(group, station);
+            }
+        }
+        
+        private void OnEditStation(object o, EventArgs args)
+        {
+            TreeIter iter;
+            StationGroup group = null;
+            Track station = null;
+            
+            if(view.Selection.GetSelected(out iter)) {
+                group = model.GetStationGroup(iter);
+                station = model.GetTrack(iter);
+            }
+            
+            if(group != null && station != null) {
+                EditStation(group, station);
+            }
+        }
+        
+        private void OnAddStation(object o, EventArgs args)
+        {
+            EditStation(null, null);
+        }
+        
+        private void EditStation(StationGroup group, Track station)
+        {
+            string group_name = null;
+            TreeIter iter = TreeIter.Zero;
+            
+            if(group != null) {
+                group_name = group.Title;
+            } 
+            
+            if(view.Selection.GetSelected(out iter)) {
+                TreeIter parent;
+                
+                if(group == null && station == null && model.IterParent(out parent, iter)) {
+                    iter = parent;
+                }
+                
+                if(group_name == null) {                
+                    group_name = (string)model.GetValue(iter, 0);
+                }
+            }
+            
+            StationEditor editor = new StationEditor(model, group_name, station);
             editor.Show();
             
             editor.Response += delegate(object eo, ResponseArgs eargs) {
@@ -222,65 +288,33 @@ namespace Banshee.Plugins.Radio
                     return;
                 }
                 
-                if(group != null) {
-                    group.Title = editor.Value;
-                    group.UpdatePath();
-                }
-                
-                if(previous_path != null && new_group.LocalPath == previous_path) {
-                    editor.Destroy();
-                    return;
-                }   
-                
-                if(new_group == null) {
-                    new_group = new StationGroup(editor.Value);
-                }
-                
-                if(File.Exists(new_group.LocalPath)) {
-                    editor.ShowExistsMessage();
-                    editor.FocusEntry();
-                    return;
-                }
-                
-                if(group == null) {
-                    plugin.StationManager.LoadStationGroup(new_group);
-                } else {
-                    model.UpdateStationGroup(group);
-                    try {
-                        File.Move(previous_path, group.LocalPath);
-                    } catch {
+                try {
+                    if(group != null && station != null) {
+                        if(group_name != editor.Group || iter.Equals(TreeIter.Zero)) {
+                            plugin.StationManager.RemoveStation(group, station);
+                            plugin.StationManager.CreateStation(editor.Group, editor.StationTitle, 
+                                editor.StreamUri, editor.Description);
+                        } else if(group_name == editor.Group) {
+                            plugin.StationManager.UpdateStation(station, editor.StationTitle, 
+                                editor.StreamUri, editor.Description);
+                            model.UpdateStation(iter, station);
+                        }
+                    } else {
+                        plugin.StationManager.CreateStation(editor.Group, editor.StationTitle, 
+                            editor.StreamUri, editor.Description);
                     }
+                } catch(UriFormatException) {
+                    editor.ErrorMessage = Catalog.GetString("Invalid URI format.");
+                    editor.FocusUri();
+                    return;
+                } catch(Exception e) {
+                    Console.WriteLine(e);
+                    editor.ErrorMessage = e.Message;
+                    return;
                 }
                 
                 editor.Destroy();
             };
-        }
-        
-        private void OnNewStationGroup(object o, EventArgs args)
-        {
-            EditStationGroup(null);
-        }
-        
-        private void OnRemoveStation(object o, EventArgs args)
-        {
-            if(!view.SelectedStationGroup.CanEdit) {
-                return;
-            }
-            
-            if(view.SelectedTrack == null) {
-                plugin.StationManager.RemoveStationGroup(view.SelectedStationGroup);
-            }
-        }
-        
-        private void OnEditStation(object o, EventArgs args)
-        {
-            if(!view.SelectedStationGroup.CanEdit) {
-                return;
-            }
-            
-            if(view.SelectedTrack == null) {
-                EditStationGroup(view.SelectedStationGroup);
-            }
         }
         
         private void OnCopyUri(object o, EventArgs args)

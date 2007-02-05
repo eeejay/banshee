@@ -44,8 +44,10 @@ namespace Banshee.Playlists.Formats.Xspf
         private uint track_num;
         private TimeSpan duration;
     
-        private List<Uri> locations;
-        private List<Uri> identifiers;
+        private List<Uri> locations = new List<Uri>();
+        private List<Uri> identifiers = new List<Uri>();
+        
+        private Playlist parent;
         
         public Track()
         {
@@ -75,6 +77,75 @@ namespace Banshee.Playlists.Formats.Xspf
             identifiers = XmlUtil.ReadUris(node, xmlns, ResolvedBaseUri, "xspf:identifier");
         }
         
+        public void Save(XmlWriter writer)
+        {
+            SaveBase(writer);
+            
+            if(album != null) {
+                writer.WriteElementString("album", album);
+            }
+            
+            foreach(Uri uri in locations) {
+                writer.WriteElementString("location", uri.AbsoluteUri);
+            }
+        }
+        
+        public Uri GetLocationAt(int position)
+        {
+            return locations[position];
+        }
+        
+        public void InsertLocation(int position, Uri uri)
+        {
+            locations.Insert(position, uri);
+        }
+        
+        public void ReplaceLocation(int position, Uri uri)
+        {
+            locations.RemoveAt(position);
+            locations.Insert(position, uri);
+        }
+        
+        public void AddLocation(Uri uri)
+        {
+            locations.Add(uri);
+        }
+        
+        public void RemoveLocation(Uri uri)
+        {
+            locations.Remove(uri);
+        }
+        
+        public void ClearLocations()
+        {
+            locations.Clear();
+        }
+        
+        public Uri GetIdentifierAt(int position)
+        {
+            return identifiers[position];
+        }
+        
+        public void InsertIdentifier(int position, Uri uri)
+        {
+            identifiers.Insert(position, uri);
+        }
+        
+        public void AddIdentifier(Uri uri)
+        {
+            identifiers.Add(uri);
+        }
+        
+        public void RemoveIdentifier(Uri uri)
+        {
+            identifiers.Remove(uri);
+        }
+        
+        public void ClearIdentifiers()
+        {
+            identifiers.Clear();
+        }
+        
         public override Uri ResolvedBaseUri {
             get { return base_uri; }
         }
@@ -100,6 +171,19 @@ namespace Banshee.Playlists.Formats.Xspf
         
         public ReadOnlyCollection<Uri> Identifiers {
             get { return new ReadOnlyCollection<Uri>(identifiers); }
+        }
+        
+        public int LocationCount {
+            get { return locations.Count; }
+        }
+        
+        public int IdentifierCount {
+            get { return identifiers.Count; }
+        }
+        
+        public Playlist Parent {
+            internal set { parent = value; }
+            get { return parent; }
         }
     }
 }

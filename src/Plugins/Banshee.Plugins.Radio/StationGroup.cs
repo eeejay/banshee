@@ -49,7 +49,7 @@ namespace Banshee.Plugins.Radio
         public void UpdatePath()
         {            
             path = Regex.Replace(Title, @"[^A-Za-z0-9]+", "_").ToLower() + ".xspf";
-            path = Path.Combine(Path.Combine(StationManager.StationsPath, "user"), path);
+            path = Path.Combine(StationManager.LocalStationsPath, path);
         }
         
         public StationGroup(string path, bool canEdit) 
@@ -61,6 +61,11 @@ namespace Banshee.Plugins.Radio
         public void Load()
         {
             Load(path);
+        }
+        
+        public void Save()
+        {
+            Save(path);
         }
         
         public string LocalPath {

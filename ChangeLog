@@ -1,3 +1,29 @@
+2007-02-05  Aaron Bockover  <abock@gnome.org>
+
+	* Plugins/Banshee.Plugins.Radio/StationManager.cs: Added Create, Update,
+	and Remove station methods; support showing/hiding remote stations
+
+	* Plugins/Banshee.Plugins.Radio/RadioPlugin.cs: Support showing/hiding
+	remote stations
+
+	* Plugins/Banshee.Plugins.Radio/RadioSource.cs: Added UI for editing,
+	adding, and removing stations
+	
+	* Plugins/Banshee.Plugins.Radio/StationGroup.cs: Added Save method
+
+	* Plugins/Banshee.Plugins.Radio/StationModel.cs: Support adding, updating,
+	and removing stations
+
+	* Plugins/Banshee.Plugins.Radio/StationEditor.cs: Editor dialog for local
+	stations
+
+	* Plugins/Banshee.Plugins.Radio/RadioActions.xml: Updated UI
+
+	* Core/Banshee.Base/Banshee.Playlists.Formats.Xspf/Playlist.cs:
+	* Core/Banshee.Base/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs:
+	* Core/Banshee.Base/Banshee.Playlists.Formats.Xspf/Track.cs: Added
+	basic XML write support for XSPF playlists
+
 2007-02-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/VolumeButton.cs: Port of the C version of

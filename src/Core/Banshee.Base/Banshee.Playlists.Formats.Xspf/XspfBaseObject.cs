@@ -62,6 +62,29 @@ namespace Banshee.Playlists.Formats.Xspf
             links = XmlUtil.ReadLinks(parentNode, xmlns, ResolvedBaseUri, "xspf:link");
         }
         
+        protected void SaveBase(XmlWriter writer)
+        {
+            if(title != null) {
+                writer.WriteElementString("title", title);
+            }
+            
+            if(creator != null) {
+                writer.WriteElementString("creator", creator);
+            }
+            
+            if(annotation != null) {
+                writer.WriteElementString("annotation", annotation);
+            }
+            
+            if(info != null) {
+                writer.WriteElementString("info", info.AbsoluteUri);
+            }
+            
+            if(image != null) {
+                writer.WriteElementString("image", image.AbsoluteUri);
+            }
+        }
+        
         public MetaEntry FindMetaEntry(string rel)
         {
             return FindMetaEntry(new Uri(ResolvedBaseUri, rel));
