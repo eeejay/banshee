@@ -33,7 +33,7 @@ $(ASSEMBLY): $(SOURCES) RadioActions.xml
 
 include $(top_srcdir)/build/gconf-schema-rules
 
-EXTRA_DIST = $(SOURCES) RadioActions.xml radio.png source-radio.png $(ASSEMBLY_GCONF_SCHEMA)
+EXTRA_DIST = $(SOURCES) RadioActions.xml radio.png source-radio.png dialog-radio.png dialog-radio.svg $(ASSEMBLY_GCONF_SCHEMA)
 CLEANFILES = *.dll *.mdb
 MAINTAINERCLEANFILES = Makefile.in *.pidb
 DISTCLEANFILES = $(schema_DATA)
