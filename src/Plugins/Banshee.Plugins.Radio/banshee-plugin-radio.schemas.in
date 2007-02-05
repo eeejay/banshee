@@ -45,5 +45,16 @@
         <long>Last time XSPF stations were updated from radio.banshee-project.org</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/banshee/plugins/radio/show_remote_stations</key>
+      <applyto>/apps/banshee/plugins/radio/show_remote_stations</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Show remote stations</short>
+        <long>Update remote stations from radio.banshee-project.org</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>
