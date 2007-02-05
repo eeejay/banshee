@@ -1,5 +1,15 @@
 2007-02-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Gui/SourceView.cs: Prevent a possible 
+	nullref when dropping on the view and not on a row (BNC 236798)
+
+	* src/Core/Banshee.Widgets/ActionButton.cs: Decreased spacing between
+	icon and label; looked strange now that the buttons don't have relief
+
+	* configure.ac: Bumped to 0.11.6
+
+2007-02-05  Aaron Bockover  <abock@gnome.org>
+
 	* Plugins/Banshee.Plugins.Radio/StationManager.cs: Added Create, Update,
 	and Remove station methods; support showing/hiding remote stations
 

@@ -492,7 +492,7 @@ namespace Banshee.Gui
 
         protected override void OnDragDataReceived(Gdk.DragContext context, int x, int y,
             Gtk.SelectionData selectionData, uint info, uint time)
-        {       
+        {
             if(Gtk.Drag.GetSourceWidget(context) == this) {
                 DragDropList<Source> sources = selectionData;
                 if(sources.Count <= 0) { 
@@ -504,7 +504,8 @@ namespace Banshee.Gui
                 if(source is IImportSource && final_drag_source is LibrarySource) {
                     (source as IImportSource).Import();
                     Gtk.Drag.Finish(context, true, false, time);
-                } else if(source.IsDragSource && final_drag_source.AcceptsSourceDrop) {
+                } else if(final_drag_source != null && source.IsDragSource && 
+                    final_drag_source.AcceptsSourceDrop) {
                     final_drag_source.SourceDrop(source);
                     Gtk.Drag.Finish(context, true, false, time);
                 } else {

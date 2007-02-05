@@ -64,7 +64,7 @@ namespace Banshee.Widgets
         {
             Relief = ReliefStyle.None;
         
-            box.Spacing = 5;
+            box.Spacing = 2;
             box.PackStart(image, false, false, 0);
             box.PackStart(label, true, true, 0);
             Add(box);
