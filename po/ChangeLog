@@ -1,3 +1,9 @@
+2007-02-05  Aaron Bockover  <abock@gnome.org>
+
+	Translators: Banshee 0.11.x is now string frozen!
+
+	* POTFILES.in: Updated
+
 2007-02-02  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.

@@ -104,6 +104,7 @@ src/Core/Banshee.Widgets/ActiveUserEvent.cs
 src/Core/Banshee.Widgets/DiscUsageDisplay.cs
 src/Core/Banshee.Widgets/SearchEntry.cs
 src/Core/Banshee.Widgets/StreamPositionLabel.cs
+src/Core/Banshee.Widgets/VolumeButton.cs
 src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs
 src/Dap/Banshee.Dap.Ipod/IpodDap.cs
 src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs
@@ -161,7 +162,7 @@ src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in
 src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs
 src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs
 src/Plugins/Banshee.Plugins.Radio/RadioSource.cs
-src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs
+src/Plugins/Banshee.Plugins.Radio/StationEditor.cs
 src/Plugins/Banshee.Plugins.Radio/StationView.cs
 src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in
 src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs
