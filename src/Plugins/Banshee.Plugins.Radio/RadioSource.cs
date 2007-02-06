@@ -116,7 +116,7 @@ namespace Banshee.Plugins.Radio
             view.Selection.Changed += OnViewSelectionChanged;
             
             ScrolledWindow view_scroll = new ScrolledWindow();
-            view_scroll.HscrollbarPolicy = PolicyType.Never;
+            view_scroll.HscrollbarPolicy = PolicyType.Automatic;
             view_scroll.VscrollbarPolicy = PolicyType.Automatic;
             view_scroll.ShadowType = ShadowType.In;
             

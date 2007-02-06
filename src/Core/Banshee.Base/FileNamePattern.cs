@@ -41,6 +41,9 @@ namespace Banshee.Base
         private delegate string ExpandTokenHandler(TrackInfo track, object replace);
         public delegate string FilterHandler(string path);
         
+        private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";
+        private static Regex invalid_path_regex;
+        
         public static FilterHandler Filter;
         
         private struct Conversion
@@ -249,7 +252,17 @@ namespace Banshee.Base
 
         public static string Escape(string input)
         {
-            return Regex.Replace(input, @"[\\\\\\/\$\%\?\*\|<>:'""&]+", "_");
+            if(invalid_path_regex == null) {
+                string regex_str = "[";
+                for(int i = 0; i < invalid_path_characters.Length; i++) {
+                    regex_str += "\\" + invalid_path_characters[i];
+                }
+                regex_str += "]+";
+                
+                invalid_path_regex = new Regex(regex_str);
+            }
+            
+            return invalid_path_regex.Replace(input, String.Empty);
         }
     }
 }

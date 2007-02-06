@@ -592,6 +592,7 @@ namespace Banshee
             if(track == null) {
                 WindowPlayer.Title = Branding.ApplicationLongName;
                 trackInfoHeader.Visible = false;
+                cover_art_view.FileName = null;
                 return;
             }
         

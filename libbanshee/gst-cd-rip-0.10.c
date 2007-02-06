@@ -334,20 +334,36 @@ gst_cd_ripper_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
     return ripper;
 }
 
-void
-gst_cd_ripper_free(GstCdRipper *ripper)
+void 
+gst_cd_ripper_cancel(GstCdRipper *ripper)
 {
     g_return_if_fail(ripper != NULL);
     
     gst_cd_ripper_stop_iterate_timeout(ripper);
     
-    if(GST_IS_ELEMENT(ripper->pipeline)) {
+    if(ripper->pipeline != NULL && GST_IS_ELEMENT(ripper->pipeline)) {
         gst_element_set_state(GST_ELEMENT(ripper->pipeline), GST_STATE_NULL);
         gst_object_unref(GST_OBJECT(ripper->pipeline));
+        ripper->pipeline = NULL;
     }
     
-    g_free(ripper->device);
-    g_free(ripper->encoder_pipeline);
+    g_remove(ripper->output_uri);
+}
+
+void
+gst_cd_ripper_free(GstCdRipper *ripper)
+{
+    g_return_if_fail(ripper != NULL);
+    
+    gst_cd_ripper_cancel(ripper);
+    
+    if(ripper->device != NULL) {
+        g_free(ripper->device);
+    }
+    
+    if(ripper->encoder_pipeline != NULL) {
+        g_free(ripper->encoder_pipeline);
+    }
     
     g_free(ripper);
 }
@@ -420,20 +436,6 @@ gst_cd_ripper_rip_track(GstCdRipper *ripper, gchar *uri, gint track_number,
     gst_cd_ripper_start_iterate_timeout(ripper);
     
     return TRUE;
-}
-
-void 
-gst_cd_ripper_cancel(GstCdRipper *ripper)
-{
-    g_return_if_fail(ripper != NULL);
-    gst_cd_ripper_stop_iterate_timeout(ripper);
-    
-    if(GST_IS_ELEMENT(ripper->pipeline)) {
-        gst_element_set_state(GST_ELEMENT(ripper->pipeline), GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(ripper->pipeline));
-    }
-    
-    g_remove(ripper->output_uri);
 }
 
 void

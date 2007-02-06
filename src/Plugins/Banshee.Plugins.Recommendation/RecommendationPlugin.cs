@@ -85,6 +85,7 @@ namespace Banshee.Plugins.Recommendation
         protected override void PluginInitialize()
         {    
             PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
+            PlayerEngineCore.StateChanged += OnPlayerEngineStateChanged;
             SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             
             if(recommendation_pane != null && ValidTrack) {
@@ -103,6 +104,7 @@ namespace Banshee.Plugins.Recommendation
             Globals.ActionManager.UI.RemoveActionGroup(actions);
             
             PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
+            PlayerEngineCore.StateChanged -= OnPlayerEngineStateChanged;
             SourceManager.ActiveSourceChanged -= OnActiveSourceChanged;
             
             if(PaneVisible) {
@@ -188,6 +190,17 @@ namespace Banshee.Plugins.Recommendation
                     break;
                 
                 case PlayerEngineEvent.EndOfStream:
+                    if(PaneVisible) {
+                        HideRecommendations();
+                    }
+                    break;
+            }
+        }
+        
+        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        {
+            switch(args.State) {
+                case PlayerEngineState.Idle:
                     if(PaneVisible) {
                         HideRecommendations();
                     }

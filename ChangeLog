@@ -1,5 +1,26 @@
 2007-02-05  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/gst-cd-rip-0.10.c: Fix major crasher that sometimes happens
+	when canceling a CD rip; caused by memory corruption due to not setting
+	an unreffed object pointer to null; _free calls _cancel to avoid code
+	dupication
+
+	* src/Plugins/Banshee.Plugins.Radio/RadioSource.cs: Allow the view to
+	scroll horizontally
+	
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:
+	Hide the pane when the player state goes idle
+
+	* src/Core/Banshee/PlayerInterface.cs: Set the cover art for the cover
+	art view to null when idle
+
+	* src/Core/Banshee.Widgets/CoverArtView.cs: Hide on null
+
+	* src/Core/Banshee.Base/FileNamePattern.cs: Added more characters to
+	escape, and cache the regular expression
+
+2007-02-05  Aaron Bockover  <abock@gnome.org>
+
 	0.11.6 Released
 
 	* NEWS: Updated 

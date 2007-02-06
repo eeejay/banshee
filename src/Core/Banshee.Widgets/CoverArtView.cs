@@ -99,7 +99,13 @@ namespace Banshee.Widgets
         public string FileName {
             set {
                 try {
-                    if(value == null || !System.IO.File.Exists(value)) {
+                    if(value == null) {
+                        pixbuf = null;
+                        Hide();
+                        return;
+                    }
+                
+                    if(!System.IO.File.Exists(value)) {
                         throw new ApplicationException("Invalid file name");
                     }
                     
