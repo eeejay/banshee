@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-02 13:49+0100\n"
-"PO-Revision-Date: 2007-02-02 13:45+0100\n"
+"POT-Creation-Date: 2007-02-07 16:11+0100\n"
+"PO-Revision-Date: 2007-02-07 16:09+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -144,25 +144,25 @@ msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Importera musik till bibliotek</b></big>"
 
 #: ../data/banshee-dialogs.glade.h:30
+msgid "Apply common field values to all tracks"
+msgstr "Verkställ allmänna fältvärden till alla spår"
+
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
 msgstr "Grafik"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:32
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:79
 msgid "Back"
 msgstr "Tillbaka"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
 msgstr "Välj en importkälla:"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Co_py files to music folder when importing"
 msgstr "Ko_piera filer till musikmapp vid importering"
-
-#: ../data/banshee-dialogs.glade.h:34
-msgid "Copy all common fields"
-msgstr "Kopiera alla vanliga fält"
 
 #: ../data/banshee-dialogs.glade.h:35
 msgid "Copy to all"
@@ -547,14 +547,14 @@ msgstr "Kunde inte länka kö till kodare"
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Kunde inte länka kodare till gnomevfssink"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:387
+#: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:150
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:413
+#: ../libbanshee/gst-cd-rip-0.10.c:429
 msgid "Encoding element does not support tagging!"
 msgstr "Kodningselement har inte stöd för taggning!"
 
@@ -738,14 +738,14 @@ msgstr "Bredd på År-kolumn"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:788
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:88
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:91
 msgid "Album"
 msgstr "Album"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:83
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:86
 msgid "Artist"
 msgstr "Artist"
 
@@ -762,8 +762,8 @@ msgstr "-"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
 #: ../src/Core/Banshee/PlayerInterface.cs:439
-#: ../src/Core/Banshee/PlayerInterface.cs:1305
-#: ../src/Core/Banshee/PlayerInterface.cs:2351
+#: ../src/Core/Banshee/PlayerInterface.cs:1306
+#: ../src/Core/Banshee/PlayerInterface.cs:2352
 msgid "Genre"
 msgstr "Genre"
 
@@ -774,7 +774,7 @@ msgstr "Senast spelad"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/PlayCountColumn.cs:42
 msgid "Plays"
-msgstr "Spelar"
+msgstr "Spelningar"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:813
@@ -784,7 +784,7 @@ msgstr "Betyg"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:787
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:93
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:96
 msgid "Title"
 msgstr "Titel"
 
@@ -826,7 +826,7 @@ msgstr "Plats"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
 #: ../src/Core/Banshee/PlayerInterface.cs:440
-#: ../src/Core/Banshee/PlayerInterface.cs:1307
+#: ../src/Core/Banshee/PlayerInterface.cs:1308
 msgid "Year"
 msgstr "År"
 
@@ -1879,21 +1879,21 @@ msgstr "Ej hörda poddsändningar"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
 #: ../src/Core/Banshee/PlayerInterface.cs:437
-#: ../src/Core/Banshee/PlayerInterface.cs:1299
-#: ../src/Core/Banshee/PlayerInterface.cs:2347
+#: ../src/Core/Banshee/PlayerInterface.cs:1300
+#: ../src/Core/Banshee/PlayerInterface.cs:2348
 msgid "Artist Name"
 msgstr "Artistnamn"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
 #: ../src/Core/Banshee/PlayerInterface.cs:436
-#: ../src/Core/Banshee/PlayerInterface.cs:1301
+#: ../src/Core/Banshee/PlayerInterface.cs:1302
 msgid "Song Name"
 msgstr "Låtnamn"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
 #: ../src/Core/Banshee/PlayerInterface.cs:438
-#: ../src/Core/Banshee/PlayerInterface.cs:1303
-#: ../src/Core/Banshee/PlayerInterface.cs:2343
+#: ../src/Core/Banshee/PlayerInterface.cs:1304
+#: ../src/Core/Banshee/PlayerInterface.cs:2344
 msgid "Album Title"
 msgstr "Albumtitel"
 
@@ -2250,19 +2250,19 @@ msgstr "Importera filer till bibliotek"
 msgid "Local Files"
 msgstr "Lokala filer"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:98
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:101
 msgid "Count"
 msgstr "Antal"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:103
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:106
 msgid "Number"
 msgstr "Nummer"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:108
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:111
 msgid "Count (unsorted)"
 msgstr "Antal (osorterad)"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:113
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:116
 msgid "Number (unsorted)"
 msgstr "Nummer (osorterad)"
 
@@ -2485,7 +2485,7 @@ msgstr ""
 "Felkorrigering används för att korrigera problem på en skiva, såsom ytliga "
 "repor, men kommer att göra importeringen mycket långsam."
 
-#: ../src/Core/Banshee.Base/Gui/SourceView.cs:528
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:529
 msgid "Could not import tracks"
 msgstr "Kunde inte importera spår"
 
@@ -2535,10 +2535,13 @@ msgstr "Ställ in alla årtal till detta värde"
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
 msgid ""
-"Set all common fields in all selected tracks to the values currently set"
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
 msgstr ""
-"Ställ in alla vanliga fält i alla markerade spår till aktuella inställda "
-"värden"
+"Verkställ värden för den här spåruppsättningen för fälten Artist, "
+"Albumtitel, Genre, Spårantal, År och Betyg till resten av de markerade "
+"spåren i den här redigeraren."
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
 msgid "Set all ratings to this value"
@@ -2816,7 +2819,7 @@ msgstr "Lokal kö"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:72
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:460
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:466
-#: ../src/Core/Banshee/PlayerInterface.cs:1564
+#: ../src/Core/Banshee/PlayerInterface.cs:1565
 msgid "New Playlist"
 msgstr "Ny spellista"
 
@@ -2908,19 +2911,19 @@ msgstr "Växla blandningsläge"
 msgid "Edit and view metadata of selected songs"
 msgstr "Redigera och visa metadata för markerade låtar"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:774
+#: ../src/Core/Banshee/PlayerInterface.cs:775
 msgid "Pause"
 msgstr "Paus"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:776
+#: ../src/Core/Banshee/PlayerInterface.cs:777
 msgid "Stop"
 msgstr "Stopp"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:797
+#: ../src/Core/Banshee/PlayerInterface.cs:798
 msgid "Cannot Play Song"
 msgstr "Kan inte spela upp låt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:798
+#: ../src/Core/Banshee/PlayerInterface.cs:799
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2934,51 +2937,51 @@ msgstr ""
 "  <big>•</big> Låten är skyddad (DRM)\n"
 "  <big>•</big> Låten är på en DAP som inte har stöd för uppspelning\n"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:807
-#: ../src/Core/Banshee/PlayerInterface.cs:816
+#: ../src/Core/Banshee/PlayerInterface.cs:808
+#: ../src/Core/Banshee/PlayerInterface.cs:817
 msgid "Play"
 msgstr "Spela"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1230
+#: ../src/Core/Banshee/PlayerInterface.cs:1231
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} objekt"
 msgstr[1] "{0} objekt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1234
+#: ../src/Core/Banshee/PlayerInterface.cs:1235
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0} dagar"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1239
+#: ../src/Core/Banshee/PlayerInterface.cs:1240
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
 msgstr[0] "{0} timme"
 msgstr[1] "{0} timmar"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1243
+#: ../src/Core/Banshee/PlayerInterface.cs:1244
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
 msgstr[0] "{0} minut"
 msgstr[1] "{0} minuter"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1245
+#: ../src/Core/Banshee/PlayerInterface.cs:1246
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
 msgstr[0] "{0} sekund"
 msgstr[1] "{0} sekunder"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1583
+#: ../src/Core/Banshee/PlayerInterface.cs:1584
 msgid "Clear"
 msgstr "Töm"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1846
+#: ../src/Core/Banshee/PlayerInterface.cs:1847
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2987,15 +2990,15 @@ msgstr[0] "Är du säker på att du vill permanent ta bort denna låt?"
 msgstr[1] ""
 "Är du säker på att du vill permanent ta bort de markerade {0} låtarna?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1850
+#: ../src/Core/Banshee/PlayerInterface.cs:1851
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Om du tar bort markeringen kommer de att permanent förloras."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1853
+#: ../src/Core/Banshee/PlayerInterface.cs:1854
 msgid "Remove selection from library"
 msgstr "Ta bort markering från bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1855
+#: ../src/Core/Banshee/PlayerInterface.cs:1856
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -3006,26 +3009,26 @@ msgstr[1] ""
 "Är du säker att du vill ta bort de <b>({0})</b> markerade låtarna från ditt "
 "bibliotek?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1900
+#: ../src/Core/Banshee/PlayerInterface.cs:1901
 msgid "Delete songs from drive"
 msgstr "Ta bort låtar från enhet"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1901
+#: ../src/Core/Banshee/PlayerInterface.cs:1902
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "Du har inte de nödvändiga rättigheterna att ta bort \"{0}\""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2015
+#: ../src/Core/Banshee/PlayerInterface.cs:2016
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2036
+#: ../src/Core/Banshee/PlayerInterface.cs:2037
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisera {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2037
+#: ../src/Core/Banshee/PlayerInterface.cs:2038
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3043,7 +3046,7 @@ msgstr ""
 "<big>•</big> <i>Spara manuella ändringar</i>: spara endast de manuella "
 "ändringarna du gjorde"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2043
+#: ../src/Core/Banshee/PlayerInterface.cs:2044
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3051,11 +3054,11 @@ msgstr ""
 "<b>Varning:</b> Åtgärder kommer att ändra eller radera existerande iPod-"
 "innehåll och kan orsaka inkompatibilitet med iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2045
+#: ../src/Core/Banshee/PlayerInterface.cs:2046
 msgid "Synchronize Library"
 msgstr "Synkronisera bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2047
+#: ../src/Core/Banshee/PlayerInterface.cs:2048
 msgid "Save Manual Changes"
 msgstr "Spara manuella ändringar"
 
@@ -3109,6 +3112,14 @@ msgstr "Kontaktar..."
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
 msgid "Idle"
 msgstr "Inaktiv"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:493
+msgid "Muted"
+msgstr "Tystad"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:495
+msgid "Full Volume"
+msgstr "Full volym"
 
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
@@ -3176,7 +3187,7 @@ msgstr "Förbehandlar spår"
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:253
 msgid "Flushing to Disk (may take time)"
-msgstr "Spolar till disk (kan ta tid)"
+msgstr "Skriver till disk (kan ta tid)"
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:263
 msgid "Failed to synchronize iPod"
@@ -4105,6 +4116,7 @@ msgstr "Fel"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:75
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:87
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:127
 msgid "Description:"
 msgstr "Beskrivning:"
 
@@ -4261,23 +4273,31 @@ msgid "Radio plugin enabled"
 msgstr "Insticksmodulen Radio aktiverad"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
+msgid "Show remote stations"
+msgstr "Visa fjärrstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
 msgid "Show stations requiring Helix/RealPlayer"
 msgstr "Visa stationer kräver Helix/RealPlayer"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
 msgid "Time of the last radio update"
 msgstr "Tid för senaste radiouppdatering"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
 msgid "Time of the last radio update check"
 msgstr "Tid för senaste radiouppdateringskontroll"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
+msgid "Update remote stations from radio.banshee-project.org"
+msgstr "Uppdatera fjärrstationer från radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
 msgid "Loading"
 msgstr "Läser in"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:52
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:62
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:63
 msgid "Radio"
 msgstr "Radio"
 
@@ -4286,76 +4306,93 @@ msgid "Provides Internet radio/streaming audio station support"
 msgstr "Tillhandahåller stöd för Internetradio/strömmande ljudstation"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
+msgid "Show Remote Stations"
+msgstr "Visa fjärrstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
+msgid "Update and show radio station content from radio.banshee-project.org"
+msgstr ""
+"Uppdatera och visa radiostationsinnehåll från radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
 msgstr "Uppdatera stationer"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:124
 msgid "Refresh stations from the Banshee Radio Web Service"
 msgstr "Uppdatera stationer från Banshee Radio Web Service"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:122
-msgid "New Station Group"
-msgstr "Ny stationsgrupp"
-
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
-msgid "Create a new local station group"
-msgstr "Skapa en ny lokal stationsgrupp"
-
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:126
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:129
 msgid "Copy URI"
 msgstr "Kopiera URI"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:127
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
 msgid "Copy stream URI to clipboard"
 msgstr "Kopiera ström-URI till urklipp"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:133
 msgid "Edit"
 msgstr "Redigera"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:131
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
 msgid "Edit Radio Station"
 msgstr "Redigera radiostation"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:137
 msgid "Add Station"
 msgstr "Lägg till station"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:135
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
 msgid "Add new Radio Station"
 msgstr "Lägg till ny radiostation"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:141
 msgid "Remove"
 msgstr "Ta bort"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:139
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:142
 msgid "Remove selected Radio Station"
 msgstr "Ta bort markerad radiostation"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:80
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
 msgid "Refreshing radio stations from the Banshee Radio Web Service"
 msgstr "Uppdaterar radiostationer från Banshee Radio Web Service"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:90
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
 msgid "Failed to load radio stations: "
 msgstr "Misslyckades med att läsa in radiostationer: "
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:49
-msgid "Add new station group"
-msgstr "Lägg till ny stationsgrupp"
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:307
+msgid "Invalid URI format."
+msgstr "Ogiltigt URI-format."
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:50
-msgid "Edit station group"
-msgstr "Redigera stationsgrupp"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:57
+msgid "Add new radio station"
+msgstr "Lägg till ny radiostation"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:71
-msgid "Title:"
-msgstr "Titel:"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:58
+msgid "Edit radio station"
+msgstr "Redigera radiostation"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:122
-msgid "The station group already exists"
-msgstr "Stationsgruppen finns redan"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
+msgid ""
+"Enter the Group, Title and URL of the radio station you wish to add. A "
+"description is optional."
+msgstr ""
+"Ange Grupp, Titel och URL för radiostationen som du önskar lägga till. En "
+"beskrivning är valfri."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
+msgid "Station Group:"
+msgstr "Stationsgrupp:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
+msgid "Station Title:"
+msgstr "Stationstitel:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
+msgid "Stream URL:"
+msgstr "URL för ström:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
 msgid "Station"
@@ -4407,10 +4444,34 @@ msgstr ""
 "närvarande spelade låten. Den hittar artister och populära låtar som andra "
 "med liknande musiksmak tycker om."
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:132
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:133
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Visa rekommendationer"
+
+#~ msgid "Copy all common fields"
+#~ msgstr "Kopiera alla vanliga fält"
+
+#~ msgid ""
+#~ "Set all common fields in all selected tracks to the values currently set"
+#~ msgstr ""
+#~ "Ställ in alla vanliga fält i alla markerade spår till aktuella inställda "
+#~ "värden"
+
+#~ msgid "Create a new local station group"
+#~ msgstr "Skapa en ny lokal stationsgrupp"
+
+#~ msgid "Add new station group"
+#~ msgstr "Lägg till ny stationsgrupp"
+
+#~ msgid "Edit station group"
+#~ msgstr "Redigera stationsgrupp"
+
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgid "The station group already exists"
+#~ msgstr "Stationsgruppen finns redan"
 
 #~ msgid "Width of Track column"
 #~ msgstr "Bredd på Spår-kolumn"
