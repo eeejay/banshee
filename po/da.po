@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-11 00:06+0100\n"
-"PO-Revision-Date: 2007-02-11 00:06+0100\n"
+"POT-Creation-Date: 2007-02-11 00:44+0100\n"
+"PO-Revision-Date: 2007-02-11 00:37+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -390,7 +390,7 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
-"Et proprietært og ældre, men også populært, ikke-forringende lydformat som "
+"Et proprietært og ældre, men også populært, forringende lydformat som "
 "producerer større filer med lavere bitrater."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
@@ -429,7 +429,7 @@ msgstr "Variabel bitrate"
 #: ../data/audio-profiles/wavpack.xml.in.h:9
 #: ../data/audio-profiles/wma.xml.in.h:7
 msgid "Worst"
-msgstr "Værste"
+msgstr "Dårligste"
 
 #: ../data/audio-profiles/mp3-xing.xml.in.h:3
 msgid "MP3 (Xing Encoder)"
@@ -468,8 +468,8 @@ msgid ""
 "A fast and efficient open source audio format offering lossless and high-"
 "quality lossy encoding with great dynamic range."
 msgstr ""
-"Et hurtigt og effektivt åbent lydformat som tilbyder ikke-forringende "
-"højkvalitetskodning med god dynamik."
+"Et hurtigt og effektivt åbent lydformat som tilbyder både forringende og "
+"ikke-forringende højkvalitetskodning med god dynamik."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
 msgid "Extra processing"
@@ -3023,10 +3023,7 @@ msgstr ""
 "<big>•</big> <i>Synkronisér bibliotek</i>: synkronisér Banshee-bibliotek til "
 "{0}\n"
 "<big>•</big> <i>Gem manuelle ændringer</i>: gem kun manuelle ændringer lavet "
-"af dig\n"
-"\n"
-"<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende iPod indhold "
-"og kan medføre inkompatiblitet med iTunes!"
+"af dig"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2044
 msgid ""
@@ -3778,7 +3775,7 @@ msgstr "Vis påmindelse når der skiftes sang"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:68
 msgid "Quit Banshee when title bar close button is clicked"
-msgstr "Afslut Banshee når der klikkes på titelbarens luk-knap"
+msgstr "Afslut Banshee når der klikkes på luk-knappen"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:62
 msgid "Shows the Notification Area Icon"
@@ -3801,7 +3798,7 @@ msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
 msgstr ""
-"Banshee blev lukket til statusområdet. Brug <i>Afslut</i> til at lukke din "
+"Banshee blev lukket til statusområdet. Brug <i>Afslut</i> for at lukke din "
 "session."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
@@ -4042,8 +4039,8 @@ msgid ""
 "Its name comes from the targeting of audio posts to Apple's iPod® audio "
 "player, although podcasts can be listened to directly in {0}."
 msgstr ""
-"Podcasting er en form for lydblogging hvor brugere abonnerer på et feed med "
-"afsnit, som hentes og kan lyttes til uden netadgang.\n"
+"Podcasting er en form for lydblogging hvor brugere abonnerer på et feed, med "
+"afsnit som hentes og kan lyttes til uden netadgang.\n"
 "\n"
 "Navnet kommer fra dets oprindelige formål som lydklip på Apples iPod® "
 "lydafspiller, men kan lyttes til direkte i {0}."
