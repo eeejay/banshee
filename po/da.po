@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-10 22:42+0100\n"
-"PO-Revision-Date: 2007-02-10 22:40+0100\n"
+"POT-Creation-Date: 2007-02-11 00:06+0100\n"
+"PO-Revision-Date: 2007-02-11 00:06+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -448,7 +448,7 @@ msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
-"Vorbis er et åbent, ikke-forringende højkvalitets lydformat med mindre "
+"Vorbis er et åbent, forringende højkvalitets lydformat med mindre "
 "filstørrelser end MP3."
 
 #: ../data/audio-profiles/wav.xml.in.h:1
@@ -477,7 +477,7 @@ msgstr "Yderligere behandling"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Lossy mode"
-msgstr "Ikke-forrringende tilstand"
+msgstr "Forrringende tilstand"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:6
 msgid "Mode"
@@ -496,8 +496,8 @@ msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
 "size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
-"Et proprietært ikke-forringende højkvalitets lydformat med mindre "
-"filstørrelser end MP3. En 96 kbps WMA svarer til en 128 kbps MP3."
+"Et proprietært forringende højkvalitets lydformat med mindre filstørrelser "
+"end MP3. En 96 kbps WMA svarer til en 128 kbps MP3."
 
 #: ../data/audio-profiles/wma.xml.in.h:2
 msgid "Audio Quality"
