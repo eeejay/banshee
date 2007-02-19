@@ -221,34 +221,40 @@ namespace Banshee.MediaEngine.Gstreamer
 
             if(domain == GST_RESOURCE_ERROR) {
                 GstResourceError domain_code = (GstResourceError)code;
-                switch(domain_code) {
-                    case GstResourceError.NotFound:
-                        CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
-                        break;
-                    default:
-                        break;
-                }        
+                if(CurrentTrack != null) {
+                    switch(domain_code) {
+                        case GstResourceError.NotFound:
+                            CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
+                            break;
+                        default:
+                            break;
+                    }        
+                }
                 
                 Console.WriteLine("GStreamer resource error: {0}", domain_code);
             } else if(domain == GST_STREAM_ERROR) {
                 GstStreamError domain_code = (GstStreamError)code;
-                switch(domain_code) {
-                    case GstStreamError.CodecNotFound:
-                        CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
-                        break;
-                    default:
-                        break;
+                if(CurrentTrack != null) {
+                    switch(domain_code) {
+                        case GstStreamError.CodecNotFound:
+                            CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 
                 Console.WriteLine("GStreamer stream error: {0}", domain_code);
             } else if(domain == GST_CORE_ERROR) {
                 GstCoreError domain_code = (GstCoreError)code;
-                switch(domain_code) {
-                    case GstCoreError.MissingPlugin:
-                        CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
-                        break;
-                    default:
-                        break;
+                if(CurrentTrack != null) {
+                    switch(domain_code) {
+                        case GstCoreError.MissingPlugin:
+                            CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 
                 Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);

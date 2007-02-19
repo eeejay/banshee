@@ -92,7 +92,6 @@ namespace Banshee.Gui.Dialogs
             
             Title = title;
             Decorated = false;
-            KeepAbove = true;
             TypeHint = Gdk.WindowTypeHint.Splashscreen;
             WindowPosition = WindowPosition.Center;
             AppPaintable = true;

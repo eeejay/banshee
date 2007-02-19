@@ -43,13 +43,7 @@ namespace Banshee.TrackView.Columns
         {
             SetCellDataFunc(Renderer, new TreeCellDataFunc(DataHandler));
             Resizable = false;
-            
-            int width, height;
-            Label label = new Label();
-            Pango.Layout layout = new Pango.Layout(label.PangoContext);
-            layout.SetText(Title);
-            layout.GetPixelSize(out width, out height);
-            FixedWidth = (int)(width * 1.5);
+            fixed_width_strings = new string [] { Title, "999999" };
         }
         
         protected void DataHandler(TreeViewColumn tree_column, CellRenderer cell, 

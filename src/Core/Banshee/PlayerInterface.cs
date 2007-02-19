@@ -177,6 +177,8 @@ namespace Banshee
             
             LoadSettings();
             
+            Globals.StartupInitializer.RunFinished += OnStartupRunFinished;
+            
             Globals.UIManager.SourceViewContainer = gxml["SourceViewContainer"] as Box;
             Globals.UIManager.Initialize();
             
@@ -542,6 +544,15 @@ namespace Banshee
 
         private void OnLibraryReloaded(object o, EventArgs args)
         {
+            if(Globals.Library.Tracks.Count <= 0) {
+                Application.Invoke(delegate { 
+                    PromptForImport();
+                });
+            }
+        }
+        
+        private void OnStartupRunFinished(object o, EventArgs args)
+        {
             if(LocalQueueSource.Instance.Count > 0) {
                 SourceManager.SetActiveSource(LocalQueueSource.Instance);
             } else if(Globals.ArgumentQueue.Contains("audio-cd")) {
@@ -560,12 +571,13 @@ namespace Banshee
                 });
             }
             
-            if(Globals.Library.Tracks.Count <= 0) {
-                Application.Invoke(delegate { 
-                    PromptForImport();
-                });
-            }
-        }
+            GLib.Timeout.Add(1500, delegate {
+                foreach(LogEntry entry in LogCore.Instance) {
+                    ShowLogCoreEntry(entry);
+                }
+                return false;
+            });
+        } 
 
         // ---- Misc. Utility Routines ----
       
@@ -1250,13 +1262,18 @@ namespace Banshee
         
         private void OnLogCoreUpdated(object o, LogCoreUpdatedArgs args)
         {
-            if(!args.Entry.ShowUser || args.Entry.Type == LogEntryType.Debug) {
+            ShowLogCoreEntry(args.Entry);
+        }
+        
+        private void ShowLogCoreEntry(LogEntry entry)
+        {
+            if(!entry.ShowUser || entry.Type == LogEntryType.Debug) {
                 return;
             }
             
             MessageType mtype;
             
-            switch(args.Entry.Type) {
+            switch(entry.Type) {
                 case LogEntryType.Warning:
                     mtype = MessageType.Warning;
                     break;
@@ -1272,11 +1289,11 @@ namespace Banshee
             HigMessageDialog dialog = new HigMessageDialog(WindowPlayer, 
                 DialogFlags.Modal,
                 mtype,
-                ButtonsType.Ok,
-                args.Entry.ShortMessage,
-                args.Entry.Details);
+                ButtonsType.Close,
+                entry.ShortMessage,
+                entry.Details);
             
-            dialog.Title = args.Entry.ShortMessage;
+            dialog.Title = String.Empty;
             IconThemeUtils.SetWindowIcon(dialog);
             
             dialog.Response += delegate(object obj, ResponseArgs response_args)

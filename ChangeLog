@@ -1,3 +1,29 @@
+2007-02-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs: Do not
+	update the CurrentTrack if it is null
+
+	* src/Core/Banshee/PlaylistView.cs: call column.SetMaxFixedWidth(this)
+
+	* src/Core/Banshee/PlayerInterface.cs: Show dialogs for LogCore LogEntrys
+	that have been logged before connecting to the event; prompt for importing
+	when the StartupInitializer is done, not through some library loaded hack
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs: Added 
+	SetMaxFixedWidth to size fixed width columns properly
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs: Set
+	the fixed width strings
+
+	* src/Core/Banshee/Main.cs: Handle any exceptions that happen when trying
+	to initialize DBus; log a warning if there's a problem
+
+	* src/Core/Banshee.Base/Gui/SplashScreen.cs: Turn off KeepAbove so the
+	splash screen doesn't force itself above other windows
+
+	* src/Core/Banshee.Base/DBusPlayer.cs: If only one CD is available and
+	no argument is passed to --audio-cd, select the single CD
+
 2007-02-07  Aaron Bockover  <abock@gnome.org>
 
 	* ext/dbus-sharp/*: Updated dbus-sharp and dbus-sharp-glib to 0.4.0 and

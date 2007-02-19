@@ -52,9 +52,19 @@ namespace Banshee
         
             try {
                 Utilities.SetProcessName("banshee");
-            } catch {}
+            } catch {
+            }
             
-            BusG.Init();
+            try {
+                BusG.Init();
+            } catch(Exception e) {
+                LogCore.Instance.PushWarning(
+                    "DBus is not available", 
+                    "Your environment is not properly set up to use DBus. Please fix your environment " +
+                    "or run Banshee through dbus-launch. Failure to do so may cause problems " + 
+                    "at a later time in Banshee during this instance.\n\n" + e.Message, true);
+            }
+            
             Gtk.Application.Init();
         
             Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {

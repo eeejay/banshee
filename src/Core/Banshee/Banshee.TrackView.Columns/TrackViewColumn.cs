@@ -72,6 +72,8 @@ namespace Banshee.TrackView.Columns
         private CellRenderer renderer;
         private Menu menu;
         
+        protected string [] fixed_width_strings;
+        
         protected virtual ModelCompareHandler CompareHandler {
             get { return null; }
         }
@@ -196,6 +198,29 @@ namespace Banshee.TrackView.Columns
             }
 
             renderer.Sensitive = ti.CanPlay && ti.PlaybackError == TrackPlaybackError.None;
+        }
+        
+        public void SetMaxFixedWidth(TreeView view)
+        {
+            int max_width = 0;
+            
+            if(fixed_width_strings == null) {
+                return;
+            }
+            
+            foreach(string str in fixed_width_strings) {
+                int width, height;
+                
+                Pango.Layout layout = new Pango.Layout(view.PangoContext);
+                layout.SetText(str);
+                layout.GetPixelSize(out width, out height);
+                
+                if(width > max_width) {
+                    max_width = width;
+                }
+            }
+            
+            FixedWidth = (int)Math.Ceiling(max_width * 1.4);
         }
         
         public int CompareTo(TrackViewColumn column)

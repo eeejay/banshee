@@ -93,6 +93,7 @@ namespace Banshee
                 column.Model = model;
                 AppendColumn(column);
                 column.CreatePopupableHeader();
+                column.SetMaxFixedWidth(this);
             }
 
             // Create static columns

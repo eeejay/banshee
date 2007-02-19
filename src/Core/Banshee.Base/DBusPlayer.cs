@@ -190,6 +190,8 @@ namespace Banshee.Base
             if(!Available) {
                 return;
             }
+            
+            Source single_cd_source = null;
         
             foreach(Source source in SourceManager.Sources) {
                 AudioCdSource audiocd_source = source as AudioCdSource;
@@ -197,13 +199,15 @@ namespace Banshee.Base
                     continue;
                 }
                 
-                if(audiocd_source.Disk.DeviceNode == device || audiocd_source.Disk.Udi == device) {
+                if(device == null || device == String.Empty) {
+                    single_cd_source = source;
+                } else if(audiocd_source.Disk.DeviceNode == device || audiocd_source.Disk.Udi == device) {
                     SourceManager.SetActiveSource(audiocd_source);
                     return;
                 }
             }
             
-            SourceManager.SetActiveSource(LibrarySource.Instance);
+            SourceManager.SetActiveSource(single_cd_source ?? LibrarySource.Instance);
         }
         
         public void SelectDap(string device)
