@@ -32,7 +32,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Banshee.Kernel;
-using Banshee.Base;
 
 namespace Banshee.Metadata
 {
@@ -52,21 +51,24 @@ namespace Banshee.Metadata
         
         private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
             = new Dictionary<IBasicTrackInfo, IMetadataLookupJob>();
-        private List<IMetadataProvider> providers = new List<IMetadataProvider> ();
+        private List<IMetadataProvider> providers = new List<IMetadataProvider>();
+        private MetadataSettings settings;
 
-        protected MetadataService()
+        public MetadataService()
         {
-            AddProvider (new Banshee.Metadata.Embedded.EmbeddedMetadataProvider ());
-            AddProvider (new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider ());
-            AddProvider (new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider ());
+            AddProvider(new Banshee.Metadata.Embedded.EmbeddedMetadataProvider());
+            AddProvider(new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider());
+            AddProvider(new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider());
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
+            
+            Settings = new MetadataSettings();
         }
 
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
         {
-            return new MetadataServiceJob(this, track);
+            return new MetadataServiceJob(this, track, settings);
         }
         
         public override void Lookup(IBasicTrackInfo track)
@@ -82,7 +84,7 @@ namespace Banshee.Metadata
             
             lock(((ICollection)queries).SyncRoot) {
                 if(!queries.ContainsKey(track)) {
-                    IMetadataLookupJob job = CreateJob(track);
+                    IMetadataLookupJob job = CreateJob(track, Settings);
                     if(job == null) {
                         return;
                     }
@@ -93,26 +95,26 @@ namespace Banshee.Metadata
             }
         }
 
-        public void AddProvider (IMetadataProvider provider)
+        public void AddProvider(IMetadataProvider provider)
         {
-            AddProvider (-1, provider);
+            AddProvider(-1, provider);
         }
 
-        public void AddProvider (int position, IMetadataProvider provider)
+        public void AddProvider(int position, IMetadataProvider provider)
         {
-            lock (providers) {
-                if (position < 0) {
-                    providers.Add (provider);
+            lock(providers) {
+                if(position < 0) {
+                    providers.Add(provider);
                 } else {
-                    providers.Insert (position, provider);
+                    providers.Insert(position, provider);
                 }
             }
         }
 
-        public void RemoveProvider (IMetadataProvider provider)
+        public void RemoveProvider(IMetadataProvider provider)
         {
-            lock (providers) {
-                providers.Remove (provider);
+            lock(providers) {
+                providers.Remove(provider);
             }
         }
         
@@ -140,7 +142,7 @@ namespace Banshee.Metadata
             
             IMetadataLookupJob lookup_job = (IMetadataLookupJob)job;
             if(RemoveJob(lookup_job)) {
-                ThreadAssist.ProxyToMain(delegate { 
+                Settings.ProxyToMain(delegate { 
                     OnHaveResult(lookup_job.Track, lookup_job.ResultTags); 
                 });
             }
@@ -153,8 +155,18 @@ namespace Banshee.Metadata
         
         public ReadOnlyCollection<IMetadataProvider> Providers {
             get {
-                lock (providers) {
-                    return new ReadOnlyCollection<IMetadataProvider> (providers);
+                lock(providers) {
+                    return new ReadOnlyCollection<IMetadataProvider>(providers);
+                }
+            }
+        }
+        
+        public override MetadataSettings Settings {
+            get { return settings; }
+            set { 
+                settings = value;
+                foreach(IMetadataProvider provider in providers) {
+                    provider.Settings = value;
                 }
             }
         }

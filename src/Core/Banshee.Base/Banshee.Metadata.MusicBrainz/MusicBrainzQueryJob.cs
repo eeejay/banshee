@@ -46,13 +46,14 @@ namespace Banshee.Metadata.MusicBrainz
         private TrackInfo track;
         private string asin;
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track)
+        public MusicBrainzQueryJob(IBasicTrackInfo track, MetadataSettings settings)
         {
             Track = track;
             this.track = track as TrackInfo; 
+            Settings = settings;
         }
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track, string asin) : this(track)
+        public MusicBrainzQueryJob(IBasicTrackInfo track, MetadataSettings settings, string asin) : this(track, settings)
         {
             this.asin = asin;
         }
@@ -73,7 +74,7 @@ namespace Banshee.Metadata.MusicBrainz
                 return false;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
                 return false;
-            } else if(!Globals.Network.Connected) {
+            } else if(!Settings.NetworkConnected) {
                 return false;
             }
             

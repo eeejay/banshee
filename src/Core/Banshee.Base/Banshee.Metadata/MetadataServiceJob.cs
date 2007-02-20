@@ -40,29 +40,31 @@ namespace Banshee.Metadata
     {
         private MetadataService service;
         private IBasicTrackInfo track;
+        private MetadataSettings settings;
         private List<StreamTag> tags = new List<StreamTag>();
         
         protected MetadataServiceJob()
         {
         }
         
-        public MetadataServiceJob(MetadataService service, IBasicTrackInfo track)
+        public MetadataServiceJob(MetadataService service, IBasicTrackInfo track, MetadataSettings settings)
         {
             this.service = service;
             this.track = track;
+            this.settings = settings;
         }
     
         public virtual void Run()
         {
             foreach(IMetadataProvider provider in service.Providers) {
                 try {
-                    IMetadataLookupJob job = provider.CreateJob(track);
+                    IMetadataLookupJob job = provider.CreateJob(track, settings);
                     job.Run();
                     
                     foreach(StreamTag tag in job.ResultTags) {
                         AddTag(tag);
                     }
-                } catch(Exception e) {
+                } catch(Exception) {
                    // Console.WriteLine(e);
                 }
             }
@@ -77,6 +79,11 @@ namespace Banshee.Metadata
             get { return tags; }
         }
         
+        public virtual MetadataSettings Settings {
+            get { return settings; }
+            set { settings = value; }
+        }
+        
         protected void AddTag(StreamTag tag)
         {
             tags.Add(tag);
@@ -89,7 +96,7 @@ namespace Banshee.Metadata
 
         protected Stream GetHttpStream(Uri uri, string [] ignoreMimeTypes)
         {
-            if(!Globals.Network.Connected) {
+            if(!Settings.NetworkConnected) {
                 throw new NetworkUnavailableException();
             }
         

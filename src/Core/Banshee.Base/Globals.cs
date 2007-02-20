@@ -35,6 +35,18 @@ using Banshee.AudioProfiles;
 namespace Banshee.Base
 {
     public delegate bool ShutdownRequestHandler();
+    
+    public class GlobalMetadataSettings : Banshee.Metadata.MetadataSettings
+    {
+        public override void ProxyToMain(EventHandler handler)
+        {
+            ThreadAssist.ProxyToMain(handler);
+        }
+        
+        public override bool NetworkConnected {
+            get { return Globals.Network.Connected; }
+        }
+    }
 
     public static class Globals
     {
@@ -73,6 +85,8 @@ namespace Banshee.Base
             }
             
             random = new Random();
+            
+            Banshee.Metadata.MetadataService.Instance.Settings = new GlobalMetadataSettings();
             
             if(!Directory.Exists(Paths.ApplicationData)) {
                 Directory.CreateDirectory(Paths.ApplicationData);

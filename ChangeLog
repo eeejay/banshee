@@ -1,5 +1,27 @@
 2007-02-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataServiceJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata/IMetadataLookupJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata/MetadataService.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata/IMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata/BaseMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Base.mdp:
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Base/Globals.cs:
+	* src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:
+	* src/Core/Banshee.Base/Makefile.am:
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs:
+	* src/Core/Banshee.Base/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Use the new MetadataSettings so there's no dependency on core/app features
+	that previously made the metadata services only usable inside the Banshee
+	application context; provide a GlobalMetadataSettings implementation that
+	implements settings for the application core
+
+2007-02-20  Aaron Bockover  <abock@gnome.org>
+
 	0.11.7 Released
 
 	* NEWS: Updated with 0.11.7 notes

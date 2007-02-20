@@ -59,10 +59,12 @@ namespace Banshee.Metadata
     {
         event MetadataLookupResultHandler HaveResult;
         
-        IMetadataLookupJob CreateJob(IBasicTrackInfo track);
+        IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings);
         
         void Lookup(IBasicTrackInfo track);
         void Cancel(IBasicTrackInfo track);
         void Cancel();
+        
+        MetadataSettings Settings { get; set; }
     }
 }

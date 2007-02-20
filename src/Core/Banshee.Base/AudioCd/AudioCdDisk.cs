@@ -204,7 +204,8 @@ namespace Banshee.Base
             Status = AudioCdLookupStatus.SearchingCoverArt;
             
             Banshee.Metadata.MusicBrainz.MusicBrainzQueryJob cover_art_job =
-                new Banshee.Metadata.MusicBrainz.MusicBrainzQueryJob(tracks[0], asin);
+                new Banshee.Metadata.MusicBrainz.MusicBrainzQueryJob(tracks[0],
+                    Banshee.Metadata.MetadataService.Instance.Settings, asin);
             if(cover_art_job.Lookup()) {
                 HandleUpdated();
             }

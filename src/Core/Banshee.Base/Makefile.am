@@ -22,7 +22,8 @@ BANSHEE_AUDIOPROFILES_GUI_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \
 	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileComboBox.cs \
 	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs \
-	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs
+	$(srcdir)/Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs \
+	$(srcdir)/Banshee.AudioProfiles.Gui/TextViewLabel.cs
 
 BANSHEE_CDROM_SOURCES = \
 	$(srcdir)/Banshee.Cdrom/IDriveFactory.cs \
@@ -139,7 +140,8 @@ BANSHEE_METADATA_SOURCES = \
 	$(srcdir)/Banshee.Metadata/IMetadataLookupJob.cs \
 	$(srcdir)/Banshee.Metadata/BaseMetadataProvider.cs \
 	$(srcdir)/Banshee.Metadata/MetadataService.cs \
-	$(srcdir)/Banshee.Metadata/MetadataServiceJob.cs
+	$(srcdir)/Banshee.Metadata/MetadataServiceJob.cs \
+	$(srcdir)/Banshee.Metadata/MetadataSettings.cs
 
 BANSHEE_METADATA_RHAPSODY_SOURCES = \
 	$(srcdir)/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs \

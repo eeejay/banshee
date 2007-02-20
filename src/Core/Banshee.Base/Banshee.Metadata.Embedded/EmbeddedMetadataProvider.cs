@@ -40,9 +40,9 @@ namespace Banshee.Metadata.Embedded
         {
         }
         
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
         {
-            return new EmbeddedQueryJob(track);
+            return new EmbeddedQueryJob(track, settings);
         }
     }
 }

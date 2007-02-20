@@ -40,10 +40,11 @@ namespace Banshee.Metadata.Embedded
     {
         private TrackInfo track;
         
-        public EmbeddedQueryJob(IBasicTrackInfo track)
+        public EmbeddedQueryJob(IBasicTrackInfo track, MetadataSettings settings)
         {
             Track = track;
             this.track = track as TrackInfo;
+            Settings = settings;
         }
         
         public override void Run()

@@ -1,8 +1,8 @@
 /***************************************************************************
- *  IMetadataProvider.cs
+ *  MetadataSettings.cs
  *
- *  Copyright (C) 2006-2007 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
+ *  Copyright (C) 2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -25,24 +25,23 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
+ 
 using System;
-using System.Collections.Generic;
 
-using Banshee.Base;
-using Banshee.Metadata;
-
-namespace Banshee.Metadata.Rhapsody
+namespace Banshee.Metadata
 {
-    public class RhapsodyMetadataProvider : BaseMetadataProvider
+    public class MetadataSettings
     {
-        public RhapsodyMetadataProvider() : base()
+        public virtual void ProxyToMain(EventHandler handler)
         {
+            EventHandler handler_c = handler;
+            if(handler_c != null) {
+                handler_c(this, EventArgs.Empty);
+            }
         }
-        
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
-        {
-            return new RhapsodyQueryJob(track, settings);
+    
+        public virtual bool NetworkConnected {
+            get { return true; }
         }
     }
 }

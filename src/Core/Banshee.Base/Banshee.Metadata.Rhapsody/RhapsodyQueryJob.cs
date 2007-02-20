@@ -46,9 +46,10 @@ namespace Banshee.Metadata.Rhapsody
     {
         private static Uri base_uri = new Uri("http://www.rhapsody.com/");
         
-        public RhapsodyQueryJob(IBasicTrackInfo track)
+        public RhapsodyQueryJob(IBasicTrackInfo track, MetadataSettings settings)
         {
             Track = track;
+            Settings = settings;
         }
         
         public override void Run()
@@ -62,7 +63,7 @@ namespace Banshee.Metadata.Rhapsody
                 return;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
                 return;
-            } else if(!Globals.Network.Connected) {
+            } else if(!Settings.NetworkConnected) {
                 return;
             }
             

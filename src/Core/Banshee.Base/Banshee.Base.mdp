@@ -246,6 +246,11 @@
     <File name="./Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Embedded/EmbeddedQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="./Localization.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/gui.stetic" subtype="Code" buildaction="Exclude" />
+    <File name="./gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.AudioProfiles.Gui/TextViewLabel.cs" subtype="Code" buildaction="Compile" />
+    <File name="./gtk-gui/objects.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.Metadata/MetadataSettings.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -275,4 +280,9 @@
     <ProjectReference type="Project" localcopy="False" refto="Last.FM" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
+  <GtkDesignInfo>
+    <ExportedWidgets>
+      <Widget>Banshee.Base.TextViewLabel</Widget>
+    </ExportedWidgets>
+  </GtkDesignInfo>
 </Project>
