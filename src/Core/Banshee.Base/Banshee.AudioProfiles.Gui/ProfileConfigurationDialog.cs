@@ -65,7 +65,7 @@ namespace Banshee.AudioProfiles.Gui
         private Profile profile;
     
         private Label header_label = new Label();
-        private Label description_label = new Label();
+        private TextViewLabel description_label = new TextViewLabel();
         private Table normal_controls_table = new Table(1, 1, false);
         private Table advanced_controls_table = new Table(1, 1, false);
         private Expander advanced_expander = new Expander(Catalog.GetString("Advanced"));
@@ -79,8 +79,7 @@ namespace Banshee.AudioProfiles.Gui
         
             HasSeparator = false;
             BorderWidth = 5;
-            Resizable = false;
-            
+                    
             AccelGroup accel_group = new AccelGroup();
             AddAccelGroup(accel_group);
             
@@ -119,8 +118,6 @@ namespace Banshee.AudioProfiles.Gui
             box.Show();
         
             header_label.Xalign = 0.0f;
-            description_label.Wrap = true;
-            description_label.Xalign = 0.0f;
             
             header_label.Show();
             description_label.Show();
@@ -159,6 +156,15 @@ namespace Banshee.AudioProfiles.Gui
             }
 
             VBox.PackStart(box, false, false, 0);
+            
+            SetSizeRequest(350, -1);
+            
+            Gdk.Geometry limits = new Gdk.Geometry();
+            limits.MinWidth = SizeRequest().Width;
+            limits.MaxWidth = Gdk.Screen.Default.Width;
+            limits.MinHeight = -1;
+            limits.MaxHeight = -1;
+            SetGeometryHints(this, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
         }
 
         private void LoadProfile()

@@ -35,7 +35,7 @@ namespace Banshee.AudioProfiles.Gui
     {
         private ProfileComboBox combo;
         private ProfileConfigureButton button;
-        private TextView description;
+        private TextViewLabel description;
         private string configuration_id;
         
         private static Gdk.Color window_color = Gdk.Color.Zero;
@@ -62,17 +62,7 @@ namespace Banshee.AudioProfiles.Gui
             editor.PackStart(button, false, false, 0);
             editor.Show();
             
-            if(window_color.Equals(Gdk.Color.Zero)) {
-                Window temp = new Window("temp");
-                temp.EnsureStyle();
-                window_color = temp.Style.Background(StateType.Normal);
-            }
-            
-            description = new TextView();
-            description.WrapMode = WrapMode.Word;
-            description.Editable = false;
-            description.CursorVisible = false;
-            description.ModifyBase(StateType.Normal, window_color);
+            description = new TextViewLabel();
             description.Show();
             
             TextTag tag = new TextTag("small");
@@ -103,7 +93,7 @@ namespace Banshee.AudioProfiles.Gui
         
         private void SetDescription()
         {
-            description.Buffer.Text = Combo.ActiveProfile.Description;
+            description.Text = Combo.ActiveProfile.Description;
             description.Buffer.ApplyTag("small", description.Buffer.StartIter, description.Buffer.EndIter);
         }
         
