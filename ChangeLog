@@ -1,5 +1,12 @@
 2007-02-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/VolumeButton.cs: Do not show the slider dock
+	when scrolling on the volume button; stop the scroll signal emission 
+	in event-after to keep the tooltip showing (and reflecting the updated
+	volume level) as the scroll happens, like the panel applet volume button
+
+2007-02-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/TextViewLabel.cs: A 
 	GtkTextView that acts and looks more like a GtkLabel - but it has nice
 	word wrapping

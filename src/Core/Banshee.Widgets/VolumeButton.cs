@@ -81,6 +81,8 @@ namespace Bacon
             
             BuildButton();
             BuildPopup(min, max, step);
+            
+            WidgetEventAfter += OnWidgetEventAfter;
         }
         
         public override void Dispose()
@@ -303,19 +305,38 @@ namespace Bacon
             return false;
         }
         
+        [DllImport("libgobject-2.0-0.dll")]
+        private static extern void g_signal_stop_emission_by_name(IntPtr o, string signal);
+        
+        // In case there's no map provided by the assembly .config file
+        [DllImport("libgobject-2.0.so.0", EntryPoint="g_signal_stop_emission_by_name_fallback")]
+        private static extern void g_signal_stop_emission_by_name_fallback(IntPtr o, string signal);
+            
+        private void OnWidgetEventAfter(object o, WidgetEventAfterArgs args)
+        {
+            if(args.Event.Type != Gdk.EventType.Scroll) {
+                return;
+            }
+            
+            try {
+                g_signal_stop_emission_by_name(Handle, "event-after");
+            } catch(DllNotFoundException) {
+                WarnGObjectMap();
+                g_signal_stop_emission_by_name_fallback(Handle, "event-after");
+            }
+        }
+        
         protected override bool OnScrollEvent(Gdk.EventScroll evnt)
         {
             if(evnt.Type != Gdk.EventType.Scroll) {
                 return false;
             }
             
-            /*if(evnt.Direction == Gdk.ScrollDirection.Up) {
+            if(evnt.Direction == Gdk.ScrollDirection.Up) {
                 AdjustVolume(1);
             } else if(evnt.Direction == Gdk.ScrollDirection.Down) {
                 AdjustVolume(-1);
-            }*/
-            
-            ShowDock(evnt);
+            }
             
             return true;
         }
@@ -572,6 +593,11 @@ namespace Bacon
             }
         }
 
+        private void WarnGObjectMap()
+        {
+            Console.Error.WriteLine("* WARNING *: Provide a DLL Map for libgobject-2.0-0.dll");
+        }
+            
         private class VolumeScale : VScale
         {
             private VolumeButton button;
@@ -648,6 +674,7 @@ namespace Bacon
                         try {
                             g_type_query(Gtk.Widget.GType.Val, query);
                         } catch(DllNotFoundException) {
+                            button.WarnGObjectMap();
                             g_type_query_fallback(Gtk.Widget.GType.Val, query);
                         }
                         
