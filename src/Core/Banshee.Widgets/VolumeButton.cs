@@ -309,7 +309,7 @@ namespace Bacon
         private static extern void g_signal_stop_emission_by_name(IntPtr o, string signal);
         
         // In case there's no map provided by the assembly .config file
-        [DllImport("libgobject-2.0.so.0", EntryPoint="g_signal_stop_emission_by_name_fallback")]
+        [DllImport("libgobject-2.0.so.0", EntryPoint="g_signal_stop_emission_by_name")]
         private static extern void g_signal_stop_emission_by_name_fallback(IntPtr o, string signal);
             
         private void OnWidgetEventAfter(object o, WidgetEventAfterArgs args)
