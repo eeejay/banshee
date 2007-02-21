@@ -51,5 +51,5 @@ if [ -d $libdir/@PACKAGE@/shell-init ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec -a banshee @MONO@ $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG "$@"
+exec -a banshee mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG "$@"
 

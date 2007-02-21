@@ -49,6 +49,10 @@ namespace Banshee.Cdrom.Nautilus
         
         public NautilusDriveFactory()
         {
+            if(HalCore.Manager == null) {
+                throw new ApplicationException("HAL Core is not available");
+            }
+
             foreach(string udi in HalCore.Manager.FindDeviceByStringMatch("storage.drive_type", "cdrom")) {
                 AddDrive(new Device(udi));
             }

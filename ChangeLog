@@ -1,5 +1,21 @@
 2007-02-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/banshee.in: Do not use @MONO@, which hard codes the
+	mono runtime location; just use mono and let the right one be chosen
+	from PATH - useful when working with parallel mono environments
+
+	* src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDriveFactory.cs: 
+	Add an explicit null check for HalCore.Manager to get around any potential
+	SEGV signal issues when throwing NullReferenceException; ensures that
+	even if HAL isn't available, the app should continue to load, regardless
+	of signal settings (which determine if SEGV can chain up to 
+	NullReferenceException by being handled by the runtime))
+
+	* ext/hal-sharp/Manager.cs: Do the same as the above, plus throw a 
+	more descriptive exception with cute DBus details
+
+2007-02-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.Ipod/IpodQueryJob.cs
 	* src/Dap/Banshee.Dap.Ipod/IpodMetadataProvider.cs: Updated to reflect
 	API updates in the metadata services

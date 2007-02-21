@@ -98,6 +98,10 @@ namespace Hal
             manager = Bus.System.GetObject<IManager>("org.freedesktop.Hal",
                 new ObjectPath("/org/freedesktop/Hal/Manager"));
             
+            if(manager == null) {
+                throw new ApplicationException("The /org/freedesktop/Hal/Manager object could not be located on the DBUs interface org.freedesktop.Hal");
+            }
+
             manager.DeviceAdded += OnDeviceAdded;
             manager.DeviceRemoved += OnDeviceRemoved;
             manager.NewCapability += OnNewCapability;
