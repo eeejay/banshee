@@ -305,6 +305,9 @@ namespace Bacon
             return false;
         }
         
+        // FIXME: There's no g_signal_stop_emission* binding:
+        // http://bugzilla.ximian.com/show_bug.cgi?id=76416
+        
         [DllImport("libgobject-2.0-0.dll")]
         private static extern void g_signal_stop_emission_by_name(IntPtr o, string signal);
         
