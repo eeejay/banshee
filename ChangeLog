@@ -1,5 +1,14 @@
 2007-02-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationUtilities.cs
+	(HostInjectionHack): Work around a last.fm web services bug where they 
+	return URIs without a host name on some content. It appears the host
+	name is always static3.last.fm, but that may not be the case for all 
+	data or it may change in the future - last.fm should fix their 
+	stuff (BGO #408068)
+
+2007-02-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/banshee.in: Do not use @MONO@, which hard codes the
 	mono runtime location; just use mono and let the right one be chosen
 	from PATH - useful when working with parallel mono environments

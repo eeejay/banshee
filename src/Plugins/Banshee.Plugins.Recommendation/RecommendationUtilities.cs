@@ -49,10 +49,26 @@ namespace Banshee.Plugins.Recommendation
             string hash = url.GetHashCode().ToString("X").ToLower();
             return System.IO.Path.Combine(System.IO.Path.Combine(CACHE_PATH, hash.Substring(0, 2)), hash);
         }
-    
+
+        // FIXME: This is to (try to) work around a bug in last.fm's XML
+        // Some XML nodes with URIs as content do not return a URI with a
+        // host name. It appears that in these cases the hostname is to be
+        // static3.last.fm, but it may not always be the case - this is
+        // a bug in last.fm, but we attempt to work around it here
+        // http://bugzilla.gnome.org/show_bug.cgi?id=408068
+
+        internal static string HostInjectionHack(string url)
+        {
+            if(url.StartsWith("http:///storable/")) {
+                url = url.Insert(7, "static3.last.fm");
+            }
+
+            return url;
+        }
+
         internal static string RequestContent(string url)
         {
-            string path = GetCachedPathFromUrl(url);
+            string path = GetCachedPathFromUrl(HostInjectionHack(url));
             DownloadContent(url, path, false);
 
             StreamReader reader = new StreamReader(path);
@@ -71,8 +87,8 @@ namespace Banshee.Plugins.Recommendation
                 }
             }
             
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.UserAgent = "Banshee Recommendation Plugin";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(HostInjectionHack(url));
+            request.UserAgent = Banshee.Web.Browser.UserAgent;
             request.KeepAlive = false;
             
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
