@@ -1,5 +1,11 @@
 2007-02-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.Ipod/IpodQueryJob.cs
+	* src/Dap/Banshee.Dap.Ipod/IpodMetadataProvider.cs: Updated to reflect
+	API updates in the metadata services
+
+2007-02-21  Aaron Bockover  <abock@gnome.org>
+
 	* build/m4/banshee/dbus.m4:
 	* build/Common.Makefile:
 	* ext/dbus-sharp/Makefile.am:

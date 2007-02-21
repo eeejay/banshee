@@ -40,10 +40,11 @@ namespace Banshee.Dap.Ipod
     {
         private IpodDapTrackInfo track;
         
-        public IpodQueryJob(IBasicTrackInfo track)
+        public IpodQueryJob(IBasicTrackInfo track, MetadataSettings settings)
         {
             Track = track;
             this.track = track as IpodDapTrackInfo; 
+            Settings = settings;
         }
         
         public override void Run()

@@ -40,9 +40,9 @@ namespace Banshee.Dap.Ipod
         {
         }
         
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
         {
-            return new IpodQueryJob(track);
+            return new IpodQueryJob(track, settings);
         }
     }
 }
