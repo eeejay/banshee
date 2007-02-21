@@ -60,6 +60,9 @@ SHAMROCK_CHECK_MONO_NUNIT
 dnl Boo libraries and compiler (optional)
 BANSHEE_CHECK_BOO
 
+dnl External NDesk DBus libraries (optional)
+BANSHEE_CHECK_NDESK_DBUS
+
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
