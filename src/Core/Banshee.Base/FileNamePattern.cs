@@ -38,7 +38,7 @@ namespace Banshee.Base
 {
     public static class FileNamePattern
     {
-        private delegate string ExpandTokenHandler(TrackInfo track, object replace);
+        public delegate string ExpandTokenHandler(TrackInfo track, object replace);
         public delegate string FilterHandler(string path);
         
         private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";
