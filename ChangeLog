@@ -1,3 +1,9 @@
+2007-02-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/FileNamePattern.cs: Make AddConversion and
+	the Conversion struct public, inlined access to the conversion table
+	values (Alptacular)
+
 2007-02-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationUtilities.cs

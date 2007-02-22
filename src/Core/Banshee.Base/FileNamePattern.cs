@@ -46,7 +46,7 @@ namespace Banshee.Base
         
         public static FilterHandler Filter;
         
-        private struct Conversion
+        public struct Conversion
         {
             private string token;
             private string name;
@@ -74,7 +74,7 @@ namespace Banshee.Base
     
         private static SortedList<string, Conversion> conversion_table;
 
-        private static void AddConversion(string token, string name, ExpandTokenHandler handler)
+        public static void AddConversion(string token, string name, ExpandTokenHandler handler)
         {
             conversion_table.Add(token, new Conversion(token, name, handler));
         }
@@ -125,11 +125,7 @@ namespace Banshee.Base
         }
         
         public static IEnumerable<Conversion> PatternConversions {
-            get {
-                foreach(KeyValuePair<string, Conversion> conversion in conversion_table) {
-                    yield return conversion.Value;
-                }
-            }
+            get { return conversion_table.Values; }
         }
         
         public static string DefaultFolder {
