@@ -1,3 +1,10 @@
+2007-02-23  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/gst-playback-0.10.c: Set the pipeline to playing or paused
+	when at the right time when buffering a stream so the clock can't get
+	ahead of itself, which may cause some streams to rebuffer depending on
+	the stream and network speed (BGO #410278)
+
 2007-02-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/FileNamePattern.cs: Forgot to mark 

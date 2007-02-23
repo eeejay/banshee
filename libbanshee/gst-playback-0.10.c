@@ -58,6 +58,9 @@ struct GstPlayback {
     guint iterate_timeout_id;
     gchar *cdda_device;
     
+    GstState target_state;
+    gboolean buffering;
+    
     GstPlaybackEosCallback eos_cb;
     GstPlaybackErrorCallback error_cb;
     GstPlaybackStateChangedCallback state_changed_cb;
@@ -78,6 +81,7 @@ gst_playback_destroy_pipeline(GstPlayback *engine)
     }
     
     if(GST_IS_ELEMENT(engine->playbin)) {
+        engine->target_state = GST_STATE_NULL;
         gst_element_set_state(engine->playbin, GST_STATE_NULL);
         gst_object_unref(GST_OBJECT(engine->playbin));
     }
@@ -130,6 +134,20 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
                 g_warning("Could not get completion percentage from BUFFERING message");
                 break;
             }
+            
+            if(buffering_progress >= 100) {
+                engine->buffering = FALSE;
+                if(engine->target_state == GST_STATE_PLAYING) {
+                    gst_element_set_state(engine->playbin, GST_STATE_PLAYING);
+                }
+            } else if(!engine->buffering && engine->target_state == GST_STATE_PLAYING) {
+                GstState current_state;
+                gst_element_get_state(engine->playbin, &current_state, NULL, 0);
+                if(current_state == GST_STATE_PLAYING) {
+                    gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
+                }
+                engine->buffering = TRUE;
+            } 
 
             if(engine->buffering_cb != NULL) {
                 engine->buffering_cb(engine, buffering_progress);
@@ -339,6 +357,8 @@ gst_playback_new()
     engine->iterate_timeout_id = 0;
     engine->cdda_device = NULL;
     
+    engine->buffering = FALSE;
+    
     return engine;
 }
 
@@ -348,6 +368,7 @@ gst_playback_free(GstPlayback *engine)
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     
     if(GST_IS_OBJECT(engine->playbin)) {
+        engine->target_state = GST_STATE_NULL;
         gst_element_set_state(engine->playbin, GST_STATE_NULL);
         gst_object_unref(GST_OBJECT(engine->playbin));
     }
@@ -448,6 +469,7 @@ gst_playback_open(GstPlayback *engine, const gchar *uri)
     
     gst_element_get_state(engine->playbin, &state, NULL, 0);
     if(state >= GST_STATE_PAUSED) {
+        engine->target_state = GST_STATE_READY;
         gst_element_set_state(engine->playbin, GST_STATE_READY);
     }
     
@@ -459,6 +481,7 @@ gst_playback_stop(GstPlayback *engine)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     gst_playback_stop_iterate_timeout(engine);
+    engine->target_state = GST_STATE_PAUSED;
     gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
 }
 
@@ -467,6 +490,7 @@ gst_playback_pause(GstPlayback *engine)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     gst_playback_stop_iterate_timeout(engine);
+    engine->target_state = GST_STATE_PAUSED;
     gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
 }
 
@@ -474,6 +498,7 @@ void
 gst_playback_play(GstPlayback *engine)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
+    engine->target_state = GST_STATE_PLAYING;
     gst_element_set_state(engine->playbin, GST_STATE_PLAYING);
     gst_playback_start_iterate_timeout(engine);
 }
