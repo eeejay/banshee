@@ -1,3 +1,12 @@
+2007-02-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee/PlayerInterface.cs: Use the Fading Alignment under the
+	playlist header
+
+	* src/Core/Banshee.Widgets/FadingAlignment.cs: Make the gradient look nicer
+
+	* data/banshee.glade: Reordered some widgets to allow for proper spacing
+
 2007-02-23  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/gst-playback-0.10.c: Set the pipeline to playing or paused

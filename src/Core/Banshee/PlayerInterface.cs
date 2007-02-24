@@ -396,6 +396,18 @@ namespace Banshee
             InterfaceElements.MainContainer = gxml["MainContainer"] as VBox;
 
             // Playlist View
+            EventBox evbox = (Gtk.EventBox)gxml["playlist_header_event_box"];
+            Widget evchild = evbox.Child;
+            evbox.Remove(evchild);
+            FadingAlignment fadalign = new FadingAlignment();
+            fadalign.BottomPadding = 4;
+            fadalign.TopPadding = 5;
+            fadalign.RightPadding = 5;
+            fadalign.LeftPadding = 5;
+            fadalign.Add(evchild);
+            fadalign.Show();
+            evbox.Add(fadalign);
+             
             playlistModel = new PlaylistModel();
             playlistView = new PlaylistView(playlistModel);
             InterfaceElements.PlaylistView = playlistView;
@@ -1017,16 +1029,14 @@ namespace Banshee
             alignment.Add(playlist_container);
             alignment.ShowAll();
             
-            gxml["PlaylistHeaderBox"].Show();
-            gxml["PlaylistHeaderSeparator"].Show();
+            gxml["playlist_header_event_box"].Show();
         }
         
         private void ShowSourceWidget()
         {
             Alignment alignment = gxml["LibraryAlignment"] as Alignment;
             
-            gxml["PlaylistHeaderBox"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
-            gxml["PlaylistHeaderSeparator"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
+            gxml["playlist_header_event_box"].Visible = SourceManager.ActiveSource.ShowPlaylistHeader;
             
             if(alignment.Child == SourceManager.ActiveSource.ViewWidget) {
                 return;

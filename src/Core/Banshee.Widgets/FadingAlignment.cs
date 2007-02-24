@@ -52,16 +52,16 @@ namespace Banshee.Widgets
         {
             base.OnStyleSet(style);
             
-            fill_color_a = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Prelight));
-            fill_color_b = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Insensitive));
+            fill_color_a = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Normal));
+            fill_color_b = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Active));
         }
         
         protected override void OnSizeAllocated(Gdk.Rectangle rect)
         {
             bg_gradient = new Cairo.LinearGradient(rect.X, rect.Y, rect.X, rect.Y + rect.Height);
-            bg_gradient.AddColorStop(1, fill_color_b);
             bg_gradient.AddColorStop(0, fill_color_a);
-            
+            bg_gradient.AddColorStop(0.9, fill_color_b);
+
             base.OnSizeAllocated(rect);
         }
         
@@ -74,7 +74,11 @@ namespace Banshee.Widgets
             Cairo.Context cr = Gdk.CairoHelper.Create(GdkWindow);
             Draw(cr);
             ((IDisposable)cr).Dispose();
-            
+ 
+ 			GdkWindow.DrawLine(Style.BackgroundGC(StateType.Active), 
+				Allocation.X, Allocation.Y, 
+				Allocation.X + Allocation.Width, Allocation.Y);
+           
             return base.OnExposeEvent(evnt);
         }
         
