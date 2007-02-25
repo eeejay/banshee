@@ -953,7 +953,7 @@ namespace Banshee
             
             Globals.ActionManager.SongActions.Sensitive = true;
             Globals.ActionManager["WriteCDAction"].Sensitive = !(source is AudioCdSource);
-            Globals.ActionManager["RemoveSongsAction"].Sensitive = !(source is AudioCdSource);
+            Globals.ActionManager["RemoveSongsAction"].Sensitive = !(source is AudioCdSource || source is Banshee.SmartPlaylist.SmartPlaylistSource);
             Globals.ActionManager["DeleteSongsFromDriveAction"].Sensitive = 
                 !(source is AudioCdSource || source is DapSource);
             Globals.ActionManager["DeleteSongsFromDriveAction"].Visible =
@@ -1582,7 +1582,10 @@ namespace Banshee
           
             bool sensitive = playlistView.Selection.CountSelectedRows() > 0;
 
-            if(sensitive && (SourceManager.ActiveSource is LibrarySource || SourceManager.ActiveSource is PlaylistSource)) {
+            if(sensitive && (SourceManager.ActiveSource is LibrarySource ||
+                    SourceManager.ActiveSource is PlaylistSource ||
+                    SourceManager.ActiveSource is Banshee.SmartPlaylist.SmartPlaylistSource)) {
+
                 Globals.ActionManager["AddToPlaylistAction"].Visible = true;
                 Globals.ActionManager["RatingAction"].Visible = true;
             
