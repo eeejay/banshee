@@ -22,7 +22,7 @@ which gnome-autogen.sh || {
     exit 1
 }
 
-ACLOCAL_FLAGS="-I build/m4/shamrock -I build/m4/banshee" REQUIRED_AUTOMAKE_VERSION=1.9 USE_GNOME2_MACROS=1 . gnome-autogen.sh
+ACLOCAL_FLAGS="-I build/m4/shamrock -I build/m4/banshee $ACLOCAL_FLAGS" REQUIRED_AUTOMAKE_VERSION=1.9 USE_GNOME2_MACROS=1 . gnome-autogen.sh
 
 if ! test -x ./mkinstalldirs; then 
 	for automake_path in `whereis automake-1.9`; do 
