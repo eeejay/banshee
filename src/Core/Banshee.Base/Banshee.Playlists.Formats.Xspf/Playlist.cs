@@ -66,6 +66,10 @@ namespace Banshee.Playlists.Formats.Xspf
             xmlns.AddNamespace("xspf", XspfNamespace);
             
             XmlNode playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
+            
+            if(playlist_node == null) {
+                throw new ApplicationException("Not a valid XSPF playlist");
+            }
 
             XmlAttribute version_attr = playlist_node.Attributes["version"];
             if(version_attr == null || version_attr.Value == null) {

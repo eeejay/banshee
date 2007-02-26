@@ -1,3 +1,13 @@
+2007-02-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Radio/StationManager.cs: Ensure that local
+	stations can be loaded even if the remote ones can't (BNC #248831)
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats.Xspf/Playlist.cs: Throw
+	an exception if the XSPF document does not have a valid root node to 
+	ensure that a NullReferenceException doesn't get thrown (can be bad due
+	to how Mono handles them - often they lead to an unhandled SIGSEGV)
+
 2007-02-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee/PlayerInterface.cs: Make the Remove content menu option

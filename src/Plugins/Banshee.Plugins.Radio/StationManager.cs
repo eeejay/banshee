@@ -152,12 +152,16 @@ namespace Banshee.Plugins.Radio
             
             try {
                 CheckForUpdates(forceUpdates);
-                LoadStations();
             } catch(Exception e) {
-                LogCore.Instance.PushWarning("Could not update stations cache", e.Message, false);
-                ThreadAssist.ProxyToMain(delegate {
+                LogCore.Instance.PushWarning("Could not refresh stations cache", e.Message, false);
+                /*ThreadAssist.ProxyToMain(delegate {
                     OnStationsLoadFailed(e);
-                });
+                });*/
+            }
+            
+            try {
+                LoadStations();
+            } catch {
             }
         }
         
@@ -172,12 +176,20 @@ namespace Banshee.Plugins.Radio
                 
                 if(ShowRemoteStationsSchema.Get()) {
                     foreach(string xspf_file in Directory.GetFiles(stations_path, "*.xspf")) {
-                        LoadStation(xspf_file, false);
+                        try {
+                            LoadStation(xspf_file, false);
+                        } catch(Exception e) {
+                            LogCore.Instance.PushWarning("Could not load XSPF file: " + xspf_file, e.Message, false);
+                        }
                     }
                 }
                 
                 foreach(string xspf_file in Directory.GetFiles(local_stations_path, "*.xspf")) {
-                    LoadStation(xspf_file, true);
+                    try {
+                        LoadStation(xspf_file, true);
+                    } catch(Exception e) {
+                        LogCore.Instance.PushWarning("Could not load XSPF file: " + xspf_file, e.Message, false);
+                    }
                 }
             } catch {
             }
