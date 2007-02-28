@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-26 13:44+0100\n"
-"PO-Revision-Date: 2007-02-26 13:44+0100\n"
+"POT-Creation-Date: 2007-02-28 14:27+0100\n"
+"PO-Revision-Date: 2007-02-28 14:27+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -344,7 +344,7 @@ msgstr "_Vyhledat:"
 
 #: ../data/audio-profiles/aac.xml.in.h:1
 msgid "Advanced Audio Coding (AAC)"
-msgstr ""
+msgstr "Advanced Audio Coding (AAC)"
 
 #: ../data/audio-profiles/aac.xml.in.h:2
 #: ../data/audio-profiles/mp3-lame.xml.in.h:4
@@ -359,6 +359,7 @@ msgid ""
 "Proprietary and standardized format that is superior to MP3, but not as "
 "popular."
 msgstr ""
+"Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
 
 #: ../data/audio-profiles/base.xml.in.h:1
 msgid "Channels"
@@ -3076,9 +3077,8 @@ msgid "Muted"
 msgstr "Minuty"
 
 #: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
-#, fuzzy
 msgid "Full Volume"
-msgstr "Hlasitost"
+msgstr "Nejvyšší hlasitost"
 
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
@@ -4173,9 +4173,8 @@ msgid "Select All"
 msgstr "Vybrat vše"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:759
-#, fuzzy
 msgid "Select None"
-msgstr "Odznačit vybrané skladby"
+msgstr "Vybrat nic"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:762
 msgid "Link"
@@ -4201,11 +4200,11 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:40
 msgid "Download all episodes"
-msgstr ""
+msgstr "Stáhnout všechny epizody"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:41
 msgid "Download the most recent episode"
-msgstr ""
+msgstr "Stáhnout nejnovější epizodu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:42
 msgid "Let me decide which episodes to download"
@@ -4251,9 +4250,8 @@ msgid "Update remote stations from radio.banshee-project.org"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
-#, fuzzy
 msgid "Loading"
-msgstr "Načítají se skladby"
+msgstr "Probíhá načítání"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:52
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:63
@@ -4299,11 +4297,11 @@ msgstr "Upravit rozhlasovou stanici"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:137
 msgid "Add Station"
-msgstr ""
+msgstr "Přidat stanici"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
 msgid "Add new Radio Station"
-msgstr ""
+msgstr "Přidat novou rozhlasovou stanici"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:141
 msgid "Remove"
@@ -4340,41 +4338,36 @@ msgid ""
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
-#, fuzzy
 msgid "Station Group:"
-msgstr "Délka"
+msgstr "Skupina stanice:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
-#, fuzzy
 msgid "Station Title:"
-msgstr "Délka"
+msgstr "Název stanice:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
 msgid "Stream URL:"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
-#, fuzzy
 msgid "Station"
-msgstr "Délka"
+msgstr "Stanice"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:77
-#, fuzzy
 msgid "Comment"
-msgstr "Počet přehrání"
+msgstr "Poznámka"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
-#, fuzzy
 msgid "Recommendation plugin enabled"
-msgstr "Povolen modul upozorňovací oblasti"
+msgstr "Povolen modul doporučení"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:109
 msgid "Recommended Artists"
-msgstr ""
+msgstr "Doporučení umělci"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:137
 msgid "No similar artists found"
-msgstr ""
+msgstr "Nebyli nalezeni podobní umělci"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:209
 #, fuzzy, csharp-format
@@ -4394,7 +4387,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
 msgid "Music Recommendations"
-msgstr ""
+msgstr "Doporučená hudba"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:61
 msgid ""
@@ -4405,6 +4398,5 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
-#, fuzzy
 msgid "Show Recommendations"
-msgstr "Nelze zobrazit upozornění"
+msgstr "Zobrazit doporučení"
