@@ -1,5 +1,12 @@
 2007-03-05  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Bumped to 0.12.0
+
+	* src/Core/Banshee/banshee.in: Prepend GST_PLUGINS_PATH instead of
+	overwriting it
+
+2007-03-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Radio/RadioSource.cs: Implement StartPlayback
 	method which will play either the selected station, the first station
 	in the selected group, or the first station in the first group when
