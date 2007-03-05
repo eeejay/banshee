@@ -313,6 +313,10 @@ namespace Banshee.Sources
             return null;
         }
         
+        public virtual void StartPlayback()
+        {
+        }
+        
         // Translators: Source being the generic word for playlist, device, library, etc
         private static string generic_name = Catalog.GetString("Source");
         public virtual string GenericName {
@@ -361,6 +365,15 @@ namespace Banshee.Sources
                 
                 return tracks_mutex; 
             }
+        }
+        
+        public virtual IEnumerable<string> Artists {
+            get { return null; }
+        }
+        
+        public virtual IEnumerable<string> GetAlbumsForArtist(string artist)
+        {
+            return null;
         }
         
         public virtual Gdk.Pixbuf Icon {
@@ -447,6 +460,10 @@ namespace Banshee.Sources
         
         public bool AcceptsSourceDrop {
             get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "SourceDrop"); }
+        }
+        
+        public bool HandlesStartPlayback {
+            get { return ReflectionUtil.IsVirtualMethodImplemented(GetType(), "StartPlayback"); }
         }
         
         public virtual int SortColumn {

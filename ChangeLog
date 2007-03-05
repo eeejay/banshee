@@ -1,3 +1,54 @@
+2007-03-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Radio/RadioSource.cs: Implement StartPlayback
+	method which will play either the selected station, the first station
+	in the selected group, or the first station in the first group when
+	there is no selection (happens when the main play button is clicked);
+	disabled the previous/next actions as they do not apply to radio
+
+	* src/Plugins/Banshee.Plugins.MiniMode/SourceModel.cs: Updated FindSource
+	to be recursive like the SourceView (Scott Peterson, BGO #414505)
+
+	* src/Core/Banshee.Base/Gui/SourceView.cs: Fixed ellipsis code to not
+	use excessive substrings in a try/catch form; efficient and no longer
+	ugly (Scott Peterson, BGO #414485)
+
+	* src/Plugins/Banshee.Plugins.MiniMode/minimode.glade: Full screen button
+	should not have relief now that others do not
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:
+	Update background of recommendations pane on StyleSet (Brian Kerrick
+	Nickel BGO #413593)
+
+	* src/Core/Banshee.Base/PlayerEngineCore.cs: Added null check for
+	CurrentTrack (BGO #410364)
+
+	* src/Core/Banshee.Base/SafeUri.cs: Added Equals method
+
+	* src/Core/Banshee.Base/Source.cs: Added StartPlayback virtual method
+	that sources can override to handle when the play button is pressed
+	while the engine is in idle
+
+	* src/Core/Banshee.Widgets/FadingAlignment.cs: Updated to be a bit more
+	subtle and use better color choices (background+mid); Added a subtle 
+	left border to blend better with the view widget (BGO #412584)
+
+	* src/Core/Banshee/PlaylistModel.cs: Reset the PlayingIter to zero when
+	a new stream is started
+
+	* src/Core/Banshee/PlaylistView.cs: Set as 'now playing' when the playing
+	iter is set, do not update the iter is non-zero; set the PlayingIter
+	when the URIs of two tracks are equal, caches to reduce comparisons; fixes
+	both (BGO #408128, #348079, BNC #228720)
+
+	* src/Core/Banshee/PlayerInterface.cs: In PlayPause, call StartPlayback
+	on the active source if it implements the method and the engine is in
+	the idle state
+
+	* src/Core/Banshee/Main.cs: Manually call gdk_set_program_class as there
+	appears to be an issue with window grouping in SLED FCS and SP1; also
+	use Gnome.Program.Run instead of Gtk.Application.Run (BNC #249494)
+
 2007-02-26  Mike Kestner  <mkestner@novell.com>
 
 	* autogen.sh: don't clobber existing ACLOCAL_FLAGS.

@@ -32,6 +32,7 @@ using System.Threading;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.MediaEngine;
 using Banshee.Sources;
 using Banshee.Database;
 
@@ -68,6 +69,14 @@ namespace Banshee
         {
             SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
                 ReloadSource();
+            };
+            
+            PlayerEngineCore.EventChanged += delegate(object o, PlayerEngineEventArgs args) {
+                switch(args.Event) {
+                    case PlayerEngineEvent.StartOfStream:
+                        playingIter = TreeIter.Zero;
+                        return;
+                }
             };
         }
 

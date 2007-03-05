@@ -46,6 +46,9 @@ namespace Banshee
         [System.Runtime.InteropServices.DllImport("libbanshee")]
         private static extern void banshee_dbus_compat_thread_init();
         
+        [System.Runtime.InteropServices.DllImport("libgtk-win32-2.0-0.dll")]
+        private static extern void gdk_set_program_class(string program_class);
+
         private static void Startup(string [] args)
         {
             banshee_dbus_compat_thread_init();
@@ -100,14 +103,19 @@ namespace Banshee
             IDBusPlayer dbus_core = DetectInstanceAndDbus();
             HandleDbusCommands(dbus_core);
             
-            new Program("Banshee", ConfigureDefines.VERSION, Modules.UI, args);
+            try {
+                gdk_set_program_class("banshee");
+            } catch {
+            }
+
+            Program program = new Program("Banshee", ConfigureDefines.VERSION, Modules.UI, args);
             
             Globals.Initialize(delegate {
                 StockIcons.Initialize();
                 new Banshee.PlayerUI();
             });
             
-            Gtk.Application.Run();
+            program.Run();
         }
     
         private static IDBusPlayer DetectInstanceAndDbus()

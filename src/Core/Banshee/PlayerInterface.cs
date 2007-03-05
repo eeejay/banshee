@@ -403,7 +403,7 @@ namespace Banshee
             fadalign.BottomPadding = 4;
             fadalign.TopPadding = 5;
             fadalign.RightPadding = 5;
-            fadalign.LeftPadding = 5;
+            fadalign.LeftPadding = 6;
             fadalign.Add(evchild);
             fadalign.Show();
             evbox.Add(fadalign);
@@ -761,6 +761,11 @@ namespace Banshee
             if(PlayerEngineCore.CurrentState != PlayerEngineState.Idle) {
                 TogglePlaying();
             } else {
+                if(SourceManager.ActiveSource.HandlesStartPlayback) {
+                    SourceManager.ActiveSource.StartPlayback();
+                    return;
+                }
+                
                 if(!playlistView.PlaySelected()) {
                     playlistModel.Advance();
                     playlistView.UpdateView();

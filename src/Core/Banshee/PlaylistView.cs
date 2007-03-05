@@ -214,15 +214,23 @@ namespace Banshee
                 model.PlayingIter = TreeIter.Zero;
                 SetTrackPixbuf(renderer, ti, false);
                 return;
+            } else if(model.PlayingIter.Equals(iter)) {
+                SetTrackPixbuf(renderer, ti, true);
+                return;
+            } else if(!model.PlayingIter.Equals(TreeIter.Zero)) {
+                SetTrackPixbuf(renderer, ti, false);
+                return;
             }
-        
+            
             if(ti != null) {
                 bool same_track = false;
                 
-                if(PlayerEngineCore.CurrentTrack != null) {
-                    //same_track = PlayerEngineCore.CurrentTrack.Equals(ti);
-                    same_track = PlayerEngineCore.CurrentTrack == ti;
-                }
+                if(PlayerEngineCore.CurrentTrack != null && PlayerEngineCore.CurrentTrack.Uri != null) {
+                    same_track = PlayerEngineCore.CurrentTrack.Uri.Equals(ti.Uri);
+                    if(same_track) {
+                        model.PlayingIter = iter;
+                    }
+                } 
                 
                 SetTrackPixbuf(renderer, ti, same_track);
             } else {

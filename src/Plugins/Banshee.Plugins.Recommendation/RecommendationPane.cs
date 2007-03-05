@@ -93,7 +93,6 @@ namespace Banshee.Plugins.Recommendation
             ShadowType = ShadowType.In;
         
             EventBox event_box = new EventBox();
-            event_box.ModifyBg(StateType.Normal, Style.Base(StateType.Normal));
             
             main_box = new HBox();
             main_box.BorderWidth = 5;
@@ -122,7 +121,6 @@ namespace Banshee.Plugins.Recommendation
             albums_box.PackStart(albums_header, false, false, 0);
 
             similar_artists_view = new TileView(2);
-            similar_artists_view.ModifyBg(StateType.Normal, Style.Base(StateType.Normal));
             similar_artists_view_sw = new ScrolledWindow();
             similar_artists_view_sw.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
             similar_artists_view_sw.Add(similar_artists_view);
@@ -155,7 +153,12 @@ namespace Banshee.Plugins.Recommendation
             main_box.PackStart(tracks_box, false, false, 5);
             main_box.PackStart(new VSeparator(), false, false, 0);
             main_box.PackStart(albums_box, false, false, 5);
-
+            
+            no_artists_pane.StyleSet += delegate {
+                event_box.ModifyBg(StateType.Normal, no_artists_pane.Style.Base(StateType.Normal));
+                similar_artists_view.ModifyBg(StateType.Normal, no_artists_pane.Style.Base(StateType.Normal));
+            };
+            
             event_box.Add(main_box);
             Add(event_box);
         }

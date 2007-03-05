@@ -113,6 +113,20 @@ namespace Banshee.Base
         {
             return AbsoluteUri;
         }
+        
+        public override bool Equals(object o)
+        {
+            if(!(o is SafeUri)) {
+                return false;
+            }
+            
+            return (o as SafeUri).AbsoluteUri == AbsoluteUri;
+        }
+        
+        public override int GetHashCode()
+        {
+            return AbsoluteUri.GetHashCode();
+        }
 
         public string AbsoluteUri {
             get { return uri; }

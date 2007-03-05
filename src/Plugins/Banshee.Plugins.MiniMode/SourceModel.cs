@@ -45,7 +45,6 @@ namespace Banshee.Plugins.MiniMode
                 AddSource(source);
             }
             
-            
             SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
                 AddSource(args.Source, args.Position);
             };
@@ -70,29 +69,34 @@ namespace Banshee.Plugins.MiniMode
                 
         private void AddSource(Source source)
         {
-            AddSource(source, -1);
+            if(!(source is ChildSource)) {
+                AddSource(source, -1);
+            }
         }
 
         private void AddSource(Source source, int position)
         {
             if(FindSource(source).Equals(TreeIter.Zero)) {
                 TreeIter iter = InsertNode(position);
-                SetSource(iter, source);
-                
-                #if !BANSHEE_0_10
-                    foreach(ChildSource child in source.Children) {
-                        SetSource(AppendNode(iter), child);
-                    }
-            
-                    source.ChildSourceAdded += delegate(SourceEventArgs e) {
-                        SetSource(AppendNode(iter), e.Source);
-                    };
-
-                    source.ChildSourceRemoved += delegate(SourceEventArgs e) {
-                        RemoveSource(e.Source);
-                    };
-                #endif
+                AddSource(source, iter);
             }
+        }
+        
+        private void AddSource(Source source, TreeIter iter)
+        {
+            SetSource(iter, source);
+            
+            foreach(ChildSource child in source.Children) {
+                AddSource(child, AppendNode(iter));
+            }
+
+            source.ChildSourceAdded += delegate(SourceEventArgs e) {
+                AddSource(e.Source, AppendNode(iter));
+            };
+
+            source.ChildSourceRemoved += delegate(SourceEventArgs e) {
+                RemoveSource(e.Source);
+            };
         }
 
         private void RemoveSource(Source source)
@@ -102,32 +106,35 @@ namespace Banshee.Plugins.MiniMode
                 Remove(ref iter);
             }
         }
-    
-        // FIXME: This is lame and could use some recusrion instead (Lukas)
-        internal TreeIter FindSource(Source source)
+        
+        public TreeIter FindSource(Source source)
         {
-            for(int i = 0, m = IterNChildren(); i < m; i++) {
-                TreeIter iter = TreeIter.Zero;
-                if(!IterNthChild(out iter, i)) {
-                    continue;
-                }
-                
+            TreeIter iter = TreeIter.Zero;
+            GetIterFirst(out iter);
+            return FindSource(source, iter);
+        }
+        
+        private TreeIter FindSource(Source source, TreeIter iter)
+        {
+            if(!IterIsValid(iter)) {
+                return TreeIter.Zero;
+            }
+            
+            do {
                 if((GetValue(iter, 2) as Source) == source) {
                     return iter;
                 }
-        
-                for(int j = 0, n = IterNChildren(iter); j < n; j++) {
+                
+                if(IterHasChild(iter)) {
                     TreeIter citer = TreeIter.Zero;
-                    if(!IterNthChild(out citer, iter, j)) {
-                        continue;
-                    }
-    
-                    if((GetValue(citer, 2) as Source) == source) {
-                        return citer;
+                    IterChildren(out citer, iter);
+                    TreeIter result = FindSource(source, citer);
+                    if(!result.Equals(TreeIter.Zero)) {
+                        return result;
                     }
                 }
-            }
-
+            } while(IterNext(ref iter));
+            
             return TreeIter.Zero;
         }
     }

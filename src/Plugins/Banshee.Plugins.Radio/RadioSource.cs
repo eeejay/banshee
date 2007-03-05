@@ -139,11 +139,41 @@ namespace Banshee.Plugins.Radio
         public override void Activate()
         {
             InterfaceElements.ActionButtonBox.PackStart(add_button, false, false, 0);
+            
+            Globals.ActionManager["NextAction"].Sensitive = false;
+            Globals.ActionManager["PreviousAction"].Sensitive = false;
         }
         
         public override void Deactivate()
         {
             InterfaceElements.ActionButtonBox.Remove(add_button);
+            Globals.ActionManager["NextAction"].Sensitive = true;
+            Globals.ActionManager["PreviousAction"].Sensitive = true;
+        }
+        
+        public override void StartPlayback()
+        { 
+            TreeIter iter;
+            
+            if(!view.Selection.GetSelected(out iter)) {
+                if(!model.IterNthChild(out iter, 0)) {
+                    return;
+                }
+            }
+            
+            if(model.IterHasChild(iter)) {
+                TreeIter child;
+                if(!model.IterChildren(out child, iter)) {
+                    return;
+                }
+
+                iter = child;
+            }
+
+            Track track = model.GetTrack(iter);
+            if(track != null) {
+                view.ActivateRow(model.GetPath(iter), view.Columns[0]);
+            }
         }
         
         private void OnPlayerStateChanged(object o, PlayerEngineStateArgs args)

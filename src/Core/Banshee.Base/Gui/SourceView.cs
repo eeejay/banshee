@@ -529,6 +529,12 @@ namespace Banshee.Gui
                     LogCore.Instance.PushError(Catalog.GetString("Could not import tracks"), e.Message);
                 }
             }
+            
+            if(newPlaylistVisible) {
+                store.Remove(ref newPlaylistIter);
+                newPlaylistVisible = false;
+                UpdateView();
+            }
         
             Gtk.Drag.Finish(context, true, false, time);
         }
@@ -699,6 +705,10 @@ namespace Banshee.Gui
             titleLayout.FontDescription = fd;
             countLayout.FontDescription = fd;
             
+            titleLayout.SetMarkup("...");
+            titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
+            int ellipsisSize = titleLayoutWidth;
+            
             string titleText = source.Name;
             titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText));
             countLayout.SetMarkup("<span size=\"small\">(" + source.Count + ")</span>");
@@ -708,20 +718,19 @@ namespace Banshee.Gui
             
             maxTitleLayoutWidth = cell_area.Width - icon.Width - countLayoutWidth - 10;
             
-            while(true) {
-                titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
-                if(titleLayoutWidth <= maxTitleLayoutWidth) {
-                    break;
-                }
-                
-                // FIXME: Gross
-                try {
-                    titleText = titleText.Substring(0, titleText.Length - 1);
-                    titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText).Trim() + "...");
-                } catch(Exception) {
-                    titleLayout.SetMarkup(source.Name);
-                    hideCounts = true;
-                    break;
+            if(titleLayoutWidth > maxTitleLayoutWidth) {
+                float ratio = (float)(maxTitleLayoutWidth - ellipsisSize) / (float)titleLayoutWidth;
+                int characters = (int)(ratio * (float)titleText.Length);
+                while(titleLayoutWidth > maxTitleLayoutWidth) {
+                    if(characters > 0) {
+                        titleLayout.SetMarkup(GLib.Markup.EscapeText(
+                            titleText.Substring(0, characters--)).Trim() + "...");
+                        titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
+                    } else {
+                        hideCounts = true;
+                        titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText.Trim()));
+                        break;
+                    }
                 }
             }
             
