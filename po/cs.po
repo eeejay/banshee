@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-28 14:27+0100\n"
-"PO-Revision-Date: 2007-02-28 14:27+0100\n"
+"POT-Creation-Date: 2007-03-05 10:40+0100\n"
+"PO-Revision-Date: 2007-03-05 10:40+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -487,6 +487,8 @@ msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
 "size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
+"Proprietární ztrátový zvukový formát s vysoce kvalitním výstupem a oproti "
+"MP3 menší velikostí souboru. 96kbps WMA odpovídá 128kbps MP3."
 
 #: ../data/audio-profiles/wma.xml.in.h:2
 msgid "Audio Quality"
@@ -1847,9 +1849,8 @@ msgid "Unheard"
 msgstr "Neposlouchané"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:100
-#, fuzzy
 msgid "Unheard Podcasts"
-msgstr "Neposlouchané"
+msgstr "Neslyšené podcasty"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
 #: ../src/Core/Banshee/PlayerInterface.cs:451
@@ -1995,7 +1996,7 @@ msgstr "Nejnověji přidané"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
 msgid "Least Recently Added"
-msgstr ""
+msgstr "Naposledy přidané"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
 msgid "Most Recently Played"
@@ -3992,9 +3993,8 @@ msgid "Canceling updates"
 msgstr "Ruší se aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:340
-#, fuzzy
 msgid "Waiting for update to terminate"
-msgstr "Čekání na médium"
+msgstr "Čekání na dokončení aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedInfo.cs:709
 msgid "Title Property Changed"
@@ -4006,9 +4006,8 @@ msgid "Already Subscribed"
 msgstr "Již přihlášeno"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:56
-#, fuzzy
 msgid "Podcasting"
-msgstr "Otevření umístění"
+msgstr "Podcasting"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
 #, csharp-format
@@ -4022,18 +4021,16 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
-#, fuzzy
 msgid "Podcast"
-msgstr "Neposlouchané"
+msgstr "Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:114
 msgid "Manage the Podcast plugin"
-msgstr ""
+msgstr "Správa modulu Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:117
-#, fuzzy
 msgid "Update Podcasts"
-msgstr "Neposlouchané"
+msgstr "Aktualizovat podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
 #, fuzzy
@@ -4048,12 +4045,11 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
 msgid "Subscribe to a new Podcast"
-msgstr ""
+msgstr "Přihlásit k novému podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:127
-#, fuzzy
 msgid "Find New Podcasts"
-msgstr "Neposlouchané"
+msgstr "Najít nové podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:128
 msgid "Find New Podcasts at PodcastAlley.com"
@@ -4090,25 +4086,24 @@ msgstr "Není dostupný žádný popis"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:78
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:106
-#, fuzzy
 msgid "Podcasts"
-msgstr "Neposlouchané"
+msgstr "Podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} Podcast"
 msgid_plural "{0} Podcasts"
-msgstr[0] "Neposlouchané"
-msgstr[1] "Neposlouchané"
-msgstr[2] "Neposlouchané"
+msgstr[0] "{0} podcast"
+msgstr[1] "{0} podcast"
+msgstr[2] "{0} podcastů"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:196
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
 msgid "Episode"
 msgid_plural "Episodes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Epizoda"
+msgstr[1] "Epizody"
+msgstr[2] "Epizody"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:201
 msgid "New"
@@ -4119,18 +4114,16 @@ msgid "Date"
 msgstr "Datum"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:75
-#, fuzzy
 msgid "Podcast:"
-msgstr "Neposlouchané"
+msgstr "Podcast:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:79
 msgid "Date:"
 msgstr "Datum:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:624
-#, fuzzy
 msgid "Update All Podcasts"
-msgstr "Neposlouchané"
+msgstr "Aktualizovat všechny podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:629
 msgid "Visit Podcast Alley"
@@ -4138,17 +4131,15 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:664
 msgid "Subscribed"
-msgstr ""
+msgstr "Přihlášeno"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:667
-#, fuzzy
 msgid "Update Podcast"
-msgstr "Neposlouchané"
+msgstr "Aktualizovat podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:671
-#, fuzzy
 msgid "Delete Podcast"
-msgstr "Vymazat seznam skladeb"
+msgstr "Smazat podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:679
 msgid "Homepage"
@@ -4164,9 +4155,8 @@ msgid "Cancel"
 msgstr "Zrušit"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:752
-#, fuzzy
 msgid "Remove Episodes(s)"
-msgstr "Neposlouchané"
+msgstr "Odstranit epizodu(y)"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:756
 msgid "Select All"
@@ -4186,9 +4176,8 @@ msgid "Subscribe"
 msgstr "Přihlásit"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
-#, fuzzy
 msgid "Subscribe to New Podcast"
-msgstr "Neposlouchané"
+msgstr "Přihlásit k novému podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
 msgid "Please enter the URL of the podcast to which you are subscribing."
@@ -4196,7 +4185,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
-msgstr ""
+msgstr "Jsou-li dostupné nové epizody:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:40
 msgid "Download all episodes"
@@ -4208,7 +4197,7 @@ msgstr "Stáhnout nejnovější epizodu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:42
 msgid "Let me decide which episodes to download"
-msgstr ""
+msgstr "Nechat mě vybrat epizody ke stažení"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
 msgid ""
