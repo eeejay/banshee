@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-07 11:38+0100\n"
-"PO-Revision-Date: 2007-03-07 11:38+0100\n"
+"POT-Creation-Date: 2007-03-08 10:28+0100\n"
+"PO-Revision-Date: 2007-03-08 10:28+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3826,7 +3826,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
 msgid "Root directory for the podcast plugin to store downloaded files"
-msgstr ""
+msgstr "Kořenový adresář modulu podcast pro ukládání stažených souborů"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
 msgid "DownloadCore is shutting down."
@@ -3953,9 +3953,8 @@ msgid "Podcast feed URL is invalid."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:514
-#, fuzzy
 msgid "Unable to load Podcast DB"
-msgstr "Nelze číst z vašeho iPodu"
+msgstr "Nelze načíst databázi Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:666
 msgid "Download Failed"
@@ -4033,15 +4032,14 @@ msgid "Update Podcasts"
 msgstr "Aktualizovat podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
-#, fuzzy
 msgid "Update Subscribed Podcasts"
-msgstr "Neposlouchané"
+msgstr "Aktualizovat přihlášené podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:122
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:619
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:675
 msgid "Subscribe to Podcast"
-msgstr ""
+msgstr "Přihlásit se k podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
 msgid "Subscribe to a new Podcast"
@@ -4053,7 +4051,7 @@ msgstr "Najít nové podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:128
 msgid "Find New Podcasts at PodcastAlley.com"
-msgstr ""
+msgstr "Najít nový podcast na PodcastAlley.com"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastErrorsSource.cs:51
 msgid "Errors"
@@ -4127,7 +4125,7 @@ msgstr "Aktualizovat všechny podcasty"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:629
 msgid "Visit Podcast Alley"
-msgstr ""
+msgstr "Navštívit Podcast Alley"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:664
 msgid "Subscribed"
@@ -4181,7 +4179,7 @@ msgstr "Přihlásit k novému podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
 msgid "Please enter the URL of the podcast to which you are subscribing."
-msgstr ""
+msgstr "Prosím zadejte URL podcastu, ke kterému se přihlašujete."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4204,6 +4202,8 @@ msgid ""
 "Always show stations that require the Helix/RealPlayer engine, even if the "
 "engine is not loaded."
 msgstr ""
+"Vždy zobrazovat stanice vyžadující engine Helix/RealPlayer, i když není "
+"tento engine zaveden."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
@@ -4302,7 +4302,7 @@ msgstr "Odstranit vybranou rozhlasovou stanici"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
 msgid "Refreshing radio stations from the Banshee Radio Web Service"
-msgstr ""
+msgstr "Obnova rozhlasových stanic z Banshee Radio Web Service"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
 msgid "Failed to load radio stations: "
@@ -4325,6 +4325,8 @@ msgid ""
 "Enter the Group, Title and URL of the radio station you wish to add. A "
 "description is optional."
 msgstr ""
+"Zadejte skupinu, název a URL rozhlasové stanice, kterou chcete přidat. Popis "
+"je volitelný."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
 msgid "Station Group:"
@@ -4372,7 +4374,7 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:330
 #, csharp-format
 msgid "{0}% similarity"
-msgstr ""
+msgstr "{0}% podobnost"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
 msgid "Music Recommendations"
@@ -4384,6 +4386,9 @@ msgid ""
 "playing song. It finds artists and popular songs that others with similar "
 "musical tastes enjoy."
 msgstr ""
+"Podle právě přehrávané skladby automaticky doporučuje hudbu, které by se vám "
+"mohla líbit. Hledá umělce a oblíbené skladby, které se líbí lidem s podobným "
+"hudebním vkusem."
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
