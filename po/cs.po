@@ -1,4 +1,3 @@
-# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of banshee.
 # Copyright (C) 2005 THE banshee'S COPYRIGHT HOLDER
@@ -11,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-08 10:28+0100\n"
-"PO-Revision-Date: 2007-03-08 10:28+0100\n"
+"POT-Creation-Date: 2007-03-12 14:20+0100\n"
+"PO-Revision-Date: 2007-03-12 14:20+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3790,23 +3789,20 @@ msgid "Podcast date column"
 msgstr "Sloupec data podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:4
-#, fuzzy
 msgid "Podcast feed column"
-msgstr "Šířka sloupce roku."
+msgstr "Sloupec podcast kanálu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
 msgid "Podcast library location"
 msgstr "Umístění podcast knihovny"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
-#, fuzzy
 msgid "Podcast plugin enabled"
-msgstr "Název zásuvného modulu"
+msgstr "Podcast modul povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:7
-#, fuzzy
 msgid "Podcast title column"
-msgstr "Šířka sloupce titulu."
+msgstr "Sloupec titulu podcastu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
 msgid "Position of the podcast date playlist column"
@@ -3950,7 +3946,7 @@ msgstr "Neplatné URL"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:446
 msgid "Podcast feed URL is invalid."
-msgstr ""
+msgstr "URL podcast kanálu je neplatná."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:514
 msgid "Unable to load Podcast DB"
@@ -3971,21 +3967,20 @@ msgstr "Aktualizuje se \"{0}\""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:263
 msgid "Podcast Feed Update"
-msgstr ""
+msgstr "Aktualizace podcast kanálu"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:267
 msgid "Updating"
 msgstr "Probíhá aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:268
-#, fuzzy
 msgid "Preparing to update feeds"
-msgstr "Příprava k zápisu"
+msgstr "Příprava aktualizace kanálů"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:318
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Updating podcast feed {0} of {1}"
-msgstr "Upravuje se skladba {0} z {1}"
+msgstr "Aktualizuji podcast kanál {0} z {1}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:339
 msgid "Canceling updates"
@@ -4075,7 +4070,7 @@ msgstr "URL:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:91
 msgid "When feed is updated:"
-msgstr ""
+msgstr "Je-li aktualizován kanál:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:108
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:104
@@ -4214,9 +4209,8 @@ msgid "Last time the master station list was checked for updates"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
-#, fuzzy
 msgid "Radio plugin enabled"
-msgstr "Název zásuvného modulu"
+msgstr "Rozhlasový modul povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
 msgid "Show remote stations"
@@ -4228,7 +4222,7 @@ msgstr "Zobrazit stanice vyžadující Helix/RealPlayer"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
 msgid "Time of the last radio update"
-msgstr ""
+msgstr "Čas poslední rozhlasové aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
 msgid "Time of the last radio update check"
@@ -4236,7 +4230,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
 msgid "Update remote stations from radio.banshee-project.org"
-msgstr ""
+msgstr "Aktualizovat vzdálené stanice z radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
 msgid "Loading"
@@ -4265,7 +4259,7 @@ msgstr "Obnovit stanice"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:124
 msgid "Refresh stations from the Banshee Radio Web Service"
-msgstr ""
+msgstr "Obnovit stanice z webové služby Banshee Radio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:129
 msgid "Copy URI"
