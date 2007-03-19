@@ -1,5 +1,10 @@
 2007-03-19  Alp Toker  <alp@atoker.com>
 
+	* ext/dbus-sharp/README: Add dbus-sharp README so hackers/packagers
+	can find out more
+
+2007-03-19  Alp Toker  <alp@atoker.com>
+
 	* ext/dbus-sharp/*: Update dbus-sharp to 0.4.2 stable release
 
 2007-03-05  Aaron Bockover  <abock@gnome.org>
