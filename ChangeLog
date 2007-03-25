@@ -1,3 +1,8 @@
+2007-03-25  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Core/Banshee.Base/Paths.cs: Fix a typo in DefaultLibraryPath 
+	(BGO #422442)
+
 2007-03-19  Alp Toker  <alp@atoker.com>
 
 	* ext/dbus-sharp/README: Add dbus-sharp README so hackers/packagers
