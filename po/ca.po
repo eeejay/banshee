@@ -3917,7 +3917,7 @@ msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
 msgstr ""
-"El Banshee es va tancar a l'àrea de notificació. Utilitzeu l'opció <i>Surt</"
+"El Banshee s'ha minimitzat a l'àrea de notificació. Utilitzeu l'opció <i>Surt</"
 "i> per a finalitzar la vostra sessió."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
@@ -3994,7 +3994,7 @@ msgstr "Esquema URI no implementat."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:202
 msgid "Download already queued."
-msgstr "Baixada ja en la cua."
+msgstr "Baixada ja és a la cua."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:287
 msgid "uri is empty"
