@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of banshee.
 # Copyright (C) 2005 THE banshee'S COPYRIGHT HOLDER
@@ -10,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-12 14:20+0100\n"
-"PO-Revision-Date: 2007-03-12 14:20+0100\n"
+"POT-Creation-Date: 2007-03-28 16:22+0200\n"
+"PO-Revision-Date: 2007-03-28 11:40+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1643,6 +1644,8 @@ msgid ""
 "If enabled, metadata (tags) will be written back to audio files when using "
 "the track metadata editor."
 msgstr ""
+"Je-li povoleno, budou při použití editoru metadat tagy s metadaty zapsány "
+"zpět do zvukových souborů"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid "Library File Pattern"
@@ -2452,6 +2455,8 @@ msgid ""
 "Error correction tries to work around problem areas on a disc, such as "
 "surface scratches, but will slow down importing substantially."
 msgstr ""
+"Korekce chyb se pokouší opravit data z problematických oblastí disku jako "
+"jsou např. poškrábaná místa. Výrazně však zpomaluje importování."
 
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:529
 msgid "Could not import tracks"
@@ -3437,9 +3442,8 @@ msgid "Audioscrobbler reporting engine enabled"
 msgstr "Oznámení výsledků Audioscrobbler"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:2
-#, fuzzy
 msgid "Audioscrobbler reporting plugin enabled"
-msgstr "Oznámení výsledků Audioscrobbler"
+msgstr "Oznamovací modul Audioscrobbler je povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:3
 msgid "Engine enabled"
@@ -3531,6 +3535,12 @@ msgid ""
 "an intentional limitation by Apple in iTunes® 7 and we apologize for the "
 "unfortunate inconvenience."
 msgstr ""
+"V aplikaci iTunes® 7 se objevily nové problémy s kompatibilitou a iTunes® 7 "
+"proto v současné době spolupracují pouze s dalšími klienty iTunes® 7.\n"
+"\n"
+"K hudebním sdílením iTunes® se nemohou připojit žádné klienty třetích stran. "
+"Toto omezení bylo úmyslně zavedeno firmou Apple. Omlouváme se za vzniklé "
+"problémy."
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:102
 msgid "Common reasons for connection failures:"
@@ -3641,9 +3651,8 @@ msgstr ""
 "Operaci lze kdykoliv obnovit z nabídky <i>Nástroje</i>."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
-#, fuzzy
 msgid "MiniMode plugin enabled"
-msgstr "Povolit modul multimediálních kláves"
+msgstr "Modul Minimální režim je povolen"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:1
 msgid "<b><big>This is the title</big></b>"
@@ -3670,6 +3679,8 @@ msgid ""
 "Mini Mode allows controlling Banshee through a small window with only "
 "playback controls and track information."
 msgstr ""
+"Minimální režim umožňuje ovládat Banshee pomocí malého okna obsahujícího "
+"pouze ovladače přehrávání a informace o skladbě."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
 msgid "Mini mode"
@@ -3729,13 +3740,13 @@ msgstr "Zobrazovat upozornění"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
 msgid "Show track information notifications when track starts playing"
-msgstr ""
+msgstr "Na začátku skladeb zobrazovat upozornění s informacemi o skladbě"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
 msgid ""
 "When the main window is closed, show a notification stating this has "
 "happened."
-msgstr ""
+msgstr "Je-li hlavní okno zavřeno, zobrazit upozornění o jeho zavření."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:59
@@ -3771,6 +3782,8 @@ msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
 msgstr ""
+"Banshee byla zavřena do oznamovací oblasti. Pro ukončení sezení použijte "
+"volbu <i>Ukončit</i>."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
 msgid "Now Playing"
@@ -3826,7 +3839,7 @@ msgstr "Kořenový adresář modulu podcast pro ukládání stažených souborů
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
 msgid "DownloadCore is shutting down."
-msgstr ""
+msgstr "DownloadCore se ukončuje."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:180
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:78
