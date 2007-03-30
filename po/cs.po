@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-28 16:22+0200\n"
-"PO-Revision-Date: 2007-03-28 11:40+0200\n"
-"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"POT-Creation-Date: 2007-03-30 15:49+0200\n"
+"PO-Revision-Date: 2007-03-30 15:49+0200\n"
+"Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3437,9 +3437,8 @@ msgid "_Enable song reporting"
 msgstr "_Povolit oznámení skladby"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:1
-#, fuzzy
 msgid "Audioscrobbler reporting engine enabled"
-msgstr "Oznámení výsledků Audioscrobbler"
+msgstr "Engine pro oznamování Audioscrobbler je povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:2
 msgid "Audioscrobbler reporting plugin enabled"
@@ -4005,7 +4004,7 @@ msgstr "Čekání na dokončení aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedInfo.cs:709
 msgid "Title Property Changed"
-msgstr ""
+msgstr "Vlastnost Titul se změnila"
 
 #. Should users be notified of this?
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastLibrary.cs:762
@@ -4017,14 +4016,14 @@ msgid "Podcasting"
 msgstr "Podcasting"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
-#, csharp-format
+#, fuzzy, csharp-format
 msgid ""
 "Podcasting is a form of audio blogging where users subscribe to a feed of "
 "shows and its episodes are downloaded and managed for offline listening.\n"
 "\n"
 "Its name comes from the targeting of audio posts to Apple's iPod® audio "
 "player, although podcasts can be listened to directly in {0}."
-msgstr ""
+msgstr "Podcasting je forma zvukového blogování Výraz podcasting je odvozen "
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
@@ -4215,11 +4214,11 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
-msgstr ""
+msgstr "Čas poslední aktualizace XSPF stanic z radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
 msgid "Last time the master station list was checked for updates"
-msgstr ""
+msgstr "Čas poslední kontroly aktualizací v hlavním seznamu stanic"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
 msgid "Radio plugin enabled"
@@ -4239,7 +4238,7 @@ msgstr "Čas poslední rozhlasové aktualizace"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
 msgid "Time of the last radio update check"
-msgstr ""
+msgstr "Čas poslední kontroly rozhlasových aktualizací"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
 msgid "Update remote stations from radio.banshee-project.org"
@@ -4265,6 +4264,7 @@ msgstr "Zobrazit vzdálené stanice"
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
 msgid "Update and show radio station content from radio.banshee-project.org"
 msgstr ""
+"Aktualizovat a zobrazit obsah rozhlasových stanic z radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
@@ -4279,9 +4279,8 @@ msgid "Copy URI"
 msgstr "Kopírovat URI"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
-#, fuzzy
 msgid "Copy stream URI to clipboard"
-msgstr "Kopírovat vybrané skladby do schránky"
+msgstr "Kopírovat URI kanálu do schránky"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:133
 msgid "Edit"
@@ -4345,7 +4344,7 @@ msgstr "Název stanice:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
 msgid "Stream URL:"
-msgstr ""
+msgstr "URL kanálu:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
 msgid "Station"
@@ -4368,14 +4367,14 @@ msgid "No similar artists found"
 msgstr "Nebyli nalezeni podobní umělci"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:212
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Top Tracks by {0}"
-msgstr "Skladba {0}"
+msgstr "Skladby podle {0}"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:214
 #, csharp-format
 msgid "Top Albums by {0}"
-msgstr ""
+msgstr "Alba podle {0}"
 
 #. translators: 25% similarity
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:330
