@@ -7,7 +7,6 @@
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <Contents>
     <File name="./AudioCd/AudioCdCore.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCd/AudioCdDisk.cs" subtype="Code" buildaction="Compile" />
@@ -280,9 +279,4 @@
     <ProjectReference type="Project" localcopy="False" refto="Last.FM" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
-  <GtkDesignInfo>
-    <ExportedWidgets>
-      <Widget>Banshee.Base.TextViewLabel</Widget>
-    </ExportedWidgets>
-  </GtkDesignInfo>
 </Project>

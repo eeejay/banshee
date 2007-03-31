@@ -1,5 +1,10 @@
 2007-03-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Utilities.cs (SetProcessName): Added a fallback
+	to setproctitle if prctl fails; this should work for BSD
+
+2007-03-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.Ipod/IpodDap.cs: Fixed major bug where no tracks
 	would be read on an HFS+ iPod; handle new iPod shuffles a little better;
 	map to more suitable device icons for new Nanos and Shuffles

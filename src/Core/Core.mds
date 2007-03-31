@@ -6,7 +6,6 @@
       <Entry build="True" name="Banshee" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="Banshee.Base" single="True">
     <Execute type="None" entry="Banshee.Widgets" />
     <Execute type="None" entry="Banshee.Base" />

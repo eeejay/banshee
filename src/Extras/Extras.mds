@@ -7,7 +7,6 @@
       <Entry build="True" name="BooBuddy" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="MusicBrainz" single="True">
     <Execute type="None" entry="MusicBrainz" />
     <Execute type="None" entry="Last.FM" />

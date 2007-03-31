@@ -9,7 +9,6 @@
       <Entry build="True" name="MonoDevelopBootstrap" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="MonoDevelopBootstrap" single="True">
     <Execute type="None" entry="Extras" />
     <Execute type="None" entry="Core" />
