@@ -1,4 +1,8 @@
-2007-04-01  Aaron Bockover  <abock@gnome.org.
+2007-04-01  Aaron Bockover  <abock@gnome.org>
+
+	* build/m4/banshee/dap-ipod.m4: Required ipod-sharp 0.6.3
+
+2007-04-01  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Bump version to 0.13.0 to mark the start of the new 
 	development series
