@@ -1,5 +1,6 @@
 SUBDIRS = \
 	Banshee.Plugins.Audioscrobbler \
+	Banshee.Plugins.Bookmarks \
 	Banshee.Plugins.Daap \
 	Banshee.Plugins.MetadataSearch \
 	Banshee.Plugins.MiniMode \

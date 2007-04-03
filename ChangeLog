@@ -1,3 +1,15 @@
+2007-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Add new plugin, disabled by default, for bookmarking positions in tracks.
+
+	* configure.ac:
+	* src/Plugins/Makefile.am:
+	* src/Plugins/Plugins.mds:
+	* src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:
+	* src/Plugins/Banshee.Plugins.Bookmarks/Makefile.am:
+	* src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in:
+	* src/Plugins/Banshee.Plugins.Bookmarks/Banshee.Plugins.Bookmarks.mdp: New.
+
 2007-04-01  Aaron Bockover  <abock@gnome.org>
 
 	* build/m4/banshee/dap-ipod.m4: Required ipod-sharp 0.6.3
