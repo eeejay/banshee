@@ -48,7 +48,7 @@ msgstr "<b>Coberta:</b>"
 
 #: ../data/banshee-dialogs.glade.h:6
 msgid "<b>Bitrate:</b>"
-msgstr "<b>Ràtio de bits:</b>"
+msgstr "<b>Taxa de bits:</b>"
 
 #: ../data/banshee-dialogs.glade.h:7
 msgid "<b>CD Importing</b>"
@@ -164,7 +164,7 @@ msgstr "Seleccioneu una font d'importació:"
 
 #: ../data/banshee-dialogs.glade.h:34
 msgid "Co_py files to music folder when importing"
-msgstr "C_opia els fitxers a la carpeta de música en importar"
+msgstr "En importar c_opia els fitxers a la carpeta de música"
 
 #: ../data/banshee-dialogs.glade.h:35
 msgid "Copy to all"
@@ -234,7 +234,7 @@ msgstr "Nom del f_itxer:"
 
 #: ../data/banshee-dialogs.glade.h:51
 msgid "Folder hie_rarchy:"
-msgstr "Jerarquia de les carpetes:"
+msgstr "J_erarquia de les carpetes:"
 
 #: ../data/banshee-dialogs.glade.h:52
 msgid "Forward"
@@ -352,14 +352,14 @@ msgstr "Codificació d'àudio avançada (AAC)"
 #: ../data/audio-profiles/wavpack.xml.in.h:3
 #: ../data/audio-profiles/wma.xml.in.h:4
 msgid "Bitrate"
-msgstr "Ràtio de bits"
+msgstr "Taxa de bits"
 
 #: ../data/audio-profiles/aac.xml.in.h:3
 msgid ""
 "Proprietary and standardized format that is superior to MP3, but not as "
 "popular."
 msgstr ""
-"Format propietari i estàndard que és superior a l'MP3, però no tan popular."
+"Format no lliure i estàndard que és superior a l'MP3, però no tan popular."
 
 #
 #: ../data/audio-profiles/base.xml.in.h:1
@@ -384,12 +384,12 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
-"Format d'àudio amb pèrdua propietari i antic, però també popular, que "
-"produeix fitxers més gran a ràtio de bits més baixos."
+"Format d'àudio amb pèrdua, antic i no lliure, però també popular, que "
+"produeix fitxers més grans a taxes de bits més baixes."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
-msgstr "Ràtio de bits de mitjana"
+msgstr "Taxa de bits mitjana"
 
 #
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
@@ -401,7 +401,7 @@ msgstr "Millor"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:5
 msgid "Constant Bitrate"
-msgstr "Ràtio de bits constant"
+msgstr "Taxa de bits constant"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:6
 msgid "MP3 (LAME Encoder)"
@@ -418,7 +418,7 @@ msgstr "Qualitat VBR"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:9
 msgid "Variable Bitrate"
-msgstr "Ràtio de bits variable"
+msgstr "Taxa de bits variable"
 
 #
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
@@ -495,7 +495,7 @@ msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
 "size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
-"Un format d'àudio amb pèrdua propietari amb gran qualitat de sortida amb una "
+"Un format d'àudio amb pèrdua no lliure amb gran qualitat de sortida amb una "
 "mida de fitxer menor que l'MP3. Un WMA a 96 kbps és equivalent a un l'MP3 a 128 "
 "kbps."
 
@@ -506,7 +506,7 @@ msgstr "Qualitat d'àudio"
 
 #: ../data/audio-profiles/wma.xml.in.h:5
 msgid "Use a variable bitrate"
-msgstr "Utilitza un ràtio de bits variable"
+msgstr "Utilitza una taxa de bits variable"
 
 #: ../data/audio-profiles/wma.xml.in.h:6
 msgid "Windows Media Audio"
@@ -1402,7 +1402,7 @@ msgstr "{0}:{1:00} de {2}"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:132
 msgid "Unknown Minutes"
-msgstr "Minuts desconeguts"
+msgstr "minuts desconeguts"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:133
 #, csharp-format
@@ -2854,7 +2854,7 @@ msgstr "Expulsa {0}"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
 msgid "Import Errors"
-msgstr "Importa els errors"
+msgstr "Errors en importar"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
@@ -4180,7 +4180,7 @@ msgstr ""
 "escoltats quan es troben en desconnexió.\n"
 "\n"
 "El seu nom es degut a que els primers enregistraments anaven adreçats "
-"alreproductor d'àudio Apple's iPod®, però els podcasts es poden escoltar "
+"al reproductor d'àudio Apple's iPod®, però els podcasts es poden escoltar "
 "directament al {0}."
 
 #
@@ -4368,7 +4368,7 @@ msgstr "Subscriviu-vos a nous Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
 msgid "Please enter the URL of the podcast to which you are subscribing."
-msgstr "Introduiu l'URL del podcast al que us esteu subscrivint."
+msgstr "Introduïu l'URL del podcast al que us esteu subscrivint."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4446,7 +4446,7 @@ msgstr "Ràdio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:57
 msgid "Provides Internet radio/streaming audio station support"
-msgstr "Proveix compatibiliat amb estacions de ràdio d'Internet"
+msgstr "Admet les emissions de ràdio i d'àudio en temps real per Internet" 
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
@@ -4502,7 +4502,7 @@ msgstr "Suprimeix"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:142
 msgid "Remove selected Radio Station"
-msgstr "Suprimeix l'estació de ràdio selecionada"
+msgstr "Suprimeix l'estació de ràdio seleccionada"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
 msgid "Refreshing radio stations from the Banshee Radio Web Service"
@@ -4531,7 +4531,7 @@ msgid ""
 "Enter the Group, Title and URL of the radio station you wish to add. A "
 "description is optional."
 msgstr ""
-"Introduiu el grup, títol i URL de l'estació de ràdio que voleu afegir.La "
+"Introduïu el grup, títol i URL de l'estació de ràdio que voleu afegir. La "
 "descripció és opcional."
 
 #
