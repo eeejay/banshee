@@ -118,6 +118,8 @@ src/Extras/Last.FM/Last.FM.Gui/AccountLoginForm.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in
+src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs
+src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in
 src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in
 src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs
 src/Plugins/Banshee.Plugins.Daap/DaapContainerSource.cs
