@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: banshee.HEAD.pot\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-09 03:22+0000\n"
-"PO-Revision-Date: 2007-03-07 15:16+0530\n"
-"Last-Translator: norbu <nor_den@hotmail.com>\n"
+"PO-Revision-Date: 2007-03-28 16:11+0530\n"
+"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,8 @@ msgstr ""
 "X-Poedit-Country: BHUTAN\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
+#: ../data/banshee.desktop.in.in.h:1
+#: ../data/banshee.glade.h:2
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:79
 msgid "Banshee Music Player"
 msgstr "བཱན་ཤི་གླུ་གཞས་གཏང་འཕྲུལ་"
@@ -146,7 +147,7 @@ msgstr "<big><b>གླུ་གཞས་ དཔེ་མཛོད་ལུ་ན
 
 #: ../data/banshee-dialogs.glade.h:30
 msgid "Apply common field values to all tracks"
-msgstr ""
+msgstr "གླུ་རིམ་ཆ་མཉམ་ལུ་ས་སྒོ་མཐུན་མོང་འཇུག་སྤྱོད་འབད་"
 
 #: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
@@ -317,12 +318,8 @@ msgid "Write speed:"
 msgstr "འབྲི་བའི་མགྱོགས་ཚད་:"
 
 #: ../data/banshee-dialogs.glade.h:71
-msgid ""
-"Your music library is empty. You may import new music into your library now, "
-"or choose to do so later."
-msgstr ""
-"ཁྱོད་ཀྱི་གླུ་གཞས་དཔེ་མཛོད་འདི་སྟོངམ་ཨིན་པས། ཁྱོད་ཀྱིས་ ཁྱོད་རའི་དཔེ་མཛོད་ནང་ལུ་ད་ལྟོ་ གླུ་གཞས་གསརཔ་ནང་"
-"འདྲེན་འབད་དགོཔ་འངོ་ ཡང་ན་ ཤུལ་ལས་འབད་ནིའི་དོན་ལས་གདམ་ཁ་རྐྱབས་དགོཔ་འོང་།"
+msgid "Your music library is empty. You may import new music into your library now, or choose to do so later."
+msgstr "ཁྱོད་ཀྱི་གླུ་གཞས་དཔེ་མཛོད་འདི་སྟོངམ་ཨིན་པས། ཁྱོད་ཀྱིས་ ཁྱོད་རའི་དཔེ་མཛོད་ནང་ལུ་ད་ལྟོ་ གླུ་གཞས་གསརཔ་ནང་འདྲེན་འབད་དགོཔ་འངོ་ ཡང་ན་ ཤུལ་ལས་འབད་ནིའི་དོན་ལས་གདམ་ཁ་རྐྱབས་དགོཔ་འོང་།"
 
 #: ../data/banshee-dialogs.glade.h:72
 msgid "_Write"
@@ -342,159 +339,138 @@ msgstr "འཚོལ་ཞིབ་:(_S)"
 
 #: ../data/audio-profiles/aac.xml.in.h:1
 msgid "Advanced Audio Coding (AAC)"
-msgstr ""
+msgstr "སྔ་གཡར་རྣར་ཉེན་ཀོ་ཌིང་ (ཨེ་ཨེ་སི་)"
 
 #: ../data/audio-profiles/aac.xml.in.h:2
 #: ../data/audio-profiles/mp3-lame.xml.in.h:4
 #: ../data/audio-profiles/mp3-xing.xml.in.h:2
 #: ../data/audio-profiles/wavpack.xml.in.h:3
 #: ../data/audio-profiles/wma.xml.in.h:4
-#, fuzzy
 msgid "Bitrate"
-msgstr "<b>བིཊི་རེཊི་:</b>"
+msgstr "བིཊི་རེཊི་"
 
 #: ../data/audio-profiles/aac.xml.in.h:3
-msgid ""
-"Proprietary and standardized format that is superior to MP3, but not as "
-"popular."
-msgstr ""
+msgid "Proprietary and standardized format that is superior to MP3, but not as popular."
+msgstr "ཨེམ་པི་༣་ ལུ་ལེགས་མི་གཅིག་ དེ་འབདཝ་ད་དེ་བཟུམ་སྦེ་ཡོངས་གྲགས་ཅན་མེད་པའི་ ཚད་ལྡན་བཟོ་ཡོད་པའི་རྩ་སྒྲིག་དང་རྒྱུ་དངོས།"
 
 #: ../data/audio-profiles/base.xml.in.h:1
-#, fuzzy
 msgid "Channels"
-msgstr "ཆ་མེད་གཏང་"
+msgstr "རྒྱུ་ལམ་ཚུ་"
 
 #: ../data/audio-profiles/flac.xml.in.h:1
 msgid "Free Lossless Audio Codec"
-msgstr ""
+msgstr "རང་དབང་གྱོང་མེད་རྣར་ཉེན་ཀོ་ཌེཀ་"
 
 #: ../data/audio-profiles/flac.xml.in.h:2
-msgid ""
-"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
-"does not degrade audio quality."
-msgstr ""
+msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
+msgstr "རང་དབང་གྱོང་མེད་རྣར་ཉེན་ཀོ་ཌེཀ་ (FLAC) འདི་  ཨེབ་བཙུགས་འབད་མི་ཨིན་དེ་འབདཝ་ད་རྣར་ཉེན་སྤུས་ཚད་ཉམས་འགྱོ་ནི་མེད་པའི་བྱུང་ཁུངས་ཁ་ཕྱེ་བཏུབ་མི་འདི་ཨིན།"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
-msgid ""
-"A proprietary and older, but also popular, lossy audio format that produces "
-"larger files at lower bitrates."
-msgstr ""
+msgid "A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates."
+msgstr "རྒྱུ་དངོས་དང་རྙིངམ་ དེ་འབདཝ་ད་ཡོངས་གྲགས་ཅན་  ལོ་སི་རྣར་ཉེན་རྩ་སྒྲིག་དེ་ཡང་བའི་འོག་གི་བིཊི་རེཊི་ལུ་ཡིག་སྣོད་སྦོམ་བྱུང་མི་འདི་ཨིན།"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
-msgstr ""
+msgstr "ཆ་སྙོམས་བཊི་རེཊི་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
 #: ../data/audio-profiles/vorbis.xml.in.h:2
 #: ../data/audio-profiles/wavpack.xml.in.h:2
 #: ../data/audio-profiles/wma.xml.in.h:3
-#, fuzzy
 msgid "Best"
-msgstr "སླར་སྒྲིག་"
+msgstr "ལེགས་ཤོམ་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:5
 msgid "Constant Bitrate"
-msgstr ""
+msgstr "ཆད་མེད་བཊི་རེཊི་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:6
 msgid "MP3 (LAME Encoder)"
-msgstr ""
+msgstr "ཨེམ་པི་ ༣་  (LAME ཨིན་ཀོ་ཌར་)"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:7
 msgid "VBR Mode"
-msgstr ""
+msgstr "ཝི་བི་ཨར་ཐབས་ལམ་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:8
 msgid "VBR Quality"
-msgstr ""
+msgstr "ཝི་བི་ཨར་སྤུས་ཚད་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:9
 msgid "Variable Bitrate"
-msgstr ""
+msgstr "འགྱུར་ཅན་བཊི་རེཊི་"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 #: ../data/audio-profiles/wavpack.xml.in.h:9
 #: ../data/audio-profiles/wma.xml.in.h:7
 msgid "Worst"
-msgstr ""
+msgstr "བྱང་ཉེས་"
 
 #: ../data/audio-profiles/mp3-xing.xml.in.h:3
 msgid "MP3 (Xing Encoder)"
-msgstr ""
+msgstr "ཨེམ་པི་ ༣་ (སིང་ཨིན་ཀོ་ཌིང་)"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:1
-#, fuzzy
 msgid "Audio quality"
-msgstr "རྣར་ཉན་རྩ་སྒྲིག་"
+msgstr "རྣར་ཉན་སྤུས་ཚད་"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:3
 msgid "Ogg Vorbis"
-msgstr ""
+msgstr "ཨོ་ཇི་ཇི་བོར་བིསི་"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:4
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
+msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
+msgstr "བོར་བིསི་འདི་  བྱུང་ཁུངས་ཁ་ཕྱེ་སྟེ་ཡོད་མི་  ཨེམ་པི་ ༣་ ལས་ཨའུཊི་པུཊི་སྤུས་ཚད་མཐོ་ཤོས་འདི་འོག་གི་ཡིག་སྣོད་ཚད་ལུ་ཡོད་མི་ཨིན།"
 
 #: ../data/audio-profiles/wav.xml.in.h:1
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
+msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
+msgstr "WAV+PCM འདི་  ཚད་གཞི་(པི་སི་ཨེམ་)རྣར་ཉེན་འཆང་མི་ ཨེབ་བཙུགས་མ་འབད་མི་  གྲལ་ཐིག་འཕར་རྩ་-ཨང་ཚད་རྩི་འདི་ཨིན།"
 
 #: ../data/audio-profiles/wav.xml.in.h:2
 msgid "Waveform PCM"
-msgstr ""
+msgstr "གཡབ་རྣམ་པ་ པི་སི་ཨེམ་"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:1
-msgid ""
-"A fast and efficient open source audio format offering lossless and high-"
-"quality lossy encoding with great dynamic range."
-msgstr ""
+msgid "A fast and efficient open source audio format offering lossless and high-quality lossy encoding with great dynamic range."
+msgstr "མགྱོགས་དྲགས་དང་རྣར་ཉེན་རྩ་སྒྲིག་ཁ་ཕྱེ་ནིའི་ནུས་ཤུགས་ཅན་   དེ་ཡང་  ནུས་ཅན་ཁྱབ་ཚད་དང་ཅིག་ཁར་གྱོང་མེད་དང་ལུ་སི་ཨིན་ཀོ་ཌིང་སྤུས་ཚད་མཐོ་ཤོས་བྱིན་མི་ཨིན།"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
-#, fuzzy
 msgid "Extra processing"
-msgstr "བཟོ་སྦྱོར་གྱི་..."
+msgstr "བཟོ་སྦྱོར་ཧེང་བཀལ་"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Lossy mode"
-msgstr ""
+msgstr "ལུ་སི་ཐབས་ལམ་"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:6
-#, fuzzy
 msgid "Mode"
-msgstr "ཐབས་ལམ་ཆ་ཚང་"
+msgstr "ཐབས་ལམ་"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Store MD5 sum in the file"
-msgstr ""
+msgstr "ཡིག་སྣོད་ནང་ལུ་ཨེམ་ཌི་ ༥་ བསྡོམ་འདི་གསོག་འཇོག་འབད་"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "Wavpack"
-msgstr ""
+msgstr "ཝེཕ་པེག་"
 
 #: ../data/audio-profiles/wma.xml.in.h:1
-msgid ""
-"A proprietary lossy audio format with high quality output at a lower file "
-"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
-msgstr ""
+msgid "A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr "རྒྱུ་དངོས་ལུ་སི་རྣར་ཉེན་རྩ་སྒྲིག་འདི་  ཨེམ་པི་༣་ འོག་གི་ཡིག་སྣོད་ཚད་གཅིག་ལས་ལྷག་སྟེ་  སྤུས་ཚད་མཐོ་ཤོས་ཡོད་མི་ཨིན།  96 kbps WMA འདི་128 kbps MP3 ལུ་འདྲ་མཉམ་ཡོདཔ་ཨིན།"
 
 #: ../data/audio-profiles/wma.xml.in.h:2
-#, fuzzy
 msgid "Audio Quality"
-msgstr "རྣར་ཉན་རྩ་སྒྲིག་"
+msgstr "རྣར་ཉན་སྤུས་ཚད་"
 
 #: ../data/audio-profiles/wma.xml.in.h:5
 msgid "Use a variable bitrate"
-msgstr ""
+msgstr "འགྱུར་ཅན་བཊི་རེཊི་གཅིག་ལག་ལེན་འཐབ་"
 
 #: ../data/audio-profiles/wma.xml.in.h:6
 msgid "Windows Media Audio"
-msgstr ""
+msgstr "སྒོ་སྒྲིག་བརྡ་ལམ་རྣར་ཉེན་"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:222
 msgid "Could not create pipeline"
@@ -928,7 +904,7 @@ msgstr "བཱན་ཤི་པ་ལག་ཨིནསི་རིམ་སྒ
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:137
 msgid "_Tools"
-msgstr ""
+msgstr "ལག་ཆས་ཚུ། (_T)"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:140
 msgid "_View"
@@ -1107,9 +1083,7 @@ msgstr "གླུ་ཐོ་ལུ་ཁ་སྐོང་རྐྱབས་(_t
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Append selected songs to playlist or create new playlist from selection"
-msgstr ""
-"སེལ་འཐུ་འབད་ཡོད་པའི་ཞབས་ཁྲ་ཚུ་ གླུ་ཐོ་ལུ་མཇུག་བསྣོན་འབད་ ཡང་ན་ སེལ་འཐུ་འབད་ནི་ལས་ གླུ་ཐོ་གསརཔ་"
-"གསར་བསྐྲུན་འབད་"
+msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ཞབས་ཁྲ་ཚུ་ གླུ་ཐོ་ལུ་མཇུག་བསྣོན་འབད་ ཡང་ན་ སེལ་འཐུ་འབད་ནི་ལས་ གླུ་ཐོ་གསརཔ་གསར་བསྐྲུན་འབད་"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:258
 msgid "Ratin_g"
@@ -1271,8 +1245,7 @@ msgstr "སི་ཌི་ཕྱིར་བཏོན་འབད་མི་ཚ
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:245
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
-msgstr ""
-"སི་ཌི་འདི་ནང་འདྲེན་འབད་བའི་སྐབས་ ཕྱིར་བཏོན་འབད་མི་ཚུགས། དང་པ་རང་ནང་འདྲེན་འབད་ནི་འདི་བཀག"
+msgstr "སི་ཌི་འདི་ནང་འདྲེན་འབད་བའི་སྐབས་ ཕྱིར་བཏོན་འབད་མི་ཚུགས། དང་པ་རང་ནང་འདྲེན་འབད་ནི་འདི་བཀག"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:85
 msgid "Could not create CD Ripper"
@@ -1284,21 +1257,13 @@ msgstr "སི་ཌི་ནང་འདྲེན་འབད་དོ་"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:284
 #, csharp-format
-msgid ""
-"<i>{0}</i> is still being imported into the music library. Would you like to "
-"stop it?"
-msgstr ""
-"<i>{0}</i> འདི་ད་ལྟོ་ཡང་ སྙན་ཆའི་དཔེ་མཛོད་དེ་ནང་ལུ་ ནང་འདྲེན་འབད་ཡོད། ཁྱོད་ཀྱིས་འདི་བཀག་ནི་ཨིན་"
-"ན?"
+msgid "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
+msgstr "<i>{0}</i> འདི་ད་ལྟོ་ཡང་ སྙན་ཆའི་དཔེ་མཛོད་དེ་ནང་ལུ་ ནང་འདྲེན་འབད་ཡོད། ཁྱོད་ཀྱིས་འདི་བཀག་ནི་ཨིན་ན?"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
 #, csharp-format
-msgid ""
-"The device node '{0}' differs from the device node already set for "
-"previously queued tracks ({1})"
-msgstr ""
-"ཐབས་འཕྲུལ་ནོཌི་ '{0}' འདི་ ཧེ་མ་གྱལ་བཟོ་ཡོད་པའི་ གླུ་རིམ་ ({1}) ཚུ་གི་དོན་ལུ་ ཧེ་མ་ལས་གཞི་སྒྲིག་"
-"འབད་ཡོད་པའི་ ཐབས་འཕྲུལ་ནོཌི་འདི་ལས་ སོ་སོ་འགྱུརཝ་ཨིན་"
+msgid "The device node '{0}' differs from the device node already set for previously queued tracks ({1})"
+msgstr "ཐབས་འཕྲུལ་ནོཌི་ '{0}' འདི་ ཧེ་མ་གྱལ་བཟོ་ཡོད་པའི་ གླུ་རིམ་ ({1}) ཚུ་གི་དོན་ལུ་ ཧེ་མ་ལས་གཞི་སྒྲིག་འབད་ཡོད་པའི་ ཐབས་འཕྲུལ་ནོཌི་འདི་ལས་ སོ་སོ་འགྱུརཝ་ཨིན་"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:305
 msgid "Importing Audio CD"
@@ -1412,8 +1377,7 @@ msgstr "འབྲི་ནིའི་ལས་སྦྱོར་གྱི་ད
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:156
 #, csharp-format
 msgid "The inserted media is not large enough to hold your selected music."
-msgstr ""
-"བཙུགས་ཡོད་པའི་བརྡ་ལམ་འདི་ ཁྱོད་ཀྱི་སེལ་འཐུ་འབད་ཡོད་པའི་སྙན་ཆ་འདི་འཆང་ནིའི་དོན་ལས་ སྦོམ་མི་འདུག"
+msgstr "བཙུགས་ཡོད་པའི་བརྡ་ལམ་འདི་ ཁྱོད་ཀྱི་སེལ་འཐུ་འབད་ཡོད་པའི་སྙན་ཆ་འདི་འཆང་ནིའི་དོན་ལས་ སྦོམ་མི་འདུག"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:138
 #, csharp-format
@@ -1441,8 +1405,7 @@ msgstr "ཌིཀསི་གི་བར་སྟོང་མ་ལངམ་"
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:176
 #, csharp-format
 msgid "Creating this CD requires at least {0} MiB of free disk space."
-msgstr ""
-"འ་ནི་སི་ཌི་གསར་བསྐྲུན་འབད་ནི་འདི་ལུ་ ཌིཀསི་བར་སྟོང་དལཝ་གི་ ཉུང་མཐའ་ {0} ཨེམ་ཨའི་བི་དགོཔ་ཨིན།"
+msgstr "འ་ནི་སི་ཌི་གསར་བསྐྲུན་འབད་ནི་འདི་ལུ་ ཌིཀསི་བར་སྟོང་དལཝ་གི་ ཉུང་མཐའ་ {0} ཨེམ་ཨའི་བི་དགོཔ་ཨིན།"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:195
 msgid "Continue Anyway"
@@ -1454,8 +1417,7 @@ msgstr "སི་ཌི་འབྲི་མ་ཚུགས་"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:240
 msgid "No suitable encoder could be found to convert selected songs."
-msgstr ""
-"སེལ་འཐུ་འབད་ཡོད་པའི་ཞབས་ཁྲ་ཚུ་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལས་ འོས་འབབ་ཡོད་པའི་ཨིན་ཀོ་ཌར་འཚོལ་མ་འཐོབ།"
+msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ཞབས་ཁྲ་ཚུ་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལས་ འོས་འབབ་ཡོད་པའི་ཨིན་ཀོ་ཌར་འཚོལ་མ་འཐོབ།"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:48
 msgid "Writing a disc"
@@ -1467,12 +1429,8 @@ msgid "Writing Disc"
 msgstr "ཌིཀསི་འབྲི་དོ་"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:57
-msgid ""
-"Stopping the disc writing process will render it useless. Would you like to "
-"stop writing the disc?"
-msgstr ""
-"ཌིཀསི་འབྲི་ནིའི་ལས་སྦྱོར་འདི་ བཀག་ནི་འདི་གིས་ དེ་ཕན་མེད་སྦེ་ལྷག་སྟོན་འབད་འོང་། ཁྱོད་ཀྱིས་ཌིཀསི་འབྲི་ནི་འདི་"
-"བཀག་ནི་ཨིན་ན?"
+msgid "Stopping the disc writing process will render it useless. Would you like to stop writing the disc?"
+msgstr "ཌིཀསི་འབྲི་ནིའི་ལས་སྦྱོར་འདི་ བཀག་ནི་འདི་གིས་ དེ་ཕན་མེད་སྦེ་ལྷག་སྟོན་འབད་འོང་། ཁྱོད་ཀྱིས་ཌིཀསི་འབྲི་ནི་འདི་བཀག་ནི་ཨིན་ན?"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:95
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:110
@@ -1563,13 +1521,8 @@ msgid "Base location for library music"
 msgstr "དཔེ་མཛོད་སྙན་ཆའི་དོན་ལུ་ གཞི་རྟེན་གནས་ཁོངས་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:3
-msgid ""
-"Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
-"\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
-msgstr ""
-"ཡང་ཅིན་ \"systemio\" (.NET System.IO), \"unix\" (Native Unix), ཡང་ན་ "
-"\"gnomevfs\" (GNOME VFS) བཏུབ་; བཱན་ཤི་འགོ་བཙུགས་ལུ་ནུས་པ་འཐོབ་ཨིན་(ལོག་བཙུགས་ནི་དགོས་མཁོ་"
-"ཡོད་)"
+msgid "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or \"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+msgstr "ཡང་ཅིན་ \"systemio\" (.NET System.IO), \"unix\" (Native Unix), ཡང་ན་ \"gnomevfs\" (GNOME VFS) བཏུབ་; བཱན་ཤི་འགོ་བཙུགས་ལུ་ནུས་པ་འཐོབ་ཨིན་(ལོག་བཙུགས་ནི་དགོས་མཁོ་ཡོད་)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:4
 msgid "Column index"
@@ -1577,23 +1530,19 @@ msgstr "ཀེར་ཐིག་ཟུར་ཐོ་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:5
 msgid "Column index for sorting the library source. -1 for unset."
-msgstr ""
-"དཔེ་མཛོད་འབྱུང་ཁུངས་དེ་ དབྱེ་སེལ་འབད་ནིའི་དོན་ལུ་ ཀེར་ཐིག་ཟུར་ཐོ། -༡ གཞི་སྒྲིག་མ་འབད་མིའི་དོན་ལུ།"
+msgstr "དཔེ་མཛོད་འབྱུང་ཁུངས་དེ་ དབྱེ་སེལ་འབད་ནིའི་དོན་ལུ་ ཀེར་ཐིག་ཟུར་ཐོ། -༡ གཞི་སྒྲིག་མ་འབད་མིའི་དོན་ལུ།"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:6
 msgid "Column sort type"
 msgstr "ཀེར་ཐིག་དབྱེ་སེལ་དབྱེ་བ་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
-msgid ""
-"Column sort type for the library source. Ascending (0) or Descending (1)"
-msgstr ""
-"དཔེ་མཛོད་འབྱུང་ཁུངས་དེ་གི་དོན་ལུ་ ཀེར་ཐིག་དབྱེ་སེལ་དབྱེ་བ། ཡར་འཛེགས་ (༠) ཡང་ན་མར་འབབ་(༡)"
+msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
+msgstr "དཔེ་མཛོད་འབྱུང་ཁུངས་དེ་གི་དོན་ལུ་ ཀེར་ཐིག་དབྱེ་སེལ་དབྱེ་བ། ཡར་འཛེགས་ (༠) ཡང་ན་མར་འབབ་(༡)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
 msgid "Copy and rename music to banshee music library directory when importing"
-msgstr ""
-"སྙན་ཆ་འདི་ ནང་འདྲེན་འབད་བའི་སྐབས་ བཱན་ཤི་སྙན་ཆའི་དཔེ་མཛོད་སྣོད་ཐོ་ལུ་ འདྲ་བཤུས་དང་བསྐྱར་མིང་བཏགས་"
+msgstr "སྙན་ཆ་འདི་ ནང་འདྲེན་འབད་བའི་སྐབས་ བཱན་ཤི་སྙན་ཆའི་དཔེ་མཛོད་སྣོད་ཐོ་ལུ་ འདྲ་བཤུས་དང་བསྐྱར་མིང་བཏགས་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:9
 msgid "Copy music on import"
@@ -1609,43 +1558,21 @@ msgstr "རིམ་དཀྲུགས་འབད་ནིའི་ཐབས་
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
 #, no-c-format
-msgid ""
-"Format for creating a track filename inside the library. Do not use path "
-"tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %"
-"album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
-"prefixed zero), %track_count_nz% (No prefixed zero)."
-msgstr ""
-"དཔེ་མཛོད་དེ་གི་ནང་ན་ གླུ་རིམ་གྱི་ཡིག་སྣོད་མིང་ཅིག་གསར་བསྐྲུན་འབད་ནིའི་དོན་ལུ་ རྩ་སྒྲིག  ནཱ་ལུ་ འགྲུལ་ལམ་ངོ་"
-"རྟགས་/ཡིག་འབྲུ་ཚཛུ་ལག་ལེན་མ་འཐབ། དཔེ་མཛོད་སྣོད་འཛིན་གྱི་དཔེ་གཞི་བལྟ། ལི་གཱལ་ངོ་རྟགས་: %artist%, %"
-"album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
-"prefixed zero), %track_count_nz% (སྔོན་ཚིག་ཀླད་ཀོར་མེད་)།"
+msgid "Format for creating a track filename inside the library. Do not use path tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
+msgstr "དཔེ་མཛོད་དེ་གི་ནང་ན་ གླུ་རིམ་གྱི་ཡིག་སྣོད་མིང་ཅིག་གསར་བསྐྲུན་འབད་ནིའི་དོན་ལུ་ རྩ་སྒྲིག  ནཱ་ལུ་ འགྲུལ་ལམ་ངོ་རྟགས་/ཡིག་འབྲུ་ཚཛུ་ལག་ལེན་མ་འཐབ། དཔེ་མཛོད་སྣོད་འཛིན་གྱི་དཔེ་གཞི་བལྟ། ལི་གཱལ་ངོ་རྟགས་: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (སྔོན་ཚིག་ཀླད་ཀོར་མེད་)།"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
 #, no-c-format
-msgid ""
-"Format for creating a track folder inside the library. Do not create an "
-"absolute path. Path here is relative to the Banshee music directory. See "
-"LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %"
-"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
-"prefixed zero), %path_sep% (portable directory separator (/))."
-msgstr ""
-"དཔེ་མཛོད་འདི་གི་ནང་ན་ གླུ་རིམ་གྱི་སྣོད་འཛིན་ཅིག་གསར་བསྐྲུན་འབད་ནིའི་དོན་ལས་ རྩ་སྒྲིག  ཡང་དག་འགྲུལ་ལམ་"
-"ཅིག་གསར་བསྐྲུན་མ་འབད། ནཱ་གི་འགྲུལ་ལམ་འདི་ བཱན་ཤི་སྙན་ཆའི་སྣོད་ཐོ་དེ་ལུ་ འབྲེལ་བ་ཡོདཔ་ཨིན། དཔེ་མཛོད་ཀྱི་"
-"གནས་ཁོངས་བལྟ། ལི་གཱལ་ངོ་རྟགས་: %artist%, %album%, %title%, %track_number%, %"
-"track_count%, %track_number_nz% (སྔོན་ཚིག་ཀླད་ཀོར་མེད་), %track_count_nz% (སྔོན་ཚིག་"
-"ཀླད་ཀོར་མེད་), %path_sep% (འབག་བཏུབ་པའི་སྣོད་ཐོ་དབྱེ་བྱེད་ (/))."
+msgid "Format for creating a track folder inside the library. Do not create an absolute path. Path here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/))."
+msgstr "དཔེ་མཛོད་འདི་གི་ནང་ན་ གླུ་རིམ་གྱི་སྣོད་འཛིན་ཅིག་གསར་བསྐྲུན་འབད་ནིའི་དོན་ལས་ རྩ་སྒྲིག  ཡང་དག་འགྲུལ་ལམ་ཅིག་གསར་བསྐྲུན་མ་འབད། ནཱ་གི་འགྲུལ་ལམ་འདི་ བཱན་ཤི་སྙན་ཆའི་སྣོད་ཐོ་དེ་ལུ་ འབྲེལ་བ་ཡོདཔ་ཨིན། དཔེ་མཛོད་ཀྱི་གནས་ཁོངས་བལྟ། ལི་གཱལ་ངོ་རྟགས་: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (སྔོན་ཚིག་ཀླད་ཀོར་མེད་), %track_count_nz% (སྔོན་ཚིག་ཀླད་ཀོར་མེད་), %path_sep% (འབག་བཏུབ་པའི་སྣོད་ཐོ་དབྱེ་བྱེད་ (/))."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 msgid "Height of the main interface window."
 msgstr "ངོས་འདྲ་བའི་སྒོ་སྒྲིག་གཙོ་བོ་འདི་གི་མཐོ་ཚད།"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
-msgid ""
-"If enabled, metadata (tags) will be written back to audio files when using "
-"the track metadata editor."
-msgstr ""
-"ལྕོགས་ཅན་བཟོ་ཡོདཔ་ཨིན་པ་ཅིན་ མེ་ཊ་གནད་སྡུད་(ངོ་རྟགས་)ཚུ་ གླུ་རིམ་མེ་ཊ་གནད་སྡུད་ཞུན་དག་པ་འདི་ལག་"
-"ལེན་འཐབ་པའི་སྐབས་ ལོག་རྣར་ཉན་ཡིག་སྣོད་ཚུ་ལུ་འབྲི་འོང་།"
+msgid "If enabled, metadata (tags) will be written back to audio files when using the track metadata editor."
+msgstr "ལྕོགས་ཅན་བཟོ་ཡོདཔ་ཨིན་པ་ཅིན་ མེ་ཊ་གནད་སྡུད་(ངོ་རྟགས་)ཚུ་ གླུ་རིམ་མེ་ཊ་གནད་སྡུད་ཞུན་དག་པ་འདི་ལག་ལེན་འཐབ་པའི་སྐབས་ ལོག་རྣར་ཉན་ཡིག་སྣོད་ཚུ་ལུ་འབྲི་འོང་།"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid "Library File Pattern"
@@ -1672,11 +1599,8 @@ msgid "Move music on info save"
 msgstr "སྙན་ཆ་དེ་ བརྡ་དོན་སྲུང་བཞག་གུ་སྤོ་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
-msgid ""
-"Move music within banshee music library directory when saving track info"
-msgstr ""
-"གླུ་རིམ་བརྡ་དོན་སྲུང་བཞག་འབད་བའི་སྐབས་ བཱན་ཤི་སྙན་ཆའི་དཔེ་མཛོད་ཀྱི་སྣོད་ཐོའི་ནང་འཁོད་ལུ་ སྙན་ཆ་སྤོ་བཤུད་"
-"འབད་"
+msgid "Move music within banshee music library directory when saving track info"
+msgstr "གླུ་རིམ་བརྡ་དོན་སྲུང་བཞག་འབད་བའི་སྐབས་ བཱན་ཤི་སྙན་ཆའི་དཔེ་མཛོད་ཀྱི་སྣོད་ཐོའི་ནང་འཁོད་ལུ་ སྙན་ཆ་སྤོ་བཤུད་འབད་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
 msgid "Name of media playback engine backend"
@@ -1723,22 +1647,16 @@ msgid "Shuffle playback"
 msgstr "གླུ་གཞས་གཏང་ནི་རིམ་དཀྲུགས་འབད་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
-msgid ""
-"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
-msgstr ""
-"འབྱུང་ཁུངས་མཐོང་སྣང་དེ་ནང་ དཔེ་མཛོད་ཐོ་ཡིག་འདི་ཚུ་གི་ ཁྱད་ཚད་དབྱེ་སེལ་འབད་ (༠= མིང་ ༡= ཚད་)"
+msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+msgstr "འབྱུང་ཁུངས་མཐོང་སྣང་དེ་ནང་ དཔེ་མཛོད་ཐོ་ཡིག་འདི་ཚུ་གི་ ཁྱད་ཚད་དབྱེ་སེལ་འབད་ (༠= མིང་ ༡= ཚད་)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid "Sort criteria of playlists"
 msgstr "གླུ་ཐོ་ཚུ་གི་ ཁྱད་ཚད་དབྱེ་སེལ་འབད་"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
-msgid ""
-"Sort order of library playlists in the source view (0 = Ascending, 1 = "
-"Descending)"
-msgstr ""
-"འབྱུང་ཁུངས་མཐོང་སྣང་འདི་ནང་ དཔེ་མཛོད་ཀྱི་གླུ་ཐོ་ཚུ་ནང་ གོ་རིམ་དབྱེ་སེལ་འབད་ (༠ = ཡར་འཛེགས་ ༡ = "
-"མར་འབབ་)"
+msgid "Sort order of library playlists in the source view (0 = Ascending, 1 = Descending)"
+msgstr "འབྱུང་ཁུངས་མཐོང་སྣང་འདི་ནང་ དཔེ་མཛོད་ཀྱི་གླུ་ཐོ་ཚུ་ནང་ གོ་རིམ་དབྱེ་སེལ་འབད་ (༠ = ཡར་འཛེགས་ ༡ = མར་འབབ་)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid "Sort order of playlists"
@@ -1774,9 +1692,7 @@ msgstr "སྦྱོར་འཕྲུལ་ཨའུཊི་པུཊི་ལ
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
-msgstr ""
-"རྣར་ཉན་སི་ཌི་ཅིག་ནང་འདྲེན་འབད་བའི་སྐབས་ འཛོལ་བ་ནོར་བཅོས་འབད་ནི་ལྕོགས་ཅན་བཟོ་ (པེ་ར་ནོའི་ཡ་ཐབས་"
-"ལམ་)"
+msgstr "རྣར་ཉན་སི་ཌི་ཅིག་ནང་འདྲེན་འབད་བའི་སྐབས་ འཛོལ་བ་ནོར་བཅོས་འབད་ནི་ལྕོགས་ཅན་བཟོ་ (པེ་ར་ནོའི་ཡ་ཐབས་ལམ་)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
 msgid "Whether to expand the library node in the source view"
@@ -2113,12 +2029,8 @@ msgstr "གླུ་ཐོ་སྤུར་བསྒྱིར་དྲགས་
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:444
 #, csharp-format
-msgid ""
-"{0} is depended on by other smart playlists. Are you sure you want to delete "
-"this and all dependent smart playlists?"
-msgstr ""
-"{0} འདི་ གླུ་ཐོ་སྤུར་བསྒྱིར་དྲགས་གཞན་མི་ལུ་ རྟེནམ་ཨིན། ཁྱོད་ཀྱིས་འ་ནི་དང་གླུ་ཐོ་སྤུར་བསྒྱིར་དྲགས་བརྟེན་མི་ཚུ་"
-"ཆ་མཉམ་ བཏོན་གཏང་ནི་ངེས་གཏན་ཨིན་ན?"
+msgid "{0} is depended on by other smart playlists. Are you sure you want to delete this and all dependent smart playlists?"
+msgstr "{0} འདི་ གླུ་ཐོ་སྤུར་བསྒྱིར་དྲགས་གཞན་མི་ལུ་ རྟེནམ་ཨིན། ཁྱོད་ཀྱིས་འ་ནི་དང་གླུ་ཐོ་སྤུར་བསྒྱིར་དྲགས་བརྟེན་མི་ཚུ་ཆ་མཉམ་ བཏོན་གཏང་ནི་ངེས་གཏན་ཨིན་ན?"
 
 #: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
 msgid "Could not launch URL"
@@ -2141,9 +2053,7 @@ msgid "Converting Files"
 msgstr "ཡིག་སྣོད་ཚུ་གཞི་བསྒྱུར་འབད་དོ་"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
-msgid ""
-"Files are currently being converted to another audio format. Would you like "
-"to stop this?"
+msgid "Files are currently being converted to another audio format. Would you like to stop this?"
 msgstr "ཡིག་སྣོད་ཚུ་ད་ལྟོ་ གཞན་མི་རྣར་ཉན་རྩ་སྒྲིག་ལུ་གཞི་བསྒྱུར་འབད་ཡོད། ཁྱོད་ཀྱིས་འདི་བཀག་ནི་ཨིན་ན?"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
@@ -2182,12 +2092,8 @@ msgid "Could not encode some files"
 msgstr "ཡིག་སྣོད་ལ་ལུ་ཅིག་ ཨིན་ཀོཌི་འབད་མ་ཚུགས་"
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:469
-msgid ""
-"Some files could not be encoded to the proper format. They will not be saved "
-"to the device if you continue."
-msgstr ""
-"ཡིག་སྣོད་ལ་ལུ་ཅིག་ ཚུལ་མཐུན་རྩ་སྒྲིག་འདི་ལུ་ ཨིན་ཀོཌི་འབད་མ་ཚུགས། དེ་ཚུ་ཁྱོད་ཀྱིས་འཕྲོལ་མཐུད་མ་འབད་བ་"
-"ཅིན་ ཐབས་འཕྲུལ་འདི་ལུ་སྲུང་བཞག་མི་འབད།"
+msgid "Some files could not be encoded to the proper format. They will not be saved to the device if you continue."
+msgstr "ཡིག་སྣོད་ལ་ལུ་ཅིག་ ཚུལ་མཐུན་རྩ་སྒྲིག་འདི་ལུ་ ཨིན་ཀོཌི་འབད་མ་ཚུགས། དེ་ཚུ་ཁྱོད་ཀྱིས་འཕྲོལ་མཐུད་མ་འབད་བ་ཅིན་ ཐབས་འཕྲུལ་འདི་ལུ་སྲུང་བཞག་མི་འབད།"
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:474
 msgid "Continue synchronizing"
@@ -2355,12 +2261,8 @@ msgid "Important tasks are running"
 msgstr "གལ་ཅན་ལས་ཀ་ཚུ་གཡོག་བཀོལ་དོ་"
 
 #: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
-msgid ""
-"Closing Banshee now will cancel any currently running tasks. They cannot be "
-"resumed automatically the next time Banshee is run."
-msgstr ""
-"བཱན་ཤི་ད་ལྟོ་ཁ་བསྡམ་ནི་འདི་གིས་ ད་ལྟོ་ལཱ་འབད་བའི་བསྒང་ཡོད་མི་ ལས་ཀ་ག་ཅི་རང་འབད་རུང་ ཆ་མེད་གཏང་"
-"འོང་། དེ་ཚུ་ལོག་ཤུལ་མ་བཱན་ཤི་འདི་གཡོག་བཀོལཝ་ད་ རང་བཞིན་གྱིས་བསྐྱར་ལོག་འབད་མི་བཏུབ།"
+msgid "Closing Banshee now will cancel any currently running tasks. They cannot be resumed automatically the next time Banshee is run."
+msgstr "བཱན་ཤི་ད་ལྟོ་ཁ་བསྡམ་ནི་འདི་གིས་ ད་ལྟོ་ལཱ་འབད་བའི་བསྒང་ཡོད་མི་ ལས་ཀ་ག་ཅི་རང་འབད་རུང་ ཆ་མེད་གཏང་འོང་། དེ་ཚུ་ལོག་ཤུལ་མ་བཱན་ཤི་འདི་གཡོག་བཀོལཝ་ད་ རང་བཞིན་གྱིས་བསྐྱར་ལོག་འབད་མི་བཏུབ།"
 
 #: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
 msgid "Quit anyway"
@@ -2449,21 +2351,12 @@ msgid "Select library location"
 msgstr "དཔེ་མཛོད་ཀྱི་གནས་ཁོངས་སེལ་འཐུ་འབད་"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
-msgid ""
-"Enable this option to save tags and other metadata inside supported audio "
-"files"
-msgstr ""
-"འ་ནི་གདམ་ཁ་འདི་ རྒྱབ་སྐྱོར་འབད་ཡོད་པའི་རྣར་ཉན་ཡིག་སྣོད་ཚུ་གི་ནང་ན་ ངོ་རྟགས་ཚུ་དང་གཞན་མི་མེ་ཊ་གནད་"
-"སྡུད་སྲུང་བཞག་འབད་ནིའི་དོན་ལས་ ལྕོགས་ཅན་བཟོ་"
+msgid "Enable this option to save tags and other metadata inside supported audio files"
+msgstr "འ་ནི་གདམ་ཁ་འདི་ རྒྱབ་སྐྱོར་འབད་ཡོད་པའི་རྣར་ཉན་ཡིག་སྣོད་ཚུ་གི་ནང་ན་ ངོ་རྟགས་ཚུ་དང་གཞན་མི་མེ་ཊ་གནད་སྡུད་སྲུང་བཞག་འབད་ནིའི་དོན་ལས་ ལྕོགས་ཅན་བཟོ་"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
-msgid ""
-"Error correction tries to work around problem areas on a disc, such as "
-"surface scratches, but will slow down importing substantially."
-msgstr ""
-"འཛོལ་བ་ནོར་བཅོས་འབད་ནི་གིས་ ཌིཀསི་ཅིག་གུའི་ དཀའ་ངལ་མངའ་ཁོངས་ཀྱི་མཐའ་སྐོར་ ལཱ་འབད་ནིའི་འབད་རྩོལ་"
-"བསྐྱེདཔ་ཨིན་ དཔེར་ན་ ཕྱི་ངོས་འབྲི་བསུབ་ཚུ་བཟུམ་ དེ་འབདཝ་ད་ རྒྱ་ཆེ་དྲགས་སྦེ་ནང་འདྲེན་འབད་ནི་ ལྷོད་ལེན་"
-"འབད་འོང་།"
+msgid "Error correction tries to work around problem areas on a disc, such as surface scratches, but will slow down importing substantially."
+msgstr "འཛོལ་བ་ནོར་བཅོས་འབད་ནི་གིས་ ཌིཀསི་ཅིག་གུའི་ དཀའ་ངལ་མངའ་ཁོངས་ཀྱི་མཐའ་སྐོར་ ལཱ་འབད་ནིའི་འབད་རྩོལ་བསྐྱེདཔ་ཨིན་ དཔེར་ན་ ཕྱི་ངོས་འབྲི་བསུབ་ཚུ་བཟུམ་ དེ་འབདཝ་ད་ རྒྱ་ཆེ་དྲགས་སྦེ་ནང་འདྲེན་འབད་ནི་ ལྷོད་ལེན་འབད་འོང་།"
 
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:529
 msgid "Could not import tracks"
@@ -2514,11 +2407,8 @@ msgid "Set all years to this value"
 msgstr "འ་ནི་གནས་གོང་འདི་ལུ་ ལོ་ཚུ་ཆ་མཉམ་གཞི་སྒྲིག་འབད་"
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
-msgid ""
-"Apply the values of this track set for the Artist, Album Title, Genre, Track "
-"count, Year, and Rating fields to the rest of the selected tracks in this "
-"editor."
-msgstr ""
+msgid "Apply the values of this track set for the Artist, Album Title, Genre, Track count, Year, and Rating fields to the rest of the selected tracks in this editor."
+msgstr "གླུ་རིམ་གཞི་སྒྲིག་འདི་གི་གནས་གོང་འདི་ གླུ་མཁན་  གླུ་མཛོད་མགོ་མིང་  རིགས་ གླུ་རིམ་གྱངས་ཁ་  ལོ་དང་  ཞུན་དག་འདི་ནང་གི་སེལ་འཐུ་འབད་དེ་ཡོད་པའི་གླུ་རིམ་གཞན་མི་ལུ་མང་ཉུང་ཚད་ཀྱི་ས་སྒོ་ཚུ་གི་དོན་ལུ་འཇུག་སྤྱོད་འབད།"
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
 msgid "Set all ratings to this value"
@@ -2587,11 +2477,8 @@ msgid "Default player engine"
 msgstr "སྔོན་སྒྲིག་གཏང་འཕྲུལ་གྱི་མ་འཕྲུལ་"
 
 #: ../src/Core/Banshee.Base/PlayerEngineCore.cs:99
-msgid ""
-"No player engines were found. Please ensure Banshee has been cleanly "
-"installed."
-msgstr ""
-"གཏང་འཕྲུལ་གྱི་མ་འཕྲུལ་འཚོལ་མ་འཐོབ། བཱན་ཤི་འདི་གཙང་ཏོག་ཏོ་སྦེ་གཞི་བཙུགས་འབད་ཡོདཔ་ཨིནམ་ ངེས་གཏན་བཟོ།"
+msgid "No player engines were found. Please ensure Banshee has been cleanly installed."
+msgstr "གཏང་འཕྲུལ་གྱི་མ་འཕྲུལ་འཚོལ་མ་འཐོབ། བཱན་ཤི་འདི་གཙང་ཏོག་ཏོ་སྦེ་གཞི་བཙུགས་འབད་ཡོདཔ་ཨིནམ་ ངེས་གཏན་བཟོ།"
 
 #: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
 msgid "Problem with Player Engine"
@@ -2679,11 +2566,8 @@ msgid "Searching for CD cover art..."
 msgstr "སི་ཌི་ཁེབས་ཀྱི་རི་མོའི་དོན་ལུ་ འཚོལ་ཞིབ་འབད་དོ་..."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
-msgstr ""
-"སི་ཌི་མེ་ཊ་གནད་སྡུད་ཀྱི་དོན་ལུ་འཚོལ་ཞིབ་འབད་མི་ཚུག་: དེ་ནང་ཨིན་ཊར་ནེཊི་གི་མཐུད་ལམ་འཐོབ་ཚུགསཔ་མིན་"
-"འདུག"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
+msgstr "སི་ཌི་མེ་ཊ་གནད་སྡུད་ཀྱི་དོན་ལུ་འཚོལ་ཞིབ་འབད་མི་ཚུག་: དེ་ནང་ཨིན་ཊར་ནེཊི་གི་མཐུད་ལམ་འཐོབ་ཚུགསཔ་མིན་འདུག"
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
 msgid "Could not fetch metadata for CD."
@@ -2954,8 +2838,7 @@ msgstr "བསལ་"
 #: ../src/Core/Banshee/PlayerInterface.cs:1882
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "ཁྱོད་ཀྱིས་འ་ནི་ཞབས་ཁྲ་འདི་ རྟག་བརྟན་སྦེ་བཏོན་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
 msgstr[1] "ཁྱོད་ཀྱིས་སེལ་འཐུ་འབད་ཡོད་མི་ {0} ཞབས་ཁྲ་ཚུ་ རྟག་བརྟན་སྦེ་བཏོན་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
 
@@ -2970,12 +2853,9 @@ msgstr "དཔེ་མཛོད་ལས་སེལ་འཐུ་འབད་
 #: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
-msgstr[0] ""
-"ཁྱོད་ཀྱིས་ སེལ་འཐུ་འབད་ཡོད་མི་ཞབས་ཁྲ་འདི་ ཁྱོད་རའི་དཔེ་མཛོད་ལས་ རྩ་བསྐྲད་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
-msgstr[1] ""
-"ཁྱོད་ཀྱིས་ སེལ་འཐུ་འབད་ཡོད་མི་ {0} ཞབས་ཁྲ་ཚུ་ ཁྱོད་རའི་དཔེ་མཛོད་ལས་ རྩ་བསྐྲད་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
+msgstr[0] "ཁྱོད་ཀྱིས་ སེལ་འཐུ་འབད་ཡོད་མི་ཞབས་ཁྲ་འདི་ ཁྱོད་རའི་དཔེ་མཛོད་ལས་ རྩ་བསྐྲད་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
+msgstr[1] "ཁྱོད་ཀྱིས་ སེལ་འཐུ་འབད་ཡོད་མི་ {0} ཞབས་ཁྲ་ཚུ་ ཁྱོད་རའི་དཔེ་མཛོད་ལས་ རྩ་བསྐྲད་གཏང་ནི་ངེས་ཏིག་ཨིན་ན?"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1936
 msgid "Delete songs from drive"
@@ -2999,27 +2879,19 @@ msgstr "{0} མཉམ་འབྱུང་འབད་"
 #: ../src/Core/Banshee/PlayerInterface.cs:2073
 #, csharp-format
 msgid ""
-"You have made changes to your {0}. Please choose a method for updating the "
-"contents of your {0}.\n"
+"You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
 "\n"
 "<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
-"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
-"made"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you made"
 msgstr ""
-"ཁྱོད་ཀྱིས་ཁྱོད་རའི་ {0} ལུ་བསྒྱུར་བཅོས་ཚུ་འབད་ཡོད། ཁྱོད་རའི་ {0} གི་ནང་དོན་འདི་དུས་མཐུན་བཟོ་ནིའི་དོན་"
-"ལུ་ ཐབས་ལམ་ཅིག་གདམ་ཁ་རྐྱབས་གནང་\n"
+"ཁྱོད་ཀྱིས་ཁྱོད་རའི་ {0} ལུ་བསྒྱུར་བཅོས་ཚུ་འབད་ཡོད། ཁྱོད་རའི་ {0} གི་ནང་དོན་འདི་དུས་མཐུན་བཟོ་ནིའི་དོན་ལུ་ ཐབས་ལམ་ཅིག་གདམ་ཁ་རྐྱབས་གནང་\n"
 "\n"
 "<big>•</big> <i>དཔེ་མཛོད་མཉམ་འབྱུང་འབད་</i>: {0} ལུ་བཱན་ཤི་དཔེ་མཛོད་མཉམ་འབྱུང་འབད་\n"
-"<big>•</big> <i>ལག་ཐོག་བསྒྱུར་བཅོས་ཚུ་སྲུང་བཞག་འབད་</i>: ཁྱོད་ཀྱིས་བཟོ་མི་ལག་ལོག་བསྒྱུར་བཅོས་ཚུ་"
-"རྐྱངམ་ཅིག་སྲུང་བཞག་འབད་"
+"<big>•</big> <i>ལག་ཐོག་བསྒྱུར་བཅོས་ཚུ་སྲུང་བཞག་འབད་</i>: ཁྱོད་ཀྱིས་བཟོ་མི་ལག་ལོག་བསྒྱུར་བཅོས་ཚུ་རྐྱངམ་ཅིག་སྲུང་བཞག་འབད་"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2079
-msgid ""
-"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
-"cause incompatibility with iTunes!"
-msgstr ""
-"<b>ཉེན་བརྡ་:</b> བྱ་བ་ཚུ་གིས་ ཡོད་བཞིན་པའི་ཨའི་པོཌི་གི་ནང་དོན་ཚུ་ བསྒྱུར་འོང་ཡང་ན་ ཀྲེག་གཏང་འོང་ "
-"དེ་ལས་ ཨའི་ཊུནསི་དང་མ་མཐུནམ་བཟོ་འོང་།"
+msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatibility with iTunes!"
+msgstr "<b>ཉེན་བརྡ་:</b> བྱ་བ་ཚུ་གིས་ ཡོད་བཞིན་པའི་ཨའི་པོཌི་གི་ནང་དོན་ཚུ་ བསྒྱུར་འོང་ཡང་ན་ ཀྲེག་གཏང་འོང་ དེ་ལས་ ཨའི་ཊུནསི་དང་མ་མཐུནམ་བཟོ་འོང་།"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2081
 msgid "Synchronize Library"
@@ -3044,8 +2916,7 @@ msgstr "{0} བཀག་"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr " '{0}' བཀོལ་སྤྱོད་འདི་ ད་ལྟོ་ཡང་ལཱ་འབད་བའི་བསྒང་ཡོད། ཁྱོད་ཀྱིས་འདི་བཀག་ནི་ཨིན་ན?"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -3081,14 +2952,12 @@ msgid "Idle"
 msgstr "ལས་མེད་"
 
 #: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
-#, fuzzy
 msgid "Muted"
-msgstr "སྐར་མ་ཚུ་"
+msgstr "སྐད་མེདཔ་"
 
 #: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
-#, fuzzy
 msgid "Full Volume"
-msgstr "སྐད་ཤུགས་"
+msgstr "སྐད་ཤུགས།"
 
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
@@ -3126,12 +2995,8 @@ msgid "Your iPod could not be identified"
 msgstr "ཁྱོད་ཀྱི་ཨའི་པོཌི་འདི་ངོས་འཛིན་འབད་མ་ཚུགས་"
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:140
-msgid ""
-"Please consider submitting information about your iPod to the Banshee "
-"Project so your iPod may be more fully identified in the future.\n"
-msgstr ""
-"ཁྱོད་རའི་ཨའི་པོཌི་འདི་མ་འོངས་པ་ནང་ ཆ་ཚང་སྦེ་ངོས་འཛིན་འབད་ཚུགས་ནིའི་དོན་ལས་ བཱན་ཤི་ལས་འགུལ་འདི་ལུ་ "
-"ཁྱོད་རའི་ཨའི་པོཌི་གི་སྐོར་ལས་ བརྡ་དོན་ཕུལ་ནི་ཆ་འཇོག་འབད་གནང་།\n"
+msgid "Please consider submitting information about your iPod to the Banshee Project so your iPod may be more fully identified in the future.\n"
+msgstr "ཁྱོད་རའི་ཨའི་པོཌི་འདི་མ་འོངས་པ་ནང་ ཆ་ཚང་སྦེ་ངོས་འཛིན་འབད་ཚུགས་ནིའི་དོན་ལས་ བཱན་ཤི་ལས་འགུལ་འདི་ལུ་ ཁྱོད་རའི་ཨའི་པོཌི་གི་སྐོར་ལས་ བརྡ་དོན་ཕུལ་ནི་ཆ་འཇོག་འབད་གནང་།\n"
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
 msgid "Do not ask me again"
@@ -3168,18 +3033,13 @@ msgstr "ཁྱོད་ཀྱི་ཨའི་པོཌི་ལྷག་མ་
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:80
 msgid ""
-"You have used this iPod with a version of iTunes that saves a version of the "
-"song database for your iPod that is too new for Banshee to recognize.\n"
+"You have used this iPod with a version of iTunes that saves a version of the song database for your iPod that is too new for Banshee to recognize.\n"
 "\n"
-"Banshee can either rebuild the database or you will have to wait for the new "
-"iTunes version to be supported by Banshee."
+"Banshee can either rebuild the database or you will have to wait for the new iTunes version to be supported by Banshee."
 msgstr ""
-"ཁྱོད་ཀྱིས་ བཱན་ཤི་གི་དོན་ལུ་ངོས་འཛིན་འབད་ནིའི་དོན་ལས་གསརཔ་ཨིན་མི་ ཁྱོད་རའི་ཨའི་པོཌི་གི་དོན་ལུ་ ཞབས་ཁྲའི་"
-"གནད་སྡུད་གཞི་རྟེན་འདི་གི་ ཐོན་རིམ་ཅིག་སྲུང་བཞག་འབད་མི་ ཨའི་ཊུའིནསི་གི་ཐོན་རིམ་ཅིག་དང་གཅིག་ཁར་ འ་ནི་"
-"ཨའི་པོཌི་འདི་ལག་ལེན་འཐབ་ཡོད།\n"
+"ཁྱོད་ཀྱིས་ བཱན་ཤི་གི་དོན་ལུ་ངོས་འཛིན་འབད་ནིའི་དོན་ལས་གསརཔ་ཨིན་མི་ ཁྱོད་རའི་ཨའི་པོཌི་གི་དོན་ལུ་ ཞབས་ཁྲའི་གནད་སྡུད་གཞི་རྟེན་འདི་གི་ ཐོན་རིམ་ཅིག་སྲུང་བཞག་འབད་མི་ ཨའི་ཊུའིནསི་གི་ཐོན་རིམ་ཅིག་དང་གཅིག་ཁར་ འ་ནི་ཨའི་པོཌི་འདི་ལག་ལེན་འཐབ་ཡོད།\n"
 "\n"
-"བཱན་ཤི་གིས་ ཡང་ཅིན་ གནད་སྡུད་གཞི་རྟེན་འདི་སླར་བཟོ་བརྩིགས་འབད་འོང་ ཡང་ན་ ཁྱོད་ཀྱིས་ བཱན་ཤི་གིས་རྒྱབ་"
-"སྐྱོར་འབད་ནིའི་དོན་ལས་ ཨའི་ཊུའིནསི་གི་ཐོན་རིམ་གསརཔ་འདི་གི་དོན་ལུ་ བསྒུག་དགོ"
+"བཱན་ཤི་གིས་ ཡང་ཅིན་ གནད་སྡུད་གཞི་རྟེན་འདི་སླར་བཟོ་བརྩིགས་འབད་འོང་ ཡང་ན་ ཁྱོད་ཀྱིས་ བཱན་ཤི་གིས་རྒྱབ་སྐྱོར་འབད་ནིའི་དོན་ལས་ ཨའི་ཊུའིནསི་གི་ཐོན་རིམ་གསརཔ་འདི་གི་དོན་ལུ་ བསྒུག་དགོ"
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:89
 msgid ""
@@ -3205,13 +3065,11 @@ msgstr "སླར་བཟོ་བརྩིགས་འབད་ནིའི་
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:126
 msgid ""
-"Rebuilding your iPod database may take some time. Also note that any "
-"playlists you have on your iPod will be lost.\n"
+"Rebuilding your iPod database may take some time. Also note that any playlists you have on your iPod will be lost.\n"
 "\n"
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
-"ཁྱོད་རའི་ཨའི་པོཌི་གནད་སྡུད་གཞི་རྟེན་ སླར་བཟོ་བརྩིགས་འབད་ནི་འདི་དུས་ཚོད་འགོར་འོང་། ཁྱོའ་རའི་ཨའི་པོཌི་གུ་"
-"ཡོད་མི་ གླུ་ཐོ་ག་ཅི་རང་འབད་རུང་ བརླག་སྟོར་ཞུགས་ནི་ཨིནམ་ཡང་དྲན།\n"
+"ཁྱོད་རའི་ཨའི་པོཌི་གནད་སྡུད་གཞི་རྟེན་ སླར་བཟོ་བརྩིགས་འབད་ནི་འདི་དུས་ཚོད་འགོར་འོང་། ཁྱོའ་རའི་ཨའི་པོཌི་གུ་ཡོད་མི་ གླུ་ཐོ་ག་ཅི་རང་འབད་རུང་ བརླག་སྟོར་ཞུགས་ནི་ཨིནམ་ཡང་དྲན།\n"
 "\n"
 "ཁྱོད་ཀྱིས་ཁྱོད་རའི་ཨའི་པོཌི་འདི་སླར་བཟོ་བརྩིགས་འབད་ནི་ངེས་ཏིག་ཨིན་ན?"
 
@@ -3266,12 +3124,8 @@ msgid "Loading Songs"
 msgstr "ཞབས་ཁྲ་ཚུ་མངོན་གསལ་འབད་དོ་"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:262
-msgid ""
-"The audio device song loading process is currently running.  Would you like "
-"to stop it?"
-msgstr ""
-"རྣར་ཉན་ཐབས་འཕྲུལ་གྱི་ཞབས་ཁྲ་མངོན་གསལ་འབད་ནིའི་ལས་སྦྱོར་འདི་ ད་ལྟོ་གཡོག་བཀོལ་བའི་བསྒང་ཡོད། ཁྱོད་ཀྱིས་"
-"འདི་བཀག་ནི་ཨིན་ན?"
+msgid "The audio device song loading process is currently running.  Would you like to stop it?"
+msgstr "རྣར་ཉན་ཐབས་འཕྲུལ་གྱི་ཞབས་ཁྲ་མངོན་གསལ་འབད་ནིའི་ལས་སྦྱོར་འདི་ ད་ལྟོ་གཡོག་བཀོལ་བའི་བསྒང་ཡོད། ཁྱོད་ཀྱིས་འདི་བཀག་ནི་ཨིན་ན?"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:263
 #, csharp-format
@@ -3288,12 +3142,8 @@ msgid "Song Playing on Device"
 msgstr "ཐབས་འཕྲུལ་གུ་ ཞབས་ཁྲ་གཏང་དོ་"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:328
-msgid ""
-"Before you can eject your device, you need to start playing a song that is "
-"not on it.  This is a known bug."
-msgstr ""
-"ཁྱོད་ཀྱིས་ཁྱོད་རའི་ཐབས་འཕྲུལ་ཕྱིར་བཏོན་མ་འབད་བའི་ཧེ་མ་ ཁྱོད་ཀྱིས་དེ་ནང་མེད་མི་ཞབས་ཁྲ་ཅིག་གཏང་ནི་འགོ་"
-"བཙུགས་དགོ  འདི་ནང་ཤེས་པའི་རྐྱེན་ཅིག་ཨིན།"
+msgid "Before you can eject your device, you need to start playing a song that is not on it.  This is a known bug."
+msgstr "ཁྱོད་ཀྱིས་ཁྱོད་རའི་ཐབས་འཕྲུལ་ཕྱིར་བཏོན་མ་འབད་བའི་ཧེ་མ་ ཁྱོད་ཀྱིས་དེ་ནང་མེད་མི་ཞབས་ཁྲ་ཅིག་གཏང་ནི་འགོ་བཙུགས་དགོ  འདི་ནང་ཤེས་པའི་རྐྱེན་ཅིག་ཨིན།"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:359
 #, csharp-format
@@ -3404,14 +3254,8 @@ msgid "Last.fm Password"
 msgstr "མཇུག་གི་.fm ཆོག་ཡིག་"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:66
-msgid ""
-"Your profile page on Last.fm is automatically updated whenever you listen to "
-"music. It lets others see what you're listening to right now, and shows "
-"charts of your listening history."
-msgstr ""
-"མཇུག་གི་.fm གུའི་ཁྱོད་ཀྱི་གསལ་སྡུད་ཤོག་ལེབ་འདི་ ནམ་རང་འབད་རུང་ཁྱོད་གླུ་གཞས་ཉན་པའི་སྐབས་ རང་བཞིན་"
-"གྱིས་དུས་མཐུན་བཟོཝ་ཨིན། དེ་གིས་གཞན་མི་ཚུ་ལུ་ ཁྱོད་ད་ལྟོ་ག་ཅི་ཉནམ་ཨིན་ན་ བལྟ་བཅུགཔ་ཨིན་ དེ་ལས་ ཁྱོད་"
-"ཀྱིས་ཉན་མིའི་ལོ་རྒྱུས་ཀྱི་ དཔེ་རིས་སྟོནམ་ཨིན།"
+msgid "Your profile page on Last.fm is automatically updated whenever you listen to music. It lets others see what you're listening to right now, and shows charts of your listening history."
+msgstr "མཇུག་གི་.fm གུའི་ཁྱོད་ཀྱི་གསལ་སྡུད་ཤོག་ལེབ་འདི་ ནམ་རང་འབད་རུང་ཁྱོད་གླུ་གཞས་ཉན་པའི་སྐབས་ རང་བཞིན་གྱིས་དུས་མཐུན་བཟོཝ་ཨིན། དེ་གིས་གཞན་མི་ཚུ་ལུ་ ཁྱོད་ད་ལྟོ་ག་ཅི་ཉནམ་ཨིན་ན་ བལྟ་བཅུགཔ་ཨིན་ དེ་ལས་ ཁྱོད་ཀྱིས་ཉན་མིའི་ལོ་རྒྱུས་ཀྱི་ དཔེ་རིས་སྟོནམ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:96
 msgid "_Audioscrobbler"
@@ -3537,19 +3381,13 @@ msgstr "སྙན་ཆ་རུབ་སྤྱོད་ལུ་མཐུད་
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:92
 msgid ""
-"iTunes® 7 introduced new compatibility issues and currently only works with "
-"other iTunes® 7 clients.\n"
+"iTunes® 7 introduced new compatibility issues and currently only works with other iTunes® 7 clients.\n"
 "\n"
-"No third-party clients can connect to iTunes® music shares anymore. This is "
-"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
-"unfortunate inconvenience."
+"No third-party clients can connect to iTunes® music shares anymore. This is an intentional limitation by Apple in iTunes® 7 and we apologize for the unfortunate inconvenience."
 msgstr ""
-"ཨའི་ཊུའིནསི་® ༧ གྱིས་ མཐུན་འགྱུར་ཅན་གྱི་གནད་དོན་གསརཔ་ཚུ་འགོ་འཛུགས་འབད་ཡོད་ དེ་ལས་ ད་ལྟོ་གཞན་མི་"
-"ཨའི་ཊུའིནསི་® ༧ ཞབས་ཏོག་སྤྱོད་མི་ཚུ་དང་གཅིག་ཁར་ལཱ་འབདཝ་ཨིན།\n"
+"ཨའི་ཊུའིནསི་® ༧ གྱིས་ མཐུན་འགྱུར་ཅན་གྱི་གནད་དོན་གསརཔ་ཚུ་འགོ་འཛུགས་འབད་ཡོད་ དེ་ལས་ ད་ལྟོ་གཞན་མི་ཨའི་ཊུའིནསི་® ༧ ཞབས་ཏོག་སྤྱོད་མི་ཚུ་དང་གཅིག་ཁར་ལཱ་འབདཝ་ཨིན།\n"
 "\n"
-"སྡེ་ཚོགས་གསུམ་པའི་ཞབས་ཏོག་སྤྱོད་མི་གིས་ ད་ཨའི་ཊུའིནསི་® སྙན་ཆ་རུབ་སྤྱོད་འབད་ནི་ལུ་ མཐུད་མི་ཚུགས། འ་ནི་"
-"འདི་ ཨའི་ཊུའིནསི་® ༧ ནང་ཨེ་པཱལ་གྱིས་ རྒྱལ་སྤྱིའི་ཚད་ཅིག་ཨིན་ དེ་ལས་ ང་བཅས་ཀྱིས་ ཁ་རྗེ་མེད་པའི་སྟབས་མ་"
-"བདེ་མི་འདི་ལུ་ བཟོད་གསོལ་ཞུ་ནི་ཨིན།"
+"སྡེ་ཚོགས་གསུམ་པའི་ཞབས་ཏོག་སྤྱོད་མི་གིས་ ད་ཨའི་ཊུའིནསི་® སྙན་ཆ་རུབ་སྤྱོད་འབད་ནི་ལུ་ མཐུད་མི་ཚུགས། འ་ནི་འདི་ ཨའི་ཊུའིནསི་® ༧ ནང་ཨེ་པཱལ་གྱིས་ རྒྱལ་སྤྱིའི་ཚད་ཅིག་ཨིན་ དེ་ལས་ ང་བཅས་ཀྱིས་ ཁ་རྗེ་མེད་པའི་སྟབས་མ་བདེ་མི་འདི་ལུ་ བཟོད་གསོལ་ཞུ་ནི་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:102
 msgid "Common reasons for connection failures:"
@@ -3596,14 +3434,8 @@ msgid "Login"
 msgstr "ནང་བསྐྱོད་"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:55
-msgid ""
-"Allow browsing and listening to songs from music shares and share your "
-"Banshee library with others. Works with other instances of Banshee, iTunes, "
-"and Rhythmbox."
-msgstr ""
-"སྙན་ཆ་རུབ་སྤྱོད་འབད་ནི་ཚུ་ལས་ ཞབས་ཁྲ་ཚུ་ལུ་བརྡ་འཚོལ་འབད་ནི་དང་ ཉན་ནི་ཚུ་འབད་བཅུག་ དེ་ལས་ཁྱོད་རའི་"
-"བཱན་ཤི་དཔེ་མཛོད་འདི་ གཞན་མི་ཚུ་དང་གཅིག་ཁར་རུབ་སྤྱོད་འབད། བཱན་ཤི་ ཨའི་ཊུའིནསི་ དང་རི་ཐམ་བོགསི་གི་དུས་"
-"སྐབས་གཞན་མི་དང་གཅིག་ཁར་ལཱ་འབདཝ་ཨིན།"
+msgid "Allow browsing and listening to songs from music shares and share your Banshee library with others. Works with other instances of Banshee, iTunes, and Rhythmbox."
+msgstr "སྙན་ཆ་རུབ་སྤྱོད་འབད་ནི་ཚུ་ལས་ ཞབས་ཁྲ་ཚུ་ལུ་བརྡ་འཚོལ་འབད་ནི་དང་ ཉན་ནི་ཚུ་འབད་བཅུག་ དེ་ལས་ཁྱོད་རའི་བཱན་ཤི་དཔེ་མཛོད་འདི་ གཞན་མི་ཚུ་དང་གཅིག་ཁར་རུབ་སྤྱོད་འབད། བཱན་ཤི་ ཨའི་ཊུའིནསི་ དང་རི་ཐམ་བོགསི་གི་དུས་སྐབས་གཞན་མི་དང་གཅིག་ཁར་ལཱ་འབདཝ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:87
 #, csharp-format
@@ -3628,18 +3460,13 @@ msgid "Metadata Searcher"
 msgstr "མེ་ཊ་གནད་སྡུད་འཚོལ་ཞིབ་པ་"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:62
-msgid ""
-"Automatically search for missing and supplementary metadata and cover art "
-"for songs in your library."
-msgstr ""
-"ཁྱོད་རའི་དཔེ་མཛོད་ནང་གི་ ཞབས་ཁྲ་ཚུ་གི་དོན་ལུ་ བརླག་སྟོར་ཞུགས་ཡོད་མི་དང་ ལྷན་ཐབས་ཀྱི་མེ་ཊ་གནད་སྡུད་"
-"དང ཁེབས་ཀྱི་རི་མོའི་དོན་ལུ་ རང་བཞིན་གྱིས་འཚོལ་ཞིབ་འབད།"
+msgid "Automatically search for missing and supplementary metadata and cover art for songs in your library."
+msgstr "ཁྱོད་རའི་དཔེ་མཛོད་ནང་གི་ ཞབས་ཁྲ་ཚུ་གི་དོན་ལུ་ བརླག་སྟོར་ཞུགས་ཡོད་མི་དང་ ལྷན་ཐབས་ཀྱི་མེ་ཊ་གནད་སྡུད་དང ཁེབས་ཀྱི་རི་མོའི་དོན་ལུ་ རང་བཞིན་གྱིས་འཚོལ་ཞིབ་འབད།"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:131
-#, fuzzy
 msgid "Download Cover Art"
-msgstr "ཁེབས་ཀྱི་རི་མོ་སྟོན་(_A)"
+msgstr "གདོང་ཁེབས་ཀྱི་རི་མོ་ཕབ་ལེན་འབད་"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
@@ -3648,20 +3475,16 @@ msgid "Download"
 msgstr "ཕབ་ལེན་"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
-#, fuzzy
 msgid "Downloading Cover Art"
-msgstr "ཡིག་སྣོད་ཕབ་ལེན་འབད་དོ་"
+msgstr "རི་མོ་གདོང་ཁེབས་ཕབ་ལེན་འབད་དོ་"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:211
-#, fuzzy
 msgid "Searching"
-msgstr "འཚོལ་ཞིབ་འབད་དོ་: {0}"
+msgstr "འཚོལ་ཞིབ་འབད་དོ་"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:213
-msgid ""
-"Are you sure you want to stop downloading cover art for the albums in your "
-"library? The operation can be resumed at any time from the <i>Tools</i> menu."
-msgstr ""
+msgid "Are you sure you want to stop downloading cover art for the albums in your library? The operation can be resumed at any time from the <i>Tools</i> menu."
+msgstr "ཁྱོད་རའི་དཔེ་མཛོད་ནང་ལུ་ཁྱོད་ཀྱིས་གླུ་མཛོད་ཀྱི་དོན་ལུ་  ཕབ་ལེན་གདོང་ཁེབས་གླུ་མཁན་བཀག་ནི་འདི་ངེས་གཏན་ཨིན་ན་? བཀོལ་སྤྱོདཔ་འདི་ <i>ལག་ཆས་ཚུ་</i>དཀར་ཆག་ལས་  དུས་ནམ་འབད་རུང་བསྐྱར་ལོག་འབད་བཏུབ།"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
 msgid "MiniMode plugin enabled"
@@ -3688,12 +3511,8 @@ msgid "This is the artist"
 msgstr "འ་ནི་འདི་གླུ་གཞསཔ་ཨིན་"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
-msgid ""
-"Mini Mode allows controlling Banshee through a small window with only "
-"playback controls and track information."
-msgstr ""
-"ཐབས་ལམ་ཆུང་བ་གིས་ གླུ་གཞས་གཏང་ནིའི་ཚད་འཛིན་ཚུ་དང་ གླུ་རིམ་གྱི་བརྡ་དོན་རྐྱངམ་ཅིག་དང་གཅིག་ཁར་ སྒོ་"
-"སྒྲིག་ཆུང་ཀུ་ཅིག་བརྒྱུད་དེ་ བཱན་ཤི་ཚད་འཛིན་འབད་བཅུགཔ་ཨིན།"
+msgid "Mini Mode allows controlling Banshee through a small window with only playback controls and track information."
+msgstr "ཐབས་ལམ་ཆུང་བ་གིས་ གླུ་གཞས་གཏང་ནིའི་ཚད་འཛིན་ཚུ་དང་ གླུ་རིམ་གྱི་བརྡ་དོན་རྐྱངམ་ཅིག་དང་གཅིག་ཁར་ སྒོ་སྒྲིག་ཆུང་ཀུ་ཅིག་བརྒྱུད་དེ་ བཱན་ཤི་ཚད་འཛིན་འབད་བཅུགཔ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
 msgid "Mini mode"
@@ -3712,12 +3531,8 @@ msgid "Multimedia Keyboard Shortcuts"
 msgstr "སྣ་མང་བརྡ་ལམ་ལྡེ་སྒྲོམ་གྱི་མགྱོགས་ཐབས་ཚུ་"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:51
-msgid ""
-"Configuration of multimedia keyboard shortcuts is done through the Gnome "
-"Keyboard Shortcuts configuration applet."
-msgstr ""
-"སྣ་མང་བརྡ་ལམ་ལྡེ་སྒྲོམ་གྱི་མགྱོགས་ཐབས་ཚུ་གི་རིམ་སྒྲིག་འབད་ནི་འདི་ ཇི་ནོམ་ལྡེ་སྒྲོམ་གྱི་མགྱོགས་ཐབས་ཚུའི་རིམ་སྒྲིག་"
-"འབད་ནིའི་ཨེཔ་ལེཊི་འདི་བརྒྱེད་དེ་འབདཝ་ཨིན།"
+msgid "Configuration of multimedia keyboard shortcuts is done through the Gnome Keyboard Shortcuts configuration applet."
+msgstr "སྣ་མང་བརྡ་ལམ་ལྡེ་སྒྲོམ་གྱི་མགྱོགས་ཐབས་ཚུ་གི་རིམ་སྒྲིག་འབད་ནི་འདི་ ཇི་ནོམ་ལྡེ་སྒྲོམ་གྱི་མགྱོགས་ཐབས་ཚུའི་རིམ་སྒྲིག་འབད་ནིའི་ཨེཔ་ལེཊི་འདི་བརྒྱེད་དེ་འབདཝ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
 msgid "Configure Keyboard Shortcuts"
@@ -3729,8 +3544,7 @@ msgstr "སྣ་མང་བརྡ་ལམ་ལྡ་མིག་ཚུ་"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:57
 msgid "Adds support for multimedia keys configured through GNOME."
-msgstr ""
-"སྣ་མང་བརྡ་ལམ་ལྡེ་མིག་ རིམ་སྒྲིག་འབད་ཡོད་མི་ཚུ་གི་དོན་ལུ་ ཇི་ནོམ་བརྒྱུད་དེ་ རྒྱབ་སྐྱོར་ཁ་སྐོང་རྐྱབས་ཨིན།"
+msgstr "སྣ་མང་བརྡ་ལམ་ལྡེ་མིག་ རིམ་སྒྲིག་འབད་ཡོད་མི་ཚུ་གི་དོན་ལུ་ ཇི་ནོམ་བརྒྱུད་དེ་ རྒྱབ་སྐྱོར་ཁ་སྐོང་རྐྱབས་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
 msgid "Notification area plugin enabled"
@@ -3757,9 +3571,7 @@ msgid "Show track information notifications when track starts playing"
 msgstr "གཏང་ནི་འགོ་བཙུགས་པའི་སྐབས་ གླུ་རིམ་བརྡ་དོན་གྱི་བརྡ་བསྐུལ་ཚུ་སྟོན་"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
-msgid ""
-"When the main window is closed, show a notification stating this has "
-"happened."
+msgid "When the main window is closed, show a notification stating this has happened."
 msgstr "སྒོ་སྒརིག་གཙོ་བོ་འདི་ཁ་བསྡམ་ཡོད་པའི་སྐབས་ འ་ནི་འབྱུང་ཡོད་ཟེར་བའི་བརྡ་བསྐུལ་ཅིག་སྟོན།"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
@@ -3792,12 +3604,8 @@ msgid "Still Running"
 msgstr "་ད་ལྟོ་ཡང་གཡོག་བཀོལ་དོ་"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:201
-msgid ""
-"Banshee was closed to the notification area. Use the <i>Quit</i> option to "
-"end your session."
-msgstr ""
-"བཱན་ཤི་འདི་ བརྡ་བསྐུལ་མངའ་ཁོངས་འདི་ལུ་ཁ་བསྡམ་ཡོད། <i>སྤང་</i> གདམ་ཁ་འདི་ ཁྱོད་རའི་ལཱ་ཡུན་མཇུག་"
-"བསྡུ་ནིའི་དོན་ལས་ལག་ལེན་འཐབ།"
+msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
+msgstr "བཱན་ཤི་འདི་ བརྡ་བསྐུལ་མངའ་ཁོངས་འདི་ལུ་ཁ་བསྡམ་ཡོད། <i>སྤང་</i> གདམ་ཁ་འདི་ ཁྱོད་རའི་ལཱ་ཡུན་མཇུག་བསྡུ་ནིའི་དོན་ལས་ལག་ལེན་འཐབ།"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
 msgid "Now Playing"
@@ -3849,9 +3657,7 @@ msgstr "ཤོག་ཀུ་བཙུགས་ནི་དང་པོཌི་
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
 msgid "Root directory for the podcast plugin to store downloaded files"
-msgstr ""
-"པོཌི་ཀཱསིཊི་པ་ལག་ཨིན་འདི་གི་དོན་ལུ་ ཕབ་ལེན་འབད་ཡོད་པའི་ཡིག་སྣོད་ཚུ་གསོག་འཇོག་འབད་ནིའི་དོན་ལས་ རྩ་བའི་"
-"སྣོད་ཐོ་"
+msgstr "པོཌི་ཀཱསིཊི་པ་ལག་ཨིན་འདི་གི་དོན་ལུ་ ཕབ་ལེན་འབད་ཡོད་པའི་ཡིག་སྣོད་ཚུ་གསོག་འཇོག་འབད་ནིའི་དོན་ལས་ རྩ་བའི་སྣོད་ཐོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
 msgid "DownloadCore is shutting down."
@@ -4031,18 +3837,13 @@ msgstr "པོཌི་ཀཱསི་ཊིང་"
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
 #, csharp-format
 msgid ""
-"Podcasting is a form of audio blogging where users subscribe to a feed of "
-"shows and its episodes are downloaded and managed for offline listening.\n"
+"Podcasting is a form of audio blogging where users subscribe to a feed of shows and its episodes are downloaded and managed for offline listening.\n"
 "\n"
-"Its name comes from the targeting of audio posts to Apple's iPod® audio "
-"player, although podcasts can be listened to directly in {0}."
+"Its name comes from the targeting of audio posts to Apple's iPod® audio player, although podcasts can be listened to directly in {0}."
 msgstr ""
-"པོཌི་ཀཱསི་ཊིང་འདི་ ལག་ལེན་པ་ཚུ་གིས་ སྟོན་ནི་གི་ཤོག་ཀུ་བཙུགས་ནི་ཅིག་ལུ་མཁོ་མངགས་འབད་མི་ རྣར་ཉན་ཝེབ་"
-"དྲན་དེབ་འབད་ནིའི་རྣམ་པ་ཅིག་ཨིན་ དེ་ལས་ དེའི་བྱུང་རིམ་ཚུ་ ཕབ་ལེན་འབད་ཞིནམ་ལས་ གཞན་མི་གློག་ལམ་མེད་"
-"པར་ཉན་མི་ཚུ་གི་དོན་ལུ་ འཛིན་སྐྱོང་འཐབ་ཡོད།\n"
+"པོཌི་ཀཱསི་ཊིང་འདི་ ལག་ལེན་པ་ཚུ་གིས་ སྟོན་ནི་གི་ཤོག་ཀུ་བཙུགས་ནི་ཅིག་ལུ་མཁོ་མངགས་འབད་མི་ རྣར་ཉན་ཝེབ་དྲན་དེབ་འབད་ནིའི་རྣམ་པ་ཅིག་ཨིན་ དེ་ལས་ དེའི་བྱུང་རིམ་ཚུ་ ཕབ་ལེན་འབད་ཞིནམ་ལས་ གཞན་མི་གློག་ལམ་མེད་པར་ཉན་མི་ཚུ་གི་དོན་ལུ་ འཛིན་སྐྱོང་འཐབ་ཡོད།\n"
 "\n"
-"དེའི་མིང་འདི་ པོཌི་ཀཱསིཊི་ཚུ་ཐད་ཀར་དུ་ {0} ནང་ཉན་བཏུབ་སྟེ་འབད་རུང་ རྣར་ཉན་འདས་ཤུལ་ཚུ་ ཨེ་པཱལ་གྱི་"
-"ཨའི་པོཌི་® རྣར་ཉན་གཏང་འཕྲུལ་ལུ་ དམིགས་གཏད་འབད་མི་འདི་ལས་ འོངམ་ཨིན།"
+"དེའི་མིང་འདི་ པོཌི་ཀཱསིཊི་ཚུ་ཐད་ཀར་དུ་ {0} ནང་ཉན་བཏུབ་སྟེ་འབད་རུང་ རྣར་ཉན་འདས་ཤུལ་ཚུ་ ཨེ་པཱལ་གྱི་ཨའི་པོཌི་® རྣར་ཉན་གཏང་འཕྲུལ་ལུ་ དམིགས་གཏད་འབད་མི་འདི་ལས་ འོངམ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
@@ -4054,26 +3855,22 @@ msgid "Manage the Podcast plugin"
 msgstr "པོཌི་ཀཱསིཊི་པ་ལག་ཨིན་འདི་འཛིན་སྐྱོང་འབད་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:117
-#, fuzzy
 msgid "Update Podcasts"
-msgstr "མ་གོ་བའི་པོཌི་ཀཱསིཊི་"
+msgstr "པོཌི་ཀཱསིཊི་ཚུ་དུས་མཐུན་བཟོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
-#, fuzzy
 msgid "Update Subscribed Podcasts"
-msgstr "མཁོ་མངགས་འབད་ཡོད་པའི་པོཌི་ཀཱསིཊི་ཤོག་ཀུ་བཙུགས་ནི་ཚུ་དུས་མཐུན་བཟོ་"
+msgstr "མཁོ་མངགས་འབད་ཡོད་པའི་པོཌི་ཀཱསིཊི་དུས་མཐུན་བཟོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:122
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:619
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:675
-#, fuzzy
 msgid "Subscribe to Podcast"
-msgstr "པོཌི་ཀཱསིཊི་ཤོག་ཀུ་བཙུགས་ནི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
+msgstr "པོཌི་ཀཱསིཊི་མཁོ་མངགས་འབད་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
-#, fuzzy
 msgid "Subscribe to a new Podcast"
-msgstr "པོཌི་ཀཱསིཊི་ཤོག་ཀུ་བཙུགས་ནི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
+msgstr "པོཌི་ཀཱསིཊི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:127
 msgid "Find New Podcasts"
@@ -4118,11 +3915,11 @@ msgid "Podcasts"
 msgstr "པོཌི་ཀཱསིཊིསི་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} Podcast"
 msgid_plural "{0} Podcasts"
-msgstr[0] "པོཌི་ཀཱསིཊི་"
-msgstr[1] "པོཌི་ཀཱསིཊི་"
+msgstr[0] "{0}པོཌི་ཀཱསིཊི་"
+msgstr[1] "{0}པོཌི་ཀཱསིཊི་ཚུ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:196
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
@@ -4140,18 +3937,16 @@ msgid "Date"
 msgstr "ཚེས་གྲངས་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:75
-#, fuzzy
 msgid "Podcast:"
-msgstr "པོཌི་ཀཱསིཊི་"
+msgstr "པོཌི་ཀཱསིཊི:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:79
 msgid "Date:"
 msgstr "ཚེས་གྲངས་:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:624
-#, fuzzy
 msgid "Update All Podcasts"
-msgstr "ཤོག་ཀུ་བཙུགས་ནི་ཚུ་ཆ་མཉམ་དུས་མཐུན་བཟོ་"
+msgstr "པོཌི་ཀསཌི་ཚུ་ཆ་མཉམ་དུས་མཐུན་བཟོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:629
 msgid "Visit Podcast Alley"
@@ -4162,14 +3957,12 @@ msgid "Subscribed"
 msgstr "མཁོ་མངགས་འབད་ཡོདཔ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:667
-#, fuzzy
 msgid "Update Podcast"
-msgstr "ཤོག་ཀུ་བཙུགས་ནི་ཚུ་དུས་མཐུན་བཟོ་"
+msgstr "པོཌི་ཀསཌི་ཚུ་དུས་མཐུན་བཟོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:671
-#, fuzzy
 msgid "Delete Podcast"
-msgstr "གླུ་ཐོ་བཏོན་གཏང་"
+msgstr "པོཌི་ཀསཌི་བཏོན་གཏང་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:679
 msgid "Homepage"
@@ -4185,9 +3978,8 @@ msgid "Cancel"
 msgstr "ཆ་མེད་གཏང་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:752
-#, fuzzy
 msgid "Remove Episodes(s)"
-msgstr "པོཌི་ཀཱསིཊི་(ཚུ་)རྩ་བསྐྲད་གཏང་"
+msgstr "ལེའུ་(ཚུ་)རྩ་བསྐྲད་གཏང་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:756
 msgid "Select All"
@@ -4207,15 +3999,12 @@ msgid "Subscribe"
 msgstr "མཁོ་མངགས་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
-#, fuzzy
 msgid "Subscribe to New Podcast"
-msgstr "པོཌི་ཀཱསིཊི་ཤོག་ཀུ་བཙུགས་ནི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
+msgstr "པོཌི་ཀཱསིཊི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
-#, fuzzy
 msgid "Please enter the URL of the podcast to which you are subscribing."
-msgstr ""
-"ལུ་ ཁྱོད་ཀྱིས་མཁོ་མངགས་འབད་ནིའི་རེ་འདོད་ཡོད་མི་ པོཌི་ཀཱསིཊི་འདི་གི་ཡུ་ཨར་ཨེལ་འདི་ཐོ་བཀོད་འབད་གནང་"
+msgstr "ཁྱོད་ཀྱིས་མཁོ་མངགས་འབད་ནིའི་རེ་འདོད་ཡོད་མི་ པོཌི་ཀཱསིཊི་འདི་གི་ཡུ་ཨར་ཨེལ་འདི་ཐོ་བཀོད་འབད་གནང་"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4234,17 +4023,12 @@ msgid "Let me decide which episodes to download"
 msgstr "བྱུང་རིམ་ག་འདི་ཕབ་ལེན་འབད་ནི་ཨིན་ན་ ང་གིས་གྲོས་ཐག་བཅད་གེ"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
-msgid ""
-"Always show stations that require the Helix/RealPlayer engine, even if the "
-"engine is not loaded."
-msgstr ""
-"མ་འཕྲུལ་འདི་མངོན་གསལ་མ་འབད་དེ་རང་འབད་རུང་ ཧི་ལིས་/རིཡལ་པི་ལེ་ཡར་ མ་འཕྲུལ་ དགོ་མི་ ལྟེ་བ་ཚུ་ཨ་"
-"རྟག་རང་སྟོན།"
+msgid "Always show stations that require the Helix/RealPlayer engine, even if the engine is not loaded."
+msgstr "མ་འཕྲུལ་འདི་མངོན་གསལ་མ་འབད་དེ་རང་འབད་རུང་ ཧི་ལིས་/རིཡལ་པི་ལེ་ཡར་ མ་འཕྲུལ་ དགོ་མི་ ལྟེ་བ་ཚུ་ཨ་རྟག་རང་སྟོན།"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
-msgstr ""
-"ཨེགསི་ཨེསི་པི་ཨེཕ་ལྟེ་བ་ཚུ་མཐའ་མཇུག་ལུ་ radio.banshee-project.org ལས་དུས་མཐུན་བཟོ་ཡོད་"
+msgstr "ཨེགསི་ཨེསི་པི་ཨེཕ་ལྟེ་བ་ཚུ་མཐའ་མཇུག་ལུ་ radio.banshee-project.org ལས་དུས་མཐུན་བཟོ་ཡོད་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
 msgid "Last time the master station list was checked for updates"
@@ -4255,9 +4039,8 @@ msgid "Radio plugin enabled"
 msgstr "རེ་ཌིའོ་པ་ལག་ཨིན་ལྕོགས་ཅན་བཟོ་ཡོད་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
-#, fuzzy
 msgid "Show remote stations"
-msgstr "འོས་སྦྱོར་འབད་ནི་ཚུ་སྟོན་"
+msgstr "ཐག་རིང་ལྟེ་བ་ཚུ་སྟོན་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
 msgid "Show stations requiring Helix/RealPlayer"
@@ -4272,10 +4055,8 @@ msgid "Time of the last radio update check"
 msgstr "མཇུག་གི་རེ་ཌིའོ་དུས་མཐུན་བཟོ་བའི་ཞིབ་དཔྱད་འདི་གི་ཆུ་ཚོད་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
-#, fuzzy
 msgid "Update remote stations from radio.banshee-project.org"
-msgstr ""
-"ཨེགསི་ཨེསི་པི་ཨེཕ་ལྟེ་བ་ཚུ་མཐའ་མཇུག་ལུ་ radio.banshee-project.org ལས་དུས་མཐུན་བཟོ་ཡོད་"
+msgstr "radio.banshee-project.org ལས་  ཐག་རིང་ལྟེ་བ་ཚུ་དུས་མཐུན་བཟོ་ཡོད་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
 msgid "Loading"
@@ -4291,15 +4072,12 @@ msgid "Provides Internet radio/streaming audio station support"
 msgstr "ཨིན་ཊར་ནེཊི་རེ་ཌིའོ་/རྒྱུན་རིམ་བཟོ་ནིའི་རྣར་ཉན་ལྟེ་བའི་རྒྱབ་སྐྱོར་བྱིནམ་ཨིན་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
-#, fuzzy
 msgid "Show Remote Stations"
-msgstr "འོས་སྦྱོར་འབད་ནི་ཚུ་སྟོན་"
+msgstr "ཐག་རིང་ལྟེ་བ་ཚུ་སྟོན་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
-#, fuzzy
 msgid "Update and show radio station content from radio.banshee-project.org"
-msgstr ""
-"ཨེགསི་ཨེསི་པི་ཨེཕ་ལྟེ་བ་ཚུ་མཐའ་མཇུག་ལུ་ radio.banshee-project.org ལས་དུས་མཐུན་བཟོ་ཡོད་"
+msgstr "radio.banshee-project.org ལས་  རེ་ཌིའོ་ལྟེ་བའི་ནང་དོན་སྟོན་ནི་དང་དུས་མཐུན་བཟོ་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
@@ -4350,39 +4128,32 @@ msgid "Failed to load radio stations: "
 msgstr "རེ་ཌིའོ་ལྟེ་བ་ཚུ་མངོན་གསལ་འབད་ནི་འཐུས་ཤོར་འབྱུང་ཡོད་:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
-#, fuzzy
 msgid "Invalid URI format."
-msgstr "ནུས་མེད་ཡུ་ཨར་ཨེལ་"
+msgstr "ནུས་ཅན་མེད་པའི་ཡུ་ཨར་ཨའི་རྩ་སྒྲིག།"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:57
-#, fuzzy
 msgid "Add new radio station"
-msgstr "རེ་ཌིའོ་ལྟེ་བ་གསརཔ་ཁ་སྐོང་རྐྱབས་"
+msgstr "རེ་ཌིའོ་ལྟེ་བ་གསརཔ་ ཁ་སྐོང་རྐྱབས་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:58
-#, fuzzy
 msgid "Edit radio station"
-msgstr "རེ་ཌིའོ་ལྟེ་བ་ཞུན་དག་འབད་"
+msgstr "རེ་ཌིའོ་ལྟེ་བ་ཞུན་དག་འབད་ད་"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
-msgid ""
-"Enter the Group, Title and URL of the radio station you wish to add. A "
-"description is optional."
-msgstr ""
+msgid "Enter the Group, Title and URL of the radio station you wish to add. A description is optional."
+msgstr "ཁྱོད་རང་ཁ་སྐོང་བརྐྱབ་ནི་ལུ་རེ་བ་ཡོད་མི་  རེ་ཌིའོ་ལྟེ་བའི་སྡེ་ཚན་མགོ་མིང་དང་ཡུ་ཨར་ཨེལ་ཐོ་བཀོད་འབད།  འགྲེལ་བཤད་འདི་གདམ་ཁ་ཅན་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
-#, fuzzy
 msgid "Station Group:"
-msgstr "ལྟེ་བའི་སྡེ་ཚན་གསརཔ་"
+msgstr "ལྟེ་བའི་སྡེ་ཚན:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
-#, fuzzy
 msgid "Station Title:"
-msgstr "ལྟེ་བ་"
+msgstr "གནད་དོན་ལྟེ:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
 msgid "Stream URL:"
-msgstr ""
+msgstr "རྒྱུན་རིམ་ཡུ་ཨར་ཨེལ:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
 msgid "Station"
@@ -4425,13 +4196,8 @@ msgid "Music Recommendations"
 msgstr "སྙན་ཆ་འོས་སྦྱོར་འབད་ནི་"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:61
-msgid ""
-"Automatically recommends music that you might like, based on the currently "
-"playing song. It finds artists and popular songs that others with similar "
-"musical tastes enjoy."
-msgstr ""
-"ད་ལྟོ་གཏང་སྟེ་ཡོད་མི་ཞབས་ཁྲ་དང་འཁྲིལ་ཏེ་ ཁྱོད་ཀྱིས་དགའ་མི་གླུ་གཞས་འདི་རང་བཞིན་གྱིས་འོས་སྦྱོར་འབད་འོང་། "
-"གཞན་མི་གིས་འདི་བཟུམ་མའི་སྙན་ཆའི་རོ་མྱོང་མི་ གླུ་གཞསཔ་ཚུ་དང་ཡོངས་གྲགས་ཅན་གྱི་ཞབས་ཁྲ་ཚུ་འཚོལཝ་ཨིན།"
+msgid "Automatically recommends music that you might like, based on the currently playing song. It finds artists and popular songs that others with similar musical tastes enjoy."
+msgstr "ད་ལྟོ་གཏང་སྟེ་ཡོད་མི་ཞབས་ཁྲ་དང་འཁྲིལ་ཏེ་ ཁྱོད་ཀྱིས་དགའ་མི་གླུ་གཞས་འདི་རང་བཞིན་གྱིས་འོས་སྦྱོར་འབད་འོང་། གཞན་མི་གིས་འདི་བཟུམ་མའི་སྙན་ཆའི་རོ་མྱོང་མི་ གླུ་གཞསཔ་ཚུ་དང་ཡོངས་གྲགས་ཅན་གྱི་ཞབས་ཁྲ་ཚུ་འཚོལཝ་ཨིན།"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
@@ -4440,44 +4206,34 @@ msgstr "འོས་སྦྱོར་འབད་ནི་ཚུ་སྟོན
 
 #~ msgid "Copy all common fields"
 #~ msgstr "མཐུན་མོང་ས་སྒོ་ཚུ་ཆ་མཉམ་འདྲ་བཤུས་རྐྱབས་"
-
 #~ msgid ""
 #~ "Set all common fields in all selected tracks to the values currently set"
 #~ msgstr ""
 #~ "སེལ་འཐུ་འབད་ཡོད་པའི་གླུ་རིམ་ཚུ་ཆ་མཉམ་ནང་གི་ མཐུན་མོང་གི་ས་སྒོ་ཚུ་ཆ་མཉམ་ ད་ལྟོ་གཞི་སྒྲིག་འབད་ཡོད་"
 #~ "མི་གནས་གོང་འདི་ནང་ལུ་གཞི་སྒྲིག་འབད་"
-
 #~ msgid ""
 #~ "0 - Download only cover art, 1 - Download cover art, fill in missing "
 #~ "metadata, 2 - Download cover art, overwrite metadata"
 #~ msgstr ""
 #~ "༠ - ཁེབས་ཀྱི་རི་མོ་རྐྱངམ་ཅིག་ཕབ་ལེན་འབད་  ༡ - ཁེབས་ཀྱི་རི་མོ་ཕབ་ལེན་འབད་ བརླག་སྟོར་ཞུགས་ཡོད་མི་"
 #~ "མེ་ཊ་གནད་སྡུད་བཀང་  ༢ - ཁེབས་ཀྱི་རི་མོ་ཕབ་ལེན་འབད་ མེ་ཊ་གནད་སྡུད་ཚབ་སྲུང་འབད་"
-
 #~ msgid "Method of fetching cover art and supplementary metadata"
 #~ msgstr "ཁེབས་ཀྱི་རི་མོ་དང་ལྷན་ཐབས་ཀྱི་མེ་ཊ་གནད་སྡུད་ལེན་ནིའི་ཐབས་ལམ་"
-
 #~ msgid "Metadata and Cover Art Searching"
 #~ msgstr "མེ་ཊ་གནད་སྡུད་དང་ཁེབས་ཀྱི་རི་མོ་འཚོལ་ཞིབ་འབད་ནི་"
-
 #~ msgid "Only download album cover artwork"
 #~ msgstr "གླུ་མཛོད་ཁེབས་ཀྱི་རི་མོའི་ལཱ་གཡོག་རྐྱངམ་ཅིག་ཕབ་ལེན་འབད་"
-
 #~ msgid "Download album cover artwork and fill in missing track data"
 #~ msgstr ""
 #~ "གླུ་མཛོད་ཁེབས་ཀྱི་རི་མོའི་ལཱ་གཡོག་ཕབ་ལེན་འབད་ དེ་ལས་ བརླག་སྟོར་ཞུགས་ཡོད་པའི་གླུ་རིམ་གནད་སྡུད་བཀང་"
-
 #~ msgid "Download album cover artwork and overwrite any existing track data"
 #~ msgstr ""
 #~ "གླུ་མཛོད་ཁེབས་ཀྱི་རི་མོའི་ལཱ་གཡོག་ཕབ་ལེན་འབད་ དེ་ལས་ ཡོད་བཞིན་པའི་གླུ་རིམ་གནད་སྡུད་ག་འབད་རུང་ཅིག་"
 #~ "ཚབ་སྲུང་འབད་"
-
 #~ msgid "Rescan Library"
 #~ msgstr "དཔེ་མཛོད་སླར་ཞིབ་ལྟ་འབད་"
-
 #~ msgid "Warning"
 #~ msgstr "ཉེན་བརྡ་"
-
 #~ msgid ""
 #~ "This option can usually correct minor mistakes in metadata, however on "
 #~ "rare occasions metadata may be incorrectly updated from MusicBrainz."
@@ -4485,44 +4241,32 @@ msgstr "འོས་སྦྱོར་འབད་ནི་ཚུ་སྟོན
 #~ "འ་ནི་གདམ་ཁ་འདི་གིས་སྤྱིར་བཏང་ལུ་ མེ་ཊ་གནད་སྡུད་ནང་ནོར་འཁྲུལ་ཆུང་ཀུ་ཚུ་ནོར་བཅོས་འབདཝ་ཨིན་ གང་"
 #~ "ལྟར་ཡང་ དུས་རྒྱུན་མེན་པའི་གནད་དོན་ཚུ་ལུ་ མེ་ཊ་གནད་སྡུད་འདི་ མིའུ་ཛིཀ་བི་རེནཛ་ལས་ བདེན་མེད་སྦེ་དུས་"
 #~ "མཐུན་འབད་འབདཝ་འོང་།"
-
 #~ msgid "Loading Podcast Feeds:  {0} ms"
 #~ msgstr "པོཌི་ཀཱསིཊི་ཤོག་ཀུ་བཙུགས་ནི་མངོན་གསལ་འབད་དོ་:  {0} ms"
-
 #~ msgid "Subscribe to New Feed"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་ནི་གསརཔ་ལུ་མཁོ་མངགས་འབད་"
-
 #~ msgid "Feeds"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་ནི་"
-
 #~ msgid "{0} Feed"
 #~ msgid_plural "{0} Feeds"
 #~ msgstr[0] "{0} ཤོག་ཀུ་བཙུགས་ནི་"
 #~ msgstr[1] "{0} ཤོག་ཀུ་བཙུགས་ནི་ཚུ་"
-
 #~ msgid "Feed"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་"
-
 #~ msgid "Feed:"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་:"
-
 #~ msgid "Update Feed"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་ནི་དུས་མཐུན་བཟོ་"
-
 #~ msgid "Delete Feed"
 #~ msgstr "ཤོག་ཀུ་བཙུགས་ནི་བཏོན་གཏང་"
-
 #~ msgid "Create a new local station group"
 #~ msgstr "ཉེ་གནས་ལྟེ་བའི་སྡེ་ཚན་གསརཔ་ཅིག་གསར་བསྐྲུན་འབད་"
-
 #~ msgid "Add new station group"
 #~ msgstr "ལྟེ་བའི་སྡེ་ཚན་གསརཔ་ཁ་སྐོང་རྐྱབས་"
-
 #~ msgid "Edit station group"
 #~ msgstr "ལྟེ་བའི་སྡེ་ཚན་ཞུན་དག་འབད་"
-
 #~ msgid "Title:"
 #~ msgstr "མགོ་མིང་:"
-
 #~ msgid "The station group already exists"
 #~ msgstr "ལྟེ་བའི་སྡེ་ཚན་འདི་ ཧེ་མ་ལས་རང་ཡོད་"
+
