@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-08 16:17+0200\n"
-"PO-Revision-Date: 2007-04-08 16:17+0200\n"
+"PO-Revision-Date: 2007-04-08 16:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -358,8 +358,7 @@ msgstr "Datový tok"
 msgid ""
 "Proprietary and standardized format that is superior to MP3, but not as "
 "popular."
-msgstr ""
-"Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
+msgstr "Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
 
 #: ../data/audio-profiles/base.xml.in.h:1
 msgid "Channels"
@@ -1294,8 +1293,7 @@ msgstr "Importuje se CD"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr ""
-"<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
+msgstr "<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
 #, csharp-format
@@ -1586,8 +1584,7 @@ msgid "Column sort type"
 msgstr "Typ třídění sloupce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
-msgid ""
-"Column sort type for the library source. Ascending (0) or Descending (1)"
+msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
@@ -1672,8 +1669,7 @@ msgid "Move music on info save"
 msgstr "Přesunout hudbu při uložení informací"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Přesunout hudbu v rámci adresáře hudební knihovny Banshee při ukládání "
 "informací o skladbě"
@@ -1723,8 +1719,7 @@ msgid "Shuffle playback"
 msgstr "Náhodné přehrávání"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
-msgid ""
-"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
@@ -2138,8 +2133,7 @@ msgstr "Převádí se soubory"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
+msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
 msgid "Initializing Transcoder..."
@@ -2674,8 +2668,7 @@ msgid "Searching for CD cover art..."
 msgstr "Hledání přebalu k CD..."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Nelze vyhledat metadata k CD, není dostupné připojení k Internetu."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
@@ -2952,8 +2945,7 @@ msgstr "Žádná"
 #: ../src/Core/Banshee/PlayerInterface.cs:1882
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat {0} vybrané skladby?"
 msgstr[2] "Opravdu chcete navždy smazat {0} vybraných skladeb?"
@@ -2969,8 +2961,7 @@ msgstr "Odstranit výběr z knihovny"
 #: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
@@ -3042,8 +3033,7 @@ msgstr "Zastavit {0}"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Operace '{0}' stále probíhá. Chcete ji zastavit?"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -3399,10 +3389,7 @@ msgid ""
 "Your profile page on Last.fm is automatically updated whenever you listen to "
 "music. It lets others see what you're listening to right now, and shows "
 "charts of your listening history."
-msgstr ""
-"Automatická aktualizace seznamu písní na účtu stránky Last.fm. Zobrazuje "
-"ostatním uživatelům vaše seznamy nyní poslouchaných písní a i grafy historie "
-"poslechu."
+msgstr "Kdykoli posloucháte hudbu, automaticky se aktualizuje váš profil na serveru Last.fm. Na něm si ostatní uživatelé mohou přečist, co právě posloucháte, a prohlédnout si žebříčky skladeb, které jste poslouchali v minulosti."
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:96
 msgid "_Audioscrobbler"
@@ -3415,7 +3402,7 @@ msgstr "Konfigurovat modul Audioscrobbler"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:100
 msgid "Visit _user profile page"
-msgstr "Navštívit stránku _uživatelského profilu"
+msgstr "Navštívit profil _uživatele"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:101
 msgid "Visit your Audioscrobbler profile page"
@@ -4299,8 +4286,7 @@ msgstr "Zobrazit vzdálené stanice"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
 msgid "Update and show radio station content from radio.banshee-project.org"
-msgstr ""
-"Aktualizovat a zobrazit obsah rozhlasových stanic z radio.banshee-project.org"
+msgstr "Aktualizovat a zobrazit obsah rozhlasových stanic z radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
@@ -4436,3 +4422,4 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Zobrazit doporučení"
+
