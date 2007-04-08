@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-30 15:49+0200\n"
-"PO-Revision-Date: 2007-03-30 15:49+0200\n"
+"POT-Creation-Date: 2007-04-08 16:17+0200\n"
+"PO-Revision-Date: 2007-04-08 16:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1360,7 +1360,7 @@ msgid "{0} Minutes"
 msgstr "{0} minut"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:335
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:339
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:90
 #, csharp-format
 msgid "{0} of {1}"
@@ -1778,6 +1778,7 @@ msgid "Whether to expand the library node in the source view"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+#, fuzzy
 msgid "Width of Source View Column."
 msgstr "Šířka okna zdrojového pohledu."
 
@@ -2153,7 +2154,7 @@ msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr "Nelze inicializovat DapCore, neboť není inicializováno HalCore"
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:335
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:398
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
 msgid "Device"
 msgstr "Zařízení"
 
@@ -2189,7 +2190,7 @@ msgstr "Pokračovat v synchronizaci"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
 #, csharp-format
 msgid "{0} Properties"
 msgstr "Vlastnosti {0}"
@@ -2204,15 +2205,15 @@ msgstr "Jméno zařízení"
 msgid "Owner name"
 msgstr "Jméno vlastníka"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:95
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
 msgid "Encode to"
 msgstr "Zakódovat do"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:101
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
 msgid "Volume usage"
 msgstr "Využití místa"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:113
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
 msgid "Advanced details"
 msgstr "Pokročilé detaily"
 
@@ -2722,19 +2723,19 @@ msgstr "Kopíruje se z {0}"
 msgid "Scanning..."
 msgstr "Probíhá vyhledávání..."
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:309
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
 #: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Nelze importovat skladbu z {0}"
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:345
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} zbývá)"
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:382
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
 #, csharp-format
 msgid "Eject {0}"
 msgstr "Vysunout {0}"
@@ -3136,24 +3137,24 @@ msgstr "Již se neptat"
 msgid "Go to Web Site"
 msgstr "Jít na web"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:229
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:234
 msgid "Could not eject iPod"
 msgstr "Nelze vysunout iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:237
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:256
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:242
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:261
 msgid "Synchronizing iPod"
 msgstr "Synchronizace iPodu"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:238
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:243
 msgid "Pre-processing tracks"
 msgstr "Předzpracování skladeb"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:253
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:258
 msgid "Flushing to Disk (may take time)"
 msgstr "Zapisování na disk (může chvíli trvat)"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:263
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:268
 msgid "Failed to synchronize iPod"
 msgstr "Synchronizace iPodu selhala"
 
@@ -3184,15 +3185,15 @@ msgstr ""
 msgid "What is the reason for this?"
 msgstr "Jaký je k tomu důvod?"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:112
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild iPod Database..."
 msgstr "Přestavět iPod databázi..."
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:120
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:124
 msgid "Confirm Rebuild iPod Database"
 msgstr "Potvrďte přestavbu iPod databáze"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:126
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:130
 msgid ""
 "Rebuilding your iPod database may take some time. Also note that any "
 "playlists you have on your iPod will be lost.\n"
@@ -3204,11 +3205,11 @@ msgstr ""
 "\n"
 "Opravdu chcete přestavět vaši iPod databázi?"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:135
 msgid "Rebuild Database"
 msgstr "Přestavět databázi"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:143
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:147
 msgid "Rebuilding iPod Database..."
 msgstr "Přestavět iPod databázi..."
 
@@ -3356,7 +3357,7 @@ msgstr "Přihlášení k účtu Last.fm"
 
 #: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:78
 msgid "Please enter your Last.fm account credentials."
-msgstr "Prosím zadejte přihlašovací informace pro váš Last.fm účet."
+msgstr "Prosím zadejte přihlašovací údaje pro váš Last.fm účet."
 
 #: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginForm.cs:50
 msgid "Account Name:"
@@ -3370,7 +3371,7 @@ msgstr "Heslo:"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:60
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:142
 msgid "Audioscrobbler Reporting"
-msgstr "Oznámení výsledků Audioscrobbler"
+msgstr "Oznamování skladeb Audioscrobbler"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:72
 msgid "Create an account"
@@ -3438,7 +3439,7 @@ msgstr "_Povolit oznámení skladby"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:1
 msgid "Audioscrobbler reporting engine enabled"
-msgstr "Engine pro oznamování Audioscrobbler je povolen"
+msgstr "Oznamovací modul Audioscrobbler je povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:2
 msgid "Audioscrobbler reporting plugin enabled"
@@ -3453,6 +3454,7 @@ msgid "Password"
 msgstr "Heslo"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
@@ -3475,6 +3477,33 @@ msgstr "Heslo pro Last.fm"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
 msgid "last.fm Username"
 msgstr "Uživatelské jméno pro Last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:52
+msgid "Bookmark your position in tracks."
+msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:85
+msgid "_Bookmarks"
+msgstr "_Záložky"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:89
+msgid "_New Bookmark"
+msgstr "_Nová záložka"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:96
+msgid "_Remove Bookmark"
+msgstr "Odst_ranit záložku"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:214
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "Modul záložek povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
 msgid "DAAP plugin enabled"
@@ -4016,14 +4045,21 @@ msgid "Podcasting"
 msgstr "Podcasting"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
-#, fuzzy, csharp-format
+#, csharp-format
 msgid ""
 "Podcasting is a form of audio blogging where users subscribe to a feed of "
 "shows and its episodes are downloaded and managed for offline listening.\n"
 "\n"
 "Its name comes from the targeting of audio posts to Apple's iPod® audio "
 "player, although podcasts can be listened to directly in {0}."
-msgstr "Podcasting je forma zvukového blogování Výraz podcasting je odvozen "
+msgstr ""
+"Podcasting je způsob publikování zvukového záznamu. Posluchači se přihlásí k "
+"vybranému kanálu, z něhož jsou následně staženy epizody k poslechu v režimu "
+"offline.\n"
+"\n"
+"Výraz podcasting je odvozen jména přehrávače Apple iPod®, pro který byly "
+"tyto zvukové příspěvky původně určeny. Podcastům lze však samozřejmě "
+"naslouchat i přímo v přehrávači {0}."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
