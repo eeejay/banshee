@@ -2,14 +2,18 @@
 # Copyright (C) 2005-2007 Jordi Mas i Hernàndez, jmas@softcatala.org
 # Traducció del Banshee al català
 #
-# Correccions addicionals Josep Puigdemont.
+# Correccions addicionals Josep Puigdemont, Toni Hermoso i Quico Llach
+#
+# N.T: fem servir "Coberta" per traduir "Album Cover". "Portada" (una opció proposada més d'un cop) és la primera pàgina d'un llibre, etc.,
+# però el que es veu quan el llibre esta tancat és la coberta, i per tant penso que el mateix es pot aplicar a un disc.
+#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-11 20:51+0100\n"
-"PO-Revision-Date: 2007-02-15 11:12+0100\n"
+"PO-Revision-Date: 2007-04-08 10:12+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: tradgnome@softcatala.net\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +160,7 @@ msgstr "Art"
 #: ../data/banshee-dialogs.glade.h:32
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:79
 msgid "Back"
-msgstr "Endarrere"
+msgstr "Enrere"
 
 #: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
@@ -204,7 +208,7 @@ msgstr "Expulsa el disc després de l'escriptura"
 
 #: ../data/banshee-dialogs.glade.h:44
 msgid "Embed directly in song"
-msgstr "Incrustació directa a la cançó"
+msgstr "Incrusta directament a la cançó"
 
 #: ../data/banshee-dialogs.glade.h:45
 #: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:70
@@ -530,7 +534,7 @@ msgstr "No s'ha pogut crear el conducte per al codificador"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:257
 msgid "Could not create queue plugin"
-msgstr "No s'ha pogut crear el connector queue"
+msgstr "No s'ha pogut crear el connector de cua"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:265
 msgid "Could not create GNOME VFS output plugin"
@@ -634,7 +638,7 @@ msgstr "Ordre de la columna Valoració"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
 msgid "Order of Time column"
-msgstr "Ordre de la columna Temps"
+msgstr "Ordre de la columna Durada"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
 msgid "Order of Title column"
@@ -678,7 +682,7 @@ msgstr "Visibilitat de la columna Valoració"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
 msgid "Visibility of Time column"
-msgstr "Visibilitat de la columna Temps"
+msgstr "Visibilitat de la columna Durada"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
 msgid "Visibility of Title column"
@@ -726,7 +730,7 @@ msgstr "Amplada de la columna Reproduccions"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
 msgid "Width of Time column"
-msgstr "Amplada de la columna Temps"
+msgstr "Amplada de la columna Durada"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
 msgid "Width of Title column"
@@ -756,7 +760,7 @@ msgstr "Artista"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
 msgid "Time"
-msgstr "Temps"
+msgstr "Durada"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:56
 msgid "N/A"
@@ -772,7 +776,7 @@ msgstr "N/D"
 msgid "Genre"
 msgstr "Gènere"
 
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs:42
+#: ../src/Core/Banshee/Banshee.	View.Columns/LastPlayedColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:791
 msgid "Last Played"
 msgstr "Última reproducció"
@@ -891,12 +895,12 @@ msgstr "Obre una ubicació remota per a la reproducció"
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:88
 msgid "Write CD"
-msgstr "Enregistra el CD"
+msgstr "Enregistra un CD"
 
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:89
 msgid "Write selection to audio CD"
-msgstr "Enregistra la selecció al CD"
+msgstr "Enregistra la selecció a un CD d'àudio"
 
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:92
@@ -935,7 +939,7 @@ msgstr "Sele_cciona-ho tot"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:120
 msgid "Select all songs in song list"
-msgstr "Selecciona totes les cançons a la llista de cançons"
+msgstr "Selecciona totes les cançons de la llista de cançons"
 
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:123
@@ -944,7 +948,7 @@ msgstr "No en se_leccionis cap"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:124
 msgid "Unselect all songs in song list"
-msgstr "Desselecciona totes les cançons a la llista de cançons"
+msgstr "Desselecciona totes les cançons de la llista de cançons"
 
 #
 #
@@ -964,7 +968,7 @@ msgstr "Configura els connectors del Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:137
 msgid "_Tools"
-msgstr "_Eines"
+msgstr "Ei_nes"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:140
 msgid "_View"
@@ -977,7 +981,7 @@ msgstr "C_olumnes..."
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:144
 msgid "Select which columns to display in the song list"
-msgstr "Seleccioneu quines columnes s'han de mostrar en la llista de cançons"
+msgstr "Seleccioneu quines columnes s'han de mostrar a la llista de cançons"
 
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:147
@@ -1121,11 +1125,11 @@ msgstr "Edita les metadades en les cançons seleccionades"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Search for songs"
-msgstr "Cer_ca cançons"
+msgstr "Cerca ca_nçons"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Search for songs matching certain criteria"
-msgstr "Cerca cançons que coincideixin amb cert criteri"
+msgstr "Cerca cançons que coincideixin amb un cert criteri"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "By matching _album"
@@ -1236,7 +1240,7 @@ msgstr "Commuta entre els modes aleatori o de reproducció contínua"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "_Stop when finished"
-msgstr "Atura quan finalit_zi"
+msgstr "Atura en finalit_zar"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Stop playback after the current song finishes playing"
@@ -1454,7 +1458,7 @@ msgstr "Algunes cançons no s'han pogut trobar."
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:109
 msgid "No CD writers were found on your system."
-msgstr "No s'han trobar gravadores de CD en el sistema."
+msgstr "No s'han trobat enregistradors de CD en el sistema."
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
 msgid "Insert Blank CD"
@@ -1962,7 +1966,7 @@ msgstr "Títol de l'àlbum"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
 msgid "Create Smart Playlist from Search"
-msgstr "Crea una llista de reproducció intel·ligent a partir de la cerca"
+msgstr "Crea una llista de reproducció intel·ligent a partir d'una cerca"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:154
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
@@ -2153,7 +2157,7 @@ msgstr "fa"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
 msgid "Date Added"
-msgstr "Data afegida"
+msgstr "Data d'afegida"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
 msgid "Duration"
@@ -2355,7 +2359,7 @@ msgstr "S'estan iniciant les tasques en segon pla"
 #: ../src/Core/Banshee.Base/Globals.cs:110
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr ""
-"El suport pel dispositiu es deshabilitarà per a aquesta instància (no hi ha "
+"El suport pel dispositiu s'inhabilitarà per a aquesta instància (no hi ha "
 "HAL)"
 
 #: ../src/Core/Banshee.Base/Globals.cs:113
@@ -2386,7 +2390,7 @@ msgstr "S'està inicialitzant la compatibilitat de CD"
 #: ../src/Core/Banshee.Base/Globals.cs:159
 msgid "Audio CD support will be disabled for this instance"
 msgstr ""
-"La compatibilitat per als CD d'àudio es deshabilitarà per aquesta instància"
+"La compatibilitat per als CD d'àudio s'inhabilitarà per aquesta instància"
 
 #: ../src/Core/Banshee.Base/Globals.cs:161
 msgid "Initializing digital audio player support"
@@ -2395,7 +2399,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/Globals.cs:162
 msgid "DAP support will be disabled for this instance"
-msgstr "La compatibilitat DAP es deshabilitarà per aquesta instància"
+msgstr "La compatibilitat DAP s'inhabilitarà per aquesta instància"
 
 #: ../src/Core/Banshee.Base/Globals.cs:164
 msgid "Initializing CD writing support"
@@ -2404,7 +2408,7 @@ msgstr "S'està inicialitzant la compatibilitat d'escriptura de CD"
 #: ../src/Core/Banshee.Base/Globals.cs:165
 msgid "CD burning support will be disabled for this instance"
 msgstr ""
-"La compatibilitat de gravació de CD es deshabilitarà per aquesta instància"
+"La compatibilitat de gravació de CD s'inhabilitarà per aquesta instància"
 
 #: ../src/Core/Banshee.Base/Globals.cs:167
 #: ../src/Core/Banshee.Base/Globals.cs:168
@@ -2433,7 +2437,7 @@ msgstr "Contribuïdors"
 
 #: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:78
 msgid "Music Management and Playback for GNOME."
-msgstr "Gestió i reproducció de la música per al GNOME."
+msgstr "Gestió i reproducció de música per al GNOME."
 
 #
 #: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:80
@@ -2482,7 +2486,7 @@ msgstr "S'ha llançat un excepció no gestionada: "
 
 #: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:41
 msgid "Select album cover image"
-msgstr "Seleccioneu la imatge per a la coberta"
+msgstr "Seleccioneu una imatge per a la coberta"
 
 #: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:49
 msgid "All image files"
@@ -2937,7 +2941,7 @@ msgstr "{0:0.00} GB"
 #: ../src/Core/Banshee/PlayerInterface.cs:448
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
 msgid "All"
-msgstr "Tot"
+msgstr "Total"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:477
 msgid "Write selection to CD"
@@ -3501,7 +3505,7 @@ msgstr "Uneix-te al grup del Banshee"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:90
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:115
 msgid "Enable song reporting"
-msgstr "Habilita l'informe de la cançó"
+msgstr "Habilita l'informe de les cançons"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:100
 msgid "Last.fm Username"
@@ -3749,7 +3753,7 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:131
 msgid "Download Cover Art"
-msgstr "Baixa la coberta"
+msgstr "Baixa les cobertes"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
@@ -3760,7 +3764,7 @@ msgstr "Baixa"
 #
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
 msgid "Downloading Cover Art"
-msgstr "S'està baixant la coberta"
+msgstr "S'estan baixant les cobertes"
 
 #
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:211
@@ -3950,28 +3954,28 @@ msgstr "Ubicació de la biblioteca Podcast"
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
 msgid "Podcast plugin enabled"
-msgstr "Connector Podcast habilitat"
+msgstr "Connector podcast habilitat"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:7
 msgid "Podcast title column"
-msgstr "Columna títol Podcast"
+msgstr "Columna títol podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
 msgid "Position of the podcast date playlist column"
-msgstr "Posició de la columna data en la llista de producció del podcast"
+msgstr "Posició de la columna data en la llista de reproducció del podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:9
 msgid "Position of the podcast feed playlist column"
-msgstr "Posició de la columna canal en la llista de producció del podcast"
+msgstr "Posició de la columna canal en la llista de reproducció del podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:10
 msgid "Position of the podcast title playlist column"
-msgstr "Posició de la columna títol en la llista de producció del podcast"
+msgstr "Posició de la columna títol en la llista de reproducció del podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:11
 msgid "Position of the separator located between the feed and podcast views"
-msgstr "Posició del separador ubicat entre les vistes canal i postcast"
+msgstr "Posició del separador ubicat entre les vistes de canal i postcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
 msgid "Root directory for the podcast plugin to store downloaded files"
@@ -4027,7 +4031,7 @@ msgstr "S'està esperant la finalització de les baixades"
 msgid "Downloading File"
 msgid_plural "Downloading Files ({0} of {1} completed)"
 msgstr[0] "S'està baixant el fitxer"
-msgstr[1] "S'estan baixant el fitxers ({0} de {1} finalitzats)"
+msgstr[1] "S'estan baixant els fitxers ({0} de {1} finalitzats)"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:639
 #, csharp-format
@@ -4101,12 +4105,12 @@ msgstr "URL no vàlida"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:446
 msgid "Podcast feed URL is invalid."
-msgstr "L'URL del canal Podcast no és vàlid."
+msgstr "L'URL del canal podcast no és vàlid."
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:514
 msgid "Unable to load Podcast DB"
-msgstr "No s'ha pogut carregar la base de dades del Podcast"
+msgstr "No s'ha pogut carregar la base de dades del podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:666
 msgid "Download Failed"
@@ -4140,7 +4144,7 @@ msgstr "S'està preparant per actualitzar els canals"
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:318
 #, csharp-format
 msgid "Updating podcast feed {0} of {1}"
-msgstr "S'està editant el canal podcast {0} de {1}"
+msgstr "S'està actualitzant el canal podcast {0} de {1}"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:339
@@ -4159,7 +4163,7 @@ msgstr "Ha canviat la propietat títol"
 #. Should users be notified of this?
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastLibrary.cs:762
 msgid "Already Subscribed"
-msgstr "Ja està subscrit"
+msgstr "Ja hi esteu subscrit"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:56
@@ -4192,36 +4196,36 @@ msgstr "Podcast"
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:114
 msgid "Manage the Podcast plugin"
-msgstr "Gestiona el connector Podcast"
+msgstr "Gestiona el connector podcast"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:117
 msgid "Update Podcasts"
-msgstr "Actualitza els Podcasts"
+msgstr "Actualitza els podcasts"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
 msgid "Update Subscribed Podcasts"
-msgstr "Actualitza els Podcasts subscrits"
+msgstr "Actualitza els podcasts subscrits"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:122
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:619
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:675
 msgid "Subscribe to Podcast"
-msgstr "Subscriviu-vos al Podcast"
+msgstr "Subscriviu-vos al podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
 msgid "Subscribe to a new Podcast"
-msgstr "Subscriviu-vos a un nou Podcast"
+msgstr "Subscriviu-vos a un podcast nou"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:127
 msgid "Find New Podcasts"
-msgstr "Cerca nous Podcasts"
+msgstr "Cerca podcasts nous"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:128
 msgid "Find New Podcasts at PodcastAlley.com"
-msgstr "Cerca nous Podcasts a PodcastAlley.com"
+msgstr "Cerca nous podcasts a PodcastAlley.com"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastErrorsSource.cs:51
@@ -4319,7 +4323,7 @@ msgstr "Actualitza el Podcast"
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:671
 msgid "Delete Podcast"
-msgstr "Suprimeix el Podcast"
+msgstr "Suprimeix el podcast"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:679
@@ -4391,20 +4395,18 @@ msgid ""
 "Always show stations that require the Helix/RealPlayer engine, even if the "
 "engine is not loaded."
 msgstr ""
-"Mostra sempre les estacions que requereixen el motor Helix/RealPlayer, "
+"Mostra sempre les emissores que requereixen el motor Helix/RealPlayer, "
 "encara que el motor no estigui carregat."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
-msgstr ""
-"Darrera vegada que les estacions XSPF es van actualitzar des de radio."
-"banshee-project.org"
+msgstr "Darrera vegada que les emissores XSPF es van actualitzar des de radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
 msgid "Last time the master station list was checked for updates"
 msgstr ""
 "Última vegada que es va comprovar si hi havia actualitzacions de la llista "
-"d'estacions mestre"
+"d'emissores mestre"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
@@ -4414,11 +4416,11 @@ msgstr "Connector ràdio habilitat"
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
 msgid "Show remote stations"
-msgstr "Mostra les estacions remotes"
+msgstr "Mostra les emissores remotes"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
 msgid "Show stations requiring Helix/RealPlayer"
-msgstr "Mostra les estacions que requereixen Helix/RealPlayer"
+msgstr "Mostra les emissores que requereixen Helix/RealPlayer"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
 msgid "Time of the last radio update"
@@ -4431,7 +4433,7 @@ msgstr "Hora de la l'última comprovació de ràdio"
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
 msgid "Update remote stations from radio.banshee-project.org"
 msgstr ""
-"Actualitza les estacions remotes de ràdio des de radio.banshee-project.org"
+"Actualitza les emissores remotes de ràdio des de radio.banshee-project.org"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
@@ -4451,22 +4453,22 @@ msgstr "Admet les emissions de ràdio i d'àudio en temps real per Internet"
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
 msgid "Show Remote Stations"
-msgstr "Mostra les estacions remotes"
+msgstr "Mostra les emissores remotes"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
 msgid "Update and show radio station content from radio.banshee-project.org"
 msgstr ""
-"Actualitza i mostra el contingut de l'estació de ràdio des de radio.banshee-"
+"Actualitza i mostra el contingut de l'emissora de ràdio des de radio.banshee-"
 "project.org"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
-msgstr "Actualitza les estacions"
+msgstr "Actualitza les emissores"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:124
 msgid "Refresh stations from the Banshee Radio Web Service"
-msgstr "Actualitza les estacions des del servei web de ràdio de Banshee"
+msgstr "Actualitza les emissores des del servei web de ràdio de Banshee"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:129
@@ -4485,15 +4487,15 @@ msgstr "Edita"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
 msgid "Edit Radio Station"
-msgstr "Edita l'estació de ràdio"
+msgstr "Edita l'emissora de ràdio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:137
 msgid "Add Station"
-msgstr "Afegeix una estació"
+msgstr "Afegeix una emissora"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
 msgid "Add new Radio Station"
-msgstr "Afegeix una estació de ràdio nova"
+msgstr "Afegeix una emissora de ràdio nova"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:141
@@ -4502,17 +4504,17 @@ msgstr "Suprimeix"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:142
 msgid "Remove selected Radio Station"
-msgstr "Suprimeix l'estació de ràdio seleccionada"
+msgstr "Suprimeix l'emissora de ràdio seleccionada"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
 msgid "Refreshing radio stations from the Banshee Radio Web Service"
 msgstr ""
-"S'estan actualitzant les estacions de ràdio des del servei web de ràdio de "
+"S'estan actualitzant les emissores de ràdio des del servei web de ràdio de "
 "Banshee"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
 msgid "Failed to load radio stations: "
-msgstr "No s'ha pogut carregar les estacions de ràdio: "
+msgstr "No s'ha pogut carregar les emissores de ràdio: "
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
 msgid "Invalid URI format."
@@ -4520,29 +4522,29 @@ msgstr "El format URI no és vàlid."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:57
 msgid "Add new radio station"
-msgstr "Afegeix una nova estació de ràdio"
+msgstr "Afegeix una nova emissora de ràdio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:58
 msgid "Edit radio station"
-msgstr "Edita l'estació de ràdio"
+msgstr "Edita l'emissora de ràdio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
 msgid ""
 "Enter the Group, Title and URL of the radio station you wish to add. A "
 "description is optional."
 msgstr ""
-"Introduïu el grup, títol i URL de l'estació de ràdio que voleu afegir. La "
+"Introduïu el grup, títol i URL de l'emissora de ràdio que voleu afegir. La "
 "descripció és opcional."
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
 msgid "Station Group:"
-msgstr "Grup d'estacions:"
+msgstr "Grup d'emissores:"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
 msgid "Station Title:"
-msgstr "Títol de l'estació:"
+msgstr "Títol de l'emissora:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
 msgid "Stream URL:"
@@ -4551,7 +4553,7 @@ msgstr "URL del flux:"
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
 msgid "Station"
-msgstr "Estació"
+msgstr "Emissora"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:77
@@ -4574,7 +4576,7 @@ msgstr "No s'han trobat artistes semblants"
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:212
 #, csharp-format
 msgid "Top Tracks by {0}"
-msgstr "Les millors pistes segons {0}"
+msgstr "Les millors cançons segons {0}"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:214
 #, csharp-format
