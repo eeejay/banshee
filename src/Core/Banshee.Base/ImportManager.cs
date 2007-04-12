@@ -82,6 +82,11 @@ namespace Banshee.Base
             path_queue = new Queue();
         }
         
+        public bool IsImportingInProgress() 
+        {
+            return this.processing_queue;
+        }
+        
         private void CreateUserEvent()
         {
             lock(user_event_mutex) {

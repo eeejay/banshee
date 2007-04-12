@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
+using Banshee.Playlists;
 
 using Mono.Unix;
 
 namespace Banshee.SmartPlaylist
 {
-    public class SmartPlaylistSource : Banshee.Sources.ChildSource
+    public class SmartPlaylistSource : Banshee.Sources.ChildSource, IPlaylist
     {
         private List<TrackInfo> tracks = new List<TrackInfo>();
         private ArrayList watchedPlaylists = new ArrayList();

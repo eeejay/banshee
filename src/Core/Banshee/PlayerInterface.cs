@@ -48,6 +48,8 @@ using Banshee.Sources;
 using Banshee.Gui;
 using Banshee.Gui.DragDrop;
 using Banshee.Configuration.Schema;
+using Banshee.Playlists;
+using Banshee.Playlists.Formats;
 
 namespace Banshee
 {
@@ -1995,6 +1997,98 @@ namespace Banshee
         {
             PromptForImport(false);
         }
+        
+        private void OnImportPlaylistAction(object o, EventArgs args)
+        {
+            // Prompt user for location of the playlist.
+            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
+                Catalog.GetString("Import Playlist"),
+                WindowPlayer,
+                FileChooserAction.Open
+            );
+                         
+            chooser.DefaultResponse = ResponseType.Ok;
+            chooser.SelectMultiple = false;
+
+            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton(Catalog.GetString("Import"), ResponseType.Ok);
+            
+            string playlist_uri = null;
+            int response = chooser.Run();            
+
+            if(response == (int) ResponseType.Ok) {            	
+                playlist_uri = SafeUri.UriToFilename(chooser.Uri);              
+                chooser.Destroy(); 
+            } else {
+                // User cancelled import.
+                chooser.Destroy();                 
+                return;
+            } 
+
+            // Read the contents of the playlist.
+            string[] uris = null;
+            try {            	
+                uris = PlaylistFileUtil.ImportPlaylist(playlist_uri);            	
+            } catch (Exception e) {
+                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                    DialogFlags.DestroyWithParent, 
+                    MessageType.Error,  
+                    ButtonsType.Ok,
+                    Catalog.GetString("Unable to Import Playlist"),
+                    e.Message);
+
+                md.Run();
+                md.Destroy();
+                return;
+            }
+
+            // Import the tracks specified in the playlist.
+            if (uris != null) {
+                ImportPlaylistWorker worker = new ImportPlaylistWorker(uris);
+                Thread t = new Thread(new ThreadStart(worker.Import));		        
+                t.Start();
+            } else {
+                HigMessageDialog md = new HigMessageDialog(WindowPlayer, 
+                    DialogFlags.DestroyWithParent, 
+                    MessageType.Error,  
+                    ButtonsType.Ok,
+                    Catalog.GetString("Unable to Import Playlist"),
+                    Catalog.GetString("Banshee was unable to find any valid tracks to import.  " +
+                        "Please check the playlist and try again."));
+
+                md.Run();
+                md.Destroy();
+                return;
+            }
+        }
+        
+        private void OnExportPlaylistAction(object o, EventArgs args)
+        {   
+            Source source = sourceView.HighlightedSource;
+            if (!PlaylistFileUtil.IsSourceExportSupported(source)) {
+                return;
+            }
+
+            PlaylistExportDialog chooser = new PlaylistExportDialog(source.Name, WindowPlayer);
+
+            string uri = null;
+            PlaylistFile playlist = null;
+            int response = chooser.Run();            
+            if(response == (int) ResponseType.Ok) {            	
+                uri = SafeUri.UriToFilename(chooser.Uri);
+
+                // Get the format that the user selected.
+                playlist = chooser.GetExportFormat();
+            }             
+            chooser.Destroy(); 
+
+            if (uri == null) {
+                // User cancelled export.
+                return;
+            }
+
+            playlist.Export(uri, source);            
+        } 
         
         private void OnOpenLocationAction(object o, EventArgs args)
         {

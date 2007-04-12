@@ -36,7 +36,12 @@ namespace Banshee.Gui.Dialogs
 {
     public class FileChooserDialog : Gtk.FileChooserDialog
     {
-        public FileChooserDialog(string title, FileChooserAction action) : base(title, null, action)
+        public FileChooserDialog(string title, FileChooserAction action) : this(title, null, action)
+        {            
+        }
+        
+        public FileChooserDialog(string title, Window parent, FileChooserAction action) : 
+            base(title, parent, action)
         {
             SetCurrentFolderUri(LastFileChooserUri.Get(Environment.GetFolderPath(Environment.SpecialFolder.Personal)));
         }

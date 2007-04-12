@@ -13,7 +13,6 @@
       <Entry build="True" name="Banshee.Plugins.Recommendation" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="Banshee.Plugins.Audioscrobbler" single="True">
     <Execute type="None" entry="Banshee.Plugins.Audioscrobbler" />
     <Execute type="None" entry="Banshee.Plugins.Bookmarks" />

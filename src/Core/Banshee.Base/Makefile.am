@@ -98,6 +98,10 @@ BANSHEE_KERNEL_SOURCES = \
 BANSHEE_LIBRARY_SOURCES = \
 	$(srcdir)/Banshee.Library/Import.cs \
 	$(srcdir)/Banshee.Library/DatabaseWriteException.cs
+	
+BANSHEE_PLAYLISTS_SOURCES = \
+    $(srcdir)/Banshee.Playlists/PlaylistFileUtil.cs  \
+    $(srcdir)/Banshee.Playlists/IPlaylist.cs 
 
 BANSHEE_SMARTPLAYLIST_SOURCES = \
 	$(srcdir)/Banshee.SmartPlaylist/Editor.cs \
@@ -255,6 +259,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_KERNEL_SOURCES) \
 	$(BANSHEE_LIBRARY_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
+	$(BANSHEE_PLAYLISTS_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \

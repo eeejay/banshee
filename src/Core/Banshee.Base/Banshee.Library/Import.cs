@@ -59,6 +59,11 @@ namespace Banshee.Library
         {
             ImportManager.Instance.QueueSource(paths);
         }
+        
+        public static bool IsImportInProgress()
+        {
+            return ImportManager.Instance.IsImportingInProgress();
+        }
 
         private static void OnImportManagerImportRequested(object o, ImportEventArgs args)
         {

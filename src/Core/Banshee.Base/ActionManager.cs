@@ -198,7 +198,15 @@ namespace Banshee.Base
                     Catalog.GetString("Song Menu"), null, null, null),
                     
                 new ActionEntry("DebugMenuAction", null,
-                    Catalog.GetString("_Debug"), null, null, null)
+                    Catalog.GetString("_Debug"), null, null, null),
+                
+                new ActionEntry("ImportPlaylistAction", null, 
+                    Catalog.GetString("Import Playlist..."), null,
+                    Catalog.GetString("Import a playlist"), null),
+
+                new ActionEntry("ExportPlaylistAction", null, 
+                    Catalog.GetString("Export Playlist..."), null,
+                    Catalog.GetString("Export a playlist"), null)
             });
             
             global_actions.Add(new ToggleActionEntry [] {               

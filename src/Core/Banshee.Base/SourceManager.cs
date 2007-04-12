@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Banshee.Base;
+using Banshee.Playlists;
 using Mono.Unix;
 
 namespace Banshee.Sources
@@ -286,6 +287,8 @@ namespace Banshee.Sources
             Globals.ActionManager["UnmapSourceAction"].StockId = source.UnmapIcon;
             Globals.ActionManager["SelectedSourcePropertiesAction"].Label = source.SourcePropertiesLabel;
             Globals.ActionManager["SelectedSourcePropertiesAction"].StockId = source.SourcePropertiesIcon;
+            // Show the "Export Playlist" option for playlists.            
+            Globals.ActionManager["ExportPlaylistAction"].Visible = (source is IPlaylist);
         }
      
         public static ICollection<Source> Sources {

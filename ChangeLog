@@ -1,3 +1,42 @@
+2007-04-12  Aaron Bockover  <abock@gnome.org>
+
+	Added playlist import/export functionality (BGO #363018)
+	Trey Ethridge <tale@juno.com>
+
+	* src/Core/Banshee/PlayerInterface.cs: Implemented OnImportPlaylistAction
+	and OnExportPlaylistAction
+	
+	* src/Core/Banshee.Base/Gui/FileChooserDialog.cs: Overloaded constructor.
+	
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs: Uncommented 
+	exception that is thrown when import determines file is not a Pls file.
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFile.cs: Added
+	null ref check
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs: Uncommented 
+	exception that is thrown when import determines file is not a playlist file
+
+	* src/Core/Banshee.Base/SourceManager.cs: Show the export option on 
+	playlist source context menus
+
+	* src/Core/Banshee.Base/Banshee.Library/Import.cs: Exposed import status
+
+	* src/Core/Banshee.Base/ImportManager.cs: Exposed import status
+
+	* src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs: Utilities
+	for playlist files
+	
+	* src/Core/Banshee.Base/Banshee.Playlists/IPlaylist.cs: Added interface 
+	for playlists to implement. Allows the export menu option to be added 
+	to context menu in a generic manner.
+	
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Base/Sources/PlaylistSource.cs: Implemented IPlaylist
+
+	* src/Core/Banshee.Base/ActionManager.cs: Added actions for import/export
+
 2007-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Add new plugin, disabled by default, for bookmarking positions in tracks.

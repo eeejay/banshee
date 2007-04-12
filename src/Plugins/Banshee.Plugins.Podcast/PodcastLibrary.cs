@@ -800,71 +800,39 @@ namespace Banshee.Plugins.Podcast
 
         private void OnLibraryTrackRemoved (object sender, LibraryTrackRemovedArgs args)
         {
-            if (args.Track != null)
+            ArrayList podcast_remove_list = new ArrayList ();
+
+            lock (TrackSync)
             {
-                PodcastInfo pi = null;
-                TrackInfo ti = args.Track;
-               
-                if (BadTrackHash (ti))
-                {
-                    return;
-                }
+                PodcastInfo tmpPi;
 
-                lock (TrackSync)
+                foreach (TrackInfo ti in args.Tracks)
                 {
-                    if (tracks_keyed.ContainsKey (ti))
+                    if (ti != null)
                     {
-                        pi = tracks_keyed [ti] as PodcastInfo;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-
-                if (pi != null)
-                {
-                    Console.WriteLine (pi);
-                    RemovePodcast (pi);
-                }
-
-            }
-            else if (args.Tracks != null)
-            {
-                ArrayList podcast_remove_list = new ArrayList ();
-
-                lock (TrackSync)
-                {
-                    PodcastInfo tmpPi;
-
-                    foreach (TrackInfo ti in args.Tracks)
-                    {
-                        if (ti != null)
+                        tmpPi = null;                            
+                        
+                        if (BadTrackHash (ti))
                         {
-							tmpPi = null;                            
-                            
-                            if (BadTrackHash (ti))
-                            {
-                                continue;
-                            }
-															
-							if (tracks_keyed.ContainsKey (ti)) {
-                                tmpPi = tracks_keyed [ti] as PodcastInfo;
-                            }
-                            
-                            if (tmpPi != null)
-                            {
-                                podcast_remove_list.Add (tmpPi);
-                            }
+                            continue;
+                        }
+                                                        
+                        if (tracks_keyed.ContainsKey (ti)) {
+                            tmpPi = tracks_keyed [ti] as PodcastInfo;
+                        }
+                        
+                        if (tmpPi != null)
+                        {
+                            podcast_remove_list.Add (tmpPi);
                         }
                     }
                 }
+            }
 
-                if (podcast_remove_list.Count > 0)
-                {
-                    RemovePodcasts (podcast_remove_list);
-                    UpdateParentFeeds (podcast_remove_list);
-                }
+            if (podcast_remove_list.Count > 0)
+            {
+                RemovePodcasts (podcast_remove_list);
+                UpdateParentFeeds (podcast_remove_list);
             }
         }
 

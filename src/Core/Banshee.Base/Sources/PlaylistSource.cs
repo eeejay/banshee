@@ -34,10 +34,11 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Database;
+using Banshee.Playlists;
 
 namespace Banshee.Sources
 {
-    public class PlaylistSource : AbstractPlaylistSource
+    public class PlaylistSource : AbstractPlaylistSource, IPlaylist
     {
         private static List<PlaylistSource> playlists = new List<PlaylistSource>();
         private DbParameter<int> playlist_id_param = new DbParameter<int>("playlist_id");

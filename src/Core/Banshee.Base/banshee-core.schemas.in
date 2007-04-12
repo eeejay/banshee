@@ -200,6 +200,17 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/banshee/player_window/default_export_format</key>
+      <applyto>/apps/banshee/player_window/default_export_format</applyto>
+      <owner>banshee</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>Export Format</short>
+        <long>The default playlist export format</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/banshee/player_window/height</key>
       <applyto>/apps/banshee/player_window/height</applyto>
       <owner>banshee</owner>

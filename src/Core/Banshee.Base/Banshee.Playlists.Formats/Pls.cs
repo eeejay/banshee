@@ -109,9 +109,9 @@ namespace Banshee.Playlists.Formats
                     }
                 }
                 
-                /*if (!validFile) {
+                if (!validFile) {
                     throw new InvalidPlaylistException(Catalog.GetString("Not a valid PLS file."));
-                }*/
+                }
             
             } finally {
                 if (tr != null) {                    

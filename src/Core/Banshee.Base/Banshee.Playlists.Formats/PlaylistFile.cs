@@ -44,6 +44,10 @@ namespace Banshee.Playlists.Formats
         
         public string UpdateExtension(string uri) 
         {            
+            if (uri == null) {
+                return null;
+            }
+            
             string extension = Path.GetExtension(uri).ToLower();            
             
             if (!Path.HasExtension(uri)) {

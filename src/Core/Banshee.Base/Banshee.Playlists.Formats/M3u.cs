@@ -86,9 +86,9 @@ namespace Banshee.Playlists.Formats
                        }
                 }
                 
-                /*if (!validFile) {
+                if (!validFile) {
                     throw new InvalidPlaylistException(Catalog.GetString("Not a valid M3U file."));
-                }*/
+                }
                         
             } finally {
                 if (tr != null) {                    

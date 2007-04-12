@@ -8,6 +8,7 @@
             <menuitem name="ImportFiles" action="ImportFilesAction" />-->
             <separator />
             <menuitem name="ImportMusic" action="ImportMusicAction" />
+            <menuitem name="ImportPlaylist" action="ImportPlaylistAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
             <placeholder name="MusicMenuAdditions" />
             <separator />
@@ -26,6 +27,7 @@
             <menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
             <menuitem name="RenameSource" action="RenameSourceAction" />
             <menuitem name="UnmapSource" action="UnmapSourceAction" />
+            <menuitem name="ExportPlaylist" action="ExportPlaylistAction" />
             <separator />
             <menuitem name="SelectAll" action="SelectAllAction" />
             <menuitem name="SelectNone" action="SelectNoneAction" />
@@ -86,6 +88,7 @@
         <separator />
         <menuitem name="RenameSource" action="RenameSourceAction" />
         <menuitem name="UnmapSource" action="UnmapSourceAction" />
+        <menuitem name="ExportPlaylist" action="ExportPlaylistAction" />
         <menuitem name="SyncDap" action="SyncDapAction" />
         <separator />
         <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
