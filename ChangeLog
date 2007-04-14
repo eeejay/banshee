@@ -1,3 +1,11 @@
+2007-04-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs: Clean the
+	design of the plugin with clear distinctions between the plugin, the UI,
+	and the model.  Handle bookmarked tracks being removed, and escape
+	underscores in track names when putting them in menus, and make the plugin
+	name translatable.
+
 2007-04-12  Aaron Bockover  <abock@gnome.org>
 
 	Added playlist import/export functionality (BGO #363018)
