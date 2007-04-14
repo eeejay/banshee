@@ -92,21 +92,29 @@ namespace Banshee.Plugins.Bookmarks
             get { return instance != null; }
         }
 
+        private ActionGroup actions;
+        private uint ui_manager_id;
         private BookmarkUI()
         {
-            parent_menu = (Globals.ActionManager.GetWidget("/MainMenu/ToolsMenu") as MenuItem).Submenu as Menu;
+            actions = new ActionGroup("Bookmarks");
 
-            bookmark_item = new ImageMenuItem(Catalog.GetString("_Bookmarks"));
-            bookmark_item.Image = new Image ("bookmark", IconSize.Menu);
-            bookmark_item.AccelPath = "<control>D";
-            bookmark_item.Submenu = bookmark_menu = new Menu();
+            actions.Add(new ActionEntry [] {
+                new ActionEntry("BookmarksAction", null,
+                                  Catalog.GetString("_Bookmarks"), null,
+                                  null, null),
+                new ActionEntry("BookmarksAddAction", Stock.Add,
+                                  Catalog.GetString("_Add Bookmark"), "<control>D",
+                                  Catalog.GetString("Bookmark the Position in the Current Track"),
+                                  HandleNewBookmark)
+            });
 
-            new_item = new ImageMenuItem(Catalog.GetString("_New Bookmark"));
-            new_item.Image = new Image(Stock.Add, IconSize.Menu);
-            new_item.Activated += HandleNewBookmark;
+            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
+            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("BookmarksMenu.xml");
+            bookmark_item = Globals.ActionManager.GetWidget("/MainMenu/ToolsMenu/Bookmarks") as ImageMenuItem;
+            new_item = Globals.ActionManager.GetWidget("/MainMenu/ToolsMenu/Bookmarks/Add") as ImageMenuItem;
+
+            bookmark_menu = bookmark_item.Submenu as Menu;
             bookmark_item.Selected += HandleMenuShown;
-
-            bookmark_menu.Append(new_item);
 
             remove_item = new ImageMenuItem(Catalog.GetString("_Remove Bookmark"));
             remove_item.Sensitive = false;
@@ -114,7 +122,6 @@ namespace Banshee.Plugins.Bookmarks
 
             remove_item.Submenu = remove_menu = new Menu();
             bookmark_menu.Append(remove_item);
-            parent_menu.Append(bookmark_item);
 
             // Wait until the library is loaded to load existing bookmarks
             if (Globals.Library.IsLoaded) {
@@ -133,7 +140,12 @@ namespace Banshee.Plugins.Bookmarks
         {
             TrackInfo track = PlayerEngineCore.CurrentTrack;
             if (track != null) {
-                AddBookmark(new Bookmark(track.TrackId, PlayerEngineCore.Position));
+                try {
+                    Bookmark bookmark = new Bookmark(track.TrackId, PlayerEngineCore.Position);
+                    AddBookmark(bookmark);
+                } catch (Exception e) {
+                    LogCore.Instance.PushWarning("Unable to Add New Bookmark", e.ToString(), false);
+                }
             }
         }
 
@@ -203,9 +215,10 @@ namespace Banshee.Plugins.Bookmarks
 
         public void Dispose()
         {
-            if (parent_menu != null && bookmark_item != null) {
-                parent_menu.Remove(bookmark_item);
-            }
+            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
+            Globals.ActionManager.UI.RemoveActionGroup(actions);
+            actions = null;
+
             instance = null;
         }
     }
@@ -288,7 +301,9 @@ namespace Banshee.Plugins.Bookmarks
 
                 if (BookmarkUI.Instantiated)
                     BookmarkUI.Instance.RemoveBookmark(this);
-            } catch {}
+            } catch (Exception e) {
+                LogCore.Instance.PushWarning("Error Removing Bookmark", e.ToString(), false);
+            }
         }
 
         public static List<Bookmark> LoadAll()
@@ -305,10 +320,12 @@ namespace Banshee.Plugins.Bookmarks
                         (int) reader[0], (int) reader[1], (uint)(int) reader[2],
                         DateTimeUtil.ToDateTime(Convert.ToInt64(reader[3]))
                     ));
-                } catch {
+                } catch (Exception e) {
                     Globals.Library.Db.Execute(String.Format(
-                        "DELETE FROM Bookmarks WHERE BookmarkID = {0}", (int)reader[1]
+                        "DELETE FROM Bookmarks WHERE BookmarkID = {0}", (int)reader[0]
                     ));
+
+                    LogCore.Instance.PushWarning("Error Loading Bookmark", e.ToString(), false);
                 }
             }
             reader.Dispose();

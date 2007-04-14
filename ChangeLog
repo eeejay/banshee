@@ -1,5 +1,14 @@
 2007-04-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs: Use UIManager
+	for the Add Bookmark item and have Ctrl-D activate it.  Add hidden logger
+	warnings for several errors.
+
+	* src/Plugins/Banshee.Plugins.Bookmarks/BookmarksMenu.xml:
+	* src/Plugins/Banshee.Plugins.Bookmarks/Makefile.am: New menu XML.
+
+2007-04-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs: Clean the
 	design of the plugin with clear distinctions between the plugin, the UI,
 	and the model.  Handle bookmarked tracks being removed, and escape

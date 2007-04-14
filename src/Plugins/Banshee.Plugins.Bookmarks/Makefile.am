@@ -1,5 +1,7 @@
 include $(top_srcdir)/build/Common.Makefile
 
+CUSTOM_MCS_FLAGS = -resource:$(srcdir)/BookmarksMenu.xml,BookmarksMenu.xml
+
 ASSEMBLY = Banshee.Plugins.Bookmarks.dll
 ASSEMBLY_GCONF_SCHEMA = banshee-plugin-bookmarks.schemas.in
 
@@ -17,7 +19,7 @@ $(ASSEMBLY): $(SOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules
 
-EXTRA_DIST = $(SOURCES) $(ASSEMBLY_GCONF_SCHEMA)
+EXTRA_DIST = $(SOURCES) BookmarksMenu.xml $(ASSEMBLY_GCONF_SCHEMA)
 CLEANFILES = *.dll *.mdb
 MAINTAINERCLEANFILES = Makefile.in *.pidb
 DISTCLEANFILES = $(schema_DATA)
