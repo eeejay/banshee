@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-03 18:28+0200\n"
-"PO-Revision-Date: 2007-04-03 18:28+0100\n"
+"POT-Creation-Date: 2007-04-14 11:29+0200\n"
+"PO-Revision-Date: 2007-04-14 11:27+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -761,9 +761,9 @@ msgstr "-"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:162
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:453
-#: ../src/Core/Banshee/PlayerInterface.cs:1338
-#: ../src/Core/Banshee/PlayerInterface.cs:2387
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+#: ../src/Core/Banshee/PlayerInterface.cs:1340
+#: ../src/Core/Banshee/PlayerInterface.cs:2481
 msgid "Genre"
 msgstr "Genre"
 
@@ -825,8 +825,8 @@ msgstr "Plats"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-#: ../src/Core/Banshee/PlayerInterface.cs:454
-#: ../src/Core/Banshee/PlayerInterface.cs:1340
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+#: ../src/Core/Banshee/PlayerInterface.cs:1342
 msgid "Year"
 msgstr "År"
 
@@ -1033,214 +1033,230 @@ msgstr "Låtmeny"
 msgid "_Debug"
 msgstr "_Felsökning"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:206
+#: ../src/Core/Banshee.Base/ActionManager.cs:204
+msgid "Import Playlist..."
+msgstr "Importera spellista..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:205
+msgid "Import a playlist"
+msgstr "Importera en spellista"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:208
+msgid "Export Playlist..."
+msgstr "Exportera spellista..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:209
+msgid "Export a playlist"
+msgstr "Exportera en spellista"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
 msgstr "H_elskärm"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:207
+#: ../src/Core/Banshee.Base/ActionManager.cs:215
 msgid "Toggle Fullscreen Mode"
 msgstr "Växla helskärmsläge"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:210
+#: ../src/Core/Banshee.Base/ActionManager.cs:218
 msgid "Show Cover _Art"
 msgstr "Visa oms_lagsbild"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:211
+#: ../src/Core/Banshee.Base/ActionManager.cs:219
 msgid "Toggle display of album cover art"
 msgstr "Växla visning av albumets omslagsbild"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:222
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
 msgid "_Copy"
 msgstr "_Kopiera"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:223
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
 msgid "Copy selected song(s) to clipboard"
 msgstr "Kopiera markerade låt(ar) till urklipp"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:226
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
 msgid "_Remove"
 msgstr "_Ta bort"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:227
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
 msgid "Remove selected song(s) from library"
 msgstr "Ta bort markerad(e) låt(ar) från bibliotek"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:230
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Delete From Drive"
 msgstr "Ta _bort från enhet"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:231
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Ta permanent bort markerade låt(ar) från lagringsmedium"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:234
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "_Edit Song Metadata"
 msgstr "R_edigera låtens metadata"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:235
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
 msgid "Edit metadata on selected songs"
 msgstr "Redigera metadata för de markerade låtarna"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:238
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
 msgid "_Search for songs"
 msgstr "_Sök efter låtar"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:239
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search for songs matching certain criteria"
 msgstr "Sök efter låtar som matchar vissa kriterium"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:242
+#: ../src/Core/Banshee.Base/ActionManager.cs:250
 msgid "By matching _album"
 msgstr "Efter matchande _album"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:243
+#: ../src/Core/Banshee.Base/ActionManager.cs:251
 msgid "Search all songs of this album"
 msgstr "Sök efter alla låtar i detta album"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:246
+#: ../src/Core/Banshee.Base/ActionManager.cs:254
 msgid "By matching a_rtist"
 msgstr "Efter matchande a_rtist"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:247
+#: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Search all songs of this artist"
 msgstr "Sök efter alla låtar av denna artist"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:250
+#: ../src/Core/Banshee.Base/ActionManager.cs:258
 msgid "By matching _genre"
 msgstr "Efter matchande _genre"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:251
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
 msgid "Search all songs of this genre"
 msgstr "Sök efter alla låtar i denna genre"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:254
+#: ../src/Core/Banshee.Base/ActionManager.cs:262
 msgid "Add _to Playlist"
 msgstr "Lägg _till i spellista"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:255
+#: ../src/Core/Banshee.Base/ActionManager.cs:263
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 "Lägg till de markerade låtarna till spellistan eller skapa en ny spellista "
 "från markering"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:258
+#: ../src/Core/Banshee.Base/ActionManager.cs:266
 msgid "Ratin_g"
 msgstr "Bety_g"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:259
+#: ../src/Core/Banshee.Base/ActionManager.cs:267
 msgid "Set rating for selected songs"
 msgstr "Sätt betyg på de markerade låtarna"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:268
+#: ../src/Core/Banshee.Base/ActionManager.cs:276
 msgid "Import CD"
 msgstr "Importera cd"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:269
+#: ../src/Core/Banshee.Base/ActionManager.cs:277
 msgid "Import audio CD to library"
 msgstr "Importera ljud-cd till bibliotek"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:278
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Play"
 msgstr "_Spela"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:279
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play or pause the current song"
 msgstr "Spela upp eller pausa den aktuella låten"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:282
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "_Next"
 msgstr "_Nästa"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:283
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the next song"
 msgstr "Spela upp nästa låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:294
 msgid "Pre_vious"
 msgstr "Före_gående"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:295
 msgid "Play the previous song"
 msgstr "Spela upp den föregående låten"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:292
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat N_one"
 msgstr "Upprepa _ingen"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:293
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Do not repeat playlist"
 msgstr "Upprepa inte spellista"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:296
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat _All"
 msgstr "Upprepa _alla"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:297
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Play all songs before repeating playlist"
 msgstr "Spela upp alla låtar innan spellistan upprepas"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:308
 msgid "Repeat Si_ngle"
 msgstr "Upprepa _enstaka"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:309
 msgid "Repeat the current playing song"
 msgstr "Repetera nuvarande låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:306
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
 msgid "Shu_ffle"
 msgstr "Bla_nda"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:307
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Växla mellan blandning eller kontinuerlig uppspelning"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:310
+#: ../src/Core/Banshee.Base/ActionManager.cs:318
 msgid "_Stop when finished"
 msgstr "_Stoppa när färdig"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:311
+#: ../src/Core/Banshee.Base/ActionManager.cs:319
 msgid "Stop playback after the current song finishes playing"
 msgstr "Stoppa uppspelning efter nuvarande låt har slutat spela"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:320
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Backward"
 msgstr "Spola _bakåt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:321
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek backward in current song"
 msgstr "Spola bakåt i aktuell låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:324
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
 msgid "Seek _Forward"
 msgstr "Spola _framåt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:325
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek forward in current song"
 msgstr "Spola framåt i aktuell låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "Seek _To..."
 msgstr "Spola _till..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Seek to a specific location in current song"
 msgstr "Spola till en specifik plats i aktuell låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:340
 msgid "_Restart Song"
 msgstr "S_tarta om låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:341
 msgid "Restart the current song"
 msgstr "Starta om nuvarande låt"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:342
-#: ../src/Core/Banshee.Base/SourceManager.cs:275
+#: ../src/Core/Banshee.Base/ActionManager.cs:350
+#: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "Synkronisera"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:343
+#: ../src/Core/Banshee.Base/ActionManager.cs:351
 msgid "Save changes to device or synchronize music library"
 msgstr "Spara ändringar till enhet eller synkronisera musikbibliotek"
 
@@ -1330,7 +1346,7 @@ msgid "Cannot Import CD"
 msgstr "Kan inte importera cd"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
-#: ../src/Core/Banshee.Base/ImportManager.cs:292
+#: ../src/Core/Banshee.Base/ImportManager.cs:297
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importerar {0} av {1}"
@@ -1624,7 +1640,11 @@ msgstr "Aktivera felkorrigering"
 msgid "Enable shuffle mode"
 msgstr "Aktivera blandningsläge"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
+msgid "Export Format"
+msgstr "Exportformat"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
 #, no-c-format
 msgid ""
 "Format for creating a track filename inside the library. Do not use path "
@@ -1638,7 +1658,7 @@ msgstr ""
 "track_number_nz% (Ingen inledande nolla), %track_count_nz% (Ingen inledande "
 "nolla)."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 #, no-c-format
 msgid ""
 "Format for creating a track folder inside the library. Do not create an "
@@ -1653,11 +1673,11 @@ msgstr ""
 "%, %track_count%, %track_number_nz% (Ingen inledande nolla), %track_count_nz"
 "% (Ingen inledande nolla), %path_sep% (portabel katalogavgränsare (/))."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 msgid "Height of the main interface window."
 msgstr "Höjd på gränssnittets huvudfönster."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid ""
 "If enabled, metadata (tags) will be written back to audio files when using "
 "the track metadata editor."
@@ -1665,93 +1685,93 @@ msgstr ""
 "Om aktiverad kommer metadata (taggar) att skrivas tillbaka till ljudfiler "
 "när redigeraren för spårmetadata används."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
 msgid "Library File Pattern"
 msgstr "Biblioteksfilmönster"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
 msgid "Library Folder Pattern"
 msgstr "Biblioteksmappmönster"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 msgid "Library location"
 msgstr "Biblioteksplats"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "Library source expansion"
 msgstr "Utfällnings av bibliotekskälla"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
 msgstr ""
 "Lista över uri:er i historikens rullgardinslista för Öppna plats-dialogrutan"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
 msgstr "Flytta musik när information sparas"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Flytta musik inom Banshees musikbibliotekkatalog när spårinformation sparas"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
 msgid "Name of media playback engine backend"
 msgstr "Namn på bakände för mediauppspelningsmotor"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Pixelposition för huvuduppspelarfönstret på X-axeln"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Pixelposition för huvuduppspelarfönstret på Y-axeln"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
 msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
 msgstr "Upprepningsläge (0 = Inget, 1 = Alla, 2 = Enstaka)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
 msgid "Repeat playback"
 msgstr "Upprepa uppspelning"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Set the IO backend in Banshee"
 msgstr "Ställer in in-/ut-bakände i Banshee"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
 msgid "Show cover art"
 msgstr "Visa omslagsbild"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
 msgstr "Visa omslagsbild under källvyn om tillgänglig"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog"
 msgstr "Visa den inledande importeringsdialogen"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr "Visa den inledande importeringsdialog när Banshees bibliotek är tomt"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
 msgid "Shuffle playback"
 msgstr "Blanda uppspelning"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid ""
 "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 "Sorteringskriterier för bibliotekets spellistor i källvyn (0 = Namn, 1 = "
 "Storlek)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort criteria of playlists"
 msgstr "Sorteringskriterier för spellistor"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
@@ -1759,82 +1779,120 @@ msgstr ""
 "Sorteringsordning för bibliotekets spellistor i källvyn (0 = Stigande, 1 = "
 "Fallande)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
 msgstr "Sorteringsordning för spellistor"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 msgid "Source View Width"
 msgstr "Bredd på källvy"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+msgid "The default playlist export format"
+msgstr "Standardformat för exportering av spellista"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
 msgstr "Sant om huvudfönstret ska maximeras, annars falskt"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
 msgid "URI"
 msgstr "Uri"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
 msgid "URI List"
 msgstr "Uri-lista"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
 msgid "URI of last file folder"
 msgstr "Uri för senaste filmapp"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "Volume"
 msgstr "Volym"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
 msgid "Volume of playback relative to mixer output"
 msgstr "Uppspelningsvolym relativ till mixerutgång"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
 msgstr "Aktivera felkorrigering vid importering av ljud-cd (paranoia-läge)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
 msgid "Whether to expand the library node in the source view"
 msgstr "Huruvida biblioteksnoden ska fällas ut i källvyn"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
 msgid "Width of Source View Column."
 msgstr "Bredd på Källvy-kolumn."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
 msgid "Width of the main interface window."
 msgstr "Bredd på gränssnittets huvudfönster."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
 msgid "Window Height"
 msgstr "Fönsterhöjd"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
 msgid "Window Maximized"
 msgstr "Fönster maximerat"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
 msgid "Window Position X"
 msgstr "Fönsterposition X"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
 msgid "Window Position Y"
 msgstr "Fönsterposition Y"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:57
 msgid "Window Width"
 msgstr "Fönsterbredd"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:58
 msgid "Write metadata back to audio files"
 msgstr "Skriv metadata tillbaka till ljudfiler"
 
-#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:69
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:280
 msgid "Scanning"
 msgstr "Söker av"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
+msgid "Verifying"
+msgstr "Verifierar"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
+msgid ""
+"The playlist import process is currently running. Would you like to stop it?"
+msgstr "Importering av spellistan körs för närvarande. Vill du stoppa den?"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
+msgid "Verifying playlist tracks exist in library"
+msgstr "Verifierar att spellistans spår finns i biblioteket"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "Verifierar {0} av {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
+msgid "Verifying "
+msgstr "Verifierar"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
+msgid "Export Playlist"
+msgstr "Exportera spellista"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
+msgid "Export"
+msgstr "Exportera"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
+msgid "Select Format: "
+msgstr "Välj format: "
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -1845,9 +1903,17 @@ msgstr "MPEG version 3.0 Extended (*.m3u)"
 msgid "Exception: "
 msgstr "Undantag: "
 
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
+msgid "Not a valid M3U file."
+msgstr "Inte en giltig M3U-fil."
+
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
 msgid "Shoutcast Playlist version 2 (*.pls)"
 msgstr "Shoutcast-spellista version 2 (*.pls)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
+msgid "Not a valid PLS file."
+msgstr "Inte en giltig PLS-fil."
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
 msgid "Edit Smart Playlist"
@@ -1878,22 +1944,22 @@ msgid "Unheard Podcasts"
 msgstr "Ej hörda poddsändningar"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
-#: ../src/Core/Banshee/PlayerInterface.cs:451
-#: ../src/Core/Banshee/PlayerInterface.cs:1332
-#: ../src/Core/Banshee/PlayerInterface.cs:2383
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+#: ../src/Core/Banshee/PlayerInterface.cs:1334
+#: ../src/Core/Banshee/PlayerInterface.cs:2477
 msgid "Artist Name"
 msgstr "Artistnamn"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
-#: ../src/Core/Banshee/PlayerInterface.cs:450
-#: ../src/Core/Banshee/PlayerInterface.cs:1334
+#: ../src/Core/Banshee/PlayerInterface.cs:452
+#: ../src/Core/Banshee/PlayerInterface.cs:1336
 msgid "Song Name"
 msgstr "Låtnamn"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
-#: ../src/Core/Banshee/PlayerInterface.cs:452
-#: ../src/Core/Banshee/PlayerInterface.cs:1336
-#: ../src/Core/Banshee/PlayerInterface.cs:2379
+#: ../src/Core/Banshee/PlayerInterface.cs:454
+#: ../src/Core/Banshee/PlayerInterface.cs:1338
+#: ../src/Core/Banshee/PlayerInterface.cs:2473
 msgid "Album Title"
 msgstr "Albumtitel"
 
@@ -2101,7 +2167,7 @@ msgid "Playlist"
 msgstr "Spellista"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:126
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "Sortera spellista"
 
@@ -2117,19 +2183,19 @@ msgstr "Ny _smart spellista..."
 msgid "New Smart Playlist _from Search..."
 msgstr "Ny smart spellista _från sökning..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:116
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
 msgid "Delete Smart Playlist"
 msgstr "Ta bort smart spellista"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:121
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
 msgid "Edit Smart Playlist..."
 msgstr "Redigera smart spellista..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:442
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
 msgid "Smart Playlist has Dependencies"
 msgstr "Smart spellista har beroenden"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:444
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
 #, csharp-format
 msgid ""
 "{0} is depended on by other smart playlists. Are you sure you want to delete "
@@ -2577,15 +2643,15 @@ msgstr "Version"
 msgid "Home Directory"
 msgstr "Hemkatalog"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:92
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
 msgid "Scanning for songs"
 msgstr "Söker efter låtar"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:280
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
 msgid "Importing Songs"
 msgstr "Importerar låtar"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:286
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
 msgid "The import process is currently running. Would you like to stop it?"
 msgstr "Importeringsprocessen körs för närvarande. Vill du stoppa den?"
 
@@ -2665,11 +2731,12 @@ msgstr "Källegenskaper..."
 msgid "Delete {0}"
 msgstr "Ta bort {0}"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:264
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2014
 msgid "Import"
 msgstr "Importera"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:282
+#: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
 msgid "Rename {0}"
 msgstr "Byt namn på {0}"
@@ -2816,18 +2883,18 @@ msgstr "Storlek fallande"
 msgid "Local Queue"
 msgstr "Lokal kö"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:72
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:460
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:466
-#: ../src/Core/Banshee/PlayerInterface.cs:1600
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1602
 msgid "New Playlist"
 msgstr "Ny spellista"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:161
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
 msgid "Cannot Rename Playlist"
 msgstr "Kan inte byta namn på spellista"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "En spellista med detta namn finns redan. Välj ett annat namn."
 
@@ -2856,74 +2923,74 @@ msgstr "från"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} GB"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:448
+#: ../src/Core/Banshee/PlayerInterface.cs:450
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
 msgid "All"
 msgstr "Alla"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:477
+#: ../src/Core/Banshee/PlayerInterface.cs:479
 msgid "Write selection to CD"
 msgstr "Skriv markering till cd"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:478
+#: ../src/Core/Banshee/PlayerInterface.cs:480
 msgid "Import CD into library"
 msgstr "Importera cd till bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:479
+#: ../src/Core/Banshee/PlayerInterface.cs:481
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:151
 msgid "Play previous song"
 msgstr "Spela upp föregående låt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:480
+#: ../src/Core/Banshee/PlayerInterface.cs:482
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:152
 msgid "Play/pause current song"
 msgstr "Spela upp/Pausa aktuell låt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:481
+#: ../src/Core/Banshee/PlayerInterface.cs:483
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
 msgid "Play next song"
 msgstr "Spela upp nästa låt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:482
+#: ../src/Core/Banshee/PlayerInterface.cs:484
 msgid "Device disk usage"
 msgstr "Enhetsanvändning"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:483
+#: ../src/Core/Banshee/PlayerInterface.cs:485
 msgid "Synchronize music library to device"
 msgstr "Synkronisera musikbibliotek till enhet"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:484
+#: ../src/Core/Banshee/PlayerInterface.cs:486
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:155
 msgid "Adjust volume"
 msgstr "Justera volym"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:485
+#: ../src/Core/Banshee/PlayerInterface.cs:487
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:156
 msgid "Change repeat playback mode"
 msgstr "Ändra upprepningsläge"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:486
+#: ../src/Core/Banshee/PlayerInterface.cs:488
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:157
 msgid "Toggle shuffle playback mode"
 msgstr "Växla blandningsläge"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:487
+#: ../src/Core/Banshee/PlayerInterface.cs:489
 msgid "Edit and view metadata of selected songs"
 msgstr "Redigera och visa metadata för markerade låtar"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:804
+#: ../src/Core/Banshee/PlayerInterface.cs:806
 msgid "Pause"
 msgstr "Paus"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:806
+#: ../src/Core/Banshee/PlayerInterface.cs:808
 msgid "Stop"
 msgstr "Stopp"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:827
+#: ../src/Core/Banshee/PlayerInterface.cs:829
 msgid "Cannot Play Song"
 msgstr "Kan inte spela upp låt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:828
+#: ../src/Core/Banshee/PlayerInterface.cs:830
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2937,51 +3004,51 @@ msgstr ""
 "  <big>•</big> Låten är skyddad (DRM)\n"
 "  <big>•</big> Låten är på en DAP som inte har stöd för uppspelning\n"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:837
-#: ../src/Core/Banshee/PlayerInterface.cs:846
+#: ../src/Core/Banshee/PlayerInterface.cs:839
+#: ../src/Core/Banshee/PlayerInterface.cs:848
 msgid "Play"
 msgstr "Spela"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1258
+#: ../src/Core/Banshee/PlayerInterface.cs:1260
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} objekt"
 msgstr[1] "{0} objekt"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1262
+#: ../src/Core/Banshee/PlayerInterface.cs:1264
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
-msgstr[0] "{0} dag"
-msgstr[1] "{0} dagar"
+msgstr[0] "{0} dygn"
+msgstr[1] "{0} dygn"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1267
+#: ../src/Core/Banshee/PlayerInterface.cs:1269
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
 msgstr[0] "{0} timme"
 msgstr[1] "{0} timmar"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1271
+#: ../src/Core/Banshee/PlayerInterface.cs:1273
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
 msgstr[0] "{0} minut"
 msgstr[1] "{0} minuter"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1273
+#: ../src/Core/Banshee/PlayerInterface.cs:1275
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
 msgstr[0] "{0} sekund"
 msgstr[1] "{0} sekunder"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1619
+#: ../src/Core/Banshee/PlayerInterface.cs:1621
 msgid "Clear"
 msgstr "Töm"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1882
+#: ../src/Core/Banshee/PlayerInterface.cs:1884
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2990,15 +3057,15 @@ msgstr[0] "Är du säker på att du vill permanent ta bort denna låt?"
 msgstr[1] ""
 "Är du säker på att du vill permanent ta bort de markerade {0} låtarna?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1886
+#: ../src/Core/Banshee/PlayerInterface.cs:1888
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Om du tar bort markeringen kommer de att permanent förloras."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1889
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
 msgid "Remove selection from library"
 msgstr "Ta bort markering från bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1891
+#: ../src/Core/Banshee/PlayerInterface.cs:1893
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -3009,26 +3076,43 @@ msgstr[1] ""
 "Är du säker att du vill ta bort de <b>({0})</b> markerade låtarna från ditt "
 "bibliotek?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1936
+#: ../src/Core/Banshee/PlayerInterface.cs:1938
 msgid "Delete songs from drive"
 msgstr "Ta bort låtar från enhet"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1937
+#: ../src/Core/Banshee/PlayerInterface.cs:1939
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "Du har inte de nödvändiga rättigheterna att ta bort \"{0}\""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2051
+#: ../src/Core/Banshee/PlayerInterface.cs:2005
+msgid "Import Playlist"
+msgstr "Importera spellista"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2037
+#: ../src/Core/Banshee/PlayerInterface.cs:2055
+msgid "Unable to Import Playlist"
+msgstr "Kunde inte importera spellista"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2056
+msgid ""
+"Banshee was unable to find any valid tracks to import.  Please check the "
+"playlist and try again."
+msgstr ""
+"Banshee kunde inte hitta några giltiga spår att importera.  Kontrollera "
+"spellistan och försök igen."
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2145
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2072
+#: ../src/Core/Banshee/PlayerInterface.cs:2166
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisera {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2073
+#: ../src/Core/Banshee/PlayerInterface.cs:2167
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3046,7 +3130,7 @@ msgstr ""
 "<big>•</big> <i>Spara manuella ändringar</i>: spara endast de manuella "
 "ändringarna du gjorde"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2079
+#: ../src/Core/Banshee/PlayerInterface.cs:2173
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3054,11 +3138,11 @@ msgstr ""
 "<b>Varning:</b> Åtgärder kommer att ändra eller radera befintligt iPod-"
 "innehåll och kan orsaka inkompatibilitet med iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2081
+#: ../src/Core/Banshee/PlayerInterface.cs:2175
 msgid "Synchronize Library"
 msgstr "Synkronisera bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2083
+#: ../src/Core/Banshee/PlayerInterface.cs:2177
 msgid "Save Manual Changes"
 msgstr "Spara manuella ändringar"
 
@@ -3517,25 +3601,33 @@ msgstr "Lösenord för Last.fm"
 msgid "last.fm Username"
 msgstr "Användarnamn för Last.fm"
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:52
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
+msgid "Bookmarks"
+msgstr "Bokmärken"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
 msgid "Bookmark your position in tracks."
 msgstr "Bokmärk din position i spår."
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:85
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
 msgid "_Bookmarks"
 msgstr "_Bokmärken"
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:89
-msgid "_New Bookmark"
-msgstr "_Nytt bokmärke"
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
+msgid "_Add Bookmark"
+msgstr "_Lägg till bokmärke"
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:96
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
+msgid "Bookmark the Position in the Current Track"
+msgstr "Bokmärk positionen i det aktella spåret"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
 msgid "_Remove Bookmark"
 msgstr "_Ta bort bokmärke"
 
 #. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
 #. (possibly more than two digits) and {2} is seconds (between 00 and 60).
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:214
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
 #, csharp-format
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}.{2:00})"
@@ -4476,6 +4568,9 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Visa rekommendationer"
+
+#~ msgid "_New Bookmark"
+#~ msgstr "_Nytt bokmärke"
 
 #~ msgid "Copy all common fields"
 #~ msgstr "Kopiera alla vanliga fält"
