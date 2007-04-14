@@ -10,19 +10,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-11 03:41-0700\n"
+"POT-Creation-Date: 2007-04-14 18:21+0100\n"
 "PO-Revision-Date: 2007-04-11 15:35+0200\n"
 "Last-Translator: Ahmad Farghal <ahmad.farghal@gmail.com>\n"
 "Language-Team: Arabic <support@eglug.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : "
+"3\n"
 "X-Poedit-Language: Arabic\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../data/banshee.desktop.in.in.h:1
-#: ../data/banshee.glade.h:2
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:79
 msgid "Banshee Music Player"
 msgstr "مشغل الموسيقى بانشي"
@@ -363,7 +363,9 @@ msgid "Write speed:"
 msgstr "سرعة ال_كتابة:"
 
 #: ../data/banshee-dialogs.glade.h:71
-msgid "Your music library is empty. You may import new music into your library now, or choose to do so later."
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later."
 msgstr ""
 
 #: ../data/banshee-dialogs.glade.h:72
@@ -396,7 +398,9 @@ msgid "Bitrate"
 msgstr "معدّل البايتات:"
 
 #: ../data/audio-profiles/aac.xml.in.h:3
-msgid "Proprietary and standardized format that is superior to MP3, but not as popular."
+msgid ""
+"Proprietary and standardized format that is superior to MP3, but not as "
+"popular."
 msgstr ""
 
 #: ../data/audio-profiles/base.xml.in.h:1
@@ -409,12 +413,16 @@ msgid "Free Lossless Audio Codec"
 msgstr ""
 
 #: ../data/audio-profiles/flac.xml.in.h:2
-msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
 msgstr ""
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
-msgid "A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates."
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
 msgstr ""
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
@@ -470,11 +478,15 @@ msgid "Ogg Vorbis"
 msgstr ""
 
 #: ../data/audio-profiles/vorbis.xml.in.h:4
-msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
 msgstr ""
 
 #: ../data/audio-profiles/wav.xml.in.h:1
-msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
 msgstr ""
 
 #: ../data/audio-profiles/wav.xml.in.h:2
@@ -482,7 +494,9 @@ msgid "Waveform PCM"
 msgstr ""
 
 #: ../data/audio-profiles/wavpack.xml.in.h:1
-msgid "A fast and efficient open source audio format offering lossless and high-quality lossy encoding with great dynamic range."
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
 msgstr ""
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
@@ -507,7 +521,9 @@ msgid "Wavpack"
 msgstr ""
 
 #: ../data/audio-profiles/wma.xml.in.h:1
-msgid "A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
 
 #: ../data/audio-profiles/wma.xml.in.h:2
@@ -823,9 +839,9 @@ msgstr "غير متوفر"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:162
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:453
-#: ../src/Core/Banshee/PlayerInterface.cs:1338
-#: ../src/Core/Banshee/PlayerInterface.cs:2387
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+#: ../src/Core/Banshee/PlayerInterface.cs:1340
+#: ../src/Core/Banshee/PlayerInterface.cs:2481
 msgid "Genre"
 msgstr "النوع"
 
@@ -887,8 +903,8 @@ msgstr "الموقع"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-#: ../src/Core/Banshee/PlayerInterface.cs:454
-#: ../src/Core/Banshee/PlayerInterface.cs:1340
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+#: ../src/Core/Banshee/PlayerInterface.cs:1342
 msgid "Year"
 msgstr "السنة"
 
@@ -1108,215 +1124,235 @@ msgstr "قائمة الأغنية"
 msgid "_Debug"
 msgstr "تنقيح"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:206
+#: ../src/Core/Banshee.Base/ActionManager.cs:204
+#, fuzzy
+msgid "Import Playlist..."
+msgstr "قائمة تشغيل ذكية"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:205
+#, fuzzy
+msgid "Import a playlist"
+msgstr "قائمة تشغيل ذكية"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:208
+#, fuzzy
+msgid "Export Playlist..."
+msgstr "حرر قائمة التشغيل الذكية..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:209
+#, fuzzy
+msgid "Export a playlist"
+msgstr "ترتيب المهام"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
 msgstr "مل_ء الشاشة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:207
+#: ../src/Core/Banshee.Base/ActionManager.cs:215
 msgid "Toggle Fullscreen Mode"
 msgstr "فعِّل/عطِّل وضع ملء الشاشة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:210
+#: ../src/Core/Banshee.Base/ActionManager.cs:218
 msgid "Show Cover _Art"
 msgstr "أظهر _غلاف الألبوم"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:211
+#: ../src/Core/Banshee.Base/ActionManager.cs:219
 msgid "Toggle display of album cover art"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:222
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
 msgid "_Copy"
 msgstr "ا_نسخ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:223
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
 #, fuzzy
 msgid "Copy selected song(s) to clipboard"
 msgstr "احذف العنصر المحدد من شريط الأدوات"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:226
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
 msgid "_Remove"
 msgstr "أ_زل"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:227
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
 #, fuzzy
 msgid "Remove selected song(s) from library"
 msgstr "احذف العنصر المحدد من شريط الأدوات"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:230
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Delete From Drive"
 msgstr "ا_حذف من السواقة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:231
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:234
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "_Edit Song Metadata"
 msgstr "_حرر معلومات الأغنية"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:235
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
 msgid "Edit metadata on selected songs"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:238
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
 msgid "_Search for songs"
 msgstr "ا_بحث عن أغانٍ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:239
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search for songs matching certain criteria"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:242
+#: ../src/Core/Banshee.Base/ActionManager.cs:250
 msgid "By matching _album"
 msgstr "بمطابقة الأ_لبوم"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:243
+#: ../src/Core/Banshee.Base/ActionManager.cs:251
 msgid "Search all songs of this album"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:246
+#: ../src/Core/Banshee.Base/ActionManager.cs:254
 msgid "By matching a_rtist"
 msgstr "بمطابقة ال_فنان"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:247
+#: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Search all songs of this artist"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:250
+#: ../src/Core/Banshee.Base/ActionManager.cs:258
 msgid "By matching _genre"
 msgstr "بمطابقة ال_نوع"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:251
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
 msgid "Search all songs of this genre"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:254
+#: ../src/Core/Banshee.Base/ActionManager.cs:262
 msgid "Add _to Playlist"
 msgstr "أ_ضف إلى قائمة تشغيل"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:255
+#: ../src/Core/Banshee.Base/ActionManager.cs:263
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:258
+#: ../src/Core/Banshee.Base/ActionManager.cs:266
 msgid "Ratin_g"
 msgstr "التر_تيب"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:259
+#: ../src/Core/Banshee.Base/ActionManager.cs:267
 msgid "Set rating for selected songs"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:268
+#: ../src/Core/Banshee.Base/ActionManager.cs:276
 msgid "Import CD"
 msgstr "استورد قرصاً مدمجاً"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:269
+#: ../src/Core/Banshee.Base/ActionManager.cs:277
 msgid "Import audio CD to library"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:278
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Play"
 msgstr "_شغّل"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:279
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 #, fuzzy
 msgid "Play or pause the current song"
 msgstr "مختصر مفتاح العزف (أو العزف/التّمهّل)."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:282
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "_Next"
 msgstr "ال_تّالية"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:283
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the next song"
 msgstr "شغّل الأغنية السابقة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:294
 msgid "Pre_vious"
 msgstr "السّاب_قة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:295
 msgid "Play the previous song"
 msgstr "شغّل الأغنية السابقة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:292
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat N_one"
 msgstr "لا تكرر _شيئاً"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:293
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Do not repeat playlist"
 msgstr "لا تكرر قائمة التشغيل"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:296
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat _All"
 msgstr "كرر ال_كل"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:297
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Play all songs before repeating playlist"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:308
 msgid "Repeat Si_ngle"
 msgstr "كرر وا_حدة"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:309
 msgid "Repeat the current playing song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:306
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
 msgid "Shu_ffle"
 msgstr "اخل_ط"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:307
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:310
+#: ../src/Core/Banshee.Base/ActionManager.cs:318
 msgid "_Stop when finished"
 msgstr "أو_قف عند الإنتهاء"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:311
+#: ../src/Core/Banshee.Base/ActionManager.cs:319
 msgid "Stop playback after the current song finishes playing"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:320
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Backward"
 msgstr "اسع إلى ال_خلف"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:321
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek backward in current song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:324
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
 msgid "Seek _Forward"
 msgstr "اسع إلى الأ_مام"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:325
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek forward in current song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "Seek _To..."
 msgstr "إ_سع إلى..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Seek to a specific location in current song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:340
 msgid "_Restart Song"
 msgstr "أ_عد تشغيل الأغنية"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:341
 msgid "Restart the current song"
 msgstr "أعد تشغيل الأغنية الحالية"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:342
-#: ../src/Core/Banshee.Base/SourceManager.cs:275
+#: ../src/Core/Banshee.Base/ActionManager.cs:350
+#: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "زامن"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:343
+#: ../src/Core/Banshee.Base/ActionManager.cs:351
 msgid "Save changes to device or synchronize music library"
 msgstr ""
 
@@ -1377,12 +1413,16 @@ msgstr "شاشة القرص مدمج"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:284
 #, csharp-format
-msgid "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
+msgid ""
+"<i>{0}</i> is still being imported into the music library. Would you like to "
+"stop it?"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
 #, csharp-format
-msgid "The device node '{0}' differs from the device node already set for previously queued tracks ({1})"
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:305
@@ -1406,7 +1446,7 @@ msgid "Cannot Import CD"
 msgstr "لا يمكن قراءة القرص"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
-#: ../src/Core/Banshee.Base/ImportManager.cs:292
+#: ../src/Core/Banshee.Base/ImportManager.cs:297
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "جاري استيراد {0} من {1}"
@@ -1554,7 +1594,9 @@ msgid "Writing Disc"
 msgstr "جاري الكتابة للقرص"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:57
-msgid "Stopping the disc writing process will render it useless. Would you like to stop writing the disc?"
+msgid ""
+"Stopping the disc writing process will render it useless. Would you like to "
+"stop writing the disc?"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:95
@@ -1653,7 +1695,9 @@ msgid "Base location for library music"
 msgstr "حذف المنتقى من المحفوظة"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:3
-msgid "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or \"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+msgid ""
+"Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
+"\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:4
@@ -1669,7 +1713,8 @@ msgid "Column sort type"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
-msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
+msgid ""
+"Column sort type for the library source. Ascending (0) or Descending (1)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
@@ -1690,202 +1735,265 @@ msgstr "مكّن 'التشغيل السريع'"
 msgid "Enable shuffle mode"
 msgstr "تحوّل بين نسق التتبع البسيط للتركيز/المعاينة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
-#, no-c-format
-msgid "Format for creating a track filename inside the library. Do not use path tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
-msgstr ""
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
+#, fuzzy
+msgid "Export Format"
+msgstr "هيئة الصوت"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
 #, no-c-format
-msgid "Format for creating a track folder inside the library. Do not create an absolute path. Path here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/))."
+msgid ""
+"Format for creating a track filename inside the library. Do not use path "
+"tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %"
+"album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
+"prefixed zero), %track_count_nz% (No prefixed zero)."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
+#, no-c-format
+msgid ""
+"Format for creating a track folder inside the library. Do not create an "
+"absolute path. Path here is relative to the Banshee music directory. See "
+"LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero), %path_sep% (portable directory separator (/))."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 #, fuzzy
 msgid "Height of the main interface window."
 msgstr "ارتفاع النافذة بالبكسل"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
-msgid "If enabled, metadata (tags) will be written back to audio files when using the track metadata editor."
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+msgid ""
+"If enabled, metadata (tags) will be written back to audio files when using "
+"the track metadata editor."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
 #, fuzzy
 msgid "Library File Pattern"
 msgstr "<b>لمحة بأسماء الملفّات</b>"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
 msgid "Library Folder Pattern"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 #, fuzzy
 msgid "Library location"
 msgstr "اختر اسم الموقع"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "Library source expansion"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
-msgid "Move music within banshee music library directory when saving track info"
-msgstr ""
-
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
-msgid "Name of media playback engine backend"
+msgid ""
+"Move music within banshee music library directory when saving track info"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
-msgid "Pixel position of Main Player Window on the X Axis"
+msgid "Name of media playback engine backend"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
-msgid "Pixel position of Main Player Window on the Y Axis"
+msgid "Pixel position of Main Player Window on the X Axis"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
-msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
+msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
+msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
 #, fuzzy
 msgid "Repeat playback"
 msgstr "تغيير"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Set the IO backend in Banshee"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
 msgid "Show cover art"
 msgstr "أظهر غلاف الألبوم"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 #, fuzzy
 msgid "Show the Initial Import Dialog"
 msgstr "إظهار حوار الشّريط لتشغيل التّطبيقات"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
 #, fuzzy
 msgid "Shuffle playback"
 msgstr "تحوّل بين نسق التتبع البسيط للتركيز/المعاينة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
-msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+msgid ""
+"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 #, fuzzy
 msgid "Sort criteria of playlists"
 msgstr "ترتيب المهام"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
-msgid "Sort order of library playlists in the source view (0 = Ascending, 1 = Descending)"
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+msgid ""
+"Sort order of library playlists in the source view (0 = Ascending, 1 = "
+"Descending)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 #, fuzzy
 msgid "Sort order of playlists"
 msgstr "ترتيب المهام"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 #, fuzzy
 msgid "Source View Width"
 msgstr "عرض التشفيرة المصدرية لهذه الصفحة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
-msgid "True if main window is to be maximized, false if it is not."
-msgstr ""
-
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
-msgid "URI"
+msgid "The default playlist export format"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
-msgid "URI List"
+msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
-msgid "URI of last file folder"
+msgid "URI"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
-msgid "Volume"
-msgstr "حجم الصوت"
+msgid "URI List"
+msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
-msgid "Volume of playback relative to mixer output"
+msgid "URI of last file folder"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
-msgid "When importing an audio CD, enable error correction (paranoia mode)"
-msgstr ""
+msgid "Volume"
+msgstr "حجم الصوت"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
-msgid "Whether to expand the library node in the source view"
+msgid "Volume of playback relative to mixer output"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+msgid "When importing an audio CD, enable error correction (paranoia mode)"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+msgid "Whether to expand the library node in the source view"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
 #, fuzzy
 msgid "Width of Source View Column."
 msgstr "العمود المرتب في مشهد الأعمال"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
 #, fuzzy
 msgid "Width of the main interface window."
 msgstr "عرض النافذة بالبكسل"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
 #, fuzzy
 msgid "Window Height"
 msgstr "ارتفاع النّافذة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
 #, fuzzy
 msgid "Window Maximized"
 msgstr "النّافذة الإفتراضية موسعة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
 #, fuzzy
 msgid "Window Position X"
 msgstr "موقع النافذة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
 #, fuzzy
 msgid "Window Position Y"
 msgstr "موقع النافذة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:57
 #, fuzzy
 msgid "Window Width"
 msgstr "عرض النّافذة"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:58
 #, fuzzy
 msgid "Write metadata back to audio files"
 msgstr "اضافة الملفات للمحفوظة"
 
-#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:69
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:280
 #, fuzzy
 msgid "Scanning"
 msgstr "جاري مسح %s"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
+#, fuzzy
+msgid "Verifying"
+msgstr "الإصدار"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
+#, fuzzy
+msgid ""
+"The playlist import process is currently running. Would you like to stop it?"
+msgstr "لا زالت عملية '{0}' تؤدي بعض الأعمال. هل ترغب في إيقافها؟"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
+msgid "Verifying playlist tracks exist in library"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#, fuzzy, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "جاري نسخ {0} من {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
+msgid "Verifying "
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
+#, fuzzy
+msgid "Export Playlist"
+msgstr "ترتيب المهام"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
+#, fuzzy
+msgid "Export"
+msgstr "استورد"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
+#, fuzzy
+msgid "Select Format: "
+msgstr "عربي"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -1896,8 +2004,16 @@ msgstr ""
 msgid "Exception: "
 msgstr ""
 
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
+msgid "Not a valid M3U file."
+msgstr ""
+
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
 msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
+msgid "Not a valid PLS file."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
@@ -1933,22 +2049,22 @@ msgid "Unheard Podcasts"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
-#: ../src/Core/Banshee/PlayerInterface.cs:451
-#: ../src/Core/Banshee/PlayerInterface.cs:1332
-#: ../src/Core/Banshee/PlayerInterface.cs:2383
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+#: ../src/Core/Banshee/PlayerInterface.cs:1334
+#: ../src/Core/Banshee/PlayerInterface.cs:2477
 msgid "Artist Name"
 msgstr "اسم الفنان"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
-#: ../src/Core/Banshee/PlayerInterface.cs:450
-#: ../src/Core/Banshee/PlayerInterface.cs:1334
+#: ../src/Core/Banshee/PlayerInterface.cs:452
+#: ../src/Core/Banshee/PlayerInterface.cs:1336
 msgid "Song Name"
 msgstr "اسم الأغنية"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
-#: ../src/Core/Banshee/PlayerInterface.cs:452
-#: ../src/Core/Banshee/PlayerInterface.cs:1336
-#: ../src/Core/Banshee/PlayerInterface.cs:2379
+#: ../src/Core/Banshee/PlayerInterface.cs:454
+#: ../src/Core/Banshee/PlayerInterface.cs:1338
+#: ../src/Core/Banshee/PlayerInterface.cs:2473
 msgid "Album Title"
 msgstr "اسم الألبوم"
 
@@ -2165,7 +2281,7 @@ msgid "Playlist"
 msgstr "قائمة التشغيل"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:126
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "قائمة تشغيل ذكية"
 
@@ -2181,22 +2297,24 @@ msgstr "قائمة تشغيل _ذكية جديدة..."
 msgid "New Smart Playlist _from Search..."
 msgstr "قائمة تشغيل ذكية جديدة من بح_ث..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:116
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
 msgid "Delete Smart Playlist"
 msgstr "احذف قائمة التشغيل الذكية"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:121
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
 msgid "Edit Smart Playlist..."
 msgstr "حرر قائمة التشغيل الذكية..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:442
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
 #, fuzzy
 msgid "Smart Playlist has Dependencies"
 msgstr "قوائم التشغيل الذكية"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:444
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
 #, csharp-format
-msgid "{0} is depended on by other smart playlists. Are you sure you want to delete this and all dependent smart playlists?"
+msgid ""
+"{0} is depended on by other smart playlists. Are you sure you want to delete "
+"this and all dependent smart playlists?"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
@@ -2218,7 +2336,9 @@ msgid "Converting Files"
 msgstr "تحويل الملفات"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
-msgid "Files are currently being converted to another audio format. Would you like to stop this?"
+msgid ""
+"Files are currently being converted to another audio format. Would you like "
+"to stop this?"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
@@ -2261,7 +2381,9 @@ msgid "Could not encode some files"
 msgstr "لن تُعرض بعض الملفات."
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:469
-msgid "Some files could not be encoded to the proper format. They will not be saved to the device if you continue."
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:474
@@ -2436,7 +2558,9 @@ msgid "Important tasks are running"
 msgstr "عدد كبير جدا من جلسات X مشتغلة."
 
 #: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
-msgid "Closing Banshee now will cancel any currently running tasks. They cannot be resumed automatically the next time Banshee is run."
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
@@ -2537,11 +2661,15 @@ msgid "Select library location"
 msgstr "اختر اسم الموقع"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
-msgid "Enable this option to save tags and other metadata inside supported audio files"
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
-msgid "Error correction tries to work around problem areas on a disc, such as surface scratches, but will slow down importing substantially."
+msgid ""
+"Error correction tries to work around problem areas on a disc, such as "
+"surface scratches, but will slow down importing substantially."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:529
@@ -2594,7 +2722,10 @@ msgid "Set all years to this value"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
-msgid "Apply the values of this track set for the Artist, Album Title, Genre, Track count, Year, and Rating fields to the rest of the selected tracks in this editor."
+msgid ""
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
@@ -2634,17 +2765,17 @@ msgstr "الإصدار"
 msgid "Home Directory"
 msgstr "المجلد المنزلي"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:92
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
 #, fuzzy
 msgid "Scanning for songs"
 msgstr "جاري المسح عن رسائل مغيّرة"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:280
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
 #, fuzzy
 msgid "Importing Songs"
 msgstr "عرض أفلام و موسيقى"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:286
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
 msgid "The import process is currently running. Would you like to stop it?"
 msgstr ""
 
@@ -2671,7 +2802,9 @@ msgid "Default player engine"
 msgstr "ترقّب اللاعب القيم"
 
 #: ../src/Core/Banshee.Base/PlayerEngineCore.cs:99
-msgid "No player engines were found. Please ensure Banshee has been cleanly installed."
+msgid ""
+"No player engines were found. Please ensure Banshee has been cleanly "
+"installed."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
@@ -2725,11 +2858,12 @@ msgstr "خصائص القائمة"
 msgid "Delete {0}"
 msgstr "إحذف {0}"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:264
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2014
 msgid "Import"
 msgstr "استورد"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:282
+#: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
 msgid "Rename {0}"
 msgstr "أعد تسمية {0}"
@@ -2767,7 +2901,8 @@ msgid "Searching for CD cover art..."
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
-msgid "Cannot search for CD metadata: there is no available Internet connection"
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
@@ -2884,18 +3019,18 @@ msgstr "ترتيب تنازلي"
 msgid "Local Queue"
 msgstr "المراسلون المحليون"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:72
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:460
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:466
-#: ../src/Core/Banshee/PlayerInterface.cs:1600
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1602
 msgid "New Playlist"
 msgstr "قائمة تشغيل جديدة"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:161
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
 msgid "Cannot Rename Playlist"
 msgstr "غير قادر على إعادة تسمية قائمة التشغيل"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 
@@ -2922,83 +3057,83 @@ msgstr "من"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} جب"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:448
+#: ../src/Core/Banshee/PlayerInterface.cs:450
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
 msgid "All"
 msgstr "الكل"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:477
+#: ../src/Core/Banshee/PlayerInterface.cs:479
 #, fuzzy
 msgid "Write selection to CD"
 msgstr "ا_كتب المحتويات على القرص المدمج"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:478
+#: ../src/Core/Banshee/PlayerInterface.cs:480
 msgid "Import CD into library"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:479
+#: ../src/Core/Banshee/PlayerInterface.cs:481
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:151
 #, fuzzy
 msgid "Play previous song"
 msgstr "تنشيط اللسان السابق"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:480
+#: ../src/Core/Banshee/PlayerInterface.cs:482
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:152
 #, fuzzy
 msgid "Play/pause current song"
 msgstr "تشغيل إو إيقاف الفيلم"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:481
+#: ../src/Core/Banshee/PlayerInterface.cs:483
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
 #, fuzzy
 msgid "Play next song"
 msgstr "تنشيط اللسان التالي"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:482
+#: ../src/Core/Banshee/PlayerInterface.cs:484
 #, fuzzy
 msgid "Device disk usage"
 msgstr "محلّل استخدام القرص"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:483
+#: ../src/Core/Banshee/PlayerInterface.cs:485
 msgid "Synchronize music library to device"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:484
+#: ../src/Core/Banshee/PlayerInterface.cs:486
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:155
 #, fuzzy
 msgid "Adjust volume"
 msgstr "تكييف شدة الصوت"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:485
+#: ../src/Core/Banshee/PlayerInterface.cs:487
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:156
 #, fuzzy
 msgid "Change repeat playback mode"
 msgstr "تغيير"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:486
+#: ../src/Core/Banshee/PlayerInterface.cs:488
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:157
 #, fuzzy
 msgid "Toggle shuffle playback mode"
 msgstr "تحوّل بين نسق التتبع البسيط للتركيز/المعاينة"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:487
+#: ../src/Core/Banshee/PlayerInterface.cs:489
 msgid "Edit and view metadata of selected songs"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:804
+#: ../src/Core/Banshee/PlayerInterface.cs:806
 msgid "Pause"
 msgstr "أوقف مؤقتاً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:806
+#: ../src/Core/Banshee/PlayerInterface.cs:808
 msgid "Stop"
 msgstr "أوقف"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:827
+#: ../src/Core/Banshee/PlayerInterface.cs:829
 #, fuzzy
 msgid "Cannot Play Song"
 msgstr "العب نغمة المشغول"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:828
+#: ../src/Core/Banshee/PlayerInterface.cs:830
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -3011,12 +3146,12 @@ msgstr ""
 "  <big>•</big> الأغنية محمية (DRM)\n"
 "  <big>•</big> الأغنية موجودة على مشاركة DAP لا تدعم العزف\n"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:837
-#: ../src/Core/Banshee/PlayerInterface.cs:846
+#: ../src/Core/Banshee/PlayerInterface.cs:839
+#: ../src/Core/Banshee/PlayerInterface.cs:848
 msgid "Play"
 msgstr "شغّل"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1258
+#: ../src/Core/Banshee/PlayerInterface.cs:1260
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
@@ -3025,7 +3160,7 @@ msgstr[1] "عنصران"
 msgstr[2] "{0} عناصر"
 msgstr[3] "{0} عنصراً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1262
+#: ../src/Core/Banshee/PlayerInterface.cs:1264
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
@@ -3034,7 +3169,7 @@ msgstr[1] "يومان"
 msgstr[2] "{0} أيام"
 msgstr[3] "{0} يوماً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1267
+#: ../src/Core/Banshee/PlayerInterface.cs:1269
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
@@ -3043,7 +3178,7 @@ msgstr[1] "ساعتان"
 msgstr[2] "{0} ساعات"
 msgstr[3] "{0} ساعةً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1271
+#: ../src/Core/Banshee/PlayerInterface.cs:1273
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
@@ -3052,7 +3187,7 @@ msgstr[1] "دقيقتان"
 msgstr[2] "{0} دقائق"
 msgstr[3] "{0} دقيقةً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1273
+#: ../src/Core/Banshee/PlayerInterface.cs:1275
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
@@ -3061,76 +3196,101 @@ msgstr[1] "ثانيتان"
 msgstr[2] "{0} ثوان"
 msgstr[3] "{0} ثانيةً"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1619
+#: ../src/Core/Banshee/PlayerInterface.cs:1621
 msgid "Clear"
 msgstr "امسح"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1882
+#: ../src/Core/Banshee/PlayerInterface.cs:1884
 #, fuzzy, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural ""
+"Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "أمتأكدٌ أنّك تريد حذف العنصر المنتقى نهائيّاً؟"
 msgstr[1] ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1886
+#: ../src/Core/Banshee/PlayerInterface.cs:1888
 #, fuzzy
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "سيضيع أي عنصر نهائيا عند حذفك له."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1889
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, fuzzy
 msgid "Remove selection from library"
 msgstr "حذف المنتقى من المحفوظة"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1891
+#: ../src/Core/Banshee/PlayerInterface.cs:1893
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1936
+#: ../src/Core/Banshee/PlayerInterface.cs:1938
 #, fuzzy
 msgid "Delete songs from drive"
 msgstr "حذف المنتقى من المحفوظة"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1937
+#: ../src/Core/Banshee/PlayerInterface.cs:1939
 #, fuzzy, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "لا تملك الصلاحيات الكافية للكتابة في المقصد."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2051
+#: ../src/Core/Banshee/PlayerInterface.cs:2005
+#, fuzzy
+msgid "Import Playlist"
+msgstr "قائمة تشغيل ذكية"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2037
+#: ../src/Core/Banshee/PlayerInterface.cs:2055
+#, fuzzy
+msgid "Unable to Import Playlist"
+msgstr "احذف قائمة التشغيل الذكية"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2056
+msgid ""
+"Banshee was unable to find any valid tracks to import.  Please check the "
+"playlist and try again."
+msgstr ""
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2145
 msgid "New CD"
 msgstr "قرص مدمج جديد"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2072
+#: ../src/Core/Banshee/PlayerInterface.cs:2166
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "زامن {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2073
+#: ../src/Core/Banshee/PlayerInterface.cs:2167
 #, csharp-format
 msgid ""
-"You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
 "\n"
 "<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
-"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you made"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
 msgstr ""
-"لقد قمت بإجراء تغييرات على {0} الخاص بك. رجاءً اختر وسيلة لتحديث محتويات {0}.\n"
+"لقد قمت بإجراء تغييرات على {0} الخاص بك. رجاءً اختر وسيلة لتحديث محتويات "
+"{0}.\n"
 "\n"
 "<big>•</big> <i>زامن المكتبة</i>: زامن مكتبة بانشي إلى {0}\n"
-"<big>•</big> <i>احفظ التغييرات اليدوية</i>: سيتم حفظ التغييرات اليدوية التي أجريتها فقط"
+"<big>•</big> <i>احفظ التغييرات اليدوية</i>: سيتم حفظ التغييرات اليدوية التي "
+"أجريتها فقط"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2079
-msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatibility with iTunes!"
+#: ../src/Core/Banshee/PlayerInterface.cs:2173
+msgid ""
+"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+"cause incompatibility with iTunes!"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2081
+#: ../src/Core/Banshee/PlayerInterface.cs:2175
 msgid "Synchronize Library"
 msgstr "زامن المكتبة"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2083
+#: ../src/Core/Banshee/PlayerInterface.cs:2177
 msgid "Save Manual Changes"
 msgstr "احفظ التغييرات اليدوية"
 
@@ -3149,7 +3309,8 @@ msgstr "أوقف {0}"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid "The '{0}' operation is still performing work. Would you like to stop it?"
+msgid ""
+"The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "لا زالت عملية '{0}' تؤدي بعض الأعمال. هل ترغب في إيقافها؟"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -3234,7 +3395,9 @@ msgid "Your iPod could not be identified"
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:140
-msgid "Please consider submitting information about your iPod to the Banshee Project so your iPod may be more fully identified in the future.\n"
+msgid ""
+"Please consider submitting information about your iPod to the Banshee "
+"Project so your iPod may be more fully identified in the future.\n"
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
@@ -3281,9 +3444,11 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:80
 msgid ""
-"You have used this iPod with a version of iTunes that saves a version of the song database for your iPod that is too new for Banshee to recognize.\n"
+"You have used this iPod with a version of iTunes that saves a version of the "
+"song database for your iPod that is too new for Banshee to recognize.\n"
 "\n"
-"Banshee can either rebuild the database or you will have to wait for the new iTunes version to be supported by Banshee."
+"Banshee can either rebuild the database or you will have to wait for the new "
+"iTunes version to be supported by Banshee."
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:89
@@ -3309,7 +3474,8 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:130
 msgid ""
-"Rebuilding your iPod database may take some time. Also note that any playlists you have on your iPod will be lost.\n"
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
 "\n"
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
@@ -3371,7 +3537,9 @@ msgid "Loading Songs"
 msgstr "جاري تحميل الأغاني"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:262
-msgid "The audio device song loading process is currently running.  Would you like to stop it?"
+msgid ""
+"The audio device song loading process is currently running.  Would you like "
+"to stop it?"
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:263
@@ -3390,7 +3558,9 @@ msgid "Song Playing on Device"
 msgstr "جاري مزامنة الجهاز"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:328
-msgid "Before you can eject your device, you need to start playing a song that is not on it.  This is a known bug."
+msgid ""
+"Before you can eject your device, you need to start playing a song that is "
+"not on it.  This is a known bug."
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:359
@@ -3508,7 +3678,10 @@ msgid "Last.fm Password"
 msgstr "كلمة سر لاست . إف إم"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:66
-msgid "Your profile page on Last.fm is automatically updated whenever you listen to music. It lets others see what you're listening to right now, and shows charts of your listening history."
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:96
@@ -3589,25 +3762,35 @@ msgstr "كلمة سر لاست.إف إم"
 msgid "last.fm Username"
 msgstr "اسم مستخدم لاست.إف إم"
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:52
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
+#, fuzzy
+msgid "Bookmarks"
+msgstr "أ_زل علامة الموقع"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
 msgid "Bookmark your position in tracks."
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:85
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
 msgid "_Bookmarks"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:89
-msgid "_New Bookmark"
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
+#, fuzzy
+msgid "_Add Bookmark"
+msgstr "أ_زل علامة الموقع"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
+msgid "Bookmark the Position in the Current Track"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:96
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
 msgid "_Remove Bookmark"
 msgstr "أ_زل علامة الموقع"
 
 #. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
 #. (possibly more than two digits) and {2} is seconds (between 00 and 60).
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:214
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
 #, csharp-format
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
@@ -3670,9 +3853,12 @@ msgstr "فشلILS تسجيل : عاجز عن الاتصال ب %s"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:92
 msgid ""
-"iTunes® 7 introduced new compatibility issues and currently only works with other iTunes® 7 clients.\n"
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
 "\n"
-"No third-party clients can connect to iTunes® music shares anymore. This is an intentional limitation by Apple in iTunes® 7 and we apologize for the unfortunate inconvenience."
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:102
@@ -3723,7 +3909,10 @@ msgid "Login"
 msgstr "لُج"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:55
-msgid "Allow browsing and listening to songs from music shares and share your Banshee library with others. Works with other instances of Banshee, iTunes, and Rhythmbox."
+msgid ""
+"Allow browsing and listening to songs from music shares and share your "
+"Banshee library with others. Works with other instances of Banshee, iTunes, "
+"and Rhythmbox."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:87
@@ -3751,7 +3940,9 @@ msgid "Metadata Searcher"
 msgstr "قسم خاطيء في البيانات العامة '%s': %s"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:62
-msgid "Automatically search for missing and supplementary metadata and cover art for songs in your library."
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
@@ -3774,7 +3965,9 @@ msgid "Searching"
 msgstr "جاري البحث"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:213
-msgid "Are you sure you want to stop downloading cover art for the albums in your library? The operation can be resumed at any time from the <i>Tools</i> menu."
+msgid ""
+"Are you sure you want to stop downloading cover art for the albums in your "
+"library? The operation can be resumed at any time from the <i>Tools</i> menu."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
@@ -3802,8 +3995,12 @@ msgid "This is the artist"
 msgstr "هذا هو الفنان"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
-msgid "Mini Mode allows controlling Banshee through a small window with only playback controls and track information."
-msgstr "يسمح لك الوضع المصغر بالتحكم في بانشي عن طريق نافذة صغيرة لا تحتوي سوى على تحكمات العزف ومعلومات القطعة المشغلة."
+msgid ""
+"Mini Mode allows controlling Banshee through a small window with only "
+"playback controls and track information."
+msgstr ""
+"يسمح لك الوضع المصغر بالتحكم في بانشي عن طريق نافذة صغيرة لا تحتوي سوى على "
+"تحكمات العزف ومعلومات القطعة المشغلة."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
 msgid "Mini mode"
@@ -3824,7 +4021,9 @@ msgid "Multimedia Keyboard Shortcuts"
 msgstr "تفضيلات إعانة _لوحة المفاتيح"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:51
-msgid "Configuration of multimedia keyboard shortcuts is done through the Gnome Keyboard Shortcuts configuration applet."
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
@@ -3868,7 +4067,9 @@ msgid "Show track information notifications when track starts playing"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
-msgid "When the main window is closed, show a notification stating this has happened."
+msgid ""
+"When the main window is closed, show a notification stating this has "
+"happened."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
@@ -3901,7 +4102,9 @@ msgid "Still Running"
 msgstr "لا يزال يعمل"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:201
-msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
+msgid ""
+"Banshee was closed to the notification area. Use the <i>Quit</i> option to "
+"end your session."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
@@ -4152,13 +4355,18 @@ msgstr "النشر الصوتي"
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
 #, csharp-format
 msgid ""
-"Podcasting is a form of audio blogging where users subscribe to a feed of shows and its episodes are downloaded and managed for offline listening.\n"
+"Podcasting is a form of audio blogging where users subscribe to a feed of "
+"shows and its episodes are downloaded and managed for offline listening.\n"
 "\n"
-"Its name comes from the targeting of audio posts to Apple's iPod® audio player, although podcasts can be listened to directly in {0}."
+"Its name comes from the targeting of audio posts to Apple's iPod® audio "
+"player, although podcasts can be listened to directly in {0}."
 msgstr ""
-"النشر الصوتي هو شكل من أشكال التدوين الصوتي، حيث يقوم المستخدمون بالاشتراك في تلقيم للبرامج والحلقات التي يتم تنزيلها وإدارتها للاستماع دون اتصال.\n"
+"النشر الصوتي هو شكل من أشكال التدوين الصوتي، حيث يقوم المستخدمون بالاشتراك "
+"في تلقيم للبرامج والحلقات التي يتم تنزيلها وإدارتها للاستماع دون اتصال.\n"
 "\n"
-"الاسم الانجليزي لهذه التقنية هو Podcasting، وسبب التسمية هو أن مستخدمي مشغل Apple iPod كانوا في بدء الأمر الهدف الرئيسي لناشري المحتوى عن طريق هذه التقنية. فالنشرات الصوتية ليست حصرية لـiPod، ويمكن تشغيلها مباشرة في {0}."
+"الاسم الانجليزي لهذه التقنية هو Podcasting، وسبب التسمية هو أن مستخدمي مشغل "
+"Apple iPod كانوا في بدء الأمر الهدف الرئيسي لناشري المحتوى عن طريق هذه "
+"التقنية. فالنشرات الصوتية ليست حصرية لـiPod، ويمكن تشغيلها مباشرة في {0}."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
@@ -4343,7 +4551,9 @@ msgid "Let me decide which episodes to download"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
-msgid "Always show stations that require the Helix/RealPlayer engine, even if the engine is not loaded."
+msgid ""
+"Always show stations that require the Helix/RealPlayer engine, even if the "
+"engine is not loaded."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
@@ -4461,7 +4671,9 @@ msgid "Edit radio station"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
-msgid "Enter the Group, Title and URL of the radio station you wish to add. A description is optional."
+msgid ""
+"Enter the Group, Title and URL of the radio station you wish to add. A "
+"description is optional."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
@@ -4517,7 +4729,10 @@ msgid "Music Recommendations"
 msgstr "توصيات الموسيقى"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:61
-msgid "Automatically recommends music that you might like, based on the currently playing song. It finds artists and popular songs that others with similar musical tastes enjoy."
+msgid ""
+"Automatically recommends music that you might like, based on the currently "
+"playing song. It finds artists and popular songs that others with similar "
+"musical tastes enjoy."
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
@@ -4586,4 +4801,3 @@ msgstr "أظهر التوصيات"
 #, fuzzy
 #~ msgid "Invalid column width"
 #~ msgstr "العرض الحالي للعمود"
-
