@@ -1,3 +1,10 @@
+2007-04-17  Aaron Bockover  <abock@gnome.org>
+
+	* build/gconf-schema-rules: Revert previous commit as it breaks the 
+	install if builddir is undefined; also shouldn't be necessary at all as
+	builddir is effectively supposed to be '.' if set and the script is run
+	from the directory with the .schema file in it anyway
+
 2007-04-16  Gary Ekker  <gekker@novell.com>
 
 	* build/gconf-schema-rules: Fix installation path of schema_DATA

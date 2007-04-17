@@ -12,7 +12,7 @@ $(srcdir)/$(ASSEMBLY_GCONF_SCHEMA): $(ASSEMBLY)
 if GCONF_SCHEMAS_INSTALL
 install-data-local:
 	if [ -z "$(DESTDIR)" ]; then \
-		GCONF_CONFIG_SOURCE="" $(GCONFTOOL) --makefile-install-rule $(builddir)/$(schema_DATA); \
+		GCONF_CONFIG_SOURCE="" $(GCONFTOOL) --makefile-install-rule $(schema_DATA); \
 	fi
 endif
 
