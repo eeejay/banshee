@@ -1,3 +1,24 @@
+2007-04-18  Aaron Bockover  <abock@gnome.org>
+
+	This patch adds org.gnome.SettingsDaemon MM Keys support, originally
+	done by Jan Arne Petersen as a patch to the MM Keys plugin. Redesigned 
+	by myself to leave support for older GNOME in tact while removing the
+	overhead of a plugin on new GNOME. Fixes BGO #395433.
+
+	* src/Core/Banshee.Base/Plugins/PluginFactory.cs (AddExcludeMask): Allow
+	filtering plugins for exclusion based on their file name
+
+	* src/Core/Banshee.Base/Plugins/PluginCore.cs: Do not load the legacy
+	MM Keys plugin if the new GnomeMMKeys is loaded successfully
+
+	* src/Core/Banshee.Base/GnomeMMKeys.cs: A standalone MM Keys component
+	that uses the new org.gnome.SettingsDaemon DBus interface available in
+	GNOME 2.18+. If this component loads, the legacy plugin will be disabled
+
+	* src/Core/Banshee.Base/Globals.cs: Try to load GnomeMMKeys at startup;
+	load DBus background components before plugins in case the plugins need
+	to access them
+
 2007-04-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Daap/DaapSource.cs: Crash fix (BGO #406923, 

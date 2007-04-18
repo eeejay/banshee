@@ -63,7 +63,10 @@ namespace Banshee.Plugins
                 return;
             }
             
-            factory.LoadPluginFromType(typeof(Banshee.SmartPlaylist.SmartPlaylistCore));
+            if(GnomeMMKeys.IsLoaded) {
+                factory.AddExcludeMask("banshee.plugins.mmkeys");
+            }
+            
             factory.LoadPlugins();
             
             InitializePlugins();
@@ -75,12 +78,6 @@ namespace Banshee.Plugins
             
             foreach(Plugin plugin in factory) {
                 try {
-                    if(plugin.GetType().ToString() == "Banshee.Plugins.SmartPlaylists.Plugin") {
-                        plugin.Dispose();
-                        to_remove.Add(plugin);
-                        continue;
-                    }
-                    
                     if(ConfigurationClient.Get<bool>(plugin.ConfigurationNamespace, "enabled", false)) {
                         plugin.Initialize();
                     }

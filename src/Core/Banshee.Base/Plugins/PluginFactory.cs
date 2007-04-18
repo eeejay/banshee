@@ -74,6 +74,7 @@ namespace Banshee.Plugins
         private List<T> plugin_instances = new List<T>();
         private List<Type> plugin_types = new List<Type>();
         private List<DirectoryInfo> scan_directories = new List<DirectoryInfo>();
+        private List<string> exclude_masks = new List<string>();
         private string include_mask = "*.dll";
         private PluginFactoryType factory_type;
 
@@ -174,6 +175,12 @@ namespace Banshee.Plugins
         
         public void LoadPluginsFromFile(FileInfo file)
         {
+            foreach(string exclude in exclude_masks) {
+                if(file.FullName.ToLower().Contains(exclude)) {
+                    return;
+                }
+            }
+            
             LoadPluginsFromAssembly(Assembly.LoadFrom(file.FullName));
         }
         
@@ -284,6 +291,11 @@ namespace Banshee.Plugins
             if(handler != null) {
                 handler(this, new PluginFactoryEventArgs<T>(type));
             }
+        }
+        
+        public void AddExcludeMask(string exclude_mask)
+        {
+            exclude_masks.Add(exclude_mask.ToLower());
         }
         
         public IEnumerator<T> GetEnumerator()

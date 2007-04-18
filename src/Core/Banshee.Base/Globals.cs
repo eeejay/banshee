@@ -164,10 +164,12 @@ namespace Banshee.Base
             startup.Register(Catalog.GetString("Initializing CD writing support"), true, 
                 Catalog.GetString("CD burning support will be disabled for this instance"), Banshee.Burner.BurnerCore.Initialize);
                 
+            startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
+            startup.Register(Catalog.GetString("Starting background tasks"), GnomeMMKeys.Initialize);
+                
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.SmartPlaylist.SmartPlaylistCore.Instance.Initialize);
             startup.Register(Catalog.GetString("Initializing plugins"), Banshee.Plugins.PluginCore.Initialize);
             startup.Register(Catalog.GetString("Initializing scripts"), Banshee.Plugins.ScriptCore.Initialize);
-            startup.Register(Catalog.GetString("Starting background tasks"), PowerManagement.Initialize);
             
             if(interfaceStartupHandler != null) {
                 startup.Register(Catalog.GetString("Loading user interface"), interfaceStartupHandler);
