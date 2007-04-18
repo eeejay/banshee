@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-27 17:11+0300\n"
-"PO-Revision-Date: 2007-01-27 15:33+0300\n"
+"POT-Creation-Date: 2007-04-19 00:20+0400\n"
+"PO-Revision-Date: 2007-04-18 02:46+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -144,25 +144,25 @@ msgid "<big><b>Import Music to Library</b></big>"
 msgstr "<big><b>Импортировать музыку в фонотеку</b></big>"
 
 #: ../data/banshee-dialogs.glade.h:30
+msgid "Apply common field values to all tracks"
+msgstr "Применить значения типичных полей ко всем дорожкам"
+
+#: ../data/banshee-dialogs.glade.h:31
 msgid "Artwork"
 msgstr "Дизайн"
 
-#: ../data/banshee-dialogs.glade.h:31
+#: ../data/banshee-dialogs.glade.h:32
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:79
 msgid "Back"
 msgstr "Назад"
 
-#: ../data/banshee-dialogs.glade.h:32
+#: ../data/banshee-dialogs.glade.h:33
 msgid "Choose an import source:"
 msgstr "Выберите источник импорта:"
 
-#: ../data/banshee-dialogs.glade.h:33
+#: ../data/banshee-dialogs.glade.h:34
 msgid "Co_py files to music folder when importing"
 msgstr "_Копировать файлы в папку с музыкой при импорте"
-
-#: ../data/banshee-dialogs.glade.h:34
-msgid "Copy all common fields"
-msgstr "Скопировать все обычные поля"
 
 #: ../data/banshee-dialogs.glade.h:35
 msgid "Copy to all"
@@ -240,7 +240,7 @@ msgstr "Вперёд"
 
 #: ../data/banshee-dialogs.glade.h:53
 msgid "Import Music Source"
-msgstr "Импортировать источник музыки"
+msgstr "Импортировать"
 
 #: ../data/banshee-dialogs.glade.h:54
 msgid "Import Music to Library"
@@ -356,8 +356,8 @@ msgid ""
 "Proprietary and standardized format that is superior to MP3, but not as "
 "popular."
 msgstr ""
-"Проприетарный и стандартизованный формат, во всех отношениях лучше MP3, но "
-"не такой популярный."
+"Несвободный и стандартизованный формат, во всех отношениях лучше MP3, но не "
+"такой популярный."
 
 #: ../data/audio-profiles/base.xml.in.h:1
 msgid "Channels"
@@ -381,8 +381,8 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
-"Проприетарный и более старый, но в то же время популярный кодек сжатия "
-"звука. Сжатые им файлы имеют больший размер при низкой скорости потока."
+"Несвободный и более старый, но в то же время популярный кодек сжатия звука. "
+"Сжатые им файлы имеют больший размер при низкой скорости потока."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
@@ -488,9 +488,9 @@ msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
 "size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
-"Проприетарный формат сжатия с потерям, обеспечивающий высокое качество при "
+"Несвободный формат сжатия с потерям, обеспечивающий высокое качество при "
 "размере файлов меньше, чем при сжатии MP3. Файл WMA со скоростью потока 96 "
-"kbps эквивалентен файлу в MP3 со скоростью потока 128 kbps."
+"Кбит/с эквивалентен файлу в MP3 со скоростью потока 128 Кбит/с."
 
 #: ../data/audio-profiles/wma.xml.in.h:2
 msgid "Audio Quality"
@@ -544,14 +544,14 @@ msgstr "Не связать queue с кодировщиком"
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Не удалось связать кодировщик с gnomevfssink"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:387
+#: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:150
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:413
+#: ../libbanshee/gst-cd-rip-0.10.c:429
 msgid "Encoding element does not support tagging!"
 msgstr "Кодируемый объект не поддерживает метаданные!"
 
@@ -734,14 +734,14 @@ msgstr "Ширина столбца «Год»"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:788
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:88
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:91
 msgid "Album"
 msgstr "Альбом"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:83
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:86
 msgid "Artist"
 msgstr "Исполнитель"
 
@@ -757,9 +757,9 @@ msgstr "Н/Д"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:162
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:439
-#: ../src/Core/Banshee/PlayerInterface.cs:1301
-#: ../src/Core/Banshee/PlayerInterface.cs:2347
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+#: ../src/Core/Banshee/PlayerInterface.cs:1340
+#: ../src/Core/Banshee/PlayerInterface.cs:2481
 msgid "Genre"
 msgstr "Жанр"
 
@@ -780,8 +780,7 @@ msgstr "Оценка"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:787
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:93
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:96
 msgid "Title"
 msgstr "Название"
 
@@ -805,12 +804,12 @@ msgstr "Неизвестная ошибка"
 msgid "Track"
 msgstr "Дорожка"
 
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:133
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:140
 msgid "Columns..."
 msgstr "Столбцы..."
 
 #. Translators: {0} is the title of the column, e.g. 'Hide Artist'
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:136
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:143
 #, csharp-format
 msgid "Hide {0}"
 msgstr "Спрятать {0}"
@@ -822,8 +821,8 @@ msgstr "Расположение:"
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-#: ../src/Core/Banshee/PlayerInterface.cs:440
-#: ../src/Core/Banshee/PlayerInterface.cs:1303
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+#: ../src/Core/Banshee/PlayerInterface.cs:1342
 msgid "Year"
 msgstr "Год"
 
@@ -1018,7 +1017,7 @@ msgstr "В_оспроизведение"
 #. Translators: Source being the generic word for playlist, device, library, etc
 #: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:105
-#: ../src/Core/Banshee.Base/Source.cs:317
+#: ../src/Core/Banshee.Base/Source.cs:321
 msgid "Source"
 msgstr "Источник"
 
@@ -1030,215 +1029,231 @@ msgstr "Меню песни"
 msgid "_Debug"
 msgstr "О_тладка"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:206
+#: ../src/Core/Banshee.Base/ActionManager.cs:204
+msgid "Import Playlist..."
+msgstr "Импортировать список воспроизведения..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:205
+msgid "Import a playlist"
+msgstr "Импортировать список воспроизведения"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:208
+msgid "Export Playlist..."
+msgstr "Экспортировать список воспроизведения..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:209
+msgid "Export a playlist"
+msgstr "Экспортировать список воспроизведения"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
 msgstr "_Во весь экран"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:207
+#: ../src/Core/Banshee.Base/ActionManager.cs:215
 msgid "Toggle Fullscreen Mode"
 msgstr "Переключить полноэкранный режим"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:210
+#: ../src/Core/Banshee.Base/ActionManager.cs:218
 msgid "Show Cover _Art"
 msgstr "Показать о_бложку"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:211
+#: ../src/Core/Banshee.Base/ActionManager.cs:219
 msgid "Toggle display of album cover art"
 msgstr "Переключить показ обложки"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:222
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
 msgid "_Copy"
 msgstr "_Скопировать"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:223
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
 msgid "Copy selected song(s) to clipboard"
 msgstr "Скопировать выбранные песни в буфер обмена"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:226
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
 msgid "_Remove"
 msgstr "_Удалить"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:227
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
 msgid "Remove selected song(s) from library"
 msgstr "Удалить выбранные песни из фонотеки"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:230
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Delete From Drive"
 msgstr "У_далить песни с диска"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:231
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr "Удалить выбранные песни насовсем с диска"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:234
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "_Edit Song Metadata"
 msgstr "_Изменить метаданные песни"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:235
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
 msgid "Edit metadata on selected songs"
 msgstr "Изменить метаданные выбранных песен"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:238
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
 msgid "_Search for songs"
 msgstr "_Искать песни"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:239
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search for songs matching certain criteria"
 msgstr "Поиск песен по определённым критериям"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:242
+#: ../src/Core/Banshee.Base/ActionManager.cs:250
 msgid "By matching _album"
 msgstr "По _альбому"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:243
+#: ../src/Core/Banshee.Base/ActionManager.cs:251
 msgid "Search all songs of this album"
 msgstr "Искать все песни этого альбома"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:246
+#: ../src/Core/Banshee.Base/ActionManager.cs:254
 msgid "By matching a_rtist"
 msgstr "По _исполнителю"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:247
+#: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Search all songs of this artist"
 msgstr "Искать все песни этого исполнителя"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:250
+#: ../src/Core/Banshee.Base/ActionManager.cs:258
 msgid "By matching _genre"
 msgstr "По _жанру"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:251
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
 msgid "Search all songs of this genre"
 msgstr "Искать все песни этого жанра"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:254
+#: ../src/Core/Banshee.Base/ActionManager.cs:262
 msgid "Add _to Playlist"
 msgstr "_Добавить в список воспроизведения"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:255
+#: ../src/Core/Banshee.Base/ActionManager.cs:263
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 "Добавить выбранное в конец существующего списка воспроизведения или создать "
 "новый"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:258
+#: ../src/Core/Banshee.Base/ActionManager.cs:266
 msgid "Ratin_g"
 msgstr "О_ценка"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:259
+#: ../src/Core/Banshee.Base/ActionManager.cs:267
 msgid "Set rating for selected songs"
 msgstr "Поставить оценку выбранным песням"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:268
+#: ../src/Core/Banshee.Base/ActionManager.cs:276
 msgid "Import CD"
 msgstr "Импортировать CD"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:269
+#: ../src/Core/Banshee.Base/ActionManager.cs:277
 msgid "Import audio CD to library"
 msgstr "Импортировать звуковой CD в фонотеку"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:278
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Play"
 msgstr "_Воспроизвести"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:279
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play or pause the current song"
 msgstr "Воспроизвести или приостановить воспроизведение текущей песни"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:282
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "_Next"
 msgstr "_Следующая"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:283
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the next song"
 msgstr "Воспроизвести следующую песню"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:294
 msgid "Pre_vious"
 msgstr "_Предыдущая"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:295
 msgid "Play the previous song"
 msgstr "Воспроизвести предыдущую песню"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:292
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat N_one"
 msgstr "_Ничего не повторять"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:293
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Do not repeat playlist"
 msgstr "Не поворять список воспроизведения"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:296
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat _All"
 msgstr "Повторить _все"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:297
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Play all songs before repeating playlist"
 msgstr "Воспроизвести все песни перед повтором списка воспроизведения"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:308
 msgid "Repeat Si_ngle"
 msgstr "Повторить _одну"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:309
 msgid "Repeat the current playing song"
 msgstr "Повторить текущую песню"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:306
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
 msgid "Shu_ffle"
 msgstr "В с_лучайном порядке"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:307
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr ""
 "Переключиться между случайным и продолжительным режимами воспроизведения"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:310
+#: ../src/Core/Banshee.Base/ActionManager.cs:318
 msgid "_Stop when finished"
 msgstr "Ост_ановить по окончании песни"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:311
+#: ../src/Core/Banshee.Base/ActionManager.cs:319
 msgid "Stop playback after the current song finishes playing"
 msgstr "Остановить воспроизведение, когда эта песня закончится"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:320
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Backward"
 msgstr "Про_крутить назад"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:321
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek backward in current song"
 msgstr "Прокрутить вперёд по текущей песне"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:324
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
 msgid "Seek _Forward"
 msgstr "Прокру_тить вперёд"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:325
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek forward in current song"
 msgstr "Прокрутить назад по текущей песне"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "Seek _To..."
 msgstr "Прокрутить _до..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Seek to a specific location in current song"
 msgstr "Прокрутить до определённого времени в текущей песне"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:340
 msgid "_Restart Song"
 msgstr "Воспроизвести с на_чала"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:341
 msgid "Restart the current song"
 msgstr "Воспроизвести текущую песню с начала"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:342
-#: ../src/Core/Banshee.Base/SourceManager.cs:275
+#: ../src/Core/Banshee.Base/ActionManager.cs:350
+#: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "Синхронизироваться"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:343
+#: ../src/Core/Banshee.Base/ActionManager.cs:351
 msgid "Save changes to device or synchronize music library"
 msgstr "Сохранить изменения на устройстве или синхронизировать фонотеку"
 
@@ -1271,15 +1286,15 @@ msgid "Track {0}"
 msgstr "Дорожка {0}"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:93
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:59
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:60
 msgid "Audio CD"
 msgstr "Звуковой CD"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:243
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
 msgid "Cannot Eject CD"
 msgstr "Невозможно извлечь CD"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:245
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
 msgstr ""
 "Диск невозможно извлечь во время импорта. Дождитесь завершения копирования."
@@ -1327,12 +1342,12 @@ msgid "Cannot Import CD"
 msgstr "Невозможно импортировать CD"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
-#: ../src/Core/Banshee.Base/ImportManager.cs:292
+#: ../src/Core/Banshee.Base/ImportManager.cs:297
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Импортируется дорожка {0} из {1}"
 
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:83
+#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
 msgid "No available profiles"
 msgstr "Нет профилей"
 
@@ -1363,7 +1378,7 @@ msgid "{0} Minutes"
 msgstr "{0} минут"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:335
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:339
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:90
 #, csharp-format
 msgid "{0} of {1}"
@@ -1614,7 +1629,11 @@ msgstr "Включить коррекцию ошибок"
 msgid "Enable shuffle mode"
 msgstr "Включить воспроизведение в случайном порядке"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
+msgid "Export Format"
+msgstr "Формат экспортируемого файла"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
 #, no-c-format
 msgid ""
 "Format for creating a track filename inside the library. Do not use path "
@@ -1628,7 +1647,7 @@ msgstr ""
 "%track_number_nz% (без нуля в префиксе), %track_count_nz% (без нуля в "
 "префиксе)."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 #, no-c-format
 msgid ""
 "Format for creating a track folder inside the library. Do not create an "
@@ -1643,11 +1662,11 @@ msgstr ""
 "track_number_nz% (No prefixed zero), %track_count_nz% (Без начального нуля), "
 "%path_sep% (с разделителем (/))."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 msgid "Height of the main interface window."
 msgstr "Высота главного окна программы."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid ""
 "If enabled, metadata (tags) will be written back to audio files when using "
 "the track metadata editor."
@@ -1655,91 +1674,91 @@ msgstr ""
 "Если включено, метаданные будут писаться в звуковые файлы при использовании "
 "редактора метаданных"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
 msgid "Library File Pattern"
 msgstr "Шаблон имени файла фонотеки"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
 msgid "Library Folder Pattern"
 msgstr "Шаблон имени папки фонотеки"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 msgid "Library location"
 msgstr "Местоположение фонотеки"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "Library source expansion"
 msgstr "Источники библиотеки"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
 msgstr "Список URI в выпадающем списке истории диалога добавления источника"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
 msgstr "Перемещать музыкальные файлы при сохранении"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
 msgid ""
 "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Перемещать музыкальные файлы внутри папки фонотеки при смене метаданных"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
 msgid "Name of media playback engine backend"
 msgstr "Имя «движка» воспроизведения музыки"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr "Положение главного окна программы на координате X в пикселах"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr "Положение главного окна программы на координате Y в пикселах"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
 msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
 msgstr "Режим повтора (0 = Не повторять, 1 = Всё, 2 = Одну дорожку)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
 msgid "Repeat playback"
 msgstr "Воспроизведение с повтором"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Set the IO backend in Banshee"
 msgstr "Устанавливает систему ввода-вывода, используемую Banshee"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
 msgid "Show cover art"
 msgstr "Показать обложку"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
 msgstr "Показать обложку под списком источников, если она доступна"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog"
 msgstr "Показать первоначальный диалог импорта"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr "Показать диалог импорта, появляющийся при самом первом запуске Banshee"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
 msgid "Shuffle playback"
 msgstr "Воспроизведение в случайном порядке"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid ""
 "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 "Способ упорядочивания списков воспроизведения (0 = по имени, 1 = по размеру)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort criteria of playlists"
 msgstr "Критерий сортировки списков воспроизведения"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
@@ -1747,85 +1766,123 @@ msgstr ""
 "Способ упорядочивания списков воспроизведения (0 = по возрастанию, 1 = по "
 "убыванию)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
 msgstr "Выстроить списки воспроизведения по порядку"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 msgid "Source View Width"
 msgstr "Ширина окна списка источников"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+msgid "The default playlist export format"
+msgstr "Формат экспортируемого списка воспроизведения по умолчанию"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
 "True, если главное окно развёрнуто на весь экран, false в противном случае."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
 msgid "URI"
 msgstr "URI"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
 msgid "URI List"
 msgstr "Список URI"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
 msgid "URI of last file folder"
 msgstr "URI последней папки с файлами"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "Volume"
 msgstr "Громкость"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
 msgid "Volume of playback relative to mixer output"
 msgstr "Уровень громкости относительно выхода микшера"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
 msgstr ""
 "Включить исправление ошибко во время импорта звуковых CD (параноидальный "
 "режим)"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
 msgid "Whether to expand the library node in the source view"
 msgstr "Раскрывать вершины в дереве источников"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
 msgid "Width of Source View Column."
 msgstr "Ширина колонки списка источников."
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
 msgid "Width of the main interface window."
 msgstr "Ширина основного окна программы"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
 msgid "Window Height"
 msgstr "Высота окна"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
 msgid "Window Maximized"
 msgstr "Окно свёрнуто"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
 msgid "Window Position X"
 msgstr "Положение окна по оси X"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
 msgid "Window Position Y"
 msgstr "Положение окна по оси Y"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:57
 msgid "Window Width"
 msgstr "Ширина окна"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:58
 msgid "Write metadata back to audio files"
 msgstr "Записывать метаданные прямо в файлы"
 
-#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:69
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:280
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:283
 msgid "Scanning"
 msgstr "Сканирование"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
+msgid "Verifying"
+msgstr "Проверка"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
+msgid ""
+"The playlist import process is currently running. Would you like to stop it?"
+msgstr "Процесс импорта всё ещё действует. Вы хотите его остановить?"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
+msgid "Verifying playlist tracks exist in library"
+msgstr "Проверка дорожек списка воспроизведение на присутствие в фонотеке"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "Проверяется {0} из {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
+msgid "Verifying "
+msgstr "Проверка"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
+msgid "Export Playlist"
+msgstr "Экспорт списка воспроизведения"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
+msgid "Export"
+msgstr "Импорт"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
+msgid "Select Format: "
+msgstr "Выберите формат:"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -1836,9 +1893,17 @@ msgstr "Расширенная версия MPEG 3.0 (*.m3u)"
 msgid "Exception: "
 msgstr "Исключение: "
 
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
+msgid "Not a valid M3U file."
+msgstr "Некорректный файл M3U."
+
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
 msgid "Shoutcast Playlist version 2 (*.pls)"
 msgstr "Shoutcast Playlist version 2 (*.pls)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
+msgid "Not a valid PLS file."
+msgstr "Некорректный файл PLS."
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
 msgid "Edit Smart Playlist"
@@ -1869,22 +1934,22 @@ msgid "Unheard Podcasts"
 msgstr "Не прослушанные подкасты"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
-#: ../src/Core/Banshee/PlayerInterface.cs:437
-#: ../src/Core/Banshee/PlayerInterface.cs:1295
-#: ../src/Core/Banshee/PlayerInterface.cs:2343
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+#: ../src/Core/Banshee/PlayerInterface.cs:1334
+#: ../src/Core/Banshee/PlayerInterface.cs:2477
 msgid "Artist Name"
 msgstr "Имя исполнителя"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
-#: ../src/Core/Banshee/PlayerInterface.cs:436
-#: ../src/Core/Banshee/PlayerInterface.cs:1297
+#: ../src/Core/Banshee/PlayerInterface.cs:452
+#: ../src/Core/Banshee/PlayerInterface.cs:1336
 msgid "Song Name"
 msgstr "Название песни"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
-#: ../src/Core/Banshee/PlayerInterface.cs:438
-#: ../src/Core/Banshee/PlayerInterface.cs:1299
-#: ../src/Core/Banshee/PlayerInterface.cs:2339
+#: ../src/Core/Banshee/PlayerInterface.cs:454
+#: ../src/Core/Banshee/PlayerInterface.cs:1338
+#: ../src/Core/Banshee/PlayerInterface.cs:2473
 msgid "Album Title"
 msgstr "Название альбома"
 
@@ -2091,7 +2156,7 @@ msgid "Playlist"
 msgstr "Список воспроизведения"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:126
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "Умный список воспроизведения"
 
@@ -2107,19 +2172,19 @@ msgstr "Создать _умный список воспроизведения..
 msgid "New Smart Playlist _from Search..."
 msgstr "Создать умный список воспроизведения из _поиска..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:116
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
 msgid "Delete Smart Playlist"
 msgstr "Удалить умный список воспроизведения"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:121
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
 msgid "Edit Smart Playlist..."
 msgstr "Изменить умный список воспроизведения"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:442
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
 msgid "Smart Playlist has Dependencies"
 msgstr "У умного списка воспроизведения есть зависимости"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:444
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
 #, csharp-format
 msgid ""
 "{0} is depended on by other smart playlists. Are you sure you want to delete "
@@ -2171,7 +2236,7 @@ msgstr ""
 "HalCore"
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:335
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:398
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
 msgid "Device"
 msgstr "Устройство"
 
@@ -2207,7 +2272,7 @@ msgstr "Продолжить синхронизацию"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
 #, csharp-format
 msgid "{0} Properties"
 msgstr "Свойства {0}"
@@ -2222,15 +2287,15 @@ msgstr "Имя устройства"
 msgid "Owner name"
 msgstr "Имя владельца"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:95
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
 msgid "Encode to"
 msgstr "Кодировать в"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:101
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
 msgid "Volume usage"
 msgstr "Использование тома"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:113
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
 msgid "Advanced details"
 msgstr "Подробности"
 
@@ -2242,19 +2307,19 @@ msgstr "Импорт файлов в фонотеку"
 msgid "Local Files"
 msgstr "Локальные файлы"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:98
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:101
 msgid "Count"
 msgstr "Счётчик"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:103
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:106
 msgid "Number"
 msgstr "Число"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:108
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:111
 msgid "Count (unsorted)"
 msgstr "Счётчик (неупорядоченный)"
 
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:113
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:116
 msgid "Number (unsorted)"
 msgstr "Число (неупорядоченное)"
 
@@ -2266,71 +2331,71 @@ msgstr "Импорт папки в фонотеку"
 msgid "Local Folder"
 msgstr "Локальная папка"
 
-#: ../src/Core/Banshee.Base/Globals.cs:86
-#: ../src/Core/Banshee.Base/Globals.cs:95
-#: ../src/Core/Banshee.Base/Globals.cs:156
+#: ../src/Core/Banshee.Base/Globals.cs:100
+#: ../src/Core/Banshee.Base/Globals.cs:109
+#: ../src/Core/Banshee.Base/Globals.cs:170
 msgid "Starting background tasks"
 msgstr "Запускаются фоновые задачи"
 
-#: ../src/Core/Banshee.Base/Globals.cs:96
+#: ../src/Core/Banshee.Base/Globals.cs:110
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr "Поддержка устройств в этот раз будет отключена (нет HAL)"
 
-#: ../src/Core/Banshee.Base/Globals.cs:99
-#: ../src/Core/Banshee.Base/Globals.cs:142
+#: ../src/Core/Banshee.Base/Globals.cs:113
+#: ../src/Core/Banshee.Base/Globals.cs:156
 msgid "Initializing audio engine"
 msgstr "Инициализируется звуковой движок"
 
-#: ../src/Core/Banshee.Base/Globals.cs:100
+#: ../src/Core/Banshee.Base/Globals.cs:114
 msgid "Detecting network settings"
 msgstr "Определяются сетевые настройки"
 
-#: ../src/Core/Banshee.Base/Globals.cs:101
+#: ../src/Core/Banshee.Base/Globals.cs:115
 msgid "Creating action manager"
 msgstr "Создаётся диспетчер действий"
 
-#: ../src/Core/Banshee.Base/Globals.cs:102
+#: ../src/Core/Banshee.Base/Globals.cs:116
 msgid "Loading music library"
 msgstr "Загружается фонотека"
 
-#: ../src/Core/Banshee.Base/Globals.cs:107
+#: ../src/Core/Banshee.Base/Globals.cs:121
 msgid "Initializing audio profiles"
 msgstr "Инициализируются звуковые профили"
 
-#: ../src/Core/Banshee.Base/Globals.cs:144
+#: ../src/Core/Banshee.Base/Globals.cs:158
 msgid "Initializing audio CD support"
 msgstr "Инициализируется поддержка звуковых CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:145
+#: ../src/Core/Banshee.Base/Globals.cs:159
 msgid "Audio CD support will be disabled for this instance"
 msgstr "Поддержка звуковых CD в этот раз будет отключена"
 
-#: ../src/Core/Banshee.Base/Globals.cs:147
+#: ../src/Core/Banshee.Base/Globals.cs:161
 msgid "Initializing digital audio player support"
 msgstr "Инициализируется поддержка музыкальных плееров"
 
-#: ../src/Core/Banshee.Base/Globals.cs:148
+#: ../src/Core/Banshee.Base/Globals.cs:162
 msgid "DAP support will be disabled for this instance"
 msgstr "Поддержка музыкальных плееров в этот раз будет отключена"
 
-#: ../src/Core/Banshee.Base/Globals.cs:150
+#: ../src/Core/Banshee.Base/Globals.cs:164
 msgid "Initializing CD writing support"
 msgstr "Инициализируется поддержка записи CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:151
+#: ../src/Core/Banshee.Base/Globals.cs:165
 msgid "CD burning support will be disabled for this instance"
 msgstr "Запись CD в этот раз будет отключена"
 
-#: ../src/Core/Banshee.Base/Globals.cs:153
-#: ../src/Core/Banshee.Base/Globals.cs:154
+#: ../src/Core/Banshee.Base/Globals.cs:167
+#: ../src/Core/Banshee.Base/Globals.cs:168
 msgid "Initializing plugins"
 msgstr "Инициализируются расширения"
 
-#: ../src/Core/Banshee.Base/Globals.cs:155
+#: ../src/Core/Banshee.Base/Globals.cs:169
 msgid "Initializing scripts"
 msgstr "Инициализируются сценарии"
 
-#: ../src/Core/Banshee.Base/Globals.cs:159
+#: ../src/Core/Banshee.Base/Globals.cs:173
 msgid "Loading user interface"
 msgstr "Загружается пользовательский интерфейс"
 
@@ -2476,7 +2541,7 @@ msgstr ""
 "Проверка ошибок позволяет исправлять проблемы с диском, такие как царапины, "
 "но при этом существенно замедляет импорт записей."
 
-#: ../src/Core/Banshee.Base/Gui/SourceView.cs:528
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
 msgid "Could not import tracks"
 msgstr "Не удалось импортировать дорожки"
 
@@ -2526,9 +2591,12 @@ msgstr "Использовать этот жанр для всех дороже�
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
 msgid ""
-"Set all common fields in all selected tracks to the values currently set"
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
 msgstr ""
-"Использовать текущие значения основных полей для всех выбранных дорожек"
+"Применить значения полей Исполнитель, Альбом, Жанр, Число дорожек, Год и "
+"Оценка к остальным выбранным дорожкам."
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
 msgid "Set all ratings to this value"
@@ -2564,15 +2632,15 @@ msgstr "Версия"
 msgid "Home Directory"
 msgstr "Домашний каталог"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:92
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
 msgid "Scanning for songs"
 msgstr "Сканирование песен"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:280
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
 msgid "Importing Songs"
 msgstr "Импорт песен"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:286
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
 msgid "The import process is currently running. Would you like to stop it?"
 msgstr "Производится импорт. Вы хотите его остановить?"
 
@@ -2605,7 +2673,7 @@ msgstr ""
 "Ни одного «движка» воспроизведения не найдено. Убедитесь в корректной "
 "установке Banshee."
 
-#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:187
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
 msgid "Problem with Player Engine"
 msgstr "Неполадки с «движком» воспроизведения"
 
@@ -2642,20 +2710,21 @@ msgstr "Параметры"
 msgid "Playing Music"
 msgstr "Воспроизводится музыка"
 
-#: ../src/Core/Banshee.Base/Source.cs:375
+#: ../src/Core/Banshee.Base/Source.cs:388
 msgid "Source Properties..."
 msgstr "Свойства источника..."
 
-#: ../src/Core/Banshee.Base/Source.cs:383
+#: ../src/Core/Banshee.Base/Source.cs:396
 #, csharp-format
 msgid "Delete {0}"
 msgstr "Удалить {0}"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:264
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2014
 msgid "Import"
 msgstr "Импортировать"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:282
+#: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
 msgid "Rename {0}"
 msgstr "Переименовать {0}"
@@ -2674,42 +2743,42 @@ msgstr "Вы точно хотите удалить {0}?"
 msgid "Do not ask me this again"
 msgstr "Больше не спрашивать об этом"
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:51
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:52
 msgid "Eject CD"
 msgstr "Извлечь диск"
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:92
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:98
 msgid "Reading table of contents from CD..."
 msgstr "Читается содержание CD..."
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:97
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:103
 msgid "Searching for CD metadata..."
 msgstr "Идёт поиск метаданных CD..."
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:102
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:108
 msgid "Searching for CD cover art..."
 msgstr "Идёт поиск обложки CD..."
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:107
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
 msgid ""
 "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Невозможноискать метаданные CD: нет соединения с Интернетом"
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
 msgid "Could not fetch metadata for CD."
 msgstr "Не удалось получить метаданные CD."
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:194
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:147
+msgid "Copy CD"
+msgstr "Скопировать CD"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:236
 msgid "Invalid Selection"
 msgstr "Некорректное выделение"
 
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:195
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:237
 msgid "You must select at least one track to import."
 msgstr "Необходимо выбрать хотя бы одну импортируемую дорожку"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:241
-msgid "Copy CD"
-msgstr "Скопировать CD"
 
 #: ../src/Core/Banshee.Base/Sources/DapSource.cs:107
 msgid "Synchronizing your Device, Please Wait..."
@@ -2740,19 +2809,19 @@ msgstr "Производится копирование из {0}"
 msgid "Scanning..."
 msgstr "Производится сканирование..."
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:309
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
 #: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr "Невозможно импортировать дорожку с {0}"
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:345
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "(Осталось {0})"
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:382
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
 #, csharp-format
 msgid "Eject {0}"
 msgstr "Извлечь {0}"
@@ -2799,18 +2868,18 @@ msgstr "По размеру назад"
 msgid "Local Queue"
 msgstr "Локальная очередь"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:72
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:460
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:466
-#: ../src/Core/Banshee/PlayerInterface.cs:1560
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1602
 msgid "New Playlist"
 msgstr "Новый список"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:161
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
 msgid "Cannot Rename Playlist"
 msgstr "Невозможно переименовать список воспроизведения"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 "Список воспроизведения с таким названием уже есть. Выберите другое название."
@@ -2838,74 +2907,74 @@ msgstr "из альбома"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} Гбайт"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:434
+#: ../src/Core/Banshee/PlayerInterface.cs:450
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
 msgid "All"
 msgstr "Все"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:463
+#: ../src/Core/Banshee/PlayerInterface.cs:479
 msgid "Write selection to CD"
 msgstr "Записать выбранное на диск"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:464
+#: ../src/Core/Banshee/PlayerInterface.cs:480
 msgid "Import CD into library"
 msgstr "Импортировать диск в фонотоеку"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:465
+#: ../src/Core/Banshee/PlayerInterface.cs:481
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:151
 msgid "Play previous song"
 msgstr "Воспроизвести предыдущую песню"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:466
+#: ../src/Core/Banshee/PlayerInterface.cs:482
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:152
 msgid "Play/pause current song"
 msgstr "Воспроизвести/приостановить воспроизведение текущей песни"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:483
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
 msgid "Play next song"
 msgstr "Воспроизвести следующую песню"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:468
+#: ../src/Core/Banshee/PlayerInterface.cs:484
 msgid "Device disk usage"
 msgstr "Использование диска устройства"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:469
+#: ../src/Core/Banshee/PlayerInterface.cs:485
 msgid "Synchronize music library to device"
 msgstr "Синхронизировать фонотеку с устройством"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:470
+#: ../src/Core/Banshee/PlayerInterface.cs:486
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:155
 msgid "Adjust volume"
 msgstr "Изменить громкость"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:471
+#: ../src/Core/Banshee/PlayerInterface.cs:487
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:156
 msgid "Change repeat playback mode"
 msgstr "Сменить тип повтора воспроизведения"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:472
+#: ../src/Core/Banshee/PlayerInterface.cs:488
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:157
 msgid "Toggle shuffle playback mode"
 msgstr "Переключить воспроизведение в случайном порядке"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:473
+#: ../src/Core/Banshee/PlayerInterface.cs:489
 msgid "Edit and view metadata of selected songs"
 msgstr "Просмотреть и изменить метаданные выделенных песен"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:772
+#: ../src/Core/Banshee/PlayerInterface.cs:806
 msgid "Pause"
 msgstr "Пауза"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:774
+#: ../src/Core/Banshee/PlayerInterface.cs:808
 msgid "Stop"
 msgstr "Остановить"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:795
+#: ../src/Core/Banshee/PlayerInterface.cs:829
 msgid "Cannot Play Song"
 msgstr "Невозможно воспроизвести песню"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:796
+#: ../src/Core/Banshee/PlayerInterface.cs:830
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2919,12 +2988,12 @@ msgstr ""
 "  <big>•</big> песня находится на проигрывателе, не поддерживающем удалённое "
 "воспроизведение\n"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:805
-#: ../src/Core/Banshee/PlayerInterface.cs:814
+#: ../src/Core/Banshee/PlayerInterface.cs:839
+#: ../src/Core/Banshee/PlayerInterface.cs:848
 msgid "Play"
 msgstr "Воспроизвести"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1226
+#: ../src/Core/Banshee/PlayerInterface.cs:1260
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
@@ -2932,7 +3001,7 @@ msgstr[0] "{0} дорожка"
 msgstr[1] "{0} дорожки"
 msgstr[2] "{0} дорожек"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1230
+#: ../src/Core/Banshee/PlayerInterface.cs:1264
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
@@ -2940,7 +3009,7 @@ msgstr[0] "{0} день"
 msgstr[1] "{0} дня"
 msgstr[2] "{0} дней"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1235
+#: ../src/Core/Banshee/PlayerInterface.cs:1269
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
@@ -2948,7 +3017,7 @@ msgstr[0] "{0} час"
 msgstr[1] "{0} часа"
 msgstr[2] "{0} часов"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1239
+#: ../src/Core/Banshee/PlayerInterface.cs:1273
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
@@ -2956,7 +3025,7 @@ msgstr[0] "{0} минута"
 msgstr[1] "{0} минуты"
 msgstr[2] "{0} минут"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1241
+#: ../src/Core/Banshee/PlayerInterface.cs:1275
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
@@ -2964,11 +3033,11 @@ msgstr[0] "{0} секунда"
 msgstr[1] "{0} секунды"
 msgstr[2] "{0} секунд"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1579
+#: ../src/Core/Banshee/PlayerInterface.cs:1621
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1842
+#: ../src/Core/Banshee/PlayerInterface.cs:1884
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2977,15 +3046,15 @@ msgstr[0] "Вы точно хотите удалить {0} песню насов
 msgstr[1] "Вы точно хотите удалить {0} выбранных песни насовсем?"
 msgstr[2] "Вы точно хотите удалить {0} выбранных песен насовсем?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1846
+#: ../src/Core/Banshee/PlayerInterface.cs:1888
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Удалённые песни пропадут навсегда."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1849
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
 msgid "Remove selection from library"
 msgstr "Удалить выбранное из фонотеки"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1851
+#: ../src/Core/Banshee/PlayerInterface.cs:1893
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -2994,26 +3063,43 @@ msgstr[0] "Вы точно хотите удалить {0} песню из св�
 msgstr[1] "Вы точно хотите удалить {0} выбранных песни из своей фонотеки?"
 msgstr[2] "Вы точно хотите удалить {0} выбранных песен из своей фонотеки?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1896
+#: ../src/Core/Banshee/PlayerInterface.cs:1938
 msgid "Delete songs from drive"
 msgstr "Удалить песни с диска"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1897
+#: ../src/Core/Banshee/PlayerInterface.cs:1939
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "У вас нет необходимых прав для удаления '{0}'"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2011
+#: ../src/Core/Banshee/PlayerInterface.cs:2005
+msgid "Import Playlist"
+msgstr "Импорт списка воспроизведения"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2037
+#: ../src/Core/Banshee/PlayerInterface.cs:2055
+msgid "Unable to Import Playlist"
+msgstr "Невозможно импортировать список воспроизведения"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2056
+msgid ""
+"Banshee was unable to find any valid tracks to import.  Please check the "
+"playlist and try again."
+msgstr ""
+"Banshee не удалось найти подходящие для импорта дорожки. Проверьте список "
+"воспроизведения и попробуйте снова."
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2145
 msgid "New CD"
 msgstr "Новый диск"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2032
+#: ../src/Core/Banshee/PlayerInterface.cs:2166
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Синхронизировать {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2033
+#: ../src/Core/Banshee/PlayerInterface.cs:2167
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3031,7 +3117,7 @@ msgstr ""
 "<big>•</big> <i>Сохранить изменения вручную</i>: сохранить только те "
 "изменения, что вы сделали сами"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2039
+#: ../src/Core/Banshee/PlayerInterface.cs:2173
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3039,11 +3125,11 @@ msgstr ""
 "<b>Предупреждение:</b> Действия изменят или сотрут существующие данные на "
 "iPod и могут вызвать несовместимость с iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2041
+#: ../src/Core/Banshee/PlayerInterface.cs:2175
 msgid "Synchronize Library"
 msgstr "Синхронизировать фонотеку"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2043
+#: ../src/Core/Banshee/PlayerInterface.cs:2177
 msgid "Save Manual Changes"
 msgstr "Сохранить изменения, внесённые вручную"
 
@@ -3072,7 +3158,7 @@ msgstr ""
 msgid "Continue {0}"
 msgstr "Продолжить {0}"
 
-#: ../src/Core/Banshee.Widgets/DiscUsageDisplay.cs:201
+#: ../src/Core/Banshee.Widgets/DiscUsageDisplay.cs:187
 msgid ""
 "Insert\n"
 "Disc"
@@ -3087,7 +3173,7 @@ msgid "Searching: {0}"
 msgstr "Поиск: {0}"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:273
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
 msgid "Buffering"
 msgstr "Буферизация"
 
@@ -3098,6 +3184,14 @@ msgstr "Соединение..."
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
 msgid "Idle"
 msgstr "Бездействие"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
+msgid "Muted"
+msgstr "Приглушено"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
+msgid "Full Volume"
+msgstr "Полная громкость"
 
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
@@ -3150,24 +3244,24 @@ msgstr "Больше не спрашивать"
 msgid "Go to Web Site"
 msgstr "Перейти на веб-сайт"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:229
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:234
 msgid "Could not eject iPod"
 msgstr "Не удалось отсоединить iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:237
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:256
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:242
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:261
 msgid "Synchronizing iPod"
 msgstr "Синхронизация с iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:238
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:243
 msgid "Pre-processing tracks"
 msgstr "Предобработка дорожек"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:253
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:258
 msgid "Flushing to Disk (may take time)"
 msgstr "Идёт сбрасывание на диск (может длиться долго)"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:263
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:268
 msgid "Failed to synchronize iPod"
 msgstr "Не удалось синхронизироваться с iPod"
 
@@ -3203,15 +3297,15 @@ msgstr ""
 msgid "What is the reason for this?"
 msgstr "В чём причина этого?"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:112
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild iPod Database..."
 msgstr "Повторно создаётся база данных iPod..."
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:120
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:124
 msgid "Confirm Rebuild iPod Database"
 msgstr "Подтвердите повторное создание базыданных iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:126
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:130
 msgid ""
 "Rebuilding your iPod database may take some time. Also note that any "
 "playlists you have on your iPod will be lost.\n"
@@ -3223,11 +3317,11 @@ msgstr ""
 "\n"
 "Вы точно хотите повторно создать базу данных вашего iPod?"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:135
 msgid "Rebuild Database"
 msgstr "Повторно создать базу данных"
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:143
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:147
 msgid "Rebuilding iPod Database..."
 msgstr "Повторно создаётся база данных..."
 
@@ -3246,12 +3340,12 @@ msgstr "Синхронизация устройства"
 msgid "Removing Songs"
 msgstr "Удаляются песни"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:186
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:188
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:189
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:191
 msgid "Vendor"
 msgstr "Производитель"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:193
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:196
 #, csharp-format
 msgid "Audio Folder"
 msgid_plural "Audio Folders"
@@ -3259,11 +3353,11 @@ msgstr[0] "Аудиокаталог"
 msgstr[1] "Аудиокаталоги"
 msgstr[2] "Аудиокаталоги"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:199
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:202
 msgid "Required Folder Depth"
 msgstr "Требуемая глубина каталога"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:204
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:207
 #, csharp-format
 msgid "Audio Format"
 msgid_plural "Audio Formats"
@@ -3271,32 +3365,32 @@ msgstr[0] "Аудиоформат"
 msgstr[1] "Аудиоформаты"
 msgstr[2] "Аудиоформаты"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:261
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:264
 msgid "Loading Songs"
 msgstr "Загрузка песен"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:262
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:265
 msgid ""
 "The audio device song loading process is currently running.  Would you like "
 "to stop it?"
 msgstr ""
 "Производится загрузка песен с аудиоустройства. Вы хотите его остановить?"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:263
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:266
 #, csharp-format
 msgid "Loading {0} of {1}"
 msgstr "Загружается {0} из {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:312
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:315
 #, csharp-format
 msgid "Copying {0} of {1}"
 msgstr "Копируется {0} из {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:327
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:330
 msgid "Song Playing on Device"
 msgstr "Песня, проигрываемая на устройстве"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:328
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
@@ -3304,31 +3398,31 @@ msgstr ""
 "Перед извлечением устройства необходимо начать играть другую запись, "
 "отсутствующую на устройстве. Это известная ошибка."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:359
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:362
 #, csharp-format
 msgid "Failed to Unmount {0}"
 msgstr "Не удалось отсоединить {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:360
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
 msgid "Make sure no other programs are using it."
 msgstr "Убедитесь, что другие программы его не используют."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:372
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:375
 #, csharp-format
 msgid "Failed to Eject {0}"
 msgstr "Не удалось извлечь {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:526
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:529
 #, csharp-format
 msgid "Removing songs from {0}"
 msgstr "Удаляются песни с {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:527
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
 #, csharp-format
 msgid "Removing {0} of {1}"
 msgstr "Удаляется {0} из {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:562
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:565
 msgid "Audio Device"
 msgstr "Звуковое устройство"
 
@@ -3473,6 +3567,7 @@ msgid "Password"
 msgstr "Пароль"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
@@ -3495,6 +3590,41 @@ msgstr "Пароль на Last.fm"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
 msgid "last.fm Username"
 msgstr "Имя пользователя на Last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
+msgid "Bookmarks"
+msgstr "Закладки"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
+msgid "Bookmark your position in tracks."
+msgstr "Оставлять закладки в дорожках."
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
+msgid "_Bookmarks"
+msgstr "За_кладки"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
+msgid "_Add Bookmark"
+msgstr "_Добавить закладку"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
+msgid "Bookmark the Position in the Current Track"
+msgstr "Оставить закладку на положение в текущей дорожке"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
+msgid "_Remove Bookmark"
+msgstr "_Удалить закладку"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "Расширение закладок включено"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
 msgid "DAAP plugin enabled"
@@ -3652,7 +3782,7 @@ msgstr "Скачать обложку"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:735
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:746
 msgid "Download"
 msgstr "Скачать"
 
@@ -3811,11 +3941,11 @@ msgstr ""
 "Banshee закрыт в область уведомления. Используйте пункт меню <i>Выйти</i>, "
 "чтобы завершить работу с программой."
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:253
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
 msgid "Now Playing"
 msgstr "Теперь воспроизводится"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:258
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:267
 msgid "Cannot show notification"
 msgstr "Невозможно показать уведомление"
 
@@ -3991,11 +4121,11 @@ msgstr "URL потока подкаста некорректен"
 msgid "Unable to load Podcast DB"
 msgstr "Невозможно загрузить БД подкаста"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:665
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:666
 msgid "Download Failed"
 msgstr "Не удалось скачать"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:745
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:746
 msgid "Unable to add file to library"
 msgstr "Невозможно добавить файл в фонотеку"
 
@@ -4055,11 +4185,11 @@ msgstr ""
 "поток «шоу», «серии» которого скачиваются и слушаются без необходимости в "
 "подключении к сети.\n"
 "\n"
-"Название происходит Its name comes from the targeting of audio posts to "
-"Apple's iPod® audio player, although podcasts can be listened to directly in "
-"{0}."
+"Название технологии обусловлено её первоначальной привязкой к плееру iPod® "
+"компании Apple, хотя сейчас подкасты можно слушать и прямо в {0}."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
 msgid "Podcast"
 msgstr "Подкаст"
 
@@ -4068,22 +4198,21 @@ msgid "Manage the Podcast plugin"
 msgstr "Настройка расширения подкастинга"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:117
-msgid "Update Feeds"
-msgstr "Обновить потоки"
+msgid "Update Podcasts"
+msgstr "Обновить подкасты"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
-msgid "Update Subscribed Podcast Feeds"
+msgid "Update Subscribed Podcasts"
 msgstr "Обновить потоки подкастинга, на которые есть подписка"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:122
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:608
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:664
-msgid "Subscribe to New Feed"
-msgstr "Подписаться на новый поток"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:619
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:675
+msgid "Subscribe to Podcast"
+msgstr "Подписаться на подкаст"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
-msgid "Subscribe to New Podcast Feed"
+msgid "Subscribe to a new Podcast"
 msgstr "Подписаться на новый поток подкастинга"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:127
@@ -4100,6 +4229,7 @@ msgstr "Ошибки"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:75
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:87
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:127
 msgid "Description:"
 msgstr "Описание:"
 
@@ -4123,18 +4253,20 @@ msgid "No description available"
 msgstr "Описание не обнаружено"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:78
-msgid "Feeds"
-msgstr "Потоки"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:106
+msgid "Podcasts"
+msgstr "Подкасты"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
 #, csharp-format
-msgid "{0} Feed"
-msgid_plural "{0} Feeds"
-msgstr[0] "{0} поток"
-msgstr[1] "{0} потока"
-msgstr[2] "{0} потоков"
+msgid "{0} Podcast"
+msgid_plural "{0} Podcasts"
+msgstr[0] "{0} подкаст"
+msgstr[1] "{0} подкаста"
+msgstr[2] "{0} подкастов"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:196
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
 msgid "Episode"
 msgid_plural "Episodes"
 msgstr[0] "Серия"
@@ -4145,72 +4277,64 @@ msgstr[2] "Серий"
 msgid "New"
 msgstr "Новый"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
-msgid "Feed"
-msgstr "Поток"
-
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:107
 msgid "Date"
 msgstr "Дата"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:75
-msgid "Feed:"
-msgstr "Поток:"
+msgid "Podcast:"
+msgstr "Подкаст:"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:79
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:105
-msgid "Podcasts"
-msgstr "Подкасты"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:624
+msgid "Update All Podcasts"
+msgstr "Обновить все подкасты"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:613
-msgid "Update All Feeds"
-msgstr "Обновить все потоки"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:618
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:629
 msgid "Visit Podcast Alley"
 msgstr "Зайти на Podcast Alley"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:653
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:664
 msgid "Subscribed"
 msgstr "Подписан"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:656
-msgid "Update Feed"
-msgstr "Обновить поток"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:667
+msgid "Update Podcast"
+msgstr "Обновить подкаст"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:660
-msgid "Delete Feed"
-msgstr "Удалить поток"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:671
+msgid "Delete Podcast"
+msgstr "Удалить подкаст"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:668
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:679
 msgid "Homepage"
 msgstr "Домашняя страница"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:672
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:755
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:683
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:766
 msgid "Properties"
 msgstr "Свойства"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:731
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:742
 msgid "Cancel"
 msgstr "Отменить"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:741
-msgid "Remove Podcast(s)"
-msgstr "Удалить подкаст(ы)"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:752
+msgid "Remove Episodes(s)"
+msgstr "Удалить серию(-ии)"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:745
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:756
 msgid "Select All"
 msgstr "Выбрать все"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:748
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:759
 msgid "Select None"
 msgstr "Снять выделение"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:751
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:762
 msgid "Link"
 msgstr "Ссылка"
 
@@ -4219,9 +4343,13 @@ msgstr "Ссылка"
 msgid "Subscribe"
 msgstr "Подписаться"
 
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
+msgid "Subscribe to New Podcast"
+msgstr "Подписаться на новый поток подкастинга"
+
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
-msgid "Please enter the URL of the podcast you wish to subscribe to"
-msgstr "Введите URL подкаста, на который хотите подписаться"
+msgid "Please enter the URL of the podcast to which you are subscribing."
+msgstr "Введите URL подкаста, на который хотите подписаться."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4263,23 +4391,31 @@ msgid "Radio plugin enabled"
 msgstr "Расширение радио включено"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
+msgid "Show remote stations"
+msgstr "Показывать интернет-станции"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
 msgid "Show stations requiring Helix/RealPlayer"
 msgstr "Показывать станции, требующие Helix/RealPlayer"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
 msgid "Time of the last radio update"
 msgstr "Время последней проверки радио"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
 msgid "Time of the last radio update check"
 msgstr "Время последней проверки обновления радио"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
+msgid "Update remote stations from radio.banshee-project.org"
+msgstr "Обновить список станций с radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
 msgid "Loading"
 msgstr "Идёт загрузка"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:52
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:62
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:63
 msgid "Radio"
 msgstr "Радио"
 
@@ -4288,76 +4424,92 @@ msgid "Provides Internet radio/streaming audio station support"
 msgstr "Обеспечивает поддержку прослушивания интернет-радиостанций"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
+msgid "Show Remote Stations"
+msgstr "Показывать интернет-станции"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
+msgid "Update and show radio station content from radio.banshee-project.org"
+msgstr "Обновить и показать список станций с radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
 msgstr "Обновить станции"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:124
 msgid "Refresh stations from the Banshee Radio Web Service"
 msgstr "Обновить список станций из Banshee Radio Web Service"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:122
-msgid "New Station Group"
-msgstr "Новая группа станций"
-
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
-msgid "Create a new local station group"
-msgstr "Создать новую локальную группу станций"
-
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:126
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:129
 msgid "Copy URI"
 msgstr "Скопировать URI"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:127
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
 msgid "Copy stream URI to clipboard"
 msgstr "Скопировать URI потока в буфер обмена"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:133
 msgid "Edit"
 msgstr "Изменить"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:131
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
 msgid "Edit Radio Station"
 msgstr "Изменить радиостанцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:137
 msgid "Add Station"
 msgstr "Добавить станцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:135
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
 msgid "Add new Radio Station"
 msgstr "Добавить новую радиостанцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:141
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:139
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:142
 msgid "Remove selected Radio Station"
 msgstr "Удалить выбранную радиостанцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:80
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
 msgid "Refreshing radio stations from the Banshee Radio Web Service"
 msgstr "Список радиостанций обновляется по Banshee Radio Web Service"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:90
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
 msgid "Failed to load radio stations: "
 msgstr "Не удалось загрузить радиостанции: "
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:49
-msgid "Add new station group"
-msgstr "Добавить новую группу станций"
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
+msgid "Invalid URI format."
+msgstr "Некорректный формат URL."
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:50
-msgid "Edit station group"
-msgstr "Изменить группу станций"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:57
+msgid "Add new radio station"
+msgstr "Добавить новую радиостанцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:71
-msgid "Title:"
-msgstr "Название:"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:58
+msgid "Edit radio station"
+msgstr "Изменить радиостанцию"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/StationGroupEditor.cs:122
-msgid "The station group already exists"
-msgstr "Группа станций с таким именем уже есть"
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
+msgid ""
+"Enter the Group, Title and URL of the radio station you wish to add. A "
+"description is optional."
+msgstr ""
+"Введите группу, название и URL радиостанции, которую хотите добавить. "
+"Описание необязательно."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
+msgid "Station Group:"
+msgstr "Группа станций:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
+msgid "Station Title:"
+msgstr "Название станции:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
+msgid "Stream URL:"
+msgstr "URL потока:"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
 msgid "Station"
@@ -4371,26 +4523,26 @@ msgstr "Комментарий"
 msgid "Recommendation plugin enabled"
 msgstr "Расширение рекомендаций включено"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:109
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:108
 msgid "Recommended Artists"
 msgstr "Рекомендуемые исполнители"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:137
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:135
 msgid "No similar artists found"
 msgstr "Схожих исполнителей не найдено"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:209
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:212
 #, csharp-format
 msgid "Top Tracks by {0}"
 msgstr "Лидирующие дорожки {0}"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:211
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:214
 #, csharp-format
 msgid "Top Albums by {0}"
 msgstr "Лидирующие альбомы {0}"
 
 #. translators: 25% similarity
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:327
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:330
 #, csharp-format
 msgid "{0}% similarity"
 msgstr "Схожесть {0}%"
@@ -4409,7 +4561,54 @@ msgstr ""
 "что звучит в настоящий момент. Находит исполнителей и песни, которые "
 "нравятся другим людям, имеющим схожие с вашими вкусы."
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:132
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:133
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Показывать рекомендации"
+
+#~ msgid "Copy all common fields"
+#~ msgstr "Скопировать все обычные поля"
+
+#~ msgid ""
+#~ "Set all common fields in all selected tracks to the values currently set"
+#~ msgstr ""
+#~ "Использовать текущие значения основных полей для всех выбранных дорожек"
+
+#~ msgid "Subscribe to New Feed"
+#~ msgstr "Подписаться на новый поток"
+
+#~ msgid "Feeds"
+#~ msgstr "Потоки"
+
+#~ msgid "{0} Feed"
+#~ msgid_plural "{0} Feeds"
+#~ msgstr[0] "{0} поток"
+#~ msgstr[1] "{0} потока"
+#~ msgstr[2] "{0} потоков"
+
+#~ msgid "Feed"
+#~ msgstr "Поток"
+
+#~ msgid "Feed:"
+#~ msgstr "Поток:"
+
+#~ msgid "Update Feed"
+#~ msgstr "Обновить поток"
+
+#~ msgid "Delete Feed"
+#~ msgstr "Удалить поток"
+
+#~ msgid "Create a new local station group"
+#~ msgstr "Создать новую локальную группу станций"
+
+#~ msgid "Add new station group"
+#~ msgstr "Добавить новую группу станций"
+
+#~ msgid "Edit station group"
+#~ msgstr "Изменить группу станций"
+
+#~ msgid "Title:"
+#~ msgstr "Название:"
+
+#~ msgid "The station group already exists"
+#~ msgstr "Группа станций с таким именем уже есть"
