@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-16 18:01+0200\n"
-"PO-Revision-Date: 2007-04-16 18:00+0200\n"
+"POT-Creation-Date: 2007-04-18 16:53+0200\n"
+"PO-Revision-Date: 2007-04-18 16:53+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1030,24 +1030,20 @@ msgid "_Debug"
 msgstr "_Ladění"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:204
-#, fuzzy
 msgid "Import Playlist..."
-msgstr "Inteligentní seznam skladeb"
+msgstr "Importovat seznam skladeb..."
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:205
-#, fuzzy
 msgid "Import a playlist"
-msgstr "Inteligentní seznam skladeb"
+msgstr "Importovat seznam skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:208
-#, fuzzy
 msgid "Export Playlist..."
-msgstr "Upravit inteligentní seznam skladeb..."
+msgstr "Exportovat seznam skladeb..."
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:209
-#, fuzzy
 msgid "Export a playlist"
-msgstr "Setřídit seznamy skladeb"
+msgstr "Exportovat seznam skladeb"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
@@ -1627,9 +1623,8 @@ msgid "Enable shuffle mode"
 msgstr "Povolit náhodný režim"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
-#, fuzzy
 msgid "Export Format"
-msgstr "Zvukový formát"
+msgstr "Formát exportu"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
 #, fuzzy, no-c-format
@@ -1733,7 +1728,7 @@ msgstr "Zobrazit přebal"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
-msgstr ""
+msgstr "Je-li dostupný, zobrazit pod přehledem zdrojů přebal alba"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog"
@@ -1768,11 +1763,11 @@ msgstr "Pořadí třídění seznamů skladeb"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 msgid "Source View Width"
-msgstr "Šířka pohledu na zdroj"
+msgstr "Šířka přehledu zdrojů"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
 msgid "The default playlist export format"
-msgstr ""
+msgstr "Výchozí formát pro export seznamů skladeb"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
@@ -1807,9 +1802,8 @@ msgid "Whether to expand the library node in the source view"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
-#, fuzzy
 msgid "Width of Source View Column."
-msgstr "Šířka okna zdrojového pohledu."
+msgstr "Šířka sloupce přehledu zdrojů."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
 msgid "Width of the main interface window."
@@ -1845,9 +1839,8 @@ msgid "Scanning"
 msgstr "Vyhledávám"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
-#, fuzzy
 msgid "Verifying"
-msgstr "Verze"
+msgstr "Ověřuji"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
 #, fuzzy
@@ -1877,9 +1870,8 @@ msgid "Export"
 msgstr "Exportovat"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
-#, fuzzy
 msgid "Select Format: "
-msgstr "Vybrat k použití"
+msgstr "Zvolte formát: "
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -3065,9 +3057,8 @@ msgstr "Importovat seznam skladeb"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2037
 #: ../src/Core/Banshee/PlayerInterface.cs:2055
-#, fuzzy
 msgid "Unable to Import Playlist"
-msgstr "Vymazat inteligentní seznam skladeb"
+msgstr "Nebylo možné importovat seznam skladeb"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2056
 msgid ""
