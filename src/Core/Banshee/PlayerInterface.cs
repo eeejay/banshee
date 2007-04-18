@@ -419,6 +419,7 @@ namespace Banshee
             playlistModel.Updated += OnPlaylistUpdated;
             playlistModel.Stopped += OnPlaylistStopped;
             playlistView.KeyPressEvent += OnPlaylistViewKeyPressEvent;
+            playlistView.PopupMenu += OnPlaylistViewPopupMenu;
             playlistView.ButtonPressEvent += OnPlaylistViewButtonPressEvent;
             playlistView.MotionNotifyEvent += OnPlaylistViewMotionNotifyEvent;
             playlistView.ButtonReleaseEvent += OnPlaylistViewButtonReleaseEvent;
@@ -746,6 +747,13 @@ namespace Banshee
                     break;
             }
         }       
+
+        [GLib.ConnectBefore]
+        private void OnPlaylistViewPopupMenu(object o, PopupMenuArgs args)
+        {
+            PlaylistMenuPopupTimeout(Gtk.Global.CurrentEventTime);
+            args.RetVal = true;
+        }
               
         // ---- Playback Event Handlers ----
         

@@ -1,5 +1,10 @@
 2007-04-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/PlayerInterface.cs: Make the track view popup menu
+	accessible from the keyboard (BGO #334132, Bill Dawson)
+
+2007-04-18  Aaron Bockover  <abock@gnome.org>
+
 	This patch adds org.gnome.SettingsDaemon MM Keys support, originally
 	done by Jan Arne Petersen as a patch to the MM Keys plugin. Redesigned 
 	by myself to leave support for older GNOME in tact while removing the
