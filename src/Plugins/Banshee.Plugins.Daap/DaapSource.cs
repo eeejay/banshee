@@ -87,9 +87,9 @@ namespace Banshee.Plugins.Daap
             SetStatusMessage(String.Format(Catalog.GetString("Connecting to {0}"), Name));
             
             ThreadAssist.Spawn(delegate {
-                client = new Client(service);
-                client.Updated += OnClientUpdated;
                 try {
+                    client = new Client(service);
+                    client.Updated += OnClientUpdated;
                     if(client.AuthenticationMethod == AuthenticationMethod.None) {
                         client.Login();
                     } else {

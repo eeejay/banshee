@@ -304,7 +304,6 @@ namespace Banshee.Gui
             if(iter.Equals(TreeIter.Zero)) {
                 return;
             }
-            
             renderer.Editable = true;
             SetCursor(store.GetPath(iter), focus_column, true);
             renderer.Editable = false;
@@ -319,9 +318,13 @@ namespace Banshee.Gui
             }
 
             Source source = GetSource(path);
-
-            if(evnt.Button == 1 && evnt.Type == EventType.TwoButtonPress) {
+            if(evnt.Button == 1) {
                 if(!source.CanActivate) {
+                    if(!source.Expanded) {
+                        ExpandRow(path, false);
+                    } else {
+                        CollapseRow(path);
+                    }
                     return false;
                 }
                 
@@ -329,9 +332,10 @@ namespace Banshee.Gui
                     SourceManager.SetActiveSource(source);
                 }
                 
-                OnSourceDoubleClicked();
-
-                return false;
+                if(evnt.Type == EventType.TwoButtonPress) {
+                    OnSourceDoubleClicked();
+                }
+                
             } else if(evnt.Button == 3) {
                 HighlightPath(path);
 

@@ -1,5 +1,25 @@
 2007-04-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Daap/DaapSource.cs: Crash fix (BGO #406923, 
+	Eric Butler)
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Resolve PSP Audio 
+	Device Properties crash (BGO #419163, Jason Conti)
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationUtilities.cs:
+	Prevent reco cache from getting corrupt (BGO #381229, Pepijn van de Geer)
+
+	* src/Core/Banshee.Base/Dap/Dap.cs: Fixed NJB syncing (BGO #405289, 
+	Mitch Reierson)
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:
+	Do not forget profile setting (BGO #410498, Lauri Kotilainen)
+
+	* src/Core/Banshee.Base/Gui/SourceView.cs: Ensure sources that are not
+	CanActivate really can't be activated (BGO #415138, Scott Peterson)
+
+2007-04-17  Aaron Bockover  <abock@gnome.org>
+
 	* build/gconf-schema-rules: Revert previous commit as it breaks the 
 	install if builddir is undefined; also shouldn't be necessary at all as
 	builddir is effectively supposed to be '.' if set and the script is run

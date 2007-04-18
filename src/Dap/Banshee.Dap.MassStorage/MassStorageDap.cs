@@ -173,8 +173,11 @@ namespace Banshee.Dap.MassStorage
             List<string> mimetypes = new List<string>();
             foreach(string format in PlaybackFormats) {
                 string codec = Banshee.Dap.CodecType.GetCodec(format);
-                extensions.AddRange(CodecType.GetExtensions(codec));
-                mimetypes.AddRange(CodecType.GetMimeTypes(codec));
+                
+                if(codec != null) {
+                    extensions.AddRange(CodecType.GetExtensions(codec));
+                    mimetypes.AddRange(CodecType.GetMimeTypes(codec));
+                }
             }
 
             SupportedExtensions = extensions.ToArray();

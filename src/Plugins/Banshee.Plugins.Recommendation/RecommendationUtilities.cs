@@ -94,7 +94,7 @@ namespace Banshee.Plugins.Recommendation
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             Stream stream = response.GetResponseStream();
 
-            FileStream file_stream = File.OpenWrite(path);
+            FileStream file_stream = File.Open(path, FileMode.Create);
             BufferedStream buffered_stream = new BufferedStream(file_stream);
 
             byte [] buffer = new byte[8192];

@@ -65,6 +65,7 @@ namespace Banshee.AudioProfiles.Gui
         
         public void ReloadProfiles()
         {
+            Profile active_profile = ActiveProfile;
             TreeIter active_iter;
             store.Clear();
             
@@ -99,6 +100,7 @@ namespace Banshee.AudioProfiles.Gui
             if(store.IterNthChild(out active_iter, 0)) {
                 SetActiveIter(active_iter);
             }
+            ActiveProfile = active_profile;
         }
 
         public void SetActiveProfile(Profile profile)

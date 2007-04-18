@@ -383,7 +383,7 @@ namespace Banshee.Dap
             Queue remove_queue = new Queue();
             
             foreach(TrackInfo track in Tracks) {
-                if(track == null || track.Uri == null) {
+                if(track == null || track.Uri == null || !track.Uri.IsFile) {
                     continue;
                 }
             
