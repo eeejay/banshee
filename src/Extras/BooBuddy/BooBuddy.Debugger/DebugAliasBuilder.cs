@@ -61,6 +61,9 @@ namespace BooBuddy.Debugger
         public void BuildAliases(BooBuddyInterpreter interpreter)
         {
             foreach(DebugAliasAttribute attr in aliases) {
+                if(attr.Loaded) {
+                    continue;
+                }
                 Type class_type = attr.MethodInfo.DeclaringType;
                 string prefix = String.Empty;
                 
@@ -78,7 +81,9 @@ namespace BooBuddy.Debugger
                     "\t" + class_type.FullName + "." + attr.MethodInfo.Name + "()\n"
                 ;
                 
-                interpreter.Interpret(block);
+                if(interpreter.Interpret(block).Errors.Count == 0) {
+                    attr.Loaded = true;
+                }
             }
         }
     
@@ -101,7 +106,7 @@ namespace BooBuddy.Debugger
         public static void Help()
         {
             foreach(DebugAliasAttribute attr in aliases) {
-                Console.WriteLine("{0}{1}(): {1}", attr.Prefix, attr.Alias, attr.Description);
+                Console.WriteLine("{0}{1}(): {2}", attr.Prefix, attr.Alias, attr.Description);
             }
         }
     }

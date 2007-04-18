@@ -87,6 +87,7 @@ namespace Banshee
             columns.Add(new PlayCountColumn());
             columns.Add(new RatingColumn());
             columns.Add(new UriColumn());
+            columns.Add(new DateAddedColumn());
             columns.Sort();
             
             foreach(TrackViewColumn column in columns) {

@@ -33,7 +33,8 @@ BANSHEE_SOURCE = \
 	Banshee.TrackView.Columns/PlayCountColumn.cs \
 	Banshee.TrackView.Columns/LastPlayedColumn.cs \
 	Banshee.TrackView.Columns/RatingColumn.cs \
-	Banshee.TrackView.Columns/UriColumn.cs
+	Banshee.TrackView.Columns/UriColumn.cs \
+	Banshee.TrackView.Columns/DateAddedColumn.cs
 	
 BANSHEE_RESOURCES = \
 	data/banshee.glade \

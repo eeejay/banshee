@@ -315,7 +315,7 @@ namespace Banshee.Base
                     Catalog.GetString("Toggle between shuffle or continuous playback modes"), null, false),
                     
                 new ToggleActionEntry("StopWhenFinishedAction", null,
-                    Catalog.GetString("_Stop when finished"), "<Shift>space",
+                    Catalog.GetString("_Stop When Finished"), "<Shift>space",
                     Catalog.GetString("Stop playback after the current song finishes playing"), null, false)
             });
 

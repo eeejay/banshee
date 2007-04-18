@@ -29,6 +29,7 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 using DAAP;
 
@@ -47,6 +48,7 @@ namespace Banshee.Plugins.Daap
         private static Hashtable source_map;
         private static int collision_count;
         private static DaapContainerSource container_source;
+        private static Dictionary<TrackInfo, DAAP.Track> track_map;
         
         private static bool initial_db_committed = false;
         
@@ -79,6 +81,8 @@ namespace Banshee.Plugins.Daap
             };
             
             server.AddDatabase(database);
+            
+            track_map = new Dictionary<TrackInfo, DAAP.Track>();
             
             if(Globals.Library.IsLoaded) {
                 LoadInitialServerDatabase();
@@ -113,6 +117,9 @@ namespace Banshee.Plugins.Daap
                 source_map.Clear();
                 source_map = null;
             }
+            
+            track_map.Clear();
+            track_map = null;
         }
         
         private static void OnServiceFound(object o, ServiceArgs args)
@@ -187,6 +194,10 @@ namespace Banshee.Plugins.Daap
                 return null;
             }
             
+            if(track_map.ContainsKey(track)) {
+                return track_map[track];
+            }
+            
             DAAP.Track song = new DAAP.Track();
             song.Album = track.Album;
             song.Artist = track.Artist;
@@ -204,7 +215,26 @@ namespace Banshee.Plugins.Daap
                 song.Format = Path.GetExtension (song.FileName).Substring (1);
             }
             
+            track_map[track] = song;
+            
             return song;
+        }
+        
+        private static DAAP.Playlist ChildSourceToPlaylist(ChildSource playlist)
+        {
+            if(playlist == null) {
+                return null;
+            }
+            
+            DAAP.Playlist daap_playlist = new DAAP.Playlist();
+            daap_playlist.Name = playlist.Name;
+            foreach(TrackInfo track in playlist.Tracks) {
+                DAAP.Track song = TrackInfoToTrack(track);
+                if(null != song) {
+                    daap_playlist.AddTrack(song);
+                }
+            }
+            return daap_playlist;
         }
         
         private static void LoadInitialServerDatabase()
@@ -216,6 +246,15 @@ namespace Banshee.Plugins.Daap
                     DAAP.Track song = TrackInfoToTrack(track);
                     if(song != null) {
                         database.AddTrack(song);
+                    }
+                }
+            }
+            
+            lock(SourceManager.DefaultSource.Children) {
+                foreach(ChildSource child in SourceManager.DefaultSource.Children) {
+                    DAAP.Playlist daap_playlist = ChildSourceToPlaylist(child);
+                    if(null != daap_playlist) {
+                        database.AddPlaylist(daap_playlist);
                     }
                 }
             }

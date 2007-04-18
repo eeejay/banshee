@@ -68,6 +68,39 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/banshee/view_columns/date_added/order</key>
+      <applyto>/apps/banshee/view_columns/date_added/order</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>11</default>
+      <locale name="C">
+        <short>Order</short>
+        <long>Order of Date Added column</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/view_columns/date_added/visible</key>
+      <applyto>/apps/banshee/view_columns/date_added/visible</applyto>
+      <owner>banshee</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Visiblity</short>
+        <long>Visibility of Date Added column</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/banshee/view_columns/date_added/width</key>
+      <applyto>/apps/banshee/view_columns/date_added/width</applyto>
+      <owner>banshee</owner>
+      <type>int</type>
+      <default>75</default>
+      <locale name="C">
+        <short>Width</short>
+        <long>Width of Date Added column</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/banshee/view_columns/genre/order</key>
       <applyto>/apps/banshee/view_columns/genre/order</applyto>
       <owner>banshee</owner>

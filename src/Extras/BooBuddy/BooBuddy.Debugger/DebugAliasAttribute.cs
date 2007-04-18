@@ -37,6 +37,7 @@ namespace BooBuddy.Debugger
         private string description;
         private string prefix;
         private MethodInfo method_info;
+        private bool loaded;
         
         public DebugAliasAttribute(string alias) : this(alias, null)
         {
@@ -66,6 +67,11 @@ namespace BooBuddy.Debugger
         public MethodInfo MethodInfo {
             get { return method_info; }
             set { method_info = value; }
+        }
+        
+        public bool Loaded {
+            get { return loaded; }
+            set { loaded = value; }
         }
     }
     

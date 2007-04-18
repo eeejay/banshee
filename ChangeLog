@@ -1,5 +1,26 @@
 2007-04-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Daap/DaapCore.cs: Share local playlists
+	over DAAP (BGO #407672, 'Munkfish')
+
+	* src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs: 
+	* src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:
+	* src/Core/Banshee/PlaylistView.cs: Added a Date Added column for the
+	track view (BGO #392232, Pepijn van de Geer)
+
+	* src/Core/Banshee.Base/ActionManager.cs: Fix capitalization errors; first 
+	break of string freeze from 0.12.x (BGO #410183, Igor Guerrero Fonseca)
+
+	* src/Extras/BooBuddy/BooBuddy.Debugger/DebugAliasBuilder.cs: Fix p_help()
+	output to correctly show description (BGO #424951, Ruben Vermeersch)
+
+	* src/Extras/BooBuddy/BooBuddy.Debugger/DebugAliasAttribute.cs:
+	* src/Extras/BooBuddy/BooBuddy.Debugger/DebugAliasBuilder.cs: Ensure
+	functions are not aliased twice to allow Boo Buddy to be closed and
+	re-opened (BGO #416991, Scott Peterson)
+
+2007-04-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/PlayerInterface.cs: Make the track view popup menu
 	accessible from the keyboard (BGO #334132, Bill Dawson)
 

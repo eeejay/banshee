@@ -1615,12 +1615,14 @@ namespace Banshee
                 if(PlaylistSource.PlaylistCount > 0) {
                     plMenu.Append(new SeparatorMenuItem());
                     
-                    foreach(PlaylistSource playlist in PlaylistSource.Playlists) {
-                        ImageMenuItem item = new ImageMenuItem(playlist.Name);
-                        item.Image = new Gtk.Image(Pixbuf.LoadFromResource("source-playlist.png"));
-                        item.Activated += OnItemAddToPlaylistActivated;
-                        playlistMenuMap[item] = playlist;
-                        plMenu.Append(item);
+                    foreach(ChildSource playlist in LibrarySource.Instance.Children) {               
+                        if (playlist is PlaylistSource) {
+                            ImageMenuItem item = new ImageMenuItem(playlist.Name);
+                            item.Image = new Gtk.Image(Pixbuf.LoadFromResource("source-playlist.png"));
+                            item.Activated += OnItemAddToPlaylistActivated;
+                            playlistMenuMap[item] = playlist;
+                            plMenu.Append(item);
+                        }
                     }
                 }
                 

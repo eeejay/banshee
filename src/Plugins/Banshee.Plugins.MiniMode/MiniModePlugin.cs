@@ -60,7 +60,7 @@ namespace Banshee.Plugins.MiniMode
         protected override void InterfaceInitialize()
         {
             viewMenu = (Globals.ActionManager.GetWidget("/MainMenu/ViewMenu") as MenuItem).Submenu as Menu;
-            menuItem = new MenuItem(Catalog.GetString("Mini mode"));
+            menuItem = new MenuItem(Catalog.GetString("_Mini Mode"));
             menuItem.Activated += delegate {
                 if (mini_mode == null) {
                     mini_mode =  new MiniMode();

@@ -48,7 +48,8 @@ namespace Banshee.TrackView.Columns
         Year,
         PlayCount,
         LastPlayed,
-        Uri
+        Uri,
+        DateAdded
     }
 
     public class TrackViewColumn : TreeViewColumn, IComparable<TrackViewColumn>
