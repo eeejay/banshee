@@ -1,7 +1,7 @@
 2007-04-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Daap/DaapCore.cs: Share local playlists
-	over DAAP (BGO #407672, 'Munkfish')
+	over DAAP (BGO #407672, Daniel Munckton)
 
 	* src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs: 
 	* src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:
@@ -18,6 +18,9 @@
 	* src/Extras/BooBuddy/BooBuddy.Debugger/DebugAliasBuilder.cs: Ensure
 	functions are not aliased twice to allow Boo Buddy to be closed and
 	re-opened (BGO #416991, Scott Peterson)
+
+	* src/Core/Banshee/PlayerInterface.cs: Sort the playlists in 'Add to
+	playlist' in the same order as sources (BGO #398489, Pepijn van de Geer)
 
 2007-04-18  Aaron Bockover  <abock@gnome.org>
 
