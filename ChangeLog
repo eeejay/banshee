@@ -1,3 +1,19 @@
+2007-04-23  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs: 
+	Load generic-artist.png in place of the artist photo if there's a problem
+	loading the artist photo from last.fm (BGO #432200); cosmetic string
+	changes; round the similarity value to the nearest whole percentage;
+	introduce a cache wipe/versioning system to allow the cache to be wiped
+	if the code to parse it changes later on (see NOTE in code) - everyone
+	will start out with a clean cache after this update at version 2
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:
+	Added schema for cache_version
+	
+	* src/Plugins/Banshee.Plugins.Recommendation/generic-artist.png: Added
+	a musician to display if an artist photo cannot be loaded from last.fm
+
 2007-04-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Daap/DaapCore.cs: Share local playlists

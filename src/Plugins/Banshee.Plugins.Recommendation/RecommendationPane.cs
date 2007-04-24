@@ -1,7 +1,7 @@
 /***************************************************************************
  *  RecommendationPane.cs
  *
- *  Copyright (C) 2006 Novell, Inc.
+ *  Copyright (C) 2006-2007 Novell, Inc.
  *  Written by Fredrik Hedberg
  *             Aaron Bockover
  *             Lukas Lipka
@@ -44,6 +44,12 @@ namespace Banshee.Plugins.Recommendation
 {
     public class RecommendationPane : Frame
     {
+        // NOTE: This is a precaution that will allow us to introduce changes in the cache system
+        // without breaking the app when it expects new changes and encounters old cache data.
+        // Whenever a fix or cache update is made in the code, increment this value to ensure 
+        // old cache data is wiped first.
+        private const int CACHE_VERSION = 2;
+    
         private const string AUDIOSCROBBLER_SIMILAR_URL = "http://ws.audioscrobbler.com/1.0/artist/{0}/similar.xml";
         private const string AUDIOSCROBBLER_TOP_TRACKS_URL = "http://ws.audioscrobbler.com/1.0/artist/{0}/toptracks.xml";
         private const string AUDIOSCROBBLER_TOP_ALBUMS_URL = "http://ws.audioscrobbler.com/1.0/artist/{0}/topalbums.xml";
@@ -68,8 +74,30 @@ namespace Banshee.Plugins.Recommendation
         public RecommendationPane() 
         {
             CreateWidget();
+            CheckForCacheWipe();
+            SetupCache();
+        }
 
+        private void CheckForCacheWipe()
+        {
+            bool wipe = false;
+            
             if(!Directory.Exists(Utilities.CACHE_PATH)) {
+                return;
+            }
+            
+            if(RecommendationPlugin.CacheVersion.Get() < CACHE_VERSION) {
+                Directory.Delete(Utilities.CACHE_PATH, true);
+                LogCore.Instance.PushDebug("Recommendation Plugin", "Destroyed outdated cache");
+            }
+        }
+
+        private void SetupCache()
+        {
+            bool clean = false;
+            
+            if(!Directory.Exists(Utilities.CACHE_PATH)) {
+                clean = true;
                 Directory.CreateDirectory(Utilities.CACHE_PATH);
             }
             
@@ -85,6 +113,12 @@ namespace Banshee.Plugins.Recommendation
                 if(!Directory.Exists(subdir)) {
                     Directory.CreateDirectory(subdir);
                 }
+            }
+            
+            RecommendationPlugin.CacheVersion.Set(CACHE_VERSION);
+            
+            if(clean) {
+                LogCore.Instance.PushDebug("Recommendation Plugin", "Created a new cache layout");
             }
         }
 
@@ -327,9 +361,13 @@ namespace Banshee.Plugins.Recommendation
             artist_tile.PrimaryText = node.SelectSingleNode("name").InnerText.Trim();
             
             // translators: 25% similarity
-            artist_tile.SecondaryText = String.Format(Catalog.GetString("{0}% similarity"), 
-                node.SelectSingleNode("match").InnerText);
-            
+            try {
+                int similarity = (int)Math.Round(Double.Parse(node.SelectSingleNode("match").InnerText));
+                artist_tile.SecondaryText = String.Format(Catalog.GetString("{0}% Similarity"), similarity);
+            } catch {
+                artist_tile.SecondaryText = Catalog.GetString("Unknown Similarity");
+            }
+
             artist_tile.Clicked += delegate {
                 Gnome.Url.Show(node.SelectSingleNode ("url").InnerText);
             };
@@ -339,6 +377,8 @@ namespace Banshee.Plugins.Recommendation
 
         private static Gdk.Pixbuf now_playing_arrow = IconThemeUtils.LoadIcon(16, "media-playback-start",
             Stock.MediaPlay, "now-playing-arrow");
+        
+        private static Gdk.Pixbuf unknown_artist_pixbuf = null;
 
         private Widget RenderTrack(XmlNode node, int rank)
         {
@@ -394,7 +434,22 @@ namespace Banshee.Plugins.Recommendation
         {
             string path = Utilities.GetCachedPathFromUrl(url);
             Utilities.DownloadContent(url, path, true);
-            return new Gdk.Pixbuf(path);
+            
+            try {
+                return new Gdk.Pixbuf(path);
+            } catch {
+                // Remove the corrupt image so it may be downloaded again
+                try {
+                    File.Delete(path);
+                } catch {
+                }
+                
+                if(unknown_artist_pixbuf == null) {
+                    unknown_artist_pixbuf = Gdk.Pixbuf.LoadFromResource("generic-artist.png");
+                }
+                
+                return unknown_artist_pixbuf;
+            }
         }
     }
 }

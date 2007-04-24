@@ -9,16 +9,20 @@ SOURCES = \
 	$(srcdir)/RecommendationPane.cs \
 	$(srcdir)/RecommendationUtilities.cs
 
-MENU_RESOURCE = RecommendationMenu.xml
-NO_RESULTS_RESOURCE = no-results.png
+RESOURCES = \
+	RecommendationMenu.xml \
+	no-results.png \
+	generic-artist.png
+
+RESOURCES_BUILD = $(foreach resource,$(RESOURCES),$(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 plugindir = $(pkglibdir)/Banshee.Plugins
 plugin_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
 all: $(ASSEMBLY)
 
-$(ASSEMBLY): $(SOURCES)
-	$(BUILD_LIB_BANSHEE_CORE) -out:$@ -resource:$(srcdir)/$(MENU_RESOURCE),$(MENU_RESOURCE) -resource:$(srcdir)/$(NO_RESULTS_RESOURCE),$(NO_RESULTS_RESOURCE) $(SOURCES) $(LINK_GTK) $(LINK_MONO_UNIX) -r:System.Web
+$(ASSEMBLY): $(SOURCES) $(RESOURCES)
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(RESOURCES_BUILD) $(SOURCES) $(LINK_GTK) $(LINK_MONO_UNIX) -r:System.Web
 
 include $(top_srcdir)/build/gconf-schema-rules
 

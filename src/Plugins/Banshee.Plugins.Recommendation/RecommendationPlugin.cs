@@ -274,5 +274,12 @@ namespace Banshee.Plugins.Recommendation
             "Plugin enabled",
             "Recommendation plugin enabled"
         );
+        
+        public static readonly SchemaEntry<int> CacheVersion = new SchemaEntry<int>(
+            "plugins.recommendation", "cache_version",
+            0,
+            "Cache version",
+            "Version of the cache layout on disk, located at ~/.config/banshee/plugins/recommendation"
+        );
     }
 }
