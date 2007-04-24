@@ -1,5 +1,12 @@
 2007-04-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/ComplexMenuItem.cs: Do not try to connect
+	the key press proxy if the new Parent is null; Never proxy Gdk.Key.Escape
+	to the menu item; implement a default key press override that has the
+	current Gtk.MenuItem behavior
+
+2007-04-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee/PlayerInterface.cs: Use RatingMenuItem instead of
 	the submenus which are clunky and ugly
 

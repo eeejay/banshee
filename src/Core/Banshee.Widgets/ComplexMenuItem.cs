@@ -28,7 +28,6 @@
 
 using System;
 using Gtk;
-using Mono.Unix;
 
 namespace Banshee.Widgets
 {
@@ -101,20 +100,34 @@ namespace Banshee.Widgets
         protected override void OnParentSet(Widget previous_parent)
         {
             if(previous_parent != null) {
-                previous_parent.KeyPressEvent -= OnKeyPressEvent;
+                previous_parent.KeyPressEvent -= OnKeyPressEventProxy;
             }
             
-            Parent.KeyPressEvent += OnKeyPressEvent;
+            if(Parent != null) {
+                Parent.KeyPressEvent += OnKeyPressEventProxy;
+            }
         }
         
         [GLib.ConnectBefore]
-        private void OnKeyPressEvent(object o, KeyPressEventArgs args)
+        private void OnKeyPressEventProxy(object o, KeyPressEventArgs args)
         {
-            if(!IsSelected || args.Event.Key == Gdk.Key.Up || args.Event.Key == Gdk.Key.Down) {
+            if(!IsSelected) {
                 return;
             }
-            
+
+            switch(args.Event.Key) {
+                case Gdk.Key.Up:
+                case Gdk.Key.Down:
+                case Gdk.Key.Escape:
+                    return;
+            }
+
             args.RetVal = OnKeyPressEvent(args.Event);
+        }
+
+        protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+        {
+            return false;
         }
         
         protected bool IsSelected {
