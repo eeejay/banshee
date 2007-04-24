@@ -8,13 +8,14 @@ namespace Banshee.Widgets
     {
         private static int max_rating = 5;
         private static int min_rating = 1;
-        private static int y_offset = 4, x_offset = 4;
         private static Pixbuf icon_rated;
         private static Pixbuf icon_blank;
         
         public object RatedObject;
         
         private int rating;
+        private bool embedded;
+        private int y_offset = 4, x_offset = 4;
         private Gdk.Pixbuf display_pixbuf;
         
         public event EventHandler Changed;
@@ -22,14 +23,24 @@ namespace Banshee.Widgets
         public RatingEntry() : this(1) 
         {
         }
+        
+        public RatingEntry(int rating) : this(rating, false)
+        {
+        }
 
-        public RatingEntry(int rating)
+        public RatingEntry(int rating, bool embedded)
         {
             if(IconRated.Height != IconNotRated.Height || IconRated.Width != IconNotRated.Width) {
                 throw new ArgumentException("Rating widget requires that rated and blank icons have the same height and width");
             }
             
             this.rating = rating;
+            this.embedded = embedded;
+            
+            if(embedded) {
+                y_offset = 0;
+                x_offset = 0;
+            }
             
             CanFocus = true;
             
@@ -71,7 +82,7 @@ namespace Banshee.Widgets
                     IconRated.CopyArea(0, 0, IconRated.Width, IconRated.Height, 
                         pbuf, i * IconRated.Width, 0);
                 } else {
-                    IconNotRated.CopyArea (0, 0, IconRated.Width, IconRated.Height,
+                    IconNotRated.CopyArea(0, 0, IconRated.Width, IconRated.Height,
                         pbuf, i * IconRated.Width, 0);
                 }
             }
@@ -79,33 +90,30 @@ namespace Banshee.Widgets
         
         private int RatingFromPosition(double x)
         {
-            return x < 5 ? 0 : (int)Math.Max(0, Math.Min(((x - 4) / (double)icon_rated.Width) + 1, MaxRating));
+            return x < x_offset + 1 ? 0 : (int)Math.Max(0, Math.Min(((x - x_offset) 
+                / (double)icon_rated.Width) + 1, MaxRating));
         }
         
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {
-            bool ret = base.OnExposeEvent(evnt);
-
             if(evnt.Window != GdkWindow) {
-                return ret;
+                return true;
             }
             
             int y_mid = (Allocation.Height - Height) / 2;
 
-            GdkWindow.DrawRectangle(Style.BaseGC(StateType.Normal), true, 0, y_mid - y_offset,
-                Allocation.Width, Height + (y_offset * 2));
-            
-            Gtk.Style.PaintShadow(Style, GdkWindow, StateType.Normal, ShadowType.In,
-                evnt.Area, this, "entry", 0, y_mid - y_offset, Allocation.Width, 
-                Height + (y_offset * 2));
+            if(!embedded) {            
+                Gtk.Style.PaintShadow(Style, GdkWindow, StateType.Normal, ShadowType.In,
+                    evnt.Area, this, "entry", 0, y_mid - y_offset, Allocation.Width, 
+                    Height + (y_offset * 2));
+            }
 
             GdkWindow.DrawPixbuf(Style.BackgroundGC(StateType.Normal), 
                 display_pixbuf, 0, 0, x_offset, y_mid, Width, Height, Gdk.RgbDither.None, 0, 0);
 
-            return ret;
+            return true;
         }
 
-        [GLib.ConnectBefore]
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
         {
             if(evnt.Button != 1) {
@@ -122,7 +130,6 @@ namespace Banshee.Widgets
             return this.OnKeyPressEvent(evnt);
         }
         
-        [GLib.ConnectBefore]
         protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
         {
             switch(evnt.Key) {
@@ -148,8 +155,12 @@ namespace Banshee.Widgets
             return false;
         }
         
-        [GLib.ConnectBefore]
         protected override bool OnScrollEvent(EventScroll args)
+        {
+            return HandleScroll(args);
+        }
+
+        public bool HandleScroll(EventScroll args)
         {
             switch(args.Direction) {
                 case Gdk.ScrollDirection.Up:
@@ -166,11 +177,10 @@ namespace Banshee.Widgets
             return false;
         }
         
-        [GLib.ConnectBefore]
         protected override bool OnMotionNotifyEvent(Gdk.EventMotion evnt)
         {
             // TODO draw highlights onmouseover a rating? (and clear on leaveNotify)
-            if(evnt.State != Gdk.ModifierType.Button1Mask) {
+            if((evnt.State & Gdk.ModifierType.Button1Mask) == 0) {
                 return false;
             }
             
@@ -189,6 +199,11 @@ namespace Banshee.Widgets
             }
         }
         
+        public void SetValueFromPosition(int x)
+        {
+            Value = RatingFromPosition(x);
+        }
+
         public int Value {
             get { return rating; }
             set {
@@ -197,6 +212,14 @@ namespace Banshee.Widgets
                     OnChanged();
                 }
             }
+        }
+        
+        public int XOffset {
+            get { return x_offset; }
+        }
+        
+        public int YOffset {
+            get { return y_offset; }
         }
         
         public Pixbuf DisplayPixbuf {

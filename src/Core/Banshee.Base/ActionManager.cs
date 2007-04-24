@@ -261,10 +261,6 @@ namespace Banshee.Base
                 new ActionEntry("AddToPlaylistAction", null,
                     Catalog.GetString("Add _to Playlist"), null,
                     Catalog.GetString("Append selected songs to playlist or create new playlist from selection"), null),
-                    
-                new ActionEntry("RatingAction", null,
-                    Catalog.GetString("Ratin_g"), null,
-                    Catalog.GetString("Set rating for selected songs"), null)
             });
             
             ui.InsertActionGroup(song_actions, 0);

@@ -38,7 +38,9 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/RatingEntry.cs \
 	$(srcdir)/ShadowContainer.cs \
 	$(srcdir)/DictionaryComboBox.cs \
-	$(srcdir)/FadingAlignment.cs 
+	$(srcdir)/FadingAlignment.cs \
+	$(srcdir)/ComplexMenuItem.cs \
+	$(srcdir)/RatingMenuItem.cs
 
 Banshee_Widgets_RESOURCES = \
 	data/images/rating-rated.png \

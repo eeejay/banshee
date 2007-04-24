@@ -1584,25 +1584,34 @@ namespace Banshee
 
         private Menu song_popup_menu = null;
         private MenuItem add_to_playlist_menu_item = null;
-        private MenuItem rating_menu_item = null;
+        private RatingMenuItem rating_menu_item = null;
         
         private bool PlaylistMenuPopupTimeout(uint time)
         {
             if(song_popup_menu == null) {
                 song_popup_menu = Globals.ActionManager.GetWidget("/SongViewPopup") as Menu;
-                add_to_playlist_menu_item = Globals.ActionManager.GetWidget(
-                    "/SongViewPopup/AddToPlaylist") as MenuItem;
-                rating_menu_item = Globals.ActionManager.GetWidget("/SongViewPopup/Rating") as MenuItem;
+                add_to_playlist_menu_item = Globals.ActionManager.GetWidget("/SongViewPopup/AddToPlaylist") as MenuItem;
+                
+                for(int i = 0; i < song_popup_menu.Children.Length; i++) {
+                    if(song_popup_menu.Children[i] == add_to_playlist_menu_item) {
+                        rating_menu_item = new RatingMenuItem();
+                        rating_menu_item.Activated += OnItemRatingActivated;
+                        rating_menu_item.Visible = false;
+                        song_popup_menu.Insert(rating_menu_item, i + 1);
+                        break;
+                    }
+                }
             }
           
-            bool sensitive = playlistView.Selection.CountSelectedRows() > 0;
+            int selected_row_count = playlistView.Selection.CountSelectedRows();
+            bool sensitive = selected_row_count > 0;
 
             if(sensitive && (SourceManager.ActiveSource is LibrarySource ||
                     SourceManager.ActiveSource is PlaylistSource ||
                     SourceManager.ActiveSource is Banshee.SmartPlaylist.SmartPlaylistSource)) {
 
                 Globals.ActionManager["AddToPlaylistAction"].Visible = true;
-                Globals.ActionManager["RatingAction"].Visible = true;
+                rating_menu_item.Visible = true;
             
                 Menu plMenu = new Menu();
                 playlistMenuMap.Clear();
@@ -1626,41 +1635,23 @@ namespace Banshee
                     }
                 }
                 
-                Menu ratingMenu = new Menu();
-                
-                MenuItem clearItem = new MenuItem(Catalog.GetString("Clear"));
-                clearItem.Name = "0";
-                clearItem.Activated += OnItemRatingActivated;
-                
-                ratingMenu.Append(clearItem);
-                ratingMenu.Append(new SeparatorMenuItem());
-                
-                for(int i = 0; i < 5; i++) {
-                    MenuItem item = new MenuItem();
-                    HBox box = new HBox();
-                    box.Spacing = 3;
-                    
-                    for(int j = 0; j < i + 1; j++) {
-                        box.PackStart(new Gtk.Image(Banshee.Gui.CellRendererRating.RatedPixbuf), false, false, 0);
-                    }
-                    
-                    item.Add(box);
-                    item.Name = String.Format("{0}", i + 1);
-                    item.Activated += OnItemRatingActivated;
-                    ratingMenu.Append(item);
-                }
-                
                 add_to_playlist_menu_item.Submenu = plMenu;
-                rating_menu_item.Submenu = ratingMenu;
-                
                 plMenu.ShowAll();
-                ratingMenu.ShowAll();
+                
+                // FIXME: The selection/popup order is fux0red
+                // if(selected_row_count == 1) {
+                //    rating_menu_item.Reset((int)playlistView.SelectedTrackInfo.Rating);
+                // } else {
+                //    rating_menu_item.Reset(0);
+                // }
+                
+                rating_menu_item.Reset(0);
             } else {
                 Globals.ActionManager["AddToPlaylistAction"].Visible = false;
-                Globals.ActionManager["RatingAction"].Visible = false;
+                rating_menu_item.Visible = false;
             }
         
-            song_popup_menu.ShowAll();
+            song_popup_menu.Show();
             song_popup_menu.Popup(null, null, null, 0, time);
             
             return false;
@@ -1668,9 +1659,12 @@ namespace Banshee
 
         private void OnItemRatingActivated(object o, EventArgs args)
         {
-            uint rating = Convert.ToUInt32((o as Widget).Name);
-            foreach(TreePath path in playlistView.Selection.GetSelectedRows())
+            uint rating = (uint)(o as RatingMenuItem).Value;
+            
+            foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 playlistModel.PathTrackInfo(path).Rating = rating;
+            }
+            
             playlistView.QueueDraw();
         }
 

@@ -1,3 +1,26 @@
+2007-04-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee/PlayerInterface.cs: Use RatingMenuItem instead of
+	the submenus which are clunky and ugly
+
+	* src/Core/Banshee.Widgets/ComplexMenuItem.cs: A special MenuItem that
+	allows widgets to be embedded and connected to a proper theme expose
+	handler, also enables keyboard events to be passed to the menu item
+
+	* src/Core/Banshee.Widgets/RatingMenuItem.cs: A ComplexMenuItem that
+	embeds the RatingEntry in it to allow inline track rating from menus;
+	with the item selected, it accepts input via the mouse with clicking
+	or dragging, the scroll wheel, or the keyboard
+
+	* src/Core/Banshee.Widgets/RatingEntry.cs: Drawing related changes to
+	allow the widget to be embedded in other widgets and fit in, but also
+	work properly as a standalone 'entry'; fix drag-rating in the standalone
+	event handlers
+
+	* src/Core/Banshee.Base/ActionManager.cs:
+	* data/UIManagerLayout.xml: Remove RatingAction as it was never a real
+	action and acted only as a visible placeholder
+
 2007-04-23  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs: 

@@ -97,7 +97,6 @@
         <menuitem name="Columns" action="ColumnsAction" />
         <separator />
         <menuitem name="AddToPlaylist" action="AddToPlaylistAction" />
-        <menuitem name="Rating" action="RatingAction" />
         <separator />
         <menuitem name="CopySongs" action="CopySongsAction" />
         <menuitem name="RemoveSongs" action="RemoveSongsAction" />
