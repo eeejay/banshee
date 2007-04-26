@@ -117,7 +117,7 @@ namespace Banshee.Metadata.Embedded
         
         protected bool SavePicture(IPicture picture, string image_path)
         {
-            if(picture.Data.Count == 0) {
+            if(picture == null || picture.Data == null || picture.Data.Count == 0) {
                 return false;
             }
             
