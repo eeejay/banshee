@@ -49,6 +49,8 @@ for subdir in `find .`; do
 		continue
 	elif [ ! `echo "$subdir" | grep -e "^./src"` ]; then
 		continue
+	elif [ `echo "$subdir" | grep SExpEngine` ]; then
+		continue
 	fi
 
 	existing="`svn propget svn:ignore $subdir`"
