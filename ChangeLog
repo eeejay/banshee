@@ -1,7 +1,7 @@
 2007-04-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
-	Fix crash if embedded picture data is null (BGO #433668, dan@acucore.com)
+	Fix crash if embedded picture data is null (BGO #433668, Dan Wilson)
 
 2007-04-24  Aaron Bockover  <abock@gnome.org>
 
