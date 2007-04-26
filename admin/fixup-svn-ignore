@@ -16,6 +16,8 @@ Makefile.in
 *.user*"
 
 ROOT_IGNORES="$GLOBAL_IGNORES
+INSTALL
+sp1-patches
 aclocal.m4
 autom4te.cache
 banshee.pc
