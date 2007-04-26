@@ -131,6 +131,9 @@ namespace Banshee.Base
                 case "Previous":
                     Globals.ActionManager["PreviousAction"].Activate();
                     break;
+                case "Stop":
+                    PlayerEngineCore.Close();
+                    break;
             }
         }
         

@@ -77,7 +77,8 @@ namespace Banshee.Plugins.MMKeys
             special_keys.RegisterHandler(OnSpecialKeysPressed, 
                 SpecialKey.AudioPlay,
                 SpecialKey.AudioPrev,
-                SpecialKey.AudioNext
+                SpecialKey.AudioNext,
+                SpecialKey.AudioStop
             );
         }
         
@@ -92,6 +93,9 @@ namespace Banshee.Plugins.MMKeys
                     break;
                 case SpecialKey.AudioPrev:
                     Globals.ActionManager["PreviousAction"].Activate();
+                    break;
+                case SpecialKey.AudioStop:
+                    PlayerEngineCore.Close();
                     break;
             }
         }

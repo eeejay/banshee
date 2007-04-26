@@ -1,5 +1,11 @@
 2007-04-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:
+	* src/Core/Banshee.Base/GnomeMMKeys.cs:
+	Added handling for Stop multimedia key (BGO #425247, Bojan Rajkovic)
+
+2007-04-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
 	Fix crash if embedded picture data is null (BGO #433668, Dan Wilson)
 
