@@ -15,9 +15,11 @@ data/audio-profiles/wavpack.xml.in
 data/audio-profiles/wma.xml.in
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
+src/Core/Banshee.Widgets/RatingMenuItem.cs
 src/Core/Banshee/banshee-interface.schemas.in
 src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs
+src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs
