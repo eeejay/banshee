@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee 0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-22 08:46+0200\n"
-"PO-Revision-Date: 2007-04-22 08:47+0200\n"
-"Last-Translator: Robert-André Mauchin <zebob.m@gmail.com>\n"
+"POT-Creation-Date: 2007-05-01 11:07+0200\n"
+"PO-Revision-Date: 2007-04-23 17:45+0100\n"
+"Last-Translator: Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -596,6 +596,11 @@ msgstr "Impossible de se connecter au pad source du codeur"
 msgid "Could not construct pipeline"
 msgstr "Impossible de créer le tube"
 
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+#, fuzzy
+msgid "Rating:"
+msgstr "Note"
+
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
 msgid "Order"
 msgstr "Position"
@@ -609,9 +614,8 @@ msgid "Order of Artist column"
 msgstr "Position de la colonne Artiste"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:4
-#, fuzzy
 msgid "Order of Date Added column"
-msgstr "Position de la colonne Dernière lecture"
+msgstr "Position de la colonne Date d'ajout"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
 msgid "Order of Genre column"
@@ -658,9 +662,8 @@ msgid "Visibility of Artist column"
 msgstr "Affichage de la colonne Artiste"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
-#, fuzzy
 msgid "Visibility of Date Added column"
-msgstr "Affichage de la colonne Dernière lecture"
+msgstr "Affichage de la colonne Date d'ajout"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
 msgid "Visibility of Genre column"
@@ -715,9 +718,8 @@ msgid "Width of Artist column"
 msgstr "Largeur de la colonne Artiste"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
-#, fuzzy
 msgid "Width of Date Added column"
-msgstr "Largeur de la colonne Dernière lecture"
+msgstr "Largeur de la colonne Date d'ajout"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
 msgid "Width of Genre column"
@@ -761,6 +763,11 @@ msgstr "Album"
 msgid "Artist"
 msgstr "Artiste"
 
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
+msgid "Date Added"
+msgstr "Date d'ajout"
+
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
 msgid "Time"
 msgstr "Durée"
@@ -775,7 +782,7 @@ msgstr "N/A"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
 #: ../src/Core/Banshee/PlayerInterface.cs:456
 #: ../src/Core/Banshee/PlayerInterface.cs:1348
-#: ../src/Core/Banshee/PlayerInterface.cs:2491
+#: ../src/Core/Banshee/PlayerInterface.cs:2485
 msgid "Genre"
 msgstr "Genre"
 
@@ -1153,125 +1160,116 @@ msgstr ""
 "Ajoute les morceaux sélectionnés à la liste de lecture ou crée une nouvelle "
 "liste de lecture avec la sélection"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:266
-msgid "Ratin_g"
-msgstr "Not_e"
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:267
-msgid "Set rating for selected songs"
-msgstr "Définit la note des morceaux sélectionnés"
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:276
+#: ../src/Core/Banshee.Base/ActionManager.cs:272
 msgid "Import CD"
 msgstr "Importer un CD"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:277
+#: ../src/Core/Banshee.Base/ActionManager.cs:273
 msgid "Import audio CD to library"
 msgstr "Importe un CD audio dans la bibliothèque"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:282
 msgid "_Play"
 msgstr "_Lire"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:283
 msgid "Play or pause the current song"
 msgstr "Lecture ou pause du morceau en cours"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:290
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Next"
 msgstr "_Suivant"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:291
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play the next song"
 msgstr "Lit le morceau suivant"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:294
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "Pre_vious"
 msgstr "Pré_cédent"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:295
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the previous song"
 msgstr "Lit le morceau précédent"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:296
 msgid "Repeat N_one"
 msgstr "_Aucune répétition"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:297
 msgid "Do not repeat playlist"
 msgstr "Ne répéte pas la liste de lecture"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:304
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat _All"
 msgstr "_Tout répéter"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:305
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Play all songs before repeating playlist"
 msgstr "Lit tous les morceaux avant de répéter la liste de lecture"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:308
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat Si_ngle"
 msgstr "Répéter _un seul"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:309
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Repeat the current playing song"
 msgstr "Répète le morceau en cours de lecture"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:314
+#: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "Shu_ffle"
 msgstr "_Aléatoire"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:315
+#: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Bascule entre le mode aléatoire et la lecture en continu"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:318
-#, fuzzy
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
 msgid "_Stop When Finished"
 msgstr "_Arrêter quand terminé"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:319
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Stop playback after the current song finishes playing"
 msgstr "Arrête la lecture à la fin du morceau en cours"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
+#: ../src/Core/Banshee.Base/ActionManager.cs:324
 msgid "Seek _Backward"
 msgstr "_Reculer"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:325
 msgid "Seek backward in current song"
 msgstr "Recule dans la lecture du morceau en cours"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Forward"
 msgstr "_Avancer"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek forward in current song"
 msgstr "Avance dans le morceau actuel"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:336
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
 msgid "Seek _To..."
 msgstr "Aller _à..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:337
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek to a specific location in current song"
 msgstr "Se positionne précisément dans le morceau actuel"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:340
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "_Restart Song"
 msgstr "_Redémarrer le morceau"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:341
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Restart the current song"
 msgstr "Relire le morceau en cours"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:350
+#: ../src/Core/Banshee.Base/ActionManager.cs:346
 #: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "Synchroniser"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:351
+#: ../src/Core/Banshee.Base/ActionManager.cs:347
 msgid "Save changes to device or synchronize music library"
 msgstr ""
 "Enregistre les modifications sur le périphérique ou synchronise la "
@@ -1977,7 +1975,7 @@ msgstr "Podcasts non écoutés"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
 #: ../src/Core/Banshee/PlayerInterface.cs:454
 #: ../src/Core/Banshee/PlayerInterface.cs:1342
-#: ../src/Core/Banshee/PlayerInterface.cs:2487
+#: ../src/Core/Banshee/PlayerInterface.cs:2481
 msgid "Artist Name"
 msgstr "Nom de l'artiste"
 
@@ -1990,7 +1988,7 @@ msgstr "Nom du morceau"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
 #: ../src/Core/Banshee/PlayerInterface.cs:455
 #: ../src/Core/Banshee/PlayerInterface.cs:1346
-#: ../src/Core/Banshee/PlayerInterface.cs:2483
+#: ../src/Core/Banshee/PlayerInterface.cs:2477
 msgid "Album Title"
 msgstr "Titre de l'album"
 
@@ -2178,10 +2176,6 @@ msgstr "Années"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:601
 msgid "ago"
 msgstr "depuis"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
-msgid "Date Added"
-msgstr "Date d'ajout"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
 msgid "Duration"
@@ -2770,7 +2764,7 @@ msgid "Delete {0}"
 msgstr "Supprimer {0}"
 
 #: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2024
+#: ../src/Core/Banshee/PlayerInterface.cs:2018
 msgid "Import"
 msgstr "Importer"
 
@@ -2925,7 +2919,7 @@ msgstr "File locale"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
-#: ../src/Core/Banshee/PlayerInterface.cs:1610
+#: ../src/Core/Banshee/PlayerInterface.cs:1619
 msgid "New Playlist"
 msgstr "Nouvelle liste de lecture"
 
@@ -3082,11 +3076,7 @@ msgid_plural "{0} seconds"
 msgstr[0] "{0} second"
 msgstr[1] "{0} secondes"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1631
-msgid "Clear"
-msgstr "Effacer"
-
-#: ../src/Core/Banshee/PlayerInterface.cs:1894
+#: ../src/Core/Banshee/PlayerInterface.cs:1888
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -3095,15 +3085,15 @@ msgstr[0] "Voulez-vous vraiment supprimer définitivement ce morceau ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer définitivement les {0} morceaux sélectionnés ?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1898
+#: ../src/Core/Banshee/PlayerInterface.cs:1892
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Si vous supprimez la sélection, elle sera définitivement perdue."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1901
+#: ../src/Core/Banshee/PlayerInterface.cs:1895
 msgid "Remove selection from library"
 msgstr "Suppression de la sélection de la bibliothèque"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1903
+#: ../src/Core/Banshee/PlayerInterface.cs:1897
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -3114,25 +3104,25 @@ msgstr[1] ""
 "Voulez-vous vraiment supprimer les {0} morceaux sélectionnés de votre "
 "bibliothèque ?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1948
+#: ../src/Core/Banshee/PlayerInterface.cs:1942
 msgid "Delete songs from drive"
 msgstr "Suppression des morceaux du disque"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1949
+#: ../src/Core/Banshee/PlayerInterface.cs:1943
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "Vous ne disposez pas des informations requises pour supprimer « {0} »"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2015
+#: ../src/Core/Banshee/PlayerInterface.cs:2009
 msgid "Import Playlist"
 msgstr "Importer une liste de lecture"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2047
-#: ../src/Core/Banshee/PlayerInterface.cs:2065
+#: ../src/Core/Banshee/PlayerInterface.cs:2041
+#: ../src/Core/Banshee/PlayerInterface.cs:2059
 msgid "Unable to Import Playlist"
 msgstr "Impossible d'importer la liste de lecture"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2066
+#: ../src/Core/Banshee/PlayerInterface.cs:2060
 msgid ""
 "Banshee was unable to find any valid tracks to import.  Please check the "
 "playlist and try again."
@@ -3140,17 +3130,17 @@ msgstr ""
 "Banshee n'a pas réussi à trouver de pistes valides à importer. Vérifiez la "
 "liste de lecture et essayez à nouveau."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2155
+#: ../src/Core/Banshee/PlayerInterface.cs:2149
 msgid "New CD"
 msgstr "Nouveau CD"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2176
+#: ../src/Core/Banshee/PlayerInterface.cs:2170
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synchronisation de {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2177
+#: ../src/Core/Banshee/PlayerInterface.cs:2171
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3168,7 +3158,7 @@ msgstr ""
 "<big>•</big> <i>Enregistrer les modifications manuelles</i> : enregistre "
 "seulement les modifications manuelles que vous avez effectuées"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2183
+#: ../src/Core/Banshee/PlayerInterface.cs:2177
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3176,11 +3166,11 @@ msgstr ""
 "<b>Avertissement :</b> ces actions vont altérer ou effacer le contenu de "
 "l'iPod et peuvent engendrer des incompatibilités avec iTunes."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2185
+#: ../src/Core/Banshee/PlayerInterface.cs:2179
 msgid "Synchronize Library"
 msgstr "Synchroniser la bibliothèque"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2187
+#: ../src/Core/Banshee/PlayerInterface.cs:2181
 msgid "Save Manual Changes"
 msgstr "Enregistrer les modifications manuelles"
 
@@ -3626,7 +3616,7 @@ msgstr "Mot de passe"
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
 msgid "Plugin enabled"
 msgstr "Greffon activé"
 
@@ -3887,9 +3877,8 @@ msgstr ""
 "uniquement les contrôles de lecture et les informations du morceau."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
-#, fuzzy
 msgid "_Mini Mode"
-msgstr "Mini-mode"
+msgstr "_Mode mini"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
 msgid "Switch back to full mode"
@@ -4579,33 +4568,49 @@ msgstr "Station"
 msgid "Comment"
 msgstr "Commentaire"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
+# La traduction de CD Session par la session CD est normale ! Voir IHM.
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+#, fuzzy
+msgid "Cache version"
+msgstr "la session CD"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
 msgid "Recommendation plugin enabled"
 msgstr "Greffon de recommandations activé"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:108
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+msgid ""
+"Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
+"recommendation"
+msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
 msgid "Recommended Artists"
 msgstr "Artistes recommandés"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:135
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:169
 msgid "No similar artists found"
 msgstr "Aucun artiste similaire trouvé"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:212
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:246
 #, csharp-format
 msgid "Top Tracks by {0}"
 msgstr "Top chansons de {0}"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:214
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:248
 #, csharp-format
 msgid "Top Albums by {0}"
 msgstr "Top albums de {0}"
 
-#. translators: 25% similarity
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:330
-#, csharp-format
-msgid "{0}% similarity"
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:366
+#, fuzzy, csharp-format
+msgid "{0}% Similarity"
 msgstr "Similaire à {0} %"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:368
+#, fuzzy
+msgid "Unknown Similarity"
+msgstr "Artiste inconnu"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
 msgid "Music Recommendations"
@@ -4625,3 +4630,12 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Afficher des recommandations"
+
+#~ msgid "Ratin_g"
+#~ msgstr "Not_e"
+
+#~ msgid "Set rating for selected songs"
+#~ msgstr "Définit la note des morceaux sélectionnés"
+
+#~ msgid "Clear"
+#~ msgstr "Effacer"
