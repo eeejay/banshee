@@ -1,5 +1,23 @@
 2007-05-07  Aaron Bockover  <abock@gnome.org>
 
+	* Banshee.mds: Added a new top-level solution that will build in ext/
+	and in libbanshee/ first
+
+	* src/Core/Banshee.Base/Banshee.Base.mdp: Run 
+	build/monodevelop/fixup-configuredefines before the build
+
+	* ext/Makefile.MonoDevelop:
+	* ext/dbus-sharp/Makefile.MonoDevelop:
+	* ext/hal-sharp/Makefile.MonoDevelop:
+	* ext/taglib-sharp/Makefile.MonoDevelop: Simple makefiles that can be
+	run from inside MonoDevelop without any need to run autogen/configure
+
+	* build/monodevelop/fixup-configuredefines: A script to generate 
+	src/Core/Banshee.Base/ConfigureDefines.cs without having to run 
+	configure; used from within MonoDevelop
+
+2007-05-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Sample: Added the sample plugin to the build
 	from the Wiki so we can verify it is always building and working; of 
 	course it does not get installed/packaged
