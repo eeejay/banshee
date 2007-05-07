@@ -162,6 +162,7 @@ src/Plugins/Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAre
 src/Plugins/Banshee.Plugins.Podcast/Makefile
 src/Plugins/Banshee.Plugins.Radio/Makefile
 src/Plugins/Banshee.Plugins.Recommendation/Makefile
+src/Plugins/Banshee.Plugins.Sample/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then

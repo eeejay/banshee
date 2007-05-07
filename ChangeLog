@@ -1,3 +1,13 @@
+2007-05-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Sample: Added the sample plugin to the build
+	from the Wiki so we can verify it is always building and working; of 
+	course it does not get installed/packaged
+
+	* configure.ac:
+	* src/Plugins/Plugins.mds:
+	* src/Plugins/Makefile.am: Added src/Plugins/Banshee.Plugins.Sample
+
 2007-04-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:

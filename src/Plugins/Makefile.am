@@ -8,7 +8,8 @@ SUBDIRS = \
 	Banshee.Plugins.NotificationAreaIcon \
 	Banshee.Plugins.Podcast \
 	Banshee.Plugins.Radio \
-	Banshee.Plugins.Recommendation
+	Banshee.Plugins.Recommendation \
+	Banshee.Plugins.Sample
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

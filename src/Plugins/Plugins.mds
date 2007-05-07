@@ -11,6 +11,8 @@
       <Entry build="True" name="Banshee.Plugins.Podcast" configuration="Debug" />
       <Entry build="True" name="Banshee.Plugins.Radio" configuration="Debug" />
       <Entry build="True" name="Banshee.Plugins.Recommendation" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Sample" configuration="Debug" />
+      <Entry build="True" name="Banshee.Plugins.Sample" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Plugins.Audioscrobbler" single="True">
@@ -24,6 +26,7 @@
     <Execute type="None" entry="Banshee.Plugins.Podcast" />
     <Execute type="None" entry="Banshee.Plugins.Radio" />
     <Execute type="None" entry="Banshee.Plugins.Recommendation" />
+    <Execute type="None" entry="Banshee.Plugins.Sample" />
   </StartMode>
   <Entries>
     <Entry filename="./Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
@@ -36,5 +39,6 @@
     <Entry filename="./Banshee.Plugins.Podcast/Banshee.Plugins.Podcast.mdp" />
     <Entry filename="./Banshee.Plugins.Radio/Banshee.Plugins.Radio.mdp" />
     <Entry filename="./Banshee.Plugins.Recommendation/Banshee.Plugins.Recommendation.mdp" />
+    <Entry filename="./Banshee.Plugins.Sample/Banshee.Plugins.Sample.mdp" />
   </Entries>
 </Combine>
