@@ -14,14 +14,14 @@ NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
 NUNIT_TESTER_CSFILES = $(srcdir)/$(NUNIT_TESTER_NAME).cs $(srcdir)/AssemblyInfo.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml -r:$(top_builddir)/src/Banshee.Base/Banshee.Base.dll $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml -r:$(top_builddir)/src/Core/Banshee.Base/Banshee.Base.dll $(ASSEMBLY_CSFILES)
 
 $(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
 	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)
 
 if ENABLE_TESTS
 run-test: $(NUNIT_TESTER) $(ASSEMBLY)
-	MONO_PATH="../src:../src/Banshee.Base" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
+	MONO_PATH="$(top_builddir)/src/Core/Banshee.Base" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
 endif
 
 CLEANFILES = $(ASSEMBLY) $(NUNIT_TESTER) TestResult.xml

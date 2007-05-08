@@ -51,7 +51,7 @@ namespace Banshee.Playlists.Formats.Xspf.Tests
 			Assert.AreEqual(W3CDateTime.Parse("2005-01-08T17:10:47-05:00").LocalTime, playlist.Date);
 
 			Assert.AreEqual(2, playlist.Meta.Count);
-			foreach(Meta meta in playlist.Meta) {
+			foreach(MetaEntry meta in playlist.Meta) {
 				Assert.AreEqual(new Uri("http://abock.org/fruit"), meta.Rel);
 				if(meta.Value != "Apples" && meta.Value != "Oranges") {
 					Assert.Fail("Expected one of 'Apples' or 'Oranges'");
@@ -59,7 +59,7 @@ namespace Banshee.Playlists.Formats.Xspf.Tests
 			}
 
 			Assert.AreEqual(2, playlist.Links.Count);
-			foreach(Link link in playlist.Links) {
+			foreach(LinkEntry link in playlist.Links) {
 				if(!link.Rel.AbsoluteUri.StartsWith("http://abock.org")) {
 					Assert.Fail("Incorrect rel, expected it to start with http://abock.org");
 				}
