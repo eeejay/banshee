@@ -94,8 +94,6 @@
         <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
     </popup>
     <popup name="SongViewPopup" action="SongViewPopupAction">
-        <menuitem name="Columns" action="ColumnsAction" />
-        <separator />
         <menuitem name="AddToPlaylist" action="AddToPlaylistAction" />
         <separator />
         <menuitem name="CopySongs" action="CopySongsAction" />
@@ -107,9 +105,6 @@
             <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction" />
             <menuitem name="SearchForSameGenre" action="SearchForSameGenreAction" />
         </menu>
-        <separator />
-        <menuitem name="SelectAll" action="SelectAllAction" />
-        <menuitem name="SelectNone" action="SelectNoneAction" />
         <separator />
         <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
         <separator />

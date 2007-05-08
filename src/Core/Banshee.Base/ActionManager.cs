@@ -243,22 +243,22 @@ namespace Banshee.Base
                     Catalog.GetString("Edit metadata on selected songs"), null),
 
                 new ActionEntry("SearchMenuAction", Stock.Find,
-                    Catalog.GetString("_Search for songs"), null,
+                    Catalog.GetString("_Search for Songs"), null,
                     Catalog.GetString("Search for songs matching certain criteria"), null),
 
                 new ActionEntry("SearchForSameAlbumAction", null,
-                    Catalog.GetString("By matching _album"), null,
+                    Catalog.GetString("By Matching _Album"), null,
                     Catalog.GetString("Search all songs of this album"), null),
 
                 new ActionEntry("SearchForSameArtistAction", null,
-                    Catalog.GetString("By matching a_rtist"), null,
+                    Catalog.GetString("By Matching A_rtist"), null,
                     Catalog.GetString("Search all songs of this artist"), null),
 
                 new ActionEntry("SearchForSameGenreAction", null,
-                    Catalog.GetString("By matching _genre"), null,
+                    Catalog.GetString("By Matching _Genre"), null,
                     Catalog.GetString("Search all songs of this genre"), null),
                     
-                new ActionEntry("AddToPlaylistAction", null,
+                new ActionEntry("AddToPlaylistAction", Stock.Add,
                     Catalog.GetString("Add _to Playlist"), null,
                     Catalog.GetString("Append selected songs to playlist or create new playlist from selection"), null),
             });
@@ -329,7 +329,7 @@ namespace Banshee.Base
                     Catalog.GetString("Seek forward in current song"), null),
                     
                 new ActionEntry("SeekToAction", null,
-                    Catalog.GetString("Seek _To..."), "T",
+                    Catalog.GetString("Seek _to..."), "T",
                     Catalog.GetString("Seek to a specific location in current song"), null),
                     
                 new ActionEntry("RestartSongAction", null,

@@ -67,7 +67,8 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 return new string[] {
                     "Sebastian Dr\u00f6ge",
                     "Aaron Bockover",
-                    "Ruben Vermeersch"
+                    "Ruben Vermeersch",
+                    "Gabriel Burt"
                 };
             }
         }
@@ -103,6 +104,12 @@ namespace Banshee.Plugins.NotificationAreaIcon
                 new ActionEntry("CloseAction", Stock.Close,
                     Catalog.GetString("_Close"), "<Control>W",
                     Catalog.GetString("Close"), CloseWindow)
+            });
+
+            actions.Add(new ToggleActionEntry [] {
+                new ToggleActionEntry("ToggleNotificationsAction", null,
+                    Catalog.GetString("_Show Notifications"), null,
+                    Catalog.GetString("Show notifications when song changes"), ToggleNotifications, ShowNotifications)
             });
 
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
@@ -211,6 +218,11 @@ namespace Banshee.Plugins.NotificationAreaIcon
             }
 
             ShowHideMainWindow();
+        }
+
+        private void ToggleNotifications(object o, EventArgs args)
+        {
+            ShowNotifications = (actions["ToggleNotificationsAction"] as ToggleAction).Active;
         }
 
         private void ShowHideMainWindow()

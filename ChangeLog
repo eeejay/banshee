@@ -1,3 +1,14 @@
+2007-05-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/UIManagerLayout.xml:
+	* src/Core/Banshee.Base/ActionManager.cs: Remove menu items (Columns,
+	Select All/None) from track context menu.  Properly capitalize others.
+
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconMenu.xml:
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs: Add
+	a menu item for disabling/enabling notifications to the notification icon menu.
+
 2007-05-07  Aaron Bockover  <abock@gnome.org>
 
 	* Banshee.mds: Added a new top-level solution that will build in ext/

@@ -63,7 +63,10 @@ namespace Banshee.Plugins.NotificationAreaIcon
             
             CheckButton show_notifications = new CheckButton(Catalog.GetString("Show notifications when song changes"));
             show_notifications.Active = plugin.ShowNotifications;
-            show_notifications.Toggled += delegate { plugin.ShowNotifications = show_notifications.Active; };
+            show_notifications.Toggled += delegate {
+                plugin.ShowNotifications = show_notifications.Active;
+                (Globals.ActionManager["ToggleNotificationsAction"] as ToggleAction).Active = show_notifications.Active;
+            };
 
             CheckButton quit_on_close = new CheckButton(Catalog.GetString("Quit Banshee when title bar close button is clicked"));
             quit_on_close.Active = plugin.QuitOnClose;
