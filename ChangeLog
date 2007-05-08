@@ -1,3 +1,30 @@
+2007-05-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	A nice piece of crack I'm not sure about yet - reverse the menu contents
+	if the notification area is on the bottom of the screen so the most used
+	items are closest to the panel - more usable in theory, but maybe it's
+	just creepy?
+
+	* src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:
+	* src/Core/Banshee.Base/Gui/TrackEditor.cs:
+	* src/Core/Banshee.Base/FileTrackInfo.cs:
+	* src/Core/Banshee.Base/StreamTagger.cs: Updated to use the TagLib# 2.0 
+	API (BGO #436743, Sebastian Dröge)
+
+	* ext/taglib-sharp/TagLib: Updated TagLib external reference back to
+	TagLib# trunk for development work, may cause breakage at times during
+	this development cycle
+
+	* ext/taglib-sharp/Makefile.am:
+	* ext/taglib-sharp/Makefile.MonoDevelop:
+	* ext/taglib-sharp/TagLib.sources: Explicitly define sources in 
+	TagLib.sources and use them for building as wildcard matching no longer
+	produces a clean build on TagLibg# trunk
+
+	* libbanshee/gst-playback-0.10.c: Check to see if playbin is still 
+	alive before pausing (BGO #436741, Sebastian Dröge)
+
 2007-05-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* data/UIManagerLayout.xml:

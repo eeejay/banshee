@@ -6,17 +6,14 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 taglibdir = $(pkglibdir)
 taglib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
-ASSEMBLY_SOURCES = \
-	$(srcdir)/TagLib/*.cs \
-	$(srcdir)/TagLib/*/*.cs \
-	$(srcdir)/TagLib/*/*/*.cs
+include $(srcdir)/TagLib.sources
 
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES)
 	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
 
-EXTRA_DIST = $(ASSEMBLY_SOURCES)
+EXTRA_DIST = $(ASSEMBLY_SOURCES) $(srcdir)/TagLib.sources
 CLEANFILES = $(taglib_SCRIPTS)
 MAINTAINERCLEANFILES = Makefile.in
 

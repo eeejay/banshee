@@ -57,7 +57,7 @@ namespace Banshee.Base
             genre = Choose(file.Tag.FirstGenre, genre);
             track_number = file.Tag.Track == 0 ? track_number : (uint)file.Tag.Track;
             track_count = file.Tag.TrackCount == 0 ? track_count : (uint)file.Tag.TrackCount;
-            duration = file.AudioProperties.Duration;
+            duration = file.Properties.Duration;
             year = (int)file.Tag.Year;
 
             this.date_added = DateTime.Now;

@@ -119,15 +119,15 @@ namespace Banshee.Dap.Ipod
 
             song.FileName = file.FullName;
             song.Album = af.Tag.Album;
-            song.Artist = af.Tag.Artists[0];
+            song.Artist = af.Tag.FirstArtist;
             song.Title = af.Tag.Title;
             song.Genre = af.Tag.Genres[0];
             song.TrackNumber = (int)af.Tag.Track;
             song.TotalTracks = (int)af.Tag.TrackCount;
-            song.Duration = af.AudioProperties.Duration;
+            song.Duration = af.Properties.Duration;
             song.Year = (int)af.Tag.Year;
-            song.BitRate = af.AudioProperties.Bitrate / 1024;
-            song.SampleRate = (ushort)af.AudioProperties.SampleRate;
+            song.BitRate = af.Properties.AudioBitrate / 1024;
+            song.SampleRate = (ushort)af.Properties.AudioSampleRate;
         }
         
         private void SaveDatabase()

@@ -76,6 +76,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private EventBox event_box;
         private NotificationArea notif_area;
         private Menu menu;
+        private bool menu_is_reversed = false;
         private ActionGroup actions;
         private uint ui_manager_id;
 
@@ -323,21 +324,34 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
         private void PositionMenu(Menu menu, out int x, out int y, out bool push_in) 
         {
-            PositionWidget(menu, out x, out y, 0);
+            bool on_bottom = PositionWidget(menu, out x, out y, 0);
             push_in = true;
+            
+            if((on_bottom && !menu_is_reversed) || (!on_bottom && menu_is_reversed)) {
+                menu_is_reversed = !menu_is_reversed;
+                Widget [] frozen_children = new Widget[menu.Children.Length - 1];
+                Array.Copy(menu.Children, 1, frozen_children, 0, frozen_children.Length);
+                for(int i = 0; i < frozen_children.Length; i++) {
+                    menu.ReorderChild(frozen_children[i], 0);
+                }
+            }
         }
 
-        private void PositionWidget(Widget widget, out int x, out int y, int yPadding) 
+        private bool PositionWidget(Widget widget, out int x, out int y, int yPadding) 
         {
             int button_y, panel_width, panel_height;
             Gtk.Requisition requisition = widget.SizeRequest();
             
             event_box.GdkWindow.GetOrigin(out x, out button_y);
             (event_box.Toplevel as Gtk.Window).GetSize(out panel_width, out panel_height);
+            
+            bool on_bottom = button_y + panel_height + requisition.Height >= event_box.Screen.Height;
 
-            y = (button_y + panel_height + requisition.Height >= event_box.Screen.Height) 
+            y = on_bottom
                 ? button_y - requisition.Height - yPadding
                 : button_y + panel_height + yPadding;
+                
+            return on_bottom;
         }
 
         private void OnMouseScroll(object o, ScrollEventArgs args) 

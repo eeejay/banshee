@@ -1,11 +1,10 @@
 ASSEMBLY = TagLib.dll
-SOURCES = \
-	$(wildcard TagLib/*.cs) \
-	$(wildcard TagLib/*/*.cs) \
-	$(wildcard TagLib/*/*/*.cs)
+srcdir = .
 
-$(ASSEMBLY): $(SOURCES)
-	gmcs -out:$@ -debug -target:library $(SOURCES)
+include TagLib.sources
+
+$(ASSEMBLY): $(ASSEMBLY_SOURCES)
+	gmcs -out:$@ -debug -target:library $(ASSEMBLY_SOURCES)
 
 clean:
 	rm -f *.{dll,mdb}

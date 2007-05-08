@@ -334,13 +334,9 @@ namespace Banshee.Gui.Dialogs
                     } catch {
                     }*/
                 
-                    if(file.AudioProperties != null) {
-                        track.Bitrate = file.AudioProperties.Bitrate;
-                        track.SampleRate = file.AudioProperties.SampleRate;
-                        track.Channels = file.AudioProperties.Channels;
-                    } else {
-                        throw new Exception();
-                    }
+                    track.Bitrate = file.Properties.AudioBitrate;
+                    track.SampleRate = file.Properties.AudioSampleRate;
+                    track.Channels = file.Properties.AudioChannels;
                 } catch(Exception) {
                     track.Bitrate = -1;
                 }

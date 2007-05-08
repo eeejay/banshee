@@ -84,7 +84,7 @@ namespace Banshee.Base
             }
 
             return TagLib.File.Create(uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
-                mimetype, TagLib.AudioProperties.ReadStyle.Average);
+                mimetype, TagLib.ReadStyle.Average);
         }
     
         private static string Choose(string priority, string fallback)
@@ -103,9 +103,7 @@ namespace Banshee.Base
             track.Year = (int)file.Tag.Year;
             track.MimeType = file.MimeType;
             
-            if(file.AudioProperties != null) {
-                track.Duration = file.AudioProperties.Duration;
-            }
+            track.Duration = file.Properties.Duration;
         }
     
         public static void TrackInfoMerge(TrackInfo track, StreamTag tag)
