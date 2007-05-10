@@ -129,7 +129,7 @@ namespace Banshee.SmartPlaylist
         {
             Banshee.Widgets.SearchEntry search_entry = InterfaceElements.SearchEntry;
 
-            string field = search_entry.GetLabelForFilterID(search_entry.ActiveFilterID);
+            TrackFilterType filter_type = (TrackFilterType)search_entry.ActiveFilterID;
             string query = search_entry.Query;
 
             string condition = String.Empty;
@@ -153,15 +153,15 @@ namespace Banshee.SmartPlaylist
                 condition_candidates.Add (String.Empty);
             }
 
-            if(field == Catalog.GetString("Artist Name")) {
+            if((filter_type & TrackFilterType.ArtistName) == TrackFilterType.ArtistName) {
                 condition = " (" + condition_candidates[0].ToString() + ") ";
-            } else if(field == Catalog.GetString("Song Name")) {
+            } else if((filter_type & TrackFilterType.SongName) == TrackFilterType.SongName) {
                 condition = " (" + condition_candidates[1].ToString() + ") ";
-            } else if(field == Catalog.GetString("Album Title")) {
+            } else if((filter_type & TrackFilterType.AlbumTitle) == TrackFilterType.AlbumTitle) {
                 condition = " (" + condition_candidates[2].ToString() + ") ";
-            } else if(field == Catalog.GetString("Genre")) {
+            } else if((filter_type & TrackFilterType.Genre) == TrackFilterType.Genre) {
                 condition = " (" + condition_candidates[3].ToString() + ") ";
-            } else if(field == Catalog.GetString("Year")) {
+            } else if((filter_type & TrackFilterType.Year) == TrackFilterType.Year) {
                 condition = " (" + condition_candidates[4].ToString() + ") ";
             } else {
                 // Searching for all possible conditions
@@ -179,7 +179,7 @@ namespace Banshee.SmartPlaylist
             Condition = condition;
 
             Dialog.Title = Catalog.GetString ("Create Smart Playlist from Search");
-            name_entry.Text = field + ": " + query;
+            name_entry.Text = search_entry.GetLabelForFilterID(search_entry.ActiveFilterID) + ": " + query;
         }
 
         public void RunDialog()

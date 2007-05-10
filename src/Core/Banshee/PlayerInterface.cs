@@ -1429,7 +1429,6 @@ namespace Banshee
             playlistModel.ClearModel();
             
             if(!searchEntry.IsQueryAvailable) {
-                Console.WriteLine("RELOADING MODEL");
                 playlistModel.ReloadSource();
                 while(Application.EventsPending()) {
                     Application.RunIteration();
