@@ -1,3 +1,26 @@
+2007-05-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/SearchEntry.cs: Completely rewritten SearchEntry
+	with a better filter API and proper GTK themeing
+
+	* src/Core/Banshee.Widgets/HoverImageButton.cs: A cute button that may
+	end up somewhere standalone, but for now makes up the filter and clear
+	buttons in the new SearchEntry
+
+	* src/Core/Banshee.Base/TrackFilterType.cs: Define what kind of filters
+	can be made on the track view; means that logic can happen against this
+	enum instead of lots of stupid Catalog.GetString()+string comparisons,
+	so searching should actually be a bit faster
+
+	* src/Core/Banshee.Base/Source.cs: Save a TrackFilterType instead of the
+	old string filter name
+
+	* src/Core/Banshee/PlayerInterface.cs: Use the new SearchEntry API which
+	should actually bring search/filter speed improvements
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Hackishly use
+	the new SearchEntry API (needs finishing)
+
 2007-05-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:

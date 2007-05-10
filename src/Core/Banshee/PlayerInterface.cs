@@ -446,18 +446,19 @@ namespace Banshee
             Window.DeleteEvent += OnWindowPlayerDeleteEvent;
             WindowPlayer.WindowStateEvent += OnWindowStateEvent;
             
-            // Search Entry
-            ArrayList fields = new ArrayList();
-            fields.Add(Catalog.GetString("All"));
-            fields.Add("-");
-            fields.Add(Catalog.GetString("Song Name"));
-            fields.Add(Catalog.GetString("Artist Name"));
-            fields.Add(Catalog.GetString("Album Title"));
-            fields.Add(Catalog.GetString("Genre"));
-            fields.Add(Catalog.GetString("Year"));
+            searchEntry = new SearchEntry();
+            searchEntry.Changed += OnSimpleSearch;
+            searchEntry.FilterChanged += OnSimpleSearchFilterChange;
+            searchEntry.SetSizeRequest(200, -1);
+            searchEntry.AddFilterOption((int)TrackFilterType.None, Catalog.GetString("All Columns"));
+            searchEntry.AddFilterSeparator();
+            searchEntry.AddFilterOption((int)TrackFilterType.SongName, Catalog.GetString("Song Name"));
+            searchEntry.AddFilterOption((int)TrackFilterType.ArtistName, Catalog.GetString("Artist Name"));
+            searchEntry.AddFilterOption((int)TrackFilterType.AlbumTitle, Catalog.GetString("Album Title"));
+            searchEntry.AddFilterOption((int)TrackFilterType.Genre, Catalog.GetString("Genre"));
+            searchEntry.AddFilterOption((int)TrackFilterType.Year, Catalog.GetString("Year"));
             
-            searchEntry = new SearchEntry(fields);
-            searchEntry.EnterPress += delegate(object o, EventArgs args) {
+            searchEntry.Activated += delegate {
                 if(!SourceManager.ActiveSource.HandlesSearch) {
                     if(playlistView.Selection.CountSelectedRows() == 0 && playlistModel.Count() > 0) {
                         playlistView.Selection.SelectPath(new TreePath(new int [] { 0 }));
@@ -465,7 +466,6 @@ namespace Banshee
                     playlistView.HasFocus = true;
                 }
             };
-            searchEntry.Changed += OnSimpleSearch;
             searchEntry.Show();
             gxml["SearchLabel"].Sensitive = true;
             searchEntry.Sensitive = true;
@@ -730,7 +730,7 @@ namespace Banshee
             }
 
             if(focus_search && !searchEntry.HasFocus && !sourceView.EditingRow) {
-                searchEntry.Focus();
+                searchEntry.HasFocus = true;
                 handled = true;
             }
             
@@ -1153,9 +1153,9 @@ namespace Banshee
             searchEntry.Ready = false;
             searchEntry.CancelSearch();
             
-            if(source.FilterQuery != null && source.FilterField != null) {
+            if(source.FilterQuery != null && source.FilterType != TrackFilterType.None) {
                 searchEntry.Query = source.FilterQuery;
-                searchEntry.Field = source.FilterField;
+                searchEntry.ActivateFilter((int)source.FilterType);
             }
             
             if(source is DapSource) {
@@ -1336,18 +1336,18 @@ namespace Banshee
             }
             
             string query = searchEntry.Query;
-            string field = searchEntry.Field;
+            TrackFilterType filter_type = (TrackFilterType)searchEntry.ActiveFilterID;
             string [] matches;
             
-            if(field == Catalog.GetString("Artist Name")) {
+            if((filter_type & TrackFilterType.ArtistName) == TrackFilterType.ArtistName) {
                 matches = new string [] { ti.Artist };
-            } else if(field == Catalog.GetString("Song Name")) {
+            } else if((filter_type & TrackFilterType.SongName) == TrackFilterType.SongName) {
                 matches = new string [] { ti.Title };
-            } else if(field == Catalog.GetString("Album Title")) {
+            } else if((filter_type & TrackFilterType.AlbumTitle) == TrackFilterType.AlbumTitle) {
                 matches = new string [] { ti.Album };
-            } else if(field == Catalog.GetString("Genre")) {
+            } else if((filter_type & TrackFilterType.Genre) == TrackFilterType.Genre) {
                 matches = new string [] { ti.Genre };
-            } else if(field == Catalog.GetString("Year")) {
+            } else if((filter_type & TrackFilterType.Year) == TrackFilterType.Year) {
                 matches = new string [] { ti.Year.ToString() };
             } else {
                 matches = new string [] {
@@ -1407,22 +1407,29 @@ namespace Banshee
             return true;
         }
         
+        private void OnSimpleSearchFilterChange(object o, EventArgs args)
+        {
+            searchEntry.EmptyMessage = String.Format(Catalog.GetString("Filter on {0}"), 
+                searchEntry.GetLabelForFilterID(searchEntry.ActiveFilterID));
+        }
+        
         private void OnSimpleSearch(object o, EventArgs args)
         {
-            SourceManager.ActiveSource.FilterField = searchEntry.Field;
+            SourceManager.ActiveSource.FilterType = (TrackFilterType)searchEntry.ActiveFilterID;
             SourceManager.ActiveSource.FilterQuery = searchEntry.Query;
         
             if(SourceManager.ActiveSource.HandlesSearch) {
                 return;
             }
 
-            if (suspendSearch) {
+            if(suspendSearch) {
                 return;
             }
             
             playlistModel.ClearModel();
             
             if(!searchEntry.IsQueryAvailable) {
+                Console.WriteLine("RELOADING MODEL");
                 playlistModel.ReloadSource();
                 while(Application.EventsPending()) {
                     Application.RunIteration();
@@ -2474,15 +2481,15 @@ namespace Banshee
 
             switch(criteria) {
                 case SearchTrackCriteria.Album:
-                    searchEntry.Field = Catalog.GetString("Album Title");
+                    searchEntry.ActivateFilter((int)TrackFilterType.AlbumTitle);
                     searchEntry.Query = track.Album;
                     break;
                 case SearchTrackCriteria.Artist:
-                    searchEntry.Field = Catalog.GetString("Artist Name");
+                    searchEntry.ActivateFilter((int)TrackFilterType.ArtistName);
                     searchEntry.Query = track.Artist;
                     break;
                 case SearchTrackCriteria.Genre:
-                    searchEntry.Field = Catalog.GetString("Genre");
+                    searchEntry.ActivateFilter((int)TrackFilterType.Genre);
                     searchEntry.Query = track.Genre;
                     break;
             }

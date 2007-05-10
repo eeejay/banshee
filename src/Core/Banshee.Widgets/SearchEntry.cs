@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  SearchEntry.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -28,409 +27,430 @@
  */
  
 using System;
-using System.Collections;
-using Mono.Unix;
 using Gtk;
 
 namespace Banshee.Widgets
 {
-    public class SearchEntry : Frame
+    public class SearchEntry : EventBox
     {
-        private ArrayList searchFields;
-        private Hashtable menuMap;
-        private Menu popupMenu;
-        
         private HBox box;
         private Entry entry;
-        private EventBox evBox;
-        private EventBox evCancelBox;
-        private Image img;
-        private Image cancelImage;
-        private Tooltips tooltips;
-    
-        private Gdk.Pixbuf icon;
-        private Gdk.Pixbuf hoverIcon;
+        private HoverImageButton filter_button;
+        private HoverImageButton clear_button;
+
+        private Menu menu;
+        private int active_filter_id = -1;
+
+        private uint changed_timeout_id = 0;
         
-        private Gdk.Cursor handCursor;
-        
-        private CheckMenuItem activeItem;
-        private bool menuActive;
-        
-        private bool emptyEmitted;
-        private uint timeoutId;
+        private string empty_message;
         private bool ready = false;
-        
-        public event EventHandler EnterPress;
-        public event EventHandler Changed;
-    
-        public SearchEntry(ArrayList searchFields) : base()
+
+        private event EventHandler filter_changed;
+        private event EventHandler entry_changed;
+
+        public event EventHandler Changed {
+            add { entry_changed += value; }
+            remove { entry_changed -= value; }
+        }
+
+        public event EventHandler Activated {
+            add { entry.Activated += value; }
+            remove { entry.Activated -= value; }
+        }
+
+        public event EventHandler FilterChanged {
+            add { filter_changed += value; }
+            remove { filter_changed -= value; }
+        }
+
+        public SearchEntry()
         {
-            handCursor = new Gdk.Cursor(Gdk.CursorType.Hand1);
-            tooltips = new Tooltips();
-            tooltips.Enable();
-            
-            this.searchFields = searchFields;
-            
+            AppPaintable = true;
+
             BuildWidget();
             BuildMenu();
         }
-        
+            
         private void BuildWidget()
         {
-            ShadowType = ShadowType.In;
-        
-            EventBox evContainer = new EventBox();
-            Add(evContainer);
-            
             box = new HBox();
-            evContainer.Add(box);
-            
-            entry = new Entry();
-            entry.HasFrame = false;
-            entry.WidthChars = 15;
-            entry.Activated += OnEntryActivated;
-            entry.KeyPressEvent += OnEntryKeyPressEvent;
-            
-            IconSet icon_set = IconFactory.LookupDefault(Stock.Find);
-            icon = icon_set.RenderIcon(entry.Style, entry.Direction, entry.State, IconSize.Menu, null, null);
+            entry = new FramelessEntry(this);
+            filter_button = new HoverImageButton(IconSize.Menu, new string [] { "edit-find", Stock.Find });
+            clear_button = new HoverImageButton(IconSize.Menu, new string [] { "edit-clear", Stock.Clear });
 
-            /*Gdk.Pixbuf arrow_overlay = new Gdk.Pixbuf(new string [] {
-                "5 3 2 1",
-                "   c None",
-                ".  c #000000",
-                ".....",
-                " ... ",
-                "  .  "
-            });
-            
-            // Currently this SIGSEGVs in Gdk.Pixbuf:gdk_pixbuf_copy_area
-            arrow_overlay.CopyArea(0, 0, arrow_overlay.Width, arrow_overlay.Height, icon, 0, 0);*/
-            
-            hoverIcon = PixbufColorshift(icon, 30);
-            
-            img = new Image(icon);
-            img.Xpad = 1;
-            img.Ypad = 1;
-            
-            evBox = new EventBox();
-            evBox.CanFocus = true;
-            evBox.EnterNotifyEvent += OnEnterNotifyEvent;
-            evBox.LeaveNotifyEvent += OnLeaveNotifyEvent;
-            evBox.ButtonPressEvent += OnButtonPressEvent;
-            evBox.KeyPressEvent += OnKeyPressEvent;
-            evBox.FocusInEvent += OnFocusInEvent;
-            evBox.FocusOutEvent += OnFocusOutEvent;
-            evBox.Add(img);
-            
-            cancelImage = new Image(Stock.Clear, IconSize.Menu);
-            cancelImage.Xpad = 2;
-            evCancelBox = new EventBox();
-            evCancelBox.CanFocus = true;
-            evCancelBox.Add(cancelImage);
-            evCancelBox.EnterNotifyEvent += OnCancelEnterNotifyEvent;
-            evCancelBox.ButtonPressEvent += OnCancelButtonPressEvent;
-            evCancelBox.KeyPressEvent += OnCancelKeyPressEvent;
-            
-            box.PackStart(evBox, false, false, 0);
+            box.PackStart(filter_button, false, false, 0);
             box.PackStart(entry, true, true, 0);
-            box.PackStart(evCancelBox, false, false, 0);
-            
-            evContainer.ShowAll();
-            evCancelBox.HideAll();
-            
-            SetSizeRequest(175, -1);
-            
-            entry.Changed += OnEntryChanged;
-            entry.StyleSet += delegate {
-                evBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
-                evCancelBox.ModifyBg(StateType.Normal, entry.Style.Base(StateType.Normal));
-            };
+            box.PackStart(clear_button, false, false, 0);
+
+            Add(box);
+            box.ShowAll();
+
+            entry.StyleSet += OnInnerEntryStyleSet;
+            entry.FocusInEvent += OnInnerEntryFocusEvent;
+            entry.FocusOutEvent += OnInnerEntryFocusEvent;
+            entry.Changed += OnInnerEntryChanged;
+
+            filter_button.Image.Xpad = 1;
+            clear_button.Image.Xpad = 1;
+            filter_button.CanFocus = false;
+            clear_button.CanFocus = false;
+
+            filter_button.ButtonReleaseEvent += OnButtonReleaseEvent;
+            clear_button.ButtonReleaseEvent += OnButtonReleaseEvent;
+            clear_button.Clicked += OnClearButtonClicked;
+
+            filter_button.Visible = false;
+            clear_button.Visible = false;
         }
-        
-        private static byte PixelClamp(int val)
-        {
-            return (byte)Math.Max(0, Math.Min(255, val));
-        }
-        
-        private unsafe Gdk.Pixbuf PixbufColorshift(Gdk.Pixbuf src, byte shift)
-        {
-            Gdk.Pixbuf dest = new Gdk.Pixbuf(src.Colorspace, src.HasAlpha, src.BitsPerSample, src.Width, src.Height);
-            
-            byte *src_pixels_orig = (byte *)src.Pixels;
-            byte *dest_pixels_orig = (byte *)dest.Pixels;
-            
-            for(int i = 0; i < src.Height; i++) {
-                byte *src_pixels = src_pixels_orig + i * src.Rowstride;
-                byte *dest_pixels = dest_pixels_orig + i * dest.Rowstride;
-                
-                for(int j = 0; j < src.Width; j++) {
-                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
-                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
-                    *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
-                    
-                    if(src.HasAlpha) {
-                        *(dest_pixels++) = *(src_pixels++);
-                    }
-                }
-            }
-            
-            return dest;
-        }
-        
+
         private void BuildMenu()
         {
-            popupMenu = new Menu();
-            menuMap = new Hashtable();
-            
-            popupMenu.Deactivated += OnMenuDeactivated;
-            
-            foreach(string menuLabel in searchFields) {
-                if(menuLabel.Equals("-")) {
-                    popupMenu.Append(new SeparatorMenuItem());
-                } else {
-                    CheckMenuItem item = new CheckMenuItem(menuLabel);
-                    item.DrawAsRadio = true;
-                    item.Toggled += OnMenuItemToggled;
-                    popupMenu.Append(item);
-                    
-                    if(activeItem == null) {
-                        activeItem = item;
-                        item.Active = true;
-                    }
-                    
-                    menuMap[item] = menuLabel;
-                }
-            }    
-            
-            tooltips.SetTip(evBox, String.Format(Catalog.GetString("Searching: {0}"), Field), null);
+            menu = new Menu();
+            menu.Deactivated += OnMenuDeactivated;
         }
-        
+
         private void ShowMenu(uint time)
         {
-            popupMenu.Popup(null, null, new MenuPositionFunc(MenuPosition), 0, time);
-            popupMenu.ShowAll();
-            img.Pixbuf = hoverIcon;
-            menuActive = true;
-        }
-        
-        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args)
-        {
-            img.GdkWindow.Cursor = handCursor;
-            img.Pixbuf = hoverIcon;
-        }
-        
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args)
-        {
-            if(!evBox.HasFocus && !menuActive) {
-                img.Pixbuf = icon;
-            }
-        }
-        
-        private void OnButtonPressEvent(object o, ButtonPressEventArgs args)
-        {
-            ShowMenu(args.Event.Time);
-        }
-        
-        private void OnFocusInEvent(object o, EventArgs args)
-        {
-            img.Pixbuf = hoverIcon;
-        }
-        
-        private void OnFocusOutEvent(object o, EventArgs args)
-        {
-            if(!menuActive) {
-                img.Pixbuf = icon;
-            }
-        }
-        
-        private void OnKeyPressEvent(object o, KeyPressEventArgs args)
-        {
-            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space) {
-                return;
-            }
-                
-            ShowMenu(args.Event.Time);
-        }
-
-        private void OnEntryKeyPressEvent(object o, KeyPressEventArgs args) 
-        {
-            if(args.Event.Key != Gdk.Key.Delete) {
-                return;
+            if(menu.Children.Length > 0) {
+                menu.Popup(null, null, OnPositionMenu, 0, time);
+                menu.ShowAll();
             }
         }
 
-        private void OnCancelEnterNotifyEvent(object o, EnterNotifyEventArgs args)
+        private void ShowHideButtons()
         {
-            cancelImage.GdkWindow.Cursor = handCursor;
-        }
-        
-        private void OnCancelButtonPressEvent(object o, ButtonPressEventArgs args)
-        {
-            CancelSearch();
-        }
-        
-        private void OnCancelKeyPressEvent(object o, KeyPressEventArgs args)
-        {
-            if(args.Event.Key != Gdk.Key.Return && args.Event.Key != Gdk.Key.space) {
-                return;
-            }
-                
-            CancelSearch();
+            clear_button.Visible = entry.Text.Length > 0;
+            filter_button.Visible = menu != null && menu.Children.Length > 0;
         }
 
-        private void MenuPosition(Menu menu, out int x, out int y, out bool push_in)
+        private void OnPositionMenu(Menu menu, out int x, out int y, out bool push_in)
         {
-            int pX, pY;
+            int origin_x, origin_y, tmp;
             
-            GdkWindow.GetOrigin(out pX, out pY);
-            Requisition req = SizeRequest();
-            
-            x = pX + Allocation.X;
-            y = pY + Allocation.Y + req.Height;    
+            filter_button.GdkWindow.GetOrigin(out origin_x, out tmp);
+            GdkWindow.GetOrigin(out tmp, out origin_y);
+
+            x = origin_x + filter_button.Allocation.X;
+            y = origin_y + SizeRequest().Height;
             push_in = true;
         }
-        
-        private void OnMenuItemToggled(object o, EventArgs args)
-        {
-            CheckMenuItem item = o as CheckMenuItem;
-            if(activeItem == item) {
-                item.Active = true;
-            } else {
-                activeItem = item;
-            }
-            
-            foreach(MenuItem iterItem in popupMenu.Children) {
-                if(!(iterItem is CheckMenuItem)) {
-                    continue;
-                }
-                
-                CheckMenuItem checkItem = iterItem as CheckMenuItem;
-                    
-                if(checkItem != activeItem) {
-                    checkItem.Active = false;
-                }
-            }
-            
-            activeItem.Active = true;
-            
-            tooltips.SetTip(evBox, String.Format(Catalog.GetString("Searching: {0}"), Field), null);
-            
-            entry.HasFocus = true;
-            
-            OnChanged(this, new EventArgs());
-        }
-        
+
         private void OnMenuDeactivated(object o, EventArgs args)
         {
-            img.Pixbuf = icon;
-            menuActive = false;
+            filter_button.QueueDraw();
         }
-        
-        protected virtual void OnChanged(object o, EventArgs args)
+
+        private bool toggling = false;
+
+        private void OnMenuItemToggled(object o, EventArgs args)
         {
-            if (Ready) {
-                EventHandler handler = Changed;
-                if(handler != null) {
-                    handler(o, args);
+            if(toggling || !(o is FilterMenuItem)) {
+                return;
+            }
+            
+            toggling = true;
+            FilterMenuItem item = (FilterMenuItem)o;
+            
+            foreach(MenuItem child_item in menu) {
+                if(!(child_item is FilterMenuItem)) {
+                    continue;
+                }
+
+                FilterMenuItem filter_child = (FilterMenuItem)child_item;
+                if(filter_child != item) {
+                    filter_child.Active = false;
                 }
             }
+
+            item.Active = true;
+            ActiveFilterID = item.ID;
+            toggling = false;
         }
 
-        private void OnEntryActivated(object o, EventArgs args)
+        private void OnInnerEntryChanged(object o, EventArgs args)
         {
-            EventHandler handler = EnterPress;
-            if(handler != null) {
-                handler(this, new EventArgs());
+            ShowHideButtons();
+
+            if(changed_timeout_id > 0) {
+                GLib.Source.Remove(changed_timeout_id);
             }
+
+            changed_timeout_id = GLib.Timeout.Add(300, OnChangedTimeout);
         }
 
-        private bool OnTimeout () 
+        private bool OnChangedTimeout()
         {
-            OnChanged(this, new EventArgs());
-
-            emptyEmitted = entry.Text.Length == 0;
+            OnChanged();
             return false;
         }
-        
-        private void OnEntryChanged(object o, EventArgs args)
+
+        private void OnInnerEntryStyleSet(object o, StyleSetArgs args)
         {
-            if(entry.Text.Length == 0) {
-                entry.HasFocus = true;
-                evCancelBox.HideAll();
-            } else {
-                emptyEmitted = false;
-                evCancelBox.ShowAll();
+            Gdk.Color color = entry.Style.Base(StateType.Normal);
+            filter_button.ModifyBg(StateType.Normal, color);
+            clear_button.ModifyBg(StateType.Normal, color);
+
+            Style.XThickness = entry.Style.XThickness;
+            Style.YThickness = entry.Style.YThickness;
+
+            box.BorderWidth = (uint)Style.XThickness;
+        }
+
+        private void OnInnerEntryFocusEvent(object o, EventArgs args)
+        {
+            QueueDraw();
+        }
+
+        private void OnButtonReleaseEvent(object o, ButtonReleaseEventArgs args)
+        {
+            if(args.Event.Button != 1) {
+                return;
             }
 
-            if(timeoutId > 0) {
-                GLib.Source.Remove(timeoutId);
+            entry.HasFocus = true;
+
+            if(o == filter_button) {
+                ShowMenu(args.Event.Time);
             }
-            
-            timeoutId = GLib.Timeout.Add(300, OnTimeout);
         }
-        
-        public void CancelSearch()
+
+        private void OnClearButtonClicked(object o, EventArgs args)
         {
-            Widget [] children = popupMenu.Children;
-            if(children != null && children.Length > 0) {
-                CheckMenuItem first = children[0] as CheckMenuItem;
-                if(first != null) {
-                    first.Activate();
-                }
-            }
-            
             entry.Text = String.Empty;
         }
-        
-        public string Query {
-            get {
-                return entry.Text.Trim();
+
+        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+        {
+            PropagateExpose(Child, evnt);
+            Style.PaintShadow(entry.Style, GdkWindow, StateType.Normal, 
+                ShadowType.In, evnt.Area, entry, "entry",
+                0, 0, Allocation.Width, Allocation.Height); 
+            return true;
+        }
+
+        protected override void OnShown()
+        {
+            base.OnShown();
+            ShowHideButtons();
+        }
+
+        protected virtual void OnChanged()
+        {
+            if(!Ready) {
+                return;
+            }
+
+            EventHandler handler = entry_changed;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        protected virtual void OnFilterChanged()
+        {
+            EventHandler handler = filter_changed;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
             }
             
-            set {
-                entry.Text = value;
+            if(IsQueryAvailable) {
+                OnInnerEntryChanged(this, EventArgs.Empty);
             }
         }
-        
-        public string Field {
-            get {
-                return menuMap[activeItem] as string;
+
+        public void AddFilterOption(int id, string label)
+        {
+            if(id < 0) {
+                throw new ArgumentException("id", "must be >= 0");
             }
-            set {
-                foreach(MenuItem iterItem in popupMenu.Children) {
-                    if(!(iterItem is CheckMenuItem)) {
-                        continue;
-                    }
 
-                    CheckMenuItem checkItem = iterItem as CheckMenuItem;
+            FilterMenuItem item = new FilterMenuItem(id, label);
+            item.Toggled += OnMenuItemToggled;
+            menu.Append(item);
 
-                    if(menuMap[checkItem] as string == value) {
-                        checkItem.Toggle();
-                    }
+            if(ActiveFilterID < 0) {
+                item.Toggle();
+            }
+
+            filter_button.Visible = true;
+        }
+
+        public void AddFilterSeparator()
+        {
+            menu.Append(new SeparatorMenuItem());
+        }
+
+        public void RemoveFilterOption(int id)
+        {
+            FilterMenuItem item = FindFilterMenuItem(id);
+            if(item != null) {
+                menu.Remove(item);
+            }
+        }
+
+        public void ActivateFilter(int id)
+        {
+            FilterMenuItem item = FindFilterMenuItem(id);
+            if(item != null) {
+                item.Toggle();
+            }
+        }
+
+        private FilterMenuItem FindFilterMenuItem(int id)
+        {
+            foreach(MenuItem item in menu) {
+                if(item is FilterMenuItem && ((FilterMenuItem)item).ID == id) {
+                    return (FilterMenuItem)item;
                 }
             }
-        }
-        
-        public void Focus()
-        {
-            entry.HasFocus = true;
+
+            return null;
         }
 
-        public new bool HasFocus {
-            get {
-                return entry.HasFocus;
+        public string GetLabelForFilterID(int id)
+        {
+            FilterMenuItem item = FindFilterMenuItem(id);
+            if(item == null) {
+                return null;
+            }
+
+            return item.Label;
+        }
+
+        public void CancelSearch()
+        {
+            entry.Text = String.Empty;
+            ActivateFilter(0);
+        }
+
+        public int ActiveFilterID {
+            get { return active_filter_id; }
+            private set { 
+                if(value == active_filter_id) {
+                    return;
+                }
+
+                active_filter_id = value;
+                OnFilterChanged();
             }
         }
-        
-        public bool IsQueryAvailable {
-            get {
-                return Query != null && Query != String.Empty;
+
+        public string EmptyMessage {
+            get { return empty_message; }
+            set {
+                empty_message = value;
+                entry.QueueDraw();
             }
+        }
+
+        public string Query {
+            get { return entry.Text.Trim(); }
+            set { entry.Text = value.Trim(); }
+        }
+
+        public bool IsQueryAvailable {
+            get { return Query != null && Query != String.Empty; }
         }
 
         public bool Ready {
             get { return ready; }
             set { ready = value; }
+        }
+        
+        public new bool HasFocus {
+            get { return entry.HasFocus; }
+            set { entry.HasFocus = true; }
+        }
+
+        private class FilterMenuItem : CheckMenuItem
+        {
+            private int id;
+            private string label;
+
+            public FilterMenuItem(int id, string label) : base(label)
+            {
+                this.id = id;
+                this.label = label;
+                DrawAsRadio = true;
+            }
+
+            public int ID {
+                get { return id; }
+            }
+
+            public string Label {
+                get { return label; }
+            }
+        }
+
+        private class FramelessEntry : Entry
+        {
+            private Gdk.Window text_window;
+            private SearchEntry parent;
+            private Pango.Layout layout;
+            private Gdk.GC text_gc;
+
+            public FramelessEntry(SearchEntry parent) : base()
+            {
+                this.parent = parent;
+                HasFrame = false;
+                
+                layout = new Pango.Layout(PangoContext);
+                layout.FontDescription = PangoContext.FontDescription.Copy();
+
+                parent.StyleSet += OnParentStyleSet;
+                WidthChars = 1;
+            }
+
+            private void OnParentStyleSet(object o, EventArgs args)
+            {
+                RefreshGC();
+                QueueDraw();
+            }
+
+            private void RefreshGC()
+            {
+                if(text_window == null) {
+                    return;
+                }
+
+                text_gc = new Gdk.GC(text_window);
+                text_gc.Copy(Style.TextGC(StateType.Normal));
+                Gdk.Color color_a = parent.Style.Foreground(StateType.Normal);
+                Gdk.Color color_b = parent.Style.Background(StateType.Normal);
+                text_gc.RgbFgColor = DrawingUtilities.ColorBlend(color_a, color_b, 0.5);
+            }
+
+            protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+            {
+                // The Entry's GdkWindow is the top level window onto which
+                // the frame is drawn; the actual text entry is drawn into a
+                // separate window, so we can ensure that for themes that don't
+                // respect HasFrame, we never ever allow the base frame drawing
+                // to happen
+                if(evnt.Window == GdkWindow) {
+                    return true;
+                }
+
+                bool ret = base.OnExposeEvent(evnt);
+
+                if(text_gc == null || evnt.Window != text_window) {
+                    text_window = evnt.Window;
+                    RefreshGC();
+                }
+
+                if(Text.Length > 0 || HasFocus || parent.EmptyMessage == null) {
+                    return ret;
+                }
+
+                int width, height;
+                layout.SetMarkup(parent.EmptyMessage);
+                layout.GetPixelSize(out width, out height);
+                evnt.Window.DrawLayout(text_gc, 2, (Allocation.Height - height) / 2, layout);
+
+                return ret;
+            }
         }
     }
 }

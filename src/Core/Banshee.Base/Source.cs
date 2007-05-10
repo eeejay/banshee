@@ -67,7 +67,7 @@ namespace Banshee.Sources
         private int order;
         private string name;
         private string filter_query;
-        private string filter_field;
+        private TrackFilterType filter_type;
         private int sort_column = -1;
         private Gtk.SortType sort_type = Gtk.SortType.Ascending;
         private bool expanded;
@@ -345,9 +345,9 @@ namespace Banshee.Sources
             set { filter_query = value; }
         }
         
-        public string FilterField {
-            get { return filter_field; }
-            set { filter_field = value; }
+        public TrackFilterType FilterType {
+            get { return filter_type; }
+            set { filter_type = value; }
         }
         
         private static readonly List<TrackInfo> empty_track_list = new List<TrackInfo>();

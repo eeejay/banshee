@@ -129,7 +129,7 @@ namespace Banshee.SmartPlaylist
         {
             Banshee.Widgets.SearchEntry search_entry = InterfaceElements.SearchEntry;
 
-            string field = search_entry.Field;
+            string field = search_entry.GetLabelForFilterID(search_entry.ActiveFilterID);
             string query = search_entry.Query;
 
             string condition = String.Empty;

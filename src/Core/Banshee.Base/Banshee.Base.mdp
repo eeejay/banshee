@@ -255,6 +255,7 @@
     <File name="./Banshee.AudioProfiles.Gui/TextViewLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/MetadataSettings.cs" subtype="Code" buildaction="Compile" />
     <File name="./GnomeMMKeys.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrackFilterType.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
