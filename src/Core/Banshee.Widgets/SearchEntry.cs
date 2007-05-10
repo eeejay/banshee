@@ -91,8 +91,8 @@ namespace Banshee.Widgets
             entry.FocusOutEvent += OnInnerEntryFocusEvent;
             entry.Changed += OnInnerEntryChanged;
 
-            filter_button.Image.Xpad = 1;
-            clear_button.Image.Xpad = 1;
+            filter_button.Image.Xpad = 2;
+            clear_button.Image.Xpad = 2;
             filter_button.CanFocus = false;
             clear_button.CanFocus = false;
 
@@ -191,10 +191,7 @@ namespace Banshee.Widgets
             filter_button.ModifyBg(StateType.Normal, color);
             clear_button.ModifyBg(StateType.Normal, color);
 
-            Style.XThickness = entry.Style.XThickness;
-            Style.YThickness = entry.Style.YThickness;
-
-            box.BorderWidth = (uint)Style.XThickness;
+            box.BorderWidth = (uint)entry.Style.XThickness;
         }
 
         private void OnInnerEntryFocusEvent(object o, EventArgs args)
@@ -447,7 +444,7 @@ namespace Banshee.Widgets
                 int width, height;
                 layout.SetMarkup(parent.EmptyMessage);
                 layout.GetPixelSize(out width, out height);
-                evnt.Window.DrawLayout(text_gc, 2, (Allocation.Height - height) / 2, layout);
+                evnt.Window.DrawLayout(text_gc, 2, (SizeRequest().Height - height) / 2, layout);
 
                 return ret;
             }

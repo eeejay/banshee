@@ -1,5 +1,9 @@
 2007-05-09  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/SearchEntry.cs: Some drawing fixes
+
+2007-05-09  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs: Properly fixed
 	up to use the new search filter stuff
 
