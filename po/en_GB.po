@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-22 18:53+0100\n"
-"PO-Revision-Date: 2007-04-22 18:57-0000\n"
+"POT-Creation-Date: 2007-05-16 07:21+0100\n"
+"PO-Revision-Date: 2007-05-16 07:21-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English/GB <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -513,7 +513,7 @@ msgstr "Could not link encoder to gnomevfssink"
 #: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:150
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:158
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -560,6 +560,10 @@ msgstr "Could not get sink pad from encoder"
 #: ../libbanshee/gst-transcode-0.10.c:377
 msgid "Could not construct pipeline"
 msgstr "Could not construct pipeline"
+
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Rating:"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
 msgid "Order"
@@ -723,6 +727,11 @@ msgstr "Album"
 msgid "Artist"
 msgstr "Artist"
 
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
+msgid "Date Added"
+msgstr "Date Added"
+
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
 msgid "Time"
 msgstr "Time"
@@ -732,12 +741,9 @@ msgid "N/A"
 msgstr "N/A"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:162
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:456
-#: ../src/Core/Banshee/PlayerInterface.cs:1348
-#: ../src/Core/Banshee/PlayerInterface.cs:2491
+#: ../src/Core/Banshee/PlayerInterface.cs:458
 msgid "Genre"
 msgstr "Genre"
 
@@ -797,10 +803,8 @@ msgid "Location"
 msgstr "Location"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-#: ../src/Core/Banshee/PlayerInterface.cs:457
-#: ../src/Core/Banshee/PlayerInterface.cs:1350
+#: ../src/Core/Banshee/PlayerInterface.cs:459
 msgid "Year"
 msgstr "Year"
 
@@ -1072,32 +1076,32 @@ msgid "Edit metadata on selected songs"
 msgstr "Edit metadata on selected songs"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:246
-msgid "_Search for songs"
-msgstr "_Search for songs"
+msgid "_Search for Songs"
+msgstr "_Search for Songs"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search for songs matching certain criteria"
 msgstr "Search for songs matching certain criteria"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:250
-msgid "By matching _album"
-msgstr "By matching _album"
+msgid "By Matching _Album"
+msgstr "By Matching _Album"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:251
 msgid "Search all songs of this album"
 msgstr "Search all songs of this album"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:254
-msgid "By matching a_rtist"
-msgstr "By matching a_rtist"
+msgid "By Matching A_rtist"
+msgstr "By Matching A_rtist"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:255
 msgid "Search all songs of this artist"
 msgstr "Search all songs of this artist"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:258
-msgid "By matching _genre"
-msgstr "By matching _genre"
+msgid "By Matching _Genre"
+msgstr "By Matching _Genre"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:259
 msgid "Search all songs of this genre"
@@ -1111,124 +1115,116 @@ msgstr "Add _to Playlist"
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr "Append selected songs to playlist or create new playlist from selection"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:266
-msgid "Ratin_g"
-msgstr "Ratin_g"
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:267
-msgid "Set rating for selected songs"
-msgstr "Set rating for selected songs"
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:276
+#: ../src/Core/Banshee.Base/ActionManager.cs:272
 msgid "Import CD"
 msgstr "Import CD"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:277
+#: ../src/Core/Banshee.Base/ActionManager.cs:273
 msgid "Import audio CD to library"
 msgstr "Import audio CD to library"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:282
 msgid "_Play"
 msgstr "_Play"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:283
 msgid "Play or pause the current song"
 msgstr "Play or pause the current song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:290
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Next"
 msgstr "_Next"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:291
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play the next song"
 msgstr "Play the next song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:294
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "Pre_vious"
 msgstr "Pre_vious"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:295
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the previous song"
 msgstr "Play the previous song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:296
 msgid "Repeat N_one"
 msgstr "Repeat N_one"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:297
 msgid "Do not repeat playlist"
 msgstr "Do not repeat playlist"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:304
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat _All"
 msgstr "Repeat _All"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:305
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Play all songs before repeating playlist"
 msgstr "Play all songs before repeating playlist"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:308
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat Si_ngle"
 msgstr "Repeat Si_ngle"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:309
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Repeat the current playing song"
 msgstr "Repeat the current playing song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:314
+#: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "Shu_ffle"
 msgstr "Shu_ffle"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:315
+#: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr "Toggle between shuffle or continuous playback modes"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:318
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
 msgid "_Stop When Finished"
 msgstr "_Stop When Finished"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:319
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Stop playback after the current song finishes playing"
 msgstr "Stop playback after the current song finishes playing"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
+#: ../src/Core/Banshee.Base/ActionManager.cs:324
 msgid "Seek _Backward"
 msgstr "Seek _Backward"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:329
+#: ../src/Core/Banshee.Base/ActionManager.cs:325
 msgid "Seek backward in current song"
 msgstr "Seek backward in current song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Forward"
 msgstr "Seek _Forward"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
 msgid "Seek forward in current song"
 msgstr "Seek forward in current song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:336
-msgid "Seek _To..."
-msgstr "Seek _To..."
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
+msgid "Seek _to..."
+msgstr "Seek _to..."
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:337
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek to a specific location in current song"
 msgstr "Seek to a specific location in current song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:340
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "_Restart Song"
 msgstr "_Restart Song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:341
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Restart the current song"
 msgstr "Restart the current song"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:350
+#: ../src/Core/Banshee.Base/ActionManager.cs:346
 #: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "Synchronise"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:351
+#: ../src/Core/Banshee.Base/ActionManager.cs:347
 msgid "Save changes to device or synchronize music library"
 msgstr "Save changes to device or synchronise music library"
 
@@ -1851,26 +1847,6 @@ msgstr "Unheard"
 msgid "Unheard Podcasts"
 msgstr "Unheard Podcasts"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
-#: ../src/Core/Banshee/PlayerInterface.cs:454
-#: ../src/Core/Banshee/PlayerInterface.cs:1342
-#: ../src/Core/Banshee/PlayerInterface.cs:2487
-msgid "Artist Name"
-msgstr "Artist Name"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
-#: ../src/Core/Banshee/PlayerInterface.cs:453
-#: ../src/Core/Banshee/PlayerInterface.cs:1344
-msgid "Song Name"
-msgstr "Song Name"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
-#: ../src/Core/Banshee/PlayerInterface.cs:455
-#: ../src/Core/Banshee/PlayerInterface.cs:1346
-#: ../src/Core/Banshee/PlayerInterface.cs:2483
-msgid "Album Title"
-msgstr "Album Title"
-
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
 msgid "Create Smart Playlist from Search"
 msgstr "Create Smart Playlist from Search"
@@ -2055,10 +2031,6 @@ msgstr "Years"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:601
 msgid "ago"
 msgstr "ago"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
-msgid "Date Added"
-msgstr "Date Added"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
 msgid "Duration"
@@ -2753,7 +2725,7 @@ msgstr "Local Queue"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
-#: ../src/Core/Banshee/PlayerInterface.cs:1610
+#: ../src/Core/Banshee/PlayerInterface.cs:1625
 msgid "New Playlist"
 msgstr "New Playlist"
 
@@ -2765,7 +2737,7 @@ msgstr "Cannot Rename Playlist"
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr "A playlist with this name already exists. Please choose another name."
 
-#: ../src/Core/Banshee.Base/StreamTagger.cs:171
+#: ../src/Core/Banshee.Base/StreamTagger.cs:169
 #, csharp-format
 msgid "Saving tags for {0}"
 msgstr "Saving tags for {0}"
@@ -2788,10 +2760,21 @@ msgstr "from"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} GB"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:451
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
-msgid "All"
-msgstr "All"
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+msgid "All Columns"
+msgstr "All Columns"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+msgid "Song Name"
+msgstr "Song Name"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+msgid "Artist Name"
+msgstr "Artist Name"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:457
+msgid "Album Title"
+msgstr "Album Title"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:480
 msgid "Write selection to CD"
@@ -2908,9 +2891,10 @@ msgid_plural "{0} seconds"
 msgstr[0] "{0} second"
 msgstr[1] "{0} seconds"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1631
-msgid "Clear"
-msgstr "Clear"
+#: ../src/Core/Banshee/PlayerInterface.cs:1412
+#, csharp-format
+msgid "Filter on {0}"
+msgstr "Filter on {0}"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1894
 #, csharp-format
@@ -3021,12 +3005,6 @@ msgid ""
 msgstr ""
 "Insert\n"
 "Disc"
-
-#: ../src/Core/Banshee.Widgets/SearchEntry.cs:205
-#: ../src/Core/Banshee.Widgets/SearchEntry.cs:316
-#, csharp-format
-msgid "Searching: {0}"
-msgstr "Searching: {0}"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
 #: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
@@ -3405,7 +3383,7 @@ msgstr "Password"
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
 msgid "Plugin enabled"
 msgstr "Plug-in enabled"
 
@@ -3706,10 +3684,11 @@ msgid "Notification Area Icon"
 msgstr "Notification Area Icon"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:64
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:113
 msgid "Show notifications when song changes"
 msgstr "Show notifications when song changes"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:68
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:71
 msgid "Quit Banshee when title bar close button is clicked"
 msgstr "Quit Banshee when title bar close button is clicked"
 
@@ -3717,27 +3696,31 @@ msgstr "Quit Banshee when title bar close button is clicked"
 msgid "Shows the Notification Area Icon"
 msgstr "Shows the Notification Area Icon"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:104
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:106
 msgid "_Close"
 msgstr "_Close"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:105
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:107
 msgid "Close"
 msgstr "Close"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:200
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:112
+msgid "_Show Notifications"
+msgstr "_Show Notifications"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:208
 msgid "Still Running"
 msgstr "Still Running"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:201
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:209
 msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
 msgstr "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:275
 msgid "Now Playing"
 msgstr "Now Playing"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:267
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:280
 msgid "Cannot show notification"
 msgstr "Cannot show notification"
 
@@ -4042,6 +4025,10 @@ msgstr "No description available"
 msgid "Podcasts"
 msgstr "Podcasts"
 
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
+msgid "All"
+msgstr "All"
+
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
 #, csharp-format
 msgid "{0} Podcast"
@@ -4291,33 +4278,44 @@ msgstr "Station"
 msgid "Comment"
 msgstr "Comment"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+msgid "Cache version"
+msgstr "Cache version"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
 msgid "Recommendation plugin enabled"
 msgstr "Recommendation plugin enabled"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:108
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+msgid "Version of the cache layout on disk, located at ~/.config/banshee/plugins/recommendation"
+msgstr "Version of the cache layout on disk, located at ~/.config/banshee/plugins/recommendation"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
 msgid "Recommended Artists"
 msgstr "Recommended Artists"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:135
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:169
 msgid "No similar artists found"
 msgstr "No similar artists found"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:212
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:246
 #, csharp-format
 msgid "Top Tracks by {0}"
 msgstr "Top Tracks by {0}"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:214
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:248
 #, csharp-format
 msgid "Top Albums by {0}"
 msgstr "Top Albums by {0}"
 
-#. translators: 25% similarity
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:330
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:366
 #, csharp-format
-msgid "{0}% similarity"
-msgstr "{0}% similarity"
+msgid "{0}% Similarity"
+msgstr "{0}% Similarity"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:368
+msgid "Unknown Similarity"
+msgstr "Unknown Similarity"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
 msgid "Music Recommendations"
@@ -4332,6 +4330,14 @@ msgstr "Automatically recommends music that you might like, based on the current
 msgid "Show Recommendations"
 msgstr "Show Recommendations"
 
+#~ msgid "Ratin_g"
+#~ msgstr "Ratin_g"
+#~ msgid "Set rating for selected songs"
+#~ msgstr "Set rating for selected songs"
+#~ msgid "Clear"
+#~ msgstr "Clear"
+#~ msgid "Searching: {0}"
+#~ msgstr "Searching: {0}"
 #~ msgid "Copy all common fields"
 #~ msgstr "Copy all common fields"
 #~ msgid ""
