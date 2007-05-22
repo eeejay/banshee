@@ -88,6 +88,12 @@
     <File name="./Banshee.Metadata/MetadataService.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration/AmarokPlayerImport.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration/PlayerImport.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration/PlayerImportDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration/PlayerImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.PlayerMigration/RhythmboxPlayerImport.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists" subtype="Directory" buildaction="Compile" />
     <File name="./Banshee.Playlists/PlaylistFileUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists/IPlaylist.cs" subtype="Code" buildaction="Compile" />

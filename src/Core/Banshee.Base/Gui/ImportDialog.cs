@@ -32,6 +32,7 @@ using Glade;
 
 using Banshee.Sources;
 using Banshee.Base;
+using Banshee.PlayerMigration;
 
 namespace Banshee.Gui
 {
@@ -85,6 +86,7 @@ namespace Banshee.Gui
             ImportSources.Add(FolderImportSource.Instance);
             ImportSources.Add(FileImportSource.Instance);
             ImportSources.Add(HomeDirectoryImportSource.Instance);
+            ImportSources.Add(PlayerImportSource.Instance);
             
             // Add the standalone sources (ImportSources is used in case plugins register a IImportSource)
             foreach(IImportSource source in ImportSources.Sources) {

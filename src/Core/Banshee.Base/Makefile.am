@@ -124,6 +124,13 @@ BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES = \
 	$(srcdir)/Banshee.Playlists.Formats.Xspf/XmlUtil.cs \
 	$(srcdir)/Banshee.Playlists.Formats.Xspf/W3CDateTime.cs
 
+BANSHEE_PLAYER_MIGRATION_SOURCES = \
+	$(srcdir)/Banshee.PlayerMigration/PlayerImport.cs \
+	$(srcdir)/Banshee.PlayerMigration/PlayerImportDialog.cs \
+	$(srcdir)/Banshee.PlayerMigration/PlayerImportSource.cs \
+	$(srcdir)/Banshee.PlayerMigration/RhythmboxPlayerImport.cs \
+	$(srcdir)/Banshee.PlayerMigration/AmarokPlayerImport.cs
+
 BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
@@ -258,6 +265,7 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
 	$(BANSHEE_KERNEL_SOURCES) \
 	$(BANSHEE_LIBRARY_SOURCES) \
+	$(BANSHEE_PLAYER_MIGRATION_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
 	$(BANSHEE_PLAYLISTS_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
