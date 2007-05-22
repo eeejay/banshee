@@ -99,8 +99,9 @@ data/images/Makefile
 
 docs/Makefile
 tests/Makefile
-tools/Makefile
-tools/banshee-import
+extras/Makefile
+extras/tools/Makefile
+extras/tools/banshee-import
 branding/Makefile
 po/Makefile.in
 

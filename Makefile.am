@@ -6,7 +6,7 @@ SUBDIRS = \
 	src \
 	docs \
 	tests \
-	tools \
+	extras \
 	branding \
 	po
 

@@ -1,3 +1,13 @@
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac:
+	* Makefile.am: Updated to reflect tools and extras directory changes
+
+	* tools/*: Moved to extras/tools
+
+	* extras/scripts/*.boo: Added a safe place for some boo scriptlets which
+	may be of use to some users
+
 2007-05-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/SearchEntry.cs: Some drawing fixes
