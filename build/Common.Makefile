@@ -46,6 +46,7 @@ if EXTERNAL_BOO
 LINK_BOO = $(BOO_LIBS)
 else
 LINK_BOO = \
+	-r:$(DIR_BOO)/Boo.Lang.dll \
 	-r:$(DIR_BOO)/Boo.Lang.Compiler.dll \
 	-r:$(DIR_BOO)/Boo.Lang.Interpreter.dll
 endif

@@ -31,6 +31,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 
+using Boo.Lang;
 using Boo.Lang.Compiler;
 using Boo.Lang.Interpreter;
 
@@ -72,11 +73,16 @@ namespace BooBuddy
     public class BooBuddyInterpreter : InteractiveInterpreter
     {
         private DebugAliasBuilder alias_builder;
+        private static string compiler_version;
         
         public event InterpreterResultHandler HaveInterpreterResult;
     
         public BooBuddyInterpreter()
         {
+            if(compiler_version == null) {
+                compiler_version = Builtins.BooVersion.ToString();
+            }
+        
             RememberLastValue = true;
             Ducky = true;
             
@@ -105,8 +111,9 @@ namespace BooBuddy
             alias_builder.BuildAliases(this);
             Interpret(String.Format(
                 "print \"Welcome to BooBuddy for {0}. Run p_help() for debugging " + 
-                "help or start writing Boo code against all loaded assembly APIs\"",
-                procname), true);
+                "help or start writing Boo code against all loaded assembly APIs\\n" + 
+                "Boo Version {1}\"",
+                procname, compiler_version), true);
         }
         
         public InterpreterResult Interpret(string block)

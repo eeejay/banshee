@@ -1,5 +1,14 @@
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extras/Boo/: Updated bundled Boo assemblies to 0.7.7.2475
+
+	* build/Common.Makefile: Link against Boo.Lang.dll
+
+	* src/Extras/BooBuddy/BooBuddyInterpreter.cs: Print the Boo compiler
+	version in the shell welcome message
+
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Recommendation/Makefile.am: Fixed up so
 	we distcheck ok again
 
