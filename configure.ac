@@ -49,7 +49,6 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	Mono.Data.SqliteClient
 	Mono.Posix
 ])
-BANSHEE_VERIFY_GMCS
 
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC

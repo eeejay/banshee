@@ -10,9 +10,9 @@ SOURCES = \
 	$(srcdir)/RecommendationUtilities.cs
 
 RESOURCES = \
-	RecommendationMenu.xml \
-	no-results.png \
-	generic-artist.png
+	$(srcdir)/RecommendationMenu.xml \
+	$(srcdir)/no-results.png \
+	$(srcdir)/generic-artist.png
 
 RESOURCES_BUILD = $(foreach resource,$(RESOURCES),$(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
@@ -26,7 +26,7 @@ $(ASSEMBLY): $(SOURCES) $(RESOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules
 
-EXTRA_DIST = $(SOURCES) $(MENU_RESOURCE) $(NO_RESULTS_RESOURCE) $(ASSEMBLY_GCONF_SCHEMA)
+EXTRA_DIST = $(SOURCES) $(RESOURCES) $(NO_RESULTS_RESOURCE) $(ASSEMBLY_GCONF_SCHEMA)
 CLEANFILES = *.dll *.mdb
 DISTCLEANFILES = *.pidb $(schema_DATA)
 MAINTAINERCLEANFILES = Makefile.in

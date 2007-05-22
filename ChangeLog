@@ -1,5 +1,21 @@
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Recommendation/Makefile.am: Fixed up so
+	we distcheck ok again
+
+	* build/m4/banshee/gmcs-79698.m4:
+	* build/mcs-test-79698.cs:
+	* build/Makefile.am:
+	* build/gmcs.exe:
+	* configure.ac: Do not run the gmcs check for BXC #79698 anymore (a
+	bug that plagues gmcs 1.1.18) since it means we have to bundle a fixed
+	C# compiler; there are several Mono releases since 1.1.18 now with 
+	fixed packages available for and/or pushed into distros; reduces the
+	tarball size quite a bit now; however, anyone using 1.1.18 to build
+	now will get a broken build - be warned
+
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac:
 	* Makefile.am: Updated to reflect tools and extras directory changes
 

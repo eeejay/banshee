@@ -17,8 +17,6 @@ $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs
 
 EXTRA_DIST = \
 	Common.Makefile \
-	mcs-test-79698.cs \
-	gmcs.exe \
 	icon-theme-installer \
 	GConfSchemaExtractor.cs \
 	gconf-schema-rules \
