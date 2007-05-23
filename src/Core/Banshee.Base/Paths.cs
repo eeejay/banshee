@@ -1,9 +1,8 @@
-
 /***************************************************************************
  *  Paths.cs
  *
- *  Copyright (C) 2005 Novell
- *  Written by Aaron Bockover (aaron@aaronbock.net)
+ *  Copyright (C) 2005-2007 Novell, Inc.
+ *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -36,7 +35,7 @@ namespace Banshee.Base
 {
     public class Paths
     {
-        public static string ApplicationData {
+        public static string LegacyApplicationData {
             get {
                 return Environment.GetFolderPath(Environment.SpecialFolder.Personal)
                     + Path.DirectorySeparatorChar
@@ -45,6 +44,13 @@ namespace Banshee.Base
                     + "banshee"
                     + Path.DirectorySeparatorChar;
             }
+        }
+        
+        private static string application_data = Path.Combine(Environment.GetFolderPath(
+            Environment.SpecialFolder.ApplicationData), "banshee");
+        
+        public static string ApplicationData {
+            get { return application_data; }
         }
         
         public static string SystemApplicationData {

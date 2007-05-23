@@ -88,8 +88,19 @@ namespace Banshee.Base
             
             Banshee.Metadata.MetadataService.Instance.Settings = new GlobalMetadataSettings();
             
+            // move the legacy app data directory (~/.gnome2/banshee) to the new 
+            // one (~/.config/banshee) or just create the new one
             if(!Directory.Exists(Paths.ApplicationData)) {
-                Directory.CreateDirectory(Paths.ApplicationData);
+                if(Directory.Exists(Paths.LegacyApplicationData)) {
+                    Directory.Move(Paths.LegacyApplicationData, Paths.ApplicationData);
+                    LogCore.Instance.PushInformation("Migrated Settings", 
+                        String.Format("Moved the Banshee's data directory from `{0}' to `{1}'",
+                        Paths.LegacyApplicationData, Paths.ApplicationData), false);
+                }
+            
+                if(!Directory.Exists(Paths.ApplicationData)) {
+                    Directory.CreateDirectory(Paths.ApplicationData);
+                }
             }
             
             // override the browser URI launch hook in Last.FM and Banshee.Widgets.LinkLabel

@@ -1,5 +1,22 @@
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
+	NOTE TO ALL: ~/.gnome2/banshee is now ~/.config/banshee
+
+	* src/Core/Banshee.Base/Paths.cs: Changed ApplicationData to 
+	~/.config/banshee; added new property, LegacyApplicationData which remains
+	~/.gnome2/banshee
+
+	* src/Core/Banshee.Base/Globals.cs: If Paths.ApplicationData does not
+	exist, check for Paths.LegacyApplicationData and move the directory
+	to Paths.ApplicationData if it does; if not, create Paths.ApplicationData
+	or use it if it already exists
+
+	* src/Core/Banshee.Base/Library.cs: Removed unnecessary directory check
+	and creation of Paths.ApplicationData as this is always handled at
+	startup
+
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:
 	Use the 'applications-other' icon if it exists... we need a better 
 	icon for this source; syntax cleanup

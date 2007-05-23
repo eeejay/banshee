@@ -79,11 +79,7 @@ namespace Banshee.Base
             } catch(Exception) {
                 Console.WriteLine("Could not create Library directory: " + libraryLocation);
             }
-            
-            if(!Directory.Exists(Paths.ApplicationData)) {
-                Directory.CreateDirectory(Paths.ApplicationData);
-            }
-            
+
             if(!File.Exists(db_file) && File.Exists(olddb_file)) {
                 Console.WriteLine("Copied old library to new location");
                 
