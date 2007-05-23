@@ -32,7 +32,6 @@ using Glade;
 
 using Banshee.Sources;
 using Banshee.Base;
-using Banshee.PlayerMigration;
 
 namespace Banshee.Gui
 {
@@ -50,6 +49,8 @@ namespace Banshee.Gui
         {
             accel_group = new AccelGroup();
             
+            Dialog.TransientFor = (Window)InterfaceElements.MainWindow;
+            Dialog.WindowPosition = WindowPosition.CenterOnParent;
             Dialog.AddAccelGroup(accel_group);
             Dialog.DefaultResponse = ResponseType.Ok;
 		    
@@ -86,30 +87,35 @@ namespace Banshee.Gui
             ImportSources.Add(FolderImportSource.Instance);
             ImportSources.Add(FileImportSource.Instance);
             ImportSources.Add(HomeDirectoryImportSource.Instance);
-            ImportSources.Add(PlayerImportSource.Instance);
+            ImportSources.Add(Banshee.PlayerMigration.PlayerImportSource.Instance);
+            
+            TreeIter active_iter = TreeIter.Zero;
+            TreeIter migration_iter = TreeIter.Zero;
             
             // Add the standalone sources (ImportSources is used in case plugins register a IImportSource)
             foreach(IImportSource source in ImportSources.Sources) {
-                AddSource(source);
+                TreeIter iter = AddSource(source);
+                if(Globals.Library.Tracks.Count == 0 && 
+                    source == Banshee.PlayerMigration.PlayerImportSource.Instance) {
+                    active_iter = iter;
+                    migration_iter = iter;
+                }
             }
             
             // Find active sources that implement IImportSource
-            
-            TreeIter active_iter = TreeIter.Zero;
-            
             foreach(Source source in SourceManager.Sources) {
                 if(source is IImportSource) {
                     TreeIter new_iter = AddSource((IImportSource)source);
-                    if(active_iter.Equals(TreeIter.Zero) && source is AudioCdSource) {
+                    if((active_iter.Equals(TreeIter.Zero) || active_iter.Equals(migration_iter)) && source is AudioCdSource) {
                         active_iter = new_iter;
-                        source_combo_box.SetActiveIter(active_iter);
                     }
                 }
             }
             
-            if(active_iter.Equals(TreeIter.Zero) && source_model.GetIterFirst(out active_iter)) {
+            if(!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals(TreeIter.Zero) && 
+                source_model.GetIterFirst(out active_iter))) {
                 source_combo_box.SetActiveIter(active_iter);
-            }
+            } 
             
             (Glade["ComboVBox"] as Box).PackStart(source_combo_box, false, false, 0);
             source_combo_box.ShowAll();

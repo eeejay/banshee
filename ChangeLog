@@ -1,5 +1,15 @@
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:
+	Use the 'applications-other' icon if it exists... we need a better 
+	icon for this source; syntax cleanup
+
+	* src/Core/Banshee.Base/Gui/ImportDialog.cs: Select PlayerImportSource
+	if there are no tracks in the library and an audio CD is not available;
+	make the dialog transient and centered on parent
+
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
 	Patch by Sebastian Dröge <slomo@circular-chaos.org>
 
 	* src/Core/Banshee.Base/Banshee.PlayerMigration/*:

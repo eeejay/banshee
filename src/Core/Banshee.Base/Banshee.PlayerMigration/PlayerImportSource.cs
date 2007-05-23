@@ -32,34 +32,35 @@ namespace Banshee.PlayerMigration
         private static PlayerImportSource instance = null;
         public static PlayerImportSource Instance {
             get {
-                if (instance == null) {
-                    instance = new PlayerImportSource ();
+                if(instance == null) {
+                    instance = new PlayerImportSource();
                 }
+                
                 return instance;
             }
         }
 
-        private PlayerImportSource () { }
+        private PlayerImportSource() 
+        {
+        }
 
-        public void Import ()
+        public void Import()
         {
             try {
-                PlayerImportDialog dialog = new PlayerImportDialog ();
-                dialog.Run ();
-                dialog.Destroy ();
-            } catch (Exception) {}
+                PlayerImportDialog dialog = new PlayerImportDialog();
+                dialog.Run();
+                dialog.Destroy();
+            } catch(Exception) {
+            }
         }
 
-        public string Name
-        {
-                get { return Catalog.GetString("Alternate Media Players"); }
+        public string Name {
+            get { return Catalog.GetString("Alternate Media Players"); }
         }
 
-        private Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, Stock.About);
-        public Gdk.Pixbuf Icon
-        {
-                get { return icon; }
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "applications-other", Stock.About);
+        public Gdk.Pixbuf Icon {
+            get { return icon; }
         }
-
     }
 }
