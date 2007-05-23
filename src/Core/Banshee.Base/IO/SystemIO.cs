@@ -111,6 +111,11 @@ namespace Banshee.IO.SystemIO
         {
             file_info = new FileInfo(path);
         }
+                
+        public void CloseStream(Stream stream)
+        {
+            stream.Close();
+        }
         
         public string Name { 
             get { return file_info.FullName; }

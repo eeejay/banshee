@@ -1,3 +1,10 @@
+2007-05-23  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/IO/SystemIO.cs:
+	* src/Core/Banshee.Base/IO/Unix.cs:
+	* src/Core/Banshee.Base/IO/GnomeVfs.cs: Implemented Close(System.IO.Stream)
+	to reflect changes made in TagLib#
+
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee/PlayerInterface.cs: Do not start search until at 

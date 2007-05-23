@@ -165,6 +165,11 @@ namespace Banshee.IO.GnomeVfs
                 | FileInfoOptions.GetAccessRights).Permissions;
         }
         
+        public void CloseStream(System.IO.Stream stream)
+        {
+            stream.Close();
+        }
+        
         public string Name { 
             get { return name; }
         }

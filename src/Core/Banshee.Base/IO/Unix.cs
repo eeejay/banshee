@@ -180,6 +180,11 @@ namespace Banshee.IO.Unix
             file_info = new UnixFileInfo(path);
         }
         
+        public void CloseStream(Stream stream)
+        {
+            stream.Close();
+        }
+        
         public string Name { 
             get { return file_info.FullName; }
         }
