@@ -1418,14 +1418,11 @@ namespace Banshee
             SourceManager.ActiveSource.FilterType = (TrackFilterType)searchEntry.ActiveFilterID;
             SourceManager.ActiveSource.FilterQuery = searchEntry.Query;
         
-            if(SourceManager.ActiveSource.HandlesSearch) {
+            if(SourceManager.ActiveSource.HandlesSearch || suspendSearch || 
+                (searchEntry.IsQueryAvailable && searchEntry.Query.Length < 3)) {
                 return;
             }
 
-            if(suspendSearch) {
-                return;
-            }
-            
             playlistModel.ClearModel();
             
             if(!searchEntry.IsQueryAvailable) {

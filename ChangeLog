@@ -1,5 +1,10 @@
 2007-05-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee/PlayerInterface.cs: Do not start search until at 
+	least three characters are available
+
+2007-05-22  Aaron Bockover  <abock@gnome.org>
+
 	NOTE TO ALL: ~/.gnome2/banshee is now ~/.config/banshee
 
 	* src/Core/Banshee.Base/Paths.cs: Changed ApplicationData to 
