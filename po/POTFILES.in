@@ -1,21 +1,20 @@
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
 [encoding: UTF-8]
-data/banshee.desktop.in.in
-data/banshee-dialogs.glade
-data/banshee.glade
 data/audio-profiles/aac.xml.in
 data/audio-profiles/base.xml.in
 data/audio-profiles/flac.xml.in
 data/audio-profiles/mp3-lame.xml.in
 data/audio-profiles/mp3-xing.xml.in
-data/audio-profiles/vorbis.xml.in
-data/audio-profiles/wav.xml.in
 data/audio-profiles/wavpack.xml.in
+data/audio-profiles/wav.xml.in
 data/audio-profiles/wma.xml.in
+data/audio-profiles/vorbis.xml.in
+data/banshee.desktop.in.in
+data/banshee-dialogs.glade
+data/banshee.glade
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
-src/Core/Banshee.Widgets/RatingMenuItem.cs
 src/Core/Banshee/banshee-interface.schemas.in
 src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs
 src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs
@@ -47,9 +46,14 @@ src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs
 src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs
 src/Core/Banshee.Base/banshee-core.schemas.in
 src/Core/Banshee.Base/Banshee.Library/Import.cs
-src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs
+src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs
+src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs
+src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs
+src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs
+src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs
 src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs
 src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs
+src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs
 src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs
 src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs
 src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs
@@ -105,6 +109,7 @@ src/Core/Banshee/StockIcons.cs
 src/Core/Banshee/TrackViewColumnWindow.cs
 src/Core/Banshee.Widgets/ActiveUserEvent.cs
 src/Core/Banshee.Widgets/DiscUsageDisplay.cs
+src/Core/Banshee.Widgets/RatingMenuItem.cs
 src/Core/Banshee.Widgets/SearchEntry.cs
 src/Core/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/VolumeButton.cs
@@ -121,8 +126,8 @@ src/Extras/Last.FM/Last.FM.Gui/AccountLoginForm.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs
 src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in
-src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs
 src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in
+src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs
 src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in
 src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs
 src/Plugins/Banshee.Plugins.Daap/DaapContainerSource.cs
