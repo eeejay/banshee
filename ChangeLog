@@ -1,3 +1,9 @@
+2007-05-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Paths.cs: Added ReadXdgUserDir to detect 
+	XDG user directories; use XDG_MUSIC_DIR or ~/Music for the default
+	library location
+
 2007-05-23  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/IO/SystemIO.cs:
