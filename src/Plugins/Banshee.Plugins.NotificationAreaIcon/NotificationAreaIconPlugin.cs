@@ -40,6 +40,7 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Widgets;
 using Banshee.Configuration;
+using Banshee.Sources;
 
 public static class PluginModuleEntry
 {
@@ -77,6 +78,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private NotificationArea notif_area;
         private Menu menu;
         private bool menu_is_reversed = false;
+		private RatingMenuItem rating_menu_item;
         private ActionGroup actions;
         private uint ui_manager_id;
 
@@ -115,10 +117,20 @@ namespace Banshee.Plugins.NotificationAreaIcon
 
             Globals.ActionManager.UI.InsertActionGroup(actions, 0);
             ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("NotificationAreaIconMenu.xml");      
-            
             menu = (Menu) Globals.ActionManager.UI.GetWidget("/NotificationAreaIconMenu");
-            menu.ShowAll();
-        
+
+            for(int i = 0; i < menu.Children.Length; i++) {
+                if(menu.Children[i].Name == "Next") {
+                    rating_menu_item = new RatingMenuItem();
+                    rating_menu_item.Activated += OnItemRatingActivated;
+                    ToggleRatingMenuSensitive();
+                    menu.Insert(rating_menu_item, i + 2);
+                    break;
+                }
+            }
+
+            menu.Show();
+            
             popup = new TrackInfoPopup();
             PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
 
@@ -322,6 +334,25 @@ namespace Banshee.Plugins.NotificationAreaIcon
             }
         }
 
+        private void OnItemRatingActivated(object o, EventArgs args)
+        {
+            if(PlayerEngineCore.CurrentTrack != null) {
+                PlayerEngineCore.CurrentTrack.Rating = (uint)rating_menu_item.Value;
+                PlayerEngineCore.TrackInfoUpdated();
+            }
+        }
+        
+        private void ToggleRatingMenuSensitive() 
+        {
+            if(PlayerEngineCore.CurrentTrack != null && (SourceManager.ActiveSource is LibrarySource || 
+                SourceManager.ActiveSource is PlaylistSource)) {
+                rating_menu_item.Reset((int)PlayerEngineCore.CurrentTrack.Rating);
+                rating_menu_item.Show();
+            } else {
+                rating_menu_item.Hide();
+            }
+        }
+
         private void PositionMenu(Menu menu, out int x, out int y, out bool push_in) 
         {
             bool on_bottom = PositionWidget(menu, out x, out y, 0);
@@ -450,6 +481,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
                     break;
                 case PlayerEngineEvent.StartOfStream:
                 case PlayerEngineEvent.TrackInfoUpdated:
+                    ToggleRatingMenuSensitive();
                     FillPopup();
                     ShowNotification();
                     break;
@@ -457,6 +489,7 @@ namespace Banshee.Plugins.NotificationAreaIcon
                     // only hide the popup when we don't play again after 250ms
                     GLib.Timeout.Add(250, delegate {
                         if (PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
+                            ToggleRatingMenuSensitive();
                             popup.Duration = 0;
                             popup.Position = 0;
                             can_show_popup = false;

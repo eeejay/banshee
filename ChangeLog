@@ -1,5 +1,11 @@
 2007-05-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Allow rating the current playing track from the notif. menu (BGO #337157,
+	Pepijn van de Geer)
+
+2007-05-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Paths.cs: Added ReadXdgUserDir to detect 
 	XDG user directories; use XDG_MUSIC_DIR or ~/Music for the default
 	library location
