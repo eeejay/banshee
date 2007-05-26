@@ -41,6 +41,7 @@ using Banshee.MediaEngine;
 using Banshee.Widgets;
 using Banshee.Configuration;
 using Banshee.Sources;
+using Banshee.SmartPlaylist;
 
 public static class PluginModuleEntry
 {
@@ -345,7 +346,8 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void ToggleRatingMenuSensitive() 
         {
             if(PlayerEngineCore.CurrentTrack != null && (SourceManager.ActiveSource is LibrarySource || 
-                SourceManager.ActiveSource is PlaylistSource)) {
+                SourceManager.ActiveSource is PlaylistSource ||
+                SourceManager.ActiveSource is SmartPlaylistSource)) {
                 rating_menu_item.Reset((int)PlayerEngineCore.CurrentTrack.Rating);
                 rating_menu_item.Show();
             } else {
