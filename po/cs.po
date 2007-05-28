@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-14 18:22+0200\n"
-"PO-Revision-Date: 2007-05-14 18:22+0200\n"
+"POT-Creation-Date: 2007-05-28 18:11+0200\n"
+"PO-Revision-Date: 2007-05-28 18:11+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,168 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: ../data/audio-profiles/aac.xml.in.h:1
+msgid "Advanced Audio Coding (AAC)"
+msgstr "Advanced Audio Coding (AAC)"
+
+#: ../data/audio-profiles/aac.xml.in.h:2
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "Datový tok"
+
+#: ../data/audio-profiles/aac.xml.in.h:3
+msgid ""
+"Proprietary and standardized format that is superior to MP3, but not as "
+"popular."
+msgstr ""
+"Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "Kanály:"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "Svobodný bezeztrátový zvukový kodek"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+"Svobodný bezeztrátový zvukový kodek (FLAC) je opensource kodek využívající "
+"kompresi beze ztráty kvality zvuku"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+"Proprietární a starší, ale také oblíbený, ztrátový zvukový formát "
+"vytvářející při nižších datových tocích větší soubory."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr "Průměrný datový tok"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+msgid "Best"
+msgstr "Nejlepší"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "Stálý datový tok"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (enkodér LAME)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "Režim VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "Kvalita VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "Proměnlivý datový tok"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wma.xml.in.h:7
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+msgid "Worst"
+msgstr "Nejhorší"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (enkodér Xing)"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+"Rychlý a úsporný opensource zvukový formát umožňující bezeztrátové a vysoce "
+"kvalitní ztrátové kódování s velkým dynamickým rozsahem."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Extra processing"
+msgstr "Zvláštní zpracování"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Lossy mode"
+msgstr "Ztrátový režim"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Mode"
+msgstr "Režim"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Store MD5 sum in the file"
+msgstr "Uložit MD5 součet do souboru"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Wavpack"
+msgstr "Wavpack"
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM je bezeztrátový formát obsahující nekomprimovaný surový zvuk s "
+"pulzně kódovou modulací (PCM)."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Waveform PCM"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+"Proprietární ztrátový zvukový formát s vysoce kvalitním výstupem a oproti "
+"MP3 menší velikostí souboru. 96kbps WMA odpovídá 128kbps MP3."
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "Kvalita zvuku"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "Použít proměnlivý datový tok"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Kvalita zvuku"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis je opensource ztrátový zvukový kodek s vysoce kvalitním výstupem a "
+"menší velikostí souborů ve srovnání s MP3."
 
 #: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:79
@@ -342,168 +504,6 @@ msgstr "Využití disku:"
 msgid "_Search:"
 msgstr "_Vyhledat:"
 
-#: ../data/audio-profiles/aac.xml.in.h:1
-msgid "Advanced Audio Coding (AAC)"
-msgstr "Advanced Audio Coding (AAC)"
-
-#: ../data/audio-profiles/aac.xml.in.h:2
-#: ../data/audio-profiles/mp3-lame.xml.in.h:4
-#: ../data/audio-profiles/mp3-xing.xml.in.h:2
-#: ../data/audio-profiles/wavpack.xml.in.h:3
-#: ../data/audio-profiles/wma.xml.in.h:4
-msgid "Bitrate"
-msgstr "Datový tok"
-
-#: ../data/audio-profiles/aac.xml.in.h:3
-msgid ""
-"Proprietary and standardized format that is superior to MP3, but not as "
-"popular."
-msgstr ""
-"Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
-
-#: ../data/audio-profiles/base.xml.in.h:1
-msgid "Channels"
-msgstr "Kanály:"
-
-#: ../data/audio-profiles/flac.xml.in.h:1
-msgid "Free Lossless Audio Codec"
-msgstr "Svobodný bezeztrátový zvukový kodek"
-
-#: ../data/audio-profiles/flac.xml.in.h:2
-msgid ""
-"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
-"does not degrade audio quality."
-msgstr ""
-"Svobodný bezeztrátový zvukový kodek (FLAC) je opensource kodek využívající "
-"kompresi beze ztráty kvality zvuku"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:1
-#: ../data/audio-profiles/mp3-xing.xml.in.h:1
-msgid ""
-"A proprietary and older, but also popular, lossy audio format that produces "
-"larger files at lower bitrates."
-msgstr ""
-"Proprietární a starší, ale také oblíbený, ztrátový zvukový formát "
-"vytvářející při nižších datových tocích větší soubory."
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:2
-msgid "Average Bitrate"
-msgstr "Průměrný datový tok"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:3
-#: ../data/audio-profiles/vorbis.xml.in.h:2
-#: ../data/audio-profiles/wavpack.xml.in.h:2
-#: ../data/audio-profiles/wma.xml.in.h:3
-msgid "Best"
-msgstr "Nejlepší"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:5
-msgid "Constant Bitrate"
-msgstr "Stálý datový tok"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:6
-msgid "MP3 (LAME Encoder)"
-msgstr "MP3 (enkodér LAME)"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:7
-msgid "VBR Mode"
-msgstr "Režim VBR"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:8
-msgid "VBR Quality"
-msgstr "Kvalita VBR"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:9
-msgid "Variable Bitrate"
-msgstr "Proměnlivý datový tok"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/vorbis.xml.in.h:5
-#: ../data/audio-profiles/wavpack.xml.in.h:9
-#: ../data/audio-profiles/wma.xml.in.h:7
-msgid "Worst"
-msgstr "Nejhorší"
-
-#: ../data/audio-profiles/mp3-xing.xml.in.h:3
-msgid "MP3 (Xing Encoder)"
-msgstr "MP3 (enkodér Xing)"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:1
-msgid "Audio quality"
-msgstr "Kvalita zvuku"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:3
-msgid "Ogg Vorbis"
-msgstr "Ogg Vorbis"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:4
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
-"Vorbis je opensource ztrátový zvukový kodek s vysoce kvalitním výstupem a "
-"menší velikostí souborů ve srovnání s MP3."
-
-#: ../data/audio-profiles/wav.xml.in.h:1
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
-"WAV+PCM je bezeztrátový formát obsahující nekomprimovaný surový zvuk s "
-"pulzně kódovou modulací (PCM)."
-
-#: ../data/audio-profiles/wav.xml.in.h:2
-msgid "Waveform PCM"
-msgstr "Waveform PCM"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:1
-msgid ""
-"A fast and efficient open source audio format offering lossless and high-"
-"quality lossy encoding with great dynamic range."
-msgstr ""
-"Rychlý a úsporný opensource zvukový formát umožňující bezeztrátové a vysoce "
-"kvalitní ztrátové kódování s velkým dynamickým rozsahem."
-
-#: ../data/audio-profiles/wavpack.xml.in.h:4
-msgid "Extra processing"
-msgstr "Zvláštní zpracování"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:5
-msgid "Lossy mode"
-msgstr "Ztrátový režim"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:6
-msgid "Mode"
-msgstr "Režim"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:7
-msgid "Store MD5 sum in the file"
-msgstr "Uložit MD5 součet do souboru"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:8
-msgid "Wavpack"
-msgstr "Wavpack"
-
-#: ../data/audio-profiles/wma.xml.in.h:1
-msgid ""
-"A proprietary lossy audio format with high quality output at a lower file "
-"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
-msgstr ""
-"Proprietární ztrátový zvukový formát s vysoce kvalitním výstupem a oproti "
-"MP3 menší velikostí souboru. 96kbps WMA odpovídá 128kbps MP3."
-
-#: ../data/audio-profiles/wma.xml.in.h:2
-msgid "Audio Quality"
-msgstr "Kvalita zvuku"
-
-#: ../data/audio-profiles/wma.xml.in.h:5
-msgid "Use a variable bitrate"
-msgstr "Použít proměnlivý datový tok"
-
-#: ../data/audio-profiles/wma.xml.in.h:6
-msgid "Windows Media Audio"
-msgstr "Windows Media Audio"
-
 #: ../libbanshee/gst-cd-rip-0.10.c:222
 msgid "Could not create pipeline"
 msgstr "Nelze vytvořit rouru"
@@ -547,7 +547,7 @@ msgstr "Nelze připojit enkodér ke gnomevfssink"
 #: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:158
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -594,10 +594,6 @@ msgstr "Nelze získat sink pad z enkodéru"
 #: ../libbanshee/gst-transcode-0.10.c:377
 msgid "Could not construct pipeline"
 msgstr "Nelze vytvořit rouru"
-
-#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
-msgid "Rating:"
-msgstr "Hodnocení:"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
 msgid "Order"
@@ -1348,6 +1344,7 @@ msgid "Cannot Import CD"
 msgstr "Nemohu importovat CD"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:55
 #: ../src/Core/Banshee.Base/ImportManager.cs:297
 #, csharp-format
 msgid "Importing {0} of {1}"
@@ -1846,6 +1843,78 @@ msgstr "Zapsat metadata do audio souborů"
 msgid "Scanning"
 msgstr "Vyhledávám"
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
+msgid "Importing Songs"
+msgstr "Import skladeb"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:42
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Právě probíhá proces importu. Chcete jej zastavit?"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:43
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
+msgid "Scanning for songs"
+msgstr "Vyhledávám skladby"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
+msgid "Migrate From Other Media Players"
+msgstr "Přechod z ostatních přehrávačů"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
+msgid ""
+"Select any supported alternate media players that you wish to migrate into "
+"Banshee."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
+msgid "Unable to Locate Supported Media Player"
+msgstr "Nelze nalézt podporovaný přehrávač"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
+msgid ""
+"Banshee was unable to locate any libraries from alternate supported media "
+"players from which to import."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
+msgid "Migrate"
+msgstr "Migrovat"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
+msgid "Alternate Media Players"
+msgstr "Alternativní přehrávače"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
+msgid "Rhythmbox Music Player"
+msgstr "Přehrávač Rhythmbox"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "MPEG Version 3.0 Extended (*.m3u)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
+msgid "Exception: "
+msgstr "Výjimka: "
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
+msgid "Not a valid M3U file."
+msgstr "Nejedná se o platný M3U soubor."
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Shoutcast Playlist verze 2 (*.pls)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
+msgid "Not a valid PLS file."
+msgstr "Nejedná se o platný PLS soubor."
+
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
 msgid "Verifying"
 msgstr "Ověřuji"
@@ -1879,27 +1948,6 @@ msgstr "Exportovat"
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
 msgid "Select Format: "
 msgstr "Zvolte formát: "
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
-msgid "MPEG Version 3.0 Extended (*.m3u)"
-msgstr "MPEG Version 3.0 Extended (*.m3u)"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
-msgid "Exception: "
-msgstr "Výjimka: "
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
-msgid "Not a valid M3U file."
-msgstr "Nejedná se o platný M3U soubor."
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
-msgid "Shoutcast Playlist version 2 (*.pls)"
-msgstr "Shoutcast Playlist verze 2 (*.pls)"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
-msgid "Not a valid PLS file."
-msgstr "Nejedná se o platný PLS soubor."
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
 msgid "Edit Smart Playlist"
@@ -2300,72 +2348,72 @@ msgstr "Import adresáře do knihovny"
 msgid "Local Folder"
 msgstr "Lokální složka"
 
-#: ../src/Core/Banshee.Base/Globals.cs:100
-#: ../src/Core/Banshee.Base/Globals.cs:109
-#: ../src/Core/Banshee.Base/Globals.cs:167
-#: ../src/Core/Banshee.Base/Globals.cs:168
+#: ../src/Core/Banshee.Base/Globals.cs:111
+#: ../src/Core/Banshee.Base/Globals.cs:120
+#: ../src/Core/Banshee.Base/Globals.cs:178
+#: ../src/Core/Banshee.Base/Globals.cs:179
 msgid "Starting background tasks"
 msgstr "Spouští se úlohy na pozadí"
 
-#: ../src/Core/Banshee.Base/Globals.cs:110
+#: ../src/Core/Banshee.Base/Globals.cs:121
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr "Podpora zařízení bude pro toto rozhraní zakázána (není HAL)"
 
-#: ../src/Core/Banshee.Base/Globals.cs:113
-#: ../src/Core/Banshee.Base/Globals.cs:156
+#: ../src/Core/Banshee.Base/Globals.cs:124
+#: ../src/Core/Banshee.Base/Globals.cs:167
 msgid "Initializing audio engine"
 msgstr "Inicializace zvukového engine"
 
-#: ../src/Core/Banshee.Base/Globals.cs:114
+#: ../src/Core/Banshee.Base/Globals.cs:125
 msgid "Detecting network settings"
 msgstr "Detekuje se nastavení sítě"
 
-#: ../src/Core/Banshee.Base/Globals.cs:115
+#: ../src/Core/Banshee.Base/Globals.cs:126
 msgid "Creating action manager"
 msgstr "Vytváří se správce akcí"
 
-#: ../src/Core/Banshee.Base/Globals.cs:116
+#: ../src/Core/Banshee.Base/Globals.cs:127
 msgid "Loading music library"
 msgstr "Načítá se hudební knihovna"
 
-#: ../src/Core/Banshee.Base/Globals.cs:121
+#: ../src/Core/Banshee.Base/Globals.cs:132
 msgid "Initializing audio profiles"
 msgstr "Inicializují se zvukové profily"
 
-#: ../src/Core/Banshee.Base/Globals.cs:158
+#: ../src/Core/Banshee.Base/Globals.cs:169
 msgid "Initializing audio CD support"
 msgstr "Inicializace podpory audio CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:159
+#: ../src/Core/Banshee.Base/Globals.cs:170
 msgid "Audio CD support will be disabled for this instance"
 msgstr "Během této instance bude vypnuta podpora audio CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:161
+#: ../src/Core/Banshee.Base/Globals.cs:172
 msgid "Initializing digital audio player support"
 msgstr "Inicializace podpory přehrávače digitálního zvuku"
 
-#: ../src/Core/Banshee.Base/Globals.cs:162
+#: ../src/Core/Banshee.Base/Globals.cs:173
 msgid "DAP support will be disabled for this instance"
 msgstr "Pro tuto instanci bude zakázána podpora DAP"
 
-#: ../src/Core/Banshee.Base/Globals.cs:164
+#: ../src/Core/Banshee.Base/Globals.cs:175
 msgid "Initializing CD writing support"
 msgstr "Inicializace podpory zápisu na CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:165
+#: ../src/Core/Banshee.Base/Globals.cs:176
 msgid "CD burning support will be disabled for this instance"
 msgstr "Vypalování CD bude pro tuto instanci zakázáno"
 
-#: ../src/Core/Banshee.Base/Globals.cs:170
-#: ../src/Core/Banshee.Base/Globals.cs:171
+#: ../src/Core/Banshee.Base/Globals.cs:181
+#: ../src/Core/Banshee.Base/Globals.cs:182
 msgid "Initializing plugins"
 msgstr "Inicializace zásuvných modulů"
 
-#: ../src/Core/Banshee.Base/Globals.cs:172
+#: ../src/Core/Banshee.Base/Globals.cs:183
 msgid "Initializing scripts"
 msgstr "Inicializují se skripty"
 
-#: ../src/Core/Banshee.Base/Globals.cs:175
+#: ../src/Core/Banshee.Base/Globals.cs:186
 msgid "Loading user interface"
 msgstr "Nahrává se uživatelské rozhraní"
 
@@ -2600,19 +2648,7 @@ msgstr "Verze"
 msgid "Home Directory"
 msgstr "Domácí složka"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:97
-msgid "Scanning for songs"
-msgstr "Vyhledávám skladby"
-
-#: ../src/Core/Banshee.Base/ImportManager.cs:285
-msgid "Importing Songs"
-msgstr "Import skladeb"
-
-#: ../src/Core/Banshee.Base/ImportManager.cs:291
-msgid "The import process is currently running. Would you like to stop it?"
-msgstr "Právě probíhá proces importu. Chcete jej zastavit?"
-
-#: ../src/Core/Banshee.Base/Library.cs:126
+#: ../src/Core/Banshee.Base/Library.cs:122
 msgid "Could not load track from library"
 msgstr "Nelze načíst skladbu z knihovny"
 
@@ -2687,7 +2723,7 @@ msgid "Delete {0}"
 msgstr "Smazat {0}"
 
 #: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2024
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
 msgid "Import"
 msgstr "Importovat"
 
@@ -2838,7 +2874,7 @@ msgstr "Lokální fronta"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
-#: ../src/Core/Banshee/PlayerInterface.cs:1625
+#: ../src/Core/Banshee/PlayerInterface.cs:1622
 msgid "New Playlist"
 msgstr "Nový seznam skladeb"
 
@@ -3014,7 +3050,7 @@ msgstr[2] "{0} sekund"
 msgid "Filter on {0}"
 msgstr "Selhalo odpojení {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1894
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -3023,15 +3059,15 @@ msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat {0} vybrané skladby?"
 msgstr[2] "Opravdu chcete navždy smazat {0} vybraných skladeb?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1898
+#: ../src/Core/Banshee/PlayerInterface.cs:1895
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Pokud výběr smažete, bude navždy ztracen."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1901
+#: ../src/Core/Banshee/PlayerInterface.cs:1898
 msgid "Remove selection from library"
 msgstr "Odstranit výběr z knihovny"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1903
+#: ../src/Core/Banshee/PlayerInterface.cs:1900
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural ""
@@ -3040,25 +3076,25 @@ msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1948
+#: ../src/Core/Banshee/PlayerInterface.cs:1945
 msgid "Delete songs from drive"
 msgstr "Smazat skladby z disku"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1949
+#: ../src/Core/Banshee/PlayerInterface.cs:1946
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr "Nemáte požadovaná oprávnění pro smazání '{0}'"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2015
+#: ../src/Core/Banshee/PlayerInterface.cs:2012
 msgid "Import Playlist"
 msgstr "Importovat seznam skladeb"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2047
-#: ../src/Core/Banshee/PlayerInterface.cs:2065
+#: ../src/Core/Banshee/PlayerInterface.cs:2044
+#: ../src/Core/Banshee/PlayerInterface.cs:2062
 msgid "Unable to Import Playlist"
 msgstr "Nebylo možné importovat seznam skladeb"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2066
+#: ../src/Core/Banshee/PlayerInterface.cs:2063
 msgid ""
 "Banshee was unable to find any valid tracks to import.  Please check the "
 "playlist and try again."
@@ -3066,17 +3102,17 @@ msgstr ""
 "Banshee nenalezla žádné platné stopy pro import. Zkontrolujte prosím seznam "
 "skladeb a zkuste to znovu."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2155
+#: ../src/Core/Banshee/PlayerInterface.cs:2152
 msgid "New CD"
 msgstr "Nové CD"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2176
+#: ../src/Core/Banshee/PlayerInterface.cs:2173
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synchronizovat {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2177
+#: ../src/Core/Banshee/PlayerInterface.cs:2174
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3093,7 +3129,7 @@ msgstr ""
 "Banshee do {0}\n"
 "<big>•</big> <i>Uložit manuální změny</i>: uložit pouze vaše ruční změny"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2183
+#: ../src/Core/Banshee/PlayerInterface.cs:2180
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3101,11 +3137,11 @@ msgstr ""
 "<b>Varování:</b> akce změní nebo smažou stávající obsah iPodu a mohou "
 "způsobit nekompatibilitu s iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2185
+#: ../src/Core/Banshee/PlayerInterface.cs:2182
 msgid "Synchronize Library"
 msgstr "Synchronizovat knihovnu"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2187
+#: ../src/Core/Banshee/PlayerInterface.cs:2184
 msgid "Save Manual Changes"
 msgstr "Uložit manuální změny"
 
@@ -3140,6 +3176,10 @@ msgid ""
 msgstr ""
 "Vložte\n"
 "Disk"
+
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Hodnocení:"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
 #: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
@@ -3554,6 +3594,10 @@ msgstr "Heslo pro Last.fm"
 msgid "last.fm Username"
 msgstr "Uživatelské jméno pro Last.fm"
 
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "Modul záložek povolen"
+
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
 msgid "Bookmarks"
 msgstr "Záložky"
@@ -3584,10 +3628,6 @@ msgstr "Odst_ranit záložku"
 #, csharp-format
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
-
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
-msgid "Bookmarks plugin enabled"
-msgstr "Modul záložek povolen"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
 msgid "DAAP plugin enabled"
@@ -3861,12 +3901,12 @@ msgid ""
 msgstr "Je-li hlavní okno zavřeno, zobrazit upozornění o jeho zavření."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:59
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:61
 msgid "Notification Area Icon"
 msgstr "Ikona v upozorňovací oblasti"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:64
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:113
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:116
 msgid "Show notifications when song changes"
 msgstr "Zobrazovat oznámení při změně skladby"
 
@@ -3874,28 +3914,27 @@ msgstr "Zobrazovat oznámení při změně skladby"
 msgid "Quit Banshee when title bar close button is clicked"
 msgstr "Ukončit Banshee při kliknutí na tlačítko uzavření v záhlaví"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:62
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:64
 msgid "Shows the Notification Area Icon"
 msgstr "Zobrazuje ikonu v upozorňovací oblasti"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:106
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "_Close"
 msgstr "_Zavřít"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:107
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:110
 msgid "Close"
 msgstr "Zavřít"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:112
-#, fuzzy
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:115
 msgid "_Show Notifications"
-msgstr "Zobrazovat upozornění"
+msgstr "_Zobrazovat upozornění"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:208
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:221
 msgid "Still Running"
 msgstr "Stále běží"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:209
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:222
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
@@ -3903,11 +3942,11 @@ msgstr ""
 "Banshee byla zavřena do oznamovací oblasti. Pro ukončení sezení použijte "
 "volbu <i>Ukončit</i>."
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:275
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:288
 msgid "Now Playing"
 msgstr "Nyní se přehrává"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:280
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:293
 msgid "Cannot show notification"
 msgstr "Nelze zobrazit upozornění"
 
@@ -4485,9 +4524,8 @@ msgid "Comment"
 msgstr "Poznámka"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
-#, fuzzy
 msgid "Cache version"
-msgstr "CD sezení"
+msgstr "Verze vyrovnávací paměti"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
 msgid "Recommendation plugin enabled"
@@ -4498,6 +4536,8 @@ msgid ""
 "Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
 "recommendation"
 msgstr ""
+"Verze vyrovnávací paměti uložené na disku v ~/.config/banshee/plugins/"
+"recommendation"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
 msgid "Recommended Artists"
