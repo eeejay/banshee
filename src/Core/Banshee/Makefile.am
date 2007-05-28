@@ -62,7 +62,8 @@ BANSHEE_RESOURCES = \
 	data/images/song-drm.png \
 	data/images/source-cd-audio.png \
 	data/images/source-library.png \
-	data/images/source-playlist.png \
+	data/images/source-playlist-16.png \
+	data/images/source-playlist-22.png \
 	data/images/source-localqueue.png \
 	data/images/sync-needed.png \
 	data/images/tray-icon.png \

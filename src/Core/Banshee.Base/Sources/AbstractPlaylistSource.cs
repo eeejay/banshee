@@ -133,7 +133,7 @@ namespace Banshee.Sources
             get { return true; }
         }        
         
-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist");
+        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "source-playlist-22");
         public override Gdk.Pixbuf Icon {
             get { return icon; }
         }

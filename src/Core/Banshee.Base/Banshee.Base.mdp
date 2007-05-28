@@ -232,8 +232,10 @@
     <File name="../../../data/images/media-repeat-single.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="../../../data/images/source-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="../../../data/images/source-smart-playlist.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../../data/images/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/splash.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./Plugins/ScriptCore.cs" subtype="Code" buildaction="Compile" />
     <File name="./SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />

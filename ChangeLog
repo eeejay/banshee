@@ -1,3 +1,16 @@
+2007-05-28  Aaron Bockover  <abock@gnome.org>
+
+	Patch to provide 16x16 versions of the playlist icons (BGO #398484, 
+	Michael Monreal
+
+	* src/Core/Banshee/PlayerInterface.cs:
+	* src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Reference source-smart-playlist-{16,22} and source-playlist-{16,22}
+
+	* data/images/source-smart-playlist-16.png:
+	* data/images/source-playlist-16.png: 16x16 versions of the playlist icons
+
 2007-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
 	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
 	Show the rating item for Smart Playlists too.

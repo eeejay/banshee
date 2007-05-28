@@ -105,7 +105,7 @@ namespace Banshee.SmartPlaylist
             get { return tracks; }
         }
 
-        private static Gdk.Pixbuf icon = Gdk.Pixbuf.LoadFromResource("source-smart-playlist.png");
+        private static Gdk.Pixbuf icon = Gdk.Pixbuf.LoadFromResource("source-smart-playlist-22.png");
         public override Gdk.Pixbuf Icon {
             get { return icon; }
         }
