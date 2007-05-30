@@ -1,3 +1,10 @@
+2007-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:
+	* src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:
+	* src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:
+	Make some strings translatable.
+
 2007-05-28  Aaron Bockover  <abock@gnome.org>
 
 	Patch to provide 16x16 versions of the playlist icons (BGO #398484, 
@@ -12,6 +19,7 @@
 	* data/images/source-playlist-16.png: 16x16 versions of the playlist icons
 
 2007-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
 	Show the rating item for Smart Playlists too.
 

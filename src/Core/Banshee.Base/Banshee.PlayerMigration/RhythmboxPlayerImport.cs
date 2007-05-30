@@ -53,7 +53,8 @@ namespace Banshee.PlayerMigration
             XmlElement root = xml_doc.DocumentElement;
 
             if (root == null || !root.HasChildNodes || root.Name != "rhythmdb") {
-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Invalid Rhythmbox database file", null);
+                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path,
+                    Catalog.GetString("Invalid Rhythmbox database file"), null);
                 return;
             }
             

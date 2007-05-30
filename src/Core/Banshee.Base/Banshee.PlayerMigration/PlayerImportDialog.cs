@@ -78,8 +78,8 @@ namespace Banshee.PlayerMigration
             CellRendererToggle crt = new CellRendererToggle ();
             crt.Activatable = true;
             crt.Toggled += CrtToggled;
-            tv.AppendColumn ("Import", crt, "active", 0);
-            tv.AppendColumn ("Player", new CellRendererText (), "text", 1);
+            tv.AppendColumn (Catalog.GetString("Import"), crt, "active", 0);
+            tv.AppendColumn (Catalog.GetString("Player"), new CellRendererText (), "text", 1);
 
             foreach (PlayerImport player_import in player_imports) {
                 if (player_import.CanImport)
@@ -87,7 +87,7 @@ namespace Banshee.PlayerMigration
             }
 
             if (list_store.IterNChildren() == 0) {
-               LogCore.Instance.PushInformation(
+                LogCore.Instance.PushInformation(
                         Catalog.GetString ("Unable to Locate Supported Media Player"),
                         Catalog.GetString ("Banshee was unable to locate any libraries from alternate supported media players from which to import."));
                 throw new Exception ("Unable to locate any supported library");

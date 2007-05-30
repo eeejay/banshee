@@ -56,7 +56,7 @@ namespace Banshee.PlayerMigration
                 conn = new SqliteConnection ("Version=3,URI=file://" + library_path);
                 conn.Open ();
             } catch (Exception e) {
-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Unable to open Amarok database", e);
+                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, Catalog.GetString("Unable to open Amarok database"), e);
                 return;
             }
             
@@ -194,7 +194,8 @@ namespace Banshee.PlayerMigration
                      conn.Close ();
                  } catch (Exception) {}
             } catch (Exception e) {
-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Importing from Amarok database failed", e);
+                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path,
+                    Catalog.GetString("Importing from Amarok database failed"), e);
             }
         }
     }
