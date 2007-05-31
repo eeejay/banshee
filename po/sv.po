@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-23 19:42+0200\n"
-"PO-Revision-Date: 2007-05-23 19:49+0100\n"
+"POT-Creation-Date: 2007-05-31 14:12+0200\n"
+"PO-Revision-Date: 2007-05-31 14:14+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -518,7 +518,7 @@ msgstr "Kunde inte länka kodare till gnomevfssink"
 #: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:158
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -1778,6 +1778,14 @@ msgstr "Söker av"
 msgid "Amarok"
 msgstr "Amarok"
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr "Kunde inte öppna Amaroks databas"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr "Import från Amaroks databas misslyckades"
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
 #: ../src/Core/Banshee.Base/ImportManager.cs:285
 msgid "Importing Songs"
@@ -1801,6 +1809,16 @@ msgstr "Migrera från andra mediaspelare"
 msgid "Select any supported alternate media players that you wish to migrate into Banshee."
 msgstr "Välj en alternativ mediaspelare som stöds och som du önskar migrera från till Banshee."
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "Importera"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+msgid "Player"
+msgstr "Spelare"
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
 msgstr "Kunde inte hitta några mediaspelare som stöds"
@@ -1820,6 +1838,10 @@ msgstr "Alternativa mediaspelare"
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 msgid "Rhythmbox Music Player"
 msgstr "Musikspelaren Rhythmbox"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr "Ogiltig Rhythmbox-databasfil"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -2620,11 +2642,6 @@ msgstr "Källegenskaper..."
 #, csharp-format
 msgid "Delete {0}"
 msgstr "Ta bort {0}"
-
-#: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2021
-msgid "Import"
-msgstr "Importera"
 
 #: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
@@ -3732,12 +3749,12 @@ msgid "When the main window is closed, show a notification stating this has happ
 msgstr "När huvudfönstret stängs, visa en notifiering om att det har skett."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:59
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:61
 msgid "Notification Area Icon"
 msgstr "Ikon för notifieringsyta"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:64
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:113
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:116
 msgid "Show notifications when song changes"
 msgstr "Visa notifieringar när låten byts"
 
@@ -3745,35 +3762,35 @@ msgstr "Visa notifieringar när låten byts"
 msgid "Quit Banshee when title bar close button is clicked"
 msgstr "Avsluta Banshee när titellistens stängningsknapp klickas"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:62
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:64
 msgid "Shows the Notification Area Icon"
 msgstr "Visar ikon för notifieringsyta"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:106
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "_Close"
 msgstr "_Stäng"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:107
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:110
 msgid "Close"
 msgstr "Stäng"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:112
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:115
 msgid "_Show Notifications"
 msgstr "_Visa notifieringar"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:208
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:221
 msgid "Still Running"
 msgstr "Kör fortfarande"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:209
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:222
 msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
 msgstr "Banshee stängdes till notifieringsytan. Använd alternativet <i>Avsluta</i> för att avsluta din session."
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:275
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:288
 msgid "Now Playing"
 msgstr "Spelar nu"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:280
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:293
 msgid "Cannot show notification"
 msgstr "Kan inte visa notifiering"
 
