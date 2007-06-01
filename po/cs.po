@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-28 18:11+0200\n"
-"PO-Revision-Date: 2007-05-28 18:11+0200\n"
+"POT-Creation-Date: 2007-06-01 13:05+0200\n"
+"PO-Revision-Date: 2007-06-01 13:02+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1751,6 +1751,8 @@ msgstr "Náhodné přehrávání"
 msgid ""
 "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
+"Třídící kritérium pro seznamy skladeb v přehledu zdrojů (0 = jméno, 1 = "
+"velikost)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort criteria of playlists"
@@ -1761,6 +1763,7 @@ msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
 msgstr ""
+"Pořadí řazení seznamů skladeb v přehledu zdrojů (0 = vzestupně, 1 = sestupně)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
@@ -1847,6 +1850,14 @@ msgstr "Vyhledávám"
 msgid "Amarok"
 msgstr "Amarok"
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr ""
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
 #: ../src/Core/Banshee.Base/ImportManager.cs:285
 msgid "Importing Songs"
@@ -1872,6 +1883,17 @@ msgid ""
 "Banshee."
 msgstr ""
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "Importovat"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+#, fuzzy
+msgid "Player"
+msgstr "Přehrát"
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
 msgstr "Nelze nalézt podporovaný přehrávač"
@@ -1893,6 +1915,10 @@ msgstr "Alternativní přehrávače"
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 msgid "Rhythmbox Music Player"
 msgstr "Přehrávač Rhythmbox"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -2721,11 +2747,6 @@ msgstr "Vlastnosti zdroje..."
 #, csharp-format
 msgid "Delete {0}"
 msgstr "Smazat {0}"
-
-#: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2021
-msgid "Import"
-msgstr "Importovat"
 
 #: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
