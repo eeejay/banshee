@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-27 18:04+0200\n"
-"PO-Revision-Date: 2007-05-27 18:04+0100\n"
+"POT-Creation-Date: 2007-06-03 16:01+0200\n"
+"PO-Revision-Date: 2007-06-03 16:01+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1859,6 +1859,14 @@ msgstr "Leder"
 msgid "Amarok"
 msgstr "Amarok"
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr "Kan ikke åbne Amarok database"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr "Kunne ikke importere fra Amarok database"
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
 #: ../src/Core/Banshee.Base/ImportManager.cs:285
 msgid "Importing Songs"
@@ -1886,6 +1894,16 @@ msgstr ""
 "Vælg en understøttet alternativ medieafspiller, som du ønsker at importere "
 "til Banshee."
 
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "Importér"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+msgid "Player"
+msgstr "Afspiller"
+
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
 msgstr "Kunne ikke finde understøttet medieafspiller"
@@ -1909,6 +1927,10 @@ msgstr "Alternative medieafspillere"
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 msgid "Rhythmbox Music Player"
 msgstr "Rhythmbox musikafspiller"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr "Ugyldig Rhythmbox databasefil"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -2740,11 +2762,6 @@ msgstr "Kildeegenskaber..."
 #, csharp-format
 msgid "Delete {0}"
 msgstr "Slet {0}"
-
-#: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2021
-msgid "Import"
-msgstr "Importér"
 
 #: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
