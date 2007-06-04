@@ -1,3 +1,12 @@
+2007-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patch from Brian Nickel fixing the build.
+
+	* src/Core/Banshee.Base/FileTrackInfo.cs:
+	* src/Core/Banshee.Base/IO/IOProxy.cs:
+	* src/Core/Banshee.Base/StreamTagger.cs:
+	* src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs: Work with latest TagLib#.
+
 2007-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:

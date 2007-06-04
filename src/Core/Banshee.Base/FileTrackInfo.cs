@@ -49,7 +49,7 @@ namespace Banshee.Base
             ParsePath(uri.LocalPath);
             track_id = 0;
    
-            TagLib.File file = TagLib.File.Create(uri.LocalPath);
+            TagLib.File file = Banshee.IO.IOProxy.OpenFile(uri.LocalPath);
    
             artist = Choose(file.Tag.JoinedArtists, artist);
             album = Choose(file.Tag.Album, album);

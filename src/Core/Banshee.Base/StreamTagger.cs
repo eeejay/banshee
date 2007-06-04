@@ -83,7 +83,7 @@ namespace Banshee.Base
                 }
             }
 
-            return TagLib.File.Create(uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+            return Banshee.IO.IOProxy.OpenFile(uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
                 mimetype, TagLib.ReadStyle.Average);
         }
     

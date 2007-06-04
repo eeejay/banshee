@@ -114,7 +114,7 @@ namespace Banshee.Dap.Ipod
         
         private void ProcessTrack(FileInfo file)
         {
-            TagLib.File af = TagLib.File.Create(file.FullName);
+            TagLib.File af = Banshee.IO.IOProxy.OpenFile(file.FullName);
             Track song = dap.Device.TrackDatabase.CreateTrack();
 
             song.FileName = file.FullName;

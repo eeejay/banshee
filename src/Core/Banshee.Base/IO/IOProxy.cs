@@ -58,7 +58,16 @@ namespace Banshee.IO
             
             file = (IFile)Activator.CreateInstance(config.FileBackend);
             directory = (IDirectory)Activator.CreateInstance(config.DirectoryBackend);
-            TagLib.File.SetFileAbstractionCreator(TagLibVfsCreator);
+        }
+        
+        public static TagLib.File OpenFile(string file, string mimetype, TagLib.ReadStyle readStyle)
+        {
+            return TagLib.File.Create(TagLibVfsCreator (file), mimetype, readStyle);
+        }
+        
+        public static TagLib.File OpenFile(string file)
+        {
+            return TagLib.File.Create(TagLibVfsCreator (file));
         }
         
         private static TagLib.File.IFileAbstraction TagLibVfsCreator(string file)
