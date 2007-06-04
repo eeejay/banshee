@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-31 14:12+0200\n"
-"PO-Revision-Date: 2007-05-31 14:14+0100\n"
+"POT-Creation-Date: 2007-06-04 07:40+0200\n"
+"PO-Revision-Date: 2007-06-04 07:43+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "Advanced Audio Coding (AAC)"
 #: ../data/audio-profiles/wavpack.xml.in.h:3
 #: ../data/audio-profiles/wma.xml.in.h:4
 msgid "Bitrate"
-msgstr "Bithastighet"
+msgstr "Bitfrekvens"
 
 #: ../data/audio-profiles/aac.xml.in.h:3
 msgid "Proprietary and standardized format that is superior to MP3, but not as popular."
@@ -49,11 +49,11 @@ msgstr "Free Lossless Audio Codec (FLAC) är en kodek med öppen källkod som ko
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
 msgid "A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates."
-msgstr "Ett proprietärt och äldre, men också populärare, förstörande ljudformat som producerar större filer vid lägre bithastigheter."
+msgstr "Ett proprietärt och äldre, men också populärare, förstörande ljudformat som producerar större filer vid lägre bitfrekvenser."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
-msgstr "Genomsnittlig bithastighet"
+msgstr "Genomsnittlig bitfrekvens"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
 #: ../data/audio-profiles/wavpack.xml.in.h:2
@@ -64,7 +64,7 @@ msgstr "Bästa"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:5
 msgid "Constant Bitrate"
-msgstr "Konstant bithastighet"
+msgstr "Konstant bitfrekvens"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:6
 msgid "MP3 (LAME Encoder)"
@@ -80,7 +80,7 @@ msgstr "VBR-kvalitet"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:9
 msgid "Variable Bitrate"
-msgstr "Variabel bithastighet"
+msgstr "Variabel bitfrekvens"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
 #: ../data/audio-profiles/wavpack.xml.in.h:9
@@ -135,7 +135,7 @@ msgstr "Ljudkvalitet"
 
 #: ../data/audio-profiles/wma.xml.in.h:5
 msgid "Use a variable bitrate"
-msgstr "Använd en variabel bithastighet"
+msgstr "Använd en variabel bitfrekvens"
 
 #: ../data/audio-profiles/wma.xml.in.h:6
 msgid "Windows Media Audio"
@@ -185,7 +185,7 @@ msgstr "<b>Albumomslag:</b>"
 
 #: ../data/banshee-dialogs.glade.h:6
 msgid "<b>Bitrate:</b>"
-msgstr "<b>Bithastighet:</b>"
+msgstr "<b>Bitfrekvens:</b>"
 
 #: ../data/banshee-dialogs.glade.h:7
 msgid "<b>CD Importing</b>"
@@ -237,7 +237,7 @@ msgstr "<b>Spelräknare:</b>"
 
 #: ../data/banshee-dialogs.glade.h:19
 msgid "<b>Sample rate:</b>"
-msgstr "<b>Samplingshastighet:</b>"
+msgstr "<b>Samplingsfrekvens:</b>"
 
 #: ../data/banshee-dialogs.glade.h:20
 msgid "<b>Session Information</b>"
@@ -306,11 +306,11 @@ msgstr "Kopiera till alla"
 
 #: ../data/banshee-dialogs.glade.h:36
 msgid "Create a new preset"
-msgstr "Skapa en ny förinställning"
+msgstr "Skapa ett nytt förval"
 
 #: ../data/banshee-dialogs.glade.h:37
 msgid "Delete the active preset"
-msgstr "Ta bort den aktiva förinställningen"
+msgstr "Ta bort det aktiva förvalet"
 
 #: ../data/banshee-dialogs.glade.h:38
 msgid "Details"
