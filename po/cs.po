@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 13:05+0200\n"
-"PO-Revision-Date: 2007-06-01 13:02+0200\n"
+"POT-Creation-Date: 2007-06-04 17:51+0200\n"
+"PO-Revision-Date: 2007-06-04 17:51+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1852,11 +1852,11 @@ msgstr "Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
 msgid "Unable to open Amarok database"
-msgstr ""
+msgstr "Nelze otevřít databázi programu Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
 msgid "Importing from Amarok database failed"
-msgstr ""
+msgstr "Import z databáze programu Amarok selhal"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
 #: ../src/Core/Banshee.Base/ImportManager.cs:285
@@ -1890,9 +1890,8 @@ msgid "Import"
 msgstr "Importovat"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
-#, fuzzy
 msgid "Player"
-msgstr "Přehrát"
+msgstr "Přehrávač"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
@@ -1918,7 +1917,7 @@ msgstr "Přehrávač Rhythmbox"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
 msgid "Invalid Rhythmbox database file"
-msgstr ""
+msgstr "Neplatný soubor databáze Rhythmbox"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
