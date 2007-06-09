@@ -317,6 +317,7 @@ namespace Banshee.Dap.MassStorage
                     count / tracksToCopy.Count);
 
                 CopyTrack(track);
+                count++;
             }
 
             FinishSave();

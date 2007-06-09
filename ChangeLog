@@ -1,3 +1,10 @@
+2007-06-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patch from Pepijn van de Geer.
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Increment the counter
+	to make the (gui) counter and progressbar work
+
 2007-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Brian Nickel fixing the build.
