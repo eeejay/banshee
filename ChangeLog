@@ -1,3 +1,9 @@
+2007-06-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Set remover to null
+	when finished deleting and set correct icon (Pepijn van de Geer, BGO
+	#446037).
+
 2007-06-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs: Add

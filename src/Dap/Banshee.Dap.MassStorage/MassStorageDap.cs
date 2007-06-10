@@ -529,7 +529,9 @@ namespace Banshee.Dap.MassStorage
                             remover = new QueuedOperationManager();
                             remover.ActionMessage = String.Format(Catalog.GetString("Removing songs from {0}"), Name);
                             remover.ProgressMessage = Catalog.GetString("Removing {0} of {1}");
+                            remover.UserEvent.Icon = IconThemeUtils.LoadIcon(22, "edit-delete", Gtk.Stock.Delete);
                             remover.OperationRequested += HandleRemoveRequested;
+                            remover.Finished += delegate { remover = null; };
                         }
                     }
                 }
