@@ -1,3 +1,7 @@
+2007-06-12  Aaron Bockover  <abock@gnome.org>
+
+	* data/audio-profiles/wavpack.xml.in: Updated by Sebastian Dröge 
+
 2007-06-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Set remover to null

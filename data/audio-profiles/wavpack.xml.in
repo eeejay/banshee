@@ -15,10 +15,10 @@
                 (gst-construct-element "wavpackenc"
                     "mode" mode
                     (if (cast-bool lossy_mode)
-                        ("bitrate" (* bitrate 1000.0))
+                        ("bitrate" (* bitrate 1000))
                         ("" ""))
                     "md5" (cast-bool md5_sum)
-                    "extra-processing" (cast-bool extra_processing))
+                    "extra-processing" extra_processing)
                 (if (gst-element-is-available "apev2mux")
                     "apev2mux"
                     (if (gst-element-is-available "id3v2mux")
@@ -49,8 +49,13 @@
         </variable>
         <variable id="extra_processing">
           <_name>Extra processing</_name>
-          <control-type>check</control-type>
+          <control-type>slider</control-type>
           <default-value>0</default-value>
+          <min-value>0</min-value>
+          <_min-label>Default</_min-label>
+          <max-value>6</max-value>
+          <_max-label>Highest</_max-label>
+          <step-value>1</step-value>
         </variable>
         <variable id="bitrate">
           <_name>Bitrate</_name>
