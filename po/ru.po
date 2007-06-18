@@ -4107,7 +4107,7 @@ msgstr "Ожидание прекращения скачивания"
 #, csharp-format
 msgid "Downloading File"
 msgid_plural "Downloading Files ({0} of {1} completed)"
-msgstr[0] "Скачивается файл"
+msgstr[0] "Скачивается файлы (скачано {0} из {1})"
 msgstr[1] "Скачиваются файлы (скачано {0} из {1})"
 msgstr[2] "Скачиваются файлы (скачано {0} из {1})"
 
@@ -4124,7 +4124,7 @@ msgstr ""
 #, csharp-format
 msgid "Currently transfering 1 file at {0} kB/s"
 msgid_plural "Currently transfering {1} files at {0} kB/s"
-msgstr[0] "Сейчас передаётся 1 файл со скоростью {0} Кб/с"
+msgstr[0] "Сейчас передаётся {1} файл со скоростью {0} Кб/с"
 msgstr[1] "Сейчас передаётся {1} файла со скоростью {0} Кб/с"
 msgstr[2] "Сейчас передаётся {1} файлов со скоростью {0} Кб/с"
 
