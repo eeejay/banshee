@@ -5,14 +5,15 @@
 # Evandro Fernandes Giovanini <evandrofg@ig.com.br>, 2006.
 # Vladimir Melo <vladimirmelo.psi@gmail.com>, 2007.
 # Og Maciel <ogmaciel@ubuntu.com>, 2007.
+# Daniel Abreu <dlabreu@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-02 16:48-0300\n"
-"PO-Revision-Date: 2007-05-31 22:15-0500\n"
-"Last-Translator: Og Maciel <ogmaciel@ubuntu.com>\n"
+"POT-Creation-Date: 2007-06-26 22:41-0300\n"
+"PO-Revision-Date: 2007-06-26 21:30-0400\n"
+"Last-Translator: Daniel Abreu <dlabreu@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,7 +97,7 @@ msgid "Variable Bitrate"
 msgstr "Taxa Variável de Bits"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wavpack.xml.in.h:11
 #: ../data/audio-profiles/wma.xml.in.h:7
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 msgid "Worst"
@@ -115,22 +116,30 @@ msgstr ""
 "perda e alta qualidade de codificação com grande alcance dinâmico."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Motor Padrão"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Extra processing"
 msgstr "Processamento adicional"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "Alto"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Lossy mode"
 msgstr "Modo com perdas"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:6
+#: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "Mode"
 msgstr "Modo"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:7
+#: ../data/audio-profiles/wavpack.xml.in.h:9
 msgid "Store MD5 sum in the file"
 msgstr "Armazenar seqüência do MD5 no arquivo"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:8
+#: ../data/audio-profiles/wavpack.xml.in.h:10
 msgid "Wavpack"
 msgstr "Wavpack"
 
@@ -787,7 +796,7 @@ msgid "Plays"
 msgstr "Reproduções"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:813
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
 msgid "Rating"
 msgstr "Avaliação"
 
@@ -833,7 +842,7 @@ msgid "Location"
 msgstr "Localização"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:816
 #: ../src/Core/Banshee/PlayerInterface.cs:459
 msgid "Year"
 msgstr "Ano"
@@ -2224,17 +2233,21 @@ msgstr "Duração"
 msgid "Play Count"
 msgstr "Contagem de Reprodução"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:796
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:794
+msgid "Track Number"
+msgstr "Número da Faixa"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:797
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
 msgid "Playlist"
 msgstr "Lista de Reprodução"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:811
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "Lista de Reprodução Inteligente"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
 msgid "Path"
 msgstr "Caminho"
 
@@ -3451,11 +3464,11 @@ msgstr "Carregando {0} de {1}"
 msgid "Copying {0} of {1}"
 msgstr "Copiando {0} de {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:330
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
 msgid "Song Playing on Device"
 msgstr "Reproduzindo Música no Dispositivo"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
@@ -3463,31 +3476,31 @@ msgstr ""
 "Antes que possa ejetar seu dispositivo, você precisa iniciar a reprodução de "
 "uma música que não se encontra nele. Este é um bug conhecido."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:362
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
 #, csharp-format
 msgid "Failed to Unmount {0}"
 msgstr "Falha ao Desmontar {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:364
 msgid "Make sure no other programs are using it."
 msgstr "Certifique-se que nenhum outro programa o está usando."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:375
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:376
 #, csharp-format
 msgid "Failed to Eject {0}"
 msgstr "Falha ao Ejetar {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:529
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
 #, csharp-format
 msgid "Removing songs from {0}"
 msgstr "Removendo músicas de {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:531
 #, csharp-format
 msgid "Removing {0} of {1}"
 msgstr "Removendo {0} de {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:565
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:568
 msgid "Audio Device"
 msgstr "Dispositivo de Áudio"
 
@@ -4691,9 +4704,6 @@ msgstr "Mostrar Recomendações"
 #~ msgid "Burnproof"
 #~ msgstr "Burnproof"
 
-#~ msgid "Default Engine"
-#~ msgstr "Motor Padrão"
-
 #~ msgid "Disk Drive:"
 #~ msgstr "Drive de Disco:"
 
@@ -5041,9 +5051,6 @@ msgstr "Mostrar Recomendações"
 
 #~ msgid "Write Support"
 #~ msgstr "Suporte de Escrita"
-
-#~ msgid "Serial Number"
-#~ msgstr "Número de Série"
 
 #~ msgid "Firmware Version"
 #~ msgstr "Varsão do Firmware"
