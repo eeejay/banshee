@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-10 22:35+0200\n"
-"PO-Revision-Date: 2007-06-10 11:06+0100\n"
+"POT-Creation-Date: 2007-06-29 22:41+0200\n"
+"PO-Revision-Date: 2007-06-29 19:22+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <dominikowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -95,7 +95,7 @@ msgid "Variable Bitrate"
 msgstr "Zmienna gęstość bitowa"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wavpack.xml.in.h:11
 #: ../data/audio-profiles/wma.xml.in.h:7
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 msgid "Worst"
@@ -114,22 +114,30 @@ msgstr ""
 "jakości stratne kodowanie z szerokim zakresem dynamicznym. "
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Domyślna"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Extra processing"
 msgstr "Dodatkowe przetwarzanie"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "Najwyższa"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Lossy mode"
 msgstr "Tryb stratny"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:6
+#: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "Mode"
 msgstr "Tryb"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:7
+#: ../data/audio-profiles/wavpack.xml.in.h:9
 msgid "Store MD5 sum in the file"
 msgstr "Przechowywanie sumy MD5 w pliku"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:8
+#: ../data/audio-profiles/wavpack.xml.in.h:10
 msgid "Wavpack"
 msgstr "Wavpack"
 
