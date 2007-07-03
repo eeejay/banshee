@@ -1,3 +1,8 @@
+2007-07-03  Patrick van Staveren  <trick@vanstaveren.us>
+
+	* ext/taglib-sharp: change svn:externals pointer to use http:// rather
+	than svn://
+
 2007-06-12  Aaron Bockover  <abock@gnome.org>
 
 	* data/audio-profiles/wavpack.xml.in: Updated by Sebastian Dröge 
