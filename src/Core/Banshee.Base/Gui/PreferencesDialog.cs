@@ -133,7 +133,7 @@ namespace Banshee.Gui.Dialogs
                 location = Paths.DefaultLibraryPath;
             }
             
-            library_location_chooser.SetFilename(location);
+            library_location_chooser.SetCurrentFolder(location);
             Globals.Library.Location = location;   
             
             file_box.ActiveValue = LibrarySchema.FilePattern.Get();

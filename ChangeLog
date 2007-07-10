@@ -1,3 +1,14 @@
+2007-07-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Only call Eject on
+	the storage volume if storage.requires_eject is not set or is true; calling
+	Eject on a volume that doesn't require it causes problems (BGO #443048,
+	Ilya Konstantinov)
+
+	* src/Core/Banshee.Base/Gui/PreferencesDialog.cs: Use SetCurrentFolder
+	instead of SetFilename on FileChooserButton to avoid a race condition
+	in GTK+ (BGO #443027, Ilya Konstantinov)
+
 2007-07-03  Patrick van Staveren  <trick@vanstaveren.us>
 
 	* ext/taglib-sharp: change svn:externals pointer to use http:// rather

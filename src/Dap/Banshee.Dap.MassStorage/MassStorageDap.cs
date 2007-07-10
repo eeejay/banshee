@@ -357,7 +357,12 @@ namespace Banshee.Dap.MassStorage
         private void UnmountCallback(bool succeeded, string error, string detailed_error)
         {
             if(succeeded) {
-                volume.Eject(EjectCallback);
+                if(!player_device.PropertyExists("storage.requires_eject") || 
+                    player_device.GetPropertyBoolean("storage.requires_eject")) {
+                    volume.Eject(EjectCallback);
+                } else {
+                   base.Eject();
+                }
             } else {
                 LogCore.Instance.PushWarning(
                     String.Format(Catalog.GetString("Failed to Unmount {0}"), Name),
