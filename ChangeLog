@@ -1,5 +1,11 @@
 2007-07-10  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/gst-playback-0.10.c: Nasty, hopefully temporary, hack to
+	ignore errors coming from qtdemux as it seems to have an issue with
+	demuxing AAC files that come from iTunes Plus store (the DRM-free files)
+
+2007-07-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs: Only call Eject on
 	the storage volume if storage.requires_eject is not set or is true; calling
 	Eject on a volume that doesn't require it causes problems (BGO #443048,

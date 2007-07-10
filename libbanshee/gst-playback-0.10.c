@@ -101,6 +101,13 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             GError *error;
             gchar *debug;
             
+            // FIXME: This is to work around a bug in qtdemux in
+            // -good <= 0.10.6
+            if(message->src != NULL && message->src->name != NULL &&
+                strncmp(message->src->name, "qtdemux", 0) == 0) {
+                break;
+            }
+            
             gst_playback_destroy_pipeline(engine);
             
             if(engine->error_cb != NULL) {
@@ -510,8 +517,8 @@ gst_playback_set_volume(GstPlayback *engine, gint volume)
 {
     gdouble act_volume;
     g_return_if_fail(IS_GST_PLAYBACK(engine));
-	act_volume = CLAMP(volume, 0, 100) / 100.0;
-	g_object_set(G_OBJECT(engine->playbin), "volume", act_volume, NULL);
+    act_volume = CLAMP(volume, 0, 100) / 100.0;
+    g_object_set(G_OBJECT(engine->playbin), "volume", act_volume, NULL);
 }
 
 gint
