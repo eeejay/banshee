@@ -1,7 +1,7 @@
 # Danish translation of Banshee.
 # Copyright (C) 2005-2007
 # This file is distributed under the same license as the Banshee package.
-# Lasse Bang Mikkelsen <lbm@fatalerror.dk>, 2005, 06, 07.
+# Lasse Bang Mikkelsen <lbm@lbm.dk>, 2005, 06, 07.
 #
 #      Konventioner:
 #
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-03 16:01+0200\n"
-"PO-Revision-Date: 2007-06-03 16:01+0100\n"
-"Last-Translator: Lasse Bang Mikkelsen <lbm@fatalerror.dk>\n"
+"POT-Creation-Date: 2007-07-15 20:55+0200\n"
+"PO-Revision-Date: 2007-07-15 20:48+0100\n"
+"Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +104,7 @@ msgid "Variable Bitrate"
 msgstr "Variabel bitrate"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wavpack.xml.in.h:11
 #: ../data/audio-profiles/wma.xml.in.h:7
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 msgid "Worst"
@@ -123,22 +123,30 @@ msgstr ""
 "ikke-forringende højkvalitetskodning med god dynamik."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Standard"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Extra processing"
 msgstr "Yderligere behandling"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "Højeste"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Lossy mode"
 msgstr "Forringende tilstand"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:6
+#: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "Mode"
 msgstr "Tilstand"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:7
+#: ../data/audio-profiles/wavpack.xml.in.h:9
 msgid "Store MD5 sum in the file"
 msgstr "Gem MD5-sum i filen"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:8
+#: ../data/audio-profiles/wavpack.xml.in.h:10
 msgid "Wavpack"
 msgstr "Wavpack"
 
@@ -794,7 +802,7 @@ msgid "Plays"
 msgstr "Afspilninger"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:813
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
 msgid "Rating"
 msgstr "Bedømmelse"
 
@@ -840,7 +848,7 @@ msgid "Location"
 msgstr "Placering"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:816
 #: ../src/Core/Banshee/PlayerInterface.cs:459
 msgid "Year"
 msgstr "År"
@@ -1812,7 +1820,7 @@ msgstr "Afspilningslydstyrke relativ til mikserlydstyrke"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
-msgstr "Aktivér fejlkorrektion (paranoid tilstand), når en lyd-cd importeres"
+msgstr "Aktivér fejlkorrektion når en lyd-cd importeres (paranoid tilstand)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
 msgid "Whether to expand the library node in the source view"
@@ -1939,7 +1947,7 @@ msgstr "MPEG Version 3.0 udvidet (*.m3u)"
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
 msgid "Exception: "
-msgstr "Undtagelse:"
+msgstr "Undtagelse: "
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
 msgid "Not a valid M3U file."
@@ -1974,7 +1982,7 @@ msgstr "Kontrollerer {0} af {1}"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
 msgid "Verifying "
-msgstr "Kontrollerer"
+msgstr "Kontrollerer "
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
 msgid "Export Playlist"
@@ -2209,17 +2217,21 @@ msgstr "Varighed"
 msgid "Play Count"
 msgstr "Afspilninger"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:796
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:794
+msgid "Track Number"
+msgstr "Spornummer"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:797
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
 msgid "Playlist"
 msgstr "Spilleliste"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:811
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "Intelligent spilleliste"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
 msgid "Path"
 msgstr "Sti"
 
@@ -2237,7 +2249,7 @@ msgstr "Slet intelligent spilleliste"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
 msgid "Edit Smart Playlist..."
-msgstr "Redigér intelligent spilleliste"
+msgstr "Redigér intelligent spilleliste..."
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
 msgid "Smart Playlist has Dependencies"
@@ -2265,7 +2277,7 @@ msgid ""
 msgstr ""
 "{0} kunne ikke åbnes: {1}\n"
 "\n"
-"Undersøg dine indstillinger for \"Foretrukne programmer\"."
+" Undersøg dine indstillinger for \"Foretrukne programmer\"."
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:135
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:136
@@ -3424,11 +3436,11 @@ msgstr "Indlæser {0} af {1}"
 msgid "Copying {0} of {1}"
 msgstr "Kopierer {0} af {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:330
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
 msgid "Song Playing on Device"
 msgstr "Sang afspilles på enhed"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
@@ -3436,31 +3448,31 @@ msgstr ""
 "Før du kan skubbe din enhed ud, er du nødt til at afspille en sang der ikke "
 "ligger på den. Dette er en kendt fejl."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:362
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:368
 #, csharp-format
 msgid "Failed to Unmount {0}"
 msgstr "Kunne ikke afmontere {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:369
 msgid "Make sure no other programs are using it."
 msgstr "Vær sikker på at ingen andre programmer bruger den."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:375
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:381
 #, csharp-format
 msgid "Failed to Eject {0}"
 msgstr "Kunne ikke skubbe {0} ud"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:529
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:535
 #, csharp-format
 msgid "Removing songs from {0}"
 msgstr "Fjerner sange fra {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:536
 #, csharp-format
 msgid "Removing {0} of {1}"
 msgstr "Fjerner {0} af {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:565
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:573
 msgid "Audio Device"
 msgstr "Lydenhed"
 
@@ -3892,8 +3904,7 @@ msgid ""
 "Configuration of multimedia keyboard shortcuts is done through the Gnome "
 "Keyboard Shortcuts configuration applet."
 msgstr ""
-"Konfiguration af multimedietastatur genveje gøres igennem Gnome-"
-"tastaturgenveje"
+"Konfiguration af multimedietastatur genveje gøres i Gnome-tastaturgenveje"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
 msgid "Configure Keyboard Shortcuts"
@@ -4038,7 +4049,7 @@ msgstr "DownloadCore lukker ned."
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:180
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:78
 msgid "dif not in 'New' state."
-msgstr "dif er ikke i 'Ny'-tilstand"
+msgstr "dif er ikke i 'Ny'-tilstand."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:193
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:110
@@ -4386,7 +4397,7 @@ msgstr "Abonnér på ny podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
 msgid "Please enter the URL of the podcast to which you are subscribing."
-msgstr "Indtast venligst URL'en på den podcast du vil abonnere på"
+msgstr "Indtast venligst URL'en på den podcast du vil abonnere på."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4512,7 +4523,7 @@ msgstr "Genopfrisker radiostationer fra Banshee radiowebtjenesten"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
 msgid "Failed to load radio stations: "
-msgstr "Kunne ikke indlæse radiostationer:"
+msgstr "Kunne ikke indlæse radiostationer: "
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
 msgid "Invalid URI format."
