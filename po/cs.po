@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-04 17:51+0200\n"
-"PO-Revision-Date: 2007-06-04 17:51+0200\n"
+"POT-Creation-Date: 2007-07-19 12:12+0200\n"
+"PO-Revision-Date: 2007-07-19 12:13+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,8 +37,7 @@ msgstr "Datový tok"
 msgid ""
 "Proprietary and standardized format that is superior to MP3, but not as "
 "popular."
-msgstr ""
-"Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
+msgstr "Standardizovaný proprietární formát vyspělejší než MP, ale méně oblíbený."
 
 #: ../data/audio-profiles/base.xml.in.h:1
 msgid "Channels"
@@ -97,7 +96,7 @@ msgid "Variable Bitrate"
 msgstr "Proměnlivý datový tok"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/wavpack.xml.in.h:9
+#: ../data/audio-profiles/wavpack.xml.in.h:11
 #: ../data/audio-profiles/wma.xml.in.h:7
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 msgid "Worst"
@@ -116,22 +115,31 @@ msgstr ""
 "kvalitní ztrátové kódování s velkým dynamickým rozsahem."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Extra processing"
 msgstr "Zvláštní zpracování"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+#, fuzzy
+msgid "Highest"
+msgstr "Vysoký"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Lossy mode"
 msgstr "Ztrátový režim"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:6
+#: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "Mode"
 msgstr "Režim"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:7
+#: ../data/audio-profiles/wavpack.xml.in.h:9
 msgid "Store MD5 sum in the file"
 msgstr "Uložit MD5 součet do souboru"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:8
+#: ../data/audio-profiles/wavpack.xml.in.h:10
 msgid "Wavpack"
 msgstr "Wavpack"
 
@@ -787,7 +795,7 @@ msgid "Plays"
 msgstr "Přehráno"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:813
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
 msgid "Rating"
 msgstr "Oblíbenost"
 
@@ -833,7 +841,7 @@ msgid "Location"
 msgstr "Umístění"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:816
 #: ../src/Core/Banshee/PlayerInterface.cs:459
 msgid "Year"
 msgstr "Rok"
@@ -1314,8 +1322,7 @@ msgstr "Importuje se CD"
 msgid ""
 "<i>{0}</i> is still being imported into the music library. Would you like to "
 "stop it?"
-msgstr ""
-"<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
+msgstr "<i>{0}</i> se stále importuje do hudební knihovny. Chcete import zastavit?"
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
 #, csharp-format
@@ -1607,8 +1614,7 @@ msgid "Column sort type"
 msgstr "Typ třídění sloupce"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
-msgid ""
-"Column sort type for the library source. Ascending (0) or Descending (1)"
+msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
@@ -1697,8 +1703,7 @@ msgid "Move music on info save"
 msgstr "Přesunout hudbu při uložení informací"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
-msgid ""
-"Move music within banshee music library directory when saving track info"
+msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 "Přesunout hudbu v rámci adresáře hudební knihovny Banshee při ukládání "
 "informací o skladbě"
@@ -1748,8 +1753,7 @@ msgid "Shuffle playback"
 msgstr "Náhodné přehrávání"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
-msgid ""
-"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 "Třídící kritérium pro seznamy skladeb v přehledu zdrojů (0 = jméno, 1 = "
 "velikost)"
@@ -1762,8 +1766,7 @@ msgstr "Třídící kritéria seznamů skladeb"
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
-msgstr ""
-"Pořadí řazení seznamů skladeb v přehledu zdrojů (0 = vzestupně, 1 = sestupně)"
+msgstr "Pořadí řazení seznamů skladeb v přehledu zdrojů (0 = vzestupně, 1 = sestupně)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
@@ -1945,8 +1948,7 @@ msgid "Verifying"
 msgstr "Ověřuji"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
-msgid ""
-"The playlist import process is currently running. Would you like to stop it?"
+msgid "The playlist import process is currently running. Would you like to stop it?"
 msgstr "Proces importu seznamu skladeb právě běží. Chcete jej zastavit?"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
@@ -2195,17 +2197,22 @@ msgstr "Délka"
 msgid "Play Count"
 msgstr "Počet přehrání"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:796
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:794
+#, fuzzy
+msgid "Track Number"
+msgstr "<b>Čí_slo skladby:</b>"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:797
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:811
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "Inteligentní seznam skladeb"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
 msgid "Path"
 msgstr "Cesta"
 
@@ -2262,8 +2269,7 @@ msgstr "Převádí se soubory"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
+msgstr "Soubory se nyní převádí do jiného zvukového formátu. Chcete převod zastavit?"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
 msgid "Initializing Transcoder..."
@@ -2783,8 +2789,7 @@ msgid "Searching for CD cover art..."
 msgstr "Hledání přebalu k CD..."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
+msgid "Cannot search for CD metadata: there is no available Internet connection"
 msgstr "Nelze vyhledat metadata k CD, není dostupné připojení k Internetu."
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
@@ -2851,7 +2856,7 @@ msgstr "Vysunout {0}"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
 msgid "Import Errors"
-msgstr "Importovat chyby"
+msgstr "Chyby při importu"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
@@ -3073,8 +3078,7 @@ msgstr "Selhalo odpojení {0}"
 #: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
-msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
 msgstr[0] "Opravdu chcete navždy smazat tuto skladbu?"
 msgstr[1] "Opravdu chcete navždy smazat {0} vybrané skladby?"
 msgstr[2] "Opravdu chcete navždy smazat {0} vybraných skladeb?"
@@ -3090,8 +3094,7 @@ msgstr "Odstranit výběr z knihovny"
 #: ../src/Core/Banshee/PlayerInterface.cs:1900
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
-msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your library?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] "Opravdu chcete odstranit vybranou skladbu z knihovny?"
 msgstr[1] "Opravdu chcete odstranit vybrané <b>({0})</b> skladby z knihovny?"
 msgstr[2] "Opravdu chcete odstranit vybraných <b>({0})</b> skladeb z knihovny?"
@@ -3180,8 +3183,7 @@ msgstr "Zastavit {0}"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Operace '{0}' stále probíhá. Chcete ji zastavit?"
 
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
@@ -3397,8 +3399,7 @@ msgstr "Načítají se skladby"
 msgid ""
 "The audio device song loading process is currently running.  Would you like "
 "to stop it?"
-msgstr ""
-"Proces nahrávání skladby na audio zařízení právě běží. Chcete jej zastavit?"
+msgstr "Proces nahrávání skladby na audio zařízení právě běží. Chcete jej zastavit?"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:266
 #, csharp-format
@@ -3410,11 +3411,11 @@ msgstr "Nahrává se {0} z {1}"
 msgid "Copying {0} of {1}"
 msgstr "Kopíruji {0} z {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:330
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
 msgid "Song Playing on Device"
 msgstr "Skladba se přehrává na zařízení"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
@@ -3422,31 +3423,31 @@ msgstr ""
 "Před vysunutím svého zařízení musíte spustit přehrávání skladby umístěné "
 "jinde. To je známá chyba."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:362
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:368
 #, csharp-format
 msgid "Failed to Unmount {0}"
 msgstr "Selhalo odpojení {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:369
 msgid "Make sure no other programs are using it."
 msgstr "Ujistěte se, že není používán jinými programy."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:375
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:381
 #, csharp-format
 msgid "Failed to Eject {0}"
 msgstr "Selhalo vysunutí {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:529
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:535
 #, csharp-format
 msgid "Removing songs from {0}"
 msgstr "Odstraňují se skladby z {0}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:536
 #, csharp-format
 msgid "Removing {0} of {1}"
 msgstr "Odstraňuji {0} z {1}"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:565
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:573
 msgid "Audio Device"
 msgstr "Audio zařízení"
 
@@ -4452,8 +4453,7 @@ msgstr "Zobrazit vzdálené stanice"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
 msgid "Update and show radio station content from radio.banshee-project.org"
-msgstr ""
-"Aktualizovat a zobrazit obsah rozhlasových stanic z radio.banshee-project.org"
+msgstr "Aktualizovat a zobrazit obsah rozhlasových stanic z radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
 msgid "Refresh Stations"
@@ -4604,3 +4604,4 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Zobrazit doporučení"
+

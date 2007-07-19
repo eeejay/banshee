@@ -1,7 +1,11 @@
+2007-07-19  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed bug #456716
+
 2007-07-19  Raivis Dejus  <orvils@gmail.com>
 
-        * lv.po: Added Latvian Translation.
-        * LINGUAS: Added Latvian Translation.
+	* lv.po: Added Latvian Translation.
+	* LINGUAS: Added Latvian Translation.
 
 2007-07-15  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
