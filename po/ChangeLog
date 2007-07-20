@@ -1,3 +1,9 @@
+2007-07-20  Duarte Loreto <happyguy_pt@hotmail.com>
+
+	* pt.po: Added Portuguese translation by Filipe Gomes
+	<filipefgomes@gmail.com>.
+	* LINGUAS: Added Portuguese (pt) to the list.
+
 2007-07-19  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: Fixed bug #456716
