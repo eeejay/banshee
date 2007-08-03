@@ -1,3 +1,8 @@
+2007-08-03  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/gst-cd-rip-0.10.c: Do not hard core cdparanoia. Create the
+	cdda source from URI to avoid a hard dependency.
+
 2007-07-10  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/gst-playback-0.10.c: Nasty, hopefully temporary, hack to

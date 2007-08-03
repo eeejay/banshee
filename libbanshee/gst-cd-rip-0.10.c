@@ -60,7 +60,7 @@ struct GstCdRipper {
     gchar *encoder_pipeline;
     
     GstElement *pipeline;
-    GstElement *cdparanoia;
+    GstElement *cddasrc;
     GstElement *encoder;
     GstElement *filesink;
     
@@ -111,7 +111,7 @@ gst_cd_ripper_iterate_timeout(GstCdRipper *ripper)
         return TRUE;
     }
 
-    if(!gst_element_query_position(ripper->cdparanoia, &format, &position)) {
+    if(!gst_element_query_position(ripper->cddasrc, &format, &position)) {
         return TRUE;
     }
     
@@ -223,14 +223,17 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
         return FALSE;
     }
 
-    ripper->cdparanoia = gst_element_factory_make("cdparanoiasrc", "cdparanoia");
-    if(ripper->cdparanoia == NULL) {
-        gst_cd_ripper_raise_error(ripper, _("Could not initialize cdparanoia"), NULL);
+    ripper->cddasrc = gst_element_make_from_uri(GST_URI_SRC, "cdda://1", "cddasrc");
+    if(ripper->cddasrc == NULL) {
+        gst_cd_ripper_raise_error(ripper, _("Could not initialize element from cdda URI"), NULL);
         return FALSE;
     }
   
-    g_object_set(G_OBJECT(ripper->cdparanoia), "device", ripper->device, NULL);
-    g_object_set(G_OBJECT(ripper->cdparanoia), "paranoia-mode", ripper->paranoia_mode, NULL);
+    g_object_set(G_OBJECT(ripper->cddasrc), "device", ripper->device, NULL);
+    
+    if(g_object_class_find_property(G_OBJECT_GET_CLASS(ripper->cddasrc), "paranoia-mode")) {
+        g_object_set(G_OBJECT(ripper->cddasrc), "paranoia-mode", ripper->paranoia_mode, NULL);
+    }
     
     ripper->track_format = gst_format_get_by_nick("track");
     
@@ -270,15 +273,15 @@ gst_cd_ripper_build_pipeline(GstCdRipper *ripper)
         G_CALLBACK(gst_cd_ripper_gvfs_allow_overwrite_cb), ripper);
     
     gst_bin_add_many(GST_BIN(ripper->pipeline),
-        ripper->cdparanoia,
+        ripper->cddasrc,
         mbtrm,
         queue,
         ripper->encoder,
         ripper->filesink,
         NULL);
         
-    if(!gst_element_link(ripper->cdparanoia, mbtrm)) {
-        gst_cd_ripper_raise_error(ripper, _("Could not link cdparanoiasrc to mbtrm"), NULL);
+    if(!gst_element_link(ripper->cddasrc, mbtrm)) {
+        gst_cd_ripper_raise_error(ripper, _("Could not link cddasrcsrc to mbtrm"), NULL);
         return FALSE;
     }
         
@@ -321,7 +324,7 @@ gst_cd_ripper_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
     ripper->encoder_pipeline = g_strdup(encoder_pipeline);
     
     ripper->pipeline = NULL;
-    ripper->cdparanoia = NULL;
+    ripper->cddasrc = NULL;
     ripper->encoder = NULL;
     ripper->filesink = NULL;
     
@@ -430,7 +433,7 @@ gst_cd_ripper_rip_track(GstCdRipper *ripper, gchar *uri, gint track_number,
     }
     
     // start the ripping
-    g_object_set(G_OBJECT(ripper->cdparanoia), "track", track_number, NULL);
+    g_object_set(G_OBJECT(ripper->cddasrc), "track", track_number, NULL);
     
     gst_element_set_state(ripper->pipeline, GST_STATE_PLAYING);
     gst_cd_ripper_start_iterate_timeout(ripper);
