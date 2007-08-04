@@ -1,3 +1,19 @@
+2007-08-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs: Pass
+	the top level GdkWindow to the engine
+
+	* libbanshee/gst-misc-0.10.c: Initialize pbutils
+
+	* libbanshee/gst-playback-0.10.c: Very basic support for the gstreamer
+	install plugins framework; still could use a lot of love
+
+	* build/m4/banshee/gstreamer.m4: Check to see if pbutils is supported 
+
+	* data/audio-profiles/Makefile.am: Do not install the aac/faac profile
+	as the plugins it requires are very broken in GStreamer; this profile
+	only confuses users
+
 2007-08-03  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/gst-cd-rip-0.10.c: Do not hard core cdparanoia. Create the

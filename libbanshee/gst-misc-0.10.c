@@ -38,6 +38,10 @@
 
 #include <gst/gst.h>
 
+#ifdef HAVE_GST_PBUTILS
+#  include <gst/pbutils/pbutils.h>
+#endif
+
 #include "gst-mbtrm.h"
 
 static gboolean gstreamer_initialized = FALSE;
@@ -70,6 +74,11 @@ void gstreamer_initialize()
     }
 
     gst_init(NULL, NULL);
+    
+    #ifdef HAVE_GST_PBUTILS
+    gst_pb_utils_init();
+    #endif
+    
     _gst_plugin_register_static(&gst_mbtrm_plugin_desc);
 
     gstreamer_initialized = TRUE;

@@ -127,6 +127,8 @@ namespace Banshee.MediaEngine.Gstreamer
         private GstPlaybackIterateCallback iterate_callback;
         private GstPlaybackBufferingCallback buffering_callback;
         private GstTaggerTagFoundCallback tag_found_callback;
+            
+        private Gdk.Window window = null;
         
         private bool buffering_finished;
         
@@ -172,6 +174,14 @@ namespace Banshee.MediaEngine.Gstreamer
         
         protected override void OpenUri(SafeUri uri)
         {
+            // The GStreamer engine can use the XID of the main window if it ever
+            // needs to bring up the plugin installer so it can be transient to
+            // the main window.
+            if(window != InterfaceElements.MainWindow.GdkWindow) {
+                window = InterfaceElements.MainWindow.GdkWindow;
+                gst_playback_set_gdk_window(handle, window.Handle);
+            }
+                
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
             gst_playback_open(handle, uri_ptr);
             GLib.Marshaller.Free(uri_ptr);
@@ -257,7 +267,9 @@ namespace Banshee.MediaEngine.Gstreamer
                     }
                 }
                 
-                Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);
+                if(domain_code != GstCoreError.MissingPlugin) {
+                    Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);
+                }
             } else if(domain == GST_LIBRARY_ERROR) {
                 Console.WriteLine("GStreamer library error: {0}", (GstLibraryError)code);
             }
@@ -385,6 +397,9 @@ namespace Banshee.MediaEngine.Gstreamer
         private static extern bool gst_playback_get_pipeline_elements(HandleRef engine, out IntPtr playbin,
             out IntPtr audiobin, out IntPtr audiotee);
             
+        [DllImport("libbanshee")]
+        private static extern void gst_playback_set_gdk_window(HandleRef engine, IntPtr window);
+                                                                   
         [DllImport("libbanshee")]
         private static extern void gst_playback_get_error_quarks(out uint core, out uint library, 
             out uint resource, out uint stream);

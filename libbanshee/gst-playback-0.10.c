@@ -26,6 +26,10 @@
  *  DEALINGS IN THE SOFTWARE.
  */
  
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +37,15 @@
 #include <glib/gstdio.h>
 
 #include <gst/gst.h>
+
+#ifdef HAVE_GST_PBUTILS
+#  include <gst/pbutils/pbutils.h>
+#endif
+
+#include <gdk/gdk.h>
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
 
 #include "gst-tagger.h"
 
@@ -67,9 +80,29 @@ struct GstPlayback {
     GstPlaybackIterateCallback iterate_cb;
     GstPlaybackBufferingCallback buffering_cb;
     GstTaggerTagFoundCallback tag_found_cb;
+    
+    GdkWindow *window;
+    GSList *missing_element_details;
+    gboolean install_plugins_noprompt;
+    
+    #ifdef HAVE_GST_PBUTILS
+    GstInstallPluginsContext *install_plugins_context;
+    #endif
 };
 
 // private methods
+
+static void
+gst_playback_nuke_slist(GSList *list)
+{   
+    GSList *node = list;
+    
+    for(; node != NULL; node = node->next) {
+        g_free(node->data);
+    }
+    
+    g_slist_free(list);
+}
 
 static void
 gst_playback_destroy_pipeline(GstPlayback *engine)
@@ -88,6 +121,89 @@ gst_playback_destroy_pipeline(GstPlayback *engine)
     
     engine->playbin = NULL;
 }
+
+#ifdef HAVE_GST_PBUTILS
+static gchar **
+gst_playback_missing_element_details_vectorize(const GSList *elements)
+{
+    GPtrArray *vector = g_ptr_array_new();
+    
+    while(elements != NULL) {
+        g_ptr_array_add(vector, g_strdup(elements->data));
+        elements = elements->next;
+    }
+    
+    g_ptr_array_add(vector, NULL);
+    return (gchar **)g_ptr_array_free(vector, FALSE);
+}
+
+static void
+gst_playback_handle_missing_elements_failed(GstPlayback *engine)
+{
+    gst_playback_nuke_slist(engine->missing_element_details);
+    engine->missing_element_details = NULL;
+    gst_element_set_state(engine->playbin, GST_STATE_READY);
+    
+    if(engine->error_cb != NULL) {
+       engine->error_cb(engine, GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, NULL, NULL);
+    }
+}
+
+static void
+gst_playback_handle_missing_elements_installer_result(GstInstallPluginsReturn result, gpointer data)
+{
+    GstPlayback *engine = (GstPlayback *)data;
+    
+    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    
+    // TODO: Actually handle a successful plugin installation
+    // if(result == GST_INSTALL_PLUGINS_SUCCESS) {
+    // }
+    
+    engine->install_plugins_noprompt = TRUE;
+    
+    gst_playback_handle_missing_elements_failed(engine);
+    
+    gst_install_plugins_context_free(engine->install_plugins_context);
+    engine->install_plugins_context = NULL;
+}
+
+static void
+gst_playback_handle_missing_elements(GstPlayback *engine)
+{
+    GstInstallPluginsReturn install_return;
+    gchar **details;
+    
+    if(engine->install_plugins_context != NULL) {
+        return;
+    } else if(engine->install_plugins_noprompt) {
+        gst_playback_handle_missing_elements_failed(engine);
+        return;
+    }
+    
+    details = gst_playback_missing_element_details_vectorize(engine->missing_element_details);
+    engine->install_plugins_context = gst_install_plugins_context_new();
+    
+    #ifdef GDK_WINDOWING_X11
+    if(engine->window != NULL) {
+        gst_install_plugins_context_set_xid(engine->install_plugins_context, 
+        GDK_WINDOW_XWINDOW(engine->window));
+    }
+    #endif
+    
+    install_return = gst_install_plugins_async(details, engine->install_plugins_context, 
+        gst_playback_handle_missing_elements_installer_result, engine);
+    
+    if(install_return != GST_INSTALL_PLUGINS_STARTED_OK) {
+        gst_playback_handle_missing_elements_failed(engine);
+        
+        gst_install_plugins_context_free(engine->install_plugins_context);
+        engine->install_plugins_context = NULL;
+    } 
+    
+    g_strfreev(details);
+}
+#endif
 
 static gboolean
 gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
@@ -118,7 +234,19 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             }
             
             break;
-        }        
+        } 
+        
+        #ifdef HAVE_GST_PBUTILS
+        case GST_MESSAGE_ELEMENT: {
+            if(gst_is_missing_plugin_message(message)) {
+                engine->missing_element_details = g_slist_append(engine->missing_element_details, 
+                    gst_missing_plugin_message_get_installer_detail(message));
+            }
+            
+            break;
+        }
+        #endif
+        
         case GST_MESSAGE_EOS:
             if(engine->eos_cb != NULL) {
                 engine->eos_cb(engine);
@@ -127,6 +255,15 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
         case GST_MESSAGE_STATE_CHANGED: {
             GstState old, new, pending;
             gst_message_parse_state_changed(message, &old, &new, &pending);
+            
+            #ifdef HAVE_GST_PBUTILS
+            if(old == GST_STATE_READY && new == GST_STATE_PAUSED) {
+                if(engine->missing_element_details != NULL) {
+                    gst_playback_handle_missing_elements(engine);
+                }
+            }
+            #endif
+            
             if(engine->state_changed_cb != NULL) {
                 engine->state_changed_cb(engine, old, new, pending);
             }
@@ -354,18 +491,6 @@ gst_playback_new()
         return NULL;
     }
     
-    engine->eos_cb = NULL;
-    engine->error_cb = NULL;
-    engine->state_changed_cb = NULL;
-    engine->iterate_cb = NULL;
-    engine->buffering_cb = NULL;
-    engine->tag_found_cb = NULL;
-    
-    engine->iterate_timeout_id = 0;
-    engine->cdda_device = NULL;
-    
-    engine->buffering = FALSE;
-    
     return engine;
 }
 
@@ -384,6 +509,16 @@ gst_playback_free(GstPlayback *engine)
         g_free(engine->cdda_device);
         engine->cdda_device = NULL;
     }
+    
+    gst_playback_nuke_slist(engine->missing_element_details);
+    engine->missing_element_details = NULL;
+    
+    #ifdef HAVE_GST_PBUTILS
+    if(engine->install_plugins_context != NULL) {
+        gst_install_plugins_context_free(engine->install_plugins_context);
+        engine->install_plugins_context = NULL;
+    }
+    #endif
     
     g_free(engine);
     engine = NULL;
@@ -608,6 +743,12 @@ gst_playback_get_pipeline_elements(GstPlayback *engine, GstElement **playbin, Gs
     *audiotee = engine->audiotee;
     
     return TRUE;
+}
+
+void
+gst_playback_set_gdk_window(GstPlayback *engine, GdkWindow *window)
+{
+    engine->window = window;
 }
 
 void
