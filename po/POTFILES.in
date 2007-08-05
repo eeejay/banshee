@@ -1,7 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file in alphabetical order.
 [encoding: UTF-8]
-data/audio-profiles/aac.xml.in
 data/audio-profiles/base.xml.in
 data/audio-profiles/flac.xml.in
 data/audio-profiles/mp3-lame.xml.in
