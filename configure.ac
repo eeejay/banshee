@@ -26,7 +26,6 @@ BANSHEE_CHECK_GSTREAMER
 SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
 	decodebin
 	playbin
-	cdparanoia
 	gnomevfssink
 	gnomevfssrc
 	audioconvert

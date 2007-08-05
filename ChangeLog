@@ -1,3 +1,12 @@
+2006-08-05  Aaron Bockover  <abock@gnome.org>
+
+	0.13.0 Released
+
+	* NEWS: Updated with 0.13.0 release notes
+
+	* configure.ac: Do not check for cdparanoiasrc; cdda sources will be
+	resolved at runtime via URI
+
 2007-08-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs: Pass
