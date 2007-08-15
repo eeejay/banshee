@@ -1,3 +1,9 @@
+2006-08-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Paths.cs: Support the changes to the 
+	xdg-user-dirs spec that allow $HOME to start the path; also allows
+	for quotes surrounding the path (BGO #461596)
+
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee.desktop.in.in: Removed X-SuSE-translate
