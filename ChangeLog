@@ -1,3 +1,21 @@
+2006-08-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Base/Hyena.Gui/EntryUndoAdapter.cs: An adapter to
+	use UndoManager against any Gtk.Entry
+
+	* src/Core/Banshee.Base/Hyena.Gui/EntryInsertAction.cs:
+	* src/Core/Banshee.Base/Hyena.Gui/EntryEraseAction.cs: IUndoAction 
+	implementations for inserting and removing text from a Gtk.Entry
+
+	* src/Core/Banshee.Base/Hyena/IUndoAction.cs: Interface for supporting
+	undoable actions
+
+	* src/Core/Banshee.Base/Hyena/UndoManager.cs: Logic for supporting 
+	unlimited undo/redo actions
+
+	* src/Core/Banshee.Base/Gui/TrackEditor.cs: Apply an EntryUndoAdapter
+	to Gtk.Entry fields in the metadata track editor (BGO #465736)
+
 2006-08-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Paths.cs: Support the changes to the 

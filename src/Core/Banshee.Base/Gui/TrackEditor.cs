@@ -220,6 +220,11 @@ namespace Banshee.Gui.Dialogs
             tips.SetTip(RatingSync, Catalog.GetString("Set all ratings to this value"), "ratings");
             
             LoadTrack(0);
+            
+            foreach(Entry entry in new Entry [] { Artist, Album, Title, Year, Genre.Entry }) {
+                new Hyena.Gui.EntryUndoAdapter(entry);
+            }
+            
             Window.Show();
         }
         

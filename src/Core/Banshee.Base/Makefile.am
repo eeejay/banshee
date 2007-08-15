@@ -244,6 +244,15 @@ NOTIFICATIONS_SOURCES = \
 	$(srcdir)/Notifications/Notification.cs \
 	$(srcdir)/Notifications/Notifications.cs
 
+HYENA_SOURCES = \
+	$(srcdir)/Hyena/IUndoAction.cs \
+	$(srcdir)/Hyena/UndoManager.cs
+
+HYENA_GUI_SOURCES = \
+	$(srcdir)/Hyena.Gui/EntryEraseAction.cs \
+	$(srcdir)/Hyena.Gui/EntryInsertAction.cs \
+	$(srcdir)/Hyena.Gui/EntryUndoAdapter.cs
+
 ASSEMBLY_SOURCES = \
     $(AUDIOCD_SOURCES) \
     $(DAP_SOURCES) \
@@ -280,6 +289,8 @@ ASSEMBLY_SOURCES = \
 	$(NOTIFICATIONS_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_SOURCES) \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \
+	$(HYENA_SOURCES) \
+	$(HYENA_GUI_SOURCES) \
 	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(top_srcdir)/ext/sexp-engine/src/SExpEngine/*.cs \
