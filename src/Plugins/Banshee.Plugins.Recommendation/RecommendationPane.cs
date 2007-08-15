@@ -362,7 +362,8 @@ namespace Banshee.Plugins.Recommendation
             
             // translators: 25% similarity
             try {
-                int similarity = (int)Math.Round(Double.Parse(node.SelectSingleNode("match").InnerText));
+                int similarity = (int)Math.Round(Double.Parse(node.SelectSingleNode("match").InnerText, 
+                    Globals.InternalCultureInfo.NumberFormat));
                 artist_tile.SecondaryText = String.Format(Catalog.GetString("{0}% Similarity"), similarity);
             } catch {
                 artist_tile.SecondaryText = Catalog.GetString("Unknown Similarity");

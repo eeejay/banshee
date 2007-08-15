@@ -1,4 +1,15 @@
-2006-08-15  Aaron Bockover  <abock@gnome.org>
+2007-08-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs: 
+	Finally fixed the 'rating exceeds 100%' issue with the recommendation
+	plugin - it was a localization/parsing issue (BGO #451457)
+
+	* src/Core/Banshee.Base/Globals.cs: Expose a static en-US culture as
+	InternalCultureInfo for use when parsing non-culture-dependent data
+
+	* ChangeLog: Fixed a bunch of dates that were 2006
+
+2007-08-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Hyena.Gui/EntryUndoAdapter.cs: An adapter to
 	use UndoManager against any Gtk.Entry
@@ -16,17 +27,17 @@
 	* src/Core/Banshee.Base/Gui/TrackEditor.cs: Apply an EntryUndoAdapter
 	to Gtk.Entry fields in the metadata track editor (BGO #465736)
 
-2006-08-06  Aaron Bockover  <abock@gnome.org>
+2007-08-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Base/Paths.cs: Support the changes to the 
 	xdg-user-dirs spec that allow $HOME to start the path; also allows
 	for quotes surrounding the path (BGO #461596)
 
-2006-08-05  Aaron Bockover  <abock@gnome.org>
+2007-08-05  Aaron Bockover  <abock@gnome.org>
 
 	* data/banshee.desktop.in.in: Removed X-SuSE-translate
 
-2006-08-05  Aaron Bockover  <abock@gnome.org>
+2007-08-05  Aaron Bockover  <abock@gnome.org>
 
 	0.13.0 Released
 

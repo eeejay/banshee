@@ -336,6 +336,11 @@ namespace Banshee.Base
             string env_val = Environment.GetEnvironmentVariable(env);
             return env_val != null && env_val != String.Empty;
         }
+        
+        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
+        public static System.Globalization.CultureInfo InternalCultureInfo {
+            get { return culture_info; }
+        }
     }
     
     public static class InterfaceElements
