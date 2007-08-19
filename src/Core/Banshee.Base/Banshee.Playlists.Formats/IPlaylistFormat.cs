@@ -36,7 +36,9 @@ namespace Banshee.Playlists.Formats
 {
     public interface IPlaylistFormat
     {
-        void Load(Stream stream);
+        void Load(Stream stream, bool validateHeader);
+        void Load(StreamReader reader, bool validateHeader);
+        
         void Save(Stream stream, Source source);
         
         Dictionary<string, object> Attributes { get; }

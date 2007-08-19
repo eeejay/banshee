@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Playlists.Formats;
 using Banshee.Playlists.Formats.Xspf;
  
 namespace Banshee.Plugins.Radio
@@ -69,9 +70,10 @@ namespace Banshee.Plugins.Radio
             Duration = TimeSpan.Zero;
             CoverArtFileName = null;
             
-            lock(((ICollection)stream_uris).SyncRoot) {
+            lock(stream_uris) {
                 if(stream_uris.Count > 0) {
                     Uri = stream_uris[stream_index];
+                    LogCore.Instance.PushDebug("Playing Radio Stream", Uri.AbsoluteUri);
                     PlayerEngineCore.OpenPlay(this);
                 }
             }
@@ -87,26 +89,27 @@ namespace Banshee.Plugins.Radio
         
         private void LoadStreamUris()
         {
-            lock(((ICollection)stream_uris).SyncRoot) {
-                if(!Gnome.Vfs.Vfs.Initialized) {
-                    Gnome.Vfs.Vfs.Initialize();
-                }
-                
-                TotemPlParser.Parser parser = new TotemPlParser.Parser();
-                parser.Entry += OnHavePlaylistEntry;
-                
+            lock(stream_uris) {
                 foreach(Uri uri in track.Locations) {
                     try {
-                        if(parser.Parse(uri.AbsoluteUri, false) == TotemPlParser.Result.Unhandled) {
+                        LogCore.Instance.PushDebug("Attempting to parse radio playlist", uri.AbsoluteUri);
+                        PlaylistParser parser = new PlaylistParser();
+                        if(parser.Parse(new SafeUri(uri.AbsoluteUri))) {
+                            foreach(Dictionary<string, object> element in parser.Elements) {
+                                if(element.ContainsKey("uri")) {
+                                    stream_uris.Add(new SafeUri(((Uri)element["uri"]).AbsoluteUri));
+                                }
+                            }
+                        } else {
                             stream_uris.Add(new SafeUri(uri.AbsoluteUri));
                         }
+                    } catch(System.Net.WebException e) {
+                        PlaybackError = TrackPlaybackError.ResourceNotFound;
                     } catch(Exception e) {
                         Console.WriteLine(e);
+                        PlaybackError = TrackPlaybackError.ResourceNotFound;
                     }
                 }
-                
-                parser.Entry -= OnHavePlaylistEntry;
-                parser = null;
                 
                 loaded = true;
             }
@@ -136,12 +139,7 @@ namespace Banshee.Plugins.Radio
                 handler(this, EventArgs.Empty);
             }
         }
-        
-        private void OnHavePlaylistEntry(object o, TotemPlParser.EntryArgs args)
-        {
-            stream_uris.Add(new SafeUri(args.Uri));
-        }
-        
+
         public Track XspfTrack {
             get { return track; }
         }

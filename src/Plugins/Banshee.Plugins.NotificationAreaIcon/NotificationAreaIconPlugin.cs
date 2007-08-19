@@ -509,7 +509,10 @@ namespace Banshee.Plugins.NotificationAreaIcon
             popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtist;
             popup.Album = PlayerEngineCore.CurrentTrack.Album;
             popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTitle;
-            popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
+            try {
+                popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
+            } catch {
+            }
             popup.QueueDraw();
             if (!popup.Visible) {
                 PositionPopup();

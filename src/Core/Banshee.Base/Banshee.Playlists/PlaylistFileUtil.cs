@@ -128,7 +128,7 @@ namespace Banshee.Playlists
             foreach(PlaylistFormatDescription format in formats) {
                 try {
                     IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance(format.Type);
-                    playlist.Load(Banshee.IO.IOProxy.File.OpenRead(new SafeUri(playlistUri)));
+                    playlist.Load(Banshee.IO.IOProxy.File.OpenRead(new SafeUri(playlistUri)), true);
                     foreach(Dictionary<string, object> element in playlist.Elements) {
                         uris.Add(((Uri)element["uri"]).AbsoluteUri);
                     }

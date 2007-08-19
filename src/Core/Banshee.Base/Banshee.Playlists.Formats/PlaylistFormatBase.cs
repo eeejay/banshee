@@ -39,7 +39,7 @@ namespace Banshee.Playlists.Formats
     {
         private Dictionary<string, object> attributes = new Dictionary<string, object>();
         private List<Dictionary<string, object>> elements = new List<Dictionary<string, object>>();
-        private Uri base_uri;
+        private Uri base_uri = new Uri(Environment.CurrentDirectory);
         
         public PlaylistFormatBase()
         {
@@ -47,7 +47,15 @@ namespace Banshee.Playlists.Formats
             elements = new List<Dictionary<string, object>>();
         }
         
-        public abstract void Load(Stream stream);
+        public virtual void Load(Stream stream, bool validateHeader)
+        {
+            using(StreamReader reader = new StreamReader(stream)) {
+                Load(reader, validateHeader);
+            }
+        }
+            
+        public abstract void Load(StreamReader reader, bool validateHeader);
+        
         public abstract void Save(Stream stream, Source source);
         
         protected virtual Dictionary<string, object> AddElement()
@@ -84,8 +92,8 @@ namespace Banshee.Playlists.Formats
         protected virtual TimeSpan SecondsStringToTimeSpan(string seconds)
         {
             try {
-                return TimeSpan.FromSeconds(Int32.Parse(seconds.Trim(), 
-                    Banshee.Base.Globals.InternalCultureInfo.NumberFormat));
+                int parsed_seconds = Int32.Parse(seconds.Trim(), Banshee.Base.Globals.InternalCultureInfo.NumberFormat);
+                return parsed_seconds < 0 ? TimeSpan.Zero : TimeSpan.FromSeconds(parsed_seconds);
             } catch {
                 return TimeSpan.Zero;
             }

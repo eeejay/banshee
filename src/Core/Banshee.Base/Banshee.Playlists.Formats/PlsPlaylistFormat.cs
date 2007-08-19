@@ -47,77 +47,80 @@ namespace Banshee.Playlists.Formats
         }
         
         public static readonly PlaylistFormatDescription FormatDescription = new PlaylistFormatDescription(
-            typeof(PlsPlaylistFormat), Catalog.GetString("Shoutcast Playlist version 2 (*.pls)"), "pls");
+            typeof(PlsPlaylistFormat), MagicHandler, Catalog.GetString("Shoutcast Playlist version 2 (*.pls)"), "pls");
+        
+        public static bool MagicHandler(StreamReader reader)
+        {
+            string line = reader.ReadLine();
+            if(line == null) {
+                return false;
+            }
+            
+            return line.Trim() == "[playlist]";
+        }
         
         public PlsPlaylistFormat()
         {
         }
         
-        public override void Load(Stream stream)
+        public override void Load(StreamReader reader, bool validateHeader)
         {
-            using(StreamReader reader = new StreamReader(stream)) {
-                string line;
-                int line_number = 0;
+            string line;
+            
+            if(validateHeader && !MagicHandler(reader)) {
+                throw new InvalidPlaylistException();
+            }
+           
+            while((line = reader.ReadLine()) != null) {
+                line = line.Trim();
                 
-                while((line = reader.ReadLine()) != null) {
-                    line = line.Trim();
-                    
-                    if(line.Length == 0) {
-                        continue;
+                if(line.Length == 0) {
+                    continue;
+                }
+               
+                int eq_offset = line.IndexOf('=');
+                int index_offset = 0;
+               
+                if(eq_offset <= 0) {
+                    continue;
+                }
+               
+                PlsType element_type = PlsType.Unknown;
+               
+                if(line.StartsWith("File")) {
+                    element_type = PlsType.File;
+                    index_offset = 4;
+                } else if(line.StartsWith("Title")) {
+                    element_type = PlsType.Title;
+                    index_offset = 5;
+                } else if(line.StartsWith("Length")) {
+                    element_type = PlsType.Length;
+                    index_offset = 6;
+                } else {
+                    continue;
+                }
+               
+                try {
+                    int index = Int32.Parse(line.Substring(index_offset, eq_offset - index_offset), 
+                        Banshee.Base.Globals.InternalCultureInfo.NumberFormat) - 1;
+                    string value_string = line.Substring(eq_offset + 1).Trim();
+                    Dictionary<string, object> element = index < Elements.Count
+                        ? Elements[index] 
+                        : AddElement();
+                   
+                    switch(element_type) {
+                        case PlsType.File:
+                            element["uri"] = ResolveUri(value_string);
+                            break;
+                        case PlsType.Title:
+                            element["title"] = value_string;
+                            break;
+                        case PlsType.Length:
+                            element["duration"] = SecondsStringToTimeSpan(value_string);
+                            break;
                     }
-                    
-                    if(line_number++ == 0) {
-                        if(line != "[playlist]") {
-                            throw new InvalidPlaylistException();
-                        }
-                        
-                        continue;
-                    }
-                    
-                    int eq_offset = line.IndexOf('=');
-                    int index_offset = 0;
-                    
-                    if(eq_offset <= 0) {
-                        continue;
-                    }
-                    
-                    PlsType element_type = PlsType.Unknown;
-                    
-                    if(line.StartsWith("File")) {
-                        element_type = PlsType.File;
-                        index_offset = 4;
-                    } else if(line.StartsWith("Title")) {
-                        element_type = PlsType.Title;
-                        index_offset = 5;
-                    } else if(line.StartsWith("Length")) {
-                        element_type = PlsType.Length;
-                        index_offset = 5;
-                    } else {
-                        continue;
-                    }
-                    
-                    try {
-                        int index = Int32.Parse(line.Substring(index_offset, eq_offset - index_offset), 
-                            Banshee.Base.Globals.InternalCultureInfo.NumberFormat) - 1;
-                        string value_string = line.Substring(eq_offset + 1).Trim();
-                        Dictionary<string, object> element = index < Elements.Count 
-                            ? Elements[index] 
-                            : AddElement();
-                        
-                        switch(element_type) {
-                            case PlsType.File:
-                                element["uri"] = ResolveUri(value_string);
-                                break;
-                            case PlsType.Title:
-                                element["title"] = value_string;
-                                break;
-                            case PlsType.Length:
-                                element["duration"] = SecondsStringToTimeSpan(value_string);
-                                break;
-                        }
-                    } catch {
-                        continue;
-                    }
+                } catch {
+                    continue;
                 }
             }
         }

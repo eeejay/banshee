@@ -1,7 +1,6 @@
 include $(top_srcdir)/build/Common.Makefile
 
 CUSTOM_MCS_FLAGS = $(MCS_FLAGS) \
-	-unsafe \
 	-resource:$(srcdir)/source-radio.png,source-radio.png \
 	-resource:$(srcdir)/dialog-radio.png,dialog-radio.png \
 	-resource:$(srcdir)/dialog-radio.svg,dialog-radio.svg \
@@ -20,8 +19,7 @@ SOURCES = \
 	$(srcdir)/StationView.cs \
 	$(srcdir)/StationGroup.cs \
 	$(srcdir)/StationEditor.cs \
-	$(srcdir)/CellRendererStation.cs \
-	$(srcdir)/totem-plparser/*.cs
+	$(srcdir)/CellRendererStation.cs
 
 plugindir = $(pkglibdir)/Banshee.Plugins
 plugin_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb

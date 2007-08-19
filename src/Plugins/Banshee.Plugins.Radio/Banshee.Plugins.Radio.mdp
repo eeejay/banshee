@@ -14,18 +14,6 @@
     <File name="./StationManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./StationModel.cs" subtype="Code" buildaction="Compile" />
     <File name="./CellRendererStation.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/CD.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/EntryHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/Error.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/IterFunc.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/MediaType.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/ObjectManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/Parser.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/PlaylistEndHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/PlaylistStartHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/Result.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/TotemPlParserSharp.IterFuncNative.cs" subtype="Code" buildaction="Compile" />
-    <File name="./totem-plparser/Type.cs" subtype="Code" buildaction="Compile" />
     <File name="./RadioActions.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./radio.png" subtype="Code" buildaction="EmbedAsResource" />

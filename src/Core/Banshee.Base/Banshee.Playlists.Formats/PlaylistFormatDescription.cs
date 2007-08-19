@@ -30,21 +30,29 @@ using System;
 
 namespace Banshee.Playlists.Formats
 {
+    public delegate bool PlaylistFormatMagicHandler(System.IO.StreamReader reader);
+    
     public class PlaylistFormatDescription
     {
         private Type type;
         private string name;
         private string extension;
+        private PlaylistFormatMagicHandler magic_handler;
         
-        public PlaylistFormatDescription(Type type, string name, string extension)
+        public PlaylistFormatDescription(Type type, PlaylistFormatMagicHandler magic_handler, string name, string extension)
         {
             this.type = type;
+            this.magic_handler = magic_handler;
             this.name = name;
             this.extension = extension;
         }
         
         public Type Type {
             get { return type; }
+        }
+        
+        public PlaylistFormatMagicHandler MagicHandler {
+            get { return magic_handler; }
         }
         
         public string FormatName {

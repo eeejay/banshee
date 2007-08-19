@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 
+using Banshee.Base;
 using Banshee.Playlists.Formats;
 
 namespace Banshee.Playlists.Formats.Tests
@@ -54,6 +55,21 @@ namespace Banshee.Playlists.Formats.Tests
             LoadTest(new PlsPlaylistFormat(), "extended.pls");
         }
 
+        [Test]
+        public void ReadDetectMagic()
+        {
+            PlaylistParser parser = new PlaylistParser();
+            parser.BaseUri = BaseUri;
+
+            foreach(string path in Directory.GetFiles("playlist-data")) {
+                parser.Parse(new SafeUri(Path.Combine(Environment.CurrentDirectory, path)));
+                AssertTest(parser.Elements);
+            }
+
+            parser.Parse(new SafeUri("http://banshee-project.org/files/tests/extended.pls"));
+            AssertTest(parser.Elements);
+        }
+
 #endregion
 
 #region Utilities
@@ -61,18 +77,21 @@ namespace Banshee.Playlists.Formats.Tests
         private IPlaylistFormat LoadPlaylist(IPlaylistFormat playlist, string filename)
         {
             playlist.BaseUri = BaseUri;
-            playlist.Load(File.OpenRead(Path.Combine("playlist-data", filename)));
+            playlist.Load(File.OpenRead(Path.Combine("playlist-data", filename)), true);
             return playlist;
         }
 
         private void LoadTest(IPlaylistFormat playlist, string filename)
         {
             LoadPlaylist(playlist, filename);
-            
-            int i = 0;
-            foreach(Dictionary<string, object> element in playlist.Elements) {
-                Assert.AreEqual((Uri)elements[i]["uri"], (Uri)element["uri"]);
+            AssertTest(playlist.Elements);
+        }
 
+        private void AssertTest(List<Dictionary<string, object>> plelements)
+        {
+            int i = 0;
+            foreach(Dictionary<string, object> element in plelements) {
+                Assert.AreEqual((Uri)elements[i]["uri"], (Uri)element["uri"]);
                 if(element.ContainsKey("title")) {
                     Assert.AreEqual((string)elements[i]["title"], (string)element["title"]);
                 }
@@ -84,6 +103,7 @@ namespace Banshee.Playlists.Formats.Tests
                 i++;
             }
         }
+
 #endregion
 
     }

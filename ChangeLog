@@ -1,5 +1,40 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Radio/RadioTrackInfo.cs: Updated to use
+	the new PlaylistParser in Banshee; handle errors more sanely so the
+	UI becomes more responsive and informative
+
+	* src/Plugins/Banshee.Plugins.Radio/totem-plparser/: Nuked! Internet
+	Radio playlists are now handled in fully managed code - no more Totem
+	PlParser dependency
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistParser.cs:
+	New PlaylistParser to replace Totem PlParser; this is completely managed
+	code and uses the new PlaylistFormat work from the previous commit; the
+	parser currently handles local and HTTP streams
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFormatDescription.cs: 
+	Added a magic delegate to allow the format to see if it may be able to 
+	parse the playlist
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFormatBase.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/IPlaylistFormat.cs:
+	Add StreamReader API
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs: 
+	Fixes; refactored slightly to use the tweaked base API
+
+	* src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs: Updated
+	to reflect some minor API changes
+
+	* tests/PlaylistFormats.cs: Add some more tests
+
+	* src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+	Catch some stupid exception
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:
 	* src/Core/Banshee/PlayerInterface.cs: Updated to use new playlist 
 	formats API

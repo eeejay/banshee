@@ -40,50 +40,57 @@ namespace Banshee.Playlists.Formats
     public class M3uPlaylistFormat : PlaylistFormatBase
     {
         public static readonly PlaylistFormatDescription FormatDescription = new PlaylistFormatDescription(
-            typeof(M3uPlaylistFormat), Catalog.GetString("MPEG Version 3.0 Extended (*.m3u)"), "m3u");
+            typeof(M3uPlaylistFormat), MagicHandler, Catalog.GetString("MPEG Version 3.0 Extended (*.m3u)"), "m3u");
+        
+        public static bool MagicHandler(StreamReader reader)
+        {
+            string line = reader.ReadLine();
+            if(line == null) {
+                return false;
+            }
+            
+            line = line.Trim();
+            return line == "#EXTM3U" || line.StartsWith("http");
+        }
         
         public M3uPlaylistFormat()
         {
         }
         
-        public override void Load(Stream stream)
+        public override void Load(StreamReader reader, bool validateHeader)
         {
-            using(StreamReader reader = new StreamReader(stream)) {
-                string line;
-                int line_number = 0;
-                bool extended = false;
-                Dictionary<string, object> element = null;
+            string line;
+            Dictionary<string, object> element = null;
                 
-                while((line = reader.ReadLine()) != null) {
-                    line = line.Trim();
-                    
-                    if(line_number++ == 0 && line == "#EXTM3U") {
-                        extended = true;
-                    }
-                    
-                    if(line.Length == 0) {
-                        continue;
-                    }
-                    
-                    bool extinf = line.StartsWith("#EXTINF:");
-                    if((extinf && !extended) || (!extinf && line[0] == '#')) {
-                        continue;
-                    }
-                    
-                    if(extinf) {
-                        element = AddElement();
-                        try {
-                            ParseExtended(element, line);
-                        } catch {
-                        }
-                        continue;
-                    } else if(element == null) {
-                        element = AddElement();
-                    }
-                    
-                    element["uri"] = ResolveUri(line);
-                    element = null;
+            while((line = reader.ReadLine()) != null) {
+                line = line.Trim();
+               
+                if(line.Length == 0) {
+                    continue;
                 }
+                    
+                bool extinf = line.StartsWith("#EXTINF:");
+                
+                if(!extinf && line[0] == '#') {
+                    continue;
+                } else if(extinf) {
+                    element = AddElement();
+                    try {
+                        ParseExtended(element, line);
+                    } catch {
+                    }
+                    continue;
+                } else if(element == null) {
+                    element = AddElement();
+                }
+                    
+                try {
+                    element["uri"] = ResolveUri(line);
+                } catch {
+                    Elements.Remove(element);
+                }
+                
+                element = null;
             }
         }
         
@@ -93,14 +100,7 @@ namespace Banshee.Playlists.Formats
             string [] parts = split.Split(new char [] { ',' }, 2);
             
             if(parts.Length == 2) {
-                try {
-                    int seconds = Convert.ToInt32(parts[0]);
-                    if(seconds > 0) {
-                        element["duration"] = TimeSpan.FromSeconds(seconds);
-                    }
-                } catch {
-                }
-                
+                element["duration"] = SecondsStringToTimeSpan(parts[0]);
                 element["title"] = parts[1].Trim();
             } else {
                 element["title"] = split.Trim();

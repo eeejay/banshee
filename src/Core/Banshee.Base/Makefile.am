@@ -111,6 +111,7 @@ BANSHEE_SMARTPLAYLIST_SOURCES = \
 	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistSource.cs
 
 BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
+	$(srcdir)/Banshee.Playlists.Formats/PlaylistParser.cs \
 	$(srcdir)/Banshee.Playlists.Formats/InvalidPlaylistException.cs \
 	$(srcdir)/Banshee.Playlists.Formats/IPlaylistFormat.cs \
 	$(srcdir)/Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
