@@ -99,6 +99,20 @@ namespace Banshee.IO.GnomeVfs
             Gnome.Vfs.Move.Uri(new Gnome.Vfs.Uri(from.AbsoluteUri), 
                                new Gnome.Vfs.Uri(to.AbsoluteUri), true);
         }
+        
+        public System.IO.Stream OpenRead(SafeUri uri)
+        {
+            return new VfsStream(uri.AbsoluteUri, System.IO.FileMode.Open);
+        }
+        
+        public System.IO.Stream OpenWrite(SafeUri uri, bool overwrite)
+        {
+            // FIXME: This always overwrites, and I can't figure out how to 
+            // not do it with GnomeVFS - this means tag writing is probably
+            // completely broke with this backend
+            
+            return new VfsStream(uri.AbsoluteUri, System.IO.FileMode.Create);
+        }
     }
 
     public class Directory : IDirectory
@@ -179,7 +193,7 @@ namespace Banshee.IO.GnomeVfs
         }
 
         public System.IO.Stream WriteStream {
-            get { return new VfsStream(Name, System.IO.FileMode.Open); }
+            get { return new VfsStream(Name, System.IO.FileMode.OpenOrCreate); }
         }
 
         public bool IsReadable {

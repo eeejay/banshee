@@ -48,6 +48,8 @@ namespace Banshee.IO
         void Delete(SafeUri uri);
         bool Exists(SafeUri uri);
         void Move(SafeUri from, SafeUri to);
+        System.IO.Stream OpenRead(SafeUri uri);
+        System.IO.Stream OpenWrite(SafeUri uri, bool overwrite);
     }
     
     public interface IDirectory

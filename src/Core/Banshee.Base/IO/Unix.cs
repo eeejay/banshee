@@ -93,6 +93,18 @@ namespace Banshee.IO.Unix
         {
             Mono.Unix.Native.Stdlib.rename(from.LocalPath, to.LocalPath);
         }
+        
+        public Stream OpenRead(SafeUri uri)
+        {
+            return new UnixFileInfo(uri.LocalPath).OpenRead();
+        }
+        
+        public Stream OpenWrite(SafeUri uri, bool overwrite)
+        {
+            return overwrite 
+                ? new UnixFileInfo(uri.LocalPath).Open(FileMode.Create, FileAccess.ReadWrite, FilePermissions.DEFFILEMODE)
+                : new UnixFileInfo(uri.LocalPath).OpenWrite();
+        }
     }
 
     public class Directory : IDirectory
@@ -194,7 +206,7 @@ namespace Banshee.IO.Unix
         }
         
         public Stream WriteStream {
-            get { return file_info.Open(FileMode.Open, FileAccess.ReadWrite); }
+            get { return file_info.Open(FileMode.Create, FileAccess.ReadWrite); }
         }
    
         public bool IsReadable {

@@ -63,6 +63,18 @@ namespace Banshee.IO.SystemIO
         {
             System.IO.File.Move(from.LocalPath, to.LocalPath);
         }
+        
+        public System.IO.Stream OpenRead(SafeUri uri)
+        {
+            return System.IO.File.OpenRead(uri.LocalPath);
+        }
+        
+        public System.IO.Stream OpenWrite(SafeUri uri, bool overwrite)
+        {
+            return overwrite 
+                ? System.IO.File.Open(uri.LocalPath, FileMode.Create, FileAccess.ReadWrite)
+                : System.IO.File.OpenWrite(uri.LocalPath);
+        }
     }
 
     public class Directory : IDirectory

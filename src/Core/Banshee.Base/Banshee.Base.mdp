@@ -98,9 +98,6 @@
     <File name="./Banshee.Playlists/PlaylistFileUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists/IPlaylist.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats" subtype="Directory" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/M3u.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/PlaylistFile.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/Pls.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
@@ -269,6 +266,12 @@
     <File name="./Hyena.Gui/EntryEraseAction.cs" subtype="Code" buildaction="Compile" />
     <File name="./Hyena.Gui/EntryInsertAction.cs" subtype="Code" buildaction="Compile" />
     <File name="./Hyena.Gui/EntryUndoAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/IPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/InvalidPlaylistException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/M3uPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistFormatBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistFormatDescription.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlsPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

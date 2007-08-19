@@ -4,6 +4,7 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES = \
+	$(srcdir)/PlaylistFormats.cs \
 	$(srcdir)/Banshee.Kernel.cs \
 	$(srcdir)/GenericCollectionController.cs \
 	$(srcdir)/FileNamePattern.cs \

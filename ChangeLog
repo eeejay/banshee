@@ -1,5 +1,41 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:
+	* src/Core/Banshee/PlayerInterface.cs: Updated to use new playlist 
+	formats API
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFile.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs: Removed old
+	PLS and M3U implementations and the old base class
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFormatDescription.cs:
+	New class to describe a playlist format for GUI/factory reasons
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/IPlaylistFormat.cs: 
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistFormatBase.cs: 
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs: 
+	API for implementing new playlist formats; new implementation of 
+	M3U and PLS formats
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/InvalidPlaylistException.cs:
+	Exception for invalid playlists
+
+	* src/Core/Banshee.Base/IO/SystemIO.cs:
+	* src/Core/Banshee.Base/IO/Unix.cs:
+	* src/Core/Banshee.Base/IO/GnomeVfs.cs:
+	* src/Core/Banshee.Base/IO/Interfaces.cs: Added OpenRead and OpenWrite
+	stream methods on File
+
+	* build/Common.Makefile: Link against TagLib for BUILD_LIB_BANSHEE
+
+	* tests/PlaylistFormats.cs: Added tests for playlist parsing
+
+	* tests/playlist-data: Test data for playlist parsing
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationUtilities.cs:
 	If response stream is GZip compressed, decompress it on the fly using
 	ICSharpCode.SharpZipLib.GZip (Christian Krause, BGO #468216)

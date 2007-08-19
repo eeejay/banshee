@@ -111,9 +111,12 @@ BANSHEE_SMARTPLAYLIST_SOURCES = \
 	$(srcdir)/Banshee.SmartPlaylist/SmartPlaylistSource.cs
 
 BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
-    $(srcdir)/Banshee.Playlists.Formats/PlaylistFile.cs \
-    $(srcdir)/Banshee.Playlists.Formats/M3u.cs \
-    $(srcdir)/Banshee.Playlists.Formats/Pls.cs  
+	$(srcdir)/Banshee.Playlists.Formats/InvalidPlaylistException.cs \
+	$(srcdir)/Banshee.Playlists.Formats/IPlaylistFormat.cs \
+	$(srcdir)/Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
+	$(srcdir)/Banshee.Playlists.Formats/PlaylistFormatBase.cs \
+	$(srcdir)/Banshee.Playlists.Formats/M3uPlaylistFormat.cs \
+	$(srcdir)/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
 
 BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES = \
 	$(srcdir)/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs \

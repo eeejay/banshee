@@ -2079,13 +2079,12 @@ namespace Banshee
             PlaylistExportDialog chooser = new PlaylistExportDialog(source.Name, WindowPlayer);
 
             string uri = null;
-            PlaylistFile playlist = null;
+            PlaylistFormatDescription format = null;
             int response = chooser.Run();            
             if(response == (int) ResponseType.Ok) {            	
-                uri = SafeUri.UriToFilename(chooser.Uri);
-
+                uri = chooser.Uri;
                 // Get the format that the user selected.
-                playlist = chooser.GetExportFormat();
+                format = chooser.GetExportFormat();
             }             
             chooser.Destroy(); 
 
@@ -2093,8 +2092,19 @@ namespace Banshee
                 // User cancelled export.
                 return;
             }
-
-            playlist.Export(uri, source);            
+            
+            try {
+                IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance(format.Type);
+                SafeUri suri = new SafeUri(uri);
+                if(suri.IsLocalPath) {
+                    playlist.BaseUri = new Uri(Path.GetDirectoryName(suri.LocalPath));
+                    Console.WriteLine(playlist.BaseUri.LocalPath);
+                }
+                playlist.Save(Banshee.IO.IOProxy.File.OpenWrite(new SafeUri(uri), true), source);
+            } catch(Exception e) {
+                Console.WriteLine(e);
+                LogCore.Instance.PushError(Catalog.GetString("Could not export playlist"), e.Message);
+            }
         } 
         
         private void OnOpenLocationAction(object o, EventArgs args)
