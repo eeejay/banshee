@@ -1,3 +1,14 @@
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationUtilities.cs:
+	If response stream is GZip compressed, decompress it on the fly using
+	ICSharpCode.SharpZipLib.GZip (Christian Krause, BGO #468216)
+
+	* src/Plugins/Banshee.Plugins.Recommendation/Makefile.am: Link against
+	ICSharpCode.SharpZipLib
+
+	* configure.ac: Check for ICSharpCode.SharpZipLib in GAC
+
 2007-08-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs: 

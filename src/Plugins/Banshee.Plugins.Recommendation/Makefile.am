@@ -22,7 +22,7 @@ plugin_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 all: $(ASSEMBLY)
 
 $(ASSEMBLY): $(SOURCES) $(RESOURCES)
-	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(RESOURCES_BUILD) $(SOURCES) $(LINK_GTK) $(LINK_MONO_UNIX) -r:System.Web
+	$(BUILD_LIB_BANSHEE_CORE) -out:$@ $(RESOURCES_BUILD) $(SOURCES) $(LINK_GTK) $(LINK_MONO_UNIX) -r:ICSharpCode.SharpZipLib -r:System.Web
 
 include $(top_srcdir)/build/gconf-schema-rules
 

@@ -47,6 +47,7 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	Mono.Cairo
 	Mono.Data.SqliteClient
 	Mono.Posix
+	ICSharpCode.SharpZipLib
 ])
 
 dnl Monodoc (optional through --disable-docs)

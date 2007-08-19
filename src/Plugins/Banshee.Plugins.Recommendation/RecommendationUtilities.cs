@@ -32,6 +32,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using ICSharpCode.SharpZipLib.GZip;
 
 using Banshee.Database;
 
@@ -78,6 +79,13 @@ namespace Banshee.Plugins.Recommendation
             return content;
         }
 
+        internal static Stream GetResponseStream(HttpWebResponse response) 
+        {
+            return response.ContentEncoding == "gzip"
+                ? new GZipInputStream(response.GetResponseStream())
+                : response.GetResponseStream();
+        }
+
         internal static void DownloadContent(string url, string path, bool static_content)
         {
             if(File.Exists(path)) {
@@ -92,7 +100,7 @@ namespace Banshee.Plugins.Recommendation
             request.KeepAlive = false;
             
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream stream = response.GetResponseStream();
+            Stream stream = GetResponseStream(response);
 
             FileStream file_stream = File.Open(path, FileMode.Create);
             BufferedStream buffered_stream = new BufferedStream(file_stream);
