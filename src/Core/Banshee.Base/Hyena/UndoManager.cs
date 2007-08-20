@@ -53,6 +53,17 @@ namespace Hyena
                 UndoRedo(redo_stack, undo_stack, false);
             }
         }
+        
+        public void Clear()
+        {
+            lock(this) {
+                frozen_count = 0;
+                try_merge = false;
+                undo_stack.Clear();
+                redo_stack.Clear();
+                OnUndoChanged();
+            }
+        }
 
         public void AddUndoAction(IUndoAction action)
         {

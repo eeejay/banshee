@@ -36,6 +36,8 @@ using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Configuration.Schema;
 
+using Hyena.Gui;
+
 namespace Banshee.Gui.Dialogs
 {
     internal class EditorTrack
@@ -139,6 +141,7 @@ namespace Banshee.Gui.Dialogs
         
         private Tooltips tips = new Tooltips();
         private RatingEntry rating_entry = new RatingEntry();
+        private List<EntryUndoAdapter> entry_undo_adapters = new List<EntryUndoAdapter>();
         
         private List<EditorTrack> TrackSet = new List<EditorTrack>();
         private int currentIndex = 0;
@@ -222,7 +225,7 @@ namespace Banshee.Gui.Dialogs
             LoadTrack(0);
             
             foreach(Entry entry in new Entry [] { Artist, Album, Title, Year, Genre.Entry }) {
-                new Hyena.Gui.EntryUndoAdapter(entry);
+                entry_undo_adapters.Add(new EntryUndoAdapter(entry));
             }
             
             Window.Show();
@@ -257,6 +260,10 @@ namespace Banshee.Gui.Dialogs
             }
                 
             SetCoverImage(null);
+            
+            foreach(EntryUndoAdapter undo_adapter in entry_undo_adapters) {
+                undo_adapter.UndoManager.Clear();
+            }
                 
             EditorTrack track = TrackSet[index] as EditorTrack;
             

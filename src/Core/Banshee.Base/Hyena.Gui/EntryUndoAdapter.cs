@@ -110,5 +110,9 @@ namespace Hyena.Gui
             item.Show();
             menu.Prepend(item);
         }
+        
+        public UndoManager UndoManager {
+            get { return undo_manager; }
+        }
     }
 }

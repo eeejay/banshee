@@ -1,5 +1,14 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Gui/TrackEditor.cs: Reset the undo managers
+	bound to each field when changing tracks
+
+	* src/Core/Banshee.Base/Hyena/UndoManager.cs: Added a clear method
+
+	* src/Core/Banshee.Base/Hyena.Gui/EntryUndoAdapter.cs: Proxy the UndoManager
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs: Use HAL
 	to get capacity information if it is available
 
