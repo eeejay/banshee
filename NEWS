@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 0.13.0
+WELCOME TO BANSHEE 0.13.1
 ===============================================================================
 
  * Banshee is a music management and playback application for GNOME.
@@ -11,7 +11,7 @@ WELCOME TO BANSHEE 0.13.0
     and much more."
 
  * Learn More: http://banshee-project.org/Discover
- * Release Overview Page: http://banshee-project.org/Releases/0.13.0
+ * Release Overview Page: http://banshee-project.org/Releases/0.13.1
 
 
 ===============================================================================
@@ -61,9 +61,9 @@ GET THE GOODS
 Sources
 -------
 
- * Banshee 0.13.0 Tarballs:
-   http://banshee-project.org/files/banshee/banshee-0.13.0.tar.bz2
-   http://banshee-project.org/files/banshee/banshee-0.13.0.tar.gz
+ * Banshee 0.13.1 Tarballs:
+   http://banshee-project.org/files/banshee/banshee-0.13.1.tar.bz2
+   http://banshee-project.org/files/banshee/banshee-0.13.1.tar.gz
  
  * ipod-sharp 0.6.2 Tarball:
    http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.3.tar.gz
@@ -77,7 +77,7 @@ Sources
 ChangeLogs
 ----------
  
- * http://banshee-project.org/files/banshee/banshee-0.13.0.changes
+ * http://banshee-project.org/files/banshee/banshee-0.13.1.changes
 
 Dependencies
 ------------
@@ -99,59 +99,9 @@ NEW STUFF
 Features
 --------
 
- * Import and Export playlists in M3U and PLS formats (Trey Ethridge)
- 
- * New Bookmarks plugin (Gabriel Burt)
- 
- * Share local playlists over DAAP (Daniel Munckton, BGO #407672)
+ * Added Undo/Redo support to the track editor (BGO #465736)
 
- * Use org.gnome.SettingsDaemon if it is available for multimedia keys
-   support in the core, but fall back on legacy multimedia keys plugin 
-   if not available (Aaron Bockover, Jan Arne Petersen, BGO #395433)
-
- * Added a date column to the track view (Pepijn van de Geer, BGO #392232)
-
- * Embed an interactive rating menu item in the track view menu (Aaron Bockover)
-
- * New search entry widget and improved searching performance
-
- * Support importing the libraries of other music players, including
-   Rhythmbox and Amarok (Sebastian Dröge, BGO #378430)
-
- * Simplified track view context and notification area menus (Gabriel Burt)
-
- * Detect and use XDG_MUSIC_DIR if it is set, otherwise use ~/Music
-
- * Allow rating the current track from the notification area icon 
-   (Pepijn van de Geer, BGO #337157)
-
- * Reverse menu items in notification area menu depending on the location of
-   the panel/tray so that the most common functionality is always closest 
-   to the notification area icon (less distance to travel with mouse to 
-   access common functions) (Aaron Bockover)
-
- * Very basic support for the new GStreamer Install Plugins framework if
-   built against GStreamer 0.10.12 or better. 
-
- * Use TagLib# 2.0 (Sebastian Dröge, Aaron Bockover, BGO #436743)
-
- * Create cdda GStreamer elements by URI and do not hardcode a dependency
-   on cdparanoia
-
-Localization
-------------
-
- * New Translations: Dzongkha (Pema Geyleg), Latvian (Raivis Dejus), 
-   Portuguese (Filipe Gomes)
-
- * Updated Translations: Arabic (Ahmad Farghal), Brazilian Portugese 
-   (Vladimir Melo,  Og Maciel, Daniel Abreu), British English (David Lodge), 
-   Bulgarian (Vladimir Petkov), Catalan (Jordi Mas), Czech (Jakub Friedl), 
-   Danish (Lasse Bang Mikkelsen), Finnish (Ilkka Tuohela), French (Jonathan 
-   Ernst, Robert-André Mauchin, Stéphane Raimbault), Hungarian (Gabor Kelemen), 
-   Polish (Artur Flinta), Russian (Alexandre Prokoudine), Swedish (Daniel 
-   Nylander)
- 
+ * Play Internet Radio playlists from the open location dialog
 
 ===============================================================================
 BUGZILLA OVERVIEW
@@ -162,40 +112,19 @@ Noteworthy bugs fixes/enhancements embraced in this release
 
  GNOME Bugzilla
 
- * 415138 - Ensure sources that are not CanActivate really can't be
-            activated (Scott Peterson)
- * 410498 - Do not forget audio profile setting (Lauri Kotilainen) 
- * 381229 - Prevent recommended cache from corruption (Pepijn van de Geer)
- * 419163 - Fixed crash regarding PSP devices (Jason Conti)
- * 406923 - Fixed crash in DAAP (Eric Butler)
- * 334132 - Make track view popup menu accessible from keyboard (Bill Dawson)
- * 398489 - Sort playlists in "Add to Playlis" menu (Pepijn van de Geer)
- * 416991 - Ensure functions are not aliased twice in Boo Buddy (Scott Peterson)
- * 424951 - Fixed p_help() in Boo Buddy (Ruben Vermeersch)
- * 410183 - Fix string capitalization errors (Igor Guerrero Fonseca)
- * 432200 - Major bug fixes in the recommendations plugin (Aaron Bockover)
- * 433668 - Fixed crash if embedded picture data is null (Dan Wilson)
- * 425247 - Support the 'stop' multimedia key (Bojan Rajkovic)
- * 436741 - Check playbin before pausing (Sebastian Dröge)
- * 398484 - Use 16x16 versions of the playlist icons in places (Michael Monreal)
- * 445770 - Fixed progress reporting in Mass Storage DAP (Pepijn van de Geer)
- * 446037 - Other Mass Storage DAP fixes (Pepijn van de Geer)
- * 443027 - Use SetCurrentFolder instead of SetFilename on FileChooserButton
-            to avoid a race condition in GTK+ (Ilya Konstantinov)
- * 443048 - Only call Eject on storage volume if storage.requires_eject is
-            not set or is true (Ilya Konstantinov)
-
- Unfiled Bug Fixes
-
- * Fixed many issues with the rating widgets (Aaron Bockover)
-
- * Added ugly hack in GStreamer engine to get around a bug in qtdemux 
-   when it encounters DRM-free files from the iTunes Plus store
+ * 453420 - Fixed CD burning in GNOME 2.19.x+
+ * 457711 - Added new managed playlist parsing that eliminates the need for
+            totem-plparser (Aaron Bockover)
+ * 468216 - Support GZipped compressed HTTP streams from last.fm in the 
+            recommendation plugin (Christian Krause)
+ * 451457 - Fixed parsing of similarity in recommendation plugin that would
+            allow it to surpass 100% in some locales (Aaron Bockover)
+ * 461596 - Expand $HOME and ~ in XDG user-dirs.dirs
 
 Show all bugs marked FIXED during this release cycle
 ----------------------------------------------------
 
- * http://banshee-project.org/files/closedbugs.php/2007-04-01,2007-08-05
+ * http://banshee-project.org/files/closedbugs.php/2007-08-06,2007-08-20
 
 File Bugs... Be Proactive... Contribute to Open Source!
 -------------------------------------------------------
@@ -217,23 +146,19 @@ Contributors for this release
    
    Community makes Open Source work!
 
-   Aaron Bockover, Bill Dawson, Bojan Rajkovic, Brian Nickel, Dan Wilson, 
-   Daniel Munckton, Eric Butler, Gabriel Burt, Igor Guerrero Fonseca, 
-   Ilya Konstantinov, James Willcox, Jan Arne Petersen, Jason Conti, 
-   Lauri Kotilainen, Michael Monreal, Pepijn van de Geer, Ruben Vermeersch, 
-   Scott Peterson, Sebastian Dröge, Trey Ethridge
+   Aaron Bockover, Christian Krause
 
 Contributors for past releases [1]
 ----------------------------------
 
    Aaron Bockover, Alexandros Frantzis, Alp Toker, Bertrand Lorentz, Bill 
    Dawson, Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Turchin, 
-   Christopher James Halse Rogers, Dan Wilson, Daniel Munkton, Eric Butler, 
-   Gabriel Burt, Igor Guerrero Fonseca, Ilya Konstantinov, Jakub Steiner, James 
-   Willcox, Jan Arne Petersen, Jason Conti, Juri Pakaste, Lauri Kotilainen, 
-   Michael Monreal, Mike Urbanski, Nathan Palmer, Patrick van Staveren, 
-   Pepijn van de Geer, Ruben Vermeersch, Sebastian Dröge, Scott Peterson, 
-   Tim Yamin, Trey Ethridge
+   Christian Krause, Christopher James Halse Rogers, Dan Wilson, 
+   Daniel Munkton, Eric Butler, Gabriel Burt, Igor Guerrero Fonseca, 
+   Ilya Konstantinov, Jakub Steiner, James Willcox, Jan Arne Petersen, 
+   Jason Conti, Juri Pakaste, Lauri Kotilainen, Michael Monreal, Mike Urbanski, 
+   Nathan Palmer, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch, 
+   Sebastian Dröge, Scott Peterson, Tim Yamin, Trey Ethridge
 
    [1] This list is actually only accurate since 0.11.3. I need to grep the
    ChangeLog to build a complete list. If your name is missing here, feel

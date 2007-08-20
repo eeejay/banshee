@@ -1,6 +1,6 @@
 dnl Automake setup
 
-AC_INIT([banshee], [0.13.0])
+AC_INIT([banshee], [0.13.1])
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
