@@ -32,6 +32,18 @@ namespace Banshee.Playlists.Formats.Tests
 #region Tests
 
         [Test]
+        public void ReadAsxSimple()
+        {
+            LoadTest(new AsxPlaylistFormat(), "simple.asx");
+        }
+
+        [Test]
+        public void ReadAsxExtended()
+        {
+            LoadTest(new AsxPlaylistFormat(), "extended.asx");
+        }
+
+        [Test]
         public void ReadM3uSimple()
         {
             LoadTest(new M3uPlaylistFormat(), "simple.m3u");

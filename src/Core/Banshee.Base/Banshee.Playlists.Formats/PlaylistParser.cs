@@ -40,7 +40,8 @@ namespace Banshee.Playlists.Formats
     {
         private static PlaylistFormatDescription [] playlist_formats = new PlaylistFormatDescription [] {
             M3uPlaylistFormat.FormatDescription,
-            PlsPlaylistFormat.FormatDescription
+            PlsPlaylistFormat.FormatDescription,
+            AsxPlaylistFormat.FormatDescription
         };
         
         private List<Dictionary<string, object>> elements;

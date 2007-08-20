@@ -1,5 +1,15 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:
+	Added first pass of ASX parsing support
+
+	* src/Core/Banshee.Base/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Add ASX to the list of playlist formats to try
+
+	* tests/*: Added ASX tests 
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Radio/RadioTrackInfo.cs:
 	* src/Core/Banshee.Base/RadioTrackInfo.cs: Moved RadioTrackInfo from
 	the radio plugin into core

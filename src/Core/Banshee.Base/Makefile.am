@@ -117,7 +117,8 @@ BANSHEE_PLAYLISTS_FORMATS_SOURCES = \
 	$(srcdir)/Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
 	$(srcdir)/Banshee.Playlists.Formats/PlaylistFormatBase.cs \
 	$(srcdir)/Banshee.Playlists.Formats/M3uPlaylistFormat.cs \
-	$(srcdir)/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
+	$(srcdir)/Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
+	$(srcdir)/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
 
 BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES = \
 	$(srcdir)/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs \
