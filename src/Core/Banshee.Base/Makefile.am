@@ -348,7 +348,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/SampleTrackInfo.cs \
 	$(srcdir)/Localization.cs \
 	$(srcdir)/GnomeMMKeys.cs \
-	$(srcdir)/TrackFilterType.cs
+	$(srcdir)/TrackFilterType.cs \
+	$(srcdir)/RadioTrackInfo.cs
 
 Banshee_Base_RESOURCES = \
 	data/UIManagerLayout.xml \

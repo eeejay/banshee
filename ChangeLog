@@ -1,5 +1,17 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Plugins/Banshee.Plugins.Radio/RadioTrackInfo.cs:
+	* src/Core/Banshee.Base/RadioTrackInfo.cs: Moved RadioTrackInfo from
+	the radio plugin into core
+
+	* src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs: Added null check
+
+	* src/Core/Banshee/PlayerInterface.cs: Use RadioTrackInfo with the open
+	location dialog so now internet playlists can be opened and played
+	from this dialog
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Plugins/Banshee.Plugins.Radio/RadioTrackInfo.cs: Updated to use
 	the new PlaylistParser in Banshee; handle errors more sanely so the
 	UI becomes more responsive and informative

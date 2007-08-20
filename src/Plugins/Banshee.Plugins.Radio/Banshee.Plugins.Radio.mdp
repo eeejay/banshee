@@ -15,7 +15,6 @@
     <File name="./StationModel.cs" subtype="Code" buildaction="Compile" />
     <File name="./CellRendererStation.cs" subtype="Code" buildaction="Compile" />
     <File name="./RadioActions.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./radio.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./source-radio.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./StationGroup.cs" subtype="Code" buildaction="Compile" />

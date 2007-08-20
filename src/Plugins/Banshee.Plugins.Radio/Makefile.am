@@ -13,7 +13,6 @@ SOURCES = \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(srcdir)/RadioPlugin.cs \
 	$(srcdir)/RadioSource.cs \
-	$(srcdir)/RadioTrackInfo.cs \
 	$(srcdir)/StationManager.cs \
 	$(srcdir)/StationModel.cs \
 	$(srcdir)/StationView.cs \

@@ -103,7 +103,8 @@ namespace Banshee.Plugins.Radio
             
             FontDescription font_description = widget.PangoContext.FontDescription.Copy();
             
-            if(playing_icon != null && track != null && PlayerEngineCore.CurrentTrack is RadioTrackInfo 
+            if(playing_icon != null && track != null && PlayerEngineCore.CurrentTrack is RadioTrackInfo
+                && (PlayerEngineCore.CurrentTrack as RadioTrackInfo).XspfTrack != null
                 && (PlayerEngineCore.CurrentTrack as RadioTrackInfo).XspfTrack.Title == track.Title
                 && (PlayerEngineCore.CurrentTrack as RadioTrackInfo).XspfTrack.Annotation == track.Annotation) {
                 render_icon = playing_icon;

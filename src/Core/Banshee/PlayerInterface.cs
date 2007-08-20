@@ -2119,10 +2119,17 @@ namespace Banshee
             }
             
             try {
-                PlayerEngineCore.Open(new SafeUri(address));
-                PlayerEngineCore.Play();
-            } catch(Exception) {
-            }   
+                RadioTrackInfo radio_track = new RadioTrackInfo(new SafeUri(address));
+                radio_track.ParsingPlaylistEvent += delegate {
+                    if(radio_track.PlaybackError != TrackPlaybackError.None) {
+                        LogCore.Instance.PushError(Catalog.GetString("Error opening stream"), Catalog.GetString("Could not open stream or playlist"));
+                        radio_track = null;
+                    }
+                };
+                radio_track.Play();
+            } catch {
+                LogCore.Instance.PushError(Catalog.GetString("Error opening stream"), Catalog.GetString("Problem parsing playlist"));
+            }
         }
         
         private void OnImportSourceAction(object o, EventArgs args)

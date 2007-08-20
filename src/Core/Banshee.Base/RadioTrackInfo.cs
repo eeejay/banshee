@@ -34,11 +34,12 @@ using Banshee.Base;
 using Banshee.Playlists.Formats;
 using Banshee.Playlists.Formats.Xspf;
  
-namespace Banshee.Plugins.Radio
+namespace Banshee.Base
 {   
     public class RadioTrackInfo : TrackInfo
     {
         private Track track;
+        private SafeUri single_location;
         private List<SafeUri> stream_uris = new List<SafeUri>();
         private int stream_index = 0;
         private bool loaded = false;
@@ -54,6 +55,12 @@ namespace Banshee.Plugins.Radio
             is_live = true;
         }
         
+        public RadioTrackInfo(SafeUri uri) : base()
+        {
+            this.single_location = uri;
+            is_live = true;
+        }
+        
         public void Play()
         {
             if(!loaded) {
@@ -64,8 +71,11 @@ namespace Banshee.Plugins.Radio
                 return;
             }
             
-            Title = track.Title;
-            Artist = track.Creator;
+            if(track != null) {
+                Title = track.Title;
+                Artist = track.Creator;
+            }
+            
             Album = null;
             Duration = TimeSpan.Zero;
             CoverArtFileName = null;
@@ -90,25 +100,12 @@ namespace Banshee.Plugins.Radio
         private void LoadStreamUris()
         {
             lock(stream_uris) {
-                foreach(Uri uri in track.Locations) {
-                    try {
-                        LogCore.Instance.PushDebug("Attempting to parse radio playlist", uri.AbsoluteUri);
-                        PlaylistParser parser = new PlaylistParser();
-                        if(parser.Parse(new SafeUri(uri.AbsoluteUri))) {
-                            foreach(Dictionary<string, object> element in parser.Elements) {
-                                if(element.ContainsKey("uri")) {
-                                    stream_uris.Add(new SafeUri(((Uri)element["uri"]).AbsoluteUri));
-                                }
-                            }
-                        } else {
-                            stream_uris.Add(new SafeUri(uri.AbsoluteUri));
-                        }
-                    } catch(System.Net.WebException e) {
-                        PlaybackError = TrackPlaybackError.ResourceNotFound;
-                    } catch(Exception e) {
-                        Console.WriteLine(e);
-                        PlaybackError = TrackPlaybackError.ResourceNotFound;
+                if(track != null) {
+                    foreach(Uri uri in track.Locations) {
+                        LoadStreamUri(uri.AbsoluteUri);
                     }
+                } else {
+                    LoadStreamUri(single_location.AbsoluteUri);
                 }
                 
                 loaded = true;
@@ -118,6 +115,28 @@ namespace Banshee.Plugins.Radio
                 OnParsingPlaylistFinished();
                 Play();
             });
+        }
+        
+        private void LoadStreamUri(string uri)
+        {
+            try {
+                LogCore.Instance.PushDebug("Attempting to parse radio playlist", uri);
+                PlaylistParser parser = new PlaylistParser();
+                if(parser.Parse(new SafeUri(uri))) {
+                    foreach(Dictionary<string, object> element in parser.Elements) {
+                        if(element.ContainsKey("uri")) {
+                            stream_uris.Add(new SafeUri(((Uri)element["uri"]).AbsoluteUri));
+                        }
+                    }
+                } else {
+                    stream_uris.Add(new SafeUri(uri));
+                }
+            } catch(System.Net.WebException) {
+                PlaybackError = TrackPlaybackError.ResourceNotFound;
+            } catch(Exception e) {
+                Console.WriteLine(e);
+                PlaybackError = TrackPlaybackError.ResourceNotFound;
+            }   
         }
         
         private void OnParsingPlaylistStarted()
