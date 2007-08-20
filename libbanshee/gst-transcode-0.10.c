@@ -184,16 +184,7 @@ gst_transcoder_build_encoder(const gchar *encoder_pipeline)
     gchar *pipeline;
     GError *error = NULL;
     
-    if(g_strrstr(encoder_pipeline, "cdwavenc")) {
-        pipeline = g_strdup_printf("audioresample ! audioconvert ! %s ! wavenc", 
-            "audio/x-raw-int, endianness=(int)1234, width=(int)16, "
-            "depth=(int)16, signed=(boolean)true, rate=(int)44100, "
-            "channels=(int)2"
-        );
-    } else {
-        pipeline = g_strdup_printf("%s", encoder_pipeline);
-    }
-    
+    pipeline = g_strdup_printf("%s", encoder_pipeline); 
     encoder = gst_parse_bin_from_description(pipeline, TRUE, &error);
     g_free(pipeline);
     

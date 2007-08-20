@@ -10,6 +10,16 @@
 #include <nautilus-burn.h>
 #endif
 
+void
+nautilus_burn_glue_drive_free(NautilusBurnDrive *drive)
+{
+#if LNB_215
+    nautilus_burn_drive_unref(drive);
+#else
+    nautilus_burn_drive_free(drive);
+#endif
+}
+
 struct NautilusBurnRecorderTrack *
 nautilus_burn_glue_create_track(const char *filename, NautilusBurnRecorderTrackType type)
 {

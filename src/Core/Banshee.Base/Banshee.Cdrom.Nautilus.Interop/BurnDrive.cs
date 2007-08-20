@@ -10,13 +10,6 @@ namespace Banshee.Cdrom.Nautilus.Interop
         {
         }
         
-        [DllImport("libnautilus-burn")]
-        static extern IntPtr nautilus_burn_drive_new();
-
-        public BurnDrive() : base(nautilus_burn_drive_new())
-        {
-        }
-        
         [DllImport("libbanshee")]
         static extern IntPtr nautilus_glue_burn_drive_get_for_device(string device_path);
 
@@ -24,10 +17,10 @@ namespace Banshee.Cdrom.Nautilus.Interop
         {
         }
 
-        [DllImport("libnautilus-burn")]
-        private static extern void nautilus_burn_drive_free(IntPtr raw);
+        [DllImport("libbanshee")]
+        private static extern void nautilus_burn_glue_drive_free(IntPtr raw);
 
-          ~BurnDrive()
+        ~BurnDrive()
         {
             Dispose(false);
         }
@@ -41,9 +34,9 @@ namespace Banshee.Cdrom.Nautilus.Interop
         private void Dispose(bool disposing)
         {
             if(Raw != IntPtr.Zero) {
-                nautilus_burn_drive_free(Handle);
+                nautilus_burn_glue_drive_free(Handle);
                 Raw = IntPtr.Zero;
-               }
+            }
         }
     
         [DllImport("libnautilus-burn")]

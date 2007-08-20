@@ -1,5 +1,26 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDrive.cs: Use HAL
+	to get capacity information if it is available
+
+	* src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusRecorder.cs: 
+	Duplicate the burn drive reference as a crappy workaround to some stupid
+	issue with libnautilus-burn in GNOME 2.19.x+
+
+	* src/Core/Banshee.Base/Banshee.Cdrom.Nautilus.Interop/BurnDrive.cs: 
+	P/Invoke more functions into the glue
+
+	* libbanshee/nautilus-burn.c: Add free glue to free/unref depending on
+	the API version
+
+	* libbanshee/gst-transcode-0.10.c: Remove the meta cdwavenc element since
+	now the CD quality caps are in the WAV profile
+
+	* data/audio-profiles/wav.xml.in: Added caps for proper encoding of
+	CD quality PCM
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Paths.cs: Expand ~ to home directory
 
 2007-08-19  Aaron Bockover  <abock@gnome.org>

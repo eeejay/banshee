@@ -113,7 +113,7 @@ namespace Banshee.Cdrom.Nautilus
                     burn_recorder.InsertMediaRequest += OnInsertMediaRequest;
                     burn_recorder.WarnDataLoss += OnWarnDataLoss;
                     
-                    switch(burn_recorder.WriteTracks(Drive, speed, flags)) {
+                    switch(burn_recorder.WriteTracks(new Lnb.BurnDrive(Drive.Device), speed, flags)) {
                         case Lnb.BurnRecorderResult.Cancel:
                             return RecorderResult.Canceled;
                         case Lnb.BurnRecorderResult.Finished:

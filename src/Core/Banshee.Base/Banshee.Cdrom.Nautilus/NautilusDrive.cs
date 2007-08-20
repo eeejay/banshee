@@ -141,7 +141,18 @@ namespace Banshee.Cdrom.Nautilus
         }
         
         public long MediaCapacity {
-            get { return HaveMedia ? drive.MediaCapacity : 0; }
+            get { 
+                if(!HaveMedia) {
+                    return 0;
+                }
+
+                if(hal_disc_device != null && hal_disc_device.PropertyExists("volume.disc.capacity")) {
+                    int capacity = hal_disc_device.GetPropertyInteger("volume.disc.capacity");
+                    return capacity > 0 ? capacity : drive.MediaCapacity;
+                }
+            
+                return drive.MediaCapacity;
+            }
         }
         
         internal BurnDrive Drive {
