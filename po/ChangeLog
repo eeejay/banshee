@@ -1,3 +1,7 @@
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
+	* POTFILES.in: Updated files
+
 2007-08-05  Aaron Bockover  <abock@gnome.org>
 
 	* POTFILES.in: Removed aac.xml.in
