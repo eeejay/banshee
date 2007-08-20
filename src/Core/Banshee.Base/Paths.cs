@@ -67,6 +67,9 @@ namespace Banshee.Base
                             if(path.StartsWith("$HOME/")) {
                                 relative = true;
                                 path = path.Substring(6);
+                            } else if(path.StartsWith("~")) {
+                                relative = true;
+                                path = path.Substring(1);
                             } else if(!path.StartsWith("/")) {
                                 relative = true;
                             }

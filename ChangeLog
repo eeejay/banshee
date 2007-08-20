@@ -1,5 +1,9 @@
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Base/Paths.cs: Expand ~ to home directory
+
+2007-08-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:
 	Added first pass of ASX parsing support
 
