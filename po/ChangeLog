@@ -1,10 +1,54 @@
-2007-08-19  Aaron Bockover  <abock@gnome.org>
+2007-08-25 Gabor Kelemen  <kelemeng@gnome.hu>
 
-	* POTFILES.in: Updated files
+	* hu.po: Translation updated.
 
-2007-08-05  Aaron Bockover  <abock@gnome.org>
+2007-08-24  Daniel Nylander <po@danielnylander.se>
 
-	* POTFILES.in: Removed aac.xml.in
+	* sv.po: Updated Swedish translation.
+
+2007-08-23  Jordi Mas <jmas@softcatala.org>
+
+	* ca.po: Updated Catalan translation
+
+2007-08-23  Artur Flinta  <aflinta@svn.gnome.org>
+
+	* pl.po: Updated Polish translation by GNOME PL Team.
+
+2007-08-16  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2007-08-15  Adam Weinberger  <adamw@gnome.org>
+
+	* POTFILES.in: Added missing files.
+
+2007-08-15  Jakub Friedl <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation, fix #458972.
+
+2007-08-12  Jorge Gonzalez <jorgegonz@svn.gnome.org>
+
+	* es.po: Updated Spanish translation by Maria Majadas.
+
+2007-08-11  Jochen Skulj <jochen@jochenskulj.de>
+
+	* de.po: Updated German translation.
+
+2007-08-11  Wadim Dziedzic  <wadimd@svn.gnome.org>
+
+	* pl.po: Updated polish translation (QA)
+
+2007-08-04  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
+2007-07-31  Ilkka Tuohela  <hile@iki.fi>
+
+	* fi.po: Updated Finnish translation.
+
+2007-07-27  Daniel Nylander <po@danielnylander.se>
+
+	* sv.po: Updated Swedish translation.
 
 2007-07-20  Duarte Loreto <happyguy_pt@hotmail.com>
 

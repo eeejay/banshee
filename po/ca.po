@@ -4,7 +4,7 @@
 #
 # Correccions addicionals Josep Puigdemont, Toni Hermoso i Quico Llach
 #
-# N.T: fem servir "Coberta" per traduir "Album Cover". "Portada" (una opció proposada més d'un cop) és la primera pàgina d'un llibre, etc.,
+# N.T.: fem servir "Coberta" per traduir "Album Cover". "Portada" (una opció proposada més d'un cop) és la primera pàgina d'un llibre, etc.,
 # però el que es veu quan el llibre esta tancat és la coberta, i per tant penso que el mateix es pot aplicar a un disc.
 #
 #
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-21 22:24+0200\n"
-"PO-Revision-Date: 2007-05-21 10:12+0100\n"
+"POT-Creation-Date: 2007-08-22 08:37+0200\n"
+"PO-Revision-Date: 2007-08-23 10:12+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: tradgnome@softcatala.net\n"
 "MIME-Version: 1.0\n"
@@ -1106,12 +1106,12 @@ msgstr "Importa una llista de reproducció"
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:208
 msgid "Export Playlist..."
-msgstr "Exporta llista de reproducció..."
+msgstr "Exporta la llista de reproducció..."
 
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:209
 msgid "Export a playlist"
-msgstr "Exporta un llista de reproducció"
+msgstr "Exporta una llista de reproducció"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
@@ -3201,6 +3201,8 @@ msgid ""
 "Banshee was unable to find any valid tracks to import.  Please check the "
 "playlist and try again."
 msgstr ""
+"El Banshee no ha pogut trobat cap pista vàlida per a importar. Comproveu la "
+"llista de reproducció i torneu-ho a provar."
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2155
 msgid "New CD"
@@ -3702,9 +3704,10 @@ msgstr "Nom d'usuari a Last.fm"
 msgid "Bookmarks"
 msgstr "Adreces d'interès"
 
+# N.T: Usem "posició" i no "adreça d'interès" per claretat
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
 msgid "Bookmark your position in tracks."
-msgstr ""
+msgstr "Desa per a més endavant la posició en les pistes."
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
 msgid "_Bookmarks"
@@ -3715,9 +3718,10 @@ msgstr "A_dreces d'interès"
 msgid "_Add Bookmark"
 msgstr "_Afegeix adreça d'interès"
 
+# N.T: Usem "posició" i no "adreça d'interès" per claretat
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
 msgid "Bookmark the Position in the Current Track"
-msgstr ""
+msgstr "Desa per a més endavant la posició en la pista actual"
 
 #
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119

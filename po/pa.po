@@ -1,26 +1,184 @@
-# translation of banshee.HEAD.po to Punjabi
+# translation of banshee.HEAD.po to
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # A S Alam <aalam@users.sf.net>, 2007.
+# A S Alam <apbrar@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-06 03:20+0000\n"
-"PO-Revision-Date: 2007-02-07 06:48+0530\n"
-"Last-Translator: A S Alam <aalam@users.sf.net>\n"
-"Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
+"POT-Creation-Date: 2007-06-13 03:41+0100\n"
+"PO-Revision-Date: 2007-07-30 21:20+0530\n"
+"Last-Translator: A S Alam <apbrar@gmail.com>\n"
+"Language-Team:  <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
+#: ../data/audio-profiles/aac.xml.in.h:1
+msgid "Advanced Audio Coding (AAC)"
+msgstr "ਐਡਵਾਂਸ ਆਡੀਓ ਕੋਡਿੰਗ(AAC)"
+
+#: ../data/audio-profiles/aac.xml.in.h:2
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "ਬਿੱਟਰੇਟ"
+
+#: ../data/audio-profiles/aac.xml.in.h:3
+msgid ""
+"Proprietary and standardized format that is superior to MP3, but not as "
+"popular."
+msgstr ""
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "ਚੈਨਲ"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "ਮੁਫ਼ਤ ਲਾਸਲੈਸ ਆਡੀਓ ਕੋਡਿੰਗ"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr "ਔਸਤ ਬਿੱਟਰੇਟ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+msgid "Best"
+msgstr "ਉੱਤਮ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "ਸਥਿਰ ਬਿੱਟਰੇਟ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (LAME ਇੰਕੋਡਰ)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "VBR ਢੰਗ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "VBR ਕੁਆਲਟੀ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "ਅਸਥਿਰ ਬਿੱਟਰੇਟ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/wavpack.xml.in.h:11
+#: ../data/audio-profiles/wma.xml.in.h:7
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+msgid "Worst"
+msgstr "ਬੁਰਾ"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (Xing ਇੰਕੋਡਰ)"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "ਮੂਲ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Extra processing"
+msgstr "ਹੋਰ ਪ੍ਰੋਸੈਸਿੰਗ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "ਸਭ ਤੋਂ ਵੱਧ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Lossy mode"
+msgstr "ਲੂਸੀ ਢੰਗ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Mode"
+msgstr "ਢੰਗ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+msgid "Store MD5 sum in the file"
+msgstr "ਫਾਇਲ 'ਚ MD5 ਸਮ ਸੰਭਾਲੋ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:10
+msgid "Wavpack"
+msgstr "ਵੇਵਪੈਕ"
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "ਵੇਵਫਾਰਮ PCM"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "ਆਡੀਓ ਕੁਆਲਿਟੀ"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "ਇੱਕ ਅਸਥਿਰ ਬਿੱਟਰੇਟ ਵਰਤੋਂ"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "ਵਿੰਡੋ ਮੀਡਿਆ ਆਡੀਓ (WMA)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "ਆਡੀਓ ਕੁਆਲਟੀ"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+
 #: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:79
 msgid "Banshee Music Player"
-msgstr "ਬਾਨਸ਼ੀ ਸੰਗੀਤ ਪਲੇਅਰ"
+msgstr "ਬਾਂਸ਼ੀ ਸੰਗੀਤ ਪਲੇਅਰ"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
@@ -336,155 +494,6 @@ msgstr "ਡਿਸਕ ਵਰਤੋਂ:"
 msgid "_Search:"
 msgstr "ਖੋਜ(_S):"
 
-#: ../data/audio-profiles/aac.xml.in.h:1
-msgid "Advanced Audio Coding (AAC)"
-msgstr "ਐਡਵਾਂਸ ਆਡੀਓ ਕੋਡਿੰਗ(AAC)"
-
-#: ../data/audio-profiles/aac.xml.in.h:2
-#: ../data/audio-profiles/mp3-lame.xml.in.h:4
-#: ../data/audio-profiles/mp3-xing.xml.in.h:2
-#: ../data/audio-profiles/wavpack.xml.in.h:3
-#: ../data/audio-profiles/wma.xml.in.h:4
-msgid "Bitrate"
-msgstr "ਬਿੱਟਰੇਟ"
-
-#: ../data/audio-profiles/aac.xml.in.h:3
-msgid ""
-"Proprietary and standardized format that is superior to MP3, but not as "
-"popular."
-msgstr ""
-
-#: ../data/audio-profiles/base.xml.in.h:1
-msgid "Channels"
-msgstr "ਚੈਨਲ"
-
-#: ../data/audio-profiles/flac.xml.in.h:1
-msgid "Free Lossless Audio Codec"
-msgstr "ਮੁਫ਼ਤ ਲਾਸਲੈਸ ਆਡੀਓ ਕੋਡਿੰਗ"
-
-#: ../data/audio-profiles/flac.xml.in.h:2
-msgid ""
-"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
-"does not degrade audio quality."
-msgstr ""
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:1
-#: ../data/audio-profiles/mp3-xing.xml.in.h:1
-msgid ""
-"A proprietary and older, but also popular, lossy audio format that produces "
-"larger files at lower bitrates."
-msgstr ""
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:2
-msgid "Average Bitrate"
-msgstr "ਔਸਤ ਬਿੱਟਰੇਟ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:3
-#: ../data/audio-profiles/vorbis.xml.in.h:2
-#: ../data/audio-profiles/wavpack.xml.in.h:2
-#: ../data/audio-profiles/wma.xml.in.h:3
-msgid "Best"
-msgstr "ਉੱਤਮ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:5
-msgid "Constant Bitrate"
-msgstr "ਸਥਿਰ ਬਿੱਟਰੇਟ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:6
-msgid "MP3 (LAME Encoder)"
-msgstr "MP3 (LAME ਇੰਕੋਡਰ)"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:7
-msgid "VBR Mode"
-msgstr "VBR ਢੰਗ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:8
-msgid "VBR Quality"
-msgstr "VBR ਕੁਆਲਟੀ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:9
-msgid "Variable Bitrate"
-msgstr "ਅਸਥਿਰ ਬਿੱਟਰੇਟ"
-
-#: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#: ../data/audio-profiles/vorbis.xml.in.h:5
-#: ../data/audio-profiles/wavpack.xml.in.h:9
-#: ../data/audio-profiles/wma.xml.in.h:7
-msgid "Worst"
-msgstr "ਬੁਰਾ"
-
-#: ../data/audio-profiles/mp3-xing.xml.in.h:3
-msgid "MP3 (Xing Encoder)"
-msgstr "MP3 (Xing ਇੰਕੋਡਰ)"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:1
-msgid "Audio quality"
-msgstr "ਆਡੀਓ ਕੁਆਲਟੀ"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:3
-msgid "Ogg Vorbis"
-msgstr "Ogg Vorbis"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:4
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
-
-#: ../data/audio-profiles/wav.xml.in.h:1
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
-
-#: ../data/audio-profiles/wav.xml.in.h:2
-msgid "Waveform PCM"
-msgstr "ਵੇਵਫਾਰਮ PCM"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:1
-msgid ""
-"A fast and efficient open source audio format offering lossless and high-"
-"quality lossy encoding with great dynamic range."
-msgstr ""
-
-#: ../data/audio-profiles/wavpack.xml.in.h:4
-msgid "Extra processing"
-msgstr "ਹੋਰ ਪ੍ਰੋਸੈਸਿੰਗ"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:5
-msgid "Lossy mode"
-msgstr "ਲੂਸੀ ਢੰਗ"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:6
-msgid "Mode"
-msgstr "ਢੰਗ"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:7
-msgid "Store MD5 sum in the file"
-msgstr "ਫਾਇਲ 'ਚ MD5 ਸਮ ਸੰਭਾਲੋ"
-
-#: ../data/audio-profiles/wavpack.xml.in.h:8
-msgid "Wavpack"
-msgstr "ਵੇਵਪੈਕ"
-
-#: ../data/audio-profiles/wma.xml.in.h:1
-msgid ""
-"A proprietary lossy audio format with high quality output at a lower file "
-"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
-msgstr ""
-
-#: ../data/audio-profiles/wma.xml.in.h:2
-msgid "Audio Quality"
-msgstr "ਆਡੀਓ ਕੁਆਲਿਟੀ"
-
-#: ../data/audio-profiles/wma.xml.in.h:5
-msgid "Use a variable bitrate"
-msgstr "ਇੱਕ ਅਸਥਿਰ ਬਿੱਟਰੇਟ ਵਰਤੋਂ"
-
-#: ../data/audio-profiles/wma.xml.in.h:6
-msgid "Windows Media Audio"
-msgstr "ਵਿੰਡੋ ਮੀਡਿਆ ਆਡੀਓ (WMA)"
-
 #: ../libbanshee/gst-cd-rip-0.10.c:222
 msgid "Could not create pipeline"
 msgstr "ਪਾਈਪਲਾਇਨ ਨਹੀਂ ਬਣਾਈ ਜਾ ਸਕੀ"
@@ -528,7 +537,7 @@ msgstr ""
 #: ../libbanshee/gst-cd-rip-0.10.c:403
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:150
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
 msgid "Banshee"
 msgstr "ਬਾਂਸ਼ੀ"
 
@@ -589,126 +598,138 @@ msgid "Order of Artist column"
 msgstr "ਕਲਾਕਾਰ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:4
+msgid "Order of Date Added column"
+msgstr "ਜੋੜਨ ਮਿਤੀ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
 msgid "Order of Genre column"
 msgstr "ਧੁਨ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:6
 msgid "Order of Last Played column"
 msgstr "ਆਖਰੀ ਚਲਾਏ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:6
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
 msgid "Order of Play Count column"
 msgstr "ਚੱਲਣ ਗਿਣਤੀ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
 msgid "Order of Rating column"
 msgstr "ਰੇਟਿੰਗ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
 msgid "Order of Time column"
 msgstr "ਸਮਾਂ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:10
 msgid "Order of Title column"
 msgstr "ਟਾਇਟਲ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:10
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:11
 msgid "Order of Track column"
 msgstr "ਟਰੈਕ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:11
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:12
 msgid "Order of Uri column"
 msgstr "ਯੁਰੀ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:12
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:13
 msgid "Order of Year column"
 msgstr "ਸਾਲ ਕਾਲਮ ਦਾ ਕ੍ਰਮ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:13
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:14
 msgid "Visibility of Album column"
 msgstr "ਐਲਬਮ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:14
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:15
 msgid "Visibility of Artist column"
 msgstr "ਕਲਾਕਾਰ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:15
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
+msgid "Visibility of Date Added column"
+msgstr "ਜੋੜਨ ਮਿਤੀ ਕਾਲਮ ਦੀ ਦਿੱਖ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
 msgid "Visibility of Genre column"
 msgstr "ਧੁਨ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:18
 msgid "Visibility of Last Played column"
 msgstr "ਆਖਰੀ ਚਲਾਇਆ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
 msgid "Visibility of Play Count column"
 msgstr "ਚੱਲਣ ਗਿਣਤੀ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:18
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
 msgid "Visibility of Rating column"
 msgstr "ਰੇਟਿੰਗ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:21
 msgid "Visibility of Time column"
 msgstr "ਸਮਾਂ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:22
 msgid "Visibility of Title column"
 msgstr "ਟਾਇਟਲ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:21
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:23
 msgid "Visibility of Track column"
 msgstr "ਟਰੈਕ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:22
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
 msgid "Visibility of Uri column"
 msgstr "ਯੁਰੀ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:23
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
 msgid "Visibility of Year column"
 msgstr "ਸਾਲ ਕਾਲਮ ਦੀ ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
 msgid "Visiblity"
 msgstr "ਦਿੱਖ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:27
 msgid "Width"
 msgstr "ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:28
 msgid "Width of Album column"
 msgstr "ਐਲਬਮ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:27
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:29
 msgid "Width of Artist column"
 msgstr "ਕਲਾਕਾਰ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:28
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
+msgid "Width of Date Added column"
+msgstr "ਜੋੜਨ ਮਿਤੀ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
 msgid "Width of Genre column"
 msgstr "ਧੁਨ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:29
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
 msgid "Width of Last Played column"
 msgstr "ਆਖਰੀ ਚਲਾਇਆ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
 msgid "Width of Play Count column"
 msgstr "ਚੱਲਣ ਗਿਣਤੀ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
 msgid "Width of Time column"
 msgstr "ਸਮਾਂ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:35
 msgid "Width of Title column"
 msgstr "ਟਾਇਟਲ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:36
 msgid "Width of Uri column"
 msgstr "ਯੁਰੀ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:37
 msgid "Width of Year column"
 msgstr "ਸਾਲ ਕਾਲਮ ਦੀ ਚੌੜਾਈ"
 
@@ -726,6 +747,11 @@ msgstr "ਐਲਬਮ"
 msgid "Artist"
 msgstr "ਕਲਾਕਾਰ"
 
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
+msgid "Date Added"
+msgstr "ਮਿਤੀ ਸ਼ਾਮਿਲ ਕੀਤੀ"
+
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
 msgid "Time"
 msgstr "ਸਮਾਂ"
@@ -735,12 +761,9 @@ msgid "N/A"
 msgstr "N/A"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:162
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:439
-#: ../src/Core/Banshee/PlayerInterface.cs:1306
-#: ../src/Core/Banshee/PlayerInterface.cs:2352
+#: ../src/Core/Banshee/PlayerInterface.cs:458
 msgid "Genre"
 msgstr "ਧੁਨ"
 
@@ -754,7 +777,7 @@ msgid "Plays"
 msgstr "ਚੱਲਿਆ"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:813
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
 msgid "Rating"
 msgstr "ਰੇਟਿੰਗ"
 
@@ -763,7 +786,7 @@ msgstr "ਰੇਟਿੰਗ"
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:787
 #: ../src/Core/Banshee.Base/FileNamePattern.cs:96
 msgid "Title"
-msgstr "ਸਿਰਲੇਖ"
+msgstr "ਟਾਇਟਲ"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:59
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:125
@@ -785,12 +808,12 @@ msgstr "ਅਣਜਾਣ ਗਲਤੀ"
 msgid "Track"
 msgstr "ਟਰੈਕ"
 
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:138
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
 msgid "Columns..."
 msgstr "ਕਾਲਮ..."
 
 #. Translators: {0} is the title of the column, e.g. 'Hide Artist'
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:144
 #, csharp-format
 msgid "Hide {0}"
 msgstr "{0} ਓਹਲੇ"
@@ -800,10 +823,8 @@ msgid "Location"
 msgstr "ਟਿਕਾਣਾ"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:164
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-#: ../src/Core/Banshee/PlayerInterface.cs:440
-#: ../src/Core/Banshee/PlayerInterface.cs:1308
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:816
+#: ../src/Core/Banshee/PlayerInterface.cs:459
 msgid "Year"
 msgstr "ਸਾਲ"
 
@@ -973,7 +994,7 @@ msgstr "ਬਾਂਸ਼ੀ ਉਪਭੋਗੀ ਗਾਈਡ(_U) (Wiki)"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:173
 msgid "Learn about how to use Banshee"
-msgstr ""
+msgstr "ਬਾਂਸ਼ੀ ਦੀ ਵਰਤੋਂ ਬਾਰੇ ਜਾਣੋ"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:178
 msgid "Banshee _Home Page"
@@ -981,7 +1002,7 @@ msgstr "ਬਾਂਸ਼ੀ ਮੁੱਖ ਸਫ਼ਾ(_H)"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:179
 msgid "Visit the Banshee Home Page"
-msgstr ""
+msgstr "ਬਾਂਸ਼ੀ ਮੁੱਖ ਸਫ਼ਾ ਵੇਖੋ"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:184
 msgid "_Get Involved"
@@ -989,7 +1010,7 @@ msgstr "ਹਿੱਸਾ ਬਣਾਓ(_G)"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:185
 msgid "Become a contributor to Banshee"
-msgstr ""
+msgstr "ਬਾਂਸ਼ੀ ਲਈ ਯੋਗਦਾਨੀ ਬਣਾਓ"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:192
 msgid "_Playback"
@@ -998,7 +1019,7 @@ msgstr "ਚਲਾਓ(_P)"
 #. Translators: Source being the generic word for playlist, device, library, etc
 #: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:105
-#: ../src/Core/Banshee.Base/Source.cs:317
+#: ../src/Core/Banshee.Base/Source.cs:321
 msgid "Source"
 msgstr "ਸਰੋਤ"
 
@@ -1010,212 +1031,220 @@ msgstr "ਗੀਤ ਮੇਨੂ"
 msgid "_Debug"
 msgstr "ਡੀਬੱਗ(_D)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:206
+#: ../src/Core/Banshee.Base/ActionManager.cs:204
+msgid "Import Playlist..."
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਆਯਾਤ..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:205
+msgid "Import a playlist"
+msgstr "ਇੱਕ ਸੰਗੀਤ-ਸੂਚੀ ਆਯਾਤ ਕਰੋ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:208
+msgid "Export Playlist..."
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਨਿਰਯਾਤ..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:209
+msgid "Export a playlist"
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਨਿਰਯਾਤ ਕਰੋ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:214
 msgid "_Fullscreen"
-msgstr "ਪੂਰੀ ਸਕਰੀਨ ਉੱਤੇ(_F)"
+msgstr "ਪੂਰੀ ਸਕਰੀਨ(_F)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:207
+#: ../src/Core/Banshee.Base/ActionManager.cs:215
 msgid "Toggle Fullscreen Mode"
-msgstr ""
+msgstr "ਪੂਰੀ ਸਕਰੀਨ ਢੰਗ ਬਦਲੋ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:210
+#: ../src/Core/Banshee.Base/ActionManager.cs:218
 msgid "Show Cover _Art"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:211
+#: ../src/Core/Banshee.Base/ActionManager.cs:219
 msgid "Toggle display of album cover art"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:222
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
 msgid "_Copy"
 msgstr "ਨਕਲ(_C)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:223
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
 msgid "Copy selected song(s) to clipboard"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:226
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
 msgid "_Remove"
 msgstr "ਹਟਾਓ(_R)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:227
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
 msgid "Remove selected song(s) from library"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:230
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
 msgid "_Delete From Drive"
 msgstr "ਡਰਾਇਵ ਤੋਂ ਹਟਾਓ(_D)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:231
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
 msgid "Permanently delete selected song(s) from storage medium"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:234
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
 msgid "_Edit Song Metadata"
 msgstr "ਗੀਤ ਮੇਟਾ-ਡਾਟਾ ਸੋਧ(_E)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:235
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
 msgid "Edit metadata on selected songs"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:238
-msgid "_Search for songs"
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
+msgid "_Search for Songs"
 msgstr "ਗੀਤ ਲਈ ਖੋਜ(_S)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:239
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
 msgid "Search for songs matching certain criteria"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:242
-msgid "By matching _album"
-msgstr ""
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:243
-msgid "Search all songs of this album"
-msgstr ""
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:246
-msgid "By matching a_rtist"
-msgstr ""
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:247
-msgid "Search all songs of this artist"
-msgstr ""
-
 #: ../src/Core/Banshee.Base/ActionManager.cs:250
-msgid "By matching _genre"
+msgid "By Matching _Album"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:251
-msgid "Search all songs of this genre"
-msgstr ""
+msgid "Search all songs of this album"
+msgstr "ਇਹ ਐਲਬਮ ਲਈ ਸਭ ਗੀਤਾਂ ਲਈ ਖੋਜ"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:254
-msgid "Add _to Playlist"
-msgstr "ਸੰਗੀਤ-ਸੂਚੀ 'ਚ ਸ਼ਾਮਿਲ(_t)"
+msgid "By Matching A_rtist"
+msgstr ""
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:255
-msgid "Append selected songs to playlist or create new playlist from selection"
+msgid "Search all songs of this artist"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:258
-msgid "Ratin_g"
-msgstr "ਰੇਟਿੰਗ(_g)"
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:259
-msgid "Set rating for selected songs"
+msgid "By Matching _Genre"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:268
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
+msgid "Search all songs of this genre"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:262
+msgid "Add _to Playlist"
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ 'ਚ ਸ਼ਾਮਿਲ(_t)"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:263
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:272
 msgid "Import CD"
 msgstr "CD ਆਯਾਤ ਕਰੋ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:269
+#: ../src/Core/Banshee.Base/ActionManager.cs:273
 msgid "Import audio CD to library"
-msgstr ""
+msgstr "ਆਡੀਓ CD ਲਾਇਬਰੇਰੀ ਵਿੱਚ ਲਿਆਓ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:278
+#: ../src/Core/Banshee.Base/ActionManager.cs:282
 msgid "_Play"
 msgstr "ਚਲਾਓ(_P)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:279
+#: ../src/Core/Banshee.Base/ActionManager.cs:283
 msgid "Play or pause the current song"
-msgstr ""
+msgstr "ਮੌਜੂਦ ਗੀਤ ਚਲਾਓ ਜਾਂ ਰੋਕੋ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:282
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
 msgid "_Next"
 msgstr "ਅੱਗੇ(_N)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:283
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
 msgid "Play the next song"
-msgstr ""
+msgstr "ਅਗਲਾ ਗੀਤ ਚਲਾਓ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:286
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
 msgid "Pre_vious"
 msgstr "ਪਿੱਛੇ(_v)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:287
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
 msgid "Play the previous song"
-msgstr ""
+msgstr "ਪਿਛਲਾ ਗੀਤ ਚਲਾਓ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:292
+#: ../src/Core/Banshee.Base/ActionManager.cs:296
 msgid "Repeat N_one"
 msgstr "ਕੋਈ ਨਾ ਦੁਹਰਾਓ(_o)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:293
+#: ../src/Core/Banshee.Base/ActionManager.cs:297
 msgid "Do not repeat playlist"
-msgstr ""
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਦੁਹਰਾਓ ਨਾ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:296
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
 msgid "Repeat _All"
 msgstr "ਸਭ ਦੁਹਰਾਓ(_A)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:297
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
 msgid "Play all songs before repeating playlist"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:300
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
 msgid "Repeat Si_ngle"
 msgstr "ਇੱਕਲਾ ਦੁਹਰਾਓ(_n)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:301
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
 msgid "Repeat the current playing song"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਚੱਲਦਾ ਗੀਤ ਮੁੜ-ਚਲਾਓ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:306
+#: ../src/Core/Banshee.Base/ActionManager.cs:310
 msgid "Shu_ffle"
 msgstr "ਰਲਵੇਂ(_f)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:307
+#: ../src/Core/Banshee.Base/ActionManager.cs:311
 msgid "Toggle between shuffle or continuous playback modes"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:310
-msgid "_Stop when finished"
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
+msgid "_Stop When Finished"
 msgstr "ਜਦੋਂ ਖਤਮ ਹੋਣ ਤਾਂ ਰੁਕੋ(_S)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:311
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
 msgid "Stop playback after the current song finishes playing"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:320
+#: ../src/Core/Banshee.Base/ActionManager.cs:324
 msgid "Seek _Backward"
 msgstr "ਪਿੱਛੇ ਜਾਓ(_B)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:321
+#: ../src/Core/Banshee.Base/ActionManager.cs:325
 msgid "Seek backward in current song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:324
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
 msgid "Seek _Forward"
 msgstr "ਅੱਗੇ ਜਾਓ(_F)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:325
-msgid "Seek forward in current song"
-msgstr ""
-
-#: ../src/Core/Banshee.Base/ActionManager.cs:328
-msgid "Seek _To..."
-msgstr "ਜਾਓ(_T)..."
-
 #: ../src/Core/Banshee.Base/ActionManager.cs:329
+msgid "Seek forward in current song"
+msgstr "ਮੌਜੂਦਾ ਗੀਤ ਵਿੱਚ ਅੱਗੇ ਜਾਓ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
+msgid "Seek _to..."
+msgstr "ਅੱਗੇ ਜਾਓ(_T)..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
 msgid "Seek to a specific location in current song"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:332
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
 msgid "_Restart Song"
 msgstr "ਗੀਤ ਮੁੜ-ਚਾਲੂ(_R)"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:333
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
 msgid "Restart the current song"
-msgstr ""
+msgstr "ਮੌਜੂਦ ਗੀਤ ਮੁੜ-ਚਾਲੂ ਕਰੋ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:342
-#: ../src/Core/Banshee.Base/SourceManager.cs:275
+#: ../src/Core/Banshee.Base/ActionManager.cs:346
+#: ../src/Core/Banshee.Base/SourceManager.cs:276
 msgid "Synchronize"
 msgstr "ਸਮਕਾਲੀ"
 
-#: ../src/Core/Banshee.Base/ActionManager.cs:343
+#: ../src/Core/Banshee.Base/ActionManager.cs:347
 msgid "Save changes to device or synchronize music library"
 msgstr ""
 
@@ -1252,11 +1281,11 @@ msgstr "{0} ਟਰੈਕ"
 msgid "Audio CD"
 msgstr "ਆਡੀਓ CD"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:243
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
 msgid "Cannot Eject CD"
 msgstr "CD ਬਾਹਰ ਨਹੀਂ ਕੱਢੀ ਜਾ ਸਕਦੀ"
 
-#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:245
 msgid "The CD cannot be ejected while it is importing. Stop the import first."
 msgstr ""
 
@@ -1300,12 +1329,13 @@ msgid "Cannot Import CD"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
-#: ../src/Core/Banshee.Base/ImportManager.cs:292
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:55
+#: ../src/Core/Banshee.Base/ImportManager.cs:297
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "{1} ਵਿੱਚੋਂ {0} ਆਯਾਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:83
+#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
 msgid "No available profiles"
 msgstr "ਕੋਈ ਉਪਲੱਬਧ ਪ੍ਰੋਫਾਇਲ ਨਹੀਂ ਹੈ"
 
@@ -1336,7 +1366,7 @@ msgid "{0} Minutes"
 msgstr "{0} ਮਿੰਟ"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:335
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:339
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:90
 #, csharp-format
 msgid "{0} of {1}"
@@ -1358,7 +1388,7 @@ msgstr "ਨਵੀਂ ਆਡੀਓ C_D"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
 msgid "Create a new audio CD"
-msgstr ""
+msgstr "ਇੱਕ ਨਵੀਂ ਆਡੀਓ CD ਬਣਾਓ"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
@@ -1417,7 +1447,7 @@ msgstr[1] ""
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
 msgid "Insufficient Disk Space"
-msgstr ""
+msgstr "ਨਾ-ਲੋੜੀਦੀ ਡਿਸਕ ਥਾਂ"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:176
 #, csharp-format
@@ -1533,11 +1563,11 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:1
 msgid "Backend"
-msgstr ""
+msgstr "ਬੈਕ-ਐਂਡ"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:2
 msgid "Base location for library music"
-msgstr ""
+msgstr "ਲਾਇਬਰੇਰੀ ਸੰਗੀਤ ਲਈ ਬੇਸ ਟਿਕਾਣਾ"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:3
 msgid ""
@@ -1547,7 +1577,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:4
 msgid "Column index"
-msgstr "ਕਾਲਮ ਤਤਕਰਾ"
+msgstr "ਕਾਲਮ ਇੰਡੈਕਸ"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:5
 msgid "Column index for sorting the library source. -1 for unset."
@@ -1571,13 +1601,17 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:10
 msgid "Enable error correction"
-msgstr ""
+msgstr "ਗਲਤੀ ਸੋਧ ਯੋਗ"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:11
 msgid "Enable shuffle mode"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:13
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
+msgid "Export Format"
+msgstr "ਨਿਰਯਾਤ ਫਾਰਮੈਟ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
 #, no-c-format
 msgid ""
 "Format for creating a track filename inside the library. Do not use path "
@@ -1586,7 +1620,7 @@ msgid ""
 "prefixed zero), %track_count_nz% (No prefixed zero)."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:15
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 #, no-c-format
 msgid ""
 "Format for creating a track folder inside the library. Do not create an "
@@ -1596,178 +1630,255 @@ msgid ""
 "prefixed zero), %path_sep% (portable directory separator (/))."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 msgid "Height of the main interface window."
 msgstr "ਮੁੱਖ ਇੰਟਰਫੇਸ ਝਰੋਖੇ ਦੀ ਉਚਾਈ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
 msgid ""
 "If enabled, metadata (tags) will be written back to audio files when using "
 "the track metadata editor."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
 msgid "Library File Pattern"
 msgstr "ਲਾਇਬਰੇਰੀ ਫਾਇਲ ਪੈਟਰਨ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
 msgid "Library Folder Pattern"
 msgstr "ਲਾਇਬਰੇਰੀ ਫੋਲਡਰ ਪੈਟਰਨ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 msgid "Library location"
 msgstr "ਲਾਇਬਰੇਰੀ ਟਿਕਾਣਾ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "Library source expansion"
 msgstr "ਲਾਇਬਰੇਰੀ ਸਰੋਤ ਫੈਲਾ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
 msgid "Move music within banshee music library directory when saving track info"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
 msgid "Name of media playback engine backend"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
 msgid "Pixel position of Main Player Window on the X Axis"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
 msgid "Pixel position of Main Player Window on the Y Axis"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
 msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
 msgid "Repeat playback"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Set the IO backend in Banshee"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
 msgid "Show cover art"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
 msgid "Show the Initial Import Dialog when the Banshee library is empty"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
 msgid "Shuffle playback"
 msgstr "ਰਲਵਾਂ ਪਲੇਅਬੈਕ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort criteria of playlists"
 msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਲਈ ਕ੍ਰਮਬੱਧ ਸੀਮਾ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 msgid "Source View Width"
 msgstr "ਸਰੋਤ ਝਲਕ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+msgid "The default playlist export format"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
 msgid "URI"
 msgstr "URI"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
 msgid "URI List"
 msgstr "URI ਲਿਸਟ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
 msgid "URI of last file folder"
 msgstr "ਆਖਰੀ ਫਾਇਲ ਫੋਲਡਰ ਦਾ URI"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "Volume"
 msgstr "ਵਾਲੀਅਮ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
 msgid "Volume of playback relative to mixer output"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
 msgid "Whether to expand the library node in the source view"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
 msgid "Width of Source View Column."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
 msgid "Width of the main interface window."
 msgstr "ਮੁੱਖ ਇੰਟਰਫੇਸ ਝਰੋਖੇ ਦੀ ਚੌੜਾਈ।"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
 msgid "Window Height"
 msgstr "ਝਰੋਖਾ ਉਚਾਈ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
 msgid "Window Maximized"
 msgstr "ਝਰੋਖਾ ਵੱਧੋ-ਵੱਧ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
 msgid "Window Position X"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
 msgid "Window Position Y"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:57
 msgid "Window Width"
 msgstr "ਝਰੋਖਾ ਚੌੜਾਈ"
 
-#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:58
 msgid "Write metadata back to audio files"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:69
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:280
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:283
 msgid "Scanning"
 msgstr "ਜਾਂਚ ਜਾਰੀ ਹੈ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
+msgid "Amarok"
+msgstr "ਅਮਰੋਕ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
+msgid "Importing Songs"
+msgstr "ਗੀਤ ਆਯਾਤ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:42
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:43
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
+msgid "Scanning for songs"
+msgstr "ਗੀਤਾਂ ਲਈ ਖੋਜ ਜਾਰੀ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
+msgid "Migrate From Other Media Players"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
+msgid ""
+"Select any supported alternate media players that you wish to migrate into "
+"Banshee."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:265
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "ਆਯਾਤ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+msgid "Player"
+msgstr "ਪਲੇਅਰ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
+msgid "Unable to Locate Supported Media Player"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
+msgid ""
+"Banshee was unable to locate any libraries from alternate supported media "
+"players from which to import."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
+msgid "Migrate"
+msgstr "ਮਾਈਗਰੇਟ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
+msgid "Alternate Media Players"
+msgstr "ਬਦਲਵੇਂ ਮੀਡਿਆ ਪਲੇਅਰ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
+msgid "Rhythmbox Music Player"
+msgstr "ਰੀਥਮਬਾਕਸ ਸੰਗੀਤ ਪਲੇਅਰ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
 msgid "MPEG Version 3.0 Extended (*.m3u)"
@@ -1778,13 +1889,54 @@ msgstr "MPEG ਵਰਜਨ 3.0 Extended (*.m3u)"
 msgid "Exception: "
 msgstr "ਅਪਵਾਦ: "
 
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
+msgid "Not a valid M3U file."
+msgstr ""
+
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
 msgid "Shoutcast Playlist version 2 (*.pls)"
 msgstr ""
 
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
+msgid "Not a valid PLS file."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
+msgid "Verifying"
+msgstr "ਜਾਂਚ"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
+msgid "The playlist import process is currently running. Would you like to stop it?"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
+msgid "Verifying playlist tracks exist in library"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "{1} ਵਿੱਚੋਂ {0} ਦੀ ਜਾਂਚ ਜਾਰੀ"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
+msgid "Verifying "
+msgstr "ਜਾਂਚ"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
+msgid "Export Playlist"
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਨਿਰਯਾਤ"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
+msgid "Export"
+msgstr "ਨਿਰਯਾਤ"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
+msgid "Select Format: "
+msgstr "ਫਾਰਮੈਟ ਚੁਣੋ: "
+
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
 msgid "Edit Smart Playlist"
-msgstr "ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ ਸੋਧ"
+msgstr "ਸਮਾਰਟ ਸੰਗੀਤ-ਸੂਚੀ ਸੋਧ"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:51
 msgid "New Smart Playlist"
@@ -1809,26 +1961,6 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:100
 msgid "Unheard Podcasts"
 msgstr ""
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:156
-#: ../src/Core/Banshee/PlayerInterface.cs:437
-#: ../src/Core/Banshee/PlayerInterface.cs:1300
-#: ../src/Core/Banshee/PlayerInterface.cs:2348
-msgid "Artist Name"
-msgstr "ਕਲਾਕਾਰ ਨਾਂ"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:158
-#: ../src/Core/Banshee/PlayerInterface.cs:436
-#: ../src/Core/Banshee/PlayerInterface.cs:1302
-msgid "Song Name"
-msgstr "ਗੀਤ ਨਾਂ"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:160
-#: ../src/Core/Banshee/PlayerInterface.cs:438
-#: ../src/Core/Banshee/PlayerInterface.cs:1304
-#: ../src/Core/Banshee/PlayerInterface.cs:2344
-msgid "Album Title"
-msgstr "ਐਲਬਮ ਨਾਂ"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
 msgid "Create Smart Playlist from Search"
@@ -2015,10 +2147,6 @@ msgstr "ਸਾਲ"
 msgid "ago"
 msgstr "ਪਹਿਲਾਂ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
-msgid "Date Added"
-msgstr "ਮਿਤੀ ਸ਼ਾਮਿਲ ਕੀਤੀ"
-
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
 msgid "Duration"
 msgstr "ਅੰਤਰਾਲ"
@@ -2027,17 +2155,21 @@ msgstr "ਅੰਤਰਾਲ"
 msgid "Play Count"
 msgstr "ਚਲਾਉਣ ਗਿਣਤੀ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:796
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:794
+msgid "Track Number"
+msgstr "ਟਰੈਕ ਨੰਬਰ"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:797
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
 msgid "Playlist"
 msgstr "ਸੰਗੀਤ-ਸੂਚੀ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:810
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:126
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:811
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
 msgid "Smart Playlist"
 msgstr "ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
 msgid "Path"
 msgstr "ਮਾਰਗ"
 
@@ -2049,19 +2181,19 @@ msgstr "ਨਵੀਂ ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ(_S)..."
 msgid "New Smart Playlist _from Search..."
 msgstr "ਖੋਜ ਤੋਂ ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ(_f)..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:116
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
 msgid "Delete Smart Playlist"
 msgstr "ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ ਹਟਾਓ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:121
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
 msgid "Edit Smart Playlist..."
 msgstr "ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ ਸੋਧ..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:442
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
 msgid "Smart Playlist has Dependencies"
 msgstr "ਚੁਸਤ ਸੰਗੀਤ-ਸੂਚੀ ਲਈ ਨਿਰਭਰਤਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:444
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
 #, csharp-format
 msgid ""
 "{0} is depended on by other smart playlists. Are you sure you want to delete "
@@ -2092,9 +2224,7 @@ msgstr "ਫਾਇਲਾਂ ਬਦਲੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ"
 msgid ""
 "Files are currently being converted to another audio format. Would you like "
 "to stop this?"
-msgstr ""
-"ਫਾਇਲਾਂ ਨੂੰ ਇਸ ਸਮੇਂ ਹੋਰ ਆਡੀਓ ਫਾਰਮੈਟ 'ਚ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ "
-"ਰੋਕਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
+msgstr "ਫਾਇਲਾਂ ਨੂੰ ਇਸ ਸਮੇਂ ਹੋਰ ਆਡੀਓ ਫਾਰਮੈਟ 'ਚ ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ। ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਰੋਕਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
 msgid "Initializing Transcoder..."
@@ -2109,7 +2239,7 @@ msgid "Cannot initialize DapCore because HalCore is not initialized"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:335
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:398
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
 msgid "Device"
 msgstr "ਜੰਤਰ"
 
@@ -2143,7 +2273,7 @@ msgstr ""
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
 #, csharp-format
 msgid "{0} Properties"
 msgstr "{0} ਵਿਸ਼ੇਸ਼ਤਾ"
@@ -2158,15 +2288,15 @@ msgstr "ਜੰਤਰ ਨਾਂ"
 msgid "Owner name"
 msgstr "ਮਾਲਕ ਨਾਂ"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:95
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
 msgid "Encode to"
 msgstr "ਇੰਕੋਡ"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:101
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
 msgid "Volume usage"
 msgstr "ਵਾਲੀਅਮ ਵਰਤੋਂ"
 
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:113
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
 msgid "Advanced details"
 msgstr "ਤਕਨੀਕੀ ਵੇਰਵਾ"
 
@@ -2202,71 +2332,72 @@ msgstr "ਫੋਲਡਰ ਲਾਇਬਰੇਰੀ 'ਚ ਲਿਆਓ"
 msgid "Local Folder"
 msgstr "ਲੋਕਲ ਫੋਲਡਰ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:86
-#: ../src/Core/Banshee.Base/Globals.cs:95
-#: ../src/Core/Banshee.Base/Globals.cs:156
+#: ../src/Core/Banshee.Base/Globals.cs:111
+#: ../src/Core/Banshee.Base/Globals.cs:120
+#: ../src/Core/Banshee.Base/Globals.cs:178
+#: ../src/Core/Banshee.Base/Globals.cs:179
 msgid "Starting background tasks"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਕੰਮ ਸ਼ੁਰੂ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:96
+#: ../src/Core/Banshee.Base/Globals.cs:121
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:99
-#: ../src/Core/Banshee.Base/Globals.cs:142
+#: ../src/Core/Banshee.Base/Globals.cs:124
+#: ../src/Core/Banshee.Base/Globals.cs:167
 msgid "Initializing audio engine"
 msgstr "ਆਡੀਓ ਇੰਜਣ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:100
+#: ../src/Core/Banshee.Base/Globals.cs:125
 msgid "Detecting network settings"
 msgstr "ਨੈੱਟਵਰਕ ਸੈਟਿੰਗ ਖੋਜੀ ਜਾ ਰਹੀ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:101
+#: ../src/Core/Banshee.Base/Globals.cs:126
 msgid "Creating action manager"
 msgstr "ਕਾਰਵਾਈ ਮੈਨੇਜਰ ਬਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:102
+#: ../src/Core/Banshee.Base/Globals.cs:127
 msgid "Loading music library"
 msgstr "ਸੰਗੀਤ ਲਾਇਬਰੇਰੀ ਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:107
+#: ../src/Core/Banshee.Base/Globals.cs:132
 msgid "Initializing audio profiles"
 msgstr "ਆਡੀਓ ਪ੍ਰੋਫਾਇਲ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:144
+#: ../src/Core/Banshee.Base/Globals.cs:169
 msgid "Initializing audio CD support"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:145
+#: ../src/Core/Banshee.Base/Globals.cs:170
 msgid "Audio CD support will be disabled for this instance"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:147
+#: ../src/Core/Banshee.Base/Globals.cs:172
 msgid "Initializing digital audio player support"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:148
+#: ../src/Core/Banshee.Base/Globals.cs:173
 msgid "DAP support will be disabled for this instance"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:150
+#: ../src/Core/Banshee.Base/Globals.cs:175
 msgid "Initializing CD writing support"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:151
+#: ../src/Core/Banshee.Base/Globals.cs:176
 msgid "CD burning support will be disabled for this instance"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Globals.cs:153
-#: ../src/Core/Banshee.Base/Globals.cs:154
+#: ../src/Core/Banshee.Base/Globals.cs:181
+#: ../src/Core/Banshee.Base/Globals.cs:182
 msgid "Initializing plugins"
 msgstr "ਪਲੱਗਇਨ ਸ਼ੁਰੂ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:155
+#: ../src/Core/Banshee.Base/Globals.cs:183
 msgid "Initializing scripts"
 msgstr "ਸਕ੍ਰਿਪਟਾਂ ਸ਼ੁਰੂ ਕੀਤੀ ਜਾ ਰਹੀਆਂ ਹਨ"
 
-#: ../src/Core/Banshee.Base/Globals.cs:159
+#: ../src/Core/Banshee.Base/Globals.cs:186
 msgid "Loading user interface"
 msgstr "ਉਪਭੋਗੀ ਇੰਟਰਫੇਸ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
@@ -2406,7 +2537,7 @@ msgid ""
 "surface scratches, but will slow down importing substantially."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Gui/SourceView.cs:529
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
 msgid "Could not import tracks"
 msgstr ""
 
@@ -2495,19 +2626,7 @@ msgstr "ਵਰਜਨ"
 msgid "Home Directory"
 msgstr "ਘਰ ਡਾਇਰੈਕਟਰੀ"
 
-#: ../src/Core/Banshee.Base/ImportManager.cs:92
-msgid "Scanning for songs"
-msgstr "ਗੀਤਾਂ ਲਈ ਖੋਜ ਜਾਰੀ"
-
-#: ../src/Core/Banshee.Base/ImportManager.cs:280
-msgid "Importing Songs"
-msgstr "ਗੀਤ ਆਯਾਤ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
-
-#: ../src/Core/Banshee.Base/ImportManager.cs:286
-msgid "The import process is currently running. Would you like to stop it?"
-msgstr ""
-
-#: ../src/Core/Banshee.Base/Library.cs:126
+#: ../src/Core/Banshee.Base/Library.cs:122
 msgid "Could not load track from library"
 msgstr "ਲਾਇਬਰੇਰੀ ਤੋਂ ਟਰੈਕ ਲੋਡ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕੇ"
 
@@ -2533,7 +2652,7 @@ msgid ""
 "installed."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:187
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
 msgid "Problem with Player Engine"
 msgstr "ਪਲੇਅਰ ਇੰਜਣ ਨਾਲ ਸਮੱਸਿਆ"
 
@@ -2570,20 +2689,16 @@ msgstr "ਸੰਰਚਨਾ"
 msgid "Playing Music"
 msgstr "ਸੰਗੀਤ ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/Core/Banshee.Base/Source.cs:375
+#: ../src/Core/Banshee.Base/Source.cs:388
 msgid "Source Properties..."
 msgstr "ਸਰੋਤ ਵਿਸ਼ੇਸ਼ਤਾ..."
 
-#: ../src/Core/Banshee.Base/Source.cs:383
+#: ../src/Core/Banshee.Base/Source.cs:396
 #, csharp-format
 msgid "Delete {0}"
 msgstr "{0} ਹਟਾਓ"
 
-#: ../src/Core/Banshee.Base/SourceManager.cs:264
-msgid "Import"
-msgstr "ਆਯਾਤ"
-
-#: ../src/Core/Banshee.Base/SourceManager.cs:282
+#: ../src/Core/Banshee.Base/SourceManager.cs:283
 #, csharp-format
 msgid "Rename {0}"
 msgstr "{0} ਨਾਂ ਬਦਲੋ"
@@ -2632,7 +2747,7 @@ msgstr "CD ਨਕਲ"
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:236
 msgid "Invalid Selection"
-msgstr ""
+msgstr "ਗਲਤ ਚੋਣ"
 
 #: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:237
 msgid "You must select at least one track to import."
@@ -2667,19 +2782,19 @@ msgstr "{0} ਤੋਂ ਨਕਲ ਜਾਰੀ"
 msgid "Scanning..."
 msgstr "ਜਾਂਚ ਜਾਰੀ ਹੈ..."
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:309
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
 #: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
 #, csharp-format
 msgid "Cannot import track from {0}"
 msgstr ""
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:345
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
 #, csharp-format
 msgid "({0} Remaining)"
 msgstr "({0} ਬਾਕੀ)"
 
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:382
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
 #, csharp-format
 msgid "Eject {0}"
 msgstr "{0} ਬਾਹਰ ਕੱਢੋ"
@@ -2696,7 +2811,7 @@ msgstr "ਫਾਇਲ ਨਾਂ"
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:102
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:97
 msgid "Close Error Report"
-msgstr ""
+msgstr "ਗਲਤੀ ਰਿਪੋਰਟ ਬੰਦ ਕਰੋ"
 
 #: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:52
 msgid "Music Library"
@@ -2726,29 +2841,29 @@ msgstr ""
 msgid "Local Queue"
 msgstr "ਲੋਕਲ ਕਤਾਰ"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:72
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:460
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:466
-#: ../src/Core/Banshee/PlayerInterface.cs:1565
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1622
 msgid "New Playlist"
 msgstr "ਨਵੀਂ ਸੰਗੀਤ-ਸੂਚੀ"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:161
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
 msgid "Cannot Rename Playlist"
 msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਨਾਂ ਬਦਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
 
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
 msgid "A playlist with this name already exists. Please choose another name."
 msgstr ""
 
-#: ../src/Core/Banshee.Base/StreamTagger.cs:171
+#: ../src/Core/Banshee.Base/StreamTagger.cs:169
 #, csharp-format
 msgid "Saving tags for {0}"
 msgstr ""
 
 #: ../src/Core/Banshee.Base/TrackInfo.cs:307
 msgid "Unknown Title"
-msgstr "ਅਣਜਾਣ ਸਿਰਲੇਖ"
+msgstr "ਅਣਜਾਣ ਟਾਇਟਲ"
 
 #: ../src/Core/Banshee.Base/TrackInfoHeader.cs:106
 #: ../src/Core/Banshee.Base/TrackInfoHeader.cs:112
@@ -2764,74 +2879,85 @@ msgstr "ਵਿੱਚੋਂ"
 msgid "{0:0.00} GB"
 msgstr "{0:0.00} GB"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:434
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
-msgid "All"
-msgstr "ਸਭ"
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+msgid "All Columns"
+msgstr "ਸਭ ਕਾਲਮ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:463
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+msgid "Song Name"
+msgstr "ਗੀਤ ਨਾਂ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+msgid "Artist Name"
+msgstr "ਕਲਾਕਾਰ ਨਾਂ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:457
+msgid "Album Title"
+msgstr "ਐਲਬਮ ਨਾਂ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:480
 msgid "Write selection to CD"
-msgstr ""
+msgstr "ਚੋਣ ਨੂੰ CD 'ਤੇ ਲਿਖੋ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:464
+#: ../src/Core/Banshee/PlayerInterface.cs:481
 msgid "Import CD into library"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:465
+#: ../src/Core/Banshee/PlayerInterface.cs:482
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:151
 msgid "Play previous song"
 msgstr "ਪਿਛਲਾ ਗੀਤ ਚਲਾਓ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:466
+#: ../src/Core/Banshee/PlayerInterface.cs:483
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:152
 msgid "Play/pause current song"
 msgstr "ਮੌਜੂਦਾ ਗਾਣਾ ਚਲਾਓ/ਰੋਕੋ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:484
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
 msgid "Play next song"
 msgstr "ਅਗਲਾ ਗਾਣਾ ਚਲਾਓ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:468
+#: ../src/Core/Banshee/PlayerInterface.cs:485
 msgid "Device disk usage"
 msgstr "ਜੰਤਰ ਡਿਸਕ ਵਰਤੋਂ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:469
+#: ../src/Core/Banshee/PlayerInterface.cs:486
 msgid "Synchronize music library to device"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:470
+#: ../src/Core/Banshee/PlayerInterface.cs:487
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:155
 msgid "Adjust volume"
 msgstr "ਵਾਲੀਅਮ ਠੀਕ ਕਰੋ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:471
+#: ../src/Core/Banshee/PlayerInterface.cs:488
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:156
 msgid "Change repeat playback mode"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:472
+#: ../src/Core/Banshee/PlayerInterface.cs:489
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:157
 msgid "Toggle shuffle playback mode"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:473
+#: ../src/Core/Banshee/PlayerInterface.cs:490
 msgid "Edit and view metadata of selected songs"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:775
+#: ../src/Core/Banshee/PlayerInterface.cs:814
 msgid "Pause"
 msgstr "ਵਿਰਾਮ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:777
+#: ../src/Core/Banshee/PlayerInterface.cs:816
 msgid "Stop"
 msgstr "ਰੋਕੋ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:798
+#: ../src/Core/Banshee/PlayerInterface.cs:837
 msgid "Cannot Play Song"
 msgstr "ਗਾਣਾ ਚਲਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:799
+#: ../src/Core/Banshee/PlayerInterface.cs:838
 #, csharp-format
 msgid ""
 "{0} cannot be played by Banshee. The most common reasons for this are:\n"
@@ -2840,92 +2966,108 @@ msgid ""
 "  <big>•</big> Song is on a DAP that does not support playback\n"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:808
-#: ../src/Core/Banshee/PlayerInterface.cs:817
+#: ../src/Core/Banshee/PlayerInterface.cs:847
+#: ../src/Core/Banshee/PlayerInterface.cs:856
 msgid "Play"
 msgstr "ਚਲਾਓ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1231
+#: ../src/Core/Banshee/PlayerInterface.cs:1268
 #, csharp-format
 msgid "{0} Item"
 msgid_plural "{0} Items"
 msgstr[0] "{0} ਇਕਾਈ"
 msgstr[1] "{0} ਇਕਾਈਆਂ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1235
+#: ../src/Core/Banshee/PlayerInterface.cs:1272
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] "{0} ਦਿਨ"
 msgstr[1] "{0} ਦਿਨ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1240
+#: ../src/Core/Banshee/PlayerInterface.cs:1277
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0} hours"
 msgstr[0] "{0} ਘੰਟਾ"
 msgstr[1] "{0} ਘੰਟੇ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1244
+#: ../src/Core/Banshee/PlayerInterface.cs:1281
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0} minutes"
 msgstr[0] "{0} ਮਿੰਟ"
 msgstr[1] "{0} ਮਿੰਟ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1246
+#: ../src/Core/Banshee/PlayerInterface.cs:1283
 #, csharp-format
 msgid "{0} second"
 msgid_plural "{0} seconds"
 msgstr[0] "{0} ਸਕਿੰਟ"
 msgstr[1] "{0} ਸਕਿੰਟ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1584
-msgid "Clear"
-msgstr "ਸਾਫ਼ ਕਰੋ"
+#: ../src/Core/Banshee/PlayerInterface.cs:1412
+#, csharp-format
+msgid "Filter on {0}"
+msgstr "{0} ਉੱਤੇ ਫਿਲਟਰ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1847
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ਕੀ ਤੁਸੀਂ ਚੁਣੇ {0} ਗੀਤ ਹਮੇਸ਼ਾਂ ਲਈ ਹਟਾਉਣੇ ਚਾਹੁੰਦੇ ਹੋ?"
+msgstr[1] "ਕੀ ਤੁਸੀਂ ਚੁਣੇ {0} ਗੀਤ ਹਮੇਸ਼ਾਂ ਲਈ ਹਟਾਉਣੇ ਚਾਹੁੰਦੇ ਹੋ?ਕੀ ਤੁਸੀਂ ਚੁਣੇ {0} ਗੀਤ ਹਮੇਸ਼ਾਂ ਲਈ ਹਟਾਉਣੇ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1851
+#: ../src/Core/Banshee/PlayerInterface.cs:1895
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "ਜੇ ਤੁਸੀਂ ਚੋਣ ਹਟਾ ਦਿੱਤੀ ਤਾਂ ਇਹ ਹਮੇਸ਼ਾਂ ਲਈ ਹਟਾ ਦਿੱਤੀ ਜਾਵੇਗੀ।"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1854
+#: ../src/Core/Banshee/PlayerInterface.cs:1898
 msgid "Remove selection from library"
 msgstr "ਚੋਣ ਨੂੰ ਲਾਇਬਰੇਰੀ 'ਚੋਂ ਹਟਾਓ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1856
+#: ../src/Core/Banshee/PlayerInterface.cs:1900
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1901
+#: ../src/Core/Banshee/PlayerInterface.cs:1945
 msgid "Delete songs from drive"
 msgstr "ਡਰਾਇਵ ਤੋਂ ਗਾਣੇ ਹਟਾਓ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:1902
+#: ../src/Core/Banshee/PlayerInterface.cs:1946
 #, csharp-format
 msgid "You do not have the required permissions to delete '{0}'"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2016
+#: ../src/Core/Banshee/PlayerInterface.cs:2012
+msgid "Import Playlist"
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਆਯਾਤ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2044
+#: ../src/Core/Banshee/PlayerInterface.cs:2062
+msgid "Unable to Import Playlist"
+msgstr "ਸੰਗੀਤ-ਸੂਚੀ ਆਯਾਤ ਕਰਨ ਲਈ ਅਸਮਰੱਥ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2063
+msgid ""
+"Banshee was unable to find any valid tracks to import.  Please check the "
+"playlist and try again."
+msgstr ""
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2152
 msgid "New CD"
 msgstr "ਨਵੀਂ CD"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2037
+#: ../src/Core/Banshee/PlayerInterface.cs:2173
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2038
+#: ../src/Core/Banshee/PlayerInterface.cs:2174
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -2936,19 +3078,19 @@ msgid ""
 "made"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2044
+#: ../src/Core/Banshee/PlayerInterface.cs:2180
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
 msgstr ""
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2046
+#: ../src/Core/Banshee/PlayerInterface.cs:2182
 msgid "Synchronize Library"
 msgstr "ਲਾਇਬਰੇਰੀ ਸਮਕਾਲੀ"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2048
+#: ../src/Core/Banshee/PlayerInterface.cs:2184
 msgid "Save Manual Changes"
-msgstr ""
+msgstr "ਬਦਲਾਅ ਖੁਦ ਸੰਭਾਲੋ"
 
 #: ../src/Core/Banshee/TrackViewColumnWindow.cs:59
 msgid "Choose Columns"
@@ -2981,14 +3123,12 @@ msgstr ""
 "ਡਿਸਕ\n"
 "ਪਾਓ"
 
-#: ../src/Core/Banshee.Widgets/SearchEntry.cs:205
-#: ../src/Core/Banshee.Widgets/SearchEntry.cs:316
-#, csharp-format
-msgid "Searching: {0}"
-msgstr "ਖੋਜ ਜਾਰੀ: {0}"
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "ਰੇਟਿੰਗ:"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:273
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
 msgid "Buffering"
 msgstr "ਬਫ਼ਰ ਕੀਤਾ ਜਾਂਦਾ"
 
@@ -3000,11 +3140,11 @@ msgstr ""
 msgid "Idle"
 msgstr "ਬੇਕਾਰ"
 
-#: ../src/Core/Banshee.Widgets/VolumeButton.cs:493
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
 msgid "Muted"
 msgstr "ਚੁੱਪ"
 
-#: ../src/Core/Banshee.Widgets/VolumeButton.cs:495
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
 msgid "Full Volume"
 msgstr "ਪੂਰੀ ਆਵਾਜ਼"
 
@@ -3057,24 +3197,24 @@ msgstr "ਮੈਨੂੰ ਮੁੜ ਨਾ ਪੁੱਛੋ"
 msgid "Go to Web Site"
 msgstr "ਵੈੱਬ ਸਾਇਟ ਉੱਤੇ ਜਾਓ"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:229
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:234
 msgid "Could not eject iPod"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:237
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:256
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:242
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:261
 msgid "Synchronizing iPod"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:238
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:243
 msgid "Pre-processing tracks"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:253
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:258
 msgid "Flushing to Disk (may take time)"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:263
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:268
 msgid "Failed to synchronize iPod"
 msgstr ""
 
@@ -3102,15 +3242,15 @@ msgstr ""
 msgid "What is the reason for this?"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:112
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:116
 msgid "Rebuild iPod Database..."
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:120
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:124
 msgid "Confirm Rebuild iPod Database"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:126
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:130
 msgid ""
 "Rebuilding your iPod database may take some time. Also note that any "
 "playlists you have on your iPod will be lost.\n"
@@ -3118,11 +3258,11 @@ msgid ""
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:135
 msgid "Rebuild Database"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:143
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:147
 msgid "Rebuilding iPod Database..."
 msgstr ""
 
@@ -3141,84 +3281,84 @@ msgstr ""
 msgid "Removing Songs"
 msgstr "ਗੀਤ ਹਟਾਏ ਜਾ ਰਹੇ ਹਨ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:186
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:188
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:189
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:191
 msgid "Vendor"
 msgstr "ਵਿਕਰੇਤਾ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:193
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:196
 #, csharp-format
 msgid "Audio Folder"
 msgid_plural "Audio Folders"
 msgstr[0] "ਆਡੀਓ ਫੋਲਡਰ"
 msgstr[1] "ਆਡੀਓ ਫੋਲਡਰ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:199
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:202
 msgid "Required Folder Depth"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:204
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:207
 #, csharp-format
 msgid "Audio Format"
 msgid_plural "Audio Formats"
 msgstr[0] "ਆਡੀਓ ਫਾਰਮੈਟ"
 msgstr[1] "ਆਡੀਓ ਫਾਰਮੈਟ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:261
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:264
 msgid "Loading Songs"
 msgstr "ਗੀਤ ਲੋਡ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:262
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:265
 msgid ""
 "The audio device song loading process is currently running.  Would you like "
 "to stop it?"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:263
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:266
 #, csharp-format
 msgid "Loading {0} of {1}"
 msgstr "{1} ਵਿੱਚੋਂ {0} ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:312
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:315
 #, csharp-format
 msgid "Copying {0} of {1}"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:327
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
 msgid "Song Playing on Device"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:328
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:359
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:363
 #, csharp-format
 msgid "Failed to Unmount {0}"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:360
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:364
 msgid "Make sure no other programs are using it."
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:372
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:376
 #, csharp-format
 msgid "Failed to Eject {0}"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:526
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:530
 #, csharp-format
 msgid "Removing songs from {0}"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:527
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:531
 #, csharp-format
 msgid "Removing {0} of {1}"
 msgstr ""
 
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:562
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:568
 msgid "Audio Device"
 msgstr "ਆਡੀਓ ਜੰਤਰ"
 
@@ -3359,6 +3499,7 @@ msgid "Password"
 msgstr "ਗੁਪਤ-ਕੋਡ"
 
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
@@ -3366,7 +3507,7 @@ msgstr "ਗੁਪਤ-ਕੋਡ"
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
 msgid "Plugin enabled"
 msgstr "ਪਲੱਗਇਨ ਯੋਗ ਕੀਤੀ"
 
@@ -3381,6 +3522,41 @@ msgstr "last.fm ਗੁਪਤ-ਕੋਡ"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
 msgid "last.fm Username"
 msgstr "last.fm ਉਪਭੋਗੀ ਨਾਂ"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "ਬੁੱਕਮਾਰਕ ਪਲੱਗਇਨ ਯੋਗ ਕੀਤੀ"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
+msgid "Bookmarks"
+msgstr "ਬੁੱਕਮਾਰਕ"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
+msgid "Bookmark your position in tracks."
+msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
+msgid "_Bookmarks"
+msgstr "ਬੁੱਕਮਾਰਕ(_B)"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
+msgid "_Add Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਸ਼ਾਮਲ(_A)"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
+msgid "Bookmark the Position in the Current Track"
+msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
+msgid "_Remove Bookmark"
+msgstr "ਬੁੱਕਮਾਰਕ ਹਟਾਓ(_R)"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
 msgid "DAAP plugin enabled"
@@ -3419,7 +3595,7 @@ msgstr "ਸਾਂਝ ਨਾਂ:"
 msgid "Shared Music"
 msgstr "ਸਾਂਝਾ ਕੀਤਾ ਸੰਗੀਤ"
 
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapCore.cs:70
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapCore.cs:72
 msgid "Banshee Music Share"
 msgstr "ਬਾਂਸ਼ੀ ਸੰਗੀਤ ਸਾਂਝ"
 
@@ -3576,8 +3752,8 @@ msgid ""
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
-msgid "Mini mode"
-msgstr "ਮਿੰਨੀ ਢੰਗ"
+msgid "_Mini Mode"
+msgstr "ਮਿੰਨੀ ਢੰਗ(_M)"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
 msgid "Switch back to full mode"
@@ -3640,45 +3816,50 @@ msgid ""
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:59
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:61
 msgid "Notification Area Icon"
 msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਖੇਤਰ ਆਈਕਾਨ"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:64
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:116
 msgid "Show notifications when song changes"
 msgstr "ਜਦੋਂ ਗਾਣਾ ਬਦਲੇ ਤਾਂ ਨੋਟੀਫਿਕੇਸ਼ਨ ਵੇਖਾਓ"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:68
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:71
 msgid "Quit Banshee when title bar close button is clicked"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:62
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:64
 msgid "Shows the Notification Area Icon"
 msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਖੇਤਰ ਆਈਕਾਨ ਵੇਖਾਓ"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:104
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
 msgid "_Close"
 msgstr "ਬੰਦ ਕਰੋ(_C)"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:105
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:110
 msgid "Close"
 msgstr "ਬੰਦ ਕਰੋ"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:200
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:115
+msgid "_Show Notifications"
+msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਵੇਖਾਓ(_S)"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:221
 msgid "Still Running"
 msgstr "ਹਾਲੇ ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:201
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:222
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:262
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:288
 msgid "Now Playing"
 msgstr "ਹੁਣ ਚੱਲ ਰਿਹਾ ਹੈ"
 
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:267
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:293
 msgid "Cannot show notification"
 msgstr "ਨੋਟੀਫਿਕੇਸ਼ਨ ਨਹੀਂ ਵੇਖਾਇਆ ਜਾ ਸਕਦਾ"
 
@@ -3980,6 +4161,10 @@ msgstr "ਕੋਈ ਵੇਰਵਾ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ"
 msgid "Podcasts"
 msgstr "ਪੋਸਟ-ਕਾਸਟ"
 
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
+msgid "All"
+msgstr "ਸਭ"
+
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
 #, csharp-format
 msgid "{0} Podcast"
@@ -4062,7 +4247,7 @@ msgstr "ਲਿੰਕ"
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:46
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:132
 msgid "Subscribe"
-msgstr ""
+msgstr "ਮੈਂਬਰੀ"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
 msgid "Subscribe to New Podcast"
@@ -4195,7 +4380,7 @@ msgstr ""
 msgid "Failed to load radio stations: "
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:307
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
 msgid "Invalid URI format."
 msgstr ""
 
@@ -4233,37 +4418,50 @@ msgstr "ਸਟੇਸ਼ਨ"
 msgid "Comment"
 msgstr "ਟਿੱਪਣੀ"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+msgid "Cache version"
+msgstr "ਕੈਚੇ ਵਰਜਨ"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
 msgid "Recommendation plugin enabled"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:109
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+msgid ""
+"Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
+"recommendation"
+msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
 msgid "Recommended Artists"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:137
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:169
 msgid "No similar artists found"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:209
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:246
 #, csharp-format
 msgid "Top Tracks by {0}"
 msgstr ""
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:211
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:248
 #, csharp-format
 msgid "Top Albums by {0}"
 msgstr ""
 
-#. translators: 25% similarity
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:327
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:366
 #, csharp-format
-msgid "{0}% similarity"
+msgid "{0}% Similarity"
 msgstr ""
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:368
+msgid "Unknown Similarity"
+msgstr "ਅਣਜਾਣ ਇਕਸਾਰਤਾ"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
 msgid "Music Recommendations"
-msgstr ""
+msgstr "ਸੰਗੀਤ ਸਿਫ਼ਾਰਸ਼"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:61
 msgid ""

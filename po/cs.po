@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-19 12:12+0200\n"
-"PO-Revision-Date: 2007-07-19 12:13+0200\n"
+"POT-Creation-Date: 2007-08-15 18:17+0200\n"
+"PO-Revision-Date: 2007-08-15 18:18+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -116,7 +116,7 @@ msgstr ""
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
 msgid "Default"
-msgstr ""
+msgstr "Výchozí"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Extra processing"
@@ -2765,7 +2765,7 @@ msgstr "Vymazat seznam skladeb"
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:155
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
-msgstr "Opravdu chcete navždy smazat tuto {0}?"
+msgstr "Opravdu chcete navždy smazat tento {0}?"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:164
 #, csharp-format
