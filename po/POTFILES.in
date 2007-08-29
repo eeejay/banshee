@@ -35,8 +35,9 @@ src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs
 src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs
 src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs
 src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs
-src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs
-src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs
+src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
+src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs
+src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
 src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs
 src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs
 src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs
@@ -88,10 +89,6 @@ src/Core/Banshee.Base/TrackInfo.cs
 src/Core/Banshee.Base/TrackInfoHeader.cs
 src/Core/Banshee.Base/Utilities.cs
 src/Core/Banshee.Base/banshee-core.schemas.in
-src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs
-src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
-src/Core/Banshee.Services/Banshee.Sources/Source.cs
-src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.Widgets/ActiveUserEvent.cs
 src/Core/Banshee.Widgets/DiscUsageDisplay.cs
 src/Core/Banshee.Widgets/RatingMenuItem.cs
