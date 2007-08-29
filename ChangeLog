@@ -1,3 +1,10 @@
+2007-08-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Plugins/Banshee.Plugins.Radio/StationManager.cs:
+	* src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in:
+	Patch from Mário Meyer to allow setting the radio station base URI from
+	which Banshee will load online radio stations
+
 2007-08-19  Aaron Bockover  <abock@gnome.org>
 
 	0.13.1 Released
