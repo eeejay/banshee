@@ -376,7 +376,7 @@ namespace Banshee.Plugins.Radio
             }
             
             Playlist playlist = new Playlist();
-            playlist.Load(CreateXspfWebStream(BaseStationUriSchema.Get()));
+            playlist.Load(CreateXspfWebStream(new Uri(BaseStationUriSchema.Get())));
             
             DateTime master_last_modified = DateTime.MinValue;
             

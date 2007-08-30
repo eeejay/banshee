@@ -116,6 +116,8 @@ src/Makefile
 src/AssemblyInfo.cs
 
 src/Core/Makefile
+src/Core/Hyena/Makefile
+src/Core/Hyena.Gui/Makefile
 src/Core/Banshee/Makefile
 src/Core/Banshee/banshee
 src/Core/Banshee/banshee.exe.config
