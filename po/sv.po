@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-24 01:29+0200\n"
-"PO-Revision-Date: 2007-08-24 01:30+0100\n"
+"POT-Creation-Date: 2007-09-03 23:30+0200\n"
+"PO-Revision-Date: 2007-09-03 23:32+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -429,8 +429,8 @@ msgstr "Markera för användning"
 #: ../data/banshee-dialogs.glade.h:66
 #: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:658
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:274
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:297
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:286
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:309
 msgid "Unknown"
 msgstr "Okänd"
 
@@ -486,51 +486,51 @@ msgid "Could not create pipeline"
 msgstr "Kunde inte skapa rörledning"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:228
-msgid "Could not initialize cdparanoia"
-msgstr "Kunde inte initiera cdparanoia"
+msgid "Could not initialize element from cdda URI"
+msgstr "Kunde inte initiera element från cdda-uri"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:239
+#: ../libbanshee/gst-cd-rip-0.10.c:242
 msgid "Could not create mbtrm plugin"
 msgstr "Kunde inte skapa mbtrm-insticksmodul"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:251
+#: ../libbanshee/gst-cd-rip-0.10.c:254
 msgid "Could not create encoder pipeline"
 msgstr "Kunde inte skapa rörledning för kodare"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:257
+#: ../libbanshee/gst-cd-rip-0.10.c:260
 msgid "Could not create queue plugin"
 msgstr "Kunde inte skapa köinsticksmodul"
 
 # Intressant ordval
-#: ../libbanshee/gst-cd-rip-0.10.c:265
+#: ../libbanshee/gst-cd-rip-0.10.c:268
 msgid "Could not create GNOME VFS output plugin"
 msgstr "Kunde inte skapa utmatningsinsticksmodul för GNOME VFS"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:281
-msgid "Could not link cdparanoiasrc to mbtrm"
-msgstr "Kunde inte länka cdparanoiasrc till mbtrm"
+#: ../libbanshee/gst-cd-rip-0.10.c:284
+msgid "Could not link cddasrcsrc to mbtrm"
+msgstr "Kunde inte länka cddasrcsrc till mbtrm"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:286
+#: ../libbanshee/gst-cd-rip-0.10.c:289
 msgid "Could not link mbtrm to queue"
 msgstr "Kunde inte länka mbtrm till kö"
 
 # Sink pad?
-#: ../libbanshee/gst-cd-rip-0.10.c:291
+#: ../libbanshee/gst-cd-rip-0.10.c:294
 msgid "Could not link queue to encoder"
 msgstr "Kunde inte länka kö till kodare"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:296
+#: ../libbanshee/gst-cd-rip-0.10.c:299
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Kunde inte länka kodare till gnomevfssink"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:403
+#: ../libbanshee/gst-cd-rip-0.10.c:406
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:429
+#: ../libbanshee/gst-cd-rip-0.10.c:432
 msgid "Encoding element does not support tagging!"
 msgstr "Kodningselement har inte stöd för taggning!"
 
@@ -542,36 +542,36 @@ msgstr "Ingen avkodare kunde hittades för källformatet."
 msgid "Could not stat encoded file"
 msgstr "Kunde inte ta status på kodad fil"
 
-#: ../libbanshee/gst-transcode-0.10.c:258
+#: ../libbanshee/gst-transcode-0.10.c:249
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Kunde inte skapa insticksmodulen \"gnomevfssrc\""
 
-#: ../libbanshee/gst-transcode-0.10.c:264
+#: ../libbanshee/gst-transcode-0.10.c:255
 msgid "Could not create 'decodebin' plugin"
 msgstr "Kunde inte skapa insticksmodulen \"decodebin\""
 
-#: ../libbanshee/gst-transcode-0.10.c:270
+#: ../libbanshee/gst-transcode-0.10.c:261
 msgid "Could not create 'gnomevfssink' plugin"
 msgstr "Kunde inte skapa insticksmodulen \"gnomevfssink\""
 
-#: ../libbanshee/gst-transcode-0.10.c:276
+#: ../libbanshee/gst-transcode-0.10.c:267
 msgid "Could not create 'sinkben' plugin"
 msgstr "Kunde inte skapa insticksmodulen \"sinkben\""
 
-#: ../libbanshee/gst-transcode-0.10.c:282
+#: ../libbanshee/gst-transcode-0.10.c:273
 msgid "Could not create 'audioconvert' plugin"
 msgstr "Kunde inte skapa insticksmodulen \"audioconvert\""
 
-#: ../libbanshee/gst-transcode-0.10.c:288
+#: ../libbanshee/gst-transcode-0.10.c:279
 msgid "Could not create encoding pipeline"
 msgstr "Kunde inte skapa kodningsrörledning"
 
 # Sink pad?
-#: ../libbanshee/gst-transcode-0.10.c:294
+#: ../libbanshee/gst-transcode-0.10.c:285
 msgid "Could not get sink pad from encoder"
 msgstr "Kunde inte få sink pad från kodare"
 
-#: ../libbanshee/gst-transcode-0.10.c:377
+#: ../libbanshee/gst-transcode-0.10.c:368
 msgid "Could not construct pipeline"
 msgstr "Kunde inte konstruera rörledning"
 
@@ -767,7 +767,6 @@ msgstr "_Uppspelning"
 #: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:105
 #: ../src/Core/Banshee.Base/Source.cs:321
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:106
 msgid "Source"
 msgstr "Källa"
 
@@ -1383,57 +1382,48 @@ msgstr "Musikspelaren Rhythmbox"
 msgid "Invalid Rhythmbox database file"
 msgstr "Ogiltig Rhythmbox-databasfil"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media ASX (*.asx)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:43
 msgid "MPEG Version 3.0 Extended (*.m3u)"
 msgstr "MPEG version 3.0 Extended (*.m3u)"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
-msgid "Exception: "
-msgstr "Undantag: "
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
-msgid "Not a valid M3U file."
-msgstr "Inte en giltig M3U-fil."
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:50
 msgid "Shoutcast Playlist version 2 (*.pls)"
 msgstr "Shoutcast-spellista version 2 (*.pls)"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
-msgid "Not a valid PLS file."
-msgstr "Inte en giltig PLS-fil."
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:177
 msgid "Verifying"
 msgstr "Verifierar"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:178
 msgid "The playlist import process is currently running. Would you like to stop it?"
 msgstr "Importering av spellistan körs för närvarande. Vill du stoppa den?"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:181
 msgid "Verifying playlist tracks exist in library"
 msgstr "Verifierar att spellistans spår finns i biblioteket"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:206
 #, csharp-format
 msgid "Verifying {0} of {1}"
 msgstr "Verifierar {0} av {1}"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:209
 msgid "Verifying "
 msgstr "Verifierar"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:283
 msgid "Export Playlist"
 msgstr "Exportera spellista"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:292
 msgid "Export"
 msgstr "Exportera"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:317
 msgid "Select Format: "
 msgstr "Välj format: "
 
@@ -2102,48 +2092,48 @@ msgstr "Blanda"
 msgid "Continuous"
 msgstr "Kontinuerlig"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:213
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:216
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Ställ automatiskt in alla spårnummer i stigande ordning"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:214
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:217
 msgid "Set all track counts to this value"
 msgstr "Ställ in alla spårantal till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:215
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:218
 msgid "Set all artists to this value"
 msgstr "Ställ in alla artister till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:216
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
 msgid "Set all albums to this value"
 msgstr "Ställ in alla album till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:217
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
 msgid "Set all genres to this value"
 msgstr "Ställ in alla genrer till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:218
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:221
 msgid "Set all years to this value"
 msgstr "Ställ in alla årtal till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:222
 msgid "Apply the values of this track set for the Artist, Album Title, Genre, Track count, Year, and Rating fields to the rest of the selected tracks in this editor."
 msgstr "Verkställ värden för den här spåruppsättningen för fälten Artist, Albumtitel, Genre, Spårantal, År och Betyg till resten av de markerade spåren i den här redigeraren."
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:223
 msgid "Set all ratings to this value"
 msgstr "Ställ in alla betyg till detta värde"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:272
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:284
 msgid "Never played"
 msgstr "Aldrig spelad"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:286
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:298
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Redigerar låt {0} av {1}"
 
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:287
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:299
 #, csharp-format
 msgid "Editing {0}"
 msgstr "Redigerar {0}"
@@ -2382,7 +2372,6 @@ msgstr "Lokal kö"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
-#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:48
 #: ../src/Core/Banshee/PlayerInterface.cs:1622
 msgid "New Playlist"
 msgstr "Ny spellista"
@@ -2646,18 +2635,6 @@ msgstr "Fönsterbredd"
 msgid "Write metadata back to audio files"
 msgstr "Skriv metadata tillbaka till ljudfiler"
 
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:46
-msgid "Library"
-msgstr "Bibliotek"
-
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:187
-msgid "Name"
-msgstr "Namn"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:697
-msgid "IconName"
-msgstr "Ikonnamn"
-
 #: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:86
 #, csharp-format
 msgid "Stop {0}"
@@ -2686,7 +2663,7 @@ msgid "Rating:"
 msgstr "Betyg:"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:291
 msgid "Buffering"
 msgstr "Buffrar"
 
@@ -2719,18 +2696,18 @@ msgid "Plays"
 msgstr "Spelningar"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:59
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:125
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:126
 msgid "Missing"
 msgstr "Saknas"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:65
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:128
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:129
 msgid "No Codec"
 msgstr "Ingen kodek"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:68
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:219
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:131
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:229
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:132
 msgid "Unknown Error"
 msgstr "Okänt fel"
 
@@ -2932,17 +2909,36 @@ msgstr "Kunde inte importera spellista"
 msgid "Banshee was unable to find any valid tracks to import.  Please check the playlist and try again."
 msgstr "Banshee kunde inte hitta några giltiga spår att importera.  Kontrollera spellistan och försök igen."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2152
+#: ../src/Core/Banshee/PlayerInterface.cs:2106
+msgid "Could not export playlist"
+msgstr "Kunde inte exportera spellista"
+
+# SUN CHANGED MESSAGE
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Error opening stream"
+msgstr "Fel vid öppnandet av ström"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+msgid "Could not open stream or playlist"
+msgstr "Kunde inte öppna ström eller spellista"
+
+# SUN CHANGED MESSAGE
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Problem parsing playlist"
+msgstr "Problem vid tolkning av spellista"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2169
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2173
+#: ../src/Core/Banshee/PlayerInterface.cs:2190
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisera {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2174
+#: ../src/Core/Banshee/PlayerInterface.cs:2191
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the contents of your {0}.\n"
@@ -2955,15 +2951,15 @@ msgstr ""
 "<big>•</big> <i>Synkronisera bibliotek</i>: synkronisera Banshees bibliotek till {0}\n"
 "<big>•</big> <i>Spara manuella ändringar</i>: spara endast de manuella ändringarna du gjorde"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2180
+#: ../src/Core/Banshee/PlayerInterface.cs:2197
 msgid "<b>Warning:</b> Actions will alter or erase existing iPod contents and may cause incompatibility with iTunes!"
 msgstr "<b>Varning:</b> Åtgärder kommer att ändra eller radera befintligt iPod-innehåll och kan orsaka inkompatibilitet med iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2182
+#: ../src/Core/Banshee/PlayerInterface.cs:2199
 msgid "Synchronize Library"
 msgstr "Synkronisera bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2184
+#: ../src/Core/Banshee/PlayerInterface.cs:2201
 msgid "Save Manual Changes"
 msgstr "Spara manuella ändringar"
 
@@ -3369,7 +3365,7 @@ msgstr "Enhetsfel"
 msgid "Could not set the owner of the device."
 msgstr "Kunde inte ställa in ägaren för enheten."
 
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:138
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:140
 msgid "Could not initialize GStreamer library"
 msgstr "Kunde inte initiera GStreamer-bibliotek"
 
@@ -4233,7 +4229,7 @@ msgstr "Position för avgränsaren som finns mellan kanalen och poddsändningsvy
 msgid "Root directory for the podcast plugin to store downloaded files"
 msgstr "Rotkatalog för poddsändningsinsticksmodulen för att lagra hämtade filer"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:117
 msgid "Loading"
 msgstr "Läser in"
 
@@ -4371,6 +4367,14 @@ msgid "Time of the last radio update check"
 msgstr "Tid för senaste radiouppdateringskontroll"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
+msgid "URI for remote stations update"
+msgstr "Uri för uppdatering av fjärrstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
+msgid "URI to update remote stations from"
+msgstr "Uri att uppdatera fjärrstationer från"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:12
 msgid "Update remote stations from radio.banshee-project.org"
 msgstr "Uppdatera fjärrstationer från radio.banshee-project.org"
 
@@ -4392,12 +4396,12 @@ msgstr "Bästa spår av {0}"
 msgid "Top Albums by {0}"
 msgstr "Toppalbum för {0}"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:366
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:367
 #, csharp-format
 msgid "{0}% Similarity"
 msgstr "{0}% liknande"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:368
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:369
 msgid "Unknown Similarity"
 msgstr "Okänd likhet"
 
@@ -4426,6 +4430,20 @@ msgstr "Insticksmodulen Rekommendationer aktiverad"
 msgid "Version of the cache layout on disk, located at ~/.config/banshee/plugins/recommendation"
 msgstr "Version av cachelayouten på disk, finns i ~/.config/banshee/plugins/recommendation"
 
+#~ msgid "Could not initialize cdparanoia"
+#~ msgstr "Kunde inte initiera cdparanoia"
+#~ msgid "Exception: "
+#~ msgstr "Undantag: "
+#~ msgid "Not a valid M3U file."
+#~ msgstr "Inte en giltig M3U-fil."
+#~ msgid "Not a valid PLS file."
+#~ msgstr "Inte en giltig PLS-fil."
+#~ msgid "Library"
+#~ msgstr "Bibliotek"
+#~ msgid "Name"
+#~ msgstr "Namn"
+#~ msgid "IconName"
+#~ msgstr "Ikonnamn"
 #~ msgid "Searching: {0}"
 #~ msgstr "Söker: {0}"
 #~ msgid "Ratin_g"
@@ -4847,11 +4865,6 @@ msgstr "Version av cachelayouten på disk, finns i ~/.config/banshee/plugins/rec
 #, fuzzy
 #~ msgid "Unkown Album"
 #~ msgstr "Okänt album"
-
-# SUN CHANGED MESSAGE
-#, fuzzy
-#~ msgid "Error Burning CD"
-#~ msgstr "Fel vid öppnande av cd"
 
 #, fuzzy
 #~ msgid "Encoding files..."
