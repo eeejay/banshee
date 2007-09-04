@@ -15,6 +15,7 @@ DIR_HYENA = $(top_builddir)/src/Core/Hyena
 DIR_HYENA_GUI = $(top_builddir)/src/Core/Hyena.Gui
 DIR_BANSHEE_SERVICES = $(top_builddir)/src/Core/Banshee.Services
 DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Core/Banshee.Widgets
+DIR_BANSHEE_THICKCLIENT = $(top_builddir)/src/Core/Banshee.ThickClient
 DIR_BANSHEE_BASE = $(top_builddir)/src/Core/Banshee.Base
 DIR_BOO = $(top_srcdir)/src/Extras/Boo
 DIR_BOOBUDDY = $(top_builddir)/src/Extras/BooBuddy
@@ -60,9 +61,10 @@ LINK_BOOBUDDY = -r:$(DIR_BOOBUDDY)/BooBuddy.dll
 LINK_HYENA = -r:$(DIR_HYENA)/Hyena.dll
 LINK_HYENA_GUI = -r:$(DIR_HYENA_GUI)/Hyena.Gui.dll
 LINK_BANSHEE_SERVICES = -r:$(DIR_BANSHEE_SERVICES)/Banshee.Services.dll
+LINK_BANSHEE_THICKCLIENT = -r:$(DIR_BANSHEE_THICKCLIENT)/Banshee.ThickClient.dll
 LINK_BANSHEE_BASE = -r:$(DIR_BANSHEE_BASE)/Banshee.Base.dll
 LINK_BANSHEE_WIDGETS = -r:$(DIR_BANSHEE_WIDGETS)/Banshee.Widgets.dll
-LINK_BANSHEE_CORE = $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_BANSHEE_SERVICES) $(LINK_BANSHEE_BASE) $(LINK_BANSHEE_WIDGETS) $(LINK_TAGLIB)
+LINK_BANSHEE_CORE = $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_BANSHEE_SERVICES) $(LINK_BANSHEE_BASE) $(LINK_BANSHEE_THICKCLIENT) $(LINK_BANSHEE_WIDGETS) $(LINK_TAGLIB)
 
 ## Building ##
 

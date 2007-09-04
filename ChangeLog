@@ -1,5 +1,9 @@
 2007-09-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient: Migrated Banshee.ThickClient 
+
+2007-09-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services: Migrated Banshee.Services
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:

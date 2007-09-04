@@ -1,8 +1,9 @@
 SUBDIRS = \
 	Hyena \
 	Hyena.Gui \
-	Banshee.Widgets \
 	Banshee.Services \
+	Banshee.Widgets \
+	Banshee.ThickClient \
 	Banshee.Base \
 	Banshee.Hyena \
 	Banshee

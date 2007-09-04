@@ -109,7 +109,7 @@ namespace Banshee.Database
         private void InnerMigrate()
         {
             // HACK: Just to make things easy while I'm writing the migration code
-            /*Execute("DROP TABLE IF EXISTS CoreConfiguration");
+            Execute("DROP TABLE IF EXISTS CoreConfiguration");
             Execute("DROP TABLE IF EXISTS CoreTracks");
             Execute("DROP TABLE IF EXISTS CoreArtists");
             Execute("DROP TABLE IF EXISTS CoreAlbums");
@@ -117,7 +117,7 @@ namespace Banshee.Database
             Execute("DROP TABLE IF EXISTS CorePlaylistEntries");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylists");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylistEntries");
-            Execute("DROP TABLE IF EXISTS CoreTracksCache");*/
+            Execute("DROP TABLE IF EXISTS CoreTracksCache");
             
             MethodInfo [] methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
