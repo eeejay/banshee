@@ -125,6 +125,7 @@ src/Core/Banshee.Base/Makefile
 src/Core/Banshee.Base/Banshee.Base.dll.config
 src/Core/Banshee.Base/ConfigureDefines.cs
 src/Core/Banshee.Hyena/Makefile
+src/Core/Banshee.Services/Makefile
 src/Core/Banshee.Widgets/Makefile
 src/Core/Banshee.Widgets/Banshee.Widgets.dll.config
 

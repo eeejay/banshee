@@ -1,3 +1,20 @@
+2007-09-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services: Migrated Banshee.Services
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Disabled
+	some things to be added back later
+
+	* src/Core/Banshee.Base/Globals.cs: Add Banshee.Services startup to the
+	existing startup sequence for now
+
+	* configure.ac:
+	* src/Core/Makefile.am:
+	* src/Core/Core.mds:
+	* src/Core/Banshee.Base/Makefile.am:
+	* build/Common.Makefile: Configure Banshee.Services in the build
+
 2007-08-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena:

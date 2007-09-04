@@ -13,6 +13,7 @@ DIR_MUSICBRAINZ = $(top_builddir)/src/Extras/MusicBrainz
 DIR_GNOME_KEYRING = $(top_builddir)/src/Extras/Gnome.Keyring
 DIR_HYENA = $(top_builddir)/src/Core/Hyena
 DIR_HYENA_GUI = $(top_builddir)/src/Core/Hyena.Gui
+DIR_BANSHEE_SERVICES = $(top_builddir)/src/Core/Banshee.Services
 DIR_BANSHEE_WIDGETS = $(top_builddir)/src/Core/Banshee.Widgets
 DIR_BANSHEE_BASE = $(top_builddir)/src/Core/Banshee.Base
 DIR_BOO = $(top_srcdir)/src/Extras/Boo
@@ -31,6 +32,7 @@ LINK_GTK = $(GTKSHARP_LIBS)
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_UNIX = -r:Mono.Posix
 
+LINK_SQLITE = -r:System.Data -r:Mono.Data.SqliteClient
 LINK_HAL = -r:$(DIR_HAL)/Hal.dll
 LINK_TAGLIB = -r:$(DIR_TAGLIB)/TagLib.dll
 LINK_LAST_FM = -r:$(DIR_LAST_FM)/Last.FM.dll
@@ -57,9 +59,10 @@ LINK_BOOBUDDY = -r:$(DIR_BOOBUDDY)/BooBuddy.dll
 
 LINK_HYENA = -r:$(DIR_HYENA)/Hyena.dll
 LINK_HYENA_GUI = -r:$(DIR_HYENA_GUI)/Hyena.Gui.dll
+LINK_BANSHEE_SERVICES = -r:$(DIR_BANSHEE_SERVICES)/Banshee.Services.dll
 LINK_BANSHEE_BASE = -r:$(DIR_BANSHEE_BASE)/Banshee.Base.dll
 LINK_BANSHEE_WIDGETS = -r:$(DIR_BANSHEE_WIDGETS)/Banshee.Widgets.dll
-LINK_BANSHEE_CORE = $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_BANSHEE_BASE) $(LINK_BANSHEE_WIDGETS) $(LINK_TAGLIB)
+LINK_BANSHEE_CORE = $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_BANSHEE_SERVICES) $(LINK_BANSHEE_BASE) $(LINK_BANSHEE_WIDGETS) $(LINK_TAGLIB)
 
 ## Building ##
 

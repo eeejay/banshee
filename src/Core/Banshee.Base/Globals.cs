@@ -117,6 +117,8 @@ namespace Banshee.Base
                 }
             });
             
+            startup.Register(Catalog.GetString("Starting background tasks"), Banshee.ServiceStack.Application.Run);
+            
             startup.Register(Catalog.GetString("Starting background tasks"), true,
                 Catalog.GetString("Device support will be disabled for this instance (no HAL)"),
                 HalCore.Initialize);
