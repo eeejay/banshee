@@ -1359,11 +1359,11 @@ msgstr "Scanne"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
 msgid "Amarok"
-msgstr "Amorak"
+msgstr "Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
 msgid "Unable to open Amarok database"
-msgstr "Amorak-Datenbank konnte nicht geöffnet werden."
+msgstr "Amarok-Datenbank konnte nicht geöffnet werden."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
 msgid "Importing from Amarok database failed"
