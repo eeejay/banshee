@@ -1386,7 +1386,7 @@ msgstr "Nach Titel suchen"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
 msgid "Migrate From Other Media Players"
-msgstr "Migrieren aus anderer Wiedergabeprogrammen"
+msgstr "Migrieren aus anderen Wiedergabeprogrammen"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
 msgid ""
