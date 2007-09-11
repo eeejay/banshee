@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee 0.10.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-05 14:53+0200\n"
+"POT-Creation-Date: 2007-09-11 21:00+0200\n"
 "PO-Revision-Date: 2007-09-05 14:54+0200\n"
 "Last-Translator: Jochen Skulj <jochen@jochenskulj.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/audio-profiles/aac.xml.in.h:1
 msgid "Advanced Audio Coding (AAC)"
@@ -493,11 +493,11 @@ msgstr "_Schreiben"
 #: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:79
 msgid "Banshee Music Player"
-msgstr "Banshee Musik-Player"
+msgstr "Banshee Musik-Wiedergabeprogramm"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
-msgstr "Musik-Player"
+msgstr "Musik-Wiedergabeprogramm"
 
 #: ../data/banshee.glade.h:1
 msgid "<b>Loading...</b>"
@@ -1386,14 +1386,14 @@ msgstr "Nach Titel suchen"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
 msgid "Migrate From Other Media Players"
-msgstr "Migrieren aus anderer Medienwiedergabe"
+msgstr "Migrieren aus anderer Wiedergabeprogrammen"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
 msgid ""
 "Select any supported alternate media players that you wish to migrate into "
 "Banshee."
 msgstr ""
-"Wählen Sie eine unterstützte Medienwiedergabe aus, das Sie nach Banshee "
+"Wählen Sie ein unterstütztes Wiedergabeprogramm aus, das Sie nach Banshee "
 "migrieren möchten."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
@@ -1404,19 +1404,19 @@ msgstr "Importieren"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
 msgid "Player"
-msgstr "Medienwiedergabe"
+msgstr "Wiedergabeprogramm"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
-msgstr "Unterstützte Medienwiedergabe nicht gefunden"
+msgstr "Unterstütztes Wiedergabeprogramm nicht gefunden"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
 msgid ""
 "Banshee was unable to locate any libraries from alternate supported media "
 "players from which to import."
 msgstr ""
-"Banshee konnte keine Bibliotheken der unterstützten Medienwiedergabe, aus "
-"der importiert werden sollte, finden."
+"Banshee konnte keine Bibliotheken des unterstützten Wiedergabeprogrammes, "
+"aus der importiert werden sollte, finden."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
 msgid "Migrate"
@@ -1424,7 +1424,7 @@ msgstr "Migrieren"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
 msgid "Alternate Media Players"
-msgstr "Alternative Medienwiedergabe"
+msgstr "Alternative Wiedergabeprogramme"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 msgid "Rhythmbox Music Player"
@@ -1979,7 +1979,7 @@ msgstr "Audio-CD-Unterstützung wird für diese Instanz deaktiviert"
 
 #: ../src/Core/Banshee.Base/Globals.cs:174
 msgid "Initializing digital audio player support"
-msgstr "Unterstützung für digitale Medienwiedergabe intialisieren"
+msgstr "Unterstützung für digitale Wiedergabeprogramme intialisieren"
 
 #: ../src/Core/Banshee.Base/Globals.cs:175
 msgid "DAP support will be disabled for this instance"
@@ -2268,8 +2268,8 @@ msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
 msgstr ""
-"Keine Player-Engines wurden gefunden. Bitte stellen Sie sicher, dass Banshee "
-"korrekt installiert wurde."
+"Keine Wiedergabe-Engines wurden gefunden. Bitte stellen Sie sicher, dass "
+"Banshee korrekt installiert wurde."
 
 #: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
 msgid "Problem with Player Engine"
@@ -2568,8 +2568,8 @@ msgid ""
 "album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
 "prefixed zero), %track_count_nz% (No prefixed zero)."
 msgstr ""
-"Format zur Erzeugung des Titel-Dateinamen innerhalb der Bibliothek. Es dürfen "
-"keine Pfad-Zeichen/Schlüsselbegriffe verwendet werden. Siehe "
+"Format zur Erzeugung des Titel-Dateinamen innerhalb der Bibliothek. Es "
+"dürfen keine Pfad-Zeichen/Schlüsselbegriffe verwendet werden. Siehe "
 "LibraryFolderPattern. Zulässige Schlüsselbegriffe sind: %artist%, %album%, %"
 "title%, %track_number%, %track_count%, %track_number_nz% (ohne führende "
 "Null), %track_count_nz% (ohne führende Null)."
@@ -2585,8 +2585,8 @@ msgid ""
 msgstr ""
 "Format zur Erzeugung des Titel-Ordners innerhalb der Bibliothek. Es darf "
 "kein absoluter Pfad erzeugt werden. Die Pfade hier sind relativ zur Banshee-"
-"Musikbibliothek. Siehe LibraryLocation. Zulässige Schlüsselbegriffe sind: "
-"%artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% "
+"Musikbibliothek. Siehe LibraryLocation. Zulässige Schlüsselbegriffe sind: %"
+"artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% "
 "(keine führende Null), %track_count_nz% (keineführende Null), %path_sep% "
 "(betriebsystemunabhängige Ordner-Trennzeichen (/))."
 
@@ -2712,8 +2712,8 @@ msgstr "Standard-Exportformat für Wiedergabelisten"
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
 msgstr ""
-"»Wahr«, wenn dass Hauptfenster maximiert werden soll, »Falsch«, "
-"wenn es nicht maximiert werden soll."
+"»Wahr«, wenn dass Hauptfenster maximiert werden soll, »Falsch«, wenn es "
+"nicht maximiert werden soll."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
 msgid "URI"
@@ -3012,9 +3012,12 @@ msgstr "Filter auf {0}"
 #: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
+msgid_plural ""
 "Are you sure you want to permanently delete the selected {0} songs?"
-msgstr "Sind Sie sicher, dass Sie diesen Titel dauerhaft löschen möchen?"
-"Sind Sie sicher, dass Sie die {0} ausgewählten Titel dauerhaft löschen möchen?"
+msgstr[0] "Sind Sie sicher, dass Sie diesen Titel dauerhaft löschen möchen?"
+msgstr[1] ""
+"Sind Sie sicher, dass Sie die {0} ausgewählten Titel dauerhaft löschen "
+"möchen?"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1895
 msgid "If you delete the selection, it will be permanently lost."
@@ -3027,12 +3030,14 @@ msgstr "Auswahl aus der Bibliothek entfernen"
 #: ../src/Core/Banshee/PlayerInterface.cs:1900
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
+msgid_plural ""
 "Are you sure you want to remove the selected {0} songs from your library?"
-msgstr ""
+msgstr[0] ""
 "Sind Sie sicher, dass Sie den ausgewählten Titel aus der Bibliothek "
 "entfernen möchten?"
-"Sind Sie sicher, dass Sie die {0} ausgewählten Titel aus "
-"der Bibliothek entfernen möchten?"
+msgstr[1] ""
+"Sind Sie sicher, dass Sie die {0} ausgewählten Titel aus der Bibliothek "
+"entfernen möchten?"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1945
 msgid "Delete songs from drive"
@@ -4231,7 +4236,7 @@ msgstr ""
 "lokal zum Hören verwaltet.\n"
 "\n"
 "Der Name stammt vom Plazieren von Audio-Beiträgen in Apple's iPod® Audio-"
-"Player, obwohl Podcast auch direkt in {0} gehört werden können."
+"Wiedergabeprogramm, obwohl Podcast auch direkt in {0} gehört werden können."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
@@ -4683,4 +4688,9 @@ msgstr ""
 "Version des Cache-Layouts auf der Festplatte, abgelegt unter ~/.config/"
 "banshee/plugins/recommendation"
 
-
+#~ msgid ""
+#~ "Are you sure you want to permanently delete this song?Are you sure you "
+#~ "want to permanently delete the selected {0} songs?"
+#~ msgstr ""
+#~ "Sind Sie sicher, dass Sie diesen Titel dauerhaft löschen möchen?Sind Sie "
+#~ "sicher, dass Sie die {0} ausgewählten Titel dauerhaft löschen möchen?"
