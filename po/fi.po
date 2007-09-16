@@ -3724,7 +3724,7 @@ msgstr "Banshee-musiikkijako"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:64
 msgid "Disconnected from music share"
-msgstr "Yhteys musiikkojakoon katkaistiin"
+msgstr "Yhteys musiikkijakoon katkaistiin"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:65
 msgid "Unable to connect to music share"
@@ -3743,7 +3743,7 @@ msgstr ""
 "kuin iTunes® 7-asiakkaiden kanssa.\n"
 "\n"
 "Ulkopuoliset asiakasohjelmat eivät enää voi ottaa yhteyttä näihin iTunes®-"
-"musiikkojakoihin. Tämä on Applen tekemä tarkoituksellinen rajoite, jolle "
+"musiikkijakoihin. Tämä on Applen tekemä tarkoituksellinen rajoite, jolle "
 "emme valitettavasti voi tehdä oikein mitään."
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:102
