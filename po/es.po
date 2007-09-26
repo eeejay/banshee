@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-30 03:25+0100\n"
-"PO-Revision-Date: 2007-09-20 12:08+0200\n"
+"POT-Creation-Date: 2007-09-20 11:09+0100\n"
+"PO-Revision-Date: 2007-09-26 11:44+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,8 +134,8 @@ msgid ""
 "A fast and efficient open source audio format offering lossless and high-"
 "quality lossy encoding with great dynamic range."
 msgstr ""
-"Un rápido y eficaz formato de sonido libre con codificación sin pérdida o gran calidad con pérdida "
-"y un gran rango dinámico."
+"Un rápido y eficaz formato de sonido libre con codificación sin pérdida o "
+"gran calidad con pérdida y un gran rango dinámico."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
 msgid "Default"
@@ -170,8 +170,9 @@ msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
 "size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
 msgstr ""
-"Un formato de sonido con pérdida propietario con gran calidad de salida para un tamaño "
-"de archivo menor que un MP3. a 96 kbps WMA es equivalente a un MP3 de 128 kbps."
+"Un formato de sonido con pérdida propietario con gran calidad de salida para "
+"un tamaño de archivo menor que un MP3. a 96 kbps WMA es equivalente a un MP3 "
+"de 128 kbps."
 
 #: ../data/audio-profiles/wma.xml.in.h:2
 msgid "Audio Quality"
@@ -1440,7 +1441,9 @@ msgstr "Verificando"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:178
 msgid "The playlist import process is currently running. Would you like to stop it?"
-msgstr "El proceso de importación de la lista de reproducción está ejecutándose. ¿Quiere pararlo?"
+msgstr ""
+"El proceso de importación de la lista de reproducción está ejecutándose. "
+"¿Quiere pararlo?"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:181
 msgid "Verifying playlist tracks exist in library"
@@ -1918,70 +1921,71 @@ msgstr "Carpeta local"
 
 #: ../src/Core/Banshee.Base/Globals.cs:111
 #: ../src/Core/Banshee.Base/Globals.cs:120
-#: ../src/Core/Banshee.Base/Globals.cs:178
-#: ../src/Core/Banshee.Base/Globals.cs:179
+#: ../src/Core/Banshee.Base/Globals.cs:122
+#: ../src/Core/Banshee.Base/Globals.cs:180
+#: ../src/Core/Banshee.Base/Globals.cs:181
 msgid "Starting background tasks"
 msgstr "Empezando tareas secundarias"
 
-#: ../src/Core/Banshee.Base/Globals.cs:121
+#: ../src/Core/Banshee.Base/Globals.cs:123
 msgid "Device support will be disabled for this instance (no HAL)"
 msgstr "El soporte del dispositivo será deshabilitado para esta instancia (sin HAL)"
 
-#: ../src/Core/Banshee.Base/Globals.cs:124
-#: ../src/Core/Banshee.Base/Globals.cs:167
+#: ../src/Core/Banshee.Base/Globals.cs:126
+#: ../src/Core/Banshee.Base/Globals.cs:169
 msgid "Initializing audio engine"
 msgstr "Inicializando motor de audio"
 
-#: ../src/Core/Banshee.Base/Globals.cs:125
+#: ../src/Core/Banshee.Base/Globals.cs:127
 msgid "Detecting network settings"
 msgstr "Detectando ajustes de la red"
 
-#: ../src/Core/Banshee.Base/Globals.cs:126
+#: ../src/Core/Banshee.Base/Globals.cs:128
 msgid "Creating action manager"
 msgstr "Creando gestor de acciones"
 
-#: ../src/Core/Banshee.Base/Globals.cs:127
+#: ../src/Core/Banshee.Base/Globals.cs:129
 msgid "Loading music library"
 msgstr "Cargando fonoteca"
 
-#: ../src/Core/Banshee.Base/Globals.cs:132
+#: ../src/Core/Banshee.Base/Globals.cs:134
 msgid "Initializing audio profiles"
 msgstr "Inicializando perfiles de audio"
 
-#: ../src/Core/Banshee.Base/Globals.cs:169
+#: ../src/Core/Banshee.Base/Globals.cs:171
 msgid "Initializing audio CD support"
 msgstr "Inicializando soporte de audio CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:170
+#: ../src/Core/Banshee.Base/Globals.cs:172
 msgid "Audio CD support will be disabled for this instance"
 msgstr "El soporte de audio CD será deshabilitado para esta instancia"
 
-#: ../src/Core/Banshee.Base/Globals.cs:172
+#: ../src/Core/Banshee.Base/Globals.cs:174
 msgid "Initializing digital audio player support"
 msgstr "Inicializando soporte de reproductor de audio digital"
 
-#: ../src/Core/Banshee.Base/Globals.cs:173
+#: ../src/Core/Banshee.Base/Globals.cs:175
 msgid "DAP support will be disabled for this instance"
 msgstr "El soporte DAP será deshabilitado para esta instancia"
 
-#: ../src/Core/Banshee.Base/Globals.cs:175
+#: ../src/Core/Banshee.Base/Globals.cs:177
 msgid "Initializing CD writing support"
 msgstr "Inicializando el soporte de grabación de CD"
 
-#: ../src/Core/Banshee.Base/Globals.cs:176
+#: ../src/Core/Banshee.Base/Globals.cs:178
 msgid "CD burning support will be disabled for this instance"
 msgstr "El soporte para grabar CD será deshabilitado para esta instancia"
 
-#: ../src/Core/Banshee.Base/Globals.cs:181
-#: ../src/Core/Banshee.Base/Globals.cs:182
+#: ../src/Core/Banshee.Base/Globals.cs:183
+#: ../src/Core/Banshee.Base/Globals.cs:184
 msgid "Initializing plugins"
 msgstr "Inicializando complementos"
 
-#: ../src/Core/Banshee.Base/Globals.cs:183
+#: ../src/Core/Banshee.Base/Globals.cs:185
 msgid "Initializing scripts"
 msgstr "Inicializando scripts"
 
-#: ../src/Core/Banshee.Base/Globals.cs:186
+#: ../src/Core/Banshee.Base/Globals.cs:188
 msgid "Loading user interface"
 msgstr "Cargando interfaz de usuario"
 
@@ -2451,7 +2455,7 @@ msgstr ""
 "Ya existe una lista de reproducción con ese nombre. Por favor elija otro "
 "nombre."
 
-#: ../src/Core/Banshee.Base/StreamTagger.cs:169
+#: ../src/Core/Banshee.Base/StreamTagger.cs:147
 #, csharp-format
 msgid "Saving tags for {0}"
 msgstr "Guardar etiquetas para {0}"
@@ -2551,10 +2555,10 @@ msgid ""
 "prefixed zero), %path_sep% (portable directory separator (/))."
 msgstr ""
 "Formato para crear una carpeta de pistas dentro de la fonoteca. No forma una "
-"ruta absoluta. La ruta es relativa a la fonoteca de Banshee. Vea "
-"Ubicación de la fonoteca. Elementos válidos: %artist%, %album%, %title%, %track_number%, %"
-"track_count%, %track_number_nz% (sin cero prefijado), %track_count_nz% (sin cero prefijado), "
-"%path_sep% (separador de directorios (/))."
+"ruta absoluta. La ruta es relativa a la fonoteca de Banshee. Vea Ubicación "
+"de la fonoteca. Elementos válidos: %artist%, %album%, %title%, %track_number"
+"%, %track_count%, %track_number_nz% (sin cero prefijado), %track_count_nz% "
+"(sin cero prefijado), %path_sep% (separador de directorios (/))."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
 msgid "Height of the main interface window."
@@ -2569,13 +2573,12 @@ msgstr ""
 "audio cuando se utilice el editor de metadatos de pistas."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
-#, fuzzy
 msgid "Library File Pattern"
-msgstr "Patrón del nombre de archivo"
+msgstr "Biblioteca de patrones de archivo"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
 msgid "Library Folder Pattern"
-msgstr ""
+msgstr "Biblioteca de patrones de carpetas"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
 msgid "Library location"
@@ -2600,9 +2603,8 @@ msgstr ""
 "guarda la información de una canción"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
-#, fuzzy
 msgid "Name of media playback engine backend"
-msgstr "Nombre del motor de reproducción de medios."
+msgstr "Nombre del motor de reproducción de medios"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
 msgid "Pixel position of Main Player Window on the X Axis"
@@ -2614,25 +2616,23 @@ msgstr "Posición de píxel de la ventana principal del reproductor en el eje Y"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
 msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
-msgstr ""
+msgstr "Modo de repetición (0 = ninguno, 1 = todas, 2 = sólo una)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
-#, fuzzy
 msgid "Repeat playback"
-msgstr "Cambiar modo de reproducción repetir canción"
+msgstr "Reproducción continua"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
 msgid "Set the IO backend in Banshee"
 msgstr "Establecer el backend de E/S en Banshee"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
-#, fuzzy
 msgid "Show cover art"
 msgstr "Mostrar arte de portada"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
 msgid "Show cover art below source view if available"
-msgstr ""
+msgstr "Mostrar la portada debajo de la vista de la fuente si está disponible"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
 msgid "Show the Initial Import Dialog"
@@ -2645,29 +2645,26 @@ msgstr ""
 "vacía"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
-#, fuzzy
 msgid "Shuffle playback"
-msgstr "Cambiar modo reproducción aleatorio"
+msgstr "Reproducción aleatoria"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
-msgstr ""
+msgstr "Criterio de ordenación de las pistas de la fonoteca en la vista de la fuente (0 = nombre, 1 = tamaño)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
-#, fuzzy
 msgid "Sort criteria of playlists"
-msgstr "Ordenar listas de reproducción"
+msgstr "Orden de las listas de reproducción"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
-msgstr ""
+msgstr "Orden de las listas de reproducción de la fonoteca en la vista de la fuente (0 = ascendiente, 1 = descendiente)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
-#, fuzzy
 msgid "Sort order of playlists"
-msgstr "Ordenar listas de reproducción"
+msgstr "Orden de las listas de reproducción"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
 msgid "Source View Width"
@@ -2675,7 +2672,7 @@ msgstr "Ancho de la vista de la fuente"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
 msgid "The default playlist export format"
-msgstr ""
+msgstr "El formato de exportación predeterminado de las listas de reproducción"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
 msgid "True if main window is to be maximized, false if it is not."
@@ -2691,18 +2688,15 @@ msgstr "Lista URI"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
 msgid "URI of last file folder"
-msgstr ""
+msgstr "URI de la última carpeta"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
 msgid "Volume"
 msgstr "Volumen"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
-#, fuzzy
 msgid "Volume of playback relative to mixer output"
-msgstr ""
-"Volumen de reproducción relativo a la salida del mezclador (excepto en "
-"Helix, que establece el volumen directamente en PCM)"
+msgstr "Volumen de reproducción relativo a la salida del mezclador"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
@@ -2768,9 +2762,8 @@ msgstr ""
 "disco"
 
 #: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
-#, fuzzy
 msgid "Rating:"
-msgstr "Puntuación"
+msgstr "Puntuación:"
 
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
 #: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:291
@@ -2840,9 +2833,8 @@ msgid "Location"
 msgstr "Ubicación"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:453
-#, fuzzy
 msgid "All Columns"
-msgstr "Columnas…"
+msgstr "Todas las columnas"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:455
 msgid "Song Name"
@@ -3664,11 +3656,11 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
 msgid "_Bookmarks"
-msgstr ""
+msgstr "_Marcadores"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
 msgid "_Add Bookmark"
-msgstr ""
+msgstr "_Añadir marcador"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
 msgid "Bookmark the Position in the Current Track"
@@ -3877,7 +3869,7 @@ msgstr "Mostrar arte de portada"
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:746
 msgid "Download"
-msgstr ""
+msgstr "Descargar"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
 #, fuzzy
