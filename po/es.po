@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-20 11:09+0100\n"
-"PO-Revision-Date: 2007-09-26 11:44+0200\n"
+"POT-Creation-Date: 2007-09-26 10:47+0100\n"
+"PO-Revision-Date: 2007-09-29 13:52+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2650,7 +2650,9 @@ msgstr "Reproducción aleatoria"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
 msgid "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
-msgstr "Criterio de ordenación de las pistas de la fonoteca en la vista de la fuente (0 = nombre, 1 = tamaño)"
+msgstr ""
+"Criterio de ordenación de las pistas de la fonoteca en la vista de la fuente "
+"(0 = nombre, 1 = tamaño)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
 msgid "Sort criteria of playlists"
@@ -2660,7 +2662,9 @@ msgstr "Orden de las listas de reproducción"
 msgid ""
 "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 "Descending)"
-msgstr "Orden de las listas de reproducción de la fonoteca en la vista de la fuente (0 = ascendiente, 1 = descendiente)"
+msgstr ""
+"Orden de las listas de reproducción de la fonoteca en la vista de la fuente "
+"(0 = ascendiente, 1 = descendiente)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
 msgid "Sort order of playlists"
@@ -3888,9 +3892,8 @@ msgid ""
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
-#, fuzzy
 msgid "Metadata searcher plugin enabled"
-msgstr "Buscador de metadatos"
+msgstr "Complemento de búsqueda de metadatos activado"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
 msgid ""
@@ -3919,9 +3922,8 @@ msgid "<i>This is the album</i>"
 msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:4
-#, fuzzy
 msgid "Current source:"
-msgstr "Elija una fuente para importar:"
+msgstr "Fuente actual:"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:5
 msgid "Full Mode"
@@ -3980,9 +3982,8 @@ msgid "Cannot show notification"
 msgstr "No es posible mostrar notificación"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
-#, fuzzy
 msgid "Notification area plugin enabled"
-msgstr "Icono del área de notificación"
+msgstr "Complemento del área área de notificación activado"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:3
 msgid "Quit instead of hide to notification area on close"
@@ -3993,9 +3994,8 @@ msgid "Quit on close"
 msgstr "Salir al cerrar"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:5
-#, fuzzy
 msgid "Show a notification when closing main window"
-msgstr "Mostrar notificaciones cuando se cambie de canción"
+msgstr "Mostrar una notificación cuando se cierre la ventana principal"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:6
 msgid "Show notifications"
@@ -4093,9 +4093,9 @@ msgid "File complete"
 msgstr "Archivo completo"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:345
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Unable to create directory:  {0}"
-msgstr "Incapaz de leer su iPod"
+msgstr "No se pudo crear el directorio: {0}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:450
 msgid "Dif is not in 'running' state"
@@ -4121,7 +4121,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:433
 msgid "Podcast feed URI scheme is not supported."
-msgstr ""
+msgstr "El esquema URI de la fuente del Podcast no está soportada."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:445
 msgid "Invalid URL"
@@ -4129,7 +4129,7 @@ msgstr "URL inválida"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:446
 msgid "Podcast feed URL is invalid."
-msgstr ""
+msgstr "La URL fuente del Podcast no es válida."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:514
 msgid "Unable to load Podcast DB"
@@ -4150,21 +4150,20 @@ msgstr "Actualizando «{0}»"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:263
 msgid "Podcast Feed Update"
-msgstr ""
+msgstr "Actualización de las fuentes de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:267
 msgid "Updating"
 msgstr "Actualizando"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:268
-#, fuzzy
 msgid "Preparing to update feeds"
-msgstr "Preparándose para grabar"
+msgstr "Preparándose para actualizar las fuentes"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:318
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Updating podcast feed {0} of {1}"
-msgstr "Editando canción {0} de {1}"
+msgstr "Actualizando fuente de Podcast {0} de {1}"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:339
 msgid "Canceling updates"
@@ -4360,7 +4359,7 @@ msgstr "Suscribirse al nuevo Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
 msgid "Please enter the URL of the podcast to which you are subscribing."
-msgstr ""
+msgstr "Introduzca la URL del Podcast al que se está suscribiendo"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
 msgid "When new episodes are available:  "
@@ -4391,9 +4390,8 @@ msgid "Podcast feed column"
 msgstr "Columna fuente de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
-#, fuzzy
 msgid "Podcast library location"
-msgstr "Seleccionar la ubicación de la biblioteca"
+msgstr "Ubicación de la biblioteca de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
 msgid "Podcast plugin enabled"
@@ -4417,11 +4415,11 @@ msgstr "Posición del Podcast en la columna título en la lista de reproducción
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:11
 msgid "Position of the separator located between the feed and podcast views"
-msgstr ""
+msgstr "Posición del separador ubicado entre la fuente y la vista de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
 msgid "Root directory for the podcast plugin to store downloaded files"
-msgstr ""
+msgstr "Directorio raíz para que el complemento de Podcast almacene los archivos descargados"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:117
 msgid "Loading"
@@ -4460,7 +4458,7 @@ msgstr "Copiar URI"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
 msgid "Copy stream URI to clipboard"
-msgstr ""
+msgstr "Copiar el flujo URI al portapapeles"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:133
 msgid "Edit"
@@ -4539,6 +4537,8 @@ msgid ""
 "Always show stations that require the Helix/RealPlayer engine, even if the "
 "engine is not loaded."
 msgstr ""
+"Mostrar siempre las emisoras que requieren el motor Helix/RealPlayer, incluso si "
+"el motor no está cargado."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
@@ -4554,7 +4554,7 @@ msgstr ""
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
 msgid "Radio plugin enabled"
-msgstr ""
+msgstr "Complemento de radio activado"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
 msgid "Show remote stations"
@@ -4573,14 +4573,12 @@ msgid "Time of the last radio update check"
 msgstr "Hora de la última comprobación de actualizaciones de radio"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
-#, fuzzy
 msgid "URI for remote stations update"
-msgstr "Mostrar emisoras remotas"
+msgstr "URI para actualizar las estaciones remotas"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
-#, fuzzy
 msgid "URI to update remote stations from"
-msgstr "Mostrar emisoras remotas"
+msgstr "URI de donde actualizar las emisoras remotas"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:12
 msgid "Update remote stations from radio.banshee-project.org"
@@ -4638,7 +4636,7 @@ msgstr "Versión de la cache"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
 msgid "Recommendation plugin enabled"
-msgstr ""
+msgstr "Complemento de recomendación activado"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
 msgid ""
