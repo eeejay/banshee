@@ -29,20 +29,17 @@
 using System; 
 using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using Mono.Unix;
 using Gtk;
 using Hal;
 using IPod;
-using IPod.Hal;
 
 using Banshee.Base;
 using Banshee.Dap;
-using Banshee.Metadata;
-using Banshee.Sources;
 using Banshee.Widgets;
+using Banshee.Metadata;
 
 public static class PluginModuleEntry
 {
@@ -59,14 +56,13 @@ namespace Banshee.Dap.Ipod
     [DapProperties(DapType = DapType.NonGeneric, PipelineName="Ipod")]
     [SupportedCodec(CodecType.Mp3)]
     [SupportedCodec(CodecType.Mp4)]
-    public sealed class IpodDap : DapDevice, IPlaylistCapable
+    public sealed class IpodDap : DapDevice
     {
         private IPod.Device device;
         private Hal.Device hal_device;
         private bool database_supported;
         private UnsupportedDatabaseView db_unsupported_container;
         private bool metadata_provider_initialized = false;
-        private List<SafeUri> added_tracks = new List<SafeUri>();
     
         public override InitializeResult Initialize(Hal.Device halDevice)
         {
@@ -93,8 +89,8 @@ namespace Banshee.Dap.Ipod
             base.Initialize(halDevice);
             
             InstallProperty("Generation", device.Generation.ToString());
-            InstallProperty("Model", device.ModelClass);
-           // InstallProperty("Model Number", device.ModelNumber);
+            InstallProperty("Model", device.Model.ToString());
+            InstallProperty("Model Number", device.ModelNumber);
             InstallProperty("Serial Number", device.SerialNumber);
             InstallProperty("Firmware Version", device.FirmwareVersion);
             InstallProperty("Database Version", device.TrackDatabase.Version.ToString());
@@ -119,13 +115,7 @@ namespace Banshee.Dap.Ipod
         private InitializeResult LoadIpod()
         {
             try {
-					//FIXME: Major Hack! Need to figure out selecting a specific ipod
-					IPod.DeviceManager devman = IPod.Hal.HalDeviceManager.Create();
-					foreach( IPod.Device dev in devman.Devices){
-						device = dev;
-					}
-					//device = new IPod.Hal.HalDevice(
-                //device = new IPod.Hal.HalDevice(hal_device["block.device"]);
+                device = new IPod.Device(hal_device["block.device"]);
                 if(File.Exists(Path.Combine(device.ControlPath, Path.Combine("iTunes", "iTunesDB")))) { 
                     device.LoadTrackDatabase();
                 } else {
@@ -173,21 +163,6 @@ namespace Banshee.Dap.Ipod
             return false;
         }
         
-        public DapPlaylistSource AddPlaylist(Source playlist){        	
-       		IPodPlaylistSource ips = new IPodPlaylistSource(this, playlist.Name);       		
-       		       		
-       		LogCore.Instance.PushDebug("In IPodDap.AddPlaylist" , "");
-            
-            foreach(TrackInfo ti in playlist.Tracks) {
-                LogCore.Instance.PushDebug("Adding track " + ti.ToString() , " to new playlist " + ips.Name);
-                IpodDapTrackInfo idti = new IpodDapTrackInfo(ti, device.TrackDatabase);
-                ips.AddTrack(idti);
-                AddTrack(idti);                
-            }
-            
-        	return (DapPlaylistSource) ips;
-        }
-        
         public override void AddTrack(TrackInfo track)
         {
             AddTrack(track, false);
@@ -198,149 +173,49 @@ namespace Banshee.Dap.Ipod
             if (track == null || (IsReadOnly && !loading))
                 return;
 
-            IpodDapTrackInfo new_track = null;
+            TrackInfo new_track = null;
 
             if(track is IpodDapTrackInfo)
-                new_track = track as IpodDapTrackInfo;
+                new_track = track;
             else
                 new_track = new IpodDapTrackInfo(track, device.TrackDatabase);
-            
-            if (new_track != null && !added_tracks.Contains(new_track.Uri)) {                
+            // FIXME: only add a new track if we don't have it already
+
+
+            if (new_track != null) {
                 tracks.Add(new_track);
                 OnTrackAdded(new_track);
-                added_tracks.Add(new_track.Uri);                
             }
         }
-        
-        public override void RemoveTrack(TrackInfo track)
+
+        protected override void OnTrackRemoved(TrackInfo track)
         {
-            if (SourceManager.ActiveSource == Source) {
-                if(!(track is IpodDapTrackInfo)) {
-                    LogCore.Instance.PushDebug("In IPodDap.TrackRemoved" , "track is NOT IpodDapTrackInfo");
-                    return;
-                }
-                
-                IpodDapTrackInfo ipod_track = (IpodDapTrackInfo) track;
-                device.TrackDatabase.RemoveTrack(ipod_track.Track);
-                
-                // User is removing from the master list.  Remove the track
-                // from any child sources.
-                RemoveTrackFromPlaylists(ipod_track);
-                base.RemoveTrack(ipod_track);   
-            } else {
-                // The user is removing a track from a child source.  Only remove
-                // from the Source if it is no longer in use by any other playlists.
-                RemoveTrackIfNotInPlaylists(track, null);
-            }
-        }
-        
-        public void RemoveTrackIfNotInPlaylists(TrackInfo track, Source source_to_ignore)
-        {
-            // Loop through the other Banshee playlists.  If the 
-            // track isn't used by any other playlists, then remove
-            // it from the Source playlist.  When the user removes 
-            // from a child source, this is necessary to keep
-            // the Source playlist in sync with the child playlists.
-            bool in_use = false;
-            foreach (Source c in Source.Children) {
-                if (source_to_ignore != null && source_to_ignore.Name == c.Name) {
-                    continue;
-                }
-            
-                foreach (TrackInfo ti in c.Tracks) {
-                    if (TrackCompare(track, ti)) {
-                        in_use = true;
-                        break;
-                    }
-                }
-                
-                if (in_use) {
-                    break;
-                }
+            if(!(track is IpodDapTrackInfo)) {
+                return;
             }
             
-            if (!in_use) {
-                if(!(track is IpodDapTrackInfo)) {
-                    LogCore.Instance.PushDebug("In IPodDap.TrackRemoved" , "track is NOT IpodDapTrackInfo");
-                    return;
-                }
-                
-                IpodDapTrackInfo ipod_track = (IpodDapTrackInfo) track;
+            try {
+                IpodDapTrackInfo ipod_track = (IpodDapTrackInfo)track;
                 device.TrackDatabase.RemoveTrack(ipod_track.Track);
-                
-                // Find a reference to the equivalent track in the source list.
-                // When removing a track from a playlist, we won't have a reference
-                // to the track in the Source list.  We will only have an equivalent
-                // track info object.
-                foreach (TrackInfo ti in Tracks) {
-                    if (TrackCompare(track, ti)) {                
-                        base.RemoveTrack(ti);                  
-                        break;
-                    }                    
-                }
-            }            
-        }
-        
-        public void RemoveTrackFromPlaylists(TrackInfo track)
-        {
-            // Loop through the other Banshee playlists.  Remove the track if
-            // it appears in any other playlists.            
-            foreach (Source c in Source.Children) {
-                foreach (TrackInfo ti in c.Tracks) {
-                    if (TrackCompare(track, ti)) {
-                        c.RemoveTrack(ti); 
-                        break;                        
-                    }
-                }
-            }           
+            } catch(Exception) {
+            }
         }
         
         private void ReloadDatabase(bool refresh)
         {
-            LogCore.Instance.PushDebug("Reloading iPod Database", "");
             bool previous_database_supported = database_supported;
             
             ClearTracks(false);
-            added_tracks.Clear();
             
             if(refresh) {
                 device.TrackDatabase.Reload();
-            }            
+            }
             
-            if(database_supported ||  !device.IsShuffle) {
-            
-                LogCore.Instance.PushDebug("Clearing child sources.", "");
-                // Clear the playlists in Banshee.  This is to clear the lists
-                // when reloading the database after a sync.
-                Source.ClearChildSources();                
-                
-                // Add the ipod playlists to Banshee.
-                foreach(Playlist p in device.TrackDatabase.Playlists) {
-                    LogCore.Instance.PushDebug("Adding iPod playlist '" + p.Name + "' to Banshee", "");
-                    IPodPlaylistSource ps = new IPodPlaylistSource(this, p.Name);
-           			foreach (Track t in p.Tracks) {
-           			    IpodDapTrackInfo idti = new IpodDapTrackInfo(t);           			    
-           			    ps.AddTrack(idti);
-           			    AddTrack(idti, true);           			    
-           			}       
-                    Source.SourceDrop(ps);
-                }
-                
-                // Add tracks that aren't in a playlist to the master DAP
-                // playlist.  AddTrack prevents duplicates.
-                foreach(Track t in device.TrackDatabase.Tracks) {
-                    IpodDapTrackInfo idti = new IpodDapTrackInfo(t);  
-                    AddTrack(idti, true);                    
-                }
-                
-            } else if (database_supported || (device.IsShuffle)) {
-            
-                // Shuffles don't support playlists ???  I think this is true.
-                foreach(Track track in device.TrackDatabase.Tracks) {                    
+            if(database_supported || (device.IsNew && device.IsShuffle)) {
+                foreach(Track track in device.TrackDatabase.Tracks) {
                     IpodDapTrackInfo ti = new IpodDapTrackInfo(track);
                     AddTrack(ti, true);
                 }
-                
             } else {
                 BuildDatabaseUnsupportedWidget();
             }
@@ -368,140 +243,13 @@ namespace Banshee.Dap.Ipod
                 Catalog.GetString("Pre-processing tracks"),
                 0.0);
             
-            // Create a hashtable of iPod tracks.  When we add go to add
-            // tracks to the iPod playlists, we need iPod tracks.  
-            Hashtable ipod_tracks_hash = new Hashtable();
-            
             foreach(IpodDapTrackInfo track in Tracks) {
-                Track ipod_track = null;
-                
                 if(track.Track == null) {
-                    ipod_track = CommitTrackToDevice(track);
+                    CommitTrackToDevice(track);
                 } else {
-                    ipod_track = track.Track;
-                    track.Track.Uri = new Uri(track.Uri.AbsoluteUri);                    
-                }
-                
-                ipod_tracks_hash.Add(track.Uri, ipod_track);
-            }
-            
-            LogCore.Instance.PushDebug("Starting Synchronize", "Finished Tracks, starting playlists");
-            
-            // Loop through the playlists in Banshee that the user has configured for the iPod.
-            // Add playlists on the iPod if they don't exist. We remove all tracks and then add them back
-            // to ensure the right tracks exist in the playlist in the proper order.
-            foreach (Source c in Source.Children) {
-                LogCore.Instance.PushDebug("Checking ChildSource " + c.Name + "", "");
-                Playlist p = device.TrackDatabase.LookupPlaylist(c.Name);
-                if (p == null) {
-                    LogCore.Instance.PushDebug("Adding ipod playlist " + c.Name , "It wasn't on the iPod.");
-                    try {
-                        p = device.TrackDatabase.CreatePlaylist(c.Name);
-                    } catch (InvalidCastException ice) {
-                        LogCore.Instance.PushDebug("Caught InvalidCastException when creating " + c.Name , ice.ToString());
-                        continue;
-                    }
-                }
-                
-                if (p == null) {
-                    LogCore.Instance.PushDebug("Creating playlist on ipod failed for " + c.Name , "");
-                    continue;
-                } else {
-                    LogCore.Instance.PushDebug("Playlist is not null.", "");
-                }
-                
-                // Remove all tracks in the playlist.
-                int num_tracks = p.Tracks.Count;
-                for (int i = 0; i < num_tracks; i++) {
-                    p.RemoveTrack(0);
-                    LogCore.Instance.PushDebug("Removed first row.", p.Tracks.Count + " remaining in playlist.");
-                }                
-                
-                // Add them back.
-                foreach (TrackInfo ti in c.Tracks) {
-                    LogCore.Instance.PushDebug("Adding track " + ti.ToString() , " to playlist " + p.Name);
-                    
-                    
-                    if (ti is IpodDapTrackInfo) {
-                        LogCore.Instance.PushDebug("ti is IpodDapTrackInfo", "");
-                        IpodDapTrackInfo idti = ti as IpodDapTrackInfo;
-                        
-                        object ipod_track_obj = ipod_tracks_hash[idti.Uri];
-                        if (ipod_track_obj == null) {
-                            LogCore.Instance.PushDebug("Couldn't find ipod track in hash!", "");
-                            continue;
-                        }
-                        
-                        if (ipod_track_obj is Track) {
-                            LogCore.Instance.PushDebug("Adding Ipod track", "");                        
-                            p.AddTrack(ipod_track_obj as Track);
-                        } else {
-                            LogCore.Instance.PushDebug("ipod_track_object not an instance of Track", "continuing to next track");
-                            continue;
-                        }                       
-                        
-                    } else {
-                        LogCore.Instance.PushDebug("ti is not IpodDapTrackInfo", "");
-                        continue;
-                    }    
-                    
-                    /*
-                    IpodDapTrackInfo idti = null;
-                    if (ti is IpodDapTrackInfo) {
-                        LogCore.Instance.PushDebug("ti is IpodDapTrackInfo", "");
-                        idti = ti as IpodDapTrackInfo;
-                    } else {
-                        LogCore.Instance.PushDebug("ti is not IpodDapTrackInfo", "");
-                        idti = new IpodDapTrackInfo(ti, device.TrackDatabase);
-                    }                    
-                    
-                    if (idti == null) {
-                        LogCore.Instance.PushDebug("idti is null", "");
-                        continue;
-                    }
-                    
-                    // TODO: the track may already be on the ipod.  I don't want to copy it again if it is, so 
-                    // I need to figure out how to determine which tracks have already been added to the ipod 
-                    // and get a ref to the Track for this case.
-                    Track track = idti.Track;
-                    if(track == null) {
-                        LogCore.Instance.PushDebug("track is null", "Adding track to ipod");
-                        track = CommitTrackToDevice(idti);
-                        
-                        if (track == null) {
-                            LogCore.Instance.PushDebug("track is still null after committing!", "");
-                            continue;
-                        }
-                    } 
-                    
-                    LogCore.Instance.PushDebug("Adding Ipod track", "");
-                    p.AddTrack(track);
-                    */
+                    track.Track.Uri = new Uri(track.Uri.AbsoluteUri);
                 }
             }
-            
-            LogCore.Instance.PushDebug("Finished adding playlists, checking for removed playlists. ", "");
-            
-            // Remove playlists that have been deleted.
-            foreach (Playlist p in device.TrackDatabase.Playlists) {
-                LogCore.Instance.PushDebug("Checking ipod playlist " + p.Name , "");
-                bool found_playlist = false;
-                foreach (Source c in Source.Children) {
-                    if (c.Name == p.Name) {
-                        found_playlist = true;
-                        break;
-                    }
-                }
-                
-                if (!found_playlist) {
-                    LogCore.Instance.PushDebug("Removing playlist " + p.Name + "; It is missing in Banshee", "");
-                    device.TrackDatabase.RemovePlaylist(p);
-                } else {
-                    LogCore.Instance.PushDebug("Found playlist " + p.Name + " in Banshee", "");
-                }
-            }
-                        
-            LogCore.Instance.PushDebug("Finished modifying playlists", "Continuing regular synchronization process");
             
             device.TrackDatabase.SaveProgressChanged += delegate(object o, TrackSaveProgressArgs args)
             {
@@ -524,15 +272,15 @@ namespace Banshee.Dap.Ipod
             }
         }
         
-        private Track CommitTrackToDevice(IpodDapTrackInfo ti)
+        private void CommitTrackToDevice(IpodDapTrackInfo ti)
         {
             Track track = device.TrackDatabase.CreateTrack();
-                        
+
             try {
                 track.Uri = new Uri(ti.Uri.AbsoluteUri);
             } catch {
                 device.TrackDatabase.RemoveTrack (track);
-                return null;
+                return;
             }
         
             if(ti.Album != null) {
@@ -594,10 +342,6 @@ namespace Banshee.Dap.Ipod
                     Console.Error.WriteLine ("Failed to set cover art from {0}: {1}", ti.CoverArtFileName, e);
                 }
             }
-            
-            // tale: I don't think this will break things.  I added it
-            // because I need the track to add to playlists.
-            return track;
         }
 
         private void SetCoverArt (Track track, ArtworkUsage usage, Gdk.Pixbuf pixbuf)
@@ -613,38 +357,34 @@ namespace Banshee.Dap.Ipod
         {
             string prefix = "multimedia-player-";
             string id = null;
-				//FIXME: Need to reinstate ipod-icon logic
-//            switch(device.ModelClass) {
-//                case DeviceModel.Color: id = "ipod-standard-color"; break;
-//                case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
-//                case DeviceModel.Regular: id = "ipod-standard-monochrome"; break;
-//                case DeviceModel.RegularU2: id = "ipod-U2-monochrome"; break;
-//                case DeviceModel.Mini: id = "ipod-mini-silver"; break;
-//                case DeviceModel.MiniBlue: id = "ipod-mini-blue"; break;
-//                case DeviceModel.MiniPink: id = "ipod-mini-pink"; break;
-//                case DeviceModel.MiniGreen: id = "ipod-mini-green"; break;
-//                case DeviceModel.MiniGold: id = "ipod-mini-gold"; break;
-//                case DeviceModel.Shuffle: id = "ipod-shuffle"; break;
-//                case DeviceModel.NanoWhite: id = "ipod-nano-white"; break;
-//                case DeviceModel.NanoBlack: id = "ipod-nano-black"; break;
-//                case DeviceModel.VideoWhite: id = "ipod-video-white"; break;
-//                case DeviceModel.VideoBlack: id = "ipod-video-black"; break;
-//                default:
-//                    if(device.IsShuffle) {
-//                        id = "ipod-shuffle";
-//                    } else if(device.Model >= DeviceModel.NanoSilver &&
-//                        device.Model <= DeviceModel.NanoProductRed) {
-//                        id = "ipod-nano-white";
-//                    } else {
-//                        id = "ipod-standard-monochrome";
-//                    }
-//                    break;
-//            }
-            if(device.IsShuffle) {
+
+            switch(device.Model) {
+                case DeviceModel.Color: id = "ipod-standard-color"; break;
+                case DeviceModel.ColorU2: id = "ipod-U2-color"; break;
+                case DeviceModel.Regular: id = "ipod-standard-monochrome"; break;
+                case DeviceModel.RegularU2: id = "ipod-U2-monochrome"; break;
+                case DeviceModel.Mini: id = "ipod-mini-silver"; break;
+                case DeviceModel.MiniBlue: id = "ipod-mini-blue"; break;
+                case DeviceModel.MiniPink: id = "ipod-mini-pink"; break;
+                case DeviceModel.MiniGreen: id = "ipod-mini-green"; break;
+                case DeviceModel.MiniGold: id = "ipod-mini-gold"; break;
+                case DeviceModel.Shuffle: id = "ipod-shuffle"; break;
+                case DeviceModel.NanoWhite: id = "ipod-nano-white"; break;
+                case DeviceModel.NanoBlack: id = "ipod-nano-black"; break;
+                case DeviceModel.VideoWhite: id = "ipod-video-white"; break;
+                case DeviceModel.VideoBlack: id = "ipod-video-black"; break;
+                default:
+                    if(device.IsShuffle) {
                         id = "ipod-shuffle";
+                    } else if(device.Model >= DeviceModel.NanoSilver &&
+                        device.Model <= DeviceModel.NanoProductRed) {
+                        id = "ipod-nano-white";
                     } else {
                         id = "ipod-standard-monochrome";
                     }
+                    break;
+            }
+            
             Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(prefix + id, size);
             
             if(icon != null) {
@@ -662,8 +402,8 @@ namespace Banshee.Dap.Ipod
         
         public override void SetOwner(string owner)
         {
-            //device. = owner;
-            //device.Save();
+            device.UserName = owner;
+            device.Save();
         }
         
         private void BuildDatabaseUnsupportedWidget()
@@ -693,7 +433,7 @@ namespace Banshee.Dap.Ipod
         
         public override string Owner {
             get {
-                return device.Name;
+                return device.UserName;
             }
         }
         

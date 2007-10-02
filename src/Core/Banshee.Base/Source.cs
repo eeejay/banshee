@@ -271,7 +271,7 @@ namespace Banshee.Sources
                 child_sources.Remove(source);
                 
                 if(SourceManager.ActiveSource == source) {
-                    SourceManager.SetActiveSource(source.Parent);
+                    SourceManager.SetActiveSource(SourceManager.DefaultSource);
                 }
 
                 SourceEventHandler handler = ChildSourceRemoved;

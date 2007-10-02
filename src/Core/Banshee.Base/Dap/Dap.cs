@@ -205,7 +205,7 @@ namespace Banshee.Dap
             OnTrackAdded(track);
         }
         
-        public virtual void RemoveTrack(TrackInfo track)
+        public void RemoveTrack(TrackInfo track)
         {
             tracks.Remove(track);
             OnTrackRemoved(track);
@@ -273,7 +273,7 @@ namespace Banshee.Dap
             return str == null ? null : str.ToLower();
         }
         
-        protected bool TrackCompare(TrackInfo a, TrackInfo b)
+        private bool TrackCompare(TrackInfo a, TrackInfo b)
         {
             return ToLower(a.Title) == ToLower(b.Title) && 
                 ToLower(a.Album) == ToLower(b.Album) &&

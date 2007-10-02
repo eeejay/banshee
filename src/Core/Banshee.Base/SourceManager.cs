@@ -117,11 +117,7 @@ namespace Banshee.Sources
 
             ThreadAssist.ProxyToMain(delegate {
                 if(source == active_source) {
-                    if (source is ChildSource) {
-                        SetActiveSource((source as ChildSource).Parent);
-                    } else {
-                        SetActiveSource(default_source);
-                    }
+                    SetActiveSource(default_source);
                 }
                 
                 SourceEventHandler handler = SourceRemoved;
