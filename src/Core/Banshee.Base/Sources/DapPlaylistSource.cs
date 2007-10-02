@@ -16,8 +16,21 @@ namespace Banshee.Base
 
         public override void AddTrack(TrackInfo track)
         {
-            base.AddTrack(track);
+            if (track == null) {
+            	return;
+            }
+            
+            if (!base.ContainsTrack(track)) {
+                base.AddTrack(track);
+            }
+            
             device.AddTrack(track);
+        }
+        
+        public override void RemoveTrack(TrackInfo track)
+        {
+            base.RemoveTrack(track);
+            device.RemoveTrack(track);
         }
     }
 }
