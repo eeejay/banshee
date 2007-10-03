@@ -10,7 +10,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/IpodQueryJob.cs \
 	$(srcdir)/IpodDapTrackInfo.cs \
 	$(srcdir)/UnsupportedDatabaseView.cs \
-	$(srcdir)/DatabaseRebuilder.cs
+	$(srcdir)/DatabaseRebuilder.cs	\
+	$(srcdir)/IPodPlaylistSource.cs
 
 if ENABLE_IPOD
 bansheedapdir = $(pkglibdir)/Banshee.Dap
