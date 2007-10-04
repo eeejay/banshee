@@ -1,3 +1,13 @@
+2007-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs: Prevent
+	array index out of bounds error -- not sure what's changed (Gtk#?) but
+	suddenly selecting most smart playlist condition types would cause a
+	crash.  Fixes BGO #464362.
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:
+	Whitespace.
+
 2007-09-19  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Core/Banshee.Base/Banshee.Library/Import.cs:

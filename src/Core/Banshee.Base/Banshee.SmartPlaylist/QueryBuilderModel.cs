@@ -193,7 +193,7 @@ namespace Banshee.SmartPlaylist
         }
         
         public override QueryFilter [] ValidFilters {
-            get {    
+            get {
                 return new QueryFilter [] {
                     QueryFilter.Is,
                     QueryFilter.IsNot,
@@ -205,21 +205,13 @@ namespace Banshee.SmartPlaylist
         }
 
         public int DefaultValue1 {
-            get {
-                return default_value_1;
-            }
-            set {
-                default_value_1 = value;
-            }
+            get { return default_value_1; }
+            set { default_value_1 = value; }
         }
 
         public int DefaultValue2 {
-            get {
-                return default_value_2;
-            }
-            set {
-                default_value_2 = value;
-            }
+            get { return default_value_2; }
+            set { default_value_2 = value; }
         }
     }
 
