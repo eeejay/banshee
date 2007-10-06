@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-15 20:55+0200\n"
-"PO-Revision-Date: 2007-07-15 20:48+0100\n"
+"POT-Creation-Date: 2007-10-07 01:45+0200\n"
+"PO-Revision-Date: 2007-10-07 01:44+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -77,9 +77,9 @@ msgid "Average Bitrate"
 msgstr "Gennemsnitlig bitrate"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
 #: ../data/audio-profiles/wavpack.xml.in.h:2
 #: ../data/audio-profiles/wma.xml.in.h:3
-#: ../data/audio-profiles/vorbis.xml.in.h:2
 msgid "Best"
 msgstr "Bedste"
 
@@ -104,15 +104,43 @@ msgid "Variable Bitrate"
 msgstr "Variabel bitrate"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/vorbis.xml.in.h:5
 #: ../data/audio-profiles/wavpack.xml.in.h:11
 #: ../data/audio-profiles/wma.xml.in.h:7
-#: ../data/audio-profiles/vorbis.xml.in.h:5
 msgid "Worst"
 msgstr "Dårligste"
 
 #: ../data/audio-profiles/mp3-xing.xml.in.h:3
 msgid "MP3 (Xing Encoder)"
 msgstr "MP3 (Xing-koder)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Lydkvalitet"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis er et åbent, forringende højkvalitets lydformat med mindre "
+"filstørrelser end MP3."
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM er et ikke-forringende format som indeholder ukomprimeret, rå "
+"pulskodemoduleret (PCM) lyd."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Bølgeform PCM"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:1
 msgid ""
@@ -150,18 +178,6 @@ msgstr "Gem MD5-sum i filen"
 msgid "Wavpack"
 msgstr "Wavpack"
 
-#: ../data/audio-profiles/wav.xml.in.h:1
-msgid ""
-"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
-"modulated (PCM) audio."
-msgstr ""
-"WAV+PCM er et ikke-forringende format som indeholder ukomprimeret, rå "
-"pulskodemoduleret (PCM) lyd."
-
-#: ../data/audio-profiles/wav.xml.in.h:2
-msgid "Waveform PCM"
-msgstr "Bølgeform PCM"
-
 #: ../data/audio-profiles/wma.xml.in.h:1
 msgid ""
 "A proprietary lossy audio format with high quality output at a lower file "
@@ -181,31 +197,6 @@ msgstr "Brug variabel bitrate"
 #: ../data/audio-profiles/wma.xml.in.h:6
 msgid "Windows Media Audio"
 msgstr "Windows Media Audio"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:1
-msgid "Audio quality"
-msgstr "Lydkvalitet"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:3
-msgid "Ogg Vorbis"
-msgstr "Ogg Vorbis"
-
-#: ../data/audio-profiles/vorbis.xml.in.h:4
-msgid ""
-"Vorbis is an open source, lossy audio codec with high quality output at a "
-"lower file size than MP3."
-msgstr ""
-"Vorbis er et åbent, forringende højkvalitets lydformat med mindre "
-"filstørrelser end MP3."
-
-#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
-#: ../src/Core/Banshee.Base/BansheeBranding.cs:79
-msgid "Banshee Music Player"
-msgstr "Banshee musikafspiller"
-
-#: ../data/banshee.desktop.in.in.h:2
-msgid "Music Player"
-msgstr "Musikafspiller"
 
 #: ../data/banshee-dialogs.glade.h:1
 msgid "0"
@@ -474,8 +465,8 @@ msgstr "Vælg til brug"
 #: ../data/banshee-dialogs.glade.h:66
 #: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:658
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:274
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:297
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:286
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:309
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -507,6 +498,15 @@ msgstr ""
 msgid "_Write"
 msgstr "_Skriv"
 
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
+#: ../src/Core/Banshee.Base/BansheeBranding.cs:79
+msgid "Banshee Music Player"
+msgstr "Banshee musikafspiller"
+
+#: ../data/banshee.desktop.in.in.h:2
+msgid "Music Player"
+msgstr "Musikafspiller"
+
 #: ../data/banshee.glade.h:1
 msgid "<b>Loading...</b>"
 msgstr "<b>Indlæser...</b>"
@@ -524,49 +524,49 @@ msgid "Could not create pipeline"
 msgstr "Kunne ikke oprette kanal"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:228
-msgid "Could not initialize cdparanoia"
-msgstr "Kunne ikke initialisere cdparanoia"
+msgid "Could not initialize element from cdda URI"
+msgstr "Kunne ikke initialisere element fra cdda-URI"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:239
+#: ../libbanshee/gst-cd-rip-0.10.c:242
 msgid "Could not create mbtrm plugin"
 msgstr "Kunne ikke oprette \"mbtrm\"-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:251
+#: ../libbanshee/gst-cd-rip-0.10.c:254
 msgid "Could not create encoder pipeline"
 msgstr "Kunne ikke oprette kodningskanal"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:257
+#: ../libbanshee/gst-cd-rip-0.10.c:260
 msgid "Could not create queue plugin"
 msgstr "Kunne ikke oprette kø-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:265
+#: ../libbanshee/gst-cd-rip-0.10.c:268
 msgid "Could not create GNOME VFS output plugin"
 msgstr "Kunne ikke oprette Gnome VFS uddata-plugin"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:281
-msgid "Could not link cdparanoiasrc to mbtrm"
-msgstr "Kunne ikke lænke cdparanoiasrc til mbtrm"
+#: ../libbanshee/gst-cd-rip-0.10.c:284
+msgid "Could not link cddasrcsrc to mbtrm"
+msgstr "Kunne ikke lænke cddasrcsrc til mbtrm"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:286
+#: ../libbanshee/gst-cd-rip-0.10.c:289
 msgid "Could not link mbtrm to queue"
 msgstr "Kunne ikke lænke mbtrm til queue"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:291
+#: ../libbanshee/gst-cd-rip-0.10.c:294
 msgid "Could not link queue to encoder"
 msgstr "Kunne ikke lænke queue til encoder"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:296
+#: ../libbanshee/gst-cd-rip-0.10.c:299
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Kunne ikke lænke encoder til gnomevfssink"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:403
+#: ../libbanshee/gst-cd-rip-0.10.c:406
 #: ../src/Core/Banshee.Base/BansheeBranding.cs:83
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
 msgid "Banshee"
 msgstr "Banshee"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:429
+#: ../libbanshee/gst-cd-rip-0.10.c:432
 msgid "Encoding element does not support tagging!"
 msgstr "Kodningselementet understøtter ikke mærkning!"
 
@@ -578,280 +578,37 @@ msgstr "Ingen afkoder kunne findes til kildeformatet."
 msgid "Could not stat encoded file"
 msgstr "Kunne ikke udføre stat() på kodet fil"
 
-#: ../libbanshee/gst-transcode-0.10.c:258
+#: ../libbanshee/gst-transcode-0.10.c:249
 msgid "Could not create 'gnomevfssrc' plugin"
 msgstr "Kunne ikke oprette \"gnomevfssrc\"-plugin"
 
-#: ../libbanshee/gst-transcode-0.10.c:264
+#: ../libbanshee/gst-transcode-0.10.c:255
 msgid "Could not create 'decodebin' plugin"
 msgstr "Kunne ikke oprette \"decodebin\"-plugin"
 
-#: ../libbanshee/gst-transcode-0.10.c:270
+#: ../libbanshee/gst-transcode-0.10.c:261
 msgid "Could not create 'gnomevfssink' plugin"
 msgstr "Kunne ikke oprette \"gnomevfssink\"-plugin"
 
-#: ../libbanshee/gst-transcode-0.10.c:276
+#: ../libbanshee/gst-transcode-0.10.c:267
 msgid "Could not create 'sinkben' plugin"
 msgstr "Kunne ikke oprette \"sinkben\"-plugin"
 
-#: ../libbanshee/gst-transcode-0.10.c:282
+#: ../libbanshee/gst-transcode-0.10.c:273
 msgid "Could not create 'audioconvert' plugin"
 msgstr "Kunne ikke oprette \"audioconvert\"-plugin"
 
-#: ../libbanshee/gst-transcode-0.10.c:288
+#: ../libbanshee/gst-transcode-0.10.c:279
 msgid "Could not create encoding pipeline"
 msgstr "Kunne ikke oprette kodningskanal"
 
-#: ../libbanshee/gst-transcode-0.10.c:294
+#: ../libbanshee/gst-transcode-0.10.c:285
 msgid "Could not get sink pad from encoder"
 msgstr "Kunne ikke hente elementfyld fra koder"
 
-#: ../libbanshee/gst-transcode-0.10.c:377
+#: ../libbanshee/gst-transcode-0.10.c:368
 msgid "Could not construct pipeline"
 msgstr "Kunne ikke oprette kanal"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
-msgid "Order"
-msgstr "Rækkefølge"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:2
-msgid "Order of Album column"
-msgstr "Rækkefølge i albumkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:3
-msgid "Order of Artist column"
-msgstr "Rækkefølge i kunsterkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:4
-msgid "Order of Date Added column"
-msgstr "Rækkefølge i dato tilføjet-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
-msgid "Order of Genre column"
-msgstr "Rækkefølge i genrekolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:6
-msgid "Order of Last Played column"
-msgstr "Rækkefølge i sidst afspillede-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
-msgid "Order of Play Count column"
-msgstr "Rækkefølge i afspilninger-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
-msgid "Order of Rating column"
-msgstr "Rækkefølge i bedømmelseskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
-msgid "Order of Time column"
-msgstr "Rækkefølge i varighedskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:10
-msgid "Order of Title column"
-msgstr "Rækkefølge i titelkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:11
-msgid "Order of Track column"
-msgstr "Rækkefølge i sporkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:12
-msgid "Order of Uri column"
-msgstr "Rækkefølge i URI-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:13
-msgid "Order of Year column"
-msgstr "Rækkefølge i årstalskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:14
-msgid "Visibility of Album column"
-msgstr "Synlighed af albumkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:15
-msgid "Visibility of Artist column"
-msgstr "Synlighed af kunsterkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
-msgid "Visibility of Date Added column"
-msgstr "Synlighed af dato tilføjet-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
-msgid "Visibility of Genre column"
-msgstr "Synlighed af genrekolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:18
-msgid "Visibility of Last Played column"
-msgstr "Synlighed af sidst afspillede-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
-msgid "Visibility of Play Count column"
-msgstr "Synlighed af afspilninger-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
-msgid "Visibility of Rating column"
-msgstr "Synlighed af bedømmelseskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:21
-msgid "Visibility of Time column"
-msgstr "Synlighed af varighedskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:22
-msgid "Visibility of Title column"
-msgstr "Synlighed af titelkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:23
-msgid "Visibility of Track column"
-msgstr "Synlighed af sporkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
-msgid "Visibility of Uri column"
-msgstr "Synlighed af URI-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
-msgid "Visibility of Year column"
-msgstr "Synlighed af årstalskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
-msgid "Visiblity"
-msgstr "Synlighed"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:27
-msgid "Width"
-msgstr "Bredde"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:28
-msgid "Width of Album column"
-msgstr "Bredde på albumkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:29
-msgid "Width of Artist column"
-msgstr "Bredde på kunsterkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
-msgid "Width of Date Added column"
-msgstr "Bredde på dato tilføjet-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
-msgid "Width of Genre column"
-msgstr "Bredde på genrekolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
-msgid "Width of Last Played column"
-msgstr "Bredde på sidst afspillede-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
-msgid "Width of Play Count column"
-msgstr "Bredde på afspilninger-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
-msgid "Width of Time column"
-msgstr "Bredde på varighedskolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:35
-msgid "Width of Title column"
-msgstr "Bredde på titelkolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:36
-msgid "Width of Uri column"
-msgstr "Bredde på URI-kolonne"
-
-#: ../src/Core/Banshee/banshee-interface.schemas.in.h:37
-msgid "Width of Year column"
-msgstr "Bredde på årstalskolonne"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:788
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:91
-msgid "Album"
-msgstr "Album"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:86
-msgid "Artist"
-msgstr "Kunstner"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:790
-msgid "Date Added"
-msgstr "Dato tilføjet"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
-msgid "Time"
-msgstr "Varighed"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:56
-msgid "N/A"
-msgstr "I/T"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
-#: ../src/Core/Banshee/PlayerInterface.cs:458
-msgid "Genre"
-msgstr "Genre"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:791
-msgid "Last Played"
-msgstr "Sidst afspillet"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/PlayCountColumn.cs:42
-msgid "Plays"
-msgstr "Afspilninger"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:814
-msgid "Rating"
-msgstr "Bedømmelse"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:787
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:96
-msgid "Title"
-msgstr "Titel"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:59
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:125
-msgid "Missing"
-msgstr "Mangler"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:65
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:128
-msgid "No Codec"
-msgstr "Intet format"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:68
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:219
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:131
-msgid "Unknown Error"
-msgstr "Ukendt fejl"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs:42
-msgid "Track"
-msgstr "Spor"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
-msgid "Columns..."
-msgstr "Kolonner..."
-
-#. Translators: {0} is the title of the column, e.g. 'Hide Artist'
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:144
-#, csharp-format
-msgid "Hide {0}"
-msgstr "Skjul {0}"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/UriColumn.cs:42
-msgid "Location"
-msgstr "Placering"
-
-#: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:816
-#: ../src/Core/Banshee/PlayerInterface.cs:459
-msgid "Year"
-msgstr "År"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:65
 msgid "_Music"
@@ -1266,7 +1023,7 @@ msgid "Restart the current song"
 msgstr "Genstart den nuværende sang"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:346
-#: ../src/Core/Banshee.Base/SourceManager.cs:276
+#: ../src/Core/Banshee.Base/SourceManager.cs:280
 msgid "Synchronize"
 msgstr "Synkronisér"
 
@@ -1594,6 +1351,1150 @@ msgstr "Kunne ikke kopiere cd"
 msgid "Could not run nautilus-cd-burner"
 msgstr "Kunne ikke køre nautilus-cd-burner"
 
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:283
+msgid "Scanning"
+msgstr "Leder"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr "Kan ikke åbne Amarok database"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr "Kunne ikke importere fra Amarok database"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
+msgid "Importing Songs"
+msgstr "Importerer sange"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:42
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Importeringsprocessen kører i øjeblikket. Vil du afbryde denne?"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:43
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
+msgid "Scanning for songs"
+msgstr "Leder efter sange"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
+msgid "Migrate From Other Media Players"
+msgstr "Migrér fra andre medieafspillere"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
+msgid ""
+"Select any supported alternate media players that you wish to migrate into "
+"Banshee."
+msgstr ""
+"Vælg en understøttet alternativ medieafspiller, som du ønsker at importere "
+"til Banshee."
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:269
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "Importér"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+msgid "Player"
+msgstr "Afspiller"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
+msgid "Unable to Locate Supported Media Player"
+msgstr "Kunne ikke finde understøttet medieafspiller"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
+msgid ""
+"Banshee was unable to locate any libraries from alternate supported media "
+"players from which to import."
+msgstr ""
+"Banshee kunne ikke finde mapper til at importere, fra andre understøttede "
+"alternative medieafspillere."
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
+msgid "Migrate"
+msgstr "Migrér"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
+msgid "Alternate Media Players"
+msgstr "Alternative medieafspillere"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
+msgid "Rhythmbox Music Player"
+msgstr "Rhythmbox musikafspiller"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr "Ugyldig Rhythmbox databasefil"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media ASX (*.asx)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:43
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "MPEG Version 3.0 udvidet (*.m3u)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:50
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Shoutcast-spilleliste version 2 (*.pls)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:177
+msgid "Verifying"
+msgstr "Kontrollerer"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:178
+msgid ""
+"The playlist import process is currently running. Would you like to stop it?"
+msgstr ""
+"Spilleliste importeringsprocessen kører i øjeblikket. Vil du afbryde denne?"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:181
+msgid "Verifying playlist tracks exist in library"
+msgstr "Kontrollerer at spilleliste numre eksisterer i bibliotek"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:206
+#, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "Kontrollerer {0} af {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:209
+msgid "Verifying "
+msgstr "Kontrollerer "
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:283
+msgid "Export Playlist"
+msgstr "Eksportér spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:292
+msgid "Export"
+msgstr "Eksportér"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:317
+msgid "Select Format: "
+msgstr "Vælg format: "
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
+msgid "Edit Smart Playlist"
+msgstr "Redigér intelligent spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:51
+msgid "New Smart Playlist"
+msgstr "Ny intelligent spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:68
+msgid "Neglected Favorites"
+msgstr "Oversete favoritter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:79
+msgid "700 MB of Favorites"
+msgstr "700 MB af favoritter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:86
+msgid "80 Minutes of Favorites"
+msgstr "80 minutter af favoritter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:93
+msgid "Unheard"
+msgstr "Ikke hørte"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:100
+msgid "Unheard Podcasts"
+msgstr "Ikke-hørte podcasts"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
+msgid "Create Smart Playlist from Search"
+msgstr "Opret intelligent spilleliste ud fra søgning"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:154
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:177
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:187
+msgid "is"
+msgstr "er"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:159
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:182
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:192
+msgid "is not"
+msgstr "er ikke"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:197
+msgid "is less than"
+msgstr "er mindre end"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:202
+msgid "is greater than"
+msgstr "er større end"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:207
+msgid "more than"
+msgstr "mere end"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:212
+msgid "less than"
+msgstr "mindre end"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:217
+msgid "is at least"
+msgstr "er mindst"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:222
+msgid "contains"
+msgstr "indeholder"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:227
+msgid "does not contain"
+msgstr "indeholder ikke"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:232
+msgid "starts with"
+msgstr "starter med"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:237
+msgid "ends with"
+msgstr "ender med"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:242
+msgid "is before"
+msgstr "er før"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:247
+msgid "is after"
+msgstr "er efter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:252
+msgid "is between"
+msgstr "er mellem"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:257
+msgid "between"
+msgstr "mellem"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:338
+msgid "to"
+msgstr "til"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:712
+msgid "_Match"
+msgstr "_Match"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:719
+msgid "all"
+msgstr "alle"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:720
+msgid "any"
+msgstr "enhver"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:725
+msgid "of the following:"
+msgstr "af de følgende:"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:744
+msgid "_Limit to"
+msgstr "_Begræns til"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:761
+msgid "selected by"
+msgstr "valgt af"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
+msgid "Random"
+msgstr "Tilfældig"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:780
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:91
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:42
+msgid "Album"
+msgstr "Album"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:778
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:86
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
+msgid "Artist"
+msgstr "Kunstner"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:781
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs:42
+#: ../src/Core/Banshee/PlayerInterface.cs:458
+msgid "Genre"
+msgstr "Genre"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:779
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:96
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:42
+msgid "Title"
+msgstr "Titel"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
+msgid "Highest Rating"
+msgstr "Højeste bedømmelse"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
+msgid "Lowest Rating"
+msgstr "Laveste bedømmelse"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
+msgid "Least Often Played"
+msgstr "Mindst afspillet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
+msgid "Most Often Played"
+msgstr "Oftest afspillet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
+msgid "Most Recently Added"
+msgstr "Senest tilføjet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
+msgid "Least Recently Added"
+msgstr "Sidst tilføjet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
+msgid "Most Recently Played"
+msgstr "Senest afspillet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
+msgid "Least Recently Played"
+msgstr "Sidst afspillet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
+msgid "songs"
+msgstr "sange"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
+msgid "minutes"
+msgstr "minutter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
+msgid "hours"
+msgstr "timer"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:65
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:317
+msgid "Seconds"
+msgstr "Sekunder"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:318
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:452
+msgid "Minutes"
+msgstr "Minutter"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:319
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:453
+msgid "Hours"
+msgstr "Timer"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:454
+msgid "Days"
+msgstr "Dage"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:455
+msgid "Weeks"
+msgstr "Uger"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:456
+msgid "Months"
+msgstr "Måneder"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:457
+msgid "Years"
+msgstr "År"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:568
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:593
+msgid "ago"
+msgstr "siden"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:782
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
+msgid "Date Added"
+msgstr "Dato tilføjet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:783
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs:42
+msgid "Last Played"
+msgstr "Sidst afspillet"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:784
+msgid "Duration"
+msgstr "Varighed"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:785
+msgid "Play Count"
+msgstr "Afspilninger"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
+msgid "Track Number"
+msgstr "Spornummer"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
+msgid "Playlist"
+msgstr "Spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:803
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
+msgid "Smart Playlist"
+msgstr "Intelligent spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:806
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
+msgid "Rating"
+msgstr "Bedømmelse"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:807
+msgid "Path"
+msgstr "Sti"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:808
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
+#: ../src/Core/Banshee/PlayerInterface.cs:459
+msgid "Year"
+msgstr "År"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:156
+msgid "New _Smart Playlist..."
+msgstr "Ny intelligent _spilleliste..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:162
+msgid "New Smart Playlist _from Search..."
+msgstr "Ny intelligent spilleliste ud _fra søgning..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
+msgid "Delete Smart Playlist"
+msgstr "Slet intelligent spilleliste"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
+msgid "Edit Smart Playlist..."
+msgstr "Redigér intelligent spilleliste..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
+msgid "Smart Playlist has Dependencies"
+msgstr "Intelligent spilleliste har afhængigheder"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
+#, csharp-format
+msgid ""
+"{0} is depended on by other smart playlists. Are you sure you want to delete "
+"this and all dependent smart playlists?"
+msgstr ""
+"{0} bruges af andre intelligente spillelister. Er du sikker på du vil slette "
+"spillelisten og alle spillelister som afhænger af den?"
+
+#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
+msgid "Could not launch URL"
+msgstr "Kunne ikke åbne URL"
+
+#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:44
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"{0} kunne ikke åbnes: {1}\n"
+"\n"
+" Undersøg dine indstillinger for \"Foretrukne programmer\"."
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:135
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:136
+msgid "Converting Files"
+msgstr "Konverterer filer"
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
+msgid ""
+"Files are currently being converted to another audio format. Would you like "
+"to stop this?"
+msgstr ""
+"Filer konverteres i øjeblikket til et andet lydformat. Vil du afbryde dette?"
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
+msgid "Initializing Transcoder..."
+msgstr "Initialiserer omkoder..."
+
+#: ../src/Core/Banshee.Base/ComponentInitializer.cs:94
+msgid "Could not initialize component"
+msgstr "Kunne ikke initialisere komponent"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
+msgid "Device"
+msgstr "Enhed"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:336
+#, csharp-format
+msgid "Synchronizing {0}"
+msgstr "Synkroniserer {0}"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:340
+msgid "Waiting for transcoder..."
+msgstr "Venter på omkoder..."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:427
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:448
+msgid "Processing..."
+msgstr "Behandler..."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:467
+msgid "Could not encode some files"
+msgstr "Nogle filer kunne ikke kodes"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:469
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr ""
+"Nogle filer kunne ikke kodes til et passende format. De vil ikke blive gemt "
+"til enheden, hvis du fortsætter."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:474
+msgid "Continue synchronizing"
+msgstr "Fortsæt synkronisering"
+
+#: ../src/Core/Banshee.Base/Dap/DapCore.cs:107
+msgid "Cannot initialize DapCore because HalCore is not initialized"
+msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialiseret"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} egenskaber"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device name"
+msgstr "Enhedsnavn"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner name"
+msgstr "Ejernavn"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
+msgid "Encode to"
+msgstr "Kod til"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
+msgid "Volume usage"
+msgstr "Pladsforbrug"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
+msgid "Advanced details"
+msgstr "Avancerede detaljer"
+
+#: ../src/Core/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Importér filer til bibliotek"
+
+#: ../src/Core/Banshee.Base/FileImportSource.cs:73
+msgid "Local Files"
+msgstr "Lokale filer"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:101
+msgid "Count"
+msgstr "Antal"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:106
+msgid "Number"
+msgstr "Nummer"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:111
+msgid "Count (unsorted)"
+msgstr "Antal (usorteret)"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:116
+msgid "Number (unsorted)"
+msgstr "Nummer (usorteret)"
+
+#: ../src/Core/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Importér mappe til bibliotek"
+
+#: ../src/Core/Banshee.Base/FolderImportSource.cs:71
+msgid "Local Folder"
+msgstr "Lokal mappe"
+
+#: ../src/Core/Banshee.Base/Globals.cs:111
+#: ../src/Core/Banshee.Base/Globals.cs:120
+#: ../src/Core/Banshee.Base/Globals.cs:122
+#: ../src/Core/Banshee.Base/Globals.cs:180
+#: ../src/Core/Banshee.Base/Globals.cs:181
+msgid "Starting background tasks"
+msgstr "Starter baggrundsopgaver"
+
+#: ../src/Core/Banshee.Base/Globals.cs:123
+msgid "Device support will be disabled for this instance (no HAL)"
+msgstr "Enhedsunderstøttelse vil være deaktiveret i denne instans (ingen HAL)"
+
+#: ../src/Core/Banshee.Base/Globals.cs:126
+#: ../src/Core/Banshee.Base/Globals.cs:169
+msgid "Initializing audio engine"
+msgstr "Initialiserer lydmotor"
+
+#: ../src/Core/Banshee.Base/Globals.cs:127
+msgid "Detecting network settings"
+msgstr "Finder netværksopsætning"
+
+#: ../src/Core/Banshee.Base/Globals.cs:128
+msgid "Creating action manager"
+msgstr "Opretter handlingshåndtering"
+
+#: ../src/Core/Banshee.Base/Globals.cs:129
+msgid "Loading music library"
+msgstr "Indlæser musikbibliotek"
+
+#: ../src/Core/Banshee.Base/Globals.cs:134
+msgid "Initializing audio profiles"
+msgstr "Initialiserer lydprofiler"
+
+#: ../src/Core/Banshee.Base/Globals.cs:171
+msgid "Initializing audio CD support"
+msgstr "Initialiserer understøttelse af lyd-cd"
+
+#: ../src/Core/Banshee.Base/Globals.cs:172
+msgid "Audio CD support will be disabled for this instance"
+msgstr "Understøttelse af lyd-cd'er vil være deaktiveret i denne instans"
+
+#: ../src/Core/Banshee.Base/Globals.cs:174
+msgid "Initializing digital audio player support"
+msgstr "Initialiserer understøttelse af digitale lydafspillere"
+
+#: ../src/Core/Banshee.Base/Globals.cs:175
+msgid "DAP support will be disabled for this instance"
+msgstr "Understøttelse af DAP vil være deaktiveret i denne instans"
+
+#: ../src/Core/Banshee.Base/Globals.cs:177
+msgid "Initializing CD writing support"
+msgstr "Initialiserer understøttelse af cd-skrivning"
+
+#: ../src/Core/Banshee.Base/Globals.cs:178
+msgid "CD burning support will be disabled for this instance"
+msgstr "Understøttelse af cd-brænding vil være deaktiveret i denne instans"
+
+#: ../src/Core/Banshee.Base/Globals.cs:183
+#: ../src/Core/Banshee.Base/Globals.cs:184
+msgid "Initializing plugins"
+msgstr "Initialiserer udvidelsesmoduler"
+
+#: ../src/Core/Banshee.Base/Globals.cs:185
+msgid "Initializing scripts"
+msgstr "Initialiserer skripter"
+
+#: ../src/Core/Banshee.Base/Globals.cs:188
+msgid "Loading user interface"
+msgstr "Indlæser brugergrænseflade"
+
+#: ../src/Core/Banshee.Base/GstTranscoder.cs:82
+msgid "Could not create transcoder"
+msgstr "Kunne ikke oprette omkoder"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:46
+msgid "Primary Development"
+msgstr "Primǽr udvikling"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:53
+msgid "Contributors"
+msgstr "Bidragydere"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:78
+msgid "Music Management and Playback for GNOME."
+msgstr "Musikhåndtering og afspilning til Gnome."
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:80
+msgid ""
+"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:85
+msgid "Banshee Wiki"
+msgstr "Banshee Wikien"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Vigtige opgaver kører"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Lukkes Banshee nu, afbrydes alle kørende opgaver. De kan ikke genoptages "
+"automatisk næste gang Banshee køres."
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Afslut alligevel"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Fortsæt kørsel"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:52
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Banshee blev ramt af en alvorlig fejl"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:89
+msgid "Error Details"
+msgstr "Fejldetaljer"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:135
+msgid "An unhandled exception was thrown: "
+msgstr "En uhåndteret undtagelse opstod: "
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:41
+msgid "Select album cover image"
+msgstr "Vælg albumomslag"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:49
+msgid "All image files"
+msgstr "Alle billedfiler"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:56
+msgid "JPEG image files"
+msgstr "JPEG-billedfiler"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:61
+msgid "PNG image files"
+msgstr "PNG-billedfiler"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:51
+msgid "Log Viewer"
+msgstr "Logfremviser"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:87
+msgid "Time Stamp"
+msgstr "Tidsstempel"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:106
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:70
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:62
+msgid "Message"
+msgstr "Meddelelse"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:118
+msgid "Show:"
+msgstr "Vis:"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:135
+msgid "All Log Entries"
+msgstr "Alle logposter"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:136
+msgid "Only Error Messages"
+msgstr "Kun fejlmeddelelser"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:137
+msgid "Only Warning Messages"
+msgstr "Kun advarselsmeddelelser"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:138
+msgid "Only Information Messages"
+msgstr "Kun informationsmeddelelser"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:139
+msgid "Only Debug Messages"
+msgstr "Kun fejlsøgningsmeddelelser"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:154
+msgid "Entry Details:"
+msgstr "Postdetaljer:"
+
+#: ../src/Core/Banshee.Base/Gui/OpenLocationDialog.cs:54
+msgid "Browse..."
+msgstr "Gennemse..."
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:67
+msgid "Select library location"
+msgstr "Vælg placering af bibliotek"
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files"
+msgstr ""
+"Aktivér denne indstilling for at indlejre mærker og andet metadata i "
+"understøttede lydfiler"
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
+msgid ""
+"Error correction tries to work around problem areas on a disc, such as "
+"surface scratches, but will slow down importing substantially."
+msgstr ""
+"Fejlkorrektion forsøger at læse ridsede områder på en disk, men vil nedsætte "
+"hastigheden mærkbart."
+
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
+msgid "Could not import tracks"
+msgstr "Kunne ikke importere spor"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:40
+msgid "Repeat None"
+msgstr "Gentag ingen"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:49
+msgid "Repeat Single"
+msgstr "Gentag én"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:58
+msgid "Repeat All"
+msgstr "Gentag alle"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:67
+msgid "Shuffle"
+msgstr "Tilfældig"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:78
+msgid "Continuous"
+msgstr "Løbende"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:216
+msgid "Automatically set all track numbers in increasing order"
+msgstr "Sæt automatisk alle spornumre i stigende rækkefølge"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:217
+msgid "Set all track counts to this value"
+msgstr "Sæt alle \"antal spor\" til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:218
+msgid "Set all artists to this value"
+msgstr "Sæt alle kunstnere til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
+msgid "Set all albums to this value"
+msgstr "Sæt alle album til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
+msgid "Set all genres to this value"
+msgstr "Sæt alle genre til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:221
+msgid "Set all years to this value"
+msgstr "Sæt alle år til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:222
+msgid ""
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
+msgstr ""
+"Anvend værdierne fra dette spor. Sæt kunstner-, albumtitel-, genre-, antal "
+"spor-, årstal- og bedømmelsesfelter på resten af sporene i denne redigering."
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:223
+msgid "Set all ratings to this value"
+msgstr "Sæt alle bedømmelser til denne værdi"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:284
+msgid "Never played"
+msgstr "Aldrig afspillet"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:298
+#, csharp-format
+msgid "Editing song {0} of {1}"
+msgstr "Redigerer sang {0} af {1}"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:299
+#, csharp-format
+msgid "Editing {0}"
+msgstr "Redigerer {0}"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:61
+msgid "Assembly Version Information"
+msgstr "Versioner på samlinger"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:67
+msgid "Assembly Name"
+msgstr "Samling"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:69
+msgid "Version"
+msgstr "Version"
+
+#: ../src/Core/Banshee.Base/HomeDirectoryImportSource.cs:58
+msgid "Home Directory"
+msgstr "Hjemmemappe"
+
+#: ../src/Core/Banshee.Base/Library.cs:122
+msgid "Could not load track from library"
+msgstr "Kunne ikke indlæse sang fra bibliotek"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:45
+msgid "There is no available network connection"
+msgstr "Der er ingen tilgængelig netværksforbindelse"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:79
+msgid "Cannot connect to NetworkManager"
+msgstr "Kan ikke tilslutte til NetworkManager"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:80
+msgid "An available, working network connection will be assumed"
+msgstr "En tilgængelig, fungerende netværksforbindelse forventes"
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:77
+msgid "Default player engine"
+msgstr "Standard afspillermotor"
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:99
+msgid ""
+"No player engines were found. Please ensure Banshee has been cleanly "
+"installed."
+msgstr ""
+"Ingen afspilningsmotore blev fundet. Undersøg venligst om Banshee er "
+"installeret korrekt."
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
+msgid "Problem with Player Engine"
+msgstr "Problemer med afspillermotor"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Banshee-udvidelsesmoduler"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "Udvidelsesmodul"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "Oversigt"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "Forfattere"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "Dette udvidelsesmodul kunne ikke initialiseres."
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: ../src/Core/Banshee.Base/PowerManagement.cs:83
+msgid "Playing Music"
+msgstr "Afspiller musik"
+
+#: ../src/Core/Banshee.Base/Source.cs:388
+msgid "Source Properties..."
+msgstr "Kildeegenskaber..."
+
+#: ../src/Core/Banshee.Base/Source.cs:396
+#, csharp-format
+msgid "Delete {0}"
+msgstr "Slet {0}"
+
+#: ../src/Core/Banshee.Base/SourceManager.cs:287
+#, csharp-format
+msgid "Rename {0}"
+msgstr "Omdøb {0}"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:53
+msgid "Delete Playlist"
+msgstr "Slet spilleliste"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:155
+#, csharp-format
+msgid "Are you sure you want to delete this {0}?"
+msgstr "Er du sikker på du vil slette denne {0}?"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:164
+#, csharp-format
+msgid "Do not ask me this again"
+msgstr "Spørg mig ikke om dette igen"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:52
+msgid "Eject CD"
+msgstr "Skub cd ud"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:98
+msgid "Reading table of contents from CD..."
+msgstr "Læser indholdstabellen fra cd'en..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:103
+msgid "Searching for CD metadata..."
+msgstr "Søger efter cd-metadata..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:108
+msgid "Searching for CD cover art..."
+msgstr "Søger efter cd omslag..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr ""
+"Kan ikke søge efter cd-metadata: der er ingen tilgængelig Internet-"
+"forbindelse"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
+msgid "Could not fetch metadata for CD."
+msgstr "Kunne ikke hente cd-metadata."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:147
+msgid "Copy CD"
+msgstr "Kopiér cd"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:236
+msgid "Invalid Selection"
+msgstr "Ugyldigt valg"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:237
+msgid "You must select at least one track to import."
+msgstr "Du skal vælge mindst ét spor at importere."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:107
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Synkroniserer din enhed, vent venligst..."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:191
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:316
+msgid "Importing"
+msgstr "Importerer"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:193
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:318
+#, csharp-format
+msgid "You are currently importing from {0}. Would you like to stop it?"
+msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
+
+#. import_manager.UserEvent.Icon = GetIcon;
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:195
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:314
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:320
+#, csharp-format
+msgid "Copying from {0}"
+msgstr "Kopierer fra {0}"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:196
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:315
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:321
+msgid "Scanning..."
+msgstr "Leder..."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
+#, csharp-format
+msgid "Cannot import track from {0}"
+msgstr "Kan ikke importere spor fra {0}"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "({0} tilbage)"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
+#, csharp-format
+msgid "Eject {0}"
+msgstr "Skub {0} ud"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
+msgid "Import Errors"
+msgstr "Importeringsfejl"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
+msgid "File Name"
+msgstr "Filnavn"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:102
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:97
+msgid "Close Error Report"
+msgstr "Luk fejlrapport"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:52
+msgid "Music Library"
+msgstr "Musikbibliotek"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:140
+msgid "Sort Playlists"
+msgstr "Sortér spillelister"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:143
+msgid "Name Ascending"
+msgstr "Navn i stigende orden"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:147
+msgid "Name Descending"
+msgstr "Navn i faldende orden"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:151
+msgid "Size Ascending"
+msgstr "Størrelse i stigende orden"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:155
+msgid "Size Descending"
+msgstr "Størrelse i faldende orden"
+
+#: ../src/Core/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "Lokal kø"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1622
+msgid "New Playlist"
+msgstr "Ny spilleliste"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+msgid "Cannot Rename Playlist"
+msgstr "Kunne ikke omdøbe spilleliste"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr ""
+"En spilleliste med dette navn eksisterer allerede. Vælg venligst et andet "
+"navn."
+
+#: ../src/Core/Banshee.Base/StreamTagger.cs:147
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "Gemmer mærker for {0}"
+
+#: ../src/Core/Banshee.Base/TrackInfo.cs:307
+msgid "Unknown Title"
+msgstr "Ukendt titel"
+
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:106
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:112
+msgid "by"
+msgstr "af"
+
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:113
+msgid "from"
+msgstr "fra"
+
+#: ../src/Core/Banshee.Base/Utilities.cs:76
+#, csharp-format
+msgid "{0:0.00} GB"
+msgstr "{0:0.00} GB"
+
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:1
 msgid "Backend"
 msgstr "Motor"
@@ -1858,1108 +2759,100 @@ msgstr "Vinduesbredde"
 msgid "Write metadata back to audio files"
 msgstr "Skriv metadata tilbage til lydfiler"
 
-#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
-#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:283
-msgid "Scanning"
-msgstr "Leder"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
-msgid "Amarok"
-msgstr "Amarok"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
-msgid "Unable to open Amarok database"
-msgstr "Kan ikke åbne Amarok database"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
-msgid "Importing from Amarok database failed"
-msgstr "Kunne ikke importere fra Amarok database"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
-#: ../src/Core/Banshee.Base/ImportManager.cs:285
-msgid "Importing Songs"
-msgstr "Importerer sange"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:42
-#: ../src/Core/Banshee.Base/ImportManager.cs:291
-msgid "The import process is currently running. Would you like to stop it?"
-msgstr "Importeringsprocessen kører i øjeblikket. Vil du afbryde denne?"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:43
-#: ../src/Core/Banshee.Base/ImportManager.cs:97
-msgid "Scanning for songs"
-msgstr "Leder efter sange"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
-msgid "Migrate From Other Media Players"
-msgstr "Migrér fra andre medieafspillere"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
-msgid ""
-"Select any supported alternate media players that you wish to migrate into "
-"Banshee."
-msgstr ""
-"Vælg en understøttet alternativ medieafspiller, som du ønsker at importere "
-"til Banshee."
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
-#: ../src/Core/Banshee.Base/SourceManager.cs:265
-#: ../src/Core/Banshee/PlayerInterface.cs:2021
-msgid "Import"
-msgstr "Importér"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
-msgid "Player"
-msgstr "Afspiller"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
-msgid "Unable to Locate Supported Media Player"
-msgstr "Kunne ikke finde understøttet medieafspiller"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
-msgid ""
-"Banshee was unable to locate any libraries from alternate supported media "
-"players from which to import."
-msgstr ""
-"Banshee kunne ikke finde mapper til at importere, fra andre understøttede "
-"alternative medieafspillere."
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
-msgid "Migrate"
-msgstr "Migrér"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
-msgid "Alternate Media Players"
-msgstr "Alternative medieafspillere"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
-msgid "Rhythmbox Music Player"
-msgstr "Rhythmbox musikafspiller"
-
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
-msgid "Invalid Rhythmbox database file"
-msgstr "Ugyldig Rhythmbox databasefil"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:29
-msgid "MPEG Version 3.0 Extended (*.m3u)"
-msgstr "MPEG Version 3.0 udvidet (*.m3u)"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:62
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:78
-msgid "Exception: "
-msgstr "Undtagelse: "
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3u.cs:90
-msgid "Not a valid M3U file."
-msgstr "Ikke en gyldig M3U-fil."
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:29
-msgid "Shoutcast Playlist version 2 (*.pls)"
-msgstr "Shoutcast-spilleliste version 2 (*.pls)"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/Pls.cs:113
-msgid "Not a valid PLS file."
-msgstr "Ikke en gyldig PLS-fil."
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:183
-msgid "Verifying"
-msgstr "Kontrollerer"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:184
-msgid ""
-"The playlist import process is currently running. Would you like to stop it?"
-msgstr ""
-"Spilleliste importeringsprocessen kører i øjeblikket. Vil du afbryde denne?"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:187
-msgid "Verifying playlist tracks exist in library"
-msgstr "Kontrollerer at spilleliste numre eksisterer i bibliotek"
-
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:212
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:86
 #, csharp-format
-msgid "Verifying {0} of {1}"
-msgstr "Kontrollerer {0} af {1}"
+msgid "Stop {0}"
+msgstr "Afbryd {0}"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:215
-msgid "Verifying "
-msgstr "Kontrollerer "
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
+#, csharp-format
+msgid ""
+"The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr "Operationen '{0}' arbejder stadig. Vil du afbryde den?"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:289
-msgid "Export Playlist"
-msgstr "Eksportér spilleliste"
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
+#, csharp-format
+msgid "Continue {0}"
+msgstr "Fortsæt {0}"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:298
-msgid "Export"
-msgstr "Eksportér"
+#: ../src/Core/Banshee.Widgets/DiscUsageDisplay.cs:187
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"Indsæt\n"
+"disk"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:323
-msgid "Select Format: "
-msgstr "Vælg format: "
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Bedømmelse:"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
-msgid "Edit Smart Playlist"
-msgstr "Redigér intelligent spilleliste"
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:291
+msgid "Buffering"
+msgstr "Mellemlagrer"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:51
-msgid "New Smart Playlist"
-msgstr "Ny intelligent spilleliste"
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:84
+msgid "Contacting..."
+msgstr "Kontakter..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:68
-msgid "Neglected Favorites"
-msgstr "Oversete favoritter"
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
+msgid "Idle"
+msgstr "Klar"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:79
-msgid "700 MB of Favorites"
-msgstr "700 MB af favoritter"
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
+msgid "Muted"
+msgstr "Lydløs"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:86
-msgid "80 Minutes of Favorites"
-msgstr "80 minutter af favoritter"
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
+msgid "Full Volume"
+msgstr "Fuld lydstyrke"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:93
-msgid "Unheard"
-msgstr "Ikke hørte"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:100
-msgid "Unheard Podcasts"
-msgstr "Ikke-hørte podcasts"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
-msgid "Create Smart Playlist from Search"
-msgstr "Opret intelligent spilleliste ud fra søgning"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:154
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:177
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:187
-msgid "is"
-msgstr "er"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:159
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:182
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:192
-msgid "is not"
-msgstr "er ikke"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:197
-msgid "is less than"
-msgstr "er mindre end"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:202
-msgid "is greater than"
-msgstr "er større end"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:207
-msgid "more than"
-msgstr "mere end"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:212
-msgid "less than"
-msgstr "mindre end"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:217
-msgid "is at least"
-msgstr "er mindst"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:222
-msgid "contains"
-msgstr "indeholder"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:227
-msgid "does not contain"
-msgstr "indeholder ikke"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:232
-msgid "starts with"
-msgstr "starter med"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:237
-msgid "ends with"
-msgstr "ender med"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:242
-msgid "is before"
-msgstr "er før"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:247
-msgid "is after"
-msgstr "er efter"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:252
-msgid "is between"
-msgstr "er mellem"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:257
-msgid "between"
-msgstr "mellem"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:335
-msgid "to"
-msgstr "til"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:709
-msgid "_Match"
-msgstr "_Match"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:716
-msgid "all"
-msgstr "alle"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:717
-msgid "any"
-msgstr "enhver"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:722
-msgid "of the following:"
-msgstr "af de følgende:"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:741
-msgid "_Limit to"
-msgstr "_Begræns til"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:758
-msgid "selected by"
-msgstr "valgt af"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
-msgid "Random"
-msgstr "Tilfældig"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
-msgid "Highest Rating"
-msgstr "Højeste bedømmelse"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
-msgid "Lowest Rating"
-msgstr "Laveste bedømmelse"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
-msgid "Least Often Played"
-msgstr "Mindst afspillet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
-msgid "Most Often Played"
-msgstr "Oftest afspillet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
-msgid "Most Recently Added"
-msgstr "Senest tilføjet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
-msgid "Least Recently Added"
-msgstr "Sidst tilføjet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
-msgid "Most Recently Played"
-msgstr "Senest afspillet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
-msgid "Least Recently Played"
-msgstr "Sidst afspillet"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
-msgid "songs"
-msgstr "sange"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
-msgid "minutes"
-msgstr "minutter"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
-msgid "hours"
-msgstr "timer"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:65
-msgid "MB"
-msgstr "MB"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:325
-msgid "Seconds"
-msgstr "Sekunder"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:326
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:460
-msgid "Minutes"
-msgstr "Minutter"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:327
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:461
-msgid "Hours"
-msgstr "Timer"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:462
-msgid "Days"
-msgstr "Dage"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:463
-msgid "Weeks"
-msgstr "Uger"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:464
-msgid "Months"
-msgstr "Måneder"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:465
-msgid "Years"
-msgstr "År"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:576
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:601
-msgid "ago"
-msgstr "siden"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:792
-msgid "Duration"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
+msgid "Time"
 msgstr "Varighed"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:793
-msgid "Play Count"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:56
+msgid "N/A"
+msgstr "I/T"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/PlayCountColumn.cs:42
+msgid "Plays"
 msgstr "Afspilninger"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:794
-msgid "Track Number"
-msgstr "Spornummer"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:59
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:126
+msgid "Missing"
+msgstr "Mangler"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:797
-#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
-msgid "Playlist"
-msgstr "Spilleliste"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:65
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:129
+msgid "No Codec"
+msgstr "Intet format"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:811
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
-msgid "Smart Playlist"
-msgstr "Intelligent spilleliste"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:68
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:229
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:132
+msgid "Unknown Error"
+msgstr "Ukendt fejl"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:815
-msgid "Path"
-msgstr "Sti"
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs:42
+msgid "Track"
+msgstr "Spor"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:156
-msgid "New _Smart Playlist..."
-msgstr "Ny intelligent _spilleliste..."
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
+msgid "Columns..."
+msgstr "Kolonner..."
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:162
-msgid "New Smart Playlist _from Search..."
-msgstr "Ny intelligent spilleliste ud _fra søgning..."
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
-msgid "Delete Smart Playlist"
-msgstr "Slet intelligent spilleliste"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
-msgid "Edit Smart Playlist..."
-msgstr "Redigér intelligent spilleliste..."
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
-msgid "Smart Playlist has Dependencies"
-msgstr "Intelligent spilleliste har afhængigheder"
-
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
+#. Translators: {0} is the title of the column, e.g. 'Hide Artist'
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:144
 #, csharp-format
-msgid ""
-"{0} is depended on by other smart playlists. Are you sure you want to delete "
-"this and all dependent smart playlists?"
-msgstr ""
-"{0} bruges af andre intelligente spillelister. Er du sikker på du vil slette "
-"spillelisten og alle spillelister som afhænger af den?"
-
-#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
-msgid "Could not launch URL"
-msgstr "Kunne ikke åbne URL"
-
-#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:44
-#, csharp-format
-msgid ""
-"{0} could not be opened: {1}\n"
-"\n"
-" Check your 'Preferred Applications' settings."
-msgstr ""
-"{0} kunne ikke åbnes: {1}\n"
-"\n"
-" Undersøg dine indstillinger for \"Foretrukne programmer\"."
-
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:135
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:136
-msgid "Converting Files"
-msgstr "Konverterer filer"
-
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
-msgid ""
-"Files are currently being converted to another audio format. Would you like "
-"to stop this?"
-msgstr ""
-"Filer konverteres i øjeblikket til et andet lydformat. Vil du afbryde dette?"
-
-#: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
-msgid "Initializing Transcoder..."
-msgstr "Initialiserer omkoder..."
-
-#: ../src/Core/Banshee.Base/ComponentInitializer.cs:94
-msgid "Could not initialize component"
-msgstr "Kunne ikke initialisere komponent"
-
-#: ../src/Core/Banshee.Base/Dap/DapCore.cs:107
-msgid "Cannot initialize DapCore because HalCore is not initialized"
-msgstr "Kan ikke initialisere DapCore fordi HalCore ikke er initialiseret"
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:335
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
-msgid "Device"
-msgstr "Enhed"
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:336
-#, csharp-format
-msgid "Synchronizing {0}"
-msgstr "Synkroniserer {0}"
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:340
-msgid "Waiting for transcoder..."
-msgstr "Venter på omkoder..."
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:427
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:448
-msgid "Processing..."
-msgstr "Behandler..."
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:467
-msgid "Could not encode some files"
-msgstr "Nogle filer kunne ikke kodes"
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:469
-msgid ""
-"Some files could not be encoded to the proper format. They will not be saved "
-"to the device if you continue."
-msgstr ""
-"Nogle filer kunne ikke kodes til et passende format. De vil ikke blive gemt "
-"til enheden, hvis du fortsætter."
-
-#: ../src/Core/Banshee.Base/Dap/Dap.cs:474
-msgid "Continue synchronizing"
-msgstr "Fortsæt synkronisering"
-
-#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
-#, csharp-format
-msgid "{0} Properties"
-msgstr "{0} egenskaber"
-
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:78
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:81
-msgid "Device name"
-msgstr "Enhedsnavn"
-
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:85
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:88
-msgid "Owner name"
-msgstr "Ejernavn"
-
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
-msgid "Encode to"
-msgstr "Kod til"
-
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
-msgid "Volume usage"
-msgstr "Pladsforbrug"
-
-#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
-msgid "Advanced details"
-msgstr "Avancerede detaljer"
-
-#: ../src/Core/Banshee.Base/FileImportSource.cs:55
-msgid "Import Files to Library"
-msgstr "Importér filer til bibliotek"
-
-#: ../src/Core/Banshee.Base/FileImportSource.cs:73
-msgid "Local Files"
-msgstr "Lokale filer"
-
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:101
-msgid "Count"
-msgstr "Antal"
-
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:106
-msgid "Number"
-msgstr "Nummer"
-
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:111
-msgid "Count (unsorted)"
-msgstr "Antal (usorteret)"
-
-#: ../src/Core/Banshee.Base/FileNamePattern.cs:116
-msgid "Number (unsorted)"
-msgstr "Nummer (usorteret)"
-
-#: ../src/Core/Banshee.Base/FolderImportSource.cs:55
-msgid "Import Folder to Library"
-msgstr "Importér mappe til bibliotek"
-
-#: ../src/Core/Banshee.Base/FolderImportSource.cs:71
-msgid "Local Folder"
-msgstr "Lokal mappe"
-
-#: ../src/Core/Banshee.Base/Globals.cs:111
-#: ../src/Core/Banshee.Base/Globals.cs:120
-#: ../src/Core/Banshee.Base/Globals.cs:178
-#: ../src/Core/Banshee.Base/Globals.cs:179
-msgid "Starting background tasks"
-msgstr "Starter baggrundsopgaver"
-
-#: ../src/Core/Banshee.Base/Globals.cs:121
-msgid "Device support will be disabled for this instance (no HAL)"
-msgstr "Enhedsunderstøttelse vil være deaktiveret i denne instans (ingen HAL)"
-
-#: ../src/Core/Banshee.Base/Globals.cs:124
-#: ../src/Core/Banshee.Base/Globals.cs:167
-msgid "Initializing audio engine"
-msgstr "Initialiserer lydmotor"
-
-#: ../src/Core/Banshee.Base/Globals.cs:125
-msgid "Detecting network settings"
-msgstr "Finder netværksopsætning"
-
-#: ../src/Core/Banshee.Base/Globals.cs:126
-msgid "Creating action manager"
-msgstr "Opretter handlingshåndtering"
-
-#: ../src/Core/Banshee.Base/Globals.cs:127
-msgid "Loading music library"
-msgstr "Indlæser musikbibliotek"
-
-#: ../src/Core/Banshee.Base/Globals.cs:132
-msgid "Initializing audio profiles"
-msgstr "Initialiserer lydprofiler"
-
-#: ../src/Core/Banshee.Base/Globals.cs:169
-msgid "Initializing audio CD support"
-msgstr "Initialiserer understøttelse af lyd-cd"
-
-#: ../src/Core/Banshee.Base/Globals.cs:170
-msgid "Audio CD support will be disabled for this instance"
-msgstr "Understøttelse af lyd-cd'er vil være deaktiveret i denne instans"
-
-#: ../src/Core/Banshee.Base/Globals.cs:172
-msgid "Initializing digital audio player support"
-msgstr "Initialiserer understøttelse af digitale lydafspillere"
-
-#: ../src/Core/Banshee.Base/Globals.cs:173
-msgid "DAP support will be disabled for this instance"
-msgstr "Understøttelse af DAP vil være deaktiveret i denne instans"
-
-#: ../src/Core/Banshee.Base/Globals.cs:175
-msgid "Initializing CD writing support"
-msgstr "Initialiserer understøttelse af cd-skrivning"
-
-#: ../src/Core/Banshee.Base/Globals.cs:176
-msgid "CD burning support will be disabled for this instance"
-msgstr "Understøttelse af cd-brænding vil være deaktiveret i denne instans"
-
-#: ../src/Core/Banshee.Base/Globals.cs:181
-#: ../src/Core/Banshee.Base/Globals.cs:182
-msgid "Initializing plugins"
-msgstr "Initialiserer udvidelsesmoduler"
-
-#: ../src/Core/Banshee.Base/Globals.cs:183
-msgid "Initializing scripts"
-msgstr "Initialiserer skripter"
-
-#: ../src/Core/Banshee.Base/Globals.cs:186
-msgid "Loading user interface"
-msgstr "Indlæser brugergrænseflade"
-
-#: ../src/Core/Banshee.Base/GstTranscoder.cs:82
-msgid "Could not create transcoder"
-msgstr "Kunne ikke oprette omkoder"
-
-#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:46
-msgid "Primary Development"
-msgstr "Primǽr udvikling"
-
-#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:53
-msgid "Contributors"
-msgstr "Bidragydere"
-
-#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:78
-msgid "Music Management and Playback for GNOME."
-msgstr "Musikhåndtering og afspilning til Gnome."
-
-#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:80
-msgid ""
-"Copyright © 2005-2007 Novell, Inc.\n"
-"Copyright © 2005 Aaron Bockover"
-msgstr ""
-"Copyright © 2005-2007 Novell, Inc.\n"
-"Copyright © 2005 Aaron Bockover"
-
-#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:85
-msgid "Banshee Wiki"
-msgstr "Banshee Wikien"
-
-#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
-msgid "Important tasks are running"
-msgstr "Vigtige opgaver kører"
-
-#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
-msgid ""
-"Closing Banshee now will cancel any currently running tasks. They cannot be "
-"resumed automatically the next time Banshee is run."
-msgstr ""
-"Lukkes Banshee nu, afbrydes alle kørende opgaver. De kan ikke genoptages "
-"automatisk næste gang Banshee køres."
-
-#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
-msgid "Quit anyway"
-msgstr "Afslut alligevel"
-
-#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
-msgid "Continue running"
-msgstr "Fortsæt kørsel"
-
-#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:52
-msgid "Banshee Encountered a Fatal Error"
-msgstr "Banshee blev ramt af en alvorlig fejl"
-
-#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:89
-msgid "Error Details"
-msgstr "Fejldetaljer"
-
-#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:135
-msgid "An unhandled exception was thrown: "
-msgstr "En uhåndteret undtagelse opstod: "
-
-#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:41
-msgid "Select album cover image"
-msgstr "Vælg albumomslag"
-
-#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:49
-msgid "All image files"
-msgstr "Alle billedfiler"
-
-#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:56
-msgid "JPEG image files"
-msgstr "JPEG-billedfiler"
-
-#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:61
-msgid "PNG image files"
-msgstr "PNG-billedfiler"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:51
-msgid "Log Viewer"
-msgstr "Logfremviser"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:87
-msgid "Time Stamp"
-msgstr "Tidsstempel"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:106
-#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:70
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:62
-msgid "Message"
-msgstr "Meddelelse"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:118
-msgid "Show:"
-msgstr "Vis:"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:135
-msgid "All Log Entries"
-msgstr "Alle logposter"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:136
-msgid "Only Error Messages"
-msgstr "Kun fejlmeddelelser"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:137
-msgid "Only Warning Messages"
-msgstr "Kun advarselsmeddelelser"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:138
-msgid "Only Information Messages"
-msgstr "Kun informationsmeddelelser"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:139
-msgid "Only Debug Messages"
-msgstr "Kun fejlsøgningsmeddelelser"
-
-#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:154
-msgid "Entry Details:"
-msgstr "Postdetaljer:"
-
-#: ../src/Core/Banshee.Base/Gui/OpenLocationDialog.cs:54
-msgid "Browse..."
-msgstr "Gennemse..."
-
-#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:67
-msgid "Select library location"
-msgstr "Vælg placering af bibliotek"
-
-#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
-msgid ""
-"Enable this option to save tags and other metadata inside supported audio "
-"files"
-msgstr ""
-"Aktivér denne indstilling for at indlejre mærker og andet metadata i "
-"understøttede lydfiler"
-
-#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
-msgid ""
-"Error correction tries to work around problem areas on a disc, such as "
-"surface scratches, but will slow down importing substantially."
-msgstr ""
-"Fejlkorrektion forsøger at læse ridsede områder på en disk, men vil nedsætte "
-"hastigheden mærkbart."
-
-#: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
-msgid "Could not import tracks"
-msgstr "Kunne ikke importere spor"
-
-#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:40
-msgid "Repeat None"
-msgstr "Gentag ingen"
-
-#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:49
-msgid "Repeat Single"
-msgstr "Gentag én"
-
-#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:58
-msgid "Repeat All"
-msgstr "Gentag alle"
-
-#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:67
-msgid "Shuffle"
-msgstr "Tilfældig"
-
-#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:78
-msgid "Continuous"
-msgstr "Løbende"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:213
-msgid "Automatically set all track numbers in increasing order"
-msgstr "Sæt automatisk alle spornumre i stigende rækkefølge"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:214
-msgid "Set all track counts to this value"
-msgstr "Sæt alle \"antal spor\" til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:215
-msgid "Set all artists to this value"
-msgstr "Sæt alle kunstnere til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:216
-msgid "Set all albums to this value"
-msgstr "Sæt alle album til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:217
-msgid "Set all genres to this value"
-msgstr "Sæt alle genre til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:218
-msgid "Set all years to this value"
-msgstr "Sæt alle år til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
-msgid ""
-"Apply the values of this track set for the Artist, Album Title, Genre, Track "
-"count, Year, and Rating fields to the rest of the selected tracks in this "
-"editor."
-msgstr ""
-"Anvend værdierne fra dette spor. Sæt kunstner-, albumtitel-, genre-, antal "
-"spor-, årstal- og bedømmelsesfelter på resten af sporene i denne redigering."
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
-msgid "Set all ratings to this value"
-msgstr "Sæt alle bedømmelser til denne værdi"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:272
-msgid "Never played"
-msgstr "Aldrig afspillet"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:286
-#, csharp-format
-msgid "Editing song {0} of {1}"
-msgstr "Redigerer sang {0} af {1}"
-
-#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:287
-#, csharp-format
-msgid "Editing {0}"
-msgstr "Redigerer {0}"
-
-#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:61
-msgid "Assembly Version Information"
-msgstr "Versioner på samlinger"
-
-#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:67
-msgid "Assembly Name"
-msgstr "Samling"
-
-#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:69
-msgid "Version"
-msgstr "Version"
-
-#: ../src/Core/Banshee.Base/HomeDirectoryImportSource.cs:58
-msgid "Home Directory"
-msgstr "Hjemmemappe"
-
-#: ../src/Core/Banshee.Base/Library.cs:122
-msgid "Could not load track from library"
-msgstr "Kunne ikke indlæse sang fra bibliotek"
-
-#: ../src/Core/Banshee.Base/NetworkDetect.cs:45
-msgid "There is no available network connection"
-msgstr "Der er ingen tilgængelig netværksforbindelse"
-
-#: ../src/Core/Banshee.Base/NetworkDetect.cs:79
-msgid "Cannot connect to NetworkManager"
-msgstr "Kan ikke tilslutte til NetworkManager"
-
-#: ../src/Core/Banshee.Base/NetworkDetect.cs:80
-msgid "An available, working network connection will be assumed"
-msgstr "En tilgængelig, fungerende netværksforbindelse forventes"
-
-#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:77
-msgid "Default player engine"
-msgstr "Standard afspillermotor"
-
-#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:99
-msgid ""
-"No player engines were found. Please ensure Banshee has been cleanly "
-"installed."
-msgstr ""
-"Ingen afspilningsmotore blev fundet. Undersøg venligst om Banshee er "
-"installeret korrekt."
-
-#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
-msgid "Problem with Player Engine"
-msgstr "Problemer med afspillermotor"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:52
-msgid "Banshee Plugins"
-msgstr "Banshee-udvidelsesmoduler"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:64
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:93
-msgid "Plugin Name"
-msgstr "Udvidelsesmodul"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:90
-msgid "Overview"
-msgstr "Oversigt"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:97
-msgid "Description"
-msgstr "Beskrivelse"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:100
-msgid "Author(s)"
-msgstr "Forfattere"
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:105
-msgid "This plugin could not be initialized."
-msgstr "Dette udvidelsesmodul kunne ikke initialiseres."
-
-#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:193
-msgid "Configuration"
-msgstr "Konfiguration"
-
-#: ../src/Core/Banshee.Base/PowerManagement.cs:83
-msgid "Playing Music"
-msgstr "Afspiller musik"
-
-#: ../src/Core/Banshee.Base/Source.cs:388
-msgid "Source Properties..."
-msgstr "Kildeegenskaber..."
-
-#: ../src/Core/Banshee.Base/Source.cs:396
-#, csharp-format
-msgid "Delete {0}"
-msgstr "Slet {0}"
-
-#: ../src/Core/Banshee.Base/SourceManager.cs:283
-#, csharp-format
-msgid "Rename {0}"
-msgstr "Omdøb {0}"
-
-#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:53
-msgid "Delete Playlist"
-msgstr "Slet spilleliste"
-
-#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:155
-#, csharp-format
-msgid "Are you sure you want to delete this {0}?"
-msgstr "Er du sikker på du vil slette denne {0}?"
-
-#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:164
-#, csharp-format
-msgid "Do not ask me this again"
-msgstr "Spørg mig ikke om dette igen"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:52
-msgid "Eject CD"
-msgstr "Skub cd ud"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:98
-msgid "Reading table of contents from CD..."
-msgstr "Læser indholdstabellen fra cd'en..."
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:103
-msgid "Searching for CD metadata..."
-msgstr "Søger efter cd-metadata..."
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:108
-msgid "Searching for CD cover art..."
-msgstr "Søger efter cd omslag..."
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
-msgid ""
-"Cannot search for CD metadata: there is no available Internet connection"
-msgstr ""
-"Kan ikke søge efter cd-metadata: der er ingen tilgængelig Internet-"
-"forbindelse"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
-msgid "Could not fetch metadata for CD."
-msgstr "Kunne ikke hente cd-metadata."
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:147
-msgid "Copy CD"
-msgstr "Kopiér cd"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:236
-msgid "Invalid Selection"
-msgstr "Ugyldigt valg"
-
-#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:237
-msgid "You must select at least one track to import."
-msgstr "Du skal vælge mindst ét spor at importere."
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:107
-msgid "Synchronizing your Device, Please Wait..."
-msgstr "Synkroniserer din enhed, vent venligst..."
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:191
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:316
-msgid "Importing"
-msgstr "Importerer"
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:193
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:318
-#, csharp-format
-msgid "You are currently importing from {0}. Would you like to stop it?"
-msgstr "Du importerer i øjeblikket fra {0}. Vil du afbryde importeringen?"
-
-#. import_manager.UserEvent.Icon = GetIcon;
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:195
-#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:314
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:320
-#, csharp-format
-msgid "Copying from {0}"
-msgstr "Kopierer fra {0}"
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:196
-#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:315
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:321
-msgid "Scanning..."
-msgstr "Leder..."
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
-#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
-#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
-#, csharp-format
-msgid "Cannot import track from {0}"
-msgstr "Kan ikke importere spor fra {0}"
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
-#, csharp-format
-msgid "({0} Remaining)"
-msgstr "({0} tilbage)"
-
-#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
-#, csharp-format
-msgid "Eject {0}"
-msgstr "Skub {0} ud"
-
-#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
-msgid "Import Errors"
-msgstr "Importeringsfejl"
-
-#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
-msgid "File Name"
-msgstr "Filnavn"
-
-#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:102
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:97
-msgid "Close Error Report"
-msgstr "Luk fejlrapport"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:52
-msgid "Music Library"
-msgstr "Musikbibliotek"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:140
-msgid "Sort Playlists"
-msgstr "Sortér spillelister"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:143
-msgid "Name Ascending"
-msgstr "Navn i stigende orden"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:147
-msgid "Name Descending"
-msgstr "Navn i faldende orden"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:151
-msgid "Size Ascending"
-msgstr "Størrelse i stigende orden"
-
-#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:155
-msgid "Size Descending"
-msgstr "Størrelse i faldende orden"
-
-#: ../src/Core/Banshee.Base/Sources/LocalQueueSource.cs:53
-msgid "Local Queue"
-msgstr "Lokal kø"
-
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
-#: ../src/Core/Banshee/PlayerInterface.cs:1622
-msgid "New Playlist"
-msgstr "Ny spilleliste"
-
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
-msgid "Cannot Rename Playlist"
-msgstr "Kunne ikke omdøbe spilleliste"
-
-#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
-msgid "A playlist with this name already exists. Please choose another name."
-msgstr ""
-"En spilleliste med dette navn eksisterer allerede. Vælg venligst et andet "
-"navn."
-
-#: ../src/Core/Banshee.Base/StreamTagger.cs:169
-#, csharp-format
-msgid "Saving tags for {0}"
-msgstr "Gemmer mærker for {0}"
-
-#: ../src/Core/Banshee.Base/TrackInfo.cs:307
-msgid "Unknown Title"
-msgstr "Ukendt titel"
-
-#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:106
-#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:112
-msgid "by"
-msgstr "af"
-
-#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:113
-msgid "from"
-msgstr "fra"
-
-#: ../src/Core/Banshee.Base/Utilities.cs:76
-#, csharp-format
-msgid "{0:0.00} GB"
-msgstr "{0:0.00} GB"
+msgid "Hide {0}"
+msgstr "Skjul {0}"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/UriColumn.cs:42
+msgid "Location"
+msgstr "Placering"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:453
 msgid "All Columns"
@@ -3148,17 +3041,34 @@ msgstr ""
 "Banshee kunne ikke finde gyldige numre at importere. Undersøg venligst "
 "spillelisten og prøv igen."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2152
+#: ../src/Core/Banshee/PlayerInterface.cs:2106
+msgid "Could not export playlist"
+msgstr "Kunne ikke eksportere spilleliste"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Error opening stream"
+msgstr "Fejl ved åbning af stream"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+msgid "Could not open stream or playlist"
+msgstr "Kunne ikke åbne stream eller spilleliste"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Problem parsing playlist"
+msgstr "Problemer ved fortolkning af spilleliste"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2169
 msgid "New CD"
 msgstr "Ny cd"
 
 #. Translators: {0} is the name of the DAP device (i.e. 'iPod')
-#: ../src/Core/Banshee/PlayerInterface.cs:2173
+#: ../src/Core/Banshee/PlayerInterface.cs:2190
 #, csharp-format
 msgid "Synchronize {0}"
 msgstr "Synkronisér {0}"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2174
+#: ../src/Core/Banshee/PlayerInterface.cs:2191
 #, csharp-format
 msgid ""
 "You have made changes to your {0}. Please choose a method for updating the "
@@ -3176,7 +3086,7 @@ msgstr ""
 "<big>•</big> <i>Gem manuelle ændringer</i>: gem kun manuelle ændringer lavet "
 "af dig"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2180
+#: ../src/Core/Banshee/PlayerInterface.cs:2197
 msgid ""
 "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
 "cause incompatibility with iTunes!"
@@ -3184,11 +3094,11 @@ msgstr ""
 "<b>Advarsel:</b> Handlinger vil ændre eller slette eksisterende indhold på "
 "iPod'en og kan resultere i inkompatibilitet med iTunes!"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2182
+#: ../src/Core/Banshee/PlayerInterface.cs:2199
 msgid "Synchronize Library"
 msgstr "Synkronisér bibliotek"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2184
+#: ../src/Core/Banshee/PlayerInterface.cs:2201
 msgid "Save Manual Changes"
 msgstr "Gem manuelle ændringer"
 
@@ -3200,54 +3110,153 @@ msgstr "Vælg kolonner"
 msgid "Visible Playlist Columns"
 msgstr "Synlige kolonner i spilleliste"
 
-#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:86
-#, csharp-format
-msgid "Stop {0}"
-msgstr "Afbryd {0}"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
+msgid "Order"
+msgstr "Rækkefølge"
 
-#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
-#, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
-msgstr "Operationen '{0}' arbejder stadig. Vil du afbryde den?"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:2
+msgid "Order of Album column"
+msgstr "Rækkefølge i albumkolonne"
 
-#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
-#, csharp-format
-msgid "Continue {0}"
-msgstr "Fortsæt {0}"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:3
+msgid "Order of Artist column"
+msgstr "Rækkefølge i kunsterkolonne"
 
-#: ../src/Core/Banshee.Widgets/DiscUsageDisplay.cs:187
-msgid ""
-"Insert\n"
-"Disc"
-msgstr ""
-"Indsæt\n"
-"disk"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:4
+msgid "Order of Date Added column"
+msgstr "Rækkefølge i dato tilføjet-kolonne"
 
-#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
-msgid "Rating:"
-msgstr "Bedømmelse:"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
+msgid "Order of Genre column"
+msgstr "Rækkefølge i genrekolonne"
 
-#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:279
-msgid "Buffering"
-msgstr "Mellemlagrer"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:6
+msgid "Order of Last Played column"
+msgstr "Rækkefølge i sidst afspillede-kolonne"
 
-#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:84
-msgid "Contacting..."
-msgstr "Kontakter..."
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
+msgid "Order of Play Count column"
+msgstr "Rækkefølge i afspilninger-kolonne"
 
-#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
-msgid "Idle"
-msgstr "Klar"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
+msgid "Order of Rating column"
+msgstr "Rækkefølge i bedømmelseskolonne"
 
-#: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
-msgid "Muted"
-msgstr "Lydløs"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
+msgid "Order of Time column"
+msgstr "Rækkefølge i varighedskolonne"
 
-#: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
-msgid "Full Volume"
-msgstr "Fuld lydstyrke"
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:10
+msgid "Order of Title column"
+msgstr "Rækkefølge i titelkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:11
+msgid "Order of Track column"
+msgstr "Rækkefølge i sporkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:12
+msgid "Order of Uri column"
+msgstr "Rækkefølge i URI-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:13
+msgid "Order of Year column"
+msgstr "Rækkefølge i årstalskolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:14
+msgid "Visibility of Album column"
+msgstr "Synlighed af albumkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:15
+msgid "Visibility of Artist column"
+msgstr "Synlighed af kunsterkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
+msgid "Visibility of Date Added column"
+msgstr "Synlighed af dato tilføjet-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
+msgid "Visibility of Genre column"
+msgstr "Synlighed af genrekolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:18
+msgid "Visibility of Last Played column"
+msgstr "Synlighed af sidst afspillede-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
+msgid "Visibility of Play Count column"
+msgstr "Synlighed af afspilninger-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
+msgid "Visibility of Rating column"
+msgstr "Synlighed af bedømmelseskolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:21
+msgid "Visibility of Time column"
+msgstr "Synlighed af varighedskolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:22
+msgid "Visibility of Title column"
+msgstr "Synlighed af titelkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:23
+msgid "Visibility of Track column"
+msgstr "Synlighed af sporkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
+msgid "Visibility of Uri column"
+msgstr "Synlighed af URI-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
+msgid "Visibility of Year column"
+msgstr "Synlighed af årstalskolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
+msgid "Visiblity"
+msgstr "Synlighed"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:27
+msgid "Width"
+msgstr "Bredde"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:28
+msgid "Width of Album column"
+msgstr "Bredde på albumkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:29
+msgid "Width of Artist column"
+msgstr "Bredde på kunsterkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
+msgid "Width of Date Added column"
+msgstr "Bredde på dato tilføjet-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
+msgid "Width of Genre column"
+msgstr "Bredde på genrekolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
+msgid "Width of Last Played column"
+msgstr "Bredde på sidst afspillede-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
+msgid "Width of Play Count column"
+msgstr "Bredde på afspilninger-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
+msgid "Width of Time column"
+msgstr "Bredde på varighedskolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:35
+msgid "Width of Title column"
+msgstr "Bredde på titelkolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:36
+msgid "Width of Uri column"
+msgstr "Bredde på URI-kolonne"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:37
+msgid "Width of Year column"
+msgstr "Bredde på årstalskolonne"
 
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
 #: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
@@ -3271,20 +3280,20 @@ msgid "Error rebuilding iPod database"
 msgstr "Fejl ved gendannelse af iPod database"
 
 #. Translators "Week 25 of 2006"
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:100
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:103
 msgid "Manufactured During"
 msgstr "Fremstillet i løbet af"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:101
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:104
 #, csharp-format
 msgid "Week {0} of {1}"
 msgstr "Uge {0} af {1}"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:139
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:142
 msgid "Your iPod could not be identified"
 msgstr "Din iPod kunne ikke identificeres"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:140
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
 msgid ""
 "Please consider submitting information about your iPod to the Banshee "
 "Project so your iPod may be more fully identified in the future.\n"
@@ -3292,32 +3301,32 @@ msgstr ""
 "Overvej venligst at indsende information omkring din iPod til Banshee-"
 "projektet, så din iPod identificeres bedre i fremtiden.\n"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:146
 msgid "Do not ask me again"
 msgstr "Spørg mig ikke igen"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:148
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:151
 msgid "Go to Web Site"
 msgstr "Gå til hjemmeside"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:234
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:353
 msgid "Could not eject iPod"
 msgstr "Kunne ikke skubbe iPod ud"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:242
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:261
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:361
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:509
 msgid "Synchronizing iPod"
 msgstr "Synkroniserer iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:243
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:362
 msgid "Pre-processing tracks"
 msgstr "Forbehandler sange"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:258
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:506
 msgid "Flushing to Disk (may take time)"
 msgstr "Opdaterer til disk (kan tage noget tid)"
 
-#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:268
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:516
 msgid "Failed to synchronize iPod"
 msgstr "Kunne ikke synkronisere iPod"
 
@@ -3508,7 +3517,7 @@ msgstr "Enhedsfejl"
 msgid "Could not set the owner of the device."
 msgstr "Kunne ikke sætte ejeren på enheden."
 
-#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:138
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:140
 msgid "Could not initialize GStreamer library"
 msgstr "Kunne ikke initialisere GStreamer-bibliotek"
 
@@ -3618,9 +3627,9 @@ msgstr "Adgangskode"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
+#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
-#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
@@ -3639,10 +3648,6 @@ msgstr "last.fm adgangskode"
 #: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
 msgid "last.fm Username"
 msgstr "last.fm brugernavn"
-
-#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
-msgid "Bookmarks plugin enabled"
-msgstr "Bogmærke-udvidelsesmodul aktiveret"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
 msgid "Bookmarks"
@@ -3675,25 +3680,9 @@ msgstr "Fje_rn bogmærke"
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
 
-#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
-msgid "DAAP plugin enabled"
-msgstr "DAAP-udvidelsesmodul aktiveret"
-
-#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:2
-msgid "Music share name"
-msgstr "Musikdelingsnavn"
-
-#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:4
-msgid "Share local music with others"
-msgstr "Del lokal musik med andre"
-
-#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:5
-msgid "Share name"
-msgstr "Delingsnavn"
-
-#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
-msgid "Share server enabled"
-msgstr "Delingsserver aktiveret"
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "Bogmærke-udvidelsesmodul aktiveret"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:49
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:50
@@ -3807,9 +3796,52 @@ msgstr "Logger ind på {0}"
 msgid "Disconnect"
 msgstr "Frakobl"
 
-#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
-msgid "Metadata searcher plugin enabled"
-msgstr "Metadata-søger udvidelsesmodul aktiveret"
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
+msgid "DAAP plugin enabled"
+msgstr "DAAP-udvidelsesmodul aktiveret"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:2
+msgid "Music share name"
+msgstr "Musikdelingsnavn"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:4
+msgid "Share local music with others"
+msgstr "Del lokal musik med andre"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:5
+msgid "Share name"
+msgstr "Delingsnavn"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
+msgid "Share server enabled"
+msgstr "Delingsserver aktiveret"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:47
+msgid "Multimedia Keyboard Shortcuts"
+msgstr "Multimedietastatur genveje"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:51
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+"Konfiguration af multimedietastatur genveje gøres i Gnome-tastaturgenveje"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
+msgid "Configure Keyboard Shortcuts"
+msgstr "Konfigurér tastatur genveje"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:52
+msgid "Multimedia Keys"
+msgstr "Multimedietaster"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:57
+msgid "Adds support for multimedia keys configured through GNOME."
+msgstr "Giver understøttelse af multimedietaster konfigureret gennem Gnome."
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:1
+msgid "Multimedia Keys plugin enabled"
+msgstr "Multimedietaster-udvidelsesmodul aktiveret"
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:57
 msgid "Metadata Searcher"
@@ -3851,6 +3883,26 @@ msgstr ""
 "bibliotek? Operationen kan genoptages på ethvert tidspunkt vha. "
 "<i>Værktøjer</i>-menuen."
 
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
+msgid "Metadata searcher plugin enabled"
+msgstr "Metadata-søger udvidelsesmodul aktiveret"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
+msgid ""
+"Mini Mode allows controlling Banshee through a small window with only "
+"playback controls and track information."
+msgstr ""
+"Minitilstand gør det muligt at kontrollere Banshee gennem et lille vindue "
+"kun med afspilningsknapper og sanginformation."
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
+msgid "_Mini Mode"
+msgstr "_Minitilstand"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
+msgid "Switch back to full mode"
+msgstr "Skift tilbage til fuld tilstand"
+
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
 msgid "MiniMode plugin enabled"
 msgstr "Minitilstand-udvidelsesmodul aktiveret"
@@ -3874,79 +3926,6 @@ msgstr "Fuld tilstand"
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:6
 msgid "This is the artist"
 msgstr "Dette er kunstneren"
-
-#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
-msgid ""
-"Mini Mode allows controlling Banshee through a small window with only "
-"playback controls and track information."
-msgstr ""
-"Minitilstand gør det muligt at kontrollere Banshee gennem et lille vindue "
-"kun med afspilningsknapper og sanginformation."
-
-#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
-msgid "_Mini Mode"
-msgstr "_Minitilstand"
-
-#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
-msgid "Switch back to full mode"
-msgstr "Skift tilbage til fuld tilstand"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:1
-msgid "Multimedia Keys plugin enabled"
-msgstr "Multimedietaster-udvidelsesmodul aktiveret"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:47
-msgid "Multimedia Keyboard Shortcuts"
-msgstr "Multimedietastatur genveje"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:51
-msgid ""
-"Configuration of multimedia keyboard shortcuts is done through the Gnome "
-"Keyboard Shortcuts configuration applet."
-msgstr ""
-"Konfiguration af multimedietastatur genveje gøres i Gnome-tastaturgenveje"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
-msgid "Configure Keyboard Shortcuts"
-msgstr "Konfigurér tastatur genveje"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:52
-msgid "Multimedia Keys"
-msgstr "Multimedietaster"
-
-#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:57
-msgid "Adds support for multimedia keys configured through GNOME."
-msgstr "Giver understøttelse af multimedietaster konfigureret gennem Gnome."
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
-msgid "Notification area plugin enabled"
-msgstr "Statusområde-udvidelsesmodul aktiveret"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:3
-msgid "Quit instead of hide to notification area on close"
-msgstr "Afslut ved lukning, gem ikke i statusområde"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:4
-msgid "Quit on close"
-msgstr "Afslut ved lukning"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:5
-msgid "Show a notification when closing main window"
-msgstr "Vis påmindelse når hovedvinduet lukkes"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:6
-msgid "Show notifications"
-msgstr "Vis påmindelser"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
-msgid "Show track information notifications when track starts playing"
-msgstr "Vis påmindelse med sporinformation når et spor afspilles"
-
-#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
-msgid ""
-"When the main window is closed, show a notification stating this has "
-"happened."
-msgstr "Vis en påmindelse når hovedvinduet lukkes."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:61
@@ -3998,49 +3977,35 @@ msgstr "Afspiller nu"
 msgid "Cannot show notification"
 msgstr "Kan ikke vise påmindelse"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:1
-msgid "Playlist separator position"
-msgstr "Placering af spillelisteseparator"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
+msgid "Notification area plugin enabled"
+msgstr "Statusområde-udvidelsesmodul aktiveret"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:3
-msgid "Podcast date column"
-msgstr "Podcast datokolonne"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:3
+msgid "Quit instead of hide to notification area on close"
+msgstr "Afslut ved lukning, gem ikke i statusområde"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:4
-msgid "Podcast feed column"
-msgstr "Podcast feedkolonne"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:4
+msgid "Quit on close"
+msgstr "Afslut ved lukning"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
-msgid "Podcast library location"
-msgstr "Podcast biblioteksplacering"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:5
+msgid "Show a notification when closing main window"
+msgstr "Vis påmindelse når hovedvinduet lukkes"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
-msgid "Podcast plugin enabled"
-msgstr "Podcast-udvidelsesmodul aktiveret"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:6
+msgid "Show notifications"
+msgstr "Vis påmindelser"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:7
-msgid "Podcast title column"
-msgstr "Podcast titelkolonne"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
+msgid "Show track information notifications when track starts playing"
+msgstr "Vis påmindelse med sporinformation når et spor afspilles"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
-msgid "Position of the podcast date playlist column"
-msgstr "Placering af podcast dato-spillelistekolonne"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:9
-msgid "Position of the podcast feed playlist column"
-msgstr "Placering af podcast feed-spillelistekolonne"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:10
-msgid "Position of the podcast title playlist column"
-msgstr "Placering af podcast titel-spillelistekolonne"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:11
-msgid "Position of the separator located between the feed and podcast views"
-msgstr "Placering af separatoren mellem feed- og podcastvisninger"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
-msgid "Root directory for the podcast plugin to store downloaded files"
-msgstr "Rodmappe for podcast-udvidelsesmodulet til hentede filer"
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
+msgid ""
+"When the main window is closed, show a notification stating this has "
+"happened."
+msgstr "Vis en påmindelse når hovedvinduet lukkes."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
 msgid "DownloadCore is shutting down."
@@ -4415,48 +4380,51 @@ msgstr "Hent det nyeste afsnit"
 msgid "Let me decide which episodes to download"
 msgstr "Lad mig vælge hvilke afsnit der skal hentes"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
-msgid ""
-"Always show stations that require the Helix/RealPlayer engine, even if the "
-"engine is not loaded."
-msgstr ""
-"Vis altid stationer som kræver Helix/RealPlayer-motoren, også selvom motoren "
-"ikke er indlæst."
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:1
+msgid "Playlist separator position"
+msgstr "Placering af spillelisteseparator"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
-msgid "Last time XSPF stations were updated from radio.banshee-project.org"
-msgstr ""
-"Sidste gang XSPF-stationer blev opdateret fra radio.banshee-project.org"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:3
+msgid "Podcast date column"
+msgstr "Podcast datokolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
-msgid "Last time the master station list was checked for updates"
-msgstr "Sidste gang hovedstationslisten blev undersøgt for opdateringer"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:4
+msgid "Podcast feed column"
+msgstr "Podcast feedkolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
-msgid "Radio plugin enabled"
-msgstr "Radio-udvidelsesmodul aktiveret"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
+msgid "Podcast library location"
+msgstr "Podcast biblioteksplacering"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
-msgid "Show remote stations"
-msgstr "Vis fjernstationer"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
+msgid "Podcast plugin enabled"
+msgstr "Podcast-udvidelsesmodul aktiveret"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
-msgid "Show stations requiring Helix/RealPlayer"
-msgstr "Vis stationer som kræver Helix/RealPlayer"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:7
+msgid "Podcast title column"
+msgstr "Podcast titelkolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
-msgid "Time of the last radio update"
-msgstr "Tidspunkt for sidste radio opdatering"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
+msgid "Position of the podcast date playlist column"
+msgstr "Placering af podcast dato-spillelistekolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
-msgid "Time of the last radio update check"
-msgstr "Tidspunkt for sidste undersøgelse for radio opdateringer"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:9
+msgid "Position of the podcast feed playlist column"
+msgstr "Placering af podcast feed-spillelistekolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
-msgid "Update remote stations from radio.banshee-project.org"
-msgstr "Opdatér fjernstationer fra radio.banshee-project.org"
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:10
+msgid "Position of the podcast title playlist column"
+msgstr "Placering af podcast titel-spillelistekolonne"
 
-#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:116
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:11
+msgid "Position of the separator located between the feed and podcast views"
+msgstr "Placering af separatoren mellem feed- og podcastvisninger"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
+msgid "Root directory for the podcast plugin to store downloaded files"
+msgstr "Rodmappe for podcast-udvidelsesmodulet til hentede filer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:117
 msgid "Loading"
 msgstr "Indlæser"
 
@@ -4565,21 +4533,54 @@ msgstr "Station"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
-msgid "Cache version"
-msgstr "Mellemlagerversion"
-
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
-msgid "Recommendation plugin enabled"
-msgstr "Anbefalings-udvidelsesmodul aktiveret"
-
-#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
 msgid ""
-"Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
-"recommendation"
+"Always show stations that require the Helix/RealPlayer engine, even if the "
+"engine is not loaded."
 msgstr ""
-"Version af mellemlagerlayoutet på disken, placeret i ~/.config/banshee/"
-"plugins/recommendation"
+"Vis altid stationer som kræver Helix/RealPlayer-motoren, også selvom motoren "
+"ikke er indlæst."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
+msgid "Last time XSPF stations were updated from radio.banshee-project.org"
+msgstr ""
+"Sidste gang XSPF-stationer blev opdateret fra radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
+msgid "Last time the master station list was checked for updates"
+msgstr "Sidste gang hovedstationslisten blev undersøgt for opdateringer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
+msgid "Radio plugin enabled"
+msgstr "Radio-udvidelsesmodul aktiveret"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
+msgid "Show remote stations"
+msgstr "Vis fjernstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
+msgid "Show stations requiring Helix/RealPlayer"
+msgstr "Vis stationer som kræver Helix/RealPlayer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
+msgid "Time of the last radio update"
+msgstr "Tidspunkt for sidste radio opdatering"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
+msgid "Time of the last radio update check"
+msgstr "Tidspunkt for sidste undersøgelse for radio opdateringer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
+msgid "URI for remote stations update"
+msgstr "URI til opdatering af fjernstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
+msgid "URI to update remote stations from"
+msgstr "URI til opdatering af fjernstationer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:12
+msgid "Update remote stations from radio.banshee-project.org"
+msgstr "Opdatér fjernstationer fra radio.banshee-project.org"
 
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
 msgid "Recommended Artists"
@@ -4599,12 +4600,12 @@ msgstr "Topsange af {0}"
 msgid "Top Albums by {0}"
 msgstr "Topalbum af {0}"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:366
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:367
 #, csharp-format
 msgid "{0}% Similarity"
 msgstr "{0}% lighed"
 
-#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:368
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:369
 msgid "Unknown Similarity"
 msgstr "Ukendt lighed"
 
@@ -4626,6 +4627,34 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Vis anbefalinger"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+msgid "Cache version"
+msgstr "Mellemlagerversion"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
+msgid "Recommendation plugin enabled"
+msgstr "Anbefalings-udvidelsesmodul aktiveret"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+msgid ""
+"Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
+"recommendation"
+msgstr ""
+"Version af mellemlagerlayoutet på disken, placeret i ~/.config/banshee/"
+"plugins/recommendation"
+
+#~ msgid "Could not initialize cdparanoia"
+#~ msgstr "Kunne ikke initialisere cdparanoia"
+
+#~ msgid "Exception: "
+#~ msgstr "Undtagelse: "
+
+#~ msgid "Not a valid M3U file."
+#~ msgstr "Ikke en gyldig M3U-fil."
+
+#~ msgid "Not a valid PLS file."
+#~ msgstr "Ikke en gyldig PLS-fil."
 
 #~ msgid "Ratin_g"
 #~ msgstr "Bedømmel_se"
