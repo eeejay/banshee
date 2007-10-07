@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-26 10:47+0100\n"
-"PO-Revision-Date: 2007-09-29 13:52+0200\n"
+"POT-Creation-Date: 2007-09-29 13:10+0100\n"
+"PO-Revision-Date: 2007-10-07 14:41+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2128,6 +2128,8 @@ msgid ""
 "Error correction tries to work around problem areas on a disc, such as "
 "surface scratches, but will slow down importing substantially."
 msgstr ""
+"La corrección de errores trata de solucionar los problemas en ciertas áreas de los discos, tales como "
+"rayaduras en la superficie, pero ralentizará mucho la importación."
 
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
 msgid "Could not import tracks"
@@ -2183,6 +2185,9 @@ msgid ""
 "count, Year, and Rating fields to the rest of the selected tracks in this "
 "editor."
 msgstr ""
+"Aplicar los valores de los campos artista, título del álbum, género, conteo de "
+"pista, año y puntuación de esta pista al resto de pistas seleccionadas en este "
+"editor."
 
 #: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:223
 msgid "Set all ratings to this value"
@@ -2501,15 +2506,15 @@ msgstr "Índice de columnas"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:5
 msgid "Column index for sorting the library source. -1 for unset."
-msgstr ""
+msgstr "Índice de columnas para la ordenación de la fuente de la fonoteca. -1 sin orden."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:6
 msgid "Column sort type"
-msgstr ""
+msgstr "Tipo de orden por columna"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
 msgid "Column sort type for the library source. Ascending (0) or Descending (1)"
-msgstr ""
+msgstr "Tipo de orden por columna para la fuente de la fonoteca. Ascendente (0) o descendente (1)"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
 msgid "Copy and rename music to banshee music library directory when importing"
@@ -2907,9 +2912,8 @@ msgid "Pause"
 msgstr "Pausar"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:816
-#, fuzzy
 msgid "Stop"
-msgstr "a"
+msgstr "Parar"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:837
 msgid "Cannot Play Song"
@@ -2969,9 +2973,9 @@ msgstr[0] "{0} segundo"
 msgstr[1] "{0} segundos"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1412
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Filter on {0}"
-msgstr "Borrar {0}"
+msgstr "Filtro en {0}"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1891
 #, csharp-format
@@ -3007,41 +3011,38 @@ msgid "You do not have the required permissions to delete '{0}'"
 msgstr "No tiene los permisos requeridos para borrar «{0}»"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2012
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Lista de reproducción inteligente"
+msgstr "Importar lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2044
 #: ../src/Core/Banshee/PlayerInterface.cs:2062
-#, fuzzy
 msgid "Unable to Import Playlist"
-msgstr "Borrar la lista de reproducción inteligente"
+msgstr "No se pudo importar la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2063
 msgid ""
 "Banshee was unable to find any valid tracks to import.  Please check the "
 "playlist and try again."
 msgstr ""
+"Banshee no pudo encontrar ninguna pista válida para importarla. Compruebe la lista "
+"de reproducción e inténtelo de nuevo."
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2106
-#, fuzzy
 msgid "Could not export playlist"
-msgstr "No repetir la lista de reproducción"
+msgstr "No se pudo exportar la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2125
 #: ../src/Core/Banshee/PlayerInterface.cs:2131
 msgid "Error opening stream"
-msgstr ""
+msgstr "Error al abrir el flujo"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2125
-#, fuzzy
 msgid "Could not open stream or playlist"
-msgstr "No repetir la lista de reproducción"
+msgstr "No se puro abrir el flujo o la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2131
-#, fuzzy
 msgid "Problem parsing playlist"
-msgstr "Problema al crear el CD"
+msgstr "Problema al analizar la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2169
 msgid "New CD"
@@ -3121,7 +3122,7 @@ msgstr "Ordenar la columna de Última reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
 msgid "Order of Play Count column"
-msgstr "Ordenar la columna de Reproducciones"
+msgstr "Ordenar la columna Contador de reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
 msgid "Order of Rating column"
@@ -3168,9 +3169,8 @@ msgid "Visibility of Last Played column"
 msgstr "Visibilidad de columna Última reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
-#, fuzzy
 msgid "Visibility of Play Count column"
-msgstr "Visibilidad de columna Reproducciones"
+msgstr "Visibilidad de columna Contador de reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
 msgid "Visibility of Rating column"
@@ -3225,9 +3225,8 @@ msgid "Width of Last Played column"
 msgstr "Anchura de la columna Última reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
-#, fuzzy
 msgid "Width of Play Count column"
-msgstr "Anchura de la columna Reproducciones."
+msgstr "Anchura de la columna Contador de reproducción"
 
 #: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
 msgid "Width of Time column"
@@ -3440,24 +3439,25 @@ msgid "Copying {0} of {1}"
 msgstr "Copiando {0} de {1}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
-#, fuzzy
 msgid "Song Playing on Device"
-msgstr "Sincronizando dispositivo"
+msgstr "Canción reproduciéndose en el dispositivo"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
 msgid ""
 "Before you can eject your device, you need to start playing a song that is "
 "not on it.  This is a known bug."
 msgstr ""
+"Antes de que pueda extraer el dispositivo debe iniciar la reproducción de una canción que "
+"no está en él. Éste es un error conocido."
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:368
 #, csharp-format
 msgid "Failed to Unmount {0}"
-msgstr ""
+msgstr "Falló al desmontar {0}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:369
 msgid "Make sure no other programs are using it."
-msgstr ""
+msgstr "Asegúrese de que ningún otro programa lo está usando."
 
 #: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:381
 #, fuzzy, csharp-format
@@ -4419,7 +4419,9 @@ msgstr "Posición del separador ubicado entre la fuente y la vista de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
 msgid "Root directory for the podcast plugin to store downloaded files"
-msgstr "Directorio raíz para que el complemento de Podcast almacene los archivos descargados"
+msgstr ""
+"Directorio raíz para que el complemento de Podcast almacene los archivos "
+"descargados"
 
 #: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:117
 msgid "Loading"
@@ -4537,8 +4539,8 @@ msgid ""
 "Always show stations that require the Helix/RealPlayer engine, even if the "
 "engine is not loaded."
 msgstr ""
-"Mostrar siempre las emisoras que requieren el motor Helix/RealPlayer, incluso si "
-"el motor no está cargado."
+"Mostrar siempre las emisoras que requieren el motor Helix/RealPlayer, "
+"incluso si el motor no está cargado."
 
 #: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
 msgid "Last time XSPF stations were updated from radio.banshee-project.org"
