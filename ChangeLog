@@ -1,3 +1,7 @@
+2007-10-14  Yannig Marchegay  <yannig@marchegay.org>
+
+	* po/LINGUAS: Added 'oc' to ALL_LINGUAS.
+
 2007-10-04  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Core/Banshee/PlayerInterface.cs: Don't filter by
