@@ -1,3 +1,11 @@
+2007-10-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/ActionManager.cs: Remove ellipses from Plugins
+	menu item.  Patch from Michael Monreal, fixes BGO #478465.
+
+	* src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs: Make strings
+	more easily translatable. Fixes BGO #407094.
+
 2007-10-14  Yannig Marchegay  <yannig@marchegay.org>
 
 	* po/LINGUAS: Added 'oc' to ALL_LINGUAS.
