@@ -1,0 +1,7 @@
+This patch changes the audio profile configuration to use the Banshee configuration API
+rather than GConf. All file paths are reletive to banshee/src/Core/Banshee.Base
+
+* Removed Banshee.AudioProfiles/GConfProfileConfiguration.cs: Obsolete.
+
+* Modified Banshee.AudioProfiles/ProfileConfiguration.cs: Made to use the Banshee
+  Configuration system.
