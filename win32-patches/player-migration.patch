@@ -1,7 +1,7 @@
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs    (working copy)
 @@ -33,6 +33,22 @@
  {
      public class AmarokPlayerImport : PlayerImport
@@ -67,8 +67,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.
 \ No newline at end of file
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs	(revision 0)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs	(revision 0)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs    (revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs    (revision 0)
 @@ -0,0 +1,696 @@
 +/*
 + *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
@@ -768,8 +768,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs
 +}
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs	(revision 0)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs	(revision 0)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs    (revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs    (revision 0)
 @@ -0,0 +1,154 @@
 +/*
 + *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
@@ -928,8 +928,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.
 \ No newline at end of file
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs	(revision 0)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs	(revision 0)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs    (revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs    (revision 0)
 @@ -0,0 +1,639 @@
 +/*
 + *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
@@ -1572,8 +1572,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylist
 +}
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs    (working copy)
 @@ -28,14 +28,10 @@
  
  namespace Banshee.PlayerMigration
@@ -1622,11 +1622,11 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs
 \ No newline at end of file
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs    (working copy)
 @@ -1,147 +0,0 @@
 -/*
-- *  Copyright (c) 2006 Sebastian Dröge <slomo@circular-chaos.org> 
+- *  Copyright (c) 2006 Sebastian Dr??ge <slomo@circular-chaos.org> 
 - *
 - *  Permission is hereby granted, free of charge, to any person obtaining a
 - *  copy of this software and associated documentation files (the "Software"),  
@@ -1774,11 +1774,11 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.
 -}
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs    (working copy)
 @@ -1,66 +0,0 @@
 -/*
-- *  Copyright (c) 2006 Sebastian Dröge <slomo@circular-chaos.org> 
+- *  Copyright (c) 2006 Sebastian Dr??ge <slomo@circular-chaos.org> 
 - *
 - *  Permission is hereby granted, free of charge, to any person obtaining a
 - *  copy of this software and associated documentation files (the "Software"),  
@@ -1845,8 +1845,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.
 -}
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs	(revision 0)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs	(revision 0)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs    (revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs    (revision 0)
 @@ -0,0 +1,48 @@
 +/*
 + *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
@@ -1898,8 +1898,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore
 +}
 Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs    (working copy)
 @@ -32,12 +32,28 @@
  {
      public class RhythmboxPlayerImport : PlayerImport
@@ -1958,8 +1958,8 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImpo
 \ No newline at end of file
 Index: banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs
 ===================================================================
---- banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs	(revision 2588)
-+++ banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs	(working copy)
+--- banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs    (revision 2588)
++++ banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs    (working copy)
 @@ -87,35 +87,34 @@
              ImportSources.Add(FolderImportSource.Instance);
              ImportSources.Add(FileImportSource.Instance);
