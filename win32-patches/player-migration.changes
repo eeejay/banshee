@@ -1,0 +1,34 @@
+This patch changes the stucture of the PlayerMigration namespace and adds iTunes support.
+Rather than a single player migration import source which opens the player migration
+dialog, each importer is its own import source. All file paths are reletive to
+banshee/src/Core/Banshee.Base
+
+* Modified Banshee.PlayerMigration/AmarokPlayerImport.cs: Tweaked the class to conform
+  to the new player migration structure.
+  
+* Added Banshee.PlayerMigration/ItunesImport.cs: Added an iTunes importer to the
+  player migration system.
+  
+* Added Banshee.PlayerMigration/ItunesImportDialog.cs: Supporting UI for the iTunes
+  importer.
+  
+* Added Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs: Supporting class
+  for the iTunes importer which handles translation of smart playlists.
+  
+* Modified Banshee.PlayerMigration/PlayerImport.cs: Tweaked the class to improve
+  player migration structure.
+  
+* Removed Banshee.PlayerMigration/PlayerImportDialog.cs: Removed as part of the new
+  player migration structure.
+  
+* Removed Banshee.PlayerMigration/PlayerImportSource.cs: Removed as part of the new
+  player migration structure.
+
+* Added Banshee.PlayerMigration/PlayerMigrationCore.cs: Added as part of the new
+  player migration structure.
+
+* Modified Banshee.PlayerMigration/RhythmboxPlayerImport.cs: Tweaked the class to
+  improve player migration structure.
+  
+* Modified Gui/ImportDialog.cs: Tweaked the class to conform to the new player
+  migration structure.

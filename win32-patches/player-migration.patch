@@ -1,0 +1,2021 @@
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs	(working copy)
+@@ -33,6 +33,22 @@
+ {
+     public class AmarokPlayerImport : PlayerImport
+     {
++        private static AmarokPlayerImport instance;
++        public static PlayerImport Instance
++        {
++            get {
++                if(instance == null) {
++                    instance = new AmarokPlayerImport();
++                }
++                
++                return instance;
++            }
++        }
++        
++        private AmarokPlayerImport()
++        {
++        }
++        
+         private static readonly string library_path = Path.Combine ( Path.Combine (Path.Combine (Path.Combine (Path.Combine (
+                                                  Environment.GetFolderPath(Environment.SpecialFolder.Personal),
+                                                  ".kde"),
+@@ -40,7 +56,7 @@
+                                                  "apps"),
+                                                  "amarok"),
+                                                  "collection.db");
+-        public override bool CanImport
++        public static bool CanImport
+         {
+             get { return File.Exists (library_path); }
+         }
+@@ -49,14 +65,15 @@
+             get { return Catalog.GetString ("Amarok"); }
+         }
+ 
+-        protected override void OnImport () {
++        protected override void DoImport ()
++        {
+             IDbConnection conn;
+ 
+             try {
+                 conn = new SqliteConnection ("Version=3,URI=file://" + library_path);
+                 conn.Open ();
+             } catch (Exception e) {
+-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, Catalog.GetString("Unable to open Amarok database"), e);
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Unable to open Amarok database", e);
+                 return;
+             }
+             
+@@ -194,9 +211,8 @@
+                      conn.Close ();
+                  } catch (Exception) {}
+             } catch (Exception e) {
+-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path,
+-                    Catalog.GetString("Importing from Amarok database failed"), e);
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Importing from Amarok database failed", e);
+             }
+         }
+     }
+-}
++}
+\ No newline at end of file
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs	(revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs	(revision 0)
+@@ -0,0 +1,696 @@
++/*
++ *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining a
++ *  copy of this software and associated documentation files (the "Software"),  
++ *  to deal in the Software without restriction, including without limitation  
++ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
++ *  and/or sell copies of the Software, and to permit persons to whom the  
++ *  Software is furnished to do so, subject to the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be included in 
++ *  all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
++ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
++ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
++ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
++ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
++ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
++ *  DEALINGS IN THE SOFTWARE.
++ */
++
++using System;
++using System.Collections.Generic;
++using System.Data;
++using System.IO;
++using System.Text;
++using System.Xml;
++using Mono.Unix;
++using Gtk;
++
++using Banshee.Base;
++using Banshee.IO;
++using Banshee.Widgets;
++using Banshee.Sources;
++using Banshee.SmartPlaylist;
++
++namespace Banshee.PlayerMigration
++{
++    public class ItunesImport : PlayerImport
++    {
++        // This is its own class so that we don't always load this stuff into memory
++        private class ItunesImportData
++        {
++            public string library_uri, default_query, local_prefix, fallback_dir;
++            public string [] query_dirs;
++            public bool get_ratings, get_stats, get_playlists, get_smart_playlists, local_library;
++            public uint total_songs, total_processed, total_count, ratings_count, stats_count, playlists_count, smart_playlists_count;
++            public List<ItunesSmartPlaylist> partial_smart_playlists, failed_smart_playlists;
++            public volatile bool canceled;
++                
++        }
++
++        private static ItunesImport instance;
++        public static PlayerImport Instance {
++            get {
++                if(instance == null) {
++                    instance = new ItunesImport();
++                }
++                return instance;
++            }
++        }
++        
++        private ItunesImport ()
++        {
++        }
++        
++        public override string Name {
++            get { return Catalog.GetString ("iTunes"); }
++        }
++
++        public static bool CanImport {
++            get { return true; }
++        }
++
++        private ItunesImportData data;
++
++        public override void Import()
++        {
++            data = new ItunesImportData();
++            if (!PromptUser()) {
++                data = null;
++                return;
++            }
++
++            CreateUserEvent();
++            user_event.CancelRequested += delegate {
++                data.canceled = true;
++            };
++
++            ThreadAssist.Spawn(delegate {
++                DoImport();
++                user_event.Dispose();
++                user_event = null;
++                data = null;
++            });
++        }
++
++        private bool PromptUser()
++        {
++            ItunesImportDialog import_dialog = new ItunesImportDialog();
++            if(import_dialog.Run() == (int)ResponseType.Ok) {
++                data.library_uri = import_dialog.LibraryUri;
++                data.get_ratings = import_dialog.Ratings;
++                data.get_stats = import_dialog.Stats;
++                data.get_playlists = import_dialog.Playliststs;
++                data.get_smart_playlists = import_dialog.SmartPlaylists;
++                data.local_library = import_dialog.LocalLibrary;
++            }
++            import_dialog.Destroy();
++            import_dialog.Dispose();
++
++            if(data.library_uri == null || data.library_uri.Length == 0) {
++                return false;
++            }
++
++            // Make sure the library version is supported (version 1.1)
++            string message = null;
++            bool prompt = false;
++            XmlReader xml_reader = new XmlTextReader(data.library_uri);
++            xml_reader.ReadToFollowing("key");
++            do {
++                xml_reader.Read();
++                string key = xml_reader.ReadContentAsString();
++                if(key == "Major Version" || key == "Minor Version") {
++                    xml_reader.Read();
++                    xml_reader.Read();
++                    if(xml_reader.ReadContentAsString() != "1") {
++                        message = Catalog.GetString(String.Format(
++                            "{0} is not familiar with this version of the iTunes library format." +
++                            " Importing may or may not work as expected, or at all. Would you like to attempt to import anyway?",
++                            Branding.ApplicationName));
++                        prompt = true;
++                        break;
++                    }
++                }
++            } while(xml_reader.ReadToNextSibling("key"));
++            xml_reader.Close();
++
++            if(prompt) {
++                bool proceed = false;
++                using(MessageDialog dialog = new MessageDialog(null, 0, MessageType.Question, ButtonsType.YesNo, message)) {
++                    if(dialog.Run() == (int)ResponseType.Yes) {
++                        proceed = true;
++                    }
++                    dialog.Destroy();
++                }
++                if(!proceed) {
++                    Banshee.Sources.ImportErrorsSource.Instance.AddError(data.library_uri,
++                        "Unsupported version", null);
++                    return false;
++                }
++            }
++
++            if(data.get_smart_playlists) {
++                data.partial_smart_playlists = new List<ItunesSmartPlaylist>();
++                data.failed_smart_playlists = new List<ItunesSmartPlaylist>();
++            }
++            return true;
++        }
++
++        protected override void DoImport()
++        {
++            data.canceled = false;
++            CheckDatabase();
++            CountSongs();
++            XmlReader xml_reader = new XmlTextReader(data.library_uri);
++            ProcessLibraryXml(xml_reader);
++            xml_reader.Close();
++        }
++
++        private void CheckDatabase()
++        {
++            try {
++                Globals.Library.Db.Execute("SELECT ItunesSynced FROM Tracks");
++            } catch(Exception e) {
++                if(e.Message != "no such column: ItunesSynced") {
++                    throw e;
++                }
++                Globals.Library.Db.Execute("ALTER TABLE Tracks ADD ItunesSynced INTEGER");
++                Globals.Library.Db.Execute("UPDATE Tracks SET ItunesSynced = 0");
++            }
++
++            try {
++                Globals.Library.Db.Execute("SELECT ItunesID FROM Tracks");
++            } catch(Exception e) {
++                if(e.Message != "no such column: ItunesID") {
++                    throw e;
++                }
++                Globals.Library.Db.Execute("ALTER TABLE Tracks ADD ItunesID INTEGER");
++            } finally {
++                Globals.Library.Db.Execute("UPDATE Tracks SET ItunesID = 0");
++            }
++        }
++
++        private void CountSongs()
++        {
++            XmlTextReader xml_reader = new XmlTextReader(data.library_uri);
++            xml_reader.ReadToDescendant("dict");
++            xml_reader.ReadToDescendant("dict");
++            xml_reader.ReadToDescendant("dict");
++            do {
++                data.total_songs++;
++            } while(xml_reader.ReadToNextSibling("dict"));
++            xml_reader.Close();
++        }
++        
++        private void ProcessLibraryXml(XmlReader xml_reader)
++        {
++            while(xml_reader.ReadToFollowing("key") && !data.canceled) {
++                xml_reader.Read();
++                string key = xml_reader.ReadContentAsString();
++                xml_reader.Read();
++                xml_reader.Read();
++
++                switch(key) {
++                case "Music Folder":
++                    if(!data.local_library && !ProcessMusicFolderPath(xml_reader.ReadContentAsString())) {
++                        return;
++                    }
++                    break;
++                case "Tracks":
++                    ProcessSongs(xml_reader.ReadSubtree());
++                    break;
++                case "Playlists":
++                    if(data.get_playlists || data.get_smart_playlists) {
++                        ProcessPlaylists(xml_reader.ReadSubtree());
++                    }
++                    break;
++                }
++            }
++        }
++
++        private bool ProcessMusicFolderPath(string path)
++        {
++            string[] itunes_music_uri_parts = ConvertToLocalUriFormat(path).Split(Path.DirectorySeparatorChar);
++            string[] library_uri_parts = Path.GetDirectoryName(data.library_uri).Split(Path.DirectorySeparatorChar);
++
++            string itunes_dir_name = library_uri_parts[library_uri_parts.Length - 1];
++            int i = 0;
++            bool found = false;
++            for(i = itunes_music_uri_parts.Length - 1; i >= 0; i--) {
++                if(itunes_music_uri_parts[i] == itunes_dir_name) {
++                    found = true;
++                    break;
++                }
++            }
++            if(!found) {
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(data.library_uri,
++                  "Unable to locate iTunes directory from iTunes URI", null);
++                return false;
++            }
++
++            string[] local_prefix_parts = new string[library_uri_parts.Length + (itunes_music_uri_parts.Length - i) - 1];
++            for(int j = 0; j < library_uri_parts.Length - 1; j++) {
++                local_prefix_parts[j] = library_uri_parts[j];
++            }
++            for(int j = i; j < itunes_music_uri_parts.Length; j++) {
++                local_prefix_parts[local_prefix_parts.Length - (itunes_music_uri_parts.Length - j)] = itunes_music_uri_parts[j];
++            }
++
++            string[] tmp_query_dirs = new string[itunes_music_uri_parts.Length];
++            string upstream_uri;
++            string tmp_upstream_uri = null;
++            int step = 0;
++            do {
++                upstream_uri = tmp_upstream_uri;
++                tmp_upstream_uri = Path.GetPathRoot(data.library_uri);
++                for(int j = 0; j < library_uri_parts.Length - step - 1; j++) {
++                    tmp_upstream_uri = Path.Combine(tmp_upstream_uri, library_uri_parts[j]);
++                }
++                tmp_upstream_uri = Path.Combine(tmp_upstream_uri, itunes_music_uri_parts[i - step]);
++                data.fallback_dir = tmp_query_dirs[step] = itunes_music_uri_parts[i - step];
++                step++;
++            } while(IOProxy.Directory.Exists(tmp_upstream_uri));
++            if(upstream_uri == null) {
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(data.library_uri,
++                  "Unable to reslove iTunes URIs to local URIs", null);
++                return false;
++            }
++            data.query_dirs = new string[step - 2];
++            data.default_query = string.Empty;
++
++            for(int j = step - 2; j >= 0; j--) {
++                if(j > 0) {
++                    data.query_dirs[j - 1] = tmp_query_dirs[j];
++                }
++                data.default_query += tmp_query_dirs[j] + Path.DirectorySeparatorChar;
++
++            }
++
++            data.local_prefix = string.Empty;
++            for(int j = 0; j < step; j++) {
++                data.local_prefix += local_prefix_parts[j] + Path.DirectorySeparatorChar;
++            }
++
++            return true;
++        }
++
++        private void ProcessSongs(XmlReader xml_reader)
++        {
++            xml_reader.ReadToFollowing("dict");
++            while(xml_reader.ReadToFollowing("dict") && !data.canceled) {
++                ProcessSong(xml_reader.ReadSubtree());
++            }
++            xml_reader.Close();
++        }
++
++        private void ProcessPlaylists(XmlReader xml_reader)
++        {
++            user_event.Header = Catalog.GetString("Importing Playlists");
++            user_event.Progress = 0;
++            while(xml_reader.ReadToFollowing("dict") && !data.canceled) {
++                ProcessPlaylist(xml_reader.ReadSubtree());
++            }
++            xml_reader.Close();
++        }
++
++        private void ProcessSong(XmlReader xml_reader)
++        {
++            string location = null;
++            int itunes_id = 0;
++            byte rating = 0;
++            uint play_count = 0;
++            DateTime last_played = new DateTime();
++
++            while(xml_reader.ReadToFollowing("key")) {
++                xml_reader.Read();
++                string key = xml_reader.ReadContentAsString();
++                xml_reader.Read();
++                xml_reader.Read();
++
++                switch (key) {
++                case "Track ID":
++                    itunes_id = int.Parse(xml_reader.ReadContentAsString());
++                    break;
++                case "Play Count":
++                    play_count = uint.Parse(xml_reader.ReadContentAsString());
++                    break;
++                case "Play Date UTC":
++                    last_played = DateTime.Parse(xml_reader.ReadContentAsString());
++                    break;
++                case "Rating":
++                    rating = byte.Parse(xml_reader.ReadContentAsString());
++                    break;
++                case "Location":
++                    location = xml_reader.ReadContentAsString();
++                    break;
++                }
++            }
++            xml_reader.Close();
++
++            data.total_processed++;
++            location = ConvertToLocalUri(location);
++            if(location == null) {
++                return;
++            }
++            SafeUri safe_uri = null;
++            try {
++                safe_uri = new SafeUri(location);
++            } catch {
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(location,
++                    "URI is not a local file path", null);
++                return;
++            }
++            
++            if(!IOProxy.File.Exists(safe_uri)) {
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(location,
++                    "File does not exist", null);
++                return;
++            }
++            
++            // Update the song if it is already in the library
++            int track_id = LibraryTrackInfo.GetId(safe_uri);
++            bool update = track_id != 0;
++            TrackInfo track_info = null;
++            try {
++                track_info = update
++                    ? Globals.Library.GetTrack(track_id)
++                    : new LibraryTrackInfo(safe_uri.AbsoluteUri);
++            } catch (Exception e) {
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(location, e.Message, e);
++                return;
++            }
++
++            // Rating
++            if(data.get_ratings && rating != 0 && track_info.Rating == 0) {
++                track_info.Rating = (uint)rating / 20;
++                data.ratings_count++;
++            }
++            bool stats_updated = false;
++
++            // Play count
++            while(data.get_stats && play_count != 0) {
++                uint previous_sync = 0;
++                if(update) {
++                    try {
++                        previous_sync = (uint)Globals.Library.Db.QuerySingle(String.Format(
++                            "SELECT ItunesSynced FROM Tracks WHERE TrackID = {0}", track_info.TrackId));
++                    } catch {
++                        previous_sync = 0;
++                    }
++                }
++                if(play_count <= previous_sync) {
++                    break;
++                }
++                Globals.Library.Db.Execute(String.Format(
++                    "UPDATE Tracks SET ItunesSynced = {0} WHERE TrackID = {1}", play_count, track_info.TrackId));
++                play_count -= previous_sync;
++                track_info.PlayCount += play_count;
++                data.stats_count++;
++                stats_updated = true;
++                break;
++            }
++
++            // Last played
++            if(data.get_stats && last_played != new DateTime () && DateTime.Compare (last_played, track_info.LastPlayed) > 0) {
++                track_info.LastPlayed = last_played;
++                if(!stats_updated) {
++                    data.stats_count++;
++                }
++            }
++
++            // iTunesID
++            Globals.Library.Db.Execute(String.Format(
++                "UPDATE Tracks SET ItunesID = {0} WHERE TrackID = {1}", itunes_id, track_info.TrackId));
++
++            track_info.Save();
++            data.total_count++;
++            UpdateUserEvent((int)data.total_processed, (int)data.total_songs, track_info.Artist, track_info.Title);
++        }
++
++        private void ProcessPlaylist(XmlReader xml_reader)
++        {
++            string name = string.Empty;
++            bool skip = false;
++            bool processed = false;
++            byte[] smart_info = null;
++            byte[] smart_criteria = null;
++
++            while(xml_reader.ReadToFollowing("key")) {
++                xml_reader.Read();
++                string key = xml_reader.ReadContentAsString();
++                xml_reader.Read();
++
++                switch (key) {
++                case "Name":
++                    xml_reader.Read();
++                    name = xml_reader.ReadContentAsString();
++                    if(name == "Library") {
++                        skip = true;
++                    }
++                    //if(name == "Music Videos")
++                    //skip = true;
++                    break;
++                case "Audiobooks":
++                    goto case "skip";
++                case "Music":
++                    goto case "skip";
++                case "Movies":
++                    goto case "skip";
++                case "Party Shuffle":
++                    goto case "skip";
++                case "Podcasts":
++                    goto case "skip";
++                case "Purchased Music":
++                    goto case "skip";
++                case "TV Shows":
++                    goto case "skip";
++                case "skip":
++                    if(xml_reader.Name == "true") {
++                        skip = true;
++                    }
++                    break;
++                case "Smart Info":
++                    xml_reader.Read();
++                    xml_reader.Read();
++                    smart_info = Convert.FromBase64String(xml_reader.ReadContentAsString());
++                    break;
++                case "Smart Criteria":
++                    xml_reader.Read();
++                    xml_reader.Read();
++                    smart_criteria = Convert.FromBase64String(xml_reader.ReadContentAsString());
++                    break;
++                case "Playlist Items":
++                    xml_reader.Read();
++                    if(!skip) {
++                        ProcessPlaylist(name, smart_info, smart_criteria, xml_reader.ReadSubtree());
++                        processed = true;
++                    }
++                    break;
++                }
++            }
++            xml_reader.Close();
++
++            // Empty playlist
++            if(!processed && !skip) {
++                ProcessPlaylist(name, smart_info, smart_criteria, null);
++            }
++        }
++
++        private void ProcessPlaylist(string name, byte[] smart_info, byte[] smart_criteria, XmlReader xml_reader)
++        {
++            user_event.Header = Catalog.GetString("Importing Playlist ") + name;
++
++            if(data.get_playlists && smart_info == null) {
++                ProcessRegularPlaylist(name, xml_reader);
++            } else if(data.get_smart_playlists && smart_info != null && smart_criteria != null) {
++                ProcessSmartPlaylist(name, smart_info, smart_criteria, xml_reader);
++            }
++            if(xml_reader != null) {
++                xml_reader.Close();
++            }
++        }
++
++        private void ProcessRegularPlaylist(string name, XmlReader xml_reader)
++        {
++            // Should we do this?
++            /*foreach(PlaylistSource playlist in PlaylistSource.Playlists) {
++                if(playlist.Name == name) {
++                    playlist.Unmap();
++                    Console.WriteLine("Replacing playlist " + name);
++                    break;
++                }
++            }*/
++            PlaylistSource playlist_source = new PlaylistSource();
++            playlist_source.Rename(name);
++            LibrarySource.Instance.AddChildSource(playlist_source);
++
++            // Get the songs in the playlists
++            if(xml_reader != null) {
++                while(xml_reader.ReadToFollowing("integer") && !data.canceled) {
++                    xml_reader.Read();
++                    int itunes_id = int.Parse(xml_reader.ReadContentAsString());
++                    TrackInfo track;
++                    try {
++                        int track_id = (int)Globals.Library.Db.QuerySingle(String.Format(
++                            "SELECT TrackID FROM Tracks WHERE ItunesID = {0}", itunes_id));
++                        track = Globals.Library.GetTrack(track_id);
++                    }
++                    catch {
++                        continue;
++                    }
++                    playlist_source.AddTrack(track);
++                    user_event.Message = String.Format("{0} - {1}", track.Artist, track.Title);
++                }
++            }
++            user_event.Message = string.Empty;
++            playlist_source.Commit();
++            data.playlists_count++;
++        }
++
++        private void ProcessSmartPlaylist(string name, byte[] info, byte[] criteria, XmlReader xml_reader)
++        {
++            ItunesSmartPlaylist smart_playlist = new SmartPlaylistParser().Parse(info, criteria);
++            smart_playlist.Name = name;
++
++            if(!(smart_playlist.Query.Length == 0 && smart_playlist.Ignore.Length != 0) || smart_playlist.LimitNumber != 0) {
++                
++                // Is there a collection of Smart Playlists?
++                /*ChildSource[] temp_array = new ChildSource[LibrarySource.Instance.Children.Count];
++                LibrarySource.Instance.Children.CopyTo(temp_array, 0);
++                // Should we do this?
++                for(int i = 0; i < temp_array.Length; i++) {
++                    if(temp_array[i].Name == name && temp_array[i].GenericName == "Smart Playlist") {
++                        temp_array[i].Unmap();
++                        Console.WriteLine("Replacing smart playlist " + name);
++                        break;
++                    }
++                }*/
++
++                SmartPlaylistSource smart_playlist_source = new SmartPlaylistSource(
++                    name,
++                    (smart_playlist.Query.Length == 0) ? null : " " + smart_playlist.Query,
++                    smart_playlist.OrderBy,
++                    smart_playlist.LimitNumber.ToString(),
++                    smart_playlist.LimitMethod
++                );
++
++                if(!SourceManager.ContainsSource(smart_playlist_source) &&
++                    SourceManager.ContainsSource(LibrarySource.Instance)) {
++                    LibrarySource.Instance.AddChildSource(smart_playlist_source);
++                }
++            }
++
++            if (smart_playlist.Ignore.Length != 0) {
++                if (smart_playlist.Query.Length != 0) {
++                    data.partial_smart_playlists.Add(smart_playlist);
++                } else {
++                    data.failed_smart_playlists.Add(smart_playlist);
++                }
++                ProcessRegularPlaylist(name, xml_reader);
++            } else {
++                data.smart_playlists_count++;
++            }
++        }
++
++        private string ConvertToLocalUri(string uri)
++        {
++            if(uri == null) {
++                return null;
++            }
++
++            string local_uri = null;
++            uri = ConvertToLocalUriFormat(uri);
++            if(!data.local_library) {
++                int index = uri.IndexOf(data.default_query);
++                if(index == -1 && data.query_dirs.Length > 0) {
++                    int count = 0;
++                    string path = data.query_dirs[data.query_dirs.Length - 1];
++                    do {
++                        for(int k = data.query_dirs.Length - 2; k >= count; k--) {
++                            path = Path.Combine(path, data.query_dirs[k]);
++                        }
++                        index = uri.IndexOf(path);
++                        count++;
++                    } while(index == -1 && count < data.query_dirs.Length);
++                    if(index == -1) {
++                        index = uri.IndexOf(data.fallback_dir);
++                        if(index != -1) {
++                            index += data.fallback_dir.Length + 1;
++                        }
++                    }
++                }
++                if(index == -1) {
++                    Banshee.Sources.ImportErrorsSource.Instance.AddError(uri,
++                        "Unable to map iTunes URI to local URI", null);
++                    return null;
++                }
++                local_uri = uri.Substring(index, uri.Length - index);
++                local_uri = Path.Combine(data.local_prefix, local_uri);
++            } else {
++                local_uri = uri.Substring(17); // 17 is the length of "file://localhost/"
++            }
++            return local_uri;
++        }
++
++        // URIs are UTF-8 percent-encoded. Deconding with System.Web.HttpServerUtility
++        // involves too much overhead, so we do it cheap here.
++        private static string ConvertToLocalUriFormat(string input)
++        {
++            StringBuilder builder = new StringBuilder(input.Length);
++            byte [] buffer = new byte [2];
++            bool using_buffer = false;
++            for(int i = 0; i < input.Length; i++) {
++                // If it's a '%', treat the two subsiquent characters as a UTF-8 byte in hex.
++                if(input[i] == '%') {
++                    byte code = byte.Parse(input.Substring(i + 1, 2),
++                        System.Globalization.NumberStyles.HexNumber);
++                    // If it's a non-ascii character, or there are already some non-ascii
++                    // characters in the buffer, then queue it for UTF-8 decoding.
++                    if(using_buffer || (code & 0x80) != 0) {
++                        if(using_buffer) {
++                            if(buffer[1] == 0) {
++                                buffer[1] = code;
++                            } else {
++                                byte [] new_buffer = new byte [buffer.Length + 1];
++                                for (int j = 0; j < buffer.Length; j++) {
++                                    new_buffer[j] = buffer[j];
++                                }
++                                buffer = new_buffer;
++                                buffer[buffer.Length - 1] = code;
++                            }
++                        } else {
++                            buffer[0] = code;
++                            using_buffer = true;
++                        }
++                    }
++                    // If it's a lone ascii character, there's no need for fancy UTF-8 decoding.
++                    else {
++                        builder.Append((char)code);
++                    }
++                    i += 2;
++                } else {
++                    // If we have something in the buffer, decode it.
++                    if(using_buffer) {
++                        builder.Append(Encoding.UTF8.GetString(buffer));
++                        if(buffer.Length > 2) {
++                            buffer = new byte [2];
++                        } else {
++                            buffer[1] = 0;
++                        }
++                        using_buffer = false;
++                    }
++                    // And add our regular characters and convert to local directory separator char.
++                    if(input[i] == '/') {
++                        builder.Append(Path.DirectorySeparatorChar);
++                    } else {
++                        builder.Append(input[i]);
++                    }
++                }
++            }
++            return builder.ToString();
++        }
++    }
++}
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs	(revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImportDialog.cs	(revision 0)
+@@ -0,0 +1,154 @@
++/*
++ *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining a
++ *  copy of this software and associated documentation files (the "Software"),  
++ *  to deal in the Software without restriction, including without limitation  
++ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
++ *  and/or sell copies of the Software, and to permit persons to whom the  
++ *  Software is furnished to do so, subject to the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be included in 
++ *  all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
++ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
++ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
++ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
++ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
++ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
++ *  DEALINGS IN THE SOFTWARE.
++ */
++
++using System;
++using System.IO;
++using Gtk;
++using Mono.Unix;
++
++namespace Banshee.PlayerMigration
++{
++    public class ItunesImportDialog : Dialog
++    {
++        private const string library_filename = "iTunes Music Library.xml";
++        private string library_uri;
++        private bool local_library;
++        private readonly Button import_button;
++        private readonly CheckButton ratings;
++        private readonly CheckButton stats;
++        private readonly CheckButton playlists;
++        private readonly CheckButton smart_playlists;
++        
++        public bool Ratings {
++            get { return ratings.Active; }
++        }
++        public bool Stats {
++            get { return stats.Active; }
++        }
++        public bool Playliststs {
++            get { return playlists.Active; }
++        }
++        public bool SmartPlaylists {
++            get { return smart_playlists.Active; }
++        }
++        public string LibraryUri {
++            get { return library_uri; }
++        }
++        public bool LocalLibrary {
++            get { return local_library; }
++        }
++        
++        public ItunesImportDialog() : base ()
++        {
++            Title = Catalog.GetString("iTunes Importer");
++            Resizable = false;
++
++            Button cancel_button = new Button(Stock.Cancel);
++            cancel_button.Clicked += delegate { Respond(ResponseType.Cancel); };
++            cancel_button.ShowAll();
++            AddActionWidget(cancel_button, ResponseType.Cancel);
++            cancel_button.CanDefault = true;
++            cancel_button.GrabFocus();
++
++            import_button = new Button();
++            import_button.Label = Catalog.GetString("_Import");
++            import_button.UseUnderline = true;
++            import_button.Image = Image.NewFromIconName(Stock.Open, IconSize.Button);
++            import_button.Clicked += delegate { Respond(ResponseType.Ok); };
++            import_button.ShowAll();
++            AddActionWidget(import_button, ResponseType.Ok);
++            
++            VBox vbox1 = new VBox();
++            vbox1.BorderWidth = 8;
++            vbox1.Spacing = 8;
++            
++            VBox vbox2 = new VBox();
++            ratings = new CheckButton(Catalog.GetString("Import song ratings"));
++            ratings.Active = true;
++            vbox2.PackStart(ratings);
++            stats = new CheckButton(Catalog.GetString("Import play statistics (playcount, etc.)"));
++            stats.Active = true;
++            vbox2.PackStart(stats);
++            playlists = new CheckButton(Catalog.GetString("Import playlists"));
++            playlists.Active = true;
++            vbox2.PackStart(playlists);
++            smart_playlists = new CheckButton(Catalog.GetString("Import smart playlists"));
++            smart_playlists.Active = true;
++            vbox2.PackStart(smart_playlists);
++
++            string possible_location = System.IO.Path.Combine(System.IO.Path.Combine(
++                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "iTunes"),
++                library_filename);
++
++            if (File.Exists(possible_location)) {
++                local_library = true;
++                library_uri = possible_location;
++            }
++            else {
++                HBox hbox = new HBox();
++                hbox.Spacing = 8;
++                Image image = new Gtk.Image();
++                image.Pixbuf = Gtk.IconTheme.Default.LoadIcon("gtk-open", 18, 0);
++                hbox.PackStart(image);
++                Label label1 = new Label();
++                label1.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(
++                    Catalog.GetString("Locate your \"" + library_filename + "\" file...")));
++                label1.SetAlignment(0.0f, 0.5f);
++                hbox.PackStart(label1);
++                Button browse_button = new Button(hbox);
++                browse_button.Clicked += OnBrowseButtonClicked;
++                vbox1.PackStart(browse_button);
++
++                ratings.Sensitive = stats.Sensitive = playlists.Sensitive =
++                    smart_playlists.Sensitive = import_button.Sensitive = false;
++            }
++            
++            vbox1.PackStart(vbox2);
++            VBox.PackStart(vbox1);
++
++            DefaultResponse = ResponseType.Cancel;
++            
++            VBox.ShowAll();
++        }
++        
++        private void OnBrowseButtonClicked(object o, EventArgs args)
++        {
++            Button browse_button = o as Button;
++            FileChooserDialog file_chooser = new FileChooserDialog(
++                Catalog.GetString("Locate \"" + library_filename + "\""),
++                this, FileChooserAction.Open,
++                Stock.Cancel, ResponseType.Cancel,
++                Stock.Open, ResponseType.Ok);
++            FileFilter filter = new FileFilter();
++            filter.AddPattern("*" + library_filename);
++            filter.Name = library_filename;
++            file_chooser.AddFilter(filter);
++            if(file_chooser.Run() == (int)ResponseType.Ok) {
++                browse_button.Sensitive = false;
++                ratings.Sensitive = stats.Sensitive = playlists.Sensitive =
++                    smart_playlists.Sensitive = import_button.Sensitive = true;
++                library_uri = file_chooser.Filename;
++            }
++            file_chooser.Destroy();
++        }
++    }
++}
+\ No newline at end of file
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs	(revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesSmartPlaylistParser.cs	(revision 0)
+@@ -0,0 +1,639 @@
++/*
++ *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining a
++ *  copy of this software and associated documentation files (the "Software"),  
++ *  to deal in the Software without restriction, including without limitation  
++ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
++ *  and/or sell copies of the Software, and to permit persons to whom the  
++ *  Software is furnished to do so, subject to the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be included in 
++ *  all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
++ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
++ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
++ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
++ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
++ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
++ *  DEALINGS IN THE SOFTWARE.
++ */ 
++
++using System;
++using System.Collections.Generic;
++using System.Text;
++
++namespace Banshee.PlayerMigration
++{
++    internal struct ItunesSmartPlaylist
++    {
++        public string Query, Ignore, OrderBy, Name, Output;
++        public uint LimitNumber;
++        public byte LimitMethod;
++    }
++
++    internal class SmartPlaylistParser
++    {
++        private struct Kind
++        {
++            public string Name, Extension;
++            public Kind(string name, string extension)
++            {
++                Name = name;
++                Extension = extension;
++            }
++        }
++        
++        //The methods by which the number of songs in a playlist are limited
++        private enum LimitMethods
++        {
++            Minutes = 0x01,
++            MB = 0x02,
++            Items = 0x03,
++            Hours = 0x04,
++            GB = 0x05,
++        }
++        
++        // The methods by which songs are selected for inclusion in a limited playlist
++        private enum SelectionMethods
++        {
++            Random = 0x02,
++            Title = 0x05,
++            AlbumTitle = 0x06,
++            Artist = 0x07,
++            Genre = 0x09,
++            HighestRating = 0x1c,
++            LowestRating = 0x01,
++            RecentlyPlayed = 0x1a,
++            OftenPlayed = 0x19,
++            RecentlyAdded = 0x15
++        }
++        
++        // The matching criteria which take string data
++        private enum StringFields
++        {
++            AlbumTitle = 0x03,
++            AlbumArtist = 0x47,
++            Artist = 0x04,
++            Category = 0x37,
++            Comments = 0x0e,
++            Composer = 0x12,
++            Description = 0x36,
++            Genre = 0x08,
++            Grouping = 0x27,
++            Kind = 0x09,
++            Title = 0x02,
++            Show = 0x3e
++        }
++        
++        // The matching criteria which take integer data
++        private enum IntFields
++        {
++            BPM = 0x23,
++            BitRate = 0x05,
++            Compilation = 0x1f,
++            DiskNumber = 0x18,
++            NumberOfPlays = 0x16,
++            Rating = 0x19,
++            Playlist = 0x28,    // FIXME Move this?
++            Podcast = 0x39,
++            SampleRate = 0x06,
++            Season = 0x3f,
++            Size = 0x0c,
++            SkipCount = 0x44,
++            Duration = 0x0d,
++            TrackNumber = 0x0b,
++            VideoKind = 0x3c,
++            Year = 0x07
++        }
++        
++        // The matching criteria which take date data
++        private enum DateFields
++        {
++            DateAdded = 0x10,
++            DateModified = 0x0a,
++            LastPlayed = 0x17,
++            LastSkipped = 0x45
++        }
++        
++        // The string matching criteria which we do no handle
++        private enum IgnoreStringFields
++        {
++            AlbumArtist = 0x47,
++            Category = 0x37,
++            Comments = 0x0e,
++            Composer = 0x12,
++            Description = 0x36,
++            Grouping = 0x27,
++            Show = 0x3e
++        }
++        
++        // The integer matching criteria which we do no handle
++        private enum IgnoreIntFields
++        {
++            BPM = 0x23,
++            BitRate = 0x05,
++            Compilation = 0x1f,
++            DiskNumber = 0x18,
++            Playlist = 0x28,
++            Podcast = 0x39,
++            SampleRate = 0x06,
++            Season = 0x3f,
++            Size = 0x0c,
++            SkipCount = 0x44,
++            TrackNumber = 0x0b,
++            VideoKind = 0x3c
++        }
++        
++        // The date matching criteria which we do no handle
++        private enum IgnoreDateFields
++        {
++            DateModified = 0x0a,
++            LastSkipped = 0x45
++        }
++        
++        // The signs which apply to different kinds of logic (is vs. is not, contains vs. doesn't contain, etc.)
++        private enum LogicSign
++        {
++            IntPositive = 0x00,
++            StringPositive = 0x01,
++            IntNegative = 0x02,
++            StringNegative = 0x03
++        }
++        
++        // The logical rules
++        private enum LogicRule
++        {
++            Other = 0x00,
++            Is = 0x01,
++            Contains = 0x02,
++            Starts = 0x04,
++            Ends = 0x08,
++            Greater = 0x10,
++            Less = 0x40
++        }
++        
++        private static Kind[] Kinds = {
++            new Kind("Protected AAC audio file", ".m4p"),
++            new Kind("MPEG audio file", ".mp3"),
++            new Kind("AIFF audio file", ".aiff"),
++            new Kind("WAV audio file", ".wav"),
++            new Kind("QuickTime movie file", ".mov"),
++            new Kind("MPEG-4 video file", ".mp4"),
++            new Kind("AAC audio file", ".m4a")
++        };
++        
++        private delegate bool KindEvalDel(Kind kind, string query);
++        
++        // INFO OFFSETS
++        //
++        // Offsets for bytes which...
++        const int MATCHBOOLOFFSET = 1;           // determin whether logical matching is to be performed - Absolute offset
++        const int LIMITBOOLOFFSET = 2;           // determin whether results are limited - Absolute offset
++        const int LIMITMETHODOFFSET = 3;         // determin by what criteria the results are limited - Absolute offset
++        const int SELECTIONMETHODOFFSET = 7;     // determin by what criteria limited playlists are populated - Absolute offset
++        const int LIMITINTOFFSET = 11;           // determin the limited - Absolute offset
++        const int SELECTIONMETHODSIGNOFFSET = 13;// determin whether certain selection methods are "most" or "least" - Absolute offset 
++
++        // CRITERIA OFFSETS
++        //
++        // Offsets for bytes which...
++        const int LOGICTYPEOFFSET = 15;   // determin whether all or any criteria must match - Absolute offset
++        const int FIELDOFFSET = 139;      // determin what is being matched (Artist, Album, &c) - Absolute offset
++        const int LOGICSIGNOFFSET = 1;    // determin whether the matching rule is positive or negative (e.g., is vs. is not) - Relative offset from FIELDOFFSET
++        const int LOGICRULEOFFSET = 4;    // determin the kind of logic used (is, contains, begins, &c) - Relative offset from FIELDOFFSET
++        const int STRINGOFFSET = 54;      // begin string data - Relative offset from FIELDOFFSET
++        const int INTAOFFSET = 60;        // begin the first int - Relative offset from FIELDOFFSET
++        const int INTBOFFSET = 24;        // begin the second int - Relative offset from INTAOFFSET
++        const int TIMEMULTIPLEOFFSET = 76;// begin the int with the multiple of time - Relative offset from FIELDOFFSET
++        const int TIMEVALUEOFFSET = 68;   // begin the inverse int with the value of time - Relative offset from FIELDOFFSET
++
++        const int INTLENGTH = 64;         // The length on a int criteria starting at the first int
++        static DateTime STARTOFTIME = new DateTime(1904, 1, 1); // Dates are recorded as seconds since Jan 1, 1904
++
++        bool or, again;
++        string conjunction_output, conjunction_query, output, query, ignore;
++        int offset, logic_sign_offset, logic_rules_offset, string_offset, int_a_offset, int_b_offset,
++            time_multiple_offset, time_value_offset;
++        byte[] info, criteria;
++
++        KindEvalDel KindEval;
++
++        public ItunesSmartPlaylist Parse(byte[] i, byte[] c)
++        {
++            info = i;
++            criteria = c;
++            ItunesSmartPlaylist result = new ItunesSmartPlaylist();
++            offset = FIELDOFFSET;
++            output = query = ignore = string.Empty;
++
++            if(info[MATCHBOOLOFFSET] == 1) {
++                or = (criteria[LOGICTYPEOFFSET] == 1) ? true : false;
++                if(or) {
++                    conjunction_query = " OR ";
++                    conjunction_output = " or\n";
++                } else {
++                    conjunction_query = " AND ";
++                    conjunction_output = " and\n";
++                }
++                do {
++                    again = false;
++                    logic_sign_offset = offset + LOGICSIGNOFFSET;
++                    logic_rules_offset = offset + LOGICRULEOFFSET;
++                    string_offset = offset + STRINGOFFSET;
++                    int_a_offset = offset + INTAOFFSET;
++                    int_b_offset = int_a_offset + INTBOFFSET;
++                    time_multiple_offset = offset + TIMEMULTIPLEOFFSET;
++                    time_value_offset = offset + TIMEVALUEOFFSET;
++                    
++                    if(Enum.IsDefined(typeof(StringFields), (int)criteria[offset])) {
++                        ProcessStringField();
++                    } else if(Enum.IsDefined(typeof(IntFields), (int)criteria[offset])) {
++                        ProcessIntField();
++                    } else if(Enum.IsDefined(typeof(DateFields), (int)criteria[offset])) {
++                        ProcessDateField();
++                    } else {
++                        ignore += "Not processed";
++                    }
++                }
++                while(again);
++            }
++            result.Output = output;
++            result.Query = query;
++            result.Ignore = ignore;
++            if(info[LIMITBOOLOFFSET] == 1) {
++                uint limit = BytesToUInt(info, LIMITINTOFFSET);
++                result.LimitNumber = (info[LIMITMETHODOFFSET] == (byte)LimitMethods.GB) ? limit * 1024 : limit;
++                if(output.Length > 0) {
++                      output += "\n";
++                }
++                output += "Limited to " + limit.ToString() + " " +
++                    Enum.GetName(typeof(LimitMethods), (int)info[LIMITMETHODOFFSET]) + " selected by ";
++                switch(info[LIMITMETHODOFFSET]) {
++                case (byte)LimitMethods.Items:
++                    result.LimitMethod = 0;
++                    break;
++                case (byte)LimitMethods.Minutes:
++                    result.LimitMethod = 1;
++                    break;
++                case (byte)LimitMethods.Hours:
++                    result.LimitMethod = 2;
++                    break;
++                case (byte)LimitMethods.MB:
++                case (byte)LimitMethods.GB:
++                    result.LimitMethod = 3;
++                    break;
++                }
++                switch(info[SELECTIONMETHODOFFSET]) {
++                case (byte)SelectionMethods.Random:
++                    output += "random";
++                    result.OrderBy = "RANDOM()";
++                    break;
++                case (byte)SelectionMethods.HighestRating:
++                    output += "highest rated";
++                    result.OrderBy = "Rating DESC";
++                    break;
++                case (byte)SelectionMethods.LowestRating:
++                    output += "lowest rated";
++                    result.OrderBy = "Rating ASC";
++                    break;
++                case (byte)SelectionMethods.RecentlyPlayed:
++                    output += (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "most recently played" : "least recently played";
++                    result.OrderBy = (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "LastPlayedStamp DESC" : "LastPlayedStamp ASC";
++                    break;
++                case (byte)SelectionMethods.OftenPlayed:
++                    output += (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "most often played" : "least often played";
++                    result.OrderBy = (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "NumberOfPlays DESC" : "NumberOfPlays ASC";
++                    break;
++                case (byte)SelectionMethods.RecentlyAdded:
++                    output += (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "most recently added" : "least recently added";
++                    result.OrderBy = (info[SELECTIONMETHODSIGNOFFSET] == 0)
++                        ? "DateAddedStamp DESC" : "DateAddedStamp ASC";
++                    break;
++                default:
++                    result.OrderBy = Enum.GetName(typeof(SelectionMethods), (int)info[SELECTIONMETHODOFFSET]);
++                    break;
++                }
++            }
++            if(ignore.Length > 0) {
++                output += "\n\nIGNORING:\n" + ignore;
++            }
++            
++            if(query.Length > 0) {
++                output += "\n\nQUERY:\n" + query;
++            }
++            return result;
++        }
++
++        private void ProcessStringField()
++        {
++            bool end = false;
++               string working_output = Enum.GetName(typeof(StringFields), criteria[offset]);
++               string working_query = "(lower(" + Enum.GetName(typeof(StringFields), criteria[offset]) + ")";
++               switch(criteria[logic_rules_offset]) {
++               case (byte)LogicRule.Contains:
++                   if((criteria[logic_sign_offset] == (byte)LogicSign.StringPositive)) {
++                         working_output += " contains ";
++                         working_query += " LIKE '%";
++                     } else {
++                       working_output += " does not contain ";
++                       working_query += " NOT LIKE '%";
++                   }
++                   if(criteria[offset] == (byte)StringFields.Kind) {
++                       KindEval = delegate(Kind kind, string query) {
++                           return (kind.Name.IndexOf(query) != -1);
++                       };
++                   }
++                   end = true;
++                   break;
++               case (byte)LogicRule.Is:
++                   if((criteria[logic_sign_offset] == (byte)LogicSign.StringPositive)) {
++                       working_output += " is ";
++                       working_query += " = '";
++                   } else {
++                       working_output += " is not ";
++                       working_query += " != '";
++                   }
++                   if(criteria[offset] == (byte)StringFields.Kind) {
++                       KindEval = delegate(Kind kind, string query) {
++                           return (kind.Name == query);
++                       };
++                   }
++                   break;
++               case (byte)LogicRule.Starts:
++                   working_output += " starts with ";
++                   working_query += " LIKE '";
++                   if(criteria[offset] == (byte)StringFields.Kind) {
++                       KindEval = delegate (Kind kind, string query) {
++                           return (kind.Name.IndexOf(query) == 0);
++                       };
++                   }
++                   end = true;
++                   break;
++               case (byte)LogicRule.Ends:
++                   working_output += " ends with ";
++                   working_query += " LIKE '%";
++                   if(criteria[offset] == (byte)StringFields.Kind) {
++                       KindEval = delegate (Kind kind, string query) {
++                           return (kind.Name.IndexOf(query) == (kind.Name.Length - query.Length));
++                       };
++                   }
++                   break;
++            }
++            working_output += "\"";
++            byte[] character = new byte[1];
++            string content = String.Empty;
++            bool onByte = true;
++            for(int i = (string_offset); i < criteria.Length; i++) {
++                // Off bytes are 0
++                if(onByte) {
++                    // If the byte is 0 and it's not the last byte,
++                    // we have another condition
++                    if(criteria[i] == 0 && i != (criteria.Length - 1)) {
++                        again = true;
++                        FinishStringField(content, working_output, working_query, end);
++                        offset = i + 2;
++                        return;
++                    }
++                    character[0] = criteria[i];
++                    content += Encoding.UTF8.GetString(character);
++                }
++                onByte = !onByte;
++            }
++            FinishStringField(content, working_output, working_query, end);
++        }
++
++        private void FinishStringField(string content, string working_output, string working_query, bool end)
++        {
++               working_output += content;
++               working_output += "\" ";
++               bool failed = false;
++               if(criteria[offset] == (byte)StringFields.Kind) {
++                   working_query = string.Empty;
++                foreach(Kind kind in Kinds) {
++                    if(KindEval(kind, content)) {
++                        if(working_query.Length > 0) {
++                            if((query.Length == 0 && !again) || or) {
++                                working_query += " OR ";
++                            } else {
++                                failed = true;
++                                break;
++                            }
++                        }
++                        working_query += "(lower(Uri)";
++                        working_query += ((criteria[logic_sign_offset] == (byte)LogicSign.StringPositive))
++                            ? " LIKE '%" + kind.Extension + "')" : " NOT LIKE '%" + kind.Extension + "%')";
++                    }
++                }
++               } else {
++                   working_query += content.ToLower();
++                   working_query += (end) ? "%')" : "')";
++               }
++            if(Enum.IsDefined(typeof(IgnoreStringFields),
++                (int)criteria[offset]) || failed) {
++                if(ignore.Length > 0) {
++                    ignore += conjunction_output;
++                }
++                ignore += working_output;
++            } else {
++                if(output.Length > 0) {
++                    output += conjunction_output;
++                }
++                if(query.Length > 0) {
++                    query += conjunction_query;
++                }
++                output += working_output;
++                query += working_query;
++            }
++        }
++
++        private void ProcessIntField()
++        {
++               string working_output = Enum.GetName(typeof(IntFields), criteria[offset]);
++               string working_query = "(" + Enum.GetName(typeof(IntFields), criteria[offset]);
++               
++               switch(criteria[logic_rules_offset]) {
++               case (byte)LogicRule.Is:
++                   if(criteria[logic_sign_offset] == (byte)LogicSign.IntPositive) {
++                       working_output += " is ";
++                       working_query += " = ";
++                   } else {
++                       working_output += " is not ";
++                       working_query += " != ";
++                   }
++                   goto case 255;
++               case (byte)LogicRule.Greater:
++                   working_output += " is greater than ";
++                   working_query += " > ";
++                   goto case 255;
++               case (byte)LogicRule.Less:
++                   working_output += " is less than ";
++                   working_query += " > ";
++                   goto case 255;
++               case 255:
++                   ulong number = (criteria[offset] == (byte)IntFields.Rating)
++                       ? (BytesToUInt(criteria, int_a_offset) / 20) : BytesToUInt(criteria, int_a_offset);
++                   working_output += number.ToString();
++                   working_query += number.ToString();
++                   break;
++               case (byte)LogicRule.Other:
++                   if(criteria[logic_sign_offset + 2] == 1) {
++                       working_output += " is in the range of ";
++                       working_query += " BETWEEN ";
++                       ulong num = (criteria[offset] == (byte)IntFields.Rating)
++                           ? (BytesToUInt(criteria, int_a_offset) / 20) : BytesToUInt(criteria, int_a_offset);
++                       working_output += num.ToString();
++                       working_query += num.ToString();
++                       working_output += " to ";
++                       working_query += " AND ";
++                       num = (criteria[offset] == (byte)IntFields.Rating)
++                           ? ((BytesToUInt(criteria, int_b_offset) - 19) / 20) : BytesToUInt(criteria, int_b_offset);
++                       working_output += num.ToString();
++                       working_query += num.ToString();
++                   }
++                   break;
++            }
++               working_query += ")";
++               if(Enum.IsDefined(typeof(IgnoreIntFields),
++                   (int)criteria[offset])) {
++                   if(ignore.Length > 0) {
++                       ignore += conjunction_output;
++                   }
++                   ignore += working_output;
++               } else {
++                   if(output.Length > 0) {
++                       output += conjunction_output;
++                   }
++                   if(query.Length > 0) {
++                       query += conjunction_query;
++                   }
++                   output += working_output;
++                   query += working_query;
++               }
++               offset = int_a_offset + INTLENGTH;
++               if(criteria.Length > offset) {
++                   again = true;
++            }
++        }
++
++        private void ProcessDateField()
++        {
++            bool isIgnore = false;
++               string working_output = Enum.GetName(typeof(DateFields), criteria[offset]);
++               string working_query = "((strftime(\"%s\", current_timestamp) - DateAddedStamp + 3600)";
++               switch(criteria[logic_rules_offset]) {
++               case (byte)LogicRule.Greater:
++                   working_output += " is after ";
++                   working_query += " > ";
++                   goto case 255;
++               case (byte)LogicRule.Less:
++                   working_output += " is before ";
++                   working_query += " > ";
++                   goto case 255;
++               case 255:
++                   isIgnore = true;
++                   DateTime time = BytesToDateTime(criteria, int_a_offset);
++                   working_output += time.ToString();
++                   working_query += ((int)DateTime.Now.Subtract(time).TotalSeconds).ToString();
++                   break;
++               case (byte)LogicRule.Other:
++                   if(criteria[logic_sign_offset + 2] == 1) {
++                       isIgnore = true;
++                       DateTime t2 = BytesToDateTime(criteria, int_a_offset);
++                       DateTime t1 = BytesToDateTime(criteria, int_b_offset);
++                       if(criteria[logic_sign_offset] == (byte)LogicSign.IntPositive) {
++                           working_output += " is in the range of ";
++                           working_query += " BETWEEN " +
++                               ((int)DateTime.Now.Subtract(t1).TotalSeconds).ToString() +
++                               " AND " +
++                               ((int)DateTime.Now.Subtract(t2).TotalSeconds).ToString();
++                       } else {
++                           working_output += " is not in the range of ";
++                       }
++                       working_output += t1.ToString();
++                       working_output += " to ";
++                       working_output += t2.ToString();
++                   } else if(criteria[logic_sign_offset + 2] == 2) {
++                       if(criteria[logic_sign_offset] == (byte)LogicSign.IntPositive) {
++                           working_output += " is in the last ";
++                           working_query += " < ";
++                       } else {
++                           working_output += " is not in the last ";
++                           working_query += " > ";
++                       }
++                       ulong t = InverseBytesToUInt(criteria, time_value_offset);
++                       ulong multiple = BytesToUInt(criteria, time_multiple_offset);
++                       working_query += (t * multiple).ToString();
++                       working_output += t.ToString() + " ";
++                       switch(multiple) {
++                       case 86400:
++                           working_output += "days";
++                           break;
++                       case 604800:
++                           working_output += "weeks";
++                           break;
++                       case 2628000:
++                           working_output += "months";
++                            break;
++                       }
++                   }
++                   break;
++            }
++            working_query += ")";
++            if(isIgnore || Enum.IsDefined(typeof(IgnoreDateFields), (int)criteria[offset])) {
++                if(ignore.Length > 0) {
++                    ignore += conjunction_output;
++                }
++                ignore += working_output;
++            } else {
++                if(output.Length > 0) {
++                    output += conjunction_output;
++                }
++                output += working_output;
++                if(query.Length > 0) {
++                    query += conjunction_query;
++                }
++                query += working_query;
++            }          
++            offset = int_a_offset + INTLENGTH;
++            if(criteria.Length > offset) {
++                again = true;
++            }
++        }
++
++        /// <summary>
++        /// Converts 4 bytes to a uint
++        /// </summary>
++        /// <param name="byteArray">A byte array</param>
++        /// <param name="offset">Should be the byte of the uint with the 0th-power position</param>
++        /// <returns></returns>
++        private static uint BytesToUInt(byte[] byteArray, int offset)
++        {
++            uint output = 0;
++            for (byte i = 0; i < 4; i++) {
++                output += (uint)(byteArray[offset - i] * Math.Pow(2, (8 * i)));
++            }
++            return output;
++        }
++
++        private static uint InverseBytesToUInt(byte[] byteArray, int offset)
++        {
++            uint output = 0;
++            for (byte i = 0; i <= 4; i++) {
++                output += (uint)((255 - (uint)(byteArray[offset - i])) * Math.Pow(2, (8 * i)));
++            }
++            return ++output;
++        }
++
++        private static DateTime BytesToDateTime (byte[] byteArray, int offset)
++        {
++            return STARTOFTIME.AddSeconds(BytesToUInt(byteArray, offset));
++        }
++    }
++}
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs	(working copy)
+@@ -28,14 +28,10 @@
+ 
+ namespace Banshee.PlayerMigration
+ {
+-    public abstract class PlayerImport
++    public abstract class PlayerImport : IImportSource
+     {
+         protected ActiveUserEvent user_event;
+ 
+-        public PlayerImport ()
+-        {
+-        }
+-
+         protected void CreateUserEvent ()
+         {
+             user_event = new ActiveUserEvent (Catalog.GetString("Importing Songs"));
+@@ -60,19 +56,22 @@
+             }
+         }
+ 
+-        public void Import ()
++        public virtual void Import ()
+         {
+             ThreadAssist.Spawn (delegate {
+                 CreateUserEvent ();
+                 using (user_event) {
+-                    OnImport ();
++                    DoImport ();
+                 }
+             });
+         }
+ 
+-        protected abstract void OnImport ();
+-
+-        public abstract bool CanImport { get; }
++        protected abstract void DoImport ();
+         public abstract string Name { get; }
++
++        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "applications-other", Stock.About);
++        public virtual Gdk.Pixbuf Icon {
++            get { return icon; }
++        }
+     }
+-}
++}
+\ No newline at end of file
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs	(working copy)
+@@ -1,147 +0,0 @@
+-/*
+- *  Copyright (c) 2006 Sebastian Dröge <slomo@circular-chaos.org> 
+- *
+- *  Permission is hereby granted, free of charge, to any person obtaining a
+- *  copy of this software and associated documentation files (the "Software"),  
+- *  to deal in the Software without restriction, including without limitation  
+- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+- *  and/or sell copies of the Software, and to permit persons to whom the  
+- *  Software is furnished to do so, subject to the following conditions:
+- *
+- *  The above copyright notice and this permission notice shall be included in 
+- *  all copies or substantial portions of the Software.
+- *
+- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+- *  DEALINGS IN THE SOFTWARE.
+- */
+-
+-using System;
+-using System.Collections.Generic;
+-using Gtk;
+-using Banshee.Base;
+-using Banshee.Widgets;
+-using Mono.Unix;
+-
+-namespace Banshee.PlayerMigration
+-{
+-    public class PlayerImportDialog : Dialog
+-    {
+-        private readonly PlayerImport [] player_imports = new PlayerImport [] {
+-            new RhythmboxPlayerImport(),
+-            new AmarokPlayerImport()
+-        };
+-
+-        private ListStore list_store;
+-        private int num_selected = 0;
+-        private Button import_button;
+-        private Button cancel_button;
+-
+-        public PlayerImportDialog () : base ()
+-        {
+-            Title = String.Empty;
+-            TransientFor = (Window) InterfaceElements.MainWindow;
+-            DestroyWithParent = true;
+-            HasSeparator = false;
+-            Resizable = false;
+-            BorderWidth = 5;
+-            VBox.Spacing = 8;
+-            
+-            Label header = new Label();
+-            header.Markup = String.Format("<big><b>{0}</b></big>", GLib.Markup.EscapeText(
+-                Catalog.GetString("Migrate From Other Media Players")));
+-            header.SetAlignment(0.0f, 0.5f);
+-            
+-            Label message = new Label(Catalog.GetString("Select any supported alternate media " + 
+-                "players that you wish to migrate into Banshee."));
+-            message.Justify = Gtk.Justification.Left;
+-            message.LineWrap = true;
+-            message.SetAlignment(0.0f, 0.5f);
+-            
+-            VBox vbox = new VBox();
+-            vbox.BorderWidth = 5;
+-            vbox.Spacing = 8;
+-            
+-            vbox.PackStart(header, false, false, 0);
+-            vbox.PackStart(message, false, false, 0);
+-
+-            ScrolledWindow sw = new ScrolledWindow ();
+-            sw.ShadowType = ShadowType.In;
+-            list_store = new ListStore (typeof(bool), typeof(string), typeof(object));
+-            TreeView tv = new TreeView (list_store);
+-            tv.HeadersVisible = false;
+-
+-            CellRendererToggle crt = new CellRendererToggle ();
+-            crt.Activatable = true;
+-            crt.Toggled += CrtToggled;
+-            tv.AppendColumn (Catalog.GetString("Import"), crt, "active", 0);
+-            tv.AppendColumn (Catalog.GetString("Player"), new CellRendererText (), "text", 1);
+-
+-            foreach (PlayerImport player_import in player_imports) {
+-                if (player_import.CanImport)
+-                        list_store.AppendValues (false, player_import.Name, player_import);
+-            }
+-
+-            if (list_store.IterNChildren() == 0) {
+-                LogCore.Instance.PushInformation(
+-                        Catalog.GetString ("Unable to Locate Supported Media Player"),
+-                        Catalog.GetString ("Banshee was unable to locate any libraries from alternate supported media players from which to import."));
+-                throw new Exception ("Unable to locate any supported library");
+-            }
+-
+-            sw.Add (tv);
+-            
+-            vbox.PackStart(sw, true, true, 0);
+-            VBox.PackStart(vbox, true, true, 0);
+-            VBox.ShowAll();
+-
+-            cancel_button = new Button (Stock.Cancel);
+-            cancel_button.Clicked += delegate {
+-                Respond (ResponseType.Cancel);
+-            };
+-            cancel_button.ShowAll ();
+-            AddActionWidget (cancel_button, ResponseType.Cancel);
+-            cancel_button.CanDefault = true;
+-            cancel_button.GrabFocus ();
+-
+-            import_button = new Button ();
+-            import_button.Label = Catalog.GetString ("Migrate");
+-            import_button.Image = Image.NewFromIconName (Stock.Open, IconSize.Button);
+-            import_button.Clicked += OnImportClicked;
+-            import_button.Sensitive = false;
+-            import_button.ShowAll ();
+-            AddActionWidget (import_button, ResponseType.Ok);
+-
+-            DefaultResponse = ResponseType.Cancel;
+-            
+-            tv.HasFocus = true;
+-        }
+-
+-        private void CrtToggled (object o, ToggledArgs args) {
+-            TreeIter iter;
+-
+-            if (list_store.GetIter (out iter, new TreePath (args.Path))) {
+-                bool old = (bool) list_store.GetValue (iter, 0);
+-                list_store.SetValue (iter, 0, !old);
+-                if (old)
+-                    num_selected--;
+-                else
+-                    num_selected++;
+-            }
+-            import_button.Sensitive = (num_selected > 0) ? true : false;
+-        }
+-
+-        private void OnImportClicked (object o, EventArgs args)
+-        {
+-            foreach (object[] row in list_store) {
+-                if ((bool) row[0])
+-                    ((PlayerImport) row[2]).Import ();
+-            }
+-            Respond (ResponseType.Ok);
+-        }
+-    }
+-}
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs	(working copy)
+@@ -1,66 +0,0 @@
+-/*
+- *  Copyright (c) 2006 Sebastian Dröge <slomo@circular-chaos.org> 
+- *
+- *  Permission is hereby granted, free of charge, to any person obtaining a
+- *  copy of this software and associated documentation files (the "Software"),  
+- *  to deal in the Software without restriction, including without limitation  
+- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
+- *  and/or sell copies of the Software, and to permit persons to whom the  
+- *  Software is furnished to do so, subject to the following conditions:
+- *
+- *  The above copyright notice and this permission notice shall be included in 
+- *  all copies or substantial portions of the Software.
+- *
+- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+- *  DEALINGS IN THE SOFTWARE.
+- */
+-
+-using System;
+-using Gtk;
+-using Mono.Unix;
+-using Banshee.Base;
+-
+-namespace Banshee.PlayerMigration
+-{
+-    public class PlayerImportSource : IImportSource
+-    {
+-        private static PlayerImportSource instance = null;
+-        public static PlayerImportSource Instance {
+-            get {
+-                if(instance == null) {
+-                    instance = new PlayerImportSource();
+-                }
+-                
+-                return instance;
+-            }
+-        }
+-
+-        private PlayerImportSource() 
+-        {
+-        }
+-
+-        public void Import()
+-        {
+-            try {
+-                PlayerImportDialog dialog = new PlayerImportDialog();
+-                dialog.Run();
+-                dialog.Destroy();
+-            } catch(Exception) {
+-            }
+-        }
+-
+-        public string Name {
+-            get { return Catalog.GetString("Alternate Media Players"); }
+-        }
+-
+-        private static Gdk.Pixbuf icon = IconThemeUtils.LoadIcon(22, "applications-other", Stock.About);
+-        public Gdk.Pixbuf Icon {
+-            get { return icon; }
+-        }
+-    }
+-}
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs	(revision 0)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerMigrationCore.cs	(revision 0)
+@@ -0,0 +1,48 @@
++/*
++ *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
++ *
++ *  Permission is hereby granted, free of charge, to any person obtaining a
++ *  copy of this software and associated documentation files (the "Software"),  
++ *  to deal in the Software without restriction, including without limitation  
++ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
++ *  and/or sell copies of the Software, and to permit persons to whom the  
++ *  Software is furnished to do so, subject to the following conditions:
++ *
++ *  The above copyright notice and this permission notice shall be included in 
++ *  all copies or substantial portions of the Software.
++ *
++ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
++ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
++ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
++ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
++ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
++ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
++ *  DEALINGS IN THE SOFTWARE.
++ */
++
++using System;
++using Banshee.Base;
++
++namespace Banshee.PlayerMigration
++{
++    public class PlayerMigrationCore
++    {
++        private static bool initialized;
++        public static void Initialize()
++        {
++            if(initialized) {
++                return;
++            }
++            if(RhythmboxPlayerImport.CanImport) {
++                ImportSources.Add(RhythmboxPlayerImport.Instance);
++            }
++            if(AmarokPlayerImport.CanImport) {
++                ImportSources.Add(AmarokPlayerImport.Instance);
++            }
++            if(ItunesImport.CanImport) {
++                ImportSources.Add(ItunesImport.Instance);
++            }
++            initialized = true;
++        }
++    }
++}
+Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs	(working copy)
+@@ -32,12 +32,28 @@
+ {
+     public class RhythmboxPlayerImport : PlayerImport
+     {
++        private static RhythmboxPlayerImport instance;
++        public static PlayerImport Instance
++        {
++            get {
++                if(instance == null) {
++                    instance = new RhythmboxPlayerImport();
++                }
++                
++                return instance;
++            }
++        }
++        
++        private RhythmboxPlayerImport ()
++        {
++        }
++        
+         private static readonly string library_path = Path.Combine (Path.Combine (Path.Combine (
+                                                  Environment.GetFolderPath(Environment.SpecialFolder.Personal),
+                                                  ".gnome2"),
+                                                  "rhythmbox"),
+                                                  "rhythmdb.xml");
+-        public override bool CanImport
++        public static bool CanImport
+         {
+             get { return File.Exists (library_path); }
+         }
+@@ -46,15 +62,15 @@
+             get { return Catalog.GetString ("Rhythmbox Music Player"); }
+         }
+ 
+-        protected override void OnImport () {
++        protected override void DoImport ()
++        {
+             StreamReader stream_reader = new StreamReader (library_path);
+             XmlDocument xml_doc = new XmlDocument ();
+             xml_doc.Load (stream_reader);
+             XmlElement root = xml_doc.DocumentElement;
+ 
+             if (root == null || !root.HasChildNodes || root.Name != "rhythmdb") {
+-                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path,
+-                    Catalog.GetString("Invalid Rhythmbox database file"), null);
++                Banshee.Sources.ImportErrorsSource.Instance.AddError(library_path, "Invalid Rhythmbox database file", null);
+                 return;
+             }
+             
+@@ -143,4 +159,4 @@
+             stream_reader.Close ();
+         }
+     }
+-}
++}
+\ No newline at end of file
+Index: banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs
+===================================================================
+--- banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs	(revision 2588)
++++ banshee/src/Core/Banshee.Base/Gui/ImportDialog.cs	(working copy)
+@@ -87,35 +87,34 @@
+             ImportSources.Add(FolderImportSource.Instance);
+             ImportSources.Add(FileImportSource.Instance);
+             ImportSources.Add(HomeDirectoryImportSource.Instance);
+-            ImportSources.Add(Banshee.PlayerMigration.PlayerImportSource.Instance);
++            Banshee.PlayerMigration.PlayerMigrationCore.Initialize();
+             
+             TreeIter active_iter = TreeIter.Zero;
+-            TreeIter migration_iter = TreeIter.Zero;
+-            
++
+             // Add the standalone sources (ImportSources is used in case plugins register a IImportSource)
+-            foreach(IImportSource source in ImportSources.Sources) {
++            foreach (IImportSource source in ImportSources.Sources)
++            {
+                 TreeIter iter = AddSource(source);
+-                if(Globals.Library.Tracks.Count == 0 && 
+-                    source == Banshee.PlayerMigration.PlayerImportSource.Instance) {
+-                    active_iter = iter;
+-                    migration_iter = iter;
+-                }
+             }
+-            
++
+             // Find active sources that implement IImportSource
+-            foreach(Source source in SourceManager.Sources) {
+-                if(source is IImportSource) {
++            foreach (Source source in SourceManager.Sources)
++            {
++                if (source is IImportSource)
++                {
+                     TreeIter new_iter = AddSource((IImportSource)source);
+-                    if((active_iter.Equals(TreeIter.Zero) || active_iter.Equals(migration_iter)) && source is AudioCdSource) {
++                    if ((active_iter.Equals(TreeIter.Zero)) && source is AudioCdSource)
++                    {
+                         active_iter = new_iter;
+                     }
+                 }
+             }
+-            
+-            if(!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals(TreeIter.Zero) && 
+-                source_model.GetIterFirst(out active_iter))) {
++
++            if (!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals(TreeIter.Zero) &&
++                source_model.GetIterFirst(out active_iter)))
++            {
+                 source_combo_box.SetActiveIter(active_iter);
+-            } 
++            }  
+             
+             (Glade["ComboVBox"] as Box).PackStart(source_combo_box, false, false, 0);
+             source_combo_box.ShowAll();
+@@ -194,4 +193,4 @@
+             }
+         }
+     }
+-}
++}
+\ No newline at end of file
