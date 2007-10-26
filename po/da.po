@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-07 01:45+0200\n"
-"PO-Revision-Date: 2007-10-07 01:44+0100\n"
+"POT-Creation-Date: 2007-10-27 00:10+0200\n"
+"PO-Revision-Date: 2007-10-27 00:10+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -711,8 +711,8 @@ msgid "_Jump to playing song"
 msgstr "_Spring til nuværende sang"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:131
-msgid "Plu_gins..."
-msgstr "Udvidelses_moduler..."
+msgid "Plu_gins"
+msgstr "Udvidelses_moduler"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:132
 msgid "Configure Banshee plugins"
@@ -4279,16 +4279,16 @@ msgid_plural "{0} Podcasts"
 msgstr[0] "{0} podcast"
 msgstr[1] "{0} podcasts"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:196
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:198
+#, csharp-format
+msgid "{0} - {1} New Episode"
+msgid_plural "{0} - {1} New Episodes"
+msgstr[0] "{0} - {1} Nyt afsnit"
+msgstr[1] "{0} - {1} Nye afsnit"
+
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
 msgid "Episode"
-msgid_plural "Episodes"
-msgstr[0] "Afsnit"
-msgstr[1] "Afsnit"
-
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:201
-msgid "New"
-msgstr "Ny"
+msgstr "Afsnit"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:107
 msgid "Date"
@@ -4643,6 +4643,9 @@ msgid ""
 msgstr ""
 "Version af mellemlagerlayoutet på disken, placeret i ~/.config/banshee/"
 "plugins/recommendation"
+
+#~ msgid "New"
+#~ msgstr "Ny"
 
 #~ msgid "Could not initialize cdparanoia"
 #~ msgstr "Kunne ikke initialisere cdparanoia"
