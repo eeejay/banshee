@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-10 11:53+0200\n"
-"PO-Revision-Date: 2007-10-10 12:12+0100\n"
+"POT-Creation-Date: 2007-10-29 11:21+0100\n"
+"PO-Revision-Date: 2007-10-29 12:12+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: tradgnome@softcatala.net\n"
 "MIME-Version: 1.0\n"
@@ -137,7 +137,6 @@ msgid ""
 msgstr ""
 "WAV+PCM és un format sense pèrdua no comprimit que conté àudio modulat (PCM)."
 
-
 #: ../data/audio-profiles/wav.xml.in.h:2
 msgid "Waveform PCM"
 msgstr "Waveform PCM"
@@ -159,8 +158,8 @@ msgstr "Per defecte"
 msgid "Extra processing"
 msgstr "Processament extra"
 
-#: ../data/audio-profiles/wavpack.xml.in.h:6
 #
+#: ../data/audio-profiles/wavpack.xml.in.h:6
 msgid "Highest"
 msgstr "Màxima"
 
@@ -531,8 +530,8 @@ msgstr "_Cerca:"
 msgid "Could not create pipeline"
 msgstr "No s'ha pogut crear el conducte"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:228
 #
+#: ../libbanshee/gst-cd-rip-0.10.c:228
 msgid "Could not initialize element from cdda URI"
 msgstr "No s'ha pogut inicialitzar l'element des de l'URI cccda"
 
@@ -552,8 +551,8 @@ msgstr "No s'ha pogut crear el connector de cua"
 msgid "Could not create GNOME VFS output plugin"
 msgstr "No s'ha pogut crear el connector de sortida GNOME VFS"
 
-#: ../libbanshee/gst-cd-rip-0.10.c:284
 #
+#: ../libbanshee/gst-cd-rip-0.10.c:284
 msgid "Could not link cddasrcsrc to mbtrm"
 msgstr "No s'ha pogut enllaçar el cddasrcsrc al mbtrm"
 
@@ -740,8 +739,9 @@ msgstr "S_alta a la cançó que s'està reproduint"
 #
 #
 #: ../src/Core/Banshee.Base/ActionManager.cs:131
-msgid "Plu_gins..."
-msgstr "C_onnectors..."
+#
+msgid "Plu_gins"
+msgstr "C_onnectors"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:132
 msgid "Configure Banshee plugins"
@@ -1419,8 +1419,8 @@ msgstr "No s'ha pogut executar el nautilus-cd-burner"
 msgid "Scanning"
 msgstr "S'està escanejant"
 
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
 #
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
 msgid "Amarok"
 msgstr "Amarok"
 
@@ -1456,8 +1456,8 @@ msgid ""
 "Select any supported alternate media players that you wish to migrate into "
 "Banshee."
 msgstr ""
-"Seleccioneu qualsevol dels reproductors multimèdia alternatius compatibles que vulgueu "
-"migrar a Banshee."
+"Seleccioneu qualsevol dels reproductors multimèdia alternatius compatibles "
+"que vulgueu migrar a Banshee."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
 #: ../src/Core/Banshee.Base/SourceManager.cs:269
@@ -1465,8 +1465,8 @@ msgstr ""
 msgid "Import"
 msgstr "Importa"
 
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
 #
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
 msgid "Player"
 msgstr "Reproductor"
 
@@ -1479,12 +1479,12 @@ msgid ""
 "Banshee was unable to locate any libraries from alternate supported media "
 "players from which to import."
 msgstr ""
-"Banshee no ha pogut trobat cap biblioteca de reproductors multimèdia alternatius compatible "
-"des de la que importar."
+"Banshee no ha pogut trobat cap biblioteca de reproductors multimèdia "
+"alternatius compatible des de la que importar."
 
 #
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
 #
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
 msgid "Migrate"
 msgstr "Migra"
 
@@ -1492,8 +1492,8 @@ msgstr "Migra"
 msgid "Alternate Media Players"
 msgstr "Reproductors multimèdia alternatius"
 
-#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 #
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
 msgid "Rhythmbox Music Player"
 msgstr "Reproductor de música Rhythmbox"
 
@@ -1501,8 +1501,8 @@ msgstr "Reproductor de música Rhythmbox"
 msgid "Invalid Rhythmbox database file"
 msgstr "Fitxer de bases de dades del Rhythmbox no és vàlid"
 
-#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
 #
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
 msgid "Windows Media ASX (*.asx)"
 msgstr "Windows Media Audio (*.asx)"
 
@@ -1539,7 +1539,7 @@ msgstr "S'està verificant {0} de {1}"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:209
 msgid "Verifying "
-msgstr "S'està vertificant "
+msgstr "S'està verificant "
 
 #
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:283
@@ -1821,8 +1821,8 @@ msgstr "Durada"
 msgid "Play Count"
 msgstr "Nombre de reproduccions"
 
-#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
 #
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
 msgid "Track Number"
 msgstr "Número de pista"
 
@@ -3179,24 +3179,24 @@ msgstr ""
 "El Banshee no ha pogut trobat cap pista vàlida per a importar. Comproveu la "
 "llista de reproducció i torneu-ho a provar."
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2106
 #
+#: ../src/Core/Banshee/PlayerInterface.cs:2106
 msgid "Could not export playlist"
-msgstr "No s'ha pogut expotar la llista de reproducció"
+msgstr "No s'ha pogut exportar la llista de reproducció"
 
+#
 #: ../src/Core/Banshee/PlayerInterface.cs:2125
 #: ../src/Core/Banshee/PlayerInterface.cs:2131
-#
 msgid "Error opening stream"
 msgstr "S'ha produït un error en obrir el flux de dades"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2125
 #
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
 msgid "Could not open stream or playlist"
 msgstr "No s'ha pogut obrir el flux de dades o la llista de reproducció"
 
-#: ../src/Core/Banshee/PlayerInterface.cs:2131
 #
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
 msgid "Problem parsing playlist"
 msgstr "S'ha produït un error en analitzar la llista de reproducció"
 
@@ -4475,17 +4475,17 @@ msgid_plural "{0} Podcasts"
 msgstr[0] "{0} podcast"
 msgstr[1] "{0} podcasts"
 
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:196
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
-msgid "Episode"
-msgid_plural "Episodes"
-msgstr[0] "Episodi"
-msgstr[1] "Episodis"
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:198
+#, csharp-format
+msgid "{0} - {1} New Episode"
+msgid_plural "{0} - {1} New Episodes"
+msgstr[0] "{0} - {1} episodi nou"
+msgstr[1] "{0} - {1} episodis nous"
 
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
 #
-#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:201
-msgid "New"
-msgstr "Nou"
+msgid "Episode"
+msgstr "Episodi"
 
 #
 #
@@ -4809,14 +4809,14 @@ msgid "Time of the last radio update check"
 msgstr "Hora de la l'última comprovació de ràdio"
 
 #
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
 #
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
 msgid "URI for remote stations update"
 msgstr "URI per a l'actualització d'emissores remotes"
 
 #
-#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
 #
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
 msgid "URI to update remote stations from"
 msgstr "URI des de la que actualitzar d'emissores remotes"
 
@@ -4888,6 +4888,10 @@ msgid ""
 "Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
 "recommendation"
 msgstr ""
+
+#
+#~ msgid "New"
+#~ msgstr "Nou"
 
 #~ msgid "Could not initialize cdparanoia"
 #~ msgstr "No s'ha pogut inicialitzar el cdparanoia"
