@@ -184,7 +184,7 @@ namespace Banshee
             Globals.UIManager.SourceViewContainer = gxml["SourceViewContainer"] as Box;
             Globals.UIManager.Initialize();
             
-            if(!Globals.ArgumentQueue.Contains("hide")) {
+            if(!ApplicationContext.ArgumentQueue.Contains("hide")) {
                 WindowPlayer.Show();
             }
         }
@@ -570,16 +570,16 @@ namespace Banshee
         {
             if(LocalQueueSource.Instance.Count > 0) {
                 SourceManager.SetActiveSource(LocalQueueSource.Instance);
-            } else if(Globals.ArgumentQueue.Contains("audio-cd")) {
-                Globals.DBusPlayer.SelectAudioCd(Globals.ArgumentQueue.Dequeue("audio-cd"));
-            } else if(Globals.ArgumentQueue.Contains("dap")) {
-                Globals.DBusPlayer.SelectDap(Globals.ArgumentQueue.Dequeue("dap"));
+            } else if(ApplicationContext.ArgumentQueue.Contains("audio-cd")) {
+                Globals.DBusPlayer.SelectAudioCd(ApplicationContext.ArgumentQueue.Dequeue("audio-cd"));
+            } else if(ApplicationContext.ArgumentQueue.Contains("dap")) {
+                Globals.DBusPlayer.SelectDap(ApplicationContext.ArgumentQueue.Dequeue("dap"));
             } else {
                 SourceManager.SetActiveSource(LibrarySource.Instance);
             }
 
-            if(Globals.ArgumentQueue.Contains("play") || 
-                (Globals.ArgumentQueue.Contains("play-enqueued") && LocalQueueSource.Instance.Count > 0)) {
+            if(ApplicationContext.ArgumentQueue.Contains("play") || 
+                (ApplicationContext.ArgumentQueue.Contains("play-enqueued") && LocalQueueSource.Instance.Count > 0)) {
                 GLib.Timeout.Add(1500, delegate {
                     PlayPause();
                     return false;

@@ -164,7 +164,7 @@ namespace Banshee.Plugins.Recommendation
             no_artists_pane = new MessagePane();
             string no_results_message;
             
-            if(!Globals.ArgumentQueue.Contains("debug")) {
+            if(!ApplicationContext.ArgumentQueue.Contains("debug")) {
                 no_artists_pane.HeaderIcon = IconThemeUtils.LoadIcon(48, "face-sad", Stock.DialogError);
                 no_results_message = Catalog.GetString("No similar artists found");
             } else {
@@ -363,7 +363,7 @@ namespace Banshee.Plugins.Recommendation
             // translators: 25% similarity
             try {
                 int similarity = (int)Math.Round(Double.Parse(node.SelectSingleNode("match").InnerText, 
-                    Globals.InternalCultureInfo.NumberFormat));
+                    ApplicationContext.InternalCultureInfo.NumberFormat));
                 artist_tile.SecondaryText = String.Format(Catalog.GetString("{0}% Similarity"), similarity);
             } catch {
                 artist_tile.SecondaryText = Catalog.GetString("Unknown Similarity");

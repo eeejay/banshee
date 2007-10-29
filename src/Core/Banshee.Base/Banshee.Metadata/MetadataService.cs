@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Banshee.Kernel;
+using Banshee.Collection;
 
 namespace Banshee.Metadata
 {

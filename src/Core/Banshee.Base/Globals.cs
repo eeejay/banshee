@@ -254,7 +254,7 @@ namespace Banshee.Base
                     args.Profile.Pipeline.AddProcess(process);
                     available = true;
                     break;
-                } else if(Debugging) {
+                } else if(ApplicationContext.Debugging) {
                     LogCore.Instance.PushDebug("GStreamer pipeline does not run", pipeline);
                 }
             }

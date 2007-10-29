@@ -349,8 +349,8 @@ namespace Banshee.Base
             
             ui.InsertActionGroup(dap_actions, 0);
             
-            this["DebugMenuAction"].Visible = Globals.ArgumentQueue.Contains("debug");
-            this["ShellAction"].Visible = Globals.ArgumentQueue.Contains("debug");
+            this["DebugMenuAction"].Visible = ApplicationContext.ArgumentQueue.Contains("debug");
+            this["ShellAction"].Visible = ApplicationContext.ArgumentQueue.Contains("debug");
         }
         
         public Action FindActionByName(string actionName)

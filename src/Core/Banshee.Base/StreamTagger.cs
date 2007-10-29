@@ -73,9 +73,9 @@ namespace Banshee.Base
         
         public static void TrackInfoMerge(TrackInfo track, TagLib.File file)
         {
-            track.Artist = Choose(file.Tag.JoinedArtists, track.Artist);
-            track.Album = Choose(file.Tag.Album, track.Album);
-            track.Title = Choose(file.Tag.Title, track.Title);
+            track.ArtistName = Choose(file.Tag.JoinedArtists, track.ArtistName);
+            track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
+            track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);
             track.Genre = Choose(file.Tag.FirstGenre, track.Genre);
             track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (uint)file.Tag.Track;
             track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (uint)file.Tag.TrackCount;
@@ -90,13 +90,13 @@ namespace Banshee.Base
             try {
                 switch(tag.Name) {
                     case CommonTags.Artist:
-                        track.Artist = Choose((string)tag.Value, track.Artist);
+                        track.ArtistName = Choose((string)tag.Value, track.ArtistName);
                         break;
                     case CommonTags.Title:
-                        track.Title = Choose((string)tag.Value, track.Title);
+                        track.TrackTitle = Choose((string)tag.Value, track.TrackTitle);
                         break;
                     case CommonTags.Album:
-                        track.Album = Choose((string)tag.Value, track.Album);
+                        track.AlbumTitle = Choose((string)tag.Value, track.AlbumTitle);
                         break;
                     case CommonTags.Genre:
                         track.Genre = Choose((string)tag.Value, track.Genre);
@@ -145,7 +145,7 @@ namespace Banshee.Base
         private TrackInfo track;
         
         public string Name {
-            get { return String.Format(Catalog.GetString("Saving tags for {0}"), track.Title); }
+            get { return String.Format(Catalog.GetString("Saving tags for {0}"), track.TrackTitle); }
         }
         
         public SaveTrackMetadataJob(TrackInfo track)
@@ -161,10 +161,10 @@ namespace Banshee.Base
             }
         
             TagLib.File file = StreamTagger.ProcessUri(track.Uri);
-            file.Tag.AlbumArtists = new string [] { track.Artist };
-            file.Tag.Album = track.Album;
+            file.Tag.AlbumArtists = new string [] { track.ArtistName };
+            file.Tag.Album = track.AlbumTitle;
             file.Tag.Genres = new string [] { track.Genre };
-            file.Tag.Title = track.Title;
+            file.Tag.Title = track.TrackTitle;
             file.Tag.Track = track.TrackNumber;
             file.Tag.TrackCount = track.TrackCount;
             file.Tag.Year = (uint)track.Year;

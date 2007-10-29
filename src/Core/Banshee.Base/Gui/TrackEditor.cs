@@ -75,9 +75,9 @@ namespace Banshee.Gui.Dialogs
         
         public void Revert()
         {
-            Artist = track.Artist == null ? String.Empty : track.Artist;
-            Album = track.Album == null ? String.Empty : track.Album;
-            Title = track.Title == null ? String.Empty : track.Title;
+            Artist = track.ArtistName == null ? String.Empty : track.ArtistName;
+            Album = track.AlbumTitle == null ? String.Empty : track.AlbumTitle;
+            Title = track.TrackTitle == null ? String.Empty : track.TrackTitle;
             Genre = track.Genre == null ? String.Empty : track.Genre;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
@@ -88,9 +88,9 @@ namespace Banshee.Gui.Dialogs
         
         public void Save()
         {
-            track.Artist = Artist;
-            track.Album = Album;
-            track.Title = Title;
+            track.ArtistName = Artist;
+            track.AlbumTitle = Album;
+            track.TrackTitle = Title;
             track.Genre = Genre;
             track.TrackNumber = TrackNumber;
             track.TrackCount = TrackCount;
@@ -273,9 +273,9 @@ namespace Banshee.Gui.Dialogs
             Year.Text = track.Year.ToString();
             rating_entry.Value = (int)track.Rating;
         
-            (Glade["Artist"] as Entry).Text = track.Artist;
-            (Glade["Album"] as Entry).Text = track.Album;
-            (Glade["Title"] as Entry).Text = track.Title;
+            (Glade["Artist"] as Entry).Text = track.ArtistName;
+            (Glade["Album"] as Entry).Text = track.AlbumTitle;
+            (Glade["Title"] as Entry).Text = track.TrackTitle;
             (Glade["Genre"] as ComboBoxEntry).Entry.Text = track.Genre;
             
             (Glade["DurationLabel"] as Label).Text = String.Format("{0}:{1}", 
@@ -297,7 +297,7 @@ namespace Banshee.Gui.Dialogs
             
             Window.Title = TrackSet.Count > 1 
                 ? String.Format(Catalog.GetString("Editing song {0} of {1}"), index + 1, TrackSet.Count)
-                : String.Format(Catalog.GetString("Editing {0}"), track.Title);
+                : String.Format(Catalog.GetString("Editing {0}"), track.TrackTitle);
        
             if(track.Uri.IsLocalPath) {
                 Uri.Text = System.IO.Path.GetFileName(track.Uri.LocalPath);
@@ -447,14 +447,14 @@ namespace Banshee.Gui.Dialogs
         private void OnArtistSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
-                track.Artist = Artist.Text;
+                track.ArtistName = Artist.Text;
             }
         }
 
         private void OnAlbumSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
-                track.Album = Album.Text;
+                track.AlbumTitle = Album.Text;
             }
         }
         
@@ -535,9 +535,9 @@ namespace Banshee.Gui.Dialogs
             
             track.TrackNumber = (uint)TrackNumber.Value;
             track.TrackCount = (uint)TrackCount.Value;
-            track.Artist = Artist.Text;
-            track.Album = Album.Text;
-            track.Title = Title.Text;
+            track.ArtistName = Artist.Text;
+            track.AlbumTitle = Album.Text;
+            track.TrackTitle = Title.Text;
             track.Genre = Genre.Entry.Text;
             track.CopyCoverArt = CopyCoverArt.Active;
             track.EmbedCoverArt = EmbedCoverArt.Active;

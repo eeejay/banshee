@@ -49,7 +49,7 @@ namespace Banshee.Base
         
         public bool Initialize()
         {
-            if(Globals.ArgumentQueue.Contains("hide")) {
+            if(ApplicationContext.ArgumentQueue.Contains("hide")) {
                 return true;
             }
             

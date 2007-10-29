@@ -116,7 +116,7 @@ namespace Banshee.Base
             output_uri = outputUri;
             
             gst_cd_ripper_rip_track(handle, outputUri.AbsoluteUri, trackNumber, 
-                track.Artist, track.Album, track.Title, track.Genre, 
+                track.ArtistName, track.AlbumTitle, track.TrackTitle, track.Genre, 
                 (int)track.TrackNumber, (int)track.TrackCount, IntPtr.Zero);
                 
             track = null;
@@ -362,7 +362,7 @@ namespace Banshee.Base
             AudioCdTrackInfo track = tracks.Dequeue() as AudioCdTrackInfo;
 
             user_event.Header = String.Format(Catalog.GetString("Importing {0} of {1}"), current++, QueueSize);
-            status = String.Format("{0} - {1}", track.Artist, track.Title);
+            status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             user_event.Message = status;
 
             SafeUri uri = new SafeUri(FileNamePattern.BuildFull(track, profile.OutputFileExtension));

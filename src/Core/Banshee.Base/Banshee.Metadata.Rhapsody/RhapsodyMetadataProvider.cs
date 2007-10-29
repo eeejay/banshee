@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Banshee.Base;
 using Banshee.Metadata;
+using Banshee.Collection;
 
 namespace Banshee.Metadata.Rhapsody
 {

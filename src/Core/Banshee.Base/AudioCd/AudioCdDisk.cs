@@ -169,8 +169,8 @@ namespace Banshee.Base
                     tracks[i].TrackTitle = mb_disc[i].Title;
                 }
                 
-                tracks[i].Asin = mb_disc.AmazonAsin;
-                tracks[i].RemoteLookupStatus = RemoteLookupStatus.Success;
+                // FIXME replace w/ MusicBrainzID
+                //tracks[i].Asin = mb_disc.AmazonAsin;
             }
             
             string asin = mb_disc.AmazonAsin;
@@ -186,7 +186,8 @@ namespace Banshee.Base
                         tracks[0].ArtistName, tracks[0].AlbumTitle, tracks[0].TrackTitle, 0, 0);
                     asin = mb_track.Asin;
                     for(int i = 0; i < min; i++) {
-                        tracks[i].Asin = asin;
+                        // FIXME replace w/ MusicBrainzID
+                        //tracks[i].Asin = asin;
                     }
                 } catch {
                 }

@@ -276,9 +276,9 @@ namespace Banshee.Dap
         
         protected bool TrackCompare(TrackInfo a, TrackInfo b)
         {
-            return ToLower(a.Title) == ToLower(b.Title) && 
-                ToLower(a.Album) == ToLower(b.Album) &&
-                ToLower(a.Artist) == ToLower(b.Artist) &&
+            return ToLower(a.TrackTitle) == ToLower(b.TrackTitle) && 
+                ToLower(a.AlbumTitle) == ToLower(b.AlbumTitle) &&
+                ToLower(a.ArtistName) == ToLower(b.ArtistName) &&
                 a.Year == b.Year &&
                 a.TrackNumber == b.TrackNumber;
         }
@@ -477,7 +477,7 @@ namespace Banshee.Dap
             foreach(BatchTranscoder.QueueItem item in encoder.ErrorList) {
                 if(item.Source is TrackInfo) {
                     TrackInfo track = item.Source as TrackInfo;
-                    dialog.AppendString(String.Format("{0} - {1}", track.Artist, track.Title));
+                    dialog.AppendString(String.Format("{0} - {1}", track.ArtistName, track.TrackTitle));
                 } else if(item.Source is SafeUri) {
                     SafeUri uri = item.Source as SafeUri;
                     dialog.AppendString(System.IO.Path.GetFileName(uri.LocalPath));

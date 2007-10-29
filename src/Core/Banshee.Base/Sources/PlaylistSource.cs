@@ -35,6 +35,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Database;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Playlists;
 
 namespace Banshee.Sources
@@ -52,8 +53,8 @@ namespace Banshee.Sources
             get { return playlists.Count; }
         }
         
-        private Queue<TrackInfo> remove_queue = new Queue<TrackInfo>();
-        private Queue<TrackInfo> append_queue = new Queue<TrackInfo>();
+        private Queue<LibraryTrackInfo> remove_queue = new Queue<LibraryTrackInfo>();
+        private Queue<LibraryTrackInfo> append_queue = new Queue<LibraryTrackInfo>();
         
         public override int Id {
             get { return id; }
@@ -187,7 +188,7 @@ namespace Banshee.Sources
             if(track is LibraryTrackInfo) {
                 lock(TracksMutex) {
                     tracks.Add(track);
-                    append_queue.Enqueue(track);
+                    append_queue.Enqueue(track as LibraryTrackInfo);
                 }
                 OnUpdated();
             }
@@ -196,8 +197,10 @@ namespace Banshee.Sources
         public override void RemoveTrack(TrackInfo track)
         {
             lock(TracksMutex) {
-                tracks.Remove(track);
-                remove_queue.Enqueue(track);
+                if (track is LibraryTrackInfo) {
+                    tracks.Remove(track);
+                    remove_queue.Enqueue(track as LibraryTrackInfo);
+                }
             }
         }
         
@@ -243,12 +246,12 @@ namespace Banshee.Sources
             if(remove_queue.Count > 0) {
                 lock(TracksMutex) {
                     while(remove_queue.Count > 0) {
-                        TrackInfo track = remove_queue.Dequeue();
+                        LibraryTrackInfo track = remove_queue.Dequeue();
                         Globals.Library.Db.Execute(new DbCommand(
                             @"DELETE FROM PlaylistEntries
                                 WHERE PlaylistID = :playlist_id
                                 AND TrackID = :track_id",
-                                "track_id", track.TrackId,
+                                "track_id", track.DbId,
                                 playlist_id_param
                         ));
                         OnTrackRemoved(track);
@@ -259,7 +262,7 @@ namespace Banshee.Sources
             if(append_queue.Count > 0) {
                 lock(TracksMutex) {
                     while(append_queue.Count > 0) {
-                        TrackInfo track = append_queue.Dequeue();
+                        LibraryTrackInfo track = append_queue.Dequeue();
                         Globals.Library.Db.Execute(new DbCommand(
                             @"INSERT INTO PlaylistEntries 
                                 VALUES (NULL, :playlist_id, :track_id, (
@@ -269,7 +272,7 @@ namespace Banshee.Sources
                                     FROM PlaylistEntries 
                                     WHERE PlaylistID = :playlist_id)
                                 )", 
-                                "track_id", track.TrackId,
+                                "track_id", track.DbId,
                                 playlist_id_param
                         ));
                         OnTrackAdded(track);
@@ -278,13 +281,17 @@ namespace Banshee.Sources
             }
         }
         
-        public override void Reorder(TrackInfo track, int position)
+        public override void Reorder(TrackInfo ti, int position)
         {
+            LibraryTrackInfo track = ti as LibraryTrackInfo;
+            if (track == null)
+                return;
+
             lock(TracksMutex) {
                 int sql_position = 1;
             
                 if(position > 0) {
-                    TrackInfo sibling = tracks[position];
+                    LibraryTrackInfo sibling = tracks[position] as LibraryTrackInfo;
                     if(sibling == track || sibling == null) {
                         return;
                     }
@@ -295,7 +302,7 @@ namespace Banshee.Sources
                             WHERE PlaylistID = :playlist_id
                                 AND TrackID = :track_id
                             LIMIT 1", 
-                            "track_id", sibling.TrackId, 
+                            "track_id", sibling.DbId, 
                             playlist_id_param)
                     ));
                 } else if(tracks[position] == track) {
@@ -317,7 +324,7 @@ namespace Banshee.Sources
                         WHERE PlaylistID = :playlist_id
                             AND TrackID = :track_id",
                     "sql_position", sql_position, 
-                    "track_id", track.TrackId,
+                    "track_id", track.DbId,
                     playlist_id_param
                 ));
                 
@@ -347,7 +354,7 @@ namespace Banshee.Sources
             int removed_count = 0;
             
             lock(TracksMutex) {
-                foreach(TrackInfo track in args.Tracks) {
+                foreach(LibraryTrackInfo track in args.Tracks) {
                     if(tracks.Contains(track)) {
                         tracks.Remove(track);
                         remove_queue.Enqueue(track);

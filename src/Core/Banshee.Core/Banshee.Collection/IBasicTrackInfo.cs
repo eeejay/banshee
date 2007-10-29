@@ -26,12 +26,12 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-namespace Banshee.Metadata
+namespace Banshee.Collection
 {
     public interface IBasicTrackInfo
     {
-        string Artist { get; }
-        string Album { get; }
-        string Title { get; }
+        string ArtistName { get; }
+        string AlbumTitle { get; }
+        string TrackTitle { get; }
     }
 }

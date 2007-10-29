@@ -137,7 +137,6 @@ BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
 BANSHEE_METADATA_SOURCES = \
-	$(srcdir)/Banshee.Metadata/IBasicTrackInfo.cs \
 	$(srcdir)/Banshee.Metadata/IMetadataProvider.cs \
 	$(srcdir)/Banshee.Metadata/IMetadataLookupJob.cs \
 	$(srcdir)/Banshee.Metadata/BaseMetadataProvider.cs \

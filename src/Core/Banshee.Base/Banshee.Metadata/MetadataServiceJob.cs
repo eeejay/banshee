@@ -33,6 +33,7 @@ using System.Collections.Generic;
 
 using Banshee.Kernel;
 using Banshee.Base;
+using Banshee.Collection;
 
 namespace Banshee.Metadata
 {

@@ -33,6 +33,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.AudioProfiles;
+using Banshee.Base;
 
 namespace Banshee.AudioProfiles.Gui
 {
@@ -87,7 +88,7 @@ namespace Banshee.AudioProfiles.Gui
             button.CanDefault = true;
             button.Show();
             
-            if(Banshee.Base.Globals.Debugging) {
+            if(ApplicationContext.Debugging) {
                 Button test_button = new Button("Test S-Expr");
                 test_button.Show();
                 test_button.Clicked += delegate {

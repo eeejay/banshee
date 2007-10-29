@@ -37,6 +37,7 @@ using System.Collections.Generic;
 using Gdk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Metadata;
 using Banshee.Kernel;
 

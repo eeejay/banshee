@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Metadata;
 
 namespace Banshee.Metadata.MusicBrainz

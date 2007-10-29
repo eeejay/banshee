@@ -31,7 +31,7 @@ using NDesk.DBus;
 namespace Banshee.Collection
 {
     [Interface("org.bansheeproject.Banshee.Tracks.Track")]
-    public interface ITrackInfo
+    public interface ITrackInfo : IBasicTrackInfo
     {
         string ArtistName { get; }
         string AlbumTitle { get; }

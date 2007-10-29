@@ -149,7 +149,7 @@ namespace Banshee.AudioProfiles
             TreeNode result = eval.EvaluateString(process);
             if(eval.Success && result is StringLiteral) {
                 return (result.Flatten() as StringLiteral).Value;
-            } else if(!eval.Success && Banshee.Base.Globals.Debugging) {
+            } else if(!eval.Success && ApplicationContext.Debugging) {
                 Console.WriteLine("Could not compile pipeline S-Expression for pipeline:");
                 Console.WriteLine(process);
                 Console.WriteLine("-----");

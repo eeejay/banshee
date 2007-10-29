@@ -36,6 +36,7 @@ using Gdk;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Dap;
 
 namespace Banshee.Sources
@@ -234,7 +235,7 @@ namespace Banshee.Sources
             }
             
             import_manager.UserEvent.Progress = import_manager.ProcessedCount / (double)import_manager.TotalCount;
-            import_manager.UserEvent.Message = String.Format("{0} - {1}", track.Artist, track.Title);
+            import_manager.UserEvent.Message = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             
             string from = track.Uri.LocalPath;
             string to = FileNamePattern.BuildFull(track, Path.GetExtension(from));

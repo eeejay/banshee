@@ -70,7 +70,7 @@ namespace Banshee
             
             Gtk.Application.Init();
         
-            Globals.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
+            ApplicationContext.ArgumentQueue = new ArgumentQueue(new ArgumentLayout [] {
                 new ArgumentLayout("enqueue <files>","Files to enqueue, must be last argument specified"),
                 new ArgumentLayout("show",           "Show window"),
                 new ArgumentLayout("hide",           "Hide window"),
@@ -147,12 +147,12 @@ namespace Banshee
             
             bool present = true;
             
-            string [] files = Globals.ArgumentQueue.Files;
+            string [] files = ApplicationContext.ArgumentQueue.Files;
             if(files.Length > 0) {
                 remote_player.EnqueueFiles(files);
             }
         
-            foreach(string arg in Globals.ArgumentQueue.Arguments) {
+            foreach(string arg in ApplicationContext.ArgumentQueue.Arguments) {
                 bool dequeue = true;
                 switch(arg) {
                 case "shutdown":
@@ -228,7 +228,7 @@ namespace Banshee
                     present = false;
                     break;
                 case "set-position":
-                    string string_position = Globals.ArgumentQueue[arg];
+                    string string_position = ApplicationContext.ArgumentQueue[arg];
                     int position = 0;
                     try {
                         position = Convert.ToInt32(string_position);
@@ -239,7 +239,7 @@ namespace Banshee
                     present = false;
                     break;
                 case "set-rating":
-                    string rating = Globals.ArgumentQueue[arg];
+                    string rating = ApplicationContext.ArgumentQueue[arg];
                     try {
                         remote_player.SetPlayingRating(Convert.ToInt32(rating));
                     } catch {
@@ -248,16 +248,16 @@ namespace Banshee
                     present = false;
                     break;
                 case "audio-cd":
-                    if(!Globals.ArgumentQueue.Contains("no-source-change")) {
-                        remote_player.SelectAudioCd(Globals.ArgumentQueue[arg]);
+                    if(!ApplicationContext.ArgumentQueue.Contains("no-source-change")) {
+                        remote_player.SelectAudioCd(ApplicationContext.ArgumentQueue[arg]);
                     }
                     
                     dequeue = false;
                     Present(remote_player);
                     break;
                 case "dap":
-                    if(!Globals.ArgumentQueue.Contains("no-source-change")) {
-                        remote_player.SelectDap(Globals.ArgumentQueue[arg]);
+                    if(!ApplicationContext.ArgumentQueue.Contains("no-source-change")) {
+                        remote_player.SelectDap(ApplicationContext.ArgumentQueue[arg]);
                     }
                     
                     dequeue = false;
@@ -269,7 +269,7 @@ namespace Banshee
                 }
                 
                 if(dequeue) {
-                    Globals.ArgumentQueue.Dequeue(arg);
+                    ApplicationContext.ArgumentQueue.Dequeue(arg);
                 }
             }
             
@@ -288,7 +288,7 @@ namespace Banshee
         
         private static void PrintQueryResult(string field, object value)
         {
-            if(Globals.ArgumentQueue.Contains("hide-field")) {
+            if(ApplicationContext.ArgumentQueue.Contains("hide-field")) {
                 Console.WriteLine(value);
             } else {
                 Console.WriteLine("{0}: {1}", field, value);
@@ -302,19 +302,19 @@ namespace Banshee
         
         private static void HandleShallowCommands()
         {
-            if(Globals.ArgumentQueue.Contains("version")) {
+            if(ApplicationContext.ArgumentQueue.Contains("version")) {
                 Console.WriteLine("Banshee " + ConfigureDefines.VERSION);
                 System.Environment.Exit(0);
             }
 
-            if(!Globals.ArgumentQueue.Contains("help")) {
+            if(!ApplicationContext.ArgumentQueue.Contains("help")) {
                 return;
             }
             
             int max_name_len = 0;
             int max_var_len = 0;
 
-            foreach(ArgumentLayout layout in Globals.ArgumentQueue.AvailableArguments) {
+            foreach(ArgumentLayout layout in ApplicationContext.ArgumentQueue.AvailableArguments) {
                 if(layout.Name.Length > max_name_len) {
                     max_name_len = layout.Name.Length;
                 }
@@ -329,7 +329,7 @@ namespace Banshee
 
             Console.WriteLine("Usage: banshee [ options ... ]\n       where options include:\n");
 
-            foreach(ArgumentLayout layout in Globals.ArgumentQueue.AvailableArguments) {
+            foreach(ArgumentLayout layout in ApplicationContext.ArgumentQueue.AvailableArguments) {
                 Console.WriteLine("  --{0,-" + max_name_len + "} {1,-" + max_var_len + "} {2}", 
                     layout.Name, layout.ValueKind == null 
                         ? String.Empty 

@@ -50,16 +50,16 @@ namespace Banshee.Base
         
         public RadioTrackInfo(Track track) : base()
         {
-            Title = track.Title;
-            Artist = track.Creator;
+            TrackTitle = track.Title;
+            ArtistName = track.Creator;
             this.track = track;
-            is_live = true;
+            Attributes |= TrackAttributes.IsLive;
         }
         
         public RadioTrackInfo(SafeUri uri) : base()
         {
             this.single_location = uri;
-            is_live = true;
+            Attributes |= TrackAttributes.IsLive;
         }
         
         public void Play()
@@ -73,11 +73,11 @@ namespace Banshee.Base
             }
             
             if(track != null) {
-                Title = track.Title;
-                Artist = track.Creator;
+                TrackTitle = track.Title;
+                ArtistName = track.Creator;
             }
             
-            Album = null;
+            AlbumTitle = null;
             Duration = TimeSpan.Zero;
             CoverArtFileName = null;
             

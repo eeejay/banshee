@@ -53,7 +53,7 @@ namespace Banshee.Sources
         
         private LocalQueueSource() : base(Catalog.GetString("Local Queue"), 100)
         {
-            Enqueue(Globals.ArgumentQueue.Files, false);
+            Enqueue(ApplicationContext.ArgumentQueue.Files, false);
         }
         
         public void Enqueue(string [] files, bool playFirst)

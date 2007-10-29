@@ -92,7 +92,7 @@ namespace Banshee.Playlists.Formats
         protected virtual TimeSpan SecondsStringToTimeSpan(string seconds)
         {
             try {
-                int parsed_seconds = Int32.Parse(seconds.Trim(), Banshee.Base.Globals.InternalCultureInfo.NumberFormat);
+                int parsed_seconds = Int32.Parse(seconds.Trim(), ApplicationContext.InternalCultureInfo.NumberFormat);
                 return parsed_seconds < 0 ? TimeSpan.Zero : TimeSpan.FromSeconds(parsed_seconds);
             } catch {
                 return TimeSpan.Zero;
