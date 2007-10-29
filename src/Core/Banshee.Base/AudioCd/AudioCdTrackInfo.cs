@@ -51,14 +51,14 @@ namespace Banshee.Base
             do_rip = true;
         }
 
-        public int TrackIndex { 
-            get { return track_index; } 
+        public int TrackIndex {
+            get { return track_index; }
             
-            set { 
+            set {
                 track_index = value;
-                TrackNumber = (uint)value;
-                uri = new SafeUri("cdda://" + track_index + "#" + disk.DeviceNode); 
-            } 
+                TrackNumber = value;
+                Uri = new SafeUri("cdda://" + track_index + "#" + disk.DeviceNode);
+            }
         }
         
         public string Device { 

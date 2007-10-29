@@ -7,6 +7,7 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Playlists;
+using Banshee.Collection;
 
 using Mono.Unix;
 

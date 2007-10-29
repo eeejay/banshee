@@ -9,6 +9,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
+using Banshee.Collection;
 
 namespace Banshee.SmartPlaylist
 {

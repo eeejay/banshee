@@ -34,6 +34,7 @@ using Mono.Unix;
 
 using Banshee.Widgets;
 using Banshee.AudioProfiles;
+using Banshee.Collection;
 
 namespace Banshee.Base
 {

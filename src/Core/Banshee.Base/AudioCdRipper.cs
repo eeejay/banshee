@@ -37,6 +37,7 @@ using Banshee.Widgets;
 using Banshee.Base;
 using Banshee.AudioProfiles;
 using Banshee.Configuration.Schema;
+using Banshee.Collection;
 
 namespace Banshee.Base
 {
@@ -231,7 +232,7 @@ namespace Banshee.Base
         private int current = 1;
         private Profile profile;
         
-        public event HaveTrackInfoHandler HaveTrackInfo;
+        public event AudioCdRipperTrackFinishedHandler TrackFinished;
         public event EventHandler Finished;
         
         private ActiveUserEvent user_event;
@@ -382,11 +383,9 @@ namespace Banshee.Base
                 }
             
                 if(lti != null) {                       
-                    HaveTrackInfoHandler handler = HaveTrackInfo;
+                    AudioCdRipperTrackFinishedHandler handler = TrackFinished;
                     if(handler != null) {
-                        HaveTrackInfoArgs hargs = new HaveTrackInfoArgs();
-                        hargs.TrackInfo = lti;
-                        handler(this, hargs);
+                        handler(this, args);
                     }
                 }
             }

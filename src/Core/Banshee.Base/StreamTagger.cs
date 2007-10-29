@@ -30,6 +30,7 @@ using System;
 using Mono.Unix;
 
 using Banshee.Configuration.Schema;
+using Banshee.Collection;
 
 namespace Banshee.Base
 {

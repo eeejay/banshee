@@ -33,6 +33,7 @@ using TagLib;
 
 using Banshee.Base;
 using Banshee.Metadata;
+using Banshee.Collection;
 
 namespace Banshee.Metadata.Embedded
 {

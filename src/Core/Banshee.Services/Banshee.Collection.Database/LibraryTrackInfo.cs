@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
@@ -52,6 +53,7 @@ namespace Banshee.Collection.Database
             Year,
             Rating,
             PlayCount,
+            SkipCount,
             LastPlayedStamp,
             DateAddedStamp,
             
@@ -68,7 +70,7 @@ namespace Banshee.Collection.Database
         {
             dbid = ReaderGetInt32(reader, Column.TrackID);
             
-            Uri = new Uri(ReaderGetString(reader, Column.RelativeUri));
+            Uri = new SafeUri(ReaderGetString(reader, Column.RelativeUri));
             
             ArtistName = ReaderGetString(reader, Column.Artist);
             AlbumTitle = ReaderGetString(reader, Column.AlbumTitle);

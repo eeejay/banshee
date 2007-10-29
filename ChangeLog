@@ -1,3 +1,7 @@
+2007-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* Get things closer to building. Add SkipCount column.
+
 2007-10-29  Aaron Bockover  <abock@gnome.org>
 
 	* HUGE COMMIT: This commit breaks the build horribly and is a first step

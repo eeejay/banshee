@@ -34,6 +34,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Widgets;
 
 namespace Banshee.Sources
@@ -219,7 +220,7 @@ namespace Banshee.Sources
             if(list.Count > 0) {
                 ripper = new AudioCdRipper();
                 ripper.Finished += OnRipperFinished;
-                ripper.HaveTrackInfo += OnRipperHaveTrackInfo;
+                ripper.TrackFinished += OnRipperTrackFinished;
                 foreach(AudioCdTrackInfo track in list) {
                     ripper.QueueTrack(track);
                 }
@@ -249,7 +250,7 @@ namespace Banshee.Sources
             }
         }
         
-        private void OnRipperHaveTrackInfo(object o, HaveTrackInfoArgs args)
+        private void OnRipperTrackFinished(object o, AudioCdRipperTrackFinishedArgs args)
         {
             OnUpdated();
         }

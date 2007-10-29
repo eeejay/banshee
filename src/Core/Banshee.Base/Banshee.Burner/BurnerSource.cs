@@ -35,6 +35,7 @@ using Hal;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Sources;
 using Banshee.Widgets;
 using Banshee.Cdrom;

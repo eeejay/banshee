@@ -35,6 +35,7 @@ using Gdk;
 using Pango;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Dap;
 using Banshee.Sources;
 using Banshee.Gui.DragDrop;

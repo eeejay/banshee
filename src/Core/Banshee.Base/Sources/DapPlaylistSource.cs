@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Banshee.Sources;
+using Banshee.Collection;
 using Banshee.Base;
 using Banshee.Dap;
 

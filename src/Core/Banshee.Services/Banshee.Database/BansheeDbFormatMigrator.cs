@@ -261,6 +261,7 @@ namespace Banshee.Database
 
                     Rating              INTEGER,
                     PlayCount           INTEGER,
+                    SkipCount           INTEGER,
                     LastPlayedStamp     INTEGER,
                     DateAddedStamp      INTEGER
                 )
@@ -388,6 +389,7 @@ namespace Banshee.Database
                         Year,
                         Rating,
                         NumberOfPlays,
+                        0,
                         DateAddedStamp,
                         LastPlayedStamp
                         FROM Tracks

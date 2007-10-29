@@ -85,9 +85,9 @@ namespace Banshee.Base
                 AudioCdTrackInfo track = new AudioCdTrackInfo(this);
                 track.Duration = new TimeSpan(mb_track.Length * TimeSpan.TicksPerSecond);
                 track.TrackIndex = mb_track.Index;
-                track.Artist = Catalog.GetString("Unknown Artist");
-                track.Album = Catalog.GetString("Unknown Album");
-                track.Title = String.Format(Catalog.GetString("Track {0}"), mb_track.Index);
+                track.ArtistName = Catalog.GetString("Unknown Artist");
+                track.AlbumTitle = Catalog.GetString("Unknown Album");
+                track.TrackTitle = String.Format(Catalog.GetString("Track {0}"), mb_track.Index);
                 
                 tracks.Add(track);
             }
@@ -158,15 +158,15 @@ namespace Banshee.Base
                 (tracks[i] as AudioCdTrackInfo).TrackIndex = mb_disc[i].Index;
                 
                 if(mb_disc[i].Artist != null) {
-                    tracks[i].Artist = mb_disc[i].Artist;
+                    tracks[i].ArtistName = mb_disc[i].Artist;
                 }
                 
                 if(mb_disc.AlbumName != null) {
-                    tracks[i].Album = mb_disc.AlbumName;
+                    tracks[i].AlbumTitle = mb_disc.AlbumName;
                 }
                 
                 if(mb_disc[i].Title != null) {
-                    tracks[i].Title = mb_disc[i].Title;
+                    tracks[i].TrackTitle = mb_disc[i].Title;
                 }
                 
                 tracks[i].Asin = mb_disc.AmazonAsin;
@@ -183,7 +183,7 @@ namespace Banshee.Base
                 // first track on the CD to attempt a file lookup
                 try {
                     SimpleTrack mb_track = SimpleQuery.FileLookup(mb_disc.Client,
-                        tracks[0].Artist, tracks[0].Album, tracks[0].Title, 0, 0);
+                        tracks[0].ArtistName, tracks[0].AlbumTitle, tracks[0].TrackTitle, 0, 0);
                     asin = mb_track.Asin;
                     for(int i = 0; i < min; i++) {
                         tracks[i].Asin = asin;

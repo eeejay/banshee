@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Banshee.Cdrom;
+using Banshee.Collection;
 using Banshee.Base;
 
 namespace Banshee.Burner

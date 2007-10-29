@@ -29,6 +29,7 @@
 using System;
 using System.Collections;
 using Banshee.Base;
+using Banshee.Collection;
 
 namespace Banshee.MediaEngine
 {

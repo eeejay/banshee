@@ -39,7 +39,8 @@ namespace Banshee.Dap
         
         public DapTrackInfo()
         {
-            CanSaveToDatabase = false;
+            Attributes &= ~TrackAttributes.CanSaveToDatabase;
+            //CanSaveToDatabase = false;
         }
     }
 }

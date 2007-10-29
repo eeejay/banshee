@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Sources

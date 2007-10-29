@@ -11,6 +11,7 @@ using Banshee.Configuration;
 using Banshee.Sources;
 using Banshee.Playlists.Formats;
 using Banshee.Widgets;
+using Banshee.Collection;
 
 namespace Banshee.Playlists
 {

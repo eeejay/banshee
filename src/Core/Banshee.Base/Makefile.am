@@ -289,7 +289,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/TrackInfoPopup.cs \
 	$(srcdir)/Library.cs \
 	$(srcdir)/Database.cs \
-	$(srcdir)/LibraryTrackInfo.cs \
 	$(srcdir)/DBusRemote.cs \
     $(srcdir)/QueuedOperationManager.cs \
 	$(srcdir)/QueuedSqliteDatabase.cs \

@@ -34,6 +34,8 @@ using System.IO;
 using Mono.Unix;
 
 using Banshee.Database;
+using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Base

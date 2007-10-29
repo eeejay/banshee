@@ -35,6 +35,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Configuration.Schema;
+using Banshee.Collection;
 
 using Hyena.Gui;
 

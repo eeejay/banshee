@@ -33,6 +33,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Cdrom;
 using Banshee.AudioProfiles;
 
