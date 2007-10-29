@@ -57,7 +57,6 @@ namespace Banshee.Base
         private static NetworkDetect network_detect;
         private static ActionManager action_manager;
         private static Library library;
-        private static ArgumentQueue argument_queue;
         private static AudioCdCore audio_cd_core;
         private static Random random;
         private static DBusRemote dbus_remote;
@@ -291,11 +290,6 @@ namespace Banshee.Base
             get { return library; }
         }
         
-        public static ArgumentQueue ArgumentQueue {
-            set { argument_queue = value; }
-            get { return argument_queue; }
-        }
-        
         public static AudioCdCore AudioCdCore {
             get { return audio_cd_core; }
         }
@@ -318,30 +312,6 @@ namespace Banshee.Base
         
         public static ProfileManager AudioProfileManager {
             get { return audio_profile_manager; }
-        }
-        
-        private static bool? debugging = null;
-        public static bool Debugging {
-            get {
-                if(debugging == null) {
-                    debugging = ArgumentQueue.Contains("debug");
-                    string debug_env = Environment.GetEnvironmentVariable("BANSHEE_DEBUG");
-                    debugging |= debug_env != null && debug_env != String.Empty;
-                }
-                
-                return debugging.Value;
-            }
-        }
-        
-        public static bool EnvironmentIsSet(string env)
-        {
-            string env_val = Environment.GetEnvironmentVariable(env);
-            return env_val != null && env_val != String.Empty;
-        }
-        
-        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
-        public static System.Globalization.CultureInfo InternalCultureInfo {
-            get { return culture_info; }
         }
     }
     

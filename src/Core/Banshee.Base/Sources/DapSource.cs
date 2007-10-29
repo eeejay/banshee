@@ -35,6 +35,7 @@ using Gtk;
 using Gdk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Dap;
 
 namespace Banshee.Sources

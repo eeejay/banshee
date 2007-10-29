@@ -48,7 +48,7 @@ namespace Banshee.Configuration
         private static bool DisableGConf {
             get { 
                 if(!disable_gconf_checked) {
-                    disable_gconf = Globals.EnvironmentIsSet("BANSHEE_DISABLE_GCONF");
+                    disable_gconf = ApplicationContext.EnvironmentIsSet("BANSHEE_DISABLE_GCONF");
                     disable_gconf_checked = true;
                 }
                 

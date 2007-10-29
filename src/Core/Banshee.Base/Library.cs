@@ -67,7 +67,7 @@ namespace Banshee.Base
         
         public Library()
         {
-            string libraryLocation = Location;
+            string libraryLocation = Paths.LibraryLocation;
             
             string db_file = Path.Combine(Paths.ApplicationData, "banshee.db");
             string olddb_file = libraryLocation + Path.DirectorySeparatorChar + ".banshee.db";
@@ -142,29 +142,6 @@ namespace Banshee.Base
             get {
                 return is_loaded;
             }
-        }
-        
-        private string cached_location;
-
-        public string Location {
-             get {
-                string path = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
-                if(path == null || path == String.Empty) {
-                    path = Paths.DefaultLibraryPath;
-                }
-                
-                Location = path;
-                return cached_location;
-             }
-             
-             set {
-                cached_location = value;
-                LibrarySchema.Location.Set(cached_location); 
-            }
-        }
-        
-        public string CachedLocation {
-            get { return cached_location ?? Location; }
         }
         
         public void SetTrack(int id, LibraryTrackInfo track)

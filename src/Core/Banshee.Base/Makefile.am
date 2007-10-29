@@ -7,9 +7,6 @@ ASSEMBLY_GCONF_SCHEMA = banshee-core.schemas.in
 bansheebasedir = $(pkglibdir)
 bansheebase_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
-Banshee_Base_SOURCES_IN = ConfigureDefines.cs.in
-Banshee_Base_GENERATED_SOURCES = $(Banshee_Base_SOURCES_IN:.in=)
-
 BANSHEE_AUDIOPROFILES_SOURCES = \
 	$(srcdir)/Banshee.AudioProfiles/ProfileManager.cs \
 	$(srcdir)/Banshee.AudioProfiles/Profile.cs \
@@ -139,17 +136,6 @@ BANSHEE_PLAYER_MIGRATION_SOURCES = \
 BANSHEE_WEB_SOURCES = \
 	$(srcdir)/Banshee.Web/Browser.cs
 
-BANSHEE_CONFIGURATION_SOURCES = \
-	$(srcdir)/Banshee.Configuration/ConfigurationClient.cs \
-	$(srcdir)/Banshee.Configuration/GConfConfigurationClient.cs \
-	$(srcdir)/Banshee.Configuration/IConfigurationClient.cs \
-	$(srcdir)/Banshee.Configuration/SchemaEntry.cs
-
-BANSHEE_CONFIGURATION_SCHEMA_SOURCES = \
-	$(srcdir)/Banshee.Configuration.Schema/LibrarySchema.cs \
-	$(srcdir)/Banshee.Configuration.Schema/ImportSchema.cs \
-	$(srcdir)/Banshee.Configuration.Schema/PlayerWindowSchema.cs
-
 BANSHEE_METADATA_SOURCES = \
 	$(srcdir)/Banshee.Metadata/IBasicTrackInfo.cs \
 	$(srcdir)/Banshee.Metadata/IMetadataProvider.cs \
@@ -170,14 +156,6 @@ BANSHEE_METADATA_EMBEDDED_SOURCES = \
 BANSHEE_METADATA_MUSICBRAINZ_SOURCES = \
 	$(srcdir)/Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs \
 	$(srcdir)/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs
-
-IO_SOURCES = \
-	$(srcdir)/IO/Utilities.cs \
-	$(srcdir)/IO/IOProxy.cs \
-	$(srcdir)/IO/Interfaces.cs \
-	$(srcdir)/IO/SystemIO.cs \
-	$(srcdir)/IO/Unix.cs \
-	$(srcdir)/IO/GnomeVfs.cs
 
 GUI_SOURCES = \
 	$(srcdir)/Gui/GladeWindow.cs \
@@ -266,7 +244,6 @@ ASSEMBLY_SOURCES = \
     $(PLUGINS_SOURCES) \
 	$(GUI_SOURCES) \
 	$(MEDIAENGINE_SOURCES) \
-	$(IO_SOURCES) \
 	$(BANSHEE_CDROM_SOURCES) \
 	$(BANSHEE_CDROM_GUI_SOURCES) \
 	$(BANSHEE_CDROM_NAUTILUS_SOURCES) \
@@ -277,7 +254,6 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_EQUALIZER_SOURCES) \
 	$(BANSHEE_EQUALIZER_GUI_SOURCES) \
 	$(BANSHEE_GUI_DRAGDROP_SOURCES) \
-	$(BANSHEE_KERNEL_SOURCES) \
 	$(BANSHEE_LIBRARY_SOURCES) \
 	$(BANSHEE_PLAYER_MIGRATION_SOURCES) \
 	$(BANSHEE_SMARTPLAYLIST_SOURCES) \
@@ -285,8 +261,6 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_PLAYLISTS_FORMATS_SOURCES) \
 	$(BANSHEE_PLAYLISTS_FORMATS_XSPF_SOURCES) \
 	$(BANSHEE_WEB_SOURCES) \
-	$(BANSHEE_CONFIGURATION_SOURCES) \
-	$(BANSHEE_CONFIGURATION_SCHEMA_SOURCES) \
 	$(BANSHEE_METADATA_SOURCES) \
 	$(BANSHEE_METADATA_RHAPSODY_SOURCES) \
 	$(BANSHEE_METADATA_MUSICBRAINZ_SOURCES) \
@@ -296,24 +270,16 @@ ASSEMBLY_SOURCES = \
 	$(BANSHEE_AUDIOPROFILES_GUI_SOURCES) \
 	$(HYENA_SOURCES) \
 	$(HYENA_GUI_SOURCES) \
-	$(Banshee_Base_GENERATED_SOURCES) \
 	$(top_srcdir)/src/AssemblyInfo.cs \
 	$(top_srcdir)/ext/sexp-engine/src/SExpEngine/*.cs \
 	$(srcdir)/ActionManager.cs \
 	$(srcdir)/HalCore.cs \
-	$(srcdir)/Utilities.cs \
-	$(srcdir)/StringUtil.cs \
-	$(srcdir)/ArgumentQueue.cs \
 	$(srcdir)/LogCore.cs \
-	$(srcdir)/Paths.cs \
-	$(srcdir)/TrackInfo.cs \
-	$(srcdir)/FileNamePattern.cs \
 	$(srcdir)/Globals.cs \
 	$(srcdir)/SpecialKeys.cs \
 	$(srcdir)/IconThemeUtils.cs \
 	$(srcdir)/GstMisc.cs \
 	$(srcdir)/ImportManager.cs \
-	$(srcdir)/UriList.cs \
 	$(srcdir)/Transcoder.cs \
 	$(srcdir)/GstTranscoder.cs \
 	$(srcdir)/BatchTranscoder.cs \
@@ -324,7 +290,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/Library.cs \
 	$(srcdir)/Database.cs \
 	$(srcdir)/LibraryTrackInfo.cs \
-	$(srcdir)/FileTrackInfo.cs \
 	$(srcdir)/DBusRemote.cs \
     $(srcdir)/QueuedOperationManager.cs \
 	$(srcdir)/QueuedSqliteDatabase.cs \
@@ -334,10 +299,8 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/FolderImportSource.cs \
 	$(srcdir)/FileImportSource.cs \
 	$(srcdir)/HomeDirectoryImportSource.cs \
-	$(srcdir)/UnknownTrackInfo.cs \
 	$(srcdir)/StreamTagger.cs \
 	$(srcdir)/GstTagger.cs \
-	$(srcdir)/SafeUri.cs \
 	$(srcdir)/Catalog.cs \
 	$(srcdir)/Branding.cs \
 	$(srcdir)/BansheeBranding.cs \
@@ -346,7 +309,6 @@ ASSEMBLY_SOURCES = \
 	$(srcdir)/ProductInformation.cs \
 	$(srcdir)/DBusPlayer.cs \
 	$(srcdir)/GenericCollectionController.cs \
-	$(srcdir)/SampleTrackInfo.cs \
 	$(srcdir)/Localization.cs \
 	$(srcdir)/GnomeMMKeys.cs \
 	$(srcdir)/TrackFilterType.cs \
@@ -376,7 +338,7 @@ Banshee_Base_EXPANDED_RESOURCES += $(top_builddir)/data/translators.xml
 Banshee_Base_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(Banshee_Base_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
 
 $(ASSEMBLY): $(ASSEMBLY_SOURCES) $(Banshee_Base_EXPANDED_RESOURCES)
-	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_BANSHEE_SERVICES) $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_LAST_FM) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) $(LINK_BOO) $(LINK_BOOBUDDY) -r:System.Data -r:Mono.Data.SqliteClient -r:Mono.Cairo $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
+	$(BUILD_LIB) $(LNB_CSFLAGS) -out:$@ $(LINK_BANSHEE_CORE_ASM) $(LINK_BANSHEE_SERVICES) $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_TAGLIB) $(LINK_BANSHEE_WIDGETS) $(LINK_MUSICBRAINZ) $(LINK_LAST_FM) $(LINK_HAL) $(LINK_DBUS) $(LINK_GTK) $(LINK_MONO_UNIX) $(LINK_BOO) $(LINK_BOOBUDDY) -r:System.Data -r:Mono.Data.SqliteClient -r:Mono.Cairo $(Banshee_Base_EXPANDED_RESOURCES_BUILD) $(ASSEMBLY_SOURCES)
 
 include $(top_srcdir)/build/gconf-schema-rules
 

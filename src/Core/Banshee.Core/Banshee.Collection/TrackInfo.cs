@@ -28,15 +28,16 @@
 
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
 
 using Hyena.Data;
-using Banshee.ServiceStack;
+using Banshee.Base;
 
 namespace Banshee.Collection
 {
     public class TrackInfo : ITrackInfo
     {
-        private Uri uri;
+        private SafeUri uri;
 
         private string artist_name;
         private string album_title;
@@ -49,6 +50,9 @@ namespace Banshee.Collection
         private int rating;
 
         private TimeSpan duration;
+        private DateTime date_added;
+        
+        private TrackAttributes attributes;
 
         public TrackInfo()
         {
@@ -60,59 +64,93 @@ namespace Banshee.Collection
                 AlbumTitle, Duration, Uri.AbsoluteUri);
         }
 
-        public Uri Uri {
+        public virtual SafeUri Uri {
             get { return uri; }
             set { uri = value; }
         }
 
         [ListItemSetup(FieldIndex=1)]
-        public string ArtistName {
+        public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
         }
 
         [ListItemSetup(FieldIndex=2)]
-        public string AlbumTitle {
+        public virtual string AlbumTitle {
             get { return album_title; }
             set { album_title = value; }
         }
 
         [ListItemSetup(FieldIndex=3)]
-        public string TrackTitle {
+        public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
         }
+        
+        public string DisplayArtistName { 
+            get { 
+                return String.IsNullOrEmpty(ArtistName)
+                    ? Catalog.GetString("Unknown Artist") 
+                    : ArtistName; 
+            } 
+        }
 
-        public string Genre {
+        public string DisplayAlbumTitle { 
+            get { 
+                return String.IsNullOrEmpty(AlbumTitle) 
+                    ? Catalog.GetString("Unknown Album") 
+                    : AlbumTitle; 
+            } 
+        }
+
+        public string DisplayTrackTitle { 
+            get { 
+                return String.IsNullOrEmpty(TrackTitle) 
+                    ? Catalog.GetString("Unknown Title") 
+                    : TrackTitle; 
+            } 
+        }        
+
+        public virtual string Genre {
             get { return genre; }
             set { genre = value; }
         }
 
         [ListItemSetup(FieldIndex=0)]
-        public int TrackNumber {
+        public virtual int TrackNumber {
             get { return track_number; }
             set { track_number = value; }
         }
 
-        public int TrackCount {
+        public virtual int TrackCount {
             get { return track_count; }
             set { track_count = value; }
         }
 
-        public int Year {
+        public virtual int Year {
             get { return year; }
             set { year = value; }
         }
 
-        public int Rating {
+        public virtual int Rating {
             get { return rating; }
             set { rating = value; }
         }
 
         [ListItemSetup(FieldIndex=4)]
-        public TimeSpan Duration {
+        public virtual TimeSpan Duration {
             get { return duration; }
             set { duration = value; }
+        }
+        
+        public virtual DateTime DateAdded {
+            get { return date_added; }
+            set { date_added = value; }
+        }
+        
+        public virtual TrackAttributes Attributes {
+            get { return attributes; }
+            protected set { attributes = value; }
         }
         
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22

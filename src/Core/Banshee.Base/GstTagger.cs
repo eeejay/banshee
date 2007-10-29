@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection;
 
 namespace Banshee.Gstreamer
 {

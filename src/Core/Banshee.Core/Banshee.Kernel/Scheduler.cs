@@ -276,9 +276,9 @@ namespace Banshee.Kernel
         
         private static void Debug(string message, params object [] args)
         {
-            if(Banshee.Base.Globals.Debugging) {
+            /*if(Banshee.Base.Globals.Debugging) {
                 Console.Error.WriteLine(String.Format("** Scheduler: {0}", message), args);
-            }
+            }*/
         }
     }
 }

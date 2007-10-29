@@ -38,6 +38,7 @@ using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.Plugins;
 using Banshee.AudioProfiles;
+using Banshee.Collection;
 
 namespace Banshee.Dap
 {    

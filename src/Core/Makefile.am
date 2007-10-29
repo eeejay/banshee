@@ -1,11 +1,11 @@
 SUBDIRS = \
 	Hyena \
 	Hyena.Gui \
+	Banshee.Core \
 	Banshee.Services \
 	Banshee.Widgets \
 	Banshee.ThickClient \
 	Banshee.Base \
-	Banshee.Hyena \
 	Banshee
 
 MAINTAINERCLEANFILES = \

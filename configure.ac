@@ -32,10 +32,6 @@ SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
 	gconfaudiosink
 ])
 
-dnl GConf
-AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
-AM_GCONF_SOURCE_2
-
 dnl Mono and gmcs
 SHAMROCK_CHECK_MONO_MODULE(1.1.10)
 SHAMROCK_FIND_MONO_2_0_COMPILER
@@ -65,6 +61,12 @@ BANSHEE_CHECK_NDESK_DBUS
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.2)
+
+dnl GConf
+PKG_CHECK_MODULES(GCONFSHARP, gconf-sharp-2.0 >= 2.7)
+AC_SUBST(GCONFSHARP_LIBS)
+AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+AM_GCONF_SOURCE_2
 
 dnl DAP support (each module is optional)
 BANSHEE_CHECK_DAP_IPOD
@@ -121,10 +123,10 @@ src/Core/Hyena.Gui/Makefile
 src/Core/Banshee/Makefile
 src/Core/Banshee/banshee
 src/Core/Banshee/banshee.exe.config
+src/Core/Banshee.Core/Makefile
+src/Core/Banshee.Core/Banshee.Base/ConfigureDefines.cs
 src/Core/Banshee.Base/Makefile
 src/Core/Banshee.Base/Banshee.Base.dll.config
-src/Core/Banshee.Base/ConfigureDefines.cs
-src/Core/Banshee.Hyena/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile

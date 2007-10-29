@@ -1,3 +1,10 @@
+2007-10-29  Aaron Bockover  <abock@gnome.org>
+
+	* HUGE COMMIT: This commit breaks the build horribly and is a first step
+	in the merge of all the cool model/view stuff; do not expect it to build
+	or work at all from this point on until ... it does (hopefully within
+	two weeks)
+
 2007-10-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Base/ActionManager.cs: Remove ellipses from Plugins

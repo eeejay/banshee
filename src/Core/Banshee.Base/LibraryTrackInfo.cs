@@ -36,6 +36,7 @@ using System.Text;
 
 using Banshee.Database;
 using Banshee.Configuration.Schema;
+using Banshee.Collection;
 
 namespace Banshee.Base
 {

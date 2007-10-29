@@ -28,7 +28,8 @@
  */
  
 using System; 
-using Banshee.Base;
+
+using Banshee.Collection;
 
 namespace Banshee.Dap
 {

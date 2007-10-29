@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Playlists.Formats;
 using Banshee.Playlists.Formats.Xspf;
  

@@ -30,11 +30,11 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Banshee.Base
 {
-    public class UriList : ArrayList 
+    public class UriList : List<SafeUri> 
     {
         public UriList(string [] uris)
         {    
@@ -57,11 +57,11 @@ namespace Banshee.Base
             LoadFromString(data);
         }
         
-        public UriList(Gtk.SelectionData selection) 
+        /*public UriList(Gtk.SelectionData selection) 
         {
             // FIXME this should check the atom etc.
             LoadFromString(System.Text.Encoding.UTF8.GetString(selection.Data));
-        }
+        }*/
 
         private void LoadFromString(string data) 
         {

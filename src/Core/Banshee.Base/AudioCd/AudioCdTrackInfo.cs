@@ -33,6 +33,8 @@ using System.Threading;
 using Mono.Unix;
 using MusicBrainz;
 
+using Banshee.Collection;
+
 namespace Banshee.Base
 {   
     public class AudioCdTrackInfo : TrackInfo
@@ -44,24 +46,11 @@ namespace Banshee.Base
         
         public AudioCdTrackInfo(AudioCdDisk disk)
         {
-            PreviousTrack = Gtk.TreeIter.Zero;
-            CanSaveToDatabase = false;
+            
             this.disk = disk;
             do_rip = true;
         }
-        
-        public override void Save()
-        {       
-        }
-        
-        public override void IncrementPlayCount()
-        {
-        }
-        
-        protected override void SaveRating()
-        {
-        }
-        
+
         public int TrackIndex { 
             get { return track_index; } 
             
@@ -90,8 +79,8 @@ namespace Banshee.Base
             set { is_ripped = value; }
         }
         
-        public override bool CanPlay {
-            get { return !disk.IsRipping || (disk.IsRipping && IsRipped); }
+        public override TrackAttributes Attributes {
+            get { return (!disk.IsRipping || (disk.IsRipping && IsRipped)) ? TrackAttributes.CanPlay : TrackAttributes.None; }
         }
     }
 }

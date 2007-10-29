@@ -56,13 +56,6 @@
     <File name="./Banshee.Cdrom.Nautilus.Interop/BurnRecorderHandlers.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Cdrom.Nautilus.Interop/BurnRecorderTrack.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Cdrom.Nautilus.Interop/NautilusEnums.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/GConfConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/SchemaEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration.Schema/ImportSchema.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration.Schema/PlayerWindowSchema.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Equalizer/EqualizerManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Equalizer/EqualizerSetting.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Equalizer.Gui/EqualizerBandScale.cs" subtype="Code" buildaction="Compile" />
@@ -73,12 +66,6 @@
     <File name="./Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/IInstanceCriticalJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/IJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/IntervalHeap.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/Job.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/JobPriority.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/Scheduler.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Library/DatabaseWriteException.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Library/Import.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Metadata/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
@@ -137,12 +124,6 @@
     <File name="./Gui/TrackEditor.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/UIManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./Gui/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/GnomeVfs.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/Interfaces.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/IOProxy.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/SystemIO.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/Unix.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IO/Utilities.cs" subtype="Code" buildaction="Compile" />
     <File name="./MediaEngine/IEqualizer.cs" subtype="Code" buildaction="Compile" />
     <File name="./MediaEngine/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="./NetworkManager/Manager.cs" subtype="Code" buildaction="Compile" />
@@ -165,7 +146,6 @@
     <File name="./Sources/PlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Sources/TestSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./ActionManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./ArgumentQueue.cs" subtype="Code" buildaction="Compile" />
     <File name="./AudioCdRipper.cs" subtype="Code" buildaction="Compile" />
     <File name="./BansheeBranding.cs" subtype="Code" buildaction="Compile" />
     <File name="./BatchTranscoder.cs" subtype="Code" buildaction="Compile" />
@@ -177,8 +157,6 @@
     <File name="./DBusPlayer.cs" subtype="Code" buildaction="Compile" />
     <File name="./DBusRemote.cs" subtype="Code" buildaction="Compile" />
     <File name="./FileImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./FileNamePattern.cs" subtype="Code" buildaction="Compile" />
-    <File name="./FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./FolderImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./GenericCollectionController.cs" subtype="Code" buildaction="Compile" />
     <File name="./Globals.cs" subtype="Code" buildaction="Compile" />
@@ -200,22 +178,14 @@
     <File name="./ProductInformation.cs" subtype="Code" buildaction="Compile" />
     <File name="./QueuedOperationManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./QueuedSqliteDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SafeUri.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SampleTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Source.cs" subtype="Code" buildaction="Compile" />
     <File name="./SourceManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./SpecialKeys.cs" subtype="Code" buildaction="Compile" />
     <File name="./StreamTagger.cs" subtype="Code" buildaction="Compile" />
-    <File name="./StringUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrackInfoHeader.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrackInfoPopup.cs" subtype="Code" buildaction="Compile" />
     <File name="./Transcoder.cs" subtype="Code" buildaction="Compile" />
-    <File name="./UnknownTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./UriList.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Utilities.cs" subtype="Code" buildaction="Compile" />
     <File name="./ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Paths.cs" subtype="Code" buildaction="Compile" />
     <File name="../../../data/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/contributors.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/UIManagerLayout.xml" subtype="Code" buildaction="EmbedAsResource" />

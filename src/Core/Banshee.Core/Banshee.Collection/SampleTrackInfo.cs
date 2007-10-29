@@ -1,10 +1,10 @@
 //
-// ITrackInfo.cs
+// SampleTrackInfo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,23 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using NDesk.DBus;
-using Banshee.ServiceStack;
+using System;
 
 namespace Banshee.Collection
 {
-    [Interface("org.bansheeproject.Banshee.Tracks.Track")]
-    public interface ITrackInfo
+    public class SampleTrackInfo : TrackInfo
     {
-        string ArtistName { get; }
-        string AlbumTitle { get; }
-        string TrackTitle { get; }
-        
-        int TrackNumber { get; }
-        int TrackCount { get; }
-        int Year { get; }
-        int Rating { get; }
+        public SampleTrackInfo() 
+        {
+            ArtistName = "The Beatles";
+            TrackTitle = "Ticket to Ride";
+            AlbumTitle = "Help!";
+            TrackNumber = 7;
+            TrackCount = 14;
+            Duration = TimeSpan.FromSeconds(182);
+            Year = 1965;
+            
+            Attributes |= TrackAttributes.CanPlay | TrackAttributes.CanSaveToDatabase;
+        }
     }
 }

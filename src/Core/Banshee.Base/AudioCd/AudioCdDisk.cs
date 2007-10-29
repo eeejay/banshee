@@ -34,6 +34,8 @@ using System.Threading;
 using Mono.Unix;
 using MusicBrainz;
 
+using Banshee.Collection;
+
 namespace Banshee.Base
 {
     public enum AudioCdLookupStatus {
@@ -252,8 +254,11 @@ namespace Banshee.Base
                 }
             
                 Hal.Device device = new Hal.Device(udi);
-                if(device.GetPropertyBoolean("volume.is_mounted")) {
-                    if(!Utilities.UnmountVolume(device_node)) {
+                if(device.IsVolume && device.GetPropertyBoolean("volume.is_mounted")) {
+                    try {
+                        device.Volume.Unmount();
+                        return true;
+                    } catch {
                         return false;
                     }
                 }

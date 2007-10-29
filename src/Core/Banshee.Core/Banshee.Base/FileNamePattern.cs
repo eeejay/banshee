@@ -32,13 +32,14 @@ using System.Collections.Generic;
 using System.IO;
 using Mono.Unix;
 
+using Banshee.Collection;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Base
 {
     public static class FileNamePattern
     {
-        public delegate string ExpandTokenHandler(TrackInfo track, object replace);
+        public delegate string ExpandTokenHandler(ITrackInfo track, object replace);
         public delegate string FilterHandler(string path);
         
         private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";
@@ -84,42 +85,42 @@ namespace Banshee.Base
             conversion_table = new SortedList<string, Conversion>();
             
             AddConversion("artist", Catalog.GetString("Artist"),  
-                delegate(TrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayArtist);
+                delegate(ITrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayArtistName);
             });
             
             AddConversion("album", Catalog.GetString("Album"),  
-                delegate(TrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayAlbum);
+                delegate(ITrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayAlbumTitle);
             });
             
             AddConversion("title", Catalog.GetString("Title"),  
-                delegate(TrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayTitle);
+                delegate(ITrackInfo t, object r) {
+                    return Escape(t == null ? (string)r : t.DisplayTrackTitle);
             });
              
             AddConversion("track_count", Catalog.GetString("Count"),  
-                delegate(TrackInfo t, object r) {
-                    return String.Format("{0:00}", t == null ? (uint)r : t.TrackCount);
+                delegate(ITrackInfo t, object r) {
+                    return String.Format("{0:00}", t == null ? (int)r : t.TrackCount);
             });
              
             AddConversion("track_number", Catalog.GetString("Number"),  
-                delegate(TrackInfo t, object r) {
-                    return String.Format("{0:00}", t == null ? (uint)r : t.TrackNumber);
+                delegate(ITrackInfo t, object r) {
+                    return String.Format("{0:00}", t == null ? (int)r : t.TrackNumber);
             });
              
             AddConversion("track_count_nz", Catalog.GetString("Count (unsorted)"),  
-                delegate(TrackInfo t, object r) {
-                    return String.Format("{0}", t == null ? (uint)r : t.TrackCount);
+                delegate(ITrackInfo t, object r) {
+                    return String.Format("{0}", t == null ? (int)r : t.TrackCount);
             });
              
             AddConversion("track_number_nz", Catalog.GetString("Number (unsorted)"),  
-                delegate(TrackInfo t, object r) {
-                    return String.Format("{0}", t == null ? (uint)r : t.TrackNumber);
+                delegate(ITrackInfo t, object r) {
+                    return String.Format("{0}", t == null ? (int)r : t.TrackNumber);
             });
             
             AddConversion("path_sep", Path.DirectorySeparatorChar.ToString(),
-                delegate(TrackInfo t, object r) {
+                delegate(ITrackInfo t, object r) {
                     return Path.DirectorySeparatorChar.ToString();
             });
         }
@@ -191,7 +192,7 @@ namespace Banshee.Base
             return OnFilter(repl_pattern);
         }
 
-        public static string CreateFromTrackInfo(TrackInfo track)
+        public static string CreateFromITrackInfo(ITrackInfo track)
         {
             string pattern = null;
 
@@ -203,10 +204,10 @@ namespace Banshee.Base
             } catch {
             }
 
-            return CreateFromTrackInfo(pattern, track);
+            return CreateFromITrackInfo(pattern, track);
         }
 
-        public static string CreateFromTrackInfo(string pattern, TrackInfo track)
+        public static string CreateFromITrackInfo(string pattern, ITrackInfo track)
         {
             string repl_pattern;
 
@@ -224,7 +225,7 @@ namespace Banshee.Base
             return OnFilter(repl_pattern);
         }
 
-        public static string BuildFull(TrackInfo track, string ext)
+        public static string BuildFull(ITrackInfo track, string ext)
         {
             if(ext == null || ext.Length < 1) {
                 ext = String.Empty;
@@ -232,8 +233,8 @@ namespace Banshee.Base
                 ext = String.Format(".{0}", ext);
             }
             
-            string songpath = CreateFromTrackInfo(track) + ext;
-            string dir = Path.GetFullPath(Globals.Library.Location + 
+            string songpath = CreateFromITrackInfo(track) + ext;
+            string dir = Path.GetFullPath(Paths.LibraryLocation + 
                 Path.DirectorySeparatorChar + 
                 Path.GetDirectoryName(songpath));
             string filename = dir + Path.DirectorySeparatorChar + 

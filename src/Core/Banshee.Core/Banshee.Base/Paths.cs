@@ -29,7 +29,8 @@
 using System;
 using System.IO;
 using Mono.Unix;
-using Gtk;
+
+using Banshee.Configuration.Schema;
  
 namespace Banshee.Base
 {
@@ -151,16 +152,38 @@ namespace Banshee.Base
         
         public static string TempDir {
             get {
-                string dir = Paths.ApplicationData 
-                    + Path.DirectorySeparatorChar 
-                    + "temp";
+                string dir = Path.Combine(Paths.ApplicationData, "temp");
         
-                if(File.Exists(dir))
+                if(File.Exists(dir)) {
                     File.Delete(dir);
-
+                }
+                
                 Directory.CreateDirectory(dir);
                 return dir;
             }
+        }
+        
+        private static string cached_library_location;
+        
+        public static string LibraryLocation {
+             get {
+                string path = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
+                if(String.IsNullOrEmpty(path)) {
+                    path = Paths.DefaultLibraryPath;
+                }
+                
+                LibraryLocation = path;
+                return cached_library_location;
+             }
+             
+             set {
+                cached_library_location = value;
+                LibrarySchema.Location.Set(cached_library_location); 
+            }
+        }
+        
+        public static string CachedLibraryLocation {
+            get { return cached_library_location ?? LibraryLocation; }
         }
     }
 }

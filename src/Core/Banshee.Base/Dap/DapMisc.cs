@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Collection;
 
 namespace Banshee.Dap
 {

@@ -7,6 +7,7 @@
       <Entry build="True" name="Hyena" configuration="Debug" />
       <Entry build="True" name="Hyena.Gui" configuration="Debug" />
       <Entry build="True" name="Banshee.Services" configuration="Debug" />
+      <Entry build="True" name="Banshee.Core" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Base" single="True">
@@ -16,6 +17,7 @@
     <Execute type="None" entry="Hyena" />
     <Execute type="None" entry="Hyena.Gui" />
     <Execute type="None" entry="Banshee.Services" />
+    <Execute type="None" entry="Banshee.Core" />
   </StartMode>
   <Entries>
     <Entry filename="./Banshee.Widgets/Banshee.Widgets.mdp" />
@@ -24,5 +26,6 @@
     <Entry filename="./Hyena/Hyena.mdp" />
     <Entry filename="./Hyena.Gui/Hyena.Gui.mdp" />
     <Entry filename="./Banshee.Services/Banshee.Services.mdp" />
+    <Entry filename="./Banshee.Core/Banshee.Core.mdp" />
   </Entries>
 </Combine>

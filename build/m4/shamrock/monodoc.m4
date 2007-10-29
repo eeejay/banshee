@@ -1,9 +1,9 @@
 AC_DEFUN([SHAMROCK_CHECK_MONODOC],
 [
 	AC_ARG_ENABLE(docs, AC_HELP_STRING([--disable-docs], 
-		[Do not build documentation]), with_docs=no, with_docs=yes)
+		[Do not build documentation]), enable_docs=no, enable_docs=yes)
 
-	if test "x$with_docs" = "xyes"; then
+	if test "x$enable_docs" = "xyes"; then
 		AC_PATH_PROG(MONODOCER, monodocer, no)
 		if test "x$MONODOCER" = "xno"; then
 			AC_MSG_ERROR([You need to install monodoc, or pass --disable-docs to configure to skip documentation installation])
@@ -18,7 +18,7 @@ AC_DEFUN([SHAMROCK_CHECK_MONODOC],
 		AC_SUBST(DOCDIR)
 		AM_CONDITIONAL(BUILD_DOCS, true)
 	else
-		AC_MSG_NOTICE([not building Banshee API documentation])
+		AC_MSG_NOTICE([not building ${PACKAGE} API documentation])
 		AM_CONDITIONAL(BUILD_DOCS, false)
 	fi
 ])

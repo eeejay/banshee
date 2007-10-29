@@ -39,6 +39,8 @@ using System.Diagnostics;
 using System.Globalization;
 using Mono.Unix;
  
+using Banshee.Collection;
+
 namespace Banshee.Base
 {
     public static class UidGenerator
@@ -76,62 +78,13 @@ namespace Banshee.Base
                 ? String.Format(Catalog.GetString("{0:0.00} GB"), mb / 1024.0)
                 : String.Format(Catalog.GetString("{0} MB"), Math.Round(mb));
         }
-        
-        public static bool UnmountVolume(string device)
-        {
-            try {
-                if(ExecProcess("pumount", device) != 0) {
-                    throw new ApplicationException("pumount returned error");
-                }
-                
-                return true;
-            } catch(Exception) {
-                try {
-                    return ExecProcess("umount", device) == 0;
-                } catch(Exception) {
-                }
-            }
-            
-            return false;
-        }
+
         
         public static int ExecProcess(string command, string args)
         {
             Process process = Process.Start(command, args == null ? "" : args);
             process.WaitForExit();
             return process.ExitCode;
-        }
-        
-        public static Gdk.Color ColorBlend(Gdk.Color a, Gdk.Color b)
-        {
-            // at some point, might be nice to allow any blend?
-            double blend = 0.5;
-
-            if(blend < 0.0 || blend > 1.0) {
-                throw new ApplicationException("blend < 0.0 || blend > 1.0");
-            }
-            
-            double blendRatio = 1.0 - blend;
-
-            int aR = a.Red >> 8;
-            int aG = a.Green >> 8;
-            int aB = a.Blue >> 8;
-
-            int bR = b.Red >> 8;
-            int bG = b.Green >> 8;
-            int bB = b.Blue >> 8;
-
-            double mR = aR + bR;
-            double mG = aG + bG;
-            double mB = aB + bB;
-
-            double blR = mR * blendRatio;
-            double blG = mG * blendRatio;
-            double blB = mB * blendRatio;
-
-            Gdk.Color color = new Gdk.Color((byte)blR, (byte)blG, (byte)blB);
-            Gdk.Colormap.System.AllocColor(ref color, true, true);
-            return color;
         }
         
         [DllImport("libc")] // Linux
@@ -337,15 +290,15 @@ namespace Banshee.Base
                 string artist = null;
                 string album = null;
                 
-                if(track.Artist != null) {
-                    artist = track.Artist.Trim();
+                if(track.ArtistName != null) {
+                    artist = track.ArtistName.Trim();
                     if(artist == String.Empty) {
                         artist = null;
                     }
                 }
                 
-                if(track.Album != null) {
-                    album = track.Album.Trim();
+                if(track.AlbumTitle != null) {
+                    album = track.AlbumTitle.Trim();
                     if(album == String.Empty) {
                         album = null;
                     }

@@ -28,7 +28,7 @@
  
 namespace Banshee.Configuration
 {
-   public struct SchemaEntry<T>
+    public struct SchemaEntry<T>
     {
         public static SchemaEntry<T> Zero;
     
