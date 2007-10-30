@@ -34,6 +34,7 @@ using Glade;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Widgets;
 using Banshee.AudioProfiles;
 using Banshee.AudioProfiles.Gui;
@@ -128,13 +129,13 @@ namespace Banshee.Gui.Dialogs
         
         private void LoadPreferences()
         {                   
-            string location = Globals.Library.Location;
+            string location = Paths.LibraryLocation;
             if(!Directory.Exists(location)) {
                 location = Paths.DefaultLibraryPath;
             }
             
             library_location_chooser.SetCurrentFolder(location);
-            Globals.Library.Location = location;   
+            Paths.LibraryLocation = location;   
             
             file_box.ActiveValue = LibrarySchema.FilePattern.Get();
             folder_box.ActiveValue = LibrarySchema.FolderPattern.Get(); 
@@ -152,7 +153,7 @@ namespace Banshee.Gui.Dialogs
             };
             
             library_location_chooser.SelectionChanged += delegate {
-                Globals.Library.Location = library_location_chooser.Filename;
+                Paths.LibraryLocation = library_location_chooser.Filename;
                 InterfaceElements.PlaylistView.QueueDraw();
             };
             
@@ -175,9 +176,9 @@ namespace Banshee.Gui.Dialogs
         private void OnFolderFileChanged(object o, EventArgs args)
         {
             (Glade["example_path"] as Label).Markup = String.Format("<small><i>{0}.ogg</i></small>",
-                GLib.Markup.EscapeText(FileNamePattern.CreateFromTrackInfo(
-                    FileNamePattern.CreateFolderFilePattern(folder_box.ActiveValue, 
-                        file_box.ActiveValue), new SampleTrackInfo())));
+                GLib.Markup.EscapeText(FileNamePattern.CreateFromITrackInfo(
+                    FileNamePattern.CreateFolderFilePattern(folder_box.ActiveValue, file_box.ActiveValue),
+                    new SampleTrackInfo())));
                         
             LibrarySchema.FilePattern.Set(file_box.ActiveValue);
             LibrarySchema.FolderPattern.Set(folder_box.ActiveValue);

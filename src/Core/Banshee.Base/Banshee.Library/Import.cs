@@ -30,6 +30,8 @@ using System;
 using System.IO;
 using Mono.Unix;
 using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Collection.Database;
  
 namespace Banshee.Library
 {
@@ -68,8 +70,9 @@ namespace Banshee.Library
         private static void OnImportManagerImportRequested(object o, ImportEventArgs args)
         {
             try {
-                TrackInfo ti = new LibraryTrackInfo(args.FileName);
-                args.ReturnMessage = String.Format("{0} - {1}", ti.Artist, ti.Title);
+                // FIXME
+                //TrackInfo ti = new LibraryTrackInfo(args.FileName);
+                //args.ReturnMessage = String.Format("{0} - {1}", ti.ArtistName, ti.TrackTitle);
             } catch(Exception e) {
                 args.ReturnMessage = Catalog.GetString("Scanning") + "...";
                 

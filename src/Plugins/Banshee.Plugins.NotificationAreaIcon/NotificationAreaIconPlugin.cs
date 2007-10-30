@@ -253,21 +253,21 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void ShowNotification()
         {
             // This has to happen before the next if, otherwise the last_* members aren't set correctly.
-            if(current_track == null || (notify_last_title == current_track.DisplayTitle 
-                && notify_last_artist == current_track.DisplayArtist)) {
+            if(current_track == null || (notify_last_title == current_track.DisplayTrackTitle 
+                && notify_last_artist == current_track.DisplayArtistName)) {
                 return;
             }
             
-            notify_last_title = current_track.DisplayTitle;
-            notify_last_artist = current_track.DisplayArtist;
+            notify_last_title = current_track.DisplayTrackTitle;
+            notify_last_artist = current_track.DisplayArtistName;
 
             if(cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
                 return;
             }
             
             string message = String.Format("{0}\n<i>{1}</i>", 
-                GLib.Markup.EscapeText(current_track.DisplayTitle),
-                GLib.Markup.EscapeText(current_track.DisplayArtist));
+                GLib.Markup.EscapeText(current_track.DisplayTrackTitle),
+                GLib.Markup.EscapeText(current_track.DisplayArtistName));
             
             Gdk.Pixbuf image = null;
             
@@ -506,9 +506,9 @@ namespace Banshee.Plugins.NotificationAreaIcon
         private void FillPopup() 
         {
             can_show_popup = true;
-            popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtist;
-            popup.Album = PlayerEngineCore.CurrentTrack.Album;
-            popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTitle;
+            popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtistName;
+            popup.Album = PlayerEngineCore.CurrentTrack.AlbumTitle;
+            popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTrackTitle;
             try {
                 popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
             } catch {

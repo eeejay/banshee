@@ -8,6 +8,7 @@ using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Playlists;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 using Mono.Unix;
 
@@ -240,8 +241,8 @@ namespace Banshee.SmartPlaylist
             List<TrackInfo> tracks_to_remove = new List<TrackInfo>();
 
             Dictionary<int, TrackInfo> old_tracks = new Dictionary<int, TrackInfo>(tracks.Count);
-            foreach (TrackInfo track in tracks) {
-                old_tracks.Add(track.TrackId, track);
+            foreach (LibraryTrackInfo track in tracks) {
+                old_tracks.Add(track.DbId, track);
             }
 
             double sum = 0;
@@ -254,13 +255,13 @@ namespace Banshee.SmartPlaylist
             while(reader.Read()) {
                 int id = Convert.ToInt32(reader[0]);
 
-                TrackInfo track = null;
+                LibraryTrackInfo track = null;
                 try {
-                    track = Globals.Library.Tracks[id] as TrackInfo;
+                    track = Globals.Library.Tracks[id] as LibraryTrackInfo;
                 } catch {}
 
                 //Console.WriteLine ("evaluating track {0} (old? {1})", track, old_tracks.Contains(track));
-                if (track == null || track.TrackId <= 0) {
+                if (track == null || track.DbId <= 0) {
                     Console.WriteLine ("bad track = {0}", track);
                     continue;
                 }
@@ -287,9 +288,9 @@ namespace Banshee.SmartPlaylist
                     }
                 }
 
-                if (old_tracks.ContainsKey(track.TrackId)) {
+                if (old_tracks.ContainsKey(track.DbId)) {
                     // If we already have it, remove it from the old_tracks list so it isn't removed
-                    old_tracks.Remove(track.TrackId);
+                    old_tracks.Remove(track.DbId);
                 } else {
                     // Otherwise, we need to add it.
                     tracks_to_add.Add(track);
@@ -307,18 +308,22 @@ namespace Banshee.SmartPlaylist
             t.Stop();
         }
 
-        public void Check (TrackInfo track)
+        public void Check (TrackInfo ti)
         {
+            LibraryTrackInfo track = ti as LibraryTrackInfo;
+            if (track == null)
+                return;
+
             if (OrderAndLimit == null) {
                 // If this SmartPlaylist doesn't have an OrderAndLimit clause, then it's quite simple
                 // to check this track - if it matches the Condition we make sure it's in, and vice-versa
                 
                 object id = Globals.Library.Db.QuerySingle(String.Format(
                     "SELECT TrackId FROM Tracks WHERE TrackId = {0} {1}",
-                    track.TrackId, PrependCondition("AND")
+                    track.DbId, PrependCondition("AND")
                 ));
 
-                if (id == null || (int) id != track.TrackId) {
+                if (id == null || (int) id != track.DbId) {
                     // If it didn't match and is in the playlist, remove it
                     if (tracks.Contains (track)) {
                         RemoveTrack(track);
@@ -386,7 +391,7 @@ namespace Banshee.SmartPlaylist
         {
             if(track is LibraryTrackInfo) {
                 lock(TracksMutex) {
-                    tracks.Add(track);
+                    tracks.Add(track as LibraryTrackInfo);
                 }
 
                 OnTrackAdded (track);
@@ -515,7 +520,7 @@ namespace Banshee.SmartPlaylist
                     remove_queue.Add(args.Track);
 
                 if (args.Tracks != null)
-                    foreach(TrackInfo track in args.Tracks)
+                    foreach(LibraryTrackInfo track in args.Tracks)
                         if (track != null && tracks.Contains(track))
                             remove_queue.Add(track);
             

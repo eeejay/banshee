@@ -51,6 +51,10 @@ namespace Banshee.Collection
 
         private TimeSpan duration;
         private DateTime date_added;
+
+        private int play_count;
+        private int skip_count;
+        private DateTime last_played;
         
         private TrackAttributes attributes;
 
@@ -62,6 +66,10 @@ namespace Banshee.Collection
         {
             return String.Format("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
                 AlbumTitle, Duration, Uri.AbsoluteUri);
+        }
+
+        public virtual void Save()
+        {
         }
 
         public virtual SafeUri Uri {
@@ -137,6 +145,16 @@ namespace Banshee.Collection
             set { rating = value; }
         }
 
+        public virtual int PlayCount {
+            get { return play_count; }
+            set { play_count = value; }
+        }
+
+        public virtual int SkipCount {
+            get { return skip_count; }
+            set { skip_count = value; }
+        }
+
         [ListItemSetup(FieldIndex=4)]
         public virtual TimeSpan Duration {
             get { return duration; }
@@ -146,6 +164,11 @@ namespace Banshee.Collection
         public virtual DateTime DateAdded {
             get { return date_added; }
             set { date_added = value; }
+        }
+
+        public virtual DateTime LastPlayed {
+            get { return last_played; }
+            set { last_played = value; }
         }
         
         public virtual TrackAttributes Attributes {

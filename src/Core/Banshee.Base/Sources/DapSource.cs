@@ -248,7 +248,8 @@ namespace Banshee.Sources
                     // probably already the same file
                     if(from_info.Length == to_info.Length) {
                         try {
-                            new LibraryTrackInfo(new SafeUri(to, false), track);
+                            // FIXME commented out to move on w/ fixing the build
+                            //new LibraryTrackInfo(new SafeUri(to, false), track);
                         } catch {
                             // was already in the library
                         }
@@ -292,11 +293,12 @@ namespace Banshee.Sources
                 }
                 
                 try {
-                    LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
+                    // FIXME commented out to move on w/ fixing the build
+                    /*LibraryTrackInfo library_track = new LibraryTrackInfo(new SafeUri(to, false), track);
                     if(playlist != null) {
                         playlist.AddTrack(library_track);
                         playlist.Commit();
-                    }
+                    }*/
                 } catch {
                     // song already in library
                 }

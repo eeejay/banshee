@@ -1,5 +1,10 @@
 2007-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* MERGE BUILD FIXES: Replace many instances of track.DisplayTitle/Artist/Album
+	and other build fixes.
+
+2007-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* MERGE BUILD FIXES: Replace many instances of track.Title/Artist/Album
 	and Globals.ArgumentQueue etc.
 

@@ -45,16 +45,16 @@ namespace Banshee.Gui.Dialogs
     {
         private TrackInfo track;
         
-        public string Artist;
-        public string Album;
-        public string Title;
+        public string ArtistName;
+        public string AlbumTitle;
+        public string TrackTitle;
         public string Genre;
         public SafeUri Uri;
         
-        public uint TrackNumber;
-        public uint TrackCount;
+        public int TrackNumber;
+        public int TrackCount;
         public int Year;
-        public uint Rating;
+        public int Rating;
         
         // temp properties
         public bool ProcessedStream = false;
@@ -75,9 +75,9 @@ namespace Banshee.Gui.Dialogs
         
         public void Revert()
         {
-            Artist = track.ArtistName == null ? String.Empty : track.ArtistName;
-            Album = track.AlbumTitle == null ? String.Empty : track.AlbumTitle;
-            Title = track.TrackTitle == null ? String.Empty : track.TrackTitle;
+            ArtistName = track.ArtistName == null ? String.Empty : track.ArtistName;
+            AlbumTitle = track.AlbumTitle == null ? String.Empty : track.AlbumTitle;
+            TrackTitle = track.TrackTitle == null ? String.Empty : track.TrackTitle;
             Genre = track.Genre == null ? String.Empty : track.Genre;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
@@ -88,9 +88,9 @@ namespace Banshee.Gui.Dialogs
         
         public void Save()
         {
-            track.ArtistName = Artist;
-            track.AlbumTitle = Album;
-            track.TrackTitle = Title;
+            track.ArtistName = ArtistName;
+            track.AlbumTitle = AlbumTitle;
+            track.TrackTitle = TrackTitle;
             track.Genre = Genre;
             track.TrackNumber = TrackNumber;
             track.TrackCount = TrackCount;
@@ -403,13 +403,13 @@ namespace Banshee.Gui.Dialogs
         {
             int i = 1;
             foreach(EditorTrack track in TrackSet) {
-                track.TrackNumber = (uint)i++;
-                track.TrackCount = (uint)TrackSet.Count;
+                track.TrackNumber = i++;
+                track.TrackCount = TrackSet.Count;
             }
 
             EditorTrack current_track = TrackSet[currentIndex] as EditorTrack;
-            TrackNumber.Value = (int)current_track.TrackNumber;
-            TrackCount.Value = (int)current_track.TrackCount;
+            TrackNumber.Value = current_track.TrackNumber;
+            TrackCount.Value = current_track.TrackCount;
         }
         
         private void OnValueEdited(object o, EventArgs args)
@@ -422,14 +422,14 @@ namespace Banshee.Gui.Dialogs
         private void OnTrackCountSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
-                track.TrackCount = (uint)TrackCount.Value;
+                track.TrackCount = (int)TrackCount.Value;
             }
         }
         
         private void OnRatingSyncClicked(object o, EventArgs args)
         {
             foreach(EditorTrack track in TrackSet) {
-                track.Rating = (uint)rating_entry.Value;
+                track.Rating = rating_entry.Value;
             }
         }
         
@@ -533,15 +533,15 @@ namespace Banshee.Gui.Dialogs
                 
             EditorTrack track = TrackSet[currentIndex] as EditorTrack;
             
-            track.TrackNumber = (uint)TrackNumber.Value;
-            track.TrackCount = (uint)TrackCount.Value;
+            track.TrackNumber = (int)TrackNumber.Value;
+            track.TrackCount = (int)TrackCount.Value;
             track.ArtistName = Artist.Text;
             track.AlbumTitle = Album.Text;
             track.TrackTitle = Title.Text;
             track.Genre = Genre.Entry.Text;
             track.CopyCoverArt = CopyCoverArt.Active;
             track.EmbedCoverArt = EmbedCoverArt.Active;
-            track.Rating = (uint)rating_entry.Value;
+            track.Rating = rating_entry.Value;
             
             try {
                 track.Year = Convert.ToInt32(Year.Text);

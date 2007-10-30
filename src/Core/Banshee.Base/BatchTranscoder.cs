@@ -178,7 +178,7 @@ namespace Banshee.Base
             
             if(current.Source is TrackInfo) {
                 TrackInfo track = current.Source as TrackInfo;
-                user_event.Message = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle);
+                user_event.Message = String.Format("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                 input_uri = track.Uri;
             } else if(current.Source is SafeUri) {
                 input_uri = current.Source as SafeUri;

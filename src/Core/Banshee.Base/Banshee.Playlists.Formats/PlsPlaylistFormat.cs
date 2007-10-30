@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Sources;
  
 namespace Banshee.Playlists.Formats
@@ -136,7 +137,7 @@ namespace Banshee.Playlists.Formats
                     count++;
                     
                     writer.WriteLine("File{0}={1}", count, ExportUri(track.Uri));
-                    writer.WriteLine("Title{0}={1} - {2}", count, track.DisplayArtist, track.DisplayTitle);
+                    writer.WriteLine("Title{0}={1} - {2}", count, track.DisplayArtistName, track.DisplayTrackTitle);
                     writer.WriteLine("Length{0}={1}", count, (int)Math.Round(track.Duration.TotalSeconds));
                 }
                                 

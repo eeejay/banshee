@@ -10,6 +10,7 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.SmartPlaylist
 {
@@ -212,8 +213,9 @@ namespace Banshee.SmartPlaylist
 
             while (reader.Read()) {
                 LibraryTrackInfo track = Globals.Library.GetTrack (Convert.ToInt32(reader[0]));
-                if (track != null)
-                    track.Changed += HandleTrackChanged;
+                // FIXME
+                //if (track != null)
+                    //track.Changed += HandleTrackChanged;
             }
 
             reader.Dispose();
@@ -268,14 +270,15 @@ namespace Banshee.SmartPlaylist
 
         private void HandleTrackAdded (object sender, LibraryTrackAddedArgs args)
         {
-            args.Track.Changed += HandleTrackChanged;
+            // FIXME
+            //args.Track.Changed += HandleTrackChanged;
 
             CheckTrack (args.Track);
         }
 
         private void HandleTrackChanged (object sender, EventArgs args)
         {
-            TrackInfo track = sender as TrackInfo;
+            LibraryTrackInfo track = sender as LibraryTrackInfo;
 
             if (track != null)
                 CheckTrack (track);
@@ -283,9 +286,11 @@ namespace Banshee.SmartPlaylist
 
         private void HandleTrackRemoved (object sender, LibraryTrackRemovedArgs args)
         {
-            foreach (TrackInfo track in args.Tracks)
+            // FIXME
+            /*foreach (TrackInfo track in args.Tracks)
                 if (track != null)
                     track.Changed -= HandleTrackChanged;
+                    */
         }
 
         public bool RateLimit ()
@@ -405,7 +410,7 @@ namespace Banshee.SmartPlaylist
             return true;
         }
 
-        private void CheckTrack (TrackInfo track)
+        private void CheckTrack (LibraryTrackInfo track)
         {
             if (RateLimit())
                 return;

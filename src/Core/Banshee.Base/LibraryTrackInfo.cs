@@ -85,7 +85,7 @@ namespace Banshee.Base
 
         private string MoveToPlace(string old_filename, bool initial_import)
         {
-            bool in_library = old_filename.StartsWith (Globals.Library.Location + Path.DirectorySeparatorChar);
+            bool in_library = old_filename.StartsWith (Paths.LibraryLocation + Path.DirectorySeparatorChar);
 //            Console.WriteLine ("\"{0}\" in \"{1}\": {2}", old_filename, Core.Library.Location, in_library);
 
             if (initial_import && !in_library) {

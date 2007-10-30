@@ -762,7 +762,8 @@ namespace Banshee.Gui
                 modGC.Copy(widget.Style.TextGC(state));
                 Gdk.Color fgcolor = widget.Style.Foreground(state);
                 Gdk.Color bgcolor = widget.Style.Background(state);
-                modGC.RgbFgColor = Utilities.ColorBlend(fgcolor, bgcolor);
+                // FIXME
+                //modGC.RgbFgColor = Utilities.ColorBlend(fgcolor, bgcolor);
             } 
             
             drawable.DrawLayout(modGC,

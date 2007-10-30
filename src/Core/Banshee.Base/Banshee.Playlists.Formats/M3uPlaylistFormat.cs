@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Sources;
  
 namespace Banshee.Playlists.Formats
@@ -117,7 +118,7 @@ namespace Banshee.Playlists.Formats
                         duration = -1;
                     }
                     
-                    writer.WriteLine("#EXTINF:{0},{1} - {2}", duration, track.DisplayArtist, track.DisplayTitle);
+                    writer.WriteLine("#EXTINF:{0},{1} - {2}", duration, track.DisplayArtistName, track.DisplayTrackTitle);
                     writer.WriteLine(ExportUri(track.Uri));
                 }
             }

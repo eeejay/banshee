@@ -272,17 +272,17 @@ namespace Banshee.Plugins.MiniMode
                 return;
             }
             
-            ArtistLabel.Markup = track.DisplayArtist;
-            TitleLabel.Markup = String.Format("<big><b>{0}</b></big>", GLib.Markup.EscapeText(track.DisplayTitle));
-            AlbumLabel.Markup = String.Format("<i>{0}</i>", GLib.Markup.EscapeText(track.DisplayAlbum));
+            ArtistLabel.Markup = track.DisplayArtistName;
+            TitleLabel.Markup = String.Format("<big><b>{0}</b></big>", GLib.Markup.EscapeText(track.DisplayTrackTitle));
+            AlbumLabel.Markup = String.Format("<i>{0}</i>", GLib.Markup.EscapeText(track.DisplayAlbumTitle));
             
             InfoBox.Visible = true;
             
-            Title = track.DisplayTitle + " (" + track.DisplayArtist + ")";
+            Title = track.DisplayTrackTitle + " (" + track.DisplayArtistName + ")";
             
             try {
                 cover_art_thumbnail.FileName = track.CoverArtFileName;
-                cover_art_thumbnail.Label = track.DisplayArtist + " - " + track.DisplayAlbum;
+                cover_art_thumbnail.Label = track.DisplayArtistName + " - " + track.DisplayAlbumTitle;
                 SetHeightLimit();
             } catch(Exception) {
             }

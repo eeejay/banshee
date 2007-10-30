@@ -313,7 +313,7 @@ namespace Banshee.Dap.MassStorage
             foreach(TrackInfo track in tracksToCopy) {
                 UpdateSaveProgress(
                     String.Format(Catalog.GetString("Copying {0} of {1}"), count, tracksToCopy.Count), 
-                    String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle),
+                    String.Format("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle),
                     count / tracksToCopy.Count);
 
                 CopyTrack(track);
@@ -443,7 +443,7 @@ namespace Banshee.Dap.MassStorage
         {
             TrackInfo track = args.Object as TrackInfo;
 
-            args.ReturnMessage = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayTitle);
+            args.ReturnMessage = String.Format("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
 
             if(!(track is MassStorageTrackInfo)) {
                 lock(uncopiedTracks) {

@@ -254,7 +254,7 @@ namespace Banshee.Plugins.Bookmarks
             this.track_id = track_id;
             this.position = position;
             this.created_at = created_at;
-            Name = String.Format(bookmark_format, Track.DisplayTitle, position/60, position%60);
+            Name = String.Format(bookmark_format, Track.DisplayTrackTitle, position/60, position%60);
         }
 
         public Bookmark(int track_id, uint position)
@@ -262,7 +262,7 @@ namespace Banshee.Plugins.Bookmarks
             this.track_id = track_id;
             this.position = position;
             this.created_at = DateTime.Now;
-            Name = String.Format(bookmark_format, Track.DisplayTitle, position/60, position%60);
+            Name = String.Format(bookmark_format, Track.DisplayTrackTitle, position/60, position%60);
 
             DbCommand command = new DbCommand(@"
                 INSERT INTO Bookmarks

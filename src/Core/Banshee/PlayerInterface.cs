@@ -623,21 +623,21 @@ namespace Banshee
                 return;
             }
         
-            trackInfoHeader.Artist = track.DisplayArtist;
-            trackInfoHeader.Title = track.DisplayTitle;
-            trackInfoHeader.Album = track.Album;
+            trackInfoHeader.Artist = track.DisplayArtistName;
+            trackInfoHeader.Title = track.DisplayTrackTitle;
+            trackInfoHeader.Album = track.AlbumTitle;
             trackInfoHeader.MoreInfoUri = track.MoreInfoUri != null ? track.MoreInfoUri.AbsoluteUri : null;
             
             trackInfoHeader.Visible = true;
             
-            WindowPlayer.Title = track.DisplayTitle + ((track.Artist != null && track.Artist != String.Empty) 
-                ? (" (" + track.DisplayArtist + ")")
+            WindowPlayer.Title = track.DisplayTrackTitle + ((track.ArtistName != null && track.ArtistName != String.Empty) 
+                ? (" (" + track.DisplayArtistName + ")")
                 : "");
             
             try {
                 trackInfoHeader.Cover.FileName = track.CoverArtFileName;
                 cover_art_view.FileName = track.CoverArtFileName;
-                trackInfoHeader.Cover.Label = String.Format("{0} - {1}", track.DisplayArtist, track.DisplayAlbum);
+                trackInfoHeader.Cover.Label = String.Format("{0} - {1}", track.DisplayArtistName, track.DisplayAlbumTitle);
             } catch(Exception) {
             }
             

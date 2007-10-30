@@ -23,11 +23,14 @@
 using System;
 using System.Data;
 using System.IO;
-using Banshee.Base;
-using Banshee.Widgets;
+
 using Gtk;
 using Mono.Unix;
 using Mono.Data.SqliteClient;
+
+using Banshee.Base;
+using Banshee.Collection.Database;
+using Banshee.Widgets;
 
 namespace Banshee.PlayerMigration
 {
@@ -177,10 +180,12 @@ namespace Banshee.PlayerMigration
                          UpdateUserEvent (processed, count, artist, title);
                      
                          try {
-                             LibraryTrackInfo ti = new LibraryTrackInfo (uri, artist, album, title, genre, track_number, 0, year, duration,
+                             // FIXME
+                             /*LibraryTrackInfo ti = new LibraryTrackInfo (uri, artist, album, title, genre, track_number, 0, year, duration,
                                  String.Empty, RemoteLookupStatus.NoAttempt);
                              ti.Rating = rating;
                              ti.PlayCount = playcount;
+                             */
                          } catch (Exception e) {
                              Banshee.Sources.ImportErrorsSource.Instance.AddError(SafeUri.UriToFilename (uri), e.Message, e);
                          }
