@@ -206,7 +206,7 @@ fi
 
 echo "WARNING: This is Banshee trunk! It is currently under very heavy"
 echo "         development and is NOT guaranteed to build or work under any"
-echo "         circumstances at the momement. When this status changes, this"
+echo "         circumstances at the moment. When this status changes, this"
 echo "         message will be removed. Only use trunk if you know exactly "
 echo "         what you are doing."
 echo
