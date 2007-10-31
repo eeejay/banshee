@@ -38,6 +38,7 @@ using Banshee.Base;
 using Banshee.AudioProfiles;
 using Banshee.Configuration.Schema;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.Base
 {
@@ -283,7 +284,7 @@ namespace Banshee.Base
             if(user_event.CancelMessage == null) {
                 user_event.CancelMessage = String.Format(Catalog.GetString(
                     "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
-                ), GLib.Markup.EscapeText(track.Album));
+                ), GLib.Markup.EscapeText(track.AlbumTitle));
             }
             
             if(device == null) {
@@ -375,11 +376,13 @@ namespace Banshee.Base
             overallProgress += (int)args.Track.Duration.TotalSeconds;
 
             if(!user_event.IsCancelRequested) {
-                TrackInfo lti;
+                TrackInfo lti = null;
                 try {
-                    lti = new LibraryTrackInfo(args.Uri, args.Track);
+                    // FIXME merge
+                    //lti = new LibraryTrackInfo(args.Uri, args.Track);
                 } catch(ApplicationException) {
-                    lti = Globals.Library.TracksFnKeyed[Library.MakeFilenameKey(args.Uri)] as TrackInfo;
+                    // FIXME merge
+                    //lti = Globals.Library.TracksFnKeyed[Library.MakeFilenameKey(args.Uri)] as TrackInfo;
                 }
             
                 if(lti != null) {                       

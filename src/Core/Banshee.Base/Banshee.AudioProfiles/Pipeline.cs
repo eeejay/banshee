@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 using SExpEngine;
+using Banshee.Base;
 
 namespace Banshee.AudioProfiles
 {

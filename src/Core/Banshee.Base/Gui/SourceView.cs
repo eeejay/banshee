@@ -39,6 +39,7 @@ using Banshee.Collection;
 using Banshee.Dap;
 using Banshee.Sources;
 using Banshee.Gui.DragDrop;
+using Banshee.Widgets;
 
 namespace Banshee.Gui
 {
@@ -762,8 +763,7 @@ namespace Banshee.Gui
                 modGC.Copy(widget.Style.TextGC(state));
                 Gdk.Color fgcolor = widget.Style.Foreground(state);
                 Gdk.Color bgcolor = widget.Style.Background(state);
-                // FIXME
-                //modGC.RgbFgColor = Utilities.ColorBlend(fgcolor, bgcolor);
+                modGC.RgbFgColor = DrawingUtilities.ColorBlend(fgcolor, bgcolor);
             } 
             
             drawable.DrawLayout(modGC,

@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using Mono.Unix;
 
@@ -35,9 +36,19 @@ using Banshee.Base;
 
 namespace Banshee.Collection
 {
+    public enum TrackPlaybackError {
+        None,
+        ResourceNotFound,
+        CodecNotFound,
+        Drm,
+        Unknown
+    }
+
     public class TrackInfo : ITrackInfo
     {
         private SafeUri uri;
+        protected string mimetype;
+        protected SafeUri more_info_uri;
 
         private string artist_name;
         private string album_title;
@@ -57,6 +68,7 @@ namespace Banshee.Collection
         private DateTime last_played;
         
         private TrackAttributes attributes;
+        protected TrackPlaybackError playback_error = TrackPlaybackError.None;
 
         public TrackInfo()
         {
@@ -75,6 +87,16 @@ namespace Banshee.Collection
         public virtual SafeUri Uri {
             get { return uri; }
             set { uri = value; }
+        }
+
+        public SafeUri MoreInfoUri {
+            get { return more_info_uri; }
+            set { more_info_uri = value; }
+        }
+
+        public string MimeType {
+            get { return mimetype; }
+            set { mimetype = value; }
         }
 
         [ListItemSetup(FieldIndex=1)]
@@ -174,6 +196,67 @@ namespace Banshee.Collection
         public virtual TrackAttributes Attributes {
             get { return attributes; }
             protected set { attributes = value; }
+        }
+
+        public virtual TrackPlaybackError PlaybackError {
+            get { return playback_error; }
+            set { playback_error = value; }
+        }
+
+        public bool IsLive {
+            get { return (Attributes & TrackAttributes.IsLive) == TrackAttributes.IsLive; }
+        }
+
+        public bool CanPlay {
+            get { return (Attributes & TrackAttributes.CanPlay) == TrackAttributes.CanPlay; }
+        }
+
+        protected string cover_art_file = null;
+        public string CoverArtFileName { 
+            get {
+                if(cover_art_file != null) {
+                    return cover_art_file;
+                }
+                
+                string path = null;
+                string id = AlbumInfo.CreateArtistAlbumId(ArtistName, AlbumTitle, false);
+                                
+                foreach(string ext in TrackInfo.CoverExtensions) {
+                    path = Paths.GetCoverArtPath(id, "." + ext);
+                    if(File.Exists(path)) {
+                        cover_art_file = path;
+                        return path;
+                    }
+                }
+               
+                string basepath = Path.GetDirectoryName(Uri.AbsolutePath) + Path.DirectorySeparatorChar;
+                
+                foreach(string cover in TrackInfo.CoverNames) {
+                    foreach(string ext in TrackInfo.CoverExtensions) {
+                        string img = basepath + cover + "." + ext;
+                        if(File.Exists(img)) {
+                            cover_art_file = img;
+                            return img;
+                        }
+                    }
+                }
+                
+                return null;
+            }
+            
+            set { cover_art_file = value; }
+        }
+
+        protected static string[] cover_names = { "cover", "Cover", "folder", "Folder" };
+        public static string[] CoverNames 
+        {
+            get { return TrackInfo.cover_names; }
+        }
+        
+        protected static string[] cover_extensions = { "jpg", "png", "jpeg", "gif" };
+        public static string[] CoverExtensions
+        {
+            get { return TrackInfo.cover_extensions; }
         }
         
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22

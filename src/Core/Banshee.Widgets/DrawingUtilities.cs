@@ -37,6 +37,11 @@ namespace Banshee.Widgets
 {
     public static class DrawingUtilities
     {
+        public static Gdk.Color ColorBlend(Gdk.Color a, Gdk.Color b)
+        {
+            return ColorBlend (a, b, 0.5);
+        }
+
         public static Gdk.Color ColorBlend(Gdk.Color a, Gdk.Color b, double blend)
         {
             if(blend < 0.0 || blend > 1.0) {

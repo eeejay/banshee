@@ -94,7 +94,7 @@ namespace Banshee.Widgets
         
         private void UpdateDisplay()
         {
-            Gdk.Color blend = Banshee.Base.Utilities.ColorBlend(
+            Gdk.Color blend = DrawingUtilities.ColorBlend(
                 artist_album_label.Style.Background(StateType.Normal),
                 artist_album_label.Style.Foreground(StateType.Normal));
             string hex_blend = String.Format("#{0:x2}{1:x2}{2:x2}", blend.Red, blend.Green, blend.Blue);

@@ -180,7 +180,7 @@ namespace Banshee.PlayerMigration
                          UpdateUserEvent (processed, count, artist, title);
                      
                          try {
-                             // FIXME
+                             // FIXME merge
                              /*LibraryTrackInfo ti = new LibraryTrackInfo (uri, artist, album, title, genre, track_number, 0, year, duration,
                                  String.Empty, RemoteLookupStatus.NoAttempt);
                              ti.Rating = rating;

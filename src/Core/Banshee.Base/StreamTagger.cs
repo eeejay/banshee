@@ -77,8 +77,8 @@ namespace Banshee.Base
             track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
             track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);
             track.Genre = Choose(file.Tag.FirstGenre, track.Genre);
-            track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (uint)file.Tag.Track;
-            track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (uint)file.Tag.TrackCount;
+            track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (int)file.Tag.Track;
+            track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (int)file.Tag.TrackCount;
             track.Year = (int)file.Tag.Year;
             track.MimeType = file.MimeType;
             
@@ -102,11 +102,11 @@ namespace Banshee.Base
                         track.Genre = Choose((string)tag.Value, track.Genre);
                         break;
                     case CommonTags.TrackNumber:
-                        uint track_number = (uint)tag.Value;
+                        int track_number = (int)tag.Value;
                         track.TrackNumber = track_number == 0 ? track.TrackNumber : track_number;
                         break;
                     case CommonTags.TrackCount:
-                        track.TrackCount = (uint)tag.Value;
+                        track.TrackCount = (int)tag.Value;
                         break;
                     case CommonTags.Duration:
                         if(tag.Value is TimeSpan) {
@@ -125,7 +125,7 @@ namespace Banshee.Base
                     case CommonTags.StreamType:
                         track.MimeType = (string)tag.Value;
                         break;
-                    case CommonTags.AlbumCoverID:
+                    case CommonTags.AlbumCoverId:
                         foreach(string ext in TrackInfo.CoverExtensions) {
                             string path = Paths.GetCoverArtPath((string) tag.Value, "." + ext);
                             if(System.IO.File.Exists(path)) {
@@ -165,8 +165,8 @@ namespace Banshee.Base
             file.Tag.Album = track.AlbumTitle;
             file.Tag.Genres = new string [] { track.Genre };
             file.Tag.Title = track.TrackTitle;
-            file.Tag.Track = track.TrackNumber;
-            file.Tag.TrackCount = track.TrackCount;
+            file.Tag.Track = (uint)track.TrackNumber;
+            file.Tag.TrackCount = (uint)track.TrackCount;
             file.Tag.Year = (uint)track.Year;
             file.Save();
         }
@@ -209,7 +209,7 @@ namespace Banshee.Base
         public const string AlbumGain         = "replaygain-album-gain";
         public const string AlbumPeak         = "replaygain-album-peak";
         public const string StreamType        = "stream-type";
-        public const string AlbumCoverID      = "album-cover-id"; 
+        public const string AlbumCoverId      = "album-cover-id"; 
         public const string MoreInfoUri       = "more-info-uri";
     }
 }

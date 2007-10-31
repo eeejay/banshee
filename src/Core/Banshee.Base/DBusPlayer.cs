@@ -246,17 +246,17 @@ namespace Banshee.Base
         
         public string GetPlayingArtist()
         {
-            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Artist) : String.Empty;
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.ArtistName) : String.Empty;
         }
         
         public string GetPlayingAlbum()
         {
-            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Album) : String.Empty;
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.AlbumTitle) : String.Empty;
         }
         
         public string GetPlayingTitle()
         {
-            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.Title) : String.Empty;
+            return HaveTrack ? TrackStringResult(PlayerEngineCore.CurrentTrack.TrackTitle) : String.Empty;
         }
         
         public string GetPlayingGenre()
@@ -298,9 +298,9 @@ namespace Banshee.Base
         {
             try {
                 if(HaveTrack) {
-                    PlayerEngineCore.CurrentTrack.Rating = (uint)Math.Max(0, Math.Min(rating, 5));
+                    PlayerEngineCore.CurrentTrack.Rating = (int)Math.Max(0, Math.Min(rating, 5));
                     PlayerEngineCore.TrackInfoUpdated();
-                    return (int)PlayerEngineCore.CurrentTrack.Rating;
+                    return PlayerEngineCore.CurrentTrack.Rating;
                 }
             } catch {
             }

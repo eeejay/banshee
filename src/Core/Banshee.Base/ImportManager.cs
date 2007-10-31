@@ -182,7 +182,7 @@ namespace Banshee.Base
         
         public void QueueSource(Gtk.SelectionData selection)
         {
-            QueueSource(new UriList(selection));
+            QueueSource(new UriList(System.Text.Encoding.UTF8.GetString(selection.Data)));
         }
         
         public void QueueSource(string source)

@@ -70,7 +70,7 @@ namespace Banshee.Library
         private static void OnImportManagerImportRequested(object o, ImportEventArgs args)
         {
             try {
-                // FIXME
+                // FIXME merge
                 //TrackInfo ti = new LibraryTrackInfo(args.FileName);
                 //args.ReturnMessage = String.Format("{0} - {1}", ti.ArtistName, ti.TrackTitle);
             } catch(Exception e) {

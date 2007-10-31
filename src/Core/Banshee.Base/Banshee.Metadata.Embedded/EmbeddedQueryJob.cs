@@ -64,7 +64,7 @@ namespace Banshee.Metadata.Embedded
         protected string Fetch()
         {
             string image_path = null;
-            string artist_album_id = TrackInfo.CreateArtistAlbumID(track.Artist, track.Album, false);
+            string artist_album_id = AlbumInfo.CreateArtistAlbumId(track.ArtistName, track.AlbumTitle, false);
 
             if(artist_album_id == null) {
                 return null;
@@ -79,7 +79,7 @@ namespace Banshee.Metadata.Embedded
                 
                 if(SavePicture(picture, path)) {    
                     StreamTag tag = new StreamTag();
-                    tag.Name = CommonTags.AlbumCoverID;
+                    tag.Name = CommonTags.AlbumCoverId;
                     tag.Value = artist_album_id;   
                     
                     AddTag(tag);

@@ -30,6 +30,8 @@ using System;
 
 using Hyena.Data.Gui;
 
+using Banshee.Collection;
+
 namespace Banshee.Collection.Gui
 {
     public class TrackListView : ListView<TrackInfo>

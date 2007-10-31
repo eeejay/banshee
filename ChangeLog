@@ -1,3 +1,8 @@
+2007-10-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* MERGE BUILD FIXES: More fixes.  Everything except src/Core/Banshee/*
+	builds.
+
 2007-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* MERGE BUILD FIXES: Replace many instances of track.DisplayTitle/Artist/Album

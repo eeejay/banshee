@@ -35,6 +35,7 @@ using Banshee.Base;
 using Banshee.MediaEngine;
 using Banshee.Sources;
 using Banshee.Database;
+using Banshee.Collection;
 
 namespace Banshee
 {

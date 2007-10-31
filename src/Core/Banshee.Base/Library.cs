@@ -178,7 +178,7 @@ namespace Banshee.Base
         private void CollectionRemove(LibraryTrackInfo track)
         {
             lock(((IDictionary)Tracks).SyncRoot) {
-                Tracks.Remove(track.TrackId);
+                Tracks.Remove(track.DbId);
             }
             
             lock(((IDictionary)TracksFnKeyed).SyncRoot) {
@@ -202,7 +202,7 @@ namespace Banshee.Base
             Db.Execute(new DbCommand(
                 @"DELETE FROM Tracks
                     WHERE TrackID = :track_id",
-                    "track_id", track.TrackId
+                    "track_id", track.DbId
             ));
                         
             LibraryTrackRemovedHandler removed_handler = TrackRemoved;
@@ -235,7 +235,7 @@ namespace Banshee.Base
                     continue;
                 }
 
-                query += String.Format(" TrackID = '{0}' ", track.TrackId);
+                query += String.Format(" TrackID = '{0}' ", track.DbId);
                 if(remove_count < tracks.Count - invalid_count - 1) {
                     query += " OR ";
                 }

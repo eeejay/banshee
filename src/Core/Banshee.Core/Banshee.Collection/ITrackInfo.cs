@@ -33,10 +33,6 @@ namespace Banshee.Collection
     [Interface("org.bansheeproject.Banshee.Tracks.Track")]
     public interface ITrackInfo : IBasicTrackInfo
     {
-        string ArtistName { get; }
-        string AlbumTitle { get; }
-        string TrackTitle { get; }
-        
         string DisplayArtistName { get; }
         string DisplayAlbumTitle { get; }
         string DisplayTrackTitle { get; }

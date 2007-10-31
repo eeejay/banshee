@@ -59,7 +59,7 @@ namespace Banshee.Metadata.Rhapsody
                 return;
             }
         
-            string album_artist_id = TrackInfo.CreateArtistAlbumID(Track.Artist, Track.Album, false);
+            string album_artist_id = AlbumInfo.CreateArtistAlbumId(Track.ArtistName, Track.AlbumTitle, false);
             if(album_artist_id == null) {
                 return;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
@@ -85,7 +85,7 @@ namespace Banshee.Metadata.Rhapsody
                 Uri art_uri = new Uri(art_node.Attributes["src"].Value);
                 if(SaveHttpStreamPixbuf(art_uri, album_artist_id, null)) {
                     StreamTag tag = new StreamTag();
-                    tag.Name = CommonTags.AlbumCoverID;
+                    tag.Name = CommonTags.AlbumCoverId;
                     tag.Value = album_artist_id;
                 
                     AddTag(tag);

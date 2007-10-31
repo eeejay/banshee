@@ -34,6 +34,7 @@ using Gtk;
 using Banshee.Base;
 using Banshee.Dap;
 using Banshee.Sources;
+using Banshee.Collection;
 using Banshee.TrackView.Columns;
 
 namespace Banshee

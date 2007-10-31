@@ -31,6 +31,8 @@ using System;
 using Hyena.Data;
 using Hyena.Data.Gui;
 
+using Banshee.Collection;
+
 namespace Banshee.Collection.Gui
 {
     public class AlbumListView : ListView<AlbumInfo>

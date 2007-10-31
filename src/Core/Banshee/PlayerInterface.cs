@@ -50,6 +50,7 @@ using Banshee.Gui.DragDrop;
 using Banshee.Configuration.Schema;
 using Banshee.Playlists;
 using Banshee.Playlists.Formats;
+using Banshee.Collection;
 
 namespace Banshee
 {
@@ -839,7 +840,7 @@ namespace Banshee
                                 "The most common reasons for this are:\n\n" +
                                 "  <big>\u2022</big> Song is protected (DRM)\n" +
                                 "  <big>\u2022</big> Song is on a DAP that does not support playback\n"),
-                                PlayerEngineCore.CurrentTrack.Title));
+                                PlayerEngineCore.CurrentTrack.TrackTitle));
                     }
                     
                     break;
@@ -939,7 +940,8 @@ namespace Banshee
             }
             
             if(stream_length > 0 && stream_position > stream_length / 2 && !incrementedCurrentSongPlayCount) {
-                PlayerEngineCore.CurrentTrack.IncrementPlayCount();
+                // FIXME merge
+                //PlayerEngineCore.CurrentTrack.IncrementPlayCount();
                 incrementedCurrentSongPlayCount = true;
                 playlistView.QueueDraw();
             }
@@ -1340,20 +1342,20 @@ namespace Banshee
             string [] matches;
             
             if((filter_type & TrackFilterType.ArtistName) == TrackFilterType.ArtistName) {
-                matches = new string [] { ti.Artist };
+                matches = new string [] { ti.ArtistName };
             } else if((filter_type & TrackFilterType.SongName) == TrackFilterType.SongName) {
-                matches = new string [] { ti.Title };
+                matches = new string [] { ti.TrackTitle };
             } else if((filter_type & TrackFilterType.AlbumTitle) == TrackFilterType.AlbumTitle) {
-                matches = new string [] { ti.Album };
+                matches = new string [] { ti.AlbumTitle };
             } else if((filter_type & TrackFilterType.Genre) == TrackFilterType.Genre) {
                 matches = new string [] { ti.Genre };
             } else if((filter_type & TrackFilterType.Year) == TrackFilterType.Year) {
                 matches = new string [] { ti.Year.ToString() };
             } else {
                 matches = new string [] {
-                    ti.Artist,
-                    ti.Album,
-                    ti.Title,
+                    ti.ArtistName,
+                    ti.AlbumTitle,
+                    ti.TrackTitle,
                     ti.Genre,
                     ti.Year.ToString()
                 };
@@ -1662,7 +1664,7 @@ namespace Banshee
 
         private void OnItemRatingActivated(object o, EventArgs args)
         {
-            uint rating = (uint)(o as RatingMenuItem).Value;
+            int rating = (int)(o as RatingMenuItem).Value;
             
             foreach(TreePath path in playlistView.Selection.GetSelectedRows()) {
                 playlistModel.PathTrackInfo(path).Rating = rating;
@@ -2494,15 +2496,15 @@ namespace Banshee
 
             switch(criteria) {
                 case SearchTrackCriteria.Album:
-                    if (track.Album != null && track.Album != String.Empty) {
+                    if (track.AlbumTitle != null && track.AlbumTitle != String.Empty) {
                         searchEntry.ActivateFilter((int)TrackFilterType.AlbumTitle);
-                        searchEntry.Query = track.Album;
+                        searchEntry.Query = track.AlbumTitle;
                     }
                     break;
                 case SearchTrackCriteria.Artist:
-                    if (track.Artist != null && track.Artist != String.Empty) {
+                    if (track.ArtistName != null && track.ArtistName != String.Empty) {
                         searchEntry.ActivateFilter((int)TrackFilterType.ArtistName);
-                        searchEntry.Query = track.Artist;
+                        searchEntry.Query = track.ArtistName;
                     }
                     break;
                 case SearchTrackCriteria.Genre:

@@ -213,7 +213,7 @@ namespace Banshee.SmartPlaylist
 
             while (reader.Read()) {
                 LibraryTrackInfo track = Globals.Library.GetTrack (Convert.ToInt32(reader[0]));
-                // FIXME
+                // FIXME merge
                 //if (track != null)
                     //track.Changed += HandleTrackChanged;
             }
@@ -270,7 +270,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleTrackAdded (object sender, LibraryTrackAddedArgs args)
         {
-            // FIXME
+            // FIXME merge
             //args.Track.Changed += HandleTrackChanged;
 
             CheckTrack (args.Track);
@@ -286,7 +286,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleTrackRemoved (object sender, LibraryTrackRemovedArgs args)
         {
-            // FIXME
+            // FIXME merge
             /*foreach (TrackInfo track in args.Tracks)
                 if (track != null)
                     track.Changed -= HandleTrackChanged;

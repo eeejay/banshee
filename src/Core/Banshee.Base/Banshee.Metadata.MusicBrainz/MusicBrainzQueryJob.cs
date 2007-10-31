@@ -70,7 +70,7 @@ namespace Banshee.Metadata.MusicBrainz
                 return false;
             }
             
-            string album_artist_id = TrackInfo.CreateArtistAlbumID(track.Artist, track.Album, false);
+            string album_artist_id = AlbumInfo.CreateArtistAlbumId(track.ArtistName, track.AlbumTitle, false);
             if(album_artist_id == null) {
                 return false;
             } else if(File.Exists(Paths.GetCoverArtPath(album_artist_id))) {
@@ -89,7 +89,7 @@ namespace Banshee.Metadata.MusicBrainz
             if(SaveHttpStreamPixbuf(new Uri(String.Format(AmazonUriFormat, asin)), album_artist_id, 
                 new string [] { "image/gif" })) {
                 StreamTag tag = new StreamTag();
-                tag.Name = CommonTags.AlbumCoverID;
+                tag.Name = CommonTags.AlbumCoverId;
                 tag.Value = album_artist_id;
 
                 AddTag(tag);
@@ -107,7 +107,7 @@ namespace Banshee.Metadata.MusicBrainz
         private string FindAsin()
         {
             Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
-                track.Artist, track.Album));
+                track.ArtistName, track.AlbumTitle));
 
             XmlTextReader reader = new XmlTextReader(GetHttpStream(uri));
 
