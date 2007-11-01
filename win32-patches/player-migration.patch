@@ -69,7 +69,7 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs
 ===================================================================
 --- banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs    (revision 0)
 +++ banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs    (revision 0)
-@@ -0,0 +1,696 @@
+@@ -0,0 +1,688 @@
 +/*
 + *  Copyright (c) 2007 Scott Peterson <lunchtimemama@gmail.com> 
 + *
@@ -526,20 +526,12 @@ Index: banshee/src/Core/Banshee.Base/Banshee.PlayerMigration/ItunesImport.cs
 +                    //skip = true;
 +                    break;
 +                case "Audiobooks":
-+                    goto case "skip";
 +                case "Music":
-+                    goto case "skip";
 +                case "Movies":
-+                    goto case "skip";
 +                case "Party Shuffle":
-+                    goto case "skip";
 +                case "Podcasts":
-+                    goto case "skip";
 +                case "Purchased Music":
-+                    goto case "skip";
 +                case "TV Shows":
-+                    goto case "skip";
-+                case "skip":
 +                    if(xml_reader.Name == "true") {
 +                        skip = true;
 +                    }
