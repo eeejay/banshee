@@ -1,5 +1,5 @@
 //
-// Nereid.cs
+// Entry.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -65,8 +65,36 @@ namespace Nereid
             
             // Run the Banshee ServiceStack initializer, then 
             // enter the GNOME/GTK/GLib main loop
+
+            ServiceManager.Instance.StartupBegin += delegate {
+                Console.WriteLine ("<STARTUP>: BEGIN");
+            };
+            
+            ServiceManager.Instance.StartupFinished += delegate {
+                Console.WriteLine ("<STARTUP>: FINISHED");
+            };
+            
+            ServiceManager.Instance.ServiceStarted += delegate (object o, ServiceStartedArgs args) {
+                Console.WriteLine ("<STARTUP> {0}/{1}: {2}", ServiceManager.Instance.ServiceCount, 
+                    ServiceManager.Instance.StartupServiceCount, args.Service.ServiceName);
+            };
+            
+            ServiceManager.Instance.RegisterService <PlayerInterface> ();
+            
+            Application.ShutdownPromptHandler = OnShutdownPrompt;
             Application.Run ();
+            
             program.Run ();
+        }
+        
+        private static bool OnShutdownPrompt ()
+        {
+            Banshee.Gui.Dialogs.ConfirmShutdownDialog dialog = new Banshee.Gui.Dialogs.ConfirmShutdownDialog();
+            try {
+                return dialog.Run () != Gtk.ResponseType.Cancel;
+            } finally {
+                dialog.Destroy();
+            }
         }
     }
 }

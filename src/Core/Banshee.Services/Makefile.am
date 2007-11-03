@@ -11,11 +11,9 @@ BANSHEE_SERVICES_SOURCE = \
 	$(wildcard Banshee.Collection.Database/*.cs) \
 	$(wildcard Banshee.Database/*.cs) \
 	$(wildcard Banshee.ServiceStack/*.cs) \
+	$(wildcard Banshee.Library/*.cs) \
+	$(wildcard Banshee.Playlist/*.cs) \
 	$(wildcard Banshee.Sources/*.cs)
-
-#	$(wildcard Banshee.Library/*.cs) \
-#	$(wildcard Banshee.Playlist/*.cs) \
-#	$(wildcard Banshee.Sources/*.cs)
 
 BANSHEE_SERVICES_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_SERVICES_SOURCE))
 

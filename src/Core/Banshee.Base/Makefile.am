@@ -157,13 +157,10 @@ BANSHEE_METADATA_MUSICBRAINZ_SOURCES = \
 	$(srcdir)/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs
 
 GUI_SOURCES = \
-	$(srcdir)/Gui/GladeWindow.cs \
-	$(srcdir)/Gui/GladeDialog.cs \
 	$(srcdir)/Gui/ImportDialog.cs \
 	$(srcdir)/Gui/OpenLocationDialog.cs \
 	$(srcdir)/Gui/UIManager.cs \
 	$(srcdir)/Gui/SeekDialog.cs \
-	$(srcdir)/Gui/ErrorListDialog.cs \
 	$(srcdir)/Gui/SplashScreen.cs \
 	$(srcdir)/Gui/PreferencesDialog.cs \
 	$(srcdir)/Gui/AboutDialog.cs \
@@ -171,7 +168,6 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/ToggleStates.cs \
 	$(srcdir)/Gui/RatingRenderer.cs \
 	$(srcdir)/Gui/TrackEditor.cs \
-	$(srcdir)/Gui/ConfirmShutdownDialog.cs \
 	$(srcdir)/Gui/ImageFileChooserDialog.cs \
 	$(srcdir)/Gui/SourceView.cs \
 	$(srcdir)/Gui/FileChooserDialog.cs

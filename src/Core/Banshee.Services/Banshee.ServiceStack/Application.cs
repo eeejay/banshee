@@ -30,17 +30,65 @@ using System;
 using System.Reflection;
 using Mono.Unix;
 
-//using Banshee.Library;
-//using Banshee.Sources;
+using Banshee.Library;
+using Banshee.Sources;
 
 namespace Banshee.ServiceStack
-{
+{    
+    public delegate bool ShutdownRequestHandler ();
+    
     public static class Application
     {
+        public static event ShutdownRequestHandler ShutdownRequested;
+        
         public static void Run ()
         {
             ServiceManager.Instance.Run ();
-            //ServiceManager.SourceManager.AddSource(new LibrarySource());
+            ServiceManager.SourceManager.AddSource (new LibrarySource ());
+        }
+     
+        public static void Shutdown ()
+        {
+            if (Banshee.Kernel.Scheduler.IsScheduled (typeof (Banshee.Kernel.IInstanceCriticalJob)) ||
+                Banshee.Kernel.Scheduler.CurrentJob is Banshee.Kernel.IInstanceCriticalJob) {
+                if (shutdown_prompt_handler != null && !shutdown_prompt_handler ()) {
+                    return;
+                }
+            }
+            
+            // TODO: Remove, this is a test
+            if (shutdown_prompt_handler != null && !shutdown_prompt_handler ()) {
+                return;
+            }
+            
+            if (OnShutdownRequested ()) {
+                Dispose ();
+            }
+        }
+        
+        private static bool OnShutdownRequested()
+        {
+            ShutdownRequestHandler handler = ShutdownRequested;
+            if (handler != null) {
+                foreach (Delegate d in handler.GetInvocationList ()) {
+                    if(!(bool)d.DynamicInvoke (null)) {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        private static void Dispose ()
+        {
+            ServiceManager.Instance.Shutdown ();
+        }
+        
+        private static ShutdownRequestHandler shutdown_prompt_handler = null;
+        public static ShutdownRequestHandler ShutdownPromptHandler {
+            get { return shutdown_prompt_handler; }
+            set { shutdown_prompt_handler = value; }
         }
         
         public static string Title {

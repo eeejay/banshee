@@ -7,6 +7,10 @@ bansheethickclientdir = $(pkglibdir)
 bansheethickclient_SCRIPTS = $(BANSHEE_THICKCLIENT_ASSEMBLY) $(BANSHEE_THICKCLIENT_ASSEMBLY).mdb
 
 BANSHEE_THICKCLIENT_SOURCE = \
+	$(wildcard Banshee.Gui/*.cs) \
+	$(wildcard Banshee.Gui.DragDrop/*.cs ) \
+	$(wildcard Banshee.Gui.Dialogs/*.cs) \
+	$(wildcard Banshee.Sources.Gui/*.cs) \
 	$(wildcard Banshee.Collection.Gui/*.cs) 
 BANSHEE_THICKCLIENT_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_THICKCLIENT_SOURCE))
 

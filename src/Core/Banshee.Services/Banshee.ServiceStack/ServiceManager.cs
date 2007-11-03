@@ -36,39 +36,122 @@ namespace Banshee.ServiceStack
 {
     public class ServiceManager : IService
     {
-        private Dictionary<string, IService> services = new Dictionary<string, IService>();
-
         private static ServiceManager instance;
         public static ServiceManager Instance {
             get { 
                 if(instance == null) {
-                    instance = new ServiceManager();
+                    instance = new ServiceManager ();
                 }
                 
                 return instance; 
             }
         }
         
-        public static void Initialize()
+        private Dictionary<string, IService> services = new Dictionary<string, IService> ();
+        private List<Type> service_types = new List<Type> ();
+        private bool has_run = false;
+        
+        public event EventHandler StartupBegin;
+        public event EventHandler StartupFinished;
+        public event ServiceStartedHandler ServiceStarted;
+        
+        public ServiceManager ()
         {
+            RegisterService<DBusServiceManager> ();
+            RegisterService<BansheeDbConnection> ();
+            RegisterService<SourceManager> ();
         }
         
         public void Run()
         {
-            IService [] _services = new IService [] {
-                new DBusServiceManager(),
-                new BansheeDbConnection(),
-                new SourceManager(),
-                this
-            };
-            
-            foreach(IService service in _services) {
-                services.Add(service.ServiceName, service);
+            lock (this) {          
+                OnStartupBegin ();
                 
-                if(service is IDBusExportable) {
-                    DBusServiceManager.RegisterObject((IDBusExportable)service);
+                foreach (Type type in service_types) {
+                    IService service = (IService)Activator.CreateInstance (type);
+                    RegisterServiceNoLock (service);
+                    OnServiceStarted (service);
+                }
+                
+                RegisterServiceNoLock (this);
+                OnServiceStarted (this);
+                
+                has_run = true;
+                
+                OnStartupFinished ();
+            }
+        }
+        
+        public void Shutdown ()
+        {
+            lock (this) {
+                foreach (IService service in services.Values) {
+                    if (service is IDisposable) {
+                        ((IDisposable)service).Dispose ();
+                    }
+                }
+                
+                services.Clear ();
+            }
+        }
+        
+        private void RegisterServiceNoLock (IService service)
+        {
+            services.Add (service.ServiceName, service);
+            
+            if(service is IDBusExportable) {
+                DBusServiceManager.RegisterObject ((IDBusExportable)service);
+            }
+        }
+                    
+        public void RegisterService (IService service)
+        {
+            lock (this) {
+                RegisterServiceNoLock (service);
+            }
+        }
+                    
+        public void RegisterService<T> () where T : IService
+        {
+            lock (this) {
+                if (has_run) {
+                    RegisterServiceNoLock (Activator.CreateInstance <T> ());
+                } else {
+                    service_types.Add (typeof (T));
                 }
             }
+        }
+        
+        protected virtual void OnStartupBegin ()
+        {
+            EventHandler handler = StartupBegin;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
+        protected virtual void OnStartupFinished ()
+        {
+            EventHandler handler = StartupFinished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
+        protected virtual void OnServiceStarted (IService service)
+        {
+            ServiceStartedHandler handler = ServiceStarted;
+            if (handler != null) {
+                handler (this, new ServiceStartedArgs (service));
+            }
+        }
+        
+        public int StartupServiceCount {
+            get { return service_types.Count + 1; }
+        }
+        
+        public int ServiceCount {
+            get { return services.Count; }
         }
         
         public IService this[string serviceName] {

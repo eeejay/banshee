@@ -1,30 +1,30 @@
 <Project name="Banshee" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="banshee" />
+      <Output directory="./" assembly="banshee" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="PlayerInterface.cs" subtype="Code" buildaction="Compile" />
-    <File name="PlaylistModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="PlaylistView.cs" subtype="Code" buildaction="Compile" />
-    <File name="StockIcons.cs" subtype="Code" buildaction="Compile" />
-    <File name="TrackViewColumnWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/AlbumColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/ArtistColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/GenreColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/LastPlayedColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/PlayCountColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/RatingColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/DurationColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/TitleColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/TrackNumberColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/TrackViewColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.TrackView.Columns/YearColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlayerInterface.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlaylistModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PlaylistView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./StockIcons.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TrackViewColumnWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/AlbumColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/ArtistColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/GenreColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/LastPlayedColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/PlayCountColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/RatingColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/DurationColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TitleColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TrackNumberColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/TrackViewColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/YearColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="../../../data/banshee.glade" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/cd-action-burn-24.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/cd-action-burn-32.png" subtype="Code" buildaction="EmbedAsResource" />
@@ -62,9 +62,9 @@
     <File name="../../../data/images/tray-icon.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../../data/images/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.TrackView.Columns/UriColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/UriColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="../../../data/UIManagerLayout.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.TrackView.Columns/DateAddedColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.TrackView.Columns/DateAddedColumn.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />

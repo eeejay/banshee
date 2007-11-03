@@ -7,7 +7,6 @@ SUBDIRS = \
 	Banshee.Services \
 	Banshee.Widgets \
 	Banshee.ThickClient \
-	Banshee.Base \
 	Nereid
 
 #Banshee
