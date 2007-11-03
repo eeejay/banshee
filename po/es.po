@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-24 20:35+0100\n"
-"PO-Revision-Date: 2007-11-02 08:59+0100\n"
+"POT-Creation-Date: 2007-10-29 03:29+0000\n"
+"PO-Revision-Date: 2007-11-03 14:04+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "Códec de audio libre sin pérdida"
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
-msgstr ""
+msgstr "El códec de sonido libre y sin pérdida (Free Lossless Audio Codec, FLAC) es un códec de fuente abierta que comprime pero no degrada la calidad del sonido."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
@@ -62,6 +62,8 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
+"Un formato de sonido con pérdida viejo y propietario, pero también popular, que produce "
+"archivos más grandes a bajas tasas de bit."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
@@ -118,12 +120,16 @@ msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
+"Vorbis es un códec de sonido con pérdida de fuente abierta con una gran calidad de salida y con "
+"un tamaño de archivo menor que MP3."
 
 #: ../data/audio-profiles/wav.xml.in.h:1
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
 msgstr ""
+"WAV+PCM es un formato de archivo con pérdida que mantiene el sonido sin compresión, con "
+"modulación de pulsos codificados."
 
 #: ../data/audio-profiles/wav.xml.in.h:2
 msgid "Waveform PCM"
@@ -664,7 +670,7 @@ msgstr "Usar scripts"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:101
 msgid "Run available user scripts"
-msgstr ""
+msgstr "Ejecutar los scripts de usuario disponibles"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:104
 msgid "_Quit"
@@ -1356,11 +1362,11 @@ msgstr "Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
 msgid "Unable to open Amarok database"
-msgstr ""
+msgstr "No se pudo abrir la base de datos de Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
 msgid "Importing from Amarok database failed"
-msgstr ""
+msgstr "Falló la importación de la base de datos de Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
 #: ../src/Core/Banshee.Base/ImportManager.cs:285
@@ -1385,7 +1391,7 @@ msgstr "Migrar desde otros reproductores"
 msgid ""
 "Select any supported alternate media players that you wish to migrate into "
 "Banshee."
-msgstr ""
+msgstr "Seleccione cualquier reproductor multimedia disponible que desee migrar a Banshee."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
 #: ../src/Core/Banshee.Base/SourceManager.cs:269
@@ -1399,13 +1405,13 @@ msgstr "Reproductor"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
 msgid "Unable to Locate Supported Media Player"
-msgstr ""
+msgstr "No se pudo localizar ningún reproductor multimedia soportado"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
 msgid ""
 "Banshee was unable to locate any libraries from alternate supported media "
 "players from which to import."
-msgstr ""
+msgstr "Banshee no pudo localizar ninguna fonoteca para importar de reproductores multimedia alternativos."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
 msgid "Migrate"
@@ -1421,7 +1427,7 @@ msgstr "Reproductor de música Rhythmbox"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
 msgid "Invalid Rhythmbox database file"
-msgstr ""
+msgstr "Archivo de base de datos Rhythmbox no válido"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
 msgid "Windows Media ASX (*.asx)"
@@ -1429,11 +1435,11 @@ msgstr "Windows Media ASX (*.asx)"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:43
 msgid "MPEG Version 3.0 Extended (*.m3u)"
-msgstr ""
+msgstr "MPEG versión 3.0 extendida (*.m3u)"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:50
 msgid "Shoutcast Playlist version 2 (*.pls)"
-msgstr ""
+msgstr "Lista de reproducción Shoutcast versión 2 (*.pls)"
 
 #: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:177
 msgid "Verifying"
@@ -1784,6 +1790,8 @@ msgid ""
 "{0} is depended on by other smart playlists. Are you sure you want to delete "
 "this and all dependent smart playlists?"
 msgstr ""
+"Otras listas de reproducción inteligentes dependen de {0}. ¿Está seguro de que quiere borrar "
+"esta lista de reproducción inteligente y todas sus dependencias?"
 
 #: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
 msgid "Could not launch URL"
@@ -2113,7 +2121,7 @@ msgstr "Examinar…"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:67
 msgid "Select library location"
-msgstr "Seleccionar la ubicación de la biblioteca"
+msgstr "Seleccionar la ubicación de la fonoteca"
 
 #: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
 msgid ""
@@ -2549,10 +2557,11 @@ msgid ""
 "album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
 "prefixed zero), %track_count_nz% (No prefixed zero)."
 msgstr ""
-"Formato para crear un nombre de archivo para las pistas en la fonoteca. No se pueden usar"
-"tokens/caracteres. Vea LibraryFolderPattern. Tokens permitidos: %artist%, %"
-"album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
-"prefixed zero), %track_count_nz% (sin prefijar con cero)."
+"Formato para crear un nombre de archivo para las pistas en la fonoteca. No "
+"se pueden usartokens/caracteres. Vea LibraryFolderPattern. Tokens "
+"permitidos: %artist%, %album%, %title%, %track_number%, %track_count%, %"
+"track_number_nz% (No prefixed zero), %track_count_nz% (sin prefijar con "
+"cero)."
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
 #, no-c-format
@@ -2595,11 +2604,11 @@ msgstr "Ubicación de la fonoteca"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
 msgid "Library source expansion"
-msgstr ""
+msgstr "Expansión de la fuente de la fonoteca"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
-msgstr ""
+msgstr "Lista de los URI en el menú desplegable histórico para el diálogo de abrir ubicación"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
@@ -2713,11 +2722,11 @@ msgstr "Volumen de reproducción relativo a la salida del mezclador"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
 msgid "When importing an audio CD, enable error correction (paranoia mode)"
-msgstr ""
+msgstr "Activar la corrección de errores (modo paranoia) al importar un CD de sonido"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
 msgid "Whether to expand the library node in the source view"
-msgstr ""
+msgstr "Indica si se debe expandir el nodo de la fonoteca en la vista de la fuente"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
 msgid "Width of Source View Column."
@@ -3652,7 +3661,7 @@ msgstr "Marcadores"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
 msgid "Bookmark your position in tracks."
-msgstr ""
+msgstr "Marcar su posición en las pistas."
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
 msgid "_Bookmarks"
@@ -3664,22 +3673,22 @@ msgstr "_Añadir marcador"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
 msgid "Bookmark the Position in the Current Track"
-msgstr ""
+msgstr "Marcar la posición en la pista actual"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
 msgid "_Remove Bookmark"
-msgstr ""
+msgstr "Elimina_r marcador"
 
 #. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
 #. (possibly more than two digits) and {2} is seconds (between 00 and 60).
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
 #, csharp-format
 msgid "{0} ({1}:{2:00})"
-msgstr ""
+msgstr "{0} ({1}:{2:00})"
 
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
 msgid "Bookmarks plugin enabled"
-msgstr ""
+msgstr "Complemento de marcadores activado"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:49
 #: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:50
@@ -3812,7 +3821,7 @@ msgstr "Nombre de la compartición"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
 msgid "Share server enabled"
-msgstr ""
+msgstr "Servidor de compartición activador"
 
 #: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:47
 msgid "Multimedia Keyboard Shortcuts"
@@ -3878,6 +3887,8 @@ msgid ""
 "Are you sure you want to stop downloading cover art for the albums in your "
 "library? The operation can be resumed at any time from the <i>Tools</i> menu."
 msgstr ""
+"¿Seguro que quiere dejar de descargar el arte de portada para los álbumes en su "
+"fonoteca? La operación se puede resumir en cualquier momento desde el menú <i>Herramientas</i>."
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
 msgid "Metadata searcher plugin enabled"
@@ -3991,7 +4002,9 @@ msgstr "Mostrar notificaciones"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
 msgid "Show track information notifications when track starts playing"
-msgstr "Mostrar notificaciones de información sobre la pista cuando comience a reproducirse"
+msgstr ""
+"Mostrar notificaciones de información sobre la pista cuando comience a "
+"reproducirse"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
 msgid ""
@@ -4131,7 +4144,7 @@ msgstr "Falló la descarga"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:746
 msgid "Unable to add file to library"
-msgstr "No se pudo añadir un archivo a la biblioteca"
+msgstr "No se pudo añadir un archivo a la fonoteca"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:226
 #, csharp-format
@@ -4381,7 +4394,7 @@ msgstr "Columna fuente de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
 msgid "Podcast library location"
-msgstr "Ubicación de la biblioteca de Podcast"
+msgstr "Ubicación de la fonoteca de Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
 msgid "Podcast plugin enabled"
@@ -4634,5 +4647,7 @@ msgstr "Complemento de recomendación activado"
 msgid ""
 "Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
 "recommendation"
-msgstr "Versión de la caché de disposición en el disco, ubicada en ~/.config/banshee/plugins/recomendation"
+msgstr ""
+"Versión de la caché de disposición en el disco, ubicada en ~/.config/banshee/"
+"plugins/recomendation"
 
