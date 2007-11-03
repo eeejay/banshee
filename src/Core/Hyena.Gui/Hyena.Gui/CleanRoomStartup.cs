@@ -1,10 +1,10 @@
 //
-// Application.cs
+// CleanRoomStartup.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,46 +27,40 @@
 //
 
 using System;
-using System.Reflection;
-using Mono.Unix;
 
-//using Banshee.Library;
-//using Banshee.Sources;
-
-namespace Banshee.ServiceStack
+namespace Hyena.Gui
 {
-    public static class Application
+    public static class CleanRoomStartup
     {
-        public static void Run ()
+        public delegate void StartupInvocationHandler();
+        
+        public static void Startup(StartupInvocationHandler startup)
         {
-            ServiceManager.Instance.Run ();
-            //ServiceManager.SourceManager.AddSource(new LibrarySource());
-        }
-        
-        public static string Title {
-            get { return "Banshee"; }
-        }
-        
-        public static string InternalName {
-            get { return "banshee"; }
-        }
-        
-        private static string version;
-        public static string Version {
-            get { 
-                if (version != null) {
-                    return version;
+            bool disable_clean_room = false;
+            
+            foreach(string arg in Environment.GetCommandLineArgs ()) {
+                if(arg == "--disable-clean-room") {
+                    disable_clean_room = true;
+                    break;
                 }
-                
-                try {
-                    AssemblyName name = Assembly.GetEntryAssembly ().GetName ();
-                    version = String.Format ("{0}.{1}.{2}", name.Version.Major, 
-                        name.Version.Minor, name.Version.Build);
-                } catch {
-                    version = Catalog.GetString ("Unknown");
-                }
-                
-                return version;
+            }
+            
+            if(disable_clean_room) {
+                startup();
+                return;
+            }
+            
+            try {
+                startup();
+            } catch(Exception e) {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e);
+            
+                Gtk.Application.Init();
+                Hyena.Gui.Dialogs.ExceptionDialog dialog = new Hyena.Gui.Dialogs.ExceptionDialog(e);
+                dialog.Run();
+                dialog.Destroy();
+                System.Environment.Exit(1);
             }
         }
     }

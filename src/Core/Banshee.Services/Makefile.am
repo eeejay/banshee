@@ -10,7 +10,8 @@ BANSHEE_SERVICES_SOURCE = \
 	$(wildcard Banshee.Collection/*.cs) \
 	$(wildcard Banshee.Collection.Database/*.cs) \
 	$(wildcard Banshee.Database/*.cs) \
-	$(wildcard Banshee.ServiceStack/*.cs)
+	$(wildcard Banshee.ServiceStack/*.cs) \
+	$(wildcard Banshee.Sources/*.cs)
 
 #	$(wildcard Banshee.Library/*.cs) \
 #	$(wildcard Banshee.Playlist/*.cs) \

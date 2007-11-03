@@ -1,3 +1,5 @@
+include $(top_srcdir)/build/Common.Makefile
+
 SUBDIRS = \
 	Hyena \
 	Hyena.Gui \
@@ -6,7 +8,12 @@ SUBDIRS = \
 	Banshee.Widgets \
 	Banshee.ThickClient \
 	Banshee.Base \
-	Banshee
+	Nereid
+
+#Banshee
+
+run:
+	MONO_PATH=$(RUN_PATH) mono Nereid/Nereid.exe
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

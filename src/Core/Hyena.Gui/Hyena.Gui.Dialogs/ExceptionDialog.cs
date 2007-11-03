@@ -1,41 +1,41 @@
-/***************************************************************************
- *  ExceptionDialog.cs
- *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
+//
+// ExceptionDialog.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2005-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 using System;
 using System.Reflection;
 using System.Resources;
 using System.Diagnostics;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Mono.Unix;
 using Gtk;
 
-namespace Banshee.Gui.Dialogs
+namespace Hyena.Gui.Dialogs
 {
     public class ExceptionDialog : Dialog
     {
@@ -153,7 +153,7 @@ namespace Banshee.Gui.Dialogs
             
             msg.Append("\n\nDisribution Information:\n\n");
             
-            Hashtable lsb = LsbVersionInfo.Harvest;
+            Dictionary<string, string> lsb = LsbVersionInfo.Harvest;
             
             foreach(string lsbfile in lsb.Keys) {
                 msg.Append("[" + lsbfile + "]\n");
@@ -194,7 +194,7 @@ namespace Banshee.Gui.Dialogs
                 "debian_version"
             };
             
-            private Hashtable harvest = new Hashtable(); 
+            private Dictionary<string, string> harvest = new Dictionary<string, string>(); 
             
             public LsbVersionInfo()
             {
@@ -207,11 +207,11 @@ namespace Banshee.Gui.Dialogs
                 }
             }
             
-            public Hashtable Findings {
+            public Dictionary<string, string> Findings {
                 get { return harvest; }
             }
             
-            public static Hashtable Harvest {
+            public static Dictionary<string, string> Harvest {
                 get { return (new LsbVersionInfo()).Findings; }
             }
         }

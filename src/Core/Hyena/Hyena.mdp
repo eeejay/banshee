@@ -1,29 +1,29 @@
 <Project name="Hyena" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Hyena" />
+      <Output directory="." assembly="Hyena" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Timer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/ICareAboutView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/IFilterable.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/IListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/ISortable.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/ISortableColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/ListItemSetup.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/SortType.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryKeywordNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryListNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryParser.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryTermNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/QueryToken.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data.Query/SqlQueryGenerator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Hyena.Data/PropertyStore.cs" subtype="Code" buildaction="Compile" />
+    <File name="Timer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ICareAboutView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/IFilterable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/IListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ISortable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ISortableColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ListItemSetup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/SortType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryKeywordNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryListNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryTermNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryToken.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/SqlQueryGenerator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/PropertyStore.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

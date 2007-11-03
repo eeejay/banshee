@@ -184,7 +184,7 @@ namespace Banshee.Database
 #endregion
         
 #region Migration Step Implementations
-        
+#pragma warning disable 0169
         // NOTE: Return true if the step should allow the driver to continue
         //       Return false if the step should terminate driver
         
@@ -215,6 +215,8 @@ namespace Banshee.Database
                 return false;
             }
         }   
+        
+#pragma warning restore 0169
         
         private void InitializeFreshDatabase()
         {

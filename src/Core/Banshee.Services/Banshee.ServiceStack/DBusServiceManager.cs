@@ -45,7 +45,8 @@ namespace Banshee.ServiceStack
             BusG.Init();
             
             try {
-                RequestNameReply nameReply = Bus.Session.RequestName(BusName);
+                RequestNameReply name_reply = Bus.Session.RequestName(BusName);
+                Console.WriteLine ("NDesk.DBus.Bus.Session.RequestName ('{0}') => {1}", BusName, name_reply);
                 // TODO: error handling based on nameReply. should probably throw if 
                 // nameReply is anything other than NameReply.PrimaryOwner
             } catch(Exception e) {

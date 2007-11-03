@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-//using Banshee.Sources;
+using Banshee.Sources;
 using Banshee.Database;
 
 namespace Banshee.ServiceStack
@@ -58,7 +58,7 @@ namespace Banshee.ServiceStack
             IService [] _services = new IService [] {
                 new DBusServiceManager(),
                 new BansheeDbConnection(),
-                //new SourceManager(),
+                new SourceManager(),
                 this
             };
             
@@ -76,7 +76,7 @@ namespace Banshee.ServiceStack
         }
         
         string IService.ServiceName {
-            get { return "ServicesManager"; }
+            get { return "ServiceManager"; }
         }
         
         public static DBusServiceManager DBusServiceManager {
@@ -87,8 +87,8 @@ namespace Banshee.ServiceStack
             get { return (BansheeDbConnection)Instance["DbConnection"]; }
         }
         
-        /*public static SourceManager SourceManager {
+        public static SourceManager SourceManager {
             get { return (SourceManager)Instance["SourceManager"]; }
-        }*/
+        }
     }
 }

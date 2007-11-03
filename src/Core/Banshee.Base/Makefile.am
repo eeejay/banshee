@@ -167,10 +167,7 @@ GUI_SOURCES = \
 	$(srcdir)/Gui/SplashScreen.cs \
 	$(srcdir)/Gui/PreferencesDialog.cs \
 	$(srcdir)/Gui/AboutDialog.cs \
-	$(srcdir)/Gui/ExceptionDialog.cs \
-	$(srcdir)/Gui/CleanRoomStartup.cs \
 	$(srcdir)/Gui/LogCoreDialog.cs \
-	$(srcdir)/Gui/VersionInformationDialog.cs \
 	$(srcdir)/Gui/ToggleStates.cs \
 	$(srcdir)/Gui/RatingRenderer.cs \
 	$(srcdir)/Gui/TrackEditor.cs \
