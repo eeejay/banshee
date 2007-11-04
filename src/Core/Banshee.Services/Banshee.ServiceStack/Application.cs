@@ -43,12 +43,12 @@ namespace Banshee.ServiceStack
         
         public static void Run ()
         {
-            Banshee.Base.LinuxPlatformHacks.TrapMonoJitSegv ();
+            Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
 
             ServiceManager.Instance.Run ();
             ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
             
-            Banshee.Base.LinuxPlatformHacks.RestoreMonoJitSegv ();
+            Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
         }
      
         public static void Shutdown ()
