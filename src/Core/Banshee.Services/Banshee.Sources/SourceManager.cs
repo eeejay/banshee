@@ -89,6 +89,10 @@ namespace Banshee.Sources
             foreach(Source child_source in source.Children) {
                 AddSource(child_source, false);
             }
+                
+            if(isDefault && ActiveSource == null) {
+                SetActiveSource(source);
+            }
         }
         
         public void AddSource(Source source)

@@ -29,7 +29,7 @@
 using System;
 using Banshee.Configuration;
  
-namespace Banshee.Configuration.Schema
+namespace Nereid
 {
     public static class PlayerWindowSchema
     {

@@ -56,7 +56,6 @@ namespace Banshee.Sources
             properties.PropertyChanged += OnPropertyChanged;
         }
         
-        
         protected void OnSetupComplete()
         {
             if(this is ITrackModelSource) {
@@ -191,7 +190,25 @@ namespace Banshee.Sources
         public int Order {
             get { return properties.GetInteger("Order"); }
         }
-
+        
+        public virtual bool ImplementsCustomSearch {
+            get { return false; }
+        }
+        
+        public virtual bool CanSearch {
+            get { return true; }
+        }
+                
+        public string FilterQuery {
+            get { return properties.GetString("FilterQuery"); }
+            set { properties.SetString("FilterQuery", value); }
+        }
+        
+        public TrackFilterType FilterType {
+            get { return (TrackFilterType)properties.GetInteger("FilterType"); }
+            set { properties.SetInteger("FilterType", (int)value); }
+        }
+        
         public virtual bool Expanded {
             get { return properties.GetBoolean("Expanded"); }
             set {

@@ -44,5 +44,6 @@
     <File name="./Banshee.Collection/SampleTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Collection/UnknownTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Collection/TrackAttributes.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection/TrackFilterType.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

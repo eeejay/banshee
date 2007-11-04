@@ -176,7 +176,7 @@ namespace Banshee.Widgets
                 GLib.Source.Remove(changed_timeout_id);
             }
 
-            changed_timeout_id = GLib.Timeout.Add(300, OnChangedTimeout);
+            changed_timeout_id = GLib.Timeout.Add(25, OnChangedTimeout);
         }
 
         private bool OnChangedTimeout()
@@ -358,6 +358,10 @@ namespace Banshee.Widgets
         public new bool HasFocus {
             get { return entry.HasFocus; }
             set { entry.HasFocus = true; }
+        }
+        
+        public Entry InnerEntry {
+            get { return entry; }
         }
 
         private class FilterMenuItem : CheckMenuItem

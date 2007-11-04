@@ -57,7 +57,7 @@ namespace Banshee.ServiceStack
             
             // Begin the Banshee boot process
             ServiceManager.Instance.Run ();
-            ServiceManager.SourceManager.AddSource (new LibrarySource ());
+            ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
 
             // Reset the SEGV handle to that of the JIT again (SIGH!)
             sigaction (Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
