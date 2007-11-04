@@ -9,7 +9,8 @@ hyena_SCRIPTS = $(HYENA_ASSEMBLY) $(HYENA_ASSEMBLY).mdb
 HYENA_SOURCE = \
 	$(wildcard *.cs) \
 	$(wildcard Hyena.Data/*.cs) \
-	$(wildcard Hyena.Data.Query/*.cs)
+	$(wildcard Hyena.Data.Query/*.cs) \
+	$(wildcard Hyena.CommandLine/*.cs) 
 HYENA_SOURCE_BUILD = $(addprefix $(srcdir)/, $(HYENA_SOURCE))
 
 all: $(HYENA_ASSEMBLY)

@@ -24,6 +24,11 @@
     <File name="./Hyena.Data.Query/QueryToken.cs" subtype="Code" buildaction="Compile" />
     <File name="./Hyena.Data.Query/SqlQueryGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="./Hyena.Data/PropertyStore.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.CommandLine" subtype="Directory" buildaction="Compile" />
+    <File name="./Hyena.CommandLine/Layout.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.CommandLine/LayoutOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.CommandLine/LayoutGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.CommandLine/CommandLineParser.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -27,24 +27,30 @@
 //
 
 using System;
+using Hyena.CommandLine;
 
 namespace Banshee.Base
 {
     public static class ApplicationContext
     {
-        private static ArgumentQueue argument_queue;
-        public static ArgumentQueue ArgumentQueue {
-            set { argument_queue = value; }
-            get { return argument_queue; }
+        private static CommandLineParser command_line = new CommandLineParser ("enqueue");
+        public static CommandLineParser CommandLine {
+            set { command_line = value; }
+            get { return command_line; }
+        }
+        
+        private static Layout command_line_layout;
+        private static Layout CommandLineLayout {
+            get { return command_line_layout; }
+            set { command_line_layout = value; }
         }
         
         private static bool? debugging = null;
         public static bool Debugging {
             get {
-                if(debugging == null) {
-                    debugging = ArgumentQueue.Contains("debug");
-                    string debug_env = Environment.GetEnvironmentVariable("BANSHEE_DEBUG");
-                    debugging |= debug_env != null && debug_env != String.Empty;
+                if (debugging == null) {
+                    debugging = CommandLine.Contains ("debug");
+                    debugging |= EnvironmentIsSet ("BANSHEE_DEBUG");
                 }
                 
                 return debugging.Value;
@@ -53,11 +59,10 @@ namespace Banshee.Base
         
         public static bool EnvironmentIsSet(string env)
         {
-            string env_val = Environment.GetEnvironmentVariable(env);
-            return env_val != null && env_val != String.Empty;
+            return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
         }
         
-        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
+        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo ("en-US");
         public static System.Globalization.CultureInfo InternalCultureInfo {
             get { return culture_info; }
         }
