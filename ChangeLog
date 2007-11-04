@@ -1,3 +1,29 @@
+2007-11-04  Aaron Bockover  <aaron@abock.org>
+
+	* Hyena/Hyena.Data/PropertyStore.cs: Added StringList and GetType support
+
+	* Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Removed unnecessary
+	old code
+
+	* Banshee.ThickClient/Banshee.Gui/GtkThemeService.cs: New service that
+	listens for GTK theme changes, invalidates known icon caches in 
+	services, and notifies listening components; effectively means that
+	the source view will update its icons if the GTK theme changes
+
+	* Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Support loading
+	icons via the IconName source property as a string or string list and
+	cache the result in the IconPixbuf property in the source; listen
+	to GtkThemeService to queue redraw
+
+	* Nereid/Nereid/PlayerInterface.cs: Set the ListenWidget in GtkThemeService
+	to PlayerInterface
+
+	* Nereid/Nereid/Entry.cs: Register a GtkThemeService
+
+	* Banshee.Services/Banshee.Library/LibrarySource.cs: Fixed icon names
+
+	* Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Added Contains
+
 2007-10-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* MERGE BUILD FIXES: More fixes.  Everything except src/Core/Banshee/*

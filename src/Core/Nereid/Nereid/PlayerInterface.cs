@@ -35,6 +35,7 @@ using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
+using Banshee.Gui;
 using Banshee.Collection.Gui;
 using Banshee.Sources.Gui;
 
@@ -59,6 +60,8 @@ namespace Nereid
             ConnectEvents ();
             LoadSettings ();
             ResizeMoveWindow ();
+            
+            ((GtkThemeService)ServiceManager.Instance["GtkThemeService"]).ListenWidget = this;
             
             Show ();
         }

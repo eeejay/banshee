@@ -75,17 +75,5 @@ namespace Banshee.Gui
                 return null;
             }
         }
-
-        public static void SetWindowIcon(Gtk.Window window)
-        {
-           // SetWindowIcon(window, Branding.ApplicationIconName);
-        }
-
-        public static void SetWindowIcon(Gtk.Window window, string iconName)
-        {
-            if(window != null && iconName != null) {
-                window.IconName = iconName;
-            }
-        }
     }
 }

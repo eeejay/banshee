@@ -134,6 +134,12 @@ namespace Banshee.Sources.Gui
             ServiceManager.SourceManager.SourceUpdated += delegate(SourceEventArgs args) {
                 QueueDraw();
             };
+            
+            if(ServiceManager.Instance.Contains ("GtkThemeService")) {
+                ((Banshee.Gui.GtkThemeService)ServiceManager.Instance["GtkThemeService"]).ThemeChanged += delegate {
+                    QueueDraw();
+                };
+            }
         }
 
         private TreeIter FindSource(Source source)
@@ -692,9 +698,22 @@ namespace Banshee.Sources.Gui
                 return;
             }
 
-            icon = source.Properties.Get<Gdk.Pixbuf>("Icon");
+            icon = source.Properties.Get<Gdk.Pixbuf>("IconPixbuf");
             if(icon == null) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, source.Properties.GetString("IconName"));
+                Type icon_type = source.Properties.GetType("IconName");
+                if(icon_type == typeof(string)) {
+                    icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, source.Properties.GetString("IconName"));
+                } else if(icon_type == typeof(string [])) {
+                    icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, source.Properties.GetStringList("IconName"));
+                }
+                
+                if(icon == null) {
+                    icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, "source-generic");
+                }
+                
+                if(icon != null) {
+                    source.Properties.Set<Gdk.Pixbuf>("IconPixbuf", icon);
+                }
             }
             
             Pango.Layout titleLayout = new Pango.Layout(widget.PangoContext);

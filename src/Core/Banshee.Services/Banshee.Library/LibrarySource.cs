@@ -45,7 +45,7 @@ namespace Banshee.Library
         
         public LibrarySource() : base(Catalog.GetString("Library"), 0)
         {
-            Properties.SetString("IconName", "user-home");
+            Properties.SetStringList("IconName", "go-home", "user-home", "source-library");
             
             track_model = new TrackListDatabaseModel(ServiceManager.DbConnection);
             album_model = new AlbumListDatabaseModel(ServiceManager.DbConnection);

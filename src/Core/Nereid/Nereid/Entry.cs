@@ -27,7 +27,9 @@
 //
 
 using System;
+
 using Banshee.Base;
+using Banshee.Gui;
 using Banshee.ServiceStack;
 
 namespace Nereid
@@ -68,6 +70,7 @@ namespace Nereid
             // Run the Banshee ServiceStack initializer, then 
             // enter the GNOME/GTK/GLib main loop
             
+            ServiceManager.Instance.RegisterService <GtkThemeService> ();
             ServiceManager.Instance.RegisterService <PlayerInterface> ();
             
             Application.ShutdownPromptHandler = OnShutdownPrompt;

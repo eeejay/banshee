@@ -122,6 +122,13 @@ namespace Banshee.ServiceStack
             }
         }
         
+        public bool Contains (string serviceName)
+        {
+            lock (this) {
+                return services.ContainsKey (serviceName);
+            }
+        }
+        
         protected virtual void OnStartupBegin ()
         {
             EventHandler handler = StartupBegin;

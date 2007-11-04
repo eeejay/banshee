@@ -28,6 +28,7 @@
     <File name="./Banshee.Gui.Dialogs/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.Dialogs/GladeDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.Dialogs/GladeWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui/GtkThemeService.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />

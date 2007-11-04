@@ -156,6 +156,16 @@ namespace Hyena.Data
             Set<string>(name, value);
         }
         
+        public string [] GetStringList(string name)
+        {
+            return Get<string []>(name);
+        }
+        
+        public void SetStringList(string name, params string [] value)
+        {
+            Set<string []>(name, value);
+        }
+        
         public bool GetBoolean(string name)
         {
             return Get<bool>(name);
@@ -170,6 +180,13 @@ namespace Hyena.Data
         {
             lock(this) {
                 return object_store != null && object_store.ContainsKey(name);
+            }
+        }
+    
+        public Type GetType(string name)
+        {
+            lock(this) {
+                return !Contains(name) ? null : object_store[name].GetType();
             }
         }
     }
