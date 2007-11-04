@@ -108,8 +108,6 @@ namespace Hyena.Gui.Dialogs
 			
             hbox.ShowAll();
 
-            IconName = "music-player-banshee";
-
             AddButton(Stock.Close, ResponseType.Close, true);
         }
 

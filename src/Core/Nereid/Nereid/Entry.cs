@@ -52,6 +52,7 @@ namespace Nereid
             
             // Initialize GTK
             Gtk.Application.Init ();
+            Gtk.Window.DefaultIconName = "music-player-banshee";
             
             // Force the GDK program class to avoid a bug in some WMs and 
             // task list versions in GNOME
@@ -61,7 +62,7 @@ namespace Nereid
             }
             
             // Create a GNOME program wrapper
-            Gnome.Program program = new Gnome.Program (Application.Title, Application.Version, 
+            Gnome.Program program = new Gnome.Program ("Banshee", Application.Version, 
                 Gnome.Modules.UI, Environment.GetCommandLineArgs ());
             
             // Run the Banshee ServiceStack initializer, then 

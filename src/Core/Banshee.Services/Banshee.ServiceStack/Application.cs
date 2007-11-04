@@ -73,11 +73,6 @@ namespace Banshee.ServiceStack
                 }
             }
             
-            // TODO: Remove, this is a test
-            if (shutdown_prompt_handler != null && !shutdown_prompt_handler ()) {
-                return;
-            }
-            
             if (OnShutdownRequested ()) {
                 Dispose ();
             }
@@ -106,10 +101,6 @@ namespace Banshee.ServiceStack
         public static ShutdownRequestHandler ShutdownPromptHandler {
             get { return shutdown_prompt_handler; }
             set { shutdown_prompt_handler = value; }
-        }
-        
-        public static string Title {
-            get { return "Banshee"; }
         }
         
         public static string InternalName {
