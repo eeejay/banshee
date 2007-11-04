@@ -38,30 +38,17 @@ namespace Banshee.ServiceStack
     public delegate bool ShutdownRequestHandler ();
     
     public static class Application
-    {
-        // For the SEGV trap hack (see below)
-        [System.Runtime.InteropServices.DllImport ("libc")]
-        private static extern int sigaction (Mono.Unix.Native.Signum sig, IntPtr act, IntPtr oact);
-        
+    {   
         public static event ShutdownRequestHandler ShutdownRequested;
         
         public static void Run ()
         {
-            // We must get a reference to the JIT's SEGV handler because 
-            // GStreamer will set its own and not restore the previous, which
-            // will cause what should be NullReferenceExceptions to be unhandled
-            // segfaults for the duration of the instance, as the JIT is powerless!
-            // FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=391777
-            IntPtr mono_jit_segv_handler = System.Runtime.InteropServices.Marshal.AllocHGlobal (512);
-            sigaction (Mono.Unix.Native.Signum.SIGSEGV, IntPtr.Zero, mono_jit_segv_handler);
-            
-            // Begin the Banshee boot process
+            Banshee.Base.LinuxPlatformHacks.TrapMonoJitSegv ();
+
             ServiceManager.Instance.Run ();
             ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
-
-            // Reset the SEGV handle to that of the JIT again (SIGH!)
-            sigaction (Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
-            System.Runtime.InteropServices.Marshal.FreeHGlobal (mono_jit_segv_handler);
+            
+            Banshee.Base.LinuxPlatformHacks.RestoreMonoJitSegv ();
         }
      
         public static void Shutdown ()

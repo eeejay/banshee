@@ -1,5 +1,19 @@
 2007-11-04  Aaron Bockover  <aaron@abock.org>
 
+	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: A static class
+	containing a collection of random platform-specific hacks such as 
+	forcing the process name, working around a GDK/window manager bug, 
+	and working around a GStreamer bug that interfered with signal handling
+	in the Mono JIT
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	* src/Core/Nereid/Nereid/Entry.cs: Simplified due to PlatformHacks
+
+	* src/Core/Banshee.Core/Banshee.Base/Utilities.cs: Moved SetProcessName
+	in an effort to get rid of this file
+
+2007-11-04  Aaron Bockover  <aaron@abock.org>
+
 	* Hyena/Hyena.Data/PropertyStore.cs: Added StringList and GetType support
 
 	* Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Removed unnecessary

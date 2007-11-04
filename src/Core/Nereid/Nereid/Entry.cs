@@ -29,16 +29,12 @@
 using System;
 
 using Banshee.Base;
-using Banshee.Gui;
 using Banshee.ServiceStack;
 
 namespace Nereid
 {
     public static class NereidEntry
     {
-        [System.Runtime.InteropServices.DllImport ("libgtk-win32-2.0-0.dll")]
-        private static extern void gdk_set_program_class (string program_class);
-    
         public static void Main ()
         {
             Hyena.Gui.CleanRoomStartup.Startup (Startup);
@@ -47,35 +43,27 @@ namespace Nereid
         private static void Startup ()
         {   
             // Set the process name so system process listings and commands are pretty
-            try {
-                Banshee.Base.Utilities.SetProcessName (Application.InternalName);
-            } catch {
-            }
+            PlatformHacks.TrySetProcessName (Application.InternalName);
             
             // Initialize GTK
             Gtk.Application.Init ();
             Gtk.Window.DefaultIconName = "music-player-banshee";
             
-            // Force the GDK program class to avoid a bug in some WMs and 
-            // task list versions in GNOME
-            try {
-                gdk_set_program_class (Application.InternalName);
-            } catch {
-            }
+            PlatformHacks.GdkSetProgramClass (Application.InternalName);
             
             // Create a GNOME program wrapper
             Gnome.Program program = new Gnome.Program ("Banshee", Application.Version, 
                 Gnome.Modules.UI, Environment.GetCommandLineArgs ());
             
-            // Run the Banshee ServiceStack initializer, then 
-            // enter the GNOME/GTK/GLib main loop
-            
-            ServiceManager.Instance.RegisterService <GtkThemeService> ();
+            // Register specific services this client will care about
+            ServiceManager.Instance.RegisterService <Banshee.Gui.GtkThemeService> ();
             ServiceManager.Instance.RegisterService <PlayerInterface> ();
             
+            // Start the core boot process
             Application.ShutdownPromptHandler = OnShutdownPrompt;
             Application.Run ();
             
+            // Run the GTK main loop
             program.Run ();
         }
         
