@@ -592,6 +592,8 @@ namespace Hyena.Data.Gui
                 list_cr = cr;
                 PaintList(evnt, clip);
             }
+            
+            ((IDisposable)cr).Dispose();
         }
         
         private void PaintHeader(Gdk.Rectangle clip)
