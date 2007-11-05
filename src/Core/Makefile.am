@@ -1,5 +1,3 @@
-include $(top_srcdir)/build/Common.Makefile
-
 SUBDIRS = \
 	Hyena \
 	Hyena.Gui \
@@ -9,10 +7,8 @@ SUBDIRS = \
 	Banshee.ThickClient \
 	Nereid
 
-#Banshee
+include $(top_srcdir)/build/build.mk
 
 run:
-	MONO_PATH=$(RUN_PATH) mono --debug Nereid/Nereid.exe 
+	MONO_PATH=$(RUN_PATH) $(MONO) --debug Nereid/Nereid.exe
 
-MAINTAINERCLEANFILES = \
-	Makefile.in

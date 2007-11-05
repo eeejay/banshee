@@ -1,32 +1,17 @@
-include $(top_srcdir)/build/Common.Makefile
+ASSEMBLY = Banshee.ThickClient
+TARGET = library
+ASSEMBLY_BUILD_FLAGS = -unsafe
+LINK = $(REF_BANSHEE_THICKCLIENT)
 
-BANSHEE_THICKCLIENT = Banshee.ThickClient
-BANSHEE_THICKCLIENT_ASSEMBLY = $(BANSHEE_THICKCLIENT).dll
+SOURCES = \
+	Banshee.Gui/*.cs \
+	Banshee.Gui.DragDrop/*.cs  \
+	Banshee.Gui.Dialogs/*.cs \
+	Banshee.Sources.Gui/*.cs \
+	Banshee.Collection.Gui/*.cs
 
-bansheethickclientdir = $(pkglibdir)
-bansheethickclient_SCRIPTS = $(BANSHEE_THICKCLIENT_ASSEMBLY) $(BANSHEE_THICKCLIENT_ASSEMBLY).mdb
+RESOURCES = \
+	$(wildcard Resources/*)
 
-BANSHEE_THICKCLIENT_SOURCE = \
-	$(wildcard Banshee.Gui/*.cs) \
-	$(wildcard Banshee.Gui.DragDrop/*.cs ) \
-	$(wildcard Banshee.Gui.Dialogs/*.cs) \
-	$(wildcard Banshee.Sources.Gui/*.cs) \
-	$(wildcard Banshee.Collection.Gui/*.cs) 
-BANSHEE_THICKCLIENT_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_THICKCLIENT_SOURCE))
-
-BANSHEE_THICKCLIENT_RESOURCES = $(wildcard Resources/*)
-BANSHEE_THICKCLIENT_EXPANDED_RESOURCES = $(foreach resource,$(BANSHEE_THICKCLIENT_RESOURCES),$(srcdir)/$(resource))
-BANSHEE_THICKCLIENT_EXPANDED_RESOURCES_BUILD = $(foreach resource,$(BANSHEE_THICKCLIENT_EXPANDED_RESOURCES), $(addprefix -resource:,$(resource)),$(notdir $(resource)))
-
-all: $(BANSHEE_THICKCLIENT_ASSEMBLY)
-
-$(BANSHEE_THICKCLIENT_ASSEMBLY): $(BANSHEE_THICKCLIENT_SOURCE_BUILD) $(BANSHEE_THICKCLIENT_EXPANDED_RESOURCES)
-	$(BUILD_LIB) -unsafe -out:$@ $(LINK_BANSHEE_CORE_ASM) $(LINK_BANSHEE_SERVICES) $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_MONO_UNIX) $(LINK_CAIRO) $(LINK_GTK) $(BANSHEE_THICKCLIENT_EXPANDED_RESOURCES_BUILD) $(BANSHEE_THICKCLIENT_SOURCE_BUILD)
-
-EXTRA_DIST = \
-	$(BANSHEE_THICKCLIENT_SOURCE) \
-	$(BANSHEE_THICKCLIENT_RESOURCES) 
-
-CLEANFILES = $(BANSHEE_THICKCLIENT_ASSEMBLY) *.mdb *.dll *.pidb
-MAINTAINERCLEANFILES = Makefile.in
+include $(top_srcdir)/build/build.mk
 

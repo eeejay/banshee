@@ -46,6 +46,9 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	ICSharpCode.SharpZipLib
 ])
 
+dnl NDesk DBus libraries
+BANSHEE_CHECK_NDESK_DBUS
+
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
@@ -54,9 +57,6 @@ SHAMROCK_CHECK_MONO_NUNIT
 
 dnl Boo libraries and compiler (optional)
 BANSHEE_CHECK_BOO
-
-dnl External NDesk DBus libraries (optional)
-BANSHEE_CHECK_NDESK_DBUS
 
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
@@ -111,8 +111,6 @@ libbanshee/Makefile
 ext/Makefile
 ext/hal-sharp/Makefile
 ext/taglib-sharp/Makefile
-ext/dbus-sharp/Makefile
-ext/dbus-sharp/NDesk.DBus.GLib.dll.config
 
 src/Makefile
 src/AssemblyInfo.cs

@@ -1,19 +1,12 @@
-include $(top_srcdir)/build/Common.Makefile 
-
-ASSEMBLY_NAME = TagLib
-ASSEMBLY = $(ASSEMBLY_NAME).dll
-
-taglibdir = $(pkglibdir)
-taglib_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
+ASSEMBLY = TagLib
+TARGET = library
+LINK = $(REF_TAGLIB)
 
 include $(srcdir)/TagLib/TagLib.sources
 
-all: $(ASSEMBLY)
+SOURCES = $(TAGLIB_CSFILES)
 
-$(ASSEMBLY): $(TAGLIB_CSFILES)
-	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(TAGLIB_CSFILES)
+include $(top_srcdir)/build/build.mk
 
-EXTRA_DIST = $(TAGLIB_CSFILES) $(srcdir)/TagLib/TagLib.sources
-CLEANFILES = $(taglib_SCRIPTS)
-MAINTAINERCLEANFILES = Makefile.in
+EXTRA_DIST += $(srcdir)/TagLib/TagLib.sources
 
