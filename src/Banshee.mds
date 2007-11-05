@@ -1,4 +1,4 @@
-<Combine name="Banshee" fileversion="2.0" outputpath="." MakePkgConfig="False" MakeLibPC="True">
+<Combine name="Banshee" fileversion="2.0" outputpath="./" MakePkgConfig="False" MakeLibPC="True">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Extras" configuration="Debug" />
@@ -18,11 +18,11 @@
     <Execute type="None" entry="MonoDevelopBootstrap" />
   </StartMode>
   <Entries>
-    <Entry filename="Extras/Extras.mds" />
-    <Entry filename="Core/Core.mds" />
-    <Entry filename="Engines/Engines.mds" />
-    <Entry filename="Plugins/Plugins.mds" />
-    <Entry filename="Dap/Dap.mds" />
-    <Entry filename="MonoDevelopBootstrap.mdp" />
+    <Entry filename="./Extras/Extras.mds" />
+    <Entry filename="./Core/Core.mds" />
+    <Entry filename="./Engines/Engines.mds" />
+    <Entry filename="./Plugins/Plugins.mds" />
+    <Entry filename="./Dap/Dap.mds" />
+    <Entry filename="./MonoDevelopBootstrap.mdp" />
   </Entries>
 </Combine>

@@ -29,16 +29,16 @@
     <Execute type="None" entry="Banshee.Plugins.Sample" />
   </StartMode>
   <Entries>
-    <Entry filename="Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
-    <Entry filename="Banshee.Plugins.Bookmarks/Banshee.Plugins.Bookmarks.mdp" />
-    <Entry filename="Banshee.Plugins.Daap/Banshee.Plugins.Daap.mdp" />
-    <Entry filename="Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.mdp" />
-    <Entry filename="Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.mdp" />
-    <Entry filename="Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.mdp" />
-    <Entry filename="Banshee.Plugins.MiniMode/Banshee.Plugins.MiniMode.mdp" />
-    <Entry filename="Banshee.Plugins.Podcast/Banshee.Plugins.Podcast.mdp" />
-    <Entry filename="Banshee.Plugins.Radio/Banshee.Plugins.Radio.mdp" />
-    <Entry filename="Banshee.Plugins.Recommendation/Banshee.Plugins.Recommendation.mdp" />
-    <Entry filename="Banshee.Plugins.Sample/Banshee.Plugins.Sample.mdp" />
+    <Entry filename="./Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.mdp" />
+    <Entry filename="./Banshee.Plugins.Bookmarks/Banshee.Plugins.Bookmarks.mdp" />
+    <Entry filename="./Banshee.Plugins.Daap/Banshee.Plugins.Daap.mdp" />
+    <Entry filename="./Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.mdp" />
+    <Entry filename="./Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.mdp" />
+    <Entry filename="./Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.mdp" />
+    <Entry filename="./Banshee.Plugins.MiniMode/Banshee.Plugins.MiniMode.mdp" />
+    <Entry filename="./Banshee.Plugins.Podcast/Banshee.Plugins.Podcast.mdp" />
+    <Entry filename="./Banshee.Plugins.Radio/Banshee.Plugins.Radio.mdp" />
+    <Entry filename="./Banshee.Plugins.Recommendation/Banshee.Plugins.Recommendation.mdp" />
+    <Entry filename="./Banshee.Plugins.Sample/Banshee.Plugins.Sample.mdp" />
   </Entries>
 </Combine>

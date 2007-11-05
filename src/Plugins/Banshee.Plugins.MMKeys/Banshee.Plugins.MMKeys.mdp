@@ -1,15 +1,15 @@
 <Project name="Banshee.Plugins.MMKeys" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="Banshee.Plugins.MMKeys" />
+      <Output directory="./" assembly="Banshee.Plugins.MMKeys" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="MMKeysConfigPage.cs" subtype="Code" buildaction="Compile" />
-    <File name="MMKeysPlugin.cs" subtype="Code" buildaction="Compile" />
+    <File name="./MMKeysConfigPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="./MMKeysPlugin.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Base" />

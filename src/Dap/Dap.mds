@@ -16,10 +16,10 @@
     <Execute type="None" entry="Banshee.Dap.MassStorage" />
   </StartMode>
   <Entries>
-    <Entry filename="Banshee.Dap.Ipod/Banshee.Dap.Ipod.mdp" />
-    <Entry filename="Banshee.Dap.Njb/Banshee.Dap.Njb.mdp" />
-    <Entry filename="Banshee.Dap.Mtp/Banshee.Dap.Mtp.mdp" />
-    <Entry filename="Banshee.Dap.Karma/Banshee.Dap.Karma.mdp" />
-    <Entry filename="Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp" />
+    <Entry filename="./Banshee.Dap.Ipod/Banshee.Dap.Ipod.mdp" />
+    <Entry filename="./Banshee.Dap.Njb/Banshee.Dap.Njb.mdp" />
+    <Entry filename="./Banshee.Dap.Mtp/Banshee.Dap.Mtp.mdp" />
+    <Entry filename="./Banshee.Dap.Karma/Banshee.Dap.Karma.mdp" />
+    <Entry filename="./Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp" />
   </Entries>
 </Combine>
