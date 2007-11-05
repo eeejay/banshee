@@ -44,13 +44,7 @@ LINK_LAST_FM = -r:$(DIR_LAST_FM)/Last.FM.dll
 LINK_MUSICBRAINZ = -r:$(DIR_MUSICBRAINZ)/MusicBrainz.dll
 LINK_GNOME_KEYRING = -r:$(DIR_GNOME_KEYRING)/Gnome.Keyring.dll
 
-if EXTERNAL_NDESK_DBUS
 LINK_DBUS = $(NDESK_DBUS_LIBS)
-else
-LINK_DBUS = \
-	-r:$(DIR_DBUS)/NDesk.DBus.dll \
-	-r:$(DIR_DBUS)/NDesk.DBus.GLib.dll
-endif
 
 if EXTERNAL_BOO
 LINK_BOO = $(BOO_LIBS)
