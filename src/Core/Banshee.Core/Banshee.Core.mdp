@@ -46,5 +46,10 @@
     <File name="./Banshee.Collection/TrackAttributes.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Collection/TrackFilterType.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Base/PlatformHacks.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming/CommonTags.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming/SaveTrackMetadataJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming/StreamTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming/StreamTagger.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming/StreamPlaybackError.cs" subtype="Code" buildaction="Compile" />
   </Contents>
 </Project>

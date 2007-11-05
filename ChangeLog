@@ -1,3 +1,37 @@
+2007-11-05  Aaron Bockover  <aaron@abock.org>
+
+	* Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* Nereid/Nereid/PlayerInterface.cs: Reflect API change in ServiceManager
+
+	* Nereid/Nereid/Entry.cs: Reflect API change in ServiceManager and 
+	implement a TimeoutHandler using GLib.Timeout
+
+	* Banshee.Services/Banshee.MediaEngine/*: Ported the PlayerEngine base
+	class; made it a Mono.Addin extension point
+
+	* Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Made 
+	ServiceManager completely static so using it doesn't suck
+
+	* Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs: Allow
+	the DBus support to be optional
+
+	* Banshee.Services/Banshee.ServiceStack/AddinCoreService.cs: Service
+	for controlling Mono.Addins
+
+	* Banshee.Core/Banshee.Streaming/*: Ported StreamTagger, StreamTag and
+	other generic stream types and friends
+
+	* Banshee.Core/Banshee.Collection/TrackInfo.cs: API Fixups
+
+	* Banshee.Core/Banshee.Base/ApplicationContext.cs: Fix API bug
+
+	* Banshee.ThickClient/Banshee.Gui/GtkThemeService.cs: Will be used for
+	more generic GTK interface stuff; make IPropertyStoreExpose and expose
+	PrimaryWindow and PrimaryWindow.RawHandle properties
+
+	* Hyena/Hyena.Data/IPropertyStoreExpose.cs: Interface to expose a
+	PropertyStore
+
 2007-11-04  Aaron Bockover  <aaron@abock.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: A static class

@@ -34,37 +34,29 @@ using Banshee.Database;
 
 namespace Banshee.ServiceStack
 {
-    public class ServiceManager : IService
+    public static class ServiceManager
     {
-        private static ServiceManager instance;
-        public static ServiceManager Instance {
-            get { 
-                if(instance == null) {
-                    instance = new ServiceManager ();
-                }
-                
-                return instance; 
-            }
-        }
+        private static Dictionary<string, IService> services = new Dictionary<string, IService> ();
+        private static List<Type> service_types = new List<Type> ();
         
-        private Dictionary<string, IService> services = new Dictionary<string, IService> ();
-        private List<Type> service_types = new List<Type> ();
-        private bool has_run = false;
+        private static bool has_run = false;
+        private static readonly object self_mutex = new object ();
         
-        public event EventHandler StartupBegin;
-        public event EventHandler StartupFinished;
-        public event ServiceStartedHandler ServiceStarted;
+        public static event EventHandler StartupBegin;
+        public static event EventHandler StartupFinished;
+        public static event ServiceStartedHandler ServiceStarted;
         
-        public ServiceManager ()
+        static ServiceManager ()
         {
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
+            RegisterService<AddinCoreService> ();
         }
         
-        public void Run()
+        public static void Run()
         {
-            lock (this) {          
+            lock (self_mutex) {          
                 OnStartupBegin ();
                 
                 foreach (Type type in service_types) {
@@ -73,18 +65,15 @@ namespace Banshee.ServiceStack
                     OnServiceStarted (service);
                 }
                 
-                RegisterServiceNoLock (this);
-                OnServiceStarted (this);
-                
                 has_run = true;
                 
                 OnStartupFinished ();
             }
         }
         
-        public void Shutdown ()
+        public static void Shutdown ()
         {
-            lock (this) {
+            lock (self_mutex) {
                 foreach (IService service in services.Values) {
                     if (service is IDisposable) {
                         ((IDisposable)service).Dispose ();
@@ -95,7 +84,7 @@ namespace Banshee.ServiceStack
             }
         }
         
-        private void RegisterServiceNoLock (IService service)
+        private static void RegisterServiceNoLock (IService service)
         {
             services.Add (service.ServiceName, service);
             
@@ -104,16 +93,16 @@ namespace Banshee.ServiceStack
             }
         }
                     
-        public void RegisterService (IService service)
+        public static void RegisterService (IService service)
         {
-            lock (this) {
+            lock (self_mutex) {
                 RegisterServiceNoLock (service);
             }
         }
                     
-        public void RegisterService<T> () where T : IService
+        public static void RegisterService<T> () where T : IService
         {
-            lock (this) {
+            lock (self_mutex) {
                 if (has_run) {
                     RegisterServiceNoLock (Activator.CreateInstance <T> ());
                 } else {
@@ -122,63 +111,69 @@ namespace Banshee.ServiceStack
             }
         }
         
-        public bool Contains (string serviceName)
+        public static bool Contains (string serviceName)
         {
-            lock (this) {
+            lock (self_mutex) {
                 return services.ContainsKey (serviceName);
             }
         }
         
-        protected virtual void OnStartupBegin ()
+        public static IService Get (string serviceName)
+        {
+            if (services.ContainsKey (serviceName)) {
+                return services[serviceName]; 
+            }
+            
+            return null;
+        }
+        
+        public static T Get<T> (string serviceName) where T : class, IService
+        {
+            return Get (serviceName) as T;
+        }
+        
+        private static void OnStartupBegin ()
         {
             EventHandler handler = StartupBegin;
             if (handler != null) {
-                handler (this, EventArgs.Empty);
+                handler (null, EventArgs.Empty);
             }
         }
         
-        protected virtual void OnStartupFinished ()
+        private static void OnStartupFinished ()
         {
             EventHandler handler = StartupFinished;
             if (handler != null) {
-                handler (this, EventArgs.Empty);
+                handler (null, EventArgs.Empty);
             }
         }
         
-        protected virtual void OnServiceStarted (IService service)
+        private static void OnServiceStarted (IService service)
         {
             ServiceStartedHandler handler = ServiceStarted;
             if (handler != null) {
-                handler (this, new ServiceStartedArgs (service));
+                handler (null, new ServiceStartedArgs (service));
             }
         }
         
-        public int StartupServiceCount {
+        public static int StartupServiceCount {
             get { return service_types.Count + 1; }
         }
         
-        public int ServiceCount {
+        public static int ServiceCount {
             get { return services.Count; }
         }
         
-        public IService this[string serviceName] {
-            get { try { return services[serviceName]; } catch { throw new Exception(serviceName); } }
-        }
-        
-        string IService.ServiceName {
-            get { return "ServiceManager"; }
-        }
-        
         public static DBusServiceManager DBusServiceManager {
-            get { return (DBusServiceManager)Instance["DBusServiceManager"]; }
+            get { return (DBusServiceManager)Get ("DBusServiceManager"); }
         }
                 
         public static BansheeDbConnection DbConnection {
-            get { return (BansheeDbConnection)Instance["DbConnection"]; }
+            get { return (BansheeDbConnection)Get ("DbConnection"); }
         }
         
         public static SourceManager SourceManager {
-            get { return (SourceManager)Instance["SourceManager"]; }
+            get { return (SourceManager)Get ("SourceManager"); }
         }
     }
 }

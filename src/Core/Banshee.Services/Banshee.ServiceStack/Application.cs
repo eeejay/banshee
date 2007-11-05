@@ -36,6 +36,8 @@ using Banshee.Sources;
 namespace Banshee.ServiceStack
 {    
     public delegate bool ShutdownRequestHandler ();
+    public delegate bool TimeoutHandler ();
+    public delegate uint TimeoutImplementationHandler (uint milliseconds, TimeoutHandler handler); 
     
     public static class Application
     {   
@@ -45,7 +47,7 @@ namespace Banshee.ServiceStack
         {
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
 
-            ServiceManager.Instance.Run ();
+            ServiceManager.Run ();
             ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
@@ -79,15 +81,30 @@ namespace Banshee.ServiceStack
             return true;
         }
         
+        public static uint RunTimeout (uint milliseconds, TimeoutHandler handler)
+        {
+            if (timeout_handler == null) {
+                throw new NotImplementedException ("The application client must provide a TimeoutImplementationHandler");
+            }
+            
+            return timeout_handler (milliseconds, handler);
+        }
+        
         private static void Dispose ()
         {
-            ServiceManager.Instance.Shutdown ();
+            ServiceManager.Shutdown ();
         }
         
         private static ShutdownRequestHandler shutdown_prompt_handler = null;
         public static ShutdownRequestHandler ShutdownPromptHandler {
             get { return shutdown_prompt_handler; }
             set { shutdown_prompt_handler = value; }
+        }
+        
+        private static TimeoutImplementationHandler timeout_handler = null;
+        public static TimeoutImplementationHandler TimeoutHandler {
+            get { return timeout_handler; }
+            set { timeout_handler = value; }
         }
         
         public static string InternalName {

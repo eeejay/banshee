@@ -12,7 +12,8 @@ BANSHEE_CORE_SOURCE = \
 	$(wildcard Banshee.Collection/*.cs) \
 	$(wildcard Banshee.Configuration/*.cs) \
 	$(wildcard Banshee.Configuration.Schema/*.cs) \
-	$(wildcard Banshee.IO/*.cs) 
+	$(wildcard Banshee.IO/*.cs) \
+	$(wildcard Banshee.Streaming/*.cs)
 
 BANSHEE_CORE_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_CORE_SOURCE))
 

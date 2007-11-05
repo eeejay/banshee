@@ -61,7 +61,7 @@ namespace Nereid
             LoadSettings ();
             ResizeMoveWindow ();
             
-            ((GtkThemeService)ServiceManager.Instance["GtkThemeService"]).ListenWidget = this;
+            ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow = this;
             
             Show ();
         }

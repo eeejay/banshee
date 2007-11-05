@@ -56,11 +56,12 @@ namespace Nereid
                 Gnome.Modules.UI, Environment.GetCommandLineArgs ());
             
             // Register specific services this client will care about
-            ServiceManager.Instance.RegisterService <Banshee.Gui.GtkThemeService> ();
-            ServiceManager.Instance.RegisterService <PlayerInterface> ();
+            ServiceManager.RegisterService <Banshee.Gui.GtkElementsService> ();
+            ServiceManager.RegisterService <PlayerInterface> ();
             
             // Start the core boot process
             Application.ShutdownPromptHandler = OnShutdownPrompt;
+            Application.TimeoutHandler = RunTimeout;
             Application.Run ();
             
             // Run the GTK main loop
@@ -75,6 +76,11 @@ namespace Nereid
             } finally {
                 dialog.Destroy();
             }
+        }
+        
+        private static uint RunTimeout (uint milliseconds, TimeoutHandler handler)
+        {
+            return GLib.Timeout.Add (milliseconds, delegate { return handler (); });
         }
     }
 }

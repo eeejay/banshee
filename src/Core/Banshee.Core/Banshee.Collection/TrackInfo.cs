@@ -33,22 +33,15 @@ using Mono.Unix;
 
 using Hyena.Data;
 using Banshee.Base;
+using Banshee.Streaming;
 
 namespace Banshee.Collection
 {
-    public enum TrackPlaybackError {
-        None,
-        ResourceNotFound,
-        CodecNotFound,
-        Drm,
-        Unknown
-    }
-
     public class TrackInfo : ITrackInfo
     {
         private SafeUri uri;
-        protected string mimetype;
-        protected SafeUri more_info_uri;
+        private SafeUri more_info_uri;
+        private string mimetype;
 
         private string artist_name;
         private string album_title;
@@ -68,7 +61,8 @@ namespace Banshee.Collection
         private DateTime last_played;
         
         private TrackAttributes attributes;
-        protected TrackPlaybackError playback_error = TrackPlaybackError.None;
+        
+        private StreamPlaybackError playback_error = StreamPlaybackError.None;
 
         public TrackInfo()
         {
@@ -198,7 +192,7 @@ namespace Banshee.Collection
             protected set { attributes = value; }
         }
 
-        public virtual TrackPlaybackError PlaybackError {
+        public virtual StreamPlaybackError PlaybackError {
             get { return playback_error; }
             set { playback_error = value; }
         }

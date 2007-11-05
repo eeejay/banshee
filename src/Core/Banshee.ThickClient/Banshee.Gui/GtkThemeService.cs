@@ -1,5 +1,5 @@
 //
-// GtkThemeService.cs
+// GtkElementsService.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -30,18 +30,22 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 
+using Hyena.Data;
+
 using Banshee.Sources;
 using Banshee.ServiceStack;
 
 namespace Banshee.Gui
 {
-    public class GtkThemeService : IService
+    public class GtkElementsService : IService, IPropertyStoreExpose
     {
-        private Widget listen_widget;
+        private PropertyStore property_store = new PropertyStore ();
+        
+        private Window primary_window;
         
         public event EventHandler ThemeChanged;
         
-        public GtkThemeService ()
+        public GtkElementsService ()
         {
         }
         
@@ -49,6 +53,15 @@ namespace Banshee.Gui
         {
             SourceInvalidateIconPixbuf (ServiceManager.SourceManager.Sources);
             OnThemeChanged ();
+        }
+        
+        private void OnPrimaryWindowRealized (object o, EventArgs args)
+        {
+            if (primary_window != null && primary_window.GdkWindow != null) {
+                property_store.Set<IntPtr> ("PrimaryWindow.RawHandle", primary_window.GdkWindow.Handle);
+            } else {
+                property_store.Remove ("PrimaryWindow.RawHandle");
+            }
         }
         
         private void SourceInvalidateIconPixbuf (ICollection<Source> sources)
@@ -67,23 +80,34 @@ namespace Banshee.Gui
             }
         }
         
-        public Widget ListenWidget {
-            get { return listen_widget; }
+        public Window PrimaryWindow {
+            get { return primary_window; }
             set {
-                if (listen_widget != null) {
-                    listen_widget.StyleSet -= OnStyleSet;
+                if (primary_window != null) {
+                    primary_window.StyleSet -= OnStyleSet;
+                    primary_window.Realized -= OnPrimaryWindowRealized;
                 }
                 
-                listen_widget = value;
+                primary_window = value;
                 
-                if (listen_widget != null) {
-                    listen_widget.StyleSet += OnStyleSet;
+                if (primary_window != null) {
+                    property_store.Set<Window> ("PrimaryWindow", primary_window);
+                    
+                    primary_window.StyleSet += OnStyleSet;
+                    primary_window.Realized += OnPrimaryWindowRealized;
+                } else {
+                    property_store.Remove ("PrimaryWindow");
+                    property_store.Remove ("PrimaryWindow.RawHandle");
                 }
             }
         }
         
+        PropertyStore IPropertyStoreExpose.PropertyStore {
+            get { return property_store; }
+        }
+        
         string IService.ServiceName {
-            get { return "GtkThemeService"; }
+            get { return "GtkElementsService"; }
         }
     }
 }

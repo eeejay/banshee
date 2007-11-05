@@ -13,14 +13,15 @@ BANSHEE_SERVICES_SOURCE = \
 	$(wildcard Banshee.ServiceStack/*.cs) \
 	$(wildcard Banshee.Library/*.cs) \
 	$(wildcard Banshee.Playlist/*.cs) \
-	$(wildcard Banshee.Sources/*.cs)
+	$(wildcard Banshee.Sources/*.cs) \
+	$(wildcard Banshee.MediaEngine/*.cs)
 
 BANSHEE_SERVICES_SOURCE_BUILD = $(addprefix $(srcdir)/, $(BANSHEE_SERVICES_SOURCE))
 
 all: $(BANSHEE_SERVICES_ASSEMBLY)
 
 $(BANSHEE_SERVICES_ASSEMBLY): $(BANSHEE_SERVICES_SOURCE_BUILD)
-	$(BUILD_LIB) -out:$@ $(LINK_BANSHEE_CORE_ASM) $(LINK_DBUS) $(LINK_SQLITE) $(LINK_MONO_UNIX) $(LINK_HYENA) $(BANSHEE_SERVICES_SOURCE_BUILD)
+	$(BUILD_LIB) -out:$@ $(LINK_BANSHEE_CORE_ASM) $(LINK_MONO_ADDINS_CORE) $(LINK_DBUS) $(LINK_TAGLIB) $(LINK_SQLITE) $(LINK_MONO_UNIX) $(LINK_HYENA) $(BANSHEE_SERVICES_SOURCE_BUILD)
 
 EXTRA_DIST = \
 	$(BANSHEE_SERVICES_SOURCE)

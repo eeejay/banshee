@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -40,8 +40,15 @@ namespace Banshee.ServiceStack
         public const string BusName = "org.bansheeproject.Banshee";
         public const string ObjectRoot = "/org/bansheeproject/Banshee";
 
+        private static bool dbus_enabled;
+        
         public DBusServiceManager()
         {
+            dbus_enabled = !Banshee.Base.ApplicationContext.CommandLine.Contains ("disable-dbus");
+            if (!dbus_enabled) {
+                return;
+            }
+            
             BusG.Init();
             
             try {
@@ -102,7 +109,7 @@ namespace Banshee.ServiceStack
         
         public void RegisterObject(object o, string objectName)
         {
-            if(Bus.Session != null) {
+            if(dbus_enabled && Bus.Session != null) {
                 Bus.Session.Register(BusName, new ObjectPath(objectName), o);
                 Console.WriteLine("Registered {0} on {1}", objectName, BusName);
             }
@@ -115,7 +122,7 @@ namespace Banshee.ServiceStack
         
         public static T FindInstance<T>(string objectPath) where T : class
         {
-            if(!Bus.Session.NameHasOwner(BusName)) {
+            if(!dbus_enabled || !Bus.Session.NameHasOwner(BusName)) {
                 return null;
             }
             

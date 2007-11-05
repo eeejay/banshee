@@ -40,7 +40,7 @@ namespace Banshee.Base
         }
         
         private static Layout command_line_layout;
-        private static Layout CommandLineLayout {
+        public static Layout CommandLineLayout {
             get { return command_line_layout; }
             set { command_line_layout = value; }
         }

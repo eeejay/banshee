@@ -12,7 +12,7 @@ SUBDIRS = \
 #Banshee
 
 run:
-	MONO_PATH=$(RUN_PATH) mono Nereid/Nereid.exe --debug
+	MONO_PATH=$(RUN_PATH) mono --debug Nereid/Nereid.exe 
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

@@ -135,8 +135,8 @@ namespace Banshee.Sources.Gui
                 QueueDraw();
             };
             
-            if(ServiceManager.Instance.Contains ("GtkThemeService")) {
-                ((Banshee.Gui.GtkThemeService)ServiceManager.Instance["GtkThemeService"]).ThemeChanged += delegate {
+            if(ServiceManager.Contains ("GtkElementsService")) {
+                ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
                     QueueDraw();
                 };
             }
