@@ -10,8 +10,7 @@ SOURCES = \
 	Banshee.Sources.Gui/*.cs \
 	Banshee.Collection.Gui/*.cs
 
-RESOURCES = \
-	$(wildcard Resources/*)
+RESOURCES = Resources/*
 
 include $(top_srcdir)/build/build.mk
 
