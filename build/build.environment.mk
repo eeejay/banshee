@@ -2,6 +2,10 @@
 MONO_BASE_PATH = 
 MONO_ADDINS_PATH =
 
+# Install Paths
+DEFAULT_INSTALL_DIR = $(pkglibdir)/Nereid
+ADDINS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/addins
+
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_SQLITE = -r:System.Data -r:Mono.Data.SqliteClient

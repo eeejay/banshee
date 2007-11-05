@@ -9,12 +9,17 @@ RESOURCES_BUILD = $(foreach resource, $(RESOURCES_EXPANDED_FULL), \
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE = $(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
+INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
+
+moduledir = $(INSTALL_DIR_RESOLVED)
+module_SCRIPTS = $(ASSEMBLY_FILE) $(ASSEMBLY_FILE).mdb
+
 all: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD)
-	@echo "$(SOURCES_BUILD)" | tr [:space:] \\n > $(srcdir)/$(ASSEMBLY_FILE).sources
-	$(BUILD) -target:$(TARGET) -out:$@ $(LINK) $(RESOURCES_BUILD) @$(srcdir)/$(ASSEMBLY_FILE).sources
-	@rm -f $(srcdir)/$(ASSEMBLY_FILE).sources
+	@echo "$(SOURCES_BUILD)" | tr [:space:] \\n > $(ASSEMBLY_FILE).sources
+	$(BUILD) -target:$(TARGET) -out:$@ $(LINK) $(RESOURCES_BUILD) @$(ASSEMBLY_FILE).sources
+	@rm -f $(ASSEMBLY_FILE).sources
 
 EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
 
