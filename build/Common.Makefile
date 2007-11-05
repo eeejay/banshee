@@ -8,6 +8,7 @@
 DIR_HAL = $(top_builddir)/ext/hal-sharp
 DIR_TAGLIB = $(top_builddir)/ext/taglib-sharp
 DIR_DBUS = $(top_builddir)/ext/dbus-sharp
+DIR_MONO_ADDINS = $(top_builddir)/ext/mono-addins
 DIR_LAST_FM = $(top_builddir)/src/Extras/Last.FM
 DIR_MUSICBRAINZ = $(top_builddir)/src/Extras/MusicBrainz
 DIR_GNOME_KEYRING = $(top_builddir)/src/Extras/Gnome.Keyring
@@ -30,6 +31,7 @@ RUN_DIR_DAP_ALL=$(RUN_DIR_DAP_IPOD):$(RUN_DIR_DAP_NJB):$(RUN_DIR_DAP_MTP):$(RUN_
 
 ## Linking ##
 
+LINK_GLIB = $(GLIBSHARP_LIBS)
 LINK_GTK = $(GTKSHARP_LIBS)
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_UNIX = -r:Mono.Posix
@@ -37,6 +39,7 @@ LINK_MONO_UNIX = -r:Mono.Posix
 LINK_SQLITE = -r:System.Data -r:Mono.Data.SqliteClient
 LINK_HAL = -r:$(DIR_HAL)/Hal.dll
 LINK_TAGLIB = -r:$(DIR_TAGLIB)/TagLib.dll
+LINK_MONO_ADDINS_CORE = -r:$(DIR_MONO_ADDINS)/Mono.Addins/Mono.Addins.dll
 LINK_LAST_FM = -r:$(DIR_LAST_FM)/Last.FM.dll
 LINK_MUSICBRAINZ = -r:$(DIR_MUSICBRAINZ)/MusicBrainz.dll
 LINK_GNOME_KEYRING = -r:$(DIR_GNOME_KEYRING)/Gnome.Keyring.dll
@@ -94,7 +97,7 @@ BUILD_UI_BANSHEE = \
 
 ## Running ##
 
-MONO_BASE_PATH = $(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_HYENA):$(DIR_HYENA_GUI):$(DIR_BANSHEE_CORE):$(DIR_BANSHEE_SERVICES):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_THICKCLIENT):$(DIR_BANSHEE_BASE):$(DIR_BOO):$(DIR_BOOBUDDY)
+MONO_BASE_PATH = $(DIR_HAL):$(DIR_TAGLIB):$(DIR_DBUS):$(DIR_MONO_ADDINS)/Mono.Addins:$(DIR_LAST_FM):$(DIR_MUSICBRAINZ):$(DIR_GNOME_KEYRING):$(DIR_HYENA):$(DIR_HYENA_GUI):$(DIR_BANSHEE_CORE):$(DIR_BANSHEE_SERVICES):$(DIR_BANSHEE_WIDGETS):$(DIR_BANSHEE_THICKCLIENT):$(DIR_BANSHEE_BASE):$(DIR_BOO):$(DIR_BOOBUDDY)
 
 RUN_PATH = \
 	LD_LIBRARY_PATH=$(top_builddir)/libbanshee/.libs:$(RUN_DIR_DAP_NJB) \
