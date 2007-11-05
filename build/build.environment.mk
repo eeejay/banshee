@@ -1,6 +1,6 @@
 # Initializers
 MONO_BASE_PATH = 
-
+MONO_ADDINS_PATH =
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
@@ -25,6 +25,7 @@ MONO_BASE_PATH += $(DIR_TAGLIB)
 REF_TAGLIB = $(LINK_MONO_POSIX)
 LINK_TAGLIB = -r:$(DIR_TAGLIB)/TagLib.dll
 LINK_TAGLIB_DEPS = $(REF_TAGLIB) $(LINK_TAGLIB)
+
 
 DIR_CORE = $(top_srcdir)/src/Core
 
@@ -71,6 +72,13 @@ LINK_BANSHEE_THICKCLIENT_DEPS = $(REF_BANSHEE_THICKCLIENT) \
 DIR_NEREID = $(DIR_CORE)/Nereid
 MONO_BASE_PATH += $(DIR_NEREID)
 REF_NEREID = $(LINK_BANSHEE_THICKCLIENT_DEPS)
+
+
+DIR_ENGINES = $(top_srcdir)/src/Engines
+
+DIR_ENGINE_GSTREAMER = $(DIR_ENGINES)/Banshee.MediaEngine.GStreamer
+MONO_ADDINS_PATH += $(DIR_ENGINE_GSTREAMER)
+REF_ENGINE_GSTREAMER = $(LINK_BANSHEE_SERVICES_DEPS) $(LINK_GLIB)
 
 
 # Build rules

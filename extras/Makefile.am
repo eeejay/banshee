@@ -1,4 +1,4 @@
-SUBDIRS = tools
+#SUBDIRS = tools
 
 EXTRA_DIST = $(wildcard $(srcdir)/scripts/*.boo)
 
