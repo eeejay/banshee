@@ -1,49 +1,45 @@
-/***************************************************************************
- *  GstPlayerEngine.cs
- *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
+// 
+// GstPlayerEngine.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2005-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using Mono.Unix;
+using Mono.Addins;
+using Hyena.Data;
 
 using Banshee.Base;
+using Banshee.Streaming;
 using Banshee.MediaEngine;
-using Banshee.Gstreamer;
+using Banshee.ServiceStack;
 
-public static class PluginModuleEntry
-{
-    public static Type [] GetTypes()
-    {
-        return new Type [] {
-            typeof(Banshee.MediaEngine.Gstreamer.GstreamerPlayerEngine)
-        };
-    }
-}
+[assembly:Addin]
+[assembly:AddinDependency ("Banshee.Services", "2.0")]
 
 namespace Banshee.MediaEngine.Gstreamer
 {
@@ -53,6 +49,8 @@ namespace Banshee.MediaEngine.Gstreamer
     internal delegate void GstPlaybackIterateCallback(IntPtr engine);
     internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
 
+    public delegate void GstTaggerTagFoundCallback(string tagName, ref GLib.Value value, IntPtr userData);        
+        
     internal enum GstCoreError {
         Failed = 1,
         TooLazy,
@@ -112,6 +110,7 @@ namespace Banshee.MediaEngine.Gstreamer
         NumErrors
     }
     
+    [Extension]
     public class GstreamerPlayerEngine : PlayerEngine
     {
         private uint GST_CORE_ERROR = 0;
@@ -127,8 +126,6 @@ namespace Banshee.MediaEngine.Gstreamer
         private GstPlaybackIterateCallback iterate_callback;
         private GstPlaybackBufferingCallback buffering_callback;
         private GstTaggerTagFoundCallback tag_found_callback;
-            
-        private Gdk.Window window = null;
         
         private bool buffering_finished;
         
@@ -177,9 +174,10 @@ namespace Banshee.MediaEngine.Gstreamer
             // The GStreamer engine can use the XID of the main window if it ever
             // needs to bring up the plugin installer so it can be transient to
             // the main window.
-            if(window != InterfaceElements.MainWindow.GdkWindow) {
-                window = InterfaceElements.MainWindow.GdkWindow;
-                gst_playback_set_gdk_window(handle, window.Handle);
+
+            IPropertyStoreExpose service = ServiceManager.Get<IService> ("GtkElementsService") as IPropertyStoreExpose;
+            if (service != null) {
+                gst_playback_set_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
             }
                 
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
@@ -234,7 +232,7 @@ namespace Banshee.MediaEngine.Gstreamer
                 if(CurrentTrack != null) {
                     switch(domain_code) {
                         case GstResourceError.NotFound:
-                            CurrentTrack.PlaybackError = TrackPlaybackError.ResourceNotFound;
+                            CurrentTrack.PlaybackError = StreamPlaybackError.ResourceNotFound;
                             break;
                         default:
                             break;
@@ -247,7 +245,7 @@ namespace Banshee.MediaEngine.Gstreamer
                 if(CurrentTrack != null) {
                     switch(domain_code) {
                         case GstStreamError.CodecNotFound:
-                            CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                            CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
                             break;
                         default:
                             break;
@@ -260,7 +258,7 @@ namespace Banshee.MediaEngine.Gstreamer
                 if(CurrentTrack != null) {
                     switch(domain_code) {
                         case GstCoreError.MissingPlugin:
-                            CurrentTrack.PlaybackError = TrackPlaybackError.CodecNotFound;
+                            CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
                             break;
                         default:
                             break;
@@ -293,7 +291,32 @@ namespace Banshee.MediaEngine.Gstreamer
         
         private void OnTagFound(string tagName, ref GLib.Value value, IntPtr userData)
         {
-            OnTagFound(GstTagger.ProcessNativeTagResult(tagName, ref value));
+            OnTagFound(ProcessNativeTagResult(tagName, ref value));
+        }
+            
+        private static StreamTag ProcessNativeTagResult(string tagName, ref GLib.Value valueRaw)
+        {
+            if(tagName == String.Empty || tagName == null) {
+                return StreamTag.Zero;
+            }
+        
+            object value = null;
+            
+            try {
+                value = valueRaw.Val;
+            } catch {
+                return StreamTag.Zero;
+            }
+            
+            if(value == null) {
+                return StreamTag.Zero;
+            }
+            
+            StreamTag item;
+            item.Name = tagName;
+            item.Value = value;
+            
+            return item;
         }
         
         public override ushort Volume {

@@ -1,5 +1,11 @@
 2007-11-05  Aaron Bockover  <aaron@abock.org>
 
+	* Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs: Ported the GStreamer
+	player engine to work under the new APIs, implemented as a Mono.Addin
+	extension
+
+2007-11-05  Aaron Bockover  <aaron@abock.org>
+
 	* Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
 	* Nereid/Nereid/PlayerInterface.cs: Reflect API change in ServiceManager
 
