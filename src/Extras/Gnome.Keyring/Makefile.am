@@ -1,34 +1,23 @@
-include $(top_srcdir)/build/Common.Makefile
+ASSEMBLY = Gnome.Keyring
+TARGET = library
+LINK = $(REF_GNOME_KEYRING)
+ASSEMBLY_BUILD_FLAGS = -define:WITH_DBUS
+SOURCES =  \
+	Gnome.Keyring/AccessRights.cs \
+	Gnome.Keyring/AttributeType.cs \
+	Gnome.Keyring/GenericItemData.cs \
+	Gnome.Keyring/ItemACL.cs \
+	Gnome.Keyring/ItemData.cs \
+	Gnome.Keyring/ItemType.cs \
+	Gnome.Keyring/KeyringException.cs \
+	Gnome.Keyring/KeyringInfo.cs \
+	Gnome.Keyring/NetItemData.cs \
+	Gnome.Keyring/NoteItemData.cs \
+	Gnome.Keyring/Operation.cs \
+	Gnome.Keyring/RequestMessage.cs \
+	Gnome.Keyring/ResponseMessage.cs \
+	Gnome.Keyring/ResultCode.cs \
+	Gnome.Keyring/Ring.cs
 
-ASSEMBLY_NAME = Gnome.Keyring
-ASSEMBLY = $(ASSEMBLY_NAME).dll
-
-gnome_keyringdir= $(pkglibdir)
-gnome_keyring_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
-
-ASSEMBLY_SOURCES =  \
-	AccessRights.cs \
-	AttributeType.cs \
-	GenericItemData.cs \
-	ItemACL.cs \
-	ItemData.cs \
-	ItemType.cs \
-	KeyringException.cs \
-	KeyringInfo.cs \
-	NetItemData.cs \
-	NoteItemData.cs \
-	Operation.cs \
-	RequestMessage.cs \
-	ResponseMessage.cs \
-	ResultCode.cs \
-	Ring.cs
-
-$(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(ASSEMBLY_SOURCES)
-
-EXTRA_DIST = $(ASSEMBLY_SOURCES)
-
-CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb
-DISTCLEANFILES = *.pidb
-MAINTAINERCLEANFILES = Makefile.in
+include $(top_srcdir)/build/build.mk
 

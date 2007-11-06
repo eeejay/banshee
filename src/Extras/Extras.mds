@@ -1,4 +1,4 @@
-<Combine name="Extras" fileversion="2.0" outputpath="build/bin/">
+<Combine name="Extras" fileversion="2.0" outputpath="./build/bin/">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Gnome.Keyring" configuration="Debug" />
@@ -14,9 +14,9 @@
     <Execute type="None" entry="BooBuddy" />
   </StartMode>
   <Entries>
-    <Entry filename="MusicBrainz/MusicBrainz.mdp" />
-    <Entry filename="Last.FM/Last.FM.mdp" />
-    <Entry filename="Gnome.Keyring/Gnome.Keyring.mdp" />
-    <Entry filename="BooBuddy/BooBuddy.mdp" />
+    <Entry filename="./MusicBrainz/MusicBrainz.mdp" />
+    <Entry filename="./Last.FM/Last.FM.mdp" />
+    <Entry filename="./Gnome.Keyring/Gnome.Keyring.mdp" />
+    <Entry filename="./BooBuddy/BooBuddy.mdp" />
   </Entries>
 </Combine>

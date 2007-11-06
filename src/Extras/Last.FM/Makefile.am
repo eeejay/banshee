@@ -1,14 +1,8 @@
-include $(top_srcdir)/build/Common.Makefile
+ASSEMBLY = Last.FM
+TARGET = library
+LINK = $(REF_LAST_FM)
 
-ASSEMBLY_NAME = Last.FM
-ASSEMBLY = $(ASSEMBLY_NAME).dll
-
-last_fmdir= $(pkglibdir)
-last_fm_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
-
-LAST_FM_SOURCES =  \
-	$(srcdir)/Last.FM/Account.cs \
-	$(srcdir)/Last.FM/Browser.cs \
+SOURCES =  \
 	Last.FM.Gui/AccountLoginDialog.cs \
 	Last.FM.Gui/AccountLoginForm.cs \
 	Last.FM.Gui/Badge.cs \
@@ -16,30 +10,19 @@ LAST_FM_SOURCES =  \
 	Last.FM/Account.cs \
 	Last.FM/Browser.cs
 
-LAST_FM_GUI_SOURCES =  \
-	Last.FM.Gui/AccountLoginDialog.cs \
-	Last.FM.Gui/AccountLoginForm.cs \
-	Last.FM.Gui/Badge.cs \
-	Last.FM.Gui/LinkButton.cs \
-	Last.FM/Account.cs \
-	Last.FM/Browser.cs
+RESOURCES =  \
+	Resources/badge.png \
+	Resources/badge-hover.png
 
-ASSEMBLY_SOURCES = \
-	$(LAST_FM_SOURCES) \
-	$(LAST_FM_GUI_SOURCES)
+include $(top_srcdir)/build/build.mk
 
-$(ASSEMBLY): $(ASSEMBLY_SOURCES) $(srcdir)/badge.png $(srcdir)/badge-hover.png
-	$(BUILD_LIB) -out:$@ $(LINK_MONO_UNIX) $(LINK_GNOME_KEYRING) $(LINK_GTK) -resource:$(srcdir)/badge.png,badge.png -resource:$(srcdir)/badge-hover.png,badge-hover.png $(ASSEMBLY_SOURCES)
-
-EXTRA_DIST = $(ASSEMBLY_SOURCES) badge.png badge-hover.png
-
-CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb
-DISTCLEANFILES = *.pidb
-MAINTAINERCLEANFILES = Makefile.in
+EXTRA_DIST += Test.cs
 
 run: test
-	mono last-fm-test.exe
+	MONO_PATH=$(DIR_GNOME_KEYRING) $(MONO) last-fm-test.exe
 
-test: $(ASSEMBLY_SOURCES) Test.cs
-	 mcs ../Gnome.Keyring/*.cs $(ASSEMBLY_SOURCES) Test.cs -out:last-fm-test.exe -resource:badge.png,badge.png -resource:badge-hover.png,badge-hover.png -pkg:gtk-sharp-2.0 -r:Mono.Posix -pkg:gnome-sharp-2.0
+test: last-fm-test.exe
+
+last-fm-test.exe: $(SOURCES_BUILD) $(RESOURCES_EXPANDED_FULL) Test.cs
+	$(BUILD) $(LINK_LAST_FM_DEPS) -out:$@ Test.cs
 

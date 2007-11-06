@@ -1,30 +1,30 @@
 <Project name="Banshee.ThickClient" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="Banshee.ThickClient" />
+      <Output directory="./" assembly="Banshee.ThickClient" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Resources/browser-album-cover.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.Collection.Gui/TrackListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/CompositeTrackListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/ColumnCellAlbum.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/ArtworkManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/ArtistListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/AlbumListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Sources.Gui/SourceView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui/IconThemeUtils.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Dialogs/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Dialogs/GladeDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Dialogs/GladeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui/GtkElementsService.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Resources/browser-album-cover.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.Collection.Gui/TrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection.Gui/CompositeTrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection.Gui/ColumnCellAlbum.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection.Gui/ArtworkManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection.Gui/ArtistListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Collection.Gui/AlbumListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Sources.Gui/SourceView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui/IconThemeUtils.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/GladeDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/GladeWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui/GtkElementsService.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

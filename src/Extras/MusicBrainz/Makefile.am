@@ -1,7 +1,7 @@
 ASSEMBLY = MusicBrainz
 TARGET = library
 LINK = $(REF_MUSICBRAINZ)
-SOURCES = \
+SOURCES =  \
 	MusicBrainz/Client.cs \
 	MusicBrainz/ClientVersion.cs \
 	MusicBrainz/Rdf.cs \

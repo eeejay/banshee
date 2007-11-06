@@ -1,4 +1,4 @@
-<Combine name="Banshee" fileversion="2.0" outputpath="." MakePkgConfig="False" MakeLibPC="True">
+<Combine name="Banshee" fileversion="2.0" outputpath="./" MakePkgConfig="False" MakeLibPC="True">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Extras" configuration="Debug" />
@@ -6,14 +6,14 @@
       <Entry build="True" name="Engines" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="Extras" single="True">
+  <StartMode startupentry="Core" single="True">
     <Execute type="None" entry="Extras" />
     <Execute type="None" entry="Core" />
     <Execute type="None" entry="Engines" />
   </StartMode>
   <Entries>
-    <Entry filename="Extras/Extras.mds" />
-    <Entry filename="Core/Core.mds" />
-    <Entry filename="Engines/Engines.mds" />
+    <Entry filename="./Extras/Extras.mds" />
+    <Entry filename="./Core/Core.mds" />
+    <Entry filename="./Engines/Engines.mds" />
   </Entries>
 </Combine>
