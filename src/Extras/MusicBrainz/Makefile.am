@@ -6,17 +6,16 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 musicbrainzdir = $(pkglibdir)
 musicbrainz_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
 
-ASSEMBLY_SOURCES = \
-	$(top_srcdir)/src/AssemblyInfo.cs \
-	$(srcdir)/Client.cs \
-	$(srcdir)/ClientVersion.cs \
-	$(srcdir)/Rdf.cs \
-	$(srcdir)/SimpleDisc.cs \
-	$(srcdir)/SimpleArtist.cs \
-	$(srcdir)/SimpleAlbum.cs \
-	$(srcdir)/SimpleTrack.cs \
-	$(srcdir)/SimpleQuery.cs \
-	$(srcdir)/Utilities.cs
+ASSEMBLY_SOURCES =  \
+	Client.cs \
+	ClientVersion.cs \
+	Rdf.cs \
+	SimpleAlbum.cs \
+	SimpleArtist.cs \
+	SimpleDisc.cs \
+	SimpleQuery.cs \
+	SimpleTrack.cs \
+	Utilities.cs
 
 if ENABLE_TESTS
 all: $(ASSEMBLY) test

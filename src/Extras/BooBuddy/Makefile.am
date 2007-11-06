@@ -8,13 +8,13 @@ BOO_MACRO_ASSEMBLY = BooMacros.dll
 boobuddydir = $(pkglibdir)
 boobuddy_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
-ASSEMBLY_SOURCES = \
-    $(srcdir)/BooBuddy.Debugger/DebugAliasAttribute.cs \
-    $(srcdir)/BooBuddy.Debugger/DebugAliasBuilder.cs \
-	$(srcdir)/BooBuddy.Debugger/Reflection.cs \
-	$(srcdir)/BooBuddyInterpreter.cs \
-	$(srcdir)/BooBuddyWindow.cs \
-	$(srcdir)/BooBuddyShell.cs
+ASSEMBLY_SOURCES =  \
+	BooBuddy.Debugger/DebugAliasAttribute.cs \
+	BooBuddy.Debugger/DebugAliasBuilder.cs \
+	BooBuddy.Debugger/Reflection.cs \
+	BooBuddyInterpreter.cs \
+	BooBuddyShell.cs \
+	BooBuddyWindow.cs
 
 BOO_MACRO_SRC = \
 	$(srcdir)/AliasMacro.boo

@@ -1,55 +1,66 @@
-<Project name="Banshee.Core" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+<Project name="Banshee.Core" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="Banshee.Core" />
-      <Build debugmode="True" target="Exe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
-    </Configuration>
-    <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="Banshee.Core" />
-      <Build debugmode="False" target="Exe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <Output directory="." assemblyKeyFile="." assembly="Banshee.Core" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Banshee.Kernel/IInstanceCriticalJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/IJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/IntervalHeap.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/Job.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/JobPriority.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Kernel/Scheduler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/GConfConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Configuration/SchemaEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/FileNamePattern.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/Paths.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/SafeUri.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/UriList.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/Utilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/AlbumInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ArtistInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ITrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/TrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/GnomeVfs.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/Interfaces.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/IOProxy.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/SystemIO.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/Unix.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.IO/Utilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/ApplicationContext.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/SampleTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/UnknownTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/TrackAttributes.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/TrackFilterType.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/PlatformHacks.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming/CommonTags.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming/SaveTrackMetadataJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming/StreamTag.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming/StreamTagger.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming/StreamPlaybackError.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/IInstanceCriticalJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/IJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/IntervalHeap.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/Job.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/JobPriority.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Kernel/Scheduler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/GConfConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/SchemaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/FileNamePattern.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/Paths.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/SafeUri.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/UriList.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/Utilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/AlbumInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ArtistInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ITrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/TrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/GnomeVfs.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/Interfaces.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/IOProxy.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/SystemIO.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/Unix.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/Utilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/ApplicationContext.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/FileTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/SampleTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/UnknownTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/TrackAttributes.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/TrackFilterType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/PlatformHacks.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/CommonTags.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/SaveTrackMetadataJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/StreamTag.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/StreamTagger.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/StreamPlaybackError.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration.Schema/ImportSchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/StringUtil.cs" subtype="Code" buildaction="Compile" />
   </Contents>
+  <References>
+    <ProjectReference type="Project" localcopy="False" refto="Hyena" />
+  </References>
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
+    <BuildFilesVar Sync="True" Name="SOURCES" />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
 </Project>

@@ -1,15 +1,15 @@
 <Project name="Banshee.Plugins.MetadataSearch" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Banshee.Plugins.MetadataSearch" />
+      <Output directory="." assembly="Banshee.Plugins.MetadataSearch" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./MetadataSearchPlugin.cs" subtype="Code" buildaction="Compile" />
-    <File name="./MetadataSearchMenu.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="MetadataSearchPlugin.cs" subtype="Code" buildaction="Compile" />
+    <File name="MetadataSearchMenu.xml" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Base" />

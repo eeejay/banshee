@@ -1,18 +1,18 @@
 <Project name="Banshee.Dap.Ipod" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Banshee.Dap.Ipod" />
+      <Output directory="." assembly="Banshee.Dap.Ipod" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./DatabaseRebuilder.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IpodDap.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IpodDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./UnsupportedDatabaseView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IPodPlaylistSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="DatabaseRebuilder.cs" subtype="Code" buildaction="Compile" />
+    <File name="IpodDap.cs" subtype="Code" buildaction="Compile" />
+    <File name="IpodDapTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="UnsupportedDatabaseView.cs" subtype="Code" buildaction="Compile" />
+    <File name="IPodPlaylistSource.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />

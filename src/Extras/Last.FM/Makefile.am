@@ -6,15 +6,23 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 last_fmdir= $(pkglibdir)
 last_fm_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb
 
-LAST_FM_SOURCES = \
+LAST_FM_SOURCES =  \
 	$(srcdir)/Last.FM/Account.cs \
-	$(srcdir)/Last.FM/Browser.cs
+	$(srcdir)/Last.FM/Browser.cs \
+	Last.FM.Gui/AccountLoginDialog.cs \
+	Last.FM.Gui/AccountLoginForm.cs \
+	Last.FM.Gui/Badge.cs \
+	Last.FM.Gui/LinkButton.cs \
+	Last.FM/Account.cs \
+	Last.FM/Browser.cs
 
-LAST_FM_GUI_SOURCES = \
-	$(srcdir)/Last.FM.Gui/AccountLoginForm.cs \
-	$(srcdir)/Last.FM.Gui/AccountLoginDialog.cs \
-	$(srcdir)/Last.FM.Gui/Badge.cs \
-	$(srcdir)/Last.FM.Gui/LinkButton.cs
+LAST_FM_GUI_SOURCES =  \
+	Last.FM.Gui/AccountLoginDialog.cs \
+	Last.FM.Gui/AccountLoginForm.cs \
+	Last.FM.Gui/Badge.cs \
+	Last.FM.Gui/LinkButton.cs \
+	Last.FM/Account.cs \
+	Last.FM/Browser.cs
 
 ASSEMBLY_SOURCES = \
 	$(LAST_FM_SOURCES) \
