@@ -1,46 +1,31 @@
-include $(top_srcdir)/build/Common.Makefile
+ASSEMBLY = MusicBrainz
+TARGET = library
+LINK = $(REF_MUSICBRAINZ)
+SOURCES = \
+	MusicBrainz/Client.cs \
+	MusicBrainz/ClientVersion.cs \
+	MusicBrainz/Rdf.cs \
+	MusicBrainz/SimpleAlbum.cs \
+	MusicBrainz/SimpleArtist.cs \
+	MusicBrainz/SimpleDisc.cs \
+	MusicBrainz/SimpleQuery.cs \
+	MusicBrainz/SimpleTrack.cs \
+	MusicBrainz/Utilities.cs
 
-ASSEMBLY_NAME = MusicBrainz
-ASSEMBLY = $(ASSEMBLY_NAME).dll
+include $(top_srcdir)/build/build.mk
 
-musicbrainzdir = $(pkglibdir)
-musicbrainz_SCRIPTS = $(ASSEMBLY) $(ASSEMBLY).mdb $(ASSEMBLY).config
-
-ASSEMBLY_SOURCES =  \
-	Client.cs \
-	ClientVersion.cs \
-	Rdf.cs \
-	SimpleAlbum.cs \
-	SimpleArtist.cs \
-	SimpleDisc.cs \
-	SimpleQuery.cs \
-	SimpleTrack.cs \
-	Utilities.cs
+module_SCRIPTS += $(ASSEMBLY_FILE).config
+EXTRA_DIST += $(ASSEMBLY_FILE).config.in SimpleDiscTest.cs SimpleLookupTest.cs
 
 if ENABLE_TESTS
-all: $(ASSEMBLY) test
-else
-all: $(ASSEMBLY)
+all: test
 endif
-
-$(ASSEMBLY): $(ASSEMBLY_SOURCES)
-	$(BUILD_LIB) -out:$@ $(ASSEMBLY_SOURCES)
 
 test: simple-disc-test.exe simple-lookup-test.exe
 
 simple-disc-test.exe: SimpleDiscTest.cs 
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:$(ASSEMBLY) $<
+	$(BUILD) -out:$@ $(LINK_MUSICBRAINZ_DEPS) $<
 
 simple-lookup-test.exe: SimpleLookupTest.cs
-	$(MCS) $(MCS_FLAGS) -out:$@ -r:$(ASSEMBLY) $<
-
-EXTRA_DIST = \
-	$(ASSEMBLY_SOURCES) \
-	$(ASSEMBLY).config.in \
-	SimpleDiscTest.cs \
-	SimpleLookupTest.cs 
-
-CLEANFILES = $(ASSEMBLY) *.dll *.exe
-DISTCLEANFILES = *.mdb
-MAINTAINERCLEANFILES = Makefile.in
+	$(BUILD) -out:$@ $(LINK_MUSICBRAINZ_DEPS) $<
 
