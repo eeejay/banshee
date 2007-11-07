@@ -3,7 +3,7 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Extras" configuration="Debug" />
       <Entry build="True" name="Core" configuration="Debug" />
-      <Entry build="True" name="Engines" configuration="Debug" />
+      <Entry build="True" name="Backends" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Core" single="True">
@@ -14,6 +14,6 @@
   <Entries>
     <Entry filename="./Extras/Extras.mds" />
     <Entry filename="./Core/Core.mds" />
-    <Entry filename="./Engines/Engines.mds" />
+    <Entry filename="./Backends/Backends.mds" />
   </Entries>
 </Combine>

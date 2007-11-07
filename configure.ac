@@ -144,8 +144,8 @@ src/Dap/Banshee.Dap.Mtp/Makefile
 src/Dap/Banshee.Dap.Njb/Makefile
 src/Dap/Banshee.Dap.Njb/njb-sharp.dll.config
 
-src/Engines/Makefile
-src/Engines/Banshee.MediaEngine.GStreamer/Makefile
+src/Backends/Makefile
+src/Backends/Banshee.GStreamer/Makefile
 
 src/Extras/Makefile
 src/Extras/Boo/Makefile
