@@ -53,6 +53,28 @@ namespace Hyena.Data.Gui
             public int ResizeX2;
             public int Index;
         }
+
+        public class RowActivatedArgs : EventArgs
+        {
+            private int row;
+            private T row_value;
+            public RowActivatedArgs (int row, T rowValue)
+            {
+                this.row = row;
+                this.row_value = rowValue;
+            }
+
+            public int Row {
+                get { return row; }
+            }
+
+            public T RowValue {
+                get { return row_value; }
+            }
+        }
+
+        public delegate void RowActivatedHandler (ListView<T> list_view, RowActivatedArgs args);
+        public event RowActivatedHandler RowActivated;
     
         private const int COLUMN_PADDING = 1;
         private const int BorderWidth = 10;
@@ -462,40 +484,57 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.Page_Down:
                     vadjustment.Value += vadjustment.PageIncrement;
                     break;
+                case Gdk.Key.Return:
+                case Gdk.Key.KP_Enter:
+                case Gdk.Key.space:
+                    if (focused_row_index != -1) {
+                        Selection.Clear ();
+                        Selection.Select (focused_row_index);
+                        OnRowActivated ();
+                        InvalidateListWindow();
+                    }
+                    break;
             }
             
             return base.OnKeyPressEvent(evnt);
         }
         
+        private int last_click_row_index = -1;
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
         {
             HasFocus = true;
             
-            if(evnt.Window == header_window) {
-                Column column = GetColumnForResizeHandle((int)evnt.X);
-                if(column != null) {
-                    resizing_column_index = GetCachedColumnForColumn(column).Index;
+            if (evnt.Window == header_window) {
+                Column column = GetColumnForResizeHandle ((int) evnt.X);
+                if (column != null) {
+                    resizing_column_index = GetCachedColumnForColumn (column).Index;
                 }
-            } else if(evnt.Window == list_window && model != null) {
-                GrabFocus();
+            } else if (evnt.Window == list_window && model != null) {
+                GrabFocus ();
                     
-                int row_index = GetRowAtY((int)evnt.Y);
-                object item = model.GetValue(row_index);
-                if(item == null) {
+                int row_index = GetRowAtY ((int) evnt.Y);
+                object item = model.GetValue (row_index);
+                if (item == null) {
                     return true;
                 }
                 
-                if((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
-                    Selection.ToggleSelect(row_index);
-                    FocusRow(row_index);
-                } else if((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
-                    Selection.Clear();
-                    Selection.SelectRange(Math.Min(focused_row_index, row_index), 
-                        Math.Max(focused_row_index, row_index));
+                if (evnt.Type == Gdk.EventType.TwoButtonPress && row_index == last_click_row_index) {
+                    OnRowActivated ();
+                    last_click_row_index = -1;
                 } else {
-                    Selection.Clear();
-                    Selection.Select(row_index);
-                    FocusRow(row_index);
+                    last_click_row_index = row_index;
+                    if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
+                        Selection.ToggleSelect(row_index);
+                        FocusRow(row_index);
+                    } else if ((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
+                        Selection.Clear();
+                        Selection.SelectRange(Math.Min(focused_row_index, row_index), 
+                            Math.Max(focused_row_index, row_index));
+                    } else {
+                        Selection.Clear();
+                        Selection.Select(row_index);
+                        FocusRow(row_index);
+                    }
                 }
                 
                 InvalidateListWindow();
@@ -772,6 +811,16 @@ namespace Hyena.Data.Gui
 #endregion
         
 #region Various Utilities
+
+        private void OnRowActivated ()
+        {
+            if (focused_row_index != -1) {
+                RowActivatedHandler handler = RowActivated;
+                if (handler != null) {
+                    handler (this, new RowActivatedArgs (focused_row_index, model.GetValue (focused_row_index)));
+                }
+            }
+        }
         
         private int GetRowAtY(int y)
         {

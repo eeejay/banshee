@@ -1,3 +1,7 @@
+2007-11-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Add RowActivated event.
+
 2007-11-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Define an extension
