@@ -67,8 +67,7 @@ namespace Hyena.Data.Gui
         
             string object_str = data_handler == null ? BoundObject.ToString() : data_handler();
             int text_height, text_width;
-            if(debug)
-            object_str="SHIT!";
+
             layout.SetText(object_str);
             layout.GetPixelSize(out text_width, out text_height);
             
