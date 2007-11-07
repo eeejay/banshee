@@ -1,5 +1,6 @@
 SOURCES_EXPANDED = $(foreach expr, $(SOURCES), $(wildcard $(expr)))
 SOURCES_BUILD = $(addprefix $(srcdir)/, $(SOURCES_EXPANDED))
+SOURCES_BUILD += $(top_srcdir)/src/AssemblyInfo.cs
 
 RESOURCES_EXPANDED = $(foreach expr, $(RESOURCES), $(wildcard $(expr)))
 RESOURCES_EXPANDED_FULL = $(addprefix $(srcdir)/, $(RESOURCES_EXPANDED))
@@ -18,6 +19,7 @@ all: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED_FULL)
 	@echo "$(SOURCES_BUILD)" | tr [:space:] \\n > $(ASSEMBLY_FILE).sources
+	@mkdir -p $(top_builddir)/build
 	$(BUILD) -target:$(TARGET) -out:$@ $(LINK) $(RESOURCES_BUILD) @$(ASSEMBLY_FILE).sources
 	@rm -f $(ASSEMBLY_FILE).sources
 

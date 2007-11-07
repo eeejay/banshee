@@ -56,8 +56,8 @@ namespace Nereid
                 Gnome.Modules.UI, Environment.GetCommandLineArgs ());
             
             // Register specific services this client will care about
-            ServiceManager.RegisterService <Banshee.Gui.GtkElementsService> ();
-            ServiceManager.RegisterService <PlayerInterface> ();
+            //ServiceManager.RegisterService <Banshee.Gui.GtkElementsService> ();
+            //ServiceManager.RegisterService <PlayerInterface> ();
             
             // Start the core boot process
             Application.ShutdownPromptHandler = OnShutdownPrompt;
@@ -65,7 +65,7 @@ namespace Nereid
             Application.Run ();
             
             // Run the GTK main loop
-            program.Run ();
+            //program.Run ();
         }
         
         private static bool OnShutdownPrompt ()

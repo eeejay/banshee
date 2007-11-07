@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.Services
 TARGET = library
 LINK = $(REF_BANSHEE_SERVICES)
+
 SOURCES =  \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
@@ -35,6 +36,8 @@ SOURCES =  \
 	Banshee.Sources/ITrackModelSource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs
+
+RESOURCES = Banshee.Services.addin.xml
 
 include $(top_srcdir)/build/build.mk
 

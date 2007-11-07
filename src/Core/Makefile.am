@@ -10,7 +10,19 @@ SUBDIRS = \
 include $(top_srcdir)/build/build.environment.mk
 
 run:
-	MONO_PATH=$(RUN_PATH) $(MONO) --debug Nereid/Nereid.exe
+	@rm -rf .run.tmp; \
+	mkdir -p .run.tmp/Addins; \
+	for dir in $(MONO_BASE_PATH); do \
+		cp $$dir/*.{dll,exe,mdb,config} .run.tmp/ 2>/dev/null; \
+	done; \
+	for dir in $(MONO_ADDINS_PATH); do \
+		cp $$dir/*.{dll,mdb,config} .run.tmp/Addins 2>/dev/null; \
+	done; \
+	pushd .run.tmp; \
+	echo "<Addins><Directory>./Addins</Directory></Addins>" > Nereid.addins; \
+	$(MONO) --debug Nereid.exe; \
+	popd; \
+	rm -rf .run.tmp
 
 MAINTAINERCLEANFILES = Makefile.in
 

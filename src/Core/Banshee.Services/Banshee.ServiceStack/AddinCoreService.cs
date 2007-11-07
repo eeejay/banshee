@@ -34,8 +34,6 @@ using Mono.Addins;
 using Banshee.Base;
 using Banshee.MediaEngine;
 
-[assembly:AddinRoot ("Banshee.Services", "2.0")]
-
 namespace Banshee.ServiceStack
 {
     public class AddinCoreService : IService
@@ -43,9 +41,11 @@ namespace Banshee.ServiceStack
         public AddinCoreService ()
         {
             AddinManager.Initialize (UserCachePath);
+            AddinManager.Registry.Rebuild (new ConsoleProgressStatus (true));
             
-            foreach (PlayerEngine engine in AddinManager.GetExtensionObjects (typeof (PlayerEngine)))
-                Console.WriteLine(engine);
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
+                Console.WriteLine(node.CreateInstance());
+            }
         }
         
         public string UserCachePath {

@@ -48,7 +48,10 @@ namespace Banshee.ServiceStack
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
 
             ServiceManager.Run ();
-            ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
+            
+            if (ServiceManager.SourceManager != null) {
+                ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
+            }
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
         }

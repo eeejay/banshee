@@ -49,6 +49,9 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 dnl NDesk DBus libraries
 BANSHEE_CHECK_NDESK_DBUS
 
+dnl Mono.Addins libraries
+BANSHEE_CHECK_MONO_ADDINS
+
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 

@@ -1,0 +1,7 @@
+<Addin id="Core" version="1.0" isroot="true">
+
+  <ExtensionPoint path="/Banshee/PlayerEngines/PlayerEngine">
+    <ExtensionNode name="TypeExtensionNode"/>
+  </ExtensionPoint>
+
+</Addin>

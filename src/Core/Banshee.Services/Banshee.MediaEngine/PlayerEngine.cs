@@ -36,7 +36,6 @@ using Banshee.ServiceStack;
 
 namespace Banshee.MediaEngine
 {
-    [Mono.Addins.TypeExtensionPoint]
     public abstract class PlayerEngine
     {
         public event PlayerEngineStateHandler StateChanged;

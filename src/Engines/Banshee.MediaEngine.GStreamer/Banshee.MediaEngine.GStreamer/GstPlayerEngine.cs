@@ -30,16 +30,12 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using Mono.Unix;
-using Mono.Addins;
 using Hyena.Data;
 
 using Banshee.Base;
 using Banshee.Streaming;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
-
-[assembly:Addin]
-[assembly:AddinDependency ("Banshee.Services", "2.0")]
 
 namespace Banshee.MediaEngine.Gstreamer
 {
@@ -110,7 +106,6 @@ namespace Banshee.MediaEngine.Gstreamer
         NumErrors
     }
     
-    [Extension]
     public class GstreamerPlayerEngine : PlayerEngine
     {
         private uint GST_CORE_ERROR = 0;
