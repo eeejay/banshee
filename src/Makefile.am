@@ -14,11 +14,6 @@ run:
 	make run; \
 	popd;
 
-run-nocheck:
-	pushd $(top_builddir)/src/Core/Banshee; \
-	make run-nocheck; \
-	popd;
-
 MAINTAINERCLEANFILES = \
 	Makefile.in
 

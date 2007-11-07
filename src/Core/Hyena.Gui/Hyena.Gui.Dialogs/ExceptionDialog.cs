@@ -131,15 +131,21 @@ namespace Hyena.Gui.Dialogs
             System.Text.StringBuilder msg = new System.Text.StringBuilder();
             
             msg.Append(Catalog.GetString("An unhandled exception was thrown: "));
-            msg.Append(e.Message);
             
-            msg.Append("\n\n");
-            msg.Append(e.StackTrace);
+            Stack<Exception> exception_chain = new Stack<Exception> ();
+
+            while (e != null) {
+                exception_chain.Push (e);
+                e = e.InnerException;
+            }
+            
+            while (exception_chain.Count > 0) {
+                e = exception_chain.Pop ();
+                msg.AppendFormat ("{0}\n\n{1}\n", e.Message, e.StackTrace);
+            };
             
             msg.Append("\n");
-            
             msg.Append(".NET Version: " + Environment.Version.ToString());
-            
             msg.Append("\n\nAssembly Version Information:\n\n");
             
             foreach(Assembly asm in AppDomain.CurrentDomain.GetAssemblies()) {
