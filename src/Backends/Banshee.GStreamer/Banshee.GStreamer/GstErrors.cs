@@ -1,5 +1,5 @@
 // 
-// AddinCoreService.cs
+// GstErrors.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,33 +27,69 @@
 //
 
 using System;
-using System.IO;
 
-using Mono.Addins;
-
-using Banshee.Base;
-using Banshee.MediaEngine;
-
-namespace Banshee.ServiceStack
+namespace Banshee.GStreamer
 {
-    public class AddinCoreService : IService
+    internal enum GstCoreError 
     {
-        public AddinCoreService ()
-        {
-            AddinManager.Initialize (UserCachePath);
-            AddinManager.Registry.Rebuild (new ConsoleProgressStatus (true));
-            
-            //foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
-            //    Console.WriteLine(node.CreateInstance());
-            //}
-        }
-        
-        public string UserCachePath {
-            get { return Path.Combine (Paths.ApplicationData, "addins"); }
-        }
-        
-        string IService.ServiceName {
-            get { return "AddinCoreService"; }
-        }
+        Failed = 1,
+        TooLazy,
+        NotImplemented,
+        StateChange,
+        Pad,
+        Thread,
+        Negotiation,
+        Event,
+        Seek,
+        Caps,
+        Tag,
+        MissingPlugin,
+        Clock,
+        NumErrors
+    }
+    
+    internal enum GstLibraryError 
+    {
+        Failed = 1,
+        Init,
+        Shutdown,
+        Settings,
+        Encode,
+        NumErrors
+    }
+    
+    internal enum GstResourceError 
+    {
+        Failed = 1,
+        TooLazy,
+        NotFound,
+        Busy,
+        OpenRead,
+        OpenWrite,
+        OpenReadWrite,
+        Close,
+        Read,
+        Write,
+        Seek,
+        Sync,
+        Settings,
+        NoSpaceLeft,
+        NumErrors
+    }
+    
+    internal enum GstStreamError 
+    {
+        Failed = 1,
+        TooLazy,
+        NotImplemented,
+        TypeNotFound,
+        WrongType,
+        CodecNotFound,
+        Decode,
+        Encode,
+        Demux,
+        Mux,
+        Format,
+        NumErrors
     }
 }

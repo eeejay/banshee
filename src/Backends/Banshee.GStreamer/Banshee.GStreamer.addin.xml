@@ -1,11 +1,11 @@
-<Addin id="Banshee.MediaEngine.GStreamer">
+<Addin id="Banshee.GStreamer">
 
   <Dependencies>
     <Addin id="Core" version="1.0" />
   </Dependencies>
 
   <Extension path="/Banshee/PlayerEngines/PlayerEngine">
-    <TypeExtensionNode class="Banshee.MediaEngine.Gstreamer.GstreamerPlayerEngine"/>
+    <TypeExtensionNode class="Banshee.GStreamer.PlayerEngine"/>
   </Extension>
 
 </Addin>

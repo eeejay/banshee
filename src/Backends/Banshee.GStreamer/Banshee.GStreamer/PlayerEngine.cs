@@ -1,5 +1,5 @@
 // 
-// GstPlayerEngine.cs
+// PlayerEngine.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -37,7 +37,7 @@ using Banshee.Streaming;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 
-namespace Banshee.MediaEngine.Gstreamer
+namespace Banshee.GStreamer
 {
     internal delegate void GstPlaybackEosCallback(IntPtr engine);
     internal delegate void GstPlaybackErrorCallback(IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug);
@@ -45,68 +45,9 @@ namespace Banshee.MediaEngine.Gstreamer
     internal delegate void GstPlaybackIterateCallback(IntPtr engine);
     internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
 
-    public delegate void GstTaggerTagFoundCallback(string tagName, ref GLib.Value value, IntPtr userData);        
-        
-    internal enum GstCoreError {
-        Failed = 1,
-        TooLazy,
-        NotImplemented,
-        StateChange,
-        Pad,
-        Thread,
-        Negotiation,
-        Event,
-        Seek,
-        Caps,
-        Tag,
-        MissingPlugin,
-        Clock,
-        NumErrors
-    }
+    internal delegate void GstTaggerTagFoundCallback(string tagName, ref GLib.Value value, IntPtr userData);        
     
-    internal enum GstLibraryError {
-        Failed = 1,
-        Init,
-        Shutdown,
-        Settings,
-        Encode,
-        NumErrors
-    }
-    
-    internal enum GstResourceError {
-        Failed = 1,
-        TooLazy,
-        NotFound,
-        Busy,
-        OpenRead,
-        OpenWrite,
-        OpenReadWrite,
-        Close,
-        Read,
-        Write,
-        Seek,
-        Sync,
-        Settings,
-        NoSpaceLeft,
-        NumErrors
-    }
-    
-    internal enum GstStreamError {
-        Failed = 1,
-        TooLazy,
-        NotImplemented,
-        TypeNotFound,
-        WrongType,
-        CodecNotFound,
-        Decode,
-        Encode,
-        Demux,
-        Mux,
-        Format,
-        NumErrors
-    }
-    
-    public class GstreamerPlayerEngine : PlayerEngine
+    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine
     {
         private uint GST_CORE_ERROR = 0;
         private uint GST_LIBRARY_ERROR = 0;
@@ -124,7 +65,7 @@ namespace Banshee.MediaEngine.Gstreamer
         
         private bool buffering_finished;
         
-        public GstreamerPlayerEngine()
+        public PlayerEngine()
         {
             IntPtr ptr = gst_playback_new();
             
