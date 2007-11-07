@@ -1,4 +1,4 @@
-ASSEMBLY = Banshee.MediaEngine.GStreamer
+ASSEMBLY = Banshee.GStreamer
 TARGET = library
 LINK = $(REF_ENGINE_GSTREAMER)
 SOURCES = Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs

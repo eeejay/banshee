@@ -1,7 +1,3 @@
-SUBDIRS = Banshee.MediaEngine.GStreamer
-
+SUBDIRS = Banshee.GStreamer
 MAINTAINERCLEANFILES = Makefile.in
-
-uninstall-hook:
-	rm -rf $(pkglibdir)/Banshee.MediaEngine
 
