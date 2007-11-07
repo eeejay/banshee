@@ -27,8 +27,12 @@
 //
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
+using Mono.Addins;
+
+using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
 
@@ -38,6 +42,7 @@ namespace Banshee.ServiceStack
     {
         private static Dictionary<string, IService> services = new Dictionary<string, IService> ();
         private static List<Type> service_types = new List<Type> ();
+        private static ExtensionNodeList extension_nodes;
         
         private static bool has_run = false;
         private static readonly object self_mutex = new object ();
@@ -51,7 +56,15 @@ namespace Banshee.ServiceStack
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
-            RegisterService<AddinCoreService> ();
+            
+            AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
+                ? "." : UserAddinCachePath);
+            
+            if (ApplicationContext.Debugging) {
+                AddinManager.Registry.Rebuild (new ConsoleProgressStatus (true));
+            }
+            
+            extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
         }
         
         public static void Run()
@@ -61,6 +74,12 @@ namespace Banshee.ServiceStack
                 
                 foreach (Type type in service_types) {
                     IService service = (IService)Activator.CreateInstance (type);
+                    RegisterServiceNoLock (service);
+                    OnServiceStarted (service);
+                }
+                
+                foreach (TypeExtensionNode node in extension_nodes) {
+                    IService service = (IService)node.CreateInstance (typeof (IService));
                     RegisterServiceNoLock (service);
                     OnServiceStarted (service);
                 }
@@ -99,7 +118,7 @@ namespace Banshee.ServiceStack
                 RegisterServiceNoLock (service);
             }
         }
-                    
+        
         public static void RegisterService<T> () where T : IService
         {
             lock (self_mutex) {
@@ -157,11 +176,15 @@ namespace Banshee.ServiceStack
         }
         
         public static int StartupServiceCount {
-            get { return service_types.Count + 1; }
+            get { return service_types.Count + (extension_nodes == null ? 0 : extension_nodes.Count) + 1; }
         }
         
         public static int ServiceCount {
             get { return services.Count; }
+        }
+        
+        public static string UserAddinCachePath {
+            get { return Path.Combine (Paths.ApplicationData, "addins"); }
         }
         
         public static DBusServiceManager DBusServiceManager {

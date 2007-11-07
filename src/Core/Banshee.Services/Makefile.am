@@ -23,7 +23,6 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
 	Banshee.Playlist/PlaylistSource.cs \
-	Banshee.ServiceStack/AddinCoreService.cs \
 	Banshee.ServiceStack/Application.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \

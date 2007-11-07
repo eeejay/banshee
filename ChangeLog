@@ -1,3 +1,18 @@
+2007-11-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Define an extension
+	point for registering services
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Load
+	addin services into the service manager; moved the Mono.Addins init stuff
+	to ServiceManager directly
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml: Define
+	a service extension for the GStreamer backend
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs: Implement
+	the skeleton for the GStreamer service backend
+
 2007-11-05  Aaron Bockover  <aaron@abock.org>
 
 	* Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs: Ported the GStreamer

@@ -11,6 +11,7 @@
     <File name="./Banshee.GStreamer/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.GStreamer.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./Banshee.GStreamer/GstErrors.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.GStreamer/Service.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

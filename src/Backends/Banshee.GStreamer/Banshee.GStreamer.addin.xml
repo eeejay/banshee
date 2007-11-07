@@ -4,6 +4,10 @@
     <Addin id="Core" version="1.0" />
   </Dependencies>
 
+  <Extension path="/Banshee/ServiceManager/Service">
+    <TypeExtensionNode class="Banshee.GStreamer.Service"/>
+  </Extension>
+  
   <Extension path="/Banshee/PlayerEngines/PlayerEngine">
     <TypeExtensionNode class="Banshee.GStreamer.PlayerEngine"/>
   </Extension>

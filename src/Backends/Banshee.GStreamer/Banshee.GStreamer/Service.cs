@@ -1,5 +1,5 @@
 // 
-// AddinCoreService.cs
+// Service.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,33 +27,20 @@
 //
 
 using System;
-using System.IO;
 
-using Mono.Addins;
+using Banshee.ServiceStack;
 
-using Banshee.Base;
-using Banshee.MediaEngine;
-
-namespace Banshee.ServiceStack
+namespace Banshee.GStreamer
 {
-    public class AddinCoreService : IService
+    public class Service : IService
     {
-        public AddinCoreService ()
+        public Service()
         {
-            AddinManager.Initialize (UserCachePath);
-            AddinManager.Registry.Rebuild (new ConsoleProgressStatus (true));
-            
-            //foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
-            //    Console.WriteLine(node.CreateInstance());
-            //}
-        }
-        
-        public string UserCachePath {
-            get { return Path.Combine (Paths.ApplicationData, "addins"); }
+            Console.WriteLine ("Hello from GStreamer service");
         }
         
         string IService.ServiceName {
-            get { return "AddinCoreService"; }
+            get { return "GStreamerCoreService"; }
         }
     }
 }

@@ -1,5 +1,9 @@
 <Addin id="Core" version="1.0" isroot="true">
 
+  <ExtensionPoint path="/Banshee/ServiceManager/Service">
+    <ExtensionNode name="TypeExtensionNode"/>
+  </ExtensionPoint>
+
   <ExtensionPoint path="/Banshee/PlayerEngines/PlayerEngine">
     <ExtensionNode name="TypeExtensionNode"/>
   </ExtensionPoint>
