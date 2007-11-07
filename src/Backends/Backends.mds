@@ -1,4 +1,4 @@
-<Combine name="Engines" fileversion="2.0">
+<Combine name="Backends" fileversion="2.0">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee.GStreamer" configuration="Debug" />
