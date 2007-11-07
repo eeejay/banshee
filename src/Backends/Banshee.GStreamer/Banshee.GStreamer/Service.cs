@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Runtime.InteropServices;
 
 using Banshee.ServiceStack;
 
@@ -34,13 +35,16 @@ namespace Banshee.GStreamer
 {
     public class Service : IService
     {
-        public Service()
+        public Service ()
         {
-            Console.WriteLine ("Hello from GStreamer service");
+            gstreamer_initialize ();
         }
         
         string IService.ServiceName {
             get { return "GStreamerCoreService"; }
         }
+        
+        [DllImport("libbanshee")]
+        private static extern void gstreamer_initialize ();
     }
 }
