@@ -31,6 +31,7 @@ using Gtk;
 using Cairo;
 
 using Hyena.Data.Gui;
+using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
 {
@@ -47,9 +48,12 @@ namespace Banshee.Collection.Gui
     
         private Pango.Layout album_layout;
         private Pango.Layout artist_layout;
+        
+        private ArtworkManager artwork_manager;
 
         public ColumnCellAlbum() : base(true, 0)
         {
+            artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
         }
     
         public unsafe override void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
@@ -83,7 +87,7 @@ namespace Banshee.Collection.Gui
             pixbuf_area.Width = pixbuf_size;
             pixbuf_area.Height = pixbuf_size;
                         
-            Gdk.Pixbuf pixbuf = ArtworkManager.Instance.Lookup(album.ArtworkId);
+            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.Lookup(album.ArtworkId);
             
             if(pixbuf != null) {
                 Gdk.Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(pixbuf_area.Width - 2, 

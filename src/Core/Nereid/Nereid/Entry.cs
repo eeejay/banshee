@@ -58,6 +58,7 @@ namespace Nereid
             // Register specific services this client will care about
             ServiceManager.RegisterService <Banshee.Gui.GtkElementsService> ();
             ServiceManager.RegisterService <Banshee.Gui.InterfaceActionService> ();
+            ServiceManager.RegisterService <Banshee.Collection.Gui.ArtworkManager> ();
             ServiceManager.RegisterService <PlayerInterface> ();
             
             // Start the core boot process

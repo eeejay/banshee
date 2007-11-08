@@ -31,54 +31,86 @@ using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
+using Mono.Unix;
+
 using Gdk;
+
+using Banshee.Base;
+using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
 {
-    public class ArtworkManager
+    public class ArtworkManager : IService
     {
-        private static ArtworkManager instance;
-        public static ArtworkManager Instance {
-            get { 
-                if(instance == null) {
-                    instance = new ArtworkManager();
-                }
-                
-                return instance;
+        private Dictionary<string, Pixbuf> artwork = new Dictionary<string, Pixbuf> ();
+        
+        public ArtworkManager ()
+        {
+            try {
+                MigrateLegacyAlbumArt ();
+            } catch (Exception e) {
+                Log.Error ("Could not migrate old album artwork to new location.", e.Message);
             }
         }
         
-        private Dictionary<string, Pixbuf> artwork = new Dictionary<string, Pixbuf>();
-        
-        public ArtworkManager()
+        private void MigrateLegacyAlbumArt ()
         {
+            if (Directory.Exists (ArtworkPath)) {
+                return;
+            }
+            
+            string legacy_artwork_path = Path.Combine (Paths.ApplicationData, "covers");
+            int artwork_count = 0;
+            
+            if (Directory.Exists (legacy_artwork_path)) {
+                Directory.CreateDirectory (ArtworkPath);
+                    
+                foreach (string path in Directory.GetFiles (legacy_artwork_path)) {
+                    string dest_path = Path.Combine (ArtworkPath, Path.GetFileName (path));
+                        
+                    File.Copy (path, dest_path);
+                    artwork_count++;
+                }
+            }
+            
+            Log.Debug (String.Format ("Migrated {0} album art images.", artwork_count));
         }
         
-        public Pixbuf Lookup(string artist, string album)
+        public Pixbuf Lookup (string artist, string album)
         {
-            return Lookup(AlbumInfo.CreateArtistAlbumId(artist, album));
+            return Lookup (AlbumInfo.CreateArtistAlbumId (artist, album));
         }
         
-        public Pixbuf Lookup(string id)
+        public Pixbuf Lookup (string id)
         {
-            if(id == null) {
+            if (id == null) {
                 return null;
             }
             
-            if(artwork.ContainsKey(id)) {
+            if (artwork.ContainsKey (id)) {
                 return artwork[id];
             }
             
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), 
-                Path.Combine("album-art", String.Format("{0}.jpg", id)));
+            string path = Path.Combine (ArtworkPath, String.Format ("{0}.jpg", id));
             
-            if(File.Exists(path)) {
-                Pixbuf pixbuf = new Pixbuf(path);
-                artwork.Add(id, pixbuf);
+            if (File.Exists (path)) {
+                Pixbuf pixbuf = new Pixbuf (path);
+                artwork.Add (id, pixbuf);
                 return pixbuf;
             }
             
             return null;
+        }
+        
+        private static string artwork_path =
+            Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "album-art");
+            
+        public static string ArtworkPath {
+            get { return artwork_path; }
+        }
+        
+        string IService.ServiceName {
+            get { return "ArtworkManager"; }
         }
     }
 }

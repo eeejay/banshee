@@ -320,7 +320,6 @@ namespace Nereid
         {
             // This forces the toolbar to look like it's just a regular plain container
             // since the stock toolbar look makes Banshee look ugly.
-            
             header_toolbar.GdkWindow.DrawRectangle (Style.BackgroundGC (header_toolbar.State), 
                 true, header_toolbar.Allocation);
             
@@ -351,9 +350,9 @@ namespace Nereid
             }
         }
         
-        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
-            switch(args.Event) {
+            switch (args.Event) {
                 case PlayerEngineEvent.Iterate:
                     OnPlayerEngineTick ();
                     break;
@@ -373,7 +372,7 @@ namespace Nereid
             }
         }
 
-        private void OnPlayerEngineTick()
+        private void OnPlayerEngineTick ()
         {
             uint stream_length = ServiceManager.PlayerEngine.Length;
             uint stream_position = ServiceManager.PlayerEngine.Position;

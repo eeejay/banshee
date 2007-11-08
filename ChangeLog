@@ -1,5 +1,17 @@
 2007-11-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Turned into a service; added a migration path for old legacy cover art
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Updated to use the ArtworkManager service
+
+	* src/Core/Nereid/Nereid/Entry.cs: Register the ArtworkManager service
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Spaces cleanup
+
+2007-11-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
 	Service for interface actions via Gtk.ActionManager/Gtk.UIManager
 
