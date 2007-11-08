@@ -36,8 +36,10 @@ using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.MediaEngine;
 
 using Banshee.Gui;
+using Banshee.Widgets;
 using Banshee.Collection.Gui;
 using Banshee.Sources.Gui;
 
@@ -54,6 +56,8 @@ namespace Nereid
         // Major Interaction Components
         private SourceView source_view;
         private CompositeTrackListView track_view;
+        private StreamPositionLabel stream_position_label;
+        private SeekSlider seek_slider;
         
         public PlayerInterface () : base ("Banshee Music Player")
         {
@@ -104,8 +108,20 @@ namespace Nereid
         {
             header_hbox = new HBox ();
             header_hbox.Show ();
+            
+            VBox seek_box = new VBox ();
+            seek_slider = new SeekSlider ();
+            seek_slider.SetSizeRequest (125, -1);
+            stream_position_label = new StreamPositionLabel (seek_slider);
+            
+            seek_box.PackStart (seek_slider, true, true, 0);
+            seek_box.PackStart (stream_position_label, true, true, 0);
+            seek_box.ShowAll ();
 
+            header_hbox.PackStart (seek_box, false, false, 0);
+            
             primary_vbox.PackStart (header_hbox, false, false, 0);
+            primary_vbox.Spacing = 5;
         }
         
         private void BuildViews ()
@@ -172,6 +188,9 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {
@@ -179,9 +198,10 @@ namespace Nereid
             };
             
             track_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
-                Console.WriteLine ("Trying to play: {0}", args.RowValue);
                 ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
+            
+            seek_slider.SeekRequested += OnSeekRequested;
         }
         
 #endregion
@@ -255,6 +275,65 @@ namespace Nereid
             filterable.Refilter();
             track_model.Reload();
         }
+        
+        private void OnSeekRequested (object o, EventArgs args)
+        {
+            ServiceManager.PlayerEngine.Position = (uint)seek_slider.Value;
+        }
+        
+#endregion
+        
+#region PlayerEngineService Event Handlers
+        
+        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        {
+            switch (args.State) {
+                case PlayerEngineState.Contacting:
+                    stream_position_label.IsContacting = true;
+                    seek_slider.SetIdle ();
+                    break;
+                case PlayerEngineState.Loaded:
+                    seek_slider.Duration = ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
+                    break;
+                case PlayerEngineState.Idle:
+                    seek_slider.SetIdle ();
+                    stream_position_label.IsContacting = false;
+                    break;
+            }
+        }
+        
+        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
+        {
+            switch(args.Event) {
+                case PlayerEngineEvent.Iterate:
+                    OnPlayerEngineTick ();
+                    break;
+                case PlayerEngineEvent.StartOfStream:
+                    seek_slider.CanSeek = true;
+                    break;
+                case PlayerEngineEvent.Buffering:
+                    if (args.BufferingPercent >= 1.0) {
+                        stream_position_label.IsBuffering = false;
+                        break;
+                    }
+                    
+                    stream_position_label.IsBuffering = true;
+                    stream_position_label.BufferingProgress = args.BufferingPercent;
+                    seek_slider.SetIdle ();
+                    break;
+            }
+        }
+
+        private void OnPlayerEngineTick()
+        {
+            uint stream_length = ServiceManager.PlayerEngine.Length;
+            uint stream_position = ServiceManager.PlayerEngine.Position;
+            
+            stream_position_label.IsContacting = false;
+            seek_slider.CanSeek = ServiceManager.PlayerEngine.CanSeek;
+            seek_slider.Duration = stream_length;
+            seek_slider.SeekValue = stream_position;
+        }        
         
 #endregion
         

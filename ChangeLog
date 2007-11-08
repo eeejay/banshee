@@ -1,5 +1,9 @@
 2007-11-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Added the seek slider stuff
+
+2007-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: Connect the RowActivated
 	event on the track view to the PlayerEngineService to get the first
 	working playback in the new banshee
