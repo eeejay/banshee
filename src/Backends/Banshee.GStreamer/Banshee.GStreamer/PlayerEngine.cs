@@ -281,9 +281,9 @@ namespace Banshee.GStreamer
         }
         
         public override uint Position {
-            get { return (uint)gst_playback_get_position(handle) / 1000; }
+            get { return (uint)gst_playback_get_position(handle); }
             set { 
-                gst_playback_set_position(handle, (ulong)value * 1000);
+                gst_playback_set_position(handle, (ulong)value);
                 OnEventChanged(PlayerEngineEvent.Seek);
             }
         }
@@ -293,7 +293,7 @@ namespace Banshee.GStreamer
         }
         
         public override uint Length {
-            get { return (uint)gst_playback_get_duration(handle) / 1000; }
+            get { return (uint)gst_playback_get_duration(handle); }
         }
         
         public override string Id {

@@ -17,6 +17,7 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
+	Banshee.Gui/BansheeIconFactory.cs \
 	Banshee.Gui/GtkElementsService.cs \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Sources.Gui/SourceView.cs

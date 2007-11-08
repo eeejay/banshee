@@ -40,6 +40,7 @@ namespace Banshee.Gui
     public class GtkElementsService : IService, IPropertyStoreExpose
     {
         private PropertyStore property_store = new PropertyStore ();
+        private BansheeIconFactory icon_factory = new BansheeIconFactory ();
         
         private Window primary_window;
         

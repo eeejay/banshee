@@ -1,3 +1,17 @@
+2007-11-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Stubbed
+	icon factory for our icons
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkElementsService.cs: 
+	Instantiate a BansheeIconFactory
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs: Accept
+	milliseconds, not seconds
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: Deliver
+	timing information in milliseconds, not seconds
+
 2007-11-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: Added the seek slider stuff

@@ -99,6 +99,7 @@ namespace Banshee.Widgets
         
         private static string FormatDuration(long time)
         {
+            time /= 1000;
             return (time > 3600 ? 
                     String.Format("{0}:{1:00}:{2:00}", time / 3600, (time / 60) % 60, time % 60) :
                     String.Format("{0}:{1:00}", time / 60, time % 60));
