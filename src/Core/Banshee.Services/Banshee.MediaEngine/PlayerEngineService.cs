@@ -1,118 +1,109 @@
-/***************************************************************************
- *  PlayerEngineCore.cs
- *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
+//
+// PlayerEngineService.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2006-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
-using Mono.Unix;
 
-using Banshee.MediaEngine;
-using Banshee.Plugins;
+using Mono.Unix;
+using Mono.Addins;
+
+using Banshee.Base;
+using Banshee.Streaming;
+using Banshee.ServiceStack;
+//using Banshee.Metadata;
 using Banshee.Configuration;
-using Banshee.Metadata;
 using Banshee.Collection;
 
-namespace Banshee.Base
+namespace Banshee.MediaEngine
 {
-    public static class PlayerEngineCore
+    public class PlayerEngineService : IService
     {   
-        private static PluginFactory<PlayerEngine> factory = new PluginFactory<PlayerEngine>();
-        
-        private static List<PlayerEngine> engines = new List<PlayerEngine>();
-        private static PlayerEngine active_engine;
-        private static PlayerEngine default_engine;
-        private static PlayerEngine pending_engine;
+        private List<PlayerEngine> engines = new List<PlayerEngine>();
+        private PlayerEngine active_engine;
+        private PlayerEngine default_engine;
+        private PlayerEngine pending_engine;
 
-        private static string preferred_engine_id = null;
+        private string preferred_engine_id = null;
 
-        public static event PlayerEngineEventHandler EventChanged;
-        public static event PlayerEngineStateHandler StateChanged;
+        public event PlayerEngineEventHandler EventChanged;
+        public event PlayerEngineStateHandler StateChanged;
 
-        private static void InstantiateEngines()
+        public PlayerEngineService()
         {
             preferred_engine_id = EngineSchema.Get();
-            
-            factory.PluginLoaded += OnPluginLoaded;
-            
-            if(Environment.GetEnvironmentVariable("BANSHEE_ENGINES_PATH") != null) {
-                factory.AddScanDirectoryFromEnvironmentVariable("BANSHEE_ENGINES_PATH");
-            } else {
-                factory.AddScanDirectory(Path.Combine(ConfigureDefines.InstallDir, "Banshee.MediaEngine"));
-            }
-            
-            factory.LoadPlugins();
-            factory.PluginLoaded -= OnPluginLoaded;
             
             if(default_engine == null && engines.Count > 0) {
                 default_engine = engines[0];
             }
             
+            foreach(TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
+                LoadEngine(node);
+            }
+            
             if(default_engine != null) {
                 active_engine = default_engine;
-                LogCore.Instance.PushDebug(Catalog.GetString("Default player engine"), active_engine.Name);
+                Log.Debug(Catalog.GetString("Default player engine"), active_engine.Name);
+            } else {
+                default_engine = active_engine;
             }
+            
+            if(default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
+                throw new ApplicationException(Catalog.GetString(
+                    "No player engines were found. Please ensure Banshee has been cleanly installed."));
+            }
+            
+            //MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
         }
         
-        private static void OnPluginLoaded(object o, PluginFactoryEventArgs<PlayerEngine> args)
+        private void LoadEngine(TypeExtensionNode node)
         {
-            PlayerEngine engine = args.Plugin;
+            PlayerEngine engine = (PlayerEngine)node.CreateInstance(typeof(PlayerEngine));
+            
             engine.StateChanged += OnEngineStateChanged;
             engine.EventChanged += OnEngineEventChanged;
 
             if(engine.Id == preferred_engine_id) {
                 DefaultEngine = engine;
             } else {
+                if (active_engine == null) {
+                    active_engine = engine;
+                }
                 engines.Add(engine);
             }
         }
-        
-        public static void Initialize()
-        {
-            InstantiateEngines();
-            if(default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
-                throw new ApplicationException(Catalog.GetString(
-                    "No player engines were found. Please ensure Banshee has been cleanly installed."));
-            }
-            
-            MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
-        }
 
-        public static void Dispose()
+        public void Dispose()
         {
-            /*foreach(PlayerEngine engine in engines) {
-                engine.Dispose();
-            }*/
-            
-            factory.Dispose();
         }
         
-        private static void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
+        /*private void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
         {
             if(CurrentTrack != null && args.Track == CurrentTrack) {
                 foreach(StreamTag tag in args.ResultTags) {
@@ -123,16 +114,16 @@ namespace Banshee.Base
                 eventargs.Event = PlayerEngineEvent.TrackInfoUpdated;
                 OnEngineEventChanged(active_engine, eventargs);
             }
-        }
+        }*/
         
-        private static void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
+        private void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
             if(o != active_engine) {
                 return;
             }
             
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
-                MetadataService.Instance.Lookup(CurrentTrack);
+                //MetadataService.Instance.Lookup(CurrentTrack);
             }
             
             PlayerEngineStateHandler handler = StateChanged;
@@ -141,7 +132,7 @@ namespace Banshee.Base
             }
         }
 
-        private static void OnEngineEventChanged(object o, PlayerEngineEventArgs args)
+        private void OnEngineEventChanged(object o, PlayerEngineEventArgs args)
         {
             if(o != active_engine) {
                 return;
@@ -149,11 +140,11 @@ namespace Banshee.Base
             
             if(CurrentTrack != null) {
                 if(args.Event == PlayerEngineEvent.Error 
-                    && CurrentTrack.PlaybackError == TrackPlaybackError.None) {
-                    CurrentTrack.PlaybackError = TrackPlaybackError.Unknown;
+                    && CurrentTrack.PlaybackError == StreamPlaybackError.None) {
+                    CurrentTrack.PlaybackError = StreamPlaybackError.Unknown;
                 } else if(args.Event == PlayerEngineEvent.Iterate 
-                    && CurrentTrack.PlaybackError != TrackPlaybackError.None) {
-                    CurrentTrack.PlaybackError = TrackPlaybackError.None;
+                    && CurrentTrack.PlaybackError != StreamPlaybackError.None) {
+                    CurrentTrack.PlaybackError = StreamPlaybackError.None;
                 }
             }
             
@@ -163,7 +154,7 @@ namespace Banshee.Base
             }
         }
         
-        public static void Open(TrackInfo track)
+        public void Open(TrackInfo track)
         {
             if(!track.CanPlay) {
                 return;
@@ -172,12 +163,12 @@ namespace Banshee.Base
             OpenCheck(track);
         }
         
-        public static void Open(SafeUri uri)
+        public void Open(SafeUri uri)
         {
             OpenCheck(uri);
         }
         
-        public static void OpenPlay(TrackInfo track)
+        public void OpenPlay(TrackInfo track)
         {
             if(!track.CanPlay) {
                 return;
@@ -187,13 +178,13 @@ namespace Banshee.Base
                 OpenCheck(track);
                 active_engine.Play();
             } catch(Exception e) {
-                LogCore.Instance.PushError(Catalog.GetString("Problem with Player Engine"), e.Message);
+                Log.Error(Catalog.GetString("Problem with Player Engine"), e.Message);
                 Close();
                 ActiveEngine = default_engine;
             }
         }
         
-        private static void OpenCheck(object o)
+        private void OpenCheck(object o)
         {
             SafeUri uri = null;
             TrackInfo track = null;
@@ -217,7 +208,7 @@ namespace Banshee.Base
             }
         }
         
-        private static void FindSupportingEngine(SafeUri uri)
+        private void FindSupportingEngine(SafeUri uri)
         {
             foreach(PlayerEngine engine in engines) {
                 foreach(string extension in engine.ExplicitDecoderCapabilities) {
@@ -247,18 +238,18 @@ namespace Banshee.Base
             }
         }
         
-        public static void Close()
+        public void Close()
         {
             active_engine.Reset();
             active_engine.Close();
         }
         
-        public static void Play()
+        public void Play()
         {
             active_engine.Play();
         }
         
-        public static void Pause()
+        public void Pause()
         {
             if(!CanPause) {
                 Close();
@@ -267,12 +258,12 @@ namespace Banshee.Base
             }
         }
         
-        public static void TrackInfoUpdated()
+        public void TrackInfoUpdated()
         {
             active_engine.TrackInfoUpdated();
         }
 
-        private static void CheckPending()
+        private void CheckPending()
         {
             if(pending_engine != null && pending_engine != active_engine) {
                 if(active_engine.CurrentState == PlayerEngineState.Idle) {
@@ -284,23 +275,23 @@ namespace Banshee.Base
             } 
         }
     
-        public static TrackInfo CurrentTrack {
+        public TrackInfo CurrentTrack {
             get { return active_engine.CurrentTrack; }
         }
         
-        public static SafeUri CurrentSafeUri {
+        public SafeUri CurrentSafeUri {
             get { return active_engine.CurrentUri; }
         }
         
-        public static PlayerEngineState CurrentState {
+        public PlayerEngineState CurrentState {
             get { return active_engine.CurrentState; }
         }
         
-        public static PlayerEngineState LastState {
+        public PlayerEngineState LastState {
             get { return active_engine.LastState; }
         }
         
-        public static ushort Volume {
+        public ushort Volume {
             get { return active_engine.Volume; }
             set { 
                 foreach(PlayerEngine engine in engines) {
@@ -309,20 +300,20 @@ namespace Banshee.Base
             }
         }
         
-        public static uint Position {
+        public uint Position {
             get { return active_engine.Position; }
             set { active_engine.Position = value; }
         }
         
-        public static bool CanSeek {
+        public bool CanSeek {
             get { return active_engine.CanSeek; }
         }
         
-        public static bool CanPause {
+        public bool CanPause {
             get { return CurrentTrack != null && !CurrentTrack.IsLive; }
         }
         
-        public static uint Length {
+        public uint Length {
             get { 
                 uint length = active_engine.Length;
                 if(length > 0) {
@@ -335,18 +326,18 @@ namespace Banshee.Base
             }
         }
     
-        public static PlayerEngine ActiveEngine {
+        public PlayerEngine ActiveEngine {
             get { return active_engine; }
             set { pending_engine = value; }
         }
         
-        public static PlayerEngine DefaultEngine {
+        public PlayerEngine DefaultEngine {
             get { return default_engine; }
             set { 
                 if(engines.Contains(value)) {
                     engines.Remove(value);
                 }
-                
+                Console.WriteLine("ADDING ENGINE");
                 engines.Insert(0, value);
             
                 default_engine = value;
@@ -354,8 +345,12 @@ namespace Banshee.Base
             }
         }
         
-        public static IEnumerable<PlayerEngine> Engines {
+        public IEnumerable<PlayerEngine> Engines {
             get { return engines; }
+        }
+        
+        string IService.ServiceName {
+            get { return "PlayerEngineService"; }
         }
         
         public static readonly SchemaEntry<int> VolumeSchema = new SchemaEntry<int>(

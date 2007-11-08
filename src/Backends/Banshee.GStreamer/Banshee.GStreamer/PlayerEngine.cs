@@ -67,6 +67,23 @@ namespace Banshee.GStreamer
         
         public PlayerEngine()
         {
+            if(ServiceManager.IsInitialized) {
+                Initialize();
+            } else {
+                ServiceManager.ServiceStarted += OnServiceStarted;
+            }
+        }
+        
+        private void OnServiceStarted(ServiceStartedArgs args)
+        {
+            if(args.Service is Service) {
+                ServiceManager.ServiceStarted -= OnServiceStarted;
+                Initialize();
+            }
+        }
+        
+        private void Initialize()
+        {
             IntPtr ptr = gst_playback_new();
             
             if(ptr == IntPtr.Zero) {

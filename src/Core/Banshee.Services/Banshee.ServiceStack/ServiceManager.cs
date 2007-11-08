@@ -35,6 +35,7 @@ using Mono.Addins;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
+using Banshee.MediaEngine;
 
 namespace Banshee.ServiceStack
 {
@@ -44,7 +45,7 @@ namespace Banshee.ServiceStack
         private static List<Type> service_types = new List<Type> ();
         private static ExtensionNodeList extension_nodes;
         
-        private static bool has_run = false;
+        private static bool is_initialized = false;
         private static readonly object self_mutex = new object ();
         
         public static event EventHandler StartupBegin;
@@ -56,6 +57,7 @@ namespace Banshee.ServiceStack
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
+            RegisterService<PlayerEngineService> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : UserAddinCachePath);
@@ -84,7 +86,7 @@ namespace Banshee.ServiceStack
                     OnServiceStarted (service);
                 }
                 
-                has_run = true;
+                is_initialized = true;
                 
                 OnStartupFinished ();
             }
@@ -122,7 +124,7 @@ namespace Banshee.ServiceStack
         public static void RegisterService<T> () where T : IService
         {
             lock (self_mutex) {
-                if (has_run) {
+                if (is_initialized) {
                     RegisterServiceNoLock (Activator.CreateInstance <T> ());
                 } else {
                     service_types.Add (typeof (T));
@@ -171,7 +173,7 @@ namespace Banshee.ServiceStack
         {
             ServiceStartedHandler handler = ServiceStarted;
             if (handler != null) {
-                handler (null, new ServiceStartedArgs (service));
+                handler (new ServiceStartedArgs (service));
             }
         }
         
@@ -181,6 +183,10 @@ namespace Banshee.ServiceStack
         
         public static int ServiceCount {
             get { return services.Count; }
+        }
+        
+        public static bool IsInitialized {
+            get { return is_initialized; }
         }
         
         public static string UserAddinCachePath {

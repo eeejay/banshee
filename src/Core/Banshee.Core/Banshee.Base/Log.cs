@@ -92,7 +92,7 @@ namespace Banshee.Base
         
         private static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
-            if (type != LogEntryType.Information) {
+            if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
                 if (details != null) {
                     Console.WriteLine ("[{0}::{1}] {2} - {3}", type, DateTime.Now, message, details);
                 } else {
@@ -112,6 +112,8 @@ namespace Banshee.Base
                 handler (new LogNotifyArgs (entry));
             }
         }
+        
+        #region Public Debug Methods
                                     
         public static void Debug (string message, string details)
         {
@@ -121,6 +123,20 @@ namespace Banshee.Base
         public static void Debug (string message)
         {
             Debug (message, null);
+        }
+        
+        #endregion
+        
+        #region Public Information Methods
+            
+        public static void Information (string message)
+        {
+            Information (message, null);
+        }
+        
+        public static void Information (string message, string details)
+        {
+            Information (message, details, true);
         }
         
         public static void Information (string message, string details, bool showUser)
@@ -133,6 +149,20 @@ namespace Banshee.Base
             Information (message, null, showUser);
         }
         
+        #endregion
+        
+        #region Public Warning Methods
+        
+        public static void Warning (string message)
+        {
+            Warning (message, null);
+        }
+        
+        public static void Warning (string message, string details)
+        {
+            Warning (message, details, true);
+        }
+        
         public static void Warning (string message, string details, bool showUser)
         {
             Commit (LogEntryType.Warning, message, details, showUser);
@@ -141,6 +171,20 @@ namespace Banshee.Base
         public static void Warning (string message, bool showUser)
         {
             Warning (message, null, showUser);
+        }
+        
+        #endregion
+        
+        #region Public Error Methods
+        
+        public static void Error (string message)
+        {
+            Error (message, null);
+        }
+        
+        public static void Error (string message, string details)
+        {
+            Error (message, details, true);
         }
         
         public static void Error (string message, string details, bool showUser)
@@ -152,5 +196,7 @@ namespace Banshee.Base
         {
             Error (message, null, showUser);
         }
+        
+        #endregion
     }
 }

@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.ServiceStack
 {
-    public delegate void ServiceStartedHandler (object o, ServiceStartedArgs args);
+    public delegate void ServiceStartedHandler (ServiceStartedArgs args);
     
     public class ServiceStartedArgs : EventArgs
     {

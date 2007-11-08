@@ -1,5 +1,23 @@
 2007-11-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Ported the old PlayerEngineCore to be a service and to load its engines
+	from Mono.Addins
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Make
+	PlayerEngineService a built-in service
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceStartedHandler.cs:
+	Updated delegate signature since ServiceManager is now static
+
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Add some more overrides
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: Defer
+	the loading of the player engine internals until we get a notification
+	from ServiceManager that the GStreamerCoreService has been loaded
+
+2007-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Added a new, extremely simple
 	and much more efficient logging facility
 
