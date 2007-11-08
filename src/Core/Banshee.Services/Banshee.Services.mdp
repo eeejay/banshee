@@ -18,7 +18,7 @@
     <File name="Banshee.Collection.Database/TrackListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/Source.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/SourceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Sources/ChildSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/DatabaseSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlist/PlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library/LibrarySource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/Application.cs" subtype="Code" buildaction="Compile" />

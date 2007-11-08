@@ -41,6 +41,7 @@ namespace Banshee.Sources
 {
     public abstract class Source : ISource
     {
+        private Source parent;        
         private PropertyStore properties = new PropertyStore();
         private List<Source> child_sources = new List<Source>();
 
@@ -91,38 +92,43 @@ namespace Banshee.Sources
         {
             return false;
         }
+
+        public void SetParentSource (Source parent)
+        {
+            this.parent = parent;
+        }
         
-        public virtual void AddChildSource(ChildSource source)
+        public virtual void AddChildSource(Source child)
         {
             lock(Children) {
-                source.SetParentSource(this);
-                child_sources.Add(source);
-                OnChildSourceAdded(source);
+                child.SetParentSource (this);
+                child_sources.Add (child);
+                OnChildSourceAdded (child);
             }
         }
 
-        public virtual void RemoveChildSource(ChildSource source)
+        public virtual void RemoveChildSource (Source child)
         {
-            lock(Children) {
-                if (source.Children.Count > 0) {
-                    source.ClearChildSources();
+            lock (Children) {
+                if (child.Children.Count > 0) {
+                    child.ClearChildSources ();
                 }
                 
-                child_sources.Remove(source);
+                child_sources.Remove (child);
                 
-                if(ServiceManager.SourceManager.ActiveSource == source) {
+                if (ServiceManager.SourceManager.ActiveSource == child) {
                     ServiceManager.SourceManager.SetActiveSource(ServiceManager.SourceManager.DefaultSource);
                 }
                 
-                OnChildSourceRemoved(source);
+                OnChildSourceRemoved (child);
             }
         }
         
-        public virtual void ClearChildSources()
+        public virtual void ClearChildSources ()
         {
             lock(Children) {
                 while(child_sources.Count > 0) {
-                    RemoveChildSource(child_sources[child_sources.Count - 1] as ChildSource);
+                    RemoveChildSource (child_sources[child_sources.Count - 1]);
                 }
             }
         }
@@ -180,6 +186,10 @@ namespace Banshee.Sources
             get {
                 return null;
             }
+        }
+
+        public Source Parent {
+            get { return parent; }
         }
 
         public string Name {
@@ -241,9 +251,9 @@ namespace Banshee.Sources
         }
         
         IDBusExportable IDBusExportable.Parent {
-            get { 
-                if(this is ChildSource) {
-                    return ((ChildSource)this).Parent;
+            get {
+                if (Parent != null) {
+                    return ((Source)this).Parent;
                 } else {
                     return ServiceManager.SourceManager;
                 }

@@ -1,3 +1,24 @@
+2007-11-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Make track caching model work for multiple sources, not just the LibrarySource.
+
+	* Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Generalize
+	and move useful functions from the LibrarySource into DatabaseSource so
+	they can be used by PlaylistSources too.
+
+	* Banshee.Services/Banshee.ServiceStack/Application.cs: Load playlists when
+	the app starts.
+
+	* Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* Banshee.Services/Banshee.Services.mdp:
+	* Banshee.Services/Banshee.Sources/ChildSource.cs:
+	* Banshee.Services/Banshee.Sources/Source.cs:
+	* Banshee.Services/Makefile.am: Get rid of ChildSource -- allow any Source
+	to have a parent set.
+
 2007-11-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:

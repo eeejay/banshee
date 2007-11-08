@@ -37,52 +37,12 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Library
 {
-    public class LibrarySource : Source, ITrackModelSource
+    public class LibrarySource : DatabaseSource
     {
-        private TrackListDatabaseModel track_model;
-        private AlbumListDatabaseModel album_model;
-        private ArtistListDatabaseModel artist_model;
-        
         public LibrarySource() : base(Catalog.GetString("Library"), 0)
         {
             Properties.SetStringList("IconName", "go-home", "user-home", "source-library");
-            
-            track_model = new TrackListDatabaseModel(ServiceManager.DbConnection);
-            album_model = new AlbumListDatabaseModel(ServiceManager.DbConnection);
-            artist_model = new ArtistListDatabaseModel(ServiceManager.DbConnection);
-            
-            track_model.Reload();
-            album_model.Reload();
-            artist_model.Reload();
-            
-            track_model.Reloaded += OnTrackModelReloaded;
-            
-            OnSetupComplete();
-        }
-        
-        private void OnTrackModelReloaded(object o, EventArgs args)
-        {
-            OnUpdated();
-        }
-        
-        public override int Count {
-            get { return track_model.Rows; }
-        }
-        
-        public TrackListModel TrackModel {
-            get { return track_model; }
-        }
-        
-        public AlbumListModel AlbumModel {
-            get { return album_model; }
-        }
-        
-        public ArtistListModel ArtistModel {
-            get { return artist_model; }
-        }
-        
-        public override string TrackModelPath {
-            get { return DBusServiceManager.MakeObjectPath(track_model); }
+            AfterInitialized ();
         }
     }
 }

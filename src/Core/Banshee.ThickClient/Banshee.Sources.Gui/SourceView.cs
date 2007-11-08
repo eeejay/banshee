@@ -196,7 +196,7 @@ namespace Banshee.Sources.Gui
             store.SetValue(iter, 0, source);
 
             lock(source.Children) {
-                foreach(ChildSource s in source.Children) {
+                foreach(Source s in source.Children) {
                     AddSource(s, position, iter);
                 }
             }
@@ -213,14 +213,13 @@ namespace Banshee.Sources.Gui
                 Expand(iter);
             }
             
-            if(source is ChildSource) {
-                ChildSource child = source as ChildSource;
-                if(child.Parent.AutoExpand) {
-                    Expand(FindSource(child.Parent));
+            if (source.Parent != null ) {
+                if (source.Parent.AutoExpand) {
+                    Expand (FindSource (source.Parent));
                 }
             }
             
-            UpdateView();
+            UpdateView ();
         }
 
         private void RemoveSource(Source source)

@@ -30,7 +30,7 @@ SOURCES =  \
 	Banshee.ServiceStack/IService.cs \
 	Banshee.ServiceStack/ServiceManager.cs \
 	Banshee.ServiceStack/ServiceStartedHandler.cs \
-	Banshee.Sources/ChildSource.cs \
+	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \
 	Banshee.Sources/ITrackModelSource.cs \
