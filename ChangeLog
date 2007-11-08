@@ -1,5 +1,19 @@
 2007-11-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Connect the RowActivated
+	event on the track view to the PlayerEngineService to get the first
+	working playback in the new banshee
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Set CanPlay, since ... it can
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Provide
+	a property for accessing the PlayerEngineService
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Fix design of RowActivted
+
+2007-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
 	Ported the old PlayerEngineCore to be a service and to load its engines
 	from Mono.Addins

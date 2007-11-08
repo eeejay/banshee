@@ -35,6 +35,28 @@ using Hyena.Data;
 
 namespace Hyena.Data.Gui
 {
+    public delegate void RowActivatedHandler<T> (object o, RowActivatedArgs<T> args);    
+    
+    public class RowActivatedArgs<T> : EventArgs
+    {
+        private int row;
+        private T row_value;
+        
+        public RowActivatedArgs (int row, T rowValue)
+        {
+            this.row = row;
+            this.row_value = rowValue;
+        }
+
+        public int Row {
+            get { return row; }
+        }
+
+        public T RowValue {
+            get { return row_value; }
+        }
+    }
+    
     [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask, "SelectAll")]
     [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask, "UnselectAll")]
     public class ListView<T> : Container
@@ -54,27 +76,7 @@ namespace Hyena.Data.Gui
             public int Index;
         }
 
-        public class RowActivatedArgs : EventArgs
-        {
-            private int row;
-            private T row_value;
-            public RowActivatedArgs (int row, T rowValue)
-            {
-                this.row = row;
-                this.row_value = rowValue;
-            }
-
-            public int Row {
-                get { return row; }
-            }
-
-            public T RowValue {
-                get { return row_value; }
-            }
-        }
-
-        public delegate void RowActivatedHandler (ListView<T> list_view, RowActivatedArgs args);
-        public event RowActivatedHandler RowActivated;
+        public event RowActivatedHandler<T> RowActivated;
     
         private const int COLUMN_PADDING = 1;
         private const int BorderWidth = 10;
@@ -815,9 +817,9 @@ namespace Hyena.Data.Gui
         private void OnRowActivated ()
         {
             if (focused_row_index != -1) {
-                RowActivatedHandler handler = RowActivated;
+                RowActivatedHandler<T> handler = RowActivated;
                 if (handler != null) {
-                    handler (this, new RowActivatedArgs (focused_row_index, model.GetValue (focused_row_index)));
+                    handler (this, new RowActivatedArgs<T> (focused_row_index, model.GetValue (focused_row_index)));
                 }
             }
         }

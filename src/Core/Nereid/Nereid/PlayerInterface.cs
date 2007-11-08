@@ -29,6 +29,8 @@
 using System;
 using Gtk;
 
+using Hyena.Data.Gui;
+
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Database;
@@ -174,6 +176,11 @@ namespace Nereid
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {
                 PlayerWindowSchema.SourceViewWidth.Set (views_pane.Position);
+            };
+            
+            track_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
+                Console.WriteLine ("Trying to play: {0}", args.RowValue);
+                ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
         }
         

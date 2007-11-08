@@ -204,5 +204,9 @@ namespace Banshee.ServiceStack
         public static SourceManager SourceManager {
             get { return (SourceManager)Get ("SourceManager"); }
         }
+        
+        public static PlayerEngineService PlayerEngine {
+            get { return (PlayerEngineService)Get ("PlayerEngineService"); }
+        }
     }
 }

@@ -82,6 +82,8 @@ namespace Banshee.Collection.Database
             Rating = ReaderGetInt32(reader, Column.Rating);
 
             Duration = ReaderGetTimeSpan(reader, Column.Duration);
+            
+            Attributes |= TrackAttributes.CanPlay;
         }
 
         private string ReaderGetString(IDataReader reader, Column column)
