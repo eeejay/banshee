@@ -21,6 +21,7 @@ SOURCES =  \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/PlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
+	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
 	Banshee.Playlist/PlaylistSource.cs \
 	Banshee.ServiceStack/Application.cs \

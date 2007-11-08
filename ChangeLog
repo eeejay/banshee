@@ -1,3 +1,10 @@
+2007-11-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Added a new, extremely simple
+	and much more efficient logging facility
+
+	* src/Core/Banshee.Base/LogCore.cs: Removed legacy logging facility
+
 2007-11-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Add RowActivated event.

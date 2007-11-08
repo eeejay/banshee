@@ -50,6 +50,7 @@
     <File name="./Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Base/ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Base/StringUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Base/Log.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
