@@ -109,6 +109,21 @@ namespace Banshee.Gui
             return null;
         }
         
+        public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item)
+        {
+            ToolItem placeholder = (ToolItem)UIManager.GetWidget (path);
+            int position = toolbar.GetItemIndex (placeholder);
+            toolbar.Remove (placeholder);
+            
+            if (item is ToolItem) {
+                toolbar.Insert ((ToolItem)item, position);
+            } else {
+                ToolItem container_item = new Banshee.Widgets.GenericToolItem<Widget> (item);
+                container_item.Show ();
+                toolbar.Insert (container_item, position);
+            }
+        }
+        
         public Action this[string actionId] {
             get { return FindAction (actionId); }
         }

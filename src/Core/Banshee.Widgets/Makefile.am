@@ -38,6 +38,7 @@ SOURCES =  \
 	Banshee.Widgets/TileView.cs \
 	Banshee.Widgets/ToggleState.cs \
 	Banshee.Widgets/VolumeButton.cs  
+
 RESOURCES =  \
 	Resources/rating-rated.png \
 	Resources/rating-unrated.png

@@ -1,3 +1,30 @@
+2007-11-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs: 
+	Added PopulateToolbarPlaceholder that allows generic widgets to be
+	embedded in a toolbar placeholder
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Cosmetic
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Added
+	some more placeholder nodes for other widgets, and added an expanded
+	spacing item to create the proper alignments
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedVolumeButton.cs:
+	A class derived from Bacon.VolumeButton that integrates with 
+	PlayerEngineService. Sexy.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: More hotness with the 
+	header toolbar, fix spacing/cosmetic issues in the display, and embed
+	the ConnectedVolumeButton in the toolbar
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Always set the volume from the schema when starting a new track
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Added a FIXME to just move the old artwork directory, but we'll wait
+	until we get closer to a release to keep from messing with Banshee stable
+
 2007-11-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

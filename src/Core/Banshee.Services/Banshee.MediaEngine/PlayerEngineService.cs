@@ -124,6 +124,7 @@ namespace Banshee.MediaEngine
             }
             
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
+                active_engine.Volume = (ushort)VolumeSchema.Get ();
                 //MetadataService.Instance.Lookup(CurrentTrack);
             }
             

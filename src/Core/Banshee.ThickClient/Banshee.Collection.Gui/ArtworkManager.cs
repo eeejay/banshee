@@ -59,6 +59,8 @@ namespace Banshee.Collection.Gui
                 return;
             }
             
+            // FIXME: Replace with Directory.Move for release
+            
             string legacy_artwork_path = Path.Combine (Paths.ApplicationData, "covers");
             int artwork_count = 0;
             

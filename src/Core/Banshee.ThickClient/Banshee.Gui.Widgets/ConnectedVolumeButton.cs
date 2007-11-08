@@ -1,5 +1,5 @@
 //
-// GlobalActions.cs
+// ConnectedVolumeButton.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,25 +27,41 @@
 //
 
 using System;
-using Mono.Unix;
-using Gtk;
 
-namespace Banshee.Gui
+using Banshee.MediaEngine;
+using Banshee.ServiceStack;
+
+namespace Banshee.Gui.Widgets
 {
-    public class GlobalActions : ActionGroup
+    public class ConnectedVolumeButton : Bacon.VolumeButton
     {
-        public GlobalActions (InterfaceActionService actionService) : base ("Global")
+        private bool emit_lock = false;
+        
+        public ConnectedVolumeButton () : base ()
         {
-            Add (new ActionEntry [] {
-                new ActionEntry ("MusicMenuAction", null, 
-                    Catalog.GetString ("_Music"), null, null, null),
-                    
-                new ActionEntry ("QuitAction", Stock.Quit,
-                    Catalog.GetString ("_Quit"), "<control>Q",
-                    Catalog.GetString ("Quit Banshee"), delegate {
-                        Banshee.ServiceStack.Application.Shutdown ();
-                    })
-            });
+            Volume = PlayerEngineService.VolumeSchema.Get ();
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        {
+            if (args.Event == PlayerEngineEvent.Volume) {
+                emit_lock = true;
+                Volume = ServiceManager.PlayerEngine.Volume;
+                emit_lock = false;
+            }
+        }
+        
+        protected override void OnVolumeChanged ()
+        {
+            if (emit_lock) {
+                return;
+            }
+            
+            ServiceManager.PlayerEngine.Volume = (ushort)Volume;
+            PlayerEngineService.VolumeSchema.Set(Volume);
+            
+            base.OnVolumeChanged ();
         }
     }
 }

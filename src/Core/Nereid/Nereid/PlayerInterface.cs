@@ -39,6 +39,7 @@ using Banshee.Collection.Database;
 using Banshee.MediaEngine;
 
 using Banshee.Gui;
+using Banshee.Gui.Widgets;
 using Banshee.Widgets;
 using Banshee.Collection.Gui;
 using Banshee.Sources.Gui;
@@ -49,16 +50,16 @@ namespace Nereid
     {
         // Major Layout Components
         private VBox primary_vbox;
-        private HBox header_hbox;
+        private Toolbar header_toolbar;
         private HPaned views_pane;
         private ViewContainer view_container;
         
         // Major Interaction Components
-        private Toolbar header_toolbar;
         private SourceView source_view;
         private CompositeTrackListView track_view;
         private StreamPositionLabel stream_position_label;
         private SeekSlider seek_slider;
+        private ConnectedVolumeButton volume_button;
         
         // Cached service references
         private GtkElementsService elements_service;
@@ -109,12 +110,7 @@ namespace Nereid
             Widget menu = action_service.UIManager.GetWidget ("/MainMenu");
             menu.Show ();
             primary_vbox.PackStart (menu, false, false, 0);
-            
-            header_toolbar = (Toolbar)action_service.UIManager.GetWidget ("/HeaderToolbar");
-            header_toolbar.ToolbarStyle = ToolbarStyle.Icons;
-            header_toolbar.Show ();
-            primary_vbox.PackStart (header_toolbar, false, false, 0);
-            
+           
             BuildHeader ();
             BuildViews ();
             
@@ -124,12 +120,24 @@ namespace Nereid
         
         private void BuildHeader ()
         {
-            header_hbox = new HBox ();
-            header_hbox.Show ();
+            Alignment toolbar_alignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
+            toolbar_alignment.TopPadding = 3;
+            toolbar_alignment.BottomPadding = 3;
+            
+            header_toolbar = (Toolbar)action_service.UIManager.GetWidget ("/HeaderToolbar");
+            header_toolbar.ToolbarStyle = ToolbarStyle.Icons;
+            header_toolbar.ShowArrow = false;
+            
+            toolbar_alignment.Add (header_toolbar);
+            toolbar_alignment.ShowAll ();
+            
+            primary_vbox.PackStart (toolbar_alignment, false, false, 0);
             
             BuildSeekSlider ();
             
-            primary_vbox.PackStart (header_hbox, false, false, 0);
+            volume_button = new ConnectedVolumeButton ();
+            volume_button.Show ();
+            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/VolumeButton", volume_button);
         }
         
         private void BuildSeekSlider ()
@@ -141,20 +149,16 @@ namespace Nereid
             VBox box = new VBox ();
             alignment.Add (box);
             
-            GenericToolItem<Alignment> seek_item = new GenericToolItem<Alignment> (alignment);
-            
-            ToolItem seek_holder = (ToolItem)action_service.UIManager.GetWidget ("/HeaderToolbar/SeekSlider");
-            int seek_position = header_toolbar.GetItemIndex (seek_holder);
-            
             seek_slider = new SeekSlider ();
             seek_slider.SetSizeRequest (125, -1);
             stream_position_label = new StreamPositionLabel (seek_slider);
             
             box.PackStart (seek_slider, true, true, 0);
             box.PackStart (stream_position_label, true, true, 0);
-            seek_item.ShowAll ();
             
-            header_toolbar.Insert (seek_item, seek_position);
+            alignment.ShowAll ();
+            
+            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", alignment);
         }
         
         private void BuildViews ()

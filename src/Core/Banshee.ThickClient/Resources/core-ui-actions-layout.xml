@@ -4,6 +4,9 @@
         <toolitem action="PlayPauseAction" />
         <toolitem action="NextAction" />
         <placeholder name="SeekSlider" />
+        <placeholder name="MetadataTile" />
+        <separator expand="true" />
+        <placeholder name="VolumeButton" />
     </toolbar>
     <menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
