@@ -1,11 +1,45 @@
 <ui>
+    <toolbar name="HeaderToolbar">
+        <toolitem action="PreviousAction" />
+        <toolitem action="PlayPauseAction" />
+        <toolitem action="NextAction" />
+        <placeholder name="SeekSlider" />
+    </toolbar>
     <menubar name="MainMenu">
+        <menu name="MusicMenu" action="MusicMenuAction">
+            <separator />
+            <placeholder name="ClosePlaceholder" />
+            <menuitem name="Quit" action="QuitAction" />
+        </menu>
+        <menu name="PlaybackMenu" action="PlaybackMenuAction">
+            <menuitem name="PlayPause" action="PlayPauseAction" />
+            <!--<menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />-->
+            <separator />
+            <menuitem name="Previous" action="PreviousAction" />
+            <menuitem name="Next" action="NextAction" />
+            <!--<separator />
+            <menuitem name="SeekBackward" action="SeekBackwardAction" />
+            <menuitem name="SeekForward" action="SeekForwardAction" />
+            <menuitem name="SeekTo" action="SeekToAction" />
+            <menuitem name="RestartSong" action="RestartSongAction" />
+            <separator />
+            <placeholder name="PlaybackMenuAdditions" />
+            <menuitem name="RepeatNone" action="RepeatNoneAction" />
+            <menuitem name="RepeatAll" action="RepeatAllAction" />
+            <menuitem name="RepeatSingle" action="RepeatSingleAction" />
+            <separator />
+            <menuitem name="Shuffle" action="ShuffleAction" />-->
+        </menu>
+    </menubar>
+</ui>
+
+    <!--<menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
             <menuitem name="NewPlaylist" action="NewPlaylistAction" />
             <menuitem name="NewCD" action="NewCDAction" />
             <placeholder name="NewMusicMenuAdditions" />
-            <!--<menuitem name="ImportFolder" action="ImportFolderAction" />
-            <menuitem name="ImportFiles" action="ImportFilesAction" />-->
+            /*<menuitem name="ImportFolder" action="ImportFolderAction" />
+            <menuitem name="ImportFiles" action="ImportFilesAction" />*/
             <separator />
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="ImportPlaylist" action="ImportPlaylistAction" />
@@ -16,9 +50,6 @@
             <menuitem name="WriteCD" action="WriteCDAction" />
             <separator />
             <menuitem name="SyncDap" action="SyncDapAction" />
-            <separator />
-            <placeholder name="ClosePlaceholder" />
-            <menuitem name="Quit" action="QuitAction" />
         </menu>
         <menu name="EditMenu" action="EditMenuAction">
             <menuitem name="CopySongs" action="CopySongsAction" />
@@ -38,25 +69,7 @@
             <menuitem name="Plugins" action="PluginsAction" />
             <menuitem name="Preferences" action="PreferencesAction" />
         </menu>
-        <menu name="PlaybackMenu" action="PlaybackMenuAction">
-            <menuitem name="PlayPause" action="PlayPauseAction" />
-            <menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />
-            <separator />
-            <menuitem name="Previous" action="PreviousAction" />
-            <menuitem name="Next" action="NextAction" />
-            <separator />
-            <menuitem name="SeekBackward" action="SeekBackwardAction" />
-            <menuitem name="SeekForward" action="SeekForwardAction" />
-            <menuitem name="SeekTo" action="SeekToAction" />
-            <menuitem name="RestartSong" action="RestartSongAction" />
-            <separator />
-            <placeholder name="PlaybackMenuAdditions" />
-            <menuitem name="RepeatNone" action="RepeatNoneAction" />
-            <menuitem name="RepeatAll" action="RepeatAllAction" />
-            <menuitem name="RepeatSingle" action="RepeatSingleAction" />
-            <separator />
-            <menuitem name="Shuffle" action="ShuffleAction" />
-        </menu>
+
         <menu name="ToolsMenu" action="ToolsMenuAction">
             <menuitem name="Scripts" action="ScriptsAction" />
         </menu>
@@ -109,5 +122,4 @@
         <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
         <separator />
         <menuitem name="Properties" action="PropertiesAction" />
-    </popup>
-</ui>
+    </popup>-->

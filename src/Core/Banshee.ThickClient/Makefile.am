@@ -18,11 +18,16 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
+	Banshee.Gui/GlobalActions.cs \
 	Banshee.Gui/GtkElementsService.cs \
 	Banshee.Gui/IconThemeUtils.cs \
+	Banshee.Gui/InterfaceActionService.cs \
+	Banshee.Gui/PlaybackActions.cs \
 	Banshee.Sources.Gui/SourceView.cs
 
-RESOURCES = Resources/browser-album-cover.png
+RESOURCES =  \
+	Resources/browser-album-cover.png \
+	Resources/core-ui-actions-layout.xml
 
 include $(top_srcdir)/build/build.mk
 

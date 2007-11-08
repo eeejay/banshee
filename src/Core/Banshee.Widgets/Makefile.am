@@ -16,6 +16,7 @@ SOURCES =  \
 	Banshee.Widgets/DrawingUtilities.cs \
 	Banshee.Widgets/EllipsizeLabel.cs \
 	Banshee.Widgets/FadingAlignment.cs \
+	Banshee.Widgets/GenericToolItem.cs \
 	Banshee.Widgets/HighlightMessageArea.cs \
 	Banshee.Widgets/HigMessageDialog.cs \
 	Banshee.Widgets/HoverImageButton.cs \

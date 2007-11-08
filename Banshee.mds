@@ -1,4 +1,4 @@
-<Combine name="Banshee (Complete)" fileversion="2.0" outputpath="./">
+<Combine name="Banshee (Complete)" fileversion="2.0" outputpath=".">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <CustomCommands>
@@ -15,6 +15,6 @@
     <Execute type="None" entry="ext" />
   </StartMode>
   <Entries>
-    <Entry filename="./src/Banshee.mds" />
+    <Entry filename="src/Banshee.mds" />
   </Entries>
 </Combine>

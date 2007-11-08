@@ -54,6 +54,7 @@ namespace Banshee.MediaEngine
 
         public event PlayerEngineEventHandler EventChanged;
         public event PlayerEngineStateHandler StateChanged;
+        public event EventHandler PlayWhenIdleRequest;
 
         public PlayerEngineService()
         {
@@ -151,6 +152,14 @@ namespace Banshee.MediaEngine
             PlayerEngineEventHandler handler = EventChanged;
             if(handler != null) {
                 handler(o, args);
+            }
+        }
+        
+        private void OnPlayWhenIdleRequest ()
+        {
+            EventHandler handler = PlayWhenIdleRequest;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         
@@ -255,6 +264,21 @@ namespace Banshee.MediaEngine
                 Close();
             } else {
                 active_engine.Pause();
+            }
+        }
+        
+        public void TogglePlaying()
+        {
+            switch (CurrentState) {
+                case PlayerEngineState.Idle:
+                    OnPlayWhenIdleRequest ();
+                    break;
+                case PlayerEngineState.Playing:
+                    Pause ();
+                    break;
+                default:
+                    Play ();
+                    break;
             }
         }
         

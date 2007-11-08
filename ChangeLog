@@ -1,5 +1,36 @@
 2007-11-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Service for interface actions via Gtk.ActionManager/Gtk.UIManager
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Common
+	global actions, like 'Quit'
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Actions
+	specific to controlling playback
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Custom
+	icon factory to load theme icons and resource icons into the stock 
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: UI
+	layout for the menu and toolbar
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Embed the menu and toolbar
+	UIs; render the stock Gtk.Toolbar as a plain, styleless widget so it
+	blends in with the window background and looks like 'the old Banshee.'
+
+	* src/Core/Nereid/Nereid/Entry.cs: Register the InterfaceActionService
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Added a TogglePlaying method that just does the right thing; raise
+	a new PlayWhenIdleRequest event if playback is requested but the engine
+	is idle
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/GenericToolItem.cs: A generic
+	widget container for embedding in a Gtk.Toolbar
+
+2007-11-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Stubbed
 	icon factory for our icons
 

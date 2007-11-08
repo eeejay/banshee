@@ -54,20 +54,30 @@ namespace Nereid
         private ViewContainer view_container;
         
         // Major Interaction Components
+        private Toolbar header_toolbar;
         private SourceView source_view;
         private CompositeTrackListView track_view;
         private StreamPositionLabel stream_position_label;
         private SeekSlider seek_slider;
         
+        // Cached service references
+        private GtkElementsService elements_service;
+        private InterfaceActionService action_service;
+        
         public PlayerInterface () : base ("Banshee Music Player")
         {
+            elements_service = ServiceManager.Get<GtkElementsService> ("GtkElementsService");
+            action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
+            
             ConfigureWindow ();
             BuildPrimaryLayout ();
             ConnectEvents ();
             LoadSettings ();
             ResizeMoveWindow ();
             
-            ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow = this;
+            elements_service.PrimaryWindow = this;
+            
+            track_view.TrackView.HasFocus = true;
             
             Show ();
         }
@@ -90,12 +100,20 @@ namespace Nereid
         private void ConfigureWindow ()
         {
             WindowPosition = WindowPosition.Center;
-            BorderWidth = 10;
         }
         
         private void BuildPrimaryLayout ()
         {
             primary_vbox = new VBox ();
+            
+            Widget menu = action_service.UIManager.GetWidget ("/MainMenu");
+            menu.Show ();
+            primary_vbox.PackStart (menu, false, false, 0);
+            
+            header_toolbar = (Toolbar)action_service.UIManager.GetWidget ("/HeaderToolbar");
+            header_toolbar.ToolbarStyle = ToolbarStyle.Icons;
+            header_toolbar.Show ();
+            primary_vbox.PackStart (header_toolbar, false, false, 0);
             
             BuildHeader ();
             BuildViews ();
@@ -109,19 +127,34 @@ namespace Nereid
             header_hbox = new HBox ();
             header_hbox.Show ();
             
-            VBox seek_box = new VBox ();
+            BuildSeekSlider ();
+            
+            primary_vbox.PackStart (header_hbox, false, false, 0);
+        }
+        
+        private void BuildSeekSlider ()
+        {
+            Alignment alignment = new Alignment (0.0f, 0.0f, 0.0f, 0.0f);
+            alignment.RightPadding = 10;
+            alignment.LeftPadding = 10;
+            
+            VBox box = new VBox ();
+            alignment.Add (box);
+            
+            GenericToolItem<Alignment> seek_item = new GenericToolItem<Alignment> (alignment);
+            
+            ToolItem seek_holder = (ToolItem)action_service.UIManager.GetWidget ("/HeaderToolbar/SeekSlider");
+            int seek_position = header_toolbar.GetItemIndex (seek_holder);
+            
             seek_slider = new SeekSlider ();
             seek_slider.SetSizeRequest (125, -1);
             stream_position_label = new StreamPositionLabel (seek_slider);
             
-            seek_box.PackStart (seek_slider, true, true, 0);
-            seek_box.PackStart (stream_position_label, true, true, 0);
-            seek_box.ShowAll ();
-
-            header_hbox.PackStart (seek_box, false, false, 0);
+            box.PackStart (seek_slider, true, true, 0);
+            box.PackStart (stream_position_label, true, true, 0);
+            seek_item.ShowAll ();
             
-            primary_vbox.PackStart (header_hbox, false, false, 0);
-            primary_vbox.Spacing = 5;
+            header_toolbar.Insert (seek_item, seek_position);
         }
         
         private void BuildViews ()
@@ -145,7 +178,9 @@ namespace Nereid
             
             primary_vbox.PackStart (views_pane, true, true, 0);
         }
-        
+
+#endregion
+
 #region Configuration Loading/Saving        
         
         private void ResizeMoveWindow ()
@@ -179,8 +214,6 @@ namespace Nereid
         
 #endregion
         
-#endregion
-        
 #region Events and Logic Setup
         
         private void ConnectEvents ()
@@ -200,6 +233,8 @@ namespace Nereid
             track_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
                 ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
+            
+            header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;
             
             seek_slider.SeekRequested += OnSeekRequested;
         }
@@ -279,6 +314,20 @@ namespace Nereid
         private void OnSeekRequested (object o, EventArgs args)
         {
             ServiceManager.PlayerEngine.Position = (uint)seek_slider.Value;
+        }
+        
+        private void OnHeaderToolbarExposeEvent (object o, ExposeEventArgs args)
+        {
+            // This forces the toolbar to look like it's just a regular plain container
+            // since the stock toolbar look makes Banshee look ugly.
+            
+            header_toolbar.GdkWindow.DrawRectangle (Style.BackgroundGC (header_toolbar.State), 
+                true, header_toolbar.Allocation);
+            
+            // Manually expose all the toolbar's children
+            foreach (Widget child in header_toolbar.Children) {
+                header_toolbar.PropagateExpose (child, args.Event);
+            }
         }
         
 #endregion
