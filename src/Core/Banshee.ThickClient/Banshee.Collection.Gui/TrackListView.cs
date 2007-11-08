@@ -30,6 +30,8 @@ using System;
 
 using Hyena.Data.Gui;
 
+using Banshee.ServiceStack;
+using Banshee.MediaEngine;
 using Banshee.Collection;
 
 namespace Banshee.Collection.Gui
@@ -41,13 +43,35 @@ namespace Banshee.Collection.Gui
         public TrackListView() : base()
         {
             column_controller = new ColumnController();
-            column_controller.Append(new Column("Track", new ColumnCellText(true, 0), 0.10));
-            column_controller.Append(new SortableColumn("Artist", new ColumnCellText(true, 1), 0.25, "artist"));
-            column_controller.Append(new SortableColumn("Album", new ColumnCellText(true, 2), 0.25, "album"));
-            column_controller.Append(new SortableColumn("Title", new ColumnCellText(true, 3), 0.25, "title"));
-            column_controller.Append(new Column("Duration", new ColumnCellText(true, 4), 0.15));
+            column_controller.Append(new Column(new ColumnCellPlaybackIndicator(true, 0), "indicator", new ColumnCellPlaybackIndicator(false, 0), 0.05));
+            column_controller.Append(new Column("Track", new ColumnCellText(true, 1), 0.10));
+            column_controller.Append(new SortableColumn("Artist", new ColumnCellText(true, 2), 0.225, "artist"));
+            column_controller.Append(new SortableColumn("Album", new ColumnCellText(true, 3), 0.225, "album"));
+            column_controller.Append(new SortableColumn("Title", new ColumnCellText(true, 4), 0.25, "title"));
+            column_controller.Append(new Column("Duration", new ColumnCellText(true, 5), 0.15));
             
             ColumnController = DefaultColumnController;
+            
+            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            
+            if (ServiceManager.Contains ("GtkElementsService")) {
+                ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
+                    foreach (Column column in column_controller) {
+                        column.HeaderCell.NotifyThemeChange ();
+                        foreach (ColumnCell cell in column) {
+                            cell.NotifyThemeChange ();
+                        }
+                    }
+                    
+                    InvalidateHeaderWindow ();
+                    InvalidateListWindow ();
+                };
+            }
+        }
+        
+        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        {
+            InvalidateListWindow ();
         }
         
         public ColumnController DefaultColumnController {

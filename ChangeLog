@@ -1,5 +1,26 @@
 2007-11-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	Cell renderer that indicates when a song is the playing song
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Add a ColumnCellPlaybackIndicator, iterate columns and cells to notify
+	theme of any theme changes
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: Added a virtual
+	NotifyThemeChange so cells can invalidate any theme cached items
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Made invalidation
+	methods protected
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Added IsTrackPlaying method
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added a Self
+	property to allow an inline data binding
+
+2007-11-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs: 
 	Added PopulateToolbarPlaceholder that allows generic widgets to be
 	embedded in a toolbar placeholder

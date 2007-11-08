@@ -8,6 +8,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ArtistListView.cs \
 	Banshee.Collection.Gui/ArtworkManager.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
+	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
 	Banshee.Collection.Gui/CompositeTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \

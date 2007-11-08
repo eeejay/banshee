@@ -126,7 +126,7 @@ namespace Banshee.MediaEngine
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
                 active_engine.Volume = (ushort)VolumeSchema.Get ();
                 //MetadataService.Instance.Lookup(CurrentTrack);
-            }
+            } 
             
             PlayerEngineStateHandler handler = StateChanged;
             if(handler != null) {
@@ -286,6 +286,11 @@ namespace Banshee.MediaEngine
         public void TrackInfoUpdated()
         {
             active_engine.TrackInfoUpdated();
+        }
+        
+        public bool IsPlaying (TrackInfo track)
+        {
+            return CurrentState != PlayerEngineState.Idle && track == CurrentTrack;
         }
 
         private void CheckPending()

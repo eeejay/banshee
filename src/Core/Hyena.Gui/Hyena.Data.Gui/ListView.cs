@@ -789,21 +789,21 @@ namespace Hyena.Data.Gui
             cell.Render(list_window, list_cr, this, area, clip, state);
         }
         
-        private void InvalidateListWindow()
+        protected void InvalidateListWindow()
         {
             if(list_window != null) {
                 list_window.InvalidateRect(list_alloc, false);
             }
         }
         
-        private void InvalidateHeaderWindow()
+        protected void InvalidateHeaderWindow()
         {
             if(header_window != null) {
                 header_window.InvalidateRect(header_alloc, false);
             }
         }
         
-        private void InvalidateFooterWindow()
+        protected void InvalidateFooterWindow()
         {
             if(footer_window != null) {
                 footer_window.InvalidateRect(footer_alloc, false);

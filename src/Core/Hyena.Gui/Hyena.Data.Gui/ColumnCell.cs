@@ -79,6 +79,10 @@ namespace Hyena.Data.Gui
                 "attributes were found on any properties.");
         }
         
+        public virtual void NotifyThemeChange ()
+        {
+        }
+        
         protected Type BoundType {
             get { return bound_object.GetType(); }
         }
