@@ -371,7 +371,7 @@ namespace Banshee.Database
             Execute(@"
                 INSERT INTO CoreTracks
                     SELECT 
-                        null, 
+                        TrackID, 
                         (SELECT ArtistID 
                             FROM CoreArtists 
                             WHERE Name = Artist),
@@ -395,6 +395,16 @@ namespace Banshee.Database
                         DateAddedStamp,
                         LastPlayedStamp
                         FROM Tracks
+            ");
+
+            Execute(@"
+                INSERT INTO CorePlaylists
+                    SELECT * FROM Playlists
+            ");
+
+            Execute(@"
+                INSERT INTO CorePlaylistEntries
+                    SELECT * FROM PlaylistEntries
             ");
         }
         

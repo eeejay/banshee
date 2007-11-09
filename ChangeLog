@@ -1,3 +1,8 @@
+2007-11-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Migrate playlists as well.
+
 2007-11-09  Aaron Bockover  <abock@gnome.org>
 
 	* Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
