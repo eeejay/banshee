@@ -601,6 +601,15 @@ namespace Hyena.Data.Gui
 #endregion        
         
 #region Drawing
+
+        public new void QueueDraw ()
+        {
+            base.QueueDraw ();
+            
+            InvalidateHeaderWindow ();
+            InvalidateListWindow ();
+            InvalidateFooterWindow ();
+        }
          
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {            

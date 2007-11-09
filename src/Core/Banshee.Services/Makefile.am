@@ -19,6 +19,10 @@ SOURCES =  \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
+	Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs \
+	Banshee.MediaEngine/PlaybackControllerService.cs \
+	Banshee.MediaEngine/PlaybackRepeatMode.cs \
+	Banshee.MediaEngine/PlaybackShuffleMode.cs \
 	Banshee.MediaEngine/PlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \

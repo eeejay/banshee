@@ -22,6 +22,9 @@ SOURCES =  \
 	Hyena.Data/ListItemSetup.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
+	Hyena/IStackProvider.cs \
+	Hyena/IUndoAction.cs \
+	Hyena/UndoManager.cs \
 	Timer.cs
 
 include $(top_srcdir)/build/build.mk

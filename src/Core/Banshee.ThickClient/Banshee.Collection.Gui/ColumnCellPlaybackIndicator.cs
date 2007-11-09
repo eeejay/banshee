@@ -30,8 +30,10 @@ using System;
 using Gtk;
 using Cairo;
 
-using Banshee.Gui;
 using Hyena.Data.Gui;
+using Banshee.Gui;
+
+using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
@@ -42,7 +44,8 @@ namespace Banshee.Collection.Gui
         private const int pixbuf_spacing = 4;
         
         private bool is_header;
-        private Gdk.Pixbuf pixbuf; 
+        private Gdk.Pixbuf pixbuf;
+        private Gdk.Pixbuf pixbuf_paused;
         
         public ColumnCellPlaybackIndicator (bool isHeader, int fieldIndex) : base (true, fieldIndex)
         {
@@ -57,9 +60,18 @@ namespace Banshee.Collection.Gui
                 pixbuf = null;
             }
             
+            if (pixbuf_paused != null) {
+                pixbuf_paused.Dispose ();
+                pixbuf_paused = null;
+            }
+            
             pixbuf = is_header 
                 ? IconThemeUtils.LoadIcon (pixbuf_size, "audio-volume-high")
                 : IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-start");
+                
+            if (!is_header) {
+                pixbuf_paused = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-pause");
+            }
         }
         
         public override void NotifyThemeChange ()
@@ -80,7 +92,12 @@ namespace Banshee.Collection.Gui
             pixbuf_area.X = cell_area.X + pixbuf_spacing;
             pixbuf_area.Y = cell_area.Y + ((cell_area.Height - pixbuf_area.Height) / 2);
             
-            window.DrawPixbuf (widget.Style.BackgroundGC(StateType.Normal), pixbuf, 
+            Gdk.Pixbuf render_pixbuf = pixbuf;
+            if (!is_header && ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
+                render_pixbuf = pixbuf_paused;
+            }
+            
+            window.DrawPixbuf (widget.Style.BackgroundGC(StateType.Normal), render_pixbuf, 
                 0, 0, pixbuf_area.X, pixbuf_area.Y, pixbuf_area.Width, pixbuf_area.Height, 
                 Gdk.RgbDither.Normal, 0, 0);
         }

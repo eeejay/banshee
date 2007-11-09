@@ -42,6 +42,10 @@
     <File name="Banshee.Collection/TrackListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.MediaEngine/PlayerEngineService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackControllerService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

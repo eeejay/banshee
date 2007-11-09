@@ -58,6 +58,7 @@ namespace Banshee.ServiceStack
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
             RegisterService<PlayerEngineService> ();
+            RegisterService<PlaybackControllerService> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : UserAddinCachePath);
@@ -207,6 +208,10 @@ namespace Banshee.ServiceStack
         
         public static PlayerEngineService PlayerEngine {
             get { return (PlayerEngineService)Get ("PlayerEngineService"); }
+        }
+        
+        public static PlaybackControllerService PlaybackController {
+            get { return (PlaybackControllerService)Get ("PlaybackControllerService"); }
         }
     }
 }

@@ -1,3 +1,29 @@
+2007-11-09  Aaron Bockover   <abock@gnome.org>
+
+	* Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs: 
+	Call QueueDraw instead of protected Invalidate methods
+
+	* Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	Added a paused pixbuf that reflects the player engine playback state
+
+	* Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Provide a public QueueDraw
+	that does proper invalidation of the internal windows
+
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackRepeatMode.cs:
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackShuffleMode.cs:
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs:
+	Stubbed out some API for the new playback controller
+
+	* Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Add the
+	playback controller as a default service
+
+	* Core/Hyena/Hyena/UndoManager.cs:
+	* Core/Hyena/Hyena/IUndoAction.cs: Moved the Undo Manager
+
+	* Core/Hyena/Hyena/IStackProvider.cs: A generic interface that provides
+	a stack data structure
+
 2007-11-09  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* build/Common.Makefile:
