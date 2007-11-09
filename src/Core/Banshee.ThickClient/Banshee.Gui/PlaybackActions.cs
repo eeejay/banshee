@@ -49,11 +49,11 @@ namespace Banshee.Gui
                     
                 new ActionEntry ("NextAction", "media-skip-forward",
                     Catalog.GetString ("_Next"), "N",
-                    Catalog.GetString ("Play the next song"), null),
+                    Catalog.GetString ("Play the next song"), OnNextAction),
                     
                 new ActionEntry ("PreviousAction", "media-skip-backward",
                     Catalog.GetString ("Pre_vious"), "B",
-                    Catalog.GetString ("Play the previous song"), null)
+                    Catalog.GetString ("Play the previous song"), OnPreviousAction)
             });
                 
             actionService.GlobalActions.Add (new ActionEntry [] {
@@ -111,6 +111,16 @@ namespace Banshee.Gui
         private void OnPlayPauseAction (object o, EventArgs args)
         {
             ServiceManager.PlayerEngine.TogglePlaying ();
+        }
+        
+        private void OnNextAction (object o, EventArgs args)
+        {
+            ServiceManager.PlaybackController.Next ();
+        }
+        
+        private void OnPreviousAction (object o, EventArgs args)
+        {
+            ServiceManager.PlaybackController.Previous ();
         }
     }
 }

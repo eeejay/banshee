@@ -27,33 +27,40 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 using Hyena;
 
+using Banshee.Collection;
+
 namespace Banshee.MediaEngine
 {
-    internal class PlaybackControllerDatabaseStack<T> : IStackProvider<T>
+    internal class PlaybackControllerDatabaseStack : IStackProvider<TrackInfo>
     {
-    	public T Peek ()
+        private Stack<TrackInfo> stack = new Stack<TrackInfo> ();
+    
+    	public TrackInfo Peek ()
     	{
-    	    return default (T);
+    	    return stack.Peek ();
     	}
     	
-    	public T Pop ()
+    	public TrackInfo Pop ()
     	{
-    	    return default (T);
+    	    return stack.Pop ();
     	}
 
-    	public void Push (T t)
+    	public void Push (TrackInfo track)
     	{
+    	    stack.Push (track);
     	}
 
     	public void Clear ()
     	{
+    	    stack.Clear ();
     	}
     	
     	public int Count {
-    	    get { return 0; }
+    	    get { return stack.Count; }
     	}
     }
 }

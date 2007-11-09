@@ -1,4 +1,18 @@
-2007-11-09  Aaron Bockover   <abock@gnome.org>
+2007-11-09  Aaron Bockover  <abock@gnome.org>
+
+	* Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use QueueDraw
+
+	* Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Connect next
+	and previous actions to the playback controller
+
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Implement rough logic for doing linear/random playback
+
+	* Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs:
+	Wrap a stock generic stack for now for testing the controller logic
+
+2007-11-09  Aaron Bockover  <abock@gnome.org>
 
 	* Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs: 
 	Call QueueDraw instead of protected Invalidate methods

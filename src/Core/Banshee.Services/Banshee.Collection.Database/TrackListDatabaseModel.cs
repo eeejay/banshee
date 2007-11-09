@@ -267,7 +267,6 @@ namespace Banshee.Collection.Database
             }
         }
 
-
         public override TrackInfo GetValue(int index)
         {
             if (tracks.ContainsKey (index)) {

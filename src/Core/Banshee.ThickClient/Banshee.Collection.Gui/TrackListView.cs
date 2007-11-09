@@ -72,7 +72,7 @@ namespace Banshee.Collection.Gui
         
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
-            InvalidateListWindow ();
+            QueueDraw ();
         }
         
         public ColumnController DefaultColumnController {
