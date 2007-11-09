@@ -12,6 +12,8 @@ AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 ASM_VERSION="$VERSION.*"
 AC_SUBST(ASM_VERSION)
 
+BANSHEE_CHECK_GATEKEEPER
+
 dnl Pieces needed by gnome-autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
 AC_PROG_INTLTOOL([0.21])
@@ -210,18 +212,5 @@ if test -d ${expanded_libdir}/banshee; then
 	echo 
 fi
 
-echo "WARNING: This is Banshee trunk! It is currently under very heavy"
-echo "         development and is NOT guaranteed to build or work under any"
-echo "         circumstances at the moment. When this status changes, this"
-echo "         message will be removed. Only use trunk if you know exactly "
-echo "         what you are doing."
-echo
-echo "         Please do not file bugs against trunk related to build errors."
-echo
-echo "         We recommend using the stable branch until this notice has"
-echo "         been removed. Check out the stable branch:"
-echo
-echo "         svn co http://svn.gnome.org/svn/banshee/branches/banshee/stable \\"
-echo "             banshee-stable"
-echo
+grep -v "Pass " README.trunk
 
