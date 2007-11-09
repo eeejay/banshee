@@ -32,19 +32,19 @@ using Hyena;
 
 namespace Banshee.MediaEngine
 {
-    internal class PlaybackControllerDatabaseStack : IStackProvider<PlaybackControllerAction>
+    internal class PlaybackControllerDatabaseStack<T> : IStackProvider<T>
     {
-    	public PlaybackControllerAction Peek ()
+    	public T Peek ()
     	{
-    	    return null;
+    	    return default (T);
     	}
     	
-    	public PlaybackControllerAction Pop ()
+    	public T Pop ()
     	{
-    	    return null;
+    	    return default (T);
     	}
 
-    	public void Push (PlaybackControllerAction action)
+    	public void Push (T t)
     	{
     	}
 
