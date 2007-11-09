@@ -30,9 +30,15 @@
     <File name="Resources/core-ui-actions-layout.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Gui/PlaybackActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/GlobalActions.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Widgets" subtype="Directory" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ConnectedVolumeButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

@@ -700,6 +700,7 @@ namespace Banshee.Sources.Gui
             icon = source.Properties.Get<Gdk.Pixbuf>("IconPixbuf");
             if(icon == null) {
                 Type icon_type = source.Properties.GetType("IconName");
+                
                 if(icon_type == typeof(string)) {
                     icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, source.Properties.GetString("IconName"));
                 } else if(icon_type == typeof(string [])) {
@@ -707,7 +708,7 @@ namespace Banshee.Sources.Gui
                 }
                 
                 if(icon == null) {
-                    icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, "source-generic");
+                    icon = Banshee.Gui.IconThemeUtils.LoadIcon(22, "image-missing");
                 }
                 
                 if(icon != null) {

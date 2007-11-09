@@ -1,3 +1,14 @@
+2007-11-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Avoid
+	possible warnings from GdkPixbuf when a resource doesn't exist by 
+	checking the manifest resource names in the assembly ahead of time
+
+	* src/Core/Banshee.ThickClient/Resources/*: Migrated some icon resources
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Use
+	a stock icon for missing source icons
+
 2007-11-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
