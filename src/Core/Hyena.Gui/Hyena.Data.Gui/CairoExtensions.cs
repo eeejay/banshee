@@ -167,6 +167,25 @@ namespace Hyena.Data.Gui
             return ColorFromHsb(h, s, b);
         }
         
+        public static Cairo.Color ColorAdjustBrightness(Cairo.Color @base, double br)
+        {
+            double h, s, b;
+            HsbFromColor(@base, out h, out s, out b);
+            b = Math.Max(Math.Min(br, 1), 0);
+            return ColorFromHsb(h, s, b);
+        }
+        
+        public static string ColorGetHex (Cairo.Color color, bool withAlpha)
+        {
+            if (withAlpha) {
+                return String.Format("#{0:x2}{1:x2}{2:x2}{3:x2}", (byte)(color.R * 255), (byte)(color.G * 255), 
+                    (byte)(color.B * 255), (byte)(color.A * 255));
+            } else {
+                return String.Format("#{0:x2}{1:x2}{2:x2}", (byte)(color.R * 255), (byte)(color.G * 255), 
+                    (byte)(color.B * 255));
+            }
+        }
+
         public static void RoundedRectangle(Cairo.Context cr, double x, double y, double w, double h, double r)
         {
             RoundedRectangle(cr, x, y, w, h, r, CairoCorners.All);

@@ -28,6 +28,8 @@
 //
 
 using System;
+using System.Collections;
+using Mono.Unix;
 
 using Gtk;
 using Cairo;
@@ -45,11 +47,17 @@ namespace Banshee.Gui.Widgets
     public class TrackInfoDisplay : Bin
     {
         private const int FADE_TIMEOUT = 1500;
+        private const int PANGO_SCALE = 1024;
     
         private ArtworkManager artwork_manager;
         private Gdk.Pixbuf current_pixbuf;
         private Gdk.Pixbuf incoming_pixbuf;
         private Gdk.Pixbuf missing_pixbuf;
+        
+        private Cairo.Color cover_border_dark_color;
+        private Cairo.Color cover_border_light_color;
+        private Cairo.Color text_color;
+        private Cairo.Color text_light_color;
         
         private TrackInfo current_track;
         private TrackInfo incoming_track;        
@@ -57,7 +65,8 @@ namespace Banshee.Gui.Widgets
         private DateTime transition_start; 
         private double transition_percent;
         private double transition_frames;
-    
+        private uint transition_id;
+        
         public TrackInfoDisplay ()
         {
             if (ServiceManager.Contains ("ArtworkManager")) {
@@ -105,19 +114,9 @@ namespace Banshee.Gui.Widgets
             Style.SetBackground (GdkWindow, StateType.Normal);
         }
         
-        protected override void OnUnrealized ()
-        {   
-            base.OnUnrealized ();
-        }
-        
         protected override void OnMapped ()
         {
             GdkWindow.Show ();
-        }
-        
-        protected override void OnSizeRequested (ref Requisition requisition)
-        {
-            requisition.Width = 400;
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -127,14 +126,28 @@ namespace Banshee.Gui.Widgets
             if (IsRealized) {
                 GdkWindow.MoveResize (allocation);
             }
+            
+            QueueDraw ();
         }
         
 #endregion
         
 #region Drawing
         
+        protected override void OnStyleSet (Style previous)
+        {
+            base.OnStyleSet (previous);
+            
+            text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal)); 
+            text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
+            cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
+            cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
+            
+            QueueDraw ();
+        }
+        
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
-        {            
+        {
             foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
                 PaintRegion (evnt, rect);
             }
@@ -175,6 +188,10 @@ namespace Banshee.Gui.Widgets
             if (pixbuf != null) {
                 RenderCoverArt (cr, pixbuf);
             }
+            
+            if (track != null) {
+                RenderTrackInfo (cr, track);
+            }
         }
         
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
@@ -198,12 +215,44 @@ namespace Banshee.Gui.Widgets
             cr.Antialias = Antialias.None;
             
             cr.Rectangle (x + 1.5, y + 1.5, width - 3, height - 3);
-            cr.Color = new Color (1.0, 1.0, 1.0, 0.5);
+            cr.Color = cover_border_light_color;
             cr.Stroke ();
             
             cr.Rectangle (x + 0.5, y + 0.5, width - 1, height - 1);
-            cr.Color = new Color (0.0, 0.0, 0.0, 0.65);
+            cr.Color = cover_border_dark_color;
             cr.Stroke ();
+        }
+        
+        private void RenderTrackInfo (Cairo.Context cr, TrackInfo track)
+        {
+            double x = Allocation.Height + 10;
+            double y = 0;
+            double width = Allocation.Width - x;
+            double height = Allocation.Height;
+            int l_width, l_height;
+
+            cr.Antialias = Cairo.Antialias.Default;            
+            
+            Pango.Layout layout = Pango.CairoHelper.CreateLayout (cr);
+            layout.Width = (int)width * PANGO_SCALE;
+            layout.Ellipsize = Pango.EllipsizeMode.End;
+            layout.FontDescription = PangoContext.FontDescription;
+            
+            layout.SetMarkup (String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle)));
+            cr.MoveTo (x, y);
+            Pango.CairoHelper.LayoutPath (cr, layout);
+            cr.Color = text_color;
+            cr.Fill ();
+            
+            string second_line = GetSecondLineText (track);
+            if(second_line == null) {
+                return;
+            }
+            
+            layout.GetPixelSize (out l_width, out l_height);
+            layout.SetMarkup (second_line);
+            cr.MoveTo (x, y + l_height);
+            Pango.CairoHelper.ShowLayout (cr, layout);
         }
         
         public new void QueueDraw ()
@@ -248,7 +297,9 @@ namespace Banshee.Gui.Widgets
             transition_percent = 0.0;
             transition_frames = 0.0;
             
-            GLib.Timeout.Add (30, ComputeTransition);
+            if (transition_id == 0) {
+                transition_id = GLib.Timeout.Add (30, ComputeTransition);
+            }
         }
         
         private bool ComputeTransition ()
@@ -269,10 +320,46 @@ namespace Banshee.Gui.Widgets
                 current_track = incoming_track;
                 incoming_pixbuf = null;
                 incoming_track = null;
+                transition_id = 0;
                 return false;
             }
             
             return true;
+        }
+        
+        private string GetSecondLineText (TrackInfo track)
+        {
+            string markup_begin = String.Format ("<span color=\"{0}\" size=\"small\">", 
+                CairoExtensions.ColorGetHex (text_light_color, false));
+            string markup_end = "</span>";
+            string markup = null;
+
+            if (track.ArtistName != null && track.AlbumTitle != null) {
+                // Translators: {0} and {1} are for markup, {2} and {3}
+                // are Artist Name and Album Title, respectively;
+                // e.g. 'by Parkway Drive from Killing with a Smile'
+                markup = String.Format ("{0}by{1} {2} {0}from{1} {3}", markup_begin, markup_end, 
+                    GLib.Markup.EscapeText (track.DisplayArtistName), 
+                    GLib.Markup.EscapeText (track.DisplayAlbumTitle));
+            } else if (track.ArtistName != null) {
+                // Translators: {0} and {1} are for markup, {2} is for Artist Name;
+                // e.g. 'by Parkway Drive'
+                markup = String.Format ("{0}by{1} {2}", markup_begin, markup_end,
+                    GLib.Markup.EscapeText (track.DisplayArtistName));
+            } else if (track.AlbumTitle != null) {
+                // Translators: {0} and {1} are for markup, {2} is for Album Title;
+                // e.g. 'from Killing with a Smile'
+                markup = String.Format ("{0}by{1} {2}", markup_begin, markup_end,
+                    GLib.Markup.EscapeText (track.DisplayAlbumTitle));
+            }
+            
+            if (markup == null) {
+                return null;
+            }
+            
+            return String.Format ("<span color=\"{0}\">{1}</span>",  
+                CairoExtensions.ColorGetHex (text_color, false),
+                markup);
         }
         
 #endregion

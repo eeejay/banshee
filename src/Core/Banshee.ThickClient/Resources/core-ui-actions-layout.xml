@@ -5,7 +5,6 @@
         <toolitem action="NextAction" />
         <placeholder name="SeekSlider" />
         <placeholder name="TrackInfoDisplay" />
-        <separator expand="true" />
         <placeholder name="VolumeButton" />
     </toolbar>
     <menubar name="MainMenu">

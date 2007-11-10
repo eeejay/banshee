@@ -1,5 +1,21 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Provide an expand override for adding items to toolbars
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Remove the spacing, since the track info header will expand
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Draw pango layouts for displaying the track information
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Expand the TrackInfoDisplay
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/CairoExtensions.cs: Added 
+	ColorGetHex and ColorAdjustBrightness methods
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	Use a timeout instead of idle to limit the number of frames rendered;
 	if debugging is on, print the number of fps per transition

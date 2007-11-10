@@ -111,14 +111,21 @@ namespace Banshee.Gui
         
         public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item)
         {
+            PopulateToolbarPlaceholder (toolbar, path, item, false);
+        }
+        
+        public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item, bool expand)
+        {
             ToolItem placeholder = (ToolItem)UIManager.GetWidget (path);
             int position = toolbar.GetItemIndex (placeholder);
             toolbar.Remove (placeholder);
             
             if (item is ToolItem) {
+                ((ToolItem)item).Expand = expand;
                 toolbar.Insert ((ToolItem)item, position);
             } else {
                 ToolItem container_item = new Banshee.Widgets.GenericToolItem<Widget> (item);
+                container_item.Expand = expand;
                 container_item.Show ();
                 toolbar.Insert (container_item, position);
             }

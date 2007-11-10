@@ -136,7 +136,7 @@ namespace Nereid
             
             TrackInfoDisplay track_info_display = new TrackInfoDisplay ();
             track_info_display.Show ();
-            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display);
+            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display, true);
             
             ConnectedVolumeButton volume_button = new ConnectedVolumeButton ();
             volume_button.Show ();
