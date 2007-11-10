@@ -4,7 +4,7 @@
         <toolitem action="PlayPauseAction" />
         <toolitem action="NextAction" />
         <placeholder name="SeekSlider" />
-        <placeholder name="MetadataTile" />
+        <placeholder name="TrackInfoDisplay" />
         <separator expand="true" />
         <placeholder name="VolumeButton" />
     </toolbar>

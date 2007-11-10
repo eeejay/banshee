@@ -18,7 +18,9 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
+	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
+	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
 	Banshee.Gui/GlobalActions.cs \
 	Banshee.Gui/GtkElementsService.cs \

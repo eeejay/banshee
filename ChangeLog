@@ -1,3 +1,27 @@
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	An adaptor around the seek slider and stream position label that connects
+	itself to the necessary engine events
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs: 
+	A connected header view for showing cover art and track information; 
+	currently only shows cover art but is 100% cairo-drawn and does cross
+	fading. Sexy.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Removed all player engine
+	event handling; embed ConnectedSeekSlider and TrackInfoDisplay; at this
+	point the main client UI is effectively stupid and only embeds smart
+	widgets - makes writing new client UIs very, very easy
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Properly align
+	the selection stroke to the pixel boundary; sharp strokes
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Added missing cr dispose
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added 
+	ArtistAlbumId shortcut property and ArtistAlbumEqual method
+
 2007-11-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:

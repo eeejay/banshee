@@ -9,7 +9,6 @@
   </Configurations>
   <Contents>
     <File name="Hyena.Data.Gui/CairoExtensions.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/CairoHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/Column.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnCellText.cs" subtype="Code" buildaction="Compile" />
@@ -22,6 +21,7 @@
     <File name="Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Dialogs/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Dialogs/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/CairoHelper.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

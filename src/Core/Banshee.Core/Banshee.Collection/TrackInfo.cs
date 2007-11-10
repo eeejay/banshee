@@ -73,6 +73,15 @@ namespace Banshee.Collection
             return String.Format("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
                 AlbumTitle, Duration, Uri.AbsoluteUri);
         }
+        
+        public bool ArtistAlbumEqual (TrackInfo track)
+        {
+            if (track == null) {
+                return false;
+            }
+            
+            return ArtistAlbumId.Equals (track.ArtistAlbumId);
+        }
 
         public virtual void Save()
         {
@@ -133,7 +142,11 @@ namespace Banshee.Collection
                     ? Catalog.GetString("Unknown Title") 
                     : TrackTitle; 
             } 
-        }        
+        }     
+        
+        public string ArtistAlbumId { 
+            get { return AlbumInfo.CreateArtistAlbumId (ArtistName, AlbumTitle); }
+        }
 
         public virtual string Genre {
             get { return genre; }

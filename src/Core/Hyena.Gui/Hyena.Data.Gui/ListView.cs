@@ -643,6 +643,7 @@ namespace Hyena.Data.Gui
                 PaintList(evnt, clip);
             }
             
+            ((IDisposable)cr.Target).Dispose ();
             ((IDisposable)cr).Dispose();
         }
         

@@ -39,6 +39,8 @@
     <File name="Resources/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Gui.Widgets/ConnectedSeekSlider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/TrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

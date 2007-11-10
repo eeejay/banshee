@@ -57,9 +57,6 @@ namespace Nereid
         // Major Interaction Components
         private SourceView source_view;
         private CompositeTrackListView track_view;
-        private StreamPositionLabel stream_position_label;
-        private SeekSlider seek_slider;
-        private ConnectedVolumeButton volume_button;
         
         // Cached service references
         private GtkElementsService elements_service;
@@ -133,34 +130,19 @@ namespace Nereid
             
             primary_vbox.PackStart (toolbar_alignment, false, false, 0);
             
-            BuildSeekSlider ();
+            ConnectedSeekSlider seek_slider = new ConnectedSeekSlider ();
+            seek_slider.Show ();
+            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", seek_slider);
             
-            volume_button = new ConnectedVolumeButton ();
+            TrackInfoDisplay track_info_display = new TrackInfoDisplay ();
+            track_info_display.Show ();
+            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display);
+            
+            ConnectedVolumeButton volume_button = new ConnectedVolumeButton ();
             volume_button.Show ();
             action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/VolumeButton", volume_button);
         }
-        
-        private void BuildSeekSlider ()
-        {
-            Alignment alignment = new Alignment (0.0f, 0.0f, 0.0f, 0.0f);
-            alignment.RightPadding = 10;
-            alignment.LeftPadding = 10;
-            
-            VBox box = new VBox ();
-            alignment.Add (box);
-            
-            seek_slider = new SeekSlider ();
-            seek_slider.SetSizeRequest (125, -1);
-            stream_position_label = new StreamPositionLabel (seek_slider);
-            
-            box.PackStart (seek_slider, true, true, 0);
-            box.PackStart (stream_position_label, true, true, 0);
-            
-            alignment.ShowAll ();
-            
-            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", alignment);
-        }
-        
+
         private void BuildViews ()
         {
             views_pane = new HPaned ();
@@ -225,9 +207,6 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
-            
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {
@@ -239,8 +218,6 @@ namespace Nereid
             };
             
             header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;
-            
-            seek_slider.SeekRequested += OnSeekRequested;
         }
         
 #endregion
@@ -315,11 +292,6 @@ namespace Nereid
             track_model.Reload();
         }
         
-        private void OnSeekRequested (object o, EventArgs args)
-        {
-            ServiceManager.PlayerEngine.Position = (uint)seek_slider.Value;
-        }
-        
         private void OnHeaderToolbarExposeEvent (object o, ExposeEventArgs args)
         {
             // This forces the toolbar to look like it's just a regular plain container
@@ -332,60 +304,6 @@ namespace Nereid
                 header_toolbar.PropagateExpose (child, args.Event);
             }
         }
-        
-#endregion
-        
-#region PlayerEngineService Event Handlers
-        
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
-        {
-            switch (args.State) {
-                case PlayerEngineState.Contacting:
-                    stream_position_label.IsContacting = true;
-                    seek_slider.SetIdle ();
-                    break;
-                case PlayerEngineState.Loaded:
-                    seek_slider.Duration = ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
-                    break;
-                case PlayerEngineState.Idle:
-                    seek_slider.SetIdle ();
-                    stream_position_label.IsContacting = false;
-                    break;
-            }
-        }
-        
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
-        {
-            switch (args.Event) {
-                case PlayerEngineEvent.Iterate:
-                    OnPlayerEngineTick ();
-                    break;
-                case PlayerEngineEvent.StartOfStream:
-                    seek_slider.CanSeek = true;
-                    break;
-                case PlayerEngineEvent.Buffering:
-                    if (args.BufferingPercent >= 1.0) {
-                        stream_position_label.IsBuffering = false;
-                        break;
-                    }
-                    
-                    stream_position_label.IsBuffering = true;
-                    stream_position_label.BufferingProgress = args.BufferingPercent;
-                    seek_slider.SetIdle ();
-                    break;
-            }
-        }
-
-        private void OnPlayerEngineTick ()
-        {
-            uint stream_length = ServiceManager.PlayerEngine.Length;
-            uint stream_position = ServiceManager.PlayerEngine.Position;
-            
-            stream_position_label.IsContacting = false;
-            seek_slider.CanSeek = ServiceManager.PlayerEngine.CanSeek;
-            seek_slider.Duration = stream_length;
-            seek_slider.SeekValue = stream_position;
-        }        
         
 #endregion
         
