@@ -125,6 +125,11 @@ namespace Banshee.Base
             Debug (message, null);
         }
         
+        public static void DebugFormat (string format, params object [] args)
+        {
+            Debug (String.Format (format, args));
+        }
+        
         #endregion
         
         #region Public Information Methods

@@ -1,5 +1,13 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Use a timeout instead of idle to limit the number of frames rendered;
+	if debugging is on, print the number of fps per transition
+
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Added a DebugFormat method
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
 	An adaptor around the seek slider and stream position label that connects
 	itself to the necessary engine events

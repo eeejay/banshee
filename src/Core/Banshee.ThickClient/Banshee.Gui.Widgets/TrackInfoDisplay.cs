@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Larry Ewing <lewing@novell.com> (Is my hero)
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -33,6 +34,7 @@ using Cairo;
 
 using Hyena.Data.Gui;
 
+using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Gui;
 using Banshee.ServiceStack;
@@ -54,11 +56,12 @@ namespace Banshee.Gui.Widgets
         
         private DateTime transition_start; 
         private double transition_percent;
+        private double transition_frames;
     
         public TrackInfoDisplay ()
         {
             if (ServiceManager.Contains ("ArtworkManager")) {
-                artwork_manager = ServiceManager.Get <ArtworkManager> ("ArtworkManager");
+                artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
             }
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
@@ -99,30 +102,29 @@ namespace Banshee.Gui.Widgets
             
             Style = Style.Attach (GdkWindow);
             GdkWindow.SetBackPixmap (null, false);
-            
             Style.SetBackground (GdkWindow, StateType.Normal);
         }
         
-        protected override void OnUnrealized()
+        protected override void OnUnrealized ()
         {   
-            base.OnUnrealized();
+            base.OnUnrealized ();
         }
         
-        protected override void OnMapped()
+        protected override void OnMapped ()
         {
-            GdkWindow.Show();
+            GdkWindow.Show ();
         }
         
-        protected override void OnSizeRequested(ref Requisition requisition)
+        protected override void OnSizeRequested (ref Requisition requisition)
         {
             requisition.Width = 400;
         }
         
-        protected override void OnSizeAllocated(Gdk.Rectangle allocation)
+        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
-            base.OnSizeAllocated(allocation);
+            base.OnSizeAllocated (allocation);
             
-            if(IsRealized) {
+            if (IsRealized) {
                 GdkWindow.MoveResize (allocation);
             }
         }
@@ -235,7 +237,7 @@ namespace Banshee.Gui.Widgets
                     incoming_pixbuf = pixbuf.ScaleSimple (Allocation.Height, Allocation.Height, 
                         Gdk.InterpType.Bilinear);
                 }
-                
+
                 BeginTransition ();
             }
         }
@@ -244,17 +246,25 @@ namespace Banshee.Gui.Widgets
         {
             transition_start = DateTime.Now;
             transition_percent = 0.0;
-            GLib.Idle.Add (ComputeTransition);
+            transition_frames = 0.0;
+            
+            GLib.Timeout.Add (30, ComputeTransition);
         }
         
         private bool ComputeTransition ()
         {
             double elapsed = (DateTime.Now - transition_start).TotalMilliseconds;
             transition_percent = elapsed / FADE_TIMEOUT;
+            transition_frames++;
             
             QueueDraw ();
             
             if (elapsed > FADE_TIMEOUT) {
+                if (ApplicationContext.Debugging) {
+                    Log.DebugFormat ("TrackInfoDisplay XFade: {0:0.00} FPS", 
+                        transition_frames / ((double)FADE_TIMEOUT / 1000.0));
+                }
+                
                 current_pixbuf = incoming_pixbuf;
                 current_track = incoming_track;
                 incoming_pixbuf = null;
