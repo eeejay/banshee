@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2005-2007 Novell, Inc.
 //
@@ -45,25 +46,25 @@ namespace Banshee.Sources
         
         public DatabaseSource (string name, int order) : base (name, order)
         {
-            track_model = new TrackListDatabaseModel(ServiceManager.DbConnection);
-            album_model = new AlbumListDatabaseModel(ServiceManager.DbConnection);
-            artist_model = new ArtistListDatabaseModel(ServiceManager.DbConnection);
+            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection);
+            album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection);
+            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection);
         }
         
         protected void AfterInitialized ()
         {
-            track_model.Reload();
-            album_model.Reload();
-            artist_model.Reload();
+            track_model.Reload ();
+            artist_model.Reload ();
+            album_model.Reload ();
             
             track_model.Reloaded += OnTrackModelReloaded;
             
-            OnSetupComplete();
+            OnSetupComplete ();
         }
 
-        private void OnTrackModelReloaded(object o, EventArgs args)
+        private void OnTrackModelReloaded (object o, EventArgs args)
         {
-            OnUpdated();
+            OnUpdated ();
         }
 
         public override int Count {
@@ -83,7 +84,7 @@ namespace Banshee.Sources
         }
         
         public override string TrackModelPath {
-            get { return DBusServiceManager.MakeObjectPath(track_model); }
+            get { return DBusServiceManager.MakeObjectPath (track_model); }
         }
     }
 }

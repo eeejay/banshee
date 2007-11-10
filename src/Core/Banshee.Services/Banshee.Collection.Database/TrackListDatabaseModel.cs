@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -250,6 +251,7 @@ namespace Banshee.Collection.Database
                 String.Format ("SELECT COUNT(*) FROM CoreTracks{0} {1}", JoinFragment, WhereFragment);
             
             using (new Timer ("Counting tracks")) {
+                Console.WriteLine("Count query: {0}", count_query);
                 IDbCommand command = connection.CreateCommand ();
                 command.CommandText = count_query;
                 rows = Convert.ToInt32 (command.ExecuteScalar ());
@@ -262,8 +264,11 @@ namespace Banshee.Collection.Database
 
         private bool UseCache {
             get {
-                return sort_query != null || filter_query != null || 
-                       artist_id_filter_query != null || album_id_filter_query != null;
+                // Always return true, meaning a source's tracks always get put into the CoreTracksCache
+                // and other pieces (album/artist models, for example) can rely on that to filter themselves.
+                return true;
+                //return sort_query != null || filter_query != null || 
+                //       artist_id_filter_query != null || album_id_filter_query != null;
             }
         }
 
@@ -383,6 +388,10 @@ namespace Banshee.Collection.Database
                     }
                 );
             }
+        }
+
+        public int DbId {
+            get { return uid; }
         }
         
         public ISortableColumn SortColumn { 

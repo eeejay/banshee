@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -38,6 +39,7 @@ namespace Banshee.Collection.Database
     {
         private Dictionary<int, ArtistInfo> artists = new Dictionary<int, ArtistInfo>();
         private BansheeDbConnection connection;
+        private string track_model_filter;
         private int rows;
         
         private ArtistInfo select_all_artist = new ArtistInfo(null);
@@ -46,13 +48,28 @@ namespace Banshee.Collection.Database
         {
             this.connection = connection;
         }
+
+        public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection) : this (connection)
+        {
+            track_model_filter = String.Format (@"
+                CoreArtists.ArtistID IN (
+                    SELECT DISTINCT(CoreTracks.ArtistID) FROM CoreTracksCache, CoreTracks
+                    WHERE CoreTracksCache.TableID = {0} AND CoreTracksCache.ID = CoreTracks.TrackID)",
+                trackModel.DbId
+            );
+        }
     
         public override void Reload()
         {
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT COUNT(*) FROM CoreArtists";
-            rows = Convert.ToInt32(command.ExecuteScalar()) + 1;
-            select_all_artist.Name = String.Format("All Artists ({0})", rows - 1);
+            lock (this) {
+                InvalidateManagedCache();
+                IDbCommand command = connection.CreateCommand();
+                using (new Timer ("Getting artists count")) {
+                command.CommandText = String.Format ("SELECT COUNT(*) FROM CoreArtists {0}", WhereFragment);
+                rows = Convert.ToInt32(command.ExecuteScalar()) + 1;
+                }
+                select_all_artist.Name = String.Format("All Artists ({0})", rows - 1);
+            }
             OnReloaded();
         }
         
@@ -70,12 +87,14 @@ namespace Banshee.Collection.Database
             
             int fetch_count = 20;
             
+            using (new Timer ("Getting artists")) {
             IDbCommand command = connection.CreateCommand();
             command.CommandText = String.Format(@"
-                SELECT ArtistID, Name 
-                    FROM CoreArtists
+                SELECT CoreArtists.ArtistID, CoreArtists.Name 
+                    FROM CoreArtists {0}
                     ORDER BY Name
-                    LIMIT {0}, {1}", index - 1, fetch_count);
+                    LIMIT {1}, {2}",
+                    WhereFragment, index - 1, fetch_count);
                 
             IDataReader reader = command.ExecuteReader();
 			
@@ -87,12 +106,27 @@ namespace Banshee.Collection.Database
 			        artists.Add(i++, artist);
 			    }
 			}
+            }
             
             if(artists.ContainsKey(new_index)) {
                 return artists[new_index];
             }
             
             return null;
+        }
+
+        private string WhereFragment {
+            get {
+                if (track_model_filter == null)
+                    return String.Empty;
+
+                return String.Format ("WHERE {0}", track_model_filter);
+            }
+        }
+
+        private void InvalidateManagedCache()
+        {
+            artists.Clear();
         }
 
         public override int Rows { 

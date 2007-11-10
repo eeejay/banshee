@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2005-2007 Novell, Inc.
 //
@@ -43,20 +44,20 @@ namespace Banshee.Playlist
 {
     public class PlaylistSource : DatabaseSource
     {
-        private const string JOIN = ", CorePlaylistEntries";
-        private const string CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
+        private const string TRACK_JOIN = ", CorePlaylistEntries";
+        private const string TRACK_CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
 
         // For existing playlists
-        public PlaylistSource (int dbid, string name, int sortColumn, int sortType) : this (name, 500)
+        public PlaylistSource (int dbid, string name, int sortColumn, int sortType) : base (name, 500)
         {
-            track_model.JoinFragment = JOIN;
-            track_model.Condition = String.Format (CONDITION, dbid);
+            track_model.JoinFragment = TRACK_JOIN;
+            track_model.Condition = String.Format (TRACK_CONDITION, dbid);
+            Properties.SetString ("IconName", "source-playlist");
+            AfterInitialized ();
         }
 
         public PlaylistSource (string name, int order) : base (name, order)
         {
-            Properties.SetStringList ("IconName", "source-playlist");
-            AfterInitialized ();
         }
 
         public PlaylistSource (int order) : this ("new playlist", order)

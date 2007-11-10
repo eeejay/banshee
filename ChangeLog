@@ -1,3 +1,13 @@
+2007-11-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* Banshee.Services/Banshee.Sources/DatabaseSource.cs: Filter which artists
+	and albums are shown for a source based on the tracks that source has.
+	Fix playlists so they actually work.
+
 2007-11-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Avoid
