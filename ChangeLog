@@ -1,5 +1,18 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Add null check
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Do not use Push/Pop since there appear to be problems with it missing
+	in Mono 1.2.4, at least in Ubuntu Gutsy; ugly workaround. Only fade
+	in/out the artist/album information if it changes
+
+	* src/Core/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Remove Push/Pop wrapper
+	stubs as they aren't needed; added a ContextDispose 
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Fix a bunch of warnings

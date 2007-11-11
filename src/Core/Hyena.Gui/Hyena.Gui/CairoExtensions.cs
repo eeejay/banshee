@@ -229,30 +229,11 @@ namespace Hyena.Data.Gui
                 cr.LineTo(x, y);
             }
         }
-        
-        // FIXME: For backwards compatability with Cairo < 1.2/Mono < 1.2.5
-        
-        public static void PushGroup (Cairo.Context cr)
+
+        public static void DisposeContext (Cairo.Context cr)
         {
-            PushGroup (cr, Cairo.Content.ColorAlpha);
-        }
-        
-        public static void PushGroup (Cairo.Context cr, Cairo.Content content)
-        {
-            // FIXME: Actually implement a compatible workaround 
-            cr.PushGroup (content);
-        }
-        
-        public static Cairo.Pattern PopGroup (Cairo.Context cr)
-        {
-            // FIXME: Actually implement a compatible workaround
-            return cr.PopGroup ();
-        }
-        
-        public static void PopGroupToSource (Cairo.Context cr)
-        {
-            Cairo.Pattern group_pattern = PopGroup (cr);
-            cr.Source = group_pattern;
+            ((IDisposable)cr.Target).Dispose ();
+            ((IDisposable)cr).Dispose ();
         }
     }
 }

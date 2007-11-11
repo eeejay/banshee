@@ -109,6 +109,10 @@ namespace Banshee.Gui.Widgets
 
         private void OnPlayerEngineTick ()
         {
+            if (ServiceManager.PlayerEngine == null) {
+                return;
+            }
+            
             uint stream_length = ServiceManager.PlayerEngine.Length;
             uint stream_position = ServiceManager.PlayerEngine.Position;
             

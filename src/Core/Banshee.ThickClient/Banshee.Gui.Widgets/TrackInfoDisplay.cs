@@ -157,14 +157,32 @@ namespace Banshee.Gui.Widgets
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
             
-            RenderAnimation (cr, clip);
+            if (incoming_track != null || current_track != null) {
+                RenderAnimation (cr, clip);
+            }
             
-            ((IDisposable)cr.Target).Dispose ();
-            ((IDisposable)cr).Dispose ();
+            CairoExtensions.DisposeContext (cr);
         }
         
         private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
-        {            
+        {
+            // For each instance of:
+            //   new ImageSurface (...)
+            //   pcr = new Context (ps)
+            //   ...
+            //   cr.Source = new Pattern (ps)
+            //   CairoExtensions.DisposeContext (pcr)
+            //
+            // The following would be preferred but apparently
+            // Ubuntu Gusty/Gutsy/Whatever doesn't ship a new
+            // enough Mono.Cairo: 
+            //   cr.PushGroup ()
+            //   ...
+            //   cr.PopGroupToSource ()
+            
+            Cairo.Surface ps;
+            Cairo.Context pcr;
+            
             if (transition_percent >= 1.0) {
                 // We are not in a transition, just render
                 RenderStage (cr, current_track, current_pixbuf);
@@ -173,9 +191,12 @@ namespace Banshee.Gui.Widgets
             
             if (current_track == null) {
                 // Fade in the whole stage, nothing to fade out
-                CairoExtensions.PushGroup (cr);
-                RenderStage (cr, incoming_track, incoming_pixbuf);
-                CairoExtensions.PopGroupToSource (cr);
+                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
+                pcr = new Context (ps);
+                RenderStage (pcr, incoming_track, incoming_pixbuf);
+                cr.Source = new Pattern (ps);
+                CairoExtensions.DisposeContext (pcr);
+                
                 cr.PaintWithAlpha (transition_percent);
                 return;
             }
@@ -183,28 +204,45 @@ namespace Banshee.Gui.Widgets
             // XFade only the cover art
             cr.Rectangle (0, 0, Allocation.Height, Allocation.Height);
             cr.Clip ();
+
             RenderCoverArt (cr, incoming_pixbuf);
-            CairoExtensions.PushGroup (cr);
-            RenderCoverArt (cr, current_pixbuf);
-            CairoExtensions.PopGroupToSource (cr);
+            
+            ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
+            pcr = new Context (ps);
+            RenderCoverArt (pcr, current_pixbuf);
+            cr.Source = new Pattern (ps);
+            CairoExtensions.DisposeContext (pcr);
+            
             cr.PaintWithAlpha (1.0 - transition_percent);
-                 
+            
             // Fade in/out the text
             cr.ResetClip ();
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
+            
+            bool same_artist_album = incoming_track.ArtistAlbumEqual (current_track);
+            
+            if (same_artist_album) {
+                RenderTrackInfo (cr, incoming_track, false, true);
+            }
                    
             if (transition_percent <= 0.5) {
                 // Fade out old text
-                CairoExtensions.PushGroup (cr);
-                RenderTrackInfo (cr, current_track);
-                CairoExtensions.PopGroupToSource (cr);
+                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
+                pcr = new Context (ps);
+                RenderTrackInfo (pcr, current_track, true, !same_artist_album);
+                cr.Source = new Pattern (ps);
+                CairoExtensions.DisposeContext (pcr);
+
                 cr.PaintWithAlpha (1.0 - (transition_percent * 2.0));
             } else {
                 // Fade in new text
-                CairoExtensions.PushGroup (cr);
-                RenderTrackInfo (cr, incoming_track);
-                CairoExtensions.PopGroupToSource (cr);
+                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
+                pcr = new Context (ps);
+                RenderTrackInfo (pcr, incoming_track, true, !same_artist_album);
+                cr.Source = new Pattern (ps);
+                CairoExtensions.DisposeContext (pcr);
+                
                 cr.PaintWithAlpha ((transition_percent - 0.5) * 2.0);
             }
         }
@@ -212,7 +250,7 @@ namespace Banshee.Gui.Widgets
         private void RenderStage (Cairo.Context cr, TrackInfo track, Gdk.Pixbuf pixbuf)
         {
            RenderCoverArt (cr, pixbuf);
-           RenderTrackInfo (cr, track);
+           RenderTrackInfo (cr, track, true, true);
         }
         
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
@@ -248,7 +286,7 @@ namespace Banshee.Gui.Widgets
             cr.Stroke ();
         }
         
-        private void RenderTrackInfo (Cairo.Context cr, TrackInfo track)
+        private void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum)
         {
             if (track == null) {
                 return;
@@ -266,11 +304,17 @@ namespace Banshee.Gui.Widgets
             layout.Ellipsize = Pango.EllipsizeMode.End;
             layout.FontDescription = PangoContext.FontDescription;
             
-            layout.SetMarkup (String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle)));
-            cr.MoveTo (x, y);
-            Pango.CairoHelper.LayoutPath (cr, layout);
-            cr.Color = text_color;
-            cr.Fill ();
+            if (renderTrack) {
+                layout.SetMarkup (String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle)));
+                cr.MoveTo (x, y);
+                Pango.CairoHelper.LayoutPath (cr, layout);
+                cr.Color = text_color;
+                cr.Fill ();
+            }
+
+            if (!renderArtistAlbum) {
+                return;
+            }
             
             string second_line = GetSecondLineText (track);
             if(second_line == null) {
@@ -340,7 +384,7 @@ namespace Banshee.Gui.Widgets
             
             if (elapsed > FADE_TIMEOUT) {
                 if (ApplicationContext.Debugging) {
-                    Log.DebugFormat ("TrackInfoDisplay XFade: {0:0.00} FPS", 
+                    Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", 
                         transition_frames / ((double)FADE_TIMEOUT / 1000.0));
                 }
                 
