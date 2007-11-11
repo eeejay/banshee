@@ -2,7 +2,6 @@ ASSEMBLY = Hyena.Gui
 TARGET = library
 LINK = $(REF_HYENA_GUI)
 SOURCES =  \
-	Hyena.Data.Gui/CairoExtensions.cs \
 	Hyena.Data.Gui/CairoHelper.cs \
 	Hyena.Data.Gui/Column.cs \
 	Hyena.Data.Gui/ColumnCell.cs \
@@ -15,6 +14,7 @@ SOURCES =  \
 	Hyena.Data.Gui/SortableColumn.cs \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
+	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs
 
 include $(top_srcdir)/build/build.mk

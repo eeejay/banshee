@@ -1,5 +1,11 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs: 
+	Refactored some of the animation logic, fade old track text out and
+	new track text in while the cover art xfades
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
 	Provide an expand override for adding items to toolbars
 

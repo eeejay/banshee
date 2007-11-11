@@ -109,9 +109,9 @@ namespace Banshee.Gui.Widgets
             GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
             GdkWindow.UserData = Handle;
             
-            Style = Style.Attach (GdkWindow);
             GdkWindow.SetBackPixmap (null, false);
             Style.SetBackground (GdkWindow, StateType.Normal);
+            Style = Style.Attach (GdkWindow);
         }
         
         protected override void OnMapped ()
@@ -133,17 +133,13 @@ namespace Banshee.Gui.Widgets
 #endregion
         
 #region Drawing
-        
+
         protected override void OnStyleSet (Style previous)
         {
-            base.OnStyleSet (previous);
-            
-            text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal)); 
+            text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal));          
             text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
             cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
             cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
-            
-            QueueDraw ();
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -161,41 +157,70 @@ namespace Banshee.Gui.Widgets
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
             
-            if (transition_percent < 1.0) {
-                double percent = transition_percent;
-                if (current_track != null) {
-                    percent = 1.0 - percent;
-                    RenderStage (cr, incoming_track, incoming_pixbuf);
-                    cr.PushGroup ();
-                    RenderStage (cr, current_track, current_pixbuf);
-                    cr.PopGroupToSource ();
-                } else {
-                    cr.PushGroup ();
-                    RenderStage (cr, incoming_track, incoming_pixbuf);
-                    cr.PopGroupToSource ();
-                }
-                cr.PaintWithAlpha (percent);            
-            } else {
-                RenderStage (cr, current_track, current_pixbuf);
-            }
+            RenderAnimation (cr, clip);
             
             ((IDisposable)cr.Target).Dispose ();
             ((IDisposable)cr).Dispose ();
         }
         
-        private void RenderStage (Cairo.Context cr, TrackInfo track, Gdk.Pixbuf pixbuf)
-        {
-            if (pixbuf != null) {
-                RenderCoverArt (cr, pixbuf);
+        private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
+        {            
+            if (transition_percent >= 1.0) {
+                // We are not in a transition, just render
+                RenderStage (cr, current_track, current_pixbuf);
+                return;
+            } 
+            
+            if (current_track == null) {
+                // Fade in the whole stage, nothing to fade out
+                cr.PushGroup ();
+                RenderStage (cr, incoming_track, incoming_pixbuf);
+                cr.PopGroupToSource ();
+                cr.PaintWithAlpha (transition_percent);
+                return;
             }
             
-            if (track != null) {
-                RenderTrackInfo (cr, track);
+            // XFade only the cover art
+            cr.Rectangle (0, 0, Allocation.Height, Allocation.Height);
+            cr.Clip ();
+            RenderCoverArt (cr, incoming_pixbuf);
+            cr.PushGroup ();
+            RenderCoverArt (cr, current_pixbuf);
+            cr.PopGroupToSource ();
+            cr.PaintWithAlpha (1.0 - transition_percent);
+                 
+            // Fade in/out the text
+            cr.ResetClip ();
+            cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
+            cr.Clip ();
+                   
+            if (transition_percent <= 0.5) {
+                // Fade out old text
+                cr.PushGroup ();
+                RenderTrackInfo (cr, current_track);
+                cr.PopGroupToSource ();
+                cr.PaintWithAlpha (1.0 - (transition_percent * 2.0));
+            } else {
+                // Fade in new text
+                cr.PushGroup ();
+                RenderTrackInfo (cr, incoming_track);
+                cr.PopGroupToSource ();
+                cr.PaintWithAlpha ((transition_percent - 0.5) * 2.0);
             }
+        }
+        
+        private void RenderStage (Cairo.Context cr, TrackInfo track, Gdk.Pixbuf pixbuf)
+        {
+           RenderCoverArt (cr, pixbuf);
+           RenderTrackInfo (cr, track);
         }
         
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
         {
+            if (pixbuf == null) {
+                return;
+            }
+            
             double x, y, p_x, p_y, width, height;
             
             width = height = Allocation.Height;
@@ -225,10 +250,13 @@ namespace Banshee.Gui.Widgets
         
         private void RenderTrackInfo (Cairo.Context cr, TrackInfo track)
         {
+            if (track == null) {
+                return;
+            }
+            
             double x = Allocation.Height + 10;
             double y = 0;
             double width = Allocation.Width - x;
-            double height = Allocation.Height;
             int l_width, l_height;
 
             cr.Antialias = Cairo.Antialias.Default;            
