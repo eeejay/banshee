@@ -99,7 +99,10 @@ namespace Banshee.Base
                     case LogEntryType.Information: Console.ForegroundColor = ConsoleColor.Green; break;
                     case LogEntryType.Debug: Console.ForegroundColor = ConsoleColor.Blue; break;
                 }
-                Console.Write ("[{0}::{1}]", type, DateTime.Now.ToShortTimeString ());
+                
+                Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:00}]", type, DateTime.Now.Hour,
+                    DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+                
                 Console.ResetColor ();
                                
                 if (details != null) {
