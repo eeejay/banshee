@@ -166,6 +166,9 @@ namespace Banshee.Gui.Widgets
         
         private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
         {
+            // Possible bug in Mono <= 1.2.4 or Ubuntu or Both:
+            //   https://bugs.launchpad.net/ubuntu/+source/mono/+bug/16195 
+            //
             // For each instance of:
             //   new ImageSurface (...)
             //   pcr = new Context (ps)
@@ -173,9 +176,8 @@ namespace Banshee.Gui.Widgets
             //   cr.Source = new Pattern (ps)
             //   CairoExtensions.DisposeContext (pcr)
             //
-            // The following would be preferred but apparently
-            // Ubuntu Gusty/Gutsy/Whatever doesn't ship a new
-            // enough Mono.Cairo: 
+            // The following would be preferred but we can't use
+            // these nice methods do to the above bug:
             //   cr.PushGroup ()
             //   ...
             //   cr.PopGroupToSource ()
