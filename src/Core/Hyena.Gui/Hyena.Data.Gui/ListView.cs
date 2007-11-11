@@ -79,7 +79,7 @@ namespace Hyena.Data.Gui
         public event RowActivatedHandler<T> RowActivated;
     
         private const int COLUMN_PADDING = 1;
-        private const int BorderWidth = 10;
+        private const int InnerBorderWidth = 10;
         private const int FooterHeight = 10;
     
         private ListViewGraphics graphics;
@@ -105,8 +105,6 @@ namespace Hyena.Data.Gui
         private bool header_visible = true;
         
         private Adjustment vadjustment;
-        
-        private int list_y_offset;
         
         private int column_text_y;
         private int column_text_height;
@@ -147,7 +145,7 @@ namespace Hyena.Data.Gui
         private int HeaderHeight {
             get {
                 if(!header_visible) {
-                    return BorderWidth;
+                    return InnerBorderWidth;
                 }
                 
                 if(header_height == 0) {
@@ -248,7 +246,7 @@ namespace Hyena.Data.Gui
             // left border window
             attributes.X = 0;
             attributes.Y = HeaderHeight;
-            attributes.Width = BorderWidth;
+            attributes.Width = InnerBorderWidth;
             attributes.Height = Allocation.Height - HeaderHeight - FooterHeight;
             attributes.EventMask = (int)(
                 Gdk.EventMask.VisibilityNotifyMask |
@@ -258,9 +256,9 @@ namespace Hyena.Data.Gui
             left_border_window.UserData = Handle;
              
             // right border window
-            attributes.X = Allocation.Width - 2 * BorderWidth;
+            attributes.X = Allocation.Width - 2 * InnerBorderWidth;
             attributes.Y = HeaderHeight;
-            attributes.Width = BorderWidth;
+            attributes.Width = InnerBorderWidth;
             attributes.Height = Allocation.Height - HeaderHeight - FooterHeight;
             attributes.EventMask = (int)(
                 Gdk.EventMask.VisibilityNotifyMask |
@@ -300,9 +298,9 @@ namespace Hyena.Data.Gui
             footer_window.UserData = Handle;
             
             // list window
-            attributes.X = BorderWidth;
+            attributes.X = InnerBorderWidth;
             attributes.Y = HeaderHeight;
-            attributes.Width = Allocation.Width - 2 * BorderWidth;
+            attributes.Width = Allocation.Width - 2 * InnerBorderWidth;
             attributes.Height = Allocation.Height - HeaderHeight - FooterHeight;
             attributes.EventMask = (int)(
                 Gdk.EventMask.ExposureMask |
@@ -381,11 +379,11 @@ namespace Hyena.Data.Gui
             footer_alloc.Height = FooterHeight;
             footer_window.MoveResize(0, allocation.Height - footer_alloc.Height, footer_alloc.Width, footer_alloc.Height);
             
-            left_border_alloc.Width = BorderWidth;
+            left_border_alloc.Width = InnerBorderWidth;
             left_border_alloc.Height = allocation.Height - header_alloc.Height - footer_alloc.Height; 
             left_border_window.MoveResize(0, header_alloc.Height, left_border_alloc.Width, left_border_alloc.Height);
             
-            right_border_alloc.Width = BorderWidth;
+            right_border_alloc.Width = InnerBorderWidth;
             right_border_alloc.Height = allocation.Height - header_alloc.Height - footer_alloc.Height;
             right_border_window.MoveResize(allocation.Width - right_border_alloc.Width, header_alloc.Height, 
                 right_border_alloc.Width, right_border_alloc.Height);
@@ -890,6 +888,7 @@ namespace Hyena.Data.Gui
 #endregion
         
 #region Keyboard Shortcut Handlers
+#pragma warning disable 0169
         
         private void SelectAll()
         {
@@ -902,7 +901,8 @@ namespace Hyena.Data.Gui
             Selection.Clear();
             InvalidateListWindow();
         }
-        
+
+#pragma warning restore 0169
 #endregion
           
 #region Column Utilities

@@ -173,9 +173,9 @@ namespace Banshee.Gui.Widgets
             
             if (current_track == null) {
                 // Fade in the whole stage, nothing to fade out
-                cr.PushGroup ();
+                CairoExtensions.PushGroup (cr);
                 RenderStage (cr, incoming_track, incoming_pixbuf);
-                cr.PopGroupToSource ();
+                CairoExtensions.PopGroupToSource (cr);
                 cr.PaintWithAlpha (transition_percent);
                 return;
             }
@@ -184,9 +184,9 @@ namespace Banshee.Gui.Widgets
             cr.Rectangle (0, 0, Allocation.Height, Allocation.Height);
             cr.Clip ();
             RenderCoverArt (cr, incoming_pixbuf);
-            cr.PushGroup ();
+            CairoExtensions.PushGroup (cr);
             RenderCoverArt (cr, current_pixbuf);
-            cr.PopGroupToSource ();
+            CairoExtensions.PopGroupToSource (cr);
             cr.PaintWithAlpha (1.0 - transition_percent);
                  
             // Fade in/out the text
@@ -196,15 +196,15 @@ namespace Banshee.Gui.Widgets
                    
             if (transition_percent <= 0.5) {
                 // Fade out old text
-                cr.PushGroup ();
+                CairoExtensions.PushGroup (cr);
                 RenderTrackInfo (cr, current_track);
-                cr.PopGroupToSource ();
+                CairoExtensions.PopGroupToSource (cr);
                 cr.PaintWithAlpha (1.0 - (transition_percent * 2.0));
             } else {
                 // Fade in new text
-                cr.PushGroup ();
+                CairoExtensions.PushGroup (cr);
                 RenderTrackInfo (cr, incoming_track);
-                cr.PopGroupToSource ();
+                CairoExtensions.PopGroupToSource (cr);
                 cr.PaintWithAlpha ((transition_percent - 0.5) * 2.0);
             }
         }

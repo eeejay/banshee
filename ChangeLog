@@ -1,5 +1,16 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Fix a bunch of warnings
+
+	* src/Core/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Stubbed out the
+	push/pop group methods that were introduced in Cairo 1.2/Mono 1.2.5;
+	they can be filled in to implement backwards compat, but simply
+	wrap the Mono.Cairo provided API right now
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs: 
 	Refactored some of the animation logic, fade old track text out and
 	new track text in while the cover art xfades

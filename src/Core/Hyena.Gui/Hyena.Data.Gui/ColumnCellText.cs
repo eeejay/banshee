@@ -38,7 +38,6 @@ namespace Hyena.Data.Gui
     
         private Pango.Layout layout;
         private DataHandler data_handler;
-        private bool debug;
         
         public ColumnCellText(bool expand, DataHandler data_handler) : base(expand, -1)
         {
@@ -47,11 +46,6 @@ namespace Hyena.Data.Gui
     
         public ColumnCellText(bool expand, int fieldIndex) : base(expand, fieldIndex)
         {
-        }
-        
-        public ColumnCellText(bool expand, int fieldIndex, bool debug) : base(expand, fieldIndex)
-        {
-            this.debug = debug;
         }
     
         public override void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
