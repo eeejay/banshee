@@ -93,15 +93,14 @@ namespace Banshee.Base
         private static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
             if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
-                ConsoleColor default_color = Console.ForegroundColor;
                 switch (type) {
                     case LogEntryType.Error: Console.ForegroundColor = ConsoleColor.Red; break;
                     case LogEntryType.Warning: Console.ForegroundColor = ConsoleColor.DarkYellow; break;
                     case LogEntryType.Information: Console.ForegroundColor = ConsoleColor.Green; break;
-                    case LogEntryType.Debug: Console.ForegroundColor = ConsoleColor.Cyan; break;
+                    case LogEntryType.Debug: Console.ForegroundColor = ConsoleColor.Blue; break;
                 }
                 Console.Write ("[{0}::{1}]", type, DateTime.Now.ToShortTimeString ());
-                Console.ForegroundColor = default_color;
+                Console.ResetColor ();
                                
                 if (details != null) {
                     Console.WriteLine (" {0} - {1}", message, details);
