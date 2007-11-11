@@ -1,5 +1,9 @@
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Make the log output nicer
+
+2007-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
 	Add null check
 
