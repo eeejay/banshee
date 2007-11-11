@@ -32,6 +32,7 @@ using Gtk;
 
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
+using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
 {
@@ -53,7 +54,11 @@ namespace Banshee.Gui
                     
                 new ActionEntry ("PreviousAction", "media-skip-backward",
                     Catalog.GetString ("Pre_vious"), "B",
-                    Catalog.GetString ("Play the previous song"), OnPreviousAction)
+                    Catalog.GetString ("Play the previous song"), OnPreviousAction),
+
+                new ActionEntry("SeekToAction", null,
+                    Catalog.GetString("Seek _to..."), "T",
+                    Catalog.GetString("Seek to a specific location in current song"), OnSeekToAction)
             });
                 
             actionService.GlobalActions.Add (new ActionEntry [] {
@@ -121,6 +126,13 @@ namespace Banshee.Gui
         private void OnPreviousAction (object o, EventArgs args)
         {
             ServiceManager.PlaybackController.Previous ();
+        }
+
+        private void OnSeekToAction (object o, EventArgs args)
+        {
+            GladeDialog dialog = new SeekDialog ();
+            dialog.Run ();
+            dialog.Destroy ();
         }
     }
 }

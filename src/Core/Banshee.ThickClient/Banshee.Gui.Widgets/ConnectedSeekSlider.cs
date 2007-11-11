@@ -51,6 +51,10 @@ namespace Banshee.Gui.Widgets
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             seek_slider.SeekRequested += OnSeekRequested;
         }
+
+        public StreamPositionLabel StreamPositionLabel {
+            get { return stream_position_label; }
+        }
         
         private void BuildSeekSlider ()
         {

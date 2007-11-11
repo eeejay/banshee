@@ -1,8 +1,9 @@
 //
-// GladeWindow.cs
+// SeekDialog.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2006-2007 Novell, Inc.
 //
@@ -25,56 +26,32 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
+using System.Collections;
+using Mono.Unix;
 using Gtk;
 using Glade;
 
+using Banshee.Base;
+using Banshee.Gui.Widgets;
+
 namespace Banshee.Gui.Dialogs
 {
-    public abstract class GladeWindow 
+    public class SeekDialog : GladeDialog
     {
-        private string window_name;
-        private Glade.XML glade;
-        private Window window;
+        [Widget] private VBox seek_box;
+        private ConnectedSeekSlider seek_slider;
         
-        protected GladeWindow()
+        public SeekDialog () : base ("SeekDialog")
         {
-        }
-
-        public GladeWindow(string name) : this(name, new Glade.XML(
-            System.Reflection.Assembly.GetCallingAssembly(), "banshee-dialogs.glade", name, "banshee"))
-        {
-        }
-
-        public GladeWindow(string name, Glade.XML glade)
-        {
-            window_name = name;        
-            this.glade = glade; 
-            this.glade.Autoconnect(this);
-        }
-        
-        public virtual void Destroy()
-        {
-            Window.Destroy();
-        }
-
-        protected Glade.XML Glade {
-            get { return glade; }
-        }
-
-        public string Name {
-            get { return window_name; }
-        }
-        
-        public Window Window {
-            get {
-                if(window == null) {
-                    window = (Window)glade.GetWidget(window_name);
-                }
-                
-                return window;
-            }
+            seek_slider = new ConnectedSeekSlider ();
+            seek_slider.StreamPositionLabel.FormatString = "<big>{0}</big>";
+            
+            seek_box.PackStart (seek_slider, false, false, 0);
+            seek_box.ShowAll ();
+            
+            Dialog.SetSizeRequest (300, -1);
         }
     }
 }

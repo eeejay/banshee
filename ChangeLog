@@ -1,3 +1,22 @@
+2007-11-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/GladeWindow.cs: Look
+	for the glade file in the calling assembly not the executing one.
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/SeekDialog.cs: Ported
+	from old dialog, using new ConnectedSeekSlider.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Provide getter for Label so the seek dialog can make the font larger.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Handle the
+	seek to action.
+
+	* src/Core/Banshee.ThickClient/Makefile.am: add new SeekDialog.cs
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Uncomment the Seek To action.
+
 2007-11-11  Aaron Bockover  <abock@gnome.org>
 
 	* Banshee.Services/Banshee.ServiceStack/IUserJob.cs: Interface for UserJobs

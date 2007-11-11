@@ -19,10 +19,13 @@
             <separator />
             <menuitem name="Previous" action="PreviousAction" />
             <menuitem name="Next" action="NextAction" />
-            <!--<separator />
+            <separator />
+            <!--
             <menuitem name="SeekBackward" action="SeekBackwardAction" />
             <menuitem name="SeekForward" action="SeekForwardAction" />
+            -->
             <menuitem name="SeekTo" action="SeekToAction" />
+            <!--
             <menuitem name="RestartSong" action="RestartSongAction" />
             <separator />
             <placeholder name="PlaybackMenuAdditions" />

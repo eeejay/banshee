@@ -15,6 +15,7 @@ SOURCES =  \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
 	Banshee.Gui.Dialogs/GladeDialog.cs \
 	Banshee.Gui.Dialogs/GladeWindow.cs \
+	Banshee.Gui.Dialogs/SeekDialog.cs \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
@@ -32,6 +33,7 @@ SOURCES =  \
 	Banshee.Sources.Gui/SourceView.cs
 
 RESOURCES =  \
+	Resources/banshee-dialogs.glade \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml \
 	Resources/source-cd-audio.png \
