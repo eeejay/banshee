@@ -59,12 +59,13 @@ namespace Banshee.ServiceStack
             RegisterService<SourceManager> ();
             RegisterService<PlayerEngineService> ();
             RegisterService<PlaybackControllerService> ();
+            RegisterService<UserJobManager> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : UserAddinCachePath);
             
             if (ApplicationContext.Debugging) {
-                AddinManager.Registry.Rebuild (new ConsoleProgressStatus (true));
+                AddinManager.Registry.Rebuild (null /*new ConsoleProgressStatus (true)*/);
             }
             
             extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");

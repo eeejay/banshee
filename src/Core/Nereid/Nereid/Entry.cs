@@ -64,7 +64,11 @@ namespace Nereid
             // Start the core boot process
             Application.ShutdownPromptHandler = OnShutdownPrompt;
             Application.TimeoutHandler = RunTimeout;
+            Application.IdleHandler = RunIdle;
             Application.Run ();
+            
+            int test_jobs_count = 0;
+            RunTimeout (10000, delegate { new TestUserJob (); return test_jobs_count++ < 4; });
             
             // Run the GTK main loop
             program.Run ();
@@ -83,6 +87,11 @@ namespace Nereid
         private static uint RunTimeout (uint milliseconds, TimeoutHandler handler)
         {
             return GLib.Timeout.Add (milliseconds, delegate { return handler (); });
+        }
+        
+        private static uint RunIdle (IdleHandler handler)
+        {
+            return GLib.Idle.Add (delegate { return handler (); });
         }
     }
 }

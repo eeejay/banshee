@@ -145,6 +145,9 @@ namespace Nereid
 
         private void BuildViews ()
         {
+            VBox source_box = new VBox ();
+            source_box.Spacing = 5;
+            
             views_pane = new HPaned ();
             view_container = new ViewContainer ();
             
@@ -158,7 +161,11 @@ namespace Nereid
             track_view.TrackView.HeaderVisible = false;
             view_container.Content = track_view;
             
-            views_pane.Add1 (source_scroll);
+            source_box.PackStart (source_scroll, true, true, 0);
+            source_box.PackStart (new UserJobTileHost (), false, false, 0);
+            source_box.Show ();
+            
+            views_pane.Add1 (source_box);
             views_pane.Add2 (view_container);            
             views_pane.ShowAll ();
             

@@ -32,8 +32,13 @@ SOURCES =  \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
 	Banshee.ServiceStack/IService.cs \
+	Banshee.ServiceStack/IUserJob.cs \
 	Banshee.ServiceStack/ServiceManager.cs \
 	Banshee.ServiceStack/ServiceStartedHandler.cs \
+	Banshee.ServiceStack/TestUserJob.cs \
+	Banshee.ServiceStack/UserJob.cs \
+	Banshee.ServiceStack/UserJobEventHandler.cs \
+	Banshee.ServiceStack/UserJobManager.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \

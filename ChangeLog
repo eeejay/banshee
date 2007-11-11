@@ -1,3 +1,32 @@
+2007-11-11  Aaron Bockover  <abock@gnome.org>
+
+	* Banshee.Services/Banshee.ServiceStack/IUserJob.cs: Interface for UserJobs
+
+	* Banshee.Services/Banshee.ServiceStack/UserJob.cs: Base UserJob class,
+	suitable for most cases when a UserJob is needed
+
+	* Banshee.Services/Banshee.ServiceStack/UserJobEventHandler.cs: Event
+	handler and argument class for UserJob events
+
+	* Banshee.Services/Banshee.ServiceStack/UserJobManager.cs: A manager
+	class for keeping track of UserJobs
+
+	* Banshee.Services/Banshee.ServiceStack/TestUserJob.cs: An exhaustive,
+	interesting test case for the UserJob stack
+
+	* Banshee.Services/Banshee.ServiceStack/Application.cs: Added Invoke
+	and RunIdle methods
+
+	* Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: GUI tile 
+	representing a single UserJob
+
+	* Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs: GUI container
+	for managing the display of the UserJobTile widgets
+
+	* Nereid/Nereid/PlayerInterface.cs: Pack in a UserJobTileHost
+
+	* Nereid/Nereid/Entry.cs: Implement RunIdle and kick off some TestUserJobs
+
 2007-11-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Make the log output nicer

@@ -38,7 +38,10 @@ namespace Banshee.ServiceStack
 {    
     public delegate bool ShutdownRequestHandler ();
     public delegate bool TimeoutHandler ();
+    public delegate bool IdleHandler ();
+    public delegate void InvokeHandler ();
     public delegate uint TimeoutImplementationHandler (uint milliseconds, TimeoutHandler handler); 
+    public delegate uint IdleImplementationHandler (IdleHandler handler);
     
     public static class Application
     {   
@@ -90,6 +93,20 @@ namespace Banshee.ServiceStack
             return true;
         }
         
+        public static void Invoke (InvokeHandler handler)
+        {
+            RunIdle (delegate { handler (); return false; });
+        }
+        
+        public static uint RunIdle (IdleHandler handler)
+        {
+            if (idle_handler == null) {
+                throw new NotImplementedException ("The application client must provide an IdleImplementationHandler");
+            }
+            
+            return idle_handler (handler);
+        }
+        
         public static uint RunTimeout (uint milliseconds, TimeoutHandler handler)
         {
             if (timeout_handler == null) {
@@ -114,6 +131,12 @@ namespace Banshee.ServiceStack
         public static TimeoutImplementationHandler TimeoutHandler {
             get { return timeout_handler; }
             set { timeout_handler = value; }
+        }
+        
+        private static IdleImplementationHandler idle_handler = null;
+        public static IdleImplementationHandler IdleHandler {
+            get { return idle_handler; }
+            set { idle_handler = value; }
         }
         
         public static string InternalName {
