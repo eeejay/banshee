@@ -139,7 +139,7 @@ namespace Banshee.Gui.Widgets
         {
             text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal));          
             text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
-            background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal)); 
+            background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
             cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
             cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
             
@@ -277,9 +277,13 @@ namespace Banshee.Gui.Widgets
             
             cr.Antialias = Cairo.Antialias.Default;
             
+            if (pixbuf == missing_pixbuf) {
+                cr.Rectangle (x, y, Allocation.Height, Allocation.Height);
+                cr.Color = background_color;
+                cr.Fill();
+            }
+            
             cr.Rectangle (p_x, p_y, pixbuf.Width + p_x, pixbuf.Height + p_y);
-            cr.Color = background_color;
-            cr.FillPreserve ();
             Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
             cr.Fill ();
             

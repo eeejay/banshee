@@ -1,6 +1,12 @@
 2007-11-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Fully fixed the missing_pixbuf translation glitch - was using the wrong
+	rectangle for the illusion squasher fill
+
+2007-11-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	First pass at fixing a missing_pixbuf->not missing transition glitch;
 	center the text on the middle of the cover art on the y-axis
 
