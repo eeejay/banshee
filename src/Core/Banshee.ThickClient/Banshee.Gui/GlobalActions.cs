@@ -37,6 +37,7 @@ namespace Banshee.Gui
         public GlobalActions (InterfaceActionService actionService) : base ("Global")
         {
             Add (new ActionEntry [] {
+                // Music Menu
                 new ActionEntry ("MusicMenuAction", null, 
                     Catalog.GetString ("_Music"), null, null, null),
                 
@@ -46,10 +47,43 @@ namespace Banshee.Gui
                     
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
-                    Catalog.GetString ("Quit Banshee"), OnQuit)
+                    Catalog.GetString ("Quit Banshee"), OnQuit),
+                
+                // Help Menu
+                new ActionEntry ("HelpMenuAction", null, 
+                    Catalog.GetString ("_Help"), null, null, null),
+                
+                new ActionEntry ("WebMenuAction", null,
+                    Catalog.GetString ("_Web Resources"), null, null, null),
+                    
+                new ActionEntry ("WikiGuideAction", Stock.Help,
+                    Catalog.GetString ("Banshee _User Guide (Wiki)"), null,
+                    Catalog.GetString ("Learn about how to use Banshee"), delegate {
+                        //Banshee.Web.Browser.Open ("http://banshee-project.org/Guide");
+                    }),
+                    
+                new ActionEntry("WikiAction", null,
+                    Catalog.GetString("Banshee _Home Page"), null,
+                    Catalog.GetString("Visit the Banshee Home Page"), delegate {
+                        //Banshee.Web.Browser.Open("http://banshee-project.org/");
+                    }),
+                    
+                new ActionEntry("WikiDeveloperAction", null,
+                    Catalog.GetString("_Get Involved"), null,
+                    Catalog.GetString("Become a contributor to Banshee"), delegate {
+                        //Banshee.Web.Browser.Open("http://banshee-project.org/Developers");
+                    }),
+                 
+                new ActionEntry ("VersionInformationAction", null,
+                    Catalog.GetString ("_Version Information..."), null,
+                    Catalog.GetString ("View detailed version and configuration information"), OnVersionInformation),
+                    
+                new ActionEntry("AboutAction", "gtk-about", OnAbout)
             });
         }
             
+#region Music Menu Actions
+        
         private void OnImportMusic (object o, EventArgs args)
         {
             Banshee.Library.Gui.ImportDialog dialog = new Banshee.Library.Gui.ImportDialog ();            
@@ -68,5 +102,26 @@ namespace Banshee.Gui
         {
             Banshee.ServiceStack.Application.Shutdown ();
         }
+        
+#endregion
+        
+#region Help Menu Actions
+        
+        private void OnVersionInformation (object o, EventArgs args)
+        {
+            Hyena.Gui.Dialogs.VersionInformationDialog dialog = new Hyena.Gui.Dialogs.VersionInformationDialog ();
+            dialog.Run ();
+            dialog.Destroy ();
+        }
+        
+        private void OnAbout (object o, EventArgs args)
+        {
+            Banshee.Gui.Dialogs.AboutDialog dialog = new Banshee.Gui.Dialogs.AboutDialog ();
+            dialog.Run ();
+            dialog.Destroy ();
+        }
+
+#endregion
+            
     }
 }

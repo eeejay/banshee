@@ -1,6 +1,6 @@
 dnl Automake setup
 
-AC_INIT([banshee], [0.13.1])
+AC_INIT([banshee], [0.90.1])
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
@@ -130,7 +130,6 @@ src/Core/Banshee/Makefile
 src/Core/Banshee/banshee
 src/Core/Banshee/banshee.exe.config
 src/Core/Banshee.Core/Makefile
-src/Core/Banshee.Core/Banshee.Base/ConfigureDefines.cs
 src/Core/Banshee.Base/Makefile
 src/Core/Banshee.Base/Banshee.Base.dll.config
 src/Core/Banshee.Services/Makefile

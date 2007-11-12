@@ -1,5 +1,27 @@
 2007-11-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added help menu
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Removed legacy
+	cover art lookup junk
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs: Ported
+	the about dialog
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Removed a bunch of
+	old path stuff
+
+	* src/Core/Banshee.Core/Banshee.Base/ConfigureDefines.cs.in: Finally nuked
+
+	* src/Core/Banshee.Core/Banshee.Base/ProductInformation.cs: Moved over
+
+	* build/TranslatorExtract.cs: Moved to build
+
+2007-11-11  Aaron Bockover  <abock@gnome.org>
+
 	* Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: 
 	* Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Added
 	import music

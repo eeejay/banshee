@@ -11,6 +11,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
 	Banshee.Collection.Gui/CompositeTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
+	Banshee.Gui.Dialogs/AboutDialog.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
 	Banshee.Gui.Dialogs/FileChooserDialog.cs \
@@ -42,6 +43,7 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.ThickClient.addin.xml \
 	Resources/banshee-dialogs.glade \
+	Resources/banshee-logo.png \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml \
 	Resources/source-cd-audio.png \

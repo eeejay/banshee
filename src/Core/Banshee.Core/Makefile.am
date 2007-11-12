@@ -3,11 +3,11 @@ TARGET = library
 LINK = $(REF_BANSHEE_CORE)
 SOURCES =  \
 	Banshee.Base/ApplicationContext.cs \
-	Banshee.Base/ConfigureDefines.cs \
 	Banshee.Base/FileNamePattern.cs \
 	Banshee.Base/Log.cs \
 	Banshee.Base/Paths.cs \
 	Banshee.Base/PlatformHacks.cs \
+	Banshee.Base/ProductInformation.cs \
 	Banshee.Base/SafeUri.cs \
 	Banshee.Base/StringUtil.cs \
 	Banshee.Base/UriList.cs \
@@ -45,6 +45,11 @@ SOURCES =  \
 	Banshee.Streaming/StreamPlaybackError.cs \
 	Banshee.Streaming/StreamTag.cs \
 	Banshee.Streaming/StreamTagger.cs
+
+RESOURCES =  \
+	Resources/contributors.xml \
+	Resources/COPYING \
+	Resources/translators.xml
 
 include $(top_srcdir)/build/build.mk
 

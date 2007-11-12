@@ -112,7 +112,7 @@ namespace Banshee.Streaming
                     case CommonTags.StreamType:
                         track.MimeType = (string)tag.Value;
                         break;
-                    case CommonTags.AlbumCoverId:
+                    /*case CommonTags.AlbumCoverId:
                         foreach(string ext in TrackInfo.CoverExtensions) {
                             string path = Paths.GetCoverArtPath((string) tag.Value, "." + ext);
                             if(System.IO.File.Exists(path)) {
@@ -120,7 +120,7 @@ namespace Banshee.Streaming
                                 break;
                             }
                         }
-                        break;
+                        break;*/
                 }
             } catch {
             }

@@ -15,23 +15,7 @@ dbusservice_in_files = org.gnome.Banshee.service.in
 dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 
-all: translator-extract.exe
-
-translator-extract.exe: TranslatorExtract.cs
-	$(MCS) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > translators.xml
-
-CLEANFILES = \
-	*.gladep \
-	*.bak \
-	translators.xml \
-	translator-extract.exe
-
 EXTRA_DIST = \
-	UIManagerLayout.xml \
-	banshee.glade \
-	banshee-dialogs.glade \
-	contributors.xml \
-	TranslatorExtract.cs \
 	$(desktop_in_files) \
 	$(dbusservice_in_files)
 
@@ -41,5 +25,4 @@ DISTCLEANFILES =	\
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
-
 

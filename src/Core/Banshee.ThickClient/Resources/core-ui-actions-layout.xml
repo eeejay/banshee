@@ -36,6 +36,17 @@
             <separator />
             <menuitem name="Shuffle" action="ShuffleAction" />-->
         </menu>
+        <menu name="HelpMenu" action="HelpMenuAction">
+            <menu name="WebMenu" action="WebMenuAction">
+                <menuitem name="WikiGuide" action="WikiGuideAction" />
+                <separator />
+                <menuitem name="Wiki" action="WikiAction" />
+                <menuitem name="WikiDeveloper" action="WikiDeveloperAction" />
+            </menu>
+            <separator />
+            <menuitem name="VersionInformation" action="VersionInformationAction" />
+            <menuitem name="About" action="AboutAction" />
+        </menu>
     </menubar>
 </ui>
 
@@ -87,18 +98,9 @@
             <menuitem name="Columns" action="ColumnsAction" />
             <menuitem name="Shell" action="ShellAction" />
         </menu>
-        <menu name="HelpMenu" action="HelpMenuAction">
-            <menu name="WebMenu" action="WebMenuAction">
-                <menuitem name="WikiGuide" action="WikiGuideAction" />
-                <separator />
-                <menuitem name="Wiki" action="WikiAction" />
-                <menuitem name="WikiDeveloper" action="WikiDeveloperAction" />
-            </menu>
-            <separator />
-            <menuitem name="About" action="AboutAction" />
-        </menu>
+       
         <menu name="DebugMenu" action="DebugMenuAction">
-            <menuitem name="VersionInformation" action="VersionInformationAction" />
+            
             <menuitem name="LoggedEvents" action="LoggedEventsAction" />
         </menu>
     </menubar>

@@ -48,17 +48,20 @@
     <File name="./Banshee.Collection/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Configuration.Schema/ImportSchema.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Base/ConfigureDefines.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Base/StringUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Base/Log.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Base/ProductInformation.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Resources/contributors.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Resources/translators.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Resources/COPYING" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
   </References>
-  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
-    <ResourcesVar />
+    <ResourcesVar Sync="True" Name="RESOURCES" />
     <OthersVar />
     <GacRefVar />
     <AsmRefVar />
