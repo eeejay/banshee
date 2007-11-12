@@ -1,5 +1,13 @@
 2007-11-12  Aaron Bockover  <abock@gnome.org>
 
+	* autogen.sh: Use my new autogen script that's been used in podsleuth 
+	and other projects - no dependency on gnome-autogen, which has been a
+	big pain for banshee; also sets -Wno-portability -Wno-syntax on automake
+	so it will STFU about our Makefile.ams, which has been a problem in 
+	Mono projects and the latest automake
+
+2007-11-12  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	Fully fixed the missing_pixbuf translation glitch - was using the wrong
 	rectangle for the illusion squasher fill
