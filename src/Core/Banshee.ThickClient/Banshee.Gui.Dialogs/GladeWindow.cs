@@ -43,7 +43,7 @@ namespace Banshee.Gui.Dialogs
         }
 
         public GladeWindow(string name) : this(name, new Glade.XML(
-            System.Reflection.Assembly.GetCallingAssembly(), "banshee-dialogs.glade", name, "banshee"))
+            System.Reflection.Assembly.GetExecutingAssembly(), "banshee-dialogs.glade", name, "banshee"))
         {
         }
 

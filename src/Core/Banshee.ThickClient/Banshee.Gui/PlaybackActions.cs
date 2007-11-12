@@ -56,9 +56,9 @@ namespace Banshee.Gui
                     Catalog.GetString ("Pre_vious"), "B",
                     Catalog.GetString ("Play the previous song"), OnPreviousAction),
 
-                new ActionEntry("SeekToAction", null,
-                    Catalog.GetString("Seek _to..."), "T",
-                    Catalog.GetString("Seek to a specific location in current song"), OnSeekToAction)
+                new ActionEntry ("SeekToAction", null,
+                    Catalog.GetString ("Seek _to..."), "T",
+                    Catalog.GetString ("Seek to a specific location in current song"), OnSeekToAction)
             });
                 
             actionService.GlobalActions.Add (new ActionEntry [] {
