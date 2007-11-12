@@ -57,6 +57,24 @@
     <File name="./Banshee.Library/HomeDirectoryImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Library/IImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Library/ImportSourceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/AsxPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/InvalidPlaylistException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/IPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/M3uPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistFormatBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistFormatDescription.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlaylistParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats/PlsPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Web/Browser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Streaming" subtype="Directory" buildaction="Compile" />
+    <File name="./Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

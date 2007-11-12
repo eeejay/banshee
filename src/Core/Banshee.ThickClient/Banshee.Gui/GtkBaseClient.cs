@@ -92,6 +92,8 @@ namespace Banshee.Gui
             
             // Start the core boot process
             Application.Run ();
+            
+            Log.Notify += OnLogNotify;
         }
         
         public virtual void Run ()
@@ -101,6 +103,44 @@ namespace Banshee.Gui
         
         protected virtual void OnRegisterServices ()
         {
+        }
+        
+        private void OnLogNotify (LogNotifyArgs args)
+        {
+            RunIdle (delegate {
+                ShowLogCoreEntry (args.Entry);
+                return false;
+            });
+        }
+                
+        private void ShowLogCoreEntry (LogEntry entry)
+        {
+            Gtk.Window window = null;
+            Gtk.MessageType mtype;
+            
+            if (ServiceManager.Contains ("GtkElementsService")) {
+                window = ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow;
+            }
+            
+            switch (entry.Type) {
+                case LogEntryType.Warning:
+                    mtype = Gtk.MessageType.Warning;
+                    break;
+                case LogEntryType.Information:
+                    mtype = Gtk.MessageType.Info;
+                    break;
+                case LogEntryType.Error:
+                default:
+                    mtype = Gtk.MessageType.Error;
+                    break;
+            }
+              
+            Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog (
+                window, Gtk.DialogFlags.Modal, mtype, Gtk.ButtonsType.Close, entry.Message, entry.Details);
+            
+            dialog.Title = String.Empty;
+            dialog.Run ();
+            dialog.Destroy ();
         }
         
         private bool OnShutdownPrompt ()

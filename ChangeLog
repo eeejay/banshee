@@ -1,5 +1,24 @@
 2007-11-11  Aaron Bockover  <abock@gnome.org>
 
+	* Nereid/Nereid/PlayerInterface.cs: Add the AccelGroup from 
+	InterfaceActionService; tseng should be happy
+
+	* Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Implement GUI 
+	handler for Log
+
+	* Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Enable the help links
+
+	* Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Implemented
+	open locaiton and restart song
+
+	* Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:
+	* Banshee.Services/Banshee.Web/Browser.cs:
+	* Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: 
+	* Banshee.Services/Banshee.Playlists.Formats.Xspf:
+	* Banshee.Services/Banshee.Playlists.Formats: Ported from old Banshee
+
+2007-11-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
 	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
 	Added help menu

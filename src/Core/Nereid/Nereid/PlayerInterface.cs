@@ -75,6 +75,8 @@ namespace Nereid
             
             elements_service.PrimaryWindow = this;
             
+            AddAccelGroup (action_service.UIManager.AccelGroup);
+            
             track_view.TrackView.HasFocus = true;
             
             Show ();

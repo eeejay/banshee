@@ -34,6 +34,21 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
 	Banshee.Playlist/PlaylistSource.cs \
+	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
+	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
+	Banshee.Playlists.Formats.Xspf/Playlist.cs \
+	Banshee.Playlists.Formats.Xspf/Track.cs \
+	Banshee.Playlists.Formats.Xspf/W3CDateTime.cs \
+	Banshee.Playlists.Formats.Xspf/XmlUtil.cs \
+	Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs \
+	Banshee.Playlists.Formats/AsxPlaylistFormat.cs \
+	Banshee.Playlists.Formats/InvalidPlaylistException.cs \
+	Banshee.Playlists.Formats/IPlaylistFormat.cs \
+	Banshee.Playlists.Formats/M3uPlaylistFormat.cs \
+	Banshee.Playlists.Formats/PlaylistFormatBase.cs \
+	Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
+	Banshee.Playlists.Formats/PlaylistParser.cs \
+	Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
 	Banshee.ServiceStack/Application.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
@@ -50,7 +65,9 @@ SOURCES =  \
 	Banshee.Sources/ISourceManager.cs \
 	Banshee.Sources/ITrackModelSource.cs \
 	Banshee.Sources/Source.cs \
-	Banshee.Sources/SourceManager.cs
+	Banshee.Sources/SourceManager.cs \
+	Banshee.Streaming/RadioTrackInfo.cs \
+	Banshee.Web/Browser.cs
 
 RESOURCES = Banshee.Services.addin.xml
 

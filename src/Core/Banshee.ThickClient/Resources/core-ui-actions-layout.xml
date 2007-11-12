@@ -10,6 +10,7 @@
     <menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
             <menuitem name="ImportMusic" action="ImportMusicAction" />
+            <menuitem name="OpenLocation" action="OpenLocationAction" />
             <separator />
             <placeholder name="ClosePlaceholder" />
             <menuitem name="Quit" action="QuitAction" />
@@ -26,9 +27,9 @@
             <menuitem name="SeekForward" action="SeekForwardAction" />
             -->
             <menuitem name="SeekTo" action="SeekToAction" />
-            <!--
             <menuitem name="RestartSong" action="RestartSongAction" />
             <separator />
+            <!--
             <placeholder name="PlaybackMenuAdditions" />
             <menuitem name="RepeatNone" action="RepeatNoneAction" />
             <menuitem name="RepeatAll" action="RepeatAllAction" />

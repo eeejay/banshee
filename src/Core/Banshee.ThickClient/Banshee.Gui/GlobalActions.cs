@@ -59,19 +59,19 @@ namespace Banshee.Gui
                 new ActionEntry ("WikiGuideAction", Stock.Help,
                     Catalog.GetString ("Banshee _User Guide (Wiki)"), null,
                     Catalog.GetString ("Learn about how to use Banshee"), delegate {
-                        //Banshee.Web.Browser.Open ("http://banshee-project.org/Guide");
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/Guide");
                     }),
                     
-                new ActionEntry("WikiAction", null,
-                    Catalog.GetString("Banshee _Home Page"), null,
-                    Catalog.GetString("Visit the Banshee Home Page"), delegate {
-                        //Banshee.Web.Browser.Open("http://banshee-project.org/");
+                new ActionEntry ("WikiAction", null,
+                    Catalog.GetString ("Banshee _Home Page"), null,
+                    Catalog.GetString ("Visit the Banshee Home Page"), delegate {
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/");
                     }),
                     
-                new ActionEntry("WikiDeveloperAction", null,
-                    Catalog.GetString("_Get Involved"), null,
-                    Catalog.GetString("Become a contributor to Banshee"), delegate {
-                        //Banshee.Web.Browser.Open("http://banshee-project.org/Developers");
+                new ActionEntry ("WikiDeveloperAction", null,
+                    Catalog.GetString ("_Get Involved"), null,
+                    Catalog.GetString ("Become a contributor to Banshee"), delegate {
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/Developers");
                     }),
                  
                 new ActionEntry ("VersionInformationAction", null,

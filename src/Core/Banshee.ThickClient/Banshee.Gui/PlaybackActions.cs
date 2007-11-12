@@ -30,6 +30,9 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.Base;
+using Banshee.Streaming;
+using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Gui.Dialogs;
@@ -58,18 +61,27 @@ namespace Banshee.Gui
 
                 new ActionEntry ("SeekToAction", null,
                     Catalog.GetString ("Seek _to..."), "T",
-                    Catalog.GetString ("Seek to a specific location in current song"), OnSeekToAction)
+                    Catalog.GetString ("Seek to a specific location in current song"), OnSeekToAction),
+                
+                new ActionEntry ("RestartSongAction", null,
+                    Catalog.GetString ("_Restart Song"), "R",
+                    Catalog.GetString ("Restart the current song"), OnRestartSongAction)
             });
                 
             actionService.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("PlaybackMenuAction", null,
-                    Catalog.GetString ("_Playback"), null, null, null)
+                    Catalog.GetString ("_Playback"), null, null, null),
+                    
+                new ActionEntry ("OpenLocationAction", null, 
+                    Catalog.GetString ("Open _Location..."), "<control>L",
+                    Catalog.GetString ("Open a remote location for playback"), OnOpenLocationAction),
             });
             
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             action_service = actionService;
         }
-        
+            
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
             if (play_pause_action == null) {
@@ -88,6 +100,16 @@ namespace Banshee.Gui
                     ShowPlay ();
                     break;
                 default:
+                    break;
+            }
+        }
+            
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        {
+            switch (args.Event) {
+                case PlayerEngineEvent.StartOfStream:
+                    TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
+                    action_service["Playback.RestartSongAction"].Sensitive = !track.IsLive;
                     break;
             }
         }
@@ -133,6 +155,40 @@ namespace Banshee.Gui
             GladeDialog dialog = new SeekDialog ();
             dialog.Run ();
             dialog.Destroy ();
+        }
+            
+        private void OnRestartSongAction (object o, EventArgs args)
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            ServiceManager.PlayerEngine.Close ();
+            ServiceManager.PlayerEngine.OpenPlay (track);
+        }
+            
+        private void OnOpenLocationAction (object o, EventArgs args)
+        {
+            OpenLocationDialog dialog = new OpenLocationDialog ();
+            ResponseType response = dialog.Run ();
+            string address = dialog.Address;
+            dialog.Destroy ();
+            
+            if(response != ResponseType.Ok) {
+                return;
+            }
+            
+            try {
+                RadioTrackInfo radio_track = new RadioTrackInfo (new SafeUri (address));
+                radio_track.ParsingPlaylistEvent += delegate {
+                    if (radio_track.PlaybackError != StreamPlaybackError.None) {
+                        Log.Error (Catalog.GetString ("Error opening stream"), 
+                            Catalog.GetString ("Could not open stream or playlist"));
+                        radio_track = null;
+                    }
+                };
+                radio_track.Play ();
+            } catch {
+                Log.Error (Catalog.GetString ("Error opening stream"), 
+                    Catalog.GetString("Problem parsing playlist"));
+            }
         }
     }
 }

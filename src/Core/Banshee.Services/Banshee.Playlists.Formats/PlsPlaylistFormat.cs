@@ -128,7 +128,7 @@ namespace Banshee.Playlists.Formats
         
         public override void Save(Stream stream, Source source)
         {
-            using(StreamWriter writer = new StreamWriter(stream)) {
+            /*using(StreamWriter writer = new StreamWriter(stream)) {
                 int count = 0;
                 
                 writer.WriteLine("[playlist]");
@@ -143,7 +143,9 @@ namespace Banshee.Playlists.Formats
                                 
                 writer.WriteLine("NumberOfEntries={0}", count);
                 writer.WriteLine("Version=2");
-            }
+            }*/
+            
+            throw new NotImplementedException ();
         }
     }
 }

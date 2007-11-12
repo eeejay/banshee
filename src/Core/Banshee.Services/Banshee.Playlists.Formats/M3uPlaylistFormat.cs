@@ -110,7 +110,7 @@ namespace Banshee.Playlists.Formats
         
         public override void Save(Stream stream, Source source)
         {
-            using(StreamWriter writer = new StreamWriter(stream)) {
+            /*using(StreamWriter writer = new StreamWriter(stream)) {
                 writer.WriteLine("#EXTM3U");
                 foreach(TrackInfo track in source.Tracks) {
                     int duration = (int)Math.Round(track.Duration.TotalSeconds);
@@ -121,7 +121,8 @@ namespace Banshee.Playlists.Formats
                     writer.WriteLine("#EXTINF:{0},{1} - {2}", duration, track.DisplayArtistName, track.DisplayTrackTitle);
                     writer.WriteLine(ExportUri(track.Uri));
                 }
-            }
+            }*/
+            throw new NotImplementedException ();
         }
     }
 }
