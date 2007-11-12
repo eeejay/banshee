@@ -56,6 +56,7 @@ namespace Banshee.Gui.Widgets
         
         private Cairo.Color cover_border_dark_color;
         private Cairo.Color cover_border_light_color;
+        private Cairo.Color background_color;
         private Cairo.Color text_color;
         private Cairo.Color text_light_color;
         
@@ -138,8 +139,14 @@ namespace Banshee.Gui.Widgets
         {
             text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal));          
             text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
+            background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal)); 
             cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
             cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
+            
+            if (missing_pixbuf != null) {
+                missing_pixbuf.Dispose ();
+                missing_pixbuf = null;
+            }
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -268,8 +275,12 @@ namespace Banshee.Gui.Widgets
             p_x += pixbuf.Width < width ? (width - pixbuf.Width) / 2 : 0;
             p_y += pixbuf.Height < height ? (height - pixbuf.Height) / 2 : 0;
             
-            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
+            cr.Antialias = Cairo.Antialias.Default;
+            
             cr.Rectangle (p_x, p_y, pixbuf.Width + p_x, pixbuf.Height + p_y);
+            cr.Color = background_color;
+            cr.FillPreserve ();
+            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
             cr.Fill ();
             
             if (pixbuf == missing_pixbuf) {
@@ -294,22 +305,32 @@ namespace Banshee.Gui.Widgets
                 return;
             }
             
-            double x = Allocation.Height + 10;
-            double y = 0;
+            double x = Allocation.Height + 10, y = 0;
             double width = Allocation.Width - x;
-            int l_width, l_height;
+            int fl_width, fl_height, sl_width, sl_height;
 
-            cr.Antialias = Cairo.Antialias.Default;            
+            // Set up the text layouts
+            Pango.Layout first_line_layout = Pango.CairoHelper.CreateLayout (cr);
+            first_line_layout.Width = (int)width * PANGO_SCALE;
+            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+            first_line_layout.FontDescription = PangoContext.FontDescription.Copy ();
             
-            Pango.Layout layout = Pango.CairoHelper.CreateLayout (cr);
-            layout.Width = (int)width * PANGO_SCALE;
-            layout.Ellipsize = Pango.EllipsizeMode.End;
-            layout.FontDescription = PangoContext.FontDescription;
+            Pango.Layout second_line_layout = first_line_layout.Copy ();
+            
+            // Compute the layout coordinates
+            first_line_layout.SetMarkup (GetFirstLineText (track));
+            first_line_layout.GetPixelSize (out fl_width, out fl_height);
+            second_line_layout.SetMarkup (GetSecondLineText (track));
+            second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            
+            y = (Allocation.Height - (fl_height + sl_height)) / 2;
+            
+            // Render the layouts
+            cr.Antialias = Cairo.Antialias.Default;
             
             if (renderTrack) {
-                layout.SetMarkup (String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle)));
                 cr.MoveTo (x, y);
-                Pango.CairoHelper.LayoutPath (cr, layout);
+                Pango.CairoHelper.LayoutPath (cr, first_line_layout);
                 cr.Color = text_color;
                 cr.Fill ();
             }
@@ -318,15 +339,8 @@ namespace Banshee.Gui.Widgets
                 return;
             }
             
-            string second_line = GetSecondLineText (track);
-            if(second_line == null) {
-                return;
-            }
-            
-            layout.GetPixelSize (out l_width, out l_height);
-            layout.SetMarkup (second_line);
-            cr.MoveTo (x, y + l_height);
-            Pango.CairoHelper.ShowLayout (cr, layout);
+            cr.MoveTo (x, y + fl_height);
+            Pango.CairoHelper.ShowLayout (cr, second_line_layout);
         }
         
         public new void QueueDraw ()
@@ -342,7 +356,10 @@ namespace Banshee.Gui.Widgets
         {
             if (args.Event == PlayerEngineEvent.StartOfStream) {
                 TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-                if (track == null) {
+                
+                if (track == current_track) {
+                    return;
+                } else if (track == null) {
                     incoming_track = null;
                     incoming_pixbuf = null;
                     return;
@@ -401,6 +418,11 @@ namespace Banshee.Gui.Widgets
             return true;
         }
         
+        private string GetFirstLineText (TrackInfo track)
+        {
+            return String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle));
+        }
+        
         private string GetSecondLineText (TrackInfo track)
         {
             string markup_begin = String.Format ("<span color=\"{0}\" size=\"small\">", 
@@ -415,20 +437,16 @@ namespace Banshee.Gui.Widgets
                 markup = String.Format ("{0}by{1} {2} {0}from{1} {3}", markup_begin, markup_end, 
                     GLib.Markup.EscapeText (track.DisplayArtistName), 
                     GLib.Markup.EscapeText (track.DisplayAlbumTitle));
-            } else if (track.ArtistName != null) {
+            } else if (track.AlbumTitle != null) {
+                // Translators: {0} and {1} are for markup, {2} is for Album Title;
+                // e.g. 'from Killing with a Smile'
+                markup = String.Format ("{0}from{1} {2}", markup_begin, markup_end,
+                    GLib.Markup.EscapeText (track.DisplayAlbumTitle));
+            } else {
                 // Translators: {0} and {1} are for markup, {2} is for Artist Name;
                 // e.g. 'by Parkway Drive'
                 markup = String.Format ("{0}by{1} {2}", markup_begin, markup_end,
                     GLib.Markup.EscapeText (track.DisplayArtistName));
-            } else if (track.AlbumTitle != null) {
-                // Translators: {0} and {1} are for markup, {2} is for Album Title;
-                // e.g. 'from Killing with a Smile'
-                markup = String.Format ("{0}by{1} {2}", markup_begin, markup_end,
-                    GLib.Markup.EscapeText (track.DisplayAlbumTitle));
-            }
-            
-            if (markup == null) {
-                return null;
             }
             
             return String.Format ("<span color=\"{0}\">{1}</span>",  
