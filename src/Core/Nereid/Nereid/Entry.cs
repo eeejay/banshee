@@ -28,11 +28,11 @@
 
 namespace Nereid
 {
-    public class NereidClient : Banshee.Gui.GtkBaseClient
+    public class Client : Banshee.Gui.GtkBaseClient
     {
         public static void Main ()
         {
-            Banshee.Gui.GtkBaseClient.Entry<NereidClient> ();
+            Banshee.Gui.GtkBaseClient.Entry<Client> ();
         }
         
         private Gnome.Program program;
