@@ -9,6 +9,7 @@
     </toolbar>
     <menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
+            <menuitem name="ImportMusic" action="ImportMusicAction" />
             <separator />
             <placeholder name="ClosePlaceholder" />
             <menuitem name="Quit" action="QuitAction" />

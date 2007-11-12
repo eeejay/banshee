@@ -1,5 +1,5 @@
-//
-// Entry.cs
+// 
+// ImportSourceManager.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,29 +26,40 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class Client : Banshee.Gui.GtkBaseClient
-    {
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Mono.Addins;
 
-        public override void Run ()
+using Banshee.ServiceStack;
+
+namespace Banshee.Library
+{
+    public class ImportSourceManager : IService, IEnumerable<IImportSource>
+    {
+        private List<IImportSource> import_sources = new List<IImportSource> ();
+        
+        public ImportSourceManager ()
         {
-            program.Run ();
+            import_sources.Add (new HomeDirectoryImportSource ());
+            
+            foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
+                import_sources.Add (source);
+            }
+        }
+        
+        public IEnumerator<IImportSource> GetEnumerator ()
+        {
+            return import_sources.GetEnumerator ();
+        }
+        
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return GetEnumerator ();
+        }
+        
+        string IService.ServiceName {
+            get { return "ImportSourceManager"; }
         }
     }
 }
-

@@ -4,6 +4,10 @@
     <ExtensionNode name="TypeExtensionNode"/>
   </ExtensionPoint>
 
+  <ExtensionPoint path="/Banshee/Library/ImportSource">
+    <ExtensionNode name="TypeExtensionNode"/>
+  </ExtensionPoint>
+
   <ExtensionPoint path="/Banshee/PlayerEngines/PlayerEngine">
     <ExtensionNode name="TypeExtensionNode"/>
   </ExtensionPoint>

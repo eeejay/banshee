@@ -54,7 +54,7 @@ namespace Banshee.IO
         public static void SetFromConfig(IIOConfig _config)
         {
             config = _config;
-            Console.WriteLine("Setting IO Backend to {0} ({1})", config.GetType(), config.Name);
+            Log.DebugFormat("Setting IO Backend to {0} ({1})", config.GetType(), config.Name);
             
             file = (IFile)Activator.CreateInstance(config.FileBackend);
             directory = (IDirectory)Activator.CreateInstance(config.DirectoryBackend);

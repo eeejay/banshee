@@ -1,5 +1,48 @@
 2007-11-11  Aaron Bockover  <abock@gnome.org>
 
+	* Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: 
+	* Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Added
+	import music
+
+	* Core/Banshee.ThickClient/Banshee.Library.Gui/ImportDialog.cs: Ported
+	the import music dialog
+
+	* Core/Banshee.ThickClient/Banshee.Gui.Dialogs/FileChooserDialog.cs:
+	* Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:
+	Ported the file chooser dialogs
+
+	* Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	* Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:
+	* Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:
+	* Core/Banshee.Services/Banshee.Library/IImportSource.cs:
+	Ported the IImportSource sources
+
+	* Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs: Implemented
+	a new ImportSourceManager that loads IImportSources using Mono.Addins
+
+	* Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Load
+	LibraryImportManager and ImportSourceManager services
+
+	* Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Extend
+	ImportManager for importing to the library
+
+	* Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Ported the
+	ImportManager
+
+	* Core/Banshee.Core/Banshee.IO/IOProxy.cs: Use Log.Debug
+
+	* Core/Banshee.Core/Banshee.Base/Log.cs: Added timer debug methods
+
+	* Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Added 
+	IsCancelRequested property
+
+	* Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Listen
+	to StyleSet to reload pixbufs
+
+	* Core/Nereid/Nereid/Client.cs: Remove the TestUserJob stuff
+
+2007-11-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/CommonServices.cs: Helper
 	class to boot common GUI services
 

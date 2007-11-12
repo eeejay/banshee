@@ -1,10 +1,10 @@
 //
-// Entry.cs
+// HomeDirectoryImportSource.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,29 +26,29 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using Mono.Unix;
+
+namespace Banshee.Library
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class HomeDirectoryImportSource : IImportSource
     {
-        public static void Main ()
+        public HomeDirectoryImportSource ()
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
         }
 
-        public override void Run ()
+        public void Import ()
         {
-            program.Run ();
+            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ("LibraryImportManager").QueueSource (
+                Environment.GetFolderPath(Environment.SpecialFolder.Personal));                                                                                                                
+        }
+        
+        public string Name {
+            get { return Catalog.GetString ("Home Directory"); }
+        }
+        
+        public string [] IconNames {
+            get { return new string [] { "user-home", "gtk-home" }; }
         }
     }
 }
-

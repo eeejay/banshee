@@ -1,10 +1,10 @@
-//
-// Entry.cs
+// 
+// FileChooserDialog.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,29 +26,36 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class Client : Banshee.Gui.GtkBaseClient
-    {
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System;
+using Gtk;
 
-        public override void Run ()
-        {
-            program.Run ();
+using Banshee.Configuration;
+
+namespace Banshee.Gui.Dialogs
+{
+    public class FileChooserDialog : Gtk.FileChooserDialog
+    {
+        public FileChooserDialog (string title, FileChooserAction action) : this (title, null, action)
+        {            
         }
+        
+        public FileChooserDialog (string title, Window parent, FileChooserAction action) : 
+            base (title, parent, action)
+        {
+            SetCurrentFolderUri (LastFileChooserUri.Get (Environment.GetFolderPath (Environment.SpecialFolder.Personal)));
+        }
+        
+        protected override void OnResponse (ResponseType response)
+        {
+            base.OnResponse (response);
+            LastFileChooserUri.Set (CurrentFolderUri);
+        }
+        
+        public static readonly SchemaEntry<string> LastFileChooserUri = new SchemaEntry<string> (
+            "player_window", "last_file_chooser_uri",
+            String.Empty,
+            "URI",
+            "URI of last file folder"
+        );
     }
 }
-

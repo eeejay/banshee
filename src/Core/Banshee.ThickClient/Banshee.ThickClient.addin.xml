@@ -1,0 +1,12 @@
+<Addin id="Banshee.ThickClient">
+
+  <Dependencies>
+    <Addin id="Core" version="1.0" />
+  </Dependencies>
+
+  <Extension path="/Banshee/Library/ImportSource">
+    <TypeExtensionNode class="Banshee.Library.Gui.FolderImportSource"/>
+    <TypeExtensionNode class="Banshee.Library.Gui.FileImportSource"/>
+  </Extension>
+  
+</Addin>

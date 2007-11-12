@@ -41,7 +41,7 @@ namespace Banshee.Library
     {
         public LibrarySource() : base(Catalog.GetString("Library"), 0)
         {
-            Properties.SetStringList("IconName", "go-home", "user-home", "source-library");
+            Properties.SetStringList("IconName", "audio-x-generic", "go-home", "user-home", "source-library");
             AfterInitialized ();
         }
     }

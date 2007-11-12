@@ -1,10 +1,10 @@
 //
-// Entry.cs
+// FolderImportSource.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,29 +26,43 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class Client : Banshee.Gui.GtkBaseClient
-    {
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System;
+using Mono.Unix;
+using Gtk;
 
-        public override void Run ()
+namespace Banshee.Library.Gui
+{
+    public class FolderImportSource : IImportSource
+    {
+        public FolderImportSource ()
         {
-            program.Run ();
+        }
+    
+        public void Import()
+        {
+            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
+                Catalog.GetString ("Import Folder to Library"),
+                FileChooserAction.SelectFolder
+            );
+            
+            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton (Stock.Open, ResponseType.Ok);
+            chooser.DefaultResponse = ResponseType.Ok;
+            
+            if(chooser.Run () == (int)ResponseType.Ok) {
+                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ("LibraryImportManager").QueueSource (
+                    chooser.Uri);   
+            }
+            
+            chooser.Destroy ();
+        }
+        
+        public string Name {
+            get { return Catalog.GetString ("Local Folder"); }
+        }
+        
+        public string [] IconNames {
+            get { return new string [] { "gtk-open" }; }
         }
     }
 }
-

@@ -13,10 +13,16 @@ SOURCES =  \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/ExportableModel.cs \
 	Banshee.Collection/IExportableModel.cs \
+	Banshee.Collection/ImportEventHandler.cs \
+	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/ModelHelper.cs \
 	Banshee.Collection/TrackListModel.cs \
 	Banshee.Database/BansheeDbConnection.cs \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
+	Banshee.Library/HomeDirectoryImportSource.cs \
+	Banshee.Library/IImportSource.cs \
+	Banshee.Library/ImportSourceManager.cs \
+	Banshee.Library/LibraryImportManager.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs \

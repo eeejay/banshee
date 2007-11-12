@@ -109,6 +109,12 @@ namespace Banshee.Gui.Widgets
                 AttachOptions.Shrink | AttachOptions.Fill, 0, 0);
         }
         
+        protected override void OnStyleSet (Style style)
+        {
+            base.OnStyleSet (style);
+            UpdateIcons ();
+        }
+
         private void OnCancelClicked (object o, EventArgs args)
         {
             if (cancel_dialog != null) {

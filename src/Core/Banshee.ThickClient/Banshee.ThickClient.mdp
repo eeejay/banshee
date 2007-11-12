@@ -45,6 +45,14 @@
     <File name="./Banshee.Gui.Widgets/UserJobTileHost.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui/CommonServices.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui/GtkBaseClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/SeekDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Resources/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.Library.Gui/FileImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Library.Gui/FolderImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.ThickClient.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./Banshee.Gui.Dialogs/FileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui.Dialogs/ImageFileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Library.Gui/ImportDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

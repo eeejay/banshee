@@ -1,5 +1,5 @@
-//
-// Entry.cs
+// 
+// LibraryImportManager.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,29 +26,37 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.IO;
+
+using Banshee.Base;
+using Banshee.ServiceStack;
+using Banshee.Collection;
+
+namespace Banshee.Library
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class LibraryImportManager : ImportManager, IService
     {
-        public static void Main ()
+        public LibraryImportManager ()
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
         }
         
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
+        protected override void OnImportRequested (string path)
         {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
+            if (path == null) {
+                IncrementProcessedCount (null);
+                return;
+            }
             
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            IncrementProcessedCount (Path.GetFileNameWithoutExtension (path));
         }
 
-        public override void Run ()
+        protected override void OnImportFinished ()
         {
-            program.Run ();
+        }
+        
+        string IService.ServiceName {
+            get { return "LibraryImportManager"; }
         }
     }
 }
-

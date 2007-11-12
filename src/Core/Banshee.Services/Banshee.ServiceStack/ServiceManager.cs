@@ -36,6 +36,7 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.MediaEngine;
+using Banshee.Library;
 
 namespace Banshee.ServiceStack
 {
@@ -59,6 +60,8 @@ namespace Banshee.ServiceStack
             RegisterService<SourceManager> ();
             RegisterService<PlayerEngineService> ();
             RegisterService<PlaybackControllerService> ();
+            RegisterService<ImportSourceManager> ();
+            RegisterService<LibraryImportManager> ();
             RegisterService<UserJobManager> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 

@@ -1,10 +1,10 @@
-//
-// Entry.cs
+// 
+// ImportEventHandler.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2005-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,29 +26,29 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class Client : Banshee.Gui.GtkBaseClient
-    {
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System;
 
-        public override void Run ()
+namespace Banshee.Collection
+{
+    public delegate void ImportEventHandler (object o, ImportEventArgs args);
+    
+    public class ImportEventArgs : EventArgs
+    {
+        private string filename;
+        private string return_message;
+        
+        public ImportEventArgs (string filename)
         {
-            program.Run ();
+            this.filename = filename;
+        }
+        
+        public string FileName {
+            get { return filename; }
+        }
+        
+        public string ReturnMessage {
+            get { return return_message; }
+            set { return_message = value; }
         }
     }
 }
-

@@ -42,6 +42,7 @@ namespace Banshee.ServiceStack
         private string [] icon_names;
         private string cancel_message;
         private bool can_cancel;
+        private bool is_cancel_requested;
         private bool is_finished;
         private bool delay_show;
         
@@ -133,6 +134,8 @@ namespace Banshee.ServiceStack
         
         protected virtual void OnCancelRequested ()
         {
+            IsCancelRequested = true;
+            
             EventHandler handler = CancelRequested;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
@@ -187,6 +190,11 @@ namespace Banshee.ServiceStack
                 can_cancel = value;
                 OnUpdated ();
             }
+        }
+        
+        public virtual bool IsCancelRequested {
+            get { return is_cancel_requested; }
+            set { is_cancel_requested = value; }
         }
         
         public virtual bool IsFinished {

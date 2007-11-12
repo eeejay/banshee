@@ -13,8 +13,10 @@ SOURCES =  \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
+	Banshee.Gui.Dialogs/FileChooserDialog.cs \
 	Banshee.Gui.Dialogs/GladeDialog.cs \
 	Banshee.Gui.Dialogs/GladeWindow.cs \
+	Banshee.Gui.Dialogs/ImageFileChooserDialog.cs \
 	Banshee.Gui.Dialogs/SeekDialog.cs \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
@@ -32,9 +34,13 @@ SOURCES =  \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PlaybackActions.cs \
+	Banshee.Library.Gui/FileImportSource.cs \
+	Banshee.Library.Gui/FolderImportSource.cs \
+	Banshee.Library.Gui/ImportDialog.cs \
 	Banshee.Sources.Gui/SourceView.cs
 
 RESOURCES =  \
+	Banshee.ThickClient.addin.xml \
 	Resources/banshee-dialogs.glade \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml \

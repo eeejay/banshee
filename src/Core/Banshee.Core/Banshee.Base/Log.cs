@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace Banshee.Base
 {
@@ -90,6 +91,9 @@ namespace Banshee.Base
     {
         public static event LogNotifyHandler Notify;
         
+        private static Dictionary<uint, DateTime> timers = new Dictionary<uint, DateTime> ();
+        private static uint next_timer_id = 1;
+        
         private static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
             if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
@@ -140,6 +144,36 @@ namespace Banshee.Base
         public static void DebugFormat (string format, params object [] args)
         {
             Debug (String.Format (format, args));
+        }
+        
+        public static uint DebugTimerStart (string message)
+        {
+            Debug (message);
+            return DebugTimerStart ();
+        }
+        
+        public static uint DebugTimerStart ()
+        {
+            uint timer_id = next_timer_id++;
+            timers.Add (timer_id, DateTime.Now);
+            return timer_id;
+        }
+        
+        public static void DebugTimerPrint (uint id)
+        {
+            DebugTimerPrint (id, "Operation duration: {0}");
+        }
+        
+        public static void DebugTimerPrint (uint id, string message)
+        {
+            DateTime finish = DateTime.Now;
+            
+            if (!timers.ContainsKey (id)) {
+                return;
+            }
+            
+            TimeSpan duration = finish - timers[id];
+            DebugFormat (message, duration);
         }
         
         #endregion

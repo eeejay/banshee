@@ -39,13 +39,34 @@ namespace Banshee.Gui
             Add (new ActionEntry [] {
                 new ActionEntry ("MusicMenuAction", null, 
                     Catalog.GetString ("_Music"), null, null, null),
+                
+                new ActionEntry ("ImportMusicAction", Stock.Open,
+                    Catalog.GetString ("Import _Music..."), "<control>I",
+                    Catalog.GetString ("Import music from a variety of sources"), OnImportMusic),
                     
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
-                    Catalog.GetString ("Quit Banshee"), delegate {
-                        Banshee.ServiceStack.Application.Shutdown ();
-                    })
+                    Catalog.GetString ("Quit Banshee"), OnQuit)
             });
+        }
+            
+        private void OnImportMusic (object o, EventArgs args)
+        {
+            Banshee.Library.Gui.ImportDialog dialog = new Banshee.Library.Gui.ImportDialog ();            
+            try {
+                if (dialog.Run () != Gtk.ResponseType.Ok) {
+                    return;
+                }
+                    
+                dialog.ActiveSource.Import ();
+            } finally {
+                dialog.Destroy ();
+            }
+        }
+        
+        private void OnQuit (object o, EventArgs args)
+        {
+            Banshee.ServiceStack.Application.Shutdown ();
         }
     }
 }
