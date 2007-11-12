@@ -1,0 +1,4644 @@
+# Biełaruski pierakład Banshee.
+# Copyright (C) 2007 THE Banshee'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the banshee package.
+# Ihar Hrachyshka <ihar.hrachyshka@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nautilus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-11-06 02:07+0200\n"
+"PO-Revision-Date: 2007-05-27 22:51+0300\n"
+"Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
+"Language-Team: i18n@mova.org <i18n@mova.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Belarusian Latin\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../data/audio-profiles/aac.xml.in.h:1
+msgid "Advanced Audio Coding (AAC)"
+msgstr "Prasunutaja kadavańnie aŭdyjo (AAC)"
+
+#: ../data/audio-profiles/aac.xml.in.h:2
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "Častata bitaŭ"
+
+#: ../data/audio-profiles/aac.xml.in.h:3
+msgid ""
+"Proprietary and standardized format that is superior to MP3, but not as "
+"popular."
+msgstr ""
+"Ułaśnicki j standartyzavany farmat, lepšy za MP3, ale nie taki papularny."
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "Kanały"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "Svabodny kodek aŭdyjo biaz strataŭ jakaści (FLAC)"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+"Svabodny kodek aŭdyjo biaz strataŭ jakaści (FLAC) - heta kodek z adkrytymi "
+"kryničnymi kodami, jaki ŭžyvaje kampresiju, ale nie źmianšaje jakaści huku."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+"Ułaśnicki, starejšy, ale taksama papularny farmat huku z strataj jakaści, "
+"jaki vyrablaje bolšyja fajły ź mienšaj častatoj bitaŭ."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr "Siaredniaja častata bitaŭ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+msgid "Best"
+msgstr "Najlepšaja"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "Stałaja častata bitaŭ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (Koder LAME)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "Režym VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "Jakaść VBR"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "Źmiennaja častata bitaŭ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:11
+#: ../data/audio-profiles/wma.xml.in.h:7
+msgid "Worst"
+msgstr "Horšaja"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (Koder Xing)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Jakaść huku"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Vorbis - heta hukavy kodek z adkrytymi kryničnymi kodami i z strataj jakaści, "
+"jaki vyrablaje vyjście vysokaj jakaści ŭ fajły mienšych pamieraŭ, čym MP3."
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM - heta farmat biaz strataŭ jakaści, jaki ŭtrymlivaje nieskampresavany, "
+"suvory, zmadulavany ŭ puls-kod (PCM) huk."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Waveform PCM"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+"Chutki i efektyŭny farmat huku biaz strataŭ jakaści, jaki prapanuje kadavańnie "
+"biaz strataŭ albo z vyjście z stratami vysokaj jakaści z vydatnym dynamičnym dyjapazonam."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Zmoŭčanaja"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Extra processing"
+msgstr "Dadatkovaja apracoŭka"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "Najvyšejšaja"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Lossy mode"
+msgstr "Stratny režym"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Mode"
+msgstr "Režym"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+msgid "Store MD5 sum in the file"
+msgstr "Zachoŭvaj sumu MD5 u fajle"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:10
+msgid "Wavpack"
+msgstr "Wavpack"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+"Ułaśnicki farmat huku z stratami, vyjściem vysokaj jakaści i mienšymi "
+"pamierami fajłaŭ, čym dla MP3. WMA na 96 kbps paraŭnalny z MP3 na 128 kbps."
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "Jakaść huku"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "Užyj źmiennuju častatu bitaŭ"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
+
+#: ../data/banshee-dialogs.glade.h:1
+msgid "0"
+msgstr "0"
+
+#: ../data/banshee-dialogs.glade.h:2
+msgid "0 MB"
+msgstr "0 MB"
+
+#: ../data/banshee-dialogs.glade.h:3
+msgid "0:00"
+msgstr "0:00"
+
+#: ../data/banshee-dialogs.glade.h:4
+msgid "<b>Albu_m:</b>"
+msgstr "<b>_Albom:</b>"
+
+#: ../data/banshee-dialogs.glade.h:5
+msgid "<b>Album Cover:</b>"
+msgstr "<b>Vokładka albomu:</b>"
+
+#: ../data/banshee-dialogs.glade.h:6
+msgid "<b>Bitrate:</b>"
+msgstr "<b>Častata bitaŭ:</b>"
+
+#: ../data/banshee-dialogs.glade.h:7
+msgid "<b>CD Importing</b>"
+msgstr "<b>Impartavańnie CD</b>"
+
+#: ../data/banshee-dialogs.glade.h:8
+msgid "<b>Channels:</b>"
+msgstr "<b>Kanały:</b>"
+
+#: ../data/banshee-dialogs.glade.h:9
+msgid "<b>Details</b>"
+msgstr "<b>Detali</b>"
+
+#: ../data/banshee-dialogs.glade.h:10
+msgid "<b>Duration:</b>"
+msgstr "<b>Praciahłaść:</b>"
+
+#: ../data/banshee-dialogs.glade.h:11
+msgid "<b>File System Organization</b>"
+msgstr "<b>Arhanizacyja fajłavaj systemy</b>"
+
+#: ../data/banshee-dialogs.glade.h:12
+msgid "<b>File name:</b>"
+msgstr "<b>Nazva fajłu:</b>"
+
+#: ../data/banshee-dialogs.glade.h:13
+msgid "<b>File size:</b>"
+msgstr "<b>Pamier fajłu:</b>"
+
+#: ../data/banshee-dialogs.glade.h:14
+msgid "<b>Imported on:</b>"
+msgstr "<b>Impartavany:</b>"
+
+#: ../data/banshee-dialogs.glade.h:15
+msgid "<b>Last played:</b>"
+msgstr "<b>Apošniaje vykanańnie:</b>"
+
+#: ../data/banshee-dialogs.glade.h:16
+msgid "<b>Location:</b>"
+msgstr "<b>Pałažeńnie:</b>"
+
+#: ../data/banshee-dialogs.glade.h:17
+msgid "<b>Music _Library</b>"
+msgstr "<b>_Muzyčnaja biblijateka</b>"
+
+#: ../data/banshee-dialogs.glade.h:18
+msgid "<b>Play count:</b>"
+msgstr "<b>Kolkaść vykanańniaŭ:</b>"
+
+#: ../data/banshee-dialogs.glade.h:19
+msgid "<b>Sample rate:</b>"
+msgstr "<b>Častata sampłaŭ:</b>"
+
+#: ../data/banshee-dialogs.glade.h:20
+msgid "<b>Session Information</b>"
+msgstr "<b>Źviestki sesii</b>"
+
+#: ../data/banshee-dialogs.glade.h:21
+msgid "<b>Track _count:</b>"
+msgstr "<b>Kolkaść _vykanańniaŭ:</b>"
+
+#: ../data/banshee-dialogs.glade.h:22
+msgid "<b>Track _number:</b>"
+msgstr "<b>_Numar pieśni:</b>"
+
+#: ../data/banshee-dialogs.glade.h:23
+msgid "<b>Write Options</b>"
+msgstr "<b>Opcyi zapisu</b>"
+
+#: ../data/banshee-dialogs.glade.h:24
+msgid "<b>_Artist:</b>"
+msgstr "<b>_Vykanaŭca:</b>"
+
+#: ../data/banshee-dialogs.glade.h:25
+msgid "<b>_Genre:</b>"
+msgstr "<b>_Styl:</b>"
+
+#: ../data/banshee-dialogs.glade.h:26
+msgid "<b>_Rating:</b>"
+msgstr "<b>_Rating:</b>"
+
+#: ../data/banshee-dialogs.glade.h:27
+msgid "<b>_Title:</b>"
+msgstr "<b>_Nazva:</b>"
+
+#: ../data/banshee-dialogs.glade.h:28
+msgid "<b>_Year:</b>"
+msgstr "<b>_Hod:</b>"
+
+#: ../data/banshee-dialogs.glade.h:29
+msgid "<big><b>Import Music to Library</b></big>"
+msgstr "<big><b>Impartuj muzyku ŭ biblijateku</b></big>"
+
+#: ../data/banshee-dialogs.glade.h:30
+msgid "Apply common field values to all tracks"
+msgstr "Prymiani supolnyja vartaści paloŭ da ŭsich pieśniaŭ"
+
+#: ../data/banshee-dialogs.glade.h:31
+msgid "Artwork"
+msgstr "Styl"
+
+#: ../data/banshee-dialogs.glade.h:32
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:79
+msgid "Back"
+msgstr "Nazad"
+
+#: ../data/banshee-dialogs.glade.h:33
+msgid "Choose an import source:"
+msgstr "Abiary krynicu impartavańnia:"
+
+#: ../data/banshee-dialogs.glade.h:34
+msgid "Co_py files to music folder when importing"
+msgstr "_Kapijuj fajły ŭ muzyčny kataloh pry impartavańni"
+
+#: ../data/banshee-dialogs.glade.h:35
+msgid "Copy to all"
+msgstr "Skapijuj dla ŭsich"
+
+#: ../data/banshee-dialogs.glade.h:36
+msgid "Create a new preset"
+msgstr "Stvary novy raskład"
+
+#: ../data/banshee-dialogs.glade.h:37
+msgid "Delete the active preset"
+msgstr "Vydal aktyŭny raskład"
+
+#: ../data/banshee-dialogs.glade.h:38
+msgid "Details"
+msgstr "Detali"
+
+#: ../data/banshee-dialogs.glade.h:39
+msgid "Disc Options"
+msgstr "Opcyi dysku"
+
+#: ../data/banshee-dialogs.glade.h:40
+msgid "Disc format:"
+msgstr "Farmat dysku:"
+
+#: ../data/banshee-dialogs.glade.h:41
+msgid "Disc name:"
+msgstr "Nazva dysku:"
+
+#: ../data/banshee-dialogs.glade.h:42
+msgid "Do not show this dialog again"
+msgstr "Bolš nie pakazvaj hetaha dyjalohu"
+
+#: ../data/banshee-dialogs.glade.h:43
+msgid "Eject disc after writing"
+msgstr "Vysuń dysk paśla zapisu"
+
+#: ../data/banshee-dialogs.glade.h:44
+msgid "Embed directly in song"
+msgstr "Ustaŭ prosta ŭ pieśniu"
+
+#: ../data/banshee-dialogs.glade.h:45
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:70
+msgid "Enabled"
+msgstr "Uklučany"
+
+#: ../data/banshee-dialogs.glade.h:46
+msgid "Enter Next"
+msgstr "Uviadzi nastupnaje"
+
+#: ../data/banshee-dialogs.glade.h:47
+msgid "Enter the address of the file you would like to open:"
+msgstr "Uviadzi adras fajłu, jaki chočaš adčynić:"
+
+#: ../data/banshee-dialogs.glade.h:48
+#: ../src/Core/Banshee.Base/ActionManager.cs:154
+msgid "Equalizer"
+msgstr "Equalizer"
+
+#: ../data/banshee-dialogs.glade.h:49
+msgid "Error"
+msgstr "Pamyłka"
+
+#: ../data/banshee-dialogs.glade.h:50
+msgid "File _name:"
+msgstr "_Nazva fajłu:"
+
+#: ../data/banshee-dialogs.glade.h:51
+msgid "Folder hie_rarchy:"
+msgstr "_Hierarchija katalohaŭ:"
+
+#: ../data/banshee-dialogs.glade.h:52
+msgid "Forward"
+msgstr "Napierad"
+
+#: ../data/banshee-dialogs.glade.h:53
+msgid "Import Music Source"
+msgstr "Impartuj krynicu muzyki"
+
+#: ../data/banshee-dialogs.glade.h:54
+msgid "Import Music to Library"
+msgstr "Impartuj muzyku ŭ biblijateku"
+
+#: ../data/banshee-dialogs.glade.h:55
+msgid "Metadata"
+msgstr "Metaźviestki"
+
+#: ../data/banshee-dialogs.glade.h:56
+msgid "O_utput format:"
+msgstr "_Farmat vyjścia:"
+
+#: ../data/banshee-dialogs.glade.h:57
+#: ../src/Core/Banshee.Base/Gui/OpenLocationDialog.cs:98
+msgid "Open Location"
+msgstr "Adčyni pałažeńnie"
+
+#: ../data/banshee-dialogs.glade.h:58
+msgid "Open in editor"
+msgstr "Adčyni ŭ redaktary"
+
+#: ../data/banshee-dialogs.glade.h:59
+msgid "Playlist _Name: "
+msgstr "_Nazva śpisu: "
+
+#: ../data/banshee-dialogs.glade.h:60
+msgid "Predefined Smart Playlists"
+msgstr "Užo akreślenyja razumnyja śpisy"
+
+#: ../data/banshee-dialogs.glade.h:61
+msgid "Preferences"
+msgstr "Nałady"
+
+#: ../data/banshee-dialogs.glade.h:62
+msgid "Reset"
+msgstr "Viarni"
+
+#: ../data/banshee-dialogs.glade.h:63
+msgid "Save to song directory"
+msgstr "Zapišy ŭ katalohu ź pieśniaj"
+
+#: ../data/banshee-dialogs.glade.h:64
+msgid "Seek to Position"
+msgstr "Pieraskoč ŭ pazycyju"
+
+#: ../data/banshee-dialogs.glade.h:65
+msgid "Select for use"
+msgstr "Abiary"
+
+#: ../data/banshee-dialogs.glade.h:66
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:658
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:286
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:309
+msgid "Unknown"
+msgstr "Nieviadomy"
+
+#: ../data/banshee-dialogs.glade.h:67
+msgid "Use error correction when importing"
+msgstr "Vypraŭlaj pamyłki pry impartavańni"
+
+#: ../data/banshee-dialogs.glade.h:68
+msgid "Write _metadata to files"
+msgstr "Zapisvaj _metaźviestki ŭ fajłach"
+
+#: ../data/banshee-dialogs.glade.h:69
+msgid "Write disc to:"
+msgstr "Zapišy dysk na:"
+
+#: ../data/banshee-dialogs.glade.h:70
+msgid "Write speed:"
+msgstr "Chutkaść zapisu:"
+
+#: ../data/banshee-dialogs.glade.h:71
+msgid ""
+"Your music library is empty. You may import new music into your library now, "
+"or choose to do so later."
+msgstr ""
+"Tvaja muzyčnaja biblijateka pustaja. Ty možaš zimpartavać novuju muzyku ŭ svaju "
+"biblijateku ciapier albo zrabić heta paźniej."
+
+#: ../data/banshee-dialogs.glade.h:72
+msgid "_Write"
+msgstr "_Zapišy"
+
+#: ../data/banshee.desktop.in.in.h:1 ../data/banshee.glade.h:2
+#: ../src/Core/Banshee.Base/BansheeBranding.cs:79
+msgid "Banshee Music Player"
+msgstr "Muzyčny player Banshee"
+
+#: ../data/banshee.desktop.in.in.h:2
+msgid "Music Player"
+msgstr "Muzyčny player"
+
+#: ../data/banshee.glade.h:1
+msgid "<b>Loading...</b>"
+msgstr "<b>Zahruzka...</b>"
+
+#: ../data/banshee.glade.h:3
+msgid "Disk Usage:"
+msgstr "Zaniata dysku:"
+
+#: ../data/banshee.glade.h:4
+msgid "_Search:"
+msgstr "_Šukaj:"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:222
+msgid "Could not create pipeline"
+msgstr "Niemahčyma stvaryć kanvejer"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:228
+msgid "Could not initialize element from cdda URI"
+msgstr "Niemahčyma inicyjalizavać element z cdda URI"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:242
+msgid "Could not create mbtrm plugin"
+msgstr "Niemahčyma stvaryć plugin mbtrm"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:254
+msgid "Could not create encoder pipeline"
+msgstr "Niemahčyma stvaryć kanvejer kodera"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:260
+msgid "Could not create queue plugin"
+msgstr "Niemahčyma stvaryć plugin čarhavańnia"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:268
+msgid "Could not create GNOME VFS output plugin"
+msgstr "Niemahčyma stvaryć plugin vyjścia GNOME VFS"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:284
+msgid "Could not link cddasrcsrc to mbtrm"
+msgstr "Niemahčyma złučyć cddasrcsrc z mbtrm"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:289
+msgid "Could not link mbtrm to queue"
+msgstr "Niemahčyma złučyć mbtrm z čarhoju"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:294
+msgid "Could not link queue to encoder"
+msgstr "Niemahčyma złučyć čarhu z koderam"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:299
+msgid "Could not link encoder to gnomevfssink"
+msgstr "Niemahčyma złučyć kodera z gnomevfssink"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:406
+#: ../src/Core/Banshee.Base/BansheeBranding.cs:83
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:3
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:171
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:432
+msgid "Encoding element does not support tagging!"
+msgstr "Element kadavańnia nie padtrymlivaje tagavańnia!"
+
+#: ../libbanshee/gst-transcode-0.10.c:160
+msgid "No decoder could be found for source format."
+msgstr "Dla farmatu krynicy nia znojdziena koderaŭ."
+
+#: ../libbanshee/gst-transcode-0.10.c:165
+msgid "Could not stat encoded file"
+msgstr "Niemahčyma vykanać stat dla zakadavanaha fajłu"
+
+#: ../libbanshee/gst-transcode-0.10.c:249
+msgid "Could not create 'gnomevfssrc' plugin"
+msgstr "Niemahčyma stvaryć plugin \"gnomevfssrc\""
+
+#: ../libbanshee/gst-transcode-0.10.c:255
+msgid "Could not create 'decodebin' plugin"
+msgstr "Niemahčyma stvaryć plugin \"decodebin\""
+
+#: ../libbanshee/gst-transcode-0.10.c:261
+msgid "Could not create 'gnomevfssink' plugin"
+msgstr "Niemahčyma stvaryć plugin \"gnomevfssink\""
+
+#: ../libbanshee/gst-transcode-0.10.c:267
+msgid "Could not create 'sinkben' plugin"
+msgstr "Niemahčyma stvaryć plugin \"sinkben\""
+
+#: ../libbanshee/gst-transcode-0.10.c:273
+msgid "Could not create 'audioconvert' plugin"
+msgstr "Niemahčyma stvaryć plugin \"audioconvert\""
+
+#: ../libbanshee/gst-transcode-0.10.c:279
+msgid "Could not create encoding pipeline"
+msgstr "Niemahčyma stvaryć kanvejer kadavańnia"
+
+#: ../libbanshee/gst-transcode-0.10.c:285
+msgid "Could not get sink pad from encoder"
+msgstr "Niemahčyma atrymać pryjomnika ad kodera"
+
+#: ../libbanshee/gst-transcode-0.10.c:368
+msgid "Could not construct pipeline"
+msgstr "Niemahčyma skanstrujavać kanvejer"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:65
+msgid "_Music"
+msgstr "_Muzyka"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:68
+msgid "_New Playlist"
+msgstr "_Novy śpis"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:69
+msgid "Create a new empty playlist"
+msgstr "Stvary novy pusty śpis"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:72
+msgid "Import _Folder..."
+msgstr "Impartuj _kataloh..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:73
+msgid "Import the contents of an entire folder"
+msgstr "Impartuj usio źmieściva katalohu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:76
+msgid "Import Files..."
+msgstr "Impartuj fajły..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:77
+msgid "Import files inside a folder"
+msgstr "Impartuj fajły z katalohu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:80
+msgid "Import _Music..."
+msgstr "Impartuj _muzyku..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:81
+msgid "Import music from a variety of sources"
+msgstr "Impartuj muzyku z raznastajnych krynicaŭ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:84
+msgid "Open _Location..."
+msgstr "Adčyni _pałažeńnie..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:85
+msgid "Open a remote location for playback"
+msgstr "Adčyni addaleny adras, kab vykanać"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:88
+msgid "Write CD"
+msgstr "Zapišy CD"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:89
+msgid "Write selection to audio CD"
+msgstr "Zapišy zaznačanyja pieśni na hukavy CD"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:92
+msgid "Import Source"
+msgstr "Impartuj krynicu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:93
+msgid "Import source to library"
+msgstr "Impartuj krynicu ŭ biblijateku"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:100
+msgid "User Scripts"
+msgstr "Tvaje skrypty"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:101
+msgid "Run available user scripts"
+msgstr "Vykonvaŭ najaŭnyja skrypty karystalnika"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:104
+msgid "_Quit"
+msgstr "_Vyjdzi"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:105
+msgid "Quit Banshee"
+msgstr "Vyjdzi z Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:108
+msgid "_Edit"
+msgstr "_Redahuj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:119
+msgid "Select _All"
+msgstr "Zaznač _usio"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:120
+msgid "Select all songs in song list"
+msgstr "Zaznač usie pieśni ŭ śpisie"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:123
+msgid "Select _None"
+msgstr "_Anuluj zaznačeńnie"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:124
+msgid "Unselect all songs in song list"
+msgstr "Anuluj zaznačeńnie dla ŭsich pieśniaŭ u śpisie"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:127
+msgid "_Jump to playing song"
+msgstr "_Pieraskoč da hranaj pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:131
+msgid "Plu_gins"
+msgstr "_Pluginy"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:132
+msgid "Configure Banshee plugins"
+msgstr "Skanfihuruj pluginy Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:137
+msgid "_Tools"
+msgstr "_Pryładździe"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:140
+msgid "_View"
+msgstr "_Vyhlad"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:143
+msgid "_Columns..."
+msgstr "_Kalony..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:144
+msgid "Select which columns to display in the song list"
+msgstr "Abiary, jakija kalony pakazvać u śpisie pieśniaŭ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:147
+msgid "_Boo Buddy..."
+msgstr ""
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:148
+msgid "Open Boo Buddy"
+msgstr ""
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:155
+msgid "Display the equalizer."
+msgstr "Pakažy equalizer."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:158
+msgid "_Logged Events Viewer..."
+msgstr "Prahladalnik _zapisanych padziej..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:159
+msgid "View a detailed log of events"
+msgstr "Pakažy detalovyja zapisy padziej"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:162
+msgid "_Help"
+msgstr "_Dapamoha"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:165
+msgid "_Version Information..."
+msgstr "Źviestki ab _versii..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:166
+msgid "View detailed version and configuration information"
+msgstr "Pakažy detalovyja źviestki ab versii j kanfihuracyi"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:169
+msgid "_Web Resources"
+msgstr "_Web-sajty"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:172
+msgid "Banshee _User Guide (Wiki)"
+msgstr "_Padručnik karystalnika Banshee (Wiki)"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:173
+msgid "Learn about how to use Banshee"
+msgstr "Navučysia karystacca Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:178
+msgid "Banshee _Home Page"
+msgstr "_Chatniaja staronka Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:179
+msgid "Visit the Banshee Home Page"
+msgstr "Naviedaj chatniuju staronku Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:184
+msgid "_Get Involved"
+msgstr "_Dałučajsia"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:185
+msgid "Become a contributor to Banshee"
+msgstr "Stań udzielnikam prajektu Banshee"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:192
+msgid "_Playback"
+msgstr "_Vykanańnie"
+
+#. Translators: Source being the generic word for playlist, device, library, etc
+#: ../src/Core/Banshee.Base/ActionManager.cs:195
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:105
+#: ../src/Core/Banshee.Base/Source.cs:321
+msgid "Source"
+msgstr "Krynica"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:198
+msgid "Song Menu"
+msgstr "Menu pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:201
+msgid "_Debug"
+msgstr "_Debug"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:204
+msgid "Import Playlist..."
+msgstr "Impartuj śpis..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:205
+msgid "Import a playlist"
+msgstr "Impartuj śpis"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:208
+msgid "Export Playlist..."
+msgstr "Ekspartuj śpis..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:209
+msgid "Export a playlist"
+msgstr "Ekspartuj śpis"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:214
+msgid "_Fullscreen"
+msgstr "_Poŭny ekran"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:215
+msgid "Toggle Fullscreen Mode"
+msgstr "Pieraklučy poŭnaekranny režym"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:218
+msgid "Show Cover _Art"
+msgstr "Pakažy _vokładku"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:219
+msgid "Toggle display of album cover art"
+msgstr "Pieraklučy pakaz vokładki albomu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:230
+msgid "_Copy"
+msgstr "_Skapijuj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:231
+msgid "Copy selected song(s) to clipboard"
+msgstr "Skapijuj zaznačanyja pieśni ŭ abmienny bufer"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:234
+msgid "_Remove"
+msgstr "_Vydal"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:235
+msgid "Remove selected song(s) from library"
+msgstr "Vydal zaznačanyja pieśni ź biblijateki"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:238
+msgid "_Delete From Drive"
+msgstr "_Vydal z dysku"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:239
+msgid "Permanently delete selected song(s) from storage medium"
+msgstr "Nazaŭždy vydal zaznačanyja pieśni z nośbita"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:242
+msgid "_Edit Song Metadata"
+msgstr "_Redahuj metaźviestki pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:243
+msgid "Edit metadata on selected songs"
+msgstr "Redahuj metaźviestki zaznačanych pieśniaŭ"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:246
+msgid "_Search for Songs"
+msgstr "_Šukaj pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:247
+msgid "Search for songs matching certain criteria"
+msgstr "Šukaj pieśni, jakija adpaviadajuć peŭnamu kryteru"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:250
+msgid "By Matching _Album"
+msgstr "Peŭny _albom"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:251
+msgid "Search all songs of this album"
+msgstr "Šukaj usie pieśni z hetaha albomu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:254
+msgid "By Matching A_rtist"
+msgstr "Peŭny _vykanaŭca"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:255
+msgid "Search all songs of this artist"
+msgstr "Šukaj usie pieśni ad hetaha vykanaŭca"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:258
+msgid "By Matching _Genre"
+msgstr "Peŭny _styl"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:259
+msgid "Search all songs of this genre"
+msgstr "Šukaj usie pieśni ŭ hetym styli"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:262
+msgid "Add _to Playlist"
+msgstr "Dadaj _da śpisu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:263
+msgid "Append selected songs to playlist or create new playlist from selection"
+msgstr "Dadaj zaznačanyja pieśni da śpisu albo stvary novy śpis z zaznačanych"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:272
+msgid "Import CD"
+msgstr "Impartuj CD"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:273
+msgid "Import audio CD to library"
+msgstr "Impartuj hukavy CD ŭ biblijateku"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:282
+msgid "_Play"
+msgstr "_Hraj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:283
+msgid "Play or pause the current song"
+msgstr "Hraj albo prypyni dziejnuju pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:286
+msgid "_Next"
+msgstr "_Nastupnaja"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:287
+msgid "Play the next song"
+msgstr "Hraj nastupnuju pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:290
+msgid "Pre_vious"
+msgstr "_Papiaredniaja"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:291
+msgid "Play the previous song"
+msgstr "Hraj papiaredniuju pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:296
+msgid "Repeat N_one"
+msgstr "_Ničoha nie paŭtaraj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:297
+msgid "Do not repeat playlist"
+msgstr "Nie paŭtaraj śpis"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:300
+msgid "Repeat _All"
+msgstr "Paŭtaraj _usio"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:301
+msgid "Play all songs before repeating playlist"
+msgstr "Vykanaj usie pieśni da paŭtoru śpisu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:304
+msgid "Repeat Si_ngle"
+msgstr "Paŭtaraj _adnu pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:305
+msgid "Repeat the current playing song"
+msgstr "Paŭtaraj hranuju ciapier pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:310
+msgid "Shu_ffle"
+msgstr "_Tasuj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:311
+msgid "Toggle between shuffle or continuous playback modes"
+msgstr "Pieraklučaj pamiž režymami tasavańnia i paśladoŭnaha vykanańnia"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:314
+msgid "_Stop When Finished"
+msgstr "_Spyni ŭ kancy"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:315
+msgid "Stop playback after the current song finishes playing"
+msgstr "Spyni vykanańnie paśla zakančeńnia hetaj pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:324
+msgid "Seek _Backward"
+msgstr "Prakručvaj _nazad"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:325
+msgid "Seek backward in current song"
+msgstr "Prakručvaj hetuju pieśniu nazad"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:328
+msgid "Seek _Forward"
+msgstr "Prakručvaj na_pierad"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:329
+msgid "Seek forward in current song"
+msgstr "Prakručvaj hetuju pieśniu napierad"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:332
+msgid "Seek _to..."
+msgstr "Prakruci _da..."
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:333
+msgid "Seek to a specific location in current song"
+msgstr "Prakruci da peŭnaj pazycyi hetaj pieśni"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:336
+msgid "_Restart Song"
+msgstr "_Znoŭ pačni pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:337
+msgid "Restart the current song"
+msgstr "Znoŭ pačni hetuju pieśniu"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:346
+#: ../src/Core/Banshee.Base/SourceManager.cs:280
+msgid "Synchronize"
+msgstr "Synchranizuj"
+
+#: ../src/Core/Banshee.Base/ActionManager.cs:347
+msgid "Save changes to device or synchronize music library"
+msgstr "Zapišy źmieny na pryładu albo synchranizuj muzyčnuju biblijateku"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdCore.cs:80
+msgid "HAL is not initialized"
+msgstr "HAL nie inicyjalizavany"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdCore.cs:86
+msgid "Audio CD Core Initialized"
+msgstr "Jadro hukavoha CD inicyjalizavanaje"
+
+#. work around mcs #76642
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdCore.cs:103
+msgid "Could not Read Audio CD"
+msgstr "Niemahčyma pračytać hukavy CD"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:86
+#: ../src/Core/Banshee.Base/TrackInfo.cs:291
+msgid "Unknown Artist"
+msgstr "Nieviadomy vykanaŭca"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:87
+#: ../src/Core/Banshee.Base/TrackInfo.cs:299
+msgid "Unknown Album"
+msgstr "Nieviadomy albom"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:88
+#, csharp-format
+msgid "Track {0}"
+msgstr "Ściežka {0}"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:93
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:60
+msgid "Audio CD"
+msgstr "Hukavy CD"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:244
+msgid "Cannot Eject CD"
+msgstr "Niemahčyma vysunuć CD"
+
+#: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:245
+msgid "The CD cannot be ejected while it is importing. Stop the import first."
+msgstr "Niemahčyma vysunuć CD, pakul jon impartujecca. Spačatku spyni impartavańnie."
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:85
+msgid "Could not create CD Ripper"
+msgstr "Niemahčyma stvaryć kapijavalnika CD"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:275
+msgid "Importing CD"
+msgstr "Impartavańnie CD"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:284
+#, csharp-format
+msgid ""
+"<i>{0}</i> is still being imported into the music library. Would you like to "
+"stop it?"
+msgstr ""
+"<i>{0}</i> dahetul impartujecca ŭ muzyčnuju biblijateku. Chočaš spynić hetuju aperacyju?"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:292
+#, csharp-format
+msgid ""
+"The device node '{0}' differs from the device node already set for "
+"previously queued tracks ({1})"
+msgstr ""
+"Pryłada \"{0}\" adroźnivajecca ad pryłady, užo akreślenaj dla papiarednich "
+"dadanych u čarhu pieśniaŭ ({1})"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:305
+msgid "Importing Audio CD"
+msgstr "Impartavańnie hukavoha CD"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:306
+msgid "Initializing Drive"
+msgstr "Inicyjalizacyja pryłady"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:313
+msgid "No encoder was found on your system."
+msgstr "U systemie nia znojdziena koderaŭ."
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:343
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:415
+msgid "Cannot Import CD"
+msgstr "Niemahčyma zimpartavać CD"
+
+#: ../src/Core/Banshee.Base/AudioCdRipper.cs:363
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:55
+#: ../src/Core/Banshee.Base/ImportManager.cs:297
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Impartavańnie {0} z {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
+msgid "No available profiles"
+msgstr "Niama profilaŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:71
+msgid "Advanced"
+msgstr "Pašyrany"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
+msgid "Audio Disc:"
+msgstr "Hukavy dysk:"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:73
+msgid "Data Disc:"
+msgstr "Dysk sa źviestkami:"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:130
+#, csharp-format
+msgid "{0}:{1:00} of {2}"
+msgstr "{0}:{1:00} z {2}"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:132
+msgid "Unknown Minutes"
+msgstr "Nieviadoma chvilin"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:133
+#, csharp-format
+msgid "{0} Minutes"
+msgstr "{0} chvilin"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:339
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:90
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} z {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:137
+msgid "Unknown MB"
+msgstr "Nieviadoma MB"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:138
+#: ../src/Core/Banshee.Base/Utilities.cs:77
+#, csharp-format
+msgid "{0} MB"
+msgstr "{0} MB"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:122
+msgid "New Audio C_D"
+msgstr "Novy hukavy _CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:123
+msgid "Create a new audio CD"
+msgstr "Stvary novy hukavy CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:165
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:108
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:192
+msgid "Problem creating CD"
+msgstr "Prablema stvareńnia CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerCore.cs:166
+msgid "No CD recording hardware was found."
+msgstr "Aparatury dla zapisu CD nia znojdziena."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerFormatList.cs:62
+msgid "Audio"
+msgstr "Huk"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:101
+msgid "Some songs could not be found."
+msgstr "Niemahčyma znajści niekatorych pieśniaŭ."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:109
+msgid "No CD writers were found on your system."
+msgstr "U systemie nia znojdziena zapisvalnych pryvodaŭ CD."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:115
+msgid "Insert Blank CD"
+msgstr "Ustaŭ pusty CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:116
+msgid "Please insert a blank CD disk for the write process."
+msgstr "Ustaŭ pusty dysk CD, kab zapisać na jaho."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:136
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:156
+#, csharp-format
+msgid "The inserted media is not large enough to hold your selected music."
+msgstr "Ustaŭleny nośbit niedastatkova vialiki, kab źmiaścić zaznačanuju muzyku."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:138
+#, csharp-format
+msgid "{0} more minute is needed on the media."
+msgid_plural "{0} more minutes are needed on the media."
+msgstr[0] "Nie staje {0} chviliny na nośbicie."
+msgstr[1] "Nie staje {0} chvilin na nośbicie."
+msgstr[2] "Nie staje {0} chvilin na nośbicie."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:142
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:162
+msgid "Not Enough Space on Disc"
+msgstr "Nie staje miesca na dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:158
+#, csharp-format
+msgid "{0} more megabyte is needed on the media."
+msgid_plural "{0} more megabytes are needed on the media."
+msgstr[0] "Nie staje {0} mehabajtu na nośbicie."
+msgstr[1] "Nie staje {0} mehabajtaŭ na nośbicie."
+msgstr[2] "Nie staje {0} mehabajtaŭ na nośbicie."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:175
+msgid "Insufficient Disk Space"
+msgstr "Niedastatkova miesca na dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:176
+#, csharp-format
+msgid "Creating this CD requires at least {0} MiB of free disk space."
+msgstr "Jak mienš {0} MiB volnaha miesca na dysku treba, kab stvaryć hety CD."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:195
+msgid "Continue Anyway"
+msgstr "Usio roŭna praciahvaj"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:239
+msgid "Could Not Write CD"
+msgstr "Niemahčyma zapisać CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionPreparer.cs:240
+msgid "No suitable encoder could be found to convert selected songs."
+msgstr "Nia znojdzieny prydatny koder, kab skanvertavać zaznačanyja pieśni."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:48
+msgid "Writing a disc"
+msgstr "Zapis dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:55
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:56
+msgid "Writing Disc"
+msgstr "Zapis dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:57
+msgid ""
+"Stopping the disc writing process will render it useless. Would you like to "
+"stop writing the disc?"
+msgstr ""
+"Dysk stanie bieskarysnym, kali spynić jaho zapis. Chočaš spynić zapis dysku?"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:95
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:110
+msgid "Error writing disc"
+msgstr "Pamyłka zapisu dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:99
+msgid "An unknown error occurred when attempting to write the disc."
+msgstr "Padčas sproby zapisać dysk zdaryłasia nieviadomaja pamyłka."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:105
+msgid "Disc writing complete"
+msgstr "Zapis dysku zakončyŭsia"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:106
+msgid "The selected audio was successfully written to the disc."
+msgstr "Zaznačany huk paśpiachova zapisany na dysku."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:142
+msgid "Preparing to record"
+msgstr "Padrychtoŭka da zapisu"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:146
+msgid "Recording contents"
+msgstr "Zapis źmieściva"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:150
+msgid "Fixating disc"
+msgstr "Fiksavańnie dysku"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:168
+msgid "Waiting for Media"
+msgstr "Čakańnie nośbita"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:172
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:175
+msgid "Insert blank disc"
+msgstr "Ustaŭ pusty dysk"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSessionRecorder.cs:173
+msgid "Please insert a blank disc for the write process."
+msgstr "Ustaŭ pusty dysk, kab zapisać jaho."
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSource.cs:63
+msgid "New Audio CD"
+msgstr "Novy hukavy CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Burner/BurnerSource.cs:233
+msgid "CD Session"
+msgstr "Sesija CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:69
+msgid "Maximum"
+msgstr "Maksymalnaja"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:70
+msgid "High"
+msgstr "Vysokaja"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:71
+msgid "Medium"
+msgstr "Siaredniaja"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:72
+msgid "Low"
+msgstr "Nizkaja"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:77
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:90
+#, csharp-format
+msgid "{0}x"
+msgstr "{0}x"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:46
+msgid "Copy CD failed"
+msgstr "Niaŭdałaje kapijavańnie CD"
+
+#: ../src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:47
+msgid "Could not run nautilus-cd-burner"
+msgstr "Niemahčyma ŭruchomić nautilus-cd-burner"
+
+#: ../src/Core/Banshee.Base/Banshee.Library/Import.cs:74
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:283
+msgid "Scanning"
+msgstr "Skanavańnie"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
+msgid "Unable to open Amarok database"
+msgstr "Niemahčyma adčynić bazu źviestak Amarok"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:198
+msgid "Importing from Amarok database failed"
+msgstr "Niaŭdałaje impartavańnie z bazy źviestak Amarok"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:41
+#: ../src/Core/Banshee.Base/ImportManager.cs:285
+msgid "Importing Songs"
+msgstr "Impartavańnie pieśniaŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:42
+#: ../src/Core/Banshee.Base/ImportManager.cs:291
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Ciapier adbyvajecca impartavańnie. Chočaš spynić jaho?"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImport.cs:43
+#: ../src/Core/Banshee.Base/ImportManager.cs:97
+msgid "Scanning for songs"
+msgstr "Pošuk pieśniaŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:56
+msgid "Migrate From Other Media Players"
+msgstr "Mihruj ź inšych medyjaplayeraŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:59
+msgid ""
+"Select any supported alternate media players that you wish to migrate into "
+"Banshee."
+msgstr ""
+"Abiary luby z padtrymanych alternatyŭnych medyjaplayeraŭ, ź jakoha ty chočaš "
+"mihravać na Banshee."
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
+#: ../src/Core/Banshee.Base/SourceManager.cs:269
+#: ../src/Core/Banshee/PlayerInterface.cs:2021
+msgid "Import"
+msgstr "Impartuj"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:82
+msgid "Player"
+msgstr "Player"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:91
+msgid "Unable to Locate Supported Media Player"
+msgstr "Niemahčyma znajści padtrymany medyjaplayer"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:92
+msgid ""
+"Banshee was unable to locate any libraries from alternate supported media "
+"players from which to import."
+msgstr ""
+"Banshee nia zmoh znajści biblijatek ad alternatyŭnych padtrymanych medyja"
+"playeraŭ, ź jakich treba zimpartavać."
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
+msgid "Migrate"
+msgstr "Mihruj"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportSource.cs:58
+msgid "Alternate Media Players"
+msgstr "Alternatyŭnyja medyjaplayery"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:46
+msgid "Rhythmbox Music Player"
+msgstr "Muzyčny player Rhythmbox"
+
+#: ../src/Core/Banshee.Base/Banshee.PlayerMigration/RhythmboxPlayerImport.cs:57
+msgid "Invalid Rhythmbox database file"
+msgstr "Niahodny fajł bazy źviestak Rhythmboksa"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media ASX (*.asx)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:43
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "Pašyrany MPEG versii 3.0 (*.m3u)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:50
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Śpis efirnaj tranślacyi Shoutcast versii 2 (*.pls)"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:177
+msgid "Verifying"
+msgstr "Pravierka"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:178
+msgid ""
+"The playlist import process is currently running. Would you like to stop it?"
+msgstr ""
+"Ciapier adbyvajecca impartavańnie śpisu. Chočaš spynić hety praces?"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:181
+msgid "Verifying playlist tracks exist in library"
+msgstr "Pravierka najaŭnaści pieśniaŭ sa śpisu ŭ biblijatecy"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:206
+#, csharp-format
+msgid "Verifying {0} of {1}"
+msgstr "Pravierka {0} z {1}"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:209
+msgid "Verifying "
+msgstr "Pravierka "
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:283
+msgid "Export Playlist"
+msgstr "Ekspartuj śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:292
+msgid "Export"
+msgstr "Ekspartuj"
+
+#: ../src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs:317
+msgid "Select Format: "
+msgstr "Abiary farmat: "
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:35
+msgid "Edit Smart Playlist"
+msgstr "Redahuj razumny śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:51
+msgid "New Smart Playlist"
+msgstr "Novy razumny śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:68
+msgid "Neglected Favorites"
+msgstr "Zabytaje ŭlubionaje"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:79
+msgid "700 MB of Favorites"
+msgstr "700 MB ŭlubionaha"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:86
+msgid "80 Minutes of Favorites"
+msgstr "80 chvilin ulubionaha"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:93
+msgid "Unheard"
+msgstr "Niečuvany"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:100
+msgid "Unheard Podcasts"
+msgstr "Niečuvanyja podcasty"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:181
+msgid "Create Smart Playlist from Search"
+msgstr "Stvary razumny śpis z pošuku"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:154
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:164
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:177
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:187
+msgid "is"
+msgstr "źjaŭlajecca"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:159
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:169
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:182
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:192
+msgid "is not"
+msgstr "nie źjaŭlajecca"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:197
+msgid "is less than"
+msgstr "mienš za"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:202
+msgid "is greater than"
+msgstr "bolš za"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:207
+msgid "more than"
+msgstr "bolš za"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:212
+msgid "less than"
+msgstr "mienš za"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:217
+msgid "is at least"
+msgstr "nia mienš za"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:222
+msgid "contains"
+msgstr "utrymlivaje"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:227
+msgid "does not contain"
+msgstr "nia ŭtrymlivaje"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:232
+msgid "starts with"
+msgstr "pačynajecca na"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:237
+msgid "ends with"
+msgstr "zakančvajecca na"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:242
+msgid "is before"
+msgstr "pierad"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:247
+msgid "is after"
+msgstr "paśla"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:252
+msgid "is between"
+msgstr "pamiž"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:257
+msgid "between"
+msgstr "pamiž"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:338
+msgid "to"
+msgstr "da"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:712
+msgid "_Match"
+msgstr "_Znajdzi"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:719
+msgid "all"
+msgstr "usie"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:720
+msgid "any"
+msgstr "lubaja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:725
+msgid "of the following:"
+msgstr "z nastupnaha:"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:744
+msgid "_Limit to"
+msgstr "_Abmiažuj da"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:761
+msgid "selected by"
+msgstr "abraŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:45
+msgid "Random"
+msgstr "Vypadkovy"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:46
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:780
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:91
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/AlbumColumn.cs:42
+msgid "Album"
+msgstr "Albom"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:778
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:86
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
+msgid "Artist"
+msgstr "Vykanaŭca"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:48
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:781
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/GenreColumn.cs:42
+#: ../src/Core/Banshee/PlayerInterface.cs:458
+msgid "Genre"
+msgstr "Styl"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:49
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:779
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:96
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:42
+msgid "Title"
+msgstr "Nazva"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:50
+msgid "Highest Rating"
+msgstr "Najvyšejšy rating"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:51
+msgid "Lowest Rating"
+msgstr "Najnižejšy rating"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:52
+msgid "Least Often Played"
+msgstr "Najradziej hranyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:53
+msgid "Most Often Played"
+msgstr "Najčaściej hranyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:54
+msgid "Most Recently Added"
+msgstr "Niadaŭna dadadzienyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:55
+msgid "Least Recently Added"
+msgstr "Daŭno dadadzienyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:56
+msgid "Most Recently Played"
+msgstr "Niadaŭna hranyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:57
+msgid "Least Recently Played"
+msgstr "Daŭno hranyja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
+msgid "songs"
+msgstr "pieśni"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
+msgid "minutes"
+msgstr "chvilin"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:64
+msgid "hours"
+msgstr "hadzin"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:65
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:317
+msgid "Seconds"
+msgstr "Sekundy"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:318
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:452
+msgid "Minutes"
+msgstr "Chviliny"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:319
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:453
+msgid "Hours"
+msgstr "Hadziny"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:454
+msgid "Days"
+msgstr "Dni"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:455
+msgid "Weeks"
+msgstr "Tydni"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:456
+msgid "Months"
+msgstr "Miesiacy"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:457
+msgid "Years"
+msgstr "Hady"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:568
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:593
+msgid "ago"
+msgstr "tamu"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:782
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DateAddedColumn.cs:42
+msgid "Date Added"
+msgstr "Data dadadzienaja"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:783
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/LastPlayedColumn.cs:42
+msgid "Last Played"
+msgstr "Apošniaje vykanańnie"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:784
+msgid "Duration"
+msgstr "Praciahłaść"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:785
+msgid "Play Count"
+msgstr "Kolkaść vykanańniaŭ"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
+msgid "Track Number"
+msgstr "Numar pieśni"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:58
+msgid "Playlist"
+msgstr "Śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:803
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:127
+msgid "Smart Playlist"
+msgstr "Razumny śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:806
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/RatingColumn.cs:43
+msgid "Rating"
+msgstr "Rating"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:807
+msgid "Path"
+msgstr "Ściežka da fajłu"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:808
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/YearColumn.cs:42
+#: ../src/Core/Banshee/PlayerInterface.cs:459
+msgid "Year"
+msgstr "Hod"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:156
+msgid "New _Smart Playlist..."
+msgstr "Novy _razumny śpis..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:162
+msgid "New Smart Playlist _from Search..."
+msgstr "Novy razumny śpis _z pošuku..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:117
+msgid "Delete Smart Playlist"
+msgstr "Vydal razumny śpis"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:122
+msgid "Edit Smart Playlist..."
+msgstr "Redahuj razumny śpis..."
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:443
+msgid "Smart Playlist has Dependencies"
+msgstr "Razumny śpis maje zaležnaści"
+
+#: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistSource.cs:445
+#, csharp-format
+msgid ""
+"{0} is depended on by other smart playlists. Are you sure you want to delete "
+"this and all dependent smart playlists?"
+msgstr ""
+"{0} zaležyć ad inšaha razumnaha śpisu. Ty sapraŭdy chočaš vydalić jaho i ŭsie "
+"zaležnyja razumnyja śpisy?"
+
+#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
+msgid "Could not launch URL"
+msgstr "Niemahčyma ŭruchomić URL"
+
+#: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:44
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"Niemahčyma adčynić {0}: {1}\n"
+"\n"
+" Pravier nałady \"Pažadanych aplikacyj\"."
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:135
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:136
+msgid "Converting Files"
+msgstr "Kanvertavańnie fajłaŭ"
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:138
+msgid ""
+"Files are currently being converted to another audio format. Would you like "
+"to stop this?"
+msgstr ""
+"Ciapier adbyvajecca kanvertavańnie ŭ inšy farmat huku. Chočaš spynić hety praces?"
+
+#: ../src/Core/Banshee.Base/BatchTranscoder.cs:141
+msgid "Initializing Transcoder..."
+msgstr "Inicyjalizacyja transkodera..."
+
+#: ../src/Core/Banshee.Base/ComponentInitializer.cs:94
+msgid "Could not initialize component"
+msgstr "Niemahčyma inicyjalizavać kampanent"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:335
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:402
+msgid "Device"
+msgstr "Pryłada"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:336
+#, csharp-format
+msgid "Synchronizing {0}"
+msgstr "Synchranizavańnie {0}"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:340
+msgid "Waiting for transcoder..."
+msgstr "Čakańnie transkodera..."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:427
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:448
+msgid "Processing..."
+msgstr "Praca..."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:467
+msgid "Could not encode some files"
+msgstr "Niemahčyma zakadavać niekatoryja fajły"
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:469
+msgid ""
+"Some files could not be encoded to the proper format. They will not be saved "
+"to the device if you continue."
+msgstr ""
+"Niekatoryja fajły nie kanvertujucca ŭ patrebny farmat. Jany nia buduć "
+"zapisanyja na pryładu, kali ty praciahnieš."
+
+#: ../src/Core/Banshee.Base/Dap/Dap.cs:474
+msgid "Continue synchronizing"
+msgstr "Praciahvaj synchranizavańnie"
+
+#: ../src/Core/Banshee.Base/Dap/DapCore.cs:107
+msgid "Cannot initialize DapCore because HalCore is not initialized"
+msgstr "Niemahčyma inicyjalizavać DapCore, bo nie inicyjalizavany HalCore"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:54
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:406
+#, csharp-format
+msgid "{0} Properties"
+msgstr "Ułaścivaści {0}"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:78
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:81
+msgid "Device name"
+msgstr "Nazva pryłady"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:85
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:88
+msgid "Owner name"
+msgstr "Imia ŭłaśnika"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:97
+msgid "Encode to"
+msgstr "Zakaduj u"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:107
+msgid "Volume usage"
+msgstr "Zaniata pamiaci"
+
+#: ../src/Core/Banshee.Base/Dap/DapPropertiesDialog.cs:119
+msgid "Advanced details"
+msgstr "Prasunutyja detali"
+
+#: ../src/Core/Banshee.Base/FileImportSource.cs:55
+msgid "Import Files to Library"
+msgstr "Impartuj fajły ŭ biblijateku"
+
+#: ../src/Core/Banshee.Base/FileImportSource.cs:73
+msgid "Local Files"
+msgstr "Lakalnyja fajły"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:101
+msgid "Count"
+msgstr "Kolkaść"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:106
+msgid "Number"
+msgstr "Numar"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:111
+msgid "Count (unsorted)"
+msgstr "Kolkaść (nie ŭparadkavana)"
+
+#: ../src/Core/Banshee.Base/FileNamePattern.cs:116
+msgid "Number (unsorted)"
+msgstr "Numar (nie ŭparadkavana)"
+
+#: ../src/Core/Banshee.Base/FolderImportSource.cs:55
+msgid "Import Folder to Library"
+msgstr "Impartuj kataloh u biblijateku"
+
+#: ../src/Core/Banshee.Base/FolderImportSource.cs:71
+msgid "Local Folder"
+msgstr "Lakalny kataloh"
+
+#: ../src/Core/Banshee.Base/Globals.cs:111
+#: ../src/Core/Banshee.Base/Globals.cs:120
+#: ../src/Core/Banshee.Base/Globals.cs:122
+#: ../src/Core/Banshee.Base/Globals.cs:180
+#: ../src/Core/Banshee.Base/Globals.cs:181
+msgid "Starting background tasks"
+msgstr "Pačynańnie fonavych zadač"
+
+#: ../src/Core/Banshee.Base/Globals.cs:123
+msgid "Device support will be disabled for this instance (no HAL)"
+msgstr "Padtrymka pryładaŭ budzie adklučana dla hetaj instancyi (biaz HAL)"
+
+#: ../src/Core/Banshee.Base/Globals.cs:126
+#: ../src/Core/Banshee.Base/Globals.cs:169
+msgid "Initializing audio engine"
+msgstr "Inicyjalizacyja hukavoha ruchavika"
+
+#: ../src/Core/Banshee.Base/Globals.cs:127
+msgid "Detecting network settings"
+msgstr "Vyznačeńnie sietkavych naładaŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:128
+msgid "Creating action manager"
+msgstr "Stvareńnie kiraŭnika dziejańniaŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:129
+msgid "Loading music library"
+msgstr "Zahruzka muzyčnaj biblijateki"
+
+#: ../src/Core/Banshee.Base/Globals.cs:134
+msgid "Initializing audio profiles"
+msgstr "Inicyjalizacyja hukavych profilaŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:171
+msgid "Initializing audio CD support"
+msgstr "Inicyjalizacyja padtrymki hukavych CD"
+
+#: ../src/Core/Banshee.Base/Globals.cs:172
+msgid "Audio CD support will be disabled for this instance"
+msgstr "Padtrymka hukavych CD budzie adklučana dla hetaj instancyi"
+
+#: ../src/Core/Banshee.Base/Globals.cs:174
+msgid "Initializing digital audio player support"
+msgstr "Inicyjalizacyja padtrymki ličbavych hukavych playeraŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:175
+msgid "DAP support will be disabled for this instance"
+msgstr "Padtrymka DAP budzie adklučana dla hetaj instancyi"
+
+#: ../src/Core/Banshee.Base/Globals.cs:177
+msgid "Initializing CD writing support"
+msgstr "Inicyjalizacyja padtrymki zapisu CD"
+
+#: ../src/Core/Banshee.Base/Globals.cs:178
+msgid "CD burning support will be disabled for this instance"
+msgstr "Padtrymka zapisu CD budzie adklučana dla hetaj instancyi"
+
+#: ../src/Core/Banshee.Base/Globals.cs:183
+#: ../src/Core/Banshee.Base/Globals.cs:184
+msgid "Initializing plugins"
+msgstr "Inicyjalizacyja pluginaŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:185
+msgid "Initializing scripts"
+msgstr "Inicyjalizacyja skryptoŭ"
+
+#: ../src/Core/Banshee.Base/Globals.cs:188
+msgid "Loading user interface"
+msgstr "Zahruzka interfejsu karystalnika"
+
+#: ../src/Core/Banshee.Base/GstTranscoder.cs:82
+msgid "Could not create transcoder"
+msgstr "Niemahčyma stvaryć transkodera"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:46
+msgid "Primary Development"
+msgstr "Hałoŭnaja raspracoŭka"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:53
+msgid "Contributors"
+msgstr "Supracoŭniki"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:78
+msgid "Music Management and Playback for GNOME."
+msgstr "Kiravańnie j vykanańnie muzyki dla GNOME."
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:80
+msgid ""
+"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Core/Banshee.Base/Gui/AboutDialog.cs:85
+msgid "Banshee Wiki"
+msgstr "Banshee Wiki"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Vykonvajucca važnyja zadačy"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Usie zadačy, jakija ciapier vykonvajucca, buduć anulavanyja, kali ty začyniš "
+"Banshee. Ich niemahčyma budzie aŭtamatyčna ŭznavić nastupnym uruchamleńniem "
+"Banshee."
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Usio roŭna vyjdzi"
+
+#: ../src/Core/Banshee.Base/Gui/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Praciahvaj pracavać"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:52
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Banshee napatkaŭ fatalnuju pamyłku"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:89
+msgid "Error Details"
+msgstr "Detali pamyłki"
+
+#: ../src/Core/Banshee.Base/Gui/ExceptionDialog.cs:135
+msgid "An unhandled exception was thrown: "
+msgstr "Była vykinutaja ničyjnaja vyklučnaść: "
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:41
+msgid "Select album cover image"
+msgstr "Abiary vyjavu z vokładkaj albomu"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:49
+msgid "All image files"
+msgstr "Usie fajły vyjavaŭ"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:56
+msgid "JPEG image files"
+msgstr "Fajły vyjavaŭ JPEG"
+
+#: ../src/Core/Banshee.Base/Gui/ImageFileChooserDialog.cs:61
+msgid "PNG image files"
+msgstr "Fajły vyjavaŭ PNG"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:51
+msgid "Log Viewer"
+msgstr "Prahladalnik časopisu"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:87
+msgid "Time Stamp"
+msgstr "Adbitak času"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:106
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:70
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:62
+msgid "Message"
+msgstr "Paviedamleńnie"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:118
+msgid "Show:"
+msgstr "Pakažy:"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:135
+msgid "All Log Entries"
+msgstr "Usie zapisy ŭ časopisie"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:136
+msgid "Only Error Messages"
+msgstr "Tolki paviedamleńni ab pamyłkach"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:137
+msgid "Only Warning Messages"
+msgstr "Tolki paviedamleńni z aściarohaj"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:138
+msgid "Only Information Messages"
+msgstr "Tolki infarmacyjnyja paviedamleńni"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:139
+msgid "Only Debug Messages"
+msgstr "Tolki debugavyja paviedamleńni"
+
+#: ../src/Core/Banshee.Base/Gui/LogCoreDialog.cs:154
+msgid "Entry Details:"
+msgstr "Detali zapisu:"
+
+#: ../src/Core/Banshee.Base/Gui/OpenLocationDialog.cs:54
+msgid "Browse..."
+msgstr "Ahladaj..."
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:67
+msgid "Select library location"
+msgstr "Abiary pałažeńnie biblijateki"
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:120
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files"
+msgstr ""
+"Uklučy hetuju opcyju, kab zapisvać tagi i inšyja metaźviestki ŭnutry "
+"padtrymanych hukavych fajłaŭ"
+
+#: ../src/Core/Banshee.Base/Gui/PreferencesDialog.cs:124
+msgid ""
+"Error correction tries to work around problem areas on a disc, such as "
+"surface scratches, but will slow down importing substantially."
+msgstr ""
+"Vypraŭleńnie pamyłak sprabuje vyrašyć prablemy dyskaŭ, napr. padrapanaść "
+"pavierchni dysku, ale istotna zapavolvaje impartavańnie."
+
+#: ../src/Core/Banshee.Base/Gui/SourceView.cs:533
+msgid "Could not import tracks"
+msgstr "Niemahčyma zimpartavać pieśni"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:40
+msgid "Repeat None"
+msgstr "Ničoha nie paŭtaraj"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:49
+msgid "Repeat Single"
+msgstr "Paŭtaraj adnu pieśniu"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:58
+msgid "Repeat All"
+msgstr "Paŭtaraj usio"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:67
+msgid "Shuffle"
+msgstr "Tasuj"
+
+#: ../src/Core/Banshee.Base/Gui/ToggleStates.cs:78
+msgid "Continuous"
+msgstr "Paśladoŭna"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:216
+msgid "Automatically set all track numbers in increasing order"
+msgstr "Aŭtamatyčna vystaŭlaj numary ŭsich pieśniaŭ u paradku pavieličeńnia"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:217
+msgid "Set all track counts to this value"
+msgstr "Vystaŭ ličylniki vykanańniaŭ usich pieśniaŭ u hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:218
+msgid "Set all artists to this value"
+msgstr "Vystaŭ usich vykanaŭcaŭ u hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:219
+msgid "Set all albums to this value"
+msgstr "Vystaŭ usie albomy ŭ hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:220
+msgid "Set all genres to this value"
+msgstr "Vystaŭ usie styli ŭ hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:221
+msgid "Set all years to this value"
+msgstr "Vystaŭ usie hady ŭ hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:222
+msgid ""
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
+msgstr ""
+"Prymiani vartaści paloŭ Vykanaŭca, Nazva albomu, Styl, Kolkaść vykanańniaŭ, Hod i Rating hetaj pieśni da inšych zaznačanych pieśniaŭ u hetym redaktary."
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:223
+msgid "Set all ratings to this value"
+msgstr "Vystaŭ usie ratingi ŭ hetuju vartaść"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:284
+msgid "Never played"
+msgstr "Jašče nia hrany"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:298
+#, csharp-format
+msgid "Editing song {0} of {1}"
+msgstr "Redahavańnie pieśni {0} z {1}"
+
+#: ../src/Core/Banshee.Base/Gui/TrackEditor.cs:299
+#, csharp-format
+msgid "Editing {0}"
+msgstr "Redahavańńie {0}"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:61
+msgid "Assembly Version Information"
+msgstr "Źviestki ab versii kamplekta"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:67
+msgid "Assembly Name"
+msgstr "Nazva kamplekta"
+
+#: ../src/Core/Banshee.Base/Gui/VersionInformationDialog.cs:69
+msgid "Version"
+msgstr "Versija"
+
+#: ../src/Core/Banshee.Base/HomeDirectoryImportSource.cs:58
+msgid "Home Directory"
+msgstr "Chatni kataloh"
+
+#: ../src/Core/Banshee.Base/Library.cs:122
+msgid "Could not load track from library"
+msgstr "Niemahčyma zahruzić pieśniu ź biblijateki"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:45
+msgid "There is no available network connection"
+msgstr "Niama sietkavaha spałučeńnia"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:79
+msgid "Cannot connect to NetworkManager"
+msgstr "Niemahčyma spałučycca z NetworkManageram"
+
+#: ../src/Core/Banshee.Base/NetworkDetect.cs:80
+msgid "An available, working network connection will be assumed"
+msgstr "Budzie vykarystanaje pracoŭnaje sietkavaje spałučeńnie"
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:77
+msgid "Default player engine"
+msgstr "Zmoŭčany ruchavik playera"
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:99
+msgid ""
+"No player engines were found. Please ensure Banshee has been cleanly "
+"installed."
+msgstr ""
+"Ruchaviki playera nia znojdzienyja. Upeŭnisia, što Banshee byŭ paśpiachova "
+"zainstalavany."
+
+#: ../src/Core/Banshee.Base/PlayerEngineCore.cs:189
+msgid "Problem with Player Engine"
+msgstr "Prablema ŭ ruchaviku playera"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:52
+msgid "Banshee Plugins"
+msgstr "Pluginy Banshee"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:64
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:93
+msgid "Plugin Name"
+msgstr "Nazva plugina"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:90
+msgid "Overview"
+msgstr "Ahlad"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:97
+msgid "Description"
+msgstr "Apisańnie"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:100
+msgid "Author(s)"
+msgstr "Aŭtary"
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:105
+msgid "This plugin could not be initialized."
+msgstr "Niemahčyma inicyjalizavać plugin."
+
+#: ../src/Core/Banshee.Base/Plugins/PluginDialog.cs:193
+msgid "Configuration"
+msgstr "Kanfihuracyja"
+
+#: ../src/Core/Banshee.Base/PowerManagement.cs:83
+msgid "Playing Music"
+msgstr "Vykanańnie muzyki"
+
+#: ../src/Core/Banshee.Base/Source.cs:388
+msgid "Source Properties..."
+msgstr "Ułaścivaści krynicy..."
+
+#: ../src/Core/Banshee.Base/Source.cs:396
+#, csharp-format
+msgid "Delete {0}"
+msgstr "Vydal {0}"
+
+#: ../src/Core/Banshee.Base/SourceManager.cs:287
+#, csharp-format
+msgid "Rename {0}"
+msgstr "Źmiani nazvu {0}"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:53
+msgid "Delete Playlist"
+msgstr "Vydal śpis"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:155
+#, csharp-format
+msgid "Are you sure you want to delete this {0}?"
+msgstr "Ty sapraŭdy chočaš vydalić {0}?"
+
+#: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:164
+#, csharp-format
+msgid "Do not ask me this again"
+msgstr "Bolš nie pytaj mianie"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:52
+msgid "Eject CD"
+msgstr "Vysuń CD"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:98
+msgid "Reading table of contents from CD..."
+msgstr "Čytańnie tablicy źmiestu z CD..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:103
+msgid "Searching for CD metadata..."
+msgstr "Pošuk metaźviestak CD..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:108
+msgid "Searching for CD cover art..."
+msgstr "Pošuk vokładki CD..."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:113
+msgid ""
+"Cannot search for CD metadata: there is no available Internet connection"
+msgstr ""
+"Niemahčyma šukać metaźviestki CD: niama internetnaha spałučeńnia"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:119
+msgid "Could not fetch metadata for CD."
+msgstr "Niemahčyma zahruzić metaźviestki ab CD."
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:147
+msgid "Copy CD"
+msgstr "Skapijuj CD"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:236
+msgid "Invalid Selection"
+msgstr "Niapravilnaje zaznačeńnie"
+
+#: ../src/Core/Banshee.Base/Sources/AudioCdSource.cs:237
+msgid "You must select at least one track to import."
+msgstr "Kab zimpartavać, treba papiarednie zaznačyć jak mienš adnu pieśniu."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:107
+msgid "Synchronizing your Device, Please Wait..."
+msgstr "Synchranizacyja pryłady, pačakaj..."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:191
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:316
+msgid "Importing"
+msgstr "Impartavańnie"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:193
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:318
+#, csharp-format
+msgid "You are currently importing from {0}. Would you like to stop it?"
+msgstr "Ciapier adbyvajecca impartavańnie z {0}. Chočaš spynić hety praces?"
+
+#. import_manager.UserEvent.Icon = GetIcon;
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:195
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:314
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:320
+#, csharp-format
+msgid "Copying from {0}"
+msgstr "Kapijavańnie z {0}"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:196
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:315
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:321
+msgid "Scanning..."
+msgstr "Skanavańnie..."
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:313
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:435
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:437
+#, csharp-format
+msgid "Cannot import track from {0}"
+msgstr "Niemahčyma zimpartavać pieśniu z {0}"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:349
+#, csharp-format
+msgid "({0} Remaining)"
+msgstr "({0} zastałosia)"
+
+#: ../src/Core/Banshee.Base/Sources/DapSource.cs:386
+#, csharp-format
+msgid "Eject {0}"
+msgstr "Vysuń {0}"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
+msgid "Import Errors"
+msgstr "Pamyłki impartavańnia"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
+msgid "File Name"
+msgstr "Nazva fajłu"
+
+#: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:102
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:97
+msgid "Close Error Report"
+msgstr "Začyni rapart ab pamyłcy"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:52
+msgid "Music Library"
+msgstr "Muzyčnaja biblijateka"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:140
+msgid "Sort Playlists"
+msgstr "Adsartuj śpisy"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:143
+msgid "Name Ascending"
+msgstr "Alfabetam"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:147
+msgid "Name Descending"
+msgstr "Prociŭ alfabetu"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:151
+msgid "Size Ascending"
+msgstr "Pa bolšym pamiery"
+
+#: ../src/Core/Banshee.Base/Sources/LibrarySource.cs:155
+msgid "Size Descending"
+msgstr "Pa mienšym pamiery"
+
+#: ../src/Core/Banshee.Base/Sources/LocalQueueSource.cs:53
+msgid "Local Queue"
+msgstr "Lakalnaja čarha"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:73
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:461
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:467
+#: ../src/Core/Banshee/PlayerInterface.cs:1622
+msgid "New Playlist"
+msgstr "Novy śpis"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:162
+msgid "Cannot Rename Playlist"
+msgstr "Niemahčyma źmianić nazvu śpisa"
+
+#: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:163
+msgid "A playlist with this name already exists. Please choose another name."
+msgstr "Śpis z takoj nazvaj užo isnuje. Abiary inšuju nazvu."
+
+#: ../src/Core/Banshee.Base/StreamTagger.cs:147
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "Zapis tagaŭ dla {0}"
+
+#: ../src/Core/Banshee.Base/TrackInfo.cs:307
+msgid "Unknown Title"
+msgstr "Nieviadomaja nazva"
+
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:106
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:112
+msgid "by"
+msgstr "ad"
+
+#: ../src/Core/Banshee.Base/TrackInfoHeader.cs:113
+msgid "from"
+msgstr "z"
+
+#: ../src/Core/Banshee.Base/Utilities.cs:76
+#, csharp-format
+msgid "{0:0.00} GB"
+msgstr "{0:0.00} GB"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:1
+msgid "Backend"
+msgstr "Ruchavik"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:2
+msgid "Base location for library music"
+msgstr "Bazavaje pałažeńnie muzyki biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:3
+msgid ""
+"Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
+"\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
+msgstr ""
+"Mahčymyja vartaści: \"systemio\" (.NET System.IO), \"unix\" (Native Unix) ci "
+"\"gnomevfs\" (GNOME VFS); upłyvaje paśla ŭruchamleńnia Banshee (patrebnaje "
+"pieraŭruchamleńnie)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:4
+msgid "Column index"
+msgstr "Numar kalony"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:5
+msgid "Column index for sorting the library source. -1 for unset."
+msgstr "Numar kalony dla ŭparadkavańnia krynicy biblijateki. -1, kab prybrać vartaść."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:6
+msgid "Column sort type"
+msgstr "Typ paradkavańnia kalony"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:7
+msgid ""
+"Column sort type for the library source. Ascending (0) or Descending (1)"
+msgstr ""
+"Typ paradkavańnia kalony dla krynic biblijateki. Pavialičvajecca (0) ci "
+"Pamianšajecca (1)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:8
+msgid "Copy and rename music to banshee music library directory when importing"
+msgstr "Kapijuj zimpartavanuju muzyku ŭ kataloh muzyčnaj biblijateki i źmianiaj nazvy"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:9
+msgid "Copy music on import"
+msgstr "Kapijuj zimpartavanuju muzyku"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:10
+msgid "Enable error correction"
+msgstr "Uklučy vypraŭleńnie pamyłak"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:11
+msgid "Enable shuffle mode"
+msgstr "Uklučy režym tasavańnia"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:12
+msgid "Export Format"
+msgstr "Farmat ekspartavańnia"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:14
+#, no-c-format
+msgid ""
+"Format for creating a track filename inside the library. Do not use path "
+"tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %"
+"album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
+"prefixed zero), %track_count_nz% (No prefixed zero)."
+msgstr ""
+"Farmat, kab stvarać nazvy fajłaŭ unutry biblijateki. Nie vykarystoŭvaj tut "
+"znakaŭ. Hladzi LibraryFolderPattern. Dazvolenyja znaki: %artist% (vykanaŭca), "
+"%album% (albom), %title% (nazva), %track_number% (numar pieśni), %track_count% "
+"(kolkaść pieśniaŭ), %track_number_nz% (numar pieśni biaź pieršaha nula), "
+"%track_count_nz% (kolkaść pieśniaŭ biaź pieršaha nula)."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:16
+#, no-c-format
+msgid ""
+"Format for creating a track folder inside the library. Do not create an "
+"absolute path. Path here is relative to the Banshee music directory. See "
+"LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, %"
+"track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+"prefixed zero), %path_sep% (portable directory separator (/))."
+msgstr ""
+"Farmat, kab stvarać kataloh ź pieśniami ŭnutry biblijateki. Nie akreślaj "
+"absalutnaj ściežki. Ściežka tut adnosicca da muzyčnaha katalohu Banshee. "
+"Hladzi LibraryLocation. Dazvolenyja vartaści: %artist% (vykanaŭca), "
+"%album% (albom), %title% (nazva), %track_number% (numar pieśni), "
+"%track_count% (kolkaść pieśniaŭ), %track_number_nz% (numar pieśni biaź "
+"pieršaha nula), %track_count_nz% (kolkaść pieśniaŭ biaź pieršaha nula), "
+"%path_sep% (pieranosny separatar katalohaŭ (/))."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:17
+msgid "Height of the main interface window."
+msgstr "Vyšynia vakna z hałoŭnym interfejsam."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:18
+msgid ""
+"If enabled, metadata (tags) will be written back to audio files when using "
+"the track metadata editor."
+msgstr ""
+"Kali ŭklučana, metaźviestki (tagi) buduć zapisvacca ŭ hukavych fajłach, "
+"kali vykarystoŭvajecca redaktar metaźviestak pieśniaŭ."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:19
+msgid "Library File Pattern"
+msgstr "Uzor fajłaŭ dla biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:20
+msgid "Library Folder Pattern"
+msgstr "Uzor katalohu dla biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:21
+msgid "Library location"
+msgstr "Pałažeńnie biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:22
+msgid "Library source expansion"
+msgstr "Pašyreńnie krynicy biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
+msgid "List of URIs in the history drop-down for the open location dialog"
+msgstr "Śpis adrasoŭ u śpisie historyi dla dyjalohu adčynieńnia pałažeńnia"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
+msgid "Move music on info save"
+msgstr "Pieranoś muzyku pry zachavańni źviestak"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:25
+msgid ""
+"Move music within banshee music library directory when saving track info"
+msgstr ""
+"Pieranoś muzyku ŭnutry katalohu muzyčnaj biblijateki Banshee, kali "
+"zapisvajucca źviestki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:26
+msgid "Name of media playback engine backend"
+msgstr "Nazva ruchavika dla vykanańnia medyjaŭ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:27
+msgid "Pixel position of Main Player Window on the X Axis"
+msgstr "Pazycyja hałoŭnaha vakna playera ŭ pikselach na vosi X"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:28
+msgid "Pixel position of Main Player Window on the Y Axis"
+msgstr "Pazycyja hałoŭnaha vakna playera ŭ pikselach na vosi Y"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:29
+msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
+msgstr "Režym paŭtoru (0 = Niama, 1 = Usie, 2 = Adna)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:30
+msgid "Repeat playback"
+msgstr "Paŭtaraj vykanańnie pieśniaŭ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:31
+msgid "Set the IO backend in Banshee"
+msgstr "Akreśl ruchavik IO ŭ Banshee"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:32
+msgid "Show cover art"
+msgstr "Pakažy vokładku"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:33
+msgid "Show cover art below source view if available"
+msgstr "Pakazvaj, kali jość, vokładku nižej krynicaŭ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:34
+msgid "Show the Initial Import Dialog"
+msgstr "Pakažy pačatkovy dyjaloh dziela impartavańnia"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:35
+msgid "Show the Initial Import Dialog when the Banshee library is empty"
+msgstr "Pakazvaj pačatkovy dyjaloh dziela impartavańnia, kali biblijateka Banshee pustaja"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:36
+msgid "Shuffle playback"
+msgstr "Pieratasuj pieśni"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:37
+msgid ""
+"Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
+msgstr ""
+"Kryter uparadkavańnia śpisaŭ ź biblijateki ŭ vykładzie krynic (0 = Nazva, 1 = Pamier)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:38
+msgid "Sort criteria of playlists"
+msgstr "Kryter uparadkavańnia śpisaŭ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:39
+msgid ""
+"Sort order of library playlists in the source view (0 = Ascending, 1 = "
+"Descending)"
+msgstr ""
+"Paradak śpisaŭ ź biblijateki ŭ vykładzie krynic (0 = Uzrastaje, 1 = Źmianšajecca)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:40
+msgid "Sort order of playlists"
+msgstr "Paradak śpisaŭ ź biblijateki"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:41
+msgid "Source View Width"
+msgstr "Šyrynia vykładu krynic"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:42
+msgid "The default playlist export format"
+msgstr "Zmoŭčany farmat dziela ekspartavanych śpisaŭ"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:43
+msgid "True if main window is to be maximized, false if it is not."
+msgstr "Praŭda, kali hałoŭnaje vakno musić być maksymalizavanym, niapraŭda, kali nie."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:44
+msgid "URI"
+msgstr "URI"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:45
+msgid "URI List"
+msgstr "Śpis URI"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:46
+msgid "URI of last file folder"
+msgstr "URI apošniaha katalohu z fajłami"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:47
+msgid "Volume"
+msgstr "Hučnaść"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:48
+msgid "Volume of playback relative to mixer output"
+msgstr "Hučnaść hrańnia adnosna vyjścia ź miksera"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:49
+msgid "When importing an audio CD, enable error correction (paranoia mode)"
+msgstr "Uklučy vypraŭleńnie pamyłak, kali impartuješ CD (režym paranoi)"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:50
+msgid "Whether to expand the library node in the source view"
+msgstr "Ci razhortvać dreva biblijateki ŭ vykładzie krynic"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:51
+msgid "Width of Source View Column."
+msgstr "Šyrynia kalony z vykładam krynic."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:52
+msgid "Width of the main interface window."
+msgstr "Šyrynia hałoŭnaha vakna."
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:53
+msgid "Window Height"
+msgstr "Vyšynia vakna"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:54
+msgid "Window Maximized"
+msgstr "Vakno maksymalizavanaje"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:55
+msgid "Window Position X"
+msgstr "Pazycyja vakna X"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:56
+msgid "Window Position Y"
+msgstr "Pazycyja vakna Y"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:57
+msgid "Window Width"
+msgstr "Šyrynia vakna"
+
+#: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:58
+msgid "Write metadata back to audio files"
+msgstr "Zapisvaj metaźviestki prosta ŭ hukavyja fajły"
+
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:86
+#, csharp-format
+msgid "Stop {0}"
+msgstr "Spyni {0}"
+
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:89
+#, csharp-format
+msgid ""
+"The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr ""
+"Dahetul vykonvajecca aperacyja \"{0}\". Chočaš spynić jaje?"
+
+#: ../src/Core/Banshee.Widgets/ActiveUserEvent.cs:92
+#, csharp-format
+msgid "Continue {0}"
+msgstr "Praciahvaj {0}"
+
+#: ../src/Core/Banshee.Widgets/DiscUsageDisplay.cs:187
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"Ustaŭ\n"
+"Dysk"
+
+#: ../src/Core/Banshee.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Rating:"
+
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:82
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:291
+msgid "Buffering"
+msgstr "Buferavańnie"
+
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:84
+msgid "Contacting..."
+msgstr "Spałučeńnie..."
+
+#: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:86
+msgid "Idle"
+msgstr "Bieździejny"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:517
+msgid "Muted"
+msgstr "Abiazhučana"
+
+#: ../src/Core/Banshee.Widgets/VolumeButton.cs:519
+msgid "Full Volume"
+msgstr "Poŭnaja hučnaść"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:42
+msgid "Time"
+msgstr "Čas"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/DurationColumn.cs:56
+msgid "N/A"
+msgstr "Niama"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/PlayCountColumn.cs:42
+msgid "Plays"
+msgstr "Vykanańniaŭ"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:59
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:126
+msgid "Missing"
+msgstr "Nie staje"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:65
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:129
+msgid "No Codec"
+msgstr "Niama kodeka"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TitleColumn.cs:68
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:229
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:132
+msgid "Unknown Error"
+msgstr "Nieviadomaja pamyłka"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs:42
+msgid "Track"
+msgstr "Ściežka"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
+msgid "Columns..."
+msgstr "Kalony..."
+
+#. Translators: {0} is the title of the column, e.g. 'Hide Artist'
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:144
+#, csharp-format
+msgid "Hide {0}"
+msgstr "Schavaj {0}"
+
+#: ../src/Core/Banshee/Banshee.TrackView.Columns/UriColumn.cs:42
+msgid "Location"
+msgstr "Pałažeńnie"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:453
+msgid "All Columns"
+msgstr "Usie kalony"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:455
+msgid "Song Name"
+msgstr "Nazva pieśni"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:456
+msgid "Artist Name"
+msgstr "Vykanaŭca"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:457
+msgid "Album Title"
+msgstr "Nazva albomu"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:480
+msgid "Write selection to CD"
+msgstr "Zapišy zaznačanaje na CD"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:481
+msgid "Import CD into library"
+msgstr "Impartuj CD ŭ biblijateku"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:482
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:151
+msgid "Play previous song"
+msgstr "Vykanaj papiaredniuju pieśniu"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:483
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:152
+msgid "Play/pause current song"
+msgstr "Hraj/prypyni dziejnuju pieśniu"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:484
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
+msgid "Play next song"
+msgstr "Vykanaj nastupnuju pieśniu"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:485
+msgid "Device disk usage"
+msgstr "Zaniata miesca na pryładzie"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:486
+msgid "Synchronize music library to device"
+msgstr "Synchranizuj muzyčnuju biblijateku z pryładaj"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:487
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:155
+msgid "Adjust volume"
+msgstr "Dapasuj hučnaść"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:488
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:156
+msgid "Change repeat playback mode"
+msgstr "Źmiani režym paŭtoru pieśniaŭ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:489
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:157
+msgid "Toggle shuffle playback mode"
+msgstr "Pieraklučy režym tasavańnia pieśniaŭ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:490
+msgid "Edit and view metadata of selected songs"
+msgstr "Redahuj i prahladaj metaźviestki zaznačanych pieśniaŭ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:814
+msgid "Pause"
+msgstr "Prypyni"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:816
+msgid "Stop"
+msgstr "Spyni"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:837
+msgid "Cannot Play Song"
+msgstr "Niemahčyma vykanać pieśniu"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:838
+#, csharp-format
+msgid ""
+"{0} cannot be played by Banshee. The most common reasons for this are:\n"
+"\n"
+"  <big>•</big> Song is protected (DRM)\n"
+"  <big>•</big> Song is on a DAP that does not support playback\n"
+msgstr ""
+"Niemahčyma vykanać {0}. Zvyčajna pryčynaj byvaje toje, što:\n"
+"\n"
+"  <big>•</big> Pieśnia abaronienaja (DRM)\n"
+"  <big>•</big> Pieśnia raźmieščanaja na krynicy DAP, jakaja nie padtrymlivaje vykanańnia\n"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:847
+#: ../src/Core/Banshee/PlayerInterface.cs:856
+msgid "Play"
+msgstr "Hraj"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1268
+#, csharp-format
+msgid "{0} Item"
+msgid_plural "{0} Items"
+msgstr[0] "{0} element"
+msgstr[1] "{0} elementy"
+msgstr[2] "{0} elementaŭ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1272
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} dzień"
+msgstr[1] "{0} dni"
+msgstr[2] "{0} dzion"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1277
+#, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} hadzina"
+msgstr[1] "{0} hadziny"
+msgstr[2] "{0} hadzin"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1281
+#, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} chvilina"
+msgstr[1] "{0} chviliny"
+msgstr[2] "{0} chvilin"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1283
+#, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "{0} sekunda"
+msgstr[1] "{0} sekundy"
+msgstr[2] "{0} sekundaŭ"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1412
+#, csharp-format
+msgid "Filter on {0}"
+msgstr "Vybiraj pavodle {0}"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1891
+#, csharp-format
+msgid "Are you sure you want to permanently delete this song?"
+msgid_plural ""
+"Are you sure you want to permanently delete the selected {0} songs?"
+msgstr[0] "Ty sapraŭdy chočaš nazaŭždy vydalić hetuju {0} pieśniu?"
+msgstr[1] "Ty sapraŭdy chočaš nazaŭždy vydalić hetyja {0} pieśni?"
+msgstr[2] "Ty sapraŭdy chočaš nazaŭždy vydalić hetych {0} pieśniaŭ?"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1895
+msgid "If you delete the selection, it will be permanently lost."
+msgstr "Zaznačanyja pieśni nazaŭždy źniknuć, kali ty vydališ ich."
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1898
+msgid "Remove selection from library"
+msgstr "Vydal zaznačanyja pieśni ź biblijateki"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1900
+#, csharp-format
+msgid "Are you sure you want to remove the selected song from your library?"
+msgid_plural ""
+"Are you sure you want to remove the selected {0} songs from your library?"
+msgstr[0] "Ty sapraŭdy chočaš vydalić {0} zaznačanuju pieśniu ź biblijateki?"
+msgstr[1] "Ty sapraŭdy chočaš vydalić {0} zaznačanyja pieśni ź biblijateki?"
+msgstr[2] "Ty sapraŭdy chočaš vydalić {0} zaznačanych pieśniaŭ ź biblijateki?"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1945
+msgid "Delete songs from drive"
+msgstr "Vydal pieśni z pryłady"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:1946
+#, csharp-format
+msgid "You do not have the required permissions to delete '{0}'"
+msgstr "Tabie nie staje pravoŭ, kab vydalić \"{0}\""
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2012
+msgid "Import Playlist"
+msgstr "Impartuj śpis"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2044
+#: ../src/Core/Banshee/PlayerInterface.cs:2062
+msgid "Unable to Import Playlist"
+msgstr "Niemahčyma zimpartavać śpis"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2063
+msgid ""
+"Banshee was unable to find any valid tracks to import.  Please check the "
+"playlist and try again."
+msgstr ""
+"Banshee nie zmahła znajści prydatnych pieśniaŭ dziela impartavańnia. Pravier "
+"śpis i pasprabuj jašče."
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2106
+msgid "Could not export playlist"
+msgstr "Niemahčyma zekspartavać śpis"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Error opening stream"
+msgstr "Pamyłka, adčyniajučy płyń"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2125
+msgid "Could not open stream or playlist"
+msgstr "Niemahčyma adčynić płyń ci śpis"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2131
+msgid "Problem parsing playlist"
+msgstr "Prablema, raźbirajučy śpis"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2169
+msgid "New CD"
+msgstr "Novy CD"
+
+#. Translators: {0} is the name of the DAP device (i.e. 'iPod')
+#: ../src/Core/Banshee/PlayerInterface.cs:2190
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "Synchranizuj {0}"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2191
+#, csharp-format
+msgid ""
+"You have made changes to your {0}. Please choose a method for updating the "
+"contents of your {0}.\n"
+"\n"
+"<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to {0}\n"
+"<big>•</big> <i>Save Manual Changes</i>: save only the manual changes you "
+"made"
+msgstr ""
+"Ty ŭčyniŭ źmieny ŭ {0}. Abiary metad aktualizacyi źmieściva ŭ {0}.\n"
+"\n"
+"<big>•</big> <i>Synchranizuj biblijateku</i>: synchranizuj biblijateku Banshee z {0}\n"
+"<big>•</big> <i>Zachavaj ručnyja źmieny</i>: zachavaj tolki ručnyja źmieny"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2197
+msgid ""
+"<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+"cause incompatibility with iTunes!"
+msgstr ""
+"<b>Uvaha:</b> Dziejańni źmieniać ci ačyściać najaŭnaje źmieściva iPodu i mohuć učynić "
+"niaŭzhodnienaść z pasłuhaj iTunes!"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2199
+msgid "Synchronize Library"
+msgstr "Synchranizuj biblijateku"
+
+#: ../src/Core/Banshee/PlayerInterface.cs:2201
+msgid "Save Manual Changes"
+msgstr "Zapišy ručnyja źmieny"
+
+#: ../src/Core/Banshee/TrackViewColumnWindow.cs:59
+msgid "Choose Columns"
+msgstr "Abiary kalony"
+
+#: ../src/Core/Banshee/TrackViewColumnWindow.cs:74
+msgid "Visible Playlist Columns"
+msgstr "Bačnyja kalony ŭ śpisie"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:1
+msgid "Order"
+msgstr "Paradak"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:2
+msgid "Order of Album column"
+msgstr "Paradak kalony albomu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:3
+msgid "Order of Artist column"
+msgstr "Paradak kalony vykanaŭcy"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:4
+msgid "Order of Date Added column"
+msgstr "Paradak kalony z dataj dadańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:5
+msgid "Order of Genre column"
+msgstr "Paradak kalony stylu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:6
+msgid "Order of Last Played column"
+msgstr "Paradak kalony apošniaha vykanańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:7
+msgid "Order of Play Count column"
+msgstr "Paradak kalony kolkaści vykanańniaŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:8
+msgid "Order of Rating column"
+msgstr "Paradak kalony ratingu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:9
+msgid "Order of Time column"
+msgstr "Paradak kalony praciahłaści"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:10
+msgid "Order of Title column"
+msgstr "Paradak kalony z nazvami"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:11
+msgid "Order of Track column"
+msgstr "Paradak kalony z numarami ściežak"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:12
+msgid "Order of Uri column"
+msgstr "Paradak kalony adrasoŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:13
+msgid "Order of Year column"
+msgstr "Paradak kalony hodu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:14
+msgid "Visibility of Album column"
+msgstr "Bačnaść kalony albomu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:15
+msgid "Visibility of Artist column"
+msgstr "Bačnaść kalony vykanaŭcy"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:16
+msgid "Visibility of Date Added column"
+msgstr "Bačnaść kalony z dataj dadańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:17
+msgid "Visibility of Genre column"
+msgstr "Bačnaść kalony stylu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:18
+msgid "Visibility of Last Played column"
+msgstr "Bačnaść kalony apošniaha vykanańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:19
+msgid "Visibility of Play Count column"
+msgstr "Bačnaść kalony z kolkaściu vykanańniaŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:20
+msgid "Visibility of Rating column"
+msgstr "Bačnaść kalony ratingu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:21
+msgid "Visibility of Time column"
+msgstr "Bačnaść kalony z praciahłaściu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:22
+msgid "Visibility of Title column"
+msgstr "Bačnaść kalony z nazvami"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:23
+msgid "Visibility of Track column"
+msgstr "Bačnaść kalony z numarami ściežak"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:24
+msgid "Visibility of Uri column"
+msgstr "Bačnaść kalony adrasoŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:25
+msgid "Visibility of Year column"
+msgstr "Bačnaść kalony hodu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:26
+msgid "Visiblity"
+msgstr "Bačnaść"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:27
+msgid "Width"
+msgstr "Šyrynia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:28
+msgid "Width of Album column"
+msgstr "Šyrynia kalony albomu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:29
+msgid "Width of Artist column"
+msgstr "Šyrynia kalony vykanaŭcy"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:30
+msgid "Width of Date Added column"
+msgstr "Šyrynia kalony z dataj dadańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:31
+msgid "Width of Genre column"
+msgstr "Šyrynia kalony stylu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:32
+msgid "Width of Last Played column"
+msgstr "Šyrynia kalony apošniaha vykanańnia"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:33
+msgid "Width of Play Count column"
+msgstr "Šyrynia kalony z kolkaściu vykanańniaŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:34
+msgid "Width of Time column"
+msgstr "Šyrynia kalony z praciahłaściu"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:35
+msgid "Width of Title column"
+msgstr "Šyrynia kalony z nazvami"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:36
+msgid "Width of Uri column"
+msgstr "Šyrynia kalony adrasoŭ"
+
+#: ../src/Core/Banshee/banshee-interface.schemas.in.h:37
+msgid "Width of Year column"
+msgstr "Šyrynia kalony hodu"
+
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:53
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:54
+msgid "Rebuilding Database"
+msgstr "Pierabudoŭvańnie bazy źviestak"
+
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:55
+msgid "Scanning iPod..."
+msgstr "Skanavańnie iPodu..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:89
+msgid "Processing Tracks..."
+msgstr "Apracoŭka pieśniaŭ..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:136
+msgid "Saving new database..."
+msgstr "Zapis novaj bazy źviestak..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/DatabaseRebuilder.cs:143
+msgid "Error rebuilding iPod database"
+msgstr "Pamyłka, pierabudoŭvajučy bazy źviestak z iPodu"
+
+#. Translators "Week 25 of 2006"
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:103
+msgid "Manufactured During"
+msgstr "Vytvorany ciaham"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:104
+#, csharp-format
+msgid "Week {0} of {1}"
+msgstr "Tydzień {0} z {1}"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:142
+msgid "Your iPod could not be identified"
+msgstr "Niemahčyma identyfikavać tvoj iPod"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:143
+msgid ""
+"Please consider submitting information about your iPod to the Banshee "
+"Project so your iPod may be more fully identified in the future.\n"
+msgstr ""
+"Kali łaska, dašli źviestki ab svaim iPodzie prajektu Banshee, "
+"kab jon bolš poŭna raspaznavaŭsia ŭ budučyni.\n"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:146
+msgid "Do not ask me again"
+msgstr "Bolš nie pytajsia ŭ mianie"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:151
+msgid "Go to Web Site"
+msgstr "Naviedaj web-sajt"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:353
+msgid "Could not eject iPod"
+msgstr "Niemahčyma adłučyć iPod"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:361
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:509
+msgid "Synchronizing iPod"
+msgstr "Synchranizacyja iPodu"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:362
+msgid "Pre-processing tracks"
+msgstr "Papiaredniaja apracoŭka pieśniaŭ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:506
+msgid "Flushing to Disk (may take time)"
+msgstr "Zamacavańnie na dysku (moža zaniać krychu času)"
+
+#: ../src/Dap/Banshee.Dap.Ipod/IpodDap.cs:516
+msgid "Failed to synchronize iPod"
+msgstr "Niaŭdałaja synchranizacyja iPodu"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:57
+msgid "Unable to read your iPod"
+msgstr "Niemahčyma pračytać z iPodu"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:80
+msgid ""
+"You have used this iPod with a version of iTunes that saves a version of the "
+"song database for your iPod that is too new for Banshee to recognize.\n"
+"\n"
+"Banshee can either rebuild the database or you will have to wait for the new "
+"iTunes version to be supported by Banshee."
+msgstr ""
+"Ty vykarystoŭvaŭ hety iPod z versijaj pasłuhi iTunes, jakaja zachoŭvaje versiju "
+"bazy pieśniaŭ, zanadta novuju, kab Banshee zmahła raspaznać jaje.\n"
+"\n"
+"Banshee moža pierabudavać bazu źviestak, albo ty možaš pačakać źjaŭleńnia "
+"padtrymki prahramaj Banshee novaj versii iTunes."
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:89
+msgid ""
+"An iPod database could not be found on this device.\n"
+"\n"
+"Banshee can build a new database for you."
+msgstr ""
+"Niemahčyma znajści bazu źviestak na hetym iPodzie.\n"
+"\n"
+"Banshee moža zbudavać novuju bazu źviestak."
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:97
+msgid "What is the reason for this?"
+msgstr "Z-za čaho heta zdaryłasia?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:116
+msgid "Rebuild iPod Database..."
+msgstr "Pierabuduj bazu źviestak z iPodu..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:124
+msgid "Confirm Rebuild iPod Database"
+msgstr "Paćvierdź pierabudovu bazy źviestak z iPodu"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:130
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"Pierabudova bazy źviestak na iPodzie vymahaje krychu času. Taksama źviarni ŭvahu, "
+"što ŭsie śpisy z iPodu zhubiacca.\n"
+"\n"
+"Ty sapraŭdy chočaš pierabudavać bazu źviestak z iPodu?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:135
+msgid "Rebuild Database"
+msgstr "Pierabuduj bazu źviestak"
+
+#: ../src/Dap/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:147
+msgid "Rebuilding iPod Database..."
+msgstr "Pierabudoŭvańnie bazy źviestak z iPodu..."
+
+#: ../src/Dap/Banshee.Dap.Karma/Karma.cs:144
+#: ../src/Dap/Banshee.Dap.Karma/Karma.cs:172
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:232
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:236
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:269
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:248
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:260
+msgid "Synchronizing Device"
+msgstr "Synchranizacyja pryłady"
+
+#: ../src/Dap/Banshee.Dap.Karma/Karma.cs:145
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:260
+msgid "Removing Songs"
+msgstr "Vydaleńnie pieśniaŭ"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:189
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:191
+msgid "Vendor"
+msgstr "Vytvorca"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:196
+#, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "Hukavy kataloh"
+msgstr[1] "Hukavyja katalohi"
+msgstr[2] "Hukavyja katalohi"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:202
+msgid "Required Folder Depth"
+msgstr "Vymahanaja hłybinia katalohaŭ"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:207
+#, csharp-format
+msgid "Audio Format"
+msgid_plural "Audio Formats"
+msgstr[0] "Hukavy farmat"
+msgstr[1] "Hukavyja farmaty"
+msgstr[2] "Hukavyja farmaty"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:264
+msgid "Loading Songs"
+msgstr "Zahruzka pieśniaŭ"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:265
+msgid ""
+"The audio device song loading process is currently running.  Would you like "
+"to stop it?"
+msgstr ""
+"Ciapier zahružajecca pieśnia z pryłady. Chočaš spynić hety praces?"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:266
+#, csharp-format
+msgid "Loading {0} of {1}"
+msgstr "Zahruzka {0} z {1}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:315
+#, csharp-format
+msgid "Copying {0} of {1}"
+msgstr "Kapijavańnie {0} z {1}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:331
+msgid "Song Playing on Device"
+msgstr "Pieśnia, jakaja vykonvajecca pryładaj"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:332
+msgid ""
+"Before you can eject your device, you need to start playing a song that is "
+"not on it.  This is a known bug."
+msgstr ""
+"Treba ŭklučyć pieśniu nia z hetaj pryłady, kab zmahčy adklučyć jaje. Heta viadomaja chiba."
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:368
+#, csharp-format
+msgid "Failed to Unmount {0}"
+msgstr "Niaŭdałaje admantavańnie {0}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:369
+msgid "Make sure no other programs are using it."
+msgstr "Pravier, kab inšyja prahramy nie vykarystoŭvali jaho."
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:381
+#, csharp-format
+msgid "Failed to Eject {0}"
+msgstr "Niaŭdałaje adłučeńnie {0}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:535
+#, csharp-format
+msgid "Removing songs from {0}"
+msgstr "Vydaleńnie pieśniaŭ z {0}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:536
+#, csharp-format
+msgid "Removing {0} of {1}"
+msgstr "Vydaleńnie {0} z {1}"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/MassStorageDap.cs:573
+msgid "Audio Device"
+msgstr "Hukavaja pryłada"
+
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:168
+msgid ": Found"
+msgstr ": Znojdziena"
+
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:169
+msgid "Reading library information"
+msgstr "Čytańnie źviestak ź biblijateki"
+
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:180
+msgid "Loading device"
+msgstr "Zahruzka pryłady"
+
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:184
+msgid "Done"
+msgstr "Zroblena"
+
+#: ../src/Dap/Banshee.Dap.Mtp/MtpDap.cs:185
+msgid ": Ready for use"
+msgstr ": Hatovaja"
+
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:155
+msgid "Cannot read device"
+msgstr "Niemahčyma pračytać z pryłady"
+
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:358
+msgid "Device Error"
+msgstr "Pamyłka pryłady"
+
+#: ../src/Dap/Banshee.Dap.Njb/NjbDap.cs:359
+msgid "Could not set the owner of the device."
+msgstr "Niemahčyma akreślić ułaśnika pryłady."
+
+#: ../src/Engines/Banshee.MediaEngine.GStreamer/GstPlayerEngine.cs:140
+msgid "Could not initialize GStreamer library"
+msgstr "Niemahčyma inicyjalizavać biblijateku GStreamer"
+
+#: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:48
+#: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:75
+msgid "Last.fm Account Login"
+msgstr "Login dla kontu Last.fm"
+
+#: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginDialog.cs:78
+msgid "Please enter your Last.fm account credentials."
+msgstr "Uviadzi źviestki dla svajho kontu na Last.fm."
+
+#: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginForm.cs:50
+msgid "Account Name:"
+msgstr "Nazva kontu:"
+
+#: ../src/Extras/Last.FM/Last.FM.Gui/AccountLoginForm.cs:57
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:112
+msgid "Password:"
+msgstr "Parol:"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:60
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:142
+msgid "Audioscrobbler Reporting"
+msgstr "Paviedamleńni dla Audioscrobblera"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:72
+msgid "Create an account"
+msgstr "Stvary kont"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:76
+msgid "Join the Banshee group"
+msgstr "Dałučysia da hrupy Banshee"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:90
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:115
+msgid "Enable song reporting"
+msgstr "Uklučy paviedamleńni ab pieśniach"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:100
+msgid "Last.fm Username"
+msgstr "Nazva karystalnika Last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerConfigDialog.cs:101
+msgid "Last.fm Password"
+msgstr "Parol Last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:66
+msgid ""
+"Your profile page on Last.fm is automatically updated whenever you listen to "
+"music. It lets others see what you're listening to right now, and shows "
+"charts of your listening history."
+msgstr ""
+"Staronka tvajho profilu na Last.fm aŭtamatyčna aktualizujecca, kali ty słuchaješ "
+"muzyku. Inšyja mohuć bačyć, što ty słuchaješ, a taksama historyju raniej słuchanaj muzyki."
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:96
+msgid "_Audioscrobbler"
+msgstr "_Audioscrobbler"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:97
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:109
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Skanfihuruj plugin Audioscrobbler"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:100
+msgid "Visit _user profile page"
+msgstr "Naviedaj staronku z _profilem karystalnika"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:101
+msgid "Visit your Audioscrobbler profile page"
+msgstr "Naviedaj svaju staronku z profilem Audioscrobbler"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:104
+msgid "Visit _group page"
+msgstr "Naviedaj staronku _hrupy"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:105
+msgid "Visit the Banshee last.fm group page"
+msgstr "Naviedaj staronku hrupy Banshee na last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:108
+msgid "_Configure..."
+msgstr "_Skanfihuruj..."
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/AudioscrobblerPlugin.cs:114
+msgid "_Enable song reporting"
+msgstr "_Uklučy paviedamleńni ab pieśniach"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:1
+msgid "Audioscrobbler reporting engine enabled"
+msgstr "Ruchavik paviedamleńniaŭ dla Audioscrobblera ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:2
+msgid "Audioscrobbler reporting plugin enabled"
+msgstr "Plugin paviedamleńniaŭ dla Audioscrobblera ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:3
+msgid "Engine enabled"
+msgstr "Ruchavik uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:4
+msgid "Password"
+msgstr "Parol"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:5
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:3
+#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:2
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:4
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:2
+msgid "Plugin enabled"
+msgstr "Plugin uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:6
+msgid "Username"
+msgstr "Nazva karystalnika"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:7
+msgid "last.fm Password"
+msgstr "Parol ad last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Audioscrobbler/banshee-plugin-audioscrobbler.schemas.in.h:8
+msgid "last.fm Username"
+msgstr "Nazva karystalnika last.fm"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:34
+msgid "Bookmarks"
+msgstr "Pamiety"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:38
+msgid "Bookmark your position in tracks."
+msgstr "Rabi pamiety pazycyj u pieśniach."
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:103
+msgid "_Bookmarks"
+msgstr "_Pamiety"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:106
+msgid "_Add Bookmark"
+msgstr "_Dadaj pamietu"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:107
+msgid "Bookmark the Position in the Current Track"
+msgstr "Zrabi pamietu pazycyi ŭ dziejnaj pieśni"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:119
+msgid "_Remove Bookmark"
+msgstr "_Vydal pamietu"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
+
+#: ../src/Plugins/Banshee.Plugins.Bookmarks/banshee-plugin-bookmarks.schemas.in.h:1
+msgid "Bookmarks plugin enabled"
+msgstr "Plugin pamietaŭ uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:49
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:50
+msgid "Music Sharing"
+msgstr "Supolnaja muzyka"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:52
+msgid "Share my music library with others"
+msgstr "Zrabi maju muzyčnuju biblijateku dastupnaj dla inšych"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapConfigPage.cs:75
+msgid "Share name:"
+msgstr "Nazva supolnaj krynicy:"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapContainerSource.cs:43
+msgid "Shared Music"
+msgstr "Supolnaja muzyka"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapCore.cs:72
+msgid "Banshee Music Share"
+msgstr "Muzyčnaja krynica Banshee"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:64
+msgid "Disconnected from music share"
+msgstr "Adłučany ad muzyčnaj krynicy"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:65
+msgid "Unable to connect to music share"
+msgstr "Niemahčyma spałučycca z muzyčnaj krynicaj"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:92
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
+msgstr ""
+"iTunes® 7 vyklikała novyja prablemy ŭzhodnienaści i pakul što pracuje tolki ź "
+"inšymi klijentami iTunes® 7.\n"
+"\n"
+"Inšyja klijenty ciapier nia mohuć spałučacca z muzyčnymi krynicami iTunes®. "
+"Heta naŭmysnaje abmiežavańnie ad Apple u iTunes® 7, i my vybačajemsia za "
+"nievyhodnaści."
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:102
+msgid "Common reasons for connection failures:"
+msgstr "Častyja pryčyny pamyłak spałučeńnia:"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:108
+msgid "The provided login credentials are invalid"
+msgstr "Padadzienyja źviestki dla ŭvachodu niapravilnyja"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:109
+msgid "The login process was canceled"
+msgstr "Praces uvachodu anulavany"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:110
+msgid "Too many users are connected to this share"
+msgstr "Da hetaj supolnaj krynicy dałučana nadta šmat karystalnikaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:112
+msgid "You are no longer connected to this music share"
+msgstr "Ty bolš nie dałučany da supolnaj muzyčnaj krynicy"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:116
+msgid "Try connecting again"
+msgstr "Pasprabuj znoŭ spałučycca"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapErrorView.cs:130
+msgid "The music share is hosted by iTunes® 7"
+msgstr "Supolnaja muzyčnaja krynica padtrymvajecca prahramaj iTunes® 7"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:47
+msgid "Login to Music Share"
+msgstr "Prahladaj supolnuju muzyčnuju krynicu"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:80
+msgid "Authentication Required"
+msgstr "Vymahajecca aŭtaryzacyja"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:104
+msgid "Username:"
+msgstr "Nazva karystalnika:"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapLoginDialog.cs:123
+msgid "Login"
+msgstr "Uvajdzi"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapPlugin.cs:55
+msgid ""
+"Allow browsing and listening to songs from music shares and share your "
+"Banshee library with others. Works with other instances of Banshee, iTunes, "
+"and Rhythmbox."
+msgstr ""
+"Dazvol prahlad i prasłuchoŭvańnie pieśniaŭ z supolnych muzyčnych krynic, a taksama "
+"daj dostup da svajoj biblijateki Banshee inšym ludziam. Pracuje dla inšych "
+"instancyj Banshee, iTunes i Rhythmbox."
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:87
+#, csharp-format
+msgid "Connecting to {0}"
+msgstr "Spałučeńnie z {0}"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:153
+#, csharp-format
+msgid "Logging in to {0}"
+msgstr "Uvachod u {0}"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/DaapSource.cs:216
+msgid "Disconnect"
+msgstr "Adłučysia"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
+msgid "DAAP plugin enabled"
+msgstr "Plugin DAAP uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:2
+msgid "Music share name"
+msgstr "Nazva supolnaj muzyčnaj krynicy"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:4
+msgid "Share local music with others"
+msgstr "Padzialaj dostup da lakalnaj muzyki ź inšymi"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:5
+msgid "Share name"
+msgstr "Nazva supolnaj krynicy"
+
+#: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:6
+msgid "Share server enabled"
+msgstr "Server supolnaha dostupu ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:47
+msgid "Multimedia Keyboard Shortcuts"
+msgstr "Multymedyjnyja klavijaturnyja skaroty"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:51
+msgid ""
+"Configuration of multimedia keyboard shortcuts is done through the Gnome "
+"Keyboard Shortcuts configuration applet."
+msgstr ""
+"Kanfihuravańnie multymedyjnych klavijaturnych skarotaŭ vykonvajecca praz "
+"aplet Klavijaturnyja skaroty dla Gnome."
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysConfigPage.cs:56
+msgid "Configure Keyboard Shortcuts"
+msgstr "Skanfihuruj klavijaturnyja skaroty"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:52
+msgid "Multimedia Keys"
+msgstr "Multymedyjnyja klavišy"
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/MMKeysPlugin.cs:57
+msgid "Adds support for multimedia keys configured through GNOME."
+msgstr "Dadaje padtrymku multymedyjnych klaviš, skanfihuravanych dla GNOME."
+
+#: ../src/Plugins/Banshee.Plugins.MMKeys/banshee-plugin-mmkeys.schemas.in.h:1
+msgid "Multimedia Keys plugin enabled"
+msgstr "Plugin multymedyjnych klaviš uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:57
+msgid "Metadata Searcher"
+msgstr "Pošuk u metaźviestkach"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:62
+msgid ""
+"Automatically search for missing and supplementary metadata and cover art "
+"for songs in your library."
+msgstr ""
+"Aŭtamatyčna šukaj adsutnyja j dadatkovyja metaźviestki, a taksama vokładki "
+"dla pieśniaŭ z tvajoj biblijateki."
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:130
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:131
+msgid "Download Cover Art"
+msgstr "Zahruzi vokładku"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:209
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:495
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:746
+msgid "Download"
+msgstr "Zahruzi"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:210
+msgid "Downloading Cover Art"
+msgstr "Zahruzka vokładki"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:211
+msgid "Searching"
+msgstr "Pošuk"
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/MetadataSearchPlugin.cs:213
+msgid ""
+"Are you sure you want to stop downloading cover art for the albums in your "
+"library? The operation can be resumed at any time from the <i>Tools</i> menu."
+msgstr ""
+"Ty sapraŭdy chočaš spynić zahruzku vokładak dla albomaŭ z tvajoj biblijateki? "
+"Hetuju aperacyju možna praciahnuć paśla praz menu <i>Pryładździe</i>."
+
+#: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
+msgid "Metadata searcher plugin enabled"
+msgstr "Plugin pošuku metaźviestak uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:39
+msgid ""
+"Mini Mode allows controlling Banshee through a small window with only "
+"playback controls and track information."
+msgstr ""
+"Drobny režym dazvalaje kiravać Banshee z dapamohaj maleńkaha vakna "
+"z elementami dla vykanańnia j źviestkami ab pieśni."
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
+msgid "_Mini Mode"
+msgstr "_Drobny režym"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
+msgid "Switch back to full mode"
+msgstr "Viarnisia ŭ poŭny režym"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
+msgid "MiniMode plugin enabled"
+msgstr "Plugin drobnaha režymu ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:1
+msgid "<b><big>This is the title</big></b>"
+msgstr "<b><big>Heta nazva</big></b>"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:2
+msgid "<i>This is the album</i>"
+msgstr "<i>Heta albom</i>"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:4
+msgid "Current source:"
+msgstr "Dziejnaja krynica:"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:5
+msgid "Full Mode"
+msgstr "Poŭny režym"
+
+#: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:6
+msgid "This is the artist"
+msgstr "Heta vykanaŭca"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:56
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:61
+msgid "Notification Area Icon"
+msgstr "Ikona ŭ abšary nahadvańnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:64
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:116
+msgid "Show notifications when song changes"
+msgstr "Pakazvaj infarmacyju, kali źmianiajecca pieśnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:71
+msgid "Quit Banshee when title bar close button is clicked"
+msgstr "Vychodź z Banshee klikam pa knopcy začynieńnia vakna"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:64
+msgid "Shows the Notification Area Icon"
+msgstr "Pakazvaje ikonu ŭ abšary nahadvańnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:109
+msgid "_Close"
+msgstr "_Začyni"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:110
+msgid "Close"
+msgstr "Začyni"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:115
+msgid "_Show Notifications"
+msgstr "_Pakazvaj nahadvańni"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:221
+msgid "Still Running"
+msgstr "Jašče pracuje"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:222
+msgid ""
+"Banshee was closed to the notification area. Use the <i>Quit</i> option to "
+"end your session."
+msgstr ""
+"Banshee pryčynienaja ŭ abšary nahadvańnia. Kab zakončyć sesiju, užyj opcyju <i>Vyjdzi</i>."
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:288
+msgid "Now Playing"
+msgstr "Ciapier hraje"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:293
+msgid "Cannot show notification"
+msgstr "Niemahčyma pakazać nahadvańnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:1
+msgid "Notification area plugin enabled"
+msgstr "Plugin abšaru nahadvańnia ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:3
+msgid "Quit instead of hide to notification area on close"
+msgstr "Začyniajučy, vychodź z prahramy, a nie chavaj jaje ŭ abšary nahadvańnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:4
+msgid "Quit on close"
+msgstr "Začyniajučy, vychodź"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:5
+msgid "Show a notification when closing main window"
+msgstr "Pakazvaj nahadvańnie, kali začyniajecca hałoŭnaje vakno"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:6
+msgid "Show notifications"
+msgstr "Pakazvaj nahadvańni"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:7
+msgid "Show track information notifications when track starts playing"
+msgstr "Pakazvaj infarmacyju, kali pačynaje vykonvacca pieśnia"
+
+#: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/banshee-plugin-notificationarea.schemas.in.h:8
+msgid ""
+"When the main window is closed, show a notification stating this has "
+"happened."
+msgstr ""
+"Pakazvaj nahadvańnie ab tym, što začynienaje hałoŭnaje vakno."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
+msgid "DownloadCore is shutting down."
+msgstr "DownloadCore vyklučajecca."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:180
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:78
+msgid "dif not in 'New' state."
+msgstr "dif nia ŭ \"Novym\" stanie."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:193
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:110
+msgid "Uri scheme not supported."
+msgstr "Schiema adrasu nie padtrymvajecca."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:202
+msgid "Download already queued."
+msgstr "Zahruzka ŭžo ŭ čarzie."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:287
+msgid "uri is empty"
+msgstr "adras pusty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:291
+msgid "path is empty"
+msgstr "ściežka pustaja"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:497
+msgid "Downloading Files"
+msgstr "Zahruzka fajłaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:498
+msgid "Initializing downloads"
+msgstr "Inicyjalizacyja zahruzak"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:536
+msgid "Canceling Downloads"
+msgstr "Anulavańnie zahruzak"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:537
+msgid "Waiting for downloads to terminate"
+msgstr "Čakańnie anulavańnia zahruzak"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:630
+#, csharp-format
+msgid "Downloading File"
+msgid_plural "Downloading Files ({0} of {1} completed)"
+msgstr[0] "Zahruzka fajłu ({0} z {1} skončana)"
+msgstr[1] "Zahruzka fajłaŭ ({0} z {1} skončana)"
+msgstr[2] "Zahruzka fajłaŭ ({0} z {1} skončana)"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:639
+#, csharp-format
+msgid ""
+"Downloading Files ({0} of {1} completed)\n"
+"{2} failed"
+msgstr ""
+"Zahruzka fajłaŭ ({0} z {1} skončanyja)\n"
+"{2} niaŭdałyja"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:645
+#, csharp-format
+msgid "Currently transfering 1 file at {0} kB/s"
+msgid_plural "Currently transfering {1} files at {0} kB/s"
+msgstr[0] "Ciapier pieradajecca {1} fajł za {0} kB/s"
+msgstr[1] "Ciapier pieradajucca {1} fajły za {0} kB/s"
+msgstr[2] "Ciapier pieradajucca {1} fajłaŭ za {0} kB/s"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:82
+msgid "Already queued, must be unique."
+msgstr "Užo ŭ čarzie, musić być unikalnym."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:103
+msgid "Item not in queue."
+msgstr "Niama ŭ čarzie."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:239
+msgid "Uri scheme not supported"
+msgstr "Schiema adrasu nie padtrymvajecca"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:280
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:327
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:120
+msgid "File complete"
+msgstr "Fajł zahružany"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:345
+#, csharp-format
+msgid "Unable to create directory:  {0}"
+msgstr "Niemahčyma stvaryć kataloh: {0}"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadTask.cs:450
+msgid "Dif is not in 'running' state"
+msgstr "Dif nia ŭ \"Dziejnym\" stanie"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:224
+#, csharp-format
+msgid "Contacting {0}..."
+msgstr "Suviaź z {0}..."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:232
+#: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/HttpDownloadTask.cs:240
+msgid "HTTP error"
+msgstr "Pamyłka HTTP"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/FeedParsers/RssPodcastFeedParser.cs:58
+msgid "Feed has no title"
+msgstr "Kanał biaz nazvy"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:432
+msgid "Uri Scheme Not Supported"
+msgstr "Schiema adrasu nie padtrymvajecca"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:433
+msgid "Podcast feed URI scheme is not supported."
+msgstr "Schiema adrasu podcasta nie padtrymvajecca."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:445
+msgid "Invalid URL"
+msgstr "Niapravilny URL"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:446
+msgid "Podcast feed URL is invalid."
+msgstr "Niapravilny URL podcasta."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:514
+msgid "Unable to load Podcast DB"
+msgstr "Niemahčyma zahruzić bazu podcastaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:666
+msgid "Download Failed"
+msgstr "Niaŭdałaja zahruzka"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastCore.cs:746
+msgid "Unable to add file to library"
+msgstr "Niemahčyma dadać fajł u biblijateku"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:226
+#, csharp-format
+msgid "Updating \"{0}\""
+msgstr "Aktualizacyja \"{0}\""
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:263
+msgid "Podcast Feed Update"
+msgstr "Aktualizacyja podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:267
+msgid "Updating"
+msgstr "Aktualizacyja"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:268
+msgid "Preparing to update feeds"
+msgstr "Padrychtoŭka da aktualizacyi kanałaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:318
+#, csharp-format
+msgid "Updating podcast feed {0} of {1}"
+msgstr "Aktualizacyja podcasta {0} z {1}"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:339
+msgid "Canceling updates"
+msgstr "Anulavańnie aktualizacyi"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedFetcher.cs:340
+msgid "Waiting for update to terminate"
+msgstr "Čakańnie anulavańnia aktualizacyi"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedInfo.cs:709
+msgid "Title Property Changed"
+msgstr "Nazva źmianiłasia"
+
+#. Should users be notified of this?
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastLibrary.cs:762
+msgid "Already Subscribed"
+msgstr "Užo padpisany"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:56
+msgid "Podcasting"
+msgstr "Podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:62
+#, csharp-format
+msgid ""
+"Podcasting is a form of audio blogging where users subscribe to a feed of "
+"shows and its episodes are downloaded and managed for offline listening.\n"
+"\n"
+"Its name comes from the targeting of audio posts to Apple's iPod® audio "
+"player, although podcasts can be listened to directly in {0}."
+msgstr ""
+"Podcasty - heta forma hukavych blogaŭ, kali karystalniki padpisvajucca "
+"na tematyčnyja kanały, i vydańni kanału zahružajucca, kab słuchać biaź "
+"sietkavaha spałučeńnia.\n"
+"\n"
+"Hetaja nazva pačatkova aznačała zahruzku hukavych dopisaŭ na hukavy "
+"player iPod® ad Apple, chacia podcasty možna słuchać naŭprost u {0}."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
+msgid "Podcast"
+msgstr "Podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:114
+msgid "Manage the Podcast plugin"
+msgstr "Kiruj pluginam dla podcastaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:117
+msgid "Update Podcasts"
+msgstr "Aktualizuj podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:118
+msgid "Update Subscribed Podcasts"
+msgstr "Aktualizuj padpisanyja podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:122
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:619
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:675
+msgid "Subscribe to Podcast"
+msgstr "Padpišy podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:123
+msgid "Subscribe to a new Podcast"
+msgstr "Padpišy novy podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:127
+msgid "Find New Podcasts"
+msgstr "Znajdzi novyja podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:128
+msgid "Find New Podcasts at PodcastAlley.com"
+msgstr "Znjadzi novyja podcasty na PodcastAlley.com"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastErrorsSource.cs:51
+msgid "Errors"
+msgstr "Pamyłki"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:75
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:87
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:127
+msgid "Description:"
+msgstr "Apisańnie:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:80
+msgid "Last Updated:"
+msgstr "Apošniaja aktualizacyja:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:85
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:83
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:113
+msgid "URL:"
+msgstr "URL:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:91
+msgid "When feed is updated:"
+msgstr "Kali aktualizoŭvajecca kanał:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedPropertiesDialog.cs:108
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:104
+msgid "No description available"
+msgstr "Niama apisańnia"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:78
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:106
+msgid "Podcasts"
+msgstr "Podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
+msgid "All"
+msgstr "Usie"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:179
+#, csharp-format
+msgid "{0} Podcast"
+msgid_plural "{0} Podcasts"
+msgstr[0] "{0} podcast"
+msgstr[1] "{0} podcasty"
+msgstr[2] "{0} podcastaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:198
+#, csharp-format
+msgid "{0} - {1} New Episode"
+msgid_plural "{0} - {1} New Episodes"
+msgstr[0] "{0} - {1} novaje vydańnie"
+msgstr[1] "{0} - {1} novyja vydańni"
+msgstr[2] "{0} - {1} novych vydańniaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:95
+msgid "Episode"
+msgstr "Vydańnie"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:107
+msgid "Date"
+msgstr "Data"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:75
+msgid "Podcast:"
+msgstr "Podcast:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPropertiesDialog.cs:79
+msgid "Date:"
+msgstr "Data:"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:624
+msgid "Update All Podcasts"
+msgstr "Aktualizuj usie podcasty"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:629
+msgid "Visit Podcast Alley"
+msgstr "Naviedaj Podcast Alley"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:664
+msgid "Subscribed"
+msgstr "Padpisany"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:667
+msgid "Update Podcast"
+msgstr "Aktualizuj podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:671
+msgid "Delete Podcast"
+msgstr "Vydal podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:679
+msgid "Homepage"
+msgstr "Chatniaja staronka"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:683
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:766
+msgid "Properties"
+msgstr "Ułaścivaści"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:742
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:752
+msgid "Remove Episodes(s)"
+msgstr "Vydal vydańni"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:756
+msgid "Select All"
+msgstr "Zaznač usie"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:759
+msgid "Select None"
+msgstr "Ničoha nie zaznač"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:762
+msgid "Link"
+msgstr "Spasyłka"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:46
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:132
+msgid "Subscribe"
+msgstr "Padpišy"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:78
+msgid "Subscribe to New Podcast"
+msgstr "Padpišy novy podcast"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:83
+msgid "Please enter the URL of the podcast to which you are subscribing."
+msgstr "Uviadzi URL podcasta, na jaki padpisvajeśsia."
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSubscribeDialog.cs:95
+msgid "When new episodes are available:  "
+msgstr "Kali jość novyja vydańni: "
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:40
+msgid "Download all episodes"
+msgstr "Zahružaj usie vydańni"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:41
+msgid "Download the most recent episode"
+msgstr "Zahružaj apošniaje vydańnie"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/UI/SyncPreferenceComboBox.cs:42
+msgid "Let me decide which episodes to download"
+msgstr "Dazvol mnie samomu akreślić vydańni dla zahruzki"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:1
+msgid "Playlist separator position"
+msgstr "Pazycyja separatara śpisu"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:3
+msgid "Podcast date column"
+msgstr "Kalona z dataj podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:4
+msgid "Podcast feed column"
+msgstr "Kalona z kanałam podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:5
+msgid "Podcast library location"
+msgstr "Pazycyja biblijateki podcastaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:6
+msgid "Podcast plugin enabled"
+msgstr "Plugin podcastaŭ uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:7
+msgid "Podcast title column"
+msgstr "Kalona z nazvaj podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:8
+msgid "Position of the podcast date playlist column"
+msgstr "Pazycyja kalony z dataj śpisu podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:9
+msgid "Position of the podcast feed playlist column"
+msgstr "Pazycyja kalony z kanałam śpisu podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:10
+msgid "Position of the podcast title playlist column"
+msgstr "Pazycyja kalony z nazvaj śpisu podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:11
+msgid "Position of the separator located between the feed and podcast views"
+msgstr "Pazycyja separatara pamiž vykładam kanału j podcasta"
+
+#: ../src/Plugins/Banshee.Plugins.Podcast/banshee-plugin-podcast.schemas.in.h:12
+msgid "Root directory for the podcast plugin to store downloaded files"
+msgstr "Hałoŭny kataloh dla zachoŭvańnia zahružanych fajłaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/CellRendererStation.cs:117
+msgid "Loading"
+msgstr "Zahruzka"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:52
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:63
+msgid "Radio"
+msgstr "Radyjo"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:57
+msgid "Provides Internet radio/streaming audio station support"
+msgstr "Padtrymvaje Internetnaje radyjo j płyni z aŭdyjo-stancyjaŭ"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:116
+msgid "Show Remote Stations"
+msgstr "Pakažy addalenyja stancyi"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:117
+msgid "Update and show radio station content from radio.banshee-project.org"
+msgstr "Aktualizuj i pakažy źmieściva radyjo-stancyj z radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:123
+msgid "Refresh Stations"
+msgstr "Abnavi stancyi"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:124
+msgid "Refresh stations from the Banshee Radio Web Service"
+msgstr "Abnavi śpis radyjo-stancyj z web-pasłužnika Banshee"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:129
+msgid "Copy URI"
+msgstr "Skapijuj adras"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:130
+msgid "Copy stream URI to clipboard"
+msgstr "Skapijuj adras płyni ŭ abmienny bufer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:133
+msgid "Edit"
+msgstr "Redahuj"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:134
+msgid "Edit Radio Station"
+msgstr "Redahuj radyjo-stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:137
+msgid "Add Station"
+msgstr "Dadaj stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:138
+msgid "Add new Radio Station"
+msgstr "Dadaj novuju radyjo-stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:141
+msgid "Remove"
+msgstr "Vydal"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioPlugin.cs:142
+msgid "Remove selected Radio Station"
+msgstr "Vydal zaznačanuju radyjo-stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:81
+msgid "Refreshing radio stations from the Banshee Radio Web Service"
+msgstr "Abnaŭleńnie śpisu radyjo-stancyj z web-pasłužnika Banshee"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:91
+msgid "Failed to load radio stations: "
+msgstr "Pamyłka zahruzki śpisu radyjo-stancyj: "
+
+#: ../src/Plugins/Banshee.Plugins.Radio/RadioSource.cs:337
+msgid "Invalid URI format."
+msgstr "Niapravilny farmat adrasu."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:57
+msgid "Add new radio station"
+msgstr "Dadaj novuju radyjo-stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:58
+msgid "Edit radio station"
+msgstr "Redahuj radyjo-stancyju"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:86
+msgid ""
+"Enter the Group, Title and URL of the radio station you wish to add. A "
+"description is optional."
+msgstr ""
+"Uviadzi hrupu, nazvu i adras dla novaj radyjo-stancyi. Apisańnie nieabaviazkovaje."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:95
+msgid "Station Group:"
+msgstr "Hrupa stancyj:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:111
+msgid "Station Title:"
+msgstr "Nazva stancyi:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationEditor.cs:119
+msgid "Stream URL:"
+msgstr "Adras płyni:"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:73
+msgid "Station"
+msgstr "Stancyja"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/StationView.cs:77
+msgid "Comment"
+msgstr "Kamentar"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:1
+msgid ""
+"Always show stations that require the Helix/RealPlayer engine, even if the "
+"engine is not loaded."
+msgstr ""
+"Zaŭsiody pakazvaj stancyi, jakija vymahajuć ruchavika Helix/RealPlayer, navat "
+"kali ruchavik nie zahružany."
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:2
+msgid "Last time XSPF stations were updated from radio.banshee-project.org"
+msgstr "Apošni raz, jak abnaŭlalisia stancyi XSPF z radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:3
+msgid "Last time the master station list was checked for updates"
+msgstr "Apošni raz, jak abnaŭlaŭsia hałoŭny śpis stancyj"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:5
+msgid "Radio plugin enabled"
+msgstr "Plugin radyjo ŭklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:6
+msgid "Show remote stations"
+msgstr "Pakažy addalenyja stancyi"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:7
+msgid "Show stations requiring Helix/RealPlayer"
+msgstr "Pakažy stancyi, jakija vymahajuć Helix/RealPlayer"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:8
+msgid "Time of the last radio update"
+msgstr "Čas apošniaha abnaŭleńnia radyjo"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:9
+msgid "Time of the last radio update check"
+msgstr "Čas apošniaj pravierki abnaŭleńniaŭ radyjo"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:10
+msgid "URI for remote stations update"
+msgstr "Adras dla abnaŭleńnia addalenych stancyj"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:11
+msgid "URI to update remote stations from"
+msgstr "Adras dla abnaŭleńnia addalenych stancyj"
+
+#: ../src/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in.h:12
+msgid "Update remote stations from radio.banshee-project.org"
+msgstr "Aktualizuj addalenyja stancyi z radio.banshee-project.org"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:142
+msgid "Recommended Artists"
+msgstr "Rekamendavanyja vykanaŭcy"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:169
+msgid "No similar artists found"
+msgstr "Padobnych vykanaŭcaŭ nia znojdziena"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:246
+#, csharp-format
+msgid "Top Tracks by {0}"
+msgstr "Papularnyja pieśni ad {0}"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:248
+#, csharp-format
+msgid "Top Albums by {0}"
+msgstr "Papularnyja albomy ad {0}"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:367
+#, csharp-format
+msgid "{0}% Similarity"
+msgstr "{0}% padabienstva"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs:369
+msgid "Unknown Similarity"
+msgstr "Nieviadomaje padabienstva"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:56
+msgid "Music Recommendations"
+msgstr "Muzyčnyja parady"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:61
+msgid ""
+"Automatically recommends music that you might like, based on the currently "
+"playing song. It finds artists and popular songs that others with similar "
+"musical tastes enjoy."
+msgstr ""
+"Aŭtamatyčna rekamenduje muzyku, jakaja tabie padabajecca, uličvajučy pieśniu, jakaja "
+"hrajecca. Šukajucca vykanaŭcy j papularnyja pieśni, jakija padabajucca ludziam "
+"z padobnym na tvoj hustam."
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:134
+#: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
+msgid "Show Recommendations"
+msgstr "Pakažy parady"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:1
+msgid "Cache version"
+msgstr "Versija kešu"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:3
+msgid "Recommendation plugin enabled"
+msgstr "Plugin paradaŭ uklučany"
+
+#: ../src/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in.h:4
+msgid ""
+"Version of the cache layout on disk, located at ~/.config/banshee/plugins/"
+"recommendation"
+msgstr ""
+"Versija vykładu kešu na dysku, što znachodzicca ŭ ~/.config/banshee/plugins/recommendation"
