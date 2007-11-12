@@ -43,6 +43,8 @@
     <File name="./Banshee.Gui.Widgets/TrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.Widgets/UserJobTile.cs" subtype="Code" buildaction="Compile" />
     <File name="./Banshee.Gui.Widgets/UserJobTileHost.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui/CommonServices.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Banshee.Gui/GtkBaseClient.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

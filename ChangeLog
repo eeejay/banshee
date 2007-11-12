@@ -1,3 +1,23 @@
+2007-11-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/CommonServices.cs: Helper
+	class to boot common GUI services
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Base class
+	for any GTK client to use for booting the core
+
+	* src/Core/Nereid/Nereid/Entry.cs: Fixed up to use GtkBaseClient
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IUserJob.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Added a Name
+	property, which should never change and should be concise
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/TestUserJob.cs: Updated,
+	actually allow it to be canceled
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Support
+	actually cancelling jobs, show a pretty dialog
+
 2007-11-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/GladeWindow.cs: Look

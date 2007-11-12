@@ -35,6 +35,7 @@ namespace Banshee.ServiceStack
 {
     public class UserJob : IUserJob
     {
+        private string name;
         private string title;
         private string status;
         private double progress;
@@ -50,26 +51,29 @@ namespace Banshee.ServiceStack
         public event EventHandler Updated;
         public event EventHandler CancelRequested;
         
-        public UserJob (string title, string status)
+        public UserJob (string name, string title, string status)
         {
             FreezeUpdate ();
+            Name = name;
             Title = title;
             Status = status;
             ThawUpdate (true);
         }
         
-        public UserJob (string title, string status, string iconName)
+        public UserJob (string name, string title, string status, string iconName)
         {
             FreezeUpdate ();
+            Name = name;
             Title = title;
             Status = status;
             IconNames = new string [] { iconName };
             ThawUpdate (true);
         }
         
-        public UserJob (string title, string status, string [] iconNames)
+        public UserJob (string name, string title, string status, string [] iconNames)
         {
             FreezeUpdate ();
+            Name = name;
             Title = title;
             Status = status;
             IconNames = iconNames;
@@ -133,6 +137,11 @@ namespace Banshee.ServiceStack
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
+        }
+        
+        public virtual string Name {
+            get { return name; }
+            set { name = value; }
         }
         
         public virtual string Title {

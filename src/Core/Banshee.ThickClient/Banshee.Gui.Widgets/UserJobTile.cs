@@ -27,6 +27,7 @@
 //
 
 using System;
+using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
@@ -50,6 +51,8 @@ namespace Banshee.Gui.Widgets
         private Button cancel_button;
         private uint update_delay_id;
         private uint progress_bounce_id;
+        
+        Banshee.Widgets.HigMessageDialog cancel_dialog;
         
         public UserJobTile (IUserJob job) : base (3, 2, false)
         {
@@ -83,8 +86,7 @@ namespace Banshee.Gui.Widgets
             cancel_button = new Button (new Image (Stock.Close, IconSize.Menu));
             cancel_button.Relief = ReliefStyle.None;
             cancel_button.ShowAll ();
-
-            HBox progress_box = new HBox ();
+            cancel_button.Clicked += OnCancelClicked;
             
             Attach (title_label, 0, 3, 0, 1, 
                 AttachOptions.Expand | AttachOptions.Fill,
@@ -107,8 +109,52 @@ namespace Banshee.Gui.Widgets
                 AttachOptions.Shrink | AttachOptions.Fill, 0, 0);
         }
         
+        private void OnCancelClicked (object o, EventArgs args)
+        {
+            if (cancel_dialog != null) {
+                return;
+            }
+            
+            Window parent = null;
+            if (ServiceManager.Contains ("GtkElementsService")) {
+                parent = ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow;
+            }
+            
+            cancel_dialog = new Banshee.Widgets.HigMessageDialog (parent, 
+                DialogFlags.Modal, MessageType.Question, ButtonsType.None,
+                job.Name == null
+                    ? Catalog.GetString ("Stop Operation")
+                    : String.Format (Catalog.GetString ("Stop {0}"), job.Name),
+                job.CancelMessage == null 
+                    ? (job.Name == null 
+                        ? Catalog.GetString ("This operation is still performing work. Would you like to stop it?")
+                        : String.Format (Catalog.GetString (
+                            "The '{0}' operation is still performing work. Would you like to stop it?"), job.Name))
+                    : job.CancelMessage);
+                        
+            cancel_dialog.AddButton (job.Name == null 
+                ? Catalog.GetString ("Continue")
+                : String.Format (Catalog.GetString ("Continue {0}"), job.Name), 
+                ResponseType.No, true);
+            cancel_dialog.AddButton (Stock.Stop, ResponseType.Yes, false);
+            cancel_dialog.DefaultResponse = ResponseType.Cancel;
+                
+            if(cancel_dialog.Run () == (int)ResponseType.Yes) {
+                if (job.CanCancel) {
+                    job.Cancel ();
+                }
+            }
+        
+            cancel_dialog.Destroy();
+            cancel_dialog = null;
+        }
+        
         private void UpdateFromJob ()
         {
+            if (cancel_dialog != null && !job.CanCancel) {
+                cancel_dialog.Respond (Gtk.ResponseType.Cancel);
+            }
+            
             if (title != job.Title) {
                 if (String.IsNullOrEmpty (job.Title)) {
                     title_label.Hide ();

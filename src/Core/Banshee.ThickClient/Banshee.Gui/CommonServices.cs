@@ -1,5 +1,5 @@
 //
-// Entry.cs
+// CommonServices.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,32 +26,19 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class NereidClient : Banshee.Gui.GtkBaseClient
-    {
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<NereidClient> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System;
 
-        public override void Run ()
+using Banshee.ServiceStack;
+
+namespace Banshee.Gui
+{
+    public static class CommonServices
+    {
+        public static void Register ()
         {
-            int test_jobs_count = 0;
-            RunTimeout (10000, delegate { new Banshee.ServiceStack.TestUserJob (); return test_jobs_count++ < 4; });
-            
-            program.Run ();
+            ServiceManager.RegisterService <Banshee.Gui.GtkElementsService> ();
+            ServiceManager.RegisterService <Banshee.Gui.InterfaceActionService> ();
+            ServiceManager.RegisterService <Banshee.Collection.Gui.ArtworkManager> ();
         }
     }
 }
-

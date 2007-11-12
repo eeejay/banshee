@@ -34,6 +34,9 @@ namespace Banshee.ServiceStack
     {
         private int icon_index = 0;
         private uint icon_timeout_id = 0;
+        private uint initial_timeout_id = 0;
+        private uint main_timeout_id = 0;
+        private uint final_timeout_id = 0;
         private Random rand = new Random ();
         
         private string [] icon_names_go = new string [] {
@@ -47,17 +50,17 @@ namespace Banshee.ServiceStack
             "face-wink"
         };
         
-        public TestUserJob () : base ("UserJob Test Job", "Waiting for 7.5 seconds...")
+        public TestUserJob () : base ("Test Job", "UserJob Test Job", "Waiting for 7.5 seconds...")
         {
             DelayShow = true;
             Register ();
             
             IconNames = new string [] { "media-eject" };
 
-            Application.RunTimeout (7500, delegate {        
+            initial_timeout_id = Application.RunTimeout (7500, delegate {        
                 Title = "New Title for Test Job";
                 
-                Application.RunTimeout (50, delegate {
+                main_timeout_id = Application.RunTimeout (50, delegate {
                     Progress += 0.001;
                     
                     if (Progress >= 0.45 && Progress <= 0.55) {
@@ -102,7 +105,7 @@ namespace Banshee.ServiceStack
                         Progress = 0.0;
                         Title = "Bouncing";
                         Status = "I'm going to bounce now...";
-                        Application.RunTimeout (8000, delegate {
+                        final_timeout_id = Application.RunTimeout (8000, delegate {
                             Finish ();
                             return false;
                         });
@@ -115,6 +118,27 @@ namespace Banshee.ServiceStack
                 
                 return false;
             });
+        }
+        
+        protected override void OnCancelRequested ()
+        {
+            if (initial_timeout_id > 0) {
+                Application.IdleTimeoutRemove (initial_timeout_id);
+            }
+            
+            if (main_timeout_id > 0) {
+                Application.IdleTimeoutRemove (main_timeout_id);
+            }
+            
+            if (icon_timeout_id > 0) {
+                Application.IdleTimeoutRemove (icon_timeout_id);
+            }
+            
+            if (final_timeout_id > 0) {
+                Application.IdleTimeoutRemove (final_timeout_id);
+            }
+            
+            OnFinished ();
         }
     }
 }

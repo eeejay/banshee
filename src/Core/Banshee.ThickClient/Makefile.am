@@ -25,7 +25,9 @@ SOURCES =  \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
+	Banshee.Gui/CommonServices.cs \
 	Banshee.Gui/GlobalActions.cs \
+	Banshee.Gui/GtkBaseClient.cs \
 	Banshee.Gui/GtkElementsService.cs \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Gui/InterfaceActionService.cs \
