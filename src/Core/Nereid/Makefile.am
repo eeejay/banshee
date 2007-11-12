@@ -2,7 +2,7 @@ ASSEMBLY = Nereid
 TARGET = exe
 LINK = $(REF_NEREID)
 SOURCES =  \
-	Nereid/Entry.cs \
+	Nereid/Client.cs \
 	Nereid/PlayerInterface.cs \
 	Nereid/PlayerWindowSchema.cs \
 	Nereid/ViewContainer.cs
