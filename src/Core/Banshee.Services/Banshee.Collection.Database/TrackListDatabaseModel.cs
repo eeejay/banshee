@@ -237,7 +237,7 @@ namespace Banshee.Collection.Database
                 }
                 
                 string cache_build_query = qb.ToString ();
-                Console.WriteLine (StringExtensions.Flatten (cache_build_query));
+                //Console.WriteLine (StringExtensions.Flatten (cache_build_query));
                 
                 using (new Timer ("Generating cache table")) {
                     IDbCommand command = connection.CreateCommand ();
@@ -251,13 +251,13 @@ namespace Banshee.Collection.Database
                 String.Format ("SELECT COUNT(*) FROM CoreTracks{0} {1}", JoinFragment, WhereFragment);
             
             using (new Timer ("Counting tracks")) {
-                Console.WriteLine("Count query: {0}", count_query);
+                //Console.WriteLine("Count query: {0}", count_query);
                 IDbCommand command = connection.CreateCommand ();
                 command.CommandText = count_query;
                 rows = Convert.ToInt32 (command.ExecuteScalar ());
             }
 
-            Console.WriteLine ("Total rows: {0}", rows);
+            //Console.WriteLine ("Total rows: {0}", rows);
 
             OnReloaded ();
         }
@@ -284,7 +284,7 @@ namespace Banshee.Collection.Database
             
             IDbCommand command = connection.CreateCommand ();
             command.CommandText = String.Format (select_query, index, fetch_count);
-            Console.WriteLine (command.CommandText);
+            //Console.WriteLine (command.CommandText);
             IDataReader reader = command.ExecuteReader ();
 
             int i = index;

@@ -83,9 +83,9 @@ namespace Banshee.Collection.Database
         {
             IDbCommand command = connection.CreateCommand();
             command.CommandText = String.Format ("SELECT COUNT(*) FROM CoreAlbums {0}", WhereFragment);
-            Console.WriteLine("Counting Artists: {0}", StringExtensions.Flatten(command.CommandText));
+           // Console.WriteLine("Counting Artists: {0}", StringExtensions.Flatten(command.CommandText));
             rows = Convert.ToInt32(command.ExecuteScalar()) + 1;
-            Console.WriteLine(rows);
+           // Console.WriteLine(rows);
             select_all_album.Title = String.Format("All Albums ({0})", rows - 1);
             OnReloaded();
         }
@@ -115,7 +115,7 @@ namespace Banshee.Collection.Database
                 WhereFragment, index - 1, fetch_count
             );
 
-            Console.WriteLine(StringExtensions.Flatten(command.CommandText));
+           // Console.WriteLine(StringExtensions.Flatten(command.CommandText));
             IDataReader reader = command.ExecuteReader();
 			
 			int i = new_index;
