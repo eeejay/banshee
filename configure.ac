@@ -126,12 +126,7 @@ src/AssemblyInfo.cs
 src/Core/Makefile
 src/Core/Hyena/Makefile
 src/Core/Hyena.Gui/Makefile
-src/Core/Banshee/Makefile
-src/Core/Banshee/banshee
-src/Core/Banshee/banshee.exe.config
 src/Core/Banshee.Core/Makefile
-src/Core/Banshee.Base/Makefile
-src/Core/Banshee.Base/Banshee.Base.dll.config
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
