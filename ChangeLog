@@ -1,3 +1,21 @@
+2007-11-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/Gui/SeekDialog.cs:
+	* src/Core/Banshee.Base/Gui/TrackEditor.cs:
+	* src/Core/Banshee.Base/Hyena.Gui/EntryEraseAction.cs:
+	* src/Core/Banshee.Base/Hyena.Gui/EntryInsertAction.cs:
+	* src/Core/Banshee.Base/Hyena.Gui/EntryUndoAdapter.cs: Remove from
+	Banshee.Base, all have been moved into new structure.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am: Add TrackEditor, not yet used.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs: 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/Selection.cs:
+	* src/Core/Hyena/Hyena.Data/Selection.cs:
+	* src/Core/Hyena.Gui/Makefile.am:
+	* src/Core/Hyena/Makefile.am: Move Selection from Hyena.Gui to Hyena.
+
 2007-11-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena/Hyena.Data/ColumnDescription.cs: A non-GUI base class

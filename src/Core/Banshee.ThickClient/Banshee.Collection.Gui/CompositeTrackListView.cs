@@ -29,6 +29,7 @@
 using System;
 using Gtk;
 
+using Hyena.Data;
 using Hyena.Data.Gui;
 
 using Banshee.Collection;
@@ -91,7 +92,7 @@ namespace Banshee.Collection.Gui
         
         protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
         {
-            Hyena.Data.Gui.Selection selection = (Hyena.Data.Gui.Selection)o;
+            Hyena.Data.Selection selection = (Hyena.Data.Selection)o;
             object view = selection.Owner;
             TrackListModel model = track_view.Model as TrackListModel;
             

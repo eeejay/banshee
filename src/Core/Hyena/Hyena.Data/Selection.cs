@@ -29,10 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-// TODO: Should this go into Hyena.Data? It's not technically GUI bound
-//       but really is only useful in that context
-
-namespace Hyena.Data.Gui
+namespace Hyena.Data
 {
     public class Selection : IEnumerable<int>
     {
