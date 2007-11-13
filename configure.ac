@@ -14,12 +14,11 @@ AC_SUBST(ASM_VERSION)
 
 BANSHEE_CHECK_GATEKEEPER
 
-dnl Pieces needed by gnome-autogen; can't be parsed from macros
+dnl Pieces needed by autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
 AC_PROG_INTLTOOL([0.21])
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
-GNOME_COMPILE_WARNINGS
 
 dnl Expansions
 SHAMROCK_EXPAND_LIBDIR
