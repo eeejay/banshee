@@ -1,5 +1,18 @@
 2007-11-12  Aaron Bockover  <abock@gnome.org>
 
+	* Banshee.Services/Banshee.Collection/ImportManager.cs: Actually register
+	the user job with the manager, allow it to be cancelled, and show
+	a nice message if it is empty
+
+	* Banshee.Services/Banshee.Library/LibraryImportManager.cs: Implemented
+	the TagLib tag reading, make a nice display of the import process,
+	and do extension-based whitelisting as a precondition to the tag parse
+
+	* Banshee.Core/Banshee.Streaming/StreamTagger.cs: Fixed ProcessUri to
+	not check for a mimetype
+
+2007-11-12  Aaron Bockover  <abock@gnome.org>
+
 	* autogen.sh: Use my new autogen script that's been used in podsleuth 
 	and other projects - no dependency on gnome-autogen, which has been a
 	big pain for banshee; also sets -Wno-portability -Wno-syntax on automake

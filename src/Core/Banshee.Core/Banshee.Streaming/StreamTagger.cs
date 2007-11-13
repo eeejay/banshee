@@ -35,20 +35,14 @@ namespace Banshee.Streaming
 {
     public static class StreamTagger
     {
-        public static TagLib.File ProcessUri(SafeUri uri)
+        public static TagLib.File ProcessUri (SafeUri uri)
         {
-            string mimetype = null;
-            
-            try {
-                mimetype = Banshee.IO.IOProxy.DetectMimeType(uri);
-            } catch {
+            TagLib.File file = Banshee.IO.IOProxy.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+                null, TagLib.ReadStyle.Average);
+
+            if (file.Properties.MediaTypes != TagLib.MediaTypes.Audio) {
+                throw new TagLib.UnsupportedFormatException ("File contains more than just audio");
             }
-
-            TagLib.File file = Banshee.IO.IOProxy.OpenFile(uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
-                mimetype, TagLib.ReadStyle.Average);
-
-            if (file.Properties.MediaTypes != TagLib.MediaTypes.Audio)
-                throw new TagLib.UnsupportedFormatException ("File doesn't contain only audio");
             
             return file;
         }

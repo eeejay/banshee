@@ -1,80 +1,79 @@
 <Project name="Banshee.Services" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Banshee.Services" />
+      <Output directory="." assembly="Banshee.Services" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Banshee.Database/BansheeDbConnection.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Database/BansheeDbFormatMigrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/AlbumListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/ArtistListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/LibraryAlbumInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/LibraryArtistInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/LibraryTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Database/TrackListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/Source.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/SourceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/DatabaseSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlist/PlaylistSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library/LibrarySource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/Application.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/ITrackModelSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/ServiceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/ISourceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/DBusServiceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/IDBusExportable.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/IService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources/ISource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/ServiceStartedHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/IEqualizer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlayerEngineState.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlayerEngineEvent.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/AlbumListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ArtistListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ExportableModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/IExportableModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ModelHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/TrackListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Services.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.MediaEngine/PlayerEngineService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlaybackControllerService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/UserJobManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/IUserJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/UserJobEventHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/UserJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ServiceStack/TestUserJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ImportManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection/ImportEventHandler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library/LibraryImportManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library/HomeDirectoryImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library/IImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library/ImportSourceManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/AsxPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/InvalidPlaylistException.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/IPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/M3uPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/PlaylistFormatBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/PlaylistFormatDescription.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/PlaylistParser.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats/PlsPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Web/Browser.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Streaming" subtype="Directory" buildaction="Compile" />
-    <File name="./Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Database/BansheeDbConnection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Database/BansheeDbFormatMigrator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/AlbumListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/ArtistListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/LibraryAlbumInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/LibraryArtistInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/LibraryTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/TrackListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/Source.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/SourceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/DatabaseSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlist/PlaylistSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/LibrarySource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/Application.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/ITrackModelSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/ServiceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/ISourceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/DBusServiceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IDBusExportable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/ISource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/ServiceStartedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/IEqualizer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlayerEngine.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlayerEngineState.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlayerEngineEvent.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/AlbumListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ArtistListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ExportableModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/IExportableModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ModelHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/TrackListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Services.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.MediaEngine/PlayerEngineService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackControllerService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/UserJobManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IUserJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/UserJobEventHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/UserJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/TestUserJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ImportManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/ImportEventHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/LibraryImportManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/HomeDirectoryImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/IImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/ImportSourceManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/AsxPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/InvalidPlaylistException.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/IPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/M3uPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/PlaylistFormatBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/PlaylistFormatDescription.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/PlaylistParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats/PlsPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Web/Browser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -87,6 +86,7 @@
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Core" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.2.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="TagLib, Version=0.0.0.0, Culture=neutral" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

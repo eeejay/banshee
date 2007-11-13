@@ -1,10 +1,10 @@
 //
-// PlaybackActions.cs
+// ImportManager.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -75,6 +75,8 @@ namespace Banshee.Collection
                 user_job = new UserJob (Title, Title, Catalog.GetString ("Scanning for songs"));
                 user_job.IconNames = new string [] { "system-search", "gtk-find" };
                 user_job.CancelMessage = CancelMessage;
+                user_job.CanCancel = true;
+                user_job.Register ();
                 
                 total_count = 0;
                 processed_count = 0;
@@ -109,7 +111,7 @@ namespace Banshee.Collection
                 string disp_progress = String.Format (ProgressMessage, processed_count, total_count);
                 
                 user_job.Title = disp_progress;
-                user_job.Status = message;
+                user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
                 user_job.Progress = new_progress;
             }
         }
