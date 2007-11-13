@@ -61,6 +61,7 @@ SOURCES =  \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \
 	Banshee.Sources/DatabaseSource.cs \
+	Banshee.Sources/ErrorSource.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \
 	Banshee.Sources/ITrackModelSource.cs \
@@ -69,9 +70,9 @@ SOURCES =  \
 	Banshee.Streaming/RadioTrackInfo.cs \
 	Banshee.Web/Browser.cs
 
-RESOURCES = \
-	Banshee.Services.addins \
-	Banshee.Services.addin.xml
+RESOURCES =  \
+	Banshee.Services.addin.xml \
+	Banshee.Services.addins
 
 module_DATA = Banshee.Services.addins
 

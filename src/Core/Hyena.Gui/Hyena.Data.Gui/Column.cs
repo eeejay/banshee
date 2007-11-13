@@ -31,91 +31,66 @@ using System.Collections;
 using System.Collections.Generic;
 using Gtk;
 
+using Hyena.Data;
+
 namespace Hyena.Data.Gui
 {
-    public class Column : IEnumerable<ColumnCell>
+    public class Column : ColumnDescription, IEnumerable<ColumnCell>
     {
-        private string title;
-        private double width;
-        private bool visible;
         private ColumnCell header_cell;
-        private List<ColumnCell> cells = new List<ColumnCell>();
+        private List<ColumnCell> cells = new List<ColumnCell> ();
         
-        public event EventHandler VisibilityChanged;
+        public Column (ColumnDescription description) :
+            this (description, new ColumnCellText (true, description.FieldIndex))
+        {
+        }
         
-        public Column(string title, ColumnCell cell, double width) : this(null, title, cell, width)
+        public Column (ColumnDescription description, ColumnCell cell) 
+            : this (description.Title, cell, description.Width)
+        {
+            Visible = description.Visible;
+        }
+        
+        public Column (string title, ColumnCell cell, double width) : this (null, title, cell, width)
         {
             this.header_cell = new ColumnHeaderCellText(HeaderCellDataHandler);
         }
         
-        public Column(ColumnCell header_cell, string title, ColumnCell cell, double width)
+        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width) 
+            : base (title, width, cell.FieldIndex, true)
         {
-            this.title = title;
-            this.width = width;
-            this.visible = true;
             this.header_cell = header_cell;
-            
             PackStart(cell);
         }
         
-        private Column HeaderCellDataHandler()
+        private Column HeaderCellDataHandler ()
         {
             return this;
         }
         
-        public void PackStart(ColumnCell cell)
+        public void PackStart (ColumnCell cell)
         {
-            cells.Insert(0, cell);
+            cells.Insert (0, cell);
         }
         
-        public void PackEnd(ColumnCell cell)
+        public void PackEnd (ColumnCell cell)
         {
-            cells.Add(cell);
+            cells.Add (cell);
         }
         
-        public ColumnCell GetCell(int index) 
+        public ColumnCell GetCell (int index) 
         {
             return cells[index];
         }
         
-        protected virtual void OnVisibilityChanged()
+        IEnumerator IEnumerable.GetEnumerator ()
         {
-            EventHandler handler = VisibilityChanged;
-            if(handler != null) {
-                handler(this, new EventArgs());
-            }
+            return cells.GetEnumerator ();
         }
         
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator<ColumnCell> IEnumerable<ColumnCell>.GetEnumerator ()
         {
-            return cells.GetEnumerator();
-        }
-        
-        IEnumerator<ColumnCell> IEnumerable<ColumnCell>.GetEnumerator()
-        {
-            return cells.GetEnumerator();
-        }
-        
-        public string Title {
-            get { return title; }
-            set { title = value; }
-        }
-        
-        public double Width {
-            get { return width; }
-            set { width = value; }
-        }
-        
-        public bool Visible {
-            get { return visible; }
-            set {
-                bool old = Visible;
-                visible = value;
-                
-                if(value != old) {
-                    OnVisibilityChanged();
-                }
-            }
+            return cells.GetEnumerator ();
         }
         
         public ColumnCell HeaderCell {

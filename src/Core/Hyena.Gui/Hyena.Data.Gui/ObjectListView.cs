@@ -1,10 +1,10 @@
 //
-// LibrarySource.cs
+// ObjectListView.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,39 +27,29 @@
 //
 
 using System;
-using Mono.Unix;
 
-using Banshee.Sources;
-
-namespace Banshee.Library
+namespace Hyena.Data.Gui
 {
-    public class LibrarySource : DatabaseSource
+    public class ObjectListView : ListView<object>
     {
-        private ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
-        private bool error_source_visible = false;
-    
-        public LibrarySource () : base (Catalog.GetString ("Library"), 0)
+        private ColumnController column_controller;
+        
+        public ObjectListView () : base ()
         {
-            Properties.SetStringList ("IconName", "audio-x-generic", "go-home", "user-home", "source-library");
-            AfterInitialized ();
-            
-            error_source.Updated += OnErrorSourceUpdated;
-            OnErrorSourceUpdated (null, null);
+            ColumnController = new ColumnController();
         }
         
-        private void OnErrorSourceUpdated (object o, EventArgs args)
+        protected override void OnModelReloaded ()
         {
-            if (error_source.Count > 0 && !error_source_visible) {
-                AddChildSource (error_source);
-                error_source_visible = true;
-            } else if (error_source.Count <= 0 && error_source_visible) {
-                RemoveChildSource (error_source);
-                error_source_visible = false;
+            ColumnController.Clear ();
+            foreach (ColumnDescription column_description in Model.ColumnDescriptions) {
+                ColumnController.Append (new Column (column_description));
             }
         }
         
-        public ErrorSource ErrorSource {
-            get { return error_source; }
+        public new IObjectListModel Model {
+            get { return (IObjectListModel)base.Model; }
+            set { base.Model = value; }
         }
     }
 }

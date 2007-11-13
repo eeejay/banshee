@@ -10,6 +10,7 @@ SOURCES =  \
 	Hyena.Data.Gui/ColumnHeaderCellText.cs \
 	Hyena.Data.Gui/ListView.cs \
 	Hyena.Data.Gui/ListViewGraphics.cs \
+	Hyena.Data.Gui/ObjectListView.cs \
 	Hyena.Data.Gui/Selection.cs \
 	Hyena.Data.Gui/SortableColumn.cs \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \

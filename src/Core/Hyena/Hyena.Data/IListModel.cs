@@ -34,9 +34,14 @@ namespace Hyena.Data
     {
         event EventHandler Cleared;
         event EventHandler Reloaded;
-        void Clear();
-        void Reload();
-        T GetValue(int index);
+        void Clear ();
+        void Reload ();
+        T GetValue (int index);
         int Rows { get; }
+    }
+    
+    public interface IObjectListModel : IListModel<object>
+    {
+        ColumnDescription [] ColumnDescriptions { get; }
     }
 }

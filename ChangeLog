@@ -1,5 +1,37 @@
 2007-11-13  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena/Hyena.Data/ColumnDescription.cs: A non-GUI base class
+	for columns, so basic column setup can be done at the model level
+
+	* src/Core/Hyena/Hyena.Data/IListModel.cs: Added IObjectListModel
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Support IObjectListModel 
+	sources
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/Column.cs: Extend ColumnDescription
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ObjectListView.cs: Wrapper view for
+	simple IObjectListModels
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Be eventful
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Make some model event
+	handler methods virtual
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Call 
+	source.Activate after raising the notification of change
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs: Implement
+	a simple IObjectListModel source for displaying errors
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Add a 
+	child ErrorSource
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Add
+	import errors to the Library's ErrorSource
+
+2007-11-13  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: 
 	* src/Core/Nereid/banshee2.in: For the sake of development, call the
 	project "banshee2" - this means trunk will be installed to 

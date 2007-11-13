@@ -13,6 +13,7 @@ SOURCES =  \
 	Hyena.Data.Query/QueryTermNode.cs \
 	Hyena.Data.Query/QueryToken.cs \
 	Hyena.Data.Query/SqlQueryGenerator.cs \
+	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/ICareAboutView.cs \
 	Hyena.Data/IFilterable.cs \
 	Hyena.Data/IListModel.cs \

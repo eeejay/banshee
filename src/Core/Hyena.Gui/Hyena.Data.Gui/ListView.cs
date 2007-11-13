@@ -184,9 +184,18 @@ namespace Hyena.Data.Gui
         public ColumnController ColumnController {
             get { return column_controller; }
             set { 
+                if (column_controller != null) {
+                    column_controller.Updated -= OnColumnControllerUpdatedHandler;
+                }
+                
                 column_controller = value;
+                
                 RegenerateColumnCache();
                 QueueDraw();
+                
+                if (column_controller != null) {
+                    column_controller.Updated += OnColumnControllerUpdatedHandler;
+                }
             }
         }
         
@@ -194,15 +203,15 @@ namespace Hyena.Data.Gui
             get { return model; }
             set {
                 if(model != value && model != null) {
-                    model.Cleared -= OnModelCleared;
-                    model.Reloaded -= OnModelReloaded;
+                    model.Cleared -= OnModelClearedHandler;
+                    model.Reloaded -= OnModelReloadedHandler;
                 }
                 
                 model = value;
                 
                 if(model != null) {
-                    model.Cleared += OnModelCleared;
-                    model.Reloaded += OnModelReloaded;
+                    model.Cleared += OnModelClearedHandler;
+                    model.Reloaded += OnModelReloadedHandler;
                 }
                 
                 RefreshViewForModel();
@@ -875,14 +884,35 @@ namespace Hyena.Data.Gui
             }
         }
 
-        private void OnModelCleared(object o, EventArgs args)
+        private void OnModelClearedHandler(object o, EventArgs args)
+        {
+            OnModelCleared ();
+        }
+        
+        private void OnModelReloadedHandler(object o, EventArgs args)
+        {
+            OnModelReloaded ();
+        }
+        
+        private void OnColumnControllerUpdatedHandler(object o, EventArgs args)
+        {
+            OnColumnControllerUpdated();
+        }
+
+        protected virtual void OnModelCleared()
         {
             RefreshViewForModel();
         }
         
-        private void OnModelReloaded(object o, EventArgs args)
+        protected virtual void OnModelReloaded()
         {
             RefreshViewForModel();
+        }
+        
+        protected virtual void OnColumnControllerUpdated()
+        {
+            RegenerateColumnCache();
+            QueueDraw();
         }
 
 #endregion

@@ -30,6 +30,7 @@ using System;
 using System.IO;
 
 using Banshee.Base;
+using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Streaming;
@@ -101,9 +102,17 @@ namespace Banshee.Library
                 
                 IncrementProcessedCount (message);
             } catch (Exception e) {
-                Log.Error (String.Format ("Could not import `{0}'", path), e.Message, false);
+                LogError (path, e);
                 IncrementProcessedCount (null);
             }
+        }
+
+        private void LogError (string path, Exception e)
+        {
+            ErrorSource error_source = ((LibrarySource)ServiceManager.SourceManager.DefaultSource).ErrorSource;
+            error_source.AddMessage (Path.GetFileName (path), e.Message);
+            
+            Log.Error (path, e.Message, false);
         }
 
         protected override void OnImportFinished ()

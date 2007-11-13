@@ -57,6 +57,8 @@ namespace Nereid
         // Major Interaction Components
         private SourceView source_view;
         private CompositeTrackListView track_view;
+        private ScrolledWindow object_view_scroll;
+        private ObjectListView object_view;
         
         // Cached service references
         private GtkElementsService elements_service;
@@ -243,6 +245,8 @@ namespace Nereid
                 return;
             }
             
+            view_container.Title = source.Name;
+            
             view_container.SearchEntry.Ready = false;
             view_container.SearchEntry.CancelSearch ();
 
@@ -251,21 +255,34 @@ namespace Nereid
                 view_container.SearchEntry.ActivateFilter((int)source.FilterType);
             }
             
-            view_container.Title = source.Name;
-            
             // Clear any models previously connected to the views            
             track_view.TrackModel = null;
             track_view.ArtistModel = null;
             track_view.AlbumModel = null;
             track_view.TrackView.HeaderVisible = false;
             
+            if (object_view != null) {
+                object_view.Model = null;
+            }
+            
             // Connect the source models to the views if possible
-            if(source is ITrackModelSource) {
+            if (source is ITrackModelSource) {
                 ITrackModelSource track_source = (ITrackModelSource)source;
                 track_view.TrackModel = track_source.TrackModel;
                 track_view.ArtistModel = track_source.ArtistModel;
                 track_view.AlbumModel = track_source.AlbumModel;
                 track_view.TrackView.HeaderVisible = true;
+                view_container.Content = track_view;
+            } else if (source is Hyena.Data.IObjectListModel) {
+                if (object_view == null) {
+                    object_view_scroll = new ScrolledWindow ();
+                    object_view = new Hyena.Data.Gui.ObjectListView ();
+                    object_view_scroll.Add (object_view);
+                    object_view.Show ();
+                }
+                
+                object_view.Model = (Hyena.Data.IObjectListModel)source;
+                view_container.Content = object_view_scroll;
             }
             
             view_container.SearchEntry.Ready = true;

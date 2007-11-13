@@ -34,36 +34,71 @@ namespace Hyena.Data.Gui
 {    
     public class ColumnController : IEnumerable<Column>
     {
-        private List<Column> columns = new List<Column>();
+        private List<Column> columns = new List<Column> ();
         
-        public void Append(Column column)
+        public event EventHandler Updated;
+        
+        protected virtual void OnUpdated ()
         {
-            columns.Add(column);
+            EventHandler handler = Updated;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
         }
         
-        public void Insert(Column column, int index)
+        public void Clear ()
         {
-            columns.Insert(index, column);
+            lock (this) {
+                columns.Clear ();
+            }
+            
+            OnUpdated ();
         }
         
-        public void Remove(Column column)
+        public void Append (Column column)
         {
-            columns.Remove(column);
+            lock (this) {
+                columns.Add (column);
+            }
+            
+            OnUpdated ();
         }
         
-        public void Remove(int index)
+        public void Insert (Column column, int index)
         {
-            columns.RemoveAt(index);
+            lock (this) {
+                columns.Insert (index, column);
+            }
+            
+            OnUpdated ();
         }
         
-        IEnumerator IEnumerable.GetEnumerator()
+        public void Remove (Column column)
         {
-            return columns.GetEnumerator();
+            lock (this) {
+                columns.Remove (column);
+            }
+            
+            OnUpdated ();
         }
         
-        IEnumerator<Column> IEnumerable<Column>.GetEnumerator()
+        public void Remove (int index)
         {
-            return columns.GetEnumerator();
+            lock (this) {
+                columns.RemoveAt (index);
+            }
+            
+            OnUpdated ();
+        }
+        
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return columns.GetEnumerator ();
+        }
+        
+        IEnumerator<Column> IEnumerable<Column>.GetEnumerator ()
+        {
+            return columns.GetEnumerator ();
         }
         
         public Column this[int index] {

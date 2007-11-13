@@ -218,9 +218,9 @@ namespace Banshee.Sources
             }
             
             active_source = source;
-            source.Activate();
             
             if(!notify) {
+                source.Activate();
                 return;
             }
             
@@ -230,6 +230,8 @@ namespace Banshee.Sources
                 args.Source = active_source;
                 handler(args);
             }
+            
+            source.Activate();
         }
      
         public ICollection<Source> Sources {
