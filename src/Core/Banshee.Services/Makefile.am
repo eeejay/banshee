@@ -69,7 +69,11 @@ SOURCES =  \
 	Banshee.Streaming/RadioTrackInfo.cs \
 	Banshee.Web/Browser.cs
 
-RESOURCES = Banshee.Services.addin.xml
+RESOURCES = \
+	Banshee.Services.addins \
+	Banshee.Services.addin.xml
+
+module_DATA = Banshee.Services.addins
 
 include $(top_srcdir)/build/build.mk
 

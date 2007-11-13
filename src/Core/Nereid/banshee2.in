@@ -2,7 +2,7 @@
 
 prefix=@prefix@
 libdir=@expanded_libdir@
-exec_asm="Nereid/Nereid.exe"
+exec_asm="Nereid.exe"
 MONO_EXE="@expanded_libdir@/@PACKAGE@/$exec_asm"
 
 export DYLD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${DYLD_LIBRARY_PATH+:$DYLD_LIBRARY_PATH}
@@ -10,5 +10,5 @@ export LD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${LD_LIBRARY
 export GST_PLUGIN_PATH=@expanded_libdir@/@PACKAGE@/gstreamer-0.10${GST_PLUGIN_PATH+:$GST_PLUGIN_PATH}
 
 # Finally - environment is set up, time to run our beloved
-exec -a nereid mono --debug $MONO_EXE "$@"
+exec -a banshee2 mono --debug $MONO_EXE "$@"
 

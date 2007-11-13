@@ -1,6 +1,6 @@
 dnl Automake setup
 
-AC_INIT([banshee], [0.90.1])
+AC_INIT([banshee2], [0.90.1])
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
@@ -91,7 +91,7 @@ dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
 
 dnl i18n
-SHAMROCK_CONFIGURE_I18N(banshee)
+SHAMROCK_CONFIGURE_I18N(banshee2)
 
 dnl generated files
 AC_OUTPUT([
@@ -132,7 +132,7 @@ src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
 src/Core/Banshee.Widgets/Banshee.Widgets.dll.config
 src/Core/Nereid/Makefile
-src/Core/Nereid/nereid
+src/Core/Nereid/banshee2
 
 src/Dap/Makefile
 src/Dap/Banshee.Dap.Ipod/Makefile

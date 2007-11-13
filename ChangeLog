@@ -1,3 +1,22 @@
+2007-11-13  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: 
+	* src/Core/Nereid/banshee2.in: For the sake of development, call the
+	project "banshee2" - this means trunk will be installed to 
+	$(libdir)/banshee2 and the executable is "banshee2" NOTE: this does not
+	mean "Banshee v2.0!" This change is only temporary for the sake of allowing
+	trunk to be installed without conflicting with stable. Do not read too
+	much into the 2 part :)
+
+	Do rm -rf ~/.config/banshee/addins after make install to ensure the
+	installed version runs cleanly.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.addins: Include a .addins
+	file to tell Mono.Addins where to look for installed addins
+
+	* build/build.environment.mk: Install to pkglibdir again
+
 2007-11-12  Aaron Bockover  <abock@gnome.org>
 
 	* Banshee.Services/Banshee.Collection/ImportManager.cs: Actually register

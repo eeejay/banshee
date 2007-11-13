@@ -7,7 +7,7 @@ SOURCES =  \
 	Nereid/PlayerWindowSchema.cs \
 	Nereid/ViewContainer.cs
 
-bin_SCRIPTS = nereid
+bin_SCRIPTS = banshee2
 
 include $(top_srcdir)/build/build.mk
 
