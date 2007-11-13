@@ -1,61 +1,61 @@
 <Project name="Banshee.ThickClient" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Banshee.ThickClient" />
+      <Output directory="." assembly="Banshee.ThickClient" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Resources/browser-album-cover.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Collection.Gui/TrackListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/CompositeTrackListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/ColumnCellAlbum.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/ArtworkManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/ArtistListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/AlbumListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Sources.Gui/SourceView.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/IconThemeUtils.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/GladeDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/GladeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/GtkElementsService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/BansheeIconFactory.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/InterfaceActionService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Resources/core-ui-actions-layout.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Gui/PlaybackActions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/GlobalActions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Widgets/ConnectedVolumeButton.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Resources/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Resources/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Gui.Widgets/ConnectedSeekSlider.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Widgets/TrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Widgets/UserJobTile.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Widgets/UserJobTileHost.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/CommonServices.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui/GtkBaseClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/SeekDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Resources/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Library.Gui/FileImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library.Gui/FolderImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.ThickClient.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Gui.Dialogs/FileChooserDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/ImageFileChooserDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Library.Gui/ImportDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Banshee.Gui.Dialogs/AboutDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Resources/banshee-logo.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./Banshee.Gui.Dialogs/OpenLocationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/browser-album-cover.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Collection.Gui/TrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/CompositeTrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ColumnCellAlbum.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ArtworkManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ArtistListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/AlbumListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/SourceView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.DragDrop/DragDropList.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.DragDrop/DragDropTarget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.DragDrop/DragDropUtilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/IconThemeUtils.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/ErrorListDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/GladeDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/GladeWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/GtkElementsService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/BansheeIconFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/InterfaceActionService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/core-ui-actions-layout.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Gui/PlaybackActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/GlobalActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/ConnectedVolumeButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Gui.Widgets/ConnectedSeekSlider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/TrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/UserJobTile.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/UserJobTileHost.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/CommonServices.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/GtkBaseClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/SeekDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/banshee-dialogs.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Library.Gui/FileImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library.Gui/FolderImportSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ThickClient.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Gui.Dialogs/FileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/ImageFileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library.Gui/ImportDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Dialogs/AboutDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/banshee-logo.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Gui.Dialogs/OpenLocationDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />
