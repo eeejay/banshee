@@ -8,6 +8,6 @@
     <Execute type="None" entry="Banshee.GStreamer" />
   </StartMode>
   <Entries>
-    <Entry filename="./Banshee.GStreamer/Banshee.GStreamer.mdp" />
+    <Entry filename="Banshee.GStreamer/Banshee.GStreamer.mdp" />
   </Entries>
 </Combine>

@@ -21,12 +21,12 @@
     <Execute type="None" entry="Banshee.ThickClient" />
   </StartMode>
   <Entries>
-    <Entry filename="./Banshee.Widgets/Banshee.Widgets.mdp" />
-    <Entry filename="./Hyena/Hyena.mdp" />
-    <Entry filename="./Hyena.Gui/Hyena.Gui.mdp" />
-    <Entry filename="./Banshee.Services/Banshee.Services.mdp" />
-    <Entry filename="./Banshee.Core/Banshee.Core.mdp" />
-    <Entry filename="./Nereid/Nereid.mdp" />
-    <Entry filename="./Banshee.ThickClient/Banshee.ThickClient.mdp" />
+    <Entry filename="Banshee.Widgets/Banshee.Widgets.mdp" />
+    <Entry filename="Hyena/Hyena.mdp" />
+    <Entry filename="Hyena.Gui/Hyena.Gui.mdp" />
+    <Entry filename="Banshee.Services/Banshee.Services.mdp" />
+    <Entry filename="Banshee.Core/Banshee.Core.mdp" />
+    <Entry filename="Nereid/Nereid.mdp" />
+    <Entry filename="Banshee.ThickClient/Banshee.ThickClient.mdp" />
   </Entries>
 </Combine>
