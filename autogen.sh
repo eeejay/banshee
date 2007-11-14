@@ -61,7 +61,7 @@ check_autotool_version pkg-config 0.14.0
 run libtoolize --force --copy
 run glib-gettextize --force --copy
 run intltoolize --force --copy --automake
-run aclocal -I build/m4/banshee -I build/m4/shamrock
+run aclocal -I build/m4/banshee -I build/m4/shamrock $ACLOCAL_FLAGS
 run autoconf
 run autoheader
 test -f config.h.in && touch config.h.in
