@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-29 03:29+0000\n"
-"PO-Revision-Date: 2007-11-03 14:04+0100\n"
+"PO-Revision-Date: 2007-11-14 14:54+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,10 @@ msgstr "Códec de audio libre sin pérdida"
 msgid ""
 "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
 "does not degrade audio quality."
-msgstr "El códec de sonido libre y sin pérdida (Free Lossless Audio Codec, FLAC) es un códec de fuente abierta que comprime pero no degrada la calidad del sonido."
+msgstr ""
+"El códec de sonido libre y sin pérdida (Free Lossless Audio Codec, FLAC) es "
+"un códec de fuente abierta que comprime pero no degrada la calidad del "
+"sonido."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
@@ -62,8 +65,8 @@ msgid ""
 "A proprietary and older, but also popular, lossy audio format that produces "
 "larger files at lower bitrates."
 msgstr ""
-"Un formato de sonido con pérdida viejo y propietario, pero también popular, que produce "
-"archivos más grandes a bajas tasas de bit."
+"Un formato de sonido con pérdida viejo y propietario, pero también popular, "
+"que produce archivos más grandes a bajas tasas de bit."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
@@ -120,16 +123,16 @@ msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
-"Vorbis es un códec de sonido con pérdida de fuente abierta con una gran calidad de salida y con "
-"un tamaño de archivo menor que MP3."
+"Vorbis es un códec de sonido con pérdida de fuente abierta con una gran "
+"calidad de salida y con un tamaño de archivo menor que MP3."
 
 #: ../data/audio-profiles/wav.xml.in.h:1
 msgid ""
 "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
 "modulated (PCM) audio."
 msgstr ""
-"WAV+PCM es un formato de archivo con pérdida que mantiene el sonido sin compresión, con "
-"modulación de pulsos codificados."
+"WAV+PCM es un formato de archivo con pérdida que mantiene el sonido sin "
+"compresión, con modulación de pulsos codificados."
 
 #: ../data/audio-profiles/wav.xml.in.h:2
 msgid "Waveform PCM"
@@ -1391,7 +1394,9 @@ msgstr "Migrar desde otros reproductores"
 msgid ""
 "Select any supported alternate media players that you wish to migrate into "
 "Banshee."
-msgstr "Seleccione cualquier reproductor multimedia disponible que desee migrar a Banshee."
+msgstr ""
+"Seleccione cualquier reproductor multimedia disponible que desee migrar a "
+"Banshee."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:81
 #: ../src/Core/Banshee.Base/SourceManager.cs:269
@@ -1411,7 +1416,9 @@ msgstr "No se pudo localizar ningún reproductor multimedia soportado"
 msgid ""
 "Banshee was unable to locate any libraries from alternate supported media "
 "players from which to import."
-msgstr "Banshee no pudo localizar ninguna fonoteca para importar de reproductores multimedia alternativos."
+msgstr ""
+"Banshee no pudo localizar ninguna fonoteca para importar de reproductores "
+"multimedia alternativos."
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/PlayerImportDialog.cs:112
 msgid "Migrate"
@@ -1790,8 +1797,9 @@ msgid ""
 "{0} is depended on by other smart playlists. Are you sure you want to delete "
 "this and all dependent smart playlists?"
 msgstr ""
-"Otras listas de reproducción inteligentes dependen de {0}. ¿Está seguro de que quiere borrar "
-"esta lista de reproducción inteligente y todas sus dependencias?"
+"Otras listas de reproducción inteligentes dependen de {0}. ¿Está seguro de "
+"que quiere borrar esta lista de reproducción inteligente y todas sus "
+"dependencias?"
 
 #: ../src/Core/Banshee.Base/Banshee.Web/Browser.cs:43
 msgid "Could not launch URL"
@@ -2608,7 +2616,9 @@ msgstr "Expansión de la fuente de la fonoteca"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:23
 msgid "List of URIs in the history drop-down for the open location dialog"
-msgstr "Lista de los URI en el menú desplegable histórico para el diálogo de abrir ubicación"
+msgstr ""
+"Lista de los URI en el menú desplegable histórico para el diálogo de abrir "
+"ubicación"
 
 #: ../src/Core/Banshee.Base/banshee-core.schemas.in.h:24
 msgid "Move music on info save"
@@ -3887,8 +3897,9 @@ msgid ""
 "Are you sure you want to stop downloading cover art for the albums in your "
 "library? The operation can be resumed at any time from the <i>Tools</i> menu."
 msgstr ""
-"¿Seguro que quiere dejar de descargar el arte de portada para los álbumes en su "
-"fonoteca? La operación se puede resumir en cualquier momento desde el menú <i>Herramientas</i>."
+"¿Seguro que quiere dejar de descargar el arte de portada para los álbumes en "
+"su fonoteca? La operación se puede resumir en cualquier momento desde el "
+"menú <i>Herramientas</i>."
 
 #: ../src/Plugins/Banshee.Plugins.MetadataSearch/banshee-plugin-metadatasearcher.schemas.in.h:1
 msgid "Metadata searcher plugin enabled"
@@ -3899,26 +3910,28 @@ msgid ""
 "Mini Mode allows controlling Banshee through a small window with only "
 "playback controls and track information."
 msgstr ""
+"El modo mini permite controlar Banshee a través de una pequeña ventana con sólo "
+"controlres de reproducción e información acerca de la pista."
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModePlugin.cs:63
 msgid "_Mini Mode"
-msgstr ""
+msgstr "Modo _mini"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:154
 msgid "Switch back to full mode"
-msgstr ""
+msgstr "Cambiar a modo completo"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/banshee-plugin-minimode.schemas.in.h:1
 msgid "MiniMode plugin enabled"
-msgstr ""
+msgstr "Complemento de Minimodo activado"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:1
 msgid "<b><big>This is the title</big></b>"
-msgstr ""
+msgstr "<b><big>Éste es el título</big></b>"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:2
 msgid "<i>This is the album</i>"
-msgstr ""
+msgstr "<i>Éste es el álbum</i>"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:4
 msgid "Current source:"
@@ -3926,7 +3939,7 @@ msgstr "Fuente actual:"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:5
 msgid "Full Mode"
-msgstr ""
+msgstr "Modo completo"
 
 #: ../src/Plugins/Banshee.Plugins.MiniMode/minimode.glade.h:6
 msgid "This is the artist"
@@ -3944,7 +3957,7 @@ msgstr "Mostrar notificaciones cuando se cambie de canción"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconConfigPage.cs:71
 msgid "Quit Banshee when title bar close button is clicked"
-msgstr ""
+msgstr "Salir de Banshee cuando se pulsa el botón de cerrar de la barra de título"
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:64
 msgid "Shows the Notification Area Icon"
@@ -3971,6 +3984,8 @@ msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
 msgstr ""
+"Banshee se minimizó al área de notificación. Use la opción <i>Salir</i> para "
+"terminar su sesión."
 
 #: ../src/Plugins/Banshee.Plugins.NotificationAreaIcon/NotificationAreaIconPlugin.cs:288
 msgid "Now Playing"
@@ -4010,11 +4025,11 @@ msgstr ""
 msgid ""
 "When the main window is closed, show a notification stating this has "
 "happened."
-msgstr ""
+msgstr "Mostrar una notificación indicando lo que ha pasado cuando se cierra la ventana principal."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:176
 msgid "DownloadCore is shutting down."
-msgstr ""
+msgstr "DownloadCore está apagado."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadCore.cs:180
 #: ../src/Plugins/Banshee.Plugins.Podcast/DownloadCore/DownloadQueue.cs:78
@@ -4178,7 +4193,7 @@ msgstr "Esperando a que termine la actualización"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastFeedInfo.cs:709
 msgid "Title Property Changed"
-msgstr ""
+msgstr "Se cambió la propiedad del título"
 
 #. Should users be notified of this?
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastLibrary.cs:762
@@ -4198,6 +4213,11 @@ msgid ""
 "Its name comes from the targeting of audio posts to Apple's iPod® audio "
 "player, although podcasts can be listened to directly in {0}."
 msgstr ""
+"Podcasting es una forma de audio blogging donde los usuarios se suscriben a una fuente de "
+"noticias y sus episodios se descargan y gestionan para una audición sin conexión.\n"
+"\n"
+"Su nombre proviene de los episodios de sonido para el reproductor de Apple iPod®, "
+"aunque los podcasts se pueden escuchar directamente en {0}."
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
