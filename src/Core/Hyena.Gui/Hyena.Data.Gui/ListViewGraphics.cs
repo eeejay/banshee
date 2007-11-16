@@ -45,7 +45,7 @@ namespace Hyena.Data.Gui
     
     public class ListViewGraphics
     {
-        private const int border_radius = 5;
+        private const int border_radius = 3;
         
         private Cairo.Color [] gtk_colors;
         
@@ -255,9 +255,9 @@ namespace Hyena.Data.Gui
         public void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height)
         {
             Cairo.Color selection_color = GetWidgetColor(GtkColorClass.Background, StateType.Selected);
-            Cairo.Color selection_stroke = CairoExtensions.ColorShade(selection_color, 0.75);
+            Cairo.Color selection_stroke = CairoExtensions.ColorShade(selection_color, 0.85);
             Cairo.Color selection_fill_light = CairoExtensions.ColorShade(selection_color, 1.1);
-            Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.85);
+            Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.90);
             
             LinearGradient grad = new LinearGradient(x, y, x, y + height);
             grad.AddColorStop(0, selection_fill_light);
