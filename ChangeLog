@@ -1,3 +1,14 @@
+2007-11-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Comment out verbose debugging output.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Add
+	--db option for specifying exactly what database file to use.  Helpful for
+	being able to use stable and trunk versions simultaneously.
+
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
@@ -63,14 +74,14 @@
 2007-11-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data/CacheableModelAdapter.cs: New abstract class
-	that partially implements a Dictionary-based caching strategry for models.
+	that partially implements a Dictionary-based caching strategy for models.
 
 	* src/Core/Hyena/Hyena.Data/ICacheableModel.cs: Interface that Models must
 	implement to work with CacheableModelAdapters.
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseModel.cs:
 	Interface that defines basic database-related properties on Models that
-	the adeapter needs to generically implement limit/offset based lookups on
+	the adapter needs to generically implement limit/offset based lookups on
 	the model.
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:

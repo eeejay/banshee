@@ -81,13 +81,13 @@ namespace Banshee.Collection.Database
             using (new Timer (String.Format ("Generating cache table for {0}", db_model))) {
                 IDbCommand command = connection.CreateCommand ();
                 command.CommandText = reload_command + db_model.ReloadFragment;
-                Console.WriteLine (command.CommandText);
+                //Console.WriteLine (command.CommandText);
                 command.ExecuteNonQuery ();
             }
 
             int rows;
-            using (new Timer (String.Format ("Counting tracks for {0}", db_model))) {
-                Console.WriteLine("Count query: {0}", count_command);
+            using (new Timer (String.Format ("Counting items for {0}", db_model))) {
+                //Console.WriteLine("Count query: {0}", count_command);
                 IDbCommand command = connection.CreateCommand ();
                 command.CommandText = count_command;
                 rows = Convert.ToInt32 (command.ExecuteScalar ());
@@ -110,10 +110,10 @@ namespace Banshee.Collection.Database
                 uid, db_model.FetchCondition, offset, limit
             );
 
-            using(new Timer(String.Format ("Loading {0} Set", db_model))) {
+            using(new Timer(String.Format ("Fetching set for {0}", db_model))) {
                 IDbCommand command = connection.CreateCommand ();
                 command.CommandText = select_query;
-                Console.WriteLine (command.CommandText);
+                //Console.WriteLine (command.CommandText);
                 IDataReader reader = command.ExecuteReader ();
 
                 int i = offset;

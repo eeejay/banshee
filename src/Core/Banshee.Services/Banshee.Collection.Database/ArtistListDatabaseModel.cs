@@ -78,15 +78,10 @@ namespace Banshee.Collection.Database
         
         public override ArtistInfo this[int index] {
             get {
-                if (index == 0) {
-                    Console.WriteLine ("returning select_all_artist for index = 0");
+                if (index == 0)
                     return select_all_artist;
-                }
 
-                ArtistInfo ai = cache.GetValue (index - 1);
-                Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Name, index - 1);
-                return ai;
-                //return cache.GetValue (index - 1);
+                return cache.GetValue (index - 1);
             }
         }
         

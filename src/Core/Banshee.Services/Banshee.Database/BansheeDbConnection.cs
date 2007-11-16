@@ -31,6 +31,7 @@ using System.IO;
 using System.Data;
 using Mono.Data.SqliteClient;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 
 namespace Banshee.Database
@@ -170,12 +171,10 @@ namespace Banshee.Database
         }
 
         public string DatabaseFile {
-            get { 
-                string [] args = Environment.GetCommandLineArgs();
-                if(args.Length > 1 && File.Exists(args[1])) {
-                    return args[1];
-                }
-            
+            get {
+                if (ApplicationContext.Contains ("db"))
+                    return ApplicationContext.CommandLine["db"];
+
                 string dbfile = Path.Combine(Path.Combine(Environment.GetFolderPath(
                     Environment.SpecialFolder.ApplicationData), 
                     "banshee"), 
