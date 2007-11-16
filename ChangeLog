@@ -1,5 +1,10 @@
 2007-11-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Fix small build-stopping bug.
+
+2007-11-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data/CacheableModelAdapter.cs: New abstract class
 	that partially implements a Dictionary-based caching strategry for models.
 

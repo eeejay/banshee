@@ -117,9 +117,9 @@ namespace Banshee.Collection.Database
 
                 int i = offset;
                 while (reader.Read()) {
-                    if (!cache.ContainsKey(i)) {
+                    if (!Cache.ContainsKey(i)) {
                         T item = db_model.GetItemFromReader (reader);
-                        cache.Add (i, item);
+                        Cache.Add (i, item);
                     }
                     i++;
                 }
