@@ -481,7 +481,7 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.Down:
                     vadjustment.Value += vadjustment.StepIncrement;
                     
-                    if(focused_row_index < Model.Rows - 1) {
+                    if(focused_row_index < Model.Count - 1) {
                         focused_row_index++;
                         InvalidateListWindow();
                     }
@@ -522,7 +522,7 @@ namespace Hyena.Data.Gui
                 GrabFocus ();
                     
                 int row_index = GetRowAtY ((int) evnt.Y);
-                object item = model.GetValue (row_index);
+                object item = model[row_index];
                 if (item == null) {
                     return true;
                 }
@@ -593,7 +593,7 @@ namespace Hyena.Data.Gui
             }
             
             if(vadjustment != null && model != null) {
-                vadjustment.Upper = RowHeight * model.Rows + HeaderHeight;
+                vadjustment.Upper = RowHeight * model.Count + HeaderHeight;
                 vadjustment.StepIncrement = RowHeight;
             }
             
@@ -724,7 +724,7 @@ namespace Hyena.Data.Gui
             
             int rows = RowsInView;
             int first_row = (int)vadjustment.Value / RowHeight;
-            int last_row = Math.Min(model.Rows, first_row + rows);
+            int last_row = Math.Min(model.Count, first_row + rows);
             
             // Compute a stack of Contiguous Selection Rectangles
             Stack<SelectionRectangle> cg_s_rects = new Stack<SelectionRectangle>();
@@ -785,7 +785,7 @@ namespace Hyena.Data.Gui
                 return;
             }
             
-            object item = model.GetValue(row_index);
+            object item = model[row_index];
             
             for(int ci = 0; ci < column_cache.Length; ci++) {
                 Gdk.Rectangle cell_area = new Gdk.Rectangle();
@@ -836,7 +836,7 @@ namespace Hyena.Data.Gui
             if (focused_row_index != -1) {
                 RowActivatedHandler<T> handler = RowActivated;
                 if (handler != null) {
-                    handler (this, new RowActivatedArgs<T> (focused_row_index, model.GetValue (focused_row_index)));
+                    handler (this, new RowActivatedArgs<T> (focused_row_index, model[focused_row_index]));
                 }
             }
         }
@@ -922,7 +922,7 @@ namespace Hyena.Data.Gui
         
         private void SelectAll()
         {
-            Selection.SelectRange(0, model.Rows, true);
+            Selection.SelectRange(0, model.Count, true);
             InvalidateListWindow();
         }
         

@@ -43,7 +43,7 @@ namespace Banshee.Collection.Database
         private BansheeCacheableModelAdapter<ArtistInfo> cache;
         private TrackListDatabaseModel track_model;
         private string reload_fragment;
-        private int rows;
+        private int count;
         
         private ArtistInfo select_all_artist = new ArtistInfo(null);
         
@@ -71,26 +71,27 @@ namespace Banshee.Collection.Database
                 )
             );
 
-            rows = cache.Reload () + 1;
-            select_all_artist.Name = String.Format("All Artists ({0})", rows - 1);
+            count = cache.Reload () + 1;
+            select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
             OnReloaded();
         }
         
-        public override ArtistInfo GetValue(int index)
-        {
-            if (index == 0) {
-                Console.WriteLine ("returning select_all_artist for index = 0");
-                return select_all_artist;
+        public override ArtistInfo this[int index] {
+            get {
+                if (index == 0) {
+                    Console.WriteLine ("returning select_all_artist for index = 0");
+                    return select_all_artist;
+                }
+
+                ArtistInfo ai = cache.GetValue (index - 1);
+                Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Name, index - 1);
+                return ai;
+                //return cache.GetValue (index - 1);
             }
-
-            ArtistInfo ai = cache.GetValue (index - 1);
-            Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Name, index - 1);
-            return ai;
-            //return cache.GetValue (index - 1);
         }
-
-        public override int Rows { 
-            get { return rows; }
+        
+        public override int Count { 
+            get { return count; }
         }
 
         // Implement ICacheableModel

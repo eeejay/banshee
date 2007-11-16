@@ -73,16 +73,15 @@ namespace Banshee.Collection
             throw new NotImplementedException();
         }
     
-        public virtual AlbumInfo GetValue(int index)
-        {
-            throw new NotImplementedException();
+        public virtual AlbumInfo this[int index] {
+            get { throw new NotImplementedException(); }
         }
         
         public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
             set { throw new NotImplementedException(); }
         }
 
-        public virtual int Rows { 
+        public virtual int Count { 
             get { throw new NotImplementedException(); }
         }
     }

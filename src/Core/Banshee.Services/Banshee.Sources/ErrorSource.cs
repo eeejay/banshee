@@ -114,17 +114,14 @@ namespace Banshee.Sources
             get { return false; }
         }
         
-        public int Rows {
-            get { return Count; }
-        }
-        
-        public object GetValue (int index)
-        {
-            if (index >= 0 && index < messages.Count) {
-                return messages[index];
-            } 
-            
-            return null;
+        public object this[int index] {
+            get {
+                if (index >= 0 && index < messages.Count) {
+                    return messages[index];
+                } 
+                
+                return null;
+            }
         }
         
         public class Message

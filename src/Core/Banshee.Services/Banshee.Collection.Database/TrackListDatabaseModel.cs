@@ -43,7 +43,7 @@ namespace Banshee.Collection.Database
     {
         private BansheeDbConnection connection;
         private BansheeCacheableModelAdapter<TrackInfo> cache;
-        private int rows;
+        private int count;
         
         private ISortableColumn sort_column;
         private string sort_query;
@@ -138,7 +138,7 @@ namespace Banshee.Collection.Database
         public override void Clear()
         {
             cache.Clear ();
-            rows = 0;
+            count = 0;
             OnCleared();
         }
         
@@ -172,18 +172,17 @@ namespace Banshee.Collection.Database
             }
                 
             reload_fragment = qb.ToString ();
-            rows = cache.Reload ();
+            count = cache.Reload ();
 
             OnReloaded ();
         }
 
-        public override TrackInfo GetValue(int index)
-        {
-            return cache.GetValue (index);
+        public override TrackInfo this[int index] {
+            get { return cache.GetValue (index); }
         }
         
-        public override int Rows {
-            get { return rows; }
+        public override int Count {
+            get { return count; }
         }
         
         public string Filter {
@@ -279,12 +278,12 @@ namespace Banshee.Collection.Database
 
         int IExportableModel.GetLength() 
         {
-            return Rows;
+            return Count;
         }
         
         IDictionary<string, object> IExportableModel.GetMetadata(int index)
         {
-            return GetValue(index).GenerateExportable();
+            return this[index].GenerateExportable();
         }
 
         // Implement ICacheableModel

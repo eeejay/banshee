@@ -68,7 +68,7 @@ namespace Banshee.Sources
         }
 
         public override int Count {
-            get { return track_model.Rows; }
+            get { return track_model.Count; }
         }
         
         public TrackListModel TrackModel {

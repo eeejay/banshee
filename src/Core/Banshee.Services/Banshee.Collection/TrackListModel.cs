@@ -73,9 +73,8 @@ namespace Banshee.Collection
             throw new NotImplementedException();
         }
     
-        public virtual TrackInfo GetValue(int index)
-        {
-            throw new NotImplementedException();
+        public virtual TrackInfo this[int index] {
+            get { throw new NotImplementedException(); }
         }
         
         public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
@@ -86,7 +85,7 @@ namespace Banshee.Collection
             set { throw new NotImplementedException(); }
         }
 
-        public virtual int Rows { 
+        public virtual int Count { 
             get { throw new NotImplementedException(); } 
         }
     }

@@ -114,7 +114,7 @@ namespace Banshee.Collection.Gui
                 int i = 0;
             
                 foreach(int row_index in artist_view.Selection) {
-                    artists[i++] = artist_view.Model.GetValue(row_index);
+                    artists[i++] = artist_view.Model[row_index];
                 }
             
                 model.ArtistInfoFilter = artists;
@@ -127,7 +127,7 @@ namespace Banshee.Collection.Gui
                 int i = 0;
             
                 foreach(int row_index in album_view.Selection) {
-                    albums[i++] = album_view.Model.GetValue(row_index);
+                    albums[i++] = album_view.Model[row_index];
                 }
             
                 model.AlbumInfoFilter = albums;

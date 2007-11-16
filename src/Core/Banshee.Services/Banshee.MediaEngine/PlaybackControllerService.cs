@@ -138,9 +138,9 @@ namespace Banshee.MediaEngine
         private TrackInfo QueryTrack ()
         {
             if (ShuffleMode == PlaybackShuffleMode.Linear) {
-                return source.TrackModel.GetValue (index++);
+                return source.TrackModel[index++];
             } else {
-                return source.TrackModel.GetValue (random.Next (0, source.TrackModel.Rows - 1));
+                return source.TrackModel[random.Next (0, source.TrackModel.Count - 1)];
             }
         }
         

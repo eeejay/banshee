@@ -42,7 +42,7 @@ namespace Banshee.Collection.Database
     {
         private BansheeDbConnection connection;
         private BansheeCacheableModelAdapter<AlbumInfo> cache;
-        private int rows;
+        private int count;
         private string artist_id_filter_query;
         private string reload_fragment;
 
@@ -78,22 +78,23 @@ namespace Banshee.Collection.Database
                 )
             );
 
-            rows = cache.Reload () + 1;
-            select_all_album.Title = String.Format("All Albums ({0})", rows - 1);
+            count = cache.Reload () + 1;
+            select_all_album.Title = String.Format("All Albums ({0})", count - 1);
             OnReloaded();
         }
         
-        public override AlbumInfo GetValue(int index)
-        {
-            if (index == 0) {
-                Console.WriteLine ("returning select_all_artist for index = 0");
-                return select_all_album;
-            }
+        public override AlbumInfo this[int index] {
+            get {
+                if (index == 0) {
+                    Console.WriteLine ("returning select_all_artist for index = 0");
+                    return select_all_album;
+                }
 
-            AlbumInfo ai = cache.GetValue (index - 1);
-            Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Title, index - 1);
-            return ai;
-            //return cache.GetValue (index - 1);
+                AlbumInfo ai = cache.GetValue (index - 1);
+                Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Title, index - 1);
+                return ai;
+                //return cache.GetValue (index - 1);
+            }
         }
         
         public override IEnumerable<ArtistInfo> ArtistInfoFilter {
@@ -115,8 +116,8 @@ namespace Banshee.Collection.Database
             }
         }
 
-        public override int Rows { 
-            get { return rows; }
+        public override int Count { 
+            get { return count; }
         }
 
         // Implement ICacheableModel
