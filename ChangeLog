@@ -1,5 +1,17 @@
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
+	* Banshee.Services/Banshee.Sources/DatabaseSource.cs: Return 
+	UnfilteredCount instead of Count on the model for the source count if
+	the model is IFilterable
+
+	* Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Implement UnfilteredCount so the source count doesn't change when a
+	filter is applied to the model
+
+	* Hyena/Hyena.Data/IFilterable.cs: Added an UnfilteredCount property
+
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Use a ColumnCellDuration for the duration column
 

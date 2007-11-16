@@ -30,6 +30,7 @@
 using System;
 
 using Mono.Unix;
+using Hyena.Data;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -68,7 +69,7 @@ namespace Banshee.Sources
         }
 
         public override int Count {
-            get { return track_model.Count; }
+            get { return track_model is IFilterable ? ((IFilterable)track_model).UnfilteredCount : track_model.Count; }
         }
         
         public TrackListModel TrackModel {

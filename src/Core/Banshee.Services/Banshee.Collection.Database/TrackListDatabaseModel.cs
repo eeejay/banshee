@@ -39,11 +39,13 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class TrackListDatabaseModel : TrackListModel, IExportableModel, ICacheableModel, IDatabaseModel<TrackInfo>, IFilterable, ISortable, ICareAboutView
+    public class TrackListDatabaseModel : TrackListModel, IExportableModel, ICacheableModel, 
+        IDatabaseModel<TrackInfo>, IFilterable, ISortable, ICareAboutView
     {
         private BansheeDbConnection connection;
         private BansheeCacheableModelAdapter<TrackInfo> cache;
         private int count;
+        private int unfiltered_count;
         
         private ISortableColumn sort_column;
         private string sort_query;
@@ -68,7 +70,6 @@ namespace Banshee.Collection.Database
             filter_field_map.Add("title", "CoreTracks.Title");
             
             this.connection = connection;
-
 
             Refilter ();
         }
@@ -138,6 +139,7 @@ namespace Banshee.Collection.Database
         public override void Clear()
         {
             cache.Clear ();
+            unfiltered_count = 0;
             count = 0;
             OnCleared();
         }
@@ -145,14 +147,11 @@ namespace Banshee.Collection.Database
         public override void Reload()
         {
             StringBuilder qb = new StringBuilder ();
-            qb.Append (String.Format (@"
-                FROM CoreTracks, CoreAlbums, CoreArtists{0}
-                WHERE 
-                    CoreTracks.AlbumID = CoreAlbums.AlbumID 
-                    AND CoreTracks.ArtistID = CoreArtists.ArtistID {1}",
-                JoinFragment, ConditionFragment
-            ));
+            string unfiltered_query = String.Format ("FROM CoreTracks, CoreAlbums, CoreArtists{0} WHERE {1} {2}",
+                JoinFragment, FetchCondition, ConditionFragment);
                 
+            qb.Append (unfiltered_query);
+            
             if (artist_id_filter_query != null) {
                 qb.Append ("AND ");
                 qb.Append (artist_id_filter_query);
@@ -174,6 +173,10 @@ namespace Banshee.Collection.Database
             reload_fragment = qb.ToString ();
             count = cache.Reload ();
 
+            IDbCommand command = connection.CreateCommand ();
+            command.CommandText = String.Format ("SELECT COUNT(*) {0}", unfiltered_query);
+            unfiltered_count = Convert.ToInt32 (command.ExecuteScalar ());
+
             OnReloaded ();
         }
 
@@ -183,6 +186,10 @@ namespace Banshee.Collection.Database
         
         public override int Count {
             get { return count; }
+        }
+        
+        public int UnfilteredCount {
+            get { return unfiltered_count; }
         }
         
         public string Filter {
