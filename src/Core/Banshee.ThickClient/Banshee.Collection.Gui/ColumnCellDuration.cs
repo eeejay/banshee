@@ -46,9 +46,9 @@ namespace Banshee.Collection.Gui
                 
                 int seconds = (int)Math.Round(((TimeSpan)BoundObject).TotalSeconds);
                 
-                return seconds > 3600 ? 
-                    String.Format("{0}:{1:00}:{2:00}", seconds / 3600, (seconds / 60) % 60, seconds % 60) :
-                    String.Format("{0}:{1:00}", seconds / 60, seconds % 60);
+                return seconds >= 3600 ? 
+                    String.Format ("{0}:{1:00}:{2:00}", seconds / 3600, (seconds / 60) % 60, seconds % 60) :
+                    String.Format ("{0}:{1:00}", seconds / 60, seconds % 60);
             }
         }
     }
