@@ -73,6 +73,15 @@ namespace Banshee.Collection
             return String.Format("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
                 AlbumTitle, Duration, Uri.AbsoluteUri);
         }
+
+        public virtual bool AudiblyEqual (TrackInfo track)
+        {
+            if (track == null) {
+                return false;
+            }
+            
+            return ArtistAlbumEqual (track) && StringUtil.RelaxedCompare (track.TrackTitle, TrackTitle) == 0;
+        }
         
         public bool ArtistAlbumEqual (TrackInfo track)
         {
@@ -209,7 +218,6 @@ namespace Banshee.Collection
             get { return playback_error; }
             set { playback_error = value; }
         }
-        
         
         [ListItemSetup(FieldIndex=0)]
         public TrackInfo Self {

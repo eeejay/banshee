@@ -290,7 +290,7 @@ namespace Banshee.MediaEngine
         
         public bool IsPlaying (TrackInfo track)
         {
-            return CurrentState != PlayerEngineState.Idle && track == CurrentTrack;
+            return CurrentState != PlayerEngineState.Idle && track.AudiblyEqual (CurrentTrack);
         }
 
         private void CheckPending()
@@ -367,7 +367,7 @@ namespace Banshee.MediaEngine
                 if(engines.Contains(value)) {
                     engines.Remove(value);
                 }
-                Console.WriteLine("ADDING ENGINE");
+                
                 engines.Insert(0, value);
             
                 default_engine = value;

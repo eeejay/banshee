@@ -1,5 +1,16 @@
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Use TrackInfo.AudiblyEqual instead of a reference check to determine if 
+	the input track is the track that is currently playing
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Implement
+	AudiblyEqual, a method used to determine if the two tracks are probably
+	the same, based on artist, album, and track title information, regardless
+	of managed reference differences or even source stream differences
+
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Implement proper sorting for all columns. Muy Caliente.
 
