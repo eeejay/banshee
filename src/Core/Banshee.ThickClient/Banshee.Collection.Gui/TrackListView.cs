@@ -46,7 +46,7 @@ namespace Banshee.Collection.Gui
             column_controller.Append(new Column(new ColumnCellPlaybackIndicator(true, 0), "indicator", 
                 new ColumnCellPlaybackIndicator(false, 0), 0.05));
                 
-            column_controller.Append(new Column("Track", new ColumnCellText(true, 1), 0.10));
+            column_controller.Append(new SortableColumn("Track", new ColumnCellText(true, 1), 0.10, "track"));
             column_controller.Append(new SortableColumn("Artist", new ColumnCellText(true, 2), 0.225, "artist"));
             column_controller.Append(new SortableColumn("Album", new ColumnCellText(true, 3), 0.225, "album"));
             column_controller.Append(new SortableColumn("Title", new ColumnCellText(true, 4), 0.25, "title"));

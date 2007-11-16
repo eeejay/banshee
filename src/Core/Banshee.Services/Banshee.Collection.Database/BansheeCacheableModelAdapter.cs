@@ -50,7 +50,8 @@ namespace Banshee.Collection.Database
 
         private static bool cache_initialized = false;
 
-        public BansheeCacheableModelAdapter (BansheeDbConnection connection, IDatabaseModel<T> model) : base ((ICacheableModel) model)
+        public BansheeCacheableModelAdapter (BansheeDbConnection connection, IDatabaseModel<T> model) 
+            : base ((ICacheableModel) model)
         {
             this.db_model = model;
             this.connection = connection;

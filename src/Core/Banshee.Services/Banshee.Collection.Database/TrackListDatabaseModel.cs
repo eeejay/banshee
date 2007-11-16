@@ -65,6 +65,7 @@ namespace Banshee.Collection.Database
         {
             cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, this);
 
+            filter_field_map.Add("track", "CoreTracks.TrackNumber");
             filter_field_map.Add("artist", "CoreArtists.Name");
             filter_field_map.Add("album", "CoreAlbums.Title");
             filter_field_map.Add("title", "CoreTracks.Title");
@@ -85,6 +86,11 @@ namespace Banshee.Collection.Database
                         OR CoreAlbums.Title LIKE '%{0}%')", Filter);
             }
         }
+        
+        private string AscDesc ()
+        {
+            return sort_column.SortType == SortType.Ascending ? " ASC" : " DESC";
+        }
 
         private void GenerateSortQueryPart()
         {
@@ -94,22 +100,34 @@ namespace Banshee.Collection.Database
             }
             
             switch(sort_column.SortKey) {
+                case "track":
+                    sort_query = String.Format (@"
+                        lower(CoreArtists.Name) ASC, 
+                        lower(CoreAlbums.Title) ASC, 
+                        CoreTracks.TrackNumber {0}", AscDesc ()); 
+                    break;
                 case "artist":
-                    sort_query = "lower(CoreArtists.Name)";
+                    sort_query = String.Format (@"
+                        lower(CoreArtists.Name) {0}, 
+                        lower(CoreAlbums.Title) ASC, 
+                        CoreTracks.TrackNumber ASC", AscDesc ()); 
                     break;
                 case "album":
-                    sort_query = "lower(CoreAlbums.Title)";
+                    sort_query = String.Format (@"
+                        lower(CoreAlbums.Title) {0},
+                        lower(CoreArtists.Name) ASC,
+                        CoreTracks.TrackNumber ASC", AscDesc ());
                     break;
                 case "title":
-                    sort_query = "lower(CoreTracks.Title)";
+                    sort_query = String.Format (@"
+                        lower(CoreArtists.Name) ASC, 
+                        lower(CoreAlbums.Title) ASC, 
+                        lower(CoreTracks.Title) {0}", AscDesc ()); 
                     break;
                 default:
                     sort_query = null;
                     return;
             }
-            
-            sort_query = String.Format(" {0} {1} ", sort_query, 
-                sort_column.SortType == SortType.Ascending ? " ASC" : " DESC");
         }
 
         public void Refilter()
