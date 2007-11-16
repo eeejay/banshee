@@ -79,7 +79,7 @@ namespace Hyena.Data.Gui
         public event RowActivatedHandler<T> RowActivated;
     
         private const int COLUMN_PADDING = 1;
-        private const int InnerBorderWidth = 10;
+        private const int InnerBorderWidth = 4;
         private const int FooterHeight = 10;
     
         private ListViewGraphics graphics;
