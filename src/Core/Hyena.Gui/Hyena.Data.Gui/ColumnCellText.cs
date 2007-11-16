@@ -58,15 +58,18 @@ namespace Hyena.Data.Gui
             if(layout == null) {
                 layout = new Pango.Layout(widget.PangoContext);
             }
-        
-            string object_str = data_handler == null ? BoundObject.ToString() : data_handler();
+            
             int text_height, text_width;
 
-            layout.SetText(object_str);
+            layout.SetText(Text);
             layout.GetPixelSize(out text_width, out text_height);
             
             Style.PaintLayout(widget.Style, window, state, true, clip_area, widget, "column",
                 cell_area.X + 4, cell_area.Y + ((cell_area.Height - text_height) / 2), layout);
+        }
+        
+        protected virtual string Text {
+            get { return data_handler == null ? BoundObject.ToString() : data_handler(); }
         }
     }
 }
