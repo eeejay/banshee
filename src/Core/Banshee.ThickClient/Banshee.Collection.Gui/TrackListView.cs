@@ -50,7 +50,7 @@ namespace Banshee.Collection.Gui
             column_controller.Append(new SortableColumn("Artist", new ColumnCellText(true, 2), 0.225, "artist"));
             column_controller.Append(new SortableColumn("Album", new ColumnCellText(true, 3), 0.225, "album"));
             column_controller.Append(new SortableColumn("Title", new ColumnCellText(true, 4), 0.25, "title"));
-            column_controller.Append(new Column("Duration", new ColumnCellText(true, 5), 0.15));
+            column_controller.Append(new Column("Duration", new ColumnCellDuration(true, 5), 0.15));
             
             ColumnController = DefaultColumnController;
             

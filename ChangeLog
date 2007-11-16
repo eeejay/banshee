@@ -1,5 +1,16 @@
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use a ColumnCellDuration for the duration column
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	A cell renderer that formats TimeSpan objects in a pretty way
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Added a virtual
+	Text property so making new text renderers is a snap
+
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: Ported the code to add/remove
 	the accelerator binding on key press event to prevent them from conflicting
 	with search; adds the key bindings for focusing search
