@@ -32,106 +32,68 @@ using System.Data;
 using System.Text;
 using System.Collections.Generic;
 
+using Hyena.Data;
+
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class AlbumListDatabaseModel : AlbumListModel
+    public class AlbumListDatabaseModel : AlbumListModel, ICacheableModel, IDatabaseModel<AlbumInfo>
     {
-        private Dictionary<int, AlbumInfo> albums = new Dictionary<int, AlbumInfo>();
         private BansheeDbConnection connection;
+        private BansheeCacheableModelAdapter<AlbumInfo> cache;
         private int rows;
         private string artist_id_filter_query;
-        private string track_model_filter;
+        private string reload_fragment;
+
+        private TrackListDatabaseModel track_model;
         
         private AlbumInfo select_all_album = new AlbumInfo(null);
         
         public AlbumListDatabaseModel(BansheeDbConnection connection)
         {
+            cache = new BansheeCacheableModelAdapter<AlbumInfo> (connection, this);
             this.connection = connection;
         }
 
         public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection) : this (connection)
         {
-            track_model_filter = String.Format (@"
-                CoreAlbums.AlbumID IN (
-                    SELECT DISTINCT(CoreTracks.AlbumID) FROM CoreTracksCache, CoreTracks
-                    WHERE CoreTracksCache.TableID = {0} AND CoreTracksCache.ID = CoreTracks.TrackID)",
-                trackModel.DbId
-            );
+            this.track_model = trackModel;
         }
 
-        private string WhereFragment {
-            get {
-                if (artist_id_filter_query == null && track_model_filter == null)
-                    return String.Empty;
-
-                StringBuilder sb = new StringBuilder ("WHERE ");
-                if (artist_id_filter_query != null) {
-                    sb.Append (artist_id_filter_query);
-                    if (track_model_filter != null)
-                        sb.Append (" AND ");
-                }
-
-                if (track_model_filter != null)
-                    sb.Append (track_model_filter);
-                return sb.ToString ();
-            }
-        }
-    
         public override void Reload()
         {
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = String.Format ("SELECT COUNT(*) FROM CoreAlbums {0}", WhereFragment);
-           // Console.WriteLine("Counting Artists: {0}", StringExtensions.Flatten(command.CommandText));
-            rows = Convert.ToInt32(command.ExecuteScalar()) + 1;
-           // Console.WriteLine(rows);
+            bool either = (artist_id_filter_query != null) || (track_model != null);
+            bool both = (artist_id_filter_query != null) && (track_model != null);
+            reload_fragment = String.Format (@"
+                FROM CoreAlbums
+                    {0} {1} {2} {3}
+                    ORDER BY Title",
+                either ? "WHERE" : null,
+                artist_id_filter_query,
+                both ? "AND" : null,
+                track_model == null ? null : String.Format(
+                    "CoreAlbums.AlbumID IN (SELECT DISTINCT (CoreTracks.AlbumID) {0})",
+                    track_model.ReloadFragment
+                )
+            );
+
+            rows = cache.Reload () + 1;
             select_all_album.Title = String.Format("All Albums ({0})", rows - 1);
             OnReloaded();
         }
         
         public override AlbumInfo GetValue(int index)
         {
-            if(index == 0) {
+            if (index == 0) {
+                Console.WriteLine ("returning select_all_artist for index = 0");
                 return select_all_album;
             }
-            
-            int new_index = index + 1;
-            
-            if(albums.ContainsKey(new_index)) {
-                return albums[new_index];
-            }
-            
-            int fetch_count = 20;
-            
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = String.Format(@"
-                SELECT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name
-                    FROM CoreAlbums INNER JOIN CoreArtists
-                        ON CoreArtists.ArtistID = CoreAlbums.ArtistID
-                    {0}
-                    ORDER BY CoreAlbums.Title
-                    LIMIT {1}, {2}",
-                WhereFragment, index - 1, fetch_count
-            );
 
-           // Console.WriteLine(StringExtensions.Flatten(command.CommandText));
-            IDataReader reader = command.ExecuteReader();
-			
-			int i = new_index;
-            
-			while(reader.Read()) {
-			    if(!albums.ContainsKey(i)) {
-			        AlbumInfo album = new LibraryAlbumInfo(reader);
-			        albums.Add(i++, album);
-			    }
-			}
-            
-            if(albums.ContainsKey(new_index)) {
-                return albums[new_index];
-            }
-            
-            return null;
+            AlbumInfo ai = cache.GetValue (index - 1);
+            Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Title, index - 1);
+            return ai;
+            //return cache.GetValue (index - 1);
         }
         
         public override IEnumerable<ArtistInfo> ArtistInfoFilter {
@@ -147,7 +109,6 @@ namespace Banshee.Collection.Database
                 
                     delegate(string new_filter) {
                         artist_id_filter_query = new_filter;
-                        albums.Clear();
                         Reload();
                     }
                 );
@@ -156,6 +117,38 @@ namespace Banshee.Collection.Database
 
         public override int Rows { 
             get { return rows; }
+        }
+
+        // Implement ICacheableModel
+        public int FetchCount {
+            get { return 20; }
+        }
+
+        // Implement IDatabaseModel
+        public AlbumInfo GetItemFromReader (IDataReader reader)
+        {
+            return new LibraryAlbumInfo (reader);
+        }
+
+        private const string primary_key = "CoreAlbums.AlbumID";
+        public string PrimaryKey {
+            get { return primary_key; }
+        }
+
+        public string ReloadFragment {
+            get { return reload_fragment; }
+        }
+
+        public string FetchColumns {
+            get { return "CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name"; }
+        }
+
+        public string FetchFrom {
+            get { return "CoreArtists, CoreAlbums"; }
+        }
+
+        public string FetchCondition {
+            get { return "CoreArtists.ArtistID = CoreAlbums.ArtistID"; }
         }
     }
 }

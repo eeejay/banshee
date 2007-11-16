@@ -39,33 +39,29 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class TrackListDatabaseModel : TrackListModel, IExportableModel, IFilterable, ISortable, ICareAboutView
+    public class TrackListDatabaseModel : TrackListModel, IExportableModel, ICacheableModel, IDatabaseModel<TrackInfo>, IFilterable, ISortable, ICareAboutView
     {
-        private Dictionary<int, LibraryTrackInfo> tracks = new Dictionary<int, LibraryTrackInfo>();
-        
         private BansheeDbConnection connection;
+        private BansheeCacheableModelAdapter<TrackInfo> cache;
         private int rows;
-        private int uid;
         
         private ISortableColumn sort_column;
         private string sort_query;
         
         private Dictionary<string, string> filter_field_map = new Dictionary<string, string>();
-        private string select_query;
+        private string reload_fragment;
+        private string join_fragment, condition;
+
         private string filter_query;
         private string filter;
         private string artist_id_filter_query;
         private string album_id_filter_query;
-        private string join_fragment, condition;
         
         private int rows_in_view;
 
-        private static int model_count = 0;
-        private static bool cache_initialized = false;
-
-        public TrackListDatabaseModel(BansheeDbConnection connection)
+        public TrackListDatabaseModel (BansheeDbConnection connection)
         {
-            uid = model_count++;
+            cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, this);
 
             filter_field_map.Add("artist", "CoreArtists.Name");
             filter_field_map.Add("album", "CoreAlbums.Title");
@@ -73,13 +69,6 @@ namespace Banshee.Collection.Database
             
             this.connection = connection;
 
-            if (!cache_initialized) {
-                cache_initialized = true;
-                // Invalidate any old cache
-                IDbCommand command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM CoreTracksCache";
-                command.ExecuteNonQuery();
-            }
 
             Refilter ();
         }
@@ -94,52 +83,8 @@ namespace Banshee.Collection.Database
                         OR CoreArtists.Name LIKE '%{0}%'
                         OR CoreAlbums.Title LIKE '%{0}%')", Filter);
             }
-            
-            /*Console.WriteLine(Filter);
-            QueryParser parser = new QueryParser(Filter);
-            QueryListNode parse_tree = parser.BuildTree();
-            parse_tree.Dump();
-            SqlQueryGenerator sql_generator = new SqlQueryGenerator(filter_field_map, parse_tree);
-            
-            filter_query = sql_generator.GenerateQuery();
-            
-            Console.WriteLine(filter_query);*/
-            
-           /*filter_query = String.Format(@"
-                CoreTracks.AlbumID = CoreAlbums.AlbumID 
-                AND CoreTracks.ArtistID = CoreArtists.ArtistID 
-                AND (CoreTracks.Title LIKE '%{0}%'
-                OR CoreTracks.ArtistID IN (SELECT CoreArtists.ArtistID FROM CoreArtists WHERE CoreArtists.Name LIKE '%{0}%')
-                OR CoreTracks.AlbumID IN (SELECT CoreAlbums.AlbumID FROM CoreAlbums WHERE CoreAlbums.Title LIKE '%{0}%'))
-            ", Filter);*/
-
-
-            if (!UseCache) {
-                select_query = String.Format(@"
-                    SELECT CoreTracks.*, CoreArtists.Name, CoreAlbums.Title
-                        FROM CoreTracks, CoreArtists, CoreAlbums{0}
-                        WHERE 
-                            CoreArtists.ArtistID = CoreTracks.ArtistID
-                            AND CoreAlbums.AlbumID = CoreTracks.AlbumID {1}",
-                    JoinFragment, ConditionFragment
-                );
-            } else {
-                select_query = String.Format(@"
-                    SELECT CoreTracks.*, CoreArtists.Name, CoreAlbums.Title 
-                        FROM CoreTracks, CoreArtists, CoreAlbums{0}
-                        INNER JOIN CoreTracksCache
-                            ON CoreTracks.TrackID = CoreTracksCache.ID
-                        WHERE
-                            CoreArtists.ArtistID = CoreTracks.ArtistID
-                            AND CoreAlbums.AlbumID = CoreTracks.AlbumID
-                            AND CoreTracksCache.TableID = {1}
-                            {2}",
-                    JoinFragment, uid, ConditionFragment
-                );
-            }
-            select_query += " LIMIT {0}, {1}";
         }
-        
+
         private void GenerateSortQueryPart()
         {
             if(sort_column == null) {
@@ -170,7 +115,7 @@ namespace Banshee.Collection.Database
         {
             lock(this) {
                 GenerateFilterQueryPart();
-                InvalidateManagedCache();
+                cache.Clear ();
             }
         }
         
@@ -186,122 +131,55 @@ namespace Banshee.Collection.Database
                 sort_column = column;
             
                 GenerateSortQueryPart();
-                InvalidateManagedCache();
+                cache.Clear ();
             }
         }
         
-        private void InvalidateManagedCache()
-        {
-            tracks.Clear();
-        }
-
         public override void Clear()
         {
-            InvalidateManagedCache();
+            cache.Clear ();
             rows = 0;
             OnCleared();
         }
         
         public override void Reload()
         {
-            bool from_cache = UseCache;
-            if (from_cache) {
-                StringBuilder qb = new StringBuilder ();
-                qb.Append (String.Format (@"
-                    DELETE FROM CoreTracksCache WHERE TableID = {0};
-                    INSERT INTO CoreTracksCache 
-                        SELECT null, {0}, CoreTracks.TrackID 
-                            FROM CoreTracks, CoreAlbums, CoreArtists{1}
-                            WHERE 
-                                CoreTracks.AlbumID = CoreAlbums.AlbumID 
-                                AND CoreTracks.ArtistID = CoreArtists.ArtistID {2}",
-                    uid, JoinFragment, ConditionFragment
-                ));
+            StringBuilder qb = new StringBuilder ();
+            qb.Append (String.Format (@"
+                FROM CoreTracks, CoreAlbums, CoreArtists{0}
+                WHERE 
+                    CoreTracks.AlbumID = CoreAlbums.AlbumID 
+                    AND CoreTracks.ArtistID = CoreArtists.ArtistID {1}",
+                JoinFragment, ConditionFragment
+            ));
                 
-                if (artist_id_filter_query != null) {
-                    qb.Append ("AND ");
-                    qb.Append (artist_id_filter_query);
-                }
-                        
-                if (album_id_filter_query != null) {
-                    qb.Append ("AND ");
-                    qb.Append (album_id_filter_query);
-                }
-                
-                if (filter_query != null)
-                    qb.Append (filter_query);
-                
-                if (sort_query != null) {
-                    qb.Append (" ORDER BY ");
-                    qb.Append (sort_query);
-                }
-                
-                string cache_build_query = qb.ToString ();
-                //Console.WriteLine (StringExtensions.Flatten (cache_build_query));
-                
-                using (new Timer ("Generating cache table")) {
-                    IDbCommand command = connection.CreateCommand ();
-                    command.CommandText = cache_build_query;
-                    command.ExecuteNonQuery ();
-                }
+            if (artist_id_filter_query != null) {
+                qb.Append ("AND ");
+                qb.Append (artist_id_filter_query);
             }
-
-            string count_query = from_cache ?
-                String.Format ("SELECT COUNT(*) FROM CoreTracksCache WHERE TableID = {0}", uid) :
-                String.Format ("SELECT COUNT(*) FROM CoreTracks{0} {1}", JoinFragment, WhereFragment);
+                    
+            if (album_id_filter_query != null) {
+                qb.Append ("AND ");
+                qb.Append (album_id_filter_query);
+            }
             
-            using (new Timer ("Counting tracks")) {
-                //Console.WriteLine("Count query: {0}", count_query);
-                IDbCommand command = connection.CreateCommand ();
-                command.CommandText = count_query;
-                rows = Convert.ToInt32 (command.ExecuteScalar ());
+            if (filter_query != null)
+                qb.Append (filter_query);
+            
+            if (sort_query != null) {
+                qb.Append (" ORDER BY ");
+                qb.Append (sort_query);
             }
-
-            //Console.WriteLine ("Total rows: {0}", rows);
+                
+            reload_fragment = qb.ToString ();
+            rows = cache.Reload ();
 
             OnReloaded ();
         }
 
-        private bool UseCache {
-            get {
-                // Always return true, meaning a source's tracks always get put into the CoreTracksCache
-                // and other pieces (album/artist models, for example) can rely on that to filter themselves.
-                return true;
-                //return sort_query != null || filter_query != null || 
-                //       artist_id_filter_query != null || album_id_filter_query != null;
-            }
-        }
-
         public override TrackInfo GetValue(int index)
         {
-            if (tracks.ContainsKey (index)) {
-                return tracks[index];
-            }
-            
-            using(new Timer("Loading Track Set")) {
-            
-            int fetch_count = RowsInView > 0 ? RowsInView * 5 : 100;
-            
-            IDbCommand command = connection.CreateCommand ();
-            command.CommandText = String.Format (select_query, index, fetch_count);
-            //Console.WriteLine (command.CommandText);
-            IDataReader reader = command.ExecuteReader ();
-
-            int i = index;
-            while(reader.Read()) {
-                if(!tracks.ContainsKey(i)) {
-                    LibraryTrackInfo track = new LibraryTrackInfo(reader);
-                    tracks.Add(i++, track);
-                }
-            }
-            
-            }
-            
-            if (tracks.ContainsKey (index)) {
-                return tracks[index];
-            }
-            
-            return null;
+            return cache.GetValue (index);
         }
         
         public override int Rows {
@@ -335,10 +213,6 @@ namespace Banshee.Collection.Database
 
         public string ConditionFragment {
             get { return PrefixCondition ("AND"); }
-        }
-
-        public string WhereFragment {
-            get { return PrefixCondition ("WHERE"); }
         }
 
         private string PrefixCondition (string prefix)
@@ -390,10 +264,10 @@ namespace Banshee.Collection.Database
             }
         }
 
-        public int DbId {
-            get { return uid; }
+        public int CacheId {
+            get { return cache.CacheId; }
         }
-        
+
         public ISortableColumn SortColumn { 
             get { return sort_column; }
         }
@@ -411,6 +285,38 @@ namespace Banshee.Collection.Database
         IDictionary<string, object> IExportableModel.GetMetadata(int index)
         {
             return GetValue(index).GenerateExportable();
+        }
+
+        // Implement ICacheableModel
+        public int FetchCount {
+            get { return RowsInView > 0 ? RowsInView * 5 : 100; }
+        }
+
+        // Implement IDatabaseModel
+        public TrackInfo GetItemFromReader (IDataReader reader)
+        {
+            return new LibraryTrackInfo (reader);
+        }
+
+        private const string primary_key = "CoreTracks.TrackID";
+        public string PrimaryKey {
+            get { return primary_key; }
+        }
+
+        public string ReloadFragment {
+            get { return reload_fragment; }
+        }
+
+        public string FetchColumns {
+            get { return "CoreTracks.*, CoreArtists.Name, CoreAlbums.Title"; }
+        }
+
+        public string FetchFrom {
+            get { return "CoreTracks, CoreArtists, CoreAlbums"; }
+        }
+
+        public string FetchCondition {
+            get { return "CoreArtists.ArtistID = CoreTracks.ArtistID AND CoreAlbums.AlbumID = CoreTracks.AlbumID"; }
         }
     }
 }

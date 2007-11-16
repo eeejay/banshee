@@ -31,15 +31,18 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 
+using Hyena.Data;
+
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class ArtistListDatabaseModel : ArtistListModel
+    public class ArtistListDatabaseModel : ArtistListModel, ICacheableModel, IDatabaseModel<ArtistInfo>
     {
-        private Dictionary<int, ArtistInfo> artists = new Dictionary<int, ArtistInfo>();
         private BansheeDbConnection connection;
-        private string track_model_filter;
+        private BansheeCacheableModelAdapter<ArtistInfo> cache;
+        private TrackListDatabaseModel track_model;
+        private string reload_fragment;
         private int rows;
         
         private ArtistInfo select_all_artist = new ArtistInfo(null);
@@ -47,90 +50,79 @@ namespace Banshee.Collection.Database
         public ArtistListDatabaseModel(BansheeDbConnection connection)
         {
             this.connection = connection;
+            cache = new BansheeCacheableModelAdapter<ArtistInfo> (connection, this);
         }
 
         public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection) : this (connection)
         {
-            track_model_filter = String.Format (@"
-                CoreArtists.ArtistID IN (
-                    SELECT DISTINCT(CoreTracks.ArtistID) FROM CoreTracksCache, CoreTracks
-                    WHERE CoreTracksCache.TableID = {0} AND CoreTracksCache.ID = CoreTracks.TrackID)",
-                trackModel.DbId
-            );
+            this.track_model = trackModel;
         }
     
         public override void Reload()
         {
-            lock (this) {
-                InvalidateManagedCache();
-                IDbCommand command = connection.CreateCommand();
-                using (new Timer ("Getting artists count")) {
-                command.CommandText = String.Format ("SELECT COUNT(*) FROM CoreArtists {0}", WhereFragment);
-                rows = Convert.ToInt32(command.ExecuteScalar()) + 1;
-                }
-                select_all_artist.Name = String.Format("All Artists ({0})", rows - 1);
-            }
+            reload_fragment = String.Format (@"
+                FROM CoreArtists
+                    {0} {1}
+                    ORDER BY Name",
+                track_model != null ? "WHERE" : null,
+                track_model == null ? null : String.Format(
+                    "CoreArtists.ArtistID IN (SELECT DISTINCT (CoreTracks.ArtistID) {0})",
+                    track_model.ReloadFragment
+                )
+            );
+
+            rows = cache.Reload () + 1;
+            select_all_artist.Name = String.Format("All Artists ({0})", rows - 1);
             OnReloaded();
         }
         
         public override ArtistInfo GetValue(int index)
         {
-            if(index == 0) {
+            if (index == 0) {
+                Console.WriteLine ("returning select_all_artist for index = 0");
                 return select_all_artist;
             }
-            
-            int new_index = index + 1;
-            
-            if(artists.ContainsKey(new_index)) {
-                return artists[new_index];
-            }
-            
-            int fetch_count = 20;
-            
-            using (new Timer ("Getting artists")) {
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = String.Format(@"
-                SELECT CoreArtists.ArtistID, CoreArtists.Name 
-                    FROM CoreArtists {0}
-                    ORDER BY Name
-                    LIMIT {1}, {2}",
-                    WhereFragment, index - 1, fetch_count);
-                
-            IDataReader reader = command.ExecuteReader();
-			
-			int i = new_index;
-            
-			while(reader.Read()) {
-			    if(!artists.ContainsKey(i)) {
-			        ArtistInfo artist = new LibraryArtistInfo(reader);
-			        artists.Add(i++, artist);
-			    }
-			}
-            }
-            
-            if(artists.ContainsKey(new_index)) {
-                return artists[new_index];
-            }
-            
-            return null;
-        }
 
-        private string WhereFragment {
-            get {
-                if (track_model_filter == null)
-                    return String.Empty;
-
-                return String.Format ("WHERE {0}", track_model_filter);
-            }
-        }
-
-        private void InvalidateManagedCache()
-        {
-            artists.Clear();
+            ArtistInfo ai = cache.GetValue (index - 1);
+            Console.WriteLine ("returning {0} for index - 1 = {1}", ai.Name, index - 1);
+            return ai;
+            //return cache.GetValue (index - 1);
         }
 
         public override int Rows { 
             get { return rows; }
+        }
+
+        // Implement ICacheableModel
+        public int FetchCount {
+            get { return 20; }
+        }
+
+        // Implement IDatabaseModel
+        public ArtistInfo GetItemFromReader (IDataReader reader)
+        {
+            return new LibraryArtistInfo (reader);
+        }
+
+        private const string primary_key = "CoreArtists.ArtistID";
+        public string PrimaryKey {
+            get { return primary_key; }
+        }
+
+        public string ReloadFragment {
+            get { return reload_fragment; }
+        }
+
+        public string FetchColumns {
+            get { return "CoreArtists.ArtistID, CoreArtists.Name"; }
+        }
+
+        public string FetchFrom {
+            get { return "CoreArtists"; }
+        }
+
+        public string FetchCondition {
+            get { return String.Format ("1=1"); }
         }
     }
 }

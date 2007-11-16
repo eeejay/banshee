@@ -118,6 +118,7 @@ namespace Banshee.Database
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylists");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylistEntries");
             Execute("DROP TABLE IF EXISTS CoreTracksCache");
+            Execute("DROP TABLE IF EXISTS CoreCache");
             
             MethodInfo [] methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
@@ -229,6 +230,7 @@ namespace Banshee.Database
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylists");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylistEntries");
             Execute("DROP TABLE IF EXISTS CoreTracksCache");
+            Execute("DROP TABLE IF EXISTS CoreCache");
             
             Execute(@"
                 CREATE TABLE CoreConfiguration (
@@ -334,10 +336,10 @@ namespace Banshee.Database
             ");
             
             Execute(@"
-                CREATE TABLE CoreTracksCache (
+                CREATE TABLE CoreCache (
                     OrderID             INTEGER PRIMARY KEY,
-                    TableID             INTEGER,
-                    ID                  INTEGER
+                    ModelID             INTEGER,
+                    ItemID              INTEGER
                 )
             ");
 
