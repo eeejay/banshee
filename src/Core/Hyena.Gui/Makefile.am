@@ -18,7 +18,8 @@ SOURCES =  \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/EntryEraseAction.cs \
 	Hyena.Gui/EntryInsertAction.cs \
-	Hyena.Gui/EntryUndoAdapter.cs
+	Hyena.Gui/EntryUndoAdapter.cs \
+	Hyena.Gui/GtkUtilities.cs
 
 include $(top_srcdir)/build/build.mk
 

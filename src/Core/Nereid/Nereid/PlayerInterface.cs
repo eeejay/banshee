@@ -29,6 +29,7 @@
 using System;
 using Gtk;
 
+using Hyena.Gui;
 using Hyena.Data.Gui;
 
 using Banshee.ServiceStack;
@@ -367,6 +368,45 @@ namespace Nereid
         {
             Banshee.ServiceStack.Application.Shutdown ();
             return true;
+        }
+        
+        private bool accel_group_active = true;
+        
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+        {
+            bool focus_search = false;
+            
+            if (Focus is Entry && GtkUtilities.NoImportantModifiersAreSet ()) {
+                if (accel_group_active) {
+                    RemoveAccelGroup (action_service.UIManager.AccelGroup);
+                    accel_group_active = false;
+                 }
+            } else {
+                if (!accel_group_active) {
+                    AddAccelGroup (action_service.UIManager.AccelGroup);
+                    accel_group_active = true;
+                }
+            }
+            
+            switch (evnt.Key) {
+                case Gdk.Key.f:
+                    if (Gdk.ModifierType.ControlMask == (evnt.State & Gdk.ModifierType.ControlMask)) {
+                        focus_search = true;
+                    }
+                    break;
+                case Gdk.Key.J:  case Gdk.Key.j: 
+                case Gdk.Key.S:  case Gdk.Key.s:
+                case Gdk.Key.F3: case Gdk.Key.slash:
+                    focus_search = true;
+                    break;
+            }
+
+            if (focus_search && !view_container.SearchEntry.HasFocus && !source_view.EditingRow) {
+                view_container.SearchEntry.HasFocus = true;
+                return true;
+            }
+            
+            return base.OnKeyPressEvent (evnt);
         }
 
 #endregion

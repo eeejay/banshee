@@ -69,6 +69,8 @@ namespace Nereid
             header.PackStart (search_entry, false, false, 0);
             
             header.ShowAll ();
+            search_entry.Show ();
+            
             PackStart (header, false, false, 0);
         }
         

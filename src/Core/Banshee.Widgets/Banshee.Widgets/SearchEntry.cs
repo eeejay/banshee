@@ -70,6 +70,8 @@ namespace Banshee.Widgets
 
             BuildWidget();
             BuildMenu();
+            
+            NoShowAll = true;
         }
             
         private void BuildWidget()

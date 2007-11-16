@@ -1,28 +1,31 @@
 <Project name="Hyena.Gui" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="Hyena.Gui" />
+      <Output directory="./" assembly="Hyena.Gui" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Hyena.Data.Gui/Column.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ColumnCell.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ColumnCellText.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ColumnController.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ColumnHeaderCellText.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ListViewGraphics.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/Selection.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/SortableColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui.Dialogs/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui.Dialogs/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/CairoHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui/CairoExtensions.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ObjectListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/Column.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ColumnCell.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ColumnCellText.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ColumnController.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ColumnHeaderCellText.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ListViewGraphics.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/SortableColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui.Dialogs/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui.Dialogs/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/CairoHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/CairoExtensions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Data.Gui/ObjectListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/EntryEraseAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/EntryInsertAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/EntryUndoAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Hyena.Gui/GtkUtilities.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
