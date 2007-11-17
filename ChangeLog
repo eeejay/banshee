@@ -1,5 +1,17 @@
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set RulesHint to true to show alternating row background colors
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Properly draw RulesHint
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Added DrawRowRule
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Fix build error
+
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
 	Use ArtworkRenderer to render the thumbnail of the cover; do the layout
 	of the text properly

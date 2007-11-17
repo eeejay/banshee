@@ -755,43 +755,47 @@ namespace Hyena.Data.Gui
                 }
             }
             
+            /*if (rules_hint) {
+                for (int ri = first_row; ri < last_row; ri++) {
+                    PaintRowBackground(ri, clip, single_list_alloc, row_state);
+                }
+            }*/
+            
+            if (rules_hint) {
+                PaintRows (first_row, last_row, clip, false);
+            }
+            
             foreach(SelectionRectangle selection_rect in cg_s_rects) {
                 graphics.DrawRowSelection(list_cr, list_alloc.X, selection_rect.Y, list_alloc.Width, selection_rect.Height);
             }        
 
-            for(int ri = first_row; ri < last_row; ri++) {
-                Gdk.Rectangle single_list_alloc = new Gdk.Rectangle();
+            PaintRows (first_row, last_row, clip, true);
+        }
+        
+        private void PaintRows (int first_row, int last_row, Gdk.Rectangle clip, bool content) 
+        {
+            for (int ri = first_row; ri < last_row; ri++) {
+                Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
                 single_list_alloc.Width = list_alloc.Width;
                 single_list_alloc.Height = RowHeight;
                 single_list_alloc.X = list_alloc.X;
                 single_list_alloc.Y = list_alloc.Y + (ri * single_list_alloc.Height - (int)vadjustment.Value);
-            
-                StateType row_state = StateType.Normal;
-                if(selection.Contains(ri)) {
-                    row_state = StateType.Selected;
-                }
                 
-                PaintRowBackground(ri, clip, single_list_alloc, row_state);
-                PaintRowFocus(ri, clip, single_list_alloc, row_state);
-                PaintRow(ri, clip, single_list_alloc, row_state);
+                if (content) {
+                    StateType row_state = StateType.Normal;
+                    if(selection.Contains (ri)) {
+                        row_state = StateType.Selected;
+                    }
+                    
+                    //PaintRowFocus (ri, clip, single_list_alloc, row_state);
+                    PaintRow (ri, clip, single_list_alloc, row_state);
+                } else if (ri % 2 != 0) {
+                    graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                        single_list_alloc.Width, single_list_alloc.Height);
+                }
             }
         }
-        
-        private void PaintRowFocus(int row_index, Gdk.Rectangle clip, Gdk.Rectangle area, StateType state)
-        {
-            if(row_index == focused_row_index && state != StateType.Selected) {
-                Style.PaintFocus(Style, list_window, State, clip, this, "row", area.X, area.Y, area.Width, area.Height);
-            }
-        }
-        
-        private void PaintRowBackground(int row_index, Gdk.Rectangle clip, Gdk.Rectangle area, StateType state)
-        {
-            if(row_index % 2 != 0 && rules_hint) {
-                Style.PaintFlatBox(Style, list_window, StateType.Normal, ShadowType.None, clip, this, "row",
-                    area.X, area.Y, area.Width, area.Height);
-            }
-        }
-        
+
         private void PaintRow(int row_index, Gdk.Rectangle clip, Gdk.Rectangle area, StateType state)
         {
             if(column_cache == null) {

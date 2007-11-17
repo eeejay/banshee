@@ -58,6 +58,8 @@ namespace Hyena.Data.Gui
         private Cairo.Color view_fill;
         private Cairo.Color view_fill_transparent;
         
+        private Cairo.Color rule_color;
+        
         private Cairo.Color border_color;
         
         private Widget widget;
@@ -122,6 +124,8 @@ namespace Hyena.Data.Gui
             view_fill = GetWidgetColor(GtkColorClass.Base, StateType.Normal);
             view_fill_transparent = view_fill;
             view_fill_transparent.A = 0;
+            
+            rule_color = CairoExtensions.ColorShade (view_fill, 0.95);
             
             border_color = GetWidgetColor(GtkColorClass.Dark, StateType.Active);
             
@@ -275,6 +279,13 @@ namespace Hyena.Data.Gui
             cr.Color = selection_stroke;
             CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, BorderRadius);
             cr.Stroke();
+        }
+                
+        public void DrawRowRule(Cairo.Context cr, int x, int y, int width, int height)
+        {
+            cr.Color = rule_color;
+            cr.Rectangle (x, y, width, height);
+            cr.Fill ();
         }
         
         public Cairo.Color ViewFill {

@@ -53,6 +53,7 @@ namespace Banshee.Collection.Gui
             column_controller.Append(new Column("Duration", new ColumnCellDuration(true, 5), 0.15));
             
             ColumnController = DefaultColumnController;
+            RulesHint = true;
             
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             

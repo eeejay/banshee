@@ -172,7 +172,7 @@ namespace Banshee.Database
 
         public string DatabaseFile {
             get {
-                if (ApplicationContext.Contains ("db"))
+                if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
 
                 string dbfile = Path.Combine(Path.Combine(Environment.GetFolderPath(
