@@ -80,7 +80,7 @@ namespace Hyena.Data.Gui
     
         private const int COLUMN_PADDING = 1;
         private const int InnerBorderWidth = 4;
-        private const int FooterHeight = 10;
+        private const int FooterHeight = InnerBorderWidth;
     
         private ListViewGraphics graphics;
         
@@ -596,7 +596,7 @@ namespace Hyena.Data.Gui
             }
             
             if(vadjustment != null && model != null) {
-                vadjustment.Upper = RowHeight * model.Count + HeaderHeight;
+                vadjustment.Upper = RowHeight * model.Count + HeaderHeight + FooterHeight;
                 vadjustment.StepIncrement = RowHeight;
             }
             
@@ -754,13 +754,7 @@ namespace Hyena.Data.Gui
                         (ri * RowHeight - (int)vadjustment.Value), RowHeight));
                 }
             }
-            
-            /*if (rules_hint) {
-                for (int ri = first_row; ri < last_row; ri++) {
-                    PaintRowBackground(ri, clip, single_list_alloc, row_state);
-                }
-            }*/
-            
+
             if (rules_hint) {
                 PaintRows (first_row, last_row, clip, false);
             }

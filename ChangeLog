@@ -1,5 +1,10 @@
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Fix the vadjustment
+	to account for the FooterHeight; Make FooterHeight reflect the BorderWidth
+
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Set RulesHint to true to show alternating row background colors
 
