@@ -1,3 +1,20 @@
+2006-11-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Allow the browser to be shown at either the top or the left of the 
+	track view; merge an action UI into the menu for toggling between the
+	two modes
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Added
+	a placeholder for the browser view menu options
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Add proper padding
+	for the right side of the text to the pango layout
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs: 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Added view
+	menu actions
+
 2007-11-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Fix the vadjustment

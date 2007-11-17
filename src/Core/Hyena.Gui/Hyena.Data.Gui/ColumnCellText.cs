@@ -54,7 +54,7 @@ namespace Hyena.Data.Gui
     
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            context.Layout.Width = (int)(cellWidth * Pango.Scale.PangoScale);
+            context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
             context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
             context.Layout.FontDescription.Weight = font_weight;
             context.Layout.Ellipsize = ellipsize_mode;

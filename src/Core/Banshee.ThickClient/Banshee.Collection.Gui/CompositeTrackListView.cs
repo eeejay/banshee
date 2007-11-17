@@ -28,32 +28,85 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 using Hyena.Data;
 using Hyena.Data.Gui;
 
+using Banshee.Gui;
+using Banshee.ServiceStack;
 using Banshee.Collection;
+using Banshee.Configuration;
 
 namespace Banshee.Collection.Gui
 {
-    public class CompositeTrackListView : HPaned
+    public class CompositeTrackListView : VBox
     {
         private ArtistListView artist_view;
         private AlbumListView album_view;
         private TrackListView track_view;
         
+        private ArtistListModel artist_model;
+        private AlbumListModel album_model;
+        private TrackListModel track_model;
+        
         private ScrolledWindow artist_scrolled_window;
         private ScrolledWindow album_scrolled_window;
         private ScrolledWindow track_scrolled_window;
         
-        private VPaned artist_album_box;
+        private Paned container;
+        private InterfaceActionService action_service;
+        private ActionGroup browser_view_actions;
+        private uint action_merge_id;
         
-        public CompositeTrackListView()
+        private static string menu_xml = @"
+            <ui>
+              <menubar name=""MainMenu"">
+                <menu name=""ViewMenu"" action=""ViewMenuAction"">
+                  <placeholder name=""BrowserViews"">
+                    <menuitem name=""BrowserTop"" action=""BrowserTopAction"" />
+                    <menuitem name=""BrowserLeft"" action=""BrowserLeftAction"" />
+                  </placeholder>
+                </menu>
+              </menubar>
+            </ui>
+        ";
+        
+        public CompositeTrackListView ()
+        {
+            string position = Position.Get ();
+            if (Position.Get () == "top") {
+                LayoutTop ();
+            } else {
+                LayoutLeft ();
+            }
+            
+            if (ServiceManager.Contains ("InterfaceActionService")) {
+                action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
+                
+                browser_view_actions = new ActionGroup ("BrowserView");
+                browser_view_actions.Add (new RadioActionEntry [] {
+                    new RadioActionEntry ("BrowserLeftAction", null, 
+                        Catalog.GetString ("Browser On Left"), null,
+                        Catalog.GetString ("Show the artist/album browser to the left of the track list"), 0),
+                    
+                    new RadioActionEntry ("BrowserTopAction", null,
+                        Catalog.GetString ("Browser On Top"), null,
+                        Catalog.GetString ("Show the artist/album browser above the track list"), 1),
+                }, position == "top" ? 1 : 0, OnViewModeChanged);
+                
+                action_service.AddActionGroup (browser_view_actions);
+                action_merge_id = action_service.UIManager.NewMergeId ();
+                action_service.UIManager.AddUiFromString (menu_xml);
+            }
+        }
+        
+        private void BuildCommon ()
         {
             artist_view = new ArtistListView();
             album_view = new AlbumListView();
             track_view = new TrackListView();
-            
+        
             artist_view.HeaderVisible = false;
             album_view.HeaderVisible = false;
             
@@ -75,19 +128,84 @@ namespace Banshee.Collection.Gui
             track_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             track_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            artist_album_box = new VPaned();
+            artist_view.Model = artist_model;
+            album_view.Model = album_model;
+            track_view.Model = track_model;
+        }
+        
+        private void Clean ()
+        {
+            if (artist_view != null) {
+                artist_view.Destroy ();
+            }
             
-            artist_album_box.Add1(artist_scrolled_window);
-            artist_album_box.Add2(album_scrolled_window);
+            if (album_view != null) {
+                album_view.Destroy ();
+            }
+            
+            if (track_view != null) {
+                track_view.Destroy ();
+            }
+            
+            if (container != null) {
+                container.Destroy ();
+            }
+            
+            BuildCommon ();
+        }
+
+        private void LayoutLeft ()
+        {
+            Clean ();
+            
+            container = new HPaned ();
+            VPaned artist_album_box = new VPaned ();
+            
+            artist_album_box.Add1 (artist_scrolled_window);
+            artist_album_box.Add2 (album_scrolled_window);
+
             artist_album_box.Position = 350;
             
-            Add1(artist_album_box);
-            Add2(track_scrolled_window);
+            container.Add1 (artist_album_box);
+            container.Add2 (track_scrolled_window);
             
-            Position = 275;
+            container.Position = 275;
+            ShowPack ();
+        }
+        
+        private void LayoutTop ()
+        {
+            Clean ();
             
-            artist_album_box.ShowAll();
-            track_view.Show();
+            container = new VPaned ();
+            HBox artist_album_box = new HBox ();
+            artist_album_box.Spacing = 10;
+            
+            artist_album_box.PackStart (artist_scrolled_window, true, true, 0);
+            artist_album_box.PackStart (album_scrolled_window, true, true, 0);
+            
+            container.Add1 (artist_album_box);
+            container.Add2 (track_scrolled_window);
+            
+            container.Position = 175;
+            ShowPack ();
+        }
+        
+        private void ShowPack ()
+        {
+            PackStart (container, true, true, 0);
+            ShowAll ();
+        }
+        
+        private void OnViewModeChanged (object o, ChangedArgs args)
+        {
+            if (args.Current.Value == 0) {
+                LayoutLeft ();
+                Position.Set ("left");
+            } else {
+                LayoutTop ();
+                Position.Set ("top");
+            }
         }
         
         protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
@@ -148,17 +266,33 @@ namespace Banshee.Collection.Gui
         
         public TrackListModel TrackModel {
             get { return (TrackListModel)track_view.Model; }
-            set { track_view.Model = value; }
+            set {
+                track_model = value;
+                track_view.Model = value; 
+            }
         }
         
         public ArtistListModel ArtistModel {
             get { return (ArtistListModel)artist_view.Model; }
-            set { artist_view.Model = value; }
+            set {
+                artist_model = value;
+                artist_view.Model = value; 
+            }
         }
         
         public AlbumListModel AlbumModel {
             get { return (AlbumListModel)album_view.Model; }
-            set { album_view.Model = value; }
+            set {
+                album_model = value;
+                album_view.Model = value;
+            }
         }
+        
+        public static readonly SchemaEntry<string> Position = new SchemaEntry<string> (
+            "browser", "position",
+            "left",
+            "Artist/Album Browser Position",
+            "The position of the Artist/Album browser; either 'top' or 'left'"
+        );
     }
 }

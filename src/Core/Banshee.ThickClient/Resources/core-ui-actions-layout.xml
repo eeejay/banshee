@@ -15,6 +15,14 @@
             <placeholder name="ClosePlaceholder" />
             <menuitem name="Quit" action="QuitAction" />
         </menu>
+        <menu name="ViewMenu" action="ViewMenuAction">
+            <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
+            <separator />
+            <placeholder name="BrowserViews" />
+            <separator />
+            <placeholder name="ViewMenuAdditions" />
+            <menuitem name="FullScreen" action="FullScreenAction" />
+        </menu>
         <menu name="PlaybackMenu" action="PlaybackMenuAction">
             <menuitem name="PlayPause" action="PlayPauseAction" />
             <!--<menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />-->
@@ -91,14 +99,7 @@
         <menu name="ToolsMenu" action="ToolsMenuAction">
             <menuitem name="Scripts" action="ScriptsAction" />
         </menu>
-        <menu name="ViewMenu" action="ViewMenuAction">
-            <menuitem name="ShowEqualizer" action="ShowEqualizerAction" />
-            <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
-            <placeholder name="ViewMenuAdditions" />
-            <menuitem name="FullScreen" action="FullScreenAction" />
-            <menuitem name="Columns" action="ColumnsAction" />
-            <menuitem name="Shell" action="ShellAction" />
-        </menu>
+
        
         <menu name="DebugMenu" action="DebugMenuAction">
             

@@ -43,6 +43,7 @@ namespace Banshee.Gui
         public InterfaceActionService ()
         {
             AddActionGroup (new GlobalActions (this));
+            AddActionGroup (new ViewActions (this));
             AddActionGroup (new PlaybackActions (this));
             
             ui_manager.AddUiFromResource ("core-ui-actions-layout.xml");            
