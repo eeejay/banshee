@@ -82,7 +82,7 @@ namespace Banshee.Collection.Gui
             ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, x, y, pixbuf_size, pixbuf_size, 
                 !is_default, ListViewGraphics.BorderRadius);
             
-            int fl_width, fl_height, sl_width, sl_height;
+            int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
             
             Pango.Layout first_line_layout = context.Layout;
             
@@ -96,21 +96,25 @@ namespace Banshee.Collection.Gui
             second_line_layout.FontDescription.Size = (int)(second_line_layout.FontDescription.Size * Pango.Scale.Small);
             
             first_line_layout.SetText (album.Title);
-            second_line_layout.SetText (album.ArtistName);
-            
             first_line_layout.GetPixelSize (out fl_width, out fl_height);
-            second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            
+            if (album.ArtistName != null) {
+                second_line_layout.SetText (album.ArtistName);
+                second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            }
             
             x = ((int)cellHeight - x) + 10;
             y = (int)((cellHeight - (fl_height + sl_height)) / 2);
             
             Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
-                    context.Area, context.Widget, "text",
-                    context.Area.X + x, context.Area.Y + y, first_line_layout);
+                context.Area, context.Widget, "text",
+                context.Area.X + x, context.Area.Y + y, first_line_layout);
             
-            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
+            if (album.ArtistName != null) {
+                Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
                     context.Area, context.Widget, "text",
                     context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            }        
         }
     }
 }

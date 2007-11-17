@@ -1,4 +1,9 @@
-2006-11-17  Aaron Bockover  <abock@gnome.org>
+2007-11-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Do not draw the second line if the artist informatio is unset
+
+2007-11-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
 	Allow the browser to be shown at either the top or the left of the 

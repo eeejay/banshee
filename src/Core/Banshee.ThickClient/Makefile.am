@@ -39,6 +39,7 @@ SOURCES =  \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PlaybackActions.cs \
+	Banshee.Gui/ViewActions.cs \
 	Banshee.Library.Gui/FileImportSource.cs \
 	Banshee.Library.Gui/FolderImportSource.cs \
 	Banshee.Library.Gui/ImportDialog.cs \
