@@ -3,11 +3,13 @@ TARGET = library
 LINK = $(REF_HYENA_GUI)
 SOURCES =  \
 	Hyena.Data.Gui/CairoHelper.cs \
+	Hyena.Data.Gui/CellContext.cs \
 	Hyena.Data.Gui/Column.cs \
 	Hyena.Data.Gui/ColumnCell.cs \
 	Hyena.Data.Gui/ColumnCellText.cs \
 	Hyena.Data.Gui/ColumnController.cs \
 	Hyena.Data.Gui/ColumnHeaderCellText.cs \
+	Hyena.Data.Gui/IHeaderCell.cs \
 	Hyena.Data.Gui/ListView.cs \
 	Hyena.Data.Gui/ListViewGraphics.cs \
 	Hyena.Data.Gui/ObjectListView.cs \

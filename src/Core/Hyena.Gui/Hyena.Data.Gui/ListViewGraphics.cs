@@ -31,6 +31,8 @@ using Gtk;
 using Gdk;
 using Cairo;
 
+using Hyena.Gui;
+
 namespace Hyena.Data.Gui
 {
     public enum GtkColorClass 
@@ -39,13 +41,14 @@ namespace Hyena.Data.Gui
         Mid,
         Dark,
         Base,
+        Text,
         Background,
         Foreground
     }
     
     public class ListViewGraphics
     {
-        private const int border_radius = 3;
+        public const int BorderRadius = 3;
         
         private Cairo.Color [] gtk_colors;
         
@@ -71,7 +74,7 @@ namespace Hyena.Data.Gui
                 RefreshColors();
             }
             
-            return gtk_colors[(int)@class * (int)GtkColorClass.Foreground + (int)state];
+            return gtk_colors[(int)@class * ((int)StateType.Insensitive + 1) + (int)state];
         }
         
         private bool refreshing = false;
@@ -84,15 +87,15 @@ namespace Hyena.Data.Gui
             
             refreshing = true;
             
-            int mc = (int)GtkColorClass.Foreground;
-            int ms = (int)StateType.Insensitive;
+            int sn = (int)StateType.Insensitive + 1;
+            int cn = (int)GtkColorClass.Foreground + 1;
             
             if(gtk_colors == null) {
-                gtk_colors = new Cairo.Color[(mc + 1) * (ms + 1)];
+                gtk_colors = new Cairo.Color[sn * cn];
             }
                 
-            for(int c = (int)GtkColorClass.Light; c <= mc; c++) {
-                for(int s = (int)StateType.Normal; s <= ms; s++) {
+            for(int c = 0, i = 0; c < cn; c++) {
+                for(int s = 0; s < sn; s++, i++) {
                     Gdk.Color color = Gdk.Color.Zero;
                     
                     if(widget != null && widget.IsRealized) {
@@ -101,6 +104,7 @@ namespace Hyena.Data.Gui
                             case GtkColorClass.Mid:        color = widget.Style.MidColors[s];   break;
                             case GtkColorClass.Dark:       color = widget.Style.DarkColors[s];  break;
                             case GtkColorClass.Base:       color = widget.Style.BaseColors[s];  break;
+                            case GtkColorClass.Text:       color = widget.Style.TextColors[s];  break;
                             case GtkColorClass.Background: color = widget.Style.Backgrounds[s]; break;
                             case GtkColorClass.Foreground: color = widget.Style.Foregrounds[s]; break;
                         }
@@ -108,7 +112,7 @@ namespace Hyena.Data.Gui
                         color = new Gdk.Color(0, 0, 0);
                     }
                     
-                    gtk_colors[c * mc + s] = CairoExtensions.GdkColorToCairoColor(color);
+                    gtk_colors[c * sn + s] = CairoExtensions.GdkColorToCairoColor(color);
                 }
             }
             
@@ -166,7 +170,7 @@ namespace Hyena.Data.Gui
             
                 cr.Pattern = grad;
                 CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width, 
-                alloc.Height - bottom_offset, border_radius, corners);
+                alloc.Height - bottom_offset, BorderRadius, corners);
                 cr.Fill();
             
                 cr.Color = gtk_base_color;
@@ -174,7 +178,7 @@ namespace Hyena.Data.Gui
                 cr.Fill();
             } else {
                 cr.Color = gtk_base_color;
-                CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, border_radius, corners);
+                CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, BorderRadius, corners);
                 cr.Fill();
             }
             
@@ -182,7 +186,7 @@ namespace Hyena.Data.Gui
             cr.Translate(alloc.X + 0.5, alloc.Y + 0.5);
             cr.Color = border_color;
             CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width - 1, 
-                alloc.Height + 4, border_radius, corners);
+                alloc.Height + 4, BorderRadius, corners);
             cr.Stroke();
             
             if(fill) {
@@ -217,7 +221,7 @@ namespace Hyena.Data.Gui
             
             cr.Color = gtk_base_color;
             CairoExtensions.RoundedRectangle(cr, alloc.X , alloc.Y, alloc.Width, 
-                alloc.Height, border_radius, corners);
+                alloc.Height, BorderRadius, corners);
             cr.Fill();
             
             cr.LineWidth = 1.0;
@@ -225,7 +229,7 @@ namespace Hyena.Data.Gui
             
             cr.Color = border_color;
             CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y - 4, alloc.Width - 1, 
-                alloc.Height + 3, border_radius, corners);
+                alloc.Height + 3, BorderRadius, corners);
             cr.Stroke();
         }
         
@@ -264,12 +268,12 @@ namespace Hyena.Data.Gui
             grad.AddColorStop(1, selection_fill_dark);
             
             cr.Pattern = grad;
-            CairoExtensions.RoundedRectangle(cr, x, y, width, height, border_radius);
+            CairoExtensions.RoundedRectangle(cr, x, y, width, height, BorderRadius);
             cr.Fill();
             
             cr.LineWidth = 1.0;
             cr.Color = selection_stroke;
-            CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, border_radius);
+            CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, BorderRadius);
             cr.Stroke();
         }
         

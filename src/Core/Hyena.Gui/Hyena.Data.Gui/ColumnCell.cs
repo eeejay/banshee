@@ -39,15 +39,15 @@ namespace Hyena.Data.Gui
         private int field_index;
         private object bound_object;
             
-        public ColumnCell(bool expand, int fieldIndex)
+        public ColumnCell (bool expand, int fieldIndex)
         {
             this.expand = expand;
             this.field_index = fieldIndex;
         }
 
-        public void BindListItem(object item)
+        public void BindListItem (object item)
         {
-            if(item == null) {
+            if (item == null) {
                 return;
             }
             
@@ -55,19 +55,19 @@ namespace Hyena.Data.Gui
             
             bound_object = null;
             
-            object [] class_attributes = type.GetCustomAttributes(typeof(ListItemSetup), true);
-            if(class_attributes != null && class_attributes.Length > 0) {
+            object [] class_attributes = type.GetCustomAttributes(typeof (ListItemSetup), true);
+            if (class_attributes != null && class_attributes.Length > 0) {
                 bound_object = item;
                 return;
             }
             
-            foreach(PropertyInfo info in type.GetProperties()) {
-                object [] attributes = info.GetCustomAttributes(typeof(ListItemSetup), false);
-                if(attributes == null || attributes.Length == 0) {
+            foreach (PropertyInfo info in type.GetProperties ()) {
+                object [] attributes = info.GetCustomAttributes(typeof (ListItemSetup), false);
+                if (attributes == null || attributes.Length == 0) {
                     continue;
                 }
             
-                if(((ListItemSetup [])attributes)[0].FieldIndex != field_index) {
+                if (((ListItemSetup [])attributes)[0].FieldIndex != field_index) {
                     continue;
                 }
                 
@@ -84,15 +84,14 @@ namespace Hyena.Data.Gui
         }
         
         protected Type BoundType {
-            get { return bound_object.GetType(); }
+            get { return bound_object.GetType (); }
         }
         
         protected object BoundObject {
             get { return bound_object; }
         }
         
-        public abstract void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle draw_area, 
-            Gdk.Rectangle cell_area, StateType state);
+        public abstract void Render (CellContext context, StateType state, double cellWidth, double cellHeight);
         
         public bool Expand {
             get { return expand; }

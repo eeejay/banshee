@@ -1,3 +1,35 @@
+2007-11-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Use ArtworkRenderer to render the thumbnail of the cover; do the layout
+	of the text properly
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Extracted the cover art rendering from TrackInfoDisplay so we can render
+	the same style of cover in many places
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Change the cell rendering
+	API; use CellContext, save/clip/render/restore for cell renderers to make
+	writing cell renderers simpler; do not allow resizing below a miniumum
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
+	Updated to reflect the API changes for cell renderers
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Added Text color
+	support; made the BorderRadius public
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/IHeaderCell.cs: Interface to expose
+	a MinWidth for text in the headers
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/CellContext.cs: A context of stuff
+	to pass to cell renderers to avoid the Render() calls from growing an
+	insane amount of arguments
+
+	* src/Core/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Changed Namespace
+
 2007-11-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:

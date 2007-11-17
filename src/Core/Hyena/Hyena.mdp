@@ -33,6 +33,9 @@
     <File name="Hyena/IUndoAction.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/UndoManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ColumnDescription.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/CacheableModelAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ICacheableModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/Selection.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

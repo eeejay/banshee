@@ -31,106 +31,86 @@ using Gtk;
 using Cairo;
 
 using Hyena.Data.Gui;
+using Banshee.Gui;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
 {
     public class ColumnCellAlbum : ColumnCell
     {
-        private static int pixbuf_size = 52;
+        private static int pixbuf_size = 48;
         private static int pixbuf_spacing = 4;
         
-        private static Gdk.Pixbuf default_cover_pixbuf = Gdk.Pixbuf.LoadFromResource("browser-album-cover.png");
+        private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (48, "media-optical");
         
         public static int RowHeight {
-            get { return 60; }
+            get { return 54; }
         }
     
-        private Pango.Layout album_layout;
-        private Pango.Layout artist_layout;
-        
         private ArtworkManager artwork_manager;
 
-        public ColumnCellAlbum() : base(true, 0)
+        public ColumnCellAlbum () : base (true, 0)
         {
             artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
         }
     
-        public unsafe override void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
-            Gdk.Rectangle clip_area, StateType state)
+        public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            if(BoundObject == null) {
+            if (BoundObject == null) {
                 return;
             }
             
-            if(!(BoundObject is AlbumInfo)) {
+            if (!(BoundObject is AlbumInfo)) {
                 throw new InvalidCastException("ColumnCellAlbum can only bind to AlbumInfo objects");
             }
             
             AlbumInfo album = (AlbumInfo)BoundObject;
             
-            if(album_layout == null) {
-                album_layout = new Pango.Layout(widget.PangoContext);
-                album_layout.FontDescription = widget.PangoContext.FontDescription.Copy();
-                album_layout.FontDescription.Weight = Pango.Weight.Bold;
-            }
+            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.Lookup (album.ArtworkId);
+            bool is_default = false;
+            int pixbuf_size = (int)cellHeight - 8;
+            int x = pixbuf_spacing;
+            int y = ((int)cellHeight - pixbuf_size) / 2;
             
-            if(artist_layout == null) {
-                artist_layout = new Pango.Layout(widget.PangoContext);
-            }
-        
-            int text_height, text_width;
-            
-            Gdk.Rectangle pixbuf_area = new Gdk.Rectangle();
-            pixbuf_area.X = cell_area.X + pixbuf_spacing;
-            pixbuf_area.Y = cell_area.Y + pixbuf_spacing;
-            pixbuf_area.Width = pixbuf_size;
-            pixbuf_area.Height = pixbuf_size;
-                        
-            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.Lookup(album.ArtworkId);
-            
-            if(pixbuf != null) {
-                Gdk.Pixbuf scaled_pixbuf = pixbuf.ScaleSimple(pixbuf_area.Width - 2, 
-                    pixbuf_area.Height - 2, Gdk.InterpType.Bilinear);
-                
-                window.DrawRectangle(widget.Style.BlackGC, true, pixbuf_area);
-                window.DrawPixbuf(widget.Style.BackgroundGC(StateType.Normal), scaled_pixbuf,
-                    0, 0, pixbuf_area.X + 1, pixbuf_area.Y + 1, scaled_pixbuf.Width, scaled_pixbuf.Height,
-                    Gdk.RgbDither.Normal, 0, 0);
-                
-                /*window.DrawPixbuf(widget.Style.BackgroundGC(StateType.Normal), scaled_pixbuf,
-                    0, 0, pixbuf_area.X + pixbuf_area.Width, pixbuf_area.Y, pixbuf_area.Width / 3, pixbuf_area.Height,
-                    Gdk.RgbDither.Normal, 0, 0);
-                
-                LinearGradient grad = new LinearGradient(pixbuf_area.X + pixbuf_area.Width, pixbuf_area.Y, 
-                    pixbuf_area.X + pixbuf_area.Width * 1.3, pixbuf_area.Y);
-                grad.AddColorStop(0, new Color(0, 0, 0, 0.3));
-                grad.AddColorStop(1, new Color(0, 0, 0, 1));
-                
-                cr.Rectangle(pixbuf_area.X + pixbuf_area.Width, pixbuf_area.Y, pixbuf_area.Width / 3, pixbuf_area.Height);
-                cr.Clip();
-                cr.Mask(grad);
-                cr.Fill();*/
+            if (pixbuf == null) {
+                pixbuf = default_cover_pixbuf;
+                is_default = true;
             } else {
-                window.DrawPixbuf(widget.Style.BackgroundGC(StateType.Normal), default_cover_pixbuf,
-                    0, 0, pixbuf_area.X + 5, pixbuf_area.Y + 6, default_cover_pixbuf.Width, default_cover_pixbuf.Height,
-                    Gdk.RgbDither.Normal, 0, 0);
+                pixbuf = pixbuf.ScaleSimple (pixbuf_size, pixbuf_size, Gdk.InterpType.Bilinear);
             }
             
-            album_layout.SetText(album.Title);
-            album_layout.GetPixelSize(out text_width, out text_height);
+            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, x, y, pixbuf_size, pixbuf_size, 
+                !is_default, ListViewGraphics.BorderRadius);
             
-            Style.PaintLayout(widget.Style, window, state, true, clip_area, widget, "column",
-                pixbuf_area.X + pixbuf_area.Width + pixbuf_spacing, 
-                pixbuf_area.Y + 4, album_layout);
+            int fl_width, fl_height, sl_width, sl_height;
             
-            if(!String.IsNullOrEmpty(album.ArtistName)) {
-                artist_layout.SetMarkup(String.Format("<small>{0}</small>", GLib.Markup.EscapeText(album.ArtistName)));
+            Pango.Layout first_line_layout = context.Layout;
             
-                Style.PaintLayout(widget.Style, window, state, true, clip_area, widget, "column",
-                    pixbuf_area.X + pixbuf_area.Width + pixbuf_spacing, 
-                    pixbuf_area.Y + text_height + 4, artist_layout);
-            }
+            first_line_layout.Width = (int)((cellWidth - cellHeight - x - 10) * Pango.Scale.PangoScale);
+            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+            first_line_layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
+            
+            Pango.Layout second_line_layout = first_line_layout.Copy ();
+            
+            first_line_layout.FontDescription.Weight = Pango.Weight.Bold;
+            second_line_layout.FontDescription.Size = (int)(second_line_layout.FontDescription.Size * Pango.Scale.Small);
+            
+            first_line_layout.SetText (album.Title);
+            second_line_layout.SetText (album.ArtistName);
+            
+            first_line_layout.GetPixelSize (out fl_width, out fl_height);
+            second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            
+            x = ((int)cellHeight - x) + 10;
+            y = (int)((cellHeight - (fl_height + sl_height)) / 2);
+            
+            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
+                    context.Area, context.Widget, "text",
+                    context.Area.X + x, context.Area.Y + y, first_line_layout);
+            
+            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
+                    context.Area, context.Widget, "text",
+                    context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
         }
     }
 }

@@ -34,7 +34,7 @@ using Mono.Unix;
 using Gtk;
 using Cairo;
 
-using Hyena.Data.Gui;
+using Hyena.Gui;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -47,15 +47,12 @@ namespace Banshee.Gui.Widgets
     public class TrackInfoDisplay : Bin
     {
         private const int FADE_TIMEOUT = 1500;
-        private const int PANGO_SCALE = 1024;
     
         private ArtworkManager artwork_manager;
         private Gdk.Pixbuf current_pixbuf;
         private Gdk.Pixbuf incoming_pixbuf;
         private Gdk.Pixbuf missing_pixbuf;
         
-        private Cairo.Color cover_border_dark_color;
-        private Cairo.Color cover_border_light_color;
         private Cairo.Color background_color;
         private Cairo.Color text_color;
         private Cairo.Color text_light_color;
@@ -140,8 +137,6 @@ namespace Banshee.Gui.Widgets
             text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal));          
             text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
             background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
-            cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
-            cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
             
             if (missing_pixbuf != null) {
                 missing_pixbuf.Dispose ();
@@ -264,43 +259,8 @@ namespace Banshee.Gui.Widgets
         
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
         {
-            if (pixbuf == null) {
-                return;
-            }
-            
-            double x, y, p_x, p_y, width, height;
-            
-            width = height = Allocation.Height;
-            x = y = p_x = p_y = 0;
-            p_x += pixbuf.Width < width ? (width - pixbuf.Width) / 2 : 0;
-            p_y += pixbuf.Height < height ? (height - pixbuf.Height) / 2 : 0;
-            
-            cr.Antialias = Cairo.Antialias.Default;
-            
-            if (pixbuf == missing_pixbuf) {
-                cr.Rectangle (x, y, Allocation.Height, Allocation.Height);
-                cr.Color = background_color;
-                cr.Fill();
-            }
-            
-            cr.Rectangle (p_x, p_y, pixbuf.Width + p_x, pixbuf.Height + p_y);
-            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
-            cr.Fill ();
-            
-            if (pixbuf == missing_pixbuf) {
-                return;
-            }
-            
-            cr.LineWidth = 1.0;
-            cr.Antialias = Antialias.None;
-            
-            cr.Rectangle (x + 1.5, y + 1.5, width - 3, height - 3);
-            cr.Color = cover_border_light_color;
-            cr.Stroke ();
-            
-            cr.Rectangle (x + 0.5, y + 0.5, width - 1, height - 1);
-            cr.Color = cover_border_dark_color;
-            cr.Stroke ();
+            ArtworkRenderer.RenderThumbnail (cr, pixbuf, 0, 0, Allocation.Height, Allocation.Height, 
+                pixbuf != missing_pixbuf, 0, pixbuf == missing_pixbuf, background_color);
         }
         
         private void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum)
@@ -315,7 +275,7 @@ namespace Banshee.Gui.Widgets
 
             // Set up the text layouts
             Pango.Layout first_line_layout = Pango.CairoHelper.CreateLayout (cr);
-            first_line_layout.Width = (int)width * PANGO_SCALE;
+            first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
             first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
             first_line_layout.FontDescription = PangoContext.FontDescription.Copy ();
             

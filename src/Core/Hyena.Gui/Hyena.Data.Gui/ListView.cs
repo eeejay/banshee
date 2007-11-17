@@ -96,6 +96,9 @@ namespace Hyena.Data.Gui
         private Cairo.Context left_border_cr;
         private Cairo.Context right_border_cr;
         
+        private Pango.Layout header_pango_layout;
+        private Pango.Layout list_pango_layout;
+        
         private Gdk.Rectangle list_alloc;
         private Gdk.Rectangle header_alloc;
         private Gdk.Rectangle footer_alloc;
@@ -635,6 +638,9 @@ namespace Hyena.Data.Gui
             
             if(evnt.Window == header_window) {
                 header_cr = cr;
+                if (header_pango_layout == null) {
+                    header_pango_layout = Pango.CairoHelper.CreateLayout (header_cr);
+                }
                 PaintHeader(evnt.Area);
             } else if(evnt.Window == footer_window) {
                 footer_cr = cr;
@@ -647,6 +653,9 @@ namespace Hyena.Data.Gui
                 PaintRightBorder(evnt, clip);
             } else if(evnt.Window == list_window) {
                 list_cr = cr;
+                if (list_pango_layout == null) {
+                    list_pango_layout = Pango.CairoHelper.CreateLayout (list_cr);
+                }
                 PaintList(evnt, clip);
             }
             
@@ -680,7 +689,11 @@ namespace Hyena.Data.Gui
                     }
                 }
                 
-                cell.Render(header_window, header_cr, this, cell_area, cell_area, StateType.Normal);
+                header_cr.Save ();
+                header_cr.Translate (cell_area.X, cell_area.Y);
+                cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
+                    graphics, cell_area), StateType.Normal, cell_area.Width, cell_area.Height);
+                header_cr.Restore ();
                 
                 if(ci < column_cache.Length - 1) {
                     graphics.DrawHeaderSeparator(header_cr, header_alloc, 
@@ -803,7 +816,12 @@ namespace Hyena.Data.Gui
         {
             ColumnCell cell = column_cache[column_index].Column.GetCell(0);
             cell.BindListItem(item);
-            cell.Render(list_window, list_cr, this, area, clip, state);
+            
+            list_cr.Save ();
+            list_cr.Translate (clip.X, clip.Y);
+            cell.Render (new CellContext (list_cr, list_pango_layout, this, list_window, graphics, area), 
+                state, area.Width, area.Height);
+            list_cr.Restore ();
         }
         
         protected void InvalidateListWindow()
@@ -998,7 +1016,16 @@ namespace Hyena.Data.Gui
             double subsequent_columns = column_cache.Length - resizing_column.Index - 1;
             double even_distribution = 0.0;
             
-            for(int i = 0; i <= resizing_column_index; i++) {
+            int min_width = 25;
+            if (resizing_column.Column.HeaderCell is IHeaderCell) {
+                min_width = ((IHeaderCell)resizing_column.Column.HeaderCell).MinWidth;
+            }
+            
+            if (resizing_column.Width + resize_delta < min_width) {
+                resize_delta = min_width - resizing_column.Width;
+            }
+                        
+            for (int i = 0; i <= resizing_column_index; i++) {
                 even_distribution += column_cache[i].Column.Width * resize_delta;
             }
 
@@ -1006,15 +1033,15 @@ namespace Hyena.Data.Gui
 
             resizing_column.Column.Width = (resizing_column.Width + resize_delta) / (double)list_alloc.Width;
 
-            for(int i = resizing_column_index + 1; i < column_cache.Length; i++) {
+            for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width = (column_cache[i].Width - 
                     (column_cache[i].Column.Width * resize_delta) - 
                     even_distribution) / (double)list_alloc.Width;
             }
             
-            RegenerateColumnCache();
-            InvalidateHeaderWindow();
-            InvalidateListWindow();
+            RegenerateColumnCache ();
+            InvalidateHeaderWindow ();
+            InvalidateListWindow ();
         }
         
         private Column GetColumnForResizeHandle(int x)

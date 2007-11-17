@@ -34,42 +34,76 @@ namespace Hyena.Data.Gui
 {
     public class ColumnCellText : ColumnCell
     {
-        public delegate string DataHandler();
+        public delegate string DataHandler ();
     
-        private Pango.Layout layout;
         private DataHandler data_handler;
+        private Pango.Weight font_weight = Pango.Weight.Normal;
+        private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
+        private int text_width;
+        private int text_height;
+        private bool use_cairo_pango = !String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("USE_CAIRO_PANGO"));
         
-        public ColumnCellText(bool expand, DataHandler data_handler) : base(expand, -1)
+        public ColumnCellText (bool expand, DataHandler data_handler) : base (expand, -1)
         {
             this.data_handler = data_handler;
         }
     
-        public ColumnCellText(bool expand, int fieldIndex) : base(expand, fieldIndex)
+        public ColumnCellText (bool expand, int fieldIndex) : base (expand, fieldIndex)
         {
         }
     
-        public override void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
-            Gdk.Rectangle clip_area, StateType state)
+        public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            if(data_handler == null && BoundObject == null) {
-                return;
+            context.Layout.Width = (int)(cellWidth * Pango.Scale.PangoScale);
+            context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
+            context.Layout.FontDescription.Weight = font_weight;
+            context.Layout.Ellipsize = ellipsize_mode;
+            
+            context.Layout.SetText (Text);
+            context.Layout.GetPixelSize (out text_width, out text_height);
+            
+            if (use_cairo_pango) {
+                context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
+                Pango.CairoHelper.LayoutPath (context.Context, context.Layout);
+                context.Context.Color = context.Graphics.GetWidgetColor (GtkColorClass.Text, state);
+                context.Context.Fill ();
+            } else {
+                Style.PaintLayout(context.Widget.Style, context.Drawable, state, true, context.Area,
+                    context.Widget, "text", context.Area.X + 4, context.Area.Y + (((int)cellHeight - text_height) / 2),
+                    context.Layout);
             }
-            
-            if(layout == null) {
-                layout = new Pango.Layout(widget.PangoContext);
-            }
-            
-            int text_height, text_width;
-
-            layout.SetText(Text);
-            layout.GetPixelSize(out text_width, out text_height);
-            
-            Style.PaintLayout(widget.Style, window, state, true, clip_area, widget, "column",
-                cell_area.X + 4, cell_area.Y + ((cell_area.Height - text_height) / 2), layout);
         }
         
         protected virtual string Text {
-            get { return data_handler == null ? BoundObject.ToString() : data_handler(); }
+            get { 
+                return data_handler == null
+                    ? (BoundObject == null 
+                        ? String.Empty 
+                        : BoundObject.ToString()) 
+                    : data_handler(); 
+            }
+        }
+        
+        protected int TextWidth {
+            get { return text_width; }
+        }
+        
+        protected int TextHeight {
+            get { return text_height; }
+        }
+        
+        internal bool UseCairoPango {
+            set { use_cairo_pango = value; }
+        }
+        
+        public virtual Pango.Weight FontWeight {
+            get { return font_weight; }
+            set { font_weight = value; }
+        }
+        
+        public virtual Pango.EllipsizeMode EllipsizeMode {
+            get { return ellipsize_mode; }
+            set { ellipsize_mode = value; }
         }
     }
 }

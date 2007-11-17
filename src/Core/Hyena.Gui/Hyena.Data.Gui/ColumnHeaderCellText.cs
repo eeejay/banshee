@@ -32,72 +32,73 @@ using Cairo;
 
 namespace Hyena.Data.Gui
 {
-    public class ColumnHeaderCellText : ColumnCell
+    public class ColumnHeaderCellText : ColumnCellText, IHeaderCell
     {
-        public delegate Column DataHandler();
+        public delegate Column DataHandler ();
         
         private Pango.Layout layout;
         private DataHandler data_handler;
         private bool has_sort;
         
-        public ColumnHeaderCellText(DataHandler data_handler) : base(true, -1)
+        public ColumnHeaderCellText (DataHandler data_handler) : base(true, -1)
         {
             this.data_handler = data_handler;
         }
     
-        public override void Render(Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
-            Gdk.Rectangle clip_area, StateType state)
+        public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             if(data_handler == null) {
                 return;
             }
             
-            if(layout == null) {
-                layout = new Pango.Layout(widget.PangoContext);
+            context.Context.Translate (0.5, 0.5);
+
+            if (!has_sort) {
+                base.Render (context, state, cellWidth - 10, cellHeight);
+                return;
             }
+            
+            int w = (int)(cellHeight / 3.5);
+            int h = (int)((double)w / 1.6);
+            int x1 = (int)cellWidth - w - 10;
+            int x2 = x1 + w;
+            int x3 = x1 + w / 2;
+            int y1 = ((int)cellHeight - h) / 2;
+            int y2 = y1 + h;
+            
+            base.Render (context, state, cellWidth - 2 * w - 10, cellHeight);
+            
+            context.Context.Translate (-0.5, -0.5);
+            
+            if (((ISortableColumn)data_handler ()).SortType == SortType.Ascending) {
+                context.Context.MoveTo (x1, y1);
+                context.Context.LineTo (x2, y1);
+                context.Context.LineTo (x3, y2);
+                context.Context.LineTo (x1, y1);
+            } else {
+                context.Context.MoveTo (x3, y1);
+                context.Context.LineTo (x2, y2);
+                context.Context.LineTo (x1, y2);
+                context.Context.LineTo (x3, y1);
+            }
+                
+            context.Context.Color = new Color (1, 1, 1, 0.4);
+            context.Context.FillPreserve ();
+            context.Context.Color = new Color (0, 0, 0, 1);
+            context.Context.Stroke ();
+        }
         
-            Column column = data_handler();
-            int text_height, text_width;
-            
-            layout.SetText(column.Title);
-            layout.GetPixelSize(out text_width, out text_height);
-            
-            Style.PaintLayout(widget.Style, window, state, true, clip_area, widget, "column",
-                cell_area.X + 4, cell_area.Y + ((cell_area.Height - text_height) / 2), layout);
-   
-            if(has_sort) {
-                int w = (int)((double)cell_area.Height / 3.5);
-                int h = (int)((double)w / 1.6);
-                int x1 = cell_area.X + text_width + 10;
-                int x2 = x1 + w;
-                int x3 = x1 + w / 2;
-                int y1 = cell_area.Y + ((cell_area.Height - h) / 2);
-                int y2 = y1 + h;
-                
-                cr.LineWidth = 0.75;
-                
-                if(((ISortableColumn)column).SortType == SortType.Ascending) {
-                    cr.MoveTo(x1, y1);
-                    cr.LineTo(x2, y1);
-                    cr.LineTo(x3, y2);
-                    cr.LineTo(x1, y1);
-                } else {
-                    cr.MoveTo(x3, y1);
-                    cr.LineTo(x2, y2);
-                    cr.LineTo(x1, y2);
-                    cr.LineTo(x3, y1);
-                }
-                    
-                cr.Color = new Color(1, 1, 1, 0.4);
-                cr.FillPreserve();
-                cr.Color = new Color(0, 0, 0, 1);
-                cr.Stroke();
-            }
+        protected override string Text {
+            get { return data_handler ().Title; }
         }
         
         public bool HasSort {
             get { return has_sort; }
             set { has_sort = value; }
+        }
+        
+        public int MinWidth {
+            get { return TextWidth + 25; }
         }
     }
 }

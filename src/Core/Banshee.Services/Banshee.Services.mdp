@@ -76,6 +76,8 @@
     <File name="Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services.addins" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Sources/ErrorSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/BansheeCacheableModelAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/IDatabaseModel.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

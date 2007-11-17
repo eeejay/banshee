@@ -30,7 +30,7 @@ using System;
 using Gdk;
 using Cairo;
 
-namespace Hyena.Data.Gui
+namespace Hyena.Gui
 {
     [Flags]
     public enum CairoCorners

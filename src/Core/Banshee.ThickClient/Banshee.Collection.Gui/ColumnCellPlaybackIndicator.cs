@@ -79,27 +79,30 @@ namespace Banshee.Collection.Gui
             LoadPixbuf ();
         }
 
-        public override void Render (Gdk.Drawable window, Cairo.Context cr, Widget widget, Gdk.Rectangle cell_area, 
-            Gdk.Rectangle clip_area, StateType state)
+        public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             if (!is_header && !ServiceManager.PlayerEngine.IsPlaying ((TrackInfo)BoundObject)) {
                 return;
             }
-            
-            Gdk.Rectangle pixbuf_area = new Gdk.Rectangle ();
-            pixbuf_area.Width = pixbuf_size;
-            pixbuf_area.Height = pixbuf_size;
-            pixbuf_area.X = cell_area.X + pixbuf_spacing;
-            pixbuf_area.Y = cell_area.Y + ((cell_area.Height - pixbuf_area.Height) / 2);
             
             Gdk.Pixbuf render_pixbuf = pixbuf;
             if (!is_header && ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
                 render_pixbuf = pixbuf_paused;
             }
             
-            window.DrawPixbuf (widget.Style.BackgroundGC(StateType.Normal), render_pixbuf, 
-                0, 0, pixbuf_area.X, pixbuf_area.Y, pixbuf_area.Width, pixbuf_area.Height, 
-                Gdk.RgbDither.Normal, 0, 0);
+            // No idea why this is necessary
+            if (is_header) {
+                context.Context.Translate (0.5, -0.5);
+            } else {
+                context.Context.Translate (0, 0.5);
+            }
+            
+            Cairo.Rectangle pixbuf_area = new Cairo.Rectangle (pixbuf_spacing, 
+                (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);
+            
+            Gdk.CairoHelper.SetSourcePixbuf (context.Context, render_pixbuf, pixbuf_area.X, pixbuf_area.Y);
+            context.Context.Rectangle (pixbuf_area);
+            context.Context.Fill ();
         }
     }
 }
