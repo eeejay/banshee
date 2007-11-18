@@ -8,6 +8,6 @@
     <Execute type="None" entry="Banshee.NotificationArea" />
   </StartMode>
   <Entries>
-    <Entry filename="./Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
+    <Entry filename="Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
   </Entries>
 </Combine>
