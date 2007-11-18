@@ -102,7 +102,7 @@ namespace Banshee.Collection.Gui
                 
                 browser_view_actions.Add (new ToggleActionEntry [] {
                     new ToggleActionEntry ("BrowserVisibleAction", null,
-                        Catalog.GetString ("Show Browser"), null,
+                        Catalog.GetString ("Show Browser"), "<control>B",
                         Catalog.GetString ("Show or hide the artist/album browser"), 
                         OnToggleBrowser, BrowserVisible.Get ())
                 });
@@ -232,6 +232,7 @@ namespace Banshee.Collection.Gui
         private void OnToggleBrowser (object o, EventArgs args)
         {
             ToggleAction action = (ToggleAction)o;
+            artist_view.Selection.Clear ();
             browser_container.Visible = action.Active;
             BrowserVisible.Set (action.Active);
         }

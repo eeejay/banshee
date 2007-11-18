@@ -1,5 +1,17 @@
 2007-11-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Reset the artist/album filter if the browser is hidden
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ArtworkPopup.cs:
+	Ported the artwork popup, always wrap the label if the layout width
+	of the text is larger than the image width
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs: 
+	Show the ArtworkPopup when the header is touched by the mouse 
+
+2007-11-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationArea.cs:
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
 	Began porting the notification area plugin; not functional yet

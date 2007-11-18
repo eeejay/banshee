@@ -65,6 +65,11 @@ namespace Banshee.Gui.Widgets
         private double transition_frames;
         private uint transition_id;
         
+        private ArtworkPopup popup;
+        private uint popup_timeout_id;
+        private bool in_popup;
+        private bool in_thumbnail_region;
+        
         public TrackInfoDisplay ()
         {
             if (ServiceManager.Contains ("ArtworkManager")) {
@@ -128,6 +133,61 @@ namespace Banshee.Gui.Widgets
             QueueDraw ();
         }
         
+#endregion
+
+#region Interaction Events
+
+        protected override bool OnEnterNotifyEvent (Gdk.EventCrossing evnt)
+        {
+            in_thumbnail_region = true;
+        
+            if (popup_timeout_id > 0) {
+                return false;
+            }
+            
+            popup_timeout_id = GLib.Timeout.Add (500, delegate {
+                if (in_thumbnail_region) {
+                    UpdatePopup ();
+                }
+                
+                popup_timeout_id = 0;
+                return false;
+            });
+            
+            return true;
+        }
+        
+        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
+        {
+            in_thumbnail_region = false;
+            
+            if (popup_timeout_id > 0) {
+                GLib.Source.Remove (popup_timeout_id);
+                popup_timeout_id = 0;
+            }
+            
+            GLib.Timeout.Add (100, delegate {
+                if (!in_popup) {
+                    HidePopup ();
+                }
+
+                return false;
+            });
+            
+            return true;
+        }
+        
+        private void OnPopupEnterNotifyEvent (object o, EnterNotifyEventArgs args)
+        {
+            in_popup = true;
+        }
+        
+        private void OnPopupLeaveNotifyEvent (object o, LeaveNotifyEventArgs args)
+        {
+            in_popup = false;
+            HidePopup ();
+        }
+
 #endregion
         
 #region Drawing
@@ -376,6 +436,8 @@ namespace Banshee.Gui.Widgets
                 incoming_pixbuf = null;
                 incoming_track = null;
                 transition_id = 0;
+                
+                UpdatePopup ();
                 return false;
             }
             
@@ -416,6 +478,47 @@ namespace Banshee.Gui.Widgets
             return String.Format ("<span color=\"{0}\">{1}</span>",  
                 CairoExtensions.ColorGetHex (text_color, false),
                 markup);
+        }
+        
+        private bool UpdatePopup ()
+        {
+            if (current_track == null || artwork_manager == null) {
+                HidePopup ();
+                return false;
+            }
+            
+            Gdk.Pixbuf pixbuf = artwork_manager.Lookup (current_track.ArtistAlbumId);
+         
+            if (pixbuf == null) {
+                HidePopup ();
+                return false;
+            }
+            
+            if (popup == null) {
+                popup = new ArtworkPopup ();
+                popup.EnterNotifyEvent += OnPopupEnterNotifyEvent;
+                popup.LeaveNotifyEvent += OnPopupLeaveNotifyEvent;
+            }
+            
+            popup.Label = String.Format ("{0} - {1}", current_track.DisplayArtistName, 
+                current_track.DisplayAlbumTitle);
+            popup.Image = pixbuf;
+                
+            if (in_thumbnail_region) {
+                popup.Show ();
+            }
+            
+            return true;
+        }
+        
+        private void HidePopup ()
+        {
+            if (popup != null) {
+                popup.Destroy ();
+                popup.EnterNotifyEvent -= OnPopupEnterNotifyEvent;
+                popup.LeaveNotifyEvent -= OnPopupLeaveNotifyEvent;
+                popup = null;
+            }
         }
         
 #endregion
