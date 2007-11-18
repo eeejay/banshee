@@ -171,8 +171,10 @@ namespace Nereid
             source_box.Show ();
             
             views_pane.Add1 (source_box);
-            views_pane.Add2 (view_container);            
-            views_pane.ShowAll ();
+            views_pane.Add2 (view_container);       
+            source_box.ShowAll ();
+            view_container.Show ();
+            views_pane.Show ();
             
             primary_vbox.PackStart (views_pane, true, true, 0);
         }

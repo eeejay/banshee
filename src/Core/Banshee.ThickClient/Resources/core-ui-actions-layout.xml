@@ -17,9 +17,7 @@
         </menu>
         <menu name="ViewMenu" action="ViewMenuAction">
             <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
-            <separator />
             <placeholder name="BrowserViews" />
-            <separator />
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
         </menu>

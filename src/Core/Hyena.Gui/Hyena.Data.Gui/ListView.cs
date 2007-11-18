@@ -373,12 +373,24 @@ namespace Hyena.Data.Gui
         
         protected override void OnMapped()
         {
+            WidgetFlags |= WidgetFlags.Mapped;
             left_border_window.Show();
             right_border_window.Show();
             list_window.Show();
             footer_window.Show();
             header_window.Show();
             GdkWindow.Show();
+        }
+        
+        protected override void OnUnmapped ()
+        {
+            WidgetFlags ^= WidgetFlags.Mapped;
+            left_border_window.Hide();
+            right_border_window.Hide();
+            list_window.Hide();
+            footer_window.Hide();
+            header_window.Hide();
+            GdkWindow.Hide();
         }
         
         private void MoveResizeWindows(Gdk.Rectangle allocation)

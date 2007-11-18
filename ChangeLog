@@ -1,3 +1,14 @@
+2007-11-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Allow the browser to be shown/hidden
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Implement OnUnmapped,
+	set WidgetFlags.Mapped/Unmapped when appropriate
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Use Show, not ShowAll for
+	showing the view container
+
 2007-11-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:

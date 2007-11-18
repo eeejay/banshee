@@ -55,6 +55,7 @@ namespace Banshee.Collection.Gui
         private ScrolledWindow track_scrolled_window;
         
         private Paned container;
+        private Widget browser_container;
         private InterfaceActionService action_service;
         private ActionGroup browser_view_actions;
         private uint action_merge_id;
@@ -64,8 +65,11 @@ namespace Banshee.Collection.Gui
               <menubar name=""MainMenu"">
                 <menu name=""ViewMenu"" action=""ViewMenuAction"">
                   <placeholder name=""BrowserViews"">
+                    <menuitem name=""BrowserVisible"" action=""BrowserVisibleAction"" />
+                    <separator />
                     <menuitem name=""BrowserTop"" action=""BrowserTopAction"" />
                     <menuitem name=""BrowserLeft"" action=""BrowserLeftAction"" />
+                    <separator />
                   </placeholder>
                 </menu>
               </menubar>
@@ -74,8 +78,8 @@ namespace Banshee.Collection.Gui
         
         public CompositeTrackListView ()
         {
-            string position = Position.Get ();
-            if (Position.Get () == "top") {
+            string position = BrowserPosition.Get ();
+            if (position == "top") {
                 LayoutTop ();
             } else {
                 LayoutLeft ();
@@ -85,6 +89,7 @@ namespace Banshee.Collection.Gui
                 action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
                 
                 browser_view_actions = new ActionGroup ("BrowserView");
+                
                 browser_view_actions.Add (new RadioActionEntry [] {
                     new RadioActionEntry ("BrowserLeftAction", null, 
                         Catalog.GetString ("Browser On Left"), null,
@@ -95,10 +100,19 @@ namespace Banshee.Collection.Gui
                         Catalog.GetString ("Show the artist/album browser above the track list"), 1),
                 }, position == "top" ? 1 : 0, OnViewModeChanged);
                 
+                browser_view_actions.Add (new ToggleActionEntry [] {
+                    new ToggleActionEntry ("BrowserVisibleAction", null,
+                        Catalog.GetString ("Show Browser"), null,
+                        Catalog.GetString ("Show or hide the artist/album browser"), 
+                        OnToggleBrowser, BrowserVisible.Get ())
+                });
+                
                 action_service.AddActionGroup (browser_view_actions);
                 action_merge_id = action_service.UIManager.NewMergeId ();
                 action_service.UIManager.AddUiFromString (menu_xml);
             }
+            
+            NoShowAll = true;
         }
         
         private void BuildCommon ()
@@ -169,6 +183,8 @@ namespace Banshee.Collection.Gui
             container.Add1 (artist_album_box);
             container.Add2 (track_scrolled_window);
             
+            browser_container = artist_album_box;
+            
             container.Position = 275;
             ShowPack ();
         }
@@ -187,6 +203,8 @@ namespace Banshee.Collection.Gui
             container.Add1 (artist_album_box);
             container.Add2 (track_scrolled_window);
             
+            browser_container = artist_album_box;
+            
             container.Position = 175;
             ShowPack ();
         }
@@ -194,18 +212,28 @@ namespace Banshee.Collection.Gui
         private void ShowPack ()
         {
             PackStart (container, true, true, 0);
+            NoShowAll = false;
             ShowAll ();
+            NoShowAll = true;
+            browser_container.Visible = BrowserVisible.Get ();
         }
         
         private void OnViewModeChanged (object o, ChangedArgs args)
         {
             if (args.Current.Value == 0) {
                 LayoutLeft ();
-                Position.Set ("left");
+                BrowserPosition.Set ("left");
             } else {
                 LayoutTop ();
-                Position.Set ("top");
+                BrowserPosition.Set ("top");
             }
+        }
+                
+        private void OnToggleBrowser (object o, EventArgs args)
+        {
+            ToggleAction action = (ToggleAction)o;
+            browser_container.Visible = action.Active;
+            BrowserVisible.Set (action.Active);
         }
         
         protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
@@ -288,7 +316,14 @@ namespace Banshee.Collection.Gui
             }
         }
         
-        public static readonly SchemaEntry<string> Position = new SchemaEntry<string> (
+        public static readonly SchemaEntry<bool> BrowserVisible = new SchemaEntry<bool> (
+            "browser", "visible",
+            true,
+            "Artist/Album Browser Visibility",
+            "Whether or not to show the Artist/Album browser"
+        );
+        
+        public static readonly SchemaEntry<string> BrowserPosition = new SchemaEntry<string> (
             "browser", "position",
             "left",
             "Artist/Album Browser Position",
