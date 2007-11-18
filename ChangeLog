@@ -1,5 +1,19 @@
 2007-11-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationArea.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Began porting the notification area plugin; not functional yet
+
+	* src/Extensions/Banshee.NotificationArea/Resources/Banshee.NotificationArea.addin.xml:
+	Addin spec for the notification area service
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml: Changed 'Core'
+	addin to Banshee.Services
+
+2007-11-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
 	Allow the browser to be shown/hidden
 

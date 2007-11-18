@@ -1,0 +1,13 @@
+<Combine name="Extensions" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Banshee.NotificationArea" configuration="Debug" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Banshee.NotificationArea" single="True">
+    <Execute type="None" entry="Banshee.NotificationArea" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
+  </Entries>
+</Combine>

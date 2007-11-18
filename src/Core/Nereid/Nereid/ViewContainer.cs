@@ -58,6 +58,7 @@ namespace Nereid
             
             title_label = new Label ();
             title_label.Xalign = 0.0f;
+            title_label.Ellipsize = Pango.EllipsizeMode.End;
             
             BuildSearchEntry ();
             

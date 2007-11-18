@@ -1,7 +1,7 @@
-<Addin id="Banshee.ThickClient">
+<Addin id="Banshee.ThickClient" version="1.0">
 
   <Dependencies>
-    <Addin id="Core" version="1.0" />
+    <Addin id="Banshee.Services" version="1.0" />
   </Dependencies>
 
   <Extension path="/Banshee/Library/ImportSource">

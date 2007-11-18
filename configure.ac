@@ -145,6 +145,9 @@ src/Dap/Banshee.Dap.Njb/njb-sharp.dll.config
 src/Backends/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 
+src/Extensions/Makefile
+src/Extensions/Banshee.NotificationArea/Makefile
+
 src/Extras/Makefile
 src/Extras/Boo/Makefile
 src/Extras/BooBuddy/Makefile

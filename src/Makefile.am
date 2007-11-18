@@ -1,7 +1,8 @@
 SUBDIRS = \
 	Extras \
 	Core \
-	Backends
+	Backends \
+	Extensions
 
 
 #Dap \

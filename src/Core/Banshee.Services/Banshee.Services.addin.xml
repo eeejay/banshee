@@ -1,4 +1,4 @@
-<Addin id="Core" version="1.0" isroot="true">
+<Addin id="Banshee.Services" version="1.0" isroot="true">
 
   <ExtensionPoint path="/Banshee/ServiceManager/Service">
     <ExtensionNode name="TypeExtensionNode"/>
