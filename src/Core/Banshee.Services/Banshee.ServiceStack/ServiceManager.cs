@@ -211,11 +211,11 @@ namespace Banshee.ServiceStack
         }
         
         public static PlayerEngineService PlayerEngine {
-            get { return (PlayerEngineService)Get ("PlayerEngineService"); }
+            get { return (PlayerEngineService)Get ("PlayerEngine"); }
         }
         
         public static PlaybackControllerService PlaybackController {
-            get { return (PlaybackControllerService)Get ("PlaybackControllerService"); }
+            get { return (PlaybackControllerService)Get ("PlaybackController"); }
         }
     }
 }

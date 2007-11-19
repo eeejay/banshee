@@ -170,7 +170,7 @@ namespace Banshee.MediaEngine
         }
         
         string IService.ServiceName {
-            get { return "PlaybackControllerService"; }
+            get { return "PlaybackController"; }
         }
     }
 }
