@@ -336,16 +336,32 @@ namespace Banshee.MediaEngine
             get { return active_engine.CurrentTrack; }
         }
         
+        IDictionary<string, object> IPlayerEngineService.CurrentTrack {
+            get { return CurrentTrack == null ? null : CurrentTrack.GenerateExportable (); }
+        }
+        
         public SafeUri CurrentSafeUri {
             get { return active_engine.CurrentUri; }
+        }
+        
+        string IPlayerEngineService.CurrentUri {
+            get { return CurrentSafeUri == null ? String.Empty : CurrentSafeUri.AbsoluteUri; }
         }
         
         public PlayerEngineState CurrentState {
             get { return active_engine.CurrentState; }
         }
         
+        string IPlayerEngineService.CurrentState {
+            get { return CurrentState.ToString ().ToLower (); }
+        }
+        
         public PlayerEngineState LastState {
             get { return active_engine.LastState; }
+        }
+        
+        string IPlayerEngineService.LastState {
+            get { return LastState.ToString ().ToLower (); }
         }
         
         public ushort Volume {
