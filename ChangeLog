@@ -1,5 +1,23 @@
 2007-11-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Many improvements in the controller logic, but still a lot to tweak; at 
+	least it is mostly usable now; implement StopWhenFinished
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:
+	The DBus interface to expose for the playback controller
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Show
+	some of the old actions, like the shuffle mode and stop when finished
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Implement
+	shuffle and stop when finished
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Moved open
+	location action to here from PlaybackActions
+
+2007-11-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseModel.cs:

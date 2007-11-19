@@ -30,6 +30,10 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.Base;
+using Banshee.Streaming;
+using Banshee.Gui.Dialogs;
+
 namespace Banshee.Gui
 {
     public class GlobalActions : ActionGroup
@@ -44,6 +48,10 @@ namespace Banshee.Gui
                 new ActionEntry ("ImportMusicAction", Stock.Open,
                     Catalog.GetString ("Import _Music..."), "<control>I",
                     Catalog.GetString ("Import music from a variety of sources"), OnImportMusic),
+                    
+                new ActionEntry ("OpenLocationAction", null, 
+                    Catalog.GetString ("Open _Location..."), "<control>L",
+                    Catalog.GetString ("Open a remote location for playback"), OnOpenLocationAction),
                     
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
@@ -95,6 +103,33 @@ namespace Banshee.Gui
                 dialog.ActiveSource.Import ();
             } finally {
                 dialog.Destroy ();
+            }
+        }
+        
+        private void OnOpenLocationAction (object o, EventArgs args)
+        {
+            OpenLocationDialog dialog = new OpenLocationDialog ();
+            ResponseType response = dialog.Run ();
+            string address = dialog.Address;
+            dialog.Destroy ();
+            
+            if(response != ResponseType.Ok) {
+                return;
+            }
+            
+            try {
+                RadioTrackInfo radio_track = new RadioTrackInfo (new SafeUri (address));
+                radio_track.ParsingPlaylistEvent += delegate {
+                    if (radio_track.PlaybackError != StreamPlaybackError.None) {
+                        Log.Error (Catalog.GetString ("Error opening stream"), 
+                            Catalog.GetString ("Could not open stream or playlist"));
+                        radio_track = null;
+                    }
+                };
+                radio_track.Play ();
+            } catch {
+                Log.Error (Catalog.GetString ("Error opening stream"), 
+                    Catalog.GetString("Problem parsing playlist"));
             }
         }
         

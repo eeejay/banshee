@@ -23,7 +23,7 @@
         </menu>
         <menu name="PlaybackMenu" action="PlaybackMenuAction">
             <menuitem name="PlayPause" action="PlayPauseAction" />
-            <!--<menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />-->
+            <menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />
             <separator />
             <menuitem name="Previous" action="PreviousAction" />
             <menuitem name="Next" action="NextAction" />
@@ -35,13 +35,12 @@
             <menuitem name="SeekTo" action="SeekToAction" />
             <menuitem name="RestartSong" action="RestartSongAction" />
             <separator />
-            <!--
             <placeholder name="PlaybackMenuAdditions" />
-            <menuitem name="RepeatNone" action="RepeatNoneAction" />
+            <!--<menuitem name="RepeatNone" action="RepeatNoneAction" />
             <menuitem name="RepeatAll" action="RepeatAllAction" />
-            <menuitem name="RepeatSingle" action="RepeatSingleAction" />
+            <menuitem name="RepeatSingle" action="RepeatSingleAction" />-->
             <separator />
-            <menuitem name="Shuffle" action="ShuffleAction" />-->
+            <menuitem name="Shuffle" action="ShuffleAction" />
         </menu>
         <menu name="HelpMenu" action="HelpMenuAction">
             <menu name="WebMenu" action="WebMenuAction">

@@ -31,7 +31,6 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
-using Banshee.Streaming;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
@@ -67,14 +66,36 @@ namespace Banshee.Gui
                     Catalog.GetString ("_Restart Song"), "R",
                     Catalog.GetString ("Restart the current song"), OnRestartSongAction)
             });
-                
+            
+            Add (new ToggleActionEntry [] {
+                new ToggleActionEntry ("ShuffleAction", "media-playlist-shuffle",
+                    Catalog.GetString ("Shu_ffle"), null,
+                    Catalog.GetString ("Toggle between shuffle or continuous playback modes"), 
+                    OnShuffleAction, false),
+                    
+                new ToggleActionEntry ("StopWhenFinishedAction", null,
+                    Catalog.GetString ("_Stop When Finished"), "<Shift>space",
+                    Catalog.GetString ("Stop playback after the current song finishes playing"), 
+                    OnStopWhenFinishedAction, false)
+            });
+            
+            Add (new RadioActionEntry [] {
+                new RadioActionEntry ("RepeatNoneAction", null, 
+                    Catalog.GetString ("Repeat N_one"), null,
+                    Catalog.GetString ("Do not repeat playlist"), 0),
+                    
+                new RadioActionEntry ("RepeatAllAction", null,
+                    Catalog.GetString ("Repeat _All"), null,
+                    Catalog.GetString ("Play all songs before repeating playlist"), 1),
+                    
+                new RadioActionEntry ("RepeatSingleAction", null,
+                    Catalog.GetString ("Repeat Si_ngle"), null,
+                    Catalog.GetString ("Repeat the current playing song"), 2)
+            }, 0, null);
+
             actionService.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("PlaybackMenuAction", null,
                     Catalog.GetString ("_Playback"), null, null, null),
-                    
-                new ActionEntry ("OpenLocationAction", null, 
-                    Catalog.GetString ("Open _Location..."), "<control>L",
-                    Catalog.GetString ("Open a remote location for playback"), OnOpenLocationAction),
             });
             
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
@@ -110,6 +131,15 @@ namespace Banshee.Gui
                 case PlayerEngineEvent.StartOfStream:
                     TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
                     action_service["Playback.RestartSongAction"].Sensitive = !track.IsLive;
+                    break;
+                case PlayerEngineEvent.EndOfStream:
+                    ToggleAction stop_action = (ToggleAction)action_service["Playback.StopWhenFinishedAction"];
+                    // Kinda lame, but we don't want to actually reset StopWhenFinished inside the controller
+                    // since it is also listening to EOS and needs to actually stop playback; we listen here
+                    // just to keep the UI in sync.
+                    stop_action.Activated -= OnStopWhenFinishedAction;
+                    stop_action.Active = false;
+                    stop_action.Activated += OnStopWhenFinishedAction;
                     break;
             }
         }
@@ -163,32 +193,17 @@ namespace Banshee.Gui
             ServiceManager.PlayerEngine.Close ();
             ServiceManager.PlayerEngine.OpenPlay (track);
         }
-            
-        private void OnOpenLocationAction (object o, EventArgs args)
+        
+        private void OnStopWhenFinishedAction (object o, EventArgs args)
         {
-            OpenLocationDialog dialog = new OpenLocationDialog ();
-            ResponseType response = dialog.Run ();
-            string address = dialog.Address;
-            dialog.Destroy ();
-            
-            if(response != ResponseType.Ok) {
-                return;
-            }
-            
-            try {
-                RadioTrackInfo radio_track = new RadioTrackInfo (new SafeUri (address));
-                radio_track.ParsingPlaylistEvent += delegate {
-                    if (radio_track.PlaybackError != StreamPlaybackError.None) {
-                        Log.Error (Catalog.GetString ("Error opening stream"), 
-                            Catalog.GetString ("Could not open stream or playlist"));
-                        radio_track = null;
-                    }
-                };
-                radio_track.Play ();
-            } catch {
-                Log.Error (Catalog.GetString ("Error opening stream"), 
-                    Catalog.GetString("Problem parsing playlist"));
-            }
+            ServiceManager.PlaybackController.StopWhenFinished = ((ToggleAction)o).Active;
+        }
+        
+        private void OnShuffleAction (object o, EventArgs args)
+        {
+            ServiceManager.PlaybackController.ShuffleMode = ((ToggleAction)o).Active 
+                ? PlaybackShuffleMode.Shuffle
+                : PlaybackShuffleMode.Linear;
         }
     }
 }
