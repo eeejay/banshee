@@ -37,6 +37,7 @@ namespace Banshee.Collection.Database
     public class LibraryTrackInfo : TrackInfo
     {
         private int dbid;
+        private int db_index;
 
         private enum Column : int {
             TrackID,
@@ -61,9 +62,10 @@ namespace Banshee.Collection.Database
             AlbumTitle
         }
 
-        public LibraryTrackInfo(IDataReader reader) : base()
+        public LibraryTrackInfo(IDataReader reader, int index) : base()
         {
             LoadFromReader(reader);
+            DbIndex = index;
         }
 
         private void LoadFromReader(IDataReader reader)
@@ -107,6 +109,11 @@ namespace Banshee.Collection.Database
 
         public int DbId {
             get { return dbid; }
+        }
+        
+        public int DbIndex {
+            get { return db_index; }
+            internal set { db_index = value; }
         }
     }
 }

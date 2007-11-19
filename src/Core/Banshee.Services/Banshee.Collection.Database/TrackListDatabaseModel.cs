@@ -197,6 +197,15 @@ namespace Banshee.Collection.Database
 
             OnReloaded ();
         }
+                
+        public override int IndexOf (TrackInfo track)
+        {
+            if (track is LibraryTrackInfo) {
+                return ((LibraryTrackInfo)track).DbIndex;
+            }
+            
+            return -1;
+        }
 
         public override TrackInfo this[int index] {
             get { return cache.GetValue (index); }
@@ -317,9 +326,9 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public TrackInfo GetItemFromReader (IDataReader reader)
+        public TrackInfo GetItemFromReader (IDataReader reader, int index)
         {
-            return new LibraryTrackInfo (reader);
+            return new LibraryTrackInfo (reader, index);
         }
 
         private const string primary_key = "CoreTracks.TrackID";

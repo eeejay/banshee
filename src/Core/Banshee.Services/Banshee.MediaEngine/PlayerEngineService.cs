@@ -43,7 +43,7 @@ using Banshee.Collection;
 
 namespace Banshee.MediaEngine
 {
-    public class PlayerEngineService : IService
+    public class PlayerEngineService : IService, IPlayerEngineService
     {   
         private List<PlayerEngine> engines = new List<PlayerEngine>();
         private PlayerEngine active_engine;
@@ -55,7 +55,19 @@ namespace Banshee.MediaEngine
         public event PlayerEngineEventHandler EventChanged;
         public event PlayerEngineStateHandler StateChanged;
         public event EventHandler PlayWhenIdleRequest;
+        
+        private event DBusPlayerEngineEventHandler dbus_event_changed;
+        event DBusPlayerEngineEventHandler IPlayerEngineService.EventChanged {
+            add { dbus_event_changed += value; }
+            remove { dbus_event_changed -= value; }
+        }
 
+        private event DBusPlayerEngineStateHandler dbus_state_changed;
+        event DBusPlayerEngineStateHandler IPlayerEngineService.StateChanged {
+            add { dbus_state_changed += value; }
+            remove { dbus_state_changed -= value; }
+        }
+        
         public PlayerEngineService()
         {
             preferred_engine_id = EngineSchema.Get();
@@ -132,6 +144,11 @@ namespace Banshee.MediaEngine
             if(handler != null) {
                 handler(o, args);
             }
+            
+            DBusPlayerEngineStateHandler dbus_handler = dbus_state_changed;
+            if (dbus_handler != null) {
+                dbus_handler (args.State.ToString ().ToLower ());
+            }
         }
 
         private void OnEngineEventChanged(object o, PlayerEngineEventArgs args)
@@ -153,6 +170,11 @@ namespace Banshee.MediaEngine
             PlayerEngineEventHandler handler = EventChanged;
             if(handler != null) {
                 handler(o, args);
+            }
+            
+            DBusPlayerEngineEventHandler dbus_handler = dbus_event_changed;
+            if (dbus_handler != null) {
+                dbus_handler (args.Event.ToString ().ToLower (), args.Message ?? String.Empty, args.BufferingPercent);
             }
         }
         
@@ -176,6 +198,11 @@ namespace Banshee.MediaEngine
         public void Open(SafeUri uri)
         {
             OpenCheck(uri);
+        }
+        
+        void IPlayerEngineService.Open (string uri)
+        {
+            OpenCheck (new SafeUri (uri));
         }
         
         public void OpenPlay(TrackInfo track)
@@ -381,6 +408,10 @@ namespace Banshee.MediaEngine
         
         string IService.ServiceName {
             get { return "PlayerEngineService"; }
+        }
+        
+        IDBusExportable IDBusExportable.Parent { 
+            get { return null; }
         }
         
         public static readonly SchemaEntry<int> VolumeSchema = new SchemaEntry<int>(

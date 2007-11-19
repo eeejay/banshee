@@ -1,3 +1,27 @@
+2007-11-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Support IndexOf method for getting the index in the model of a track; 
+	used by the PlaybackController for determining linear next
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Store the index of the track from the database
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlayerEngineService.cs:
+	DBus interface for the player engine
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineEvent.cs:
+	Added DBus worthy signal delegates
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Implement IPlayerEngineService, the DBus interface
+
 2007-11-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:

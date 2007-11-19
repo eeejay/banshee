@@ -63,6 +63,11 @@ namespace Banshee.Collection
             }
         }
         
+        public virtual int IndexOf(TrackInfo track)
+        {
+            throw new NotImplementedException();
+        }
+        
         public virtual void Clear()
         {
             throw new NotImplementedException();

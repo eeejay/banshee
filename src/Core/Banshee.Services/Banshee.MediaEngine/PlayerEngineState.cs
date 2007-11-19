@@ -30,6 +30,7 @@ using System;
 
 namespace Banshee.MediaEngine
 {
+    public delegate void DBusPlayerEngineStateHandler (string state);
     public delegate void PlayerEngineStateHandler (object o, PlayerEngineStateArgs args);
     
     public sealed class PlayerEngineStateArgs : EventArgs

@@ -34,7 +34,7 @@ namespace Banshee.Collection.Database
 {
     public interface IDatabaseModel<T> : ICacheableModel
     {
-        T GetItemFromReader (IDataReader reader);
+        T GetItemFromReader (IDataReader reader, int index);
 
         string PrimaryKey { get; }
         string ReloadFragment { get; }

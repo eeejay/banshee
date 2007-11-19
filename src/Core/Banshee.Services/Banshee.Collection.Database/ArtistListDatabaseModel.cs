@@ -95,7 +95,7 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public ArtistInfo GetItemFromReader (IDataReader reader)
+        public ArtistInfo GetItemFromReader (IDataReader reader, int index)
         {
             return new LibraryArtistInfo (reader);
         }
