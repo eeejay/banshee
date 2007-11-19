@@ -172,6 +172,13 @@ namespace Banshee.MediaEngine
                 handler(o, args);
             }
             
+            // Do not raise iterate across DBus to avoid so many calls;
+            // DBus clients should do their own iterating and 
+            // event/state checking locally
+            if (args.Event == PlayerEngineEvent.Iterate) {
+                return;
+            }
+            
             DBusPlayerEngineEventHandler dbus_handler = dbus_event_changed;
             if (dbus_handler != null) {
                 dbus_handler (args.Event.ToString ().ToLower (), args.Message ?? String.Empty, args.BufferingPercent);
@@ -423,7 +430,7 @@ namespace Banshee.MediaEngine
         }
         
         string IService.ServiceName {
-            get { return "PlayerEngineService"; }
+            get { return "PlayerEngine"; }
         }
         
         IDBusExportable IDBusExportable.Parent { 
