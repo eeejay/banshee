@@ -27,6 +27,7 @@ SOURCES =  \
 	Banshee.Library/LibraryImportManager.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
+	Banshee.MediaEngine/IPlaybackController.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
 	Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs \
 	Banshee.MediaEngine/PlaybackControllerService.cs \

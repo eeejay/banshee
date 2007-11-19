@@ -30,27 +30,43 @@ using System;
 
 using Hyena;
 
+using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 
 namespace Banshee.MediaEngine
 {
-    public class PlaybackControllerService : IService
+    public class PlaybackControllerService : IService, IPlaybackController
     {
+        private enum Direction
+        {
+            Next,
+            Previous
+        }
+    
         private IStackProvider<TrackInfo> previous_stack;
         private IStackProvider<TrackInfo> next_stack;
     
-        private int index = 0;
         private TrackInfo current_track;
+        private TrackInfo changing_to_track;
         private Random random = new Random ();
     
         private PlaybackShuffleMode shuffle_mode;
         private PlaybackRepeatMode repeat_mode;
+        private bool stop_when_finished = false;
         
         private PlayerEngineService player_engine;
         private SourceManager source_manager;
         private ITrackModelSource source;
+        
+        public event EventHandler Stopped;
+        
+        private event PlaybackControllerStoppedHandler dbus_stopped;
+        event PlaybackControllerStoppedHandler IPlaybackController.Stopped {
+            add { dbus_stopped += value; }
+            remove { dbus_stopped -= value; }
+        }
         
         public PlaybackControllerService ()
         {
@@ -86,16 +102,22 @@ namespace Banshee.MediaEngine
         {
             switch (args.Event) {
                 case PlayerEngineEvent.EndOfStream:
-                    //ToggleAction action = Globals.ActionManager["StopWhenFinishedAction"] as ToggleAction;
-                    
-                    //if(!action.Active) {
+                    if (!StopWhenFinished) {
                         Next ();
-                    //} else {
-                        //OnStopped ();
-                    //}
+                    } else {
+                        OnStopped ();
+                    }
                     
+                    StopWhenFinished = false;
                     break;
-                    //action.Active = false;
+                case PlayerEngineEvent.StartOfStream:
+                    TrackInfo track = player_engine.CurrentTrack;
+                    if (changing_to_track != track && track != null) {
+                        CurrentTrack = track;
+                    }
+                    
+                    changing_to_track = null;
+                    break;
             }       
         }
         
@@ -109,7 +131,7 @@ namespace Banshee.MediaEngine
                     previous_stack.Push (tmp_track);
                 }
             } else {
-                TrackInfo next_track = QueryTrack ();
+                TrackInfo next_track = QueryTrack (Direction.Next);
                 if (next_track != null) {
                     if (tmp_track != null) {
                         previous_stack.Push (tmp_track);
@@ -130,23 +152,49 @@ namespace Banshee.MediaEngine
 
             if (previous_stack.Count > 0) {
                 CurrentTrack = previous_stack.Pop ();
+            } else {
+                CurrentTrack = QueryTrack (Direction.Previous);
             }
             
             QueuePlayTrack ();
         }
         
-        private TrackInfo QueryTrack ()
+        private TrackInfo QueryTrack (Direction direction)
         {
-            if (ShuffleMode == PlaybackShuffleMode.Linear) {
-                return source.TrackModel[index++];
-            } else {
-                return source.TrackModel[random.Next (0, source.TrackModel.Count - 1)];
-            }
+            Log.DebugFormat ("Querying model for track to play in {0}:{1} mode", ShuffleMode, direction);
+            return ShuffleMode == PlaybackShuffleMode.Linear
+                ? QueryTrackLinear (direction)
+                : QueryTrackRandom ();
+        }
+        
+        private TrackInfo QueryTrackLinear (Direction direction)
+        {
+            int index = source.TrackModel.IndexOf (CurrentTrack);
+            return source.TrackModel[index < 0 ? 0 : index + (direction == Direction.Next ? 1 : -1)];
+        }
+        
+        private TrackInfo QueryTrackRandom ()
+        {
+            return source.TrackModel[random.Next (0, source.TrackModel.Count - 1)];
         }
         
         private void QueuePlayTrack ()
         {
+            changing_to_track = CurrentTrack;
             player_engine.OpenPlay (CurrentTrack);
+        }
+        
+        protected virtual void OnStopped ()
+        {
+            EventHandler handler = Stopped;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+            
+            PlaybackControllerStoppedHandler dbus_handler = dbus_stopped;
+            if (dbus_handler != null) {
+                dbus_handler ();
+            }
         }
         
         public TrackInfo CurrentTrack {
@@ -169,8 +217,17 @@ namespace Banshee.MediaEngine
             set { repeat_mode = value; }
         }
         
+        public bool StopWhenFinished {
+            get { return stop_when_finished; }
+            set { stop_when_finished = value; }
+        }
+        
         string IService.ServiceName {
             get { return "PlaybackController"; }
+        }
+        
+        IDBusExportable IDBusExportable.Parent {
+            get { return null; }
         }
     }
 }
