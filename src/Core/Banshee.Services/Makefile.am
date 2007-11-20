@@ -15,6 +15,7 @@ SOURCES =  \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/ExportableModel.cs \
 	Banshee.Collection/IExportableModel.cs \
+	Banshee.Collection/IHasTrackSelection.cs \
 	Banshee.Collection/ImportEventHandler.cs \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/ModelHelper.cs \

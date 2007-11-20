@@ -8,6 +8,7 @@
         <placeholder name="VolumeButton" />
     </toolbar>
     <menubar name="MainMenu">
+
         <menu name="MusicMenu" action="MusicMenuAction">
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
@@ -15,12 +16,18 @@
             <placeholder name="ClosePlaceholder" />
             <menuitem name="Quit" action="QuitAction" />
         </menu>
+
+        <menu name="EditMenu" action="EditMenuAction">
+            <menuitem name="TrackProperties" action="TrackPropertiesAction" />
+        </menu>
+
         <menu name="ViewMenu" action="ViewMenuAction">
             <menuitem name="ShowCoverArt" action="ShowCoverArtAction" />
             <placeholder name="BrowserViews" />
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
         </menu>
+
         <menu name="PlaybackMenu" action="PlaybackMenuAction">
             <menuitem name="PlayPause" action="PlayPauseAction" />
             <menuitem name="StopWhenFinished" action="StopWhenFinishedAction" />
@@ -42,6 +49,7 @@
             <separator />
             <menuitem name="Shuffle" action="ShuffleAction" />
         </menu>
+
         <menu name="HelpMenu" action="HelpMenuAction">
             <menu name="WebMenu" action="WebMenuAction">
                 <menuitem name="WikiGuide" action="WikiGuideAction" />
@@ -53,6 +61,7 @@
             <menuitem name="VersionInformation" action="VersionInformationAction" />
             <menuitem name="About" action="AboutAction" />
         </menu>
+
     </menubar>
 </ui>
 

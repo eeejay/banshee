@@ -56,6 +56,10 @@ namespace Banshee.Gui
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
                     Catalog.GetString ("Quit Banshee"), OnQuit),
+
+                // Edit Menu
+                new ActionEntry("EditMenuAction", null, 
+                    Catalog.GetString("_Edit"), null, null, null),
                 
                 // Help Menu
                 new ActionEntry ("HelpMenuAction", null, 

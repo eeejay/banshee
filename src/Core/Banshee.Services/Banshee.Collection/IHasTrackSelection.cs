@@ -1,8 +1,8 @@
 //
-// Entry.cs
+// IHasTrackSelection.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -26,31 +26,15 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
-{
-    public class Client : Banshee.Gui.GtkBaseClient
-    {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        private Gnome.Program program;
-        
-        protected override void OnRegisterServices ()
-        {
-            program = new Gnome.Program ("Banshee", Banshee.ServiceStack.Application.Version, 
-                Gnome.Modules.UI, System.Environment.GetCommandLineArgs ());
-            
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+using System.Collections.Generic;
 
-        public override void Run ()
-        {
-            program.Run ();
-        }
+using Hyena.Data;
+
+namespace Banshee.Collection
+{
+    public interface IHasTrackSelection
+    {
+        Selection TrackSelection { get; }
+        IEnumerable<TrackInfo> GetSelectedTracks ();
     }
 }
-

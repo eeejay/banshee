@@ -152,7 +152,7 @@ namespace Banshee.Gui.Dialogs
 
         public event EventHandler Saved;
 
-        public TrackEditor(IList<TrackInfo> selection) : base("TrackEditorWindow")
+        public TrackEditor(IEnumerable<TrackInfo> selection) : base("TrackEditorWindow")
         {
             if(selection == null) {
                 return;
@@ -381,7 +381,7 @@ namespace Banshee.Gui.Dialogs
             EnterNextTitle.Sensitive = Next.Sensitive;
         }
         
-        private static Gdk.Pixbuf no_cover_image = Gdk.Pixbuf.LoadFromResource("editor-cover-album.png");
+        private static Gdk.Pixbuf no_cover_image = Gdk.Pixbuf.LoadFromResource("browser-album-cover.png");
         
         private void SetCoverImage(Gdk.Pixbuf pixbuf)
         {

@@ -24,6 +24,7 @@ SOURCES =  \
 	Hyena.Data/ISortableColumn.cs \
 	Hyena.Data/ListItemSetup.cs \
 	Hyena.Data/PropertyStore.cs \
+	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/Selection.cs \
 	Hyena.Data/SortType.cs \
 	Hyena/IStackProvider.cs \

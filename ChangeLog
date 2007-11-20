@@ -1,3 +1,32 @@
+2007-11-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs: Add
+	new interface used by TrackActions to get the selected tracks.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Change
+	the ctor to take an Enumerable<TrackInfo> instead of a List<TrackInfo> so
+	we can avoid putting all the TrackInfos in memory at once.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add Edit menu
+	and Track Properties menu item.
+
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.mdp:
+	* src/Core/Hyena/Hyena.Data/ModelSelection.cs: New file that takes a Model
+	and Selection and is an IEnumerable<T> over the selection.  Will be an
+	IList<T> soon.
+
+	* src/Core/Makefile.am:
+	* src/Core/Nereid/Nereid/Client.cs:
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Implement IHasTrackSelection
+	and create TrackActions.
+
 2007-11-19  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:

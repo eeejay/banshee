@@ -27,9 +27,11 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 
 using Hyena.Gui;
+using Hyena.Data;
 using Hyena.Data.Gui;
 
 using Banshee.ServiceStack;
@@ -41,13 +43,14 @@ using Banshee.MediaEngine;
 
 using Banshee.Gui;
 using Banshee.Gui.Widgets;
+using Banshee.Gui.Dialogs;
 using Banshee.Widgets;
 using Banshee.Collection.Gui;
 using Banshee.Sources.Gui;
 
 namespace Nereid
 {
-    public class PlayerInterface : Window, IService, IDisposable
+    public class PlayerInterface : Window, IService, IDisposable, IHasTrackSelection
     {
         // Major Layout Components
         private VBox primary_vbox;
@@ -57,7 +60,7 @@ namespace Nereid
         
         // Major Interaction Components
         private SourceView source_view;
-        private CompositeTrackListView track_view;
+        private CompositeTrackListView composite_view;
         private ScrolledWindow object_view_scroll;
         private ObjectListView object_view;
         
@@ -80,7 +83,7 @@ namespace Nereid
             
             AddAccelGroup (action_service.UIManager.AccelGroup);
             
-            track_view.TrackView.HasFocus = true;
+            composite_view.TrackView.HasFocus = true;
             
             Show ();
         }
@@ -157,14 +160,14 @@ namespace Nereid
             view_container = new ViewContainer ();
             
             source_view = new SourceView ();
-            track_view = new CompositeTrackListView ();
+            composite_view = new CompositeTrackListView ();
             
             ScrolledWindow source_scroll = new ScrolledWindow ();
             source_scroll.ShadowType = ShadowType.In;
             source_scroll.Add (source_view);       
             
-            track_view.TrackView.HeaderVisible = false;
-            view_container.Content = track_view;
+            composite_view.TrackView.HeaderVisible = false;
+            view_container.Content = composite_view;
             
             source_box.PackStart (source_scroll, true, true, 0);
             source_box.PackStart (new UserJobTileHost (), false, false, 0);
@@ -220,6 +223,9 @@ namespace Nereid
         {
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
+
+            // Action events
+            action_service.AddActionGroup (new TrackActions (action_service, this));
             
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
@@ -227,15 +233,15 @@ namespace Nereid
                 PlayerWindowSchema.SourceViewWidth.Set (views_pane.Position);
             };
             
-            track_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
+            composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
                 ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
-            
+
             header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;
         }
         
 #endregion
-        
+
 #region Service Event Handlers
         
         private void OnActiveSourceChanged (SourceEventArgs args)
@@ -259,10 +265,10 @@ namespace Nereid
             }
             
             // Clear any models previously connected to the views            
-            track_view.TrackModel = null;
-            track_view.ArtistModel = null;
-            track_view.AlbumModel = null;
-            track_view.TrackView.HeaderVisible = false;
+            composite_view.TrackModel = null;
+            composite_view.ArtistModel = null;
+            composite_view.AlbumModel = null;
+            composite_view.TrackView.HeaderVisible = false;
             
             if (object_view != null) {
                 object_view.Model = null;
@@ -271,11 +277,11 @@ namespace Nereid
             // Connect the source models to the views if possible
             if (source is ITrackModelSource) {
                 ITrackModelSource track_source = (ITrackModelSource)source;
-                track_view.TrackModel = track_source.TrackModel;
-                track_view.ArtistModel = track_source.ArtistModel;
-                track_view.AlbumModel = track_source.AlbumModel;
-                track_view.TrackView.HeaderVisible = true;
-                view_container.Content = track_view;
+                composite_view.TrackModel = track_source.TrackModel;
+                composite_view.ArtistModel = track_source.ArtistModel;
+                composite_view.AlbumModel = track_source.AlbumModel;
+                composite_view.TrackView.HeaderVisible = true;
+                view_container.Content = composite_view;
             } else if (source is Hyena.Data.IObjectListModel) {
                 if (object_view == null) {
                     object_view_scroll = new ScrolledWindow ();
@@ -292,7 +298,7 @@ namespace Nereid
         }
         
 #endregion
-        
+
 #region UI Event Handlers
         
         private void OnSearchEntryChanged (object o, EventArgs args)
@@ -334,6 +340,20 @@ namespace Nereid
             }
         }
         
+#endregion
+
+#region Implement Interfaces
+
+        // IHasTrackSelection
+        public IEnumerable<TrackInfo> GetSelectedTracks ()
+        {
+            return new ModelSelection<TrackInfo> (composite_view.TrackModel, composite_view.TrackView.Selection);
+        }
+
+        public Hyena.Data.Selection TrackSelection {
+            get { return composite_view.TrackView.Selection; }
+        }
+
 #endregion
         
 #region Gtk.Window Overrides
