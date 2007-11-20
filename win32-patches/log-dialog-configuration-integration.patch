@@ -1,0 +1,289 @@
+Index: Banshee.Base/Sources/AbstractPlaylistSource.cs
+===================================================================
+--- Banshee.Base/Sources/AbstractPlaylistSource.cs	(revision 2823)
++++ Banshee.Base/Sources/AbstractPlaylistSource.cs	(working copy)
+@@ -155,24 +155,13 @@
+                 Gtk.ButtonsType.Cancel,
+                 String.Format(Catalog.GetString("Are you sure you want to delete this {0}?"),
+                     source.GenericName.ToLower()),
+-                source.Name);
++                source.Name, true);
+             
+             dialog.AddButton(Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
+             
+-            Gtk.Alignment alignment = new Gtk.Alignment(0.0f, 0.0f, 0.0f, 0.0f);
+-            alignment.TopPadding = 10;
+-            Gtk.CheckButton confirm_button = new Gtk.CheckButton(String.Format(Catalog.GetString(
+-                "Do not ask me this again"), source.GenericName.ToLower()));
+-            confirm_button.Toggled += delegate {
+-                do_not_ask = confirm_button.Active;
+-            };
+-            alignment.Add(confirm_button);
+-            alignment.ShowAll();
+-            dialog.LabelVBox.PackStart(alignment, false, false, 0);
+-            
+             try {
+                 if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
+-                    ConfigurationClient.Set<bool>("sources", key, do_not_ask);
++                    ConfigurationClient.Set<bool>("sources", key, dialog.Suppress);
+                     return true;
+                 }
+                 
+Index: Banshee.Core/Banshee.Base/Log.cs
+===================================================================
+--- Banshee.Core/Banshee.Base/Log.cs	(revision 2823)
++++ Banshee.Core/Banshee.Base/Log.cs	(working copy)
+@@ -29,6 +29,8 @@
+ using System;
+ using System.Collections.Generic;
+ 
++using Banshee.Configuration;
++
+ namespace Banshee.Base
+ {
+     public delegate void LogNotifyHandler (LogNotifyArgs args);
+@@ -61,12 +63,14 @@
+         private string message;
+         private string details;
+         private DateTime timestamp;
++        private SchemaEntry<bool> suppress;
+         
+-        internal LogEntry (LogEntryType type, string message, string details)
++        internal LogEntry (LogEntryType type, string message, string details, SchemaEntry<bool> suppress)
+         {
+             this.type = type;
+             this.message = message;
+             this.details = details;
++            this.suppress = suppress;
+             this.timestamp = DateTime.Now;
+         }
+ 
+@@ -81,6 +85,10 @@
+         public string Details { 
+             get { return details; } 
+         }
++        
++        public SchemaEntry<bool> Suppress {
++		    get { return supress; }
++		}
+ 
+         public DateTime TimeStamp { 
+             get { return timestamp; } 
+@@ -94,7 +102,7 @@
+         private static Dictionary<uint, DateTime> timers = new Dictionary<uint, DateTime> ();
+         private static uint next_timer_id = 1;
+         
+-        private static void Commit (LogEntryType type, string message, string details, bool showUser)
++        private static void Commit (LogEntryType type, string message, string details, bool showUser, SchemaEntry<bool> supress)
+         {
+             if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
+                 switch (type) {
+@@ -117,7 +125,7 @@
+             }
+             
+             if (showUser) {
+-                OnNotify (new LogEntry (type, message, details));
++                OnNotify (new LogEntry (type, message, details, suppress));
+             }
+         }
+         
+@@ -133,7 +141,7 @@
+                                     
+         public static void Debug (string message, string details)
+         {
+-            Commit (LogEntryType.Debug, message, details, false);
++            Commit (LogEntryType.Debug, message, details, false, SchemaEntry<bool>.Zero);
+         }
+         
+         public static void Debug (string message)
+@@ -192,14 +200,24 @@
+         
+         public static void Information (string message, string details, bool showUser)
+         {
+-            Commit (LogEntryType.Information, message, details, showUser);
++            Commit (LogEntryType.Information, message, details, showUser, SchemaEntry<bool>.Zero);
+         }
+         
++        public static void Information (string message, string details, SchemaEntry<bool> suppress)
++        {
++            Commit (LogEntryType.Information, message, details, !suppress.Get(), suppress);
++        }
++        
+         public static void Information (string message, bool showUser)
+         {
+             Information (message, null, showUser);
+         }
+         
++        public static void Information (string message, SchemaEntry<bool> suppress)
++        {
++            Information (message, null, suppress);
++        }
++        
+         #endregion
+         
+         #region Public Warning Methods
+@@ -216,14 +234,24 @@
+         
+         public static void Warning (string message, string details, bool showUser)
+         {
+-            Commit (LogEntryType.Warning, message, details, showUser);
++            Commit (LogEntryType.Warning, message, details, showUser, SchemaEntry<bool>.Zero);
+         }
+         
++        public static void Warning (string message, string details, SchemaEntry<bool> suppress)
++        {
++            Commit (LogEntryType.Warning, message, details, !suppress.Get(), suppress);
++        }
++        
+         public static void Warning (string message, bool showUser)
+         {
+             Warning (message, null, showUser);
+         }
+         
++        public static void Warning (string message, SchemaEntry<bool> suppress)
++        {
++            Warning (message, null, suppress);
++        }
++        
+         #endregion
+         
+         #region Public Error Methods
+@@ -240,14 +268,24 @@
+         
+         public static void Error (string message, string details, bool showUser)
+         {
+-            Commit (LogEntryType.Error, message, details, showUser);
++            Commit (LogEntryType.Error, message, details, showUser, SchemaEntry<bool>.Zero);
+         }
+         
++        public static void Error (string message, string details, SchemaEntry<bool> suppress)
++        {
++            Commit (LogEntryType.Error, message, details, !suppress.Get(), suppress);
++        }
++        
+         public static void Error (string message, bool showUser)
+         {
+             Error (message, null, showUser);
+         }
+         
++        public static void Error (string message, SchemaEntry<bool> suppress)
++        {
++            Error (message, null, suppress);
++        }
++        
+         #endregion
+     }
+ }
+Index: Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs
+===================================================================
+--- Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs	(revision 2823)
++++ Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs	(working copy)
+@@ -29,6 +29,7 @@
+ using System;
+ 
+ using Banshee.Base;
++using Banshee.Configuration;
+ using Banshee.ServiceStack;
+ using Banshee.Gui.Dialogs;
+ 
+@@ -135,11 +136,18 @@
+                     break;
+             }
+               
++            bool suppress = !entry.Suppress.Equals(SchemaEntry<bool>.Zero);
++            
+             Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog (
+-                window, Gtk.DialogFlags.Modal, mtype, Gtk.ButtonsType.Close, entry.Message, entry.Details);
++                window, Gtk.DialogFlags.Modal, mtype, Gtk.ButtonsType.Close, entry.Message, entry.Details, suppress);
+             
+             dialog.Title = String.Empty;
+             dialog.Run ();
++            
++            if(suppress) {
++                entry.Suppress.Set(dialog.Suppress);
++            }
++            
+             dialog.Destroy ();
+         }
+         
+Index: Banshee.Widgets/Banshee.Widgets/HigMessageDialog.cs
+===================================================================
+--- Banshee.Widgets/Banshee.Widgets/HigMessageDialog.cs	(revision 2823)
++++ Banshee.Widgets/Banshee.Widgets/HigMessageDialog.cs	(working copy)
+@@ -33,6 +33,7 @@
+         private Gtk.AccelGroup accel_group;
+         private Gtk.Image image;
+         private Gtk.VBox label_vbox;
++        private Gtk.CheckButton supress;
+ 
+         public HigMessageDialog(Gtk.Window parent,
+                      Gtk.DialogFlags flags,
+@@ -40,6 +41,17 @@
+                      Gtk.ButtonsType buttons,
+                      string          header,
+                      string          msg)
++            : this(parent, flags, type, buttons, header, msg, false)
++        {
++        }
++        
++        public HigMessageDialog(Gtk.Window parent,
++                     Gtk.DialogFlags flags,
++                     Gtk.MessageType type,
++                     Gtk.ButtonsType buttons,
++                     string          header,
++                     string          msg,
++                     bool            show_suppress)
+             : base()
+         {
+             HasSeparator = false;
+@@ -107,6 +119,13 @@
+             label.Show ();
+             label_vbox.PackStart (label, false, false, 0);
+             
++            if(show_supress) {
++                supress = new Gtk.CheckButton();
++                supress.Label = Catalog.GetString("Do not show this again");
++                supress.Show();
++                label_vbox.PackStart(supress);
++            }
++            
+             switch (buttons) {
+             case Gtk.ButtonsType.None:
+                 break;
+@@ -214,5 +233,9 @@
+         public Gtk.VBox LabelVBox {
+             get { return label_vbox; }
+         }
++        
++        public bool Suppress {
++            get { return supress != null && supress.Active; }
++        }
+     }
+ }
+Index: Banshee/Main.cs
+===================================================================
+--- Banshee/Main.cs	(revision 2823)
++++ Banshee/Main.cs	(working copy)
+@@ -65,7 +65,7 @@
+                     "DBus is not available", 
+                     "Your environment is not properly set up to use DBus. Please fix your environment " +
+                     "or run Banshee through dbus-launch. Failure to do so may cause problems " + 
+-                    "at a later time in Banshee during this instance.\n\n" + e.Message, true);
++                    "at a later time in Banshee during this instance.\n\n" + e.Message, DBusNotifySuppressSchema);
+             }
+             
+             Gtk.Application.Init();
+@@ -340,6 +340,13 @@
+             
+             System.Environment.Exit(0);
+         }
++        
++        public static readonly SchemaEntry<bool> DBusNotifySuppressSchema = new SchemaEntry<bool>(
++            "core", "dbus_notify_suppress",
++            false,
++            "DBus error notification suppression",
++            "Suppress notifications of a DBus initialization error"
++        );
+     }
+ }
+ 
