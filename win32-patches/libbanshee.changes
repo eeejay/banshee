@@ -1,0 +1,1 @@
+Who the hell knows. Mostly just #ifndef-ing out things that don't work on Windows and using auto-bins instead of gfs-bins in GStreamer.
