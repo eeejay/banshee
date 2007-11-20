@@ -7,14 +7,17 @@
       </CustomCommands>
       <Entry build="True" name="Banshee" configuration="Debug" />
       <Entry build="True" configuration="Default" />
+      <Entry build="True" name="tests" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee" single="True">
     <Execute type="None" entry="Banshee" />
     <Execute type="None" entry="ext" />
     <Execute type="None" entry="ext" />
+    <Execute type="None" entry="tests" />
   </StartMode>
   <Entries>
     <Entry filename="src/Banshee.mds" />
+    <Entry filename="tests/tests.mdp" />
   </Entries>
 </Combine>

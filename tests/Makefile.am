@@ -5,15 +5,18 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 
 ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-ASSEMBLY_CSFILES = \
-	$(srcdir)/PlaylistFormats.cs \
-	$(srcdir)/Banshee.Kernel.cs \
-	$(srcdir)/FileNamePattern.cs \
-	$(srcdir)/Xspf/Xspf.cs
+ASSEMBLY_CSFILES =  \
+	Banshee.Core/FileNamePatternTests.cs \
+	Banshee.Core/KernelTests.cs \
+	Banshee.Services/PlaylistFormatTests.cs \
+	Banshee.Services/Xspf/Xspf.cs \
+	Hyena/SelectionTests.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
-NUNIT_TESTER_CSFILES = $(srcdir)/$(NUNIT_TESTER_NAME).cs $(srcdir)/AssemblyInfo.cs
+NUNIT_TESTER_CSFILES =  \
+	AssemblyInfo.cs \
+	ConsoleUi.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
 	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(LINK_BANSHEE_SERVICES_DEPS) $(ASSEMBLY_CSFILES)

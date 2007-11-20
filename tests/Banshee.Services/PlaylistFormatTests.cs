@@ -73,7 +73,7 @@ namespace Banshee.Playlists.Formats.Tests
             PlaylistParser parser = new PlaylistParser();
             parser.BaseUri = BaseUri;
 
-            foreach(string path in Directory.GetFiles("playlist-data")) {
+            foreach(string path in Directory.GetFiles("Banshee.Services/playlist-data")) {
                 parser.Parse(new SafeUri(Path.Combine(Environment.CurrentDirectory, path)));
                 AssertTest(parser.Elements);
             }
@@ -89,7 +89,7 @@ namespace Banshee.Playlists.Formats.Tests
         private IPlaylistFormat LoadPlaylist(IPlaylistFormat playlist, string filename)
         {
             playlist.BaseUri = BaseUri;
-            playlist.Load(File.OpenRead(Path.Combine("playlist-data", filename)), true);
+            playlist.Load(File.OpenRead(Path.Combine("Banshee.Services", Path.Combine("playlist-data", filename))), true);
             return playlist;
         }
 

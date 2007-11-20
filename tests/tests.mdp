@@ -1,0 +1,33 @@
+<Project name="tests" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="." assemblyKeyFile="." assembly="banshee-tests" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="Banshee.Core/FileNamePatternTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Core/KernelTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Services/Xspf/Xspf.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Services/PlaylistFormatTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/SelectionTests.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Project" localcopy="False" refto="Banshee.Core" />
+    <ProjectReference type="Project" localcopy="False" refto="Banshee.Services" />
+    <ProjectReference type="Project" localcopy="False" refto="Hyena" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </References>
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
+    <BuildFilesVar Sync="True" Name="ASSEMBLY_CSFILES" />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>

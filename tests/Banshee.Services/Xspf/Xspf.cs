@@ -11,11 +11,14 @@ namespace Banshee.Playlists.Formats.Xspf.Tests
 	[TestFixture]
 	public class XspfTest
 	{
+        private const string complete_path = "Banshee.Services/Xspf/complete.xml";
+        private const string xsd_path = "Banshee.Services/Xspf/xspf-1.xsd";
+
 		[Test]
 		public void Load()
 		{
 			Playlist playlist = new Playlist();
-			playlist.Load("Xspf/complete.xml");
+			playlist.Load(complete_path);
 			Helper.TestPlaylist(playlist);
 		}
 
@@ -25,10 +28,10 @@ namespace Banshee.Playlists.Formats.Xspf.Tests
 			XmlReaderSettings settings = new XmlReaderSettings();
 			settings.ValidationType = ValidationType.Schema;
 			XmlSchemaSet schema_set = new XmlSchemaSet();
-			schema_set.Add("http://xspf.org/ns/0/", "Xspf/xspf-1.xsd");
+			schema_set.Add("http://xspf.org/ns/0/", xsd_path);
 			settings.Schemas.Add(schema_set);
 			settings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
-			XmlReader reader = XmlReader.Create("Xspf/complete.xml", settings);
+			XmlReader reader = XmlReader.Create(complete_path, settings);
 			while(reader.Read());
 		}
 	}
