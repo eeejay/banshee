@@ -1,3 +1,7 @@
+SPECIAL NOTE: The logging system changes since I branched, so I adapted this
+patch from the work I did before. I did it by hand in a text editor, so I don't
+know for sure that I didn't make a typo. If it doesn't compile, it's my fault.
+
 This patch allows you to pass a SchemaEntry<bool> to the logging methods.
 This bool maps to a "Do not show this dialog again" checkbox which appears in
 the related log HigMessageDialog. For example:
