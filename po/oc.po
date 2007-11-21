@@ -11,13 +11,12 @@ msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-11 23:25+0200\n"
-"PO-Revision-Date: 2007-11-20 14:29+0100\n"
+"PO-Revision-Date: 2007-11-21 18:15+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../data/audio-profiles/aac.xml.in.h:1
 msgid "Advanced Audio Coding (AAC)"
@@ -1357,7 +1356,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:130
 #, csharp-format
 msgid "{0}:{1:00} of {2}"
-msgstr ""
+msgstr "{0}:{1:00} sus {2}"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:132
 msgid "Unknown Minutes"
@@ -1366,14 +1365,14 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:133
 #, csharp-format
 msgid "{0} Minutes"
-msgstr ""
+msgstr "{0} minutas"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:136
 #: ../src/Core/Banshee.Base/Sources/DapSource.cs:339
 #: ../src/Core/Banshee.Widgets/StreamPositionLabel.cs:90
 #, csharp-format
 msgid "{0} of {1}"
-msgstr ""
+msgstr "{0} sus {1}"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:137
 msgid "Unknown MB"
@@ -1551,7 +1550,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:90
 #, csharp-format
 msgid "{0}x"
-msgstr ""
+msgstr "{0}x"
 
 #: ../src/Core/Banshee.Base/Banshee.Cdrom.Nautilus/NautilusDiscDuplicator.cs:46
 msgid "Copy CD failed"
@@ -1809,7 +1808,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:49
 msgid "Amarok"
-msgstr ""
+msgstr "Amarok"
 
 #: ../src/Core/Banshee.Base/Banshee.PlayerMigration/AmarokPlayerImport.cs:59
 msgid "Unable to open Amarok database"
@@ -2877,7 +2876,7 @@ msgstr "{0:0.00} Go"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:453
 msgid "All Columns"
-msgstr ""
+msgstr "Totas las colomnas"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:455
 msgid "Song Name"
@@ -2885,7 +2884,7 @@ msgstr ""
 
 #: ../src/Core/Banshee/PlayerInterface.cs:456
 msgid "Artist Name"
-msgstr ""
+msgstr "Nom d'artista"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:457
 msgid "Album Title"
@@ -2970,27 +2969,27 @@ msgstr "Legir"
 #: ../src/Core/Banshee/PlayerInterface.cs:1268
 #, csharp-format
 msgid "{0} Item"
-msgstr ""
+msgstr "{0} element"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1272
 #, csharp-format
 msgid "{0} day"
-msgstr ""
+msgstr "{0} jorn"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1277
 #, csharp-format
 msgid "{0} hour"
-msgstr ""
+msgstr "{0} ora"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1281
 #, csharp-format
 msgid "{0} minute"
-msgstr ""
+msgstr "{0} minuta"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1283
 #, csharp-format
 msgid "{0} second"
-msgstr ""
+msgstr "{0} segonda"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1412
 #, csharp-format
@@ -3536,7 +3535,7 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Bookmarks/BookmarksPlugin.cs:235
 #, csharp-format
 msgid "{0} ({1}:{2:00})"
-msgstr ""
+msgstr "{0} ({1}:{2:00})"
 
 #: ../src/Plugins/Banshee.Plugins.Daap/banshee-plugin-daap.schemas.in.h:1
 msgid "DAAP plugin enabled"
