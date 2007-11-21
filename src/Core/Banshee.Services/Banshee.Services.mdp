@@ -104,8 +104,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-<<<<<<< .mine
   <Deployment.LinuxDeployData generateScript="False" />
-</Project>=======
 </Project>
->>>>>>> .r2830
