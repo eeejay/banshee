@@ -5,6 +5,7 @@ SOURCES =  \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
+	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
 	Hyena.Data.Query/QueryKeywordNode.cs \
 	Hyena.Data.Query/QueryListNode.cs \

@@ -192,7 +192,7 @@ namespace Banshee.Base
             return OnFilter(repl_pattern);
         }
 
-        public static string CreateFromITrackInfo(ITrackInfo track)
+        public static string CreateFromTrackInfo(ITrackInfo track)
         {
             string pattern = null;
 
@@ -204,10 +204,10 @@ namespace Banshee.Base
             } catch {
             }
 
-            return CreateFromITrackInfo(pattern, track);
+            return CreateFromTrackInfo(pattern, track);
         }
 
-        public static string CreateFromITrackInfo(string pattern, ITrackInfo track)
+        public static string CreateFromTrackInfo(string pattern, ITrackInfo track)
         {
             string repl_pattern;
 
@@ -233,7 +233,7 @@ namespace Banshee.Base
                 ext = String.Format(".{0}", ext);
             }
             
-            string songpath = CreateFromITrackInfo(track) + ext;
+            string songpath = CreateFromTrackInfo(track) + ext;
             string dir = Path.GetFullPath(Paths.LibraryLocation + 
                 Path.DirectorySeparatorChar + 
                 Path.GetDirectoryName(songpath));
