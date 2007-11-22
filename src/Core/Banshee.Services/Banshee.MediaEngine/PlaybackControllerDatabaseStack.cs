@@ -29,8 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-using Hyena;
-
+using Hyena.Collections;
 using Banshee.Collection;
 
 namespace Banshee.MediaEngine

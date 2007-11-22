@@ -30,6 +30,8 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
+using Hyena.Collections;
+
 namespace Banshee.Kernel
 {
     public delegate void JobEventHandler(IJob job);
