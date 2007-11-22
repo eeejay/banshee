@@ -85,6 +85,7 @@ namespace Banshee.Kernel
         public virtual void Clear()
         {
             generation = 0;
+            count = 0;
             heap = new Interval[MIN_CAPACITY];
         }
         

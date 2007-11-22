@@ -12,7 +12,7 @@
     <File name="Banshee.Core/KernelTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services/Xspf/Xspf.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services/PlaylistFormatTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena/SelectionTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/RangeCollectionTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Core" />

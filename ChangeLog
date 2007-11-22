@@ -1,3 +1,15 @@
+2007-11-22  Aaron Bockover  <abock@gnome.org>
+
+	* Core/Hyena/Hyena.Collections/RangeCollection.cs: New collection for
+	storing ordered ranges that supports efficient add/remove of indexes
+
+	* Core/Hyena/Hyena.Collections/IStackProvider.cs: Moved to new 
+	Hyena.Collections namespace
+
+	* Core/Banshee.Core/Banshee.Kernel/IntervalHeap.cs: Reset count
+
+	* tests/Hyena/RangeCollectionTests.cs: Added unit tests for RangeCollection
+
 2007-11-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Makefile.am:

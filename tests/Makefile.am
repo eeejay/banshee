@@ -10,7 +10,9 @@ ASSEMBLY_CSFILES =  \
 	Banshee.Core/KernelTests.cs \
 	Banshee.Services/PlaylistFormatTests.cs \
 	Banshee.Services/Xspf/Xspf.cs \
-	Hyena/SelectionTests.cs
+	Hyena/RangeCollectionTests.cs
+
+CFS=Hyena/RangeCollectionTests.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
@@ -19,12 +21,14 @@ NUNIT_TESTER_CSFILES =  \
 	ConsoleUi.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(LINK_BANSHEE_SERVICES_DEPS) $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(LINK_HYENA_DEPS) $(CFS)
 
 $(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
 	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)
 
 if ENABLE_TESTS
+all: $(ASSEMBLY)
+
 run-test: $(NUNIT_TESTER) $(ASSEMBLY)
 	MONO_PATH="$(RUN_PATH)" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
 endif

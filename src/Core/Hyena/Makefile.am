@@ -2,6 +2,8 @@ ASSEMBLY = Hyena
 TARGET = library
 LINK = $(REF_HYENA)
 SOURCES =  \
+	Hyena.Collections/IStackProvider.cs \
+	Hyena.Collections/RangeCollection.cs \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
@@ -24,11 +26,10 @@ SOURCES =  \
 	Hyena.Data/ISortable.cs \
 	Hyena.Data/ISortableColumn.cs \
 	Hyena.Data/ListItemSetup.cs \
-	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/ModelSelection.cs \
+	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/Selection.cs \
 	Hyena.Data/SortType.cs \
-	Hyena/IStackProvider.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/UndoManager.cs \
 	Timer.cs
