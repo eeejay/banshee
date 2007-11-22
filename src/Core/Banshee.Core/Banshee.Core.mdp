@@ -10,7 +10,6 @@
   <Contents>
     <File name="Banshee.Kernel/IInstanceCriticalJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/IJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Kernel/IntervalHeap.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/Job.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/JobPriority.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/Scheduler.cs" subtype="Code" buildaction="Compile" />

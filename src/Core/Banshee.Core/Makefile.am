@@ -36,7 +36,6 @@ SOURCES =  \
 	Banshee.IO/Utilities.cs \
 	Banshee.Kernel/IInstanceCriticalJob.cs \
 	Banshee.Kernel/IJob.cs \
-	Banshee.Kernel/IntervalHeap.cs \
 	Banshee.Kernel/Job.cs \
 	Banshee.Kernel/JobPriority.cs \
 	Banshee.Kernel/Scheduler.cs \
