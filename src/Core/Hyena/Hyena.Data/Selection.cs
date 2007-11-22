@@ -29,119 +29,93 @@
 using System;
 using System.Collections.Generic;
 
+using Hyena.Collections;
+
 namespace Hyena.Data
 {
     public class Selection : IEnumerable<int>
     {
-        private Dictionary<int, bool> selection = new Dictionary<int, bool>();
-        private bool all_selected;
+        RangeCollection ranges = new RangeCollection ();
+        private int max_index;
+        private object owner;
         
         public event EventHandler Changed;
         
-        private object owner;
-        
-        public Selection()
+        public Selection ()
         {
         }
         
-        protected virtual void OnChanged()
+        protected virtual void OnChanged ()
         {
             EventHandler handler = Changed;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         
-        public void ToggleSelect(int index)
+        public void ToggleSelect (int index)
         {
-            lock(this) {
-                if(selection.ContainsKey(index)) {
-                    selection.Remove(index);
-                } else {
-                    selection.Add(index, true);
-                }
-                
-                all_selected = false;
-                OnChanged();
+            if (!ranges.Remove (index)) {
+                ranges.Add (index);
             }
+            
+            OnChanged();
         }
         
-        public void Select(int index)
+        public void Select (int index)
         {
-            Select(index, true);
+            Select (index, true);
         }
         
-        public void Select(int index, bool raise)
+        public void Select (int index, bool raise)
         { 
-            lock(this) {
-                if(!selection.ContainsKey(index)) { 
-                    selection.Add(index, true);
-                    all_selected = false;
-                    
-                    if(raise) {
-                        OnChanged();
-                    }
-                }
+            ranges.Add (index);
+            
+            if (raise) {
+                OnChanged ();
             }
         }
         
-        public void Unselect(int index)
+        public void Unselect (int index)
         {
-            lock(this) {
-                if(selection.Remove(index)) {
-                    all_selected = false;
-                    OnChanged();
-                }
+            if (ranges.Remove (index)) {
+                OnChanged ();
             }
         }
                     
         public bool Contains(int index)
         {
-            lock(this) {
-                return selection.ContainsKey(index);
-            }
+            return ranges.Contains (index);
         }
         
-        public void SelectRange(int start, int end)
+        public void SelectRange (int start, int end)
         {
-            SelectRange(start, end, false);
-        }
-        
-        public void SelectRange(int start, int end, bool all)
-        {
-            for(int i = start; i <= end; i++) {
-                Select(i, false);
+            for (int i = start; i <= end; i++) {
+                Select (i, false);
             }
             
-            all_selected = all;
-            
-            OnChanged();
+            OnChanged ();
         }
 
-        public void Clear() {
-            Clear(true);
+        public void Clear () 
+        {
+            Clear (true);
         }
         
-        public void Clear(bool raise)
+        public void Clear (bool raise)
         {
-            lock(this) {
-                if(selection.Count > 0) {
-                    selection.Clear();
-                    all_selected = false;
-
-                    if(raise) {
-                        OnChanged();
-                    }
-                }
+            if (ranges.Count <= 0) {
+                return;
+            }
+            
+            ranges.Clear ();
+            if (raise) {
+                OnChanged ();
             }
         }
         
         public int Count {
-            get { return selection.Count; }
-        }
-        
-        public bool AllSelected {
-            get { return all_selected; }
+            get { return ranges.Count; }
         }
         
         public object Owner {
@@ -149,14 +123,29 @@ namespace Hyena.Data
             set { owner = value; }
         }
         
-        public IEnumerator<int> GetEnumerator()
-        {
-            return selection.Keys.GetEnumerator();
+        public int MaxIndex {
+            set { max_index = value; }
         }
         
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public bool AllSelected {
+            get { 
+                if (ranges.RangeCount == 1) {
+                    RangeCollection.Range range = ranges.Ranges[0];
+                    return range.Start == 0 && range.End == max_index;
+                }
+                
+                return false;
+            }
+        }
+        
+        public IEnumerator<int> GetEnumerator ()
         {
-            return selection.Keys.GetEnumerator();
+            return ranges.GetEnumerator();
+        }
+        
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
+        {
+            return ranges.GetEnumerator ();
         }
     }
 }

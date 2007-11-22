@@ -907,6 +907,10 @@ namespace Hyena.Data.Gui
             UpdateAdjustments(null, null);
             vadjustment.Value = 0;
             
+            if (Model != null) {
+                selection.MaxIndex = Model.Count;
+            }
+            
             if(Parent is ScrolledWindow) {
                 Parent.QueueDraw();
             }
@@ -950,7 +954,7 @@ namespace Hyena.Data.Gui
         
         private void SelectAll()
         {
-            Selection.SelectRange(0, model.Count, true);
+            Selection.SelectRange(0, model.Count);
             InvalidateListWindow();
         }
         

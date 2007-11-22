@@ -1,5 +1,12 @@
 2007-11-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena/Hyena.Data/Selection.cs: Updated to use RangeCollection
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Updated to reflect
+	API change in Selection
+
+2007-11-22  Aaron Bockover  <abock@gnome.org>
+
 	* Core/Hyena/Hyena.Collections/RangeCollection.cs: New collection for
 	storing ordered ranges that supports efficient add/remove of indexes
 
