@@ -189,7 +189,7 @@ namespace Hyena.Collections
                 if (cmp == 0) {
                     return mid;
                 } else if (cmp > 0) {
-                    if (ranges[mid - 1].CompareTo (range) < 0) {
+                    if (mid > 0 && ranges[mid - 1].CompareTo (range) < 0) {
                         return mid;
                     }
                     
