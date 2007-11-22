@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Hyena
+namespace Hyena.Collections
 {
     public interface IStackProvider<T>
     {

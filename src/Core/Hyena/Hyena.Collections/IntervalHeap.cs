@@ -1,38 +1,38 @@
-/***************************************************************************
- *  IntervalHeap.cs
- *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
+//
+// IntervalHeap.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2006-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Banshee.Kernel
+namespace Hyena.Collections
 {
-    public class IntervalHeap<T> : ICollection<T>, ICollection, IEnumerable<T>, IEnumerable
+    public class IntervalHeap<T> : ICollection<T>, ICollection
     {
         private const int MIN_CAPACITY = 16;
     
@@ -41,146 +41,146 @@ namespace Banshee.Kernel
         
         private Interval [] heap;
         
-        public IntervalHeap()
+        public IntervalHeap ()
         {
-            Clear();
+            Clear ();
         }
         
-        public virtual T Pop()
+        public virtual T Pop ()
         {
-            if(count == 0) {
-                throw new InvalidOperationException();
+            if (count == 0) {
+                throw new InvalidOperationException ();
             }
             
             T item = heap[0].Item;
-            MoveDown(0, heap[--count]);
+            MoveDown (0, heap[--count]);
             generation++;
             
             return item;
         }
         
-        public virtual T Peek()
+        public virtual T Peek ()
         {
-            if(count == 0) {
-                throw new InvalidOperationException();
+            if (count == 0) {
+                throw new InvalidOperationException ();
             }
             
             return heap[0].Item;
         }
 
-        public virtual void Push(T item, int priority)
+        public virtual void Push (T item, int priority)
         {
-            if(item == null) {
-                throw new ArgumentNullException("item");
+            if (item == null) {
+                throw new ArgumentNullException ("item");
             }
             
-            if(count == heap.Length) {
-                OptimalArrayResize(ref heap, 1);
+            if (count == heap.Length) {
+                OptimalArrayResize (ref heap, 1);
             }
             
-            MoveUp(++count - 1, new Interval(item, priority));
+            MoveUp (++count - 1, new Interval (item, priority));
             generation++;
         }
         
-        public virtual void Clear()
+        public virtual void Clear ()
         {
             generation = 0;
             count = 0;
             heap = new Interval[MIN_CAPACITY];
         }
         
-        void ICollection.CopyTo(Array array, int index)
+        void ICollection.CopyTo (Array array, int index)
         {
-            if(array == null) {
-                throw new ArgumentNullException("array");
+            if (array == null) {
+                throw new ArgumentNullException ("array");
             }
 
-            if(index < 0) {
-                throw new ArgumentOutOfRangeException("index");
+            if (index < 0) {
+                throw new ArgumentOutOfRangeException ("index");
             }
 
-            Array.Copy(heap, 0, array, index, count);
+            Array.Copy (heap, 0, array, index, count);
         }
         
-        public virtual void CopyTo(T [] array, int index)
+        public virtual void CopyTo (T [] array, int index)
         {
-            if(array == null) {
-                throw new ArgumentNullException("array");
+            if (array == null) {
+                throw new ArgumentNullException ("array");
             }
 
-            if(index < 0) {
-                throw new ArgumentOutOfRangeException("index");
+            if (index < 0) {
+                throw new ArgumentOutOfRangeException ("index");
             }
 
-            Array.Copy(heap, 0, array, index, count);
+            Array.Copy (heap, 0, array, index, count);
         }
 
-        public virtual bool Contains(T item)
+        public virtual bool Contains (T item)
         {
-            if(item == null) {
-                throw new ArgumentNullException("item");
+            if (item == null) {
+                throw new ArgumentNullException ("item");
             }
             
-            return FindItemHeapIndex(item) >= 0;
-        }
-        
-        public virtual void Add(T item)
-        {
-            if(item == null) {
-                throw new ArgumentNullException("item");
-            }
-            
-            Push(item, 0);
+            return FindItemHeapIndex (item) >= 0;
         }
         
-        public virtual bool Remove(T item)
+        public virtual void Add (T item)
         {
-            if(item == null) {
-                throw new ArgumentNullException("item");
+            if (item == null) {
+                throw new ArgumentNullException ("item");
             }
             
-            int index = FindItemHeapIndex(item);
+            Push (item, 0);
+        }
+        
+        public virtual bool Remove (T item)
+        {
+            if (item == null) {
+                throw new ArgumentNullException ("item");
+            }
             
-            if(index < 0) {
+            int index = FindItemHeapIndex (item);
+            
+            if (index < 0) {
                 return false;
             }
         
-            MoveDown(index, heap[--count]);
+            MoveDown (index, heap[--count]);
             generation++;
             
             return true;
         }
         
-        public virtual void TrimExcess()
+        public virtual void TrimExcess ()
         {
-            if(count < heap.Length * 0.9) {
-                Array.Resize(ref heap, count);
+            if (count < heap.Length * 0.9) {
+                Array.Resize (ref heap, count);
             }
         }
         
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator ()
         {
-            return GetEnumerator();
+            return GetEnumerator ();
         }
         
-        public virtual IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator ()
         {
-            return new IntervalHeapEnumerator(this);
+            return new IntervalHeapEnumerator (this);
         }
         
-        public static IntervalHeap<T> Synchronized(IntervalHeap<T> heap)
+        public static IntervalHeap<T> Synchronized (IntervalHeap<T> heap)
         {
-            if(heap == null) {
-                throw new ArgumentNullException("heap");
+            if (heap == null) {
+                throw new ArgumentNullException ("heap");
             }
             
-            return new SyncIntervalHeap(heap);
+            return new SyncIntervalHeap (heap);
         }
         
-        private int FindItemHeapIndex(T item)
+        private int FindItemHeapIndex (T item)
         {
-            for(int i = 0; i < count; i++) {
-                if(item.Equals(heap[i].Item)) {
+            for (int i = 0; i < count; i++) {
+                if (item.Equals (heap[i].Item)) {
                     return i;
                 }
             }
@@ -188,58 +188,57 @@ namespace Banshee.Kernel
             return -1;
         }
         
-        private int GetLeftChildIndex(int index)
+        private int GetLeftChildIndex (int index)
         {
             return index * 2 + 1;
         }
         
-        private int GetParentIndex(int index)
+        private int GetParentIndex (int index)
         {
             return (index - 1) / 2;
         }
         
-        // grow array to nearest minimum power of two
-        private static void OptimalArrayResize(ref Interval [] array, int grow)
+        private static void OptimalArrayResize (ref Interval [] array, int grow)
         { 
             int new_capacity = array.Length == 0 ? 1 : array.Length;
             int min_capacity = array.Length == 0 ? MIN_CAPACITY : array.Length + grow;
 
-            while(new_capacity < min_capacity) {
+            while (new_capacity < min_capacity) {
                 new_capacity <<= 1;
             }
 
-            Array.Resize(ref array, new_capacity);
+            Array.Resize (ref array, new_capacity);
         }
 
-        private void MoveUp(int index, Interval node)
+        private void MoveUp (int index, Interval node)
         {
-            int parent_index = GetParentIndex(index);
+            int parent_index = GetParentIndex (index);
             
-            while(index > 0 && heap[parent_index].Priority < node.Priority) {
+            while (index > 0 && heap[parent_index].Priority < node.Priority) {
                 heap[index] = heap[parent_index];
                 index = parent_index;
-                parent_index = GetParentIndex(index);
+                parent_index = GetParentIndex (index);
             }
             
             heap[index] = node;
         }
         
-        private void MoveDown(int index, Interval node)
+        private void MoveDown (int index, Interval node)
         {
-            int child_index = GetLeftChildIndex(index);
+            int child_index = GetLeftChildIndex (index);
             
-            while(child_index < count) {
-                if(child_index + 1 < count 
+            while (child_index < count) {
+                if (child_index + 1 < count 
                     && heap[child_index].Priority < heap[child_index + 1].Priority) {
                     child_index++;
                 }
                 
                 heap[index] = heap[child_index];
                 index = child_index;
-                child_index = GetLeftChildIndex(index);
+                child_index = GetLeftChildIndex (index);
             }
             
-            MoveUp(index, node);
+            MoveUp (index, node);
         }
 
         public virtual int Count {
@@ -263,7 +262,7 @@ namespace Banshee.Kernel
             private T item;
             private int priority;
             
-            public Interval(T item, int priority)
+            public Interval (T item, int priority)
             {
                 this.item = item;
                 this.priority = priority;
@@ -282,13 +281,13 @@ namespace Banshee.Kernel
         {
             private IntervalHeap<T> heap;
             
-            internal SyncIntervalHeap(IntervalHeap<T> heap)
+            internal SyncIntervalHeap (IntervalHeap<T> heap)
             {
                 this.heap = heap;
             }
             
             public override int Count {
-                get { lock(heap) { return heap.Count; } }
+                get { lock (heap) { return heap.Count; } }
             }
             
             public override bool IsSynchronized {
@@ -299,54 +298,54 @@ namespace Banshee.Kernel
                 get { return heap.SyncRoot; }
             }
             
-            public override void Clear()
+            public override void Clear ()
             {
-                lock(heap) { heap.Clear(); }
+                lock (heap) { heap.Clear (); }
             }
             
             public override bool Contains(T item)
             {
-                lock(heap) { return heap.Contains(item); }
+                lock (heap) { return heap.Contains (item); }
             }
             
             public override T Pop()
             {
-                lock(heap) { return heap.Pop(); }
+                lock (heap) { return heap.Pop (); }
             }
             
-            public override T Peek()
+            public override T Peek ()
             {
-                lock(heap) { return heap.Peek(); }
+                lock (heap) { return heap.Peek (); }
             }
             
-            public override void Push(T item, int priority)
+            public override void Push (T item, int priority)
             {
-                lock(heap) { heap.Push(item, priority); }
+                lock (heap) { heap.Push (item, priority); }
             }
             
-            public override void Add(T item)
+            public override void Add (T item)
             {
-                lock(heap) { heap.Add(item); }
+                lock (heap) { heap.Add (item); }
             }
             
-            public override bool Remove(T item)
+            public override bool Remove (T item)
             {
-                lock(heap) { return heap.Remove(item); }
+                lock (heap) { return heap.Remove (item); }
             }
             
-            public override void TrimExcess()
+            public override void TrimExcess ()
             {
-                lock(heap) { heap.TrimExcess(); }
+                lock (heap) { heap.TrimExcess (); }
             }
             
-            public override void CopyTo(T [] array, int index)
+            public override void CopyTo (T [] array, int index)
             {
-                lock(heap) { heap.CopyTo(array, index); }
+                lock (heap) { heap.CopyTo (array, index); }
             }
             
-            public override IEnumerator<T> GetEnumerator()
+            public override IEnumerator<T> GetEnumerator ()
             {
-                lock(heap) { return new IntervalHeapEnumerator(this); }
+                lock (heap) { return new IntervalHeapEnumerator (this); }
             }
         }
     
@@ -356,30 +355,30 @@ namespace Banshee.Kernel
             private int index;
             private int generation;
             
-            public IntervalHeapEnumerator(IntervalHeap<T> heap)
+            public IntervalHeapEnumerator (IntervalHeap<T> heap)
             {
                 this.heap = heap;
-                Reset();
+                Reset ();
             }
             
-            public void Reset()
+            public void Reset ()
             {
                 generation = heap.generation;
                 index = -1;
             }
             
-            public void Dispose()
+            public void Dispose ()
             {
                 heap = null;
             }
  
-            public bool MoveNext()
+            public bool MoveNext ()
             {
-                if(generation != heap.generation) {
-                    throw new InvalidOperationException();
+                if (generation != heap.generation) {
+                    throw new InvalidOperationException ();
                 }
                 
-                if(index + 1 == heap.count) {
+                if (index + 1 == heap.count) {
                     return false;
                 }
                 
@@ -393,8 +392,8 @@ namespace Banshee.Kernel
  
             public T Current {
                 get {
-                    if(generation != heap.generation) {
-                        throw new InvalidOperationException();
+                    if (generation != heap.generation) {
+                        throw new InvalidOperationException ();
                     }
                     
                     return heap.heap[index].Item;
