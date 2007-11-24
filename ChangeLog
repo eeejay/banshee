@@ -1,3 +1,8 @@
+2007-11-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs: Ignore any
+	part of the album/artist string that ends in a (.*) 
+
 2007-11-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena/Hyena.Data/Selection.cs: Updated to use RangeCollection

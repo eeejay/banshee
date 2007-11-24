@@ -40,31 +40,38 @@ namespace Banshee.Collection
         private string artist_name;
         private string artwork_id;
         
-        public AlbumInfo(string title)
+        public AlbumInfo (string title)
         {
             this.title = title;
         }
         
-        public static string CreateArtistAlbumId(string artist, string album)
+        public static string CreateArtistAlbumId (string artist, string album)
         {
-            return CreateArtistAlbumId(artist, album, false);
+            return CreateArtistAlbumId (artist, album, false);
         }
         
-        public static string CreateArtistAlbumId(string artist, string album, bool asPath)
+        public static string CreateArtistAlbumId (string artist, string album, bool asPath)
         {
-            string sm_artist = CreateArtistAlbumIdPart(artist);
-            string sm_album = CreateArtistAlbumIdPart(album);
+            string sm_artist = CreateArtistAlbumIdPart (artist);
+            string sm_album = CreateArtistAlbumIdPart (album);
             
             return sm_artist == null || sm_album == null 
                 ? null 
-                : String.Format("{0}{1}{2}", sm_artist, (asPath ? "/" : "-"), sm_album); 
+                : String.Format ("{0}{1}{2}", sm_artist, asPath ? "/" : "-", sm_album); 
         }
         
-        private static string CreateArtistAlbumIdPart(string part)
+        private static string CreateArtistAlbumIdPart (string part)
         {
-            return String.IsNullOrEmpty(part)
-                ? null 
-                : Regex.Replace(part, @"[^A-Za-z0-9]*", "").ToLower();
+            if (String.IsNullOrEmpty (part)) {
+                return null;
+            }
+            
+            int lp_index = part.LastIndexOf ('(');
+            if (lp_index > 0) {
+                part = part.Substring (0, lp_index);
+            }
+            
+            return Regex.Replace (part, @"[^A-Za-z0-9]*", "").ToLower ();
         }
         
         public virtual string ArtistName {
@@ -79,9 +86,10 @@ namespace Banshee.Collection
         
         public virtual string ArtworkId {
             get { 
-                if(artwork_id == null) {
-                    artwork_id = CreateArtistAlbumId(ArtistName, Title);
+                if (artwork_id == null) {
+                    artwork_id = CreateArtistAlbumId (ArtistName, Title);
                 }
+                
                 return artwork_id;
             }
         }
