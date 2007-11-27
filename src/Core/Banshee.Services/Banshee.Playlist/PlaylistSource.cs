@@ -34,11 +34,15 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 
+using Hyena.Data;
+using Hyena.Collections;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Database;
 using Banshee.Sources;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.Playlist
 {
@@ -46,31 +50,126 @@ namespace Banshee.Playlist
     {
         private const string TRACK_JOIN = ", CorePlaylistEntries";
         private const string TRACK_CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
+        private int? dbid;
 
-        // For existing playlists
-        public PlaylistSource (int dbid, string name, int sortColumn, int sortType) : base (name, 500)
+        protected int? DbId {
+            get { return dbid; }
+            set {
+                if (value == null)
+                    return;
+                dbid = value;
+                track_model.JoinFragment = TRACK_JOIN;
+                track_model.Condition = String.Format (TRACK_CONDITION, dbid);
+                AfterInitialized ();
+            }
+        }
+
+        public PlaylistSource (int dbid, string name, int sortColumn, int sortType) : this (name, dbid)
         {
-            track_model.JoinFragment = TRACK_JOIN;
-            track_model.Condition = String.Format (TRACK_CONDITION, dbid);
+        }
+
+        public PlaylistSource (string name) : this (name, CreateNewPlaylist (name))
+        {
+        }
+
+        public PlaylistSource (string name, int? dbid) : base (name, 500)
+        {
             Properties.SetString ("IconName", "source-playlist");
-            AfterInitialized ();
+            DbId = dbid;
         }
 
-        public PlaylistSource (string name, int order) : base (name, order)
+        public override void Rename (string newName)
         {
+            base.Rename (newName);
+            Commit ();
         }
 
-        public PlaylistSource (int order) : this ("new playlist", order)
+        public void AddTracks (TrackListDatabaseModel from, Selection selection)
         {
+            if (from == track_model || selection.Count == 0)
+                return;
+
+            lock (from) {
+                using (new Timer ("Adding tracks to playlist")) {
+                foreach (RangeCollection.Range range in selection.Ranges) {
+                    DbCommand command = new DbCommand (String.Format (@"
+                        INSERT INTO CorePlaylistEntries
+                            SELECT null, {0}, ItemID, 0
+                                FROM CoreCache WHERE ModelID = {1}
+                                LIMIT {2}, {3}",
+                        DbId, from.CacheId, range.Start, range.End - range.Start + 1
+                    ));
+                    Console.WriteLine ("Adding selection with: {0}\n{1}", command, command.CommandText);
+                    ServiceManager.DbConnection.Execute (command);
+                }
+                }
+                Reload ();
+            }
+        }
+
+        public void RemoveTracks (Selection selection)
+        {
+            if (selection.Count == 0)
+                return;
+
+            lock (track_model) {
+                using (new Timer ("Removing tracks from playlist")) {
+                foreach (RangeCollection.Range range in selection.Ranges) {
+                    DbCommand command = new DbCommand (String.Format (@"
+                        DELETE FROM CorePlaylistEntries WHERE TrackID IN
+                            (SELECT ItemID FROM CoreCache
+                                WHERE ModelID = {0} LIMIT {1}, {2})",
+                        track_model.CacheId, range.Start, range.End - range.Start + 1
+                    ));
+                    Console.WriteLine ("Removing selection with: {0}\n{1}", command, command.CommandText);
+                    ServiceManager.DbConnection.Execute (command);
+                }
+                }
+                Reload ();
+            }
+        }
+
+        private void Reload ()
+        {
+            track_model.Reload ();
+            artist_model.Reload ();
+            album_model.Reload ();
+        }
+
+        protected void Commit ()
+        {
+            if (dbid == null)
+                return;
+
+            ServiceManager.DbConnection.Execute (
+                @"UPDATE CorePlaylists
+                    SET Name = :playlist_name,
+                        SortColumn = :sort_column,
+                        SortType = :sort_type
+                    WHERE PlaylistID = :playlist_id",
+                "playlist_name", Name,
+                "sort_column", -1,
+                "sort_type", 0,
+                "playlist_id", dbid
+            );
+        }
+
+        private static int CreateNewPlaylist (string name)
+        {
+            return ServiceManager.DbConnection.Execute (
+                @"INSERT INTO CorePlaylists
+                    VALUES (NULL, :playlist_name, -1, 0)",
+                    "playlist_name", name
+            );
         }
 
         public static List<PlaylistSource> LoadAll ()
         {
             List<PlaylistSource> sources = new List<PlaylistSource> ();
 
-            IDbCommand command = ServiceManager.DbConnection.CreateCommand ();
-            command.CommandText = "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists";
-            IDataReader reader = command.ExecuteReader ();
+            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists"
+            );
             
             while (reader.Read ()) {
                 PlaylistSource playlist = new PlaylistSource (
@@ -105,9 +204,9 @@ namespace Banshee.Playlist
         /*internal static bool PlaylistExists(string name)
         {
             return GetPlaylistID(name) > 0;
-        }
+        }*/
         
-        public static string UniqueName {
+        /*public static string UniqueName {
             get { return NamingUtil.PostfixDuplicate(Catalog.GetString("New Playlist"), PlaylistExists); }
         }
         

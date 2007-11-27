@@ -36,24 +36,20 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public class BansheeDbConnection : IService, IDisposable
+    public class BansheeDbConnection : QueuedSqliteDatabase, IService, IDisposable
     {
         private IDbConnection connection;
 
-        public BansheeDbConnection() : this(true)
+        public BansheeDbConnection() : base (DatabaseFile)
         {
-        }
+            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (this);
+            Execute ("PRAGMA synchronous = OFF;");
+            Execute ("PRAGMA cache_size = 32768;");
 
-        public BansheeDbConnection(bool connect)
-        {
-            if(connect) {
-                Open();
-                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator(connection);
-                migrator.SlowStarted += OnMigrationSlowStarted;
-                migrator.SlowPulse += OnMigrationSlowPulse;
-                migrator.SlowFinished += OnMigrationSlowFinished;
-                migrator.Migrate();
-            }
+            migrator.SlowStarted += OnMigrationSlowStarted;
+            migrator.SlowPulse += OnMigrationSlowPulse;
+            migrator.SlowFinished += OnMigrationSlowFinished;
+            migrator.Migrate();
         }
         
         //private Gtk.Window slow_window;
@@ -124,53 +120,7 @@ namespace Banshee.Database
             }*/
         }
 
-        public void Dispose()
-        {
-            Close();
-        }
-
-        public void Open()
-        {
-            lock(this) {
-                if(connection != null) {
-                    return;
-                }
-
-                string dbfile = DatabaseFile;
-                Console.WriteLine("Opening connection to Banshee Database: {0}", dbfile);
-                connection = new SqliteConnection(String.Format("Version=3,URI=file:{0}", dbfile));
-                connection.Open();
-                IDbCommand command = connection.CreateCommand();
-                command.CommandText = @"
-                    PRAGMA synchronous = OFF;
-                    PRAGMA cache_size = 32768;
-                ";
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public void Close()
-        {
-            lock(this) {
-                if(connection != null) {
-                    connection.Close();
-                    connection = null;
-                }
-            }
-        }
-
-        public IDbCommand CreateCommand()
-        {
-            lock(this) {
-                if(connection == null) {
-                    throw new ApplicationException("Not connected to database");
-                }
-
-                return connection.CreateCommand();
-            }
-        }
-
-        public string DatabaseFile {
+        public static string DatabaseFile {
             get {
                 if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
@@ -196,10 +146,6 @@ namespace Banshee.Database
             }
         }
 
-        public IDbConnection Connection {
-            get { return connection; }
-        }
-        
         string IService.ServiceName {
             get { return "DbConnection"; }
         }

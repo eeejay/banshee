@@ -73,7 +73,7 @@ namespace Banshee.Sources.Gui
 
     public class SourceView : TreeView
     {
-        private Source newPlaylistSource = new PlaylistSource(-1);
+        //private Source newPlaylistSource = new PlaylistSource(-1);
         private TreeIter newPlaylistIter = TreeIter.Zero;
         private bool newPlaylistVisible = false;
         
@@ -108,7 +108,9 @@ namespace Banshee.Sources.Gui
             focus_column.SetCellDataFunc(renderer, new TreeCellDataFunc(SourceCellDataFunc));
             AppendColumn(focus_column);
             
-            store = new TreeStore(typeof(Source));
+            store = new TreeStore(typeof(Source), typeof(int));
+            store.SetSortColumnId (1, SortType.Ascending);
+            store.ChangeSortColumn ();
             Model = store;
             HeadersVisible = false;
             
@@ -120,7 +122,7 @@ namespace Banshee.Sources.Gui
             RefreshList();
 
             ServiceManager.SourceManager.SourceAdded += delegate(SourceAddedArgs args) {
-                AddSource(args.Source, args.Position);
+                AddSource(args.Source);
             };
             
             ServiceManager.SourceManager.SourceRemoved += delegate(SourceEventArgs args) {
@@ -132,6 +134,8 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.SourceManager.SourceUpdated += delegate(SourceEventArgs args) {
+                TreeIter iter = FindSource (args.Source);
+                store.SetValue (iter, 1, args.Source.Order);
                 QueueDraw();
             };
             
@@ -175,34 +179,36 @@ namespace Banshee.Sources.Gui
         
         private void AddSource(Source source)
         {
-            AddSource(source, -1);
+            AddSource(source, TreeIter.Zero);
         }
 
-        private void AddSource(Source source, int position)
+        private void AddSource(Source source, TreeIter parent)
         {
-            AddSource(source, position, TreeIter.Zero);
-        }
-        
-        private void AddSource(Source source, int position, TreeIter parent)
-        {
-            if(!FindSource(source).Equals(TreeIter.Zero)) {
+            // Don't add duplicates
+            if(!FindSource(source).Equals(TreeIter.Zero))
                 return;
-            }
+
+            // Don't add a child source before its parent
+            if(parent.Equals(TreeIter.Zero) && source.Parent != null)
+                return;
+
+            int position = source.Order;
             
             TreeIter iter = parent.Equals(TreeIter.Zero)
                 ? store.InsertNode(position) 
-                : store.AppendNode(parent);
+                : store.InsertNode(parent, position);
             
             store.SetValue(iter, 0, source);
+            store.SetValue(iter, 1, source.Order);
 
             lock(source.Children) {
                 foreach(Source s in source.Children) {
-                    AddSource(s, position, iter);
+                    AddSource(s, iter);
                 }
             }
 
             source.ChildSourceAdded += delegate(SourceEventArgs e) {
-                AddSource(e.Source, position, iter);
+                AddSource(e.Source, iter);
             };
 
             source.ChildSourceRemoved += delegate(SourceEventArgs e) {
@@ -288,7 +294,7 @@ namespace Banshee.Sources.Gui
             }
             
             renderer.Selected = renderer.source.Equals(ServiceManager.SourceManager.ActiveSource);
-            renderer.Italicized = renderer.source.Equals(newPlaylistSource);
+            //renderer.Italicized = renderer.source.Equals(newPlaylistSource);
             renderer.Sensitive = renderer.source.CanActivate;
         }
         
@@ -446,6 +452,7 @@ namespace Banshee.Sources.Gui
                 TreeIter library = FindSource(LibrarySource.Instance);
                 newPlaylistIter = store.AppendNode(library);
                 store.SetValue(newPlaylistIter, 0, newPlaylistSource);
+                store.SetValue(newPlaylistIter, 1, 999);
                 newPlaylistVisible = true;
 
                 UpdateView();

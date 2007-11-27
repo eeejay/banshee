@@ -44,14 +44,14 @@ namespace Banshee.Gui
                 // Music Menu
                 new ActionEntry ("MusicMenuAction", null, 
                     Catalog.GetString ("_Music"), null, null, null),
-                
+
                 new ActionEntry ("ImportMusicAction", Stock.Open,
                     Catalog.GetString ("Import _Music..."), "<control>I",
                     Catalog.GetString ("Import music from a variety of sources"), OnImportMusic),
                     
                 new ActionEntry ("OpenLocationAction", null, 
                     Catalog.GetString ("Open _Location..."), "<control>L",
-                    Catalog.GetString ("Open a remote location for playback"), OnOpenLocationAction),
+                    Catalog.GetString ("Open a remote location for playback"), OnOpenLocation),
                     
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
@@ -95,7 +95,7 @@ namespace Banshee.Gui
         }
             
 #region Music Menu Actions
-        
+
         private void OnImportMusic (object o, EventArgs args)
         {
             Banshee.Library.Gui.ImportDialog dialog = new Banshee.Library.Gui.ImportDialog ();            
@@ -110,7 +110,7 @@ namespace Banshee.Gui
             }
         }
         
-        private void OnOpenLocationAction (object o, EventArgs args)
+        private void OnOpenLocation (object o, EventArgs args)
         {
             OpenLocationDialog dialog = new OpenLocationDialog ();
             ResponseType response = dialog.Run ();

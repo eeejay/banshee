@@ -1,5 +1,60 @@
 2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Base/QueuedSqliteDatabase.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Database/QueuedSqliteDatabase.cs:
+	Migrate QueuedSqliteDatabase class over, mostly unchanged.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Inherit from QueuedSqliteDatabase.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Update database queries.
+
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs: Add
+	method for getting the TrackModel, used by PlaylistSource to efficiently
+	add/remove tracks.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Add
+	ability to create new PlaylistSource and have it be automatically saved to
+	the db or not. New AddTracks and RemoveTracks methods that use the
+	Selection's Ranges to efficiently add/remove tracks.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Bring Sort methods
+	and classes over.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Override OnPopupMenu to actually pop up the track context menu.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Check
+	for null tracks.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Remove
+	'Action' suffix from action handler's name for consistency/brevity.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IHasSourceView.cs: New
+	interface that PlayerInterface implements so SourceActions can get the
+	highlighted source.  Instantiate SourceActions the same as TrackActions.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Port
+	changes from stable branch: add a second column to the TreeStore for
+	source order, and sort by it.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: 
+	* src/Core/Banshee.ThickClient/Makefile.am: New SourceActions class,
+	handle RenameSource, NewPlaylist, AddToPlaylist, AddToNewPlaylist, and
+	RemoveTracks actions.
+
+	* src/Core/Hyena/Hyena.Data/Selection.cs: Provide access to the Ranges of
+	the Selection, enabling extremely fast playlist track addition/removal.
+
+2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Improve
 	handling of child sources -- add them to the SourceManager automatically.
 	Child sources with children should be possible (though probably not

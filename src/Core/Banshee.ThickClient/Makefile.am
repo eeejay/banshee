@@ -38,8 +38,10 @@ SOURCES =  \
 	Banshee.Gui/GtkBaseClient.cs \
 	Banshee.Gui/GtkElementsService.cs \
 	Banshee.Gui/IconThemeUtils.cs \
+	Banshee.Gui/IHasSourceView.cs \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PlaybackActions.cs \
+	Banshee.Gui/SourceActions.cs \
 	Banshee.Gui/TrackActions.cs \
 	Banshee.Gui/ViewActions.cs \
 	Banshee.Library.Gui/FileImportSource.cs \

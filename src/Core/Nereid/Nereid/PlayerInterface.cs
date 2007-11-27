@@ -50,7 +50,7 @@ using Banshee.Sources.Gui;
 
 namespace Nereid
 {
-    public class PlayerInterface : Window, IService, IDisposable, IHasTrackSelection
+    public class PlayerInterface : Window, IService, IDisposable, IHasTrackSelection, IHasSourceView
     {
         // Major Layout Components
         private VBox primary_vbox;
@@ -224,8 +224,11 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
 
-            // Action events
+            // Track actions
             action_service.AddActionGroup (new TrackActions (action_service, this));
+
+            // Source actions
+            action_service.AddActionGroup (new SourceActions (action_service, this));
             
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
@@ -352,6 +355,20 @@ namespace Nereid
 
         public Hyena.Collections.Selection TrackSelection {
             get { return composite_view.TrackView.Selection; }
+        }
+
+        public TrackListDatabaseModel TrackModel {
+            get { return composite_view.TrackModel as TrackListDatabaseModel; }
+        }
+
+        // IHasSourceView
+        public Source HighlightedSource {
+            get { return source_view.HighlightedSource; }
+        }
+
+        public void BeginRenameSource (Source source)
+        {
+            source_view.BeginRenameSource (source);
         }
 
 #endregion

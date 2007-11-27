@@ -27,9 +27,11 @@
 //
 
 using System;
+using Gtk;
 
 using Hyena.Data.Gui;
 
+using Banshee.Gui;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Collection;
@@ -69,6 +71,14 @@ namespace Banshee.Collection.Gui
                     QueueDraw ();
                 };
             }
+        }
+
+        protected override bool OnPopupMenu ()
+        {
+            Gtk.Menu menu = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").UIManager.GetWidget ("/TrackPopup") as Menu;
+            menu.Show (); 
+            menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+            return true;
         }
         
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)

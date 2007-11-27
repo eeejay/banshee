@@ -7,9 +7,11 @@
         <placeholder name="TrackInfoDisplay" />
         <placeholder name="VolumeButton" />
     </toolbar>
-    <menubar name="MainMenu">
 
+    <menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
+            <menuitem name="NewPlaylist" action="NewPlaylistAction" />
+            <separator />
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
             <separator />
@@ -18,7 +20,13 @@
         </menu>
 
         <menu name="EditMenu" action="EditMenuAction">
+            <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
+            <menuitem name="RemoveTracks" action="RemoveTracksAction" />
             <menuitem name="TrackProperties" action="TrackPropertiesAction" />
+            <separator />
+            <menuitem name="RenameSource" action="RenameSourceAction" />
+            <!--<menuitem name="UnmapSource" action="UnmapSourceAction" />
+            <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />-->
         </menu>
 
         <menu name="ViewMenu" action="ViewMenuAction">
@@ -61,13 +69,30 @@
             <menuitem name="VersionInformation" action="VersionInformationAction" />
             <menuitem name="About" action="AboutAction" />
         </menu>
-
     </menubar>
+
+    <popup name="TrackPopup" action="TrackPopupAction">
+        <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
+        <menuitem name="RemoveTracks" action="RemoveTracksAction" />
+        <separator />
+        <!--<menuitem name="CopySongs" action="CopySongsAction" />-->
+        <!--<menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
+        <separator />
+        <menu name="SearchMenu" action="SearchMenuAction">
+            <menuitem name="SearchForSameArtist" action="SearchForSameArtistAction" />
+            <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction" />
+            <menuitem name="SearchForSameGenre" action="SearchForSameGenreAction" />
+        </menu>
+        <separator />
+        <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
+        -->
+        <separator />
+        <menuitem name="TrackProperties" action="TrackPropertiesAction" />
+    </popup>
 </ui>
 
     <!--<menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
-            <menuitem name="NewPlaylist" action="NewPlaylistAction" />
             <menuitem name="NewCD" action="NewCDAction" />
             <placeholder name="NewMusicMenuAdditions" />
             /*<menuitem name="ImportFolder" action="ImportFolderAction" />
@@ -123,19 +148,4 @@
         <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
     </popup>
     <popup name="SongViewPopup" action="SongViewPopupAction">
-        <menuitem name="AddToPlaylist" action="AddToPlaylistAction" />
-        <separator />
-        <menuitem name="CopySongs" action="CopySongsAction" />
-        <menuitem name="RemoveSongs" action="RemoveSongsAction" />
-        <menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
-        <separator />
-        <menu name="SearchMenu" action="SearchMenuAction">
-            <menuitem name="SearchForSameArtist" action="SearchForSameArtistAction" />
-            <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction" />
-            <menuitem name="SearchForSameGenre" action="SearchForSameGenreAction" />
-        </menu>
-        <separator />
-        <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
-        <separator />
-        <menuitem name="Properties" action="PropertiesAction" />
     </popup>-->

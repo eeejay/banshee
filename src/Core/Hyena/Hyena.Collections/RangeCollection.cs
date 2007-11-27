@@ -249,7 +249,7 @@ namespace Hyena.Collections
 #region Public RangeCollection API
 
         public Range [] Ranges {
-            get { 
+            get {
                 Range [] ranges_copy = new Range[range_count];
                 Array.Copy (ranges, ranges_copy, range_count);
                 return ranges_copy;

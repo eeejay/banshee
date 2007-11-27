@@ -191,9 +191,9 @@ namespace Banshee.Collection.Database
             reload_fragment = qb.ToString ();
             count = cache.Reload ();
 
-            IDbCommand command = connection.CreateCommand ();
-            command.CommandText = String.Format ("SELECT COUNT(*) {0}", unfiltered_query);
-            unfiltered_count = Convert.ToInt32 (command.ExecuteScalar ());
+            unfiltered_count = connection.QueryInt32 (String.Format (
+                "SELECT COUNT(*) {0}", unfiltered_query
+            ));
 
             OnReloaded ();
         }

@@ -1,5 +1,5 @@
 //
-// IHasTrackSelection.cs
+// IHasSourceView.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -26,18 +26,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.Collections.Generic;
+using Banshee.Sources;
 
-using Hyena.Collections;
-
-using Banshee.Collection.Database;
-
-namespace Banshee.Collection
+namespace Banshee.Gui
 {
-    public interface IHasTrackSelection
+    public interface IHasSourceView
     {
-        Selection TrackSelection { get; }
-        TrackListDatabaseModel TrackModel { get; }
-        IEnumerable<TrackInfo> GetSelectedTracks ();
+        Source HighlightedSource { get; }
+        void BeginRenameSource (Source source);
     }
 }

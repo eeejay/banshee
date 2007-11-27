@@ -1,30 +1,30 @@
-/***************************************************************************
- *  QueuedSqliteDatabase.cs
- *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@aaronbock.net>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// QueuedSqliteDatabase.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2005-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
  
 using System;
 using System.Threading;
@@ -71,7 +71,7 @@ namespace Banshee.Database
             WakeUp();
         }
         
-        public SqliteDataReader Query(DbCommand command)
+        public SqliteDataReader ExecuteReader(DbCommand command)
         {
             WaitForConnection();
             command.Connection = connection;
@@ -80,12 +80,12 @@ namespace Banshee.Database
             return command.WaitForResult() as SqliteDataReader;
         }
         
-        public SqliteDataReader Query(object command)
+        public SqliteDataReader ExecuteReader(object command)
         {
-            return Query(new DbCommand(command.ToString()));
+            return ExecuteReader(new DbCommand(command.ToString()));
         }
         
-        public object QuerySingle(DbCommand command)
+        public object ExecuteScalar(DbCommand command)
         {
             WaitForConnection();
             command.Connection = connection;
@@ -93,10 +93,20 @@ namespace Banshee.Database
             QueueCommand(command);
             return command.WaitForResult();
         }
-                
-        public object QuerySingle(object command)
+
+        public Int32 QueryInt32 (object command)
         {
-            return QuerySingle(new DbCommand(command.ToString()));
+            return Convert.ToInt32 (ExecuteScalar (command));
+        }
+                
+        public object ExecuteScalar(object command)
+        {
+            return ExecuteScalar(new DbCommand(command.ToString()));
+        }
+
+        public object ExecuteScalar(string command, params object [] parameters) 
+        {
+            return ExecuteScalar(new DbCommand(command, parameters));
         }
         
         public int Execute(DbCommand command)
@@ -113,14 +123,19 @@ namespace Banshee.Database
         {
             return Execute(new DbCommand(command.ToString()));
         }
+
+        public int Execute(string command, params object [] parameters) 
+        {
+            return Execute(new DbCommand(command, parameters));
+        }
         
         public bool TableExists(string table)
         {
-            return Convert.ToInt32(QuerySingle(String.Format(@"
+            return Convert.ToInt32(ExecuteScalar(@"
                 SELECT COUNT(*) 
                     FROM sqlite_master
-                    WHERE Type='table' AND Name='{0}'", 
-                    table))) > 0;
+                    WHERE Type='table' AND Name=:table_name", 
+                    "table_name", table)) > 0;
         }
 
         private void WakeUp()

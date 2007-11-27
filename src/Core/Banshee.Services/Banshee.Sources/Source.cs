@@ -132,6 +132,37 @@ namespace Banshee.Sources
                 }
             }
         }
+
+        public class NameComparer : IComparer<Source>
+        {
+            public int Compare (Source a, Source b)
+            {
+                return a.Name.CompareTo (b.Name);
+            }
+        }
+
+        public class SizeComparer : IComparer<Source>
+        {
+            public int Compare (Source a, Source b)
+            {
+                return a.Count.CompareTo (b.Count);
+            }
+        }
+
+        /*public virtual void SortChildSources (IComparer<Source> comparer, bool asc)
+        {
+            lock(Children) {
+                child_sources.Sort (comparer);
+                if (!asc) {
+                    child_sources.Reverse ();
+                }
+
+                int i = 0;
+                foreach (Source child in child_sources) {
+                    child.Order = i++;
+                }
+            }
+        }*/
         
 #endregion
         

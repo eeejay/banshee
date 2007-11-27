@@ -159,7 +159,8 @@ namespace Banshee.Gui.Dialogs
             }
         
             foreach(TrackInfo track in selection) {
-                TrackSet.Add(new EditorTrack(track));
+                if (track != null)
+                    TrackSet.Add(new EditorTrack(track));
             }
             
             rating_entry.Show();

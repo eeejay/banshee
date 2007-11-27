@@ -150,6 +150,10 @@ namespace Hyena.Collections
                 return false;
             }
         }
+
+        public RangeCollection.Range [] Ranges {
+            get { return ranges.Ranges; }
+        }
         
 #if NET_2_0
         public IEnumerator<int> GetEnumerator ()

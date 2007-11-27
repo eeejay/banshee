@@ -68,9 +68,7 @@ namespace Banshee.Collection.Database
             if (!cache_initialized) {
                 cache_initialized = true;
                 // Invalidate any old cache
-                IDbCommand command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM CoreCache";
-                command.ExecuteNonQuery();
+                connection.Execute ("DELETE FROM CoreCache");
             }
         }
 
@@ -79,18 +77,13 @@ namespace Banshee.Collection.Database
             InvalidateManagedCache ();
 
             using (new Timer (String.Format ("Generating cache table for {0}", db_model))) {
-                IDbCommand command = connection.CreateCommand ();
-                command.CommandText = reload_command + db_model.ReloadFragment;
-                //Console.WriteLine (command.CommandText);
-                command.ExecuteNonQuery ();
+                connection.Execute (reload_command + db_model.ReloadFragment);
             }
 
             int rows;
             using (new Timer (String.Format ("Counting items for {0}", db_model))) {
                 //Console.WriteLine("Count query: {0}", count_command);
-                IDbCommand command = connection.CreateCommand ();
-                command.CommandText = count_command;
-                rows = Convert.ToInt32 (command.ExecuteScalar ());
+                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command));
             }
             return rows;
         }
@@ -111,10 +104,7 @@ namespace Banshee.Collection.Database
             );
 
             using(new Timer(String.Format ("Fetching set for {0}", db_model))) {
-                IDbCommand command = connection.CreateCommand ();
-                command.CommandText = select_query;
-                //Console.WriteLine (command.CommandText);
-                IDataReader reader = command.ExecuteReader ();
+                IDataReader reader = connection.ExecuteReader (select_query);
 
                 int i = offset;
                 while (reader.Read()) {

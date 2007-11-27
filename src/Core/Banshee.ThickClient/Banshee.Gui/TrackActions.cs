@@ -27,10 +27,13 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Sources;
+using Banshee.Playlist;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.Gui.Dialogs;
@@ -41,9 +44,10 @@ namespace Banshee.Gui
     {
         private InterfaceActionService action_service;
         private IHasTrackSelection selection_provider;
+        private Dictionary<MenuItem, PlaylistSource> playlist_menu_map = new Dictionary<MenuItem, PlaylistSource> ();
 
         private static readonly string [] require_selection_actions = new string [] {
-            "TrackPropertiesAction"
+            "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction"
         };
         
         public TrackActions (InterfaceActionService actionService, IHasTrackSelection selectionProvider) : base ("Track")
@@ -51,8 +55,24 @@ namespace Banshee.Gui
             Add (new ActionEntry [] {
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
                     Catalog.GetString ("_Track Properties"), null,
-                    Catalog.GetString ("Edit metadata on selected songs"), OnTrackProperties)
+                    Catalog.GetString ("Edit metadata on selected songs"), OnTrackProperties),
+
+                new ActionEntry ("AddToPlaylistAction", Stock.Add,
+                    Catalog.GetString ("Add _to Playlist"), null,
+                    Catalog.GetString ("Append selected songs to playlist or create new playlist from selection"),
+                    OnAddToPlaylist),
+
+                new ActionEntry ("AddToNewPlaylistAction", Stock.New,
+                    Catalog.GetString ("New Playlist"), null,
+                    Catalog.GetString ("Create new playlist from selected tracks"),
+                    OnAddToNewPlaylist),
+
+                new ActionEntry("RemoveTracksAction", Stock.Remove,
+                    Catalog.GetString("_Remove"), "Delete",
+                    Catalog.GetString("Remove selected song(s) from library"), OnRemoveTracks),
             });
+
+            this["AddToPlaylistAction"].HideIfEmpty = false;
 
             action_service = actionService;
             selection_provider = selectionProvider;
@@ -76,14 +96,65 @@ namespace Banshee.Gui
         private void OnTrackProperties (object o, EventArgs args)
         {
             Console.WriteLine ("In OnTrackPropertiesAction");
-            foreach (TrackInfo track in selection_provider.GetSelectedTracks ()) {
-                Console.WriteLine ("Have selected track: {0}", track.TrackTitle);
-            }
-
             TrackEditor propEdit = new TrackEditor (selection_provider.GetSelectedTracks ());
             propEdit.Saved += delegate {
                 //ui.playlistView.QueueDraw();
             };
+        }
+
+        private void OnAddToPlaylist (object o, EventArgs args)
+        {
+            Gdk.Pixbuf pl_pb = Gdk.Pixbuf.LoadFromResource ("source-playlist-16.png");
+            playlist_menu_map.Clear ();
+            Source active_source = ServiceManager.SourceManager.ActiveSource;
+
+            foreach (MenuItem menu in (o as Action).Proxies) {
+                Menu submenu = new Menu ();
+                menu.Submenu = submenu;
+
+                submenu.Append (this ["AddToNewPlaylistAction"].CreateMenuItem ());
+                submenu.Append (new SeparatorMenuItem ());
+                foreach (Source child in ServiceManager.SourceManager.DefaultSource.Children) {
+                    PlaylistSource playlist = child as PlaylistSource;
+                    if (playlist != null) {
+                        ImageMenuItem item = new ImageMenuItem (playlist.Name);
+                        item.Image = new Gtk.Image (pl_pb);
+                        item.Activated += OnAddToExistingPlaylist;
+                        item.Sensitive = playlist != active_source;
+                        playlist_menu_map[item] = playlist;
+                        submenu.Append (item);
+                    }
+                }
+                submenu.ShowAll ();
+            }
+        }
+
+        private void OnAddToNewPlaylist (object o, EventArgs args)
+        {
+            // TODO generate name based on the track selection, or begin editing it
+            PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+
+            ThreadAssist.Spawn (delegate {
+                playlist.AddTracks (selection_provider.TrackModel, selection_provider.TrackSelection);
+            });
+        }
+
+        private void OnAddToExistingPlaylist (object o, EventArgs args)
+        {
+            PlaylistSource playlist = playlist_menu_map[o as MenuItem];
+            playlist.AddTracks (selection_provider.TrackModel, selection_provider.TrackSelection);
+        }
+
+        private void OnRemoveTracks (object o, EventArgs args)
+        {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+
+            if (source is PlaylistSource) {
+                (source as PlaylistSource).RemoveTracks (selection_provider.TrackSelection);
+            }
+
+            selection_provider.TrackSelection.Clear ();
         }
     }
 }
