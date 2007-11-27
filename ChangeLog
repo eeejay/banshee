@@ -1,5 +1,12 @@
 2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Makefile.am: Use BANSHEE_DEV_OPTIONS env var so developers can
+	have make run use an alternate db (with
+	BANSHEE_DEV_OPTIONS="--db=/alternate/banshee/db") and so I stop committing
+	my hardcoded hack.
+
+2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
 	Add Track and Source action groups here instead of from PlayerInterface.
 
