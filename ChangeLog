@@ -1,3 +1,9 @@
+2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: When changing the
+	selection avoid having the Selection raise two Changed events by passing
+	raise = false to Clear.
+
 2007-11-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs: Ignore any

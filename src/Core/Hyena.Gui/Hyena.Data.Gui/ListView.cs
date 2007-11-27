@@ -512,7 +512,7 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.KP_Enter:
                 case Gdk.Key.space:
                     if (focused_row_index != -1) {
-                        Selection.Clear ();
+                        Selection.Clear (false);
                         Selection.Select (focused_row_index);
                         OnRowActivated ();
                         InvalidateListWindow();
@@ -551,11 +551,11 @@ namespace Hyena.Data.Gui
                         Selection.ToggleSelect(row_index);
                         FocusRow(row_index);
                     } else if ((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Selection.Clear();
+                        Selection.Clear(false);
                         Selection.SelectRange(Math.Min(focused_row_index, row_index), 
                             Math.Max(focused_row_index, row_index));
                     } else {
-                        Selection.Clear();
+                        Selection.Clear(false);
                         Selection.Select(row_index);
                         FocusRow(row_index);
                     }
