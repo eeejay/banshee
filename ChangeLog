@@ -1,5 +1,20 @@
 2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Add Track and Source action groups here instead of from PlayerInterface.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add properties
+	so PlayerInterface can set itself as the provider of things these actions
+	groups need.
+
+	* src/Core/Nereid/Nereid/Client.cs: Fix typo.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Set action group properities,
+	don't instantiate them.
+
+2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Base/QueuedSqliteDatabase.cs:
 	* src/Core/Banshee.Services/Makefile.am:
 	* src/Core/Banshee.Services/Banshee.Database/QueuedSqliteDatabase.cs:

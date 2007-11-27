@@ -80,6 +80,9 @@ namespace Nereid
             ResizeMoveWindow ();
             
             elements_service.PrimaryWindow = this;
+
+            action_service.TrackActions.TrackSelector = this;
+            action_service.SourceActions.SourceView = this;
             
             AddAccelGroup (action_service.UIManager.AccelGroup);
             
@@ -224,12 +227,6 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
 
-            // Track actions
-            action_service.AddActionGroup (new TrackActions (action_service, this));
-
-            // Source actions
-            action_service.AddActionGroup (new SourceActions (action_service, this));
-            
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {

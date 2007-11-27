@@ -39,13 +39,27 @@ namespace Banshee.Gui
     {
         private UIManager ui_manager = new UIManager ();    
         private Dictionary<string, ActionGroup> action_groups = new Dictionary<string, ActionGroup> ();
+
+        private GlobalActions   global_actions;
+        private ViewActions     view_actions;
+        private PlaybackActions playback_actions;
+        private TrackActions    track_actions;
+        private SourceActions   source_actions;
         
         public InterfaceActionService ()
         {
-            AddActionGroup (new GlobalActions (this));
-            AddActionGroup (new ViewActions (this));
-            AddActionGroup (new PlaybackActions (this));
-            
+            global_actions      = new GlobalActions (this);
+            view_actions        = new ViewActions (this);
+            playback_actions    = new PlaybackActions (this);
+            track_actions       = new TrackActions (this);
+            source_actions      = new SourceActions (this);
+
+            AddActionGroup (global_actions);
+            AddActionGroup (view_actions);
+            AddActionGroup (playback_actions);
+            AddActionGroup (track_actions);
+            AddActionGroup (source_actions);
+
             ui_manager.AddUiFromResource ("core-ui-actions-layout.xml");            
         }
         
@@ -141,11 +155,19 @@ namespace Banshee.Gui
         }
         
         public ActionGroup GlobalActions {
-            get { return action_groups["Global"]; }
+            get { return global_actions; }
         }
         
         public PlaybackActions PlaybackActions {
-            get { return (PlaybackActions)action_groups["Playback"]; }
+            get { return playback_actions; }
+        }
+
+        public TrackActions TrackActions {
+            get { return track_actions; }
+        }
+
+        public SourceActions SourceActions {
+            get { return source_actions; }
         }
         
         string IService.ServiceName {

@@ -42,9 +42,14 @@ namespace Banshee.Gui
     public class SourceActions : ActionGroup
     {
         private InterfaceActionService action_service;
-        IHasSourceView source_view;
+
+        private IHasSourceView source_view;
+        public IHasSourceView SourceView {
+            get { return source_view; }
+            set { source_view = value; }
+        }
         
-        public SourceActions (InterfaceActionService actionService, IHasSourceView sourceView) : base ("Source")
+        public SourceActions (InterfaceActionService actionService) : base ("Source")
         {
             Add (new ActionEntry [] {
                 new ActionEntry("NewPlaylistAction", Stock.New,
@@ -71,7 +76,6 @@ namespace Banshee.Gui
             //ServiceManager.SourceManager.SourceRemoved += OnPlayerEngineStateChanged;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             action_service = actionService;
-            source_view = sourceView;
         }
             
 #region Source Manager Handlers
@@ -93,7 +97,7 @@ namespace Banshee.Gui
 
             // TODO should begin editing the name after making it, but this changed
             // the ActiveSource to the new playlist and we don't want that.
-            //source_view.BeginRenameSource (playlist);
+            //SourceView.BeginRenameSource (playlist);
         }
             
         private void OnImportSourceAction (object o, EventArgs args)
@@ -102,7 +106,7 @@ namespace Banshee.Gui
 
         private void OnRenameSourceAction (object o, EventArgs args)
         {
-            source_view.BeginRenameSource (source_view.HighlightedSource);
+            SourceView.BeginRenameSource (SourceView.HighlightedSource);
         }
 
         private void OnUnmapSourceAction (object o, EventArgs args)

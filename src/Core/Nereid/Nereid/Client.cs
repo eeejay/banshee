@@ -1,5 +1,5 @@
 //
-// Entry.cs
+// Client.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>

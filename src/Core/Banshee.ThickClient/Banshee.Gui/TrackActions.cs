@@ -43,14 +43,29 @@ namespace Banshee.Gui
     public class TrackActions : ActionGroup
     {
         private InterfaceActionService action_service;
-        private IHasTrackSelection selection_provider;
         private Dictionary<MenuItem, PlaylistSource> playlist_menu_map = new Dictionary<MenuItem, PlaylistSource> ();
+
+        private IHasTrackSelection track_selector;
+        public IHasTrackSelection TrackSelector {
+            get { return track_selector; }
+            set {
+                if (track_selector != null && track_selector != value)
+                    track_selector.TrackSelection.Changed -= HandleSelectionChanged;
+
+                track_selector = value;
+
+                if (track_selector != null) {
+                    track_selector.TrackSelection.Changed += HandleSelectionChanged;
+                    Sensitize ();
+                }
+            }
+        }
 
         private static readonly string [] require_selection_actions = new string [] {
             "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction"
         };
         
-        public TrackActions (InterfaceActionService actionService, IHasTrackSelection selectionProvider) : base ("Track")
+        public TrackActions (InterfaceActionService actionService) : base ("Track")
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
@@ -75,10 +90,6 @@ namespace Banshee.Gui
             this["AddToPlaylistAction"].HideIfEmpty = false;
 
             action_service = actionService;
-            selection_provider = selectionProvider;
-            selection_provider.TrackSelection.Changed += HandleSelectionChanged;
-
-            Sensitize ();
         }
 
         private void HandleSelectionChanged (object sender, EventArgs args)
@@ -88,7 +99,7 @@ namespace Banshee.Gui
 
         private void Sensitize ()
         {
-            bool has_selection = selection_provider.TrackSelection.Count > 0;
+            bool has_selection = TrackSelector.TrackSelection.Count > 0;
             foreach (string action in require_selection_actions)
                 this [action].Sensitive = has_selection;
         }
@@ -96,7 +107,7 @@ namespace Banshee.Gui
         private void OnTrackProperties (object o, EventArgs args)
         {
             Console.WriteLine ("In OnTrackPropertiesAction");
-            TrackEditor propEdit = new TrackEditor (selection_provider.GetSelectedTracks ());
+            TrackEditor propEdit = new TrackEditor (TrackSelector.GetSelectedTracks ());
             propEdit.Saved += delegate {
                 //ui.playlistView.QueueDraw();
             };
@@ -136,14 +147,14 @@ namespace Banshee.Gui
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
 
             ThreadAssist.Spawn (delegate {
-                playlist.AddTracks (selection_provider.TrackModel, selection_provider.TrackSelection);
+                playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelection);
             });
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
             PlaylistSource playlist = playlist_menu_map[o as MenuItem];
-            playlist.AddTracks (selection_provider.TrackModel, selection_provider.TrackSelection);
+            playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelection);
         }
 
         private void OnRemoveTracks (object o, EventArgs args)
@@ -151,10 +162,10 @@ namespace Banshee.Gui
             Source source = ServiceManager.SourceManager.ActiveSource;
 
             if (source is PlaylistSource) {
-                (source as PlaylistSource).RemoveTracks (selection_provider.TrackSelection);
+                (source as PlaylistSource).RemoveTracks (TrackSelector.TrackSelection);
             }
 
-            selection_provider.TrackSelection.Clear ();
+            TrackSelector.TrackSelection.Clear ();
         }
     }
 }
