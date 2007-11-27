@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -36,7 +37,7 @@ using Selection=Hyena.Collections.Selection;
 
 namespace Hyena.Data.Gui
 {
-    public delegate void RowActivatedHandler<T> (object o, RowActivatedArgs<T> args);    
+    public delegate void RowActivatedHandler<T> (object o, RowActivatedArgs<T> args);
     
     public class RowActivatedArgs<T> : EventArgs
     {
@@ -57,7 +58,7 @@ namespace Hyena.Data.Gui
             get { return row_value; }
         }
     }
-    
+
     [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask, "SelectAll")]
     [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask, "UnselectAll")]
     public class ListView<T> : Container
@@ -525,40 +526,59 @@ namespace Hyena.Data.Gui
         }
         
         private int last_click_row_index = -1;
-        protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
+        protected override bool OnButtonPressEvent(Gdk.EventButton press)
         {
             HasFocus = true;
             
-            if (evnt.Window == header_window) {
-                Column column = GetColumnForResizeHandle ((int) evnt.X);
+            if (press.Window == header_window) {
+                Column column = GetColumnForResizeHandle ((int) press.X);
                 if (column != null) {
                     resizing_column_index = GetCachedColumnForColumn (column).Index;
                 }
-            } else if (evnt.Window == list_window && model != null) {
+            } else if (press.Window == list_window && model != null) {
                 GrabFocus ();
                     
-                int row_index = GetRowAtY ((int) evnt.Y);
+                int row_index = GetRowAtY ((int) press.Y);
                 object item = model[row_index];
                 if (item == null) {
                     return true;
                 }
-                
-                if (evnt.Type == Gdk.EventType.TwoButtonPress && row_index == last_click_row_index) {
+
+                if (press.Button == 1 && press.Type == Gdk.EventType.TwoButtonPress && row_index == last_click_row_index) {
                     OnRowActivated ();
                     last_click_row_index = -1;
                 } else {
-                    last_click_row_index = row_index;
-                    if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Selection.ToggleSelect(row_index);
-                        FocusRow(row_index);
-                    } else if ((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
+                    if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
+                        if (press.Button == 3) {
+                            if (!Selection.Contains (row_index)) {
+                                Selection.Select (row_index);
+                            }
+                        } else {
+                            Selection.ToggleSelect(row_index);
+                        }
+                    } else if ((press.State & Gdk.ModifierType.ShiftMask) != 0) {
                         Selection.Clear(false);
                         Selection.SelectRange(Math.Min(focused_row_index, row_index), 
                             Math.Max(focused_row_index, row_index));
                     } else {
-                        Selection.Clear(false);
-                        Selection.Select(row_index);
-                        FocusRow(row_index);
+                        if (press.Button == 3) {
+                            if (!Selection.Contains (row_index)) {
+                                Selection.Clear(false);
+                                Selection.Select(row_index);
+                            }
+                        } else {
+                            Selection.Clear(false);
+                            Selection.Select(row_index);
+                        }
+                    }
+
+                    FocusRow(row_index);
+
+                    if (press.Button == 3) {
+                        last_click_row_index = -1;
+                        OnPopupMenu ();
+                    } else {
+                        last_click_row_index = row_index;
                     }
                 }
                 

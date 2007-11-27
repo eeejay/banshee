@@ -102,13 +102,23 @@ namespace Banshee.Sources
         
         public void RemoveSource(Source source)
         {
+            if(source == null || !ContainsSource (source)) {
+                return;
+            }
+
             if(source == default_source) {
                 default_source = null;
             }
             
+            source.Updated -= OnSourceUpdated;
+            source.ChildSourceAdded -= OnChildSourceAdded;
+            source.ChildSourceRemoved -= OnChildSourceRemoved;
+
             sources.Remove(source);
 
-            source.Updated -= OnSourceUpdated;
+            foreach(Source child_source in source.Children) {
+                RemoveSource(child_source);
+            }
 
             if(source == active_source) {
                 SetActiveSource(default_source);
@@ -164,12 +174,12 @@ namespace Banshee.Sources
 
         private void OnChildSourceAdded(SourceEventArgs args)
         {
-            args.Source.Updated += OnSourceUpdated;
+            AddSource (args.Source);
         }
         
         private void OnChildSourceRemoved(SourceEventArgs args)
         {
-            args.Source.Updated -= OnSourceUpdated;
+            RemoveSource (args.Source);
         }
         
         private int FindSourceInsertPosition(Source source)

@@ -1,3 +1,17 @@
+2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Improve
+	handling of child sources -- add them to the SourceManager automatically.
+	Child sources with children should be possible (though probably not
+	advisable).
+
+	* src/src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Don't
+	manually add Playlists to the SourceManager since they are implicitly
+	added by being children of the Library.
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Handle context menu mouse
+	clicks by calling OnPopupMenu.
+
 2007-11-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena/Hyena.Data/Selection.cs:

@@ -60,7 +60,6 @@ namespace Banshee.ServiceStack
 
                 foreach (PlaylistSource pl in PlaylistSource.LoadAll ()) {
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
-                    ServiceManager.SourceManager.AddSource (pl);
                 }
             }
             
