@@ -21,7 +21,7 @@ run:
 	cp $(top_builddir)/libbanshee/.libs/libbanshee.so .run.tmp; \
 	pushd .run.tmp; \
 	echo "<Addins><Directory>./Addins</Directory></Addins>" > Nereid.addins; \
-	$(MONO) --debug Nereid.exe --debug --uninstalled --db=/home/gabe/.config/banshee/banshee2.db; \
+	$(MONO) --debug Nereid.exe --debug --uninstalled; \
 	popd; \
 	rm -rf .run.tmp
 
