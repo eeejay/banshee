@@ -27,6 +27,9 @@
 //
 
 using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
 using Gdk;
 using Cairo;
 
@@ -234,6 +237,63 @@ namespace Hyena.Gui
         {
             ((IDisposable)cr.Target).Dispose ();
             ((IDisposable)cr).Dispose ();
+        }
+        
+        private struct CairoInteropCall
+        {
+            public string Name;
+            public MethodInfo ManagedMethod;
+            public bool CallNative;
+            
+            public CairoInteropCall (string name)
+            {
+                Name = name;
+                ManagedMethod = null;
+                CallNative = false;
+            }
+        }
+        
+        private static bool CallCairoMethod (Cairo.Context cr, ref CairoInteropCall call)
+        {
+            if (call.ManagedMethod == null && !call.CallNative) {
+                MemberInfo [] members = typeof (Cairo.Context).GetMember (call.Name, MemberTypes.Method, 
+                    BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public);
+                
+                if (members != null && members.Length > 0 && members[0] is MethodInfo) {
+                    call.ManagedMethod = (MethodInfo)members[0];
+                } else {
+                    call.CallNative = true;
+                }
+            }
+            
+            if (call.ManagedMethod != null) {
+                call.ManagedMethod.Invoke (cr, null);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        [DllImport ("libcairo.so.2")]
+        private static extern void cairo_push_group (IntPtr ptr);
+        private static CairoInteropCall cairo_push_group_call = new CairoInteropCall ("PushGroup");
+        
+        public static void PushGroup (Cairo.Context cr)
+        {
+            if (!CallCairoMethod (cr, ref cairo_push_group_call)) {
+                cairo_push_group (cr.Handle);
+            }
+        }
+        
+        [DllImport ("libcairo.so.2")]
+        private static extern void cairo_pop_group_to_source (IntPtr ptr);
+        private static CairoInteropCall cairo_pop_group_to_source_call = new CairoInteropCall ("PopGroupToSource");
+        
+        public static void PopGroupToSource (Cairo.Context cr)
+        {
+            if (!CallCairoMethod (cr, ref cairo_pop_group_to_source_call)) {
+                cairo_pop_group_to_source (cr.Handle);
+            }
         }
     }
 }

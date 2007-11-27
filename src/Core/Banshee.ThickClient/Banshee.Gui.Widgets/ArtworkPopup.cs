@@ -95,6 +95,8 @@ namespace Banshee.Gui.Widgets
                 
                 Resize(1, 1);
             }
+            
+            get { return image.Pixbuf; }
         }
         
         public string Label {

@@ -42,8 +42,6 @@ namespace Banshee.Collection.Gui
 {
     public class ArtworkManager : IService
     {
-        private Dictionary<string, Pixbuf> artwork = new Dictionary<string, Pixbuf> ();
-        
         public ArtworkManager ()
         {
             try {
@@ -85,23 +83,38 @@ namespace Banshee.Collection.Gui
         
         public Pixbuf Lookup (string id)
         {
+            return LookupScale (id, 0);
+        }
+        
+        public Pixbuf LookupScale (string id, int size)
+        {
             if (id == null) {
                 return null;
             }
             
-            if (artwork.ContainsKey (id)) {
-                return artwork[id];
+            string path = GetPathForSize (id, size);
+            if (File.Exists (path)) {
+                return new Pixbuf (path);
             }
             
-            string path = Path.Combine (ArtworkPath, String.Format ("{0}.jpg", id));
-            
-            if (File.Exists (path)) {
-                Pixbuf pixbuf = new Pixbuf (path);
-                artwork.Add (id, pixbuf);
-                return pixbuf;
+            string orig_path = GetPathForSize (id, 0);
+            if (File.Exists (orig_path)) {
+                Pixbuf pixbuf = new Pixbuf (orig_path);
+                Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
+                Directory.CreateDirectory (Path.GetDirectoryName (path));
+                scaled_pixbuf.Save (path, "jpeg");
+                ArtworkRenderer.DisposePixbuf (pixbuf);
+                return scaled_pixbuf;
             }
             
             return null;
+        }
+        
+        private string GetPathForSize (string id, int size)
+        {
+            return size == 0
+                ? Path.Combine (ArtworkPath, String.Format ("{0}.jpg", id))
+                : Path.Combine (ArtworkPath, Path.Combine (size.ToString (), String.Format ("{0}.jpg", id))); 
         }
         
         private static string artwork_path =

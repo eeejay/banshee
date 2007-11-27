@@ -1,3 +1,38 @@
+2007-11-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Hyena/Hyena.Data/Selection.cs:
+	* src/Core/Hyena/Hyena.Collections/RangeCollection.cs: Check for NET_2_0
+	to use generics internally, otherwise implemented 1.1 supported for use
+	inside Managed Windows Forms; implemented IndexOf and partial 
+	implementation of indexer
+
+	* tests/Hyena/RangeCollectionTests.cs: More tests
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ArtworkPopup.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Dispose pixbuf when done
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Do not cache pixbufs and added a LookupScale that will save the scaled
+	version to disk for subsequent lookups; reduces memory usage ... a lot
+
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs:
+	* src/Core/Hyena/Hyena.Data/ModelSelection.cs: 
+	* src/Core/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs:
+	Updated to reflect namespace change
+
+	* src/Core/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Implemented Pop/Push
+	Group methods that will use reflection to invoke them in the managed
+	Cairo binding if they exist or fall back on P/Invoke if they do not;
+	reflection results are cached for efficient subsequent calls
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Go back to using Push/Pop Group methods ala the new interop wrapping;
+	gets rid of a huge memory leak
+
 2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: When changing the

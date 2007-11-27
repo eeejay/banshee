@@ -350,7 +350,7 @@ namespace Nereid
             return new ModelSelection<TrackInfo> (composite_view.TrackModel, composite_view.TrackView.Selection);
         }
 
-        public Hyena.Data.Selection TrackSelection {
+        public Hyena.Collections.Selection TrackSelection {
             get { return composite_view.TrackView.Selection; }
         }
 

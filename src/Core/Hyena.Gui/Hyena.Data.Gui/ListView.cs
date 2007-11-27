@@ -32,6 +32,7 @@ using Gtk;
 using Cairo;
 
 using Hyena.Data;
+using Selection=Hyena.Collections.Selection;
 
 namespace Hyena.Data.Gui
 {

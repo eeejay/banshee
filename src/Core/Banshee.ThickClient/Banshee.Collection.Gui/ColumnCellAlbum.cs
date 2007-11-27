@@ -66,22 +66,21 @@ namespace Banshee.Collection.Gui
             
             AlbumInfo album = (AlbumInfo)BoundObject;
             
-            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.Lookup (album.ArtworkId);
-            bool is_default = false;
             int pixbuf_size = (int)cellHeight - 8;
+            bool is_default = false;
             int x = pixbuf_spacing;
             int y = ((int)cellHeight - pixbuf_size) / 2;
+            
+            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.LookupScale (album.ArtworkId, pixbuf_size);
             
             if (pixbuf == null) {
                 pixbuf = default_cover_pixbuf;
                 is_default = true;
-            } else {
-                pixbuf = pixbuf.ScaleSimple (pixbuf_size, pixbuf_size, Gdk.InterpType.Bilinear);
             }
             
-            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, x, y, pixbuf_size, pixbuf_size, 
+            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, true, x, y, pixbuf_size, pixbuf_size, 
                 !is_default, ListViewGraphics.BorderRadius);
-            
+                
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
             
             Pango.Layout first_line_layout = context.Layout;
@@ -114,7 +113,7 @@ namespace Banshee.Collection.Gui
                 Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
                     context.Area, context.Widget, "text",
                     context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
-            }        
+            }
         }
     }
 }

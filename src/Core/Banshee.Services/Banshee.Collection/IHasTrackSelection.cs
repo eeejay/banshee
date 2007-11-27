@@ -28,7 +28,7 @@
 
 using System.Collections.Generic;
 
-using Hyena.Data;
+using Hyena.Collections;
 
 namespace Banshee.Collection
 {

@@ -38,13 +38,14 @@ namespace Banshee.Collection.Gui
         private static Color cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
         private static Color cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
         
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf,
+        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
             double x, double y, double width, double height, bool drawBorder, double radius)
         {
-            RenderThumbnail (cr, pixbuf, x, y, width, height, drawBorder, radius, false, cover_border_light_color);
+            RenderThumbnail (cr, pixbuf, dispose, x, y, width, height, 
+                drawBorder, radius, false, cover_border_light_color);
         }
         
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf,
+        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
             double x, double y, double width, double height, bool drawBorder, double radius, 
             bool fill, Color fillColor)
         {
@@ -85,6 +86,19 @@ namespace Banshee.Collection.Gui
             CairoExtensions.RoundedRectangle (cr, x + 0.5, y + 0.5, width - 1, height - 1, radius);
             cr.Color = cover_border_dark_color;
             cr.Stroke ();
+            
+            if (dispose) {
+                DisposePixbuf (pixbuf);
+            }
+        }
+        
+        public static void DisposePixbuf (Gdk.Pixbuf pixbuf)
+        {
+            if (pixbuf != null) {
+                pixbuf.Dispose ();
+                pixbuf = null;
+                GC.Collect ();
+            }
         }
     }
 }

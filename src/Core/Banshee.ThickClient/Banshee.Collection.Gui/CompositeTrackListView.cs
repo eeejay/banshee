@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.Reflection;
+
 using Gtk;
 using Mono.Unix;
 
@@ -239,7 +241,7 @@ namespace Banshee.Collection.Gui
         
         protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
         {
-            Hyena.Data.Selection selection = (Hyena.Data.Selection)o;
+            Hyena.Collections.Selection selection = (Hyena.Collections.Selection)o;
             object view = selection.Owner;
             TrackListModel model = track_view.Model as TrackListModel;
             
@@ -279,6 +281,8 @@ namespace Banshee.Collection.Gui
             
                 model.AlbumInfoFilter = albums;
             }
+            
+            track_view.Selection.Clear ();
         }
         
         public TrackListView TrackView {

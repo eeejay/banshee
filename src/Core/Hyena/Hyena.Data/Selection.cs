@@ -27,13 +27,26 @@
 //
 
 using System;
+using System.Collections;
+
+#if NET_2_0
 using System.Collections.Generic;
+#endif
 
-using Hyena.Collections;
-
-namespace Hyena.Data
+namespace Hyena.Collections
 {
-    public class Selection : IEnumerable<int>
+#if NET_1_1
+    internal
+#else
+    public 
+#endif
+    
+    class Selection :
+#if NET_2_0
+        IEnumerable<int>
+#else
+        IEnumerable
+#endif
     {
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
@@ -131,21 +144,28 @@ namespace Hyena.Data
             get { 
                 if (ranges.RangeCount == 1) {
                     RangeCollection.Range range = ranges.Ranges[0];
-                    return range.Start == 0 && range.End == max_index;
+                    return range.Start == 0 && range.End == max_index - 1;
                 }
                 
                 return false;
             }
         }
         
+#if NET_2_0
         public IEnumerator<int> GetEnumerator ()
-        {
-            return ranges.GetEnumerator();
-        }
-        
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
         {
             return ranges.GetEnumerator ();
         }
+        
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return GetEnumerator ();
+        }
+#else
+        public IEnumerator GetEnumerator ()
+        {
+            return ranges.GetEnumerator ();
+        }
+#endif
     }
 }

@@ -206,44 +206,30 @@ namespace Banshee.Gui.Widgets
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
+            Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
+        
             foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
-                PaintRegion (evnt, rect);
+                PaintRegion (cr, evnt, rect);
             }
+
+            CairoExtensions.DisposeContext (cr);
+            cr = null;
             
             return true;
         }
                 
-        private void PaintRegion (Gdk.EventExpose evnt, Gdk.Rectangle clip)
+        private void PaintRegion (Cairo.Context cr, Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
             
             if (incoming_track != null || current_track != null) {
                 RenderAnimation (cr, clip);
             }
-            
-            CairoExtensions.DisposeContext (cr);
         }
         
         private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
         {
-            // Possible bug in Mono <= 1.2.4 or Ubuntu or Both:
-            //   https://bugs.launchpad.net/ubuntu/+source/mono/+bug/16195 
-            //
-            // For each instance of:
-            //   new ImageSurface (...)
-            //   pcr = new Context (ps)
-            //   ...
-            //   cr.Source = new Pattern (ps)
-            //   CairoExtensions.DisposeContext (pcr)
-            //
-            // The following would be preferred but we can't use
-            // these nice methods do to the above bug:
-            //   cr.PushGroup ()
-            //   ...
-            //   cr.PopGroupToSource ()
-            
             Cairo.Surface ps;
             Cairo.Context pcr;
             
@@ -255,11 +241,9 @@ namespace Banshee.Gui.Widgets
             
             if (current_track == null) {
                 // Fade in the whole stage, nothing to fade out
-                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
-                pcr = new Context (ps);
-                RenderStage (pcr, incoming_track, incoming_pixbuf);
-                cr.Source = new Pattern (ps);
-                CairoExtensions.DisposeContext (pcr);
+                CairoExtensions.PushGroup (cr);
+                RenderStage (cr, incoming_track, incoming_pixbuf);
+                CairoExtensions.PopGroupToSource (cr);
                 
                 cr.PaintWithAlpha (transition_percent);
                 return;
@@ -271,11 +255,9 @@ namespace Banshee.Gui.Widgets
 
             RenderCoverArt (cr, incoming_pixbuf);
             
-            ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
-            pcr = new Context (ps);
-            RenderCoverArt (pcr, current_pixbuf);
-            cr.Source = new Pattern (ps);
-            CairoExtensions.DisposeContext (pcr);
+            CairoExtensions.PushGroup (cr);
+            RenderCoverArt (cr, current_pixbuf);
+            CairoExtensions.PopGroupToSource (cr);
             
             cr.PaintWithAlpha (1.0 - transition_percent);
             
@@ -292,20 +274,16 @@ namespace Banshee.Gui.Widgets
                    
             if (transition_percent <= 0.5) {
                 // Fade out old text
-                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
-                pcr = new Context (ps);
-                RenderTrackInfo (pcr, current_track, true, !same_artist_album);
-                cr.Source = new Pattern (ps);
-                CairoExtensions.DisposeContext (pcr);
-
+                CairoExtensions.PushGroup (cr);
+                RenderTrackInfo (cr, current_track, true, !same_artist_album);
+                CairoExtensions.PopGroupToSource (cr);
+               
                 cr.PaintWithAlpha (1.0 - (transition_percent * 2.0));
             } else {
                 // Fade in new text
-                ps = new ImageSurface (Cairo.Format.Argb32, clip.Width, clip.Height);
-                pcr = new Context (ps);
-                RenderTrackInfo (pcr, incoming_track, true, !same_artist_album);
-                cr.Source = new Pattern (ps);
-                CairoExtensions.DisposeContext (pcr);
+                CairoExtensions.PushGroup (cr);
+                RenderTrackInfo (cr, incoming_track, true, !same_artist_album);
+                CairoExtensions.PopGroupToSource (cr);
                 
                 cr.PaintWithAlpha ((transition_percent - 0.5) * 2.0);
             }
@@ -313,13 +291,13 @@ namespace Banshee.Gui.Widgets
         
         private void RenderStage (Cairo.Context cr, TrackInfo track, Gdk.Pixbuf pixbuf)
         {
-           RenderCoverArt (cr, pixbuf);
-           RenderTrackInfo (cr, track, true, true);
+            RenderCoverArt (cr, pixbuf);
+            RenderTrackInfo (cr, track, true, true);
         }
         
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
         {
-            ArtworkRenderer.RenderThumbnail (cr, pixbuf, 0, 0, Allocation.Height, Allocation.Height, 
+            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, 0, 0, Allocation.Height, Allocation.Height, 
                 pixbuf != missing_pixbuf, 0, pixbuf == missing_pixbuf, background_color);
         }
         
@@ -391,15 +369,14 @@ namespace Banshee.Gui.Widgets
                 
                 incoming_track = track;
                 
-                Gdk.Pixbuf pixbuf = artwork_manager.Lookup (track.ArtistAlbumId);
+                Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtistAlbumId, Allocation.Height);
                 if (pixbuf == null) {
                     if (missing_pixbuf == null) {
                         missing_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
                     }
                     incoming_pixbuf = missing_pixbuf;
                 } else {
-                    incoming_pixbuf = pixbuf.ScaleSimple (Allocation.Height, Allocation.Height, 
-                        Gdk.InterpType.Bilinear);
+                    incoming_pixbuf = pixbuf;
                 }
 
                 BeginTransition ();
@@ -431,10 +408,15 @@ namespace Banshee.Gui.Widgets
                         transition_frames / ((double)FADE_TIMEOUT / 1000.0));
                 }
                 
+                if (current_pixbuf != incoming_pixbuf) {
+                    ArtworkRenderer.DisposePixbuf (current_pixbuf);
+                }
+                
                 current_pixbuf = incoming_pixbuf;
                 current_track = incoming_track;
-                incoming_pixbuf = null;
+                
                 incoming_track = null;
+                
                 transition_id = 0;
                 
                 UpdatePopup ();
@@ -514,6 +496,7 @@ namespace Banshee.Gui.Widgets
         private void HidePopup ()
         {
             if (popup != null) {
+                ArtworkRenderer.DisposePixbuf (popup.Image);
                 popup.Destroy ();
                 popup.EnterNotifyEvent -= OnPopupEnterNotifyEvent;
                 popup.LeaveNotifyEvent -= OnPopupLeaveNotifyEvent;

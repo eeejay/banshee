@@ -30,6 +30,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using Hyena.Collections;
+
 namespace Hyena.Data
 {
     //public class ModelSelection<T> : IList<T>
