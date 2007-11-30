@@ -36,6 +36,7 @@ using Banshee.Sources;
 using Banshee.Playlist;
 using Banshee.Collection;
 using Banshee.ServiceStack;
+using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
@@ -44,6 +45,11 @@ namespace Banshee.Gui
     {
         private InterfaceActionService action_service;
         private Dictionary<MenuItem, PlaylistSource> playlist_menu_map = new Dictionary<MenuItem, PlaylistSource> ();
+        private RatingActionProxy rating_proxy;
+
+        private static readonly string [] require_selection_actions = new string [] {
+            "TrackPopupAction", "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction", "RateTracksAction"
+        };
 
         private IHasTrackSelection track_selector;
         public IHasTrackSelection TrackSelector {
@@ -61,13 +67,14 @@ namespace Banshee.Gui
             }
         }
 
-        private static readonly string [] require_selection_actions = new string [] {
-            "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction"
-        };
-        
         public TrackActions (InterfaceActionService actionService) : base ("Track")
         {
+            action_service = actionService;
+
             Add (new ActionEntry [] {
+                new ActionEntry("TrackPopupAction", null, 
+                    String.Empty, null, null, OnTrackPopup),
+
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
                     Catalog.GetString ("_Track Properties"), null,
                     Catalog.GetString ("Edit metadata on selected songs"), OnTrackProperties),
@@ -82,14 +89,29 @@ namespace Banshee.Gui
                     Catalog.GetString ("Create new playlist from selected tracks"),
                     OnAddToNewPlaylist),
 
-                new ActionEntry("RemoveTracksAction", Stock.Remove,
+                new ActionEntry ("RemoveTracksAction", Stock.Remove,
                     Catalog.GetString("_Remove"), "Delete",
                     Catalog.GetString("Remove selected song(s) from library"), OnRemoveTracks),
+
+                new ActionEntry ("RateTracksAction", null,
+                    String.Empty, null, null, OnRateTracks),
             });
 
-            this["AddToPlaylistAction"].HideIfEmpty = false;
+            action_service.UIManager.ActionsChanged += HandleActionsChanged;
 
-            action_service = actionService;
+            action_service.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
+
+            this["AddToPlaylistAction"].HideIfEmpty = false;
+        }
+
+        private void HandleActionsChanged (object sender, EventArgs args)
+        {
+            if (action_service.UIManager.GetAction ("/MainMenu/EditMenu") != null) {
+                rating_proxy = new RatingActionProxy (action_service.UIManager, this["RateTracksAction"]);
+                rating_proxy.AddPath ("/MainMenu/EditMenu", "RemoveTracks");
+                rating_proxy.AddPath ("/TrackPopup", "RemoveTracks");
+                action_service.UIManager.ActionsChanged -= HandleActionsChanged;
+            }
         }
 
         private void HandleSelectionChanged (object sender, EventArgs args)
@@ -97,28 +119,55 @@ namespace Banshee.Gui
             Sensitize ();
         }
 
+        private void HandleEditMenuActivated (object sender, EventArgs args)
+        {
+            ResetRating ();
+        }
+
         private void Sensitize ()
         {
             bool has_selection = TrackSelector.TrackSelection.Count > 0;
-            foreach (string action in require_selection_actions)
-                this [action].Sensitive = has_selection;
+            Sensitive = has_selection;
+            //foreach (string action in require_selection_actions)
+            //    this [action].Sensitive = has_selection;
+        }
+
+        private void ResetRating ()
+        {
+            if (TrackSelector.TrackSelection.Count == 1)
+                rating_proxy.Reset (3);//TrackSelector.GetSelectedTracks ().Current.Rating;
+            else
+                rating_proxy.Reset (0);
         }
             
+#region Action Handlers
+
+        private void OnTrackPopup (object o, EventArgs args)
+        {
+            ResetRating ();
+
+            Gtk.Menu menu = action_service.UIManager.GetWidget ("/TrackPopup") as Menu;
+            menu.Show (); 
+            menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+        }
+
         private void OnTrackProperties (object o, EventArgs args)
         {
-            Console.WriteLine ("In OnTrackPropertiesAction");
             TrackEditor propEdit = new TrackEditor (TrackSelector.GetSelectedTracks ());
             propEdit.Saved += delegate {
                 //ui.playlistView.QueueDraw();
             };
         }
 
+        // Called when the Add to Playlist action is highlighted.
+        // Generates the menu of playlists to which you can add the selected tracks.
         private void OnAddToPlaylist (object o, EventArgs args)
         {
             Gdk.Pixbuf pl_pb = Gdk.Pixbuf.LoadFromResource ("source-playlist-16.png");
             playlist_menu_map.Clear ();
             Source active_source = ServiceManager.SourceManager.ActiveSource;
 
+            // TODO find just the menu that was activated instead of modifying all proxies
             foreach (MenuItem menu in (o as Action).Proxies) {
                 Menu submenu = new Menu ();
                 menu.Submenu = submenu;
@@ -167,5 +216,13 @@ namespace Banshee.Gui
 
             TrackSelector.TrackSelection.Clear ();
         }
+
+        private void OnRateTracks (object o, EventArgs args)
+        {
+            Console.WriteLine ("OnRateTracks..");
+        }
+
+#endregion
+
     }
 }

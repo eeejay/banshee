@@ -75,9 +75,7 @@ namespace Banshee.Collection.Gui
 
         protected override bool OnPopupMenu ()
         {
-            Gtk.Menu menu = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").UIManager.GetWidget ("/TrackPopup") as Menu;
-            menu.Show (); 
-            menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").TrackActions["TrackPopupAction"].Activate ();
             return true;
         }
         

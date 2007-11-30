@@ -1,3 +1,26 @@
+2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Activate the TrackPopupAction instead of showing the popup manual
+	manually.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add
+	and handle RateTracksAction and TrackPopupAction.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/ComplexMenuItem.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingMenuItem.cs: Update
+	license header, override OnAdded and OnRemoved to allow using with
+	Gtk.UIManager.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingEntry.cs: Update license
+	header.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CustomActionProxy.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:
+	* src/Core/Banshee.Widgets/Makefile.am: New files to enable setting custom
+	MenuItem subclasses as proxies for Gtk.Actions.  Abstracts out repetitive
+	logic for inserting menu items at a particular position.
+
 2007-11-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Makefile.am: Use BANSHEE_DEV_OPTIONS env var so developers can

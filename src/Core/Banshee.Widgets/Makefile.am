@@ -10,6 +10,7 @@ SOURCES =  \
 	Banshee.Widgets/ComplexMenuItem.cs \
 	Banshee.Widgets/CoverArtThumbnail.cs \
 	Banshee.Widgets/CoverArtView.cs \
+	Banshee.Widgets/CustomActionProxy.cs \
 	Banshee.Widgets/DateButton.cs \
 	Banshee.Widgets/DictionaryComboBox.cs \
 	Banshee.Widgets/DiscUsageDisplay.cs \
@@ -27,6 +28,7 @@ SOURCES =  \
 	Banshee.Widgets/MultiStateToggleButton.cs \
 	Banshee.Widgets/PropertyTable.cs \
 	Banshee.Widgets/RadialProgress.cs \
+	Banshee.Widgets/RatingActionProxy.cs \
 	Banshee.Widgets/RatingEntry.cs \
 	Banshee.Widgets/RatingMenuItem.cs \
 	Banshee.Widgets/SearchEntry.cs \
